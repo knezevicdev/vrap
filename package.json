@@ -1,0 +1,11 @@
+{
+  "name": "vroom-web",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@bitbucket.org:tdalabs/vroom-web.git",
+  "author": "Kevin Parrott <kevin.parrott@contractor.vroom.com>",
+  "license": "UNLICENSED",
+  "dependencies": {
+    "lerna": "^3.20.2"
+  }
+}
