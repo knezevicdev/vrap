@@ -5,6 +5,9 @@
   "repository": "git@bitbucket.org:tdalabs/vroom-web.git",
   "author": "Kevin Parrott <kevin.parrott@contractor.vroom.com>",
   "license": "UNLICENSED",
+  "scripts": {
+    "dev:homepage": "lerna run dev --scope homepage"
+  },
   "dependencies": {
     "lerna": "^3.20.2"
   }
