@@ -1,15 +1,8 @@
 {
   "name": "@vroom-web/homepage",
   "version": "0.0.0",
-  "description": "> TODO: description",
-  "author": "Kevin Parrott <kevin.parrott@contractor.vroom.com>",
-  "homepage": "https://bitbucket.org/tdalabs/vroom-web#readme",
-  "license": "UNLICENSED",
   "main": "index.js",
-  "repository": {
-    "type": "git",
-    "url": "git+ssh://git@bitbucket.org/tdalabs/vroom-web.git"
-  },
+  "license": "UNLICENSED",
   "scripts": {
     "test": "echo \"Error: run tests from root\" && exit 1",
     "dev": "next",

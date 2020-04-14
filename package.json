@@ -1,7 +1,12 @@
 {
-  "version": "1.0.0",
+  "name": "vroom-web",
+  "version": "0.0.0",
   "main": "index.js",
   "license": "UNLICENSED",
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@bitbucket.org/tdalabs/vroom-web.git"
+  },
   "scripts": {
     "setup": "yarn install && yarn run bootstrap",
     "bootstrap": "lerna bootstrap",
