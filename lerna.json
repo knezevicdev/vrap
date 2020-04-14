@@ -1,7 +1,9 @@
 {
   "npmClient": "yarn",
   "packages": [
-    "packages/*"
+    "apps/*",
+    "components/*",
+    "networking/*"
   ],
   "version": "0.0.0"
 }
