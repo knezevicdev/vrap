@@ -1,5 +1,5 @@
 {
-  "name": "@vroom-web/header",
+  "name": "@vroom-web/button",
   "version": "0.0.0",
   "description": "> TODO: description",
   "author": "Kevin Parrott <kevin.parrott@contractor.vroom.com>",
@@ -18,8 +18,7 @@
   },
   "scripts": {
     "test": "echo \"Error: run tests from root\" && exit 1",
-    "build": "rollup --config",
-    "dev": "rollup --config --watch"
+    "build": "rollup --config"
   },
   "dependencies": {},
   "devDependencies": {

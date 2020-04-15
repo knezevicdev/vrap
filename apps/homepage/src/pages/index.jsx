@@ -1,5 +1,6 @@
 import React from "react";
 import Head from "next/head";
+import Header from "@vroom-web/header";
 
 const Home = () => (
   <div className="container">
@@ -9,6 +10,7 @@ const Home = () => (
     </Head>
 
     <main>
+      <Header text="I'm a Header" />
       <h1 className="title">
         Welcome to <a href="https://nextjs.org">Next.js!</a>
       </h1>
