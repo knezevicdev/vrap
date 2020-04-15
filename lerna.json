@@ -3,6 +3,7 @@
   "packages": [
     "apps/*",
     "components/*",
+    "integrations/*",
     "networking/*"
   ],
   "version": "0.0.0"
