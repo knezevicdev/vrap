@@ -7,20 +7,9 @@
     "type": "git",
     "url": "git+ssh://git@bitbucket.org/tdalabs/vroom-web.git"
   },
-  "scripts": {
-    "setup": "yarn install && yarn run bootstrap",
-    "bootstrap": "lerna bootstrap",
-    "create": "lerna create",
-    "add": "lerna add",
-    "dev:homepage": "lerna run dev --scope homepage"
-  },
   "private": true,
   "workspaces": [
     "apps/homepage",
     "components/material-ui-confirm"
-  ],
-  "dependencies": {
-    "lerna": "^3.20.2"
-  },
-  "devDependencies": {}
+  ]
 }
