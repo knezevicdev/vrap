@@ -1,0 +1,20 @@
+version: '3'
+services:
+  web:
+    build:
+      context: .
+      dockerfile: ./docker/Dockerfile
+    user: 'root'
+    environment:
+      - CDN_URL=
+      - CLIENT_TAG_MANAGER_SRC_URL=https://assets.adobedtm.com/b14636b10888/4d943c2e5a28/launch-cca5a24b442e-staging.min.js
+      - INVSEARCH_V3_URL=https://invsearch-v3-prod-ext.aws.vroomapi.com/v3
+      - LEADS_URL=https://leads-dev-int.vroomapi.com:8443
+      - SEGMENT_WRITE_KEY=DwAbhfNQBWxGRV9Y4rwlNRgFgDpwDUOb
+    command: ash -c 'yarn install && yarn dev'
+    ports:
+      - '8080:8080'
+    volumes:
+      - '.:/www/:cached'
+      - '/www/.next'
+      - '/www/node_modules'

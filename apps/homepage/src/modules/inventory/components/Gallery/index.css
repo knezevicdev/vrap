@@ -1,0 +1,15 @@
+/*
+Here Be Dragons
+This was done as a last resort in order to get the necessary specificity for
+react-image-gallery to appropriately size images. Only create css files as a
+must when all other approaches fail you.
+*/
+
+.image-gallery-content.right .image-gallery-slide .image-gallery-image {
+  max-height: 60vh;
+}
+
+/* This is one unit above the material ui appBar  */
+.image-gallery.fullscreen-modal {
+  z-index: 1101;
+}
