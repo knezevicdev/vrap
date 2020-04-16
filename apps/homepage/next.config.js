@@ -1,10 +1,13 @@
+const path = require('path');
+// const fromRoot = name => path.resolve(__dirname + '/node_modules/' + name);
+
 module.exports = {
   /* Not all env vars must be listed here.
   Only env vars used client-side must be added.
   Env vars used only be the server are handled by docker-compose.yaml,
   or whatever deployment injection method we choose. */
   /* Custom webpack configuration. */
-  webpack: config => {
+  webpack: (config) => {
     /* Enable SVG imports. */
     config.module.rules.push({
       test: /\.svg$/,
@@ -12,6 +15,10 @@ module.exports = {
     });
     /* Enable imports relative to the project root. */
     config.resolve.modules.push(__dirname);
+
+    // config.resolve.alias['react'] = fromRoot('react');
+    // config.resolve.alias['react-dom'] = fromRoot('react-dom');
+
     return config;
   },
   env: {

@@ -6,6 +6,7 @@ interface Props {
 }
 
 const Banner: React.FC<Props> = ({ text }) => {
+  // return <header>{text}</header>;
   return (
     <Grid container>
       <Grid item>{text}</Grid>

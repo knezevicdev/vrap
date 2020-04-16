@@ -14,6 +14,11 @@
     "add": "lerna add",
     "dev:homepage": "lerna run dev --scope homepage"
   },
+  "private": true,
+  "workspaces": [
+    "apps/homepage",
+    "components/material-ui-confirm"
+  ],
   "dependencies": {
     "lerna": "^3.20.2"
   },

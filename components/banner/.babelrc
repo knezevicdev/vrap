@@ -1,11 +1,18 @@
 {
-  "presets": ["@babel/react"],
-  "ignore": ["**/__snapshots__", "**/*.d.ts", "**/*.test.*"],
+  "presets": [
+    [
+      "@babel/preset-env",
+      {
+        "modules": false
+      }
+    ],
+    "@babel/preset-react",
+    "@babel/typescript"
+  ],
   "plugins": [
-    "@babel/plugin-transform-typescript",
     "babel-plugin-typescript-to-proptypes",
     "@babel/plugin-proposal-export-default-from",
-    "@babel/proposal-class-properties",
-    "@babel/proposal-object-rest-spread"
+    "@babel/plugin-proposal-class-properties",
+    "@babel/plugin-proposal-object-rest-spread"
   ]
 }
