@@ -36,7 +36,7 @@ const BoxBody: React.FC<Children> = ({ children, mb = 2 }) => (
   </Box>
 );
 
-const useStyles = makeStyles((theme) =>
+const useStyles = makeStyles(theme =>
   createStyles({
     root: {
       marginBottom: theme.spacing(1),

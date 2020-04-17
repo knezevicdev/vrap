@@ -7,7 +7,7 @@ module.exports = {
   Env vars used only be the server are handled by docker-compose.yaml,
   or whatever deployment injection method we choose. */
   /* Custom webpack configuration. */
-  webpack: (config) => {
+  webpack: config => {
     /* Enable SVG imports. */
     config.module.rules.push({
       test: /\.svg$/,
