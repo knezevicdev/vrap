@@ -9,7 +9,7 @@
   },
   "private": true,
   "workspaces": [
-    "apps/homepage",
-    "components/material-ui-confirm"
+    "apps/**",
+    "libs/**"
   ]
 }
