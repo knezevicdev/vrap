@@ -2,7 +2,7 @@
   "compilerOptions": {
     "declaration": true,
     "emitDeclarationOnly": true,
-    "outDir": "dist/js",
+    "outDir": "dist",
     "jsx": "react",
     "lib": ["es2017", "dom"],
     "module": "commonjs",
@@ -10,10 +10,12 @@
     "skipLibCheck": true,
     "strict": true,
     "strictNullChecks": false,
-    "target": "es5"
+    "target": "es5",
+    "esModuleInterop": true
   },
   "include": ["./src/*", "./src/**/*"],
   "exclude": [
+    "./src/setupTests.ts",
     "./src/**/**.test.tsx",
     "./src/**/**.test.ts",
     "./src/**/**.stories.ts",

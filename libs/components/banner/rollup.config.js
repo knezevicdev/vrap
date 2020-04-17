@@ -1,36 +1,26 @@
+import pkg from "./package.json";
 import babel from "rollup-plugin-babel";
 import resolve from "@rollup/plugin-node-resolve";
 import commonjs from "@rollup/plugin-commonjs";
 import peerDepsExternal from "rollup-plugin-peer-deps-external";
 
-// Require understands JSON files.
-// const packageJson = require("./package.json");
-// const external = Object.keys(packageJson.peerDependencies);
-
-const isProd = process.env.NODE_ENV === "production";
-
 const extensions = [".js", ".jsx", ".ts", ".tsx"];
 
-const globals = {
-  react: "React",
-  "react-dom": "ReactDOM",
-};
+// const globals = {
+//   react: "React",
+//   "react-dom": "ReactDOM",
+// };
 
 const config = {
   input: "./src/index.tsx",
   output: [
     {
-      file: "./dist/js/index.js",
-      format: "umd",
-      name: "Banner",
-      globals,
-      sourcemap: true,
+      file: pkg.main,
+      format: "cjs",
     },
     {
-      file: "./dist/esm/index.js",
-      format: "es",
-      globals,
-      // sourcemap: true,
+      file: pkg.module,
+      format: "esm",
     },
   ],
   plugins: [
@@ -38,7 +28,7 @@ const config = {
     resolve({ extensions }),
     babel({
       extensions,
-      include: ["src/**/*"],
+      // include: ["src/**/*"],
       exclude: "node_modules/**",
     }),
     commonjs({
@@ -68,7 +58,6 @@ const config = {
       },
     }),
   ],
-  // external,
 };
 
 export default config;

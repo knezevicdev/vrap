@@ -1,4 +1,4 @@
-import * as React from "react";
+import React from "react";
 import Grid from "@material-ui/core/Grid";
 
 interface Props {
@@ -6,7 +6,6 @@ interface Props {
 }
 
 const Banner: React.FC<Props> = ({ text }) => {
-  // return <header>{text}</header>;
   return (
     <Grid container>
       <Grid item>{text}</Grid>
