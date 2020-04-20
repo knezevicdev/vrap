@@ -2,6 +2,7 @@ import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
 import { styled, useTheme } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
+import { Button, Container } from '@vroom-web/ui';
 import React from 'react';
 
 import Autocomplete from './Autocomplete';
@@ -9,8 +10,6 @@ import InventoryCountLabel from './InventoryCountLabel';
 import ViewModel from './ViewModel';
 
 import globalEnv from 'src/globalEnv';
-import Button from 'src/ui/Button';
-import Container from 'src/ui/Container';
 import Typography from 'src/ui/Typography';
 
 const StyledBox = styled(Box)(() => ({

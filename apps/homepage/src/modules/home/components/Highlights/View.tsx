@@ -2,13 +2,11 @@ import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
 import { styled, useTheme } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
-import Container from '@vroom-web/container';
+import { Button, Container } from '@vroom-web/ui';
 import React from 'react';
 
 import Highlight from './HighlightView';
 import ViewModel from './ViewModel';
-
-import Button from 'src/ui/Button';
 
 const StyledButton = styled(Button)(() => ({
   minWidth: '200px',
