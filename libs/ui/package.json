@@ -10,7 +10,7 @@
     "dist"
   ],
   "scripts": {
-    "build": "yarn clean && yarn build:lib && yarn build:types",
+    "build": "yarn clean && yarn build:types && yarn build:lib",
     "build:lib": "rollup -c",
     "build:types": "tsc -p tsconfig.gen-dts.json",
     "clean": "rimraf dist"
