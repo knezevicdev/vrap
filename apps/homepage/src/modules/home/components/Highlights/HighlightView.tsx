@@ -1,15 +1,15 @@
 import Box from '@material-ui/core/Box';
+import { styled } from '@material-ui/core/styles';
 import React from 'react';
-import styled from 'styled-components';
 
 import Typography from 'src/ui/Typography';
 
-const StyledImg = styled.img`
-  border-radius: 50%;
-  flex-shrink: 0;
-  width: 100px;
-  height: 100px;
-`;
+const StyledImg = styled('img')(() => ({
+  borderRadius: '50%',
+  flexShrink: 0,
+  width: '100px',
+  height: '100px',
+}));
 
 interface Props {
   description: string;

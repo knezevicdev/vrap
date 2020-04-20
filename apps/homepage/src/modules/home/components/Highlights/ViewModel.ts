@@ -1,5 +1,3 @@
-import Router from 'next/router';
-
 import globalEnv from 'src/globalEnv';
 
 interface Highlight {
@@ -36,7 +34,7 @@ class HighlightsViewModel {
   ];
 
   handleButtonClick(): void {
-    Router.push('/cars');
+    // TODO navigate to appropriate page
   }
 }
 

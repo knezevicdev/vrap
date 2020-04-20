@@ -1,5 +1,4 @@
-import 'react-image-gallery/styles/css/image-gallery.css';
-import 'src/modules/inventory/components/Gallery/index.css';
+import 'mobx-react/batchingForReactDom';
 
 import { CssBaseline } from '@material-ui/core';
 import { ThemeProvider } from '@material-ui/core/styles';
@@ -15,7 +14,7 @@ configureMobx({
   enforceActions: 'observed', // don't allow state modifications outside actions
 });
 
-class MyApp extends App {
+class VroomApp extends App {
   componentDidMount(): void {
     smoothscroll.polyfill(); // needs access to the window
   }
@@ -25,7 +24,7 @@ class MyApp extends App {
     return (
       <>
         <Head>
-          <title>Rocket Auto</title>
+          <title>Vroom</title>
         </Head>
         <ThemeProvider theme={theme}>
           <CssBaseline />
@@ -36,4 +35,4 @@ class MyApp extends App {
   }
 }
 
-export default MyApp;
+export default VroomApp;

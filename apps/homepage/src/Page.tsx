@@ -2,7 +2,6 @@ import { styled } from '@material-ui/core/styles';
 import Head from 'next/head';
 import React from 'react';
 
-import AnalyticsHandler from 'src/integrations/analytics/AnalyticsHandler';
 import Container from 'src/ui/Container';
 
 const Contents = styled('div')(() => ({
@@ -18,17 +17,17 @@ interface PageProps {
 }
 
 class Page extends React.Component<PageProps> {
-  private analyticsHandler: AnalyticsHandler;
+  // private analyticsHandler: AnalyticsHandler;
 
   constructor(props: PageProps) {
     super(props);
-    this.analyticsHandler = new AnalyticsHandler();
+    // this.analyticsHandler = new AnalyticsHandler();
   }
 
   componentDidMount(): void {
     window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
-    const { category, name } = this.props;
-    this.analyticsHandler.page(name, category);
+    // const { category, name } = this.props;
+    // this.analyticsHandler.page(name, category);
   }
 
   render(): React.ReactNode {

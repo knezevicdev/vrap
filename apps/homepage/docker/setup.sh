@@ -4,7 +4,7 @@
 yarn install
 
 # Build libraries.
-yarn --cwd ./libs/components/material-ui-confirm build
+yarn --cwd ./libs/ui build
 
 # Build the main app.
 yarn --cwd ./apps/homepage build

@@ -5,7 +5,7 @@ import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { Button, Container } from '@vroom-web/ui';
 import React from 'react';
 
-import Highlight from './HighlightView';
+import HighlightView from './HighlightView';
 import ViewModel from './ViewModel';
 
 const StyledButton = styled(Button)(() => ({
@@ -31,7 +31,7 @@ const HighlightsView: React.FC<Props> = ({ viewModel }) => {
             <Grid container spacing={mdUp ? 6 : 4}>
               {viewModel.highlights.map((highlight, index) => (
                 <Grid key={index} item xs={12} md={4}>
-                  <Highlight
+                  <HighlightView
                     description={highlight.description}
                     imgAlt={highlight.imgAlt}
                     imgSrc={highlight.imgSrc}

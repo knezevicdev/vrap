@@ -6,10 +6,10 @@ import { Button, Container } from '@vroom-web/ui';
 import React from 'react';
 
 import Autocomplete from './Autocomplete';
-import InventoryCountLabel from './InventoryCountLabel';
 import ViewModel from './ViewModel';
 
 import globalEnv from 'src/globalEnv';
+import InternalLink from 'src/ui/InternalLink';
 import Typography from 'src/ui/Typography';
 
 const StyledBox = styled(Box)(() => ({
@@ -68,7 +68,11 @@ const HeroView: React.FC<Props> = ({ viewModel }) => {
               <Box display="flex" mb={2}>
                 {autocompleteOrButtonView()}
               </Box>
-              <InventoryCountLabel />
+              <InternalLink color="textSecondary" href={viewModel.link.href}>
+                <Typography fontWeight="fontWeightMedium" variant="body1">
+                  {viewModel.link.label}
+                </Typography>
+              </InternalLink>
             </Grid>
           </Grid>
         </Box>

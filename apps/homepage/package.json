@@ -3,9 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev --port 8080",
+    "dev": "next dev",
     "build": "next build",
-    "start": "next start --port 8080",
+    "start": "next start",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx,.json",
     "test": "jest --watch",
     "test:ci": "jest --ci"
@@ -22,18 +22,14 @@
     "js-base64": "^2.5.2",
     "lodash.debounce": "^4.0.8",
     "lodash.isempty": "^4.4.0",
-    "material-ui-confirm": "^2.0.4",
     "mobx": "^5.15.4",
     "mobx-react": "^6.1.8",
     "next": "9.2.2",
     "qs": "^6.9.1",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
-    "react-image-gallery": "^1.0.6",
     "react-string-replace": "^0.4.4",
-    "react-text-mask": "^5.4.3",
-    "smoothscroll-polyfill": "^0.4.4",
-    "styled-components": "^5.0.1"
+    "smoothscroll-polyfill": "^0.4.4"
   },
   "devDependencies": {
     "@babel/plugin-proposal-class-properties": "^7.8.3",
@@ -47,10 +43,8 @@
     "@types/qs": "^6.9.1",
     "@types/react": "^16.9.22",
     "@types/react-dom": "^16.9.5",
-    "@types/react-text-mask": "^5.4.6",
     "@types/segment-analytics": "0.0.32",
     "@types/smoothscroll-polyfill": "^0.3.1",
-    "@types/styled-components": "^5.0.0",
     "@typescript-eslint/eslint-plugin": "^2.20.0",
     "@typescript-eslint/parser": "^2.20.0",
     "babel-jest": "^25.1.0",

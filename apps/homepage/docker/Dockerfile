@@ -5,13 +5,13 @@ RUN apk --no-cache add git
 
 RUN mkdir -p /www
 RUN mkdir -p /www/apps/homepage
-RUN mkdir -p /www/libs/components/material-ui-confirm/dist
+RUN mkdir -p /www/libs/ui/dist
 
 WORKDIR /www
 
 COPY package.json .
 COPY apps/homepage ./apps/homepage
-COPY libs/components/material-ui-confirm ./libs/components/material-ui-confirm
+COPY libs/ui ./libs/ui
 
 RUN chown -R 1000:1000 .
 

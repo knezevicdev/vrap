@@ -9,9 +9,7 @@ import Document, {
   NextScript,
 } from 'next/document';
 import React from 'react';
-import { ServerStyleSheet } from 'styled-components';
 
-import ClientTagManagerSnippet from './ClientTagManagerSnippet';
 import FaviconSnippet from './FaviconSnippet';
 import FontsSnippet from './FontsSnippet';
 import GlobalEnvSnippet from './GlobalEnvSnippet';
@@ -19,40 +17,32 @@ import SegmentSnippet from './SegmentSnippet';
 
 import theme from 'src/ui/theme';
 
-class MyDocument extends Document {
+class VroomDocument extends Document {
   static async getInitialProps(
     ctx: DocumentContext
   ): Promise<DocumentInitialProps> {
-    const styledComponentsSheet = new ServerStyleSheet();
     const materialSheets = new ServerStyleSheets();
     const originalRenderPage = ctx.renderPage;
 
-    try {
-      // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-      const customEnhanceApp: Enhancer<AppType> = App => props =>
-        styledComponentsSheet.collectStyles(
-          materialSheets.collect(<App {...props} />)
-        );
-      const customRenderPage: RenderPage = () =>
-        originalRenderPage({
-          enhanceApp: customEnhanceApp,
-        });
-      ctx.renderPage = customRenderPage;
+    // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+    const customEnhanceApp: Enhancer<AppType> = App => props =>
+      materialSheets.collect(<App {...props} />)
+    const customRenderPage: RenderPage = () =>
+      originalRenderPage({
+        enhanceApp: customEnhanceApp,
+      });
+    ctx.renderPage = customRenderPage;
 
-      const initialProps = await Document.getInitialProps(ctx);
-      return {
-        ...initialProps,
-        styles: (
-          <>
-            {initialProps.styles}
-            {materialSheets.getStyleElement()}
-            {styledComponentsSheet.getStyleElement()}
-          </>
-        ),
-      };
-    } finally {
-      styledComponentsSheet.seal();
-    }
+    const initialProps = await Document.getInitialProps(ctx);
+    return {
+      ...initialProps,
+      styles: (
+        <>
+          {initialProps.styles}
+          {materialSheets.getStyleElement()}
+        </>
+      ),
+    };
   }
 
   render(): JSX.Element {
@@ -79,10 +69,6 @@ class MyDocument extends Document {
           <GlobalEnvSnippet
             CDN_URL={process.env.CDN_URL}
             INVSEARCH_V3_URL={process.env.INVSEARCH_V3_URL}
-            LEADS_URL={process.env.LEADS_URL}
-          />
-          <ClientTagManagerSnippet
-            clientTagManagerSrcUrl={process.env.CLIENT_TAG_MANAGER_SRC_URL}
           />
         </Head>
         <body>
@@ -94,7 +80,7 @@ class MyDocument extends Document {
   }
 }
 
-export default MyDocument;
+export default VroomDocument;
 
 // Resolution order
 //

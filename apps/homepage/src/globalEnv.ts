@@ -1,7 +1,6 @@
 export interface GlobalEnv {
   CDN_URL?: string;
   INVSEARCH_V3_URL?: string;
-  LEADS_URL?: string;
 }
 
 declare global {

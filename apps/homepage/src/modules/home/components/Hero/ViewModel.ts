@@ -1,11 +1,19 @@
-import Router from 'next/router';
+interface Link {
+  label: string;
+  href: string;
+}
 
 class HeroViewModel {
   readonly title: string = `Great cars.\nDelivered to\xa0you.`;
   readonly mobileButtonLabel: string = 'Browse All Vehicles';
+  readonly link: Link = {
+    // TODO: update link to appropriate page.
+    href: '/',
+    label: 'Browse all low-mileage cars\xa0and\xa0trucks',
+  };
 
   handleMobileButtonClick(): void {
-    Router.push('/cars');
+    // TODO navigate to the appropriate page.
   }
 }
 

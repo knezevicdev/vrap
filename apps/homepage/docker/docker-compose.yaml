@@ -7,18 +7,15 @@ services:
     user: 'root'
     environment:
       - CDN_URL=
-      - CLIENT_TAG_MANAGER_SRC_URL=https://assets.adobedtm.com/b14636b10888/4d943c2e5a28/launch-cca5a24b442e-staging.min.js
       - INVSEARCH_V3_URL=https://invsearch-v3-prod-ext.aws.vroomapi.com/v3
-      - LEADS_URL=https://leads-dev-int.vroomapi.com:8443
-      - SEGMENT_WRITE_KEY=DwAbhfNQBWxGRV9Y4rwlNRgFgDpwDUOb
     command: ash -c './apps/homepage/docker/setup.sh && yarn --cwd ./apps/homepage dev --port 8080'
     ports:
       - '8080:8080'
     volumes:
       # Link everything in library folders, except dependencies and build artifacts.
-      - '../../../libs/components/material-ui-confirm/:/www/libs/components/material-ui-confirm/:cached'
-      - '/www/libs/components/material-ui-confirm/dist'
-      - '/www/libs/components/material-ui-confirm/node_modules'
+      - '../../../libs/ui/:/www/libs/ui/:cached'
+      - '/www/libs/ui/dist'
+      - '/www/libs/ui/node_modules'
 
       # Link everything in the app folder, except for dependencies and build artifacts.
       - '../:/www/apps/homepage/:cached'
