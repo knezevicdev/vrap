@@ -1,19 +1,15 @@
 {
+  "extends": "./tsconfig.json",
   "compilerOptions": {
     "declaration": true,
     "emitDeclarationOnly": true,
-    "outDir": "dist/js",
-    "jsx": "react",
-    "lib": ["es2017", "dom"],
-    "module": "commonjs",
-    "moduleResolution": "node",
-    "skipLibCheck": true,
-    "strict": true,
-    "strictNullChecks": false,
+    "noEmit": false,
+    "outDir": "dist",
     "target": "es5"
   },
-  "include": ["./src/*", "./src/**/*"],
   "exclude": [
+    "node_modules",
+    "./src/setupTests.ts",
     "./src/**/**.test.tsx",
     "./src/**/**.test.ts",
     "./src/**/**.stories.ts",

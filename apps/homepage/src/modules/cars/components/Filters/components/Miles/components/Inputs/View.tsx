@@ -1,11 +1,11 @@
 import { styled } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
+import { observer } from 'mobx-react';
 import React from 'react';
 
 import InputsViewModel from './ViewModel';
 
 import Typography from 'src/ui/Typography';
-import { observer } from 'mobx-react';
 
 const ContainerForErrorAndInputs = styled('div')(() => ({
   display: 'flex',

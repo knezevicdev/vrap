@@ -13,7 +13,7 @@ class YearViewModel {
   }
 
   onDone = (years: number[]): void => {
-    this.store.updateMinAndMax(key, { min: years[0], max: years[1] })
+    this.store.updateMinAndMax(key, { min: years[0], max: years[1] });
   };
 
   reset = (): void => {
