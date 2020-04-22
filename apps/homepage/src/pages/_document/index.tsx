@@ -25,8 +25,8 @@ class VroomDocument extends Document {
     const originalRenderPage = ctx.renderPage;
 
     // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-    const customEnhanceApp: Enhancer<AppType> = App => props =>
-      materialSheets.collect(<App {...props} />)
+    const customEnhanceApp: Enhancer<AppType> = (App) => (props) =>
+      materialSheets.collect(<App {...props} />);
     const customRenderPage: RenderPage = () =>
       originalRenderPage({
         enhanceApp: customEnhanceApp,

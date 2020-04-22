@@ -1,0 +1,17 @@
+version: "3"
+services:
+  storybook:
+    build:
+      context: ../../../
+      dockerfile: ./libs/ui/docker/Dockerfile
+    image: vroom_web-lib-ui:latest
+    container_name: storybook
+    user: "root"
+    command: ash -c 'yarn --cwd ./libs/ui storybook'
+    ports:
+      - "8080:8080"
+    volumes:
+      # Link everything in library folders, except dependencies and build artifacts.
+      - "../:/www/libs/ui/:cached"
+      - "/www/libs/ui/dist"
+      - "/www/libs/ui/node_modules"

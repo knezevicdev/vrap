@@ -10,7 +10,7 @@ import ViewModel, { Suggestion } from './ViewModel';
 
 import Button from 'src/ui/Button';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   paper: {
     margin: 0,
     borderRadius: 0,

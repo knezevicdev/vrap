@@ -7,7 +7,7 @@ interface Props extends ContainerProps {
   children: React.ReactNode;
   content?: boolean;
 }
-const Container: React.FC<Props> = props => {
+const Container: React.FC<Props> = (props) => {
   const { content, children, ...rest } = props;
   const theme = useTheme();
   const mdAndUp = useMediaQuery(theme.breakpoints.up('md'));

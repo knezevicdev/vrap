@@ -4,8 +4,7 @@ FROM node:erbium-alpine
 RUN apk --no-cache add git
 
 RUN mkdir -p /www/.git
-RUN mkdir -p /www/apps/homepage
-RUN mkdir -p /www/libs/ui/dist
+RUN mkdir -p /www/libs/ui
 
 WORKDIR /www
 
@@ -17,16 +16,14 @@ COPY .eslintignore .
 COPY .eslintrc.js .
 COPY .prettierrc.js .
 
-
-COPY apps/homepage ./apps/homepage
 COPY libs/ui ./libs/ui
 
 RUN chown -R 1000:1000 .
 
-RUN ./apps/homepage/docker/setup.sh
+RUN yarn install
 
 EXPOSE 8080
 
 USER 1000
 
-CMD ["yarn", "--cwd", "./apps/homepage", "start", "--port", "8080"]
+CMD ["yarn", "--cwd", "./libs/ui", "storybook"]

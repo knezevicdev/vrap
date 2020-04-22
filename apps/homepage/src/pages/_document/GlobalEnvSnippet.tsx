@@ -4,7 +4,7 @@ import { GlobalEnv } from 'src/globalEnv';
 
 type ClientEnvVarSnippetProps = GlobalEnv;
 
-const ClientEnvVarSnippet: React.FC<ClientEnvVarSnippetProps> = props => {
+const ClientEnvVarSnippet: React.FC<ClientEnvVarSnippetProps> = (props) => {
   const str = JSON.stringify({ ...props });
   return (
     <script
