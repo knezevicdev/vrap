@@ -9,10 +9,17 @@ WORKDIR /www
 COPY . .
 RUN chown -R 1000:1000 .
 
-RUN ./apps/homepage/docker/setup.sh
+# Bootstrap yarn workspaces.
+RUN yarn install
+
+# Build libraries.
+RUN yarn workspace @vroom-web/ui build
+
+# Build the main app.
+RUN yarn workspace @vroom-web/homepage build
 
 EXPOSE 8080
 
 USER 1000
 
-CMD ["yarn", "workspace", "@vroom-web/homepage", "start"]
+CMD ["yarn", "workspace", "@vroom-web/homepage", "start", "--port", "8080"]
