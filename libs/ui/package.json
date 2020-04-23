@@ -13,7 +13,7 @@
     "build": "yarn clean && yarn build:types && yarn build:lib",
     "build:lib": "rollup -c",
     "build:types": "tsc -p tsconfig.gen-dts.json",
-    "clean": "rimraf dist",
+    "clean": "rimraf dist/*",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx,.json",
     "storybook": "start-storybook -p 8080 --ci --quiet"
   },

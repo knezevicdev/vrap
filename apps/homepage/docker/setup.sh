@@ -4,7 +4,7 @@
 yarn install
 
 # Build libraries.
-yarn --cwd ./libs/ui build
+yarn workspace @vroom-web/ui build
 
 # Build the main app.
-yarn --cwd ./apps/homepage build
+yarn workspace @vroom-web/homepage build

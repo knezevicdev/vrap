@@ -1,6 +1,5 @@
-import Head from 'next/head';
 import { styled } from '@material-ui/core/styles';
-
+import Head from 'next/head';
 import React from 'react';
 
 import Container from 'src/ui/Container';

@@ -3,24 +3,10 @@ FROM node:erbium-alpine
 # Install git so editor git commands work
 RUN apk --no-cache add git
 
-RUN mkdir -p /www/.git
-RUN mkdir -p /www/apps/homepage
-RUN mkdir -p /www/libs/ui/dist
+RUN mkdir -p /www
 
 WORKDIR /www
-
-COPY package.json .
-COPY yarn.lock .
-COPY .git .git
-COPY .gitignore .
-COPY .eslintignore .
-COPY .eslintrc.js .
-COPY .prettierrc.js .
-
-
-COPY apps/homepage ./apps/homepage
-COPY libs/ui ./libs/ui
-
+COPY . .
 RUN chown -R 1000:1000 .
 
 RUN ./apps/homepage/docker/setup.sh
@@ -29,4 +15,4 @@ EXPOSE 8080
 
 USER 1000
 
-CMD ["yarn", "--cwd", "./apps/homepage", "start", "--port", "8080"]
+CMD ["yarn", "workspace", "@vroom-web/homepage", "start"]

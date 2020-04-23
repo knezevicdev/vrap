@@ -1,8 +1,8 @@
 {
   "name": "Vroom Web - Homepage",
   "dockerComposeFile": "../docker/docker-compose.yaml",
-  "service": "web",
-  "workspaceFolder": "/www",
+  "service": "homepage",
+  "workspaceFolder": "/www/apps/homepage",
   // Use 'settings' to set *default* container specific settings.json values on container create.
   // You can edit these settings after create using File > Preferences > Settings > Remote.
   "settings": {
