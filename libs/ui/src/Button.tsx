@@ -1,17 +1,17 @@
-import { default as MuiButton } from "@material-ui/core/Button";
-import { styled } from "@material-ui/core/styles";
+import { default as MuiButton } from '@material-ui/core/Button';
+import { styled } from '@material-ui/core/styles';
 
 const Button = styled(MuiButton)(({ theme }) => ({
   fontWeight: theme.typography.fontWeightMedium,
-  [theme.breakpoints.only("xs")]: {
+  [theme.breakpoints.only('xs')]: {
     flexGrow: 1,
   },
-  minWidth: "120px",
-  minHeight: "48px",
+  minWidth: '120px',
+  minHeight: '49px',
   borderRadius: 0,
-  boxShadow: "none",
-  "&:hover": {
-    boxShadow: "none",
+  boxShadow: 'none',
+  '&:hover': {
+    boxShadow: 'none',
   },
 }));
 

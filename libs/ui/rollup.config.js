@@ -1,29 +1,30 @@
-import pkg from "./package.json";
-import babel from "rollup-plugin-babel";
-import resolve from "@rollup/plugin-node-resolve";
+import resolve from '@rollup/plugin-node-resolve';
+import babel from 'rollup-plugin-babel';
 
-const extensions = [".js", ".jsx", ".ts", ".tsx"];
+import pkg from './package.json';
+
+const extensions = ['.js', '.jsx', '.ts', '.tsx'];
 
 // RegEx needed to check for trailing characters, eg
 // @material-ui/core/Container
-const rex = (module) => new RegExp(`^${module}(\/.+)*$`);
+const rex = (module) => new RegExp(`^${module}(/.+)*$`);
 const external = [
-  "prop-types",
-  "react",
-  "react-dom",
-  "@material-ui/core",
+  'prop-types',
+  'react',
+  'react-dom',
+  '@material-ui/core',
 ].map((i) => rex(i));
 
 const config = {
-  input: "./src/index.tsx",
+  input: './src/index.tsx',
   output: [
     {
       file: pkg.main,
-      format: "cjs",
+      format: 'cjs',
     },
     {
       file: pkg.module,
-      format: "esm",
+      format: 'esm',
     },
   ],
   external,
@@ -31,7 +32,7 @@ const config = {
     resolve({ extensions }),
     babel({
       extensions,
-      exclude: "node_modules/**",
+      exclude: ['node_modules/**', '*.stories.*'],
     }),
   ],
 };

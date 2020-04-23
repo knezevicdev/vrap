@@ -4,21 +4,22 @@ FROM node:erbium-alpine
 RUN apk --no-cache add git
 
 RUN mkdir -p /www
-RUN mkdir -p /www/apps/homepage
-RUN mkdir -p /www/libs/ui/dist
 
 WORKDIR /www
-
-COPY package.json .
-COPY apps/homepage ./apps/homepage
-COPY libs/ui ./libs/ui
-
+COPY . .
 RUN chown -R 1000:1000 .
 
-RUN ./apps/homepage/docker/setup.sh
+# Bootstrap yarn workspaces.
+RUN yarn install
+
+# Build libraries.
+RUN yarn workspace @vroom-web/ui build
+
+# Build the main app.
+RUN yarn workspace @vroom-web/homepage build
 
 EXPOSE 8080
 
 USER 1000
 
-CMD ["yarn", "--cwd", "./apps/homepage", "start", "--port", "8080"]
+CMD ["yarn", "workspace", "@vroom-web/homepage", "start", "--port", "8080"]

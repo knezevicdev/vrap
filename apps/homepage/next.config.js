@@ -1,6 +1,6 @@
 module.exports = {
   /* Custom webpack configuration. */
-  webpack: config => {
+  webpack: (config) => {
     /* Enable SVG imports. */
     config.module.rules.push({
       test: /\.svg$/,

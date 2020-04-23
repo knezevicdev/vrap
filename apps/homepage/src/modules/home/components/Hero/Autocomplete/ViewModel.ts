@@ -39,14 +39,14 @@ class AutocompleteViewModel {
     }
     if (this.store.inventorySuggestions) {
       const suggestions: Suggestions = [];
-      this.store.inventorySuggestions.Make.forEach(element => {
+      this.store.inventorySuggestions.Make.forEach((element) => {
         suggestions.push({
           group: 'Make',
           label: element,
           make: element,
         });
       });
-      this.store.inventorySuggestions.Model.forEach(element => {
+      this.store.inventorySuggestions.Model.forEach((element) => {
         const tokens = element.split('#');
         const make = tokens[0];
         const model = tokens[1];
@@ -57,7 +57,7 @@ class AutocompleteViewModel {
           model,
         });
       });
-      this.store.inventorySuggestions.BodyType.forEach(element => {
+      this.store.inventorySuggestions.BodyType.forEach((element) => {
         suggestions.push({
           group: 'Body Type',
           label: element,
