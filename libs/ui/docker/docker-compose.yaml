@@ -7,7 +7,9 @@ services:
     image: vroom_web-ui:latest
     container_name: storybook
     user: 'root'
-    command: ash -c 'yarn install && yarn workspace @vroom-web/ui storybook'
+    command: >
+      ash -c "yarn install &&
+              yarn workspace @vroom-web/ui storybook"
     ports:
       - '8080:8080'
     volumes:
