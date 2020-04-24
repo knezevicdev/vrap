@@ -4,7 +4,7 @@ services:
     build:
       context: ../../../
       dockerfile: ./libs/ui/docker/Dockerfile
-    image: vroom_web-ui:latest
+    image: vroom-web-ui:latest
     container_name: storybook
     user: 'root'
     command: >

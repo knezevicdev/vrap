@@ -13,6 +13,7 @@ RUN chown -R 1000:1000 .
 RUN yarn install
 
 # Build libraries.
+RUN yarn workspace @vroom-web/inv-search-networking build
 RUN yarn workspace @vroom-web/ui build
 
 # Build the main app.

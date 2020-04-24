@@ -1,15 +1,18 @@
 version: '3'
 services:
-  homepage:
+  web:
     build:
       context: ../../../
       dockerfile: ./apps/homepage/docker/Dockerfile
+    image: vroom-web-homepage:latest
+    container_name: web
     user: 'root'
     environment:
       - CDN_URL=
       - INVSEARCH_V3_URL=https://invsearch-v3-prod-ext.aws.vroomapi.com/v3
     command: >
       ash -c "yarn install &&
+              yarn workspace @vroom-web/inv-search-networking build &&
               yarn workspace @vroom-web/ui build &&
               yarn workspace @vroom-web/homepage dev --port 8080"
     ports:
@@ -19,5 +22,7 @@ services:
       # stop dependencies and build artifacts from copying to host
       - '/www/apps/homepage/.next'
       - '/www/apps/homepage/node_modules'
+      - '/www/libs/networking/inv-search/dist'
+      - '/www/libs/networking/inv-search/node_modules'
       - '/www/libs/ui/dist'
       - '/www/libs/ui/node_modules'

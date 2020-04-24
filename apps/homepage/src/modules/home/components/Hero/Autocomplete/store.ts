@@ -1,9 +1,15 @@
+import { InvSearchNetworker } from '@vroom-web/inv-search-networking';
 import debounce from 'lodash.debounce';
 import { action, observable, runInAction } from 'mobx';
 
-import { InventorySuggestions } from 'src/networking/models/InventorySuggestions.v3';
-import { Networker } from 'src/networking/Networker';
+import globalEnv from 'src/globalEnv';
 import { Status } from 'src/networking/types';
+
+export interface InventorySuggestions {
+  BodyType: string[];
+  Make: string[];
+  Model: string[];
+}
 
 // The amount of time a user must stop typing before we get autcomplete options.
 const INPUT_DEBOUNCE_WAIT = 400; // milliseconds
@@ -13,18 +19,25 @@ export class AutocompleteStore {
   @observable inventorySuggestions?: InventorySuggestions;
   @observable inventorySuggestionsStatus: Status = Status.INITIAL;
 
-  private networker: Networker;
+  private invSearchNetworker: InvSearchNetworker;
 
   constructor() {
-    this.networker = new Networker();
+    if (!globalEnv.INVSEARCH_V3_URL) {
+      throw new Error('globalEnv.INVSEARCH_V3_URL is undefined');
+    }
+    this.invSearchNetworker = new InvSearchNetworker(
+      globalEnv.INVSEARCH_V3_URL
+    );
   }
 
   @action
   getInventorySuggestions = async (input: string): Promise<void> => {
     this.inventorySuggestionsStatus = Status.FETCHING;
     try {
-      const response = await this.networker.getInventorySuggestionsV3(input);
-      const inventorySuggestions = response.data.data;
+      const response = await this.invSearchNetworker.getInventorySuggestions(
+        input
+      );
+      const inventorySuggestions = response.data;
       runInAction(() => {
         this.inventorySuggestions = inventorySuggestions;
         this.inventorySuggestionsStatus = Status.SUCCESS;
