@@ -9,7 +9,7 @@ services:
     user: 'root'
     command: >
       ash -c "yarn install &&
-              yarn workspace @vroom-web/inv-search-networking test --watch
+              yarn workspace @vroom-web/inv-search-networking test --watch"
     volumes:
       - '../../../../:/www/:cached'
       # stop dependencies and build artifacts from copying to host
