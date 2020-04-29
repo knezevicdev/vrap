@@ -14,6 +14,7 @@
     "@material-ui/core": "^4.9.4",
     "@material-ui/icons": "^4.9.1",
     "@material-ui/lab": "4.0.0-alpha.44",
+    "@vroom-web/header-components": "1.0.0",
     "@vroom-web/inv-search-networking": "^1.0.0",
     "@vroom-web/ui": "^1.0.0",
     "axios": "^0.19.2",
