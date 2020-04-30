@@ -2,8 +2,8 @@ import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
 import React from 'react';
 
-import { ReactComponent as AppStoreSvg } from '../assets/appStore.svg';
-import googlePlayBadge from '../assets/googlePlayBadge.png';
+import { ReactComponent as AppStoreBadge } from '../svg/appStoreBadge.svg';
+import { ReactComponent as GooglePlayBadge } from '../svg/googlePlayBadge.svg';
 
 const Badges: React.FC = () => {
   const androidUrl =
@@ -16,20 +16,12 @@ const Badges: React.FC = () => {
       <Grid container alignItems="center">
         <Box display="flex" mr={1}>
           <a href={androidUrl}>
-            <img
-              alt="Get it on Google Play"
-              // src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png"
-              src={googlePlayBadge}
-              style={{
-                width: 'auto',
-                height: '32px',
-              }}
-            />
+            <GooglePlayBadge />
           </a>
         </Box>
         <Box display="flex">
           <a href={iosUrl}>
-            <AppStoreSvg style={{ height: '32px' }} />
+            <AppStoreBadge />
           </a>
         </Box>
       </Grid>

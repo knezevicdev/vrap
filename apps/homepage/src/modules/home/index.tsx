@@ -1,3 +1,4 @@
+import { StandardFooter } from '@vroom-web/footer';
 import { SimpleHeader } from '@vroom-web/header-components';
 import React from 'react';
 
@@ -10,6 +11,7 @@ const Home: React.FC = () => {
       <SimpleHeader />
       <Hero />
       <Highlights />
+      <StandardFooter />
     </>
   );
 };

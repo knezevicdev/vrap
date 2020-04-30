@@ -16,6 +16,7 @@ RUN yarn install
 RUN yarn workspace @vroom-web/inv-search-networking build
 RUN yarn workspace @vroom-web/ui build
 RUN yarn workspace @vroom-web/header-components build
+RUN yarn workspace @vroom-web/footer build
 
 # Build the main app.
 RUN yarn workspace @vroom-web/homepage build

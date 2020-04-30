@@ -1,20 +1,16 @@
 import { styled } from '@material-ui/core/styles';
 import React from 'react';
 
-import { ReactComponent as LogoSvg } from '../assets/logo.svg';
+import { ReactComponent as LogoSvg } from '../svg/logo.svg';
 
 const StyledAnchor = styled('a')(() => ({
   color: 'inherit',
   display: 'inline-flex',
 }));
 
-const StyledLogoSvg = styled(LogoSvg)(({ theme }) => ({
-  width: '104px',
-  height: '17px',
-  [theme.breakpoints.up('md')]: {
-    width: '116px',
-    height: '20px',
-  },
+const StyledLogoSvg = styled(LogoSvg)(() => ({
+  width: '140px',
+  height: '24px',
 }));
 
 interface Props {
