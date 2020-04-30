@@ -1,6 +1,13 @@
+import { parsePhoneNumberFromString } from 'libphonenumber-js';
+
 import { DesktopLinks, MobileLinks } from '../../components/Nav';
 import { ReactComponent as AccountSvg } from '../../svg/account.svg';
 import HeaderNavStore from './store';
+
+interface PhoneNumberLinkData {
+  href: string;
+  label: string;
+}
 
 class HeaderNavViewModel {
   private store: HeaderNavStore;
@@ -10,14 +17,41 @@ class HeaderNavViewModel {
   }
 
   handleMount(): void {
-    this.store.checkLoggedInClientSide();
+    this.store.initClientSide();
   }
 
   private handleSignOutClick = (): void => {
     this.store.signOut();
   };
 
+  private getPhoneNumberLinkData = (
+    phoneNumber?: string
+  ): PhoneNumberLinkData => {
+    const defaultPhoneNumberLinkData: PhoneNumberLinkData = {
+      href: 'tel:+18555241300',
+      label: '(855) 524-1300',
+    };
+    if (!phoneNumber) {
+      return defaultPhoneNumberLinkData;
+    }
+    const parsedPhoneNumber = parsePhoneNumberFromString(phoneNumber, 'US');
+    if (!parsedPhoneNumber) {
+      return defaultPhoneNumberLinkData;
+    }
+    if (!parsedPhoneNumber.isValid()) {
+      return defaultPhoneNumberLinkData;
+    }
+    const phoneNumberLinkData: PhoneNumberLinkData = {
+      href: parsedPhoneNumber.getURI(),
+      label: parsedPhoneNumber.formatNational(),
+    };
+    return phoneNumberLinkData;
+  };
+
   desktopLinks(): DesktopLinks {
+    const phoneNumberLinkData = this.getPhoneNumberLinkData(
+      this.store.phoneNumber
+    );
     if (!this.store.loggedIn) {
       return [
         {
@@ -65,7 +99,10 @@ class HeaderNavViewModel {
               href: 'https://vroom.zendesk.com/hc/en-us',
               label: 'FAQ',
             },
-            // TODO: figure out phone link
+            {
+              href: phoneNumberLinkData.href,
+              label: phoneNumberLinkData.label,
+            },
             {
               href: '/contact',
               label: 'Contact Us',
@@ -139,7 +176,10 @@ class HeaderNavViewModel {
             href: 'https://vroom.zendesk.com/hc/en-us',
             label: 'FAQ',
           },
-          // TODO: figure out phone link
+          {
+            href: phoneNumberLinkData.href,
+            label: phoneNumberLinkData.label,
+          },
           {
             href: '/contact',
             label: 'Contact Us',
@@ -170,6 +210,9 @@ class HeaderNavViewModel {
   }
 
   mobileLinks(): MobileLinks {
+    const phoneNumberLinkData = this.getPhoneNumberLinkData(
+      this.store.phoneNumber
+    );
     if (!this.store.loggedIn) {
       return [
         {
@@ -222,7 +265,11 @@ class HeaderNavViewModel {
           href: 'https://vroom.zendesk.com/hc/en-us',
           label: 'FAQ',
         },
-        // TODO: figure out phone link.
+        {
+          type: 'link',
+          href: phoneNumberLinkData.href,
+          label: 'Call',
+        },
         {
           type: 'link',
           href: '/contact',
@@ -297,7 +344,11 @@ class HeaderNavViewModel {
         href: 'https://vroom.zendesk.com/hc/en-us',
         label: 'FAQ',
       },
-      // TODO: figure out phone link.
+      {
+        type: 'link',
+        href: phoneNumberLinkData.href,
+        label: 'Call',
+      },
       {
         type: 'link',
         href: '/contact',
