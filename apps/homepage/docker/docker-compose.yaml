@@ -14,6 +14,7 @@ services:
       ash -c "yarn install &&
               yarn workspace @vroom-web/inv-search-networking build &&
               yarn workspace @vroom-web/ui build &&
+              yarn workspace @vroom-web/header-components build &&
               yarn workspace @vroom-web/homepage dev --port 8080"
     ports:
       - '8080:8080'
@@ -26,3 +27,5 @@ services:
       - '/www/libs/networking/inv-search/node_modules'
       - '/www/libs/ui/dist'
       - '/www/libs/ui/node_modules'
+      - '/www/libs/components/header/dist'
+      - '/www/libs/components/header/node_modules'
