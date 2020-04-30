@@ -10,7 +10,7 @@ jobs:
       - run:
           command: |-
             sudo apt-get install python-pip && pip install awscli
-            aws s3 sync ./apps/homepage/public s3://homepage-assets-${CIRCLE_BRANCH}.n.vroom.systems --acl public-read
+            aws s3 sync ./apps/homepage/public s3://homepage-assets-${CIRCLE_BRANCH//homepage-/}.n.vroom.systems --acl public-read
             build ./apps/homepage/docker
             deploy $CIRCLE_BRANCH ./apps/homepage/docker
   homepage_prod: &mlp
@@ -23,7 +23,7 @@ jobs:
       - run:
           command: |-
             sudo apt-get install python-pip && pip install awscli
-            aws s3 sync ./apps/homepage/public s3://homepage-assets-${CIRCLE_BRANCH}.p.vroom.systems --acl public-read
+            aws s3 sync ./apps/homepage/public s3://homepage-assets-${CIRCLE_BRANCH//homepage-/}.p.vroom.systems --acl public-read
             build ./apps/homepage/docker
             deploy $CIRCLE_BRANCH ./apps/homepage/docker
 workflows:
