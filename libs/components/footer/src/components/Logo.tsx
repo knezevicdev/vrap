@@ -1,7 +1,7 @@
 import { styled } from '@material-ui/core/styles';
 import React from 'react';
 
-import { ReactComponent as LogoSvg } from '../svg/logo.svg';
+import { ReactComponent as LogoSvg } from '../assets/logo.svg';
 
 const StyledAnchor = styled('a')(() => ({
   color: 'inherit',

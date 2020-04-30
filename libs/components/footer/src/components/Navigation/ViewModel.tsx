@@ -11,7 +11,6 @@ interface Section {
 }
 
 class NavigationViewModel {
-  private readonly vroomUrl: string = 'https://vroom.com';
   links(): Section[] {
     return [
       {
@@ -20,17 +19,17 @@ class NavigationViewModel {
           {
             external: true,
             label: 'Buy',
-            href: `${this.vroomUrl}/catalog`,
+            href: `/catalog`,
           },
           {
             external: true,
             label: 'Sell/Trade',
-            href: `${this.vroomUrl}/sell`,
+            href: `/sell`,
           },
           {
             external: true,
             label: 'Finance',
-            href: `${this.vroomUrl}/finance`,
+            href: `/finance`,
           },
         ],
       },
@@ -40,23 +39,24 @@ class NavigationViewModel {
           {
             external: true,
             label: 'About Us',
-            href: `${this.vroomUrl}/about`,
+            href: `/about`,
           },
           {
             external: true,
             label: 'Vroom Protection',
-            href: `${this.vroomUrl}/protection`,
+            href: `/protection`,
           },
           {
             external: true,
             label: 'How It Works',
-            href: `${this.vroomUrl}/how-it-works`,
+            href: `/how-it-works`,
           },
         ],
       },
       {
         title: 'Contact',
         links: [
+          // TODO: Needs to use api / cookie
           {
             external: true,
             label: '(855) 524-1300',
@@ -71,7 +71,7 @@ class NavigationViewModel {
           {
             external: true,
             label: 'Contact Us',
-            href: `${this.vroomUrl}/contact`,
+            href: `/contact`,
           },
         ],
       },
@@ -81,26 +81,26 @@ class NavigationViewModel {
           {
             external: true,
             label: 'Privacy Policy',
-            href: `${this.vroomUrl}/legal/privacy-policy`,
+            href: `/legal/privacy-policy`,
           },
           {
             external: true,
             label: 'Terms of Use',
-            href: `${this.vroomUrl}/legal/terms-of-use`,
+            href: `/legal/terms-of-use`,
           },
           {
             external: true,
             label: 'Careers',
-            href: `${this.vroomUrl}/careers`,
+            href: `/careers`,
             target: '_blank',
           },
-          {
-            external: true,
-            label: 'Do Not Sell My Information',
-            href:
-              'https://privacyportal-cdn.onetrust.com/dsarwebform/8086730d-99f7-48ea-b3a1-0b3bb0cf163e/aa3e2126-7439-411d-a9a2-9fa0c4f8b01d.html',
-            target: '_blank',
-          },
+          // {
+          //   external: true,
+          //   label: 'Do Not Sell My Information',
+          //   href:
+          //     'https://privacyportal-cdn.onetrust.com/dsarwebform/8086730d-99f7-48ea-b3a1-0b3bb0cf163e/aa3e2126-7439-411d-a9a2-9fa0c4f8b01d.html',
+          //   target: '_blank',
+          // },
         ],
       },
     ];
