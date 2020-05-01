@@ -10,9 +10,7 @@ services:
     environment:
       - CDN_URL=
       - INVSEARCH_V3_URL=https://invsearch-v3-prod-ext.aws.vroomapi.com/v3
-    command: >
-      ash -c "yarn install &&
-              yarn workspace @vroom-web/homepage dev --port 8080"
+    command: ash -c "yarn workspace @vroom-web/homepage dev --port 8080"
     ports:
       - '8080:8080'
     volumes:
@@ -26,3 +24,5 @@ services:
       - '/www/libs/ui/node_modules'
       - '/www/libs/components/header/dist'
       - '/www/libs/components/header/node_modules'
+      - '/www/libs/components/footer/dist'
+      - '/www/libs/components/footer/node_modules'

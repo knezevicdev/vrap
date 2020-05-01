@@ -21,15 +21,15 @@ interface Props {
 const DesktopNavigationView: React.FC<Props> = ({ viewModel }) => {
   return (
     <Grid container>
-      {viewModel.links().map((section) => {
+      {viewModel.links().map((section, index) => {
         return (
-          <Grid key={`section-${section.title}`} item xs={3}>
+          <Grid key={index} item xs={3}>
             <Box display="flex" mb={1}>
               {section.title}
             </Box>
             {section.links.map((link, index) => {
               return (
-                <Box key={`link-${index}`} display="flex" mb={1}>
+                <Box key={index} display="flex" mb={1}>
                   <StyledLink
                     color="secondary"
                     href={link.href}

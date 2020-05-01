@@ -30,10 +30,10 @@ const NavigationView: React.FC<Props> = ({ viewModel }) => {
 
   return (
     <Grid container direction="column">
-      {viewModel.links().map((section) => {
+      {viewModel.links().map((section, index) => {
         return (
           <ExpansionPanel
-            key={section.title}
+            key={index}
             square={true}
             elevation={0}
             expanded={expanded === section.title}
@@ -48,7 +48,7 @@ const NavigationView: React.FC<Props> = ({ viewModel }) => {
               <Grid container spacing={1}>
                 {section.links.map((link, index) => {
                   return (
-                    <Grid item key={`link-${index}`} xs={12}>
+                    <Grid item key={index} xs={12}>
                       <StyledLink
                         color="secondary"
                         href={link.href}

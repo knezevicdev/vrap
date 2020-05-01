@@ -15,4 +15,4 @@ EXPOSE 8080
 
 USER 1000
 
-CMD ["yarn", "workspace", "@vroom-web/footer", "storybook"]
+CMD ["yarn", "workspace", "@vroom-web/footer-components", "storybook"]
