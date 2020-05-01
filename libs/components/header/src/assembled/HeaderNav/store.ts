@@ -3,13 +3,19 @@ import jwtDecode from 'jwt-decode';
 import { action, observable } from 'mobx';
 
 class HeaderNavStore {
+  private static authTokenCookieName = 'authToken';
+  private static phoneNumberCookieName = 'sitePhoneNumber';
+
+  @observable phoneNumber?: string;
   @observable loggedIn = false;
 
   @action
-  checkLoggedInClientSide = (): void => {
+  private initLoggedInClientSide = (): void => {
     try {
       // https://github.com/js-cookie/js-cookie/blob/master/SERVER_SIDE.md#express
-      const authTokenWithExpressPrefix = ClientSideCookies.get('authToken');
+      const authTokenWithExpressPrefix = ClientSideCookies.get(
+        HeaderNavStore.authTokenCookieName
+      );
       if (!authTokenWithExpressPrefix) {
         this.loggedIn = false;
         return;
@@ -22,6 +28,22 @@ class HeaderNavStore {
     } catch {
       this.loggedIn = false;
     }
+  };
+
+  @action
+  private initPhoneNumberClientSide = (): void => {
+    const phoneNumber = ClientSideCookies.get(
+      HeaderNavStore.phoneNumberCookieName
+    );
+    if (phoneNumber) {
+      this.phoneNumber = phoneNumber;
+    }
+  };
+
+  @action
+  initClientSide = (): void => {
+    this.initLoggedInClientSide();
+    this.initPhoneNumberClientSide();
   };
 
   @action
