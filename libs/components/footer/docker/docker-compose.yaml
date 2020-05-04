@@ -1,0 +1,15 @@
+version: '3'
+services:
+  storybook:
+    build:
+      context: ../../../../
+      dockerfile: ./libs/components/footer/docker/Dockerfile
+    user: 'root'
+    command: ash -c "yarn workspace @vroom-web/footer-components storybook"
+    ports:
+      - '8080:8080'
+    volumes:
+      - '../../../../:/www/:cached'
+      # stop dependencies and build artifacts from copying to host
+      - '/www/libs/components/footer/dist'
+      - '/www/libs/components/footer/node_modules'
