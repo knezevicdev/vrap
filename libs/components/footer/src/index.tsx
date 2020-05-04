@@ -1,4 +1,7 @@
-export { default as Brand } from './assembled/Brand';
 export { default as StandardFooter } from './assembled/StandardFooter';
+export { default as Badges } from './components/Badges';
 export { default as Bar } from './components/Bar';
-export { DesktopNav, MobileNav } from './components/Nav';
+export { default as Copyright } from './components/Copyright';
+export { default as Logo } from './components/Logo';
+export { default as Social } from './components/Social';
+export { default as Nav } from './components/Nav';

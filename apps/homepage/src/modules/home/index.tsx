@@ -1,4 +1,4 @@
-import { StandardFooter } from '@vroom-web/footer';
+import { StandardFooter } from '@vroom-web/footer-components';
 import { SimpleHeader } from '@vroom-web/header-components';
 import React from 'react';
 

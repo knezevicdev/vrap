@@ -2,7 +2,8 @@ import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
 import Link from '@material-ui/core/Link';
 import { styled } from '@material-ui/core/styles';
-import React from 'react';
+import { observer } from 'mobx-react';
+import React, { useEffect } from 'react';
 
 import NavigationViewModel from './ViewModel';
 
@@ -19,6 +20,10 @@ interface Props {
 }
 
 const DesktopNavigationView: React.FC<Props> = ({ viewModel }) => {
+  useEffect(() => {
+    viewModel.handleMount();
+  }, [viewModel]);
+
   return (
     <Grid container>
       {viewModel.links().map((section, index) => {
@@ -47,4 +52,4 @@ const DesktopNavigationView: React.FC<Props> = ({ viewModel }) => {
   );
 };
 
-export default DesktopNavigationView;
+export default observer(DesktopNavigationView);

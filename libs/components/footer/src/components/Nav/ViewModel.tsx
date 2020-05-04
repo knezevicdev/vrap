@@ -1,3 +1,7 @@
+import { parsePhoneNumberFromString } from 'libphonenumber-js';
+
+import NavStore from './store';
+
 interface Link {
   href: string;
   label: string;
@@ -10,6 +14,41 @@ interface Section {
 }
 
 class NavigationViewModel {
+  private store: NavStore;
+
+  constructor(store: NavStore) {
+    this.store = store;
+  }
+
+  handleMount(): void {
+    this.store.initClientSide();
+  }
+
+  private getPhoneNumberLinkData = (phoneNumber?: string): Link => {
+    const defaultPhoneNumberLinkData: Link = {
+      href: 'tel:+18555241300',
+      label: '(855) 524-1300',
+    };
+
+    if (!phoneNumber) {
+      return defaultPhoneNumberLinkData;
+    }
+
+    const parsedPhoneNumber = parsePhoneNumberFromString(phoneNumber, 'US');
+
+    if (!parsedPhoneNumber) {
+      return defaultPhoneNumberLinkData;
+    }
+    if (!parsedPhoneNumber.isValid()) {
+      return defaultPhoneNumberLinkData;
+    }
+    const phoneNumberLinkData: Link = {
+      href: parsedPhoneNumber.getURI(),
+      label: parsedPhoneNumber.formatNational(),
+    };
+    return phoneNumberLinkData;
+  };
+
   links(): Section[] {
     return [
       {
@@ -49,11 +88,7 @@ class NavigationViewModel {
       {
         title: 'Contact',
         links: [
-          // TODO: Needs to use api / cookie
-          {
-            label: '(855) 524-1300',
-            href: 'tel:+1(855) 524-1300',
-          },
+          this.getPhoneNumberLinkData(this.store.phoneNumber),
           {
             label: 'FAQ',
             href: 'https://vroom.zendesk.com/hc/en-us',

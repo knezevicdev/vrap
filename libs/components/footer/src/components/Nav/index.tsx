@@ -2,14 +2,22 @@ import React from 'react';
 
 import DesktopView from './DesktopView';
 import MobileView from './MobileView';
+import NavStore from './store';
 import ViewModel from './ViewModel';
 
-export const MobileNav: React.FC = () => {
-  const viewModel = new ViewModel();
-  return <MobileView viewModel={viewModel} />;
+interface Props {
+  desktop: boolean;
+}
+export const Nav: React.FC<Props> = (props) => {
+  const { desktop } = props;
+  const store = new NavStore();
+  const viewModel = new ViewModel(store);
+
+  if (desktop) {
+    return <DesktopView viewModel={viewModel} />;
+  } else {
+    return <MobileView viewModel={viewModel} />;
+  }
 };
 
-export const DesktopNav: React.FC = () => {
-  const viewModel = new ViewModel();
-  return <DesktopView viewModel={viewModel} />;
-};
+export default Nav;

@@ -5,7 +5,8 @@ import Grid from '@material-ui/core/Grid';
 import Link from '@material-ui/core/Link';
 import { styled } from '@material-ui/core/styles';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import React from 'react';
+import { observer } from 'mobx-react';
+import React, { useEffect, useState } from 'react';
 
 import NavigationViewModel from './ViewModel';
 
@@ -21,8 +22,12 @@ interface Props {
   viewModel: NavigationViewModel;
 }
 
-const NavigationView: React.FC<Props> = ({ viewModel }) => {
-  const [expanded, setExpanded] = React.useState('');
+const MobileNavView: React.FC<Props> = ({ viewModel }) => {
+  const [expanded, setExpanded] = useState('');
+
+  useEffect(() => {
+    viewModel.handleMount();
+  }, [viewModel]);
 
   const handleChange = (isExpanded: boolean, panel: string): void => {
     setExpanded(isExpanded ? panel : '');
@@ -68,4 +73,4 @@ const NavigationView: React.FC<Props> = ({ viewModel }) => {
   );
 };
 
-export default NavigationView;
+export default observer(MobileNavView);
