@@ -15,9 +15,11 @@
     "build:types": "tsc -p tsconfig.gen-dts.json",
     "clean": "rimraf dist/*",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx,.json",
-    "storybook": "start-storybook -p 8080 --ci --quiet"
+    "storybook": "start-storybook -p 8080 -s ./static --ci --quiet"
   },
-  "dependencies": {},
+  "dependencies": {
+    "clsx": "^1.1.0"
+  },
   "devDependencies": {
     "@babel/core": "^7.9.0",
     "@babel/plugin-proposal-class-properties": "^7.8.3",
