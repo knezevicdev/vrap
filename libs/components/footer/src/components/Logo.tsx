@@ -8,9 +8,10 @@ const StyledAnchor = styled('a')(() => ({
   display: 'inline-flex',
 }));
 
-const StyledLogoSvg = styled(LogoSvg)(() => ({
+const StyledLogoSvg = styled(LogoSvg)(({ theme }) => ({
   width: '140px',
   height: '24px',
+  color: theme.palette.text.secondary,
 }));
 
 interface Props {

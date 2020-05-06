@@ -1,3 +1,4 @@
+import { ThemeProvider } from '@vroom-web/ui';
 import React from 'react';
 
 import StandardFooter from './StandardFooter';
@@ -5,5 +6,9 @@ import StandardFooter from './StandardFooter';
 export default { title: 'Standard Footer' };
 
 export const Standard: React.FC = () => {
-  return <StandardFooter />;
+  return (
+    <ThemeProvider>
+      <StandardFooter />
+    </ThemeProvider>
+  );
 };

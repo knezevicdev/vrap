@@ -10,17 +10,29 @@ const Social: React.FC = () => {
   return (
     <Grid container>
       <Box display="flex" mr={2}>
-        <Link href="https://www.facebook.com/vroom" target="_blank">
+        <Link
+          href="https://www.facebook.com/vroom"
+          target="_blank"
+          color="textSecondary"
+        >
           <FacebookIcon />
         </Link>
       </Box>
       <Box display="flex" mr={2}>
-        <Link href="https://www.twitter.com/vroomcars" target="_blank">
+        <Link
+          href="https://www.twitter.com/vroomcars"
+          target="_blank"
+          color="textSecondary"
+        >
           <TwitterIcon />
         </Link>
       </Box>
       <Box display="flex">
-        <Link href="https://www.instagram.com/vroom" target="_blank">
+        <Link
+          href="https://www.instagram.com/vroom"
+          target="_blank"
+          color="textSecondary"
+        >
           <InstagramIcon />
         </Link>
       </Box>
