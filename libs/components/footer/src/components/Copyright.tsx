@@ -1,13 +1,16 @@
+import Box from '@material-ui/core/Box';
 import React from 'react';
-
-// import Typography from 'src/ui/Typography';
 
 const NavigationView: React.FC = () => {
   const label = `© ${new Date().getFullYear()} VROOM. ALL RIGHTS RESERVED.`;
   return (
-    // <Typography fontWeight="fontWeightLight" variant="overline">
-    <div>{label}</div>
-    // </Typography>
+    <Box
+      fontSize={12}
+      fontFamily="Calibre, Arial, sans-serif"
+      color="text.secondary"
+    >
+      {label}
+    </Box>
   );
 };
 

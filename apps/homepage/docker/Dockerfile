@@ -10,7 +10,7 @@ COPY . .
 RUN chown -R 1000:1000 .
 
 # Bootstrap yarn workspaces.
-RUN yarn install
+RUN yarn install --silent
 
 # Build libraries.
 RUN yarn workspace @vroom-web/inv-search-networking build

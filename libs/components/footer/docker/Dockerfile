@@ -9,7 +9,8 @@ WORKDIR /www
 COPY . .
 RUN chown -R 1000:1000 .
 
-RUN yarn install
+RUN yarn install --silent
+RUN yarn workspace @vroom-web/ui build
 
 EXPOSE 8080
 
