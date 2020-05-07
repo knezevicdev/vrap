@@ -1,8 +1,7 @@
 import { styled } from '@material-ui/core/styles';
+import { Container } from '@vroom-web/ui';
 import Head from 'next/head';
 import React from 'react';
-
-import Container from 'src/ui/Container';
 
 const Contents = styled('div')(() => ({
   minHeight: '100vh',
@@ -35,7 +34,7 @@ class Page extends React.Component<PageProps> {
     return (
       <>
         {head && <Head>{head}</Head>}
-        <Container disableGutters maxWidth="xl">
+        <Container disableDefaultPadding maxWidth="xl">
           <Contents>{children}</Contents>
         </Container>
       </>

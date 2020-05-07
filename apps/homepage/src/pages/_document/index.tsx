@@ -1,4 +1,5 @@
 import { ServerStyleSheets } from '@material-ui/core/styles';
+import { theme } from '@vroom-web/ui';
 import { AppType, Enhancer, RenderPage } from 'next/dist/next-server/lib/utils';
 import Document, {
   DocumentContext,
@@ -14,8 +15,6 @@ import FaviconSnippet from './FaviconSnippet';
 import FontsSnippet from './FontsSnippet';
 import GlobalEnvSnippet from './GlobalEnvSnippet';
 import SegmentSnippet from './SegmentSnippet';
-
-import theme from 'src/ui/theme';
 
 class VroomDocument extends Document {
   static async getInitialProps(

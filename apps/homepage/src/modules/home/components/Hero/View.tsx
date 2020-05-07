@@ -1,26 +1,108 @@
-import Box from '@material-ui/core/Box';
-import Grid from '@material-ui/core/Grid';
 import { styled, useTheme } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
-import { Button, Container } from '@vroom-web/ui';
+import { Button, Container, Typography } from '@vroom-web/ui';
 import React from 'react';
 
 import Autocomplete from './Autocomplete';
 import ViewModel from './ViewModel';
 
-import globalEnv from 'src/globalEnv';
-import InternalLink from 'src/ui/InternalLink';
-import Typography from 'src/ui/Typography';
+import ExternalLink from 'src/ui/ExternalLink';
 
-const StyledBox = styled(Box)(() => ({
-  background: `url(${globalEnv.CDN_URL}/modules/home/hero-background.png)`,
-  backgroundRepeat: 'no-repeat',
-  backgroundSize: 'cover',
-  backgroundPosition: 'center top',
+const Background = styled('div')(({ theme }) => ({
+  overflow: 'hidden',
+  background: theme.palette.primary.main,
+  [theme.breakpoints.up('sm')]: {
+    background: `linear-gradient(100deg, ${theme.palette.primary.main} 71.9%, ${theme.palette.background.paper} 72%)`,
+  },
+  [theme.breakpoints.only('md')]: {
+    paddingTop: theme.spacing(5),
+    paddingBottom: theme.spacing(5),
+  },
+  [theme.breakpoints.up('lg')]: {
+    paddingTop: theme.spacing(10),
+    paddingBottom: theme.spacing(10),
+  },
+}));
+
+const StyledContainer = styled(Container)(({ theme }) => ({
+  display: 'grid',
+  justifyContent: 'center',
+  alignItems: 'center',
+  gap: `${theme.spacing(1)}px`,
+  gridTemplateAreas: `
+    "t"
+    "s"
+    "i"
+    "b"
+  `,
+  [theme.breakpoints.only('sm')]: {
+    gridTemplateAreas: `
+      "t t t t t ."
+      "s s s i i i"
+      "b b b i i i"
+    `,
+    gridTemplateRows: 'auto',
+    gridTemplateColumns: '1fr 1fr 1fr 1fr 1fr 1fr',
+  },
+  [theme.breakpoints.up('md')]: {
+    gap: `${theme.spacing(2)}px`,
+    gridTemplateAreas: `
+      "t t t t . ."
+      "s s s i i i"
+      "a a a i i i"
+      "l l l i i i"
+    `,
+    gridTemplateColumns: '1fr 1fr 1fr 1fr 1fr 1fr',
+  },
+}));
+
+const Title = styled(Typography)(({ theme }) => ({
+  color: theme.palette.text.secondary,
+  gridArea: 't',
+}));
+
+const SubTitle = styled(Typography)(({ theme }) => ({
+  color: theme.palette.text.secondary,
+  fontWeight: 600,
+  gridArea: 's',
+  letterSpacing: '0.25px',
+  lineHeight: '1.3',
+}));
+
+const SubTitleLink = styled(ExternalLink)(({ theme }) => ({
+  color: theme.palette.text.secondary,
+  fontWeight: 600,
+  textDecoration: 'underline',
+}));
+
+const CarImage = styled('img')(({ theme }) => ({
+  gridArea: 'i',
+  width: '150%',
+  height: 'auto',
+  [theme.breakpoints.up('sm')]: {
+    width: '100%',
+    objectFit: 'contain',
+  },
 }));
 
 const StyledButton = styled(Button)(() => ({
-  minHeight: '56px',
+  gridArea: 'b',
+  minHeight: '48px',
+}));
+
+const StyledAutocomplete = styled(Autocomplete)(() => ({
+  gridArea: 'a',
+}));
+
+const BrowseLink = styled(ExternalLink)(() => ({
+  gridArea: 'l',
+}));
+
+const Browse = styled(Typography)(({ theme }) => ({
+  color: theme.palette.text.secondary,
+  display: 'flex',
+  fontWeight: 600,
+  textDecoration: 'underline',
 }));
 
 interface Props {
@@ -30,17 +112,18 @@ interface Props {
 const HeroView: React.FC<Props> = ({ viewModel }) => {
   const theme = useTheme();
   const mdUp = useMediaQuery(theme.breakpoints.up('md'));
+
   const handleMobileButtonClick = (): void => {
     viewModel.handleMobileButtonClick();
   };
 
   const autocompleteOrButtonView = (): JSX.Element => {
     if (mdUp) {
-      return <Autocomplete />;
+      return <StyledAutocomplete />;
     }
     return (
       <StyledButton
-        color="primary"
+        color="secondary"
         onClick={handleMobileButtonClick}
         variant="contained"
       >
@@ -49,35 +132,32 @@ const HeroView: React.FC<Props> = ({ viewModel }) => {
     );
   };
 
+  const browseLinkOrNull = (): React.ReactNode => {
+    if (mdUp) {
+      return (
+        <BrowseLink href={viewModel.link.href}>
+          <Browse>{viewModel.link.label}</Browse>
+        </BrowseLink>
+      );
+    }
+    return null;
+  };
+
   return (
-    <StyledBox>
-      <Container content>
-        <Box color="primary.contrastText" py={{ xs: 6, md: 15 }}>
-          <Grid container>
-            <Grid item xs={12} md={6}>
-              <Box mb={4}>
-                <Typography
-                  fontWeight="bold"
-                  lineHeight="normal"
-                  variant="h1"
-                  whiteSpace="prewrap"
-                >
-                  {viewModel.title}
-                </Typography>
-              </Box>
-              <Box display="flex" mb={2}>
-                {autocompleteOrButtonView()}
-              </Box>
-              <InternalLink color="textSecondary" href={viewModel.link.href}>
-                <Typography fontWeight="fontWeightMedium" variant="body1">
-                  {viewModel.link.label}
-                </Typography>
-              </InternalLink>
-            </Grid>
-          </Grid>
-        </Box>
-      </Container>
-    </StyledBox>
+    <Background>
+      <StyledContainer>
+        <Title variant="h1">{viewModel.title}</Title>
+        <SubTitle>
+          {viewModel.subtitle}{' '}
+          <SubTitleLink href={viewModel.subtitleLink.href}>
+            {viewModel.subtitleLink.label}
+          </SubTitleLink>
+        </SubTitle>
+        <CarImage alt={viewModel.car.alt} src={viewModel.car.src} />
+        {autocompleteOrButtonView()}
+        {browseLinkOrNull()}
+      </StyledContainer>
+    </Background>
   );
 };
 

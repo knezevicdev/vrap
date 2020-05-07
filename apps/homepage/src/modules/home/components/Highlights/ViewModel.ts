@@ -8,7 +8,7 @@ interface Highlight {
 }
 
 class HighlightsViewModel {
-  readonly ctaLabel: string = 'Shop Now';
+  readonly ctaLabel: string = 'SHOP NOW';
   readonly highlights: Highlight[] = [
     {
       description:
@@ -34,7 +34,7 @@ class HighlightsViewModel {
   ];
 
   handleButtonClick(): void {
-    // TODO navigate to appropriate page
+    window.location.href = '/catalog';
   }
 }
 

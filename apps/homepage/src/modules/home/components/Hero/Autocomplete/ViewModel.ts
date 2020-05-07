@@ -17,8 +17,8 @@ class AutocompleteViewModel {
   // private analyticsHandler: AnalyticsHandler;
   private store: AutocompleteStore;
 
-  readonly buttonLabel: string = 'Search';
-  readonly inputPlaceholder: string = 'Enter make, model or body type';
+  readonly buttonLabel: string = 'SEARCH';
+  readonly inputPlaceholder: string = 'Search by make, model, or body type';
 
   constructor(store: AutocompleteStore) {
     // this.analyticsHandler = new AnalyticsHandler();
@@ -73,19 +73,51 @@ class AutocompleteViewModel {
     return this.store.inventorySuggestionsStatus === Status.FETCHING;
   }
 
-  navigateUsingAutocomplete(_suggestion: Suggestion): void {
+  navigateUsingAutocomplete(suggestion: Suggestion): void {
+    // TODO add analytics.
     // this.analyticsHandler.trackProductSearched(
     //   'Home',
     //   'Autocomplete',
     //   suggestion.label
     // );
-    // TODO navigate to the appropriate url.
+
+    if (suggestion.group === 'Body Type') {
+      if (!suggestion.bodyType) {
+        return;
+      }
+      const bodyType =
+        suggestion.bodyType === 'Van Minivan'
+          ? 'minivan'
+          : suggestion.bodyType.toLowerCase();
+      window.location.href = `/catalog/all-years/all-makes/${bodyType}`;
+      return;
+    }
+
+    if (suggestion.group === 'Make') {
+      if (!suggestion.make) {
+        return;
+      }
+      const make = suggestion.make.toLowerCase().replace(/[\s-]/g, '_');
+      window.location.href = `/catalog/all-years/${make}`;
+      return;
+    }
+
+    if (suggestion.group === 'Model') {
+      if (!suggestion.make || !suggestion.model) {
+        return;
+      }
+      const make = suggestion.make.toLowerCase().replace(/[\s-]/g, '_');
+      const model = suggestion.model.toLowerCase().replace(/[\s-]/g, '_');
+      window.location.href = `/catalog/all-years/${make}_${model}`;
+      return;
+    }
   }
 
   navigateUsingSearch(): void {
-    // const inputValue = this.store.inputValue;
+    const inputValue = this.store.inputValue;
+    // TODO add analytics.
     // this.analyticsHandler.trackProductSearched('Home', 'Free Form', inputValue);
-    // TODO navigate to the appropriate url.
+    window.location.href = `/catalog?search=${inputValue}`;
   }
 }
 

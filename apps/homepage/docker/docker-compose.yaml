@@ -14,8 +14,14 @@ services:
     ports:
       - '8080:8080'
     volumes:
-      - '../../../:/www/:cached'
-      # stop dependencies and build artifacts from copying to host
+      # Setup a volume so source code edits will be reflected outside the container.
+      - '../../../:/www/'
+      # Setup volumes for dependencies and built artifacts.
+      # This allows the node_modules created during the build to not be overwritten.
+      # https://stackoverflow.com/questions/30043872/docker-compose-node-modules-not-present-in-a-volume-after-npm-install-succeeds
+      # It also makes sure that the built artifacts are only present on the container,
+      # and not copied back to the host machine.
+      - '/www/node_modules'
       - '/www/apps/homepage/.next'
       - '/www/apps/homepage/node_modules'
       - '/www/libs/networking/inv-search/dist'
