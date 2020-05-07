@@ -1,28 +1,52 @@
-import ExpansionPanel from '@material-ui/core/ExpansionPanel';
-import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
+import Box from '@material-ui/core/Box';
+import MuiExpansionPanel from '@material-ui/core/ExpansionPanel';
+import MuiExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
 import Grid from '@material-ui/core/Grid';
 import Link from '@material-ui/core/Link';
-import { styled } from '@material-ui/core/styles';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import { makeStyles, styled } from '@material-ui/core/styles';
+import MuiExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import { Typography } from '@vroom-web/ui';
 import { observer } from 'mobx-react';
 import React, { useEffect, useState } from 'react';
 
 import NavigationViewModel from './ViewModel';
 
-const StyledLink = styled(Link)(({ theme }) => ({
-  display: 'block',
-  fontWeight: theme.typography.fontWeightMedium,
-  '&:not(:last-child)': {
-    marginBottom: theme.spacing(1),
+//#region Styling
+const ExpansionPanel = styled(MuiExpansionPanel)(({ theme }) => ({
+  backgroundColor: theme.palette.secondary.main,
+  borderBottom: `${theme.palette.background.paper} 1px solid`,
+  '&::before': {
+    display: 'none',
   },
 }));
+
+const ExpandMoreIcon = styled(MuiExpandMoreIcon)(({ theme }) => ({
+  color: theme.palette.text.secondary,
+}));
+
+const useExpansionPanelStyles = makeStyles((theme) => ({
+  root: {
+    padding: theme.spacing(0, 1, 0, 0),
+  },
+  content: {
+    margin: theme.spacing(2, 0),
+  },
+}));
+
+const ExpansionPanelDetails = styled(MuiExpansionPanelDetails)(({ theme }) => ({
+  flexDirection: 'column',
+  padding: theme.spacing(0, 0, 1, 0),
+}));
+
+//#endregion
 
 interface Props {
   viewModel: NavigationViewModel;
 }
 
 const MobileNavView: React.FC<Props> = ({ viewModel }) => {
+  const expansionPanelClasses = useExpansionPanelStyles();
   const [expanded, setExpanded] = useState('');
 
   useEffect(() => {
@@ -46,25 +70,33 @@ const MobileNavView: React.FC<Props> = ({ viewModel }) => {
               handleChange(isExpanded, section.title)
             }
           >
-            <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-              {section.title}
+            <ExpansionPanelSummary
+              classes={{
+                root: expansionPanelClasses.root,
+                content: expansionPanelClasses.content,
+              }}
+              expandIcon={<ExpandMoreIcon color="secondary" />}
+            >
+              <Typography
+                variant="body1"
+                color="text.secondary"
+                fontWeight="fontWeightSemibold"
+              >
+                {section.title}
+              </Typography>
             </ExpansionPanelSummary>
             <ExpansionPanelDetails>
-              <Grid container spacing={1}>
-                {section.links.map((link, index) => {
-                  return (
-                    <Grid item key={index} xs={12}>
-                      <StyledLink
-                        color="secondary"
-                        href={link.href}
-                        target={link.target}
-                      >
+              {section.links.map((link, index) => {
+                return (
+                  <Box key={index} display="flex" flex={1} py={1}>
+                    <Link href={link.href} target={link.target}>
+                      <Typography variant="button" color="text.secondary">
                         {link.label}
-                      </StyledLink>
-                    </Grid>
-                  );
-                })}
-              </Grid>
+                      </Typography>
+                    </Link>
+                  </Box>
+                );
+              })}
             </ExpansionPanelDetails>
           </ExpansionPanel>
         );

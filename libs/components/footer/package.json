@@ -18,6 +18,7 @@
     "storybook": "start-storybook -p 8080 --ci --quiet"
   },
   "dependencies": {
+    "@vroom-web/ui": "^1.0.0",
     "js-cookie": "^2.2.1",
     "libphonenumber-js": "^1.7.51",
     "mobx": "^5.15.4",
@@ -54,7 +55,6 @@
   },
   "peerDependencies": {
     "@material-ui/core": "^4.9.10",
-    "@vroom-web/ui": "^1.0.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1"
   }

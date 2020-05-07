@@ -1,19 +1,11 @@
 import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
 import Link from '@material-ui/core/Link';
-import { styled } from '@material-ui/core/styles';
 import { Typography } from '@vroom-web/ui';
 import { observer } from 'mobx-react';
 import React, { useEffect } from 'react';
 
 import NavigationViewModel from './ViewModel';
-
-const StyledLink = styled(Link)(({ theme }) => ({
-  display: 'block',
-  '&:not(:last-child)': {
-    marginBottom: theme.spacing(1),
-  },
-}));
 
 interface Props {
   viewModel: NavigationViewModel;
@@ -40,12 +32,12 @@ const DesktopNavigationView: React.FC<Props> = ({ viewModel }) => {
             </Box>
             {section.links.map((link, index) => {
               return (
-                <Box key={index} display="flex" mb={1}>
-                  <StyledLink href={link.href} target={link.target}>
+                <Box key={index} display="flex" pb={1}>
+                  <Link href={link.href} target={link.target}>
                     <Typography variant="button" color="text.secondary">
                       {link.label}
                     </Typography>
-                  </StyledLink>
+                  </Link>
                 </Box>
               );
             })}
