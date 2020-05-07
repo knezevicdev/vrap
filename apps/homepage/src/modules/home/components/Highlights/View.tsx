@@ -1,4 +1,3 @@
-import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
 import { styled, useTheme } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
@@ -8,8 +7,26 @@ import React from 'react';
 import HighlightView from './HighlightView';
 import ViewModel from './ViewModel';
 
-const StyledButton = styled(Button)(() => ({
-  minWidth: '200px',
+const Background = styled('div')(({ theme }) => ({
+  backgroundColor: theme.palette.background.paper,
+}));
+
+const StyledContainer = styled(Container)(({ theme }) => ({
+  display: 'flex',
+  flexDirection: 'column',
+  [theme.breakpoints.up('sm')]: {
+    alignItems: 'center',
+  },
+}));
+
+const StyledButton = styled(Button)(({ theme }) => ({
+  minWidth: '180px',
+  letterSpacing: '1.75px',
+  fontWeight: 600,
+  marginTop: theme.spacing(2),
+  [theme.breakpoints.up('md')]: {
+    marginTop: theme.spacing(4),
+  },
 }));
 
 interface Props {
@@ -24,35 +41,29 @@ const HighlightsView: React.FC<Props> = ({ viewModel }) => {
   };
 
   return (
-    <Box bgcolor="background.paper">
-      <Container content>
-        <Box py={{ xs: 6, md: 12 }}>
-          <Box mb={4}>
-            <Grid container spacing={mdUp ? 6 : 4}>
-              {viewModel.highlights.map((highlight, index) => (
-                <Grid key={index} item xs={12} md={4}>
-                  <HighlightView
-                    description={highlight.description}
-                    imgAlt={highlight.imgAlt}
-                    imgSrc={highlight.imgSrc}
-                    title={highlight.title}
-                  />
-                </Grid>
-              ))}
+    <Background>
+      <StyledContainer>
+        <Grid container spacing={mdUp ? 6 : 2}>
+          {viewModel.highlights.map((highlight, index) => (
+            <Grid key={index} item xs={12} md={4}>
+              <HighlightView
+                description={highlight.description}
+                imgAlt={highlight.imgAlt}
+                imgSrc={highlight.imgSrc}
+                title={highlight.title}
+              />
             </Grid>
-          </Box>
-          <Box display="flex" justifyContent="center">
-            <StyledButton
-              color="primary"
-              onClick={handleButtonClick}
-              variant="contained"
-            >
-              {viewModel.ctaLabel}
-            </StyledButton>
-          </Box>
-        </Box>
-      </Container>
-    </Box>
+          ))}
+        </Grid>
+        <StyledButton
+          color="primary"
+          onClick={handleButtonClick}
+          variant="contained"
+        >
+          {viewModel.ctaLabel}
+        </StyledButton>
+      </StyledContainer>
+    </Background>
   );
 };
 
