@@ -12,7 +12,7 @@ jobs:
           # aws s3 sync ./apps/homepage/public s3://homepage-assets-${CIRCLE_BRANCH//homepage-/}.n.vroom.systems --acl public-read
           command: |-
             build -a vroom-web/apps/homepage/docker
-            deploy -a vroom-web/apps/homepage/docker
+            deploy -a vroom-web/apps/homepage/docker -n dev
   homepage_prod: &mlp
     docker:
       - image: vroom/mlp:2.0
