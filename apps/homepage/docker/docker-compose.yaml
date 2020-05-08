@@ -4,8 +4,6 @@ services:
     build:
       context: ../../../
       dockerfile: ./apps/homepage/docker/Dockerfile
-    image: vroom-web-homepage:latest
-    container_name: web
     user: 'root'
     environment:
       - CDN_URL=
