@@ -11,7 +11,7 @@ jobs:
           # sudo apt-get install python-pip && pip install awscli
           # aws s3 sync ./apps/homepage/public s3://homepage-assets-${CIRCLE_BRANCH//homepage-/}.n.vroom.systems --acl public-read
           command: |-
-            build -a ./apps/homepage/docker
+            build -a vroom-web/apps/homepage/docker
             deploy
   homepage_prod: &mlp
     docker:
