@@ -13,6 +13,7 @@ const external = [
   'react',
   'react-dom',
   '@material-ui/core',
+  '@vroom-web/ui',
 ].map((i) => rex(i));
 
 const config = {

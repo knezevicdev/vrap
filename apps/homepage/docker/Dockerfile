@@ -10,12 +10,13 @@ COPY . .
 RUN chown -R 1000:1000 .
 
 # Bootstrap yarn workspaces.
-RUN yarn install
+RUN yarn install --silent
 
 # Build libraries.
 RUN yarn workspace @vroom-web/inv-search-networking build
 RUN yarn workspace @vroom-web/ui build
 RUN yarn workspace @vroom-web/header-components build
+RUN yarn workspace @vroom-web/footer-components build
 
 # Build the main app.
 RUN yarn workspace @vroom-web/homepage build

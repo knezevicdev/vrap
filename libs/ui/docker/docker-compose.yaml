@@ -7,13 +7,13 @@ services:
     image: vroom-web-ui:latest
     container_name: storybook
     user: 'root'
-    command: >
-      ash -c "yarn install &&
-              yarn workspace @vroom-web/ui storybook"
+    command: ash -c "yarn workspace @vroom-web/ui storybook"
     ports:
       - '8080:8080'
     volumes:
-      - '../../../:/www/:cached'
-      # stop dependencies and build artifacts from copying to host
-      - '/www/libs/ui/dist'
+      # Setup volume so that source code edits are reflected outside the container.
+      - '../../../:/www/'
+      # Setup volumes for dependencies and built artifacts.
+      - '/www/node_modules'
       - '/www/libs/ui/node_modules'
+      - '/www/libs/ui/dist'

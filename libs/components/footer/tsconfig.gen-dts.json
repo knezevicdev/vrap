@@ -1,0 +1,19 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "declaration": true,
+    "emitDeclarationOnly": true,
+    "noEmit": false,
+    "outDir": "dist",
+    "target": "es5"
+  },
+  "exclude": [
+    "node_modules",
+    "./src/setupTests.ts",
+    "./src/**/**.test.tsx",
+    "./src/**/**.test.ts",
+    "./src/**/**.stories.ts",
+    "./src/**/**.stories.tsx",
+    "./src/**/examples/**"
+  ]
+}

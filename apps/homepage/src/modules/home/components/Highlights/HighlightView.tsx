@@ -1,14 +1,32 @@
-import Box from '@material-ui/core/Box';
 import { styled } from '@material-ui/core/styles';
+import { Typography } from '@vroom-web/ui';
 import React from 'react';
 
-import Typography from 'src/ui/Typography';
+const Highlight = styled('div')(() => ({
+  display: 'flex',
+}));
 
 const StyledImg = styled('img')(() => ({
   borderRadius: '50%',
   flexShrink: 0,
   width: '100px',
   height: '100px',
+}));
+
+const Text = styled('div')(({ theme }) => ({
+  marginLeft: theme.spacing(2),
+}));
+
+const Title = styled(Typography)(({ theme }) => ({
+  fontWeight: 600,
+  letterSpacing: '0.25px',
+  lineHeight: '1.3',
+  marginBottom: theme.spacing(1),
+}));
+
+const Description = styled(Typography)(() => ({
+  letterSpacing: '0.25px',
+  lineHeight: '1.3',
 }));
 
 interface Props {
@@ -25,23 +43,13 @@ const HighlightView: React.FC<Props> = ({
   title,
 }) => {
   return (
-    <Box display="flex">
+    <Highlight>
       <StyledImg alt={imgAlt} src={imgSrc} />
-      <Box ml={2}>
-        <Box mb={2}>
-          <Typography fontWeight="fontWeightMedium" variant="body1">
-            {title}
-          </Typography>
-        </Box>
-        <Typography
-          fontWeight="fontWeightLight"
-          lineHeight="1.5"
-          variant="body1"
-        >
-          {description}
-        </Typography>
-      </Box>
-    </Box>
+      <Text>
+        <Title variant="body1">{title}</Title>
+        <Description variant="body1">{description}</Description>
+      </Text>
+    </Highlight>
   );
 };
 

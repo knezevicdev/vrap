@@ -1,46 +1,61 @@
 import Box from '@material-ui/core/Box';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles, styled } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Autocomplete, { RenderInputParams } from '@material-ui/lab/Autocomplete';
+import { Button } from '@vroom-web/ui';
 import { observer } from 'mobx-react';
 import React from 'react';
 
 import ViewModel, { Suggestion } from './ViewModel';
-
-import Button from 'src/ui/Button';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
     margin: 0,
     borderRadius: 0,
     '& .MuiListSubheader-root': {
-      color: theme.palette.grey[700],
+      ...theme.typography.caption,
+      color: theme.palette.grey[500],
+      fontWeight: 600,
+      textTransform: 'uppercase',
     },
     '& .MuiAutocomplete-groupUl': {
+      ...theme.typography.body1,
       color: theme.palette.text.primary,
+      letterSpacing: '0.25px',
+      lineHeight: '1.3',
     },
   },
   inputRoot: {
-    paddingRight: theme.spacing(1),
+    paddingRight: theme.spacing(2),
     backgroundColor: theme.palette.background.paper,
   },
   input: {
+    ...theme.typography.body1,
     color: theme.palette.text.primary,
-    fontWeight: 300,
+    letterSpacing: '0.25px',
+    lineHeight: '1.3',
     padding: `${theme.spacing(2, 6, 2, 2)} !important`,
     '&::placeholder, &::-webkit-input-placeholder': {
-      color: theme.palette.grey[700],
+      color: theme.palette.grey[500],
       opacity: 1,
     },
   },
 }));
 
+const HeroAutoCompleteBox = styled(Box)(() => ({
+  maxWidth: '680px',
+}));
+
 interface HeroAutocompleteProps {
+  className?: string;
   viewModel: ViewModel;
 }
 
-const HeroAutocomplete: React.FC<HeroAutocompleteProps> = ({ viewModel }) => {
+const HeroAutocomplete: React.FC<HeroAutocompleteProps> = ({
+  className,
+  viewModel,
+}) => {
   const classes = useStyles();
 
   const handleChange = (
@@ -81,7 +96,7 @@ const HeroAutocomplete: React.FC<HeroAutocompleteProps> = ({ viewModel }) => {
   const suggestionsLoading = viewModel.suggestionsLoading();
 
   return (
-    <Box display="flex" flexGrow={1}>
+    <HeroAutoCompleteBox className={className} display="flex" flexGrow={1}>
       <Autocomplete<Suggestion>
         classes={{
           paper: classes.paper,
@@ -118,10 +133,10 @@ const HeroAutocomplete: React.FC<HeroAutocompleteProps> = ({ viewModel }) => {
         )}
         style={{ flexGrow: 1 }}
       />
-      <Button color="primary" onClick={handleButtonClick} variant="contained">
+      <Button onClick={handleButtonClick} variant="contained" color="secondary">
         {viewModel.buttonLabel}
       </Button>
-    </Box>
+    </HeroAutoCompleteBox>
   );
 };
 
