@@ -8,9 +8,9 @@ jobs:
       - setup_remote_docker:
           version: 18.09.3
       - run:
+          # sudo apt-get install python-pip && pip install awscli
+          # aws s3 sync ./apps/homepage/public s3://homepage-assets-${CIRCLE_BRANCH//homepage-/}.n.vroom.systems --acl public-read
           command: |-
-            sudo apt-get install python-pip && pip install awscli
-            aws s3 sync ./apps/homepage/public s3://homepage-assets-${CIRCLE_BRANCH//homepage-/}.n.vroom.systems --acl public-read
             build -a ./apps/homepage/docker
             deploy
   homepage_prod: &mlp
