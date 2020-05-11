@@ -28,7 +28,7 @@ jobs:
             deploy $CIRCLE_BRANCH ./apps/homepage/docker
   lighthouse:
     docker:
-      - image: circleci/node:erbium-alpine-browsers
+      - image: circleci/erbium-browsers
     steps:
       - checkout
       - run:
