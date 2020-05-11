@@ -26,10 +26,22 @@ jobs:
             aws s3 sync ./apps/homepage/public s3://homepage-assets-${CIRCLE_BRANCH//homepage-/}.p.vroom.systems --acl public-read
             build ./apps/homepage/docker
             deploy $CIRCLE_BRANCH ./apps/homepage/docker
+  lighthouse: &lighthouse
+    docker:
+      - image: circleci/node:10.16-browsers
+    steps:
+      - checkout
+      - run:
+          command: |-
+            yarn global add @lhci/cli@0.3.x
+            docker-compose -f ./apps/homepage/docker/docker-compose.yaml up
+            /home/circleci/.yarn/bin/lhci autorun
 workflows:
   version: 2
   workflow:
     jobs:
+      - lighthouse:
+            context: aws-prod
       - homepage:
           context: aws-non-prod
           filters:
