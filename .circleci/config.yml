@@ -48,7 +48,7 @@ jobs:
             nohup yarn workspace @vroom-web/homepage start --port 8080 & sleep 5
 
             yarn global add @lhci/cli@0.3.x
-            ls -a
+            cd apps/homepage
             /home/circleci/.yarn/bin/lhci autorun
 workflows:
   version: 2
