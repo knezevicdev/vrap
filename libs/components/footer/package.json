@@ -15,7 +15,7 @@
     "build:types": "tsc -p tsconfig.gen-dts.json",
     "clean": "rimraf dist/*",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx,.json",
-    "storybook": "start-storybook -p 8080 --ci --quiet"
+    "storybook": "start-storybook -p 8080 -s ./static --ci --quiet"
   },
   "dependencies": {
     "@vroom-web/ui": "^1.0.0",
