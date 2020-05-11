@@ -26,7 +26,7 @@ jobs:
             aws s3 sync ./apps/homepage/public s3://homepage-assets-${CIRCLE_BRANCH//homepage-/}.p.vroom.systems --acl public-read
             build ./apps/homepage/docker
             deploy $CIRCLE_BRANCH ./apps/homepage/docker
-  lighthouse: &lighthouse
+  lighthouse:
     docker:
       - image: circleci/node:10.16-browsers
     steps:
