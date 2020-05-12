@@ -1,6 +1,6 @@
 import { styled } from '@material-ui/core/styles';
+import { Typography } from '@vroom-web/ui';
 import React from 'react';
-
 export interface Link extends Props {
   type: 'link';
 }
@@ -37,7 +37,9 @@ const LinkView: React.FC<Props> = ({ href, IconComponent, label, onClick }) => {
   return (
     <StyledAnchor href={href} onClick={onClick}>
       {IconComponent && <IconComponent />}
-      {label}
+      <Typography variant="caption" fontWeight="fontWeightSemibold">
+        {label}
+      </Typography>
     </StyledAnchor>
   );
 };

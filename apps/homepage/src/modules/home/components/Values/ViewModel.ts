@@ -7,7 +7,7 @@ class ValuesViewModel {
       type: 'PRICE',
       title: 'No haggling. No pressure.',
       description:
-        'We’ve eliminated the middleman and made the entire car buying process more efficient, which allows us to pass the savings onto our customers.',
+        'We’ve eliminated the middleman and made the entire car buying process more efficient, which allows us to pass the savings on to our customers.',
     },
     {
       type: 'RECONDITINOING',

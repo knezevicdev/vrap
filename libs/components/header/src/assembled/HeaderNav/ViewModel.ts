@@ -57,21 +57,21 @@ class HeaderNavViewModel {
         {
           type: 'link',
           href: '/catalog',
-          label: 'Buy',
+          label: 'BUY',
         },
         {
           type: 'link',
           href: '/sell',
-          label: 'Sell/Trade',
+          label: 'SELL/TRADE',
         },
         {
           type: 'link',
           href: '/finance',
-          label: 'Finance',
+          label: 'FINANCE',
         },
         {
           type: 'dropdown',
-          label: 'About',
+          label: 'ABOUT',
           links: [
             {
               href: '/about',
@@ -93,7 +93,7 @@ class HeaderNavViewModel {
         },
         {
           type: 'dropdown',
-          label: 'Contact',
+          label: 'CONTACT',
           links: [
             {
               href: 'https://vroom.zendesk.com/hc/en-us',
@@ -111,7 +111,7 @@ class HeaderNavViewModel {
         },
         {
           type: 'dropdown',
-          label: 'Log In',
+          label: 'LOG IN',
           links: [
             {
               href: '/account/login',
