@@ -1,0 +1,14 @@
+{
+  "ci": {
+    "upload": {
+      "target": "lhci",
+      "token": "f712d23d-ceac-43cc-a6f3-1dbf280c502b",
+      "serverBaseUrl": "https://whispering-spire-42736.herokuapp.com/app/projects"
+    },
+    "collect": {
+      "url": [
+        "http://localhost:8080"
+      ]
+    }
+  }
+}
