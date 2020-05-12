@@ -45,6 +45,7 @@ class VroomDocument extends Document {
   }
 
   render(): JSX.Element {
+    console.log('_document render process.env', process.env);
     return (
       <Html>
         <Head>
