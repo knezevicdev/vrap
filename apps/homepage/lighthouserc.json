@@ -1,7 +1,8 @@
 {
   "ci": {
     "upload": {
-      "target": "temporary-public-storage"
+      "target": "lhci",
+      "serverBaseUrl": "https://whispering-spire-42736.herokuapp.com/app/projects"
     },
     "collect": {
       "url": [
