@@ -49,6 +49,17 @@ class HeaderNavViewModel {
     return phoneNumberLinkData;
   };
 
+  private getAccountLabel(): string {
+    const name = this.store.name;
+    if (!name) {
+      return 'Account';
+    }
+    const tokens = name.split(' ');
+    const firstLetters = tokens.map((token) => token[0]);
+    const initials = firstLetters.join('');
+    return initials;
+  }
+
   desktopLinks(): DesktopLinks {
     const phoneNumberLinkData = this.getPhoneNumberLinkData(
       this.store.phoneNumber
@@ -195,7 +206,7 @@ class HeaderNavViewModel {
       {
         type: 'dropdown',
         IconComponent: AccountSvg,
-        label: 'Account', // TODO add user's initials
+        label: this.getAccountLabel(),
         links: [
           {
             href: '/my-account/favorites',
@@ -288,7 +299,7 @@ class HeaderNavViewModel {
       {
         type: 'dropdown',
         IconComponent: AccountSvg,
-        label: 'Account',
+        label: this.getAccountLabel(),
         links: [
           {
             href: '/my-account/favorites',
