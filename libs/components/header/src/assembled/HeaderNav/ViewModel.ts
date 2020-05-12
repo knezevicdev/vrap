@@ -2,6 +2,7 @@ import { parsePhoneNumberFromString } from 'libphonenumber-js';
 
 import { DesktopLinks, MobileLinks } from '../../components/Nav';
 import { ReactComponent as AccountSvg } from '../../svg/account.svg';
+import FavoritesHeartIconComponent from './FavoritesHeartIconComponent';
 import HeaderNavStore from './store';
 
 interface PhoneNumberLinkData {
@@ -185,6 +186,11 @@ class HeaderNavViewModel {
             label: 'Contact Us',
           },
         ],
+      },
+      {
+        type: 'link',
+        href: '/my-account/favorites',
+        IconComponent: FavoritesHeartIconComponent,
       },
       {
         type: 'dropdown',
