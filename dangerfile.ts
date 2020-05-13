@@ -10,9 +10,6 @@ if (danger.bitbucket_cloud.pr.reviewers.length === 0) {
   );
 }
 
-// Check that apps are not importing the source code of libraries.
-// They should be importing built versions.
-
 function recursiveReaddirSync(dirPath: string): string[] {
   let filepaths: string[] = [];
   const files = fs.readdirSync(dirPath);
@@ -31,6 +28,9 @@ function recursiveReaddirSync(dirPath: string): string[] {
 const allAppFiles = recursiveReaddirSync('./apps');
 allAppFiles.forEach((file) => {
   const content = fs.readFileSync(file, 'utf8');
+
+  // Check that apps are not importing the source code of libraries.
+  // They should be importing built versions.
   const importStatementRegex = /import\s+?(?:(?:(?:[\w*\s{},]*)\s+from\s+?)|)(?:(?:".*?")|(?:'.*?'))[\s]*?(?:;|$|)/g;
   const importStatements = content.match(importStatementRegex);
   if (!importStatements) {
@@ -41,4 +41,18 @@ allAppFiles.forEach((file) => {
       fail('Apps cannot import library source code. Use the built version!');
     }
   });
+
+  // Check that static nextjs page files are warned about
+  // the limitations of our current env var solution.
+  // If we update our NextJS env var solution to inject env vars at build time, this warning can be removed.
+  if (
+    file.includes('/pages/') &&
+    !file.includes('_app') &&
+    !file.includes('_document') &&
+    !content.includes('getInitialProps')
+  ) {
+    warn(
+      'There are files within a "pages" directory that have no "getInitialProps" function. If these files are part of a NextJS application, be aware that env vars currently do not work on static pages.'
+    );
+  }
 });
