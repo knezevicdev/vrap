@@ -70,12 +70,15 @@ workflows:
           context: dangerjs
       - homepage:
           context: aws-non-prod
+          # filters:
+          #   branches:
+          #     only:
+          #       - homepage-dev
+          #       - homepage-qa
+          #       - homepage-uat
           filters:
-            branches:
-              only:
-                - homepage-dev
-                - homepage-qa
-                - homepage-uat
+            tags:
+              only: /^homepage-v\d{1,}\.\d{1,}\.\d{1,}$/
       - homepage_prod:
           context: aws-prod
           filters:
