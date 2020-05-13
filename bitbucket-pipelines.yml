@@ -1,0 +1,9 @@
+pipelines:
+  pull-requests:
+    '**':
+      - step:
+          name: Trigger PR workflow on CircleCI
+          script:
+            - echo "Triggering PR build for branch $BITBUCKET_BRANCH"
+            - >
+              curl -ss -X POST -H "Content-Type: application/json" -d '{"build_parameters":{"BITBUCKET_PR":true}}' "https://circleci.com/api/v1.1/project/bb/:username/:project/tree/$BITBUCKET_BRANCH?circle-token=$CIRCLE_CI_ACCESS_TOKEN"
