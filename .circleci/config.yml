@@ -1,5 +1,15 @@
 version: 2
 jobs:
+  danger:
+    docker:
+      - image: node:erbium-alpine
+    steps:
+      - checkout
+      - run:
+          name: Danger
+          command: |-
+            yarn install
+            yarn danger ci
   homepage: &mlp
     docker:
       - image: vroom/mlp:2.0
@@ -55,7 +65,9 @@ workflows:
   workflow:
     jobs:
       - lighthouse:
-            context: aws-prod
+          context: aws-prod
+      - danger:
+          context: dangerjs
       - homepage:
           context: aws-non-prod
           filters:
