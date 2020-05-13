@@ -6,7 +6,6 @@ type ClientEnvVarSnippetProps = GlobalEnv;
 
 const ClientEnvVarSnippet: React.FC<ClientEnvVarSnippetProps> = (props) => {
   const str = JSON.stringify({ ...props });
-  console.log('GlobalEnvSnippet props', props);
   return (
     <script
       dangerouslySetInnerHTML={{
