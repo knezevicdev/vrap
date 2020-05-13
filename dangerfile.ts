@@ -55,3 +55,4 @@ allAppFiles.forEach((file) => {
     );
   }
 });
+
