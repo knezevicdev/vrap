@@ -25,7 +25,8 @@ const HomePage: NextPage<Props> = ({ title, description }) => {
 };
 
 HomePage.getInitialProps = async (): Promise<Props> => {
-  const title = 'Vroom: Buy, Sell or Trade-In Used Vehicles Online';
+  // const title = 'Vroom: Buy, Sell or Trade-In Used Vehicles Online';
+  const title = 'Oh Hello There';
   const description =
     'Buy, sell or trade-in a certified used car online from anywhere in the USA. We offer no-haggle car buying, top quality cars, full warranties & home shipping.';
   return {
