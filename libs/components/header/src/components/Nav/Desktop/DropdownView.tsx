@@ -1,5 +1,6 @@
 import { styled, withStyles } from '@material-ui/core/styles';
 import Tooltip from '@material-ui/core/Tooltip';
+import { Typography } from '@vroom-web/ui';
 import React from 'react';
 
 import { ReactComponent as ArrowSvg } from '../../../svg/arrow.svg';
@@ -122,7 +123,7 @@ const DropdownView: React.FC<Props> = ({ IconComponent, label, links }) => {
     return (
       <StyledAnchor key={label} href={href} onClick={onClick}>
         {IconComponent && <IconComponent />}
-        {label}
+        <Typography variant="button">{label}</Typography>
       </StyledAnchor>
     );
   });
@@ -142,7 +143,9 @@ const DropdownView: React.FC<Props> = ({ IconComponent, label, links }) => {
       <StyledSpan>
         <LabelAndArrow>
           {IconComponent && <IconComponent />}
-          {label}
+          <Typography variant="caption" fontWeight="fontWeightSemibold">
+            {label}
+          </Typography>
           <StyledArrowSvg className="dropdown-arrow" />
         </LabelAndArrow>
       </StyledSpan>

@@ -1,4 +1,5 @@
 import { styled } from '@material-ui/core/styles';
+import { Typography } from '@vroom-web/ui';
 import React from 'react';
 
 export interface Link extends Props {
@@ -7,8 +8,8 @@ export interface Link extends Props {
 
 interface Props {
   href: string;
-  IconComponent?: React.FunctionComponent<React.SVGProps<SVGSVGElement>>;
-  label: string;
+  IconComponent?: React.ComponentType;
+  label?: string;
   onClick?: (event: React.MouseEvent<HTMLAnchorElement>) => void;
 }
 
@@ -52,7 +53,9 @@ const IconAndLabel = styled('div')(() => ({
     alignSelf: 'center',
     width: '16px',
     height: '16px',
-    marginRight: '4px',
+  },
+  '& > :not(:first-child)': {
+    marginLeft: '4px',
   },
 }));
 
@@ -61,7 +64,11 @@ const LinkView: React.FC<Props> = ({ href, IconComponent, label, onClick }) => {
     <StyledAnchor href={href} onClick={onClick}>
       <IconAndLabel>
         {IconComponent && <IconComponent />}
-        {label}
+        {label && (
+          <Typography variant="caption" fontWeight="fontWeightSemibold">
+            {label}
+          </Typography>
+        )}
       </IconAndLabel>
     </StyledAnchor>
   );

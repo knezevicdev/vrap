@@ -1,5 +1,6 @@
 import Collapse from '@material-ui/core/Collapse';
 import { styled } from '@material-ui/core/styles';
+import { Typography } from '@vroom-web/ui';
 import React from 'react';
 
 import { ReactComponent as ArrowSvg } from '../../../svg/arrow.svg';
@@ -85,7 +86,7 @@ const DropdownView: React.FC<Props> = ({ IconComponent, label, links }) => {
     return (
       <StyledAnchor key={label} href={href} onClick={onClick}>
         {IconComponent && <IconComponent />}
-        {label}
+        <Typography variant="button">{label}</Typography>
       </StyledAnchor>
     );
   });
@@ -93,7 +94,9 @@ const DropdownView: React.FC<Props> = ({ IconComponent, label, links }) => {
     <StyledDiv onClick={handleClick}>
       <IconLabelAndArrow>
         {IconComponent && <IconComponent />}
-        {label}
+        <Typography variant="caption" fontWeight="fontWeightSemibold">
+          {label}
+        </Typography>
         <StyledArrowSvg
           className="dropdown-arrow"
           style={{ transform: expanded ? 'rotate(180deg)' : 'none' }}

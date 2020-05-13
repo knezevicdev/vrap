@@ -1,5 +1,15 @@
 version: 2
 jobs:
+  danger:
+    docker:
+      - image: node:erbium-alpine
+    steps:
+      - checkout
+      - run:
+          name: Danger
+          command: |-
+            yarn install
+            yarn danger ci
   homepage: &mlp
     docker:
       - image: vroom/mlp:2.0
@@ -26,10 +36,38 @@ jobs:
             aws s3 sync ./apps/homepage/public s3://homepage-assets-${CIRCLE_BRANCH//homepage-/}.p.vroom.systems --acl public-read
             build ./apps/homepage/docker
             deploy $CIRCLE_BRANCH ./apps/homepage/docker
+  lighthouse:
+    docker:
+      - image: circleci/node:erbium-browsers
+    steps:
+      - checkout
+      - run:
+          command: |-
+            # Bootstrap yarn workspaces.
+            yarn install --silent
+
+            # Build libraries.
+            yarn workspace @vroom-web/inv-search-networking build
+            yarn workspace @vroom-web/ui build
+            yarn workspace @vroom-web/header-components build
+            yarn workspace @vroom-web/footer-components build
+
+            # Build the main app.
+            yarn workspace @vroom-web/homepage build
+
+            nohup yarn workspace @vroom-web/homepage start --port 8080 & sleep 5
+
+            yarn global add @lhci/cli@0.3.x
+            cd apps/homepage
+            /home/circleci/.yarn/bin/lhci autorun
 workflows:
   version: 2
   workflow:
     jobs:
+      - lighthouse:
+          context: aws-prod
+      - danger:
+          context: dangerjs
       - homepage:
           context: aws-non-prod
           filters:

@@ -11,6 +11,7 @@ interface Props {
 }
 
 const StyledDiv = styled('div')(({ theme }) => ({
+  display: 'inline-flex',
   '& > *:not(:first-child)': {
     marginLeft: theme.spacing(3),
   },
@@ -20,12 +21,12 @@ const DesktopView: React.FC<Props> = ({ links }) => {
   if (!links) {
     return null;
   }
-  const linksJsx = links.map((link) => {
+  const linksJsx = links.map((link, index) => {
     if (link.type === 'link') {
       const { href, IconComponent, label, onClick } = link as Link;
       return (
         <LinkView
-          key={label}
+          key={index}
           href={href}
           IconComponent={IconComponent}
           label={label}
@@ -36,7 +37,7 @@ const DesktopView: React.FC<Props> = ({ links }) => {
       const { IconComponent, label, links } = link as Dropdown;
       return (
         <DropdownView
-          key={label}
+          key={index}
           IconComponent={IconComponent}
           label={label}
           links={links}

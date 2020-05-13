@@ -2,6 +2,7 @@ import { parsePhoneNumberFromString } from 'libphonenumber-js';
 
 import { DesktopLinks, MobileLinks } from '../../components/Nav';
 import { ReactComponent as AccountSvg } from '../../svg/account.svg';
+import FavoritesHeartIconComponent from './FavoritesHeartIconComponent';
 import HeaderNavStore from './store';
 
 interface PhoneNumberLinkData {
@@ -48,6 +49,17 @@ class HeaderNavViewModel {
     return phoneNumberLinkData;
   };
 
+  private getAccountLabel(): string {
+    const name = this.store.name;
+    if (!name) {
+      return 'Account';
+    }
+    const tokens = name.split(' ');
+    const firstLetters = tokens.map((token) => token[0]);
+    const initials = firstLetters.join('');
+    return initials;
+  }
+
   desktopLinks(): DesktopLinks {
     const phoneNumberLinkData = this.getPhoneNumberLinkData(
       this.store.phoneNumber
@@ -57,21 +69,21 @@ class HeaderNavViewModel {
         {
           type: 'link',
           href: '/catalog',
-          label: 'Buy',
+          label: 'BUY',
         },
         {
           type: 'link',
           href: '/sell',
-          label: 'Sell/Trade',
+          label: 'SELL/TRADE',
         },
         {
           type: 'link',
           href: '/finance',
-          label: 'Finance',
+          label: 'FINANCE',
         },
         {
           type: 'dropdown',
-          label: 'About',
+          label: 'ABOUT',
           links: [
             {
               href: '/about',
@@ -93,7 +105,7 @@ class HeaderNavViewModel {
         },
         {
           type: 'dropdown',
-          label: 'Contact',
+          label: 'CONTACT',
           links: [
             {
               href: 'https://vroom.zendesk.com/hc/en-us',
@@ -111,7 +123,7 @@ class HeaderNavViewModel {
         },
         {
           type: 'dropdown',
-          label: 'Log In',
+          label: 'LOG IN',
           links: [
             {
               href: '/account/login',
@@ -187,9 +199,14 @@ class HeaderNavViewModel {
         ],
       },
       {
+        type: 'link',
+        href: '/my-account/favorites',
+        IconComponent: FavoritesHeartIconComponent,
+      },
+      {
         type: 'dropdown',
         IconComponent: AccountSvg,
-        label: 'Account', // TODO add user's initials
+        label: this.getAccountLabel(),
         links: [
           {
             href: '/my-account/favorites',
@@ -282,7 +299,7 @@ class HeaderNavViewModel {
       {
         type: 'dropdown',
         IconComponent: AccountSvg,
-        label: 'Account',
+        label: this.getAccountLabel(),
         links: [
           {
             href: '/my-account/favorites',
