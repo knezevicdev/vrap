@@ -3,7 +3,6 @@ import fs from 'fs';
 import path from 'path';
 
 // Check that someone has been assigned to this PR
-
 if (danger.bitbucket_cloud.pr.reviewers.length === 0) {
   warn(
     'Please assign someone to merge this PR, and optionally include people who should review.'
