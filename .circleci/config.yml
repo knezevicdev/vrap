@@ -82,7 +82,7 @@ workflows:
           #       - homepage-uat
           filters:
             tags:
-              only: /^homepage-dev-v\d{1,}\.\d{1,}\.\d{1,}$/
+              only: /^homepage-dev-v.*/
             branches:
               ignore: /.*/
       - homepage_prod:
