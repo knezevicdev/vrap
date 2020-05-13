@@ -78,7 +78,9 @@ workflows:
           #       - homepage-uat
           filters:
             tags:
-              only: /^homepage-v\d{1,}\.\d{1,}\.\d{1,}$/
+              only: /^homepage-dev-v\d{1,}\.\d{1,}\.\d{1,}$/
+            branches:
+              ignore: /.*/
       - homepage_prod:
           context: aws-prod
           filters:
