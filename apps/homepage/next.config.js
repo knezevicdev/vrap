@@ -1,4 +1,9 @@
 module.exports = {
+  exportPathMap: async function () {
+    return {
+      '/hp': { page: '/' },
+    };
+  },
   /* Custom webpack configuration. */
   webpack: (config) => {
     /* Enable SVG imports. */
