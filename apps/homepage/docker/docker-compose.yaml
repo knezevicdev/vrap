@@ -8,10 +8,10 @@ services:
     environment:
       - CDN_URL=
       - INVSEARCH_V3_URL=https://invsearch-v3-prod-ext.aws.vroomapi.com/v3
-    command: ash -c "yarn workspace @vroom-web/homepage dev --port 8080"
+    # command: ash -c "yarn workspace @vroom-web/homepage dev --port 8080"
     # This starts nothing but leaves the container running, useful for
     # debugging nextjs start / config operations
-    # command: ash -c "tail -f /dev/null"
+    command: ash -c "tail -f /dev/null"
     ports:
       - '8080:8080'
     volumes:
