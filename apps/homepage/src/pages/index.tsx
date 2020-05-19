@@ -1,15 +1,23 @@
-import { NextPage } from 'next';
+import { NextPage, NextPageContext } from 'next';
+import { parseCookies } from 'nookies';
 import React from 'react';
 
+import experimentSDK from 'src/integrations/experimentSDK';
 import Home from 'src/modules/home';
 import Page from 'src/Page';
 
-interface Props {
-  title: string;
-  description: string;
+interface Experiment {
+  assignedVariant: 0 | 1;
+  optimizeId?: string;
 }
 
-const HomePage: NextPage<Props> = ({ title, description }) => {
+interface Props {
+  description: string;
+  experiments: Experiment[];
+  title: string;
+}
+
+const HomePage: NextPage<Props> = ({ description, experiments, title }) => {
   const head = (
     <>
       <title>{title}</title>
@@ -18,20 +26,23 @@ const HomePage: NextPage<Props> = ({ title, description }) => {
   );
 
   return (
-    <Page name="Home" head={head}>
+    <Page experiments={experiments} name="Home" head={head}>
       <Home />
     </Page>
   );
 };
 
-HomePage.getInitialProps = async (): Promise<Props> => {
+HomePage.getInitialProps = async (ctx: NextPageContext): Promise<Props> => {
   const title = 'Vroom: Buy, Sell or Trade-In Used Vehicles Online';
   const description =
     'Buy, sell or trade-in a certified used car online from anywhere in the USA. We offer no-haggle car buying, top quality cars, full warranties & home shipping.';
-  return {
-    title,
-    description,
-  };
+  const cookies = parseCookies(ctx);
+  const marketingId = cookies['uuid'];
+  const experiments = await experimentSDK.getRunningExperiments(
+    marketingId,
+    'website'
+  );
+  return { description, experiments, title };
 };
 
 export default HomePage;

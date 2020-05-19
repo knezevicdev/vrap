@@ -1,6 +1,6 @@
 import { AutocompleteStore } from './store';
 
-// import AnalyticsHandler from 'src/integrations/analytics/AnalyticsHandler';
+import AnalyticsHandler from 'src/integrations/analytics/AnalyticsHandler';
 import { Status } from 'src/networking/types';
 
 export interface Suggestion {
@@ -14,14 +14,14 @@ export interface Suggestion {
 export type Suggestions = Suggestion[];
 
 class AutocompleteViewModel {
-  // private analyticsHandler: AnalyticsHandler;
+  private analyticsHandler: AnalyticsHandler;
   private store: AutocompleteStore;
 
   readonly buttonLabel: string = 'SEARCH';
   readonly inputPlaceholder: string = 'Search by make, model, or body type';
 
   constructor(store: AutocompleteStore) {
-    // this.analyticsHandler = new AnalyticsHandler();
+    this.analyticsHandler = new AnalyticsHandler();
     this.store = store;
   }
 
@@ -74,12 +74,10 @@ class AutocompleteViewModel {
   }
 
   navigateUsingAutocomplete(suggestion: Suggestion): void {
-    // TODO add analytics.
-    // this.analyticsHandler.trackProductSearched(
-    //   'Home',
-    //   'Autocomplete',
-    //   suggestion.label
-    // );
+    this.analyticsHandler.trackProductSearched(
+      'Autocomplete',
+      suggestion.label
+    );
 
     if (suggestion.group === 'Body Type') {
       if (!suggestion.bodyType) {
@@ -115,8 +113,7 @@ class AutocompleteViewModel {
 
   navigateUsingSearch(): void {
     const inputValue = this.store.inputValue;
-    // TODO add analytics.
-    // this.analyticsHandler.trackProductSearched('Home', 'Free Form', inputValue);
+    this.analyticsHandler.trackProductSearched('Free Form', inputValue);
     window.location.href = `/catalog?search=${inputValue}`;
   }
 }

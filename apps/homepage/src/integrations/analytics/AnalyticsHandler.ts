@@ -1,110 +1,78 @@
 import {
-  identify as segmentIdentify,
+  onAnalyticsReady as onSegmentAnalyticsReady,
   page as segmentPage,
+  setAnonymousId as segmentSetAnonymousId,
   track as segmentTrack,
 } from './segment';
 
-interface Product {
-  imageUrl: string;
-  make: string;
-  model: string;
-  name: string;
-  price: number;
-  sku: number;
-  soldStatus?: number;
-  url?: string;
-  vin: string;
-  year: number;
+declare global {
+  interface Window {
+    ga?: Function;
+  }
+}
+
+interface Experiment {
+  assignedVariant: 0 | 1;
+  optimizeId?: string;
 }
 
 class AnalyticsHandler {
+  private static optimizeExperimentsString?: string;
+
   private track(event: string, properties?: object): void {
-    segmentTrack(event, properties);
+    const propertiesWithExperimentCombination = {
+      ...properties,
+      experimentCombination: AnalyticsHandler.optimizeExperimentsString,
+    };
+    segmentTrack(event, propertiesWithExperimentCombination);
+  }
+
+  setAnonymousId(anonymousId: string): void {
+    segmentSetAnonymousId(anonymousId);
+  }
+
+  setExperiments(experiments?: Experiment[]): void {
+    AnalyticsHandler.optimizeExperimentsString = experiments
+      ? experiments
+          .filter((experiment) => experiment.optimizeId)
+          .map(
+            (experiment) =>
+              `${experiment.optimizeId}.${experiment.assignedVariant}`
+          )
+          .join('!')
+      : undefined;
+
+    onSegmentAnalyticsReady(() => {
+      try {
+        if (typeof window.ga === 'undefined') {
+          throw new Error('window.ga is undefined');
+        }
+        window.ga('set', 'exp', AnalyticsHandler.optimizeExperimentsString);
+      } catch (e) {
+        console.error(e);
+      }
+    });
   }
 
   page(name: string, category?: string): void {
     const properties = {
       category,
+      experimentCombination: AnalyticsHandler.optimizeExperimentsString,
       name,
     };
     segmentPage(name, properties);
   }
 
-  identify(traits: object, userId?: string): void {
-    segmentIdentify(traits, userId);
-  }
-
   trackProductSearched(
-    category: 'Home' | 'Catalog' | 'Product',
     label: 'Autocomplete' | 'Free Form',
     query: string
   ): void {
     const event = 'Product Searched';
     const properties = {
-      category,
+      category: 'Home',
       label,
       query,
     };
-    this.track(event, properties);
-  }
-
-  trackProductClicked(product: Product): void {
-    const event = 'Product Clicked';
-    const category = 'Catalog';
-    const {
-      imageUrl,
-      make,
-      model,
-      name,
-      price,
-      soldStatus,
-      url,
-      vin,
-      year,
-    } = product;
-    const properties = {
-      category,
-      imageUrl,
-      make,
-      model,
-      name,
-      price,
-      soldStatus,
-      url,
-      vin,
-      year,
-    };
-    this.track(event, properties);
-  }
-
-  trackContactSubmitted(product: Product): void {
-    const event = 'Contact Submitted';
-    const category = 'Lead Submission';
-    const { make, model, name, price, sku, vin, year } = product;
-    const properties = {
-      category,
-      make,
-      model,
-      name,
-      price,
-      sku,
-      vin,
-      year,
-    };
-    this.track(event, properties);
-  }
-
-  trackProductViewed(product: Product): void {
-    const event = 'Product Viewed';
-    const category = 'Product';
-    const properties = { ...product, category };
-    this.track(event, properties);
-  }
-
-  trackProductAdded(product: Product): void {
-    const event = 'Product Added';
-    const category = 'Product';
-    const properties = { ...product, category };
     this.track(event, properties);
   }
 }

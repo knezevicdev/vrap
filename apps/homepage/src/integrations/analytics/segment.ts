@@ -1,9 +1,15 @@
-function onAnalyticsReady(callback: () => void): void {
+export function onAnalyticsReady(callback: () => void): void {
   try {
     window.analytics.ready(callback);
   } catch {
     console.log('window.analytics is not defined');
   }
+}
+
+export function setAnonymousId(anonymousId: string): void {
+  onAnalyticsReady(() => {
+    window.analytics.user().anonymousId(anonymousId);
+  });
 }
 
 export function page(name: string, properties?: object): void {
