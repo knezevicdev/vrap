@@ -1,5 +1,24 @@
 version: 2
 jobs:
+  sonarcloud:
+    docker:
+      - image: circleci/node:erbium-browsers
+    steps:
+      - checkout
+      - run:
+          command: |-
+            # Bootstrap yarn workspaces.
+            yarn install --silent
+
+            # Build libraries.
+            yarn workspace @vroom-web/inv-search-networking build
+            yarn workspace @vroom-web/ui build
+            yarn workspace @vroom-web/header-components build
+            yarn workspace @vroom-web/footer-components build
+
+            # Build the main app.
+            yarn workspace @vroom-web/homepage build
+      - sonarcloud/scan
   danger:
     docker:
       - image: node:erbium-alpine
@@ -64,10 +83,14 @@ jobs:
             yarn global add @lhci/cli@0.3.x
             cd apps/homepage
             /home/circleci/.yarn/bin/lhci autorun
+orbs:
+  sonarcloud: sonarsource/sonarcloud@1.0.1
 workflows:
   version: 2
   workflow:
     jobs:
+      - sonarcloud:
+            context: SonarCloud
       - lighthouse:
           context: aws-prod
       - danger:
