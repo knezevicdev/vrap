@@ -83,8 +83,8 @@ jobs:
             yarn global add @lhci/cli@0.3.x
             cd apps/homepage
             /home/circleci/.yarn/bin/lhci autorun
-orbs:
-  sonarcloud: sonarsource/sonarcloud@1.0.1
+#orbs:
+#  sonarcloud: sonarsource/sonarcloud@1.0.1
 workflows:
   version: 2
   workflow:
