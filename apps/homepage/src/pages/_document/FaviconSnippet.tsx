@@ -1,3 +1,4 @@
+import { theme } from '@vroom-web/ui';
 import React from 'react';
 
 import globalEnv from 'src/globalEnv';
@@ -26,9 +27,13 @@ const FaviconSnippet: React.FC = () => {
       <link
         rel="mask-icon"
         href={`${globalEnv.CDN_URL}/safari-pinned-tab.svg`}
-        color="#c9072a"
+        color={theme.palette.primary.main}
       />
-      <meta name="msapplication-TileColor" content="#da532c" />
+      <meta
+        name="msapplication-TileColor"
+        content={theme.palette.primary.main}
+      />
+      <meta name="theme-color" content={theme.palette.primary.main} />
     </>
   );
 };

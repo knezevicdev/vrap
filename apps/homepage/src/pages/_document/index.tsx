@@ -1,5 +1,4 @@
 import { ServerStyleSheets } from '@material-ui/core/styles';
-import { theme } from '@vroom-web/ui';
 import { AppType, Enhancer, RenderPage } from 'next/dist/next-server/lib/utils';
 import Document, {
   DocumentContext,
@@ -46,23 +45,14 @@ class VroomDocument extends Document {
 
   render(): JSX.Element {
     return (
-      <Html>
+      <Html lang="en">
         <Head>
           <meta charSet="utf-8" />
           <meta
             name="viewport"
             content="minimum-scale=1, initial-scale=1, width=device-width"
           />
-          <meta name="theme-color" content={theme.palette.primary.main} />
           <FaviconSnippet />
-          {/*
-              Font Icons
-              In order to use the font Icon component
-          */}
-          <link
-            rel="stylesheet"
-            href="https://fonts.googleapis.com/icon?family=Material+Icons"
-          />
           <FontsSnippet />
           <SegmentSnippet segmentWriteKey={process.env.SEGMENT_WRITE_KEY} />
           <GlobalEnvSnippet
