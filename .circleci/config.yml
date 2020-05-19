@@ -89,8 +89,8 @@ workflows:
   version: 2
   workflow:
     jobs:
-#      - sonarcloud:
-#            context: SonarCloud
+      - sonarcloud:
+            context: SonarCloud
       - lighthouse:
           context: aws-prod
       - danger:
