@@ -9,6 +9,8 @@ declare global {
   }
 }
 
-const globalEnv: GlobalEnv | NodeJS.ProcessEnv = process.browser ? window.__GLOBAL_ENV__ : process.env;
+const globalEnv: GlobalEnv | NodeJS.ProcessEnv = process.browser
+  ? window.__GLOBAL_ENV__
+  : process.env;
 
 export default globalEnv;
