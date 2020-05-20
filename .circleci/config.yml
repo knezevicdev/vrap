@@ -35,6 +35,14 @@ jobs:
     steps:
       - checkout
       - run:
+        command: |-
+            # Bootstrap yarn workspaces.
+            yarn install --silent
+
+            yarn workspaces run lint
+    steps:
+      - checkout
+      - run:
           command: |-
             # Bootstrap yarn workspaces.
             yarn install --silent
@@ -53,6 +61,9 @@ jobs:
             yarn global add @lhci/cli@0.3.x
             cd apps/homepage
             /home/circleci/.yarn/bin/lhci autorun
+  lint:
+    docker:
+      - image: circleci/node:erbium
   homepage: &mlp
     docker:
       - image: vroom/mlp:2.0
@@ -112,6 +123,7 @@ workflows:
           context: dangerjs
       - lighthouse:
           context: aws-prod
+      - lint
       - homepage:
           context: aws-non-prod
           filters:
