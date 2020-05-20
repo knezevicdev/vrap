@@ -35,14 +35,6 @@ jobs:
     steps:
       - checkout
       - run:
-        command: |-
-            # Bootstrap yarn workspaces.
-            yarn install --silent
-
-            yarn workspaces run lint
-    steps:
-      - checkout
-      - run:
           command: |-
             # Bootstrap yarn workspaces.
             yarn install --silent
@@ -64,6 +56,14 @@ jobs:
   lint:
     docker:
       - image: circleci/node:erbium
+    steps:
+      - checkout
+      - run:
+        command: |-
+            # Bootstrap yarn workspaces.
+            yarn install --silent
+
+            yarn workspaces run lint
   homepage: &mlp
     docker:
       - image: vroom/mlp:2.0
