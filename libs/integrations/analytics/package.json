@@ -1,9 +1,42 @@
 {
   "name": "@vroom-web/analytics-integration",
-  "version": "0.0.0",
-  "main": "index.js",
+  "version": "1.0.0",
   "license": "UNLICENSED",
+  "private": true,
+  "main": "dist/index.cjs.js",
+  "module": "dist/index.esm.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
   "scripts": {
+    "test": "jest",
+    "build": "yarn clean && yarn build:types && yarn build:lib",
+    "build:lib": "rollup -c",
+    "build:types": "tsc -p tsconfig.gen-dts.json",
+    "clean": "rimraf dist/*",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx,.json"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.9.0",
+    "@babel/plugin-proposal-class-properties": "^7.8.3",
+    "@babel/plugin-proposal-export-default-from": "^7.8.3",
+    "@babel/plugin-proposal-object-rest-spread": "^7.9.5",
+    "@babel/preset-env": "^7.9.5",
+    "@babel/preset-react": "^7.9.4",
+    "@babel/preset-typescript": "^7.9.0",
+    "@rollup/plugin-commonjs": "^11.1.0",
+    "@rollup/plugin-node-resolve": "^7.1.3",
+    "babel-jest": "^25.5.1",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "rimraf": "^3.0.2",
+    "rollup": "^2.6.1",
+    "rollup-plugin-babel": "^4.4.0",
+    "typescript": "^3.8.3"
+  },
+  "peerDependencies": {
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1"
   }
 }
