@@ -59,11 +59,11 @@ jobs:
     steps:
       - checkout
       - run:
-        command: |-
-            # Bootstrap yarn workspaces.
-            yarn install --silent
+          command: |-
+              # Bootstrap yarn workspaces.
+              yarn install --silent
 
-            yarn workspaces run lint
+              yarn workspaces run lint
   homepage: &mlp
     docker:
       - image: vroom/mlp:2.0
