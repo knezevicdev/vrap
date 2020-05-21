@@ -4,7 +4,7 @@ import Head from 'next/head';
 import { parseCookies } from 'nookies';
 import React from 'react';
 
-import AnalyticsHandler from 'src/integrations/analytics/AnalyticsHandler';
+import AnalyticsHandler from 'src/integrations/AnalyticsHandler';
 
 const Contents = styled('div')(() => ({
   minHeight: '100vh',

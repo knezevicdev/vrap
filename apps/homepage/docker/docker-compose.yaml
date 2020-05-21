@@ -26,6 +26,8 @@ services:
       - '/www/node_modules'
       - '/www/apps/homepage/.next'
       - '/www/apps/homepage/node_modules'
+      - '/www/libs/integrations/analytics/dist'
+      - '/www/libs/integrations/analytics/node_modules'
       - '/www/libs/networking/inv-search/dist'
       - '/www/libs/networking/inv-search/node_modules'
       - '/www/libs/ui/dist'

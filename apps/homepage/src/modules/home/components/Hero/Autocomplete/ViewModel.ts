@@ -1,6 +1,6 @@
 import { AutocompleteStore } from './store';
 
-import AnalyticsHandler from 'src/integrations/analytics/AnalyticsHandler';
+import AnalyticsHandler from 'src/integrations/AnalyticsHandler';
 import { Status } from 'src/networking/types';
 
 export interface Suggestion {
