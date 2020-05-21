@@ -6,9 +6,7 @@
       "serverBaseUrl": "https://whispering-spire-42736.herokuapp.com/app/projects"
     },
     "collect": {
-      "url": [
-        "http://localhost:8080"
-      ]
+      "url": ["http://localhost:8080"]
     }
   }
 }
