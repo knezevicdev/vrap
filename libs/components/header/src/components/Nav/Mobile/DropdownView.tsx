@@ -94,7 +94,11 @@ const DropdownView: React.FC<Props> = ({ IconComponent, label, links }) => {
     <StyledDiv onClick={handleClick}>
       <IconLabelAndArrow>
         {IconComponent && <IconComponent />}
-        <Typography variant="caption" fontWeight="fontWeightSemibold">
+        <Typography
+          letterSpacing="1.25px"
+          variant="button"
+          fontWeight="fontWeightSemibold"
+        >
           {label}
         </Typography>
         <StyledArrowSvg

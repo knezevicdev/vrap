@@ -65,7 +65,11 @@ const LinkView: React.FC<Props> = ({ href, IconComponent, label, onClick }) => {
       <IconAndLabel>
         {IconComponent && <IconComponent />}
         {label && (
-          <Typography variant="caption" fontWeight="fontWeightSemibold">
+          <Typography
+            letterSpacing="1.25px"
+            variant="button"
+            fontWeight="fontWeightSemibold"
+          >
             {label}
           </Typography>
         )}

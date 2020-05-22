@@ -37,7 +37,11 @@ const LinkView: React.FC<Props> = ({ href, IconComponent, label, onClick }) => {
   return (
     <StyledAnchor href={href} onClick={onClick}>
       {IconComponent && <IconComponent />}
-      <Typography variant="caption" fontWeight="fontWeightSemibold">
+      <Typography
+        letterSpacing="1.25px"
+        variant="button"
+        fontWeight="fontWeightSemibold"
+      >
         {label}
       </Typography>
     </StyledAnchor>

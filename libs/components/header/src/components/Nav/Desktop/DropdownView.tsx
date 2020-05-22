@@ -143,7 +143,11 @@ const DropdownView: React.FC<Props> = ({ IconComponent, label, links }) => {
       <StyledSpan>
         <LabelAndArrow>
           {IconComponent && <IconComponent />}
-          <Typography variant="caption" fontWeight="fontWeightSemibold">
+          <Typography
+            letterSpacing="1.25px"
+            variant="button"
+            fontWeight="fontWeightSemibold"
+          >
             {label}
           </Typography>
           <StyledArrowSvg className="dropdown-arrow" />

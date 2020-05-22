@@ -52,7 +52,7 @@ class HeaderNavViewModel {
   private getAccountLabel(): string {
     const name = this.store.name;
     if (!name) {
-      return 'Account';
+      return 'ACCOUNT';
     }
     const tokens = name.split(' ');
     const firstLetters = tokens.map((token) => token[0]);
@@ -146,21 +146,21 @@ class HeaderNavViewModel {
       {
         type: 'link',
         href: '/catalog',
-        label: 'Buy',
+        label: 'BUY',
       },
       {
         type: 'link',
         href: '/sell',
-        label: 'Sell/Trade',
+        label: 'SELL/TRADE',
       },
       {
         type: 'link',
         href: '/finance',
-        label: 'Finance',
+        label: 'FINANCE',
       },
       {
         type: 'dropdown',
-        label: 'About',
+        label: 'ABOUT',
         links: [
           {
             href: '/about',
@@ -182,7 +182,7 @@ class HeaderNavViewModel {
       },
       {
         type: 'dropdown',
-        label: 'Contact',
+        label: 'CONTACT',
         links: [
           {
             href: 'https://vroom.zendesk.com/hc/en-us',
@@ -235,47 +235,47 @@ class HeaderNavViewModel {
         {
           type: 'link',
           href: '/account/login',
-          label: 'Log In',
+          label: 'LOG IN',
         },
         {
           type: 'link',
           href: '/',
-          label: 'Home',
+          label: 'HOME',
         },
         {
           type: 'link',
           href: '/catalog',
-          label: 'Buy',
+          label: 'BUY',
         },
         {
           type: 'link',
           href: '/sell',
-          label: 'Sell/Trade',
+          label: 'SELL/TRADE',
         },
         {
           type: 'link',
           href: '/finance',
-          label: 'Finance',
+          label: 'FINANCE',
         },
         {
           type: 'link',
           href: '/about',
-          label: 'About Us',
+          label: 'ABOUT US',
         },
         {
           type: 'link',
           href: '/protection',
-          label: 'Vroom Protection',
+          label: 'VROOM PROTECTION',
         },
         {
           type: 'link',
           href: '/how-it-works',
-          label: 'How It Works',
+          label: 'HOW IT WORKS',
         },
         {
           type: 'link',
           href: '/reviews',
-          label: 'Customer Reviews',
+          label: 'CUSTOMER REVIEWS',
         },
         {
           type: 'link',
@@ -285,12 +285,12 @@ class HeaderNavViewModel {
         {
           type: 'link',
           href: phoneNumberLinkData.href,
-          label: 'Call',
+          label: 'CALL',
         },
         {
           type: 'link',
           href: '/contact',
-          label: 'Contact Us',
+          label: 'CONTACT US',
         },
       ];
     }
@@ -309,52 +309,47 @@ class HeaderNavViewModel {
             href: '/my-account/profile',
             label: 'Profile',
           },
-          {
-            href: '/catalog',
-            label: 'Sign Out',
-            onClick: this.handleSignOutClick,
-          },
         ],
       },
       {
         type: 'link',
         href: '/',
-        label: 'Home',
+        label: 'HOME',
       },
       {
         type: 'link',
         href: '/catalog',
-        label: 'Buy',
+        label: 'BUY',
       },
       {
         type: 'link',
         href: '/sell',
-        label: 'Sell/Trade',
+        label: 'SELL/TRADE',
       },
       {
         type: 'link',
         href: '/finance',
-        label: 'Finance',
+        label: 'FINANCE',
       },
       {
         type: 'link',
         href: '/about',
-        label: 'About Us',
+        label: 'ABOUT US',
       },
       {
         type: 'link',
         href: '/protection',
-        label: 'Vroom Protection',
+        label: 'VROOM PROTECTION',
       },
       {
         type: 'link',
         href: '/how-it-works',
-        label: 'How It Works',
+        label: 'HOW IT WORKS',
       },
       {
         type: 'link',
         href: '/reviews',
-        label: 'Customer Reviews',
+        label: 'CUSTOMER REVIEWS',
       },
       {
         type: 'link',
@@ -364,12 +359,18 @@ class HeaderNavViewModel {
       {
         type: 'link',
         href: phoneNumberLinkData.href,
-        label: 'Call',
+        label: 'CALL',
       },
       {
         type: 'link',
         href: '/contact',
-        label: 'Contact Us',
+        label: 'CONTACT US',
+      },
+      {
+        type: 'link',
+        href: '/catalog',
+        label: 'SIGN OUT',
+        onClick: this.handleSignOutClick,
       },
     ];
   }
