@@ -1,4 +1,5 @@
 import { ServerStyleSheets } from '@material-ui/core/styles';
+import { AnalyticsSnippet } from '@vroom-web/analytics-integration';
 import { AppType, Enhancer, RenderPage } from 'next/dist/next-server/lib/utils';
 import Document, {
   DocumentContext,
@@ -13,7 +14,6 @@ import React from 'react';
 import FaviconSnippet from './FaviconSnippet';
 import FontsSnippet from './FontsSnippet';
 import GlobalEnvSnippet from './GlobalEnvSnippet';
-import SegmentSnippet from './SegmentSnippet';
 
 class VroomDocument extends Document {
   static async getInitialProps(
@@ -44,6 +44,8 @@ class VroomDocument extends Document {
   }
 
   render(): JSX.Element {
+    const segmentWriteKey = process.env.SEGMENT_WRITE_KEY;
+
     return (
       <Html lang="en">
         <Head>
@@ -54,7 +56,12 @@ class VroomDocument extends Document {
           />
           <FaviconSnippet />
           <FontsSnippet />
-          <SegmentSnippet segmentWriteKey={process.env.SEGMENT_WRITE_KEY} />
+          {segmentWriteKey && (
+            <AnalyticsSnippet
+              appName="Vroom Web - Homepage"
+              segmentWriteKey={segmentWriteKey}
+            />
+          )}
           <GlobalEnvSnippet
             CDN_URL={process.env.CDN_URL}
             INVSEARCH_V3_URL={process.env.INVSEARCH_V3_URL}
