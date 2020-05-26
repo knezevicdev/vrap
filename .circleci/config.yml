@@ -93,9 +93,13 @@ jobs:
       - run:
           command: |-
             sudo apt-get install python-pip && pip install awscli
-            aws s3 sync ./apps/homepage/public s3://homepage-assets-${CIRCLE_BRANCH//homepage-/}.p.vroom.systems --acl public-read
+
+            NAME_SPACE=${CIRCLE_TAG%-v*}
+            ENV=${NAME_SPACE#homepage-}
+
+            aws s3 sync ./apps/homepage/public s3://homepage-assets-${ENV}.p.vroom.systems --acl public-read
             build ./apps/homepage/docker
-            deploy $CIRCLE_BRANCH ./apps/homepage/docker
+            deploy ${ENV} ./apps/homepage/docker
 orbs:
   sonarcloud: sonarsource/sonarcloud@1.0.1
 workflows:
