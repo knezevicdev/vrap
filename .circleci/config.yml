@@ -123,6 +123,7 @@ workflows:
       - homepage_prod:
           context: aws-prod
           filters:
+            tags:
+              only: /^homepage-prod-v.*/
             branches:
-              only:
-                - homepage-prod
+              ignore: /.*/
