@@ -11,7 +11,7 @@ interface SliderProps {
   onDone: (price: MaxAndMin) => void;
 }
 
-const Slider: React.FC<SliderProps> = props => {
+const Slider: React.FC<SliderProps> = (props) => {
   const { state, onDone } = props;
   const store = new SliderStore(state);
   const viewModel = new ViewModel(store, onDone);

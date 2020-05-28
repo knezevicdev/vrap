@@ -19,7 +19,7 @@ const CustomButton = styled(Button)(({ theme }) => ({
   },
 }));
 
-const StartPurchaseView: React.FC<Props> = props => {
+const StartPurchaseView: React.FC<Props> = (props) => {
   const { viewModel } = props;
   const handleClick = (): void => viewModel.handleClick();
 

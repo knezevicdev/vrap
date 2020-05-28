@@ -53,7 +53,7 @@ class InventoryViewModel {
   startReaction(): void {
     this.disposeReaction = reaction(
       () => this.store.vehicleStatus,
-      status => {
+      (status) => {
         if (status === Status.SUCCESS) {
           this.trackProductViewed();
         }

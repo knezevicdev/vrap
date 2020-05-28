@@ -23,7 +23,7 @@ interface Props {
   viewModel: ViewModel;
 }
 
-const VehicleHeaderView: React.FC<Props> = props => {
+const VehicleHeaderView: React.FC<Props> = (props) => {
   const theme = useTheme();
   const { viewModel } = props;
 

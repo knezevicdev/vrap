@@ -39,7 +39,7 @@ class FiltersStore {
 
   @action
   toggleVisibility = (display: Filter): void => {
-    const filter = this.filters.find(f => f.display === display);
+    const filter = this.filters.find((f) => f.display === display);
     if (filter) {
       filter.open = !filter.open;
     }

@@ -15,7 +15,7 @@ interface Props {
   viewModel: ViewModel;
 }
 
-const HowItWorks: React.FC<Props> = props => {
+const HowItWorks: React.FC<Props> = (props) => {
   const { viewModel } = props;
   const theme = useTheme();
   const mdAndUp = useMediaQuery(theme.breakpoints.up('md'));

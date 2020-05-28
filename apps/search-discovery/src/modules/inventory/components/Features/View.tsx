@@ -31,7 +31,7 @@ const Message = styled(Typography)(({ theme }) => ({
   lineHeight: 'inherit',
 }));
 
-const FeaturesView: React.FC<Props> = props => {
+const FeaturesView: React.FC<Props> = (props) => {
   const { viewModel } = props;
 
   const [limited, setLimited] = useState(true);
@@ -51,7 +51,7 @@ const FeaturesView: React.FC<Props> = props => {
         </Grid>
       </Box>
       <Grid container>
-        {items.map(i => {
+        {items.map((i) => {
           return (
             <Grid key={i} item xs={12} sm={6} md={4}>
               <Box pb={2}>

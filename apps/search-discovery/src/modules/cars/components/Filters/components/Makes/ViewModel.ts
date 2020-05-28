@@ -25,7 +25,9 @@ class MakesViewModel {
     if (this.carsStore.makeAndModelsData) {
       const isSelected = this.makesStore.makesVisibility.indexOf(make) > -1;
       const models = this.carsStore.makeAndModelsData[make].slice().sort();
-      const allModelIndex = models.findIndex(m => m.toLowerCase() === ALL_KEY);
+      const allModelIndex = models.findIndex(
+        (m) => m.toLowerCase() === ALL_KEY
+      );
       if (allModelIndex !== 0) {
         const allModel = models[allModelIndex];
         models.splice(allModelIndex, 1);

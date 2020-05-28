@@ -18,7 +18,7 @@ const StyledTypography = styled(Typography)(() => ({
   cursor: 'pointer',
 }));
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   popper: {
     top: `66px !important`,
     right: `0 !important`,

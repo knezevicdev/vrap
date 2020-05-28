@@ -128,7 +128,7 @@ class CarsViewModel {
   startReaction(): void {
     this.disposeReaction = reaction(
       () => this.store.inventoryStatus,
-      status => {
+      (status) => {
         if (status === Status.SUCCESS) {
           this.trackProductList();
         }

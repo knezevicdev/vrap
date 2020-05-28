@@ -11,7 +11,7 @@ class MakesStore {
 
   @action
   setMakesVisibility = (make: string): void => {
-    const isOpen = this.makesVisibility.find(m => m === make);
+    const isOpen = this.makesVisibility.find((m) => m === make);
     if (isOpen) {
       this.makesVisibility.remove(make);
     } else {

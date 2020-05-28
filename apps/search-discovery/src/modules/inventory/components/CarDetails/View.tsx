@@ -16,7 +16,7 @@ interface Props {
   viewModel: ViewModel;
 }
 
-const CarDetailsView: React.FC<Props> = props => {
+const CarDetailsView: React.FC<Props> = (props) => {
   const { viewModel } = props;
 
   const theme = useTheme();
@@ -152,7 +152,7 @@ const CarDetailsView: React.FC<Props> = props => {
                 </Box>
               </Grid>
               <Grid item xs={12}>
-                {basics.items.map(text => {
+                {basics.items.map((text) => {
                   return (
                     <Box mb={2} key={text}>
                       <Typography variant="body1" fontWeight="fontWeightLight">
@@ -180,7 +180,7 @@ const CarDetailsView: React.FC<Props> = props => {
                 </Box>
               </Grid>
               <Grid item xs={12}>
-                {performance.items.map(text => {
+                {performance.items.map((text) => {
                   return (
                     <Box mb={2} key={text}>
                       <Typography variant="body1" fontWeight="fontWeightLight">

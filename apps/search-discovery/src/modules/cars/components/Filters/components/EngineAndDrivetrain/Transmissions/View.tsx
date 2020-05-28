@@ -13,7 +13,7 @@ interface Props {
   viewModel: TransmissionsViewModel;
 }
 
-const Label = withStyles(theme => ({
+const Label = withStyles((theme) => ({
   label: {
     fontWeight: theme.typography.fontWeightLight,
   },
@@ -27,7 +27,7 @@ const Transmissions: React.FC<Props> = ({ viewModel }) => {
 
   return (
     <RadioGroup value={viewModel.getActiveTransmission()} onChange={onChange}>
-      {viewModel.values.map(transmission => {
+      {viewModel.values.map((transmission) => {
         return (
           <Label
             key={transmission}

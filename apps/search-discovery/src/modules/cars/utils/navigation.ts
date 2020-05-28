@@ -52,7 +52,7 @@ export const updateUrl = (
       : undefined;
     const model = models && models[0] !== 'all' ? models[0] : undefined;
     const descriptorsCombined = [make, model, bodyType]
-      .filter(value => value)
+      .filter((value) => value)
       .join('-');
     const descriptor = descriptorsCombined ? `/${descriptorsCombined}` : '';
 

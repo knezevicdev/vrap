@@ -29,7 +29,7 @@ const ChipsView: React.FC<Props> = ({ viewModel }) => {
 
   return (
     <ChipsContainer container direction="row" spacing={1}>
-      {active.map(chip => {
+      {active.map((chip) => {
         const { display, onDelete } = chip;
         return (
           <Grid item key={display}>

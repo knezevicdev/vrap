@@ -28,7 +28,7 @@ const Divider = styled(Typography)(({ theme }) => ({
   marginLeft: theme.spacing(1),
 }));
 
-const BreadcrumbsView: React.FC<Props> = props => {
+const BreadcrumbsView: React.FC<Props> = (props) => {
   const { viewModel } = props;
   const crumbs = viewModel.crumbs();
   const lastIndex = crumbs.length - 1;

@@ -11,7 +11,7 @@ interface Props {
   viewModel: DriveTypesViewModel;
 }
 
-const Label = withStyles(theme => ({
+const Label = withStyles((theme) => ({
   label: {
     fontWeight: theme.typography.fontWeightLight,
   },
@@ -20,7 +20,7 @@ const Label = withStyles(theme => ({
 const DriveTypesView: React.FC<Props> = ({ viewModel }) => {
   return (
     <FormGroup>
-      {viewModel.values.map(driveType => {
+      {viewModel.values.map((driveType) => {
         const isSelected = viewModel.getActiveDriveTypes().includes(driveType);
 
         return (

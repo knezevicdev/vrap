@@ -21,7 +21,9 @@ export interface ActiveChip {
 }
 
 const format = (model: string): string => {
-  return model.replace(/_/g, ' ').replace(/(^\w|\s\w)/g, m => m.toUpperCase());
+  return model
+    .replace(/_/g, ' ')
+    .replace(/(^\w|\s\w)/g, (m) => m.toUpperCase());
 };
 
 class ChipsViewModel {
@@ -55,7 +57,7 @@ class ChipsViewModel {
       const active = [];
 
       makemodels &&
-        Object.keys(makemodels).forEach(make => {
+        Object.keys(makemodels).forEach((make) => {
           const models = makemodels[make];
           const isAll = models[0] === ALL_KEY;
           if (isAll) {
@@ -64,7 +66,7 @@ class ChipsViewModel {
               onDelete: () => removeMakeOrModel(make, ALL_KEY),
             });
           } else {
-            models.forEach(model => {
+            models.forEach((model) => {
               active.push({
                 display: format(model),
                 onDelete: () => removeMakeOrModel(make, model),
@@ -74,7 +76,7 @@ class ChipsViewModel {
         });
 
       bodytypes &&
-        bodytypes.forEach(bodytype => {
+        bodytypes.forEach((bodytype) => {
           active.push({
             display: bodytype,
             onDelete: () =>
@@ -87,7 +89,7 @@ class ChipsViewModel {
         });
 
       colors &&
-        colors.forEach(color => {
+        colors.forEach((color) => {
           active.push({
             display: color,
             onDelete: () =>
@@ -123,7 +125,7 @@ class ChipsViewModel {
         });
 
       drivetype &&
-        drivetype.forEach(driveType => {
+        drivetype.forEach((driveType) => {
           active.push({
             display: driveType,
             onDelete: () =>

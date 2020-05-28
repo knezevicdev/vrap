@@ -96,15 +96,15 @@ export const getFilterData = (
               const models = makemodels[make];
               const isAll = models[0] === ALL_KEY;
               const makesMap = Object.keys(makeAndModelMap);
-              const makeIndex = makesMap.findIndex(m => sanitize(m) === make);
+              const makeIndex = makesMap.findIndex((m) => sanitize(m) === make);
               if (isAll) {
                 current.make.push(makesMap[makeIndex]);
               } else {
-                const mappedModels = models.map(model => {
+                const mappedModels = models.map((model) => {
                   const key = makesMap[makeIndex];
                   const modelsMap = makeAndModelMap[key];
                   const modelIndex = modelsMap.findIndex(
-                    m => sanitize(m) === model
+                    (m) => sanitize(m) === model
                   );
                   return modelsMap[modelIndex];
                 });
@@ -118,9 +118,9 @@ export const getFilterData = (
         : { make: undefined, model: undefined };
 
     const bodytype = bodytypes
-      ? bodytypes.map(bodytype => {
+      ? bodytypes.map((bodytype) => {
           const item = bodyTypes.find(
-            body => body.url === bodytype
+            (body) => body.url === bodytype
           ) as BodyType;
           return item.api;
         })

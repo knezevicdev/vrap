@@ -113,7 +113,7 @@ interface TypographyProps {
   whiteSpace?: WhiteSpace;
 }
 
-const Typography: React.FC<TypographyProps> = props => {
+const Typography: React.FC<TypographyProps> = (props) => {
   const {
     children,
     className,

@@ -11,7 +11,7 @@ interface InputsProps {
   onDone: (values: MaxAndMin | undefined) => void;
 }
 
-const Inputs: React.FC<InputsProps> = props => {
+const Inputs: React.FC<InputsProps> = (props) => {
   const { state, onDone } = props;
   const store = new InputsStore(state, onDone);
   const viewModel = new ViewModel(store);

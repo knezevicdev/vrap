@@ -11,7 +11,7 @@ interface Props {
   errorBottom: string;
 }
 
-const VehicleNotFound: React.FC<Props> = props => {
+const VehicleNotFound: React.FC<Props> = (props) => {
   const { errorTop, errorBottom } = props;
   return (
     <Grid container spacing={6} justify="center">

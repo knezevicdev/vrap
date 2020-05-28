@@ -92,7 +92,7 @@ const FiltersView: React.FC<FiltersViewProps> = ({ viewModel }) => {
         <FiltersButton fontWeight="fontWeightLight">Filters</FiltersButton>
         <CloseIcon fontSize="small" />
       </FiltersCloseContainer>
-      {viewModel.getFilters().map(value => {
+      {viewModel.getFilters().map((value) => {
         const { display, open } = value;
         return (
           <StyledFilter key={display}>

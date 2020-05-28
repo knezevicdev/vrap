@@ -15,7 +15,7 @@ interface Props {
   viewModel: ViewModel;
 }
 
-const SimilarVehiclesView: React.FC<Props> = props => {
+const SimilarVehiclesView: React.FC<Props> = (props) => {
   const { viewModel } = props;
 
   if (viewModel.error()) {

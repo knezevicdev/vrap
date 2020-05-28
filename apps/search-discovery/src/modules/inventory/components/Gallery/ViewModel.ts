@@ -43,7 +43,7 @@ class GalleryViewModel {
     const interiorPhotoIndex = vehiclePhotos.indexOf(interiorPhotoUrl);
     vehiclePhotos.splice(1, 0, vehiclePhotos.splice(interiorPhotoIndex, 1)[0]);
 
-    return vehiclePhotos.map(img => {
+    return vehiclePhotos.map((img) => {
       return {
         original: this.getHiResImageUrl(img),
         thumbnail: img,

@@ -20,7 +20,7 @@ interface Props {
 const ModelsView: React.FC<Props> = ({ models, viewModel }) => {
   return (
     <StyledList>
-      {models.map(model => {
+      {models.map((model) => {
         const { display, isSelected } = viewModel.getModelInfo(model);
         return (
           <ListItem

@@ -58,7 +58,7 @@ class HeaderAutocompleteViewModel {
     if (this.headerAutocompleteStore.inventorySuggestions) {
       const suggestions: Suggestions = [];
       this.headerAutocompleteStore.inventorySuggestions.Make.forEach(
-        element => {
+        (element) => {
           suggestions.push({
             group: 'Make',
             label: element,
@@ -67,7 +67,7 @@ class HeaderAutocompleteViewModel {
         }
       );
       this.headerAutocompleteStore.inventorySuggestions.Model.forEach(
-        element => {
+        (element) => {
           const tokens = element.split('#');
           const make = sanitize(tokens[0]);
           const model = sanitize(tokens[1]);
@@ -80,7 +80,7 @@ class HeaderAutocompleteViewModel {
         }
       );
       this.headerAutocompleteStore.inventorySuggestions.BodyType.forEach(
-        element => {
+        (element) => {
           suggestions.push({
             group: 'Body Type',
             label: element,
@@ -137,7 +137,7 @@ class HeaderAutocompleteViewModel {
         default: {
           const bodyType = suggestion.bodyType as string;
           const bodyTypeUrl = (bodyTypes.find(
-            body => body.api === bodyType
+            (body) => body.api === bodyType
           ) as BodyType).url;
           return { [bodyTypeKey]: [bodyTypeUrl] };
         }

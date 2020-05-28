@@ -19,7 +19,7 @@ const transformResponse = (data: Inventory): MakeAndModels => {
   });
 
   return makes.reduce((current: MakeAndModels, make: MakeBuckets) => {
-    const models = make.model_count.buckets.map(model => model.key);
+    const models = make.model_count.buckets.map((model) => model.key);
     const name = make.key;
 
     current[name] = ['All'].concat(models);

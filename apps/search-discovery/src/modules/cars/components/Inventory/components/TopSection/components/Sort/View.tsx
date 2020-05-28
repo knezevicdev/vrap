@@ -27,7 +27,7 @@ const SortView: React.FC<Props> = ({ viewModel }) => {
 
   return (
     <SortContainer value={value} onChange={handleChange}>
-      {values.map(item => (
+      {values.map((item) => (
         <MenuItem key={item} value={item}>
           {item}
         </MenuItem>

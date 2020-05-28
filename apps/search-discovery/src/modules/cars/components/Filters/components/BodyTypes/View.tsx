@@ -35,7 +35,7 @@ const BodyTypesView: React.FC<Props> = ({ viewModel }) => {
   const resetButtonLabel = viewModel.resetButtonLabel;
   return (
     <StyledList>
-      {bodyTypes.map(bodyType => {
+      {bodyTypes.map((bodyType) => {
         const { display, url } = bodyType;
         const { isSelected, fontWeight } = viewModel.getItemInformation(url);
 

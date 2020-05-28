@@ -33,7 +33,7 @@ const MakesView: React.FC<Props> = ({ viewModel }) => {
 
   return (
     <StyledList>
-      {viewModel.getMakes().map(make => {
+      {viewModel.getMakes().map((make) => {
         const { isSelected, models } = viewModel.getMakeData(make);
 
         return (

@@ -40,7 +40,7 @@ export async function getInitialInventoryStoreState(
     ).data as InventoryV3;
 
     const vehicle = response.data.hits.hits.find(
-      i => i._source.vin.toLowerCase() === vin.toLowerCase()
+      (i) => i._source.vin.toLowerCase() === vin.toLowerCase()
     );
 
     if (!vehicle) {
@@ -101,7 +101,7 @@ export class InventoryStore {
       ).data as InventoryV3;
 
       const vehicle = response.data.hits.hits.find(
-        i => i._source.vin.toLowerCase() === vin.toLowerCase()
+        (i) => i._source.vin.toLowerCase() === vin.toLowerCase()
       );
 
       if (!vehicle) {

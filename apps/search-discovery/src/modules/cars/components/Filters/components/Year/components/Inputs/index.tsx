@@ -9,7 +9,7 @@ interface InputsProps {
   onDone: (values: number[]) => void;
 }
 
-const Inputs: React.FC<InputsProps> = props => {
+const Inputs: React.FC<InputsProps> = (props) => {
   const { state, onDone } = props;
   const store = new InputsStore(state);
   const viewModel = new ViewModel(store, onDone);

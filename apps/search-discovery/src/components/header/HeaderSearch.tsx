@@ -5,7 +5,7 @@ import React from 'react';
 import HeaderAutocomplete from './HeaderAutocomplete';
 import HeaderSearchDialog from './HeaderSearchDialog';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   root: {
     maxWidth: '500px',
     border: `1px solid ${theme.palette.grey.A100}`,
