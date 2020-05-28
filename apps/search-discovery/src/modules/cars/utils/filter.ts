@@ -5,7 +5,9 @@ import {
   ALL_KEY,
   BodyType,
   bodyTypes,
+  Filters,
   FiltersData,
+  FiltersString,
   INVENTORY_LIMIT,
   MakeAndModels,
   SortValue,
@@ -17,52 +19,52 @@ export const sanitize = (str: string): string => {
   return str.replace(toUnderscoreRegex, '_').toLowerCase();
 };
 
+interface MaxAndMin {
+  min: string;
+
+  max: string;
+}
+
+interface FiltersParsed extends FiltersString {
+  [Filters.YEAR]?: MaxAndMin;
+  [Filters.PRICE]?: MaxAndMin;
+  [Filters.MILES]?: MaxAndMin;
+  [Filters.TRANSMISSION]?: string;
+  [Filters.PAGE]?: string;
+}
+
 export const getFiltersDataFromUrl = (
   filters?: string
 ): FiltersData | undefined => {
   if (filters) {
     const decoded = Base64.decode(filters as string);
-    let parsed = parse(decoded);
-    parsed.miles &&
-      (parsed = {
-        ...parsed,
-        miles: {
-          min: parseInt(parsed.miles.min),
-          max: parseInt(parsed.miles.max),
-        },
-      });
+    const parsed: FiltersParsed = parse(decoded);
+    const result: FiltersData = parse(decoded);
+
+    if (parsed.miles)
+      result.miles = {
+        min: parseInt(parsed.miles.min),
+        max: parseInt(parsed.miles.max),
+      };
 
     parsed.year &&
-      (parsed = {
-        ...parsed,
-        year: {
-          min: parseInt(parsed.year.min),
-          max: parseInt(parsed.year.max),
-        },
+      (result.year = {
+        min: parseInt(parsed.year.min),
+        max: parseInt(parsed.year.max),
       });
 
     parsed.price &&
-      (parsed = {
-        ...parsed,
-        price: {
-          min: parseInt(parsed.price.min),
-          max: parseInt(parsed.price.max),
-        },
+      (result.price = {
+        min: parseInt(parsed.price.min),
+        max: parseInt(parsed.price.max),
       });
 
     parsed.transmission &&
-      (parsed = {
-        ...parsed,
-        transmission: parseInt(parsed.transmission),
-      });
+      (result.transmission = parseInt(parsed.transmission));
 
-    parsed.page &&
-      (parsed = {
-        ...parsed,
-        page: parseInt(parsed.page),
-      });
+    parsed.page && (result.page = parseInt(parsed.page));
 
-    return parsed;
+    return result;
   }
 
   return undefined;
