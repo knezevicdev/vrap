@@ -1,6 +1,11 @@
+import { name, version } from 'package.json';
+
 export interface GlobalEnv {
   CDN_URL?: string;
   INVSEARCH_V3_URL?: string;
+  LEADS_URL?: string;
+  NAME?: string;
+  VERSION?: string;
 }
 
 declare global {
@@ -9,8 +14,8 @@ declare global {
   }
 }
 
-const globalEnv: GlobalEnv | NodeJS.ProcessEnv = process.browser
+const globalEnv: GlobalEnv = process.browser
   ? window.__GLOBAL_ENV__
-  : process.env;
+  : { ...process.env, NAME: name, VERSION: version };
 
 export default globalEnv;
