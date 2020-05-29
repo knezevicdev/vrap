@@ -47,18 +47,21 @@ export enum Filters {
   SEARCH = 'search',
 }
 
-export interface FiltersData {
+export interface FiltersString {
   [Filters.MAKE_AND_MODELS]?: MakeAndModels;
   [Filters.BODY_TYPES]?: string[];
   [Filters.COLORS]?: string[];
+  [Filters.DRIVE_TYPE]?: string[];
+  [Filters.SORT]?: SortValue;
+  [Filters.SEARCH]?: string;
+}
+
+export interface FiltersData extends FiltersString {
   [Filters.YEAR]?: MaxAndMin;
   [Filters.PRICE]?: MaxAndMin;
   [Filters.MILES]?: MaxAndMin;
   [Filters.TRANSMISSION]?: number;
-  [Filters.DRIVE_TYPE]?: string[];
   [Filters.PAGE]?: number;
-  [Filters.SORT]?: SortValue;
-  [Filters.SEARCH]?: string;
 }
 
 export enum Pathname {

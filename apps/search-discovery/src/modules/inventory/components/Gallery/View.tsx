@@ -19,6 +19,10 @@ const Paper = styled(MuiPaper)(({ theme }) => ({
 }));
 //#endregion
 
+interface LocalImageGallery extends ImageGallery {
+  toggleFullScreen: () => void;
+}
+
 interface Props {
   viewModel: ViewModel;
 }
@@ -30,7 +34,7 @@ const GalleryView: React.FC<Props> = (props) => {
   const [fullscreen, setFullscreen] = useState(false);
   const isMobile = useMediaQuery(theme.breakpoints.down('xs'));
 
-  const imageGalleryRef = useRef<ImageGallery>(null);
+  const imageGalleryRef = useRef<LocalImageGallery>(null);
   const handleClick = (): void => {
     if (imageGalleryRef.current && !isMobile) {
       imageGalleryRef.current.toggleFullScreen();

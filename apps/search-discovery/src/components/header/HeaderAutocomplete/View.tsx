@@ -2,7 +2,9 @@ import Box from '@material-ui/core/Box';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { useTheme } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
-import Autocomplete, { RenderInputParams } from '@material-ui/lab/Autocomplete';
+import Autocomplete, {
+  AutocompleteRenderInputParams,
+} from '@material-ui/lab/Autocomplete';
 import React from 'react';
 
 import { ReactComponent as SearchIcon } from '../svg/search.svg';
@@ -25,10 +27,10 @@ const HeaderAutocomplete: React.FC<HeaderAutocompleteProps> = ({
 
   const handleChange = (
     event: React.ChangeEvent<{}>,
-    value: Suggestion | null
+    value: Suggestion | string | null
   ): void => {
     event.preventDefault();
-    if (!value) {
+    if (!value || typeof value === 'string') {
       return;
     }
     headerAutocompleteViewModel.navigateUsingAutocomplete(value);
@@ -61,7 +63,7 @@ const HeaderAutocomplete: React.FC<HeaderAutocompleteProps> = ({
 
   return (
     <Box display="flex" flexGrow={1}>
-      <Autocomplete<Suggestion>
+      <Autocomplete<Suggestion, undefined, boolean, boolean>
         classes={classes}
         disableClearable={true}
         freeSolo={true}
@@ -71,7 +73,7 @@ const HeaderAutocomplete: React.FC<HeaderAutocompleteProps> = ({
         options={headerAutocompleteViewModel.suggestions()}
         loading={suggestionsLoading}
         inputValue={headerAutocompleteViewModel.inputValue()}
-        renderInput={(params: RenderInputParams): JSX.Element => (
+        renderInput={(params: AutocompleteRenderInputParams): JSX.Element => (
           <TextField
             {...params}
             InputProps={{
