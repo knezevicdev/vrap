@@ -3,14 +3,13 @@ jobs:
   sonarcloud:
     docker:
       - image: circleci/node:erbium-browsers
+    environment:
+      CDN_URL: ''
+      INVSEARCH_V3_URL: ''
     steps:
       - checkout
       - run:
           command: |-
-            # Placeholders
-            ENV CDN_URL ''
-            ENV INVSEARCH_V3_URL ''
-
             # Bootstrap yarn workspaces.
             yarn install --silent
 
@@ -37,13 +36,16 @@ jobs:
   lighthouse:
     docker:
       - image: circleci/node:erbium-browsers
+    environment:
+      CDN_URL: ''
+      INVSEARCH_V3_URL: ''
     steps:
       - checkout
       - run:
           command: |-
             # Placeholders
-            ENV CDN_URL ''
-            ENV INVSEARCH_V3_URL ''
+            CDN_URL=''
+            INVSEARCH_V3_URL=''
 
             # Bootstrap yarn workspaces.
             yarn install --silent
