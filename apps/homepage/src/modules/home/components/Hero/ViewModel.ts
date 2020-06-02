@@ -1,3 +1,5 @@
+import { HomeStore } from '../../store';
+
 import globalEnv from 'src/globalEnv';
 
 interface Link {
@@ -22,6 +24,16 @@ class HeroViewModel {
     src: `${globalEnv.CDN_URL}/modules/home/prius.png`,
     alt: 'Prius',
   };
+
+  private store: HomeStore;
+
+  constructor(store: HomeStore) {
+    this.store = store;
+  }
+
+  getDeviceType(): string {
+    return this.store.deviceType;
+  }
 
   handleMobileButtonClick(): void {
     window.location.href = '/catalog';
