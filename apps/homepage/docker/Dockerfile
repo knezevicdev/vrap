@@ -9,9 +9,6 @@ WORKDIR /www
 COPY . .
 RUN chown -R 1000:1000 .
 
-# Placeholders
-ENV CDN_URL=
-ENV INVSEARCH_V3_URL=
 
 # Bootstrap yarn workspaces.
 RUN yarn install --silent
@@ -22,6 +19,10 @@ RUN yarn workspace @vroom-web/inv-search-networking build
 RUN yarn workspace @vroom-web/ui build
 RUN yarn workspace @vroom-web/header-components build
 RUN yarn workspace @vroom-web/footer-components build
+
+# Placeholders
+ENV CDN_URL ''
+ENV INVSEARCH_V3_URL ''
 
 # Build the main app.
 RUN yarn workspace @vroom-web/homepage build

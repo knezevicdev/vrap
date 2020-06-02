@@ -7,6 +7,10 @@ jobs:
       - checkout
       - run:
           command: |-
+            # Placeholders
+            ENV CDN_URL ''
+            ENV INVSEARCH_V3_URL ''
+
             # Bootstrap yarn workspaces.
             yarn install --silent
 
@@ -37,6 +41,10 @@ jobs:
       - checkout
       - run:
           command: |-
+            # Placeholders
+            ENV CDN_URL ''
+            ENV INVSEARCH_V3_URL ''
+
             # Bootstrap yarn workspaces.
             yarn install --silent
 
