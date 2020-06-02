@@ -9,7 +9,6 @@ WORKDIR /www
 COPY . .
 RUN chown -R 1000:1000 .
 
-
 # Bootstrap yarn workspaces.
 RUN yarn install --silent
 
