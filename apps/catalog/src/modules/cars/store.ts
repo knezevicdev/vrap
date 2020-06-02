@@ -1,3 +1,4 @@
+import { Inventory } from '@vroom-web/inv-search-networking';
 import { action, computed, observable } from 'mobx';
 import { createContext } from 'react';
 
@@ -8,7 +9,6 @@ import {
 } from 'src/modules/cars/utils/data';
 import { getFiltersDataFromUrl } from 'src/modules/cars/utils/filter';
 import { FiltersData, MakeAndModels } from 'src/modules/cars/utils/types';
-import { Inventory } from 'src/networking/models/Inventory.v3';
 import { Status } from 'src/networking/types';
 
 export interface InitialCarsStoreState {
@@ -47,7 +47,7 @@ export async function getInitialCarsStoreState(
     initialState.inventoryStatus = Status.ERROR;
   }
 
-  const hasNoInventory = inventoryData?.data.hits.total === 0;
+  const hasNoInventory = inventoryData?.hits.total === 0;
 
   const popularCarsData = hasNoInventory ? await fetchPopularCars() : undefined;
   initialState.popularCarsData = popularCarsData;
@@ -73,7 +73,7 @@ export class CarsStore {
   @observable inventoryStatus: Status = Status.INITIAL;
   @computed get hasInventory(): boolean {
     if (this.inventoryData) {
-      return this.inventoryData.data.hits.total !== 0;
+      return this.inventoryData.hits.total !== 0;
     }
     return false;
   }
@@ -82,7 +82,7 @@ export class CarsStore {
   @observable popularCarsStatus: Status = Status.INITIAL;
   @computed get hasPopularCars(): boolean {
     if (this.popularCarsData) {
-      return this.popularCarsData.data.hits.total !== 0;
+      return this.popularCarsData.hits.total !== 0;
     }
     return false;
   }

@@ -15,6 +15,8 @@ import FaviconSnippet from './FaviconSnippet';
 import FontsSnippet from './FontsSnippet';
 import GlobalEnvSnippet from './GlobalEnvSnippet';
 
+import globalEnv from 'src/globalEnv';
+
 class VroomDocument extends Document {
   static async getInitialProps(
     ctx: DocumentContext
@@ -63,8 +65,10 @@ class VroomDocument extends Document {
             />
           )}
           <GlobalEnvSnippet
-            CDN_URL={process.env.CDN_URL}
-            INVSEARCH_V3_URL={process.env.INVSEARCH_V3_URL}
+            CDN_URL={globalEnv.CDN_URL}
+            INVSEARCH_V3_URL={globalEnv.INVSEARCH_V3_URL}
+            NAME={globalEnv.NAME}
+            VERSION={globalEnv.VERSION}
           />
         </Head>
         <body>

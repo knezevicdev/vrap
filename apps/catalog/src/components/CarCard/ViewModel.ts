@@ -1,3 +1,4 @@
+import { Car } from '@vroom-web/inv-search-networking';
 import Router from 'next/router';
 
 import globalEnv from 'src/globalEnv';
@@ -5,7 +6,6 @@ import AnalyticsHandler, {
   Product,
   ProductPhotoType,
 } from 'src/integrations/analytics/AnalyticsHandler';
-import { Car } from 'src/networking/models/Inventory.v3';
 
 interface Summary {
   image: string;

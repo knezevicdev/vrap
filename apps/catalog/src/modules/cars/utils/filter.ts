@@ -1,3 +1,4 @@
+import { PostInventoryRequestData } from '@vroom-web/inv-search-networking';
 import { Base64 } from 'js-base64';
 import { parse } from 'qs';
 
@@ -12,7 +13,6 @@ import {
   MakeAndModels,
   SortValue,
 } from 'src/modules/cars/utils/types';
-import { SearchParams } from 'src/networking/models/Inventory.v3';
 
 export const sanitize = (str: string): string => {
   const toUnderscoreRegex = /-| /g;
@@ -73,7 +73,7 @@ export const getFiltersDataFromUrl = (
 export const getFilterData = (
   filters?: string,
   makeAndModelMap?: MakeAndModels
-): SearchParams | undefined => {
+): PostInventoryRequestData | undefined => {
   const urlFilters = getFiltersDataFromUrl(filters);
 
   if (urlFilters) {
