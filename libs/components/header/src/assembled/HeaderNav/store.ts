@@ -52,6 +52,13 @@ class HeaderNavStore {
   @action
   signOut = (): void => {
     ClientSideCookies.remove('authToken');
+    // FIT-468.
+    // The vroom-com application persists its redux state using session storage.
+    // In order to make sure sign outs are registered by the vroom-com app,
+    // we need to clear the persisted data here.
+    // When we get to a point where we've fully ported off vroom-com,
+    // this line can be reassesed and likely removed.
+    sessionStorage.removeItem('persist:root');
     this.loggedIn = false;
   };
 }
