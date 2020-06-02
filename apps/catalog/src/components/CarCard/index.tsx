@@ -1,12 +1,11 @@
 import { useTheme } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
+import { Car } from '@vroom-web/inv-search-networking';
 import React from 'react';
 
 import DesktopView from './DesktopView';
 import MobileView from './MobileView';
 import CarCardViewModel from './ViewModel';
-
-import { Car } from 'src/networking/models/Inventory.v3';
 
 interface CarCardProps {
   car: Car | undefined;

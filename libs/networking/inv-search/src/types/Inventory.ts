@@ -20,7 +20,7 @@ export const carSchema = yup
     transmission: yup.string(),
     trim: yup.string(),
     engine: yup.string(),
-    hiresPhotos: yup.array(yup.string()),
+    hiresPhotos: yup.array(yup.string()).nullable(),
     warranty: yup.number(),
     model: yup.string(),
     extColor: yup.string(),
@@ -44,12 +44,14 @@ export const carSchema = yup
     optionalFeatures: yup.string(),
     zone: yup.string(),
     soldStatus: yup.number(),
-    otherPhotos: yup.array(yup.string()),
+    otherPhotos: yup.array(yup.string()).nullable(),
     ownerCount: yup.number(),
     cityMpg: yup.number(),
     highwayMpg: yup.number(),
     // TODO: replace inventoryId with externalId when the API supplies it.
     inventoryId: yup.number(),
+    consignmentPartnerId: yup.string(),
+    hasStockPhotos: yup.boolean(),
   })
   .strict(true);
 export type Car = yup.InferType<typeof carSchema>;

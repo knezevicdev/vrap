@@ -11,7 +11,7 @@ class PaginationViewModel {
   }
 
   private getTotal = (): number => {
-    return this.carsStore.inventoryData?.data.hits.total || INVENTORY_LIMIT;
+    return this.carsStore.inventoryData?.hits.total || INVENTORY_LIMIT;
   };
 
   getPageAndCount(): { page: number; count: number } {

@@ -1,3 +1,11 @@
+import {
+  Inventory,
+  InvSearchNetworker,
+  MakeBucket,
+  PostInventoryRequestData,
+  SoldStatus,
+} from '@vroom-web/inv-search-networking';
+
 import globalEnv from 'src/globalEnv';
 import { getFilterData } from 'src/modules/cars/utils/filter';
 import {
@@ -5,20 +13,13 @@ import {
   MakeAndModels,
   POPULAR_CAR_LIMIT,
 } from 'src/modules/cars/utils/types';
-import {
-  Inventory,
-  MakeBuckets,
-  SearchParams,
-  SoldStatus,
-} from 'src/networking/models/Inventory.v3';
-import { Networker } from 'src/networking/Networker';
 
 const transformResponse = (data: Inventory): MakeAndModels => {
-  const makes = data.data.aggregations.make_count.buckets.sort((a, b) => {
+  const makes = data.aggregations.make_count.buckets.sort((a, b) => {
     return a.key > b.key ? 1 : -1;
   });
 
-  return makes.reduce((current: MakeAndModels, make: MakeBuckets) => {
+  return makes.reduce((current: MakeAndModels, make: MakeBucket) => {
     const models = make.model_count.buckets.map((model) => model.key);
     const name = make.key;
 
@@ -39,10 +40,12 @@ export const getDataForMakeAndModels = async (): Promise<
       source: `${globalEnv.NAME}-${globalEnv.VERSION}`,
     };
 
-    const makeAndModelResponse = await new Networker().postInventory(
+    const invSearchNetworker = new InvSearchNetworker(
+      globalEnv.INVSEARCH_V3_URL
+    );
+    const makeAndModelResponse = await invSearchNetworker.postInventory(
       dataForMakeAndModel
     );
-
     return transformResponse(makeAndModelResponse.data);
   } catch {
     return undefined;
@@ -52,7 +55,7 @@ export const getDataForMakeAndModels = async (): Promise<
 const getInventoryData = (
   filters?: string,
   makeAndModelMap?: MakeAndModels
-): SearchParams => {
+): PostInventoryRequestData => {
   const filterData = getFilterData(filters, makeAndModelMap);
   return {
     ...filterData,
@@ -71,7 +74,10 @@ export const fetchInventoryData = async (
   const data = getInventoryData(filters, makeAndModelMap);
 
   try {
-    const inventoryResponse = await new Networker().postInventory(data);
+    const invSearchNetworker = new InvSearchNetworker(
+      globalEnv.INVSEARCH_V3_URL
+    );
+    const inventoryResponse = await invSearchNetworker.postInventory(data);
     return inventoryResponse.data;
   } catch {
     return undefined;
@@ -89,7 +95,10 @@ export const fetchPopularCars = async (): Promise<Inventory | undefined> => {
   };
 
   try {
-    const inventoryResponse = await new Networker().postInventory(data);
+    const invSearchNetworker = new InvSearchNetworker(
+      globalEnv.INVSEARCH_V3_URL
+    );
+    const inventoryResponse = await invSearchNetworker.postInventory(data);
     return inventoryResponse.data;
   } catch {
     return undefined;

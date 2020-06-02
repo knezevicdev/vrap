@@ -1,3 +1,4 @@
+import { Car, Hit, Inventory } from '@vroom-web/inv-search-networking';
 import { reaction } from 'mobx';
 
 import AnalyticsHandler, {
@@ -5,7 +6,6 @@ import AnalyticsHandler, {
 } from 'src/integrations/analytics/AnalyticsHandler';
 import { CarsStore } from 'src/modules/cars/store';
 import { Filters, INVENTORY_LIMIT } from 'src/modules/cars/utils/types';
-import { Car, Hit, Inventory } from 'src/networking/models/Inventory.v3';
 import { Status } from 'src/networking/types';
 
 class CarsViewModel {
@@ -22,7 +22,7 @@ class CarsViewModel {
     if (!this.store.inventoryData) {
       return;
     }
-    const cars = this.store.inventoryData.data.hits.hits.map((hit: Hit) => {
+    const cars = this.store.inventoryData.hits.hits.map((hit: Hit) => {
       const { _source } = hit;
       return _source;
     });
@@ -178,7 +178,7 @@ class CarsViewModel {
   };
 
   private getCarsFromStore = (inventory: Inventory): Car[] => {
-    return inventory.data.hits.hits.map((hit: Hit) => {
+    return inventory.hits.hits.map((hit: Hit) => {
       const { _source } = hit;
       return _source;
     });

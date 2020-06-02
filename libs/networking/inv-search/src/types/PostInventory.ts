@@ -1,11 +1,12 @@
 import { InventoryResponse, inventoryResponseSchema } from './Inventory';
 
-type SoldStatus =
-  | 'all_cars'
-  | 'for_sale'
-  | 'sale_pending'
-  | 'sold'
-  | 'delivered';
+export enum SoldStatus {
+  ALL_CARS = 'all_cars',
+  FOR_SALE = 'for_sale',
+  SALE_PENDING = 'sale_pending',
+  SOLD = 'sold',
+  DELIVERED = 'delivered',
+}
 
 export interface PostInventoryRequestData {
   offset?: number;
