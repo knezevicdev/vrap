@@ -1,9 +1,11 @@
 import { NextPage, NextPageContext } from 'next';
 import { parseCookies } from 'nookies';
 import React from 'react';
+import { UAParser } from 'ua-parser-js';
 
 import experimentSDK from 'src/integrations/experimentSDK';
 import Home from 'src/modules/home';
+import { HomeStore, HomeStoreContext } from 'src/modules/home/store';
 import Page from 'src/Page';
 
 interface Experiment {
@@ -15,9 +17,16 @@ interface Props {
   description: string;
   experiments: Experiment[];
   title: string;
+  deviceType: string;
 }
 
-const HomePage: NextPage<Props> = ({ description, experiments, title }) => {
+const HomePage: NextPage<Props> = ({
+  description,
+  experiments,
+  title,
+  deviceType,
+}) => {
+  const store = new HomeStore({ deviceType });
   const head = (
     <>
       <title>{title}</title>
@@ -27,7 +36,9 @@ const HomePage: NextPage<Props> = ({ description, experiments, title }) => {
 
   return (
     <Page experiments={experiments} name="Home" head={head}>
-      <Home />
+      <HomeStoreContext.Provider value={store}>
+        <Home />
+      </HomeStoreContext.Provider>
     </Page>
   );
 };
@@ -42,7 +53,11 @@ HomePage.getInitialProps = async (ctx: NextPageContext): Promise<Props> => {
     marketingId,
     'website'
   );
-  return { description, experiments, title };
+
+  const ua = new UAParser(ctx.req?.headers['user-agent']);
+  const deviceType = ua.getDevice().type || 'desktop';
+
+  return { description, experiments, title, deviceType };
 };
 
 export default HomePage;
