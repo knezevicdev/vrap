@@ -22,12 +22,19 @@ class HeaderNavStore {
         return;
       }
       const authToken = JSON.parse(authTokenWithExpressPrefix.slice(2));
-      const { accessToken, idToken } = authToken;
-      const { name } = jwtDecode(idToken);
-      this.name = name;
-      const { exp: expirationTimestamp } = jwtDecode(accessToken);
+      const { exp: expirationTimestamp } = jwtDecode(authToken.accessToken);
       const loggedIn = expirationTimestamp > new Date().getTime() / 1000;
       this.loggedIn = loggedIn;
+
+      // FIT-488
+      // This is a stopgap until the authToken cookie realiably includes "idToken" data.
+      // We will set the "name" field if "idToken" is defined, otherwise gracefully fail.
+      try {
+        const { name } = jwtDecode(authToken.idToken);
+        this.name = name;
+      } catch {
+        this.name = undefined;
+      }
     } catch {
       this.loggedIn = false;
     }
