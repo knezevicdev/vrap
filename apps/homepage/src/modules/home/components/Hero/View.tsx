@@ -16,7 +16,7 @@ const DesktopBackground = styled('div')(({ theme }) => ({
   background: `linear-gradient(100deg, ${theme.palette.primary.main} 71.9%, ${theme.palette.background.paper} 72%)`,
   paddingTop: theme.spacing(10),
   paddingBottom: theme.spacing(10),
-  [theme.breakpoints.only('xs')]: {
+  [theme.breakpoints.between('xs', 'sm')]: {
     paddingTop: 0,
     paddingBottom: 0,
     background: theme.palette.primary.main,
