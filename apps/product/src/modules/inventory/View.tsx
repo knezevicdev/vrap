@@ -12,6 +12,7 @@ import Breadcrumbs from './components/Breadcrumbs';
 import CarDetails from './components/CarDetails';
 import Features from './components/Features';
 import Gallery from './components/Gallery';
+import GallerySelect from './components/GallerySelect';
 import PeaceOfMind from './components/PeaceOfMind';
 import SimilarVehicles from './components/SimilarVehicles';
 import StartPurchase from './components/StartPurchase';
@@ -75,6 +76,7 @@ const VehicleDetails: React.FC<Props> = (props) => {
         <>
           <Grid container>
             <Grid item xs={12}>
+              <GallerySelect />
               <Gallery />
             </Grid>
           </Grid>
