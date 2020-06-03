@@ -19,10 +19,6 @@ RUN yarn workspace @vroom-web/ui build
 RUN yarn workspace @vroom-web/header-components build
 RUN yarn workspace @vroom-web/footer-components build
 
-# Placeholders
-ENV CDN_URL ''
-ENV INVSEARCH_V3_URL ''
-
 # Build the main app.
 RUN yarn workspace @vroom-web/catalog build
 
