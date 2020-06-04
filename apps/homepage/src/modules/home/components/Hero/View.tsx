@@ -46,6 +46,7 @@ const useBackgroundStyles = makeStyles((theme) => ({
     },
   },
 }));
+
 const Background: React.FC<{ desktop: boolean }> = ({ children, desktop }) => {
   const classes = useBackgroundStyles();
   return (
@@ -126,12 +127,11 @@ const Container: React.FC<{ desktop: boolean; maxWidth?: 'sm' | 'lg' }> = ({
   maxWidth,
 }) => {
   const classes = useContainerStyles();
-  const props = maxWidth ? { maxWidth } : {};
 
   return (
     <VroomContainer
       className={desktop ? classes.desktop : classes.mobile}
-      {...props}
+      maxWidth={maxWidth}
     >
       {children}
     </VroomContainer>
