@@ -68,7 +68,7 @@ jobs:
               yarn workspaces run lint
   homepage_non_prod: &mlp
     docker:
-      - image: vroom/mlp:3.0.1
+      - image: vroom/mlp:3.0
     steps:
       - checkout
       - setup_remote_docker:
