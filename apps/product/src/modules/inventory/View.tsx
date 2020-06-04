@@ -77,6 +77,8 @@ const VehicleDetails: React.FC<Props> = (props) => {
           <Grid container>
             <Grid item xs={12}>
               <GallerySelect />
+            </Grid>
+            <Grid item xs={12}>
               <Gallery />
             </Grid>
           </Grid>

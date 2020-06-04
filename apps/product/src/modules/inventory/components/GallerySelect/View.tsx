@@ -36,7 +36,6 @@ const GallerySelectorView: React.FC<Props> = (props) => {
           label={viewModel.imperfections}
           {...a11yProps(viewModel.imperfections)}
         />
-        \
       </Tabs>
     </>
   );
