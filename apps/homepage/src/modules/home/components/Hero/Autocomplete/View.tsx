@@ -2,7 +2,9 @@ import Box from '@material-ui/core/Box';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { makeStyles, styled } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
-import Autocomplete, { RenderInputParams } from '@material-ui/lab/Autocomplete';
+import Autocomplete, {
+  AutocompleteRenderInputParams,
+} from '@material-ui/lab/Autocomplete';
 import { Button } from '@vroom-web/ui';
 import { observer } from 'mobx-react';
 import React from 'react';
@@ -60,10 +62,10 @@ const HeroAutocomplete: React.FC<HeroAutocompleteProps> = ({
 
   const handleChange = (
     event: React.ChangeEvent<{}>,
-    value: Suggestion | null
+    value: Suggestion | null | string
   ): void => {
     event.preventDefault();
-    if (!value) {
+    if (!value || typeof value === 'string') {
       return;
     }
     viewModel.navigateUsingAutocomplete(value);
@@ -97,7 +99,7 @@ const HeroAutocomplete: React.FC<HeroAutocompleteProps> = ({
 
   return (
     <HeroAutoCompleteBox className={className} display="flex" flexGrow={1}>
-      <Autocomplete<Suggestion>
+      <Autocomplete<Suggestion, undefined, boolean, boolean>
         classes={{
           paper: classes.paper,
           inputRoot: classes.inputRoot,
@@ -111,7 +113,7 @@ const HeroAutocomplete: React.FC<HeroAutocompleteProps> = ({
         onChange={handleChange}
         options={viewModel.suggestions()}
         loading={suggestionsLoading}
-        renderInput={(params: RenderInputParams): JSX.Element => (
+        renderInput={(params: AutocompleteRenderInputParams): JSX.Element => (
           <TextField
             {...params}
             InputProps={{
