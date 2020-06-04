@@ -87,8 +87,8 @@ jobs:
             NAME_SPACE=${CIRCLE_TAG%-v*}
             ENV=${NAME_SPACE#homepage-}
 
-            build -a vroom-web/apps/homepage ./apps/homepage/docker
-            deploy -n ${NAME_SPACE} ./apps/homepage/docker
+            build -a vroom-web/apps/homepage/docker
+            deploy -a vroom-web/apps/homepage/docker -n ${NAME_SPACE}
   homepage_prod: &mlp
     docker:
       - image: vroom/mlp:2.0
