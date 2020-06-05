@@ -64,7 +64,7 @@ const GalleryView: React.FC<Props> = (props) => {
         >
           <ImageGallery
             ref={imageGalleryRef}
-            items={viewModel.getImages()}
+            items={viewModel.getGalleryImages()}
             showPlayButton={false}
             showNav={!isMobile}
             showThumbnails={!isMobile || fullscreen}

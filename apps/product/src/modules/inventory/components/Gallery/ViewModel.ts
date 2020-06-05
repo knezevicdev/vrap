@@ -1,10 +1,18 @@
-import { InventoryStore } from '../../store';
+import { isEmpty } from 'lodash';
+
+import { GallerySelections, InventoryStore } from '../../store';
 
 import globalEnv from 'src/globalEnv';
 
-interface Photo {
+interface GeneralPhoto {
   original: string;
   thumbnail: string;
+}
+
+interface DefectPhoto {
+  original: string;
+  thumbnail: string;
+  description: string;
 }
 
 class GalleryViewModel {
@@ -32,7 +40,20 @@ class GalleryViewModel {
     return leadFlagPhotoUrl === '';
   }
 
-  getImages(): Photo[] {
+  getGalleryImages(): GeneralPhoto[] | DefectPhoto[] {
+    const selected = this.getSelectedGallery();
+    if (selected === GallerySelections.DEFECTS) {
+      return this.getDefectImages();
+    } else {
+      return this.getGeneralImages();
+    }
+  }
+
+  getSelectedGallery(): GallerySelections {
+    return this.store.selectedGallery;
+  }
+
+  getGeneralImages(): GeneralPhoto[] {
     const {
       leadFlagPhotoUrl,
       otherPhotos = [],
@@ -51,6 +72,24 @@ class GalleryViewModel {
     });
   }
 
+  getDefectImages(): DefectPhoto[] {
+    const { defectPhotos } = this.store.vehicle._source;
+    const defectImages = !isEmpty(defectPhotos)
+      ? defectPhotos.map(
+          (img: { url: string; defectType: string; location: string }) => {
+            return {
+              original: this.getHiResImageUrl(img.url),
+              thumbnail: img.url,
+              description: `${this.getDefectTypeText(img.defectType)} - ${
+                img.location
+              }`,
+            };
+          }
+        )
+      : [];
+    return defectImages;
+  }
+
   private getHiResImageUrl(img: string): string {
     const vroomImageURL = img.includes('vroomcdn');
     if (vroomImageURL) {
@@ -63,6 +102,31 @@ class GalleryViewModel {
       const fyusionImgURL = img.replace('/edit/', '/');
       return fyusionImgURL.split('?')[0];
     }
+  }
+
+  private getDefectTypeText(type: string): string {
+    let descText = '';
+    switch (type) {
+      case 'Scratch':
+        descText = 'Scratch';
+        break;
+      case 'Oxidation':
+        descText = 'Paint Imperfection';
+        break;
+      case 'Spider Cracking':
+        descText = 'Paint Imperfection';
+        break;
+      case 'Chip':
+        descText = 'Chip';
+        break;
+      case 'Run':
+        descText = 'Paint Imperfection';
+        break;
+      case 'Dent':
+        descText = 'Dent';
+        break;
+    }
+    return descText;
   }
 }
 

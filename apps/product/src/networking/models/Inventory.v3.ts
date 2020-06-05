@@ -82,6 +82,7 @@ export interface Car {
   zone: string;
   soldStatus: number;
   otherPhotos: string[];
+  defectPhotos: [{ url: string; defectType: string; location: string }];
   ownerCount: number;
   cityMpg: number;
   highwayMpg: number;
