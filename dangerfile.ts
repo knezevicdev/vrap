@@ -46,6 +46,7 @@ allAppFiles.forEach((file) => {
   // If we update our NextJS env var solution to inject env vars at build time, this warning can be removed.
   if (
     file.includes('/pages/') &&
+    !file.includes('/api') &&
     !file.includes('_app') &&
     !file.includes('_document') &&
     !content.includes('getInitialProps')
@@ -55,4 +56,3 @@ allAppFiles.forEach((file) => {
     );
   }
 });
-

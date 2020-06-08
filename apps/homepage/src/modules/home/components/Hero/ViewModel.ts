@@ -31,8 +31,8 @@ class HeroViewModel {
     this.store = store;
   }
 
-  getDeviceType(): string {
-    return this.store.deviceType;
+  isDesktop(): boolean {
+    return this.store.deviceType === 'desktop';
   }
 
   handleMobileButtonClick(): void {
