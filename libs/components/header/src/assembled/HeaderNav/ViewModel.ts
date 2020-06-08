@@ -217,6 +217,14 @@ class HeaderNavViewModel {
             label: 'Profile',
           },
           {
+            href: '/my-account/addresses',
+            label: 'Addresses',
+          },
+          {
+            href: '/my-account/transactions',
+            label: 'Transactions',
+          },
+          {
             href: '/catalog',
             label: 'Sign Out',
             onClick: this.handleSignOutClick,
@@ -308,6 +316,14 @@ class HeaderNavViewModel {
           {
             href: '/my-account/profile',
             label: 'Profile',
+          },
+          {
+            href: '/my-account/addresses',
+            label: 'Addresses',
+          },
+          {
+            href: '/my-account/transactions',
+            label: 'Transactions',
           },
         ],
       },
