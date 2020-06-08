@@ -41,16 +41,12 @@ class GalleryViewModel {
   }
 
   getGalleryImages(): GeneralPhoto[] | DefectPhoto[] {
-    const selected = this.getSelectedGallery();
-    if (selected === GallerySelections.DEFECTS) {
+    const { selectedGallery } = this.store;
+    if (selectedGallery === GallerySelections.DEFECTS) {
       return this.getDefectImages();
     } else {
       return this.getGeneralImages();
     }
-  }
-
-  getSelectedGallery(): GallerySelections {
-    return this.store.selectedGallery;
   }
 
   getGeneralImages(): GeneralPhoto[] {
