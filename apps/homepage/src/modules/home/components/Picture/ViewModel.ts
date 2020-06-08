@@ -5,9 +5,13 @@ interface Media {
 
 class PictureViewModel {
   src = '';
+  className?: string;
 
-  constructor(filePath: string) {
+  constructor(filePath: string, className?: string) {
     this.src = filePath;
+    if (className) {
+      this.className = className;
+    }
   }
 
   get(): Media {
