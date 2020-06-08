@@ -81,7 +81,7 @@ interface DesktopViewProps {
 const DesktopView: React.FC<DesktopViewProps> = ({ viewModel }) => {
   const { image, title, trim, miles, price } = viewModel.getSummary();
   const handleActionClick = (): void => {
-    viewModel.navigate();
+    viewModel.trackProductClick();
   };
 
   return (

@@ -1,6 +1,5 @@
 import { Car } from '@vroom-web/inv-search-networking';
 
-// import Router from 'next/router';
 import globalEnv from 'src/globalEnv';
 import AnalyticsHandler, {
   Product,
@@ -83,8 +82,7 @@ class CarCardViewModel {
     return `/inventory/${this.car.vin}`;
   }
 
-  navigate = (): void => {
-    console.log('navigate');
+  trackProductClick = (): void => {
     const {
       consignmentPartnerId,
       inventoryId,

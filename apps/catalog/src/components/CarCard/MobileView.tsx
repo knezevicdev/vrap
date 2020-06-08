@@ -82,7 +82,7 @@ interface MobileViewProps {
 const MobileView: React.FC<MobileViewProps> = ({ viewModel }) => {
   const { image, title, trim, miles, price } = viewModel.getSummary();
   const handleActionClick = (): void => {
-    viewModel.navigate();
+    viewModel.trackProductClick();
   };
   return (
     <Grid item xs={12}>
