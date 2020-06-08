@@ -8,11 +8,6 @@ interface Props {
   className?: string;
 }
 
-// const Picture: React.FC<Props> = ({ filePath, alt, children }) => {
-//   const viewModel = new ViewModel(filePath, alt);
-//   return <View viewModel={viewModel} children={children} />;
-// };
-
 const Picture: React.FC<Props> = ({ children, src, className }) => {
   const viewModel = new ViewModel(src);
   const { webp, jp2 } = viewModel.get();
