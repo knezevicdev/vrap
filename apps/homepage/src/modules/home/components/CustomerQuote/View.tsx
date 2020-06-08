@@ -2,6 +2,7 @@ import { styled } from '@material-ui/core/styles';
 import { Container, Typography } from '@vroom-web/ui';
 import React from 'react';
 
+import Picture from '../Picture';
 import ViewModel from './ViewModel';
 
 const Card = styled('div')(({ theme }) => ({
@@ -13,7 +14,7 @@ const Card = styled('div')(({ theme }) => ({
   },
 }));
 
-const Image = styled('img')(({ theme }) => ({
+const StyledPicture = styled(Picture)(({ theme }) => ({
   width: '100%',
   height: '200px',
   objectFit: 'cover',
@@ -71,7 +72,9 @@ const CustomerQuoteView: React.FC<Props> = ({ viewModel }) => {
   return (
     <Container>
       <Card>
-        <Image src={viewModel.image.src} alt={viewModel.image.alt} />
+        <StyledPicture src={viewModel.image.src}>
+          <img src={viewModel.image.src} alt={viewModel.image.alt} />
+        </StyledPicture>
         <QuoteContainer>
           <Quote>{viewModel.quote}</Quote>
           <Name>{viewModel.name}</Name>

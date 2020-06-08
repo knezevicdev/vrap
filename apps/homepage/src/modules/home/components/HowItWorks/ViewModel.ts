@@ -19,8 +19,8 @@ class HowItWorksViewModel {
     label: 'LEARN MORE',
   };
   readonly video: Video = {
-    src: `${globalEnv.CDN_URL}/modules/home/how-it-works-promo.mp4`,
-    poster: `${globalEnv.CDN_URL}/modules/home/how-it-works-poster.png`,
+    src: `${globalEnv.CDN_URL}/modules/home/videos/how-it-works-promo.mp4`,
+    poster: `${globalEnv.CDN_URL}/modules/home/images/how-it-works-poster.png`,
   };
 }
 
