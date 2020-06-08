@@ -40,6 +40,10 @@ export const getDataForMakeAndModels = async (): Promise<
       source: `${globalEnv.NAME}-${globalEnv.VERSION}`,
     };
 
+    if (!globalEnv.INVSEARCH_V3_URL) {
+      throw new Error('globalEnv.INVSEARCH_V3_URL is undefined');
+    }
+
     const invSearchNetworker = new InvSearchNetworker(
       globalEnv.INVSEARCH_V3_URL
     );
@@ -74,6 +78,9 @@ export const fetchInventoryData = async (
   const data = getInventoryData(filters, makeAndModelMap);
 
   try {
+    if (!globalEnv.INVSEARCH_V3_URL) {
+      throw new Error('globalEnv.INVSEARCH_V3_URL is undefined');
+    }
     const invSearchNetworker = new InvSearchNetworker(
       globalEnv.INVSEARCH_V3_URL
     );
@@ -95,6 +102,9 @@ export const fetchPopularCars = async (): Promise<Inventory | undefined> => {
   };
 
   try {
+    if (!globalEnv.INVSEARCH_V3_URL) {
+      throw new Error('globalEnv.INVSEARCH_V3_URL is undefined');
+    }
     const invSearchNetworker = new InvSearchNetworker(
       globalEnv.INVSEARCH_V3_URL
     );
