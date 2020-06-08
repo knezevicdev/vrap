@@ -7,7 +7,7 @@ import ViewModel from './ViewModel';
 import globalEnv from 'src/globalEnv';
 
 const Background = styled('div')(() => ({
-  background: `url(${globalEnv.CDN_URL}/modules/home/who-we-are-background.png)`,
+  background: `url(${globalEnv.CDN_URL}/modules/home/images/who-we-are-background.png)`,
   backgroundRepeat: 'no-repeat',
   backgroundSize: 'cover',
   backgroundPosition: 'center top',

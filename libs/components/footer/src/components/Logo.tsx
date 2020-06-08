@@ -30,6 +30,7 @@ const Logo: React.FC<Props> = ({ className, href, onClick, style }) => {
       style={style}
     >
       <StyledLogoSvg />
+      <span className="MuiTypography-srOnly">Home</span>
     </StyledAnchor>
   );
 };
