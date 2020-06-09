@@ -7,7 +7,11 @@ interface Link {
 
 interface Video {
   src: string;
-  poster: string;
+  poster: {
+    default: string;
+    jpeg2000: string;
+    webp: string;
+  };
 }
 
 class HowItWorksViewModel {
@@ -16,11 +20,15 @@ class HowItWorksViewModel {
     'Vroom is changing the way people buy, sell, and trade in cars. Here’s a step-by-step guide on what\xa0to\xa0expect.';
   readonly link: Link = {
     href: '/how-it-works',
-    label: 'LEARN MORE',
+    label: 'LEARN MORE ABOUT VROOM',
   };
   readonly video: Video = {
     src: `${globalEnv.CDN_URL}/modules/home/videos/how-it-works-promo.mp4`,
-    poster: `${globalEnv.CDN_URL}/modules/home/images/how-it-works-poster.png`,
+    poster: {
+      default: `${globalEnv.CDN_URL}/modules/home/images/how-it-works-poster.png`,
+      jpeg2000: `${globalEnv.CDN_URL}/modules/home/images/jp2/how-it-works-poster.jp2`,
+      webp: `${globalEnv.CDN_URL}/modules/home/images/webp/how-it-works-poster.webp`,
+    },
   };
 }
 

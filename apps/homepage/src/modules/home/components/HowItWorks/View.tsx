@@ -47,6 +47,26 @@ interface Props {
 }
 
 const HowItWorksView: React.FC<Props> = ({ viewModel }) => {
+  const [poster, setPoster] = React.useState('');
+  React.useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const jpeg2000 = Object.values(window.Modernizr.jpeg2000);
+      const webp = Object.values(window.Modernizr.webp).indexOf(false) === -1;
+      if (jpeg2000) {
+        setPoster(viewModel.video.poster.jpeg2000);
+      }
+      if (webp) {
+        setPoster(viewModel.video.poster.webp);
+      }
+      if (!jpeg2000 && !webp) {
+        setPoster(viewModel.video.poster.default);
+      }
+    }
+  }, [
+    viewModel.video.poster.jpeg2000,
+    viewModel.video.poster.webp,
+    viewModel.video.poster.default,
+  ]);
   return (
     <Background>
       <StyledContainer>
@@ -55,7 +75,7 @@ const HowItWorksView: React.FC<Props> = ({ viewModel }) => {
         <ExternalLink href={viewModel.link.href}>
           <LearnMore variant="button">{viewModel.link.label}</LearnMore>
         </ExternalLink>
-        <Video controls poster={viewModel.video.poster}>
+        <Video controls poster={poster}>
           <source src={viewModel.video.src} type="video/mp4" />
         </Video>
       </StyledContainer>
