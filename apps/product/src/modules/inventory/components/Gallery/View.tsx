@@ -35,11 +35,6 @@ const GalleryView: React.FC<Props> = (props) => {
   const isMobile = useMediaQuery(theme.breakpoints.down('xs'));
 
   const imageGalleryRef = useRef<LocalImageGallery>(null);
-  const handleClick = (): void => {
-    if (imageGalleryRef.current && !isMobile) {
-      imageGalleryRef.current.toggleFullScreen();
-    }
-  };
 
   const handleFullscreen = (): void => {
     setFullscreen(!fullscreen);
@@ -48,15 +43,9 @@ const GalleryView: React.FC<Props> = (props) => {
   if (viewModel.hasNoImages()) {
     return <NoImagesView viewModel={viewModel} />;
   }
-
   return (
     <>
-      <Box
-        bgcolor={
-          viewModel.showBanner() ? theme.palette.background.paper : 'grey.400'
-        }
-        className={viewModel.showBanner() ? 'stock-photos' : ''}
-      >
+      <Box className={viewModel.showBanner() ? 'stock-photos' : ''}>
         <Typography
           component="span"
           variant="body1"
@@ -67,15 +56,17 @@ const GalleryView: React.FC<Props> = (props) => {
             items={viewModel.getGalleryImages()}
             showPlayButton={false}
             showNav={!isMobile}
-            showThumbnails={!isMobile || fullscreen}
-            thumbnailPosition={isMobile || fullscreen ? 'bottom' : 'right'}
+            showThumbnails={viewModel.showThumbnails(isMobile, fullscreen)}
+            thumbnailPosition={viewModel.getThumbnailPosition(
+              isMobile,
+              fullscreen
+            )}
             showFullscreenButton={!isMobile}
             indexSeparator={viewModel.indexSeparator}
             useBrowserFullscreen={false}
-            showIndex={true}
+            showIndex={viewModel.showIndex()}
             onErrorImageURL={viewModel.defaultImage.src}
             onScreenChange={handleFullscreen}
-            onClick={handleClick}
           />
         </Typography>
       </Box>

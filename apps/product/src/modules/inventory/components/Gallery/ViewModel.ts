@@ -1,6 +1,8 @@
 import { isEmpty } from 'lodash';
 
 import { GallerySelections, InventoryStore } from '../../store';
+import GalleryConditionEnd from '../GalleryConditionEnd';
+import GalleryGeneralToCondition from '../GalleryGeneralToCondition';
 
 import globalEnv from 'src/globalEnv';
 
@@ -35,6 +37,33 @@ class GalleryViewModel {
     return this.store.vehicle._source.hasStockPhotos;
   }
 
+  showIndex(): boolean {
+    const galleryImages = this.getGalleryImages();
+    return galleryImages.length > 1;
+  }
+
+  showThumbnails(isMobile: boolean, fullscreen: boolean): boolean {
+    const galleryImages = this.getGalleryImages();
+    if (isMobile || galleryImages.length <= 1) {
+      return false;
+    }
+    if (fullscreen) {
+      return true;
+    }
+    return true;
+  }
+
+  getThumbnailPosition(
+    isMobile: boolean,
+    fullscreen: boolean
+  ): 'bottom' | 'left' | 'right' | 'top' | undefined {
+    const galleryImages = this.getGalleryImages();
+    if (isMobile || fullscreen || galleryImages.length <= 1) {
+      return 'bottom';
+    }
+    return 'right';
+  }
+
   hasNoImages(): boolean {
     const { leadFlagPhotoUrl } = this.store.vehicle._source;
     return leadFlagPhotoUrl === '';
@@ -60,12 +89,25 @@ class GalleryViewModel {
     const interiorPhotoIndex = vehiclePhotos.indexOf(interiorPhotoUrl);
     vehiclePhotos.splice(1, 0, vehiclePhotos.splice(interiorPhotoIndex, 1)[0]);
 
-    return vehiclePhotos.map((img) => {
+    const generalPhotos = vehiclePhotos.map((img) => {
       return {
         original: this.getHiResImageUrl(img),
         thumbnail: img,
       };
     });
+    if (vehiclePhotos.length > 1) {
+      const addGeneralToCondition: {
+        original: string;
+        thumbnail: string;
+        renderItem: React.FunctionComponent;
+      } = {
+        original: this.defaultImage.src,
+        thumbnail: this.defaultImage.src,
+        renderItem: GalleryGeneralToCondition,
+      };
+      generalPhotos.push(addGeneralToCondition);
+    }
+    return generalPhotos;
   }
 
   getDefectImages(): DefectPhoto[] {
@@ -83,6 +125,20 @@ class GalleryViewModel {
           }
         )
       : [];
+
+    const addGalleryEndCard: {
+      original: string;
+      thumbnail: string;
+      description: string;
+      renderItem: React.FunctionComponent;
+    } = {
+      original: this.defaultImage.src,
+      thumbnail: this.defaultImage.src,
+      description: 'Condition End Card',
+      renderItem: GalleryConditionEnd,
+    };
+    defectImages.push(addGalleryEndCard);
+
     return defectImages;
   }
 

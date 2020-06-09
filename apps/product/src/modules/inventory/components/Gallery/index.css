@@ -7,6 +7,7 @@ must when all other approaches fail you.
 
 .image-gallery-content.right .image-gallery-slide .image-gallery-image {
   max-height: 60vh;
+  background: #041022;
 }
 
 /* This is one unit above the material ui appBar  */
@@ -20,4 +21,8 @@ must when all other approaches fail you.
 
 .stock-photos .image-gallery-content.fullscreen {
   background: #ffffff;
+}
+
+.image-gallery-thumbnails-wrapper.right .image-gallery-thumbnails {
+  max-height: 60vh;
 }
