@@ -4,7 +4,7 @@ import { Button, Container as VroomContainer, Typography } from '@vroom-web/ui';
 import { observer } from 'mobx-react';
 import React from 'react';
 
-import Autocomplete from './Autocomplete';
+import BuySellTrade from './BuySellTrade';
 import ViewModel from './ViewModel';
 
 import ExternalLink from 'src/ui/ExternalLink';
@@ -198,7 +198,7 @@ const StyledButton = styled(Button)(() => ({
   minHeight: '48px',
 }));
 
-const StyledAutocomplete = styled(Autocomplete)(() => ({
+const InputContainer = styled('div')(() => ({
   gridArea: 'a',
 }));
 
@@ -262,12 +262,12 @@ const HeroView: React.FC<Props> = ({ viewModel }) => {
         />
         {desktop ? (
           <>
-            {smDown ? mobileButton : <StyledAutocomplete />}
+            {smDown ? mobileButton : <InputContainer><BuySellTrade/></InputContainer>}
             {!smDown && browse}
           </>
         ) : (
           <>
-            {mdUp ? <StyledAutocomplete /> : mobileButton}
+            {mdUp ? <InputContainer><BuySellTrade/></InputContainer> : mobileButton}
             {mdUp && browse}
           </>
         )}
