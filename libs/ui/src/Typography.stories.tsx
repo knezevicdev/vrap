@@ -52,6 +52,7 @@ export const allTypography: React.FC = () => {
         <Typography lineHeight="50px">custom line height</Typography>
 
         <Typography textAlign="center">custom text align</Typography>
+        <Typography variant="srOnly">For Machine Eyes Only</Typography>
       </StyledDiv>
     </ThemeProvider>
   );

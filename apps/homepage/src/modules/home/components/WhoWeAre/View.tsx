@@ -14,7 +14,7 @@ const Background = styled('div')(() => {
     backgroundPosition: 'center top',
   };
   if (typeof window !== 'undefined') {
-    const jpeg2000 = Object.values(window.Modernizr.jpeg2000);
+    const jpeg2000 = window.Modernizr.jpeg2000;
     const webp = Object.values(window.Modernizr.webp).indexOf(false) === -1;
 
     if (jpeg2000) {

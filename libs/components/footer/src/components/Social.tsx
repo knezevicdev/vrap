@@ -4,6 +4,7 @@ import Link from '@material-ui/core/Link';
 import FacebookIcon from '@material-ui/icons/Facebook';
 import InstagramIcon from '@material-ui/icons/Instagram';
 import TwitterIcon from '@material-ui/icons/Twitter';
+import { Typography } from '@vroom-web/ui';
 import React from 'react';
 
 const Social: React.FC = () => {
@@ -17,7 +18,7 @@ const Social: React.FC = () => {
           color="textSecondary"
         >
           <FacebookIcon />
-          <span className="MuiTypography-srOnly">Facebook</span>
+          <Typography variant="srOnly">Facebook</Typography>
         </Link>
       </Box>
       <Box display="flex" mr={2}>
@@ -28,7 +29,7 @@ const Social: React.FC = () => {
           color="textSecondary"
         >
           <TwitterIcon />
-          <span className="MuiTypography-srOnly">Twitter</span>
+          <Typography variant="srOnly">Twitter</Typography>
         </Link>
       </Box>
       <Box display="flex">
@@ -39,7 +40,7 @@ const Social: React.FC = () => {
           color="textSecondary"
         >
           <InstagramIcon />
-          <span className="MuiTypography-srOnly">Instagram</span>
+          <Typography variant="srOnly">Instagram</Typography>
         </Link>
       </Box>
     </Grid>

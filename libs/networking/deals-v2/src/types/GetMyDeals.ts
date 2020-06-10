@@ -1,79 +1,84 @@
 /* eslint-disable @typescript-eslint/camelcase */
 import * as yup from 'yup';
 
-export const dealSchema = yup
+export type Deal = {
+  dealSummary: {
+    dealStatus: {
+      status: string;
+      step: string;
+    };
+    inventory: {
+      pricing: {
+        listPrice: number;
+      };
+      vehicle: {
+        make: string;
+        model: string;
+        trim: string;
+        vin: string;
+        year: number;
+      };
+    };
+  };
+};
+
+export const dealSchema: yup.ObjectSchema<Deal> = yup
   .object({
-    deal_id: yup.number(),
-    account_id: yup.number(),
-    vin: yup.string(),
-    summary: yup.object({
-      paymentType: yup.string(),
-      dealStatus: yup.object({
-        status: yup.string(),
-        step: yup.string(),
-        pastSteps: yup.array(yup.string()).nullable(),
-        frozen: yup.boolean(),
-        reason: yup.string(),
-        errorDetail: yup.string(),
-        interestedInTrade: yup.boolean(),
-        canBeCancelled: yup.boolean(),
-      }),
-      account: yup.object({
-        userName: yup.string(),
-        firstName: yup.string(),
-        middleName: yup.string(),
-        lastName: yup.string(),
-        phone: yup.string(),
-      }),
-      inventory: yup.object({
-        id: yup.string(),
-        miles: yup.number(),
-        ownerCount: yup.number(),
-        pricing: yup.object({
-          listPrice: yup.number(),
-          msrp: yup.number(),
-          blueBookValue: yup.number(),
-        }),
-        status: yup.object({
-          key: yup.string(),
-          display: yup.string(),
-        }),
-        vehicle: yup.object({
-          vin: yup.string(),
-          year: yup.number(),
-          make: yup.string(),
-          model: yup.string(),
-          trim: yup.string(),
-          fuelType: yup.object({
-            key: yup.string(),
-            display: yup.string(),
-          }),
-          seatingCapacity: yup.number(),
-          grossWeight: yup.number(),
-          isElectric: yup.boolean(),
-          exteriorColorGeneric: yup.object({
-            key: yup.string(),
-            display: yup.string(),
-          }),
-          cylinders: yup.number(),
-          engineBore: yup.number(),
-        }),
-        imageUrls: yup.array(yup.string()).nullable(),
-        leadPhotoURL: yup.string(),
-      }),
-    }),
+    dealSummary: yup
+      .object({
+        dealStatus: yup
+          .object({
+            status: yup.string().defined(),
+            step: yup.string().defined(),
+          })
+          .defined(),
+        inventory: yup
+          .object({
+            pricing: yup
+              .object({
+                listPrice: yup.number().defined(),
+              })
+              .defined(),
+            vehicle: yup
+              .object({
+                make: yup.string().defined(),
+                model: yup.string().defined(),
+                trim: yup.string().defined(),
+                vin: yup.string().defined(),
+                year: yup.number().defined(),
+              })
+              .defined(),
+          })
+          .defined(),
+      })
+      .defined(),
   })
-  .strict(true);
-export type Deal = yup.InferType<typeof dealSchema>;
+  .defined();
 
-export const dataSchema = yup.array<Deal>(dealSchema).nullable().strict(true);
-export type Data = yup.InferType<typeof dataSchema>;
+export type User = {
+  deals: Deal[];
+};
+export const userSchema: yup.ObjectSchema<User> = yup
+  .object({
+    deals: yup.array(dealSchema).defined(),
+  })
+  .defined();
 
-export const getMyDealsResponseSchema = yup
-  .object<{
-    data: Data;
-  }>({
+export type Data = {
+  user: User;
+};
+export const dataSchema: yup.ObjectSchema<Data> = yup
+  .object({
+    user: userSchema,
+  })
+  .defined();
+
+export type GetMyDealsResponse = {
+  data: Data;
+};
+export const getMyDealsResponseSchema: yup.ObjectSchema<GetMyDealsResponse> = yup
+  .object({
     data: dataSchema,
   })
+  .defined()
   .strict(true);
-export type GetMyDealsResponse = yup.InferType<typeof getMyDealsResponseSchema>;

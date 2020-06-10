@@ -19,6 +19,9 @@ export class HeaderAutocompleteStore {
   private invSearchNetworker: InvSearchNetworker;
 
   constructor() {
+    if (!globalEnv.INVSEARCH_V3_URL) {
+      throw new Error('globalEnv.INVSEARCH_V3_URL is undefined');
+    }
     this.invSearchNetworker = new InvSearchNetworker(
       globalEnv.INVSEARCH_V3_URL
     );

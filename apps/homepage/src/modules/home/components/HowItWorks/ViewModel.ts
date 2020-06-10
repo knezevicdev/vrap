@@ -30,6 +30,18 @@ class HowItWorksViewModel {
       webp: `${globalEnv.CDN_URL}/modules/home/images/webp/how-it-works-poster.webp`,
     },
   };
+
+  getPoster(): string {
+    const jpeg2000 = window.Modernizr.jpeg2000;
+    const webp = Object.values(window.Modernizr.webp).indexOf(false) === -1;
+    if (jpeg2000) {
+      return this.video.poster.jpeg2000;
+    }
+    if (webp) {
+      return this.video.poster.webp;
+    }
+    return this.video.poster.default;
+  }
 }
 
 export default HowItWorksViewModel;
