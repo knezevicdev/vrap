@@ -1,4 +1,5 @@
 import { styled } from '@material-ui/core/styles';
+import { Typography } from '@vroom-web/ui';
 import React from 'react';
 
 import { ReactComponent as LogoSvg } from '../svg/logo.svg';
@@ -33,7 +34,7 @@ const Logo: React.FC<Props> = ({ className, href, onClick, style }) => {
       style={style}
     >
       <StyledLogoSvg />
-      <span className="MuiTypography-srOnly">Home</span>
+      <Typography variant="srOnly">Home</Typography>
     </StyledAnchor>
   );
 };

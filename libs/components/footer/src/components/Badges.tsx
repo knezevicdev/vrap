@@ -26,13 +26,13 @@ const Badges: React.FC = () => {
         <Box display="flex" mr={1}>
           <a href={androidUrl}>
             <GooglePlayBadge />
-            <span className="MuiTypography-srOnly">Google Play</span>
+            <Typography variant="srOnly">Google Play</Typography>
           </a>
         </Box>
         <Box display="flex">
           <a href={iosUrl}>
             <AppStoreBadge />
-            <span className="MuiTypography-srOnly">App Store</span>
+            <Typography variant="srOnly">App Store</Typography>
           </a>
         </Box>
       </Grid>

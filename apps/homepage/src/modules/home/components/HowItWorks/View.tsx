@@ -50,23 +50,9 @@ const HowItWorksView: React.FC<Props> = ({ viewModel }) => {
   const [poster, setPoster] = React.useState('');
   React.useEffect(() => {
     if (typeof window !== 'undefined') {
-      const jpeg2000 = Object.values(window.Modernizr.jpeg2000);
-      const webp = Object.values(window.Modernizr.webp).indexOf(false) === -1;
-      if (jpeg2000) {
-        setPoster(viewModel.video.poster.jpeg2000);
-      }
-      if (webp) {
-        setPoster(viewModel.video.poster.webp);
-      }
-      if (!jpeg2000 && !webp) {
-        setPoster(viewModel.video.poster.default);
-      }
+      setPoster(viewModel.getPoster());
     }
-  }, [
-    viewModel.video.poster.jpeg2000,
-    viewModel.video.poster.webp,
-    viewModel.video.poster.default,
-  ]);
+  }, [viewModel]);
   return (
     <Background>
       <StyledContainer>
