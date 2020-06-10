@@ -173,6 +173,7 @@ const CarImage: React.FC<{ desktop: boolean; alt: string; src: string }> = ({
         className={desktop ? classes.desktop : classes.mobile}
         alt={alt}
         src={src}
+        loading="lazy"
       />
     </Picture>
   );

@@ -94,7 +94,7 @@ const CustomerQuoteView: React.FC<Props> = ({ viewModel }) => {
         <Capsule container>
           <PictureGrid item xs={12} md={6}>
             <Picture src={src}>
-              <Image src={src} alt={alt} />
+              <Image src={src} alt={alt} loading="lazy" />
             </Picture>
           </PictureGrid>
           <QuoteGrid item xs={12} md={6}>

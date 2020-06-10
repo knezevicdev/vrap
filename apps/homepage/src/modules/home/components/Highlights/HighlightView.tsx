@@ -47,7 +47,7 @@ const HighlightView: React.FC<Props> = ({
   return (
     <Highlight>
       <Picture src={imgSrc}>
-        <StyledImg src={imgSrc} alt={imgAlt} />
+        <StyledImg src={imgSrc} alt={imgAlt} loading="lazy" />
       </Picture>
       <Text>
         <Title variant="body1">{title}</Title>
