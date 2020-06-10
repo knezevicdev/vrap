@@ -2,12 +2,12 @@ import React from 'react';
 
 import View from './View';
 import ViewModel from './ViewModel';
-import {SellStore} from "./store";
+import {LicensePlateStore} from "./store";
 
-const Sell: React.FC = () => {
-    const store = new SellStore();
+const LicensePlate: React.FC = () => {
+    const store = new LicensePlateStore();
     const viewModel = new ViewModel(store);
     return <View viewModel={viewModel} />;
 };
 
-export default Sell;
+export default LicensePlate;
