@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# This needs to be run anytime a new image is added to the homepage.
+# Also, imagemagick must be installed on the device that this script is being run.
+
 # Create the folder to store Next Gen images
 mkdir ./public/modules/home/images/jp2
 mkdir ./public/modules/home/images/webp
