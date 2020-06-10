@@ -10,7 +10,7 @@ class ValuesViewModel {
         'We’ve eliminated the middleman and made the entire car buying process more efficient, which allows us to pass the savings on to our customers.',
     },
     {
-      type: 'RECONDITINOING',
+      type: 'RECONDITIONING',
       title: 'Multiple Inspections',
       description:
         'Our cars are inspected for safety, mechanical and cosmetic issues. We only sell cars that have accident-free CARFAX vehicle history reports at the time of purchase and sale.',
