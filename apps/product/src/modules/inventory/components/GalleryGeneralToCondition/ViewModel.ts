@@ -13,7 +13,7 @@ class GalleryConditionEndViewModel {
   };
   readonly defaultImage = {
     alt: 'Condition End Photo',
-    src: `${globalEnv.CDN_URL}/components/LastCondition.png`,
+    src: `${globalEnv.CDN_URL}/components/LastGallery.png`,
   };
 
   constructor(inventoryStore: InventoryStore) {
