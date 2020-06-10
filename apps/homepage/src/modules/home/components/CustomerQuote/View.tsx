@@ -73,7 +73,11 @@ const CustomerQuoteView: React.FC<Props> = ({ viewModel }) => {
     <Container>
       <Card>
         <StyledPicture src={viewModel.image.src}>
-          <img src={viewModel.image.src} alt={viewModel.image.alt} />
+          <img
+            src={viewModel.image.src}
+            alt={viewModel.image.alt}
+            loading="lazy"
+          />
         </StyledPicture>
         <QuoteContainer>
           <Quote>{viewModel.quote}</Quote>

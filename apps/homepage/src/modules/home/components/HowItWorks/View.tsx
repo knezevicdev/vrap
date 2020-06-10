@@ -75,7 +75,7 @@ const HowItWorksView: React.FC<Props> = ({ viewModel }) => {
         <ExternalLink href={viewModel.link.href}>
           <LearnMore variant="button">{viewModel.link.label}</LearnMore>
         </ExternalLink>
-        <Video controls poster={poster}>
+        <Video controls poster={poster} preload="none">
           <source src={viewModel.video.src} type="video/mp4" />
         </Video>
       </StyledContainer>
