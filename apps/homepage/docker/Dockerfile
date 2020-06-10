@@ -14,6 +14,7 @@ RUN yarn install --silent
 
 # Build libraries.
 RUN yarn workspace @vroom-web/analytics-integration build
+RUN yarn workspace @vroom-web/deals-v2-networking build
 RUN yarn workspace @vroom-web/inv-search-networking build
 RUN yarn workspace @vroom-web/ui build
 RUN yarn workspace @vroom-web/header-components build

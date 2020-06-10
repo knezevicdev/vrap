@@ -13,6 +13,7 @@ RUN chown -R 1000:1000 .
 RUN yarn install --silent
 
 # Build libraries.
+RUN yarn workspace @vroom-web/deals-v2-networking build
 RUN yarn workspace @vroom-web/ui build
 
 EXPOSE 8080
