@@ -47,6 +47,12 @@ interface Props {
 }
 
 const HowItWorksView: React.FC<Props> = ({ viewModel }) => {
+  const [poster, setPoster] = React.useState('');
+  React.useEffect(() => {
+    if (typeof window !== 'undefined') {
+      setPoster(viewModel.getPoster());
+    }
+  }, [viewModel]);
   return (
     <Background>
       <StyledContainer>
@@ -55,7 +61,7 @@ const HowItWorksView: React.FC<Props> = ({ viewModel }) => {
         <ExternalLink href={viewModel.link.href}>
           <LearnMore variant="button">{viewModel.link.label}</LearnMore>
         </ExternalLink>
-        <Video controls poster={viewModel.video.poster}>
+        <Video controls poster={poster} preload="none">
           <source src={viewModel.video.src} type="video/mp4" />
         </Video>
       </StyledContainer>

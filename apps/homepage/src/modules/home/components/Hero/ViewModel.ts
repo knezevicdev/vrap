@@ -21,7 +21,7 @@ class HeroViewModel {
     label: 'Browse all low-mileage cars\xa0and\xa0trucks',
   };
   readonly car: { src: string; alt: string } = {
-    src: `${globalEnv.CDN_URL}/modules/home/prius.png`,
+    src: `${globalEnv.CDN_URL}/modules/home/images/prius.png`,
     alt: 'Prius',
   };
 
