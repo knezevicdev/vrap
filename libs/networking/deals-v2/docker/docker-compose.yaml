@@ -8,8 +8,7 @@ services:
     container_name: test
     user: 'root'
     command: >
-      ash -c "yarn install &&
-              yarn workspace @vroom-web/deals-v2-networking test --watch"
+      ash -c "yarn workspace @vroom-web/deals-v2-networking test --watch"
     volumes:
       - '../../../../:/www/'
       - '/www/node_modules'

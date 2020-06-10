@@ -1,30 +1,16 @@
 import Card from '@material-ui/core/Card';
-import CardActionArea from '@material-ui/core/CardActionArea';
 import CardContent from '@material-ui/core/CardContent';
 import Grid from '@material-ui/core/Grid';
 import { styled } from '@material-ui/core/styles';
-import Skeleton from '@material-ui/lab/Skeleton';
 import React from 'react';
 
 import CarCardViewModel from './ViewModel';
 
 import Typography from 'src/ui/Typography';
 
-interface DesktopViewProps {
-  viewModel: CarCardViewModel;
-}
-
 const Container = styled(Card)(() => ({
   height: '100%',
   minHeight: '296px',
-}));
-
-const Action = styled(CardActionArea)(() => ({
-  height: '100%',
-}));
-
-const NoAction = styled(Action)(() => ({
-  pointerEvents: 'none',
 }));
 
 const Media = styled('div')(({ theme }) => ({
@@ -77,78 +63,75 @@ const Price = styled(Typography)(() => ({
   marginTop: 'auto',
 }));
 
-const LoadingCard: React.FC = () => {
-  return (
-    <NoAction>
-      <Media>
-        <Skeleton variant={'rect'} height={'100%'} />
-      </Media>
-      <Content />
-    </NoAction>
-  );
-};
+const HiddenAnchor = styled('a')(() => ({
+  '&:link': {
+    textDecoration: 'inherit',
+    color: 'inherit',
+  },
+  '&:visited': {
+    textDecoration: 'inherit',
+    color: 'inherit',
+  },
+}));
 
-const RegularCard: React.FC<DesktopViewProps> = ({ viewModel }) => {
+interface DesktopViewProps {
+  viewModel: CarCardViewModel;
+}
+
+const DesktopView: React.FC<DesktopViewProps> = ({ viewModel }) => {
   const { image, title, trim, miles, price } = viewModel.getSummary();
   const handleActionClick = (): void => {
-    viewModel.navigate();
+    viewModel.trackProductClick();
   };
 
   return (
-    <Action onClick={handleActionClick}>
-      <Media>
-        <Photo src={image} alt={title} />
-        {viewModel.showLogo() && (
-          <EvoxLogo src={viewModel.evoxLogo.src} alt={viewModel.evoxLogo.alt} />
-        )}
-        {viewModel.showAvailableSoon() && (
-          <AvailableSoon
-            fontWeight="fontWeightMedium"
-            variant="overline"
-            lineHeight="24px"
-          >
-            {viewModel.availableSoon}
-          </AvailableSoon>
-        )}
-      </Media>
-      <Content>
-        <Typography
-          fontWeight="fontWeightMedium"
-          lineHeight="24px"
-          whiteSpace="nowrap"
-        >
-          {title}
-        </Typography>
-        <TrimAndMiles>
-          <Typography
-            fontWeight="fontWeightLight"
-            lineHeight="24px"
-            whiteSpace="nowrap"
-          >
-            {trim}
-          </Typography>
-          <Divider fontWeight="fontWeightLight" lineHeight="24px">
-            |
-          </Divider>
-          <Typography fontWeight="fontWeightLight" lineHeight="24px">
-            {miles}
-          </Typography>
-        </TrimAndMiles>
-        <Price fontWeight="fontWeightMedium">{price}</Price>
-      </Content>
-    </Action>
-  );
-};
-
-const DesktopView: React.FC<DesktopViewProps> = ({ viewModel }) => {
-  return (
     <Grid item xs={12} sm={6} md={3}>
       <Container>
-        {viewModel.loading() ? (
-          <LoadingCard />
-        ) : (
-          <RegularCard viewModel={viewModel} />
-        )}
+        <HiddenAnchor href={viewModel.link()} onClick={handleActionClick}>
+          <Media>
+            <Photo src={image} alt={title} />
+            {viewModel.showLogo() && (
+              <EvoxLogo
+                src={viewModel.evoxLogo.src}
+                alt={viewModel.evoxLogo.alt}
+              />
+            )}
+            {viewModel.showAvailableSoon() && (
+              <AvailableSoon
+                fontWeight="fontWeightMedium"
+                variant="overline"
+                lineHeight="24px"
+              >
+                {viewModel.availableSoon}
+              </AvailableSoon>
+            )}
+          </Media>
+          <Content>
+            <Typography
+              fontWeight="fontWeightMedium"
+              lineHeight="24px"
+              whiteSpace="nowrap"
+            >
+              {title}
+            </Typography>
+            <TrimAndMiles>
+              <Typography
+                fontWeight="fontWeightLight"
+                lineHeight="24px"
+                whiteSpace="nowrap"
+              >
+                {trim}
+              </Typography>
+              <Divider fontWeight="fontWeightLight" lineHeight="24px">
+                |
+              </Divider>
+              <Typography fontWeight="fontWeightLight" lineHeight="24px">
+                {miles}
+              </Typography>
+            </TrimAndMiles>
+            <Price fontWeight="fontWeightMedium">{price}</Price>
+          </Content>
+        </HiddenAnchor>
       </Container>
     </Grid>
   );

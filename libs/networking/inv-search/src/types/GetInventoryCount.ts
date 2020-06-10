@@ -1,10 +1,11 @@
 import * as yup from 'yup';
 
-export const getInventoryCountResponseSchema = yup
+export type GetInventoryCountResponse = {
+  data: number;
+};
+export const getInventoryCountResponseSchema: yup.ObjectSchema<GetInventoryCountResponse> = yup
   .object({
-    data: yup.number(),
+    data: yup.number().defined(),
   })
+  .defined()
   .strict(true);
-export type GetInventoryCountResponse = yup.InferType<
-  typeof getInventoryCountResponseSchema
->;

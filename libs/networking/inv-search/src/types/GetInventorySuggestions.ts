@@ -1,21 +1,24 @@
 import * as yup from 'yup';
 
-export const dataSchema = yup
+export type Data = {
+  BodyType: string[];
+  Make: string[];
+  Model: string[];
+};
+export const dataSchema: yup.ObjectSchema<Data> = yup
   .object({
-    BodyType: yup.array(yup.string()),
-    Make: yup.array(yup.string()),
-    Model: yup.array(yup.string()),
+    BodyType: yup.array(yup.string().defined()).defined(),
+    Make: yup.array(yup.string().defined()).defined(),
+    Model: yup.array(yup.string().defined()).defined(),
   })
-  .strict(true);
-export type Data = yup.InferType<typeof dataSchema>;
+  .defined();
 
-export const getInventorySuggestionsResponseSchema = yup
-  .object<{
-    data: Data;
-  }>({
+export type GetInventorySuggestionsResponse = {
+  data: Data;
+};
+export const getInventorySuggestionsResponseSchema: yup.ObjectSchema<GetInventorySuggestionsResponse> = yup
+  .object({
     data: dataSchema,
   })
+  .defined()
   .strict(true);
-export type GetInventorySuggestionsResponse = yup.InferType<
-  typeof getInventorySuggestionsResponseSchema
->;

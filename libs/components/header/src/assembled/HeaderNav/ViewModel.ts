@@ -101,6 +101,10 @@ class HeaderNavViewModel {
               href: '/reviews',
               label: 'Customer Reviews',
             },
+            {
+              href: 'https://ir.vroom.com/',
+              label: 'Investor Relations',
+            },
           ],
         },
         {
@@ -177,6 +181,10 @@ class HeaderNavViewModel {
           {
             href: '/reviews',
             label: 'Customer Reviews',
+          },
+          {
+            href: 'https://ir.vroom.com/',
+            label: 'Investor Relations',
           },
         ],
       },
@@ -287,6 +295,11 @@ class HeaderNavViewModel {
         },
         {
           type: 'link',
+          href: 'https://ir.vroom.com/',
+          label: 'INVESTOR RELATIONS',
+        },
+        {
+          type: 'link',
           href: 'https://vroom.zendesk.com/hc/en-us',
           label: 'FAQ',
         },
@@ -366,6 +379,11 @@ class HeaderNavViewModel {
         type: 'link',
         href: '/reviews',
         label: 'CUSTOMER REVIEWS',
+      },
+      {
+        type: 'link',
+        href: 'https://ir.vroom.com/',
+        label: 'INVESTOR RELATIONS',
       },
       {
         type: 'link',
