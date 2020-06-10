@@ -10,7 +10,7 @@ import Typography from 'src/ui/Typography';
 
 const StyledImg = styled('img')(({ theme }) => ({
   width: '50%',
-  height: 'auto',
+  height: '60vh',
   objectFit: 'cover',
   [theme.breakpoints.down('sm')]: {
     display: 'none',
@@ -21,8 +21,10 @@ const StyledContainer = styled(Container)(({ theme }) => ({
   display: 'flex',
   flexDirection: 'row',
   whiteSpace: 'normal',
-  maxHeight: '60vh',
   backgroundColor: theme.palette.background.paper,
+  [theme.breakpoints.only('xs')]: {
+    height: '44vh',
+  },
 }));
 
 const StyledBox = styled(Box)(({ theme }) => ({

@@ -4,7 +4,7 @@ import globalEnv from 'src/globalEnv';
 
 class GalleryConditionEndViewModel {
   private store: InventoryStore;
-  readonly goToConditionText: string = 'VIEW IMPERFEFTION PHOTOS';
+  readonly goToConditionText: string = 'VIEW IMPERFECTIONS PHOTOS';
   readonly faqPreText: string =
     'For information on our mechanical and safety standards, ';
   readonly faqLink = {

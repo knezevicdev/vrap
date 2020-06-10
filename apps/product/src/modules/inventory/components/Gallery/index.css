@@ -19,6 +19,10 @@ must when all other approaches fail you.
   background: #041022;
 }
 
+.image-gallery-content.fullscreen img {
+  height: 100%;
+}
+
 .stock-photos .image-gallery-content.fullscreen {
   background: #ffffff;
 }
