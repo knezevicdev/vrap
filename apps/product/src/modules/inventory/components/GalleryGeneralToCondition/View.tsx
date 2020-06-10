@@ -17,11 +17,12 @@ const StyledImg = styled('img')(({ theme }) => ({
   },
 }));
 
-const StyledContainer = styled(Container)(() => ({
+const StyledContainer = styled(Container)(({ theme }) => ({
   display: 'flex',
   flexDirection: 'row',
   whiteSpace: 'normal',
   maxHeight: '60vh',
+  backgroundColor: theme.palette.background.paper,
 }));
 
 const StyledBox = styled(Box)(({ theme }) => ({

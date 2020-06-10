@@ -1,4 +1,4 @@
-import { isEmpty } from 'lodash';
+import isEmpty from 'lodash/isEmpty';
 
 import { GallerySelections, InventoryStore } from '../../store';
 import GalleryConditionEnd from '../GalleryConditionEnd';
@@ -11,9 +11,7 @@ interface GeneralPhoto {
   thumbnail: string;
 }
 
-interface DefectPhoto {
-  original: string;
-  thumbnail: string;
+interface DefectPhoto extends GeneralPhoto {
   description: string;
 }
 
@@ -42,13 +40,10 @@ class GalleryViewModel {
     return galleryImages.length > 1;
   }
 
-  showThumbnails(isMobile: boolean, fullscreen: boolean): boolean {
+  showThumbnails(isMobile: boolean): boolean {
     const galleryImages = this.getGalleryImages();
     if (isMobile || galleryImages.length <= 1) {
       return false;
-    }
-    if (fullscreen) {
-      return true;
     }
     return true;
   }
@@ -56,7 +51,7 @@ class GalleryViewModel {
   getThumbnailPosition(
     isMobile: boolean,
     fullscreen: boolean
-  ): 'bottom' | 'left' | 'right' | 'top' | undefined {
+  ): 'bottom' | 'right' {
     const galleryImages = this.getGalleryImages();
     if (isMobile || fullscreen || galleryImages.length <= 1) {
       return 'bottom';
@@ -102,6 +97,7 @@ class GalleryViewModel {
         renderItem: React.FunctionComponent;
       } = {
         original: this.defaultImage.src,
+        //TODO: Replace with designs photo
         thumbnail: this.defaultImage.src,
         renderItem: GalleryGeneralToCondition,
       };
@@ -133,6 +129,7 @@ class GalleryViewModel {
       renderItem: React.FunctionComponent;
     } = {
       original: this.defaultImage.src,
+      //TODO: Replace with designs photo
       thumbnail: this.defaultImage.src,
       description: 'Condition End Card',
       renderItem: GalleryConditionEnd,

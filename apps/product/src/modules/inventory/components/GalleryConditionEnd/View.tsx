@@ -16,11 +16,12 @@ const StyledImg = styled('img')(({ theme }) => ({
   },
 }));
 
-const StyledContainer = styled(Container)(() => ({
+const StyledContainer = styled(Container)(({ theme }) => ({
   display: 'flex',
   flexDirection: 'row',
   whiteSpace: 'normal',
   maxHeight: '60vh',
+  backgroundColor: theme.palette.background.paper,
 }));
 
 const StyledTypography = styled(Typography)(() => ({}));
@@ -42,7 +43,7 @@ const GalleryConditionEndView: React.FC<Props> = ({ viewModel }) => {
     <StyledContainer>
       <StyledBox>
         <StyledTypography
-          component="span"
+          component="div"
           variant="body1"
           fontWeight="fontWeightLight"
         >

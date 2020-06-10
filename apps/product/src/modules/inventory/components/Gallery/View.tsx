@@ -56,7 +56,7 @@ const GalleryView: React.FC<Props> = (props) => {
             items={viewModel.getGalleryImages()}
             showPlayButton={false}
             showNav={!isMobile}
-            showThumbnails={viewModel.showThumbnails(isMobile, fullscreen)}
+            showThumbnails={viewModel.showThumbnails(isMobile)}
             thumbnailPosition={viewModel.getThumbnailPosition(
               isMobile,
               fullscreen
