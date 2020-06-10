@@ -26,3 +26,10 @@ must when all other approaches fail you.
 .image-gallery-thumbnails-wrapper.right .image-gallery-thumbnails {
   max-height: 60vh;
 }
+
+.image-gallery-index {
+  width: 100%;
+  text-align: center;
+  background: rgba(255, 255, 255, 0.75);
+  color: #000000;
+}

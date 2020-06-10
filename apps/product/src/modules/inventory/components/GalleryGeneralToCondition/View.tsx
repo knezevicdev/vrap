@@ -24,11 +24,18 @@ const StyledContainer = styled(Container)(() => ({
   maxHeight: '60vh',
 }));
 
-const StyledBox = styled(Box)(() => ({
+const StyledBox = styled(Box)(({ theme }) => ({
   display: 'flex',
   justifyContent: 'center',
   alignItems: 'center',
   width: '50%',
+  [theme.breakpoints.down('sm')]: {
+    width: '100%',
+    height: '60vh;',
+  },
+  [theme.breakpoints.only('xs')]: {
+    height: '40vh',
+  },
 }));
 
 const StyledButton = styled(Button)(() => ({
