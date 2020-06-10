@@ -89,26 +89,24 @@ const CustomerQuoteView: React.FC<Props> = ({ viewModel }) => {
   } = viewModel;
 
   return (
-    <>
-      <Container>
-        <Paper elevation={0} square>
-          <Capsule container>
-            <PictureGrid item xs={12} md={6}>
-              <Picture src={src}>
-                <Image src={src} alt={alt} />
-              </Picture>
-            </PictureGrid>
-            <QuoteGrid item xs={12} md={6}>
-              <QuoteContainer>
-                <Quote>{viewModel.quote}</Quote>
-                <Name>{viewModel.name}</Name>
-                <Location variant="caption">{viewModel.location}</Location>
-              </QuoteContainer>
-            </QuoteGrid>
-          </Capsule>
-        </Paper>
-      </Container>
-    </>
+    <Container>
+      <Paper elevation={0} square>
+        <Capsule container>
+          <PictureGrid item xs={12} md={6}>
+            <Picture src={src}>
+              <Image src={src} alt={alt} />
+            </Picture>
+          </PictureGrid>
+          <QuoteGrid item xs={12} md={6}>
+            <QuoteContainer>
+              <Quote>{viewModel.quote}</Quote>
+              <Name>{viewModel.name}</Name>
+              <Location variant="caption">{viewModel.location}</Location>
+            </QuoteContainer>
+          </QuoteGrid>
+        </Capsule>
+      </Paper>
+    </Container>
   );
 };
 
