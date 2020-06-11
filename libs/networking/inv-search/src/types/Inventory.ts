@@ -1,123 +1,208 @@
 /* eslint-disable @typescript-eslint/camelcase */
 import * as yup from 'yup';
 
-export const carSchema = yup
+export type Car = {
+  vin: string;
+  bodyType: string;
+  interiorPhotoUrl: string;
+  diesel: number;
+  leadFlagPhotoUrl: string;
+  listingPrice: number;
+  color: string;
+  year: number;
+  leadFlagPhotoUrlHiRes: string;
+  subjectLine: string;
+  warrantyRemaining: string;
+  miles: number;
+  interiorPhotoUrlHiRes: string;
+  dvd: number;
+  transmission: string;
+  trim: string;
+  engine: string;
+  hiresPhotos: string[] | null;
+  warranty: number;
+  model: string;
+  extColor: string;
+  text: string;
+  engId: number;
+  bodyId: number;
+  make: string;
+  vehicleType: string;
+  doorCount: number;
+  roof: number;
+  nav: number;
+  warrantyOriginal: string;
+  driveType: string;
+  intColor: string;
+  cylinders: number;
+  awd: number;
+  fuelType: string;
+  leadPhotoUrlHiRes: string;
+  leadPhotoUrl: string;
+  style: string;
+  optionalFeatures: string;
+  zone: string;
+  soldStatus: number;
+  otherPhotos: string[] | null;
+  ownerCount: number;
+  cityMpg: number;
+  highwayMpg: number;
+  // TODO: replace inventoryId with externalId when the API supplies it.
+  inventoryId: number;
+  consignmentPartnerId: string;
+  hasStockPhotos: boolean;
+};
+export const carSchema: yup.ObjectSchema<Car> = yup
   .object({
-    vin: yup.string(),
-    bodyType: yup.string(),
-    interiorPhotoUrl: yup.string(),
-    diesel: yup.number(),
-    leadFlagPhotoUrl: yup.string(),
-    listingPrice: yup.number(),
-    color: yup.string(),
-    year: yup.number(),
-    leadFlagPhotoUrlHiRes: yup.string(),
-    subjectLine: yup.string(),
-    warrantyRemaining: yup.string(),
-    miles: yup.number(),
-    interiorPhotoUrlHiRes: yup.string(),
-    dvd: yup.number(),
-    transmission: yup.string(),
-    trim: yup.string(),
-    engine: yup.string(),
-    hiresPhotos: yup.array(yup.string()),
-    warranty: yup.number(),
-    model: yup.string(),
-    extColor: yup.string(),
-    text: yup.string(),
-    engId: yup.number(),
-    bodyId: yup.number(),
-    make: yup.string(),
-    vehicleType: yup.string(),
-    doorCount: yup.number(),
-    roof: yup.number(),
-    nav: yup.number(),
-    warrantyOriginal: yup.string(),
-    driveType: yup.string(),
-    intColor: yup.string(),
-    cylinders: yup.number(),
-    awd: yup.number(),
-    fuelType: yup.string(),
-    leadPhotoUrlHiRes: yup.string(),
-    leadPhotoUrl: yup.string(),
-    style: yup.string(),
-    optionalFeatures: yup.string(),
-    zone: yup.string(),
-    soldStatus: yup.number(),
-    otherPhotos: yup.array(yup.string()),
-    ownerCount: yup.number(),
-    cityMpg: yup.number(),
-    highwayMpg: yup.number(),
+    vin: yup.string().defined(),
+    bodyType: yup.string().defined(),
+    interiorPhotoUrl: yup.string().defined(),
+    diesel: yup.number().defined(),
+    leadFlagPhotoUrl: yup.string().defined(),
+    listingPrice: yup.number().defined(),
+    color: yup.string().defined(),
+    year: yup.number().defined(),
+    leadFlagPhotoUrlHiRes: yup.string().defined(),
+    subjectLine: yup.string().defined(),
+    warrantyRemaining: yup.string().defined(),
+    miles: yup.number().defined(),
+    interiorPhotoUrlHiRes: yup.string().defined(),
+    dvd: yup.number().defined(),
+    transmission: yup.string().defined(),
+    trim: yup.string().defined(),
+    engine: yup.string().defined(),
+    hiresPhotos: yup.array(yup.string().defined()).defined().nullable(),
+    warranty: yup.number().defined(),
+    model: yup.string().defined(),
+    extColor: yup.string().defined(),
+    text: yup.string().defined(),
+    engId: yup.number().defined(),
+    bodyId: yup.number().defined(),
+    make: yup.string().defined(),
+    vehicleType: yup.string().defined(),
+    doorCount: yup.number().defined(),
+    roof: yup.number().defined(),
+    nav: yup.number().defined(),
+    warrantyOriginal: yup.string().defined(),
+    driveType: yup.string().defined(),
+    intColor: yup.string().defined(),
+    cylinders: yup.number().defined(),
+    awd: yup.number().defined(),
+    fuelType: yup.string().defined(),
+    leadPhotoUrlHiRes: yup.string().defined(),
+    leadPhotoUrl: yup.string().defined(),
+    style: yup.string().defined(),
+    optionalFeatures: yup.string().defined(),
+    zone: yup.string().defined(),
+    soldStatus: yup.number().defined(),
+    otherPhotos: yup.array(yup.string().defined()).defined().nullable(),
+    ownerCount: yup.number().defined(),
+    cityMpg: yup.number().defined(),
+    highwayMpg: yup.number().defined(),
     // TODO: replace inventoryId with externalId when the API supplies it.
-    inventoryId: yup.number(),
+    inventoryId: yup.number().defined(),
+    consignmentPartnerId: yup.string().defined(),
+    hasStockPhotos: yup.boolean().defined(),
   })
+  .defined()
   .strict(true);
-export type Car = yup.InferType<typeof carSchema>;
 
-export const hitSchema = yup
-  .object<{ _source: Car }>({
+export type Hit = {
+  _source: Car;
+};
+export const hitSchema: yup.ObjectSchema<Hit> = yup
+  .object({
     _source: carSchema,
   })
+  .defined()
   .strict(true);
-export type Hit = yup.InferType<typeof hitSchema>;
 
-export const hitsSchema = yup
-  .object<{ total: number; hits: Hit[] }>({
-    total: yup.number(),
-    hits: yup.array(hitSchema),
-  })
-  .strict(true);
-export type Hits = yup.InferType<typeof hitsSchema>;
-
-export const modelBucketSchema = yup
+export type Hits = {
+  total: number;
+  hits: Hit[];
+};
+export const hitsSchema: yup.ObjectSchema<Hits> = yup
   .object({
-    key: yup.string(),
-    doc_count: yup.number(),
+    total: yup.number().defined(),
+    hits: yup.array(hitSchema).defined(),
   })
+  .defined()
   .strict(true);
-export type ModelBucket = yup.InferType<typeof modelBucketSchema>;
 
-export const modelCountSchema = yup
-  .object<{ buckets: ModelBucket[] }>({
-    buckets: yup.array(modelBucketSchema),
+export type ModelBucket = {
+  key: string;
+  doc_count: number;
+};
+export const modelBucketSchema: yup.ObjectSchema<ModelBucket> = yup
+  .object({
+    key: yup.string().defined(),
+    doc_count: yup.number().defined(),
   })
+  .defined()
   .strict(true);
-export type ModelCount = yup.InferType<typeof modelCountSchema>;
 
-export const makeBucketSchema = yup
-  .object<{ key: string; doc_count: number; model_count: ModelCount }>({
-    key: yup.string(),
-    doc_count: yup.number(),
+export type ModelCount = {
+  buckets: ModelBucket[];
+};
+export const modelCountSchema: yup.ObjectSchema<ModelCount> = yup
+  .object({
+    buckets: yup.array(modelBucketSchema).defined(),
+  })
+  .defined()
+  .strict(true);
+
+export type MakeBucket = {
+  key: string;
+  doc_count: number;
+  model_count: ModelCount;
+};
+export const makeBucketSchema: yup.ObjectSchema<MakeBucket> = yup
+  .object({
+    key: yup.string().defined(),
+    doc_count: yup.number().defined(),
     model_count: modelCountSchema,
   })
+  .defined()
   .strict(true);
-export type MakeBucket = yup.InferType<typeof makeBucketSchema>;
 
-export const makeCountSchema = yup
-  .object<{ buckets: MakeBucket[] }>({
-    buckets: yup.array(makeBucketSchema),
+export type MakeCount = {
+  buckets: MakeBucket[];
+};
+export const makeCountSchema: yup.ObjectSchema<MakeCount> = yup
+  .object({
+    buckets: yup.array(makeBucketSchema).defined(),
   })
+  .defined()
   .strict(true);
-export type MakeCount = yup.InferType<typeof makeCountSchema>;
 
-export const aggregationsSchema = yup
-  .object<{ make_count: MakeCount }>({
+export type Aggregations = {
+  make_count: MakeCount;
+};
+export const aggregationsSchema: yup.ObjectSchema<Aggregations> = yup
+  .object({
     make_count: makeCountSchema,
   })
+  .defined()
   .strict(true);
-export type Aggregations = yup.InferType<typeof aggregationsSchema>;
 
-export const dataSchema = yup
-  .object<{ hits: Hits; aggregations: Aggregations }>({
+export type Data = {
+  hits: Hits;
+  aggregations: Aggregations;
+};
+export const dataSchema: yup.ObjectSchema<Data> = yup
+  .object({
     hits: hitsSchema,
     aggregations: aggregationsSchema,
   })
+  .defined()
   .strict(true);
-export type Data = yup.InferType<typeof dataSchema>;
 
-export const inventoryResponseSchema = yup
-  .object<{ data: Data }>({
+export type InventoryResponse = {
+  data: Data;
+};
+export const inventoryResponseSchema: yup.ObjectSchema<InventoryResponse> = yup
+  .object({
     data: dataSchema,
   })
+  .defined()
   .strict(true);
-export type InventoryResponse = yup.InferType<typeof inventoryResponseSchema>;

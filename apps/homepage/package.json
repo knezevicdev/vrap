@@ -1,6 +1,6 @@
 {
   "name": "@vroom-web/homepage",
-  "version": "1.0.0",
+  "version": "1.0.6",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -13,8 +13,9 @@
   "dependencies": {
     "@material-ui/core": "^4.9.4",
     "@material-ui/icons": "^4.9.1",
-    "@material-ui/lab": "4.0.0-alpha.44",
+    "@material-ui/lab": "^4.0.0-alpha.44",
     "@vroom-web/analytics-integration": "^1.0.0",
+    "@vroom-web/deals-v2-networking": "^1.0.0",
     "@vroom-web/footer-components": "^1.0.0",
     "@vroom-web/header-components": "^1.0.0",
     "@vroom-web/inv-search-networking": "^1.0.0",
@@ -34,22 +35,26 @@
     "react-dom": "^16.12.0",
     "react-string-replace": "^0.4.4",
     "smoothscroll-polyfill": "^0.4.4",
+    "ua-parser-js": "^0.7.21",
     "vroom-abtesting-sdk": "https://experiments-dev.n.vroom.systems/sdk/0.1.6/abtesting-sdk.tar"
   },
   "devDependencies": {
     "@babel/plugin-proposal-class-properties": "^7.8.3",
     "@babel/plugin-proposal-decorators": "^7.8.3",
+    "@next/bundle-analyzer": "^9.4.4",
     "@svgr/webpack": "^5.2.0",
     "@types/jest": "^25.1.4",
     "@types/js-base64": "^2.3.1",
     "@types/lodash.debounce": "^4.0.6",
     "@types/lodash.isempty": "^4.4.6",
+    "@types/modernizr": "^3.5.3",
     "@types/node": "^13.7.4",
     "@types/qs": "^6.9.1",
     "@types/react": "^16.9.22",
     "@types/react-dom": "^16.9.5",
     "@types/segment-analytics": "0.0.32",
     "@types/smoothscroll-polyfill": "^0.3.1",
+    "@types/ua-parser-js": "^0.7.33",
     "typescript": "^3.8.2",
     "url-loader": "^3.0.0"
   }

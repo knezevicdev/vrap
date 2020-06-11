@@ -11,9 +11,11 @@ import Document, {
 } from 'next/document';
 import React from 'react';
 
+import globalEnv from '../../globalEnv';
 import FaviconSnippet from './FaviconSnippet';
 import FontsSnippet from './FontsSnippet';
 import GlobalEnvSnippet from './GlobalEnvSnippet';
+import ModernizrSnippet from './ModernizrSnippet';
 
 class VroomDocument extends Document {
   static async getInitialProps(
@@ -63,9 +65,11 @@ class VroomDocument extends Document {
             />
           )}
           <GlobalEnvSnippet
-            CDN_URL={process.env.CDN_URL}
-            INVSEARCH_V3_URL={process.env.INVSEARCH_V3_URL}
+            CDN_URL={globalEnv.CDN_URL}
+            GEARBOX_PRIVATE_URL={globalEnv.GEARBOX_PRIVATE_URL}
+            INVSEARCH_V3_URL={globalEnv.INVSEARCH_V3_URL}
           />
+          <ModernizrSnippet />
         </Head>
         <body>
           <Main />

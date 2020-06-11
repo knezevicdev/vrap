@@ -65,8 +65,15 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
 }));
 
-type VariantClass = 'h1' | 'h2' | 'body1' | 'button' | 'caption';
-export type Variant = 'inherit' | 'h1' | 'h2' | 'body1' | 'button' | 'caption';
+type VariantClass = 'h1' | 'h2' | 'body1' | 'button' | 'caption' | 'srOnly';
+export type Variant =
+  | 'inherit'
+  | 'h1'
+  | 'h2'
+  | 'body1'
+  | 'button'
+  | 'caption'
+  | 'srOnly';
 
 interface VariantToTagMapping {
   [variant: string]: React.ElementType;
@@ -78,6 +85,7 @@ const defaultVariantToTagMapping: VariantToTagMapping = {
   body1: 'p',
   button: 'span',
   caption: 'span',
+  srOnly: 'span',
 };
 
 type WhiteSpaceClass =

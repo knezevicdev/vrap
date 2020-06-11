@@ -22,12 +22,19 @@ class HeaderNavStore {
         return;
       }
       const authToken = JSON.parse(authTokenWithExpressPrefix.slice(2));
-      const { accessToken, idToken } = authToken;
-      const { name } = jwtDecode(idToken);
-      this.name = name;
-      const { exp: expirationTimestamp } = jwtDecode(accessToken);
+      const { exp: expirationTimestamp } = jwtDecode(authToken.accessToken);
       const loggedIn = expirationTimestamp > new Date().getTime() / 1000;
       this.loggedIn = loggedIn;
+
+      // FIT-488
+      // This is a stopgap until the authToken cookie realiably includes "idToken" data.
+      // We will set the "name" field if "idToken" is defined, otherwise gracefully fail.
+      try {
+        const { name } = jwtDecode(authToken.idToken);
+        this.name = name;
+      } catch {
+        this.name = undefined;
+      }
     } catch {
       this.loggedIn = false;
     }
@@ -52,6 +59,13 @@ class HeaderNavStore {
   @action
   signOut = (): void => {
     ClientSideCookies.remove('authToken');
+    // FIT-468.
+    // The vroom-com application persists its redux state using session storage.
+    // In order to make sure sign outs are registered by the vroom-com app,
+    // we need to clear the persisted data here.
+    // When we get to a point where we've fully ported off vroom-com,
+    // this line can be reassesed and likely removed.
+    sessionStorage.removeItem('persist:root');
     this.loggedIn = false;
   };
 }

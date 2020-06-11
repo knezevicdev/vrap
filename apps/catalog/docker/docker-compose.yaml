@@ -1,0 +1,40 @@
+version: '3'
+services:
+  catalog:
+    build:
+      context: ../../../
+      dockerfile: ./apps/catalog/docker/Dockerfile
+    user: 'root'
+    environment:
+      - CDN_URL=
+      - INVSEARCH_V3_URL=https://invsearch-v3-prod-ext.aws.vroomapi.com/v3
+      - SEGMENT_WRITE_KEY=N0pxERRIw4iYCoxZREMZj1yWBIoARIz4
+    command: ash -c "yarn workspace @vroom-web/catalog dev --port 8080"
+    # This starts nothing but leaves the container running, useful for
+    # debugging nextjs start / config operations
+    # command: ash -c "tail -f /dev/null"
+    ports:
+      - '8080:8080'
+    volumes:
+      # Setup a volume so source code edits will be reflected outside the container.
+      - '../../../:/www/'
+      # Setup volumes for dependencies and built artifacts.
+      # This allows the node_modules created during the build to not be overwritten.
+      # https://stackoverflow.com/questions/30043872/docker-compose-node-modules-not-present-in-a-volume-after-npm-install-succeeds
+      # It also makes sure that the built artifacts are only present on the container,
+      # and not copied back to the host machine.
+      - '/www/node_modules'
+      - '/www/apps/catalog/.next'
+      - '/www/apps/catalog/node_modules'
+      - '/www/libs/integrations/analytics/dist'
+      - '/www/libs/integrations/analytics/node_modules'
+      - '/www/libs/networking/deals-v2/dist'
+      - '/www/libs/networking/deals-v2/node_modules'
+      - '/www/libs/networking/inv-search/dist'
+      - '/www/libs/networking/inv-search/node_modules'
+      - '/www/libs/ui/dist'
+      - '/www/libs/ui/node_modules'
+      - '/www/libs/components/header/dist'
+      - '/www/libs/components/header/node_modules'
+      - '/www/libs/components/footer/dist'
+      - '/www/libs/components/footer/node_modules'
