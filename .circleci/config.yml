@@ -90,7 +90,7 @@ jobs:
             ENV=${NAME_SPACE#homepage-}
 
             build -a vroom-web/apps/homepage/docker
-            deploy -a vroom-web/apps/homepage/docker -n ${ENV}
+            deploy -a vroom-web/apps/homepage/docker -n dev
   homepage_prod: &mlp
     docker:
       - image: vroom/mlp:2.0
