@@ -5,12 +5,16 @@ import View from './View';
 import ViewModel from './ViewModel';
 
 interface Props {
+  className?: string;
   gearboxPrivateUrl: string;
 }
 
-const InProgressDealBar: React.FC<Props> = ({ gearboxPrivateUrl }) => {
+const InProgressDealBar: React.FC<Props> = ({
+  className,
+  gearboxPrivateUrl,
+}) => {
   const store = new Store(gearboxPrivateUrl);
-  const viewModel = new ViewModel(store);
+  const viewModel = new ViewModel(store, className);
   return <View viewModel={viewModel} />;
 };
 

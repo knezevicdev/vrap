@@ -10,6 +10,12 @@ import Bar from '../../components/Bar';
 import { ReactComponent as CartSvg } from '../../svg/cart.svg';
 import ViewModel from './ViewModel';
 
+const StyledCollapse = styled(Collapse)(({ theme }) => ({
+  top: '0px',
+  position: 'sticky',
+  zIndex: theme.zIndex.appBar,
+}));
+
 const StyledBar = styled(Bar)(({ theme }) => ({
   paddingTop: theme.spacing(2),
   paddingBottom: theme.spacing(2),
@@ -119,7 +125,7 @@ const InProgressDealBarView: React.FC<Props> = ({ viewModel }) => {
   const show = viewModel.show();
 
   return (
-    <Collapse in={show}>
+    <StyledCollapse className={viewModel.className} in={show}>
       <StyledBar>
         {show && (
           <>
@@ -154,7 +160,7 @@ const InProgressDealBarView: React.FC<Props> = ({ viewModel }) => {
           </>
         )}
       </StyledBar>
-    </Collapse>
+    </StyledCollapse>
   );
 };
 

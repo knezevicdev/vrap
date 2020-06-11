@@ -66,6 +66,7 @@ class VroomDocument extends Document {
           )}
           <GlobalEnvSnippet
             CDN_URL={globalEnv.CDN_URL}
+            GEARBOX_PRIVATE_URL={globalEnv.GEARBOX_PRIVATE_URL}
             INVSEARCH_V3_URL={globalEnv.INVSEARCH_V3_URL}
           />
           <ModernizrSnippet />
