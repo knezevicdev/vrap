@@ -15,6 +15,16 @@ interface DefectPhoto extends GeneralPhoto {
   description: string;
 }
 
+enum DefectTypes {
+  SCRATCH = 'Scratch',
+  OXIDATION = 'Oxidation',
+  PAINT_IMPERFECTION = 'Paint Imperfection',
+  SPIDER_CRACKING = 'Spider Cracking',
+  CHIP = 'Chip',
+  RUN = 'Run',
+  DENT = 'Dent',
+}
+
 class GalleryViewModel {
   private store: InventoryStore;
   readonly defaultImage = {
@@ -154,25 +164,34 @@ class GalleryViewModel {
   }
 
   private getDefectTypeText(type: string): string {
+    const {
+      SCRATCH,
+      OXIDATION,
+      PAINT_IMPERFECTION,
+      SPIDER_CRACKING,
+      CHIP,
+      RUN,
+      DENT,
+    } = DefectTypes;
     let descText = '';
     switch (type) {
-      case 'Scratch':
-        descText = 'Scratch';
+      case SCRATCH:
+        descText = SCRATCH;
         break;
-      case 'Oxidation':
-        descText = 'Paint Imperfection';
+      case OXIDATION:
+        descText = PAINT_IMPERFECTION;
         break;
-      case 'Spider Cracking':
-        descText = 'Paint Imperfection';
+      case SPIDER_CRACKING:
+        descText = PAINT_IMPERFECTION;
         break;
-      case 'Chip':
-        descText = 'Chip';
+      case CHIP:
+        descText = CHIP;
         break;
-      case 'Run':
-        descText = 'Paint Imperfection';
+      case RUN:
+        descText = PAINT_IMPERFECTION;
         break;
-      case 'Dent':
-        descText = 'Dent';
+      case DENT:
+        descText = DENT;
         break;
     }
     return descText;
