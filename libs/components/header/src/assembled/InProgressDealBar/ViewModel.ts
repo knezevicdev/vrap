@@ -1,3 +1,4 @@
+import AnalyticsHandler from '../../integrations/AnalyticsHandler';
 import { Status } from '../../networking/types';
 import Store from './store';
 
@@ -8,6 +9,7 @@ class InProgressDealBarViewModel {
 
   private store: Store;
   private currencyFormatter: Intl.NumberFormat;
+  private analyticsHandler: AnalyticsHandler;
 
   constructor(store: Store, className?: string) {
     this.className = className;
@@ -18,6 +20,7 @@ class InProgressDealBarViewModel {
       minimumFractionDigits: 0,
       maximumFractionDigits: 0,
     });
+    this.analyticsHandler = new AnalyticsHandler();
   }
 
   handleMount(): void {
@@ -84,6 +87,7 @@ class InProgressDealBarViewModel {
   }
 
   handleButtonClick(): void {
+    this.analyticsHandler.trackTransactionResumeClicked();
     const { step } = this.store.inProgressDeal.dealSummary.dealStatus;
     const { vin } = this.store.inProgressDeal.dealSummary.inventory.vehicle;
     const href = this.getResumeStepHref(step, vin);

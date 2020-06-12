@@ -2,7 +2,8 @@ import { styled } from '@material-ui/core/styles';
 import { Typography } from '@vroom-web/ui';
 import React from 'react';
 
-import { ReactComponent as LogoSvg } from '../svg/logo.svg';
+import { ReactComponent as LogoSvg } from '../../svg/logo.svg';
+import ViewModel from './ViewModel';
 
 const StyledAnchor = styled('a')(() => ({
   color: 'inherit',
@@ -19,19 +20,19 @@ const StyledLogoSvg = styled(LogoSvg)(({ theme }) => ({
 }));
 
 interface Props {
-  className?: string;
-  href?: string;
-  onClick?: (event: React.MouseEvent<HTMLAnchorElement>) => void;
-  style?: React.CSSProperties;
+  viewModel: ViewModel;
 }
 
-const Logo: React.FC<Props> = ({ className, href, onClick, style }) => {
+const Logo: React.FC<Props> = ({ viewModel }) => {
+  const handleClick = (event: React.MouseEvent<HTMLAnchorElement>): void => {
+    viewModel.handleLogoClick(event);
+  };
+
   return (
     <StyledAnchor
-      className={className}
-      href={href ? href : '/'}
-      onClick={onClick}
-      style={style}
+      className={viewModel.className}
+      href={viewModel.href}
+      onClick={handleClick}
     >
       <StyledLogoSvg />
       <Typography variant="srOnly">Home</Typography>
