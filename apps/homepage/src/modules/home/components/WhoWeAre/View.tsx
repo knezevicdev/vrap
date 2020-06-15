@@ -13,20 +13,24 @@ const Background = styled('div')(() => {
     backgroundSize: 'cover',
     backgroundPosition: 'center top',
   };
+
   if (typeof window !== 'undefined') {
     const jpeg2000 = window.Modernizr.jpeg2000;
-    const webp = Object.values(window.Modernizr.webp).indexOf(false) === -1;
+
+    const webp =
+      typeof window.Modernizr.webp === 'boolean'
+        ? window.Modernizr.webp
+        : Object.values(window.Modernizr.webp).indexOf(false) === -1;
 
     if (jpeg2000) {
       config.backgroundImage = `url(${globalEnv.CDN_URL}/modules/home/images/jp2/who-we-are-background.jp2)`;
-    }
-    if (webp) {
+    } else if (webp) {
       config.backgroundImage = `url(${globalEnv.CDN_URL}/modules/home/images/webp/who-we-are-background.webp)`;
-    }
-    if (!jpeg2000 && !webp) {
+    } else {
       config.backgroundImage = `url(${globalEnv.CDN_URL}/modules/home/images/who-we-are-background.png)`;
     }
   }
+
   return config;
 });
 
