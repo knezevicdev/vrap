@@ -19,6 +19,7 @@ class AutocompleteViewModel {
 
   readonly buttonLabel: string = 'Find your car';
   readonly inputPlaceholder: string = 'Enter make, model or body style';
+  readonly label: string = 'Search Cars';
 
   constructor(store: AutocompleteStore) {
     this.analyticsHandler = new AnalyticsHandler();

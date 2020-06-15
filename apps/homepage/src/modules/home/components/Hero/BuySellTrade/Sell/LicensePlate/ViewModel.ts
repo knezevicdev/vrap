@@ -26,12 +26,16 @@ class LicensePlateViewModel {
         this.store.setSelectedState(event.target.value as string);
     };
 
-    getStates = () => {
+    getStates = (): string[] => {
         return this.states;
     }
 
-    getSelectedState = () => {
+    getSelectedState = (): string => {
         return this.store.selectedState;
+    }
+
+    isButtonDisabled = (): boolean => {
+        return this.getSelectedState() === '' || this.getInputValue() === '';
     }
 
     navigate(): void {

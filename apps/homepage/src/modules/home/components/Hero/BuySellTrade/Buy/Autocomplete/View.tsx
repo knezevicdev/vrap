@@ -42,6 +42,33 @@ const useStyles = makeStyles((theme) => ({
       color: theme.palette.grey[500],
       opacity: 1,
     },
+    border: "solid 1px #E0E0E0",
+  },
+}));
+
+const Input = styled(TextField)(({theme}) => ({
+  width: '100%',
+  '& .MuiInput-formControl': {
+    marginTop: theme.spacing(1),
+    marginBottom: theme.spacing(3)
+  },
+  '& .MuiInputLabel-root': {
+    position: 'static',
+    transform: 'none',
+    fontSize: '14px',
+    fontWeight: theme.typography.fontWeightLight,
+    lineHeight: '14px',
+    color: theme.palette.text.primary,
+  },
+  '& input': {
+    padding: theme.spacing(1, 2),
+    border: `1px solid ${theme.palette.grey[400]}`,
+  },
+  '& .Mui-error input': {
+    borderColor: theme.palette.error.main,
+  },
+  '& .Mui-error.MuiInputLabel-root': {
+    color: theme.palette.error.main,
   },
 }));
 
@@ -115,7 +142,7 @@ const HeroAutocomplete: React.FC<HeroAutocompleteProps> = ({
         options={viewModel.suggestions()}
         loading={suggestionsLoading}
         renderInput={(params: AutocompleteRenderInputParams): JSX.Element => (
-          <TextField
+          <Input
             {...params}
             InputProps={{
               ...params.InputProps,
@@ -129,12 +156,15 @@ const HeroAutocomplete: React.FC<HeroAutocompleteProps> = ({
                 </React.Fragment>
               ),
             }}
+            InputLabelProps={{disableAnimation: true,}}
+            label={viewModel.label}
+            focused={true}
             onChange={handleInputChange}
             onKeyDown={handleInputKeyDown}
             placeholder={viewModel.inputPlaceholder}
           />
         )}
-        style={{ flexGrow: 1, border: "solid 1px #E0E0E0", margin: '8px 0 16px 0' }}
+        style={{ flexGrow: 1, margin: '8px 0 16px 0' }}
       />
       <Button onClick={handleButtonClick} variant="contained" color="secondary">
         {viewModel.buttonLabel}

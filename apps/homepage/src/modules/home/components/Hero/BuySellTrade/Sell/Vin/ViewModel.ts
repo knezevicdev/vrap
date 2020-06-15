@@ -7,6 +7,7 @@ class VinViewModel {
     constructor(store: VinStore) {
         this.store = store;
     }
+
     readonly buttonLabel: string = 'What\'s my car worth?'
     readonly inputPlaceholder: string = 'VIN Number';
     readonly inputLabel: string = 'Vehicle Identification Number (VIN)';
@@ -23,6 +24,19 @@ class VinViewModel {
         const value = event.target.value;
         this.store.setVin(value);
     };
+
+    isButtonDisabled = (): boolean => {
+        return this.getInputValue() === '' || !this.isVinValid();
+    }
+
+    /*
+        Based off vroom-com
+        TODO: Could use better validation
+    */
+    isVinValid = (): boolean => {
+        const vin = this.getInputValue();
+        return vin.length === 17 && /^[A-Za-z0-9]+$/.test(vin);
+    }
 }
 
 export default VinViewModel;

@@ -27,7 +27,7 @@ const Input = styled(TextField)(({theme}) => ({
         lineHeight: '14px',
         color: theme.palette.text.primary,
     },
-    '& input': {
+    '& input, .MuiSelect-root': {
         padding: theme.spacing(1, 2),
         border: `1px solid ${theme.palette.grey[400]}`,
     },
@@ -37,6 +37,11 @@ const Input = styled(TextField)(({theme}) => ({
     '& .Mui-error.MuiInputLabel-root': {
         color: theme.palette.error.main,
     },
+}));
+
+const StateSelect = styled(Input)(({theme}) => ({
+    width: theme.spacing(20),
+    marginLeft: theme.spacing(3)
 }));
 
 const SubmitButton = styled(Button)(() => ({
@@ -57,21 +62,30 @@ const LicensePlateView: React.FC<Props> = ({viewModel}) => {
             <Inputs>
                 <Input
                     id="license-plate"
+                    focused={true}
                     label={viewModel.licensePlateLabel}
                     placeholder={viewModel.licensePlateLabel}
                     value={viewModel.getInputValue()}
                     onChange={viewModel.onChange}
                     InputProps={{disableUnderline: true}}
                 />
-                <Select
+                <StateSelect
                     id="state"
+                    select
+                    label={"State"}
+                    placeholder={viewModel.licensePlateLabel}
                     value={viewModel.getSelectedState()}
                     onChange={viewModel.handleChange}
+                    InputProps={{disableUnderline: true}}
                 >
                     {viewModel.getStates().map(state => <MenuItem key={state} value={state}>{state}</MenuItem>)}
-                </Select>
+                </StateSelect>
             </Inputs>
-            <SubmitButton onClick={handleButtonClick} variant="contained" color="secondary">
+            <SubmitButton
+                disabled={viewModel.isButtonDisabled()}
+                onClick={handleButtonClick}
+                variant="contained"
+                color="secondary">
                 {viewModel.buttonLabel}
             </SubmitButton>
         </LicensePlateContainer>

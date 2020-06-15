@@ -50,13 +50,18 @@ const VinView: React.FC<Props> = ({viewModel}) => {
         <VinContainer>
             <Input
                 id="vin"
+                focused={true}
                 label={viewModel.inputLabel}
                 placeholder={viewModel.inputPlaceholder}
                 value={viewModel.getInputValue()}
                 onChange={viewModel.onChange}
-                InputProps={{disableUnderline: true}}
+                InputProps={{disableUnderline: true, inputProps: { maxLength: 17 }}}
             />
-            <SubmitButton onClick={handleButtonClick} variant="contained" color="secondary">
+            <SubmitButton
+                disabled={viewModel.isButtonDisabled()}
+                onClick={handleButtonClick}
+                variant="contained"
+                color="secondary">
                 {viewModel.buttonLabel}
             </SubmitButton>
         </VinContainer>

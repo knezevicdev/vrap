@@ -3,7 +3,6 @@ import {observer} from "mobx-react";
 import ViewModel from './ViewModel';
 import {styled} from "@material-ui/core/styles";
 import ExternalLink from "src/ui/ExternalLink";
-import {Typography} from "@vroom-web/ui";
 import Autocomplete from "./Autocomplete";
 
 interface Props {
@@ -24,14 +23,9 @@ interface Props {
     viewModel: ViewModel;
 }
 
-const SearchCars = styled(Typography)(() => ({
-    letterSpacing: '0.35px',
-}));
-
 const BuyView: React.FC<Props> = ({viewModel}) => {
     return (
         <BuyContainer>
-            <SearchCars>{viewModel.searchLabel}</SearchCars>
             <Autocomplete/>
             <Browse href={viewModel.link.href}>
                 {viewModel.link.label}

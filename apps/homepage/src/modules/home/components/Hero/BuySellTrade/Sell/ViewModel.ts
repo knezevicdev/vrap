@@ -20,6 +20,7 @@ class SellViewModel {
     showLicensePlate = (): boolean => {
         return this.store.tab == 0;
     }
+
 }
 
 export default SellViewModel;
