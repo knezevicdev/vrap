@@ -1,4 +1,5 @@
 import globalEnv from 'src/globalEnv';
+import AnalyticsHandler from 'src/integrations/AnalyticsHandler';
 
 interface Highlight {
   description: string;
@@ -33,7 +34,14 @@ class HighlightsViewModel {
     },
   ];
 
+  private analyticsHandler: AnalyticsHandler;
+
+  constructor() {
+    this.analyticsHandler = new AnalyticsHandler();
+  }
+
   handleButtonClick(): void {
+    this.analyticsHandler.trackShowNowClicked();
     window.location.href = '/catalog';
   }
 }

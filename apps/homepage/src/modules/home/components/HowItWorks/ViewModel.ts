@@ -1,4 +1,8 @@
 import globalEnv from 'src/globalEnv';
+import AnalyticsHandler, {
+  VideoEvent,
+  VideoProperties,
+} from 'src/integrations/AnalyticsHandler';
 
 interface Link {
   label: string;
@@ -31,6 +35,12 @@ class HowItWorksViewModel {
     },
   };
 
+  private analyticsHandler: AnalyticsHandler;
+
+  constructor() {
+    this.analyticsHandler = new AnalyticsHandler();
+  }
+
   getPoster(): string {
     const jpeg2000 = window.Modernizr.jpeg2000;
     const webp = Object.values(window.Modernizr.webp).indexOf(false) === -1;
@@ -41,6 +51,35 @@ class HowItWorksViewModel {
       return this.video.poster.webp;
     }
     return this.video.poster.default;
+  }
+
+  handleLearnMoreClick(): void {
+    this.analyticsHandler.trackHowItWorksLearnMoreClicked();
+  }
+
+  handleVideoClick(target: EventTarget & HTMLVideoElement): void {
+    const { currentTime, currentSrc, duration, volume } = target;
+    const properties: VideoProperties = {
+      contentAssetId: currentSrc,
+      position: currentTime,
+      totalLength: Math.round(duration),
+      sound: Math.round(volume * 100),
+      quality: '1080p',
+      fullScreen: window.innerHeight === screen.height,
+    };
+
+    if (target.currentTime === 0) {
+      this.analyticsHandler.trackVideoPlayback(VideoEvent.Started, properties);
+    }
+    if (target.paused) {
+      this.analyticsHandler.trackVideoPlayback(VideoEvent.Paused, properties);
+    }
+    if (target.currentTime === target.duration) {
+      this.analyticsHandler.trackVideoPlayback(
+        VideoEvent.Completed,
+        properties
+      );
+    }
   }
 }
 
