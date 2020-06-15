@@ -61,7 +61,7 @@ class HowItWorksViewModel {
     const { currentTime, currentSrc, duration, volume } = target;
     const properties: VideoProperties = {
       contentAssetId: currentSrc,
-      position: Math.round(currentTime),
+      position: currentTime,
       totalLength: Math.round(duration),
       sound: Math.round(volume * 100),
       quality: '1080p',
