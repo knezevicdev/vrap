@@ -1,10 +1,10 @@
-import {action, observable} from 'mobx';
+import { action, observable } from 'mobx';
 
 export class VinStore {
-    @observable vin = '';
+  @observable vin = '';
 
-    @action
-    setVin = (vin: string): void => {
-        this.vin = vin;
-    };
+  @action
+  setVin = (vin: string): void => {
+    this.vin = vin;
+  };
 }

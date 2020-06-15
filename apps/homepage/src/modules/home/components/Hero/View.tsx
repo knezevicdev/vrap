@@ -262,12 +262,24 @@ const HeroView: React.FC<Props> = ({ viewModel }) => {
         />
         {desktop ? (
           <>
-            {smDown ? mobileButton : <InputContainer><BuySellTrade/></InputContainer>}
+            {smDown ? (
+              mobileButton
+            ) : (
+              <InputContainer>
+                <BuySellTrade />
+              </InputContainer>
+            )}
             {!smDown && browse}
           </>
         ) : (
           <>
-            {mdUp ? <InputContainer><BuySellTrade/></InputContainer> : mobileButton}
+            {mdUp ? (
+              <InputContainer>
+                <BuySellTrade />
+              </InputContainer>
+            ) : (
+              mobileButton
+            )}
             {mdUp && browse}
           </>
         )}

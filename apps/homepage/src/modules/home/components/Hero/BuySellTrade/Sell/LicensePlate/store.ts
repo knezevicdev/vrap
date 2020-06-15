@@ -1,16 +1,16 @@
-import {action, observable} from 'mobx';
+import { action, observable } from 'mobx';
 
 export class LicensePlateStore {
-    @observable selectedState = '';
-    @observable licensePlate = '';
+  @observable selectedState = '';
+  @observable licensePlate = '';
 
-    @action
-    setSelectedState = (state: string): void => {
-        this.selectedState = state;
-    };
+  @action
+  setSelectedState = (state: string): void => {
+    this.selectedState = state;
+  };
 
-    @action
-    setLicensePlate= (licensePlate: string): void => {
-        this.licensePlate = licensePlate;
-    };
+  @action
+  setLicensePlate = (licensePlate: string): void => {
+    this.licensePlate = licensePlate;
+  };
 }

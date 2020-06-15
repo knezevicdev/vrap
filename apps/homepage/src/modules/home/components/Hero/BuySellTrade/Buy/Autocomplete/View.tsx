@@ -42,15 +42,15 @@ const useStyles = makeStyles((theme) => ({
       color: theme.palette.grey[500],
       opacity: 1,
     },
-    border: "solid 1px #E0E0E0",
+    border: 'solid 1px #E0E0E0',
   },
 }));
 
-const Input = styled(TextField)(({theme}) => ({
+const Input = styled(TextField)(({ theme }) => ({
   width: '100%',
   '& .MuiInput-formControl': {
     marginTop: theme.spacing(1),
-    marginBottom: theme.spacing(3)
+    marginBottom: theme.spacing(3),
   },
   '& .MuiInputLabel-root': {
     position: 'static',
@@ -74,7 +74,7 @@ const Input = styled(TextField)(({theme}) => ({
 
 const HeroAutoCompleteBox = styled(Box)(() => ({
   maxWidth: '680px',
-  flexDirection: 'column'
+  flexDirection: 'column',
 }));
 
 interface HeroAutocompleteProps {
@@ -156,7 +156,7 @@ const HeroAutocomplete: React.FC<HeroAutocompleteProps> = ({
                 </React.Fragment>
               ),
             }}
-            InputLabelProps={{disableAnimation: true,}}
+            InputLabelProps={{ disableAnimation: true }}
             label={viewModel.label}
             focused={true}
             onChange={handleInputChange}

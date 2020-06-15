@@ -1,26 +1,25 @@
-import {SellStore} from "./store";
+import { SellStore } from './store';
 
 class SellViewModel {
-    private readonly store: SellStore;
-    readonly buyTab: string = 'LICENSE PLATE';
-    readonly sellTab: string = "VIN"
+  private readonly store: SellStore;
+  readonly buyTab: string = 'LICENSE PLATE';
+  readonly sellTab: string = 'VIN';
 
-    constructor(store: SellStore) {
-        this.store = store;
-    }
+  constructor(store: SellStore) {
+    this.store = store;
+  }
 
-    handleChange = (_: React.ChangeEvent<{}>, newValue: number) => {
-        this.store.setTab(newValue);
-    };
+  handleChange = (_: React.ChangeEvent<{}>, newValue: number) => {
+    this.store.setTab(newValue);
+  };
 
-    getTab = (): number => {
-        return this.store.tab;
-    }
+  getTab = (): number => {
+    return this.store.tab;
+  };
 
-    showLicensePlate = (): boolean => {
-        return this.store.tab == 0;
-    }
-
+  showLicensePlate = (): boolean => {
+    return this.store.tab == 0;
+  };
 }
 
 export default SellViewModel;
