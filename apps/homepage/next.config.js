@@ -1,7 +1,12 @@
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const withBundleAnalyzer = require('@next/bundle-analyzer')({
+  enabled: process.env.ANALYZE === 'true',
+});
+
 // TODO: remove once interchange (nginx) is setup locally
 const isProd = process.env.NODE_ENV === 'production';
 
-module.exports = {
+module.exports = withBundleAnalyzer({
   assetPrefix: isProd ? '/hp' : '',
   /* Custom webpack configuration. */
   webpack: (config) => {
@@ -14,4 +19,4 @@ module.exports = {
     config.resolve.modules.push(__dirname);
     return config;
   },
-};
+});

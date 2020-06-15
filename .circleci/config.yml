@@ -12,6 +12,7 @@ jobs:
 
             # Build libraries.
             yarn workspace @vroom-web/analytics-integration build
+            yarn workspace @vroom-web/deals-v2-networking build
             yarn workspace @vroom-web/inv-search-networking build
             yarn workspace @vroom-web/ui build
             yarn workspace @vroom-web/header-components build
@@ -42,6 +43,7 @@ jobs:
 
             # Build libraries.
             yarn workspace @vroom-web/analytics-integration build
+            yarn workspace @vroom-web/deals-v2-networking build
             yarn workspace @vroom-web/inv-search-networking build
             yarn workspace @vroom-web/ui build
             yarn workspace @vroom-web/header-components build
@@ -80,7 +82,10 @@ jobs:
             NAME_SPACE=${CIRCLE_TAG%-v*}
             ENV=${NAME_SPACE#homepage-}
 
-            aws s3 sync ./apps/homepage/public s3://homepage-assets-${ENV}.n.vroom.systems --acl public-read
+            aws s3 sync ./apps/homepage/public s3://homepage-assets-${ENV}.n.vroom.systems --acl public-read --exclude '*.webp' --exclude '*.mp4'
+            aws s3 sync ./apps/homepage/public s3://homepage-assets-${ENV}.n.vroom.systems --acl public-read --exclude '*' --include '*.webp' --content-type 'image/webp'
+            aws s3 sync ./apps/homepage/public s3://homepage-assets-${ENV}.n.vroom.systems --acl public-read --exclude '*' --include '*.mp4' --content-type 'video/mp4'
+
             build ./apps/homepage/docker
             deploy ${ENV} ./apps/homepage/docker
   homepage_prod: &mlp
@@ -97,7 +102,10 @@ jobs:
             NAME_SPACE=${CIRCLE_TAG%-v*}
             ENV=${NAME_SPACE#homepage-}
 
-            aws s3 sync ./apps/homepage/public s3://homepage-assets-${ENV}.p.vroom.systems --acl public-read
+            aws s3 sync ./apps/homepage/public s3://homepage-assets-${ENV}.p.vroom.systems --acl public-read --exclude '*.webp' --exclude '*.mp4'
+            aws s3 sync ./apps/homepage/public s3://homepage-assets-${ENV}.p.vroom.systems --acl public-read --exclude '*' --include '*.webp' --content-type 'image/webp'
+            aws s3 sync ./apps/homepage/public s3://homepage-assets-${ENV}.p.vroom.systems --acl public-read --exclude '*' --include '*.mp4' --content-type 'video/mp4'
+
             build ./apps/homepage/docker
             deploy ${ENV} ./apps/homepage/docker
 orbs:

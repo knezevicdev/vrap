@@ -9,7 +9,7 @@ class SellViewModel {
     this.store = store;
   }
 
-  handleChange = (_: React.ChangeEvent<{}>, newValue: number) => {
+  handleChange = (_: React.ChangeEvent<{}>, newValue: number): void => {
     this.store.setTab(newValue);
   };
 

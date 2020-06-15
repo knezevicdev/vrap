@@ -82,7 +82,7 @@ class LicensePlateViewModel {
     this.store = store;
   }
 
-  handleChange = (event: React.ChangeEvent<{ value: unknown }>) => {
+  handleChange = (event: React.ChangeEvent<{ value: unknown }>): void => {
     this.store.setSelectedState(event.target.value as string);
   };
 

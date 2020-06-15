@@ -1,5 +1,4 @@
 import MenuItem from '@material-ui/core/MenuItem';
-import Select from '@material-ui/core/Select';
 import { styled } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import { Button } from '@vroom-web/ui';
