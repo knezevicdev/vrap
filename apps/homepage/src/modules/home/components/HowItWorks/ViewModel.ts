@@ -33,7 +33,12 @@ class HowItWorksViewModel {
 
   getPoster(): string {
     const jpeg2000 = window.Modernizr.jpeg2000;
-    const webp = Object.values(window.Modernizr.webp).indexOf(false) === -1;
+
+    const webp =
+      typeof window.Modernizr.webp === 'boolean'
+        ? window.Modernizr.webp
+        : Object.values(window.Modernizr.webp).indexOf(false) === -1;
+
     if (jpeg2000) {
       return this.video.poster.jpeg2000;
     }
