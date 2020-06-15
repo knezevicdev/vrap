@@ -12,9 +12,8 @@ interface Props {
     viewModel: ViewModel;
 }
 
-const TabsContainer = styled('div')(({theme}) => ({
+const SellContainer = styled('div')(({theme}) => ({
     backgroundColor: theme.palette.background.paper,
-    padding: theme.spacing(4),
     maxWidth: '570px'
 }));
 
@@ -24,13 +23,13 @@ const CustomTab = styled(Tab)(() => ({
 
 const SellView: React.FC<Props> = ({viewModel}) => {
     return (
-        <TabsContainer>
+        <SellContainer>
             <Tabs value={viewModel.getTab()} onChange={viewModel.handleChange}>
                 <CustomTab label={viewModel.buyTab}/>
                 <CustomTab label={viewModel.sellTab}/>
             </Tabs>
             {viewModel.showLicensePlate() ? <LicensePlate/> : <Vin/>}
-        </TabsContainer>
+        </SellContainer>
     )
 };
 

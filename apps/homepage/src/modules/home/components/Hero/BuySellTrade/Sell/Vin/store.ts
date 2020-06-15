@@ -1,10 +1,10 @@
 import {action, observable} from 'mobx';
 
 export class VinStore {
-    @observable tab = 0;
+    @observable vin = '';
 
     @action
-    setTab = (tab: number): void => {
-        this.tab = tab;
+    setVin = (vin: string): void => {
+        this.vin = vin;
     };
 }
