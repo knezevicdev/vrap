@@ -48,10 +48,10 @@ const tabStyle = makeStyles((theme) => ({
     letterSpacing: '1.25px',
     minHeight: theme.spacing(4),
     minWidth: '50%',
-    color: '#999DA3',
+    color: theme.palette.grey['500'],
   },
   selected: {
-    color: '#041022'
+    color: theme.palette.text.primary
   }
 }));
 
