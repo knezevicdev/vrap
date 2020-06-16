@@ -1,4 +1,4 @@
-import { styled } from '@material-ui/core/styles';
+import {makeStyles, styled} from '@material-ui/core/styles';
 import Tab from '@material-ui/core/Tab';
 import Tabs from '@material-ui/core/Tabs';
 import { observer } from 'mobx-react';
@@ -17,16 +17,56 @@ const SellContainer = styled('div')(({ theme }) => ({
   maxWidth: '570px',
 }));
 
-const CustomTab = styled(Tab)(() => ({
-  width: '50%',
+const tabsStyles = makeStyles((theme) => ({
+  root: {
+    backgroundColor: '#F5F5F5',
+    borderRadius: 20,
+    minHeight: theme.spacing(4),
+    border: '1px solid #D6D7DA',
+    boxShadow: '0px 1px 2px rgba(0, 0, 0, 0.08)',
+    margin: theme.spacing(2, 0),
+  },
+  flexContainer: {
+    position: 'relative',
+    zIndex: 1,
+  },
+  indicator: {
+    top: 0,
+    bottom: 0,
+    height: 'auto',
+    borderRadius: 20,
+    backgroundColor: '#fff',
+    boxShadow: '0px 1px 2px rgba(0, 0, 0, 0.08)',
+    border: '1px solid #041022'
+  },
+}));
+
+const tabStyle = makeStyles((theme) => ({
+  root: {
+    fontWeight: 600,
+    fontSize: '14px',
+    letterSpacing: '1.25px',
+    minHeight: theme.spacing(4),
+    minWidth: '50%',
+    color: '#999DA3',
+  },
+  selected: {
+    color: '#041022'
+  }
 }));
 
 const SellView: React.FC<Props> = ({ viewModel }) => {
+  const tabsClass = tabsStyles();
+  const tabClass = tabStyle();
+
   return (
     <SellContainer>
-      <Tabs value={viewModel.getTab()} onChange={viewModel.handleChange}>
-        <CustomTab label={viewModel.buyTab} />
-        <CustomTab label={viewModel.sellTab} />
+      <Tabs
+          classes={tabsClass}
+          value={viewModel.getTab()}
+          onChange={viewModel.handleChange}>
+        <Tab disableRipple classes={tabClass} label={viewModel.buyTab} />
+        <Tab disableRipple classes={tabClass} label={viewModel.sellTab} />
       </Tabs>
       {viewModel.showLicensePlate() ? <LicensePlate /> : <Vin />}
     </SellContainer>
