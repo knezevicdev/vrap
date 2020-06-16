@@ -1,4 +1,5 @@
 import Drawer from '@material-ui/core/Drawer';
+import IconButton from '@material-ui/core/IconButton';
 import { styled, withStyles } from '@material-ui/core/styles';
 import React from 'react';
 
@@ -9,10 +10,11 @@ import DrawerContentView, {
 
 export type Links = DrawerContentViewLinks;
 
-const StyledHamburgerSvg = styled(HamburgerSvg)(() => ({
+const StyledHamburgerSvg = styled(HamburgerSvg)(({ theme }) => ({
   width: '24px',
   height: '24px',
   cursor: 'pointer',
+  color: theme.palette.secondary.main,
 }));
 
 const StyledDrawer = withStyles(() => ({
@@ -54,7 +56,9 @@ const MobileView: React.FC<Props> = ({
   const actualOpen = open ? open : uncontrolledOpen;
   return (
     <>
-      <StyledHamburgerSvg onClick={handleMenuIconClick} />
+      <IconButton onClick={handleMenuIconClick}>
+        <StyledHamburgerSvg />
+      </IconButton>
       <StyledDrawer
         anchor={anchor}
         onClose={handleDrawerClose}

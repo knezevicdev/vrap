@@ -12,7 +12,10 @@ const extensions = ['.js', '.jsx', '.ts', '.tsx'];
 // @material-ui/core/Container
 const rex = (module) => new RegExp(`^${module}(/.+)*$`);
 const external = [
+  '@vroom-web/analytics-integration',
   '@vroom-web/deals-v2-networking',
+  '@vroom-web/inv-search-networking',
+  '@vroom-web/ui',
   'prop-types',
   'react',
   'react-dom',

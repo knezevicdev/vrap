@@ -1,6 +1,6 @@
 version: '3'
 services:
-  storybook:
+  header-storybook:
     build:
       context: ../../../../
       dockerfile: ./libs/components/header/docker/Dockerfile
@@ -19,7 +19,11 @@ services:
       # It also makes sure that the built artifacts are only present on the container,
       # and not copied back to the host machine.
       - '/www/node_modules'
+      - '/www/libs/integrations/analytics/dist'
+      - '/www/libs/integrations/analytics/node_modules'
       - '/www/libs/networking/deals-v2/dist'
       - '/www/libs/networking/deals-v2/node_modules'
+      - '/www/libs/networking/inv-search/dist'
+      - '/www/libs/networking/inv-search/node_modules'
       - '/www/libs/ui/dist'
       - '/www/libs/ui/node_modules'
