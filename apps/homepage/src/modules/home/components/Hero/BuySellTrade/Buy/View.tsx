@@ -6,6 +6,7 @@ import Autocomplete from './Autocomplete';
 import ViewModel from './ViewModel';
 
 import ExternalLink from 'src/ui/ExternalLink';
+import {Typography} from "@vroom-web/ui";
 
 interface Props {
   viewModel: ViewModel;
@@ -15,10 +16,11 @@ const BuyContainer = styled('div')(({ theme }) => ({
   paddingTop: theme.spacing(1),
 }));
 
-const Browse = styled(ExternalLink)(({ theme }) => ({
+const BrowseText = styled(Typography)(({ theme }) => ({
   color: theme.palette.text.primary,
-  display: 'flex',
-  fontWeight: 600,
+  fontSize: '20px',
+  letterSpacing: '0.25px',
+  marginTop: theme.spacing(2)
 }));
 
 interface Props {
@@ -29,7 +31,9 @@ const BuyView: React.FC<Props> = ({ viewModel }) => {
   return (
     <BuyContainer>
       <Autocomplete />
-      <Browse href={viewModel.link.href}>{viewModel.link.label}</Browse>
+      <ExternalLink href={viewModel.link.href}>
+        <BrowseText>{viewModel.link.label}</BrowseText>
+      </ExternalLink>
     </BuyContainer>
   );
 };

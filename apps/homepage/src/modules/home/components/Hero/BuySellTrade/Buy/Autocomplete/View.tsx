@@ -29,15 +29,15 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   inputRoot: {
-    paddingRight: theme.spacing(2),
     backgroundColor: theme.palette.background.paper,
+    height: '40px'
   },
   input: {
     ...theme.typography.body1,
     color: theme.palette.text.primary,
     letterSpacing: '0.25px',
     lineHeight: '1.3',
-    padding: `${theme.spacing(2, 6, 2, 2)} !important`,
+    padding: `${theme.spacing(1)}px !important`,
     '&::placeholder, &::-webkit-input-placeholder': {
       color: theme.palette.grey[500],
       opacity: 1,
@@ -50,7 +50,6 @@ const Input = styled(TextField)(({ theme }) => ({
   width: '100%',
   '& .MuiInput-formControl': {
     marginTop: theme.spacing(1),
-    marginBottom: theme.spacing(3),
   },
   '& .MuiInputLabel-root': {
     position: 'static',
@@ -164,7 +163,7 @@ const HeroAutocomplete: React.FC<HeroAutocompleteProps> = ({
             placeholder={viewModel.inputPlaceholder}
           />
         )}
-        style={{ flexGrow: 1, margin: '8px 0 16px 0' }}
+        style={{ flexGrow: 1, margin: '16px 0'}}
       />
       <Button onClick={handleButtonClick} variant="contained" color="secondary">
         {viewModel.buttonLabel}
