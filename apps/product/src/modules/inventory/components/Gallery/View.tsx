@@ -6,6 +6,7 @@ import { observer } from 'mobx-react';
 import React, { useRef, useState } from 'react';
 import ImageGallery from 'react-image-gallery';
 
+import GallerySelect from './components/Select';
 import NoImagesView from './NoImagesView';
 import ViewModel from './ViewModel';
 
@@ -43,8 +44,10 @@ const GalleryView: React.FC<Props> = (props) => {
   if (viewModel.hasNoImages()) {
     return <NoImagesView viewModel={viewModel} />;
   }
+
   return (
     <>
+      <GallerySelect />
       <Box className={viewModel.showBanner() ? 'stock-photos' : ''}>
         <Typography
           component="span"

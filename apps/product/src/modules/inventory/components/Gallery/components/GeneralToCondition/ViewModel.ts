@@ -1,9 +1,9 @@
-import { GallerySelections, InventoryStore } from '../../store';
+import { GallerySelections, GalleryStore } from '../../store';
 
 import globalEnv from 'src/globalEnv';
 
 class GalleryConditionEndViewModel {
-  private store: InventoryStore;
+  private store: GalleryStore;
   readonly goToConditionText: string = 'VIEW IMPERFECTIONS PHOTOS';
   readonly faqPreText: string =
     'For information on our mechanical and safety standards, ';
@@ -16,7 +16,7 @@ class GalleryConditionEndViewModel {
     src: `${globalEnv.CDN_URL}/modules/inventory/components/gallery/LastGallery.png`,
   };
 
-  constructor(inventoryStore: InventoryStore) {
+  constructor(inventoryStore: GalleryStore) {
     this.store = inventoryStore;
   }
 

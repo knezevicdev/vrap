@@ -1,10 +1,12 @@
 import isEmpty from 'lodash/isEmpty';
 
-import { GallerySelections, InventoryStore } from '../../store';
-import GalleryConditionEnd from '../GalleryConditionEnd';
-import GalleryGeneralToCondition from '../GalleryGeneralToCondition';
+import { InventoryStore } from '../../store';
+import GalleryConditionEnd from './components/ConditionEnd';
+import GalleryGeneralToCondition from './components/GeneralToCondition';
+import { GallerySelections, GalleryStore } from './store';
 
 import globalEnv from 'src/globalEnv';
+import { DefectTypes } from 'src/networking/models/Inventory.v3';
 
 interface GeneralPhoto {
   original: string;
@@ -15,18 +17,9 @@ interface DefectPhoto extends GeneralPhoto {
   description: string;
 }
 
-enum DefectTypes {
-  SCRATCH = 'Scratch',
-  OXIDATION = 'Oxidation',
-  PAINT_IMPERFECTION = 'Paint Imperfection',
-  SPIDER_CRACKING = 'Spider Cracking',
-  CHIP = 'Chip',
-  RUN = 'Run',
-  DENT = 'Dent',
-}
-
 class GalleryViewModel {
-  private store: InventoryStore;
+  private inventoryStore: InventoryStore;
+  private galleryStore: GalleryStore;
   readonly defaultImage = {
     alt: 'No photos',
     src: `${globalEnv.CDN_URL}/components/ghost-suv.png`,
@@ -37,12 +30,13 @@ class GalleryViewModel {
   readonly noPhotosSubtitle: string =
     "When real photos become available, we'll share\xa0them\xa0here.";
 
-  constructor(inventoryStore: InventoryStore) {
-    this.store = inventoryStore;
+  constructor(inventoryStore: InventoryStore, galleryStore: GalleryStore) {
+    this.inventoryStore = inventoryStore;
+    this.galleryStore = galleryStore;
   }
 
   showBanner(): boolean {
-    return this.store.vehicle._source.hasStockPhotos;
+    return this.inventoryStore.vehicle._source.hasStockPhotos;
   }
 
   showIndex(): boolean {
@@ -70,12 +64,12 @@ class GalleryViewModel {
   }
 
   hasNoImages(): boolean {
-    const { leadFlagPhotoUrl } = this.store.vehicle._source;
+    const { leadFlagPhotoUrl } = this.inventoryStore.vehicle._source;
     return leadFlagPhotoUrl === '';
   }
 
   getGalleryImages(): GeneralPhoto[] | DefectPhoto[] {
-    const { selectedGallery } = this.store;
+    const { selectedGallery } = this.galleryStore;
     if (selectedGallery === GallerySelections.DEFECTS) {
       return this.getDefectImages();
     } else {
@@ -88,7 +82,7 @@ class GalleryViewModel {
       leadFlagPhotoUrl,
       otherPhotos = [],
       interiorPhotoUrl,
-    } = this.store.vehicle._source;
+    } = this.inventoryStore.vehicle._source;
 
     const vehiclePhotos = [leadFlagPhotoUrl, ...otherPhotos];
     const interiorPhotoIndex = vehiclePhotos.indexOf(interiorPhotoUrl);
@@ -117,14 +111,14 @@ class GalleryViewModel {
   }
 
   getDefectImages(): DefectPhoto[] {
-    const { defectPhotos } = this.store.vehicle._source;
+    const { defectPhotos } = this.inventoryStore.vehicle._source;
     const defectImages = !isEmpty(defectPhotos)
       ? defectPhotos.map(
-          (img: { url: string; defectType: string; location: string }) => {
+          (img: { url: string; defectType: DefectTypes; location: string }) => {
             return {
               original: this.getHiResImageUrl(img.url),
               thumbnail: img.url,
-              description: `${this.getDefectTypeText(img.defectType)} - ${
+              description: `${this.getDefectDisplay(img.defectType)} - ${
                 img.location
               }`,
             };
@@ -163,38 +157,23 @@ class GalleryViewModel {
     }
   }
 
-  private getDefectTypeText(type: string): string {
-    const {
-      SCRATCH,
-      OXIDATION,
-      PAINT_IMPERFECTION,
-      SPIDER_CRACKING,
-      CHIP,
-      RUN,
-      DENT,
-    } = DefectTypes;
-    let descText = '';
-    switch (type) {
-      case SCRATCH:
-        descText = SCRATCH;
-        break;
-      case OXIDATION:
-        descText = PAINT_IMPERFECTION;
-        break;
-      case SPIDER_CRACKING:
-        descText = PAINT_IMPERFECTION;
-        break;
-      case CHIP:
-        descText = CHIP;
-        break;
-      case RUN:
-        descText = PAINT_IMPERFECTION;
-        break;
-      case DENT:
-        descText = DENT;
-        break;
+  private getDefectDisplay(defect: DefectTypes): string {
+    switch (defect) {
+      case DefectTypes.SCRATCH:
+        return 'Scratch';
+      case DefectTypes.OXIDATION:
+        return 'Paint Imperfection';
+      case DefectTypes.SPIDER_CRACKING:
+        return 'Paint Imperfection';
+      case DefectTypes.RUN:
+        return 'Paint Imperfection';
+      case DefectTypes.DENT:
+        return 'Dent';
+      case DefectTypes.CHIP:
+        return 'Chip';
+      default:
+        return '';
     }
-    return descText;
   }
 }
 

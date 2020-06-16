@@ -39,6 +39,15 @@ export interface Hit {
   _source: Car;
 }
 
+export enum DefectTypes {
+  SCRATCH = 'Scratch',
+  OXIDATION = 'Oxidation',
+  SPIDER_CRACKING = 'Spider Cracking',
+  CHIP = 'Chip',
+  RUN = 'Run',
+  DENT = 'Dent',
+}
+
 export interface Car {
   vin: string;
   bodyType: string;
@@ -82,7 +91,7 @@ export interface Car {
   zone: string;
   soldStatus: number;
   otherPhotos: string[];
-  defectPhotos: [{ url: string; defectType: string; location: string }];
+  defectPhotos: [{ url: string; defectType: DefectTypes; location: string }];
   ownerCount: number;
   cityMpg: number;
   highwayMpg: number;
