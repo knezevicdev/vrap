@@ -70,15 +70,20 @@ class HowItWorksViewModel {
 
     if (target.currentTime === 0) {
       this.analyticsHandler.trackVideoPlayback(VideoEvent.Started, properties);
+      return;
     }
-    if (target.paused) {
-      this.analyticsHandler.trackVideoPlayback(VideoEvent.Paused, properties);
-    }
+
     if (target.currentTime === target.duration) {
       this.analyticsHandler.trackVideoPlayback(
         VideoEvent.Completed,
         properties
       );
+      return;
+    }
+
+    if (target.paused) {
+      this.analyticsHandler.trackVideoPlayback(VideoEvent.Paused, properties);
+      return;
     }
   }
 }
