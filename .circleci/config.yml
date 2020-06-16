@@ -77,10 +77,6 @@ jobs:
           version: 18.09.3
       - run:
           command: |-
-
-            NAME_SPACE=${CIRCLE_TAG%-v*}
-            ENV=${NAME_SPACE#homepage-}
-
             build -a vroom-web/apps/homepage/docker
   homepage_dev_deploy: &mlp
     docker:
@@ -174,22 +170,49 @@ workflows:
               ignore: /.*/
       - homepage_dev_deploy:
           context: aws-non-prod
+          requires:
+            - homepage_non_prod_build
+          filters:
+            tags:
+              only: /^homepage-v.*/
+            branches:
+              ignore: /.*/
       - hold_homepage_qa:
           type: approval
           requires:
             - homepage_non_prod_build
+          filters:
+            tags:
+              only: /^homepage-v.*/
+            branches:
+              ignore: /.*/
       - homepage_qa_deploy:
           context: aws-non-prod
           requires:
             - hold_homepage_qa
+          filters:
+            tags:
+              only: /^homepage-v.*/
+            branches:
+              ignore: /.*/
       - hold_homepage_uat:
           type: approval
           requires:
             - homepage_non_prod_build
+          filters:
+            tags:
+              only: /^homepage-v.*/
+            branches:
+              ignore: /.*/
       - homepage_uat_deploy:
           context: aws-non-prod
           requires:
             - hold_homepage_uat
+          filters:
+            tags:
+              only: /^homepage-v.*/
+            branches:
+              ignore: /.*/
       - homepage_prod:
           context: aws-prod
           filters:
