@@ -159,16 +159,24 @@ workflows:
       - lighthouse:
           context: aws-prod
       - lint
-      - homepage_non_prod:
+      - hold:
+          name: hold_<< matrix.env >>
           matrix:
             parameters:
               env: ["dev"]
+          type: approval
+      - homepage_non_prod:
           context: aws-non-prod
           filters:
             tags:
               only: /^homepage-v.*/
             branches:
               ignore: /.*/
+          matrix:
+            parameters:
+              env: ["dev"]
+          requires:
+            - hold_<< matrix.version >>
       # - homepage_dev:
       #     context: aws-non-prod
       #     filters:
