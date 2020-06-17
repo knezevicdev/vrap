@@ -114,7 +114,6 @@ workflows:
           context: aws-prod
       - lint
       - homepage_build:
-          name: homepage_build-non-prod
           context: aws-non-prod
           filters:
             tags:
@@ -123,10 +122,10 @@ workflows:
               ignore: /.*/
       - hold:
           name: hold_<< matrix.env >>
+          type: approval
           matrix:
             parameters:
               env: ["dev", "qa", "uat"]
-          type: approval
           requires:
             - homepage_build-non-prod
           filters:
@@ -135,6 +134,7 @@ workflows:
             branches:
               ignore: /.*/
       - homepage_deploy:
+          name: homepage_deploy_<< matrix.env >>
           context: aws-non-prod
           s3: s3://homepage-assets-<< matrix.env >>.n.vroom.systems
           matrix:
@@ -151,31 +151,21 @@ workflows:
           name: hold_prod
           type: approval
           requires:
-            - homepage_deploy-dev
-            - homepage_deploy-qa
-            - homepage_deploy-uat
-          filters:
-            tags:
-              only: /^homepage-v.*/
-            branches:
-              ignore: /.*/
-      - homepage_build:
-          name: homepage_build-prod
-          context: aws-prod
-          requires:
-            - hold_prod
+            - homepage_deploy_dev
+            - homepage_deploy_qa
+            - homepage_deploy_uat
           filters:
             tags:
               only: /^homepage-v.*/
             branches:
               ignore: /.*/
       - homepage_deploy:
-          name: homepage_deploy-prod
+          name: homepage_deploy_prod
           context: aws-prod
           env: "prod"
           s3: s3://homepage-assets-prod.p.vroom.systems
           requires:
-            - homepage_build-prod
+            - hold_prod
           filters:
             tags:
               only: /^homepage-v.*/
