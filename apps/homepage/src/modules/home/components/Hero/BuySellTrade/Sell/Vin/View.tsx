@@ -18,7 +18,6 @@ const Input = styled(TextField)(({theme}) => ({
     width: '100%',
     '& .MuiInput-formControl': {
         marginTop: theme.spacing(1),
-        marginBottom: theme.spacing(3),
     },
     '& .MuiInputLabel-root': {
         position: 'static',
@@ -77,6 +76,8 @@ const VinView: React.FC<Props> = ({viewModel}) => {
                 placeholder={viewModel.inputPlaceholder}
                 value={viewModel.getInputValue()}
                 onChange={viewModel.onChange}
+                error={viewModel.hasError()}
+                helperText={viewModel.errorMessage}
                 InputProps={{disableUnderline: true, inputProps: {maxLength: 17}}}
             />
             <SubmitButton
