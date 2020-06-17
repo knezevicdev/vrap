@@ -127,7 +127,7 @@ workflows:
             parameters:
               env: ["dev", "qa", "uat"]
           requires:
-            - homepage_build-non-prod
+            - homepage_build
           filters:
             tags:
               only: /^homepage-v.*/
