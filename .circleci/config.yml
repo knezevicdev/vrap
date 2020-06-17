@@ -145,6 +145,7 @@ workflows:
             branches:
               ignore: /.*/
       - homepage_prod:
+          env: "prod"
           context: aws-prod
           requires:
             - hold_prod
