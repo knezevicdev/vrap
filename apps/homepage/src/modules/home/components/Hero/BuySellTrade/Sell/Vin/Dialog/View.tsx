@@ -31,7 +31,7 @@ const Vin = styled(Typography)(({theme}) => ({
 
 const Image = styled('img')(({theme}) => ({
     width: '296px',
-    padding: theme.spacing(2,0)
+    padding: theme.spacing(2, 0)
 }));
 
 const ListContainer = styled('div')(() => ({
@@ -65,14 +65,15 @@ const VinDialogView: React.FC<Props> = ({viewModel}) => {
                     <List>
                         <Typography lineHeight='normal' fontWeight='600'>{viewModel.carTitle}</Typography>
                         <UL>
-                            {viewModel.carList.map(item => <li><Typography lineHeight='normal'>{item}</Typography>
+                            {viewModel.carList.map(item => <li key={item}><Typography
+                                lineHeight='normal'>{item}</Typography>
                             </li>)}
                         </UL>
                     </List>
                     <List>
                         <Typography lineHeight='normal' fontWeight='600'>{viewModel.documentationTitle}</Typography>
                         <UL>
-                            {viewModel.documentationList.map(item => <li><Typography
+                            {viewModel.documentationList.map(item => <li key={item}><Typography
                                 lineHeight='normal'>{item}</Typography>
                             </li>)}
                         </UL>
