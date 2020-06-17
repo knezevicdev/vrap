@@ -70,7 +70,17 @@ jobs:
               yarn install --silent
 
               yarn workspaces run lint
-  homepage_build_deploy: &mlp
+  homepage_build: &mlp
+    docker:
+      - image: vroom/mlp:3.0.1
+    steps:
+      - checkout
+      - setup_remote_docker:
+          version: 18.09.3
+      - run:
+          command: |-
+            build -a vroom-web/apps/homepage/docker
+  homepage_deploy: &mlp
     docker:
       - image: vroom/mlp:3.0.1
     parameters:
@@ -90,7 +100,7 @@ jobs:
             aws s3 sync ./apps/homepage/public << parameters.s3 >> --acl public-read --exclude '*' --include '*.webp' --content-type 'image/webp'
             aws s3 sync ./apps/homepage/public << parameters.s3 >> --acl public-read --exclude '*' --include '*.mp4' --content-type 'video/mp4'
 
-            build -a vroom-web/apps/homepage/docker
+            login
             deploy -a vroom-web/apps/homepage/docker -n << parameters.env >>
 workflows:
   version: 2
@@ -103,18 +113,28 @@ workflows:
       - lighthouse:
           context: aws-prod
       - lint
-      - hold:
-          name: hold_<< matrix.env >>
-          matrix:
-            parameters:
-              env: ["dev", "qa", "uat", "prod"]
-          type: approval
+      - homepage_build:
+          context: aws-non-prod
           filters:
             tags:
               only: /^homepage-v.*/
             branches:
               ignore: /.*/
-      - homepage_build_deploy:
+      - hold:
+          name: hold_<< matrix.env >>
+          type: approval
+          matrix:
+            parameters:
+              env: ["dev", "qa", "uat"]
+          requires:
+            - homepage_build
+          filters:
+            tags:
+              only: /^homepage-v.*/
+            branches:
+              ignore: /.*/
+      - homepage_deploy:
+          name: homepage_deploy_<< matrix.env >>
           context: aws-non-prod
           s3: s3://homepage-assets-<< matrix.env >>.n.vroom.systems
           matrix:
@@ -127,8 +147,20 @@ workflows:
               only: /^homepage-v.*/
             branches:
               ignore: /.*/
-      - homepage_build_deploy:
-          name: homepage_build_deploy-prod
+      - hold:
+          name: hold_prod
+          type: approval
+          requires:
+            - homepage_deploy_dev
+            - homepage_deploy_qa
+            - homepage_deploy_uat
+          filters:
+            tags:
+              only: /^homepage-v.*/
+            branches:
+              ignore: /.*/
+      - homepage_deploy:
+          name: homepage_deploy_prod
           context: aws-prod
           env: "prod"
           s3: s3://homepage-assets-prod.p.vroom.systems
