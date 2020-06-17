@@ -1,6 +1,40 @@
 import { AnalyticsHandler as BaseAnalyticsHandler } from '@vroom-web/analytics-integration';
 
+export enum TrackProductSearchedLabel {
+  AUTOCOMPLETE = 'Autocomplete',
+  FREE_FORM = 'Free Form',
+}
+
+export enum TrackProductSearchedCategory {
+  CATALOG = 'Catalog',
+  PRODUCT = 'Product',
+}
+
 class AnalyticsHandler extends BaseAnalyticsHandler {
+  private getTrackProductSearchedCategory():
+    | TrackProductSearchedCategory
+    | undefined {
+    const { pathname } = window.location;
+    if (pathname.startsWith('/cars')) {
+      return TrackProductSearchedCategory.CATALOG;
+    } else if (pathname.startsWith('/inventory')) {
+      return TrackProductSearchedCategory.PRODUCT;
+    } else {
+      return undefined;
+    }
+  }
+
+  trackProductSearched(label: TrackProductSearchedLabel, query: string): void {
+    const event = 'Product Searched';
+    const category = this.getTrackProductSearchedCategory();
+    const properties = {
+      category,
+      label,
+      query,
+    };
+    this.track(event, properties);
+  }
+
   trackBuyClicked(): void {
     const event = 'Buy Clicked';
     const properties = {
