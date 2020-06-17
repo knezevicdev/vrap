@@ -2,6 +2,7 @@ version: 2.1
 parameters:
   env:
     type: string
+    default: "dev"
 commands:
   sync_build_deploy:
     description: "A command to sync, build, and deploy an application"
