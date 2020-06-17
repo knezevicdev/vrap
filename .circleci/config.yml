@@ -96,7 +96,7 @@ jobs:
       - setup_remote_docker:
           version: 18.09.3
       - run:
-        command: echo "Hello World"
+          command: echo "Hello World"
           # command: |-
           #   sudo apt-get install python-pip && pip install awscli
 
