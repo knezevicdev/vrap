@@ -1,4 +1,6 @@
 version: 2.1
+orbs:
+  sonarcloud: sonarsource/sonarcloud@1.0.1
 jobs:
   sonarcloud:
     docker:
@@ -84,14 +86,12 @@ jobs:
           command: |-
             sudo apt-get install python-pip && pip install awscli
 
-            aws s3 sync ./apps/homepage/public s3://homepage-assets-<< parameters.env >>.<< parameters.s3 >>.vroom.systems --acl public-read --exclude '*.webp' --exclude '*.mp4'
-            aws s3 sync ./apps/homepage/public s3://homepage-assets-<< parameters.env >>.<< parameters.s3 >>.vroom.systems --acl public-read --exclude '*' --include '*.webp' --content-type 'image/webp'
-            aws s3 sync ./apps/homepage/public s3://homepage-assets-<< parameters.env >>.<< parameters.s3 >>.vroom.systems --acl public-read --exclude '*' --include '*.mp4' --content-type 'video/mp4'
+            aws s3 sync ./apps/homepage/public << parameters.s3 >> --acl public-read --exclude '*.webp' --exclude '*.mp4'
+            aws s3 sync ./apps/homepage/public << parameters.s3 >> --acl public-read --exclude '*' --include '*.webp' --content-type 'image/webp'
+            aws s3 sync ./apps/homepage/public << parameters.s3 >> --acl public-read --exclude '*' --include '*.mp4' --content-type 'video/mp4'
 
             build -a vroom-web/apps/homepage/docker
             deploy -a vroom-web/apps/homepage/docker -n << parameters.env >>
-orbs:
-  sonarcloud: sonarsource/sonarcloud@1.0.1
 workflows:
   version: 2
   homepage:
@@ -116,7 +116,7 @@ workflows:
               ignore: /.*/
       - homepage_build_deploy:
           context: aws-non-prod
-          s3: "n"
+          s3: s3://homepage-assets-<< matrix.env >>.n.vroom.systems
           matrix:
             parameters:
               env: ["dev", "qa", "uat"]
@@ -131,7 +131,7 @@ workflows:
           name: homepage_build_deploy-prod
           context: aws-prod
           env: "prod"
-          s3: "p"
+          s3: s3://homepage-assets-prod.p.vroom.systems
           requires:
             - hold_prod
           filters:
