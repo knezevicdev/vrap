@@ -176,7 +176,7 @@ workflows:
             parameters:
               env: ["dev"]
           requires:
-            - hold_<< matrix.version >>
+            - hold_<< matrix.env >>
       # - homepage_dev:
       #     context: aws-non-prod
       #     filters:
