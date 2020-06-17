@@ -92,7 +92,8 @@ jobs:
     docker:
       - image: vroom/mlp:3.0.1
     steps:
-      - sync_build_deploy
+      - sync_build_deploy:
+          env: "dev"
   homepage_qa: &mlp
     docker:
       - image: vroom/mlp:3.0.1
@@ -140,7 +141,6 @@ workflows:
       - lint
       - homepage_dev:
           context: aws-non-prod
-          env: "dev"
           filters:
             tags:
               only: /^homepage-v.*/
