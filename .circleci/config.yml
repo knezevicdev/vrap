@@ -100,6 +100,7 @@ jobs:
             aws s3 sync ./apps/homepage/public << parameters.s3 >> --acl public-read --exclude '*' --include '*.webp' --content-type 'image/webp'
             aws s3 sync ./apps/homepage/public << parameters.s3 >> --acl public-read --exclude '*' --include '*.mp4' --content-type 'video/mp4'
 
+            login
             deploy -a vroom-web/apps/homepage/docker -n << parameters.env >>
 workflows:
   version: 2
@@ -120,27 +121,14 @@ workflows:
               only: /^homepage-v.*/
             branches:
               ignore: /.*/
-      - homepage_build:
-          name: homepage_build-prod
-          context: aws-prod
-          requires:
-            - homepage_deploy-dev
-            - homepage_deploy-qa
-            - homepage_deploy-uat
-            - hold_prod
-          filters:
-            tags:
-              only: /^homepage-v.*/
-            branches:
-              ignore: /.*/
       - hold:
           name: hold_<< matrix.env >>
           matrix:
             parameters:
-              env: ["dev", "qa", "uat", "prod"]
+              env: ["dev", "qa", "uat"]
           type: approval
           requires:
-            - homepage_build
+            - homepage_build-non-prod
           filters:
             tags:
               only: /^homepage-v.*/
@@ -154,6 +142,28 @@ workflows:
               env: ["dev", "qa", "uat"]
           requires:
             - hold_<< matrix.env >>
+          filters:
+            tags:
+              only: /^homepage-v.*/
+            branches:
+              ignore: /.*/
+      - hold:
+          name: hold_prod
+          type: approval
+          requires:
+            - homepage_deploy-dev
+            - homepage_deploy-qa
+            - homepage_deploy-uat
+          filters:
+            tags:
+              only: /^homepage-v.*/
+            branches:
+              ignore: /.*/
+      - homepage_build:
+          name: homepage_build-prod
+          context: aws-prod
+          requires:
+            - hold_prod
           filters:
             tags:
               only: /^homepage-v.*/
