@@ -30,7 +30,7 @@ const useStyles = makeStyles((theme) => ({
   },
   inputRoot: {
     backgroundColor: theme.palette.background.paper,
-    height: '40px'
+    height: '40px',
   },
   input: {
     ...theme.typography.body1,
@@ -163,7 +163,7 @@ const HeroAutocomplete: React.FC<HeroAutocompleteProps> = ({
             placeholder={viewModel.inputPlaceholder}
           />
         )}
-        style={{ flexGrow: 1, margin: '16px 0'}}
+        style={{ flexGrow: 1, margin: '16px 0' }}
       />
       <Button onClick={handleButtonClick} variant="contained" color="secondary">
         {viewModel.buttonLabel}

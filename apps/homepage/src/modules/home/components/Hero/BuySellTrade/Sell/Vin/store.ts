@@ -13,7 +13,7 @@ export class VinStore {
   @action
   setIsDialogOpen = (): void => {
     this.isDialogOpen = !this.isDialogOpen;
-  }
+  };
 
   @action
   setHasError = (hasError: boolean): void => {

@@ -1,4 +1,5 @@
 import { styled } from '@material-ui/core/styles';
+import { Typography } from '@vroom-web/ui';
 import { observer } from 'mobx-react';
 import React from 'react';
 
@@ -6,7 +7,6 @@ import Autocomplete from './Autocomplete';
 import ViewModel from './ViewModel';
 
 import ExternalLink from 'src/ui/ExternalLink';
-import {Typography} from "@vroom-web/ui";
 
 interface Props {
   viewModel: ViewModel;
@@ -20,7 +20,7 @@ const BrowseText = styled(Typography)(({ theme }) => ({
   color: theme.palette.text.primary,
   fontSize: '20px',
   letterSpacing: '0.25px',
-  marginTop: theme.spacing(2)
+  marginTop: theme.spacing(2),
 }));
 
 interface Props {

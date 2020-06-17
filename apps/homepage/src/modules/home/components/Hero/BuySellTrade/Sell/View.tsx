@@ -1,4 +1,4 @@
-import {makeStyles, styled} from '@material-ui/core/styles';
+import { makeStyles, styled } from '@material-ui/core/styles';
 import Tab from '@material-ui/core/Tab';
 import Tabs from '@material-ui/core/Tabs';
 import { observer } from 'mobx-react';
@@ -37,7 +37,7 @@ const tabsStyles = makeStyles((theme) => ({
     borderRadius: 20,
     backgroundColor: '#fff',
     boxShadow: '0px 1px 2px rgba(0, 0, 0, 0.08)',
-    border: '1px solid #041022'
+    border: '1px solid #041022',
   },
 }));
 
@@ -51,8 +51,8 @@ const tabStyle = makeStyles((theme) => ({
     color: theme.palette.grey['500'],
   },
   selected: {
-    color: theme.palette.text.primary
-  }
+    color: theme.palette.text.primary,
+  },
 }));
 
 const SellView: React.FC<Props> = ({ viewModel }) => {
@@ -62,9 +62,10 @@ const SellView: React.FC<Props> = ({ viewModel }) => {
   return (
     <SellContainer>
       <Tabs
-          classes={tabsClass}
-          value={viewModel.getTab()}
-          onChange={viewModel.handleChange}>
+        classes={tabsClass}
+        value={viewModel.getTab()}
+        onChange={viewModel.handleChange}
+      >
         <Tab disableRipple classes={tabClass} label={viewModel.buyTab} />
         <Tab disableRipple classes={tabClass} label={viewModel.sellTab} />
       </Tabs>
