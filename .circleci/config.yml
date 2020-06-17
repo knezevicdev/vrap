@@ -150,7 +150,7 @@ orbs:
   sonarcloud: sonarsource/sonarcloud@1.0.1
 workflows:
   version: 2
-  workflow:
+  homepage:
     jobs:
       - sonarcloud:
           context: SonarCloud
@@ -165,18 +165,23 @@ workflows:
             parameters:
               env: ["dev"]
           type: approval
-      - homepage_non_prod:
-          context: aws-non-prod
           filters:
             tags:
               only: /^homepage-v.*/
             branches:
               ignore: /.*/
+      - homepage_non_prod:
+          context: aws-non-prod
           matrix:
             parameters:
               env: ["dev"]
           requires:
             - hold_<< matrix.env >>
+          filters:
+            tags:
+              only: /^homepage-v.*/
+            branches:
+              ignore: /.*/
       # - homepage_dev:
       #     context: aws-non-prod
       #     filters:
