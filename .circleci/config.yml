@@ -113,7 +113,21 @@ workflows:
           context: aws-prod
       - lint
       - homepage_build:
+          name: homepage_build-non-prod
           context: aws-non-prod
+          filters:
+            tags:
+              only: /^homepage-v.*/
+            branches:
+              ignore: /.*/
+      - homepage_build:
+          name: homepage_build-prod
+          context: aws-prod
+          requires:
+            - homepage_deploy-dev
+            - homepage_deploy-qa
+            - homepage_deploy-uat
+            - hold_prod
           filters:
             tags:
               only: /^homepage-v.*/
@@ -146,12 +160,12 @@ workflows:
             branches:
               ignore: /.*/
       - homepage_deploy:
-          name: homepage_build_deploy-prod
+          name: homepage_deploy-prod
           context: aws-prod
           env: "prod"
           s3: s3://homepage-assets-prod.p.vroom.systems
           requires:
-            - hold_prod
+            - homepage_build-prod
           filters:
             tags:
               only: /^homepage-v.*/
