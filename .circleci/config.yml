@@ -1,10 +1,10 @@
 version: 2.1
+parameters:
+  env:
+    type: string
 commands:
   sync_build_deploy:
     description: "A command to sync, build, and deploy an application"
-    parameters:
-      env:
-        type: string
     steps:
       - checkout
       - setup_remote_docker:
