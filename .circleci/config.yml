@@ -6,6 +6,9 @@ commands:
       env:
         type: string
     steps:
+      - checkout
+      - setup_remote_docker:
+          version: 18.09.3
       - run:
           command: |-
             sudo apt-get install python-pip && pip install awscli
@@ -89,9 +92,6 @@ jobs:
     docker:
       - image: vroom/mlp:3.0.1
     steps:
-      - checkout
-      - setup_remote_docker:
-          version: 18.09.3
       - sync_build_deploy:
           env: "dev"
   homepage_qa: &mlp
