@@ -129,11 +129,11 @@ workflows:
               ignore: /.*/
       - homepage_build_deploy:
           name: homepage_build_deploy-prod
-          context: aws-non-prod
+          context: aws-prod
           env: "prod"
           s3: "p"
           requires:
-            - hold_<< matrix.env >>
+            - hold_prod
           filters:
             tags:
               only: /^homepage-v.*/
