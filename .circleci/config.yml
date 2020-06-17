@@ -160,10 +160,9 @@ workflows:
           context: aws-prod
       - lint
       - homepage_non_prod:
-          type: approval
           matrix:
             parameters:
-              env: ["dev", "qa"]
+              env: ["dev"]
           context: aws-non-prod
           filters:
             tags:
