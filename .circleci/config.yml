@@ -113,6 +113,7 @@ workflows:
           context: aws-prod
       - lint
       - homepage_build:
+          context: aws-non-prod
           filters:
             tags:
               only: /^homepage-v.*/
