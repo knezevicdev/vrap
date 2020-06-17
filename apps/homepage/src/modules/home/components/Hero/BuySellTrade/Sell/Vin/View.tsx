@@ -5,7 +5,6 @@ import {observer} from 'mobx-react';
 import React from 'react';
 import {ReactComponent as QuestionSvg} from './svg/question.svg';
 
-
 import ViewModel from './ViewModel';
 import VinDialog from "./Dialog";
 
