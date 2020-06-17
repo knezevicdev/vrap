@@ -88,6 +88,11 @@ jobs:
               yarn install --silent
 
               yarn workspaces run lint
+  homepage_non_prod:
+    docker:
+      - image: vroom/mlp:3.0.1
+    steps:
+      - sync_build_deploy
   homepage_dev: &mlp
     docker:
       - image: vroom/mlp:3.0.1
@@ -139,13 +144,23 @@ workflows:
       - lighthouse:
           context: aws-prod
       - lint
-      - homepage_dev:
+      - homepage_non_prod:
+          matrix:
+            parameters:
+              env: ["dev"]
           context: aws-non-prod
           filters:
             tags:
               only: /^homepage-v.*/
             branches:
               ignore: /.*/
+      # - homepage_dev:
+      #     context: aws-non-prod
+      #     filters:
+      #       tags:
+      #         only: /^homepage-v.*/
+      #       branches:
+      #         ignore: /.*/
       - hold_homepage_qa:
           type: approval
           filters:
