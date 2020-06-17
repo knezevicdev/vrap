@@ -1,4 +1,21 @@
 version: 2.1
+commands:
+  sync_build_deploy:
+    description: "A command to sync, build, and deploy an application"
+    parameters:
+      env:
+        type: string
+    steps:
+      - run:
+          command: |-
+            sudo apt-get install python-pip && pip install awscli
+
+            aws s3 sync ./apps/homepage/public s3://homepage-assets-<< parameters.env >>.n.vroom.systems --acl public-read --exclude '*.webp' --exclude '*.mp4'
+            aws s3 sync ./apps/homepage/public s3://homepage-assets-<< parameters.env >>.n.vroom.systems --acl public-read --exclude '*' --include '*.webp' --content-type 'image/webp'
+            aws s3 sync ./apps/homepage/public s3://homepage-assets-<< parameters.env >>.n.vroom.systems --acl public-read --exclude '*' --include '*.mp4' --content-type 'video/mp4'
+
+            build -a vroom-web/apps/homepage/docker
+            deploy -a vroom-web/apps/homepage/docker -n << parameters.env >>
 jobs:
   sonarcloud:
     docker:
@@ -71,22 +88,12 @@ jobs:
   homepage_dev: &mlp
     docker:
       - image: vroom/mlp:3.0.1
-    environment:
-      ENV: dev
     steps:
       - checkout
       - setup_remote_docker:
           version: 18.09.3
-      - run:
-          command: |-
-            sudo apt-get install python-pip && pip install awscli
-
-            aws s3 sync ./apps/homepage/public s3://homepage-assets-${ENV}.n.vroom.systems --acl public-read --exclude '*.webp' --exclude '*.mp4'
-            aws s3 sync ./apps/homepage/public s3://homepage-assets-${ENV}.n.vroom.systems --acl public-read --exclude '*' --include '*.webp' --content-type 'image/webp'
-            aws s3 sync ./apps/homepage/public s3://homepage-assets-${ENV}.n.vroom.systems --acl public-read --exclude '*' --include '*.mp4' --content-type 'video/mp4'
-
-            build -a vroom-web/apps/homepage/docker
-            deploy -a vroom-web/apps/homepage/docker -n ${ENV}
+      - sync_build_deploy:
+          env: "dev"
   homepage_qa: &mlp
     docker:
       - image: vroom/mlp:3.0.1
