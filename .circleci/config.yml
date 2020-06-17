@@ -128,6 +128,7 @@ workflows:
             branches:
               ignore: /.*/
       - homepage_build_deploy:
+          name: homepage_build_deploy-prod
           context: aws-non-prod
           env: "prod"
           s3: "p"
