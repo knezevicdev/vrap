@@ -116,10 +116,21 @@ workflows:
               ignore: /.*/
       - homepage_build_deploy:
           context: aws-non-prod
+          s3: "n"
           matrix:
             parameters:
-              env: ["dev", "qa", "uat", "prod"]
-              s3: ["n", "n", "n", "p"]
+              env: ["dev", "qa", "uat"]
+          requires:
+            - hold_<< matrix.env >>
+          filters:
+            tags:
+              only: /^homepage-v.*/
+            branches:
+              ignore: /.*/
+      - homepage_build_deploy:
+          context: aws-non-prod
+          env: "prod"
+          s3: "p"
           requires:
             - hold_<< matrix.env >>
           filters:
