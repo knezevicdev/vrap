@@ -92,7 +92,7 @@ jobs:
     docker:
       - image: vroom/mlp:3.0.1
     steps:
-      - sync_build_deploy:
+      - sync_build_deploy
   homepage_qa: &mlp
     docker:
       - image: vroom/mlp:3.0.1
