@@ -1,173 +1,178 @@
-version: 2.1
-orbs:
-  sonarcloud: sonarsource/sonarcloud@1.0.1
 jobs:
-  sonarcloud:
-    docker:
-      - image: circleci/node:erbium-browsers
-    steps:
-      - checkout
-      - run:
-          command: |-
-            # Bootstrap yarn workspaces.
-            yarn install --silent
-
-            # Build libraries.
-            yarn workspace @vroom-web/analytics-integration build
-            yarn workspace @vroom-web/deals-v2-networking build
-            yarn workspace @vroom-web/inv-search-networking build
-            yarn workspace @vroom-web/ui build
-            yarn workspace @vroom-web/header-components build
-            yarn workspace @vroom-web/footer-components build
-
-            # Build the main app.
-            yarn workspace @vroom-web/homepage build
-      - sonarcloud/scan
   danger:
     docker:
-      - image: node:erbium-alpine
+    - image: node:erbium-alpine
     steps:
-      - checkout
-      - run:
-          name: Danger
-          command: |-
-            yarn install
-            yarn danger ci
-  lighthouse:
+    - checkout
+    - run:
+        command: |-
+          yarn install
+          yarn danger ci
+        name: Danger
+  homepage_build:
     docker:
-      - image: circleci/node:erbium-browsers
+    - image: vroom/mlp:3.0.1
     steps:
-      - checkout
-      - run:
-          command: |-
-            # Bootstrap yarn workspaces.
-            yarn install --silent
-
-            # Build libraries.
-            yarn workspace @vroom-web/analytics-integration build
-            yarn workspace @vroom-web/deals-v2-networking build
-            yarn workspace @vroom-web/inv-search-networking build
-            yarn workspace @vroom-web/ui build
-            yarn workspace @vroom-web/header-components build
-            yarn workspace @vroom-web/footer-components build
-
-            # Build the main app.
-            yarn workspace @vroom-web/homepage build
-
-            nohup yarn workspace @vroom-web/homepage start --port 8080 & sleep 5
-
-            yarn global add @lhci/cli@0.3.x
-            cd apps/homepage
-            /home/circleci/.yarn/bin/lhci autorun
-  lint:
+    - checkout
+    - setup_remote_docker:
+        version: 18.09.3
+    - run:
+        command: build -a vroom-web/apps/homepage/docker
+  homepage_deploy:
     docker:
-      - image: circleci/node:erbium
-    steps:
-      - checkout
-      - run:
-          command: |-
-              # Bootstrap yarn workspaces.
-              yarn install --silent
-
-              yarn workspaces run lint
-  homepage_build: &mlp
-    docker:
-      - image: vroom/mlp:3.0.1
-    steps:
-      - checkout
-      - setup_remote_docker:
-          version: 18.09.3
-      - run:
-          command: |-
-            build -a vroom-web/apps/homepage/docker
-  homepage_deploy: &mlp
-    docker:
-      - image: vroom/mlp:3.0.1
+    - image: vroom/mlp:3.0.1
     parameters:
       env:
         type: string
       s3:
         type: string
     steps:
-      - checkout
-      - setup_remote_docker:
-          version: 18.09.3
-      - run:
-          command: |-
-            sudo apt-get install python-pip && pip install awscli
+    - checkout
+    - setup_remote_docker:
+        version: 18.09.3
+    - run:
+        command: |-
+          sudo apt-get install python-pip && pip install awscli
 
-            aws s3 sync ./apps/homepage/public << parameters.s3 >> --acl public-read --exclude '*.webp' --exclude '*.mp4'
-            aws s3 sync ./apps/homepage/public << parameters.s3 >> --acl public-read --exclude '*' --include '*.webp' --content-type 'image/webp'
-            aws s3 sync ./apps/homepage/public << parameters.s3 >> --acl public-read --exclude '*' --include '*.mp4' --content-type 'video/mp4'
+          aws s3 sync ./apps/homepage/public << parameters.s3 >> --acl public-read --exclude '*.webp' --exclude '*.mp4'
+          aws s3 sync ./apps/homepage/public << parameters.s3 >> --acl public-read --exclude '*' --include '*.webp' --content-type 'image/webp'
+          aws s3 sync ./apps/homepage/public << parameters.s3 >> --acl public-read --exclude '*' --include '*.mp4' --content-type 'video/mp4'
 
-            login
-            deploy -a vroom-web/apps/homepage/docker -n << parameters.env >>
+          login
+          deploy -a vroom-web/apps/homepage/docker -n << parameters.env >>
+  lighthouse:
+    docker:
+    - image: circleci/node:erbium-browsers
+    steps:
+    - checkout
+    - run:
+        command: |-
+          # Bootstrap yarn workspaces.
+          yarn install --silent
+
+          # Build libraries.
+          yarn workspace @vroom-web/analytics-integration build
+          yarn workspace @vroom-web/deals-v2-networking build
+          yarn workspace @vroom-web/inv-search-networking build
+          yarn workspace @vroom-web/ui build
+          yarn workspace @vroom-web/header-components build
+          yarn workspace @vroom-web/footer-components build
+
+          # Build the main app.
+          yarn workspace @vroom-web/homepage build
+
+          nohup yarn workspace @vroom-web/homepage start --port 8080 & sleep 5
+
+          yarn global add @lhci/cli@0.3.x
+          cd apps/homepage
+          /home/circleci/.yarn/bin/lhci autorun
+  lint:
+    docker:
+    - image: circleci/node:erbium
+    steps:
+    - checkout
+    - run:
+        command: |-
+          yarn install --silent
+          yarn workspaces run lint
+        name: Lint
+  sonarcloud:
+    docker:
+    - image: circleci/node:erbium-browsers
+    steps:
+    - checkout
+    - run:
+        command: |-
+          # Bootstrap yarn workspaces.
+          yarn install --silent
+
+          # Build libraries.
+          yarn workspace @vroom-web/analytics-integration build
+          yarn workspace @vroom-web/deals-v2-networking build
+          yarn workspace @vroom-web/inv-search-networking build
+          yarn workspace @vroom-web/ui build
+          yarn workspace @vroom-web/header-components build
+          yarn workspace @vroom-web/footer-components build
+
+          # Build the main app.
+          yarn workspace @vroom-web/homepage build
+    - sonarcloud/scan
+orbs:
+  sonarcloud: sonarsource/sonarcloud@1.0.1
+version: 2.1
 workflows:
-  version: 2
   homepage:
     jobs:
-      - sonarcloud:
-          context: SonarCloud
-      - danger:
-          context: dangerjs
-      - lighthouse:
-          context: aws-prod
-      - lint
-      - homepage_build:
-          context: aws-non-prod
-          filters:
-            tags:
-              only: /^homepage-v.*/
-            branches:
-              ignore: /.*/
-      - hold:
-          name: hold_<< matrix.env >>
-          type: approval
-          matrix:
-            parameters:
-              env: ["dev", "qa", "uat"]
-          requires:
-            - homepage_build
-          filters:
-            tags:
-              only: /^homepage-v.*/
-            branches:
-              ignore: /.*/
-      - homepage_deploy:
-          name: homepage_deploy_<< matrix.env >>
-          context: aws-non-prod
-          s3: s3://homepage-assets-<< matrix.env >>.n.vroom.systems
-          matrix:
-            parameters:
-              env: ["dev", "qa", "uat"]
-          requires:
-            - hold_<< matrix.env >>
-          filters:
-            tags:
-              only: /^homepage-v.*/
-            branches:
-              ignore: /.*/
-      - hold:
-          name: hold_prod
-          type: approval
-          requires:
-            - homepage_deploy_dev
-            - homepage_deploy_qa
-            - homepage_deploy_uat
-          filters:
-            tags:
-              only: /^homepage-v.*/
-            branches:
-              ignore: /.*/
-      - homepage_deploy:
-          name: homepage_deploy_prod
-          context: aws-prod
-          env: "prod"
-          s3: s3://homepage-assets-prod.p.vroom.systems
-          requires:
-            - hold_prod
-          filters:
-            tags:
-              only: /^homepage-v.*/
-            branches:
-              ignore: /.*/
+    - sonarcloud:
+        context: SonarCloud
+    - danger:
+        context: dangerjs
+    - lighthouse:
+        context: aws-prod
+    - lint
+    - homepage_build:
+        context: aws-non-prod
+        filters:
+          branches:
+            ignore: /.*/
+          tags:
+            only: /^homepage-v.*/
+    - hold:
+        filters:
+          branches:
+            ignore: /.*/
+          tags:
+            only: /^homepage-v.*/
+        matrix:
+          parameters:
+            env:
+            - dev
+            - qa
+            - uat
+        name: hold_<< matrix.env >>
+        requires:
+        - homepage_build
+        type: approval
+    - homepage_deploy:
+        context: aws-non-prod
+        filters:
+          branches:
+            ignore: /.*/
+          tags:
+            only: /^homepage-v.*/
+        matrix:
+          parameters:
+            env:
+            - dev
+            - qa
+            - uat
+        name: homepage_deploy_<< matrix.env >>
+        requires:
+        - hold_<< matrix.env >>
+        s3: s3://homepage-assets-<< matrix.env >>.n.vroom.systems
+    - hold:
+        filters:
+          branches:
+            ignore: /.*/
+          tags:
+            only: /^homepage-v.*/
+        name: hold_prod
+        requires:
+        - homepage_deploy_dev
+        - homepage_deploy_qa
+        - homepage_deploy_uat
+        type: approval
+    - homepage_deploy:
+        context: aws-prod
+        env: prod
+        filters:
+          branches:
+            ignore: /.*/
+          tags:
+            only: /^homepage-v.*/
+        name: homepage_deploy_prod
+        requires:
+        - hold_prod
+        s3: s3://homepage-assets-prod.p.vroom.systems
+  version: 2
+

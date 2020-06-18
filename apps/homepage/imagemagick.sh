@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # This needs to be run anytime a new image is added to the homepage.
 # Also, imagemagick must be installed on the device that this script is being run.
