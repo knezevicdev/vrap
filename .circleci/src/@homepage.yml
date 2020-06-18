@@ -82,6 +82,47 @@ jobs:
             login
             deploy -a vroom-web/apps/homepage/docker -n << parameters.env >>
 
+    # homepage_release:
+    #   docker:
+    #   - image: vroom/mlp:3.0.1
+    #   steps:
+    #     - checkout
+    #     - setup_remote_docker:
+    #         version: 18.09.3
+    #     - run:
+    #         command: |-
+    #           sudo apt-get install python-pip && pip install awscli
+
+    #           aws s3 sync ./apps/homepage/public s3://homepage-assets-prod.p.vroom.systems --acl public-read --exclude '*.webp' --exclude '*.mp4'
+    #           aws s3 sync ./apps/homepage/public s3://homepage-assets-prod.p.vroom.systems --acl public-read --exclude '*' --include '*.webp' --content-type 'image/webp'
+    #           aws s3 sync ./apps/homepage/public s3://homepage-assets-prod.p.vroom.systems --acl public-read --exclude '*' --include '*.mp4' --content-type 'video/mp4'
+
+    #           login
+    #           release -a vroom-web/apps/homepage/docker -n uat
+
+  # FIT-541
+  # This is a stopgap until we can figure out how to deploy to prod using MLP 3.
+  homepage_prod:
+    docker:
+      - image: vroom/mlp:2.0
+    steps:
+      - checkout
+      - setup_remote_docker:
+          version: 18.09.3
+      - run:
+          command: |-
+            sudo apt-get install python-pip && pip install awscli
+
+            NAME_SPACE=${CIRCLE_TAG%-v*}
+            ENV=${NAME_SPACE#homepage-}
+
+            aws s3 sync ./apps/homepage/public s3://homepage-assets-${ENV}.p.vroom.systems --acl public-read --exclude '*.webp' --exclude '*.mp4'
+            aws s3 sync ./apps/homepage/public s3://homepage-assets-${ENV}.p.vroom.systems --acl public-read --exclude '*' --include '*.webp' --content-type 'image/webp'
+            aws s3 sync ./apps/homepage/public s3://homepage-assets-${ENV}.p.vroom.systems --acl public-read --exclude '*' --include '*.mp4' --content-type 'video/mp4'
+
+            build ./apps/homepage/docker
+            deploy ${ENV} ./apps/homepage/docker
+
 workflows:
   homepage:
     jobs:
@@ -150,3 +191,12 @@ workflows:
             only: /^homepage-v.*/
           branches:
             ignore: /.*/
+    # FIT-541
+    # This is a stopgap until we can figure out how to deploy to prod using MLP 3.
+    - homepage_prod:
+          context: aws-prod
+          filters:
+            tags:
+              only: /^homepage-prod-v.*/
+            branches:
+              ignore: /.*/
