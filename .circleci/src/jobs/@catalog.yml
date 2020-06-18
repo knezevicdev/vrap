@@ -1,0 +1,32 @@
+catalog_build:
+  docker:
+  - image: vroom/mlp:3.0.1
+  steps:
+    - checkout
+    - setup_remote_docker:
+        version: 18.09.3
+    - run:
+        command: |-
+          build -a vroom-web/apps/catalog/docker
+catalog_deploy:
+  docker:
+  - image: vroom/mlp:3.0.1
+  parameters:
+    env:
+      type: string
+    s3:
+      type: string
+  steps:
+    - checkout
+    - setup_remote_docker:
+        version: 18.09.3
+    - run:
+        command: |-
+          # sudo apt-get install python-pip && pip install awscli
+
+          # aws s3 sync ./apps/catalog/public << parameters.s3 >> --acl public-read --exclude '*.webp' --exclude '*.mp4'
+          # aws s3 sync ./apps/catalog/public << parameters.s3 >> --acl public-read --exclude '*' --include '*.webp' --content-type 'image/webp'
+          # aws s3 sync ./apps/catalog/public << parameters.s3 >> --acl public-read --exclude '*' --include '*.mp4' --content-type 'video/mp4'
+
+          login
+          deploy -a vroom-web/apps/catalog/docker -n << parameters.env >>

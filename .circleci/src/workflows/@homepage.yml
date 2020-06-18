@@ -1,0 +1,67 @@
+homepage:
+  jobs:
+  - sonarcloud:
+      context: SonarCloud
+  - danger:
+      context: dangerjs
+  - lighthouse:
+      context: aws-prod
+  - lint
+  - homepage_build:
+      context: aws-non-prod
+      filters:
+        tags:
+          only: /^homepage-v.*/
+        branches:
+          ignore: /.*/
+  - hold:
+      name: hold_<< matrix.env >>
+      type: approval
+      matrix:
+        parameters:
+          env: ["dev", "qa", "uat"]
+      requires:
+        - homepage_build
+      filters:
+        tags:
+          only: /^homepage-v.*/
+        branches:
+          ignore: /.*/
+  - homepage_deploy:
+      name: homepage_deploy_<< matrix.env >>
+      context: aws-non-prod
+      s3: s3://homepage-assets-<< matrix.env >>.n.vroom.systems
+      matrix:
+        parameters:
+          env: ["dev", "qa", "uat"]
+      requires:
+        - hold_<< matrix.env >>
+      filters:
+        tags:
+          only: /^homepage-v.*/
+        branches:
+          ignore: /.*/
+  - hold:
+      name: hold_prod
+      type: approval
+      requires:
+        - homepage_deploy_dev
+        - homepage_deploy_qa
+        - homepage_deploy_uat
+      filters:
+        tags:
+          only: /^homepage-v.*/
+        branches:
+          ignore: /.*/
+  - homepage_deploy:
+      name: homepage_deploy_prod
+      context: aws-prod
+      env: "prod"
+      s3: s3://homepage-assets-prod.p.vroom.systems
+      requires:
+        - hold_prod
+      filters:
+        tags:
+          only: /^homepage-v.*/
+        branches:
+          ignore: /.*/

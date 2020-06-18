@@ -1,9 +1,0 @@
-docker:
-  - image: circleci/node:erbium
-steps:
-  - checkout
-  - run:
-      name: Lint
-      command: |-
-        yarn install --silent
-        yarn workspaces run lint
