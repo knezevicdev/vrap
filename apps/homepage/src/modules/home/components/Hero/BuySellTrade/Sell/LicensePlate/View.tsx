@@ -5,6 +5,7 @@ import { Button } from '@vroom-web/ui';
 import { observer } from 'mobx-react';
 import React from 'react';
 
+import LicensePlateDialog from './Dialog';
 import ViewModel from './ViewModel';
 
 interface Props {
@@ -40,8 +41,8 @@ const Input = styled(TextField)(({ theme }) => ({
     display: 'none',
   },
   '& .MuiFormHelperText-root.Mui-error': {
-    display: 'initial'
-  }
+    display: 'initial',
+  },
 }));
 
 const StateSelect = styled(Input)(({ theme }) => ({
@@ -49,9 +50,9 @@ const StateSelect = styled(Input)(({ theme }) => ({
   marginLeft: theme.spacing(3),
 }));
 
-const SubmitButton = styled(Button)(({theme}) => ({
+const SubmitButton = styled(Button)(({ theme }) => ({
   width: '100%',
-  marginTop: theme.spacing(3)
+  marginTop: theme.spacing(3),
 }));
 
 const Inputs = styled('div')(() => ({
@@ -97,6 +98,7 @@ const LicensePlateView: React.FC<Props> = ({ viewModel }) => {
       >
         {viewModel.buttonLabel}
       </SubmitButton>
+      <LicensePlateDialog licensePlateStore={viewModel.store} />
     </LicensePlateContainer>
   );
 };

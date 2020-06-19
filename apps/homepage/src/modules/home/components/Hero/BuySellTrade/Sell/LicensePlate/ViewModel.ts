@@ -3,7 +3,7 @@ import React from 'react';
 import { LicensePlateStore } from './store';
 
 class LicensePlateViewModel {
-  private readonly store: LicensePlateStore;
+  readonly store: LicensePlateStore;
   private readonly states = [
     'AK',
     'AL',
@@ -60,7 +60,8 @@ class LicensePlateViewModel {
 
   readonly licensePlateLabel: string = 'License plate';
   readonly buttonLabel: string = "What's my car worth?";
-  readonly error: string = "We could not identify the vehicle associated with this license plate. Please try again."
+  readonly error: string =
+    'We could not identify the vehicle associated with this license plate. Please try again.';
 
   getInputValue = (): string => {
     return this.store.licensePlate;
@@ -92,19 +93,12 @@ class LicensePlateViewModel {
   };
 
   handleButtonClick = (): void => {
-    this.store.getVin();
+    this.store.getVehicles();
   };
 
   hasError = (): boolean => {
     return this.store.hasError;
   };
-
-  navigate(): void {
-    // const licensePlate = this.store.licensePlate;
-    // const state = this.store.selectedState;
-    const vin = 'JTMDWRFV9KD502170';
-    window.location.href = `sell/vehicleInformation/${vin}`;
-  }
 }
 
 export default LicensePlateViewModel;
