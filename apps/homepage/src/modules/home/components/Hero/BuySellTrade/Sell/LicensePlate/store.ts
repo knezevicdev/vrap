@@ -15,6 +15,7 @@ export class LicensePlateStore {
       ]
     | undefined = undefined;
   @observable isDialogOpen = false;
+  @observable fetching = false;
 
   @action
   setSelectedState = (state: string): void => {
@@ -46,6 +47,9 @@ export class LicensePlateStore {
             }
         }`.trim();
     try {
+      runInAction(() => {
+        this.fetching = true;
+      });
       axios
         .post(`https://gearbox-dev-int.vroomapi.com/query-public`, {
           query,
@@ -63,12 +67,14 @@ export class LicensePlateStore {
                 this.hasError = false;
                 this.vehicles = vehicles;
                 this.isDialogOpen = true;
+                this.fetching = false;
               });
             }
           } else {
             runInAction(() => {
               this.hasError = true;
               this.isDialogOpen = false;
+              this.fetching = false;
             });
           }
         });
@@ -76,6 +82,7 @@ export class LicensePlateStore {
       runInAction(() => {
         this.hasError = true;
         this.isDialogOpen = false;
+        this.fetching = false;
       });
     }
   };

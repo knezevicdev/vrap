@@ -59,7 +59,6 @@ class LicensePlateViewModel {
   ];
 
   readonly licensePlateLabel: string = 'License plate';
-  readonly buttonLabel: string = "What's my car worth?";
   readonly error: string =
     'We could not identify the vehicle associated with this license plate. Please try again.';
 
@@ -89,7 +88,11 @@ class LicensePlateViewModel {
   };
 
   isButtonDisabled = (): boolean => {
-    return this.getSelectedState() === '' || this.getInputValue() === '';
+    return (
+      this.getSelectedState() === '' ||
+      this.getInputValue() === '' ||
+      this.store.fetching
+    );
   };
 
   handleButtonClick = (): void => {
@@ -98,6 +101,10 @@ class LicensePlateViewModel {
 
   hasError = (): boolean => {
     return this.store.hasError;
+  };
+
+  getButtonLabel = (): string => {
+    return this.store.fetching ? 'Finding vehicle...' : `What's my car worth?`;
   };
 }
 

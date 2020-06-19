@@ -96,7 +96,7 @@ const LicensePlateView: React.FC<Props> = ({ viewModel }) => {
         variant="contained"
         color="secondary"
       >
-        {viewModel.buttonLabel}
+        {viewModel.getButtonLabel()}
       </SubmitButton>
       <LicensePlateDialog licensePlateStore={viewModel.store} />
     </LicensePlateContainer>
