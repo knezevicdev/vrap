@@ -60,6 +60,7 @@ class LicensePlateViewModel {
 
   readonly licensePlateLabel: string = 'License plate';
   readonly buttonLabel: string = "What's my car worth?";
+  readonly error: string = "We could not identify the vehicle associated with this license plate. Please try again."
 
   getInputValue = (): string => {
     return this.store.licensePlate;
@@ -88,6 +89,14 @@ class LicensePlateViewModel {
 
   isButtonDisabled = (): boolean => {
     return this.getSelectedState() === '' || this.getInputValue() === '';
+  };
+
+  handleButtonClick = (): void => {
+    this.store.getVin();
+  };
+
+  hasError = (): boolean => {
+    return this.store.hasError;
   };
 
   navigate(): void {

@@ -17,7 +17,6 @@ const Input = styled(TextField)(({ theme }) => ({
   width: '100%',
   '& .MuiInput-formControl': {
     marginTop: theme.spacing(1),
-    marginBottom: theme.spacing(3),
   },
   '& .MuiInputLabel-root': {
     position: 'static',
@@ -37,6 +36,12 @@ const Input = styled(TextField)(({ theme }) => ({
   '& .Mui-error.MuiInputLabel-root': {
     color: theme.palette.error.main,
   },
+  '& .MuiFormHelperText-root': {
+    display: 'none',
+  },
+  '& .MuiFormHelperText-root.Mui-error': {
+    display: 'initial'
+  }
 }));
 
 const StateSelect = styled(Input)(({ theme }) => ({
@@ -44,8 +49,9 @@ const StateSelect = styled(Input)(({ theme }) => ({
   marginLeft: theme.spacing(3),
 }));
 
-const SubmitButton = styled(Button)(() => ({
+const SubmitButton = styled(Button)(({theme}) => ({
   width: '100%',
+  marginTop: theme.spacing(3)
 }));
 
 const Inputs = styled('div')(() => ({
@@ -53,10 +59,6 @@ const Inputs = styled('div')(() => ({
 }));
 
 const LicensePlateView: React.FC<Props> = ({ viewModel }) => {
-  const handleButtonClick = (): void => {
-    viewModel.navigate();
-  };
-
   return (
     <LicensePlateContainer>
       <Inputs>
@@ -67,7 +69,9 @@ const LicensePlateView: React.FC<Props> = ({ viewModel }) => {
           placeholder={viewModel.licensePlateLabel}
           value={viewModel.getInputValue()}
           onChange={viewModel.onChange}
-          InputProps={{ disableUnderline: true }}
+          error={viewModel.hasError()}
+          helperText={viewModel.error}
+          InputProps={{ disableUnderline: true, inputProps: { maxLength: 7 } }}
         />
         <StateSelect
           id="state"
@@ -87,7 +91,7 @@ const LicensePlateView: React.FC<Props> = ({ viewModel }) => {
       </Inputs>
       <SubmitButton
         disabled={viewModel.isButtonDisabled()}
-        onClick={handleButtonClick}
+        onClick={viewModel.handleButtonClick}
         variant="contained"
         color="secondary"
       >
