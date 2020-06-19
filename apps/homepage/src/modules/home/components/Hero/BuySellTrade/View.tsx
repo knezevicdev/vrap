@@ -15,8 +15,9 @@ interface Props {
 const TabsContainer = styled('div')(({ theme }) => ({
   backgroundColor: theme.palette.background.paper,
   padding: theme.spacing(4),
+  marginTop: theme.spacing(2),
   maxWidth: '570px',
-  gridArea: 'a',
+  gridArea: 'sv',
 }));
 
 const tabsStyles = makeStyles((theme) => ({

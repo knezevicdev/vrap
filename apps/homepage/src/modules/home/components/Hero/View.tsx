@@ -86,6 +86,7 @@ const useCarImageStyles = makeStyles((theme) => ({
     height: '176px',
     width: '100%',
     objectFit: 'contain',
+    alignSelf: 'end',
     [theme.breakpoints.only('xs')]: {
       width: '150%',
     },
@@ -161,8 +162,8 @@ const HeroView: React.FC<Props> = ({ viewModel }) => {
           alt={viewModel.car.alt}
           src={viewModel.car.src}
         />
-        <Search />
-        {/*<BuySellTrade/>*/}
+        {/*<Search />*/}
+        <BuySellTrade/>
       </Container>
     </Background>
   );
