@@ -31,7 +31,7 @@ const BuyView: React.FC<Props> = ({ viewModel }) => {
   return (
     <BuyContainer>
       <Autocomplete />
-      <ExternalLink href={viewModel.link.href}>
+      <ExternalLink underline="none" href={viewModel.link.href}>
         <BrowseText>{viewModel.link.label}</BrowseText>
       </ExternalLink>
     </BuyContainer>

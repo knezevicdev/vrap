@@ -1,6 +1,6 @@
 import { makeStyles, styled, useTheme } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
-import { Button, Container as VroomContainer, Typography } from '@vroom-web/ui';
+import { Container as VroomContainer, Typography } from '@vroom-web/ui';
 import { observer } from 'mobx-react';
 import React from 'react';
 
@@ -8,6 +8,7 @@ import BuySellTrade from './BuySellTrade';
 import ViewModel from './ViewModel';
 
 import ExternalLink from 'src/ui/ExternalLink';
+import Search from "./Search";
 
 //#region Styling
 const useBackgroundStyles = makeStyles((theme) => ({
@@ -193,26 +194,6 @@ const SubTitleLink = styled(ExternalLink)(({ theme }) => ({
   fontWeight: 600,
   textDecoration: 'underline',
 }));
-
-const StyledButton = styled(Button)(() => ({
-  gridArea: 'b',
-  minHeight: '48px',
-}));
-
-const InputContainer = styled('div')(() => ({
-  gridArea: 'a',
-}));
-
-const BrowseLink = styled(ExternalLink)(() => ({
-  gridArea: 'l',
-}));
-
-const Browse = styled(Typography)(({ theme }) => ({
-  color: theme.palette.text.secondary,
-  display: 'flex',
-  fontWeight: 600,
-  textDecoration: 'underline',
-}));
 //#endregion
 
 interface Props {
@@ -222,28 +203,7 @@ interface Props {
 const HeroView: React.FC<Props> = ({ viewModel }) => {
   const theme = useTheme();
   const smDown = useMediaQuery(theme.breakpoints.down('sm'));
-  const mdUp = useMediaQuery(theme.breakpoints.up('md'));
 
-  const handleMobileButtonClick = (): void => {
-    viewModel.handleMobileButtonClick();
-  };
-
-  const mobileButton = (
-    <StyledButton
-      color="secondary"
-      onClick={handleMobileButtonClick}
-      variant="contained"
-      fullWidth
-    >
-      {viewModel.mobileButtonLabel}
-    </StyledButton>
-  );
-
-  const browse = (
-    <BrowseLink href={viewModel.link.href}>
-      <Browse>{viewModel.link.label}</Browse>
-    </BrowseLink>
-  );
 
   const desktop = viewModel.isDesktop();
   return (
@@ -261,29 +221,7 @@ const HeroView: React.FC<Props> = ({ viewModel }) => {
           alt={viewModel.car.alt}
           src={viewModel.car.src}
         />
-        {desktop ? (
-          <>
-            {smDown ? (
-              mobileButton
-            ) : (
-              <InputContainer>
-                <BuySellTrade />
-              </InputContainer>
-            )}
-            {!smDown && browse}
-          </>
-        ) : (
-          <>
-            {mdUp ? (
-              <InputContainer>
-                <BuySellTrade />
-              </InputContainer>
-            ) : (
-              mobileButton
-            )}
-            {mdUp && browse}
-          </>
-        )}
+        <Search/>
       </Container>
     </Background>
   );
