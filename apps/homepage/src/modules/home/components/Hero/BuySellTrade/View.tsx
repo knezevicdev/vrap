@@ -16,6 +16,7 @@ const TabsContainer = styled('div')(({ theme }) => ({
   backgroundColor: theme.palette.background.paper,
   padding: theme.spacing(4),
   maxWidth: '570px',
+  gridArea: 'a',
 }));
 
 const tabsStyles = makeStyles((theme) => ({

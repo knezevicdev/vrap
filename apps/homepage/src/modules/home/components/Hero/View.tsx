@@ -5,36 +5,17 @@ import { observer } from 'mobx-react';
 import React from 'react';
 
 import BuySellTrade from './BuySellTrade';
+import Search from './Search';
 import ViewModel from './ViewModel';
 
 import ExternalLink from 'src/ui/ExternalLink';
-import Search from "./Search";
 
 //#region Styling
 const useBackgroundStyles = makeStyles((theme) => ({
-  desktop: {
-    overflow: 'hidden',
-    background: `linear-gradient(100deg, ${theme.palette.primary.main} 71.9%, ${theme.palette.background.paper} 72%)`,
-    paddingTop: theme.spacing(10),
-    paddingBottom: theme.spacing(10),
-    [theme.breakpoints.only('xs')]: {
-      paddingTop: 0,
-      paddingBottom: 0,
-      background: theme.palette.primary.main,
-    },
-    [theme.breakpoints.only('sm')]: {
-      paddingTop: 0,
-      paddingBottom: 0,
-    },
-    [theme.breakpoints.only('md')]: {
-      paddingTop: theme.spacing(5),
-      paddingBottom: theme.spacing(5),
-    },
-  },
-  mobile: {
+  background: {
     overflow: 'hidden',
     background: theme.palette.primary.main,
-    [theme.breakpoints.up('sm')]: {
+    [theme.breakpoints.up('md')]: {
       background: `linear-gradient(100deg, ${theme.palette.primary.main} 71.9%, ${theme.palette.background.paper} 72%)`,
     },
     [theme.breakpoints.only('md')]: {
@@ -48,92 +29,52 @@ const useBackgroundStyles = makeStyles((theme) => ({
   },
 }));
 
-const Background: React.FC<{ desktop: boolean }> = ({ children, desktop }) => {
+const Background: React.FC = ({ children }) => {
   const classes = useBackgroundStyles();
-  return (
-    <div className={desktop ? classes.desktop : classes.mobile}>{children}</div>
-  );
+  return <div className={classes.background}>{children}</div>;
 };
 
 const useContainerStyles = makeStyles((theme) => ({
-  desktop: {
+  grid: {
     display: 'grid',
-    justifyContent: 'center',
-    alignItems: 'center',
-    gap: `${theme.spacing(2)}px`,
+    gridTemplateColumns: '1fr 1fr 1fr 1fr 1fr 1fr',
     gridTemplateAreas: `
       "t t t t . ."
       "s s s i i i"
-      "a a a i i i"
-      "l l l i i i"
+      "sv sv sv i i i" 
     `,
-    gridTemplateColumns: '1fr 1fr 1fr 1fr 1fr 1fr',
+    [theme.breakpoints.only('sm')]: {
+      textAlign: 'center',
+      gap: `${theme.spacing(1)}px`,
+      gridTemplateAreas: `
+      "i"
+      "t"
+      "s"
+      "sv"
+      `,
+      gridTemplateColumns: 'none',
+    },
     [theme.breakpoints.only('xs')]: {
       gap: `${theme.spacing(1)}px`,
       gridTemplateAreas: `
       "t"
       "s"
       "i"
-      "b"
+      "sv"
     `,
       gridTemplateColumns: 'none',
-    },
-    [theme.breakpoints.only('sm')]: {
-      gap: `${theme.spacing(1)}px`,
-      gridTemplateAreas: `
-        "t t t t t ."
-        "s s s i i i"
-        "b b b i i i"
-      `,
-      gridTemplateRows: 'auto',
-      gridTemplateColumns: '1fr 1fr 1fr 1fr 1fr 1fr',
-    },
-  },
-  mobile: {
-    display: 'grid',
-    justifyContent: 'center',
-    alignItems: 'center',
-    gap: `${theme.spacing(1)}px`,
-    gridTemplateAreas: `
-    "t"
-    "s"
-    "i"
-    "b"
-  `,
-    [theme.breakpoints.only('sm')]: {
-      gridTemplateAreas: `
-      "t t t t t ."
-      "s s s i i i"
-      "b b b i i i"
-    `,
-      gridTemplateRows: 'auto',
-      gridTemplateColumns: '1fr 1fr 1fr 1fr 1fr 1fr',
-    },
-    [theme.breakpoints.up('md')]: {
-      gap: `${theme.spacing(2)}px`,
-      gridTemplateAreas: `
-      "t t t t . ."
-      "s s s i i i"
-      "a a a i i i"
-      "l l l i i i"
-    `,
-      gridTemplateColumns: '1fr 1fr 1fr 1fr 1fr 1fr',
     },
   },
 }));
 
-const Container: React.FC<{ desktop: boolean; maxWidth?: 'sm' | 'lg' }> = ({
+const Container: React.FC<{ maxWidth?: 'sm' | 'lg' }> = ({
   children,
-  desktop,
   maxWidth,
 }) => {
   const classes = useContainerStyles();
 
   return (
-    <VroomContainer
-      className={desktop ? classes.desktop : classes.mobile}
-      maxWidth={maxWidth}
-    >
+    <VroomContainer className={classes.grid} maxWidth={maxWidth}>
       {children}
     </VroomContainer>
   );
@@ -142,7 +83,7 @@ const Container: React.FC<{ desktop: boolean; maxWidth?: 'sm' | 'lg' }> = ({
 const useCarImageStyles = makeStyles((theme) => ({
   desktop: {
     gridArea: 'i',
-    height: 'auto',
+    height: '176px',
     width: '100%',
     objectFit: 'contain',
     [theme.breakpoints.only('xs')]: {
@@ -204,11 +145,10 @@ const HeroView: React.FC<Props> = ({ viewModel }) => {
   const theme = useTheme();
   const smDown = useMediaQuery(theme.breakpoints.down('sm'));
 
-
   const desktop = viewModel.isDesktop();
   return (
-    <Background desktop={desktop}>
-      <Container desktop={desktop} maxWidth={smDown ? 'sm' : 'lg'}>
+    <Background>
+      <Container maxWidth={smDown ? 'sm' : 'lg'}>
         <Title variant="h1">{viewModel.title}</Title>
         <SubTitle>
           {viewModel.subtitle}{' '}
@@ -221,7 +161,8 @@ const HeroView: React.FC<Props> = ({ viewModel }) => {
           alt={viewModel.car.alt}
           src={viewModel.car.src}
         />
-        <Search/>
+        <Search />
+        {/*<BuySellTrade/>*/}
       </Container>
     </Background>
   );

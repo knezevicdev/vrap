@@ -51,7 +51,7 @@ export class LicensePlateStore {
         this.fetching = true;
       });
       axios
-          //TODO: Replace with library and all endpoints - make sure it gets released to prod
+        //TODO: Replace with library and all endpoints - make sure it gets released to prod
         .post(`https://gearbox-dev-int.vroomapi.com/query-public`, {
           query,
         })
