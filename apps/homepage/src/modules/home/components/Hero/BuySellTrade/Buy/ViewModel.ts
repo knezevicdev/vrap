@@ -9,6 +9,11 @@ class BuyViewModel {
     href: '/catalog',
     label: 'Browse thousands of low-mileage cars and trucks',
   };
+
+  handleButtonClick = (): void => {
+    window.location.href = `/catalog`;
+  };
+
 }
 
 export default BuyViewModel;

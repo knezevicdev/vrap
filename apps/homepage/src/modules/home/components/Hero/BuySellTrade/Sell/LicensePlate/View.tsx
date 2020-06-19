@@ -47,7 +47,7 @@ const Input = styled(TextField)(({ theme }) => ({
 
 const StateSelect = styled(Input)(({ theme }) => ({
   width: theme.spacing(20),
-  marginLeft: theme.spacing(3),
+  marginLeft: theme.spacing(2),
 }));
 
 const SubmitButton = styled(Button)(({ theme }) => ({

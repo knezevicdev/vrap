@@ -81,7 +81,7 @@ const Container: React.FC<{ maxWidth?: 'sm' | 'lg' }> = ({
 };
 
 const useCarImageStyles = makeStyles((theme) => ({
-  desktop: {
+  image: {
     gridArea: 'i',
     height: '176px',
     width: '100%',
@@ -91,26 +91,16 @@ const useCarImageStyles = makeStyles((theme) => ({
       width: '150%',
     },
   },
-  mobile: {
-    gridArea: 'i',
-    width: '150%',
-    height: 'auto',
-    [theme.breakpoints.up('sm')]: {
-      width: '100%',
-      objectFit: 'contain',
-    },
-  },
 }));
 
-const CarImage: React.FC<{ desktop: boolean; alt: string; src: string }> = ({
-  desktop,
+const CarImage: React.FC<{ alt: string; src: string }> = ({
   alt,
   src,
 }) => {
   const classes = useCarImageStyles();
   return (
     <img
-      className={desktop ? classes.desktop : classes.mobile}
+      className={classes.image}
       alt={alt}
       src={src}
       loading="lazy"
@@ -146,7 +136,6 @@ const HeroView: React.FC<Props> = ({ viewModel }) => {
   const theme = useTheme();
   const smDown = useMediaQuery(theme.breakpoints.down('sm'));
 
-  const desktop = viewModel.isDesktop();
   return (
     <Background>
       <Container maxWidth={smDown ? 'sm' : 'lg'}>
@@ -158,7 +147,6 @@ const HeroView: React.FC<Props> = ({ viewModel }) => {
           </SubTitleLink>
         </SubTitle>
         <CarImage
-          desktop={desktop}
           alt={viewModel.car.alt}
           src={viewModel.car.src}
         />

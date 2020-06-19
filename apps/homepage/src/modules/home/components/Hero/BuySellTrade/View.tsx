@@ -1,4 +1,4 @@
-import { makeStyles, styled } from '@material-ui/core/styles';
+import {makeStyles, styled} from '@material-ui/core/styles';
 import Tab from '@material-ui/core/Tab';
 import Tabs from '@material-ui/core/Tabs';
 import { observer } from 'mobx-react';
@@ -15,9 +15,13 @@ interface Props {
 const TabsContainer = styled('div')(({ theme }) => ({
   backgroundColor: theme.palette.background.paper,
   padding: theme.spacing(4),
+  [theme.breakpoints.only('xs')]: {
+    padding: theme.spacing(2),
+  },
   marginTop: theme.spacing(2),
   maxWidth: '570px',
   gridArea: 'sv',
+  textAlign: 'left',
 }));
 
 const tabsStyles = makeStyles((theme) => ({
