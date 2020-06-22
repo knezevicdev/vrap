@@ -10,9 +10,9 @@ must when all other approaches fail you.
   background: #041022;
 }
 
-/* This is one unit above the material ui appBar  */
+/* This is two units above the material ui appBar, one above list view  */
 .image-gallery.fullscreen-modal {
-  z-index: 1101;
+  z-index: 1102;
 }
 
 .image-gallery-content.fullscreen {

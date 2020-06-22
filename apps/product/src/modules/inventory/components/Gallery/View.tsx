@@ -6,8 +6,9 @@ import { observer } from 'mobx-react';
 import React, { useRef, useState } from 'react';
 import ImageGallery from 'react-image-gallery';
 
+import ListView from './components/ListView';
+import NoImagesView from './components/NoImagesView';
 import GallerySelect from './components/Select';
-import NoImagesView from './NoImagesView';
 import ViewModel from './ViewModel';
 
 import Container from 'src/ui/Container';
@@ -41,8 +42,16 @@ const GalleryView: React.FC<Props> = (props) => {
     setFullscreen(!fullscreen);
   };
 
+  const handleClick = (): void => {
+    isMobile && viewModel.setListView();
+  };
+
   if (viewModel.hasNoImages()) {
     return <NoImagesView viewModel={viewModel} />;
+  }
+
+  if (viewModel.isListView()) {
+    return <ListView viewModel={viewModel} />;
   }
 
   return (
@@ -70,6 +79,7 @@ const GalleryView: React.FC<Props> = (props) => {
             showIndex={viewModel.showIndex()}
             onErrorImageURL={viewModel.defaultImage.src}
             onScreenChange={handleFullscreen}
+            onClick={handleClick}
           />
         </Typography>
       </Box>

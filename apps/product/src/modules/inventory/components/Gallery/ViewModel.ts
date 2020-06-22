@@ -68,7 +68,7 @@ class GalleryViewModel {
     return leadFlagPhotoUrl === '';
   }
 
-  getGalleryImages(): GeneralPhoto[] | DefectPhoto[] {
+  getGalleryImages(): (GeneralPhoto | DefectPhoto)[] {
     const { selectedGallery } = this.galleryStore;
     if (selectedGallery === GallerySelections.DEFECTS) {
       return this.getDefectImages();
@@ -83,6 +83,7 @@ class GalleryViewModel {
       otherPhotos = [],
       interiorPhotoUrl,
     } = this.inventoryStore.vehicle._source;
+    const { isListView } = this.galleryStore;
 
     const vehiclePhotos = [leadFlagPhotoUrl, ...otherPhotos];
     const interiorPhotoIndex = vehiclePhotos.indexOf(interiorPhotoUrl);
@@ -94,7 +95,7 @@ class GalleryViewModel {
         thumbnail: img,
       };
     });
-    if (vehiclePhotos.length > 1) {
+    if (vehiclePhotos.length > 1 && !isListView) {
       const addGeneralToCondition: {
         original: string;
         thumbnail: string;
@@ -112,6 +113,7 @@ class GalleryViewModel {
 
   getDefectImages(): DefectPhoto[] {
     const { defectPhotos } = this.inventoryStore.vehicle._source;
+    const { isListView } = this.galleryStore;
     const defectImages = !isEmpty(defectPhotos)
       ? defectPhotos.map(
           (img: { url: string; defectType: DefectTypes; location: string }) => {
@@ -125,22 +127,46 @@ class GalleryViewModel {
           }
         )
       : [];
-
-    const addGalleryEndCard: {
-      original: string;
-      thumbnail: string;
-      description: string;
-      renderItem: React.FunctionComponent;
-    } = {
-      original: this.defaultImage.src,
-      //TODO: Replace with designs photo
-      thumbnail: this.defaultImage.src,
-      description: 'Condition End Card',
-      renderItem: GalleryConditionEnd,
-    };
-    defectImages.push(addGalleryEndCard);
-
+    if (!isListView) {
+      const addGalleryEndCard: {
+        original: string;
+        thumbnail: string;
+        description: string;
+        renderItem: React.FunctionComponent;
+      } = {
+        original: this.defaultImage.src,
+        //TODO: Replace with designs photo
+        thumbnail: this.defaultImage.src,
+        description: 'Condition End Card',
+        renderItem: GalleryConditionEnd,
+      };
+      defectImages.push(addGalleryEndCard);
+    }
     return defectImages;
+  }
+
+  isDefectView(): boolean {
+    return this.galleryStore.selectedGallery === GallerySelections.DEFECTS;
+  }
+
+  isListView(): boolean {
+    return this.galleryStore.isListView;
+  }
+
+  setListView(): void {
+    this.galleryStore.changeListView();
+  }
+
+  handleListViewImageClick(image: string): void {
+    this.galleryStore.setListViewFullscreen(image);
+  }
+
+  showListViewFullscreen(): string | undefined {
+    return this.galleryStore.listViewFullscreenImage;
+  }
+
+  handleListViewFullscreenClose(): void {
+    this.galleryStore.setListViewFullscreen();
   }
 
   private getHiResImageUrl(img: string): string {
