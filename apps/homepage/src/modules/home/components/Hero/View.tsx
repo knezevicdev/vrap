@@ -5,7 +5,7 @@ import { observer } from 'mobx-react';
 import React from 'react';
 
 import BuySellTrade from './BuySellTrade';
-import Search from './Search';
+// import Search from './Search';
 import ViewModel from './ViewModel';
 
 import ExternalLink from 'src/ui/ExternalLink';
