@@ -7,7 +7,7 @@ const gitHash = childProcess.execSync('git rev-parse HEAD').toString().trim();
 const isProd = process.env.NODE_ENV === 'production';
 
 module.exports = {
-  assetPrefix: isProd ? '/catalog' : '',
+  assetPrefix: isProd ? '/cars' : '',
   generateBuildId: () => gitHash,
   /* Custom webpack configuration. */
   webpack: (config) => {
