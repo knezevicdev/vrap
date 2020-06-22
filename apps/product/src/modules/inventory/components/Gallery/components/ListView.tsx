@@ -99,11 +99,11 @@ const GalleryListView: React.FC<Props> = ({ viewModel }) => {
             index: number
           ) => {
             return (
-              <React.Fragment key={index}>
+              <React.Fragment key={'listView_' + index}>
                 <ImageHeader>
                   {index + 1}
                   {viewModel.indexSeparator}
-                  {images.length}
+                  {images.length + 1}
                   <div>{image.description}</div>
                 </ImageHeader>
                 <StyledImage
@@ -116,7 +116,27 @@ const GalleryListView: React.FC<Props> = ({ viewModel }) => {
             );
           }
         )}
-        {isDefect ? <GalleryConditionEnd /> : <GalleryGeneralToCondition />}
+        {isDefect ? (
+          <>
+            {images.length > 1 && (
+              <ImageHeader>
+                {images.length + 1}
+                {viewModel.indexSeparator}
+                {images.length}
+              </ImageHeader>
+            )}
+            <GalleryConditionEnd />
+          </>
+        ) : (
+          <>
+            <ImageHeader>
+              {images.length + 1}
+              {viewModel.indexSeparator}
+              {images.length}
+            </ImageHeader>
+            <GalleryGeneralToCondition />
+          </>
+        )}
       </StyledContainer>
     </>
   );
