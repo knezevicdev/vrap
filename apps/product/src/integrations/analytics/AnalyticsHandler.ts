@@ -22,6 +22,7 @@ export interface Product {
   url?: string;
   vin: string;
   year: number;
+  defectPhotos?: boolean;
 }
 
 interface Filter {
