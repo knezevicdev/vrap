@@ -93,19 +93,9 @@ const useCarImageStyles = makeStyles((theme) => ({
   },
 }));
 
-const CarImage: React.FC<{ alt: string; src: string }> = ({
-  alt,
-  src,
-}) => {
+const CarImage: React.FC<{ alt: string; src: string }> = ({ alt, src }) => {
   const classes = useCarImageStyles();
-  return (
-    <img
-      className={classes.image}
-      alt={alt}
-      src={src}
-      loading="lazy"
-    />
-  );
+  return <img className={classes.image} alt={alt} src={src} loading="lazy" />;
 };
 
 const Title = styled(Typography)(({ theme }) => ({
@@ -146,12 +136,9 @@ const HeroView: React.FC<Props> = ({ viewModel }) => {
             {viewModel.subtitleLink.label}
           </SubTitleLink>
         </SubTitle>
-        <CarImage
-          alt={viewModel.car.alt}
-          src={viewModel.car.src}
-        />
+        <CarImage alt={viewModel.car.alt} src={viewModel.car.src} />
         {/*<Search />*/}
-        <BuySellTrade/>
+        <BuySellTrade />
       </Container>
     </Background>
   );

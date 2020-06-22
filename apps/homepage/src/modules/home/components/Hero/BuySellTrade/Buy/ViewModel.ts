@@ -13,7 +13,6 @@ class BuyViewModel {
   handleButtonClick = (): void => {
     window.location.href = `/catalog`;
   };
-
 }
 
 export default BuyViewModel;
