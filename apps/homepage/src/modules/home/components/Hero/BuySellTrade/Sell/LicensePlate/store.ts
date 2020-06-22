@@ -2,7 +2,7 @@ import { action, observable, runInAction } from 'mobx';
 
 import LicensePlateToVinNetworker, {
   Vehicles,
-} from '../../LicensePlateToVinNetworker';
+} from './LicensePlateToVinNetworker';
 
 import globalEnv from 'src/globalEnv';
 
