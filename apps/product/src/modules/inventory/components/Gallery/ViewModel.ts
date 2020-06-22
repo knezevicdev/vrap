@@ -1,14 +1,25 @@
+import isEmpty from 'lodash/isEmpty';
+
 import { InventoryStore } from '../../store';
+import GalleryConditionEnd from './components/ConditionEnd';
+import GalleryGeneralToCondition from './components/GeneralToCondition';
+import { GallerySelections, GalleryStore } from './store';
 
 import globalEnv from 'src/globalEnv';
+import { DefectTypes } from 'src/networking/models/Inventory.v3';
 
-interface Photo {
+interface GeneralPhoto {
   original: string;
   thumbnail: string;
 }
 
+interface DefectPhoto extends GeneralPhoto {
+  description: string;
+}
+
 class GalleryViewModel {
-  private store: InventoryStore;
+  private inventoryStore: InventoryStore;
+  private galleryStore: GalleryStore;
   readonly defaultImage = {
     alt: 'No photos',
     src: `${globalEnv.CDN_URL}/components/ghost-suv.png`,
@@ -19,36 +30,117 @@ class GalleryViewModel {
   readonly noPhotosSubtitle: string =
     "When real photos become available, we'll share\xa0them\xa0here.";
 
-  constructor(inventoryStore: InventoryStore) {
-    this.store = inventoryStore;
+  constructor(inventoryStore: InventoryStore, galleryStore: GalleryStore) {
+    this.inventoryStore = inventoryStore;
+    this.galleryStore = galleryStore;
   }
 
   showBanner(): boolean {
-    return this.store.vehicle._source.hasStockPhotos;
+    return this.inventoryStore.vehicle._source.hasStockPhotos;
+  }
+
+  showIndex(): boolean {
+    const galleryImages = this.getGalleryImages();
+    return galleryImages.length > 1;
+  }
+
+  showThumbnails(isMobile: boolean): boolean {
+    const galleryImages = this.getGalleryImages();
+    if (isMobile || galleryImages.length <= 1) {
+      return false;
+    }
+    return true;
+  }
+
+  getThumbnailPosition(
+    isMobile: boolean,
+    fullscreen: boolean
+  ): 'bottom' | 'right' {
+    const galleryImages = this.getGalleryImages();
+    if (isMobile || fullscreen || galleryImages.length <= 1) {
+      return 'bottom';
+    }
+    return 'right';
   }
 
   hasNoImages(): boolean {
-    const { leadFlagPhotoUrl } = this.store.vehicle._source;
+    const { leadFlagPhotoUrl } = this.inventoryStore.vehicle._source;
     return leadFlagPhotoUrl === '';
   }
 
-  getImages(): Photo[] {
+  getGalleryImages(): GeneralPhoto[] | DefectPhoto[] {
+    const { selectedGallery } = this.galleryStore;
+    if (selectedGallery === GallerySelections.DEFECTS) {
+      return this.getDefectImages();
+    } else {
+      return this.getGeneralImages();
+    }
+  }
+
+  getGeneralImages(): GeneralPhoto[] {
     const {
       leadFlagPhotoUrl,
       otherPhotos = [],
       interiorPhotoUrl,
-    } = this.store.vehicle._source;
+    } = this.inventoryStore.vehicle._source;
 
     const vehiclePhotos = [leadFlagPhotoUrl, ...otherPhotos];
     const interiorPhotoIndex = vehiclePhotos.indexOf(interiorPhotoUrl);
     vehiclePhotos.splice(1, 0, vehiclePhotos.splice(interiorPhotoIndex, 1)[0]);
 
-    return vehiclePhotos.map((img) => {
+    const generalPhotos = vehiclePhotos.map((img) => {
       return {
         original: this.getHiResImageUrl(img),
         thumbnail: img,
       };
     });
+    if (vehiclePhotos.length > 1) {
+      const addGeneralToCondition: {
+        original: string;
+        thumbnail: string;
+        renderItem: React.FunctionComponent;
+      } = {
+        original: this.defaultImage.src,
+        //TODO: Replace with designs photo
+        thumbnail: this.defaultImage.src,
+        renderItem: GalleryGeneralToCondition,
+      };
+      generalPhotos.push(addGeneralToCondition);
+    }
+    return generalPhotos;
+  }
+
+  getDefectImages(): DefectPhoto[] {
+    const { defectPhotos } = this.inventoryStore.vehicle._source;
+    const defectImages = !isEmpty(defectPhotos)
+      ? defectPhotos.map(
+          (img: { url: string; defectType: DefectTypes; location: string }) => {
+            return {
+              original: this.getHiResImageUrl(img.url),
+              thumbnail: img.url,
+              description: `${this.getDefectDisplay(img.defectType)} - ${
+                img.location
+              }`,
+            };
+          }
+        )
+      : [];
+
+    const addGalleryEndCard: {
+      original: string;
+      thumbnail: string;
+      description: string;
+      renderItem: React.FunctionComponent;
+    } = {
+      original: this.defaultImage.src,
+      //TODO: Replace with designs photo
+      thumbnail: this.defaultImage.src,
+      description: 'Condition End Card',
+      renderItem: GalleryConditionEnd,
+    };
+    defectImages.push(addGalleryEndCard);
+
+    return defectImages;
   }
 
   private getHiResImageUrl(img: string): string {
@@ -62,6 +154,25 @@ class GalleryViewModel {
       //Fyusion Image
       const fyusionImgURL = img.replace('/edit/', '/');
       return fyusionImgURL.split('?')[0];
+    }
+  }
+
+  private getDefectDisplay(defect: DefectTypes): string {
+    switch (defect) {
+      case DefectTypes.SCRATCH:
+        return 'Scratch';
+      case DefectTypes.OXIDATION:
+        return 'Paint Imperfection';
+      case DefectTypes.SPIDER_CRACKING:
+        return 'Paint Imperfection';
+      case DefectTypes.RUN:
+        return 'Paint Imperfection';
+      case DefectTypes.DENT:
+        return 'Dent';
+      case DefectTypes.CHIP:
+        return 'Chip';
+      default:
+        return '';
     }
   }
 }

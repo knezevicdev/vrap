@@ -10,18 +10,11 @@ import {
 import { Networker } from 'src/networking/Networker';
 import { Status } from 'src/networking/types';
 
-export enum GallerySelections {
-  GENERAL = 'GENERAL PHOTOS',
-  DEFECTS = 'IMPERFECTIONS',
-  THREESIXTY = '360',
-}
-
 export interface InventoryStoreState {
   similarStatus: Status;
   similar: Hit[];
   vehicleStatus: Status;
   vehicle: Hit;
-  selectedGallery: GallerySelections;
 }
 
 export async function getInitialInventoryStoreState(
@@ -32,7 +25,6 @@ export async function getInitialInventoryStoreState(
     similar: [] as Hit[],
     vehicleStatus: Status.INITIAL,
     vehicle: {} as Hit,
-    selectedGallery: GallerySelections.GENERAL,
   };
 
   const networker = new Networker();
@@ -83,7 +75,6 @@ export class InventoryStore {
   @observable similar: Hit[] = [] as Hit[];
   @observable vehicleStatus: Status = Status.FETCHING;
   @observable vehicle: Hit = {} as Hit;
-  @observable selectedGallery: GallerySelections = GallerySelections.GENERAL;
 
   private networker: Networker;
 
@@ -94,7 +85,6 @@ export class InventoryStore {
       this.vehicle = initialState.vehicle;
       this.similarStatus = initialState.similarStatus;
       this.similar = initialState.similar;
-      this.selectedGallery = initialState.selectedGallery;
     }
   }
 
@@ -148,11 +138,6 @@ export class InventoryStore {
         this.similarStatus = Status.ERROR;
       });
     }
-  };
-
-  @action
-  changeSelectedGallery = (gallery: GallerySelections): void => {
-    this.selectedGallery = gallery;
   };
 }
 

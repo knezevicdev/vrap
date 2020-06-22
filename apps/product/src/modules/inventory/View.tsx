@@ -11,8 +11,7 @@ import React, { useEffect } from 'react';
 import Breadcrumbs from './components/Breadcrumbs';
 import CarDetails from './components/CarDetails';
 import Features from './components/Features';
-import Gallery from './components/Gallery';
-import GallerySelect from './components/GallerySelect';
+import Gallery from './components/Gallery/';
 import PeaceOfMind from './components/PeaceOfMind';
 import SimilarVehicles from './components/SimilarVehicles';
 import StartPurchase from './components/StartPurchase';
@@ -75,9 +74,6 @@ const VehicleDetails: React.FC<Props> = (props) => {
       {viewModel.ready() && (
         <>
           <Grid container>
-            <Grid item xs={12}>
-              <GallerySelect />
-            </Grid>
             <Grid item xs={12}>
               <Gallery />
             </Grid>

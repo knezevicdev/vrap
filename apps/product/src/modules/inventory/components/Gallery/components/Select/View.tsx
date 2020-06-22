@@ -18,7 +18,6 @@ interface Props {
 const GallerySelectorView: React.FC<Props> = (props) => {
   const { viewModel } = props;
   const selected = viewModel.getSelectedGallery();
-
   return (
     <>
       <Tabs

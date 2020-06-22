@@ -1,12 +1,12 @@
-import { GallerySelections, InventoryStore } from '../../store';
+import { GallerySelections, GalleryStore } from '../../store';
 
 class GallerySelectorViewModel {
-  private store: InventoryStore;
+  private store: GalleryStore;
   readonly general: string = GallerySelections.GENERAL;
   readonly imperfections: string = GallerySelections.DEFECTS;
 
-  constructor(inventoryStore: InventoryStore) {
-    this.store = inventoryStore;
+  constructor(galleryStore: GalleryStore) {
+    this.store = galleryStore;
   }
 
   handleChange = (

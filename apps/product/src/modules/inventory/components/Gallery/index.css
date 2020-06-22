@@ -7,6 +7,7 @@ must when all other approaches fail you.
 
 .image-gallery-content.right .image-gallery-slide .image-gallery-image {
   max-height: 60vh;
+  background: #041022;
 }
 
 /* This is one unit above the material ui appBar  */
@@ -15,9 +16,24 @@ must when all other approaches fail you.
 }
 
 .image-gallery-content.fullscreen {
-  background: #bebebe;
+  background: #041022;
+}
+
+.image-gallery-content.fullscreen img {
+  height: 100%;
 }
 
 .stock-photos .image-gallery-content.fullscreen {
   background: #ffffff;
+}
+
+.image-gallery-thumbnails-wrapper.right .image-gallery-thumbnails {
+  max-height: 60vh;
+}
+
+.image-gallery-index {
+  width: 100%;
+  text-align: center;
+  background: rgba(255, 255, 255, 0.75);
+  color: #000000;
 }
