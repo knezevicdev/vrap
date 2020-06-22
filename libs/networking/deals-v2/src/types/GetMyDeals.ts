@@ -2,7 +2,7 @@
 import * as yup from 'yup';
 
 export type Deal = {
-  summary: {
+  dealSummary: {
     dealStatus: {
       status: string;
       step: string;
@@ -12,10 +12,11 @@ export type Deal = {
         listPrice: number;
       };
       vehicle: {
-        year: number;
         make: string;
         model: string;
         trim: string;
+        vin: string;
+        year: number;
       };
     };
   };
@@ -23,7 +24,7 @@ export type Deal = {
 
 export const dealSchema: yup.ObjectSchema<Deal> = yup
   .object({
-    summary: yup
+    dealSummary: yup
       .object({
         dealStatus: yup
           .object({
@@ -40,10 +41,11 @@ export const dealSchema: yup.ObjectSchema<Deal> = yup
               .defined(),
             vehicle: yup
               .object({
-                year: yup.number().defined(),
                 make: yup.string().defined(),
                 model: yup.string().defined(),
                 trim: yup.string().defined(),
+                vin: yup.string().defined(),
+                year: yup.number().defined(),
               })
               .defined(),
           })
@@ -53,11 +55,23 @@ export const dealSchema: yup.ObjectSchema<Deal> = yup
   })
   .defined();
 
-export type Data = Deal[] | null;
-export const dataSchema: yup.NullableArraySchema<Deal> = yup
-  .array(dealSchema)
-  .defined()
-  .nullable();
+export type User = {
+  deals: Deal[];
+};
+export const userSchema: yup.ObjectSchema<User> = yup
+  .object({
+    deals: yup.array(dealSchema).defined(),
+  })
+  .defined();
+
+export type Data = {
+  user: User;
+};
+export const dataSchema: yup.ObjectSchema<Data> = yup
+  .object({
+    user: userSchema,
+  })
+  .defined();
 
 export type GetMyDealsResponse = {
   data: Data;

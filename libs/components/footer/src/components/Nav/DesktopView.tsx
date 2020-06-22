@@ -33,7 +33,7 @@ const DesktopNavigationView: React.FC<Props> = ({ viewModel }) => {
             {section.links.map((link, index) => {
               return (
                 <Box key={index} display="flex" pb={1}>
-                  <Link href={link.href} target={link.target}>
+                  <Link href={link.href} target={link.target} rel={link.rel}>
                     <Typography variant="button" color="text.secondary">
                       {link.label}
                     </Typography>

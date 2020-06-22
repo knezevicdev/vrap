@@ -1,6 +1,6 @@
 import { styled } from '@material-ui/core/styles';
 import { Container, Typography } from '@vroom-web/ui';
-import React from 'react';
+import React, { useState } from 'react';
 
 import ViewModel from './ViewModel';
 
@@ -47,15 +47,36 @@ interface Props {
 }
 
 const HowItWorksView: React.FC<Props> = ({ viewModel }) => {
+  const [poster, setPoster] = useState('');
+
+  React.useEffect(() => {
+    if (typeof window !== 'undefined') {
+      setPoster(viewModel.getPoster());
+    }
+  }, [viewModel]);
+
+  const handleLearnMoreClick = (): void => viewModel.handleLearnMoreClick();
+  const handleVideoClick = (
+    event: React.SyntheticEvent<HTMLVideoElement, Event>
+  ): void => {
+    viewModel.handleVideoClick(event.currentTarget);
+  };
+
   return (
     <Background>
       <StyledContainer>
         <Title variant="h2">{viewModel.title}</Title>
         <SubTitle>{viewModel.subtitle}</SubTitle>
-        <ExternalLink href={viewModel.link.href}>
+        <ExternalLink href={viewModel.link.href} onClick={handleLearnMoreClick}>
           <LearnMore variant="button">{viewModel.link.label}</LearnMore>
         </ExternalLink>
-        <Video controls poster={viewModel.video.poster}>
+        <Video
+          controls
+          poster={poster}
+          preload="metadata"
+          onPlay={handleVideoClick}
+          onPause={handleVideoClick}
+        >
           <source src={viewModel.video.src} type="video/mp4" />
         </Video>
       </StyledContainer>

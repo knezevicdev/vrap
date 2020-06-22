@@ -1,1 +1,1 @@
-export type { GetMyDealsResponse, Deal, Data as MyDeals } from './GetMyDeals';
+export type { GetMyDealsResponse, Deal } from './GetMyDeals';

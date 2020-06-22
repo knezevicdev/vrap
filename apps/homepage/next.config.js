@@ -1,8 +1,18 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
+
+const withBundleAnalyzer = require('@next/bundle-analyzer')({
+  enabled: process.env.ANALYZE === 'true',
+});
+
+const childProcess = require('child_process');
+const gitHash = childProcess.execSync('git rev-parse HEAD').toString().trim();
+
 // TODO: remove once interchange (nginx) is setup locally
 const isProd = process.env.NODE_ENV === 'production';
 
-module.exports = {
+module.exports = withBundleAnalyzer({
   assetPrefix: isProd ? '/hp' : '',
+  generateBuildId: () => gitHash,
   /* Custom webpack configuration. */
   webpack: (config) => {
     /* Enable SVG imports. */
@@ -14,4 +24,4 @@ module.exports = {
     config.resolve.modules.push(__dirname);
     return config;
   },
-};
+});

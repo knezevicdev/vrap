@@ -18,9 +18,35 @@ export default class DealsV2Networker implements DealsV2Networking {
     this.hostUrl = hostUrl;
   }
 
+  // FIT-502. This uses a graphql endpoint.
+  // We should return to this and decide the best way to use graphql.
   async getMyDeals(accessToken: string): Promise<GetMyDealsResponse> {
-    const url = `${this.hostUrl}/my-deals`;
-    const response = await this.axiosInstance.get(url, {
+    const query = `{
+      user {
+        deals {
+          dealSummary {
+            dealStatus {
+              status
+              step
+            }
+            inventory {
+              pricing {
+                listPrice
+              }
+              vehicle {
+                make
+                model
+                trim
+                vin
+                year
+              }
+            }
+          }
+        }
+      }
+    }`.trim();
+    const data = { query };
+    const response = await this.axiosInstance.post(this.hostUrl, data, {
       headers: { Authorization: `Bearer ${accessToken}` },
     });
     await getMyDealsResponseSchema.validate(response.data);

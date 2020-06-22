@@ -1,8 +1,14 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
+
+const childProcess = require('child_process');
+const gitHash = childProcess.execSync('git rev-parse HEAD').toString().trim();
+
 // TODO: remove once interchange (nginx) is setup locally
 const isProd = process.env.NODE_ENV === 'production';
 
 module.exports = {
   assetPrefix: isProd ? '/product' : '',
+  generateBuildId: () => gitHash,
   /* Custom webpack configuration. */
   webpack: (config) => {
     /* Enable SVG imports. */

@@ -4,6 +4,7 @@ import { Button, Container as VroomContainer, Typography } from '@vroom-web/ui';
 import { observer } from 'mobx-react';
 import React from 'react';
 
+import Picture from '../Picture';
 import Autocomplete from './Autocomplete';
 import ViewModel from './ViewModel';
 
@@ -139,8 +140,10 @@ const Container: React.FC<{ desktop: boolean; maxWidth?: 'sm' | 'lg' }> = ({
 };
 
 const useCarImageStyles = makeStyles((theme) => ({
-  desktop: {
+  picture: {
     gridArea: 'i',
+  },
+  desktop: {
     height: 'auto',
     width: '100%',
     objectFit: 'contain',
@@ -149,12 +152,11 @@ const useCarImageStyles = makeStyles((theme) => ({
     },
   },
   mobile: {
-    gridArea: 'i',
     width: '150%',
     height: 'auto',
+    objectFit: 'contain',
     [theme.breakpoints.up('sm')]: {
       width: '100%',
-      objectFit: 'contain',
     },
   },
 }));
@@ -166,11 +168,14 @@ const CarImage: React.FC<{ desktop: boolean; alt: string; src: string }> = ({
 }) => {
   const classes = useCarImageStyles();
   return (
-    <img
-      className={desktop ? classes.desktop : classes.mobile}
-      alt={alt}
-      src={src}
-    />
+    <Picture src={src} className={classes.picture}>
+      <img
+        className={desktop ? classes.desktop : classes.mobile}
+        alt={alt}
+        src={src}
+        loading="lazy"
+      />
+    </Picture>
   );
 };
 

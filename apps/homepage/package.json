@@ -1,6 +1,6 @@
 {
   "name": "@vroom-web/homepage",
-  "version": "1.0.5",
+  "version": "1.0.8",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -15,6 +15,7 @@
     "@material-ui/icons": "^4.9.1",
     "@material-ui/lab": "^4.0.0-alpha.44",
     "@vroom-web/analytics-integration": "^1.0.0",
+    "@vroom-web/deals-v2-networking": "^1.0.0",
     "@vroom-web/footer-components": "^1.0.0",
     "@vroom-web/header-components": "^1.0.0",
     "@vroom-web/inv-search-networking": "^1.0.0",
@@ -40,11 +41,13 @@
   "devDependencies": {
     "@babel/plugin-proposal-class-properties": "^7.8.3",
     "@babel/plugin-proposal-decorators": "^7.8.3",
+    "@next/bundle-analyzer": "^9.4.4",
     "@svgr/webpack": "^5.2.0",
     "@types/jest": "^25.1.4",
     "@types/js-base64": "^2.3.1",
     "@types/lodash.debounce": "^4.0.6",
     "@types/lodash.isempty": "^4.4.6",
+    "@types/modernizr": "^3.5.3",
     "@types/node": "^13.7.4",
     "@types/qs": "^6.9.1",
     "@types/react": "^16.9.22",

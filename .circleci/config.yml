@@ -1,129 +1,205 @@
-version: 2.1
 jobs:
-  sonarcloud:
-    docker:
-      - image: circleci/node:erbium-browsers
-    steps:
-      - checkout
-      - run:
-          command: |-
-            # Bootstrap yarn workspaces.
-            yarn install --silent
-
-            # Build libraries.
-            yarn workspace @vroom-web/analytics-integration build
-            yarn workspace @vroom-web/inv-search-networking build
-            yarn workspace @vroom-web/ui build
-            yarn workspace @vroom-web/header-components build
-            yarn workspace @vroom-web/footer-components build
-
-            # Build the main app.
-            yarn workspace @vroom-web/homepage build
-      - sonarcloud/scan
   danger:
     docker:
-      - image: node:erbium-alpine
+    - image: node:erbium-alpine
     steps:
-      - checkout
-      - run:
-          name: Danger
-          command: |-
-            yarn install
-            yarn danger ci
+    - checkout
+    - run:
+        command: |-
+          yarn install
+          yarn danger ci
+        name: Danger
+  homepage_build:
+    docker:
+    - image: vroom/mlp:3.0.1
+    steps:
+    - checkout
+    - setup_remote_docker:
+        version: 18.09.3
+    - run:
+        command: build -a vroom-web/apps/homepage/docker
+  homepage_deploy:
+    docker:
+    - image: vroom/mlp:3.0.1
+    parameters:
+      env:
+        type: string
+      s3:
+        type: string
+    steps:
+    - checkout
+    - setup_remote_docker:
+        version: 18.09.3
+    - run:
+        command: |-
+          sudo apt-get install python-pip && pip install awscli
+
+          aws s3 sync ./apps/homepage/public << parameters.s3 >> --acl public-read --exclude '*.webp' --exclude '*.mp4'
+          aws s3 sync ./apps/homepage/public << parameters.s3 >> --acl public-read --exclude '*' --include '*.webp' --content-type 'image/webp'
+          aws s3 sync ./apps/homepage/public << parameters.s3 >> --acl public-read --exclude '*' --include '*.mp4' --content-type 'video/mp4'
+
+          login
+          deploy -a vroom-web/apps/homepage/docker -n << parameters.env >>
+  homepage_prod:
+    docker:
+    - image: vroom/mlp:2.0
+    steps:
+    - checkout
+    - setup_remote_docker:
+        version: 18.09.3
+    - run:
+        command: |-
+          sudo apt-get install python-pip && pip install awscli
+
+          NAME_SPACE=${CIRCLE_TAG%-v*}
+          ENV=${NAME_SPACE#homepage-}
+
+          aws s3 sync ./apps/homepage/public s3://homepage-assets-${ENV}.p.vroom.systems --acl public-read --exclude '*.webp' --exclude '*.mp4'
+          aws s3 sync ./apps/homepage/public s3://homepage-assets-${ENV}.p.vroom.systems --acl public-read --exclude '*' --include '*.webp' --content-type 'image/webp'
+          aws s3 sync ./apps/homepage/public s3://homepage-assets-${ENV}.p.vroom.systems --acl public-read --exclude '*' --include '*.mp4' --content-type 'video/mp4'
+
+          build ./apps/homepage/docker
+          deploy ${ENV} ./apps/homepage/docker
   lighthouse:
     docker:
-      - image: circleci/node:erbium-browsers
+    - image: circleci/node:erbium-browsers
     steps:
-      - checkout
-      - run:
-          command: |-
-            # Bootstrap yarn workspaces.
-            yarn install --silent
+    - checkout
+    - run:
+        command: |-
+          # Bootstrap yarn workspaces.
+          yarn install --silent
 
-            # Build libraries.
-            yarn workspace @vroom-web/analytics-integration build
-            yarn workspace @vroom-web/inv-search-networking build
-            yarn workspace @vroom-web/ui build
-            yarn workspace @vroom-web/header-components build
-            yarn workspace @vroom-web/footer-components build
+          # Build libraries.
+          yarn workspace @vroom-web/analytics-integration build
+          yarn workspace @vroom-web/deals-v2-networking build
+          yarn workspace @vroom-web/inv-search-networking build
+          yarn workspace @vroom-web/ui build
+          yarn workspace @vroom-web/header-components build
+          yarn workspace @vroom-web/footer-components build
 
-            # Build the main app.
-            yarn workspace @vroom-web/homepage build
+          # Build the main app.
+          yarn workspace @vroom-web/homepage build
 
-            nohup yarn workspace @vroom-web/homepage start --port 8080 & sleep 5
+          nohup yarn workspace @vroom-web/homepage start --port 8080 & sleep 5
 
-            yarn global add @lhci/cli@0.3.x
-            cd apps/homepage
-            /home/circleci/.yarn/bin/lhci autorun
+          yarn global add @lhci/cli@0.3.x
+          cd apps/homepage
+          /home/circleci/.yarn/bin/lhci autorun
   lint:
     docker:
-      - image: circleci/node:erbium
+    - image: circleci/node:erbium
     steps:
-      - checkout
-      - run:
-          command: |-
-              # Bootstrap yarn workspaces.
-              yarn install --silent
-
-              yarn workspaces run lint
-  homepage_non_prod: &mlp
+    - checkout
+    - run:
+        command: |-
+          yarn install --silent
+          yarn workspaces run lint
+        name: Lint
+  sonarcloud:
     docker:
-      - image: vroom/mlp:2.0
+    - image: circleci/node:erbium-browsers
     steps:
-      - checkout
-      - setup_remote_docker:
-          version: 18.09.3
-      - run:
-          command: |-
-            sudo apt-get install python-pip && pip install awscli
+    - checkout
+    - run:
+        command: |-
+          # Bootstrap yarn workspaces.
+          yarn install --silent
 
-            NAME_SPACE=${CIRCLE_TAG%-v*}
-            ENV=${NAME_SPACE#homepage-}
+          # Build libraries.
+          yarn workspace @vroom-web/analytics-integration build
+          yarn workspace @vroom-web/deals-v2-networking build
+          yarn workspace @vroom-web/inv-search-networking build
+          yarn workspace @vroom-web/ui build
+          yarn workspace @vroom-web/header-components build
+          yarn workspace @vroom-web/footer-components build
 
-            aws s3 sync ./apps/homepage/public s3://homepage-assets-${ENV}.n.vroom.systems --acl public-read
-            build ./apps/homepage/docker
-            deploy ${ENV} ./apps/homepage/docker
-  homepage_prod: &mlp
-    docker:
-      - image: vroom/mlp:2.0
-    steps:
-      - checkout
-      - setup_remote_docker:
-          version: 18.09.3
-      - run:
-          command: |-
-            sudo apt-get install python-pip && pip install awscli
-
-            NAME_SPACE=${CIRCLE_TAG%-v*}
-            ENV=${NAME_SPACE#homepage-}
-
-            aws s3 sync ./apps/homepage/public s3://homepage-assets-${ENV}.p.vroom.systems --acl public-read
-            build ./apps/homepage/docker
-            deploy ${ENV} ./apps/homepage/docker
+          # Build the main app.
+          yarn workspace @vroom-web/homepage build
+    - sonarcloud/scan
 orbs:
   sonarcloud: sonarsource/sonarcloud@1.0.1
+version: 2.1
 workflows:
-  version: 2
-  workflow:
+  homepage:
     jobs:
-      - sonarcloud:
-          context: SonarCloud
-      - danger:
-          context: dangerjs
-      - lighthouse:
-          context: aws-prod
-      - lint
-      - homepage_non_prod:
-          context: aws-non-prod
-          filters:
-            tags:
-              only: /^homepage-(dev|qa|uat)-v.*/
-            branches:
-              ignore: /.*/
-      - homepage_prod:
-          context: aws-prod
-          filters:
-            tags:
-              only: /^homepage-prod-v.*/
-            branches:
-              ignore: /.*/
+    - sonarcloud:
+        context: SonarCloud
+    - danger:
+        context: dangerjs
+    - lighthouse:
+        context: aws-prod
+    - lint
+    - homepage_build:
+        context: aws-non-prod
+        filters:
+          branches:
+            ignore: /.*/
+          tags:
+            only: /^homepage-v.*/
+    - hold:
+        filters:
+          branches:
+            ignore: /.*/
+          tags:
+            only: /^homepage-v.*/
+        matrix:
+          parameters:
+            env:
+            - dev
+            - qa
+            - uat
+        name: hold_<< matrix.env >>
+        requires:
+        - homepage_build
+        type: approval
+    - homepage_deploy:
+        context: aws-non-prod
+        filters:
+          branches:
+            ignore: /.*/
+          tags:
+            only: /^homepage-v.*/
+        matrix:
+          parameters:
+            env:
+            - dev
+            - qa
+            - uat
+        name: homepage_deploy_<< matrix.env >>
+        requires:
+        - hold_<< matrix.env >>
+        s3: s3://homepage-assets-<< matrix.env >>.n.vroom.systems
+    - hold:
+        filters:
+          branches:
+            ignore: /.*/
+          tags:
+            only: /^homepage-v.*/
+        name: hold_prod
+        requires:
+        - homepage_deploy_dev
+        - homepage_deploy_qa
+        - homepage_deploy_uat
+        type: approval
+    - homepage_deploy:
+        context: aws-prod
+        env: prod
+        filters:
+          branches:
+            ignore: /.*/
+          tags:
+            only: /^homepage-v.*/
+        name: homepage_deploy_prod
+        requires:
+        - hold_prod
+        s3: s3://homepage-assets-prod.p.vroom.systems
+    - homepage_prod:
+        context: aws-prod
+        filters:
+          branches:
+            ignore: /.*/
+          tags:
+            only: /^homepage-prod-v.*/
+  version: 2
+

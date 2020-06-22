@@ -1,0 +1,9 @@
+docker:
+  - image: node:erbium-alpine
+steps:
+  - checkout
+  - run:
+      name: Danger
+      command: |-
+        yarn install
+        yarn danger ci
