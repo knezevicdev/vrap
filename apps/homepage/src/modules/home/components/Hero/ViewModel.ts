@@ -31,12 +31,29 @@ class HeroViewModel {
     this.store = store;
   }
 
+  //TODO: remove
   isDesktop(): boolean {
     return this.store.deviceType === 'desktop';
   }
 
-  showSearch = (): boolean => {
-    return this.store.fitHomepageSelltradeExperimentVariant === 0;
+  showDefaultVariant = (): boolean => {
+    const experimentId = 'fit-homepage-selltrade';
+    const forcedExperimentId = `experiment-${experimentId}`;
+
+    if (this.store.query) {
+      const forcedVariant = this.store.query[forcedExperimentId];
+      return forcedVariant === '0';
+    }
+
+    if (this.store.experiments) {
+      const experiment = this.store.experiments.find(
+        (x) => x.id === experimentId
+      );
+
+      return experiment ? experiment.assignedVariant === 0 : true;
+    }
+
+    return true;
   };
 
   handleMobileButtonClick(): void {
