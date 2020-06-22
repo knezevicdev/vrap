@@ -35,6 +35,10 @@ class HeroViewModel {
     return this.store.deviceType === 'desktop';
   }
 
+  showSearch = (): boolean => {
+    return this.store.fitHomepageSelltradeExperimentVariant === 0;
+  };
+
   handleMobileButtonClick(): void {
     window.location.href = '/catalog';
   }

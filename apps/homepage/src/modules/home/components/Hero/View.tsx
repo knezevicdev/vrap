@@ -5,7 +5,7 @@ import { observer } from 'mobx-react';
 import React from 'react';
 
 import BuySellTrade from './BuySellTrade';
-// import Search from './Search';
+import Search from './Search';
 import ViewModel from './ViewModel';
 
 import ExternalLink from 'src/ui/ExternalLink';
@@ -137,8 +137,7 @@ const HeroView: React.FC<Props> = ({ viewModel }) => {
           </SubTitleLink>
         </SubTitle>
         <CarImage alt={viewModel.car.alt} src={viewModel.car.src} />
-        {/*<Search />*/}
-        <BuySellTrade />
+        {viewModel.showSearch() ? <Search /> : <BuySellTrade />}
       </Container>
     </Background>
   );

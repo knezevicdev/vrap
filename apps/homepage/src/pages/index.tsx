@@ -10,6 +10,7 @@ import Page from 'src/Page';
 
 interface Experiment {
   assignedVariant: 0 | 1;
+  id: string;
   optimizeId?: string;
 }
 
@@ -26,7 +27,17 @@ const HomePage: NextPage<Props> = ({
   title,
   deviceType,
 }) => {
-  const store = new HomeStore({ deviceType });
+  const fitHomepageSelltradeExperiment = experiments.find(
+    (x) => x.id === 'fit-homepage-selltrade'
+  );
+  const fitHomepageSelltradeExperimentVariant = fitHomepageSelltradeExperiment
+    ? fitHomepageSelltradeExperiment.assignedVariant
+    : 0;
+
+  const store = new HomeStore({
+    deviceType,
+    fitHomepageSelltradeExperimentVariant,
+  });
   const head = (
     <>
       <title>{title}</title>
@@ -49,9 +60,10 @@ HomePage.getInitialProps = async (ctx: NextPageContext): Promise<Props> => {
     'Buy, sell or trade-in a certified used car online from anywhere in the USA. We offer no-haggle car buying, top quality cars, full warranties & home shipping.';
   const cookies = parseCookies(ctx);
   const marketingId = cookies['uuid'];
+  console.log(marketingId);
   const experiments = await experimentSDK.getRunningExperiments(
     marketingId,
-    'website'
+    'homepage'
   );
 
   const ua = new UAParser(ctx.req?.headers['user-agent']);

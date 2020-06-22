@@ -1,19 +1,19 @@
-import axios from 'axios';
 import { action, observable, runInAction } from 'mobx';
 
+import LicensePlateToVinNetworker, {
+  Vehicles,
+} from '../../LicensePlateToVinNetworker';
+
+import globalEnv from 'src/globalEnv';
+
 export class LicensePlateStore {
+  private licensePlateToVinNetworker = new LicensePlateToVinNetworker(
+    globalEnv.GEARBOX_PUBLIC_URL as string
+  );
   @observable selectedState = '';
   @observable licensePlate = '';
   @observable hasError = false;
-  @observable vehicles:
-    | [
-        {
-          vin: string;
-          modelYear: number;
-          make: string;
-        }
-      ]
-    | undefined = undefined;
+  @observable vehicles: Vehicles[] | undefined = undefined;
   @observable isDialogOpen = false;
   @observable fetching = false;
 
@@ -34,29 +34,14 @@ export class LicensePlateStore {
 
   @action
   getVehicles = async (): Promise<void> => {
-    const query = `
-        {
-            licensePlateToVin(lp:"${this.licensePlate}",state:"${this.selectedState}", source:"vroom.com"){
-                vehicles{
-                    vin
-                    stateOfRegistration
-                    modelYear
-                    restrictedStateIndicator
-                    make
-                }
-            }
-        }`.trim();
     try {
       runInAction(() => {
         this.fetching = true;
       });
-      axios
-        //TODO: Replace with library and all endpoints - make sure it gets released to prod
-        .post(`https://gearbox-dev-int.vroomapi.com/query-public`, {
-          query,
-        })
+      this.licensePlateToVinNetworker
+        .getVin(this.licensePlate, this.selectedState)
         .then((res) => {
-          const data = res.data.data;
+          const data = res.data;
           if (data) {
             const vehicles = data.licensePlateToVin.vehicles;
 
