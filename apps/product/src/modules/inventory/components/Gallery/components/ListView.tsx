@@ -25,22 +25,33 @@ const StyledContainer = styled(Container)(() => ({
   overflowY: 'scroll',
 }));
 
+const Header = styled('span')(() => ({
+  position: 'fixed',
+  backgroundColor: 'white',
+  width: '100%',
+  paddingBottom: '5px',
+}));
+
 const StyledCloseIcon = styled(CloseIcon)(() => ({
   position: 'absolute',
   top: 0,
   right: 0,
-  margin: '10px',
+  margin: '10px 30px',
 }));
 
 const StyledImage = styled('img')(() => ({
   width: '100%',
 }));
 
-const ImageHeader = styled('div')(() => ({
-  padding: '10px 0',
+const ImageContainer = styled('div')(() => ({
+  paddingTop: '40px',
 }));
 
-const ListViewFullscreenContainer = styled('div')(() => ({
+const ImageHeader = styled('div')(() => ({
+  padding: '15px 0',
+}));
+
+const FullscreenContainer = styled('div')(() => ({
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
@@ -53,7 +64,7 @@ const ListViewFullscreenContainer = styled('div')(() => ({
   overflow: 'hidden',
 }));
 
-const ListViewFullscreenImageContainer = styled('div')(() => ({
+const FullscreenImageContainer = styled('div')(() => ({
   position: 'absolute',
   width: '100%',
 }));
@@ -77,66 +88,57 @@ const GalleryListView: React.FC<Props> = ({ viewModel }) => {
   return (
     <>
       {viewModel.showListViewFullscreen() && (
-        <ListViewFullscreenContainer>
-          <ListViewFullscreenImageContainer>
+        <FullscreenContainer>
+          <FullscreenImageContainer>
             <StyledImage src={viewModel.showListViewFullscreen()} />
             <StyledFullscreenExitIcon
               onClick={(): void => viewModel.handleListViewFullscreenClose()}
             />
-          </ListViewFullscreenImageContainer>
-        </ListViewFullscreenContainer>
+          </FullscreenImageContainer>
+        </FullscreenContainer>
       )}
       <StyledContainer>
-        <GallerySelect />
-        <StyledCloseIcon onClick={handleCloseIconClick} />
-        {images.map(
-          (
-            image: {
-              original: string;
-              thumbnail: string;
-              description?: string;
-            },
-            index: number
-          ) => {
-            return (
-              <React.Fragment key={'listView_' + index}>
-                <ImageHeader>
-                  {index + 1}
-                  {viewModel.indexSeparator}
-                  {images.length + 1}
-                  <div>{image.description}</div>
-                </ImageHeader>
-                <StyledImage
-                  src={image.thumbnail}
-                  onClick={(): void =>
-                    viewModel.handleListViewImageClick(image.original)
-                  }
-                />
-              </React.Fragment>
-            );
-          }
+        <Header>
+          <GallerySelect />
+          <StyledCloseIcon onClick={handleCloseIconClick} />
+        </Header>
+        <ImageContainer>
+          {images.map(
+            (
+              image: {
+                original: string;
+                thumbnail: string;
+                description?: string;
+              },
+              index: number
+            ) => {
+              return (
+                <React.Fragment key={'listView_' + index}>
+                  <ImageHeader>
+                    {index + 1}
+                    {viewModel.indexSeparator}
+                    {images.length + 1}
+                    <div>{image.description}</div>
+                  </ImageHeader>
+                  <StyledImage
+                    src={image.thumbnail}
+                    onClick={(): void =>
+                      viewModel.handleListViewImageClick(image.original)
+                    }
+                  />
+                </React.Fragment>
+              );
+            }
+          )}
+        </ImageContainer>
+        {images.length > 1 && (
+          <ImageHeader>
+            {images.length + 1}
+            {viewModel.indexSeparator}
+            {images.length + 1}
+          </ImageHeader>
         )}
-        {isDefect ? (
-          <>
-            {images.length > 1 && (
-              <ImageHeader>
-                {images.length + 1}
-                {viewModel.indexSeparator}
-                {images.length}
-              </ImageHeader>
-            )}
-            <GalleryConditionEnd />
-          </>
-        ) : (
-          <>
-            <ImageHeader>
-              {images.length + 1}
-              {viewModel.indexSeparator}
-              {images.length}
-            </ImageHeader>
-            <GalleryGeneralToCondition />
-          </>
-        )}
+        {isDefect ? <GalleryConditionEnd /> : <GalleryGeneralToCondition />}
       </StyledContainer>
     </>
   );
