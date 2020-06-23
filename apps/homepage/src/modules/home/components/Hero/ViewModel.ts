@@ -31,9 +31,25 @@ class HeroViewModel {
     this.store = store;
   }
 
-  isDesktop(): boolean {
-    return this.store.deviceType === 'desktop';
-  }
+  showDefaultVariant = (): boolean => {
+    const experimentId = 'fit-homepage-selltrade';
+    const forcedExperimentId = `experiment-${experimentId}`;
+
+    if (this.store.query) {
+      const forcedVariant = this.store.query[forcedExperimentId];
+      return forcedVariant === '0';
+    }
+
+    if (this.store.experiments) {
+      const experiment = this.store.experiments.find(
+        (x) => x.id === experimentId
+      );
+
+      return experiment ? experiment.assignedVariant === 0 : true;
+    }
+
+    return true;
+  };
 
   handleMobileButtonClick(): void {
     window.location.href = '/catalog';
