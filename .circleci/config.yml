@@ -62,6 +62,7 @@ jobs:
 
           build ./apps/homepage/docker
           deploy << parameters.env >> ./apps/homepage/docker
+          sleep 30
 
           if [ -z "${FASTLY_PURGE_KEY}" ]; then echo "FASTLY_PURGE_KEY not set"; return 1; elif [ -z "${FASTLY_SERVICE_ID}" ]; then echo "FASTLY_SERVICE_ID not set"; return 1; else curl -X POST -H "Fastly-Key: ${FASTLY_PURGE_KEY}" -H "Accept: application/json" https://api.fastly.com/service/${FASTLY_SERVICE_ID}/purge_all ; fi
   lint:
