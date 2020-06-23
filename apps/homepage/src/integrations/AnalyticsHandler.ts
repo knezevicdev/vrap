@@ -81,6 +81,16 @@ class AnalyticsHandler extends BaseAnalyticsHandler {
     };
     this.track(event, properties);
   }
+
+  trackHomeSearchClicked(): void {
+    const event = 'Home Search CTA Clicked';
+    const properties = {
+      eventName: 'interaction - Search',
+      action: 'Browse',
+      category: 'Home',
+    };
+    this.track(event, properties);
+  }
 }
 
 export default AnalyticsHandler;

@@ -1,6 +1,7 @@
 import { HomeStore } from '../../store';
 
 import globalEnv from 'src/globalEnv';
+import { getExperimentVariant } from 'src/integrations/experimentSDK';
 
 interface Link {
   label: string;
@@ -16,44 +17,20 @@ class HeroViewModel {
     label: 'Learn\xa0More',
   };
   readonly mobileButtonLabel: string = 'Browse All Vehicles';
-  readonly link: Link = {
-    href: '/catalog',
-    label: 'Browse all low-mileage cars\xa0and\xa0trucks',
-  };
   readonly car: { src: string; alt: string } = {
     src: `${globalEnv.CDN_URL}/modules/home/images/prius.png`,
     alt: 'Prius',
   };
+  readonly sellTradeExperimentVariant: boolean;
 
   private store: HomeStore;
 
   constructor(store: HomeStore) {
     this.store = store;
-  }
-
-  showDefaultVariant = (): boolean => {
-    const experimentId = 'fit-homepage-selltrade';
-    const forcedExperimentId = `experiment-${experimentId}`;
-    const queryIsNotEmpty = Object.keys(this.store.query).length > 0;
-
-    if (queryIsNotEmpty) {
-      const forcedVariant = this.store.query[forcedExperimentId];
-      return forcedVariant === '0';
-    }
-
-    if (this.store.experiments) {
-      const experiment = this.store.experiments.find(
-        (x) => x.id === experimentId
-      );
-
-      return experiment ? experiment.assignedVariant === 0 : true;
-    }
-
-    return true;
-  };
-
-  handleMobileButtonClick(): void {
-    window.location.href = '/catalog';
+    this.sellTradeExperimentVariant = getExperimentVariant(
+      'fit-homepage-selltrade',
+      store
+    );
   }
 }
 
