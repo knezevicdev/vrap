@@ -16,9 +16,9 @@ class SearchViewModel {
     alt: 'Prius',
   };
 
-  handleMobileButtonClick(): void {
+  handleMobileButtonClick = (): void => {
     window.location.href = '/catalog';
-  }
+  };
 }
 
 export default SearchViewModel;

@@ -33,31 +33,25 @@ const SearchView: React.FC<Props> = ({ viewModel }) => {
   const theme = useTheme();
   const smUp = useMediaQuery(theme.breakpoints.up('sm'));
 
-  const handleMobileButtonClick = (): void => {
-    viewModel.handleMobileButtonClick();
-  };
-
-  const mobileButton = (
-    <StyledButton
-      color="secondary"
-      onClick={handleMobileButtonClick}
-      variant="contained"
-      fullWidth
-    >
-      {viewModel.mobileButtonLabel}
-    </StyledButton>
-  );
-
-  const browse = (
-    <ExternalLink href={viewModel.link.href}>
-      <Browse>{viewModel.link.label}</Browse>
-    </ExternalLink>
-  );
-
   return (
     <SearchViewContainer>
-      {smUp ? <Autocomplete /> : mobileButton}
-      {smUp && browse}
+      {smUp ? (
+        <Autocomplete />
+      ) : (
+        <StyledButton
+          color="secondary"
+          onClick={viewModel.handleMobileButtonClick}
+          variant="contained"
+          fullWidth
+        >
+          {viewModel.mobileButtonLabel}
+        </StyledButton>
+      )}
+      {smUp && (
+        <ExternalLink href={viewModel.link.href}>
+          <Browse>{viewModel.link.label}</Browse>
+        </ExternalLink>
+      )}
     </SearchViewContainer>
   );
 };

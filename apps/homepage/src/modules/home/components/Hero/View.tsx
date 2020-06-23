@@ -93,7 +93,12 @@ const useCarImageStyles = makeStyles((theme) => ({
   },
 }));
 
-const CarImage: React.FC<{ alt: string; src: string }> = ({ alt, src }) => {
+interface CarImageProps {
+  alt: string;
+  src: string;
+}
+
+const CarImage: React.FC<CarImageProps> = ({ alt, src }) => {
   const classes = useCarImageStyles();
   return <img className={classes.image} alt={alt} src={src} loading="lazy" />;
 };
