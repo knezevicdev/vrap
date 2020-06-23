@@ -3,7 +3,10 @@ import React from 'react';
 import { LicensePlateStore } from '../store';
 import { LicensePlateDialogStore } from './store';
 
+import AnalyticsHandler from 'src/integrations/AnalyticsHandler';
+
 class LicensePlateDialogViewModel {
+  private analyticsHandler: AnalyticsHandler = new AnalyticsHandler();
   private readonly licensePlateStore: LicensePlateStore;
   private readonly licensePlateDialogStore: LicensePlateDialogStore;
   readonly title: string = `which car are you looking to sell?`;
@@ -46,6 +49,7 @@ class LicensePlateDialogViewModel {
   };
 
   handleButtonClick = (): void => {
+    this.analyticsHandler.trackWhatIsMyCarWorthClicked(false);
     window.location.href = `sell/vehicleInformation/${this.licensePlateDialogStore.selectedVin}`;
   };
 

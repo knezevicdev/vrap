@@ -72,6 +72,15 @@ class AnalyticsHandler extends BaseAnalyticsHandler {
     };
     this.track(event, properties);
   }
+
+  trackWhatIsMyCarWorthClicked(isVin: boolean): void {
+    const event = `What's My Car Worth? Clicked`;
+    const properties = {
+      category: 'Sell',
+      label: isVin ? 'Vin' : 'License Plate',
+    };
+    this.track(event, properties);
+  }
 }
 
 export default AnalyticsHandler;

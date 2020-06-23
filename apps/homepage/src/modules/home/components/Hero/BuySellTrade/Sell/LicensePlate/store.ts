@@ -5,11 +5,14 @@ import LicensePlateToVinNetworker, {
 } from './LicensePlateToVinNetworker';
 
 import globalEnv from 'src/globalEnv';
+import AnalyticsHandler from 'src/integrations/AnalyticsHandler';
 
 export class LicensePlateStore {
+  private analyticsHandler: AnalyticsHandler = new AnalyticsHandler();
   private licensePlateToVinNetworker = new LicensePlateToVinNetworker(
     globalEnv.GEARBOX_PUBLIC_URL as string
   );
+
   @observable selectedState = '';
   @observable licensePlate = '';
   @observable hasError = false;
@@ -47,6 +50,7 @@ export class LicensePlateStore {
 
             if (vehicles.length === 1) {
               const vin = vehicles[0].vin;
+              this.analyticsHandler.trackWhatIsMyCarWorthClicked(false);
               window.location.href = `sell/vehicleInformation/${vin}`;
             } else {
               runInAction(() => {

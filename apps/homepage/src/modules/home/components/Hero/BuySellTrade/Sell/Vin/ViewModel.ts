@@ -2,7 +2,10 @@ import React from 'react';
 
 import { VinStore } from './store';
 
+import AnalyticsHandler from 'src/integrations/AnalyticsHandler';
+
 class VinViewModel {
+  private analyticsHandler: AnalyticsHandler = new AnalyticsHandler();
   readonly store: VinStore;
 
   constructor(store: VinStore) {
@@ -16,6 +19,7 @@ class VinViewModel {
   readonly errorMessage: string = 'Please enter a valid vin';
 
   handleButtonClick = (): void => {
+    this.analyticsHandler.trackWhatIsMyCarWorthClicked(true);
     window.location.href = `sell/vehicleInformation/${this.store.vin}`;
   };
 
