@@ -1,7 +1,6 @@
 import { NextPage, NextPageContext } from 'next';
 import { parseCookies } from 'nookies';
 import React from 'react';
-import { UAParser } from 'ua-parser-js';
 import { Experiment } from 'vroom-abtesting-sdk/types';
 
 import experimentSDK from 'src/integrations/experimentSDK';
@@ -14,7 +13,6 @@ interface Props {
   experiments: Experiment[];
   query: {};
   title: string;
-  deviceType: string;
 }
 
 const HomePage: NextPage<Props> = ({
@@ -22,10 +20,8 @@ const HomePage: NextPage<Props> = ({
   experiments,
   query,
   title,
-  deviceType,
 }) => {
   const store = new HomeStore({
-    deviceType,
     experiments,
     query,
   });
@@ -57,10 +53,8 @@ HomePage.getInitialProps = async (ctx: NextPageContext): Promise<Props> => {
   );
 
   const query = ctx.query;
-  const ua = new UAParser(ctx.req?.headers['user-agent']);
-  const deviceType = ua.getDevice().type || 'desktop';
 
-  return { description, experiments, query, title, deviceType };
+  return { description, experiments, query, title };
 };
 
 export default HomePage;

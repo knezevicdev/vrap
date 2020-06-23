@@ -31,11 +31,6 @@ class HeroViewModel {
     this.store = store;
   }
 
-  //TODO: remove
-  isDesktop(): boolean {
-    return this.store.deviceType === 'desktop';
-  }
-
   showDefaultVariant = (): boolean => {
     const experimentId = 'fit-homepage-selltrade';
     const forcedExperimentId = `experiment-${experimentId}`;
