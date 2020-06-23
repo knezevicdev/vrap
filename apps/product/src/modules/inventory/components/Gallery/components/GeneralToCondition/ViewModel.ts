@@ -1,9 +1,11 @@
 import { GallerySelections, GalleryStore } from '../../store';
 
 import globalEnv from 'src/globalEnv';
+import AnalyticsHandler from 'src/integrations/analytics/AnalyticsHandler';
 
 class GalleryConditionEndViewModel {
   private store: GalleryStore;
+  private analyticsHandler: AnalyticsHandler;
   readonly goToConditionText: string = 'VIEW IMPERFECTIONS PHOTOS';
   readonly faqPreText: string =
     'For information on our mechanical and safety standards, ';
@@ -18,10 +20,12 @@ class GalleryConditionEndViewModel {
 
   constructor(inventoryStore: GalleryStore) {
     this.store = inventoryStore;
+    this.analyticsHandler = new AnalyticsHandler();
   }
 
   goToCondition = (): void => {
     this.store.changeSelectedGallery(GallerySelections.DEFECTS);
+    this.analyticsHandler.trackConditionCTA();
   };
 }
 

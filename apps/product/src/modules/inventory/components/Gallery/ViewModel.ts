@@ -6,6 +6,7 @@ import GalleryGeneralToCondition from './components/GeneralToCondition';
 import { GallerySelections, GalleryStore } from './store';
 
 import globalEnv from 'src/globalEnv';
+import AnalyticsHandler from 'src/integrations/analytics/AnalyticsHandler';
 import { DefectTypes } from 'src/networking/models/Inventory.v3';
 
 interface GeneralPhoto {
@@ -20,6 +21,7 @@ interface DefectPhoto extends GeneralPhoto {
 class GalleryViewModel {
   private inventoryStore: InventoryStore;
   private galleryStore: GalleryStore;
+  private analyticsHandler: AnalyticsHandler;
   readonly defaultImage = {
     alt: 'No photos',
     src: `${globalEnv.CDN_URL}/components/ghost-suv.png`,
@@ -33,6 +35,7 @@ class GalleryViewModel {
   constructor(inventoryStore: InventoryStore, galleryStore: GalleryStore) {
     this.inventoryStore = inventoryStore;
     this.galleryStore = galleryStore;
+    this.analyticsHandler = new AnalyticsHandler();
   }
 
   showBanner(): boolean {
@@ -154,7 +157,9 @@ class GalleryViewModel {
   }
 
   setListView(): void {
+    const { selectedGallery, isListView } = this.galleryStore;
     this.galleryStore.changeListView();
+    !isListView && this.analyticsHandler.trackGalleryListView(selectedGallery);
   }
 
   handleListViewImageClick(image: string): void {

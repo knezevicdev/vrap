@@ -27,6 +27,7 @@ class StartPurchaseViewModel {
       model,
       vin,
       year,
+      defectPhotos,
     } = this.store.vehicle._source;
     const name = `${year} ${make} ${model}`;
     const product: Product = {
@@ -40,6 +41,7 @@ class StartPurchaseViewModel {
       sku,
       vin,
       year,
+      defectPhotos: !!defectPhotos,
     };
 
     this.analyticsHandler.trackProductAdded(product);

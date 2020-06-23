@@ -25,9 +25,9 @@ const StyledContainer = styled(Container)(() => ({
   overflowY: 'scroll',
 }));
 
-const Header = styled('span')(() => ({
+const Header = styled('span')(({ theme }) => ({
   position: 'fixed',
-  backgroundColor: 'white',
+  backgroundColor: theme.palette.background.paper,
   width: '100%',
   paddingBottom: '5px',
 }));
@@ -61,7 +61,6 @@ const FullscreenContainer = styled('div')(() => ({
   height: '100%',
   width: '100%',
   backgroundColor: '#041022',
-  overflow: 'hidden',
 }));
 
 const FullscreenImageContainer = styled('div')(() => ({
@@ -69,13 +68,12 @@ const FullscreenImageContainer = styled('div')(() => ({
   width: '100%',
 }));
 
-const StyledFullscreenExitIcon = styled(FullscreenExitIcon)(({ theme }) => ({
+const StyledFullscreenExitIcon = styled(FullscreenExitIcon)(() => ({
   position: 'absolute',
   height: '50px',
   width: '50px',
   right: 0,
   bottom: 0,
-  color: theme.palette.grey[50],
 }));
 
 const GalleryListView: React.FC<Props> = ({ viewModel }) => {
