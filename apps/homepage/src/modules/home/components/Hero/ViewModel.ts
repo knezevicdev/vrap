@@ -34,8 +34,9 @@ class HeroViewModel {
   showDefaultVariant = (): boolean => {
     const experimentId = 'fit-homepage-selltrade';
     const forcedExperimentId = `experiment-${experimentId}`;
+    const queryIsNotEmpty = Object.keys(this.store.query).length > 0;
 
-    if (this.store.query) {
+    if (queryIsNotEmpty) {
       const forcedVariant = this.store.query[forcedExperimentId];
       return forcedVariant === '0';
     }
