@@ -27,12 +27,12 @@ const GallerySelectorView: React.FC<Props> = (props) => {
       >
         <Tab
           value={viewModel.general}
-          label={viewModel.general}
+          label={viewModel.general.toUpperCase()}
           {...a11yProps(viewModel.general)}
         />
         <Tab
           value={viewModel.imperfections}
-          label={viewModel.imperfections}
+          label={viewModel.imperfections.toUpperCase()}
           {...a11yProps(viewModel.imperfections)}
         />
       </Tabs>

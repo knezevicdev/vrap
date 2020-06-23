@@ -2,8 +2,8 @@ import { action, observable } from 'mobx';
 import { createContext } from 'react';
 
 export enum GallerySelections {
-  GENERAL = 'GENERAL PHOTOS',
-  DEFECTS = 'IMPERFECTIONS',
+  GENERAL = 'General Photos',
+  DEFECTS = 'Imperfections',
   THREESIXTY = '360',
 }
 
