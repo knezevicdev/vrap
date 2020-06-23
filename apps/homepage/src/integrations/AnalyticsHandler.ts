@@ -64,6 +64,14 @@ class AnalyticsHandler extends BaseAnalyticsHandler {
     };
     this.track(event, properties);
   }
+
+  trackWhatIsJuneteenthClicked(): void {
+    const event = 'What is Juneteenth Clicked';
+    const properties = {
+      category: 'Home',
+    };
+    this.track(event, properties);
+  }
 }
 
 export default AnalyticsHandler;
