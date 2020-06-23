@@ -17,15 +17,8 @@ const Background = styled('div')(() => {
   if (typeof window !== 'undefined') {
     const jpeg2000 = window.Modernizr.jpeg2000;
 
-    const webp =
-      typeof window.Modernizr.webp === 'boolean'
-        ? window.Modernizr.webp
-        : Object.values(window.Modernizr.webp).indexOf(false) === -1;
-
     if (jpeg2000) {
       config.backgroundImage = `url(${globalEnv.CDN_URL}/modules/home/images/jp2/who-we-are-background.jp2)`;
-    } else if (webp) {
-      config.backgroundImage = `url(${globalEnv.CDN_URL}/modules/home/images/webp/who-we-are-background.webp)`;
     } else {
       config.backgroundImage = `url(${globalEnv.CDN_URL}/modules/home/images/who-we-are-background.png)`;
     }
