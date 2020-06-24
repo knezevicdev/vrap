@@ -12,14 +12,11 @@ class SearchViewModel {
   private analyticsHandler: AnalyticsHandler;
   private store: HomeStore;
 
-  readonly browseAllVehiclesTextExperimentVaraint: boolean;
   readonly mobileButtonLabel: string = 'Browse All Vehicles';
 
-  readonly link: Link = {
+  link: Link = {
     href: '/catalog',
-    label: `Browse ${
-      this.browseAllVehiclesTextExperimentVaraint ? 'all' : 'our'
-    } low-mileage cars\xa0and\xa0trucks`,
+    label: '',
   };
   readonly car: { src: string; alt: string } = {
     src: `${globalEnv.CDN_URL}/modules/home/images/prius.png`,
@@ -29,11 +26,14 @@ class SearchViewModel {
   constructor(store: HomeStore) {
     this.analyticsHandler = new AnalyticsHandler();
     this.store = store;
-    this.browseAllVehiclesTextExperimentVaraint = getExperimentVariant(
+    const browseAllVehiclesTextExperimentVaraint = getExperimentVariant(
       'snd-homepage-browse-all-low-mileage-vs-browse-our-low-mileage',
       store
     );
-    console.log(this.browseAllVehiclesTextExperimentVaraint);
+    this.link.label = `Browse ${
+      browseAllVehiclesTextExperimentVaraint ? 'all' : 'our'
+    } low-mileage cars\xa0and\xa0trucks`;
+    console.log(browseAllVehiclesTextExperimentVaraint);
   }
 
   handleMobileButtonClick = (): void => {
