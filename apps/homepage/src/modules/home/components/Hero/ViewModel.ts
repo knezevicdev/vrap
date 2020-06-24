@@ -23,10 +23,7 @@ class HeroViewModel {
   };
   readonly sellTradeExperimentVariant: boolean;
 
-  private store: HomeStore;
-
   constructor(store: HomeStore) {
-    this.store = store;
     this.sellTradeExperimentVariant = getExperimentVariant(
       'fit-homepage-selltrade',
       store
