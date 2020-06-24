@@ -33,7 +33,6 @@ class SearchViewModel {
     this.link.label = `Browse ${
       browseAllVehiclesTextExperimentVaraint ? 'all' : 'our'
     } low-mileage cars\xa0and\xa0trucks`;
-    console.log(browseAllVehiclesTextExperimentVaraint);
   }
 
   handleMobileButtonClick = (): void => {
