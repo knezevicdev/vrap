@@ -47,10 +47,7 @@ HomePage.getInitialProps = async (ctx: NextPageContext): Promise<Props> => {
     'Buy, sell or trade-in a certified used car online from anywhere in the USA. We offer no-haggle car buying, top quality cars, full warranties & home shipping.';
   const cookies = parseCookies(ctx);
   const marketingId = cookies['uuid'];
-  const experiments = await experimentSDK.getRunningExperiments(
-    marketingId,
-    'website'
-  );
+  const experiments = await experimentSDK.getRunningExperiments(marketingId);
 
   const query = ctx.query;
 

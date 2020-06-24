@@ -32,7 +32,6 @@ interface Props {
 const SearchView: React.FC<Props> = ({ viewModel }) => {
   const theme = useTheme();
   const smUp = useMediaQuery(theme.breakpoints.up('sm'));
-
   return (
     <SearchViewContainer>
       {smUp ? (
@@ -48,7 +47,10 @@ const SearchView: React.FC<Props> = ({ viewModel }) => {
         </StyledButton>
       )}
       {smUp && (
-        <ExternalLink href={viewModel.link.href}>
+        <ExternalLink
+          href={viewModel.link.href}
+          onClick={viewModel.handleHomeCatalogCTACLicked}
+        >
           <Browse>{viewModel.link.label}</Browse>
         </ExternalLink>
       )}

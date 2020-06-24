@@ -142,7 +142,7 @@ const HeroView: React.FC<Props> = ({ viewModel }) => {
           </SubTitleLink>
         </SubTitle>
         <CarImage alt={viewModel.car.alt} src={viewModel.car.src} />
-        {viewModel.showDefaultVariant() ? <Search /> : <BuySellTrade />}
+        {viewModel.sellTradeExperimentVariant ? <Search /> : <BuySellTrade />}
       </Container>
     </Background>
   );
