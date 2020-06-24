@@ -9,7 +9,7 @@ interface Link {
 }
 
 class SearchViewModel {
-  private analyticsHandler: AnalyticsHandler;
+  private analyticsHandler: AnalyticsHandler = new AnalyticsHandler();
 
   readonly mobileButtonLabel: string = 'Browse All Vehicles';
 
@@ -23,10 +23,10 @@ class SearchViewModel {
   };
 
   constructor(store: HomeStore) {
-    this.analyticsHandler = new AnalyticsHandler();
     const browseAllVehiclesTextExperimentVaraint = getExperimentVariant(
       'snd-homepage-browse-all-low-mileage-vs-browse-our-low-mileage',
-      store
+      store.experiments,
+      store.query
     );
     this.link.label = `Browse ${
       browseAllVehiclesTextExperimentVaraint ? 'all' : 'our'

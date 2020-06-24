@@ -26,7 +26,8 @@ class HeroViewModel {
   constructor(store: HomeStore) {
     this.sellTradeExperimentVariant = getExperimentVariant(
       'fit-homepage-selltrade',
-      store
+      store.experiments,
+      store.query
     );
   }
 }
