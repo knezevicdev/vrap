@@ -40,12 +40,12 @@ class HowItWorksViewModel {
   private analyticsHandler: AnalyticsHandler = new AnalyticsHandler();
 
   constructor(store: HomeStore) {
-    const LearnMoreLinkLabelExperimentVariant = getExperimentVariant(
+    const learnMoreLinkLabelExperimentVariant = getExperimentVariant(
       'snd-homepage-learn-more-vs-learn-more-about-vroom',
       store.experiments,
       store.query
     );
-    this.link.label = LearnMoreLinkLabelExperimentVariant
+    this.link.label = learnMoreLinkLabelExperimentVariant
       ? 'LEARN MORE ABOUT VROOM'
       : 'BUYING AND SELLING MADE EASY';
   }
