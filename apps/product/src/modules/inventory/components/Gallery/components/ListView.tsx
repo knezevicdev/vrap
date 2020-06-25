@@ -68,12 +68,13 @@ const FullscreenImageContainer = styled('div')(() => ({
   width: '100%',
 }));
 
-const StyledFullscreenExitIcon = styled(FullscreenExitIcon)(() => ({
+const StyledFullscreenExitIcon = styled(FullscreenExitIcon)(({ theme }) => ({
   position: 'absolute',
   height: '50px',
   width: '50px',
   right: 0,
   bottom: 0,
+  color: theme.palette.grey[100],
 }));
 
 const GalleryListView: React.FC<Props> = ({ viewModel }) => {
@@ -105,7 +106,7 @@ const GalleryListView: React.FC<Props> = ({ viewModel }) => {
       )}
       <StyledContainer>
         <Header>
-          <GallerySelect />
+          <GallerySelect product={viewModel.getCurrentProduct()} />
           <StyledCloseIcon onClick={handleCloseIconClick} />
         </Header>
         <ImagesContainer id="listViewImagesContainer">
