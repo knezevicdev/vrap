@@ -17,7 +17,7 @@ const globalEnv: GlobalEnv | NodeJS.ProcessEnv = process.browser
   : process.env;
 
 if (globalEnv.CDN_URL && process.env.SHORT_HASH) {
-  console.log(`${globalEnv.CDN_URL}/${process.env.SHORT_HASH}`);
+  globalEnv.CDN_URL = `${globalEnv.CDN_URL}/${process.env.SHORT_HASH}`;
 }
 
 export default globalEnv;
