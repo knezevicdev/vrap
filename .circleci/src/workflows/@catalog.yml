@@ -24,7 +24,7 @@ catalog:
   - catalog_deploy:
       name: catalog_deploy_<< matrix.env >>
       context: aws-non-prod
-      s3: s3://catalog-assets-<< matrix.env >>.n.vroom.systems
+      s3: s3://static-assets.n.vroom.systems/catalog/<< matrix.env >>
       matrix:
         parameters:
           env: ["dev", "qa", "uat"]
@@ -51,7 +51,7 @@ catalog:
       name: catalog_deploy_prod
       context: aws-prod
       env: "prod"
-      s3: s3://catalog-assets-prod.p.vroom.systems
+      s3: s3://static-assets.p.vroom.systems
       requires:
         - hold_prod
       filters:

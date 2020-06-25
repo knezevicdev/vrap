@@ -4,8 +4,6 @@ homepage:
       context: SonarCloud
   - danger:
       context: dangerjs
-  - lighthouse:
-      context: aws-prod
   - lint
   - homepage_build:
       context: aws-non-prod
@@ -30,7 +28,7 @@ homepage:
   - homepage_deploy:
       name: homepage_deploy_<< matrix.env >>
       context: aws-non-prod
-      s3: s3://homepage-assets-<< matrix.env >>.n.vroom.systems
+      s3: s3://static-assets.n.vroom.systems/homepage/<< matrix.env >>
       matrix:
         parameters:
           env: ["dev", "qa", "uat"]
@@ -57,7 +55,7 @@ homepage:
       name: homepage_deploy_prod
       context: aws-prod
       env: "prod"
-      s3: s3://homepage-assets-prod.p.vroom.systems
+      s3: s3://static-assets.p.vroom.systems
       requires:
         - hold_prod
       filters:
