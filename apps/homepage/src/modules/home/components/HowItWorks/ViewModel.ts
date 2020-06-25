@@ -3,6 +3,8 @@ import AnalyticsHandler, {
   VideoEvent,
   VideoProperties,
 } from 'src/integrations/AnalyticsHandler';
+import { getExperimentVariant } from 'src/integrations/experimentSDK';
+import { HomeStore } from 'src/modules/home/store';
 
 interface Link {
   label: string;
@@ -24,7 +26,7 @@ class HowItWorksViewModel {
     'Vroom is changing the way people buy, sell, and trade in cars. Here’s a step-by-step guide on what\xa0to\xa0expect.';
   readonly link: Link = {
     href: '/how-it-works',
-    label: 'LEARN MORE ABOUT VROOM',
+    label: '',
   };
   readonly video: Video = {
     src: `${globalEnv.CDN_URL}/modules/home/videos/how-it-works-promo.mp4`,
@@ -35,10 +37,17 @@ class HowItWorksViewModel {
     },
   };
 
-  private analyticsHandler: AnalyticsHandler;
+  private analyticsHandler: AnalyticsHandler = new AnalyticsHandler();
 
-  constructor() {
-    this.analyticsHandler = new AnalyticsHandler();
+  constructor(store: HomeStore) {
+    const learnMoreLinkLabelExperimentVariant = getExperimentVariant(
+      'snd-homepage-learn-more-vs-learn-more-about-vroom',
+      store.experiments,
+      store.query
+    );
+    this.link.label = learnMoreLinkLabelExperimentVariant
+      ? 'LEARN MORE ABOUT VROOM'
+      : 'BUYING AND SELLING MADE EASY';
   }
 
   getPoster(): string {
