@@ -6,6 +6,7 @@ import CustomerQuote from './components/CustomerQuote';
 import Hero from './components/Hero';
 import Highlights from './components/Highlights';
 import HowItWorks from './components/HowItWorks';
+import JuneteenthBanner from './components/JuneteenthBanner';
 import Quotes from './components/Quotes';
 import Values from './components/Values';
 import WhoWeAre from './components/WhoWeAre';
@@ -20,6 +21,7 @@ const Home: React.FC = () => {
       {gearboxPrivateUrl && (
         <InProgressDealBar gearboxPrivateUrl={gearboxPrivateUrl} />
       )}
+      <JuneteenthBanner />
       <Hero />
       <Highlights />
       <Values />
