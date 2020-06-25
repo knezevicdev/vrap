@@ -8,6 +8,7 @@ services:
     environment:
       - CDN_URL=
       - GEARBOX_PRIVATE_URL=https://gearbox-qa-int.vroomapi.com/query-private
+      - GEARBOX_PUBLIC_URL=https://gearbox-dev-int.vroomapi.com/query-public
       - INVSEARCH_V3_URL=https://invsearch-v3-prod-ext.aws.vroomapi.com/v3
       - SEGMENT_WRITE_KEY=N0pxERRIw4iYCoxZREMZj1yWBIoARIz4
     command: ash -c "yarn workspace @vroom-web/homepage dev --port 8080"

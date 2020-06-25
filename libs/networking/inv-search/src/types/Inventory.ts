@@ -130,11 +130,13 @@ export const hitsSchema: yup.ObjectSchema<Hits> = yup
   .strict(true);
 
 export type ModelBucket = {
+  slug: string;
   key: string;
   doc_count: number;
 };
 export const modelBucketSchema: yup.ObjectSchema<ModelBucket> = yup
   .object({
+    slug: yup.string().defined(),
     key: yup.string().defined(),
     doc_count: yup.number().defined(),
   })
@@ -152,12 +154,14 @@ export const modelCountSchema: yup.ObjectSchema<ModelCount> = yup
   .strict(true);
 
 export type MakeBucket = {
+  slug: string;
   key: string;
   doc_count: number;
   model_count: ModelCount;
 };
 export const makeBucketSchema: yup.ObjectSchema<MakeBucket> = yup
   .object({
+    slug: yup.string().defined(),
     key: yup.string().defined(),
     doc_count: yup.number().defined(),
     model_count: modelCountSchema,

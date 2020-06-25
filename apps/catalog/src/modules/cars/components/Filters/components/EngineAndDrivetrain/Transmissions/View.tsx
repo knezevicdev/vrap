@@ -7,7 +7,7 @@ import React from 'react';
 
 import TransmissionsViewModel from './ViewModel';
 
-import { Transmission } from 'src/modules/cars/utils/types';
+import { Transmission } from 'src/modules/cars/utils/url';
 
 interface Props {
   viewModel: TransmissionsViewModel;

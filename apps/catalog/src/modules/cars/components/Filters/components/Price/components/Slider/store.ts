@@ -1,6 +1,6 @@
 import { action, observable } from 'mobx';
 
-import { MaxAndMin } from 'src/modules/cars/utils/types';
+import { MaxAndMin } from 'src/modules/cars/utils/url';
 
 class SliderStore {
   @observable values: MaxAndMin;

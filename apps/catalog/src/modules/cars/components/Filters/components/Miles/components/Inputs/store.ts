@@ -2,7 +2,7 @@ import { action, observable } from 'mobx';
 
 import { range } from '../../ViewModel';
 
-import { MaxAndMin } from 'src/modules/cars/utils/types';
+import { MaxAndMin } from 'src/modules/cars/utils/url';
 
 class InputsStore {
   @observable value: string | undefined;

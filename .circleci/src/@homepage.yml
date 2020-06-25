@@ -1,31 +1,4 @@
 jobs:
-  lighthouse:
-    docker:
-    - image: circleci/node:erbium-browsers
-    steps:
-      - checkout
-      - run:
-          command: |-
-            # Bootstrap yarn workspaces.
-            yarn install --silent
-
-            # Build libraries.
-            yarn workspace @vroom-web/analytics-integration build
-            yarn workspace @vroom-web/deals-v2-networking build
-            yarn workspace @vroom-web/inv-search-networking build
-            yarn workspace @vroom-web/ui build
-            yarn workspace @vroom-web/header-components build
-            yarn workspace @vroom-web/footer-components build
-
-            # Build the main app.
-            yarn workspace @vroom-web/homepage build
-
-            nohup yarn workspace @vroom-web/homepage start --port 8080 & sleep 5
-
-            yarn global add @lhci/cli@0.3.x
-            cd apps/homepage
-            /home/circleci/.yarn/bin/lhci autorun
-
   sonarcloud:
     docker:
     - image: circleci/node:erbium-browsers
@@ -105,6 +78,11 @@ jobs:
   homepage_prod:
     docker:
       - image: vroom/mlp:2.0
+    parameters:
+      env:
+        type: string
+      s3:
+        type: string
     steps:
       - checkout
       - setup_remote_docker:
@@ -113,16 +91,16 @@ jobs:
           command: |-
             sudo apt-get install python-pip && pip install awscli
 
-            NAME_SPACE=${CIRCLE_TAG%-v*}
-            ENV=${NAME_SPACE#homepage-}
-
-            aws s3 sync ./apps/homepage/public s3://homepage-assets-${ENV}.p.vroom.systems --acl public-read --exclude '*.webp' --exclude '*.mp4'
-            aws s3 sync ./apps/homepage/public s3://homepage-assets-${ENV}.p.vroom.systems --acl public-read --exclude '*' --include '*.webp' --content-type 'image/webp'
-            aws s3 sync ./apps/homepage/public s3://homepage-assets-${ENV}.p.vroom.systems --acl public-read --exclude '*' --include '*.mp4' --content-type 'video/mp4'
+            aws s3 sync ./apps/homepage/public << parameters.s3 >> --acl public-read --exclude '*.webp' --exclude '*.mp4'
+            aws s3 sync ./apps/homepage/public << parameters.s3 >> --acl public-read --exclude '*' --include '*.webp' --content-type 'image/webp'
+            aws s3 sync ./apps/homepage/public << parameters.s3 >> --acl public-read --exclude '*' --include '*.mp4' --content-type 'video/mp4'
 
             build ./apps/homepage/docker
-            deploy ${ENV} ./apps/homepage/docker
+            deploy << parameters.env >> ./apps/homepage/docker
 
+            sleep 240
+
+            if [ -z "${FASTLY_PURGE_KEY}" ]; then echo "FASTLY_PURGE_KEY not set"; return 1; elif [ -z "${FASTLY_SERVICE_ID}" ]; then echo "FASTLY_SERVICE_ID not set"; return 1; else echo "Purging Fastly for service ${FASTLY_SERVICE_ID}"; curl -X POST -H "Fastly-Key: ${FASTLY_PURGE_KEY}" -H "Accept: application/json" https://api.fastly.com/service/${FASTLY_SERVICE_ID}/purge_all ; fi
 workflows:
   homepage:
     jobs:
@@ -130,8 +108,6 @@ workflows:
         context: SonarCloud
     - danger:
         context: dangerjs
-    - lighthouse:
-        context: aws-prod
     - lint
     - homepage_build:
         context: aws-non-prod
@@ -179,7 +155,10 @@ workflows:
             only: /^homepage-v.*/
           branches:
             ignore: /.*/
-    - homepage_deploy:
+    # FIT-541
+    # This is a stopgap until we can figure out how to deploy to prod using MLP 3.
+    # - homepage_deploy:
+    - homepage_prod:
         name: homepage_deploy_prod
         context: aws-prod
         env: "prod"
@@ -191,12 +170,3 @@ workflows:
             only: /^homepage-v.*/
           branches:
             ignore: /.*/
-    # FIT-541
-    # This is a stopgap until we can figure out how to deploy to prod using MLP 3.
-    - homepage_prod:
-          context: aws-prod
-          filters:
-            tags:
-              only: /^homepage-prod-v.*/
-            branches:
-              ignore: /.*/

@@ -1,10 +1,12 @@
 import { CarsStore } from 'src/modules/cars/store';
 import {
   addToList,
+  BodyType,
+  Filters,
+  FiltersData,
   removeFromList,
   resetFilter,
-} from 'src/modules/cars/utils/navigation';
-import { BodyType, Filters, FiltersData } from 'src/modules/cars/utils/types';
+} from 'src/modules/cars/utils/url';
 
 class BodyTypesViewModel {
   private readonly carsStore: CarsStore;

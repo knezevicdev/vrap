@@ -5,7 +5,7 @@ import AnalyticsHandler, {
   Product,
 } from 'src/integrations/analytics/AnalyticsHandler';
 import { CarsStore } from 'src/modules/cars/store';
-import { Filters, INVENTORY_LIMIT } from 'src/modules/cars/utils/types';
+import { Filters } from 'src/modules/cars/utils/url';
 import { Status } from 'src/networking/types';
 
 class CarsViewModel {
@@ -174,7 +174,7 @@ class CarsViewModel {
   };
 
   loadingCars = (): Car[] => {
-    return Array(INVENTORY_LIMIT).fill(undefined);
+    return Array(this.store.inventoryCardsPerPage).fill(undefined);
   };
 
   private getCarsFromStore = (inventory: Inventory): Car[] => {

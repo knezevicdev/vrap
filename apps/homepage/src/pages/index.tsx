@@ -1,32 +1,30 @@
 import { NextPage, NextPageContext } from 'next';
 import { parseCookies } from 'nookies';
 import React from 'react';
-import { UAParser } from 'ua-parser-js';
+import { Experiment } from 'vroom-abtesting-sdk/types';
 
 import experimentSDK from 'src/integrations/experimentSDK';
 import Home from 'src/modules/home';
 import { HomeStore, HomeStoreContext } from 'src/modules/home/store';
 import Page from 'src/Page';
 
-interface Experiment {
-  assignedVariant: 0 | 1;
-  optimizeId?: string;
-}
-
 interface Props {
   description: string;
   experiments: Experiment[];
+  query: {};
   title: string;
-  deviceType: string;
 }
 
 const HomePage: NextPage<Props> = ({
   description,
   experiments,
+  query,
   title,
-  deviceType,
 }) => {
-  const store = new HomeStore({ deviceType });
+  const store = new HomeStore({
+    experiments,
+    query,
+  });
   const head = (
     <>
       <title>{title}</title>
@@ -49,15 +47,11 @@ HomePage.getInitialProps = async (ctx: NextPageContext): Promise<Props> => {
     'Buy, sell or trade-in a certified used car online from anywhere in the USA. We offer no-haggle car buying, top quality cars, full warranties & home shipping.';
   const cookies = parseCookies(ctx);
   const marketingId = cookies['uuid'];
-  const experiments = await experimentSDK.getRunningExperiments(
-    marketingId,
-    'website'
-  );
+  const experiments = await experimentSDK.getRunningExperiments(marketingId);
 
-  const ua = new UAParser(ctx.req?.headers['user-agent']);
-  const deviceType = ua.getDevice().type || 'desktop';
+  const query = ctx.query;
 
-  return { description, experiments, title, deviceType };
+  return { description, experiments, query, title };
 };
 
 export default HomePage;

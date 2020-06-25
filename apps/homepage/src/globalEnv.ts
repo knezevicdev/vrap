@@ -1,6 +1,7 @@
 export interface GlobalEnv {
   CDN_URL?: string;
   GEARBOX_PRIVATE_URL?: string;
+  GEARBOX_PUBLIC_URL?: string;
   INVSEARCH_V3_URL?: string;
 }
 
