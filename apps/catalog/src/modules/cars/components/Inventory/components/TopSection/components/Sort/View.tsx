@@ -6,7 +6,7 @@ import React from 'react';
 
 import SortViewModel from './ViewModel';
 
-import { SortValue } from 'src/modules/cars/utils/types';
+import { SortValue } from 'src/modules/cars/utils/url';
 
 const SortContainer = styled(Select)(({ theme }) => ({
   marginLeft: 'auto',

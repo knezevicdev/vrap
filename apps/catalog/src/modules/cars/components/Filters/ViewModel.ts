@@ -1,9 +1,7 @@
 import { IObservableArray } from 'mobx';
 
 import { CarsStore } from '../../store';
-import FiltersStore from './store';
-
-import { Filter } from 'src/modules/cars/utils/types';
+import FiltersStore, { Filter } from './store';
 
 class FiltersViewModel {
   private readonly carsStore: CarsStore;

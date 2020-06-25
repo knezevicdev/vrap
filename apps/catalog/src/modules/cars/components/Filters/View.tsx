@@ -19,9 +19,9 @@ import Makes from './components/Makes';
 import Miles from './components/Miles';
 import Price from './components/Price';
 import Year from './components/Year';
+import { Filter } from './store';
 import FiltersViewModel from './ViewModel';
 
-import { Filter } from 'src/modules/cars/utils/types';
 import Typography from 'src/ui/Typography';
 
 const FiltersContainer = styled(List)(({ theme }) => ({

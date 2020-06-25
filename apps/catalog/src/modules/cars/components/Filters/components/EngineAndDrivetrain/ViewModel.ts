@@ -1,6 +1,5 @@
 import { CarsStore } from 'src/modules/cars/store';
-import { resetEngineAndDrivetrain } from 'src/modules/cars/utils/navigation';
-import { Filters } from 'src/modules/cars/utils/types';
+import { Filters, resetEngineAndDrivetrain } from 'src/modules/cars/utils/url';
 
 class EngineAndDrivetrainViewModel {
   private readonly carsStore: CarsStore;

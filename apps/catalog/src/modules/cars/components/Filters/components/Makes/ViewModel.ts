@@ -1,7 +1,7 @@
 import { CarsStore } from '../../../../store';
 import MakesStore from './store';
 
-import { ALL_KEY } from 'src/modules/cars/utils/types';
+import { ALL_KEY } from 'src/modules/cars/utils/url';
 
 class MakesViewModel {
   private readonly carsStore: CarsStore;

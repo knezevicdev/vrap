@@ -1,10 +1,11 @@
 import { CarsStore } from 'src/modules/cars/store';
 import {
   addToList,
+  Filters,
+  FiltersData,
   removeFromList,
   resetFilter,
-} from 'src/modules/cars/utils/navigation';
-import { Filters, FiltersData } from 'src/modules/cars/utils/types';
+} from 'src/modules/cars/utils/url';
 
 class ColorViewModel {
   private readonly carsStore: CarsStore;

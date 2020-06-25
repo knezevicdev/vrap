@@ -4,7 +4,7 @@ import InputsStore from './store';
 import View from './View';
 import ViewModel from './ViewModel';
 
-import { MaxAndMin } from 'src/modules/cars/utils/types';
+import { MaxAndMin } from 'src/modules/cars/utils/url';
 
 interface InputsProps {
   state: string[] | undefined;

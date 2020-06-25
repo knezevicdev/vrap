@@ -1,7 +1,7 @@
 import { range } from '../../ViewModel';
 import InputsStore from './store';
 
-import { MaxAndMin } from 'src/modules/cars/utils/types';
+import { MaxAndMin } from 'src/modules/cars/utils/url';
 
 class InputsViewModel {
   private readonly store: InputsStore;

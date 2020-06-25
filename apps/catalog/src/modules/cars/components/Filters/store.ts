@@ -1,6 +1,14 @@
 import { action, IObservableArray, observable } from 'mobx';
 
-import { Filter } from 'src/modules/cars/utils/types';
+export enum Filter {
+  MAKE_AND_MODEL = 'Make & Model',
+  BODY_TYPE = 'Body Type',
+  COLOR = 'Color',
+  YEAR = 'Year',
+  PRICE = 'Price',
+  MILES = 'Miles',
+  ENGINE_AND_DRIVETRAIN = 'Engine & Drivetrain',
+}
 
 class FiltersStore {
   readonly filters: IObservableArray<{

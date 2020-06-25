@@ -1,9 +1,11 @@
 import { CarsStore } from 'src/modules/cars/store';
 import {
+  Filters,
+  FiltersData,
+  MaxAndMin,
   resetFilter,
   updateMinAndMax,
-} from 'src/modules/cars/utils/navigation';
-import { Filters, FiltersData, MaxAndMin } from 'src/modules/cars/utils/types';
+} from 'src/modules/cars/utils/url';
 
 export const range = { min: 0, max: 200000 };
 const key = Filters.MILES;
