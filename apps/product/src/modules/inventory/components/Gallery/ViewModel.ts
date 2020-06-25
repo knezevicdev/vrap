@@ -6,7 +6,9 @@ import GalleryGeneralToCondition from './components/GeneralToCondition';
 import { GallerySelections, GalleryStore } from './store';
 
 import globalEnv from 'src/globalEnv';
-import AnalyticsHandler from 'src/integrations/analytics/AnalyticsHandler';
+import AnalyticsHandler, {
+  Product,
+} from 'src/integrations/analytics/AnalyticsHandler';
 import { DefectTypes } from 'src/networking/models/Inventory.v3';
 
 interface GeneralPhoto {
@@ -55,6 +57,37 @@ class GalleryViewModel {
     return true;
   }
 
+  getCurrentProduct(): Product {
+    const {
+      consignmentPartnerId: partnerId,
+      inventoryId: sku,
+      leadPhotoUrl: imageUrl,
+      listingPrice: price,
+      make,
+      model,
+      vin,
+      year,
+      defectPhotos,
+      hasStockPhotos,
+    } = this.inventoryStore.vehicle._source;
+    const name = `${year} ${make} ${model}`;
+    const product: Product = {
+      imageUrl,
+      inventoryType: partnerId ? 'Consignment' : 'Vroom',
+      make,
+      model,
+      name,
+      partnerId,
+      price,
+      sku,
+      vin,
+      year,
+      defectPhotos: !!defectPhotos,
+      hasStockPhotos,
+    };
+    return product;
+  }
+
   getThumbnailPosition(
     isMobile: boolean,
     fullscreen: boolean
@@ -69,6 +102,10 @@ class GalleryViewModel {
   hasNoImages(): boolean {
     const { leadFlagPhotoUrl } = this.inventoryStore.vehicle._source;
     return leadFlagPhotoUrl === '';
+  }
+
+  getSelectedGallery(): string {
+    return this.galleryStore.selectedGallery;
   }
 
   getGalleryImages(): (GeneralPhoto | DefectPhoto)[] {
@@ -158,8 +195,10 @@ class GalleryViewModel {
 
   setListView(): void {
     const { selectedGallery, isListView } = this.galleryStore;
+    const product = this.getCurrentProduct();
     this.galleryStore.changeListView();
-    !isListView && this.analyticsHandler.trackGalleryListView(selectedGallery);
+    !isListView &&
+      this.analyticsHandler.trackGalleryListView(product, selectedGallery);
   }
 
   handleListViewImageClick(image: string): void {

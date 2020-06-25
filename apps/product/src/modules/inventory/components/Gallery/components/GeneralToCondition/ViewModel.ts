@@ -18,8 +18,8 @@ class GalleryConditionEndViewModel {
     src: `${globalEnv.CDN_URL}/modules/inventory/components/gallery/LastGallery.png`,
   };
 
-  constructor(inventoryStore: GalleryStore) {
-    this.store = inventoryStore;
+  constructor(galleryStore: GalleryStore) {
+    this.store = galleryStore;
     this.analyticsHandler = new AnalyticsHandler();
   }
 

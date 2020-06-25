@@ -23,6 +23,7 @@ export interface Product {
   vin: string;
   year: number;
   defectPhotos?: boolean;
+  hasStockPhotos?: boolean;
 }
 
 interface Filter {
@@ -121,27 +122,24 @@ class AnalyticsHandler {
     this.track(event, properties);
   }
 
-  trackGallerySelection(selection: string): void {
+  trackGallerySelection(product: Product, selection: string): void {
     const event = `${selection} Button Clicked`;
     const category = 'Product';
-    const action = 'Clicked';
-    const properties = { tab: selection, action, category };
+    const properties = { product, category };
     this.track(event, properties);
   }
 
   trackConditionCTA(): void {
     const event = 'Condition CTA Clicked';
     const category = 'Product';
-    const action = 'Clicked';
-    const properties = { action, category };
+    const properties = { category };
     this.track(event, properties);
   }
 
-  trackGalleryListView(selection: string): void {
+  trackGalleryListView(product: Product, selection: string): void {
     const event = `${selection} Image List Viewed`;
     const category = 'Product';
-    const action = 'Viewed';
-    const properties = { action, category };
+    const properties = { product, category };
     this.track(event, properties);
   }
 }

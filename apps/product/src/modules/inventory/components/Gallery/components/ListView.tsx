@@ -2,7 +2,7 @@ import { styled } from '@material-ui/core/styles';
 import CloseIcon from '@material-ui/icons/Close';
 import FullscreenExitIcon from '@material-ui/icons/FullscreenExit';
 import { observer } from 'mobx-react';
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import ViewModel from '../ViewModel';
 import GalleryConditionEnd from './ConditionEnd';
@@ -43,7 +43,7 @@ const StyledImage = styled('img')(() => ({
   width: '100%',
 }));
 
-const ImageContainer = styled('div')(() => ({
+const ImagesContainer = styled('div')(() => ({
   paddingTop: '40px',
 }));
 
@@ -77,6 +77,14 @@ const StyledFullscreenExitIcon = styled(FullscreenExitIcon)(() => ({
 }));
 
 const GalleryListView: React.FC<Props> = ({ viewModel }) => {
+  const currentSelection = viewModel.getSelectedGallery();
+  useEffect(() => {
+    const listViewImagesContainer = document.getElementById(
+      'listViewImagesContainer'
+    );
+    listViewImagesContainer && listViewImagesContainer.scrollIntoView();
+  }, [currentSelection]);
+
   const handleCloseIconClick = (): void => {
     viewModel.setListView();
   };
@@ -100,7 +108,7 @@ const GalleryListView: React.FC<Props> = ({ viewModel }) => {
           <GallerySelect />
           <StyledCloseIcon onClick={handleCloseIconClick} />
         </Header>
-        <ImageContainer>
+        <ImagesContainer id="listViewImagesContainer">
           {images.map(
             (
               image: {
@@ -128,7 +136,7 @@ const GalleryListView: React.FC<Props> = ({ viewModel }) => {
               );
             }
           )}
-        </ImageContainer>
+        </ImagesContainer>
         {images.length > 1 && (
           <ImageHeader>
             {images.length + 1}

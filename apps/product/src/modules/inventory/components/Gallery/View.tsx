@@ -56,7 +56,7 @@ const GalleryView: React.FC<Props> = (props) => {
 
   return (
     <>
-      <GallerySelect />
+      <GallerySelect product={viewModel.getCurrentProduct()} />
       <Box className={viewModel.showBanner() ? 'stock-photos' : ''}>
         <Typography
           component="span"
