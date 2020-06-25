@@ -1,3 +1,5 @@
+import { HomeStore } from '../../store';
+
 import globalEnv from 'src/globalEnv';
 import AnalyticsHandler from 'src/integrations/AnalyticsHandler';
 
@@ -34,10 +36,14 @@ class HighlightsViewModel {
     },
   ];
 
-  private analyticsHandler: AnalyticsHandler;
+  private analyticsHandler: AnalyticsHandler = new AnalyticsHandler();
 
-  constructor() {
-    this.analyticsHandler = new AnalyticsHandler();
+  constructor(store: HomeStore) {
+    const browseAllVehiclesTextExperimentVaraint = getExperimentVariant(
+      'snd-homepage-browse-all-low-mileage-vs-browse-our-low-mileage',
+      store.experiments,
+      store.query
+    );
   }
 
   handleButtonClick(): void {
