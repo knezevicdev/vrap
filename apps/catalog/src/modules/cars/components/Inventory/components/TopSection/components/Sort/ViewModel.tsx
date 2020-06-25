@@ -1,6 +1,5 @@
 import { CarsStore } from 'src/modules/cars/store';
-import { updateSort } from 'src/modules/cars/utils/navigation';
-import { FiltersData, SortValue } from 'src/modules/cars/utils/types';
+import { FiltersData, SortValue, updateSort } from 'src/modules/cars/utils/url';
 
 class SortViewModel {
   private readonly carsStore: CarsStore;

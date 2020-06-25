@@ -2,18 +2,16 @@ import Router from 'next/router';
 
 import { CarsStore } from 'src/modules/cars/store';
 import {
-  removeFromList,
-  removeMakeOrModel,
-  resetFilter,
-  updateTransmission,
-} from 'src/modules/cars/utils/navigation';
-import {
   ALL_KEY,
   Filters,
   FiltersData,
   Pathname,
+  removeFromList,
+  removeMakeOrModel,
+  resetFilter,
   Transmission,
-} from 'src/modules/cars/utils/types';
+  updateTransmission,
+} from 'src/modules/cars/utils/url';
 
 export interface ActiveChip {
   onDelete: () => void;
@@ -63,13 +61,13 @@ class ChipsViewModel {
           if (isAll) {
             active.push({
               display: format(make),
-              onDelete: () => removeMakeOrModel(make, ALL_KEY),
+              onDelete: () => removeMakeOrModel(make, ALL_KEY, filtersData),
             });
           } else {
             models.forEach((model) => {
               active.push({
                 display: format(model),
-                onDelete: () => removeMakeOrModel(make, model),
+                onDelete: () => removeMakeOrModel(make, model, filtersData),
               });
             });
           }

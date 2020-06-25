@@ -1,6 +1,11 @@
 import { CarsStore } from 'src/modules/cars/store';
-import { addToList, removeFromList } from 'src/modules/cars/utils/navigation';
-import { DriveType, Filters, FiltersData } from 'src/modules/cars/utils/types';
+import {
+  addToList,
+  DriveType,
+  Filters,
+  FiltersData,
+  removeFromList,
+} from 'src/modules/cars/utils/url';
 
 class DriveTypesViewModel {
   private readonly carsStore: CarsStore;

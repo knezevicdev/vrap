@@ -1,7 +1,7 @@
 import { range } from '../../ViewModel';
 import SliderStore from './store';
 
-import { MaxAndMin } from 'src/modules/cars/utils/types';
+import { MaxAndMin } from 'src/modules/cars/utils/url';
 
 class SliderViewModel {
   private readonly store: SliderStore;

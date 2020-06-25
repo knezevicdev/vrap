@@ -1,9 +1,10 @@
 import { CarsStore } from 'src/modules/cars/store';
 import {
+  Filters,
+  FiltersData,
   resetFilter,
   updateMinAndMax,
-} from 'src/modules/cars/utils/navigation';
-import { Filters, FiltersData } from 'src/modules/cars/utils/types';
+} from 'src/modules/cars/utils/url';
 
 export const range = { min: 2000, max: 2020 };
 const key = Filters.YEAR;

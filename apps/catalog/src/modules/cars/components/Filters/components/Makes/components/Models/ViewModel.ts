@@ -1,7 +1,10 @@
 import { CarsStore } from 'src/modules/cars/store';
-import { sanitize } from 'src/modules/cars/utils/filter';
-import { addMake, removeMakeOrModel } from 'src/modules/cars/utils/navigation';
-import { ALL_KEY, Filters } from 'src/modules/cars/utils/types';
+import {
+  addMake,
+  ALL_KEY,
+  Filters,
+  removeMakeOrModel,
+} from 'src/modules/cars/utils/url';
 
 class ModelsViewModel {
   private readonly carsStore: CarsStore;
@@ -19,22 +22,20 @@ class ModelsViewModel {
     if (!isSelected) {
       addMake(this.make, model, this.models.length, filtersData);
     } else {
-      removeMakeOrModel(this.make, model);
+      removeMakeOrModel(this.make, model, filtersData);
     }
   };
 
   getModelInfo = (model: string): { display: string; isSelected: boolean } => {
-    const sModel = sanitize(model);
-    const sMake = sanitize(this.make);
     const key = Filters.MAKE_AND_MODELS;
     const filtersData = this.carsStore.filtersData;
     const cars = (filtersData && filtersData[key]) || undefined;
 
     const isSelected =
-      (cars && cars[sMake] && cars[sMake].includes(sModel)) || false;
+      (cars && cars[this.make] && cars[this.make].includes(model)) || false;
 
     const selectAllTitle = isSelected ? 'Unselect All' : 'Select All';
-    const display = sModel === ALL_KEY ? selectAllTitle : model;
+    const display = model === ALL_KEY ? selectAllTitle : model;
 
     return { display, isSelected };
   };

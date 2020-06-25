@@ -14,7 +14,9 @@ export interface PostInventoryRequestData {
   limit?: number;
   testdriveonly?: boolean;
   make?: string[];
+  makeSlug?: string[];
   model?: string[];
+  modelSlug?: string[];
   bodytype?: string[];
   color?: string[];
   year?: {} | { min: number; max: number };

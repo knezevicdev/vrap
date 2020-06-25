@@ -1,10 +1,10 @@
 import { CarsStore } from 'src/modules/cars/store';
-import { updateTransmission } from 'src/modules/cars/utils/navigation';
 import {
   Filters,
   FiltersData,
   Transmission,
-} from 'src/modules/cars/utils/types';
+  updateTransmission,
+} from 'src/modules/cars/utils/url';
 
 class TransmissionsViewModel {
   private readonly carsStore: CarsStore;

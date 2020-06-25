@@ -8,6 +8,13 @@ const isProd = process.env.NODE_ENV === 'production';
 
 module.exports = {
   assetPrefix: isProd ? '/catalog' : '',
+  experimental: {
+    // By enabling optional catch all routes, we are able to have a single route for the catalog page.
+    // This simplified things immensely because we don't have to persist state across routes.
+    // https://github.com/vercel/next.js/pull/12887
+    // https://nextjs.org/docs/routing/dynamic-routes#optional-catch-all-routes
+    optionalCatchAll: true,
+  },
   generateBuildId: () => gitHash,
   /* Custom webpack configuration. */
   webpack: (config) => {

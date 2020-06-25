@@ -7,7 +7,7 @@ import React from 'react';
 
 import BodyTypesViewModel from './ViewModel';
 
-import { bodyTypes } from 'src/modules/cars/utils/types';
+import { bodyTypes } from 'src/modules/cars/utils/url';
 import Typography from 'src/ui/Typography';
 
 const StyledListItem = styled(ListItem)(({ theme }) => ({
