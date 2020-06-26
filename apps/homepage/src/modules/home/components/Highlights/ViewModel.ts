@@ -44,14 +44,9 @@ class HighlightsViewModel {
       store.experiments,
       store.query
     );
-    const highQualityCarHighlight = this.highlights.find(
-      (highlight) => highlight.title === 'High-Quality Cars'
-    );
-    if (highQualityCarHighlight) {
-      highQualityCarHighlight.description = `Multiple inspections. Free CARFAX® history report. ${
-        homeWarrantyTextExperimentVariant ? 'Complimentary' : 'Free'
-      } limited\xa0warranty.`;
-    }
+    this.highlights[0].description = `Multiple inspections. Free CARFAX® history report. ${
+      homeWarrantyTextExperimentVariant ? 'Complimentary' : 'Free'
+    } limited\xa0warranty.`;
   }
 
   handleButtonClick(): void {
