@@ -32,7 +32,7 @@ class HighlightsViewModel {
         'Get your car or truck shipped to your home or a convenient nearby\xa0location.',
       imgAlt: 'Delivered Right to You',
       imgSrc: `${globalEnv.CDN_URL}/modules/home/images/highlight-3.png`,
-      title: 'Delivered Right to You',
+      title: '',
     },
   ];
 
@@ -44,9 +44,17 @@ class HighlightsViewModel {
       store.experiments,
       store.query
     );
+    const deliveredToYouExperimentVariant = getExperimentVariant(
+      'snd-homepage-delivered-right-to-you-vs-delivered-safely-to-you',
+      store.experiments,
+      store.query
+    );
     this.highlights[0].description = `Multiple inspections. Free CARFAX® history report. ${
       homeWarrantyTextExperimentVariant ? 'Complimentary' : 'Free'
     } limited\xa0warranty.`;
+    this.highlights[2].title = `Delivered ${
+      deliveredToYouExperimentVariant ? 'Right' : 'Safely'
+    } to You`;
   }
 
   handleButtonClick(): void {
