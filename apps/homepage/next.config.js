@@ -34,7 +34,7 @@ const config = {
 
 if (isProd) {
   config.experimental = {
-    basePath: `/${gitHash}`,
+    basePath: `/hp/${gitHash}`,
   };
 }
 
