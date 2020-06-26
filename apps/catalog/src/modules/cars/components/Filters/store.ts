@@ -1,6 +1,14 @@
 import { action, IObservableArray, observable } from 'mobx';
 
-export enum Filter {
+import BodyTypes from './components/BodyTypes';
+import Color from './components/Color';
+import EngineAndDrivetrain from './components/EngineAndDrivetrain';
+import Makes from './components/Makes';
+import Miles from './components/Miles';
+import Price from './components/Price';
+import Year from './components/Year';
+
+export enum FilterDisplay {
   MAKE_AND_MODEL = 'Make & Model',
   BODY_TYPE = 'Body Type',
   COLOR = 'Color',
@@ -10,46 +18,58 @@ export enum Filter {
   ENGINE_AND_DRIVETRAIN = 'Engine & Drivetrain',
 }
 
+export interface Filter {
+  display: FilterDisplay;
+  FilterComponent: React.FC;
+  open: boolean;
+}
+
 class FiltersStore {
-  readonly filters: IObservableArray<{
-    display: Filter;
-    open: boolean;
-  }> = observable([
+  readonly filters: IObservableArray<Filter> = observable([
     {
-      display: Filter.MAKE_AND_MODEL,
+      display: FilterDisplay.MAKE_AND_MODEL,
+      FilterComponent: Makes,
       open: true,
     },
     {
-      display: Filter.BODY_TYPE,
+      display: FilterDisplay.BODY_TYPE,
+      FilterComponent: BodyTypes,
       open: false,
     },
     {
-      display: Filter.COLOR,
+      display: FilterDisplay.COLOR,
+      FilterComponent: Color,
       open: false,
     },
     {
-      display: Filter.YEAR,
+      display: FilterDisplay.YEAR,
+      FilterComponent: Year,
       open: false,
     },
     {
-      display: Filter.PRICE,
+      display: FilterDisplay.PRICE,
+      FilterComponent: Price,
       open: false,
     },
     {
-      display: Filter.MILES,
+      display: FilterDisplay.MILES,
+      FilterComponent: Miles,
       open: false,
     },
     {
-      display: Filter.ENGINE_AND_DRIVETRAIN,
+      display: FilterDisplay.ENGINE_AND_DRIVETRAIN,
+      FilterComponent: EngineAndDrivetrain,
       open: false,
     },
   ]);
 
   @action
-  toggleVisibility = (display: Filter): void => {
-    const filter = this.filters.find((f) => f.display === display);
-    if (filter) {
-      filter.open = !filter.open;
+  toggleVisibility = (filter: Filter): void => {
+    const matchingFilter = this.filters.find(
+      (f) => f.display === filter.display
+    );
+    if (matchingFilter) {
+      matchingFilter.open = !matchingFilter.open;
     }
   };
 }

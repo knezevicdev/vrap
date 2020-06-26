@@ -7,6 +7,8 @@ import React from 'react';
 
 import DriveTypesViewModel from './ViewModel';
 
+import { DriveType as FiltersDataDriveType } from 'src/modules/cars/utils/url';
+
 interface Props {
   viewModel: DriveTypesViewModel;
 }
@@ -18,22 +20,32 @@ const Label = withStyles((theme) => ({
 }))(FormControlLabel);
 
 const DriveTypesView: React.FC<Props> = ({ viewModel }) => {
+  const handleCheckboxChange = (
+    event: React.ChangeEvent<HTMLInputElement>,
+    checked: boolean
+  ): void => {
+    const filtersDataValue = event.target.value as FiltersDataDriveType;
+    viewModel.handleCheckboxChange(filtersDataValue, checked);
+  };
+
   return (
     <FormGroup>
-      {viewModel.values.map((driveType) => {
-        const isSelected = viewModel.getActiveDriveTypes().includes(driveType);
+      {viewModel.getDriveTypes().map((driveType) => {
+        const checked = viewModel.isChecked(driveType);
+        const { display, filtersDataValue } = driveType;
 
         return (
           <Label
-            key={driveType}
+            key={display}
             control={
               <Checkbox
                 color="primary"
-                checked={isSelected}
-                onChange={viewModel.handleClick(driveType, isSelected)}
+                checked={checked}
+                onChange={handleCheckboxChange}
+                value={filtersDataValue}
               />
             }
-            label={driveType}
+            label={display}
           />
         );
       })}

@@ -7,6 +7,7 @@ import Inputs from './components/Inputs';
 import Slider from './components/Slider';
 import MilesViewModel from './ViewModel';
 
+import { MaxAndMin } from 'src/modules/cars/utils/url';
 import Typography from 'src/ui/Typography';
 
 const MilesContainer = styled('div')(({ theme }) => ({
@@ -24,14 +25,29 @@ interface Props {
 }
 
 const MilesView: React.FC<Props> = ({ viewModel }) => {
-  const { miles } = viewModel.getMilesFromUrl();
+  const handleResetClick = (): void => {
+    viewModel.handleResetClick();
+  };
+
+  const handleInputsDone = (values: MaxAndMin | undefined): void => {
+    viewModel.handleInputsDone(values);
+  };
+
+  const handleSliderDone = (values: MaxAndMin | undefined): void => {
+    viewModel.handleSliderDone(values);
+  };
+
+  const state = viewModel.getState();
 
   return (
     <MilesContainer>
-      <Inputs onDone={viewModel.onDone} state={miles} />
-      <Slider onDone={viewModel.onDone} state={miles} />
-
-      <Reset button onClick={viewModel.reset} disabled={!miles}>
+      <Inputs onDone={handleInputsDone} range={viewModel.range} state={state} />
+      <Slider onDone={handleSliderDone} range={viewModel.range} state={state} />
+      <Reset
+        button
+        onClick={handleResetClick}
+        disabled={viewModel.isResetButtonDisabled()}
+      >
         <Typography fontWeight="fontWeightMedium" color="secondary.main">
           {viewModel.resetButtonLabel}
         </Typography>

@@ -5,12 +5,12 @@ class MakesStore {
   readonly makesVisibility: IObservableArray<string> = observable([]);
 
   @action
-  setShowMore = (): void => {
+  toggleShowMore = (): void => {
     this.showMore = !this.showMore;
   };
 
   @action
-  setMakesVisibility = (make: string): void => {
+  toggleMakesVisibility = (make: string): void => {
     const isOpen = this.makesVisibility.find((m) => m === make);
     if (isOpen) {
       this.makesVisibility.remove(make);

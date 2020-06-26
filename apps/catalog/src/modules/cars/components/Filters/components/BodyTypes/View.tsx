@@ -7,7 +7,6 @@ import React from 'react';
 
 import BodyTypesViewModel from './ViewModel';
 
-import { bodyTypes } from 'src/modules/cars/utils/url';
 import Typography from 'src/ui/Typography';
 
 const StyledListItem = styled(ListItem)(({ theme }) => ({
@@ -35,15 +34,19 @@ const BodyTypesView: React.FC<Props> = ({ viewModel }) => {
   const resetButtonLabel = viewModel.resetButtonLabel;
   return (
     <StyledList>
-      {bodyTypes.map((bodyType) => {
-        const { display, url } = bodyType;
-        const { isSelected, fontWeight } = viewModel.getItemInformation(url);
-
+      {viewModel.getBodyTypes().map((bodyType) => {
+        const { display, filtersDataValue } = bodyType;
+        const { isSelected, fontWeight } = viewModel.getItemInformation(
+          filtersDataValue
+        );
         return (
           <StyledListItem
-            key={url}
+            key={display}
             button
-            onClick={viewModel.handleClick(bodyType, isSelected)}
+            onClick={viewModel.handleListItemClick(
+              filtersDataValue,
+              isSelected
+            )}
           >
             <Typography fontWeight={fontWeight}>{display}</Typography>
             {isSelected && <StyledCheck fontSize="small" color="secondary" />}

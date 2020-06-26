@@ -5,8 +5,21 @@ import { MaxAndMin } from 'src/modules/cars/utils/url';
 class SliderStore {
   @observable values: MaxAndMin;
 
-  constructor(state: MaxAndMin) {
-    this.values = state;
+  constructor(range: MaxAndMin, value?: MaxAndMin) {
+    if (!value) {
+      this.values = range;
+      return;
+    }
+    const isValidValue =
+      value.min >= range.min &&
+      value.min <= range.max &&
+      value.max >= value.min &&
+      value.max <= range.max;
+
+    if (!isValidValue) {
+      this.values = range;
+    }
+    this.values = value;
   }
 
   @action

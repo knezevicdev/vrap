@@ -1,11 +1,11 @@
 import { action, observable } from 'mobx';
 
-import { range } from '../../ViewModel';
+import { MaxAndMin } from 'src/modules/cars/utils/url';
 
 class SliderStore {
   @observable value: number;
 
-  constructor(state: string | undefined) {
+  constructor(range: MaxAndMin, state: string | undefined) {
     this.value = state ? parseInt(state) : range.min;
   }
 

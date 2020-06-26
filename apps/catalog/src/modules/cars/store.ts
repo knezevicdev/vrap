@@ -6,6 +6,7 @@ import {
   SoldStatus,
 } from '@vroom-web/inv-search-networking';
 import { action, computed, observable } from 'mobx';
+import Router from 'next/router';
 import { createContext } from 'react';
 
 import {
@@ -34,6 +35,7 @@ import {
   Filters,
   FiltersData,
   getFiltersDataFromUrl,
+  getUrlFromFiltersData,
 } from 'src/modules/cars/utils/url';
 import { Status } from 'src/networking/types';
 
@@ -356,6 +358,13 @@ export class CarsStore {
   @action
   toggleAreFiltersOpen = (): void => {
     this.areFiltersOpen = !this.areFiltersOpen;
+  };
+
+  @action
+  updateFiltersData = (filtersData?: FiltersData): void => {
+    const as = getUrlFromFiltersData(filtersData);
+    Router.replace('/cars/[[...params]]', as, { shallow: true });
+    this.filtersData = filtersData;
   };
 }
 

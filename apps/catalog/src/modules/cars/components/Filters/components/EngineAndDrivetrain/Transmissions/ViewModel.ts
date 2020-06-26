@@ -1,37 +1,50 @@
+import { Transmission } from 'src/modules/cars/data';
 import { CarsStore } from 'src/modules/cars/store';
 import {
   Filters,
   FiltersData,
-  Transmission,
-  updateTransmission,
+  Transmission as FiltersDataTransmission,
 } from 'src/modules/cars/utils/url';
 
 class TransmissionsViewModel {
   private readonly carsStore: CarsStore;
-  readonly values = [Transmission.ALL, Transmission.AUTO, Transmission.MANUAL];
+
+  readonly allOption = {
+    display: 'All',
+    value: 'all',
+  };
 
   constructor(carsStore: CarsStore) {
     this.carsStore = carsStore;
   }
 
-  getActiveTransmission = (): string => {
-    const filtersData = this.carsStore.filtersData;
-
-    const isSelected =
-      (filtersData && filtersData[Filters.TRANSMISSION] === 0) ||
-      (filtersData && filtersData[Filters.TRANSMISSION] === 1);
-
-    const isAutomatic =
-      (filtersData && (filtersData[Filters.TRANSMISSION] as number)) === 0;
-
-    const selected = isAutomatic ? Transmission.AUTO : Transmission.MANUAL;
-
-    return isSelected ? selected : Transmission.ALL;
+  getTransmissions = (): Transmission[] => {
+    return this.carsStore.transmissions;
   };
 
-  handleClick = (transmission: Transmission): void => {
+  getActiveTransmission = (): string => {
     const filtersData = this.carsStore.filtersData;
-    updateTransmission(transmission, filtersData as FiltersData);
+    if (!filtersData) {
+      return this.allOption.value;
+    }
+    const filtersDataTransmission = filtersData[Filters.TRANSMISSION];
+    if (!filtersDataTransmission) {
+      return this.allOption.value;
+    }
+    return filtersDataTransmission;
+  };
+
+  handleRadioGroupChange = (
+    filtersDataValue: FiltersDataTransmission
+  ): void => {
+    const updatedFiltersDataTransmission =
+      filtersDataValue === this.allOption.value ? undefined : filtersDataValue;
+    const filtersData = this.carsStore.filtersData;
+    const updatedFiltersData: FiltersData = {
+      ...filtersData,
+      [Filters.TRANSMISSION]: updatedFiltersDataTransmission,
+    };
+    this.carsStore.updateFiltersData(updatedFiltersData);
   };
 }
 

@@ -1,43 +1,71 @@
 import { CarsStore } from 'src/modules/cars/store';
-import {
-  Filters,
-  FiltersData,
-  MaxAndMin,
-  resetFilter,
-  updateMinAndMax,
-} from 'src/modules/cars/utils/url';
-
-export const range = { min: 0, max: 200000 };
-const key = Filters.MILES;
+import { Filters, FiltersData, MaxAndMin } from 'src/modules/cars/utils/url';
 
 class MilesViewModel {
   private readonly carsStore: CarsStore;
+  readonly range: MaxAndMin = { min: 0, max: 200000 };
   readonly resetButtonLabel: string = 'Reset';
 
   constructor(carsStore: CarsStore) {
     this.carsStore = carsStore;
   }
 
-  onDone = (miles: MaxAndMin | undefined): void => {
+  private getMiles = (): MaxAndMin | undefined => {
     const filtersData = this.carsStore.filtersData;
-    miles
-      ? updateMinAndMax(key, miles, filtersData as FiltersData)
-      : resetFilter(Filters.MILES, filtersData as FiltersData);
+    if (!filtersData) {
+      return undefined;
+    }
+    const filtersDataMiles = filtersData[Filters.MILES];
+    if (!filtersDataMiles) {
+      return undefined;
+    }
+    return filtersDataMiles;
   };
 
-  reset = (): void => {
-    const filtersData = this.carsStore.filtersData;
-    resetFilter(Filters.MILES, filtersData as FiltersData);
+  getState = (): string | undefined => {
+    const miles = this.getMiles();
+    if (!miles) {
+      return undefined;
+    }
+    return miles.max.toString();
   };
 
-  getMilesFromUrl = (): { miles: string | undefined } => {
+  private updateFiltersDataMiles(values: MaxAndMin | undefined): void {
     const filtersData = this.carsStore.filtersData;
-    const milesFromUrl =
-      filtersData && filtersData[key] ? filtersData[key] : undefined;
-    const miles = milesFromUrl ? milesFromUrl.max.toString() : undefined;
+    const updatedFiltersData: FiltersData = {
+      ...filtersData,
+      [Filters.MILES]: values,
+    };
+    this.carsStore.updateFiltersData(updatedFiltersData);
+  }
 
-    return { miles };
+  handleInputsDone = (values: MaxAndMin | undefined): void => {
+    this.updateFiltersDataMiles(values);
   };
+
+  handleSliderDone = (values: MaxAndMin | undefined): void => {
+    this.updateFiltersDataMiles(values);
+  };
+
+  isResetButtonDisabled = (): boolean => {
+    const miles = this.getMiles();
+    if (!miles) {
+      return true;
+    }
+    return false;
+  };
+
+  handleResetClick(): void {
+    const filtersData = this.carsStore.filtersData;
+    if (!filtersData) {
+      return;
+    }
+    const updatedFiltersData: FiltersData = {
+      ...filtersData,
+      [Filters.MILES]: undefined,
+    };
+    this.carsStore.updateFiltersData(updatedFiltersData);
+  }
 }
 
 export default MilesViewModel;

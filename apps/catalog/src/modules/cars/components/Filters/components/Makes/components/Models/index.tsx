@@ -2,19 +2,19 @@ import React from 'react';
 
 import { CarsStoreContext } from '../../../../../../store';
 import View from './View';
-import ViewModel from './ViewModel';
+import ViewModel, { Model } from './ViewModel';
 
 interface Props {
-  make: string;
-  models: string[];
+  makeSlug: string;
+  models: Model[];
 }
 
-const Models: React.FC<Props> = ({ make, models }) => {
+const Models: React.FC<Props> = ({ makeSlug, models }) => {
   return (
     <CarsStoreContext.Consumer>
       {(carsStore): JSX.Element => {
-        const viewModel = new ViewModel(make, models, carsStore);
-        return <View viewModel={viewModel} models={models} />;
+        const viewModel = new ViewModel(makeSlug, models, carsStore);
+        return <View viewModel={viewModel} />;
       }}
     </CarsStoreContext.Consumer>
   );

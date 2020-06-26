@@ -1,6 +1,6 @@
 import { useTheme } from '@material-ui/core/styles';
 import { NextPage, NextPageContext } from 'next';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import Page from 'src/components/Page';
 import Cars from 'src/modules/cars';
@@ -16,7 +16,8 @@ interface Props {
 }
 
 const CarsPage: NextPage<Props> = ({ initialStoreState }) => {
-  const carsStore = new CarsStore(initialStoreState);
+  // Persist store instance across URL updates.
+  const [carsStore] = useState<CarsStore>(new CarsStore(initialStoreState));
 
   /* FIT-307. This effect allows the filters panel to be initially closed
   on mobile, and initially open on desktop. */

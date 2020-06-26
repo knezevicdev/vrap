@@ -32,11 +32,19 @@ interface Props {
 const EngineAndDrivetrainView: React.FC<Props> = ({ viewModel }) => {
   return (
     <EngineAndDrivetrainContainer>
-      <Titles fontWeight="fontWeightMedium">Transmission</Titles>
+      <Titles fontWeight="fontWeightMedium">
+        {viewModel.transmissionFilterLabel}
+      </Titles>
       <Transmissions />
-      <Titles fontWeight="fontWeightMedium">Drive Type</Titles>
+      <Titles fontWeight="fontWeightMedium">
+        {viewModel.driveTypeFilterLabel}
+      </Titles>
       <DriveTypes />
-      <Reset button onClick={viewModel.reset} disabled={viewModel.isDisabled()}>
+      <Reset
+        button
+        onClick={viewModel.reset}
+        disabled={viewModel.isResetButtonDisabled()}
+      >
         <Typography fontWeight="fontWeightMedium" color="secondary.main">
           {viewModel.resetButtonLabel}
         </Typography>

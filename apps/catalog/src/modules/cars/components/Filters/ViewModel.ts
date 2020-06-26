@@ -1,5 +1,3 @@
-import { IObservableArray } from 'mobx';
-
 import { CarsStore } from '../../store';
 import FiltersStore, { Filter } from './store';
 
@@ -20,15 +18,12 @@ class FiltersViewModel {
     this.carsStore.toggleAreFiltersOpen();
   };
 
-  getFilters = (): IObservableArray<{
-    display: Filter;
-    open: boolean;
-  }> => {
+  getFilters = (): Filter[] => {
     return this.filtersStore.filters;
   };
 
-  toggleVisibility = (display: Filter): void => {
-    this.filtersStore.toggleVisibility(display);
+  toggleVisibility = (filter: Filter): void => {
+    this.filtersStore.toggleVisibility(filter);
   };
 }
 

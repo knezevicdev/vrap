@@ -12,13 +12,6 @@ import { observer } from 'mobx-react';
 import React from 'react';
 
 import { ReactComponent as FiltersIcon } from '../filters.svg';
-import BodyTypes from './components/BodyTypes';
-import Color from './components/Color';
-import EngineAndDrivetrain from './components/EngineAndDrivetrain';
-import Makes from './components/Makes';
-import Miles from './components/Miles';
-import Price from './components/Price';
-import Year from './components/Year';
 import { Filter } from './store';
 import FiltersViewModel from './ViewModel';
 
@@ -78,8 +71,8 @@ const FiltersView: React.FC<FiltersViewProps> = ({ viewModel }) => {
   const handleFiltersCloseContainerClick = (): void => {
     viewModel.toggleAreFiltersOpen();
   };
-  const handleListItemClick = (display: Filter) => (): void => {
-    viewModel.toggleVisibility(display);
+  const handleListItemClick = (filter: Filter) => (): void => {
+    viewModel.toggleVisibility(filter);
   };
   const handleDrawerClose = (): void => {
     viewModel.toggleAreFiltersOpen();
@@ -92,24 +85,18 @@ const FiltersView: React.FC<FiltersViewProps> = ({ viewModel }) => {
         <FiltersButton fontWeight="fontWeightLight">Filters</FiltersButton>
         <CloseIcon fontSize="small" />
       </FiltersCloseContainer>
-      {viewModel.getFilters().map((value) => {
-        const { display, open } = value;
+      {viewModel.getFilters().map((filter) => {
+        const { display, FilterComponent, open } = filter;
         return (
           <StyledFilter key={display}>
-            <StyledListItem button onClick={handleListItemClick(display)}>
+            <StyledListItem button onClick={handleListItemClick(filter)}>
               <Title fontWeight="fontWeightMedium" variant="h3">
                 {display}
               </Title>
               {open ? <ExpandLess /> : <ExpandMore />}
             </StyledListItem>
             <Collapse in={open} timeout="auto">
-              {display === 'Make & Model' && <Makes />}
-              {display === 'Body Type' && <BodyTypes />}
-              {display === 'Color' && <Color />}
-              {display === 'Year' && <Year />}
-              {display === 'Price' && <Price />}
-              {display === 'Miles' && <Miles />}
-              {display === 'Engine & Drivetrain' && <EngineAndDrivetrain />}
+              <FilterComponent />
             </Collapse>
           </StyledFilter>
         );

@@ -1,58 +1,51 @@
-import { range } from '../../ViewModel';
 import InputsStore from './store';
 
 import { MaxAndMin } from 'src/modules/cars/utils/url';
 
 class InputsViewModel {
   private readonly store: InputsStore;
+  private currencyFormatter: Intl.NumberFormat;
 
-  readonly errorLabel: string = 'Please enter prices within $4,000 - $125,000';
-  readonly leftPlaceholder: string = range.min.toString();
-  readonly rightPlaceholder: string = range.max.toString();
-  onDone: (values: MaxAndMin) => void;
+  readonly errorLabel: string;
+  readonly minInputPlaceholder: string;
+  readonly maxInputPlaceholder: string;
+  readonly range: MaxAndMin;
 
-  constructor(store: InputsStore, onDone: (values: MaxAndMin) => void) {
+  constructor(range: MaxAndMin, store: InputsStore) {
+    this.currencyFormatter = new Intl.NumberFormat('en-US', {
+      style: 'currency',
+      currency: 'USD',
+      minimumFractionDigits: 0,
+      maximumFractionDigits: 0,
+    });
+    const minPriceLabel = this.currencyFormatter.format(range.min);
+    const maxPriceLabel = this.currencyFormatter.format(range.max);
+    this.errorLabel = `Please enter prices within ${minPriceLabel} - ${maxPriceLabel}`;
+    this.minInputPlaceholder = range.min.toString();
+    this.maxInputPlaceholder = range.max.toString();
+    this.range = range;
     this.store = store;
-    this.onDone = onDone;
   }
 
-  getError = (): boolean => {
-    return this.store.error;
+  hasError = (): boolean => {
+    return this.store.errorMin || this.store.errorMax;
   };
 
   getMin = (): string => {
-    return this.store.values[0];
+    return this.store.min;
   };
 
   getMax = (): string => {
-    return this.store.values[1];
+    return this.store.max;
   };
 
-  private hasError = (values: string[]): boolean => {
-    if (values[0] !== '' && values[1] !== '') {
-      const min = parseInt(values[0]);
-      const max = parseInt(values[1]);
-      return min > max || min < range.min || max > range.max;
-    }
-    return true;
-  };
+  handleMinInputChange(value: string): void {
+    this.store.setMin(value);
+  }
 
-  private changeURL = (values: string[]): void => {
-    const min = parseInt(values[0]);
-    const max = parseInt(values[1]);
-    this.onDone({ min: min, max: max });
-  };
-
-  setValues = (values: string[]): void => {
-    this.store.setValues(values);
-
-    if (this.hasError(values)) {
-      this.store.setError(true);
-    } else {
-      this.store.setError(false);
-      this.changeURL(values);
-    }
-  };
+  handleMaxInputChange(value: string): void {
+    this.store.setMax(value);
+  }
 }
 
 export default InputsViewModel;

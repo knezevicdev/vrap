@@ -63,7 +63,7 @@ const mockFiltersData1: FiltersData = {
 const mockFiltersQueryParam1 =
   'eyJib2R5dHlwZXMiOlsic3V2Il0sImNvbG9ycyI6WyJncmV5Il0sImRyaXZldHlwZSI6WyJhd2QiXSwibWFrZXNhbmRtb2RlbHMiOlt7Im1ha2VTbHVnIjoidm9sdm8iLCJtb2RlbFNsdWdzIjpbInhjOTAiXX1dLCJtaWxlcyI6eyJtYXgiOjEwMDAwMCwibWluIjowfSwicGFnZSI6MCwicHJpY2UiOnsibWF4IjoxMDAwMDAsIm1pbiI6MH0sInNlYXJjaCI6InNlYXJjaCIsInNvcnQiOnsiYnkiOiJtaWxlcyIsImRpcmVjdGlvbiI6ImFzYyJ9LCJ0cmFuc21pc3Npb24iOiJhdXRvIiwieWVhciI6eyJtYXgiOjIwMjAsIm1pbiI6MjAxOH19';
 
-const mockUrl1 = `/cars/volvo-xc90-suv/2018-2020?filters=${mockFiltersQueryParam1}`;
+const mockUrl1 = `/cars/volvo/xc90/suv/2018-2020?filters=${mockFiltersQueryParam1}`;
 
 describe('getDescriptorParam', () => {
   test('1', () => {
@@ -89,7 +89,7 @@ describe('getDescriptorParam', () => {
         },
       ],
     };
-    expect(getDescriptorParam(mockFiltersData)).toEqual('/ford-f-150');
+    expect(getDescriptorParam(mockFiltersData)).toEqual('/ford/f-150');
   });
   test('4', () => {
     const mockFiltersData: FiltersData = {
@@ -104,7 +104,7 @@ describe('getDescriptorParam', () => {
         },
       ],
     };
-    expect(getDescriptorParam(mockFiltersData)).toEqual('/ford-f-150');
+    expect(getDescriptorParam(mockFiltersData)).toEqual('/ford/f-150');
   });
   test('5', () => {
     const mockFiltersData: FiltersData = {
@@ -116,7 +116,7 @@ describe('getDescriptorParam', () => {
         },
       ],
     };
-    expect(getDescriptorParam(mockFiltersData)).toEqual('/ford-focus-sedan');
+    expect(getDescriptorParam(mockFiltersData)).toEqual('/ford/focus/sedan');
   });
   test('6', () => {
     const mockFiltersData: FiltersData = {
@@ -174,7 +174,7 @@ describe('getParams', () => {
       },
     };
     expect(getParams(mockFiltersData)).toEqual(
-      '/volvo-xc80-hatchback/2016-2019'
+      '/volvo/xc80/hatchback/2016-2019'
     );
   });
 });

@@ -114,7 +114,7 @@ export const getDescriptorParam = (filtersData: FiltersData): string => {
   if (descriptorParamArray.length === 0) {
     return '';
   }
-  return `/${descriptorParamArray.join('-')}`;
+  return `/${descriptorParamArray.join('/')}`;
 };
 
 export const getYearParam = (filtersData: FiltersData): string => {
@@ -139,7 +139,11 @@ export const getQuery = (filtersData?: FiltersData): string => {
   if (!filtersData) {
     return '';
   }
-  const encodedFiltersData = Base64.encode(JSON.stringify(filtersData));
+  const jsonFiltersData = JSON.stringify(filtersData);
+  if (jsonFiltersData === '{}') {
+    return '';
+  }
+  const encodedFiltersData = Base64.encode(jsonFiltersData);
   return `?filters=${encodedFiltersData}`;
 };
 

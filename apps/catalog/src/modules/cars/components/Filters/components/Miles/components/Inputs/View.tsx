@@ -33,12 +33,9 @@ export interface InputsViewProps {
 }
 
 const InputsView: React.FC<InputsViewProps> = ({ viewModel }) => {
-  const onChange = (event: object): void => {
-    const {
-      target: { value },
-    } = event as React.ChangeEvent<HTMLSelectElement>;
-    const miles = parseInt(value);
-    viewModel.setValue(miles);
+  const onChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
+    const value = event.target.value;
+    viewModel.setValue(value);
   };
 
   return (
@@ -47,7 +44,7 @@ const InputsView: React.FC<InputsViewProps> = ({ viewModel }) => {
         <Error color="error.main">{viewModel.errorLabel}</Error>
       )}
       <InputsContainer>
-        <Typography variant="overline">Mileage Maximum</Typography>
+        <Typography variant="overline">{viewModel.inputLabel}</Typography>
         <Input
           size="small"
           variant="outlined"
