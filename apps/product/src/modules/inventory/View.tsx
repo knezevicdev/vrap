@@ -11,7 +11,7 @@ import React, { useEffect } from 'react';
 import Breadcrumbs from './components/Breadcrumbs';
 import CarDetails from './components/CarDetails';
 import Features from './components/Features';
-import Gallery from './components/Gallery';
+import Gallery from './components/Gallery/';
 import PeaceOfMind from './components/PeaceOfMind';
 import SimilarVehicles from './components/SimilarVehicles';
 import StartPurchase from './components/StartPurchase';

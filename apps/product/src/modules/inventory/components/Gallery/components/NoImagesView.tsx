@@ -2,7 +2,7 @@ import Box from '@material-ui/core/Box';
 import { styled } from '@material-ui/core/styles';
 import React from 'react';
 
-import ViewModel from './ViewModel';
+import ViewModel from '../ViewModel';
 
 import Container from 'src/ui/Container';
 import Typography from 'src/ui/Typography';
