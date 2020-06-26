@@ -17,7 +17,7 @@ const config = {
   env: {
     SHORT_HASH: gitHash,
   },
-  // assetPrefix: isProd ? `/home/${gitHash}` : '',
+  assetPrefix: isProd ? `/home/${gitHash}` : '',
   generateBuildId: () => gitHash,
   /* Custom webpack configuration. */
   webpack: (config) => {
@@ -31,11 +31,5 @@ const config = {
     return config;
   },
 };
-
-if (isProd) {
-  config.experimental = {
-    basePath: `/hp/${gitHash}`,
-  };
-}
 
 module.exports = withBundleAnalyzer(config);
