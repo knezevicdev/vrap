@@ -1,5 +1,8 @@
+import { HomeStore } from '../../store';
+
 import globalEnv from 'src/globalEnv';
 import AnalyticsHandler from 'src/integrations/AnalyticsHandler';
+import { getExperimentVariant } from 'src/integrations/experimentSDK';
 
 interface Highlight {
   description: string;
@@ -12,8 +15,7 @@ class HighlightsViewModel {
   readonly ctaLabel: string = 'SHOP NOW';
   readonly highlights: Highlight[] = [
     {
-      description:
-        'Multiple inspections. Free CARFAX® history report. Complimentary limited\xa0warranty.',
+      description: '',
       imgAlt: 'High-Quality Cars',
       imgSrc: `${globalEnv.CDN_URL}/modules/home/images/highlight-1.png`,
       title: 'High-Quality Cars',
@@ -34,10 +36,17 @@ class HighlightsViewModel {
     },
   ];
 
-  private analyticsHandler: AnalyticsHandler;
+  private analyticsHandler: AnalyticsHandler = new AnalyticsHandler();
 
-  constructor() {
-    this.analyticsHandler = new AnalyticsHandler();
+  constructor(store: HomeStore) {
+    const homeWarrantyTextExperimentVariant = getExperimentVariant(
+      'snd-homepage-complimentary-limited-warranty-vs-free-limited-warranty',
+      store.experiments,
+      store.query
+    );
+    this.highlights[0].description = `Multiple inspections. Free CARFAX® history report. ${
+      homeWarrantyTextExperimentVariant ? 'Complimentary' : 'Free'
+    } limited\xa0warranty.`;
   }
 
   handleButtonClick(): void {
