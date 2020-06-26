@@ -57,6 +57,10 @@ class GalleryViewModel {
     return true;
   }
 
+  showImageHeader(length: number): boolean {
+    return length > 1;
+  }
+
   getCurrentProduct(): Product {
     const {
       consignmentPartnerId: partnerId,

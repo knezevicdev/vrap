@@ -1,5 +1,5 @@
 import globalEnv from 'src/globalEnv';
-class GalleryConditionEndViewModel {
+class ConditionEndViewModel {
   readonly bodyText: string = `Our vehicles look nice but they aren’t perfect. We make our best effort to fix anything outside of normal wear and tear. Here’s some things you can expect from Vroom. We:`;
   readonly bullets = [
     'Fix all scratches longer than 6 inches.',
@@ -20,4 +20,4 @@ class GalleryConditionEndViewModel {
   };
 }
 
-export default GalleryConditionEndViewModel;
+export default ConditionEndViewModel;

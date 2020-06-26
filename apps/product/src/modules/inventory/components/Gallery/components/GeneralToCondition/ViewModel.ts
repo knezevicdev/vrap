@@ -3,18 +3,12 @@ import { GallerySelections, GalleryStore } from '../../store';
 import globalEnv from 'src/globalEnv';
 import AnalyticsHandler from 'src/integrations/analytics/AnalyticsHandler';
 
-class GalleryConditionEndViewModel {
+class GalleryToConditionViewModel {
   private store: GalleryStore;
   private analyticsHandler: AnalyticsHandler;
   readonly goToConditionText: string = 'VIEW IMPERFECTIONS PHOTOS';
-  readonly faqPreText: string =
-    'For information on our mechanical and safety standards, ';
-  readonly faqLink = {
-    text: 'please visit our FAQ.',
-    url: `https://vroom.zendesk.com/hc/en-us/articles/205360495-How-do-you-ensure-the-quality-of-your-vehicles-`,
-  };
   readonly defaultImage = {
-    alt: 'Condition End Photo',
+    alt: 'Gallery To Condition Photo',
     src: `${globalEnv.CDN_URL}/modules/inventory/components/gallery/LastGallery.png`,
   };
 
@@ -29,4 +23,4 @@ class GalleryConditionEndViewModel {
   };
 }
 
-export default GalleryConditionEndViewModel;
+export default GalleryToConditionViewModel;

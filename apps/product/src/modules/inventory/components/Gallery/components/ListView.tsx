@@ -79,6 +79,7 @@ const StyledFullscreenExitIcon = styled(FullscreenExitIcon)(({ theme }) => ({
 
 const GalleryListView: React.FC<Props> = ({ viewModel }) => {
   const currentSelection = viewModel.getSelectedGallery();
+  //This is to ensure that the list returns to the top when selection is changed
   useEffect(() => {
     const listViewImagesContainer = document.getElementById(
       'listViewImagesContainer'
@@ -138,7 +139,7 @@ const GalleryListView: React.FC<Props> = ({ viewModel }) => {
             }
           )}
         </ImagesContainer>
-        {images.length > 1 && (
+        {viewModel.showImageHeader(images.length) && (
           <ImageHeader>
             {images.length + 1}
             {viewModel.indexSeparator}

@@ -40,7 +40,7 @@ interface Props {
   viewModel: ViewModel;
 }
 
-const GalleryConditionEndView: React.FC<Props> = ({ viewModel }) => {
+const ConditionEndView: React.FC<Props> = ({ viewModel }) => {
   return (
     <StyledContainer>
       <StyledBox>
@@ -73,4 +73,4 @@ const GalleryConditionEndView: React.FC<Props> = ({ viewModel }) => {
   );
 };
 
-export default GalleryConditionEndView;
+export default ConditionEndView;
