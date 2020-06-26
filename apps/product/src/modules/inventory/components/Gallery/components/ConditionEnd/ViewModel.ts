@@ -1,10 +1,5 @@
-import isEmpty from 'lodash.isempty';
-
-import { InventoryStore } from '../../../../store';
-
 import globalEnv from 'src/globalEnv';
 class GalleryConditionEndViewModel {
-  private inventoryStore: InventoryStore;
   readonly bodyText: string = `Our vehicles look nice but they aren’t perfect. We make our best effort to fix anything outside of normal wear and tear. Here’s some things you can expect from Vroom. We:`;
   readonly bullets = [
     'Fix all scratches longer than 6 inches.',
@@ -23,14 +18,6 @@ class GalleryConditionEndViewModel {
     alt: 'Condition End Photo',
     src: `${globalEnv.CDN_URL}/modules/inventory/components/gallery/LastCondition.png`,
   };
-  constructor(inventoryStore: InventoryStore) {
-    this.inventoryStore = inventoryStore;
-  }
-
-  defectPhotosExist(): boolean {
-    const { defectPhotos } = this.inventoryStore.vehicle._source;
-    return !isEmpty(defectPhotos);
-  }
 }
 
 export default GalleryConditionEndViewModel;
