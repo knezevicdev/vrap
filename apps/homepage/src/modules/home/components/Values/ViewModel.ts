@@ -1,4 +1,4 @@
-import { getExperimentVariant } from 'src/integrations/experimentSDK';
+import { showDefaultVariant } from 'src/integrations/experimentSDK';
 import { HomeStore } from 'src/modules/home/store';
 
 class ValuesViewModel {
@@ -44,7 +44,7 @@ class ValuesViewModel {
   subtitle: string;
 
   constructor(store: HomeStore) {
-    const homeVroomRevolutionExperimentVariant = getExperimentVariant(
+    const homeVroomRevolutionExperimentVariant = showDefaultVariant(
       'snd-homepage-heres-how-vroom-is-leading-the-revolution-to-heres-how-vroom-is-revolutionizing-the-car-shopping-experience',
       store.experiments,
       store.query
