@@ -2,7 +2,7 @@ import { HomeStore } from '../../store';
 
 import globalEnv from 'src/globalEnv';
 import AnalyticsHandler from 'src/integrations/AnalyticsHandler';
-import { getExperimentVariant } from 'src/integrations/experimentSDK';
+import { showDefaultVariant } from 'src/integrations/experimentSDK';
 
 interface Highlight {
   description: string;
@@ -39,12 +39,12 @@ class HighlightsViewModel {
   private analyticsHandler: AnalyticsHandler = new AnalyticsHandler();
 
   constructor(store: HomeStore) {
-    const homeWarrantyTextExperimentVariant = getExperimentVariant(
+    const homeWarrantyTextExperimentVariant = showDefaultVariant(
       'snd-homepage-complimentary-limited-warranty-vs-free-limited-warranty',
       store.experiments,
       store.query
     );
-    const deliveredToYouExperimentVariant = getExperimentVariant(
+    const deliveredToYouExperimentVariant = showDefaultVariant(
       'snd-homepage-delivered-right-to-you-vs-delivered-safely-to-you',
       store.experiments,
       store.query
