@@ -13,31 +13,29 @@ const gitHash = childProcess
 // TODO: remove once interchange (nginx) is setup locally
 const isProd = process.env.NODE_ENV === 'production';
 
-module.exports = withBundleAnalyzer(() => {
-  const config = {
-    env: {
-      SHORT_HASH: gitHash,
-    },
-    // assetPrefix: isProd ? `/home/${gitHash}` : '',
-    generateBuildId: () => gitHash,
-    /* Custom webpack configuration. */
-    webpack: (config) => {
-      /* Enable SVG imports. */
-      config.module.rules.push({
-        test: /\.svg$/,
-        use: ['@svgr/webpack', 'url-loader'],
-      });
-      /* Enable imports relative to the project root. */
-      config.resolve.modules.push(__dirname);
-      return config;
-    },
+const config = {
+  env: {
+    SHORT_HASH: gitHash,
+  },
+  // assetPrefix: isProd ? `/home/${gitHash}` : '',
+  generateBuildId: () => gitHash,
+  /* Custom webpack configuration. */
+  webpack: (config) => {
+    /* Enable SVG imports. */
+    config.module.rules.push({
+      test: /\.svg$/,
+      use: ['@svgr/webpack', 'url-loader'],
+    });
+    /* Enable imports relative to the project root. */
+    config.resolve.modules.push(__dirname);
+    return config;
+  },
+};
+
+if (isProd) {
+  config.experimental = {
+    basePath: `/${gitHash}`,
   };
+}
 
-  if (isProd) {
-    config.experimental = {
-      basePath: `/${gitHash}`,
-    };
-  }
-
-  return config;
-});
+module.exports = withBundleAnalyzer(config);
