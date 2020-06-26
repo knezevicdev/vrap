@@ -2,11 +2,10 @@ import { StandardFooter } from '@vroom-web/footer-components';
 import { InProgressDealBar, SimpleHeader } from '@vroom-web/header-components';
 import React from 'react';
 
-import CustomerQuote from './components/CustomerQuote';
 import Hero from './components/Hero';
 import Highlights from './components/Highlights';
-import HowItWorks from './components/HowItWorks';
 import JuneteenthBanner from './components/JuneteenthBanner';
+import QuoteHIW from './components/QuoteHIW';
 import Quotes from './components/Quotes';
 import Values from './components/Values';
 import WhoWeAre from './components/WhoWeAre';
@@ -25,8 +24,7 @@ const Home: React.FC = () => {
       <Hero />
       <Highlights />
       <Values />
-      <CustomerQuote />
-      <HowItWorks />
+      <QuoteHIW />
       <Quotes />
       <WhoWeAre />
       <StandardFooter />

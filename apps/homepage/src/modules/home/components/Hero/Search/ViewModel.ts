@@ -1,6 +1,6 @@
 import globalEnv from 'src/globalEnv';
 import AnalyticsHandler from 'src/integrations/AnalyticsHandler';
-import { getExperimentVariant } from 'src/integrations/experimentSDK';
+import { showDefaultVariant } from 'src/integrations/experimentSDK';
 import { HomeStore } from 'src/modules/home/store';
 
 interface Link {
@@ -23,7 +23,7 @@ class SearchViewModel {
   };
 
   constructor(store: HomeStore) {
-    const browseAllVehiclesTextExperimentVaraint = getExperimentVariant(
+    const browseAllVehiclesTextExperimentVaraint = showDefaultVariant(
       'snd-homepage-browse-all-low-mileage-vs-browse-our-low-mileage',
       store.experiments,
       store.query

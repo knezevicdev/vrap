@@ -3,7 +3,7 @@ import AnalyticsHandler, {
   VideoEvent,
   VideoProperties,
 } from 'src/integrations/AnalyticsHandler';
-import { getExperimentVariant } from 'src/integrations/experimentSDK';
+import { showDefaultVariant } from 'src/integrations/experimentSDK';
 import { HomeStore } from 'src/modules/home/store';
 
 interface Link {
@@ -40,7 +40,7 @@ class HowItWorksViewModel {
   private analyticsHandler: AnalyticsHandler = new AnalyticsHandler();
 
   constructor(store: HomeStore) {
-    const learnMoreLinkLabelExperimentVariant = getExperimentVariant(
+    const learnMoreLinkLabelExperimentVariant = showDefaultVariant(
       'snd-homepage-learn-more-vs-learn-more-about-vroom',
       store.experiments,
       store.query

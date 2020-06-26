@@ -1,7 +1,7 @@
 import { HomeStore } from '../../store';
 
 import globalEnv from 'src/globalEnv';
-import { getExperimentVariant } from 'src/integrations/experimentSDK';
+import { showDefaultVariant } from 'src/integrations/experimentSDK';
 
 interface Link {
   label: string;
@@ -24,7 +24,7 @@ class HeroViewModel {
   readonly sellTradeExperimentVariant: boolean;
 
   constructor(store: HomeStore) {
-    this.sellTradeExperimentVariant = getExperimentVariant(
+    this.sellTradeExperimentVariant = showDefaultVariant(
       'fit-homepage-selltrade',
       store.experiments,
       store.query
