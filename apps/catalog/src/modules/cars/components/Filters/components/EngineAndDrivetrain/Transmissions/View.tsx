@@ -7,7 +7,7 @@ import React from 'react';
 
 import TransmissionsViewModel from './ViewModel';
 
-import { Transmission } from 'src/modules/cars/utils/types';
+import { Transmission as FiltersDataTransmission } from 'src/modules/cars/utils/url';
 
 interface Props {
   viewModel: TransmissionsViewModel;
@@ -21,19 +21,25 @@ const Label = withStyles((theme) => ({
 
 const Transmissions: React.FC<Props> = ({ viewModel }) => {
   const onChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
-    const transmission = event.target.value as Transmission;
-    viewModel.handleClick(transmission);
+    const filtersDataValue = event.target.value as FiltersDataTransmission;
+    viewModel.handleRadioGroupChange(filtersDataValue);
   };
 
   return (
     <RadioGroup value={viewModel.getActiveTransmission()} onChange={onChange}>
-      {viewModel.values.map((transmission) => {
+      <Label
+        control={<Radio color="primary" />}
+        label={viewModel.allOption.display}
+        value={viewModel.allOption.value}
+      />
+      {viewModel.getTransmissions().map((transmission) => {
+        const { display, filtersDataValue } = transmission;
         return (
           <Label
-            key={transmission}
-            value={transmission}
+            key={display}
+            value={filtersDataValue}
             control={<Radio color="primary" />}
-            label={transmission}
+            label={display}
           />
         );
       })}

@@ -1,18 +1,20 @@
 import React from 'react';
 
-import InputsStore from '../../../Price/components/Inputs/store';
+import InputsStore from './store';
 import View from './View';
 import ViewModel from './ViewModel';
 
+import { MaxAndMin } from 'src/modules/cars/utils/url';
+
 interface InputsProps {
-  state: string[] | undefined;
-  onDone: (values: number[]) => void;
+  onChange: (value?: MaxAndMin) => void;
+  range: MaxAndMin;
+  value?: MaxAndMin;
 }
 
-const Inputs: React.FC<InputsProps> = (props) => {
-  const { state, onDone } = props;
-  const store = new InputsStore(state);
-  const viewModel = new ViewModel(store, onDone);
+const Inputs: React.FC<InputsProps> = ({ onChange, range, value }) => {
+  const store = new InputsStore(onChange, range, value);
+  const viewModel = new ViewModel(range, store);
   return <View viewModel={viewModel} />;
 };
 

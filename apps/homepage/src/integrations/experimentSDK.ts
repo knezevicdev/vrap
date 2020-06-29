@@ -3,7 +3,7 @@ import { Experiment } from 'vroom-abtesting-sdk/types';
 
 const experimentSDK = new ExperimentSDK();
 
-export const getExperimentVariant = (
+export const showDefaultVariant = (
   experimentId: string,
   experiments: Experiment[] | undefined,
   query: { [key: string]: string }

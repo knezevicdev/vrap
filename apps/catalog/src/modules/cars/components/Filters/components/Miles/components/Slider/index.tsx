@@ -4,17 +4,17 @@ import SliderStore from './store';
 import View from './View';
 import ViewModel from './ViewModel';
 
-import { MaxAndMin } from 'src/modules/cars/utils/types';
+import { MaxAndMin } from 'src/modules/cars/utils/url';
 
 interface SliderProps {
-  state: string | undefined;
   onDone: (miles: MaxAndMin) => void;
+  range: MaxAndMin;
+  state: string | undefined;
 }
 
-const Slider: React.FC<SliderProps> = (props) => {
-  const { state, onDone } = props;
-  const store = new SliderStore(state);
-  const viewModel = new ViewModel(store, onDone);
+const Slider: React.FC<SliderProps> = ({ onDone, range, state }) => {
+  const store = new SliderStore(range, state);
+  const viewModel = new ViewModel(onDone, range, store);
   return <View viewModel={viewModel} />;
 };
 

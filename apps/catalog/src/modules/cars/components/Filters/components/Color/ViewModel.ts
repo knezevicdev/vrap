@@ -1,95 +1,25 @@
+import { Color } from 'src/modules/cars/data';
 import { CarsStore } from 'src/modules/cars/store';
 import {
-  addToList,
-  removeFromList,
-  resetFilter,
-} from 'src/modules/cars/utils/navigation';
-import { Filters, FiltersData } from 'src/modules/cars/utils/types';
+  Color as FiltersDataColor,
+  Filters,
+  FiltersData,
+} from 'src/modules/cars/utils/url';
 
 class ColorViewModel {
   private readonly carsStore: CarsStore;
   readonly resetButtonLabel: string = 'Reset';
-  readonly colors = [
-    {
-      displayName: 'White',
-      url: 'white',
-      background: '#ffffff',
-    },
-    {
-      displayName: 'Black',
-      url: 'black',
-      background: '#041022',
-    },
-    {
-      displayName: 'Grey',
-      url: 'grey',
-      background: '#6c717a',
-    },
-    {
-      displayName: 'Silver',
-      url: 'silver',
-      background: '#d6d7da',
-    },
-    {
-      displayName: 'Red',
-      url: 'red',
-      background: '#e7131a',
-    },
-    {
-      displayName: 'Orange',
-      url: 'orange',
-      background: '#f26900',
-    },
-    {
-      displayName: 'Brown',
-      url: 'brown',
-      background: '#914915',
-    },
-    {
-      displayName: 'Gold',
-      url: 'gold',
-      background: '#F3D482',
-    },
-    {
-      displayName: 'Yellow',
-      url: 'yellow',
-      background: '#ffd400',
-    },
-    {
-      displayName: 'Green',
-      url: 'green',
-      background: '#308406',
-    },
-    {
-      displayName: 'Blue',
-      url: 'blue',
-      background: '#1960d0',
-    },
-    {
-      displayName: 'Purple',
-      url: 'purple',
-      background: '#8C3EA7',
-    },
-  ];
 
   constructor(carsStore: CarsStore) {
     this.carsStore = carsStore;
   }
 
-  handleClick = (color: string, isSelected: boolean) => (): void => {
-    const filtersData = this.carsStore.filtersData;
-    isSelected
-      ? removeFromList(Filters.COLORS, color, filtersData as FiltersData)
-      : addToList(Filters.COLORS, color, filtersData);
-  };
-
-  reset = (): void => {
-    const filtersData = this.carsStore.filtersData;
-    resetFilter(Filters.COLORS, filtersData as FiltersData);
+  getColors = (): Color[] => {
+    return this.carsStore.colors;
   };
 
   getItemInformation = (
-    url: string
+    filtersDataValue: FiltersDataColor
   ): {
     isSelected: boolean;
     fontWeight: string;
@@ -97,24 +27,109 @@ class ColorViewModel {
     isMetallic: boolean;
   } => {
     const filtersData = this.carsStore.filtersData;
-    const urlData =
+    const filtersDataColors =
       filtersData && filtersData[Filters.COLORS]
         ? filtersData[Filters.COLORS]
         : undefined;
-    const isSelected = urlData ? urlData.includes(url) : false;
+    const isSelected = filtersDataColors
+      ? filtersDataColors.includes(filtersDataValue)
+      : false;
     const fontWeight = isSelected ? 'fontWeightMedium' : 'fontWeightLight';
-    const hasBorder = url === 'white';
-    const isMetallic = url === 'silver' || url === 'gold';
+    const hasBorder = filtersDataValue === FiltersDataColor.WHITE;
+    const isMetallic =
+      filtersDataValue === FiltersDataColor.SILVER ||
+      filtersDataValue === FiltersDataColor.GOLD;
     return { isSelected, fontWeight, hasBorder, isMetallic };
+  };
+
+  private removeFiltersDataColor = (
+    filtersDataValue: FiltersDataColor,
+    filtersDataColors?: FiltersDataColor[]
+  ): FiltersDataColor[] | undefined => {
+    if (!filtersDataColors) {
+      return undefined;
+    }
+    if (!filtersDataColors.includes(filtersDataValue)) {
+      return undefined;
+    }
+    const updatedFiltersDataColors = filtersDataColors.filter(
+      (c) => c !== filtersDataValue
+    );
+    return updatedFiltersDataColors.length > 0
+      ? updatedFiltersDataColors
+      : undefined;
+  };
+
+  private addFiltersDataColor = (
+    filtersDataValue: FiltersDataColor,
+    filtersDataColors?: FiltersDataColor[]
+  ): FiltersDataColor[] | undefined => {
+    if (!filtersDataColors) {
+      return [filtersDataValue];
+    }
+    if (filtersDataColors.includes(filtersDataValue)) {
+      return filtersDataColors;
+    }
+    return [...filtersDataColors, filtersDataValue];
+  };
+
+  private getUpdatedFiltersDataColors(
+    filtersDataValue: FiltersDataColor,
+    isSelected: boolean,
+    filtersDataColors?: FiltersDataColor[]
+  ): FiltersDataColor[] | undefined {
+    if (isSelected) {
+      return this.removeFiltersDataColor(filtersDataValue, filtersDataColors);
+    }
+    return this.addFiltersDataColor(filtersDataValue, filtersDataColors);
+  }
+
+  handleListItemClick = (
+    filtersDataValue: FiltersDataColor,
+    isSelected: boolean
+  ) => (): void => {
+    const filtersData = this.carsStore.filtersData;
+    const filtersDataColors = filtersData
+      ? filtersData[Filters.COLORS]
+      : undefined;
+    const updatedFiltersDataColors = this.getUpdatedFiltersDataColors(
+      filtersDataValue,
+      isSelected,
+      filtersDataColors
+    );
+    const updatedFiltersData: FiltersData = {
+      ...filtersData,
+      [Filters.COLORS]: updatedFiltersDataColors,
+    };
+    this.carsStore.updateFiltersData(updatedFiltersData);
   };
 
   isResetDisabled = (): boolean => {
     const filtersData = this.carsStore.filtersData;
-    const urlData =
-      filtersData && filtersData[Filters.COLORS]
-        ? filtersData[Filters.COLORS]
-        : undefined;
-    return !urlData;
+    if (!filtersData) {
+      return true;
+    }
+    const filtersDataColors = filtersData[Filters.COLORS];
+    if (!filtersDataColors) {
+      return true;
+    }
+    return false;
+  };
+
+  reset = (): void => {
+    const filtersData = this.carsStore.filtersData;
+    if (!filtersData) {
+      return;
+    }
+    const filtersDataColors = filtersData[Filters.COLORS];
+    if (!filtersDataColors) {
+      return;
+    }
+    const updatedFiltersData: FiltersData = {
+      ...filtersData,
+      [Filters.COLORS]: undefined,
+    };
+    this.carsStore.updateFiltersData(updatedFiltersData);
   };
 }
 

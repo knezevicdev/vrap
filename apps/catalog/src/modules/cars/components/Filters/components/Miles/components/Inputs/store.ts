@@ -1,30 +1,38 @@
 import { action, observable } from 'mobx';
 
-import { range } from '../../ViewModel';
-
-import { MaxAndMin } from 'src/modules/cars/utils/types';
+import { MaxAndMin } from 'src/modules/cars/utils/url';
 
 class InputsStore {
   @observable value: string | undefined;
   @observable error = false;
-  onDone: (miles: MaxAndMin) => void;
+  onDone: (miles: MaxAndMin | undefined) => void;
+  range: MaxAndMin;
 
   constructor(
-    state: string | undefined,
-    onDone: (values: MaxAndMin | undefined) => void
+    onDone: (values: MaxAndMin | undefined) => void,
+    range: MaxAndMin,
+    state: string | undefined
   ) {
-    this.value = state;
     this.onDone = onDone;
+    this.range = range;
+    this.value = state;
   }
 
   @action
-  setValue = (value: number): void => {
-    const error = value < range.min || value > range.max;
-    this.value = value.toString();
+  setValue = (value: string): void => {
+    if (value === '') {
+      this.error = false;
+      this.value = '';
+      this.onDone(undefined);
+      return;
+    }
+    const intValue = parseInt(value);
+    const error =
+      isNaN(intValue) || intValue < this.range.min || intValue > this.range.max;
     this.error = error;
-
+    this.value = value.toString();
     if (!error) {
-      this.onDone({ min: 0, max: value });
+      this.onDone({ min: 0, max: intValue });
     }
   };
 }

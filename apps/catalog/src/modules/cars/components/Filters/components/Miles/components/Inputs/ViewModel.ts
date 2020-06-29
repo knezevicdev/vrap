@@ -5,6 +5,7 @@ class InputsViewModel {
   readonly errorLabel: string =
     'Please enter a mileage less than or equal to 200,000';
   readonly placeholder: string = 'No Maximum';
+  readonly inputLabel: string = 'Mileage Maximum';
 
   constructor(store: InputsStore) {
     this.store = store;
@@ -18,7 +19,7 @@ class InputsViewModel {
     return this.store.error;
   };
 
-  setValue = (value: number): void => {
+  setValue = (value: string): void => {
     this.store.setValue(value);
   };
 }

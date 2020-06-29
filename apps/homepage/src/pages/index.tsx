@@ -44,7 +44,7 @@ const HomePage: NextPage<Props> = ({
 HomePage.getInitialProps = async (ctx: NextPageContext): Promise<Props> => {
   const title = 'Vroom: Buy, Sell or Trade-In Used Vehicles Online';
   const description =
-    'Buy, sell or trade-in a certified used car online from anywhere in the USA. We offer no-haggle car buying, top quality cars, full warranties & home shipping.';
+    'Buy, sell or trade-in your car entirely online, from the comfort of your home. No haggle, no pressure. Easy online financing available. Browse thousands of high-quality cars, and have it delivered straight to you.';
   const cookies = parseCookies(ctx);
   const marketingId = cookies['uuid'];
   const experiments = await experimentSDK.getRunningExperiments(marketingId);

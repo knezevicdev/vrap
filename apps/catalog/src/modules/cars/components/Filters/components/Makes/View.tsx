@@ -23,35 +23,34 @@ interface Props {
 }
 
 const MakesView: React.FC<Props> = ({ viewModel }) => {
-  const onMakeClick = (make: string) => (): void => {
-    viewModel.setMakesVisibility(make);
+  const handleMakeClick = (make: string) => (): void => {
+    viewModel.toggleMakesVisibility(make);
   };
 
-  const onShowClick = (): void => {
-    viewModel.setShowMore();
+  const handleShowMoreClick = (): void => {
+    viewModel.toggleShowMore();
   };
 
   return (
     <StyledList>
       {viewModel.getMakes().map((make) => {
-        const { isSelected, models } = viewModel.getMakeData(make);
-
+        const { display, slug, isSelected, models } = make;
         return (
-          <div key={make}>
-            <StyledListItem button onClick={onMakeClick(make)}>
+          <div key={display}>
+            <StyledListItem button onClick={handleMakeClick(slug)}>
               <Typography
                 fontWeight={isSelected ? 'fontWeightMedium' : 'fontWeightLight'}
               >
-                {make}
+                {display}
               </Typography>
             </StyledListItem>
             <Collapse in={isSelected} timeout="auto" unmountOnExit>
-              <Models make={make} models={models} />
+              <Models makeSlug={slug} models={models} />
             </Collapse>
           </div>
         );
       })}
-      <StyledListItem button onClick={onShowClick}>
+      <StyledListItem button onClick={handleShowMoreClick}>
         <Typography
           variant="body1"
           fontWeight="fontWeightMedium"

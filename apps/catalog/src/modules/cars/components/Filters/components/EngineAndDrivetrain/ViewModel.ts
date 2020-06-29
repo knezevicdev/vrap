@@ -1,35 +1,35 @@
 import { CarsStore } from 'src/modules/cars/store';
-import { resetEngineAndDrivetrain } from 'src/modules/cars/utils/navigation';
-import { Filters } from 'src/modules/cars/utils/types';
+import { Filters, FiltersData } from 'src/modules/cars/utils/url';
 
 class EngineAndDrivetrainViewModel {
   private readonly carsStore: CarsStore;
+
+  readonly transmissionFilterLabel: string = 'Transmission';
+  readonly driveTypeFilterLabel: string = 'Drive Type';
   readonly resetButtonLabel: string = 'Reset';
 
   constructor(carsStore: CarsStore) {
     this.carsStore = carsStore;
   }
 
-  isDisabled = (): boolean => {
+  isResetButtonDisabled = (): boolean => {
     const filtersData = this.carsStore.filtersData;
-    const transmissionFromURL =
-      filtersData && filtersData[Filters.TRANSMISSION];
-
-    const driveTypesFromUrl = filtersData && filtersData[Filters.DRIVE_TYPE];
-
-    return (
-      !transmissionFromURL && transmissionFromURL !== 0 && !driveTypesFromUrl
-    );
+    if (!filtersData) {
+      return true;
+    }
+    const filtersDataDriveType = filtersData[Filters.DRIVE_TYPE];
+    const filtersDataTransmission = filtersData[Filters.TRANSMISSION];
+    return !filtersDataDriveType && !filtersDataTransmission;
   };
 
   reset = (): void => {
     const filtersData = this.carsStore.filtersData;
-    const updatedFilters = {
+    const updatedFiltersData: FiltersData = {
       ...filtersData,
       [Filters.DRIVE_TYPE]: undefined,
       [Filters.TRANSMISSION]: undefined,
     };
-    resetEngineAndDrivetrain(updatedFilters);
+    this.carsStore.updateFiltersData(updatedFiltersData);
   };
 }
 

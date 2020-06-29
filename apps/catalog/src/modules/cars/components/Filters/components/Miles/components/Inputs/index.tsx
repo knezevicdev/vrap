@@ -4,16 +4,16 @@ import InputsStore from './store';
 import View from './View';
 import ViewModel from './ViewModel';
 
-import { MaxAndMin } from 'src/modules/cars/utils/types';
+import { MaxAndMin } from 'src/modules/cars/utils/url';
 
 interface InputsProps {
-  state: string | undefined;
   onDone: (values: MaxAndMin | undefined) => void;
+  range: MaxAndMin;
+  state: string | undefined;
 }
 
-const Inputs: React.FC<InputsProps> = (props) => {
-  const { state, onDone } = props;
-  const store = new InputsStore(state, onDone);
+const Inputs: React.FC<InputsProps> = ({ onDone, range, state }) => {
+  const store = new InputsStore(onDone, range, state);
   const viewModel = new ViewModel(store);
   return <View viewModel={viewModel} />;
 };

@@ -4,8 +4,8 @@ import { StandardFooter } from '@vroom-web/footer-components';
 import { SimpleHeader } from '@vroom-web/header-components';
 import React from 'react';
 
-import Filters from 'src/modules/cars/components/Filters';
-import Inventory from 'src/modules/cars/components/Inventory';
+import Filters from './components/Filters';
+// import Inventory from 'src/modules/cars/components/Inventory';
 
 const StyledGrid = styled(Grid)(() => ({
   flexGrow: 1,
@@ -17,7 +17,7 @@ const Cars: React.FC = () => {
       <SimpleHeader />
       <StyledGrid container direction="row" wrap="nowrap">
         <Filters />
-        <Inventory />
+        {/* <Inventory /> */}
       </StyledGrid>
       <StandardFooter />
     </>

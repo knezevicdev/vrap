@@ -1,26 +1,37 @@
-import { range } from '../../ViewModel';
 import SliderStore from './store';
 
-import { MaxAndMin } from 'src/modules/cars/utils/types';
+import { MaxAndMin } from 'src/modules/cars/utils/url';
 
 class SliderViewModel {
+  private onChange: (price?: MaxAndMin) => void;
   private readonly store: SliderStore;
-  readonly min: number = range.min;
-  readonly max: number = range.max;
-  onDone: (price: MaxAndMin) => void;
+  readonly range: MaxAndMin;
 
-  constructor(store: SliderStore, onDone: (price: MaxAndMin) => void) {
+  constructor(
+    onChange: (price?: MaxAndMin) => void,
+    range: MaxAndMin,
+    store: SliderStore
+  ) {
+    this.onChange = onChange;
+    this.range = range;
     this.store = store;
-    this.onDone = onDone;
   }
-
-  setValues = (values: MaxAndMin): void => {
-    this.store.setValues(values);
-  };
 
   getValues = (): number[] => {
     const values = this.store.values;
     return [values.min, values.max];
+  };
+
+  handleSliderChange = (values: MaxAndMin): void => {
+    this.store.setValues(values);
+  };
+
+  handleSliderChangeCommitted = (values: MaxAndMin): void => {
+    if (values.min === this.range.min && values.max === this.range.max) {
+      this.onChange(undefined);
+    } else {
+      this.onChange(values);
+    }
   };
 }
 

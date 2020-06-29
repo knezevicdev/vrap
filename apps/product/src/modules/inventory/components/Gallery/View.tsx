@@ -6,7 +6,9 @@ import { observer } from 'mobx-react';
 import React, { useRef, useState } from 'react';
 import ImageGallery from 'react-image-gallery';
 
-import NoImagesView from './NoImagesView';
+import ListView from './components/ListView';
+import NoImagesView from './components/NoImagesView';
+import GallerySelect from './components/Select';
 import ViewModel from './ViewModel';
 
 import Container from 'src/ui/Container';
@@ -35,28 +37,27 @@ const GalleryView: React.FC<Props> = (props) => {
   const isMobile = useMediaQuery(theme.breakpoints.down('xs'));
 
   const imageGalleryRef = useRef<LocalImageGallery>(null);
-  const handleClick = (): void => {
-    if (imageGalleryRef.current && !isMobile) {
-      imageGalleryRef.current.toggleFullScreen();
-    }
-  };
 
   const handleFullscreen = (): void => {
     setFullscreen(!fullscreen);
+  };
+
+  const handleClick = (): void => {
+    isMobile && viewModel.setListView();
   };
 
   if (viewModel.hasNoImages()) {
     return <NoImagesView viewModel={viewModel} />;
   }
 
+  if (viewModel.isListView()) {
+    return <ListView viewModel={viewModel} />;
+  }
+
   return (
     <>
-      <Box
-        bgcolor={
-          viewModel.showBanner() ? theme.palette.background.paper : 'grey.400'
-        }
-        className={viewModel.showBanner() ? 'stock-photos' : ''}
-      >
+      <GallerySelect product={viewModel.getCurrentProduct()} />
+      <Box className={viewModel.showBanner() ? 'stock-photos' : ''}>
         <Typography
           component="span"
           variant="body1"
@@ -64,15 +65,18 @@ const GalleryView: React.FC<Props> = (props) => {
         >
           <ImageGallery
             ref={imageGalleryRef}
-            items={viewModel.getImages()}
+            items={viewModel.getGalleryImages()}
             showPlayButton={false}
             showNav={!isMobile}
-            showThumbnails={!isMobile || fullscreen}
-            thumbnailPosition={isMobile || fullscreen ? 'bottom' : 'right'}
+            showThumbnails={viewModel.showThumbnails(isMobile)}
+            thumbnailPosition={viewModel.getThumbnailPosition(
+              isMobile,
+              fullscreen
+            )}
             showFullscreenButton={!isMobile}
             indexSeparator={viewModel.indexSeparator}
             useBrowserFullscreen={false}
-            showIndex={true}
+            showIndex={viewModel.showIndex()}
             onErrorImageURL={viewModel.defaultImage.src}
             onScreenChange={handleFullscreen}
             onClick={handleClick}

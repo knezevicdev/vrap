@@ -1,5 +1,8 @@
+import { HomeStore } from '../../store';
+
 import globalEnv from 'src/globalEnv';
 import AnalyticsHandler from 'src/integrations/AnalyticsHandler';
+import { showDefaultVariant } from 'src/integrations/experimentSDK';
 
 interface Highlight {
   description: string;
@@ -9,11 +12,10 @@ interface Highlight {
 }
 
 class HighlightsViewModel {
-  readonly ctaLabel: string = 'SHOP NOW';
+  ctaLabel: string;
   readonly highlights: Highlight[] = [
     {
-      description:
-        'Multiple inspections. Free CARFAX® history report. Complimentary limited\xa0warranty.',
+      description: '',
       imgAlt: 'High-Quality Cars',
       imgSrc: `${globalEnv.CDN_URL}/modules/home/images/highlight-1.png`,
       title: 'High-Quality Cars',
@@ -30,14 +32,35 @@ class HighlightsViewModel {
         'Get your car or truck shipped to your home or a convenient nearby\xa0location.',
       imgAlt: 'Delivered Right to You',
       imgSrc: `${globalEnv.CDN_URL}/modules/home/images/highlight-3.png`,
-      title: 'Delivered Right to You',
+      title: '',
     },
   ];
 
-  private analyticsHandler: AnalyticsHandler;
+  private analyticsHandler: AnalyticsHandler = new AnalyticsHandler();
 
-  constructor() {
-    this.analyticsHandler = new AnalyticsHandler();
+  constructor(store: HomeStore) {
+    const homeWarrantyTextExperimentVariant = showDefaultVariant(
+      'snd-homepage-complimentary-limited-warranty-vs-free-limited-warranty',
+      store.experiments,
+      store.query
+    );
+    const deliveredToYouExperimentVariant = showDefaultVariant(
+      'snd-homepage-delivered-right-to-you-vs-delivered-safely-to-you',
+      store.experiments,
+      store.query
+    );
+    const homeShopButtonDefaultVariant = showDefaultVariant(
+      'snd-homepage-shop-now-vs-shop-vehicles',
+      store.experiments,
+      store.query
+    );
+    this.ctaLabel = `SHOP ${homeShopButtonDefaultVariant ? 'NOW' : 'VEHICLES'}`;
+    this.highlights[0].description = `Multiple inspections. Free CARFAX® history report. ${
+      homeWarrantyTextExperimentVariant ? 'Complimentary' : 'Free'
+    } limited\xa0warranty.`;
+    this.highlights[2].title = `Delivered ${
+      deliveredToYouExperimentVariant ? 'Right' : 'Safely'
+    } to You`;
   }
 
   handleButtonClick(): void {

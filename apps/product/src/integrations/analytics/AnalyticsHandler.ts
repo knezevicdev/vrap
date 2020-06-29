@@ -22,6 +22,8 @@ export interface Product {
   url?: string;
   vin: string;
   year: number;
+  defectPhotos?: boolean;
+  hasStockPhotos?: boolean;
 }
 
 interface Filter {
@@ -117,6 +119,27 @@ class AnalyticsHandler {
     const event = 'Product Added';
     const category = 'Product';
     const properties = { ...product, category };
+    this.track(event, properties);
+  }
+
+  trackGallerySelection(product: Product, selection: string): void {
+    const event = `${selection} Button Clicked`;
+    const category = 'Product';
+    const properties = { product, category };
+    this.track(event, properties);
+  }
+
+  trackConditionCTA(): void {
+    const event = 'Condition CTA Clicked';
+    const category = 'Product';
+    const properties = { category };
+    this.track(event, properties);
+  }
+
+  trackGalleryListView(product: Product, selection: string): void {
+    const event = `${selection} Image List Viewed`;
+    const category = 'Product';
+    const properties = { product, category };
     this.track(event, properties);
   }
 }

@@ -13,23 +13,37 @@ const StyledList = styled(List)(() => ({
 }));
 
 interface Props {
-  models: string[];
   viewModel: ModelsViewModel;
 }
 
-const ModelsView: React.FC<Props> = ({ models, viewModel }) => {
+const ModelsView: React.FC<Props> = ({ viewModel }) => {
+  const allModel = viewModel.getAllModel();
   return (
     <StyledList>
-      {models.map((model) => {
-        const { display, isSelected } = viewModel.getModelInfo(model);
+      <ListItem
+        key={allModel.display}
+        button
+        onClick={viewModel.handleClick(allModel.slug, allModel.isSelected)}
+      >
+        <Typography
+          fontWeight={
+            allModel.isSelected ? 'fontWeightSemibold' : 'fontWeightLight'
+          }
+        >
+          {allModel.display}
+        </Typography>
+      </ListItem>
+      {viewModel.models.map((model) => {
+        const { display, slug } = model;
+        const isSelected = viewModel.isSelected(slug);
         return (
           <ListItem
-            key={model}
+            key={display}
             button
-            onClick={viewModel.onClick(model, isSelected)}
+            onClick={viewModel.handleClick(slug, isSelected)}
           >
             <Typography
-              fontWeight={isSelected ? 'fontWeightMedium' : 'fontWeightLight'}
+              fontWeight={isSelected ? 'fontWeightSemibold' : 'fontWeightLight'}
             >
               {display}
             </Typography>

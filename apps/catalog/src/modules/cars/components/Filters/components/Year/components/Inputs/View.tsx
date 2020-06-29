@@ -1,5 +1,5 @@
+import OutlinedInput from '@material-ui/core/OutlinedInput';
 import { styled } from '@material-ui/core/styles';
-import TextField from '@material-ui/core/TextField';
 import { observer } from 'mobx-react';
 import React from 'react';
 
@@ -17,12 +17,20 @@ const InputsContainer = styled('div')(() => ({
   justifyContent: 'space-around',
 }));
 
-const Input = styled(TextField)(() => ({
-  width: '66px',
+const Input = styled(OutlinedInput)(({ theme }) => ({
+  width: theme.spacing(12),
+  height: theme.spacing(5),
+  fontSize: '12px',
+  '& .MuiTypography-colorTextSecondary': {
+    color: theme.palette.text.primary,
+  },
+  '& .MuiOutlinedInput-adornedStart': {
+    paddingLeft: theme.spacing(1),
+  },
 }));
 
-const Error = styled(Typography)(() => ({
-  marginBottom: '16px',
+const Error = styled(Typography)(({ theme }) => ({
+  marginBottom: theme.spacing(2),
   lineHeight: '1.4',
   textAlign: 'center',
 }));
@@ -32,23 +40,25 @@ interface InputsViewProps {
 }
 
 const InputsView: React.FC<InputsViewProps> = ({ viewModel }) => {
-  const onMinChange = (event: object): void => {
-    const {
-      target: { value },
-    } = event as React.ChangeEvent<HTMLSelectElement>;
-    viewModel.setValues([value, viewModel.getMax()]);
+  const handleMinInputChange = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ): void => {
+    const value = event.target.value;
+    viewModel.handleMinInputChange(value);
   };
 
-  const onMaxChange = (event: object): void => {
-    const {
-      target: { value },
-    } = event as React.ChangeEvent<HTMLSelectElement>;
-    viewModel.setValues([viewModel.getMin(), value]);
+  const handleMaxInputChange = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ): void => {
+    const value = event.target.value;
+    viewModel.handleMaxInputChange(value);
   };
+
+  const hasError = viewModel.hasError();
 
   return (
     <ContainerForErrorAndInputs>
-      {viewModel.getError() && (
+      {hasError && (
         <Error variant="body1" color="error.main">
           {viewModel.errorLabel}
         </Error>
@@ -56,20 +66,16 @@ const InputsView: React.FC<InputsViewProps> = ({ viewModel }) => {
 
       <InputsContainer>
         <Input
-          size="small"
-          variant="outlined"
-          error={viewModel.getError()}
+          error={hasError}
           value={viewModel.getMin()}
-          onChange={onMinChange}
-          placeholder={viewModel.leftPlaceholder}
+          onChange={handleMinInputChange}
+          placeholder={viewModel.minInputPlaceholder}
         />
         <Input
-          size="small"
-          variant="outlined"
-          error={viewModel.getError()}
+          error={hasError}
           value={viewModel.getMax()}
-          onChange={onMaxChange}
-          placeholder={viewModel.rightPlaceholder}
+          onChange={handleMaxInputChange}
+          placeholder={viewModel.maxInputPlaceholder}
         />
       </InputsContainer>
     </ContainerForErrorAndInputs>

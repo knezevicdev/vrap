@@ -22,7 +22,7 @@ const Slider: React.FC<SliderViewProps> = ({ viewModel }) => {
     newValue: number | number[]
   ): void => {
     const values = newValue as number[];
-    viewModel.setValues(values);
+    viewModel.handleSliderChange({ min: values[0], max: values[1] });
   };
 
   const onChangeCommitted = (
@@ -30,16 +30,17 @@ const Slider: React.FC<SliderViewProps> = ({ viewModel }) => {
     newValue: number | number[]
   ): void => {
     const values = newValue as number[];
-    viewModel.onDone(values);
+    viewModel.handleSliderChangeCommitted({ min: values[0], max: values[1] });
   };
 
   return (
     <StyledSlider
       ValueLabelComponent={SliderValueLabel}
       valueLabelDisplay="auto"
-      min={viewModel.min}
-      max={viewModel.max}
+      min={viewModel.range.min}
+      max={viewModel.range.max}
       value={viewModel.getValues()}
+      step={1}
       onChange={handleChange}
       onChangeCommitted={onChangeCommitted}
     />

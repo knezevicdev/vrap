@@ -33,6 +33,7 @@ class InventoryViewModel {
       model,
       vin,
       year,
+      defectPhotos,
     } = this.store.vehicle._source;
     const name = `${year} ${make} ${model}`;
     const product: Product = {
@@ -46,6 +47,7 @@ class InventoryViewModel {
       sku,
       vin,
       year,
+      defectPhotos: !!defectPhotos,
     };
     this.analyticsHandler.trackProductViewed(product);
   }

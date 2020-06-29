@@ -40,30 +40,33 @@ export interface Props {
 const ColorView: React.FC<Props> = ({ viewModel }) => {
   return (
     <StyledList>
-      {viewModel.colors.map((color) => {
-        const { displayName, url, background } = color;
+      {viewModel.getColors().map((color) => {
+        const { display, filtersDataValue, value } = color;
         const {
           isSelected,
           fontWeight,
           hasBorder,
           isMetallic,
-        } = viewModel.getItemInformation(url);
+        } = viewModel.getItemInformation(filtersDataValue);
         return (
           <StyledListItem
-            key={displayName}
+            key={display}
             button
-            onClick={viewModel.handleClick(url, isSelected)}
+            onClick={viewModel.handleListItemClick(
+              filtersDataValue,
+              isSelected
+            )}
           >
             <Circle
               style={{
-                backgroundColor: background,
+                backgroundColor: value,
                 border: hasBorder ? 'solid 1px #041022' : 'none',
                 backgroundImage: isMetallic
                   ? 'linear-gradient(224deg, rgba(255,255,255,0.50) 0%, rgba(0,0,0,0.50) 100%)'
                   : 'none',
               }}
             />
-            <Typography fontWeight={fontWeight}>{displayName}</Typography>
+            <Typography fontWeight={fontWeight}>{display}</Typography>
             {isSelected && <StyledCheck fontSize="small" color="secondary" />}
           </StyledListItem>
         );

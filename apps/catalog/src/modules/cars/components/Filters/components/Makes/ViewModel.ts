@@ -1,7 +1,13 @@
 import { CarsStore } from '../../../../store';
+import { Model } from './components/Models/ViewModel';
 import MakesStore from './store';
 
-import { ALL_KEY } from 'src/modules/cars/utils/types';
+interface Make {
+  display: string;
+  slug: string;
+  isSelected: boolean;
+  models: Model[];
+}
 
 class MakesViewModel {
   private readonly carsStore: CarsStore;
@@ -12,43 +18,40 @@ class MakesViewModel {
     this.makesStore = makesStore;
   }
 
-  getMakes = (): string[] => {
-    if (this.carsStore.makeAndModelsData) {
-      const makes = Object.keys(this.carsStore.makeAndModelsData);
-      return this.makesStore.showMore ? makes : makes.slice(0, 10);
-    } else {
+  getMakes = (): Make[] => {
+    if (!this.carsStore.makeBuckets) {
       return [];
     }
-  };
 
-  getMakeData = (make: string): { isSelected: boolean; models: string[] } => {
-    if (this.carsStore.makeAndModelsData) {
-      const isSelected = this.makesStore.makesVisibility.indexOf(make) > -1;
-      const models = this.carsStore.makeAndModelsData[make].slice().sort();
-      const allModelIndex = models.findIndex(
-        (m) => m.toLowerCase() === ALL_KEY
-      );
-      if (allModelIndex !== 0) {
-        const allModel = models[allModelIndex];
-        models.splice(allModelIndex, 1);
-        models.splice(0, 0, allModel);
-      }
-      return { isSelected, models };
-    } else {
-      return { isSelected: false, models: [] };
-    }
+    const makes: Make[] = this.carsStore.makeBuckets
+      .slice()
+      .sort((a, b) => {
+        return a.key > b.key ? 1 : -1;
+      })
+      .map((makeBucket) => ({
+        display: makeBucket.key,
+        slug: makeBucket.slug,
+        isSelected:
+          this.makesStore.makesVisibility.indexOf(makeBucket.slug) > -1,
+        models: makeBucket.model_count.buckets.map((modelBucket) => ({
+          display: modelBucket.key,
+          slug: modelBucket.slug,
+        })),
+      }));
+
+    return this.makesStore.showMore ? makes : makes.slice(0, 10);
   };
 
   getShowMoreLabel = (): string => {
     return this.makesStore.showMore ? 'Show Less' : 'Show More';
   };
 
-  setShowMore = (): void => {
-    this.makesStore.setShowMore();
+  toggleShowMore = (): void => {
+    this.makesStore.toggleShowMore();
   };
 
-  setMakesVisibility = (make: string): void => {
-    this.makesStore.setMakesVisibility(make);
+  toggleMakesVisibility = (make: string): void => {
+    this.makesStore.toggleMakesVisibility(make);
   };
 }
 
