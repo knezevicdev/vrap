@@ -12,7 +12,7 @@ interface Highlight {
 }
 
 class HighlightsViewModel {
-  readonly ctaLabel: string = 'SHOP NOW';
+  ctaLabel: string;
   readonly highlights: Highlight[] = [
     {
       description: '',
@@ -49,6 +49,12 @@ class HighlightsViewModel {
       store.experiments,
       store.query
     );
+    const homeShopButtonDefaultVariant = showDefaultVariant(
+      'snd-homepage-shop-now-vs-shop-vehicles',
+      store.experiments,
+      store.query
+    );
+    this.ctaLabel = `SHOP ${homeShopButtonDefaultVariant ? 'NOW' : 'VEHICLES'}`;
     this.highlights[0].description = `Multiple inspections. Free CARFAX® history report. ${
       homeWarrantyTextExperimentVariant ? 'Complimentary' : 'Free'
     } limited\xa0warranty.`;
