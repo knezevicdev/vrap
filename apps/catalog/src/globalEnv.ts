@@ -5,6 +5,7 @@ export interface GlobalEnv {
   INVSEARCH_V3_URL?: string;
   NAME?: string;
   VERSION?: string;
+  SHORT_HASH?: string;
 }
 
 declare global {
@@ -16,5 +17,9 @@ declare global {
 const globalEnv: GlobalEnv | NodeJS.ProcessEnv = process.browser
   ? window.__GLOBAL_ENV__
   : { ...process.env, NAME: name, VERSION: version };
+
+if (globalEnv.CDN_URL && process.env.SHORT_HASH) {
+  globalEnv.CDN_URL = `${globalEnv.CDN_URL}/${process.env.SHORT_HASH}`;
+}
 
 export default globalEnv;

@@ -7,6 +7,9 @@ const gitHash = childProcess.execSync('git rev-parse HEAD').toString().trim();
 const isProd = process.env.NODE_ENV === 'production';
 
 module.exports = {
+  env: {
+    SHORT_HASH: gitHash,
+  },
   assetPrefix: isProd ? '/catalog' : '',
   experimental: {
     // By enabling optional catch all routes, we are able to have a single route for the catalog page.
