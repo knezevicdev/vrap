@@ -222,7 +222,7 @@ workflows:
         name: homepage_deploy_<< matrix.env >>
         requires:
         - hold_<< matrix.env >>
-        s3: s3://static-assets.n.vroom.systems/homepage/<< matrix.env >>
+        s3: s3://static-assets.n.vroom.systems/homepage
     - hold:
         filters:
           branches:
@@ -246,6 +246,6 @@ workflows:
         name: homepage_deploy_prod
         requires:
         - hold_prod
-        s3: s3://static-assets.p.vroom.systems
+        s3: s3://static-assets.p.vroom.systems/homepage
   version: 2
 
