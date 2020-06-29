@@ -84,6 +84,10 @@ class NavigationViewModel {
             label: 'How It Works',
             href: `/how-it-works`,
           },
+          {
+            label: 'Investor Relations',
+            href: `https://ir.vroom.com`,
+          },
         ],
       },
       {
