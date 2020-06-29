@@ -12,7 +12,6 @@ import Document, {
 import React from 'react';
 
 import globalEnv from '../../globalEnv';
-// import DataDogSnippet from './DataDogSnippet';
 import FaviconSnippet from './FaviconSnippet';
 import FontsSnippet from './FontsSnippet';
 import GlobalEnvSnippet from './GlobalEnvSnippet';
@@ -75,11 +74,6 @@ class VroomDocument extends Document {
             }
           />
           <ModernizrSnippet />
-          {/* {process.env.DATA_DOG_LOG_COLLECTION_TOKEN && (
-            <DataDogSnippet
-              clientToken={process.env.DATA_DOG_LOG_COLLECTION_TOKEN}
-            />
-          )} */}
         </Head>
         <body>
           <Main />

@@ -25,7 +25,10 @@ class VroomApp extends App {
         sampleRate: 100,
         silentMultipleInit: true,
       };
-      const context = { service: 'vroom-web-homepage' };
+      const context = {
+        service: 'vroom-web-homepage',
+        host: window.location.host,
+      };
       datadogLogs.init(init);
       datadogLogs.setLoggerGlobalContext(context);
     }
