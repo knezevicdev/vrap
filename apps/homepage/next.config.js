@@ -17,7 +17,6 @@ const config = {
   env: {
     SHORT_HASH: gitHash,
   },
-  // assetPrefix: isProd ? `/hp/${gitHash}` : '',
   assetPrefix: isProd ? `/hp` : '',
   generateBuildId: () => gitHash,
   /* Custom webpack configuration. */
