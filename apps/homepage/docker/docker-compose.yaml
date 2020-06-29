@@ -11,7 +11,7 @@ services:
       - GEARBOX_PUBLIC_URL=https://gearbox-dev-int.vroomapi.com/query-public
       - INVSEARCH_V3_URL=https://invsearch-v3-prod-ext.aws.vroomapi.com/v3
       - SEGMENT_WRITE_KEY=N0pxERRIw4iYCoxZREMZj1yWBIoARIz4
-      - DATA_DOG_LOG_COLLECTION_TOKEN=
+      - DATA_DOG_LOG_COLLECTION_TOKEN=pubb20b42f026cc404ce1fe7588cdf993d8
     command: ash -c "yarn workspace @vroom-web/homepage dev --port 8080"
     # This starts nothing but leaves the container running, useful for
     # debugging nextjs start / config operations
