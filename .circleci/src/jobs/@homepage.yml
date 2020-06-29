@@ -45,7 +45,6 @@ homepage_deploy:
         command: |-
           sudo apt-get install python-pip && pip install awscli
 
-          # SHORT_HASH=$(echo $CIRCLE_SHA1 | cut -c -7)
           SHORT_HASH=$(git rev-parse --short HEAD)
 
           aws s3 sync ./apps/homepage/public << parameters.s3 >>/$SHORT_HASH --acl public-read --exclude '*.webp' --exclude '*.mp4'
