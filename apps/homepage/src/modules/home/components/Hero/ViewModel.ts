@@ -32,9 +32,9 @@ class HeroViewModel {
       store.query
     );
     this.car = {
-      src: priusVsf150ImageDefaultVariant
-        ? `${globalEnv.CDN_URL}/modules/home/images/prius.png`
-        : 'https://assets.vroomcdn.com/static-rebrand/marketing/finance/hero/ford.png',
+      src: `${globalEnv.CDN_URL}/modules/home/images/${
+        priusVsf150ImageDefaultVariant ? 'prius' : 'ford'
+      }.png`,
       alt: priusVsf150ImageDefaultVariant ? 'Prius' : 'F-150',
     };
   }
