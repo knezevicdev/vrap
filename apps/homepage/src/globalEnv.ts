@@ -3,6 +3,7 @@ export interface GlobalEnv {
   GEARBOX_PRIVATE_URL?: string;
   GEARBOX_PUBLIC_URL?: string;
   INVSEARCH_V3_URL?: string;
+  DATA_DOG_LOG_COLLECTION_TOKEN?: string;
 }
 
 declare global {

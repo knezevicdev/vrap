@@ -12,6 +12,7 @@ import Document, {
 import React from 'react';
 
 import globalEnv from '../../globalEnv';
+// import DataDogSnippet from './DataDogSnippet';
 import FaviconSnippet from './FaviconSnippet';
 import FontsSnippet from './FontsSnippet';
 import GlobalEnvSnippet from './GlobalEnvSnippet';
@@ -69,8 +70,16 @@ class VroomDocument extends Document {
             GEARBOX_PRIVATE_URL={globalEnv.GEARBOX_PRIVATE_URL}
             GEARBOX_PUBLIC_URL={globalEnv.GEARBOX_PUBLIC_URL}
             INVSEARCH_V3_URL={globalEnv.INVSEARCH_V3_URL}
+            DATA_DOG_LOG_COLLECTION_TOKEN={
+              globalEnv.DATA_DOG_LOG_COLLECTION_TOKEN
+            }
           />
           <ModernizrSnippet />
+          {/* {process.env.DATA_DOG_LOG_COLLECTION_TOKEN && (
+            <DataDogSnippet
+              clientToken={process.env.DATA_DOG_LOG_COLLECTION_TOKEN}
+            />
+          )} */}
         </Head>
         <body>
           <Main />
