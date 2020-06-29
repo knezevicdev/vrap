@@ -17,10 +17,6 @@ class SearchViewModel {
     href: '/catalog',
     label: '',
   };
-  readonly car: { src: string; alt: string } = {
-    src: `${globalEnv.CDN_URL}/modules/home/images/prius.png`,
-    alt: 'Prius',
-  };
 
   constructor(store: HomeStore) {
     const browseAllVehiclesTextExperimentVaraint = showDefaultVariant(

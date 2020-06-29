@@ -17,10 +17,7 @@ class HeroViewModel {
     label: 'Learn\xa0More',
   };
   readonly mobileButtonLabel: string = 'Browse All Vehicles';
-  readonly car: { src: string; alt: string } = {
-    src: `${globalEnv.CDN_URL}/modules/home/images/prius.png`,
-    alt: 'Prius',
-  };
+  car: { src: string; alt: string };
   readonly sellTradeExperimentVariant: boolean;
 
   constructor(store: HomeStore) {
@@ -29,6 +26,17 @@ class HeroViewModel {
       store.experiments,
       store.query
     );
+    const priusVsf150ImageDefaultVariant = showDefaultVariant(
+      'snd-homepage-prius-vs-f150',
+      store.experiments,
+      store.query
+    );
+    this.car = {
+      src: priusVsf150ImageDefaultVariant
+        ? `${globalEnv.CDN_URL}/modules/home/images/prius.png`
+        : 'https://assets.vroomcdn.com/static-rebrand/marketing/finance/hero/ford.png',
+      alt: priusVsf150ImageDefaultVariant ? 'Prius' : 'F-150',
+    };
   }
 }
 
