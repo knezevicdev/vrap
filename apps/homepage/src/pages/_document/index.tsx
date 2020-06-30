@@ -69,6 +69,9 @@ class VroomDocument extends Document {
             GEARBOX_PRIVATE_URL={globalEnv.GEARBOX_PRIVATE_URL}
             GEARBOX_PUBLIC_URL={globalEnv.GEARBOX_PUBLIC_URL}
             INVSEARCH_V3_URL={globalEnv.INVSEARCH_V3_URL}
+            DATA_DOG_LOG_COLLECTION_TOKEN={
+              globalEnv.DATA_DOG_LOG_COLLECTION_TOKEN
+            }
           />
           <ModernizrSnippet />
         </Head>
