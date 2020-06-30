@@ -1,6 +1,5 @@
 import { HomeStore } from '../../store';
 
-import globalEnv from 'src/globalEnv';
 import { showDefaultVariant } from 'src/integrations/experimentSDK';
 
 interface Link {

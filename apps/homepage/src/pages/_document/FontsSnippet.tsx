@@ -1,7 +1,5 @@
 import React from 'react';
 
-import globalEnv from 'src/globalEnv';
-
 const FontsSnippet: React.FC = () => {
   return (
     <>

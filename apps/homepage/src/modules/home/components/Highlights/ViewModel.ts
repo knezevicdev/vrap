@@ -1,6 +1,5 @@
 import { HomeStore } from '../../store';
 
-import globalEnv from 'src/globalEnv';
 import AnalyticsHandler from 'src/integrations/AnalyticsHandler';
 import { showDefaultVariant } from 'src/integrations/experimentSDK';
 

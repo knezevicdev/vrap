@@ -1,7 +1,5 @@
 import { VinStore } from '../store';
 
-import globalEnv from 'src/globalEnv';
-
 class VinDialogViewModel {
   private readonly store: VinStore;
   readonly title: string = `What's a VIN, and where's mine?`;

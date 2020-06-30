@@ -4,8 +4,6 @@ import React from 'react';
 
 import ViewModel from './ViewModel';
 
-import globalEnv from 'src/globalEnv';
-
 const Background = styled('div')(() => {
   const config = {
     backgroundImage: '',

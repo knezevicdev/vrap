@@ -1,8 +1,6 @@
 import { theme } from '@vroom-web/ui';
 import React from 'react';
 
-import globalEnv from 'src/globalEnv';
-
 const FaviconSnippet: React.FC = () => {
   return (
     <>

@@ -1,4 +1,3 @@
-import globalEnv from 'src/globalEnv';
 import AnalyticsHandler, {
   VideoEvent,
   VideoProperties,
