@@ -6,7 +6,7 @@ import AnalyticsHandler from 'src/integrations/analytics/AnalyticsHandler';
 class GalleryToConditionViewModel {
   private store: GalleryStore;
   private analyticsHandler: AnalyticsHandler;
-  readonly goToConditionText: string = 'VIEW IMPERFECTIONS PHOTOS';
+  readonly goToConditionText: string = 'VIEW IMPERFECTION PHOTOS';
   readonly defaultImage = {
     alt: 'Gallery To Condition Photo',
     src: `${globalEnv.CDN_URL}/modules/inventory/components/gallery/LastGallery.png`,
