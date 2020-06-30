@@ -11,7 +11,7 @@ class SearchViewModel {
   private analyticsHandler: AnalyticsHandler = new AnalyticsHandler();
 
   readonly mobileButtonLabel: string = 'Browse All Vehicles';
-
+  condenseCatalogLinksDefaultVariant: boolean;
   link: Link = {
     href: '/catalog',
     label: '',
@@ -20,6 +20,11 @@ class SearchViewModel {
   constructor(store: HomeStore) {
     const browseAllVehiclesTextExperimentVaraint = showDefaultVariant(
       'snd-homepage-browse-all-low-mileage-vs-browse-our-low-mileage',
+      store.experiments,
+      store.query
+    );
+    this.condenseCatalogLinksDefaultVariant = showDefaultVariant(
+      'snd-home-condense-catalog-links',
       store.experiments,
       store.query
     );
