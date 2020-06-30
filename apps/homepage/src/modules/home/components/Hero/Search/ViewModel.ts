@@ -1,4 +1,3 @@
-import globalEnv from 'src/globalEnv';
 import AnalyticsHandler from 'src/integrations/AnalyticsHandler';
 import { showDefaultVariant } from 'src/integrations/experimentSDK';
 import { HomeStore } from 'src/modules/home/store';
@@ -16,10 +15,6 @@ class SearchViewModel {
   link: Link = {
     href: '/catalog',
     label: '',
-  };
-  readonly car: { src: string; alt: string } = {
-    src: `${globalEnv.CDN_URL}/modules/home/images/prius.png`,
-    alt: 'Prius',
   };
 
   constructor(store: HomeStore) {
