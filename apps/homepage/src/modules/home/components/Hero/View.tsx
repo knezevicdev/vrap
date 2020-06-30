@@ -83,14 +83,14 @@ const Container: React.FC<{ maxWidth?: 'sm' | 'lg' }> = ({
 interface CarImageProps {
   alt: string;
   src: string;
-  largerTruckHeight: boolean;
+  carImageHeight: boolean;
 }
 
 const useCarImageStyles = makeStyles((theme) => ({
   image: {
     gridArea: 'i',
     height: (props: CarImageProps): string =>
-      props.largerTruckHeight ? '225px' : '176px',
+      props.carImageHeight ? '225px' : '176px',
     width: '100%',
     objectFit: 'contain',
     alignSelf: 'end',
@@ -147,7 +147,7 @@ const HeroView: React.FC<Props> = ({ viewModel }) => {
         <CarImage
           alt={viewModel.car.alt}
           src={viewModel.car.src}
-          largerTruckHeight={viewModel.f150TruckHeightVariant}
+          carImageHeight={viewModel.carImageHeight}
         />
         {viewModel.sellTradeExperimentVariant ? <Search /> : <BuySellTrade />}
       </Container>
