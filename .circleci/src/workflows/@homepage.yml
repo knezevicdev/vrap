@@ -7,6 +7,7 @@ homepage:
   - lint
   - homepage_build:
       context: aws-non-prod
+      s3: s3://static-assets.n.vroom.systems/homepage
       filters:
         tags:
           only: /^homepage-v.*/
@@ -28,7 +29,6 @@ homepage:
   - homepage_deploy:
       name: homepage_deploy_<< matrix.env >>
       context: aws-non-prod
-      s3: s3://static-assets.n.vroom.systems/homepage
       matrix:
         parameters:
           env: ["dev", "qa", "uat"]
@@ -51,7 +51,21 @@ homepage:
           only: /^homepage-v.*/
         branches:
           ignore: /.*/
-  - homepage_deploy:
+  # - homepage_deploy:
+  #     name: homepage_deploy_prod
+  #     context: aws-prod
+  #     env: "prod"
+  #     s3: s3://static-assets.p.vroom.systems/homepage
+  #     requires:
+  #       - hold_prod
+  #     filters:
+  #       tags:
+  #         only: /^homepage-v.*/
+  #       branches:
+  #         ignore: /.*/
+  # FIT-541
+  # This is a stopgap until we can figure out how to deploy to prod using MLP 3.
+  - homepage_prod:
       name: homepage_deploy_prod
       context: aws-prod
       env: "prod"
