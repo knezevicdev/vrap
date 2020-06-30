@@ -18,7 +18,7 @@ class HeroViewModel {
   };
   readonly mobileButtonLabel: string = 'Browse All Vehicles';
   readonly car: { src: string; alt: string } = {
-    src: `${globalEnv.CDN_URL}/modules/home/images/prius.png`,
+    src: `${process.env.PUBLIC_URL}/modules/home/images/prius.png`,
     alt: 'Prius',
   };
   readonly sellTradeExperimentVariant: boolean;

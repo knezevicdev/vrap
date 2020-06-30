@@ -29,11 +29,11 @@ class HowItWorksViewModel {
     label: '',
   };
   readonly video: Video = {
-    src: `${globalEnv.CDN_URL}/modules/home/videos/how-it-works-promo.mp4`,
+    src: `${process.env.PUBLIC_URL}/modules/home/videos/how-it-works-promo.mp4`,
     poster: {
-      default: `${globalEnv.CDN_URL}/modules/home/images/how-it-works-poster.png`,
-      jpeg2000: `${globalEnv.CDN_URL}/modules/home/images/jp2/how-it-works-poster.jp2`,
-      webp: `${globalEnv.CDN_URL}/modules/home/images/webp/how-it-works-poster.webp`,
+      default: `${process.env.PUBLIC_URL}/modules/home/images/how-it-works-poster.png`,
+      jpeg2000: `${process.env.PUBLIC_URL}/modules/home/images/jp2/how-it-works-poster.jp2`,
+      webp: `${process.env.PUBLIC_URL}/modules/home/images/webp/how-it-works-poster.webp`,
     },
   };
 
