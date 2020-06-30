@@ -1,9 +1,10 @@
 import { DriveType } from 'src/modules/cars/data';
 import { CarsStore } from 'src/modules/cars/store';
 import {
+  addDriveType,
   DriveType as FiltersDataDriveType,
   Filters,
-  FiltersData,
+  removeDriveType,
 } from 'src/modules/cars/utils/url';
 
 class DriveTypesViewModel {
@@ -30,69 +31,14 @@ class DriveTypesViewModel {
     return filtersDataDriveType.includes(driveType.filtersDataValue);
   };
 
-  private addFiltersDataDriveType(
-    filtersDataValue: FiltersDataDriveType,
-    filtersDataDriveType?: FiltersDataDriveType[]
-  ): FiltersDataDriveType[] {
-    if (!filtersDataDriveType) {
-      return [filtersDataValue];
-    }
-    if (filtersDataDriveType.includes(filtersDataValue)) {
-      return filtersDataDriveType;
-    }
-    return [...filtersDataDriveType, filtersDataValue];
-  }
-
-  private removeFiltersDataDriveType(
-    filtersDataValue: FiltersDataDriveType,
-    filtersDataDriveType?: FiltersDataDriveType[]
-  ): FiltersDataDriveType[] | undefined {
-    if (!filtersDataDriveType) {
-      return undefined;
-    }
-    if (!filtersDataDriveType.includes(filtersDataValue)) {
-      return filtersDataDriveType;
-    }
-    if (filtersDataDriveType.length === 1) {
-      return undefined;
-    }
-    return filtersDataDriveType.filter((dt) => dt !== filtersDataValue);
-  }
-
-  private getUpdatedFiltersDataDriveType(
-    filtersDataValue: FiltersDataDriveType,
-    checked: boolean,
-    filtersDataDriveType?: FiltersDataDriveType[]
-  ): FiltersDataDriveType[] | undefined {
-    if (checked) {
-      return this.addFiltersDataDriveType(
-        filtersDataValue,
-        filtersDataDriveType
-      );
-    }
-    return this.removeFiltersDataDriveType(
-      filtersDataValue,
-      filtersDataDriveType
-    );
-  }
-
   handleCheckboxChange(
     filtersDataValue: FiltersDataDriveType,
     checked: boolean
   ): void {
     const filtersData = this.carsStore.filtersData;
-    const filtersDataDriveType = filtersData
-      ? filtersData[Filters.DRIVE_TYPE]
-      : undefined;
-    const updatedFiltersDataDriveType = this.getUpdatedFiltersDataDriveType(
-      filtersDataValue,
-      checked,
-      filtersDataDriveType
-    );
-    const updatedFiltersData: FiltersData = {
-      ...filtersData,
-      [Filters.DRIVE_TYPE]: updatedFiltersDataDriveType,
-    };
+    const updatedFiltersData = checked
+      ? addDriveType(filtersDataValue, filtersData)
+      : removeDriveType(filtersDataValue, filtersData);
     this.carsStore.updateFiltersData(updatedFiltersData);
   }
 }

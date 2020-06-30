@@ -5,7 +5,7 @@ import {
   PostInventoryRequestData,
   SoldStatus,
 } from '@vroom-web/inv-search-networking';
-import { action, computed, observable } from 'mobx';
+import { action, computed, observable, runInAction } from 'mobx';
 import Router from 'next/router';
 import { createContext } from 'react';
 
@@ -284,7 +284,6 @@ export async function getInitialCarsStoreState(
     try {
       initialState.popularCarsStatus = Status.FETCHING;
       const popularCarsRequestData = {
-        // TODO: set "fulldetails" back to false when backend includes consignment data for that case.
         fulldetails: true,
         limit: POPULAR_CAR_LIMIT,
         sortdirection: 'asc',
@@ -306,6 +305,8 @@ export async function getInitialCarsStoreState(
 }
 
 export class CarsStore {
+  private readonly invSearchNetworker: InvSearchNetworker;
+
   readonly inventoryCardsPerPage: number = INVENTORY_CARDS_PER_PAGE;
   readonly bodyTypes: BodyType[] = bodyTypes;
   readonly colors: Color[] = colors;
@@ -339,6 +340,10 @@ export class CarsStore {
   @observable areFiltersOpen = false;
 
   constructor(initialState?: InitialCarsStoreState) {
+    this.invSearchNetworker = new InvSearchNetworker(
+      globalEnv.INVSEARCH_V3_URL || ''
+    );
+
     if (initialState) {
       this.filtersData = initialState.filtersData;
       this.makeBuckets = initialState.makeBuckets;
@@ -361,10 +366,81 @@ export class CarsStore {
   };
 
   @action
-  updateFiltersData = (filtersData?: FiltersData): void => {
-    const as = getUrlFromFiltersData(filtersData);
+  private fetchInventoryData = async (): Promise<void> => {
+    try {
+      this.inventoryStatus = Status.FETCHING;
+      const postInventoryRequestDataFromFiltersData = getPostInventoryRequestDataFromFilterData(
+        this.filtersData
+      );
+      const inventoryRequestData: PostInventoryRequestData = {
+        ...postInventoryRequestDataFromFiltersData,
+        fulldetails: true,
+        limit: INVENTORY_CARDS_PER_PAGE,
+        'sold-status': SoldStatus.FOR_SALE,
+        source: `${globalEnv.NAME}-${globalEnv.VERSION}`,
+      };
+      const inventoryResponse = await this.invSearchNetworker.postInventory(
+        inventoryRequestData
+      );
+      runInAction(() => {
+        this.inventoryData = inventoryResponse.data;
+        this.inventoryStatus = Status.SUCCESS;
+      });
+    } catch {
+      runInAction(() => {
+        this.inventoryData = undefined;
+        this.inventoryStatus = Status.ERROR;
+      });
+    }
+  };
+
+  @action
+  private fetchPopularCarsData = async (): Promise<void> => {
+    try {
+      this.popularCarsStatus = Status.FETCHING;
+      const popularCarsRequestData = {
+        fulldetails: true,
+        limit: POPULAR_CAR_LIMIT,
+        sortdirection: 'asc',
+        'sold-status': SoldStatus.FOR_SALE,
+        source: `${globalEnv.NAME}-${globalEnv.VERSION}`,
+      };
+      const inventoryResponse = await this.invSearchNetworker.postInventory(
+        popularCarsRequestData
+      );
+      const popularCarsData = inventoryResponse.data;
+      runInAction(() => {
+        this.popularCarsData = popularCarsData;
+        this.popularCarsStatus = Status.SUCCESS;
+      });
+    } catch {
+      runInAction(() => {
+        this.popularCarsData = undefined;
+        this.popularCarsStatus = Status.ERROR;
+      });
+    }
+  };
+
+  @action
+  updateFiltersData = async (
+    filtersData?: FiltersData,
+    isPagination?: boolean
+  ): Promise<void> => {
+    // Unless we are explicity paginating, reset the page to the start.
+    const filtersDataToUse: FiltersData | undefined = isPagination
+      ? filtersData
+      : {
+          ...filtersData,
+          [Filters.PAGE]: undefined,
+        };
+    const as = getUrlFromFiltersData(filtersDataToUse);
     Router.replace('/cars/[[...params]]', as, { shallow: true });
-    this.filtersData = filtersData;
+    window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+    this.filtersData = filtersDataToUse;
+    await this.fetchInventoryData();
+    if (!this.hasInventory) {
+      await this.fetchPopularCarsData();
+    }
   };
 }
 

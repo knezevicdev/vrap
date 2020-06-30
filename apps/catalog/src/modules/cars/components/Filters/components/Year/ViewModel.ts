@@ -1,39 +1,38 @@
 import { CarsStore } from 'src/modules/cars/store';
-import { Filters, FiltersData, MaxAndMin } from 'src/modules/cars/utils/url';
+import {
+  Filters,
+  MaxAndMin,
+  resetFilter,
+  setYear,
+} from 'src/modules/cars/utils/url';
 
 class YearViewModel {
   private readonly carsStore: CarsStore;
+  readonly errorLabel: string;
   readonly resetButtonLabel: string = 'Reset';
   readonly range: MaxAndMin = { min: 2000, max: 2020 };
+  readonly step = 1;
 
   constructor(carsStore: CarsStore) {
     this.carsStore = carsStore;
+    this.errorLabel = `'Please enter a range of years within ${this.range.min}-${this.range.max}`;
   }
 
-  getYear = (): MaxAndMin | undefined => {
+  getMaxAndMinInputsValue = (): MaxAndMin | undefined => {
     const filtersData = this.carsStore.filtersData;
     if (!filtersData) {
       return undefined;
     }
-    const filtersDataPrice = filtersData[Filters.YEAR];
-    return filtersDataPrice;
+    const filtersDataYear = filtersData[Filters.YEAR];
+    return filtersDataYear;
   };
 
-  private udpateFiltersDataYear = (value: MaxAndMin | undefined): void => {
+  handleMaxAndMinInputsChange = (value?: MaxAndMin): void => {
     const filtersData = this.carsStore.filtersData;
-    const updatedFiltersData: FiltersData = {
-      ...filtersData,
-      [Filters.YEAR]: value,
-    };
+    const updatedFiltersData = value
+      ? setYear(value, filtersData)
+      : resetFilter(Filters.YEAR, filtersData);
     this.carsStore.updateFiltersData(updatedFiltersData);
-  };
-
-  handleInputsChange = (value: MaxAndMin | undefined): void => {
-    this.udpateFiltersDataYear(value);
-  };
-
-  handleSliderChange = (value: MaxAndMin | undefined): void => {
-    this.udpateFiltersDataYear(value);
   };
 
   isResetButtonDisabled = (): boolean => {
@@ -50,10 +49,7 @@ class YearViewModel {
 
   handleResetClick(): void {
     const filtersData = this.carsStore.filtersData;
-    const updatedFiltersData: FiltersData = {
-      ...filtersData,
-      [Filters.YEAR]: undefined,
-    };
+    const updatedFiltersData = resetFilter(Filters.YEAR, filtersData);
     this.carsStore.updateFiltersData(updatedFiltersData);
   }
 }
