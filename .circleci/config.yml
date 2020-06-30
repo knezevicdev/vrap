@@ -62,6 +62,8 @@ jobs:
           CID=$(cat docker.cid)
           docker cp $CID:/www/apps/homepage/.next ./apps/homepage/
 
+          sudo apt-get install python-pip && pip install awscli
+
           aws s3 sync ./apps/homepage/.next/static << parameters.s3 >>/$SHORT_HASH/.next/static --acl public-read
           aws s3 sync ./apps/homepage/public << parameters.s3 >>/$SHORT_HASH/public --acl public-read --exclude '*.webp' --exclude '*.mp4'
           aws s3 sync ./apps/homepage/public << parameters.s3 >>/$SHORT_HASH/public --acl public-read --exclude '*' --include '*.webp' --content-type 'image/webp'
