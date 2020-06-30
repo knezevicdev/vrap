@@ -83,14 +83,13 @@ const Container: React.FC<{ maxWidth?: 'sm' | 'lg' }> = ({
 interface CarImageProps {
   alt: string;
   src: string;
-  carImageHeight: boolean;
+  carImageHeight: string;
 }
 
 const useCarImageStyles = makeStyles((theme) => ({
   image: {
     gridArea: 'i',
-    height: (props: CarImageProps): string =>
-      props.carImageHeight ? '225px' : '176px',
+    height: (props: CarImageProps): string => props.carImageHeight,
     width: '100%',
     objectFit: 'contain',
     alignSelf: 'end',
