@@ -19,6 +19,7 @@ class HeroViewModel {
   readonly mobileButtonLabel: string = 'Browse All Vehicles';
   car: { src: string; alt: string };
   readonly sellTradeExperimentVariant: boolean;
+  carImageHeight: string;
 
   constructor(store: HomeStore) {
     this.sellTradeExperimentVariant = showDefaultVariant(
@@ -31,6 +32,10 @@ class HeroViewModel {
       store.experiments,
       store.query
     );
+    this.carImageHeight =
+      !priusVsf150ImageDefaultVariant && !this.sellTradeExperimentVariant
+        ? '225px'
+        : '176px';
     this.car = {
       src: `${globalEnv.CDN_URL}/modules/home/images/${
         priusVsf150ImageDefaultVariant ? 'prius' : 'ford'
