@@ -26,7 +26,7 @@ class VroomApp extends App {
         silentMultipleInit: true,
       };
       const context = {
-        service: 'vroom-web-homepage',
+        service: '@vroom-web/homepage',
         host: window.location.host,
       };
       datadogLogs.init(init);
