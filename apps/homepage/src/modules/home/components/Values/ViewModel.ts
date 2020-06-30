@@ -36,7 +36,7 @@ class ValuesViewModel {
     },
     {
       type: 'COVERAGE',
-      title: 'Free Limited Warranty',
+      title: '',
       description:
         'A limited warranty is included with most Vroom vehicles, good for 90 days or 6,000 miles. The majority of our cars are still under their manufacturer’s warranty.',
     },
@@ -49,6 +49,14 @@ class ValuesViewModel {
       store.experiments,
       store.query
     );
+    const freeVsFREELimitedWarrantyDefaultVariant = showDefaultVariant(
+      'snd-free-vs-free-limited-warranty',
+      store.experiments,
+      store.query
+    );
+    this.values[5].title = `${
+      freeVsFREELimitedWarrantyDefaultVariant ? 'Free' : 'FREE'
+    } Limited Warranty`;
     this.subtitle = `We believe buying a car should be fun, easy, and affordable.  Here’s how Vroom is ${
       homeVroomRevolutionExperimentVariant
         ? 'leading\xa0the\xa0revolution'
