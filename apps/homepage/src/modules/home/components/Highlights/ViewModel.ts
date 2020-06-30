@@ -54,6 +54,11 @@ class HighlightsViewModel {
       store.experiments,
       store.query
     );
+    const carOrTruckVsVehicleDefaultVariant = showDefaultVariant(
+      'snd-car-or-truck-vs-vehicle-shipped',
+      store.experiments,
+      store.query
+    );
     this.ctaLabel = `SHOP ${homeShopButtonDefaultVariant ? 'NOW' : 'VEHICLES'}`;
     this.highlights[0].description = `Multiple inspections. Free CARFAX® history report. ${
       homeWarrantyTextExperimentVariant ? 'Complimentary' : 'Free'
@@ -61,6 +66,9 @@ class HighlightsViewModel {
     this.highlights[2].title = `Delivered ${
       deliveredToYouExperimentVariant ? 'Right' : 'Safely'
     } to You`;
+    this.highlights[2].description = `Get your ${
+      carOrTruckVsVehicleDefaultVariant ? 'car or truck' : 'vehicles'
+    } shipped to your home or a convenient nearby\xa0location.`;
   }
 
   handleButtonClick(): void {
