@@ -1,12 +1,11 @@
 import Chip from '@material-ui/core/Chip';
 import Grid from '@material-ui/core/Grid';
 import { styled } from '@material-ui/core/styles';
+import { Typography } from '@vroom-web/ui';
 import { observer } from 'mobx-react';
 import React from 'react';
 
 import ChipsViewModel from './ViewModel';
-
-import Typography from 'src/ui/Typography';
 
 const ChipsContainer = styled(Grid)(({ theme }) => ({
   paddingRight: theme.spacing(1),

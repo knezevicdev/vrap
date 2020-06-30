@@ -4,7 +4,7 @@ import globalEnv from 'src/globalEnv';
 import AnalyticsHandler, {
   Product,
   ProductPhotoType,
-} from 'src/integrations/analytics/AnalyticsHandler';
+} from 'src/integrations/AnalyticsHandler';
 
 interface Summary {
   image: string;

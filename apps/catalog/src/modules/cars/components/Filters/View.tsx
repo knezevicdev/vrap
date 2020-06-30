@@ -8,14 +8,13 @@ import useMediaQuery from '@material-ui/core/useMediaQuery';
 import Close from '@material-ui/icons/Close';
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
+import { Typography } from '@vroom-web/ui';
 import { observer } from 'mobx-react';
 import React from 'react';
 
 import { ReactComponent as FiltersIcon } from '../filters.svg';
 import { Filter } from './store';
 import FiltersViewModel from './ViewModel';
-
-import Typography from 'src/ui/Typography';
 
 const FiltersContainer = styled(List)(({ theme }) => ({
   minWidth: '250px',
@@ -90,9 +89,7 @@ const FiltersView: React.FC<FiltersViewProps> = ({ viewModel }) => {
         return (
           <StyledFilter key={display}>
             <StyledListItem button onClick={handleListItemClick(filter)}>
-              <Title fontWeight="fontWeightMedium" variant="h3">
-                {display}
-              </Title>
+              <Title fontWeight="fontWeightMedium">{display}</Title>
               {open ? <ExpandLess /> : <ExpandMore />}
             </StyledListItem>
             <Collapse in={open} timeout="auto">

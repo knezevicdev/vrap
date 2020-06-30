@@ -5,10 +5,9 @@ import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { observer } from 'mobx-react';
 import React, { useEffect } from 'react';
 
+import CarCard from './components/CarCard';
+import VehicleNotFound from './components/VehicleNotFound';
 import ViewModel from './ViewModel';
-
-import CarCard from 'src/components/CarCard';
-import VehicleNotFound from 'src/components/VehicleNotFound';
 
 const ErrorAndNoResultsContainer = styled('div')(({ theme }) => ({
   margin: theme.spacing(4, 0),

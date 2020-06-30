@@ -3,11 +3,10 @@ import CardActionArea from '@material-ui/core/CardActionArea';
 import CardContent from '@material-ui/core/CardContent';
 import Grid from '@material-ui/core/Grid';
 import { styled } from '@material-ui/core/styles';
+import { Typography } from '@vroom-web/ui';
 import React from 'react';
 
 import CarCardViewModel from './ViewModel';
-
-import Typography from 'src/ui/Typography';
 
 const StyledCard = styled(Card)(() => ({
   width: '100%',
@@ -98,11 +97,7 @@ const MobileView: React.FC<MobileViewProps> = ({ viewModel }) => {
                 />
               )}
               {viewModel.showAvailableSoon() && (
-                <AvailableSoon
-                  fontWeight="fontWeightMedium"
-                  variant="overline"
-                  lineHeight="24px"
-                >
+                <AvailableSoon fontWeight="fontWeightMedium" lineHeight="24px">
                   {viewModel.availableSoon}
                 </AvailableSoon>
               )}

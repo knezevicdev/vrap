@@ -1,5 +1,6 @@
 import OutlinedInput from '@material-ui/core/OutlinedInput';
 import { styled } from '@material-ui/core/styles';
+import { Typography } from '@vroom-web/ui';
 import { observer } from 'mobx-react';
 import React from 'react';
 
@@ -8,7 +9,6 @@ import SliderValueLabelView from './SliderValueLabelView';
 import ViewModel from './ViewModel';
 
 import UISlider from 'src/ui/Slider';
-import Typography from 'src/ui/Typography';
 
 const ContainerForErrorAndInputs = styled('div')(() => ({
   display: 'flex',
@@ -80,11 +80,7 @@ const MaxAndMinInputsView: React.FC<Props> = ({ viewModel }) => {
 
   const getMinInputForVariant = (): React.ReactNode => {
     if (viewModel.variant === Variant.MAX_ONLY) {
-      return (
-        <Typography variant="overline">
-          {viewModel.maxOnlyInputLabel}
-        </Typography>
-      );
+      return <Typography>{viewModel.maxOnlyInputLabel}</Typography>;
     }
     return (
       <Input

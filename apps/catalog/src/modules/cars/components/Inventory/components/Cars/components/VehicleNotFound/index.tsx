@@ -1,10 +1,9 @@
 import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
+import { Typography } from '@vroom-web/ui';
 import React from 'react';
 
 import { ReactComponent as NoVehiclesFoundIcon } from './no-vehicles-found.svg';
-
-import Typography from 'src/ui/Typography';
 
 interface Props {
   errorTop: string;

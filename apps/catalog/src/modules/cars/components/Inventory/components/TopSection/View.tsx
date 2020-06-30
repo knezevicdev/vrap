@@ -2,6 +2,7 @@ import Grid from '@material-ui/core/Grid';
 import { styled } from '@material-ui/core/styles';
 import { useTheme } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
+import { Typography } from '@vroom-web/ui';
 import { observer } from 'mobx-react';
 import React from 'react';
 
@@ -9,8 +10,6 @@ import { ReactComponent as FiltersIcon } from '../../../filters.svg';
 import Chips from './components/Chips';
 import Sort from './components/Sort';
 import TopSectionViewModel from './ViewModel';
-
-import Typography from 'src/ui/Typography';
 
 const TopSectionGrid = styled(Grid)(({ theme }) => ({
   display: 'flex',

@@ -1,6 +1,7 @@
 import InputAdornment from '@material-ui/core/InputAdornment';
 import ListItem from '@material-ui/core/ListItem';
 import { styled } from '@material-ui/core/styles';
+import { Typography } from '@vroom-web/ui';
 import { observer } from 'mobx-react';
 import React from 'react';
 
@@ -8,7 +9,6 @@ import MaxAndMinInputs from '../MaxAndMinInputs';
 import PriceViewModel from './ViewModel';
 
 import { MaxAndMin } from 'src/modules/cars/utils/url';
-import Typography from 'src/ui/Typography';
 
 const Container = styled('div')(({ theme }) => ({
   display: 'flex',

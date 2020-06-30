@@ -2,11 +2,10 @@ import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Grid from '@material-ui/core/Grid';
 import { styled } from '@material-ui/core/styles';
+import { Typography } from '@vroom-web/ui';
 import React from 'react';
 
 import CarCardViewModel from './ViewModel';
-
-import Typography from 'src/ui/Typography';
 
 const Container = styled(Card)(() => ({
   height: '100%',
@@ -97,11 +96,7 @@ const DesktopView: React.FC<DesktopViewProps> = ({ viewModel }) => {
               />
             )}
             {viewModel.showAvailableSoon() && (
-              <AvailableSoon
-                fontWeight="fontWeightMedium"
-                variant="overline"
-                lineHeight="24px"
-              >
+              <AvailableSoon fontWeight="fontWeightMedium" lineHeight="24px">
                 {viewModel.availableSoon}
               </AvailableSoon>
             )}
