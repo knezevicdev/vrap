@@ -1,4 +1,4 @@
-import { Car } from '@vroom-web/inv-search-networking';
+import { Car, SoldStatusInt } from '@vroom-web/inv-search-networking';
 
 import globalEnv from 'src/globalEnv';
 import AnalyticsHandler, {
@@ -22,6 +22,7 @@ class CarCardViewModel {
     src: `${globalEnv.CDN_URL}/components/evox-logo.png`,
   };
   readonly availableSoon: string = 'AVAILABLE SOON';
+  readonly salePending: string = 'SALE PENDING';
 
   constructor(car: Car) {
     this.analyticsHandler = new AnalyticsHandler();
@@ -53,6 +54,13 @@ class CarCardViewModel {
     From David - the intention is to add an availableSoon flag ASAP
     */
     return this.car.leadFlagPhotoUrl === '' || this.car.hasStockPhotos;
+  };
+
+  showSalePending = (): boolean => {
+    return (
+      !this.showAvailableSoon() &&
+      this.car.soldStatus === SoldStatusInt.SALE_PENDING
+    );
   };
 
   getSummary(): Summary {

@@ -245,7 +245,6 @@ export async function getInitialCarsStoreState(
       fulldetails: false,
       limit: 1,
       sortdirection: 'asc',
-      'sold-status': SoldStatus.FOR_SALE,
       source: `${globalEnv.NAME}-${globalEnv.VERSION}`,
     };
     const makesResponse = await invSearchNetworker.postInventory(
@@ -267,7 +266,6 @@ export async function getInitialCarsStoreState(
       ...postInventoryRequestDataFromFiltersData,
       fulldetails: true,
       limit: INVENTORY_CARDS_PER_PAGE,
-      'sold-status': SoldStatus.FOR_SALE,
       source: `${globalEnv.NAME}-${globalEnv.VERSION}`,
     };
     const inventoryResponse = await invSearchNetworker.postInventory(
@@ -376,7 +374,6 @@ export class CarsStore {
         ...postInventoryRequestDataFromFiltersData,
         fulldetails: true,
         limit: INVENTORY_CARDS_PER_PAGE,
-        'sold-status': SoldStatus.FOR_SALE,
         source: `${globalEnv.NAME}-${globalEnv.VERSION}`,
       };
       const inventoryResponse = await this.invSearchNetworker.postInventory(
