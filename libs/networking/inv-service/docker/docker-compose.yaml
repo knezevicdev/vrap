@@ -1,11 +1,9 @@
 version: '3'
 services:
-  test:
+  inv-service-networking:
     build:
       context: ../../../../
       dockerfile: ./libs/networking/inv-service/docker/Dockerfile
-    image: vroom-web-inv-service-networking:latest
-    container_name: test
     user: 'root'
     command: >
       ash -c "yarn workspace @vroom-web/inv-service-networking test --watch"
