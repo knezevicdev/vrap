@@ -5,17 +5,21 @@ const withBundleAnalyzer = require('@next/bundle-analyzer')({
 });
 
 const childProcess = require('child_process');
-const gitHash = childProcess
-  .execSync('git rev-parse --short HEAD')
+const shortHash = childProcess
+  .execSync('git rev-parse --short=8 HEAD')
   .toString()
   .trim();
 
 // TODO: remove once interchange (nginx) is setup locally
 const isProd = process.env.NODE_ENV === 'production';
+const assetPrefix = isProd ? `/hp` : '';
 
 const config = {
-  assetPrefix: isProd ? `/hp` : '',
-  generateBuildId: () => gitHash,
+  env: {
+    assetPrefix,
+  },
+  assetPrefix,
+  generateBuildId: () => shortHash,
   /* Custom webpack configuration. */
   webpack: (config) => {
     /* Enable SVG imports. */

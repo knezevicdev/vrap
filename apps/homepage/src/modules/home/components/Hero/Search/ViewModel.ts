@@ -1,3 +1,4 @@
+import globalEnv from 'src/globalEnv';
 import AnalyticsHandler from 'src/integrations/AnalyticsHandler';
 import { showDefaultVariant } from 'src/integrations/experimentSDK';
 import { HomeStore } from 'src/modules/home/store';
@@ -17,7 +18,7 @@ class SearchViewModel {
     label: '',
   };
   readonly car: { src: string; alt: string } = {
-    src: `/modules/home/images/prius.png`,
+    src: `${globalEnv.ASSET_PREFIX}/modules/home/images/prius.png`,
     alt: 'Prius',
   };
 
