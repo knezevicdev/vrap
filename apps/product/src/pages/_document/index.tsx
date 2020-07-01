@@ -65,6 +65,7 @@ class VroomDocument extends Document {
           <GlobalEnvSnippet
             CDN_URL={process.env.CDN_URL}
             INVSEARCH_V3_URL={process.env.INVSEARCH_V3_URL}
+            INV_SERVICE_V2_URL={process.env.INV_SERVICE_V2_URL}
           />
         </Head>
         <body>
