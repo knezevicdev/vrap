@@ -41,6 +41,14 @@ const AvailableSoon = styled(Typography)(({ theme }) => ({
   background: theme.palette.grey['400'],
 }));
 
+const SalePending = styled(Typography)(({ theme }) => ({
+  position: 'absolute',
+  top: 0,
+  left: 0,
+  padding: theme.spacing(0, 1),
+  background: '#ffd400',
+}));
+
 const Content = styled(CardContent)(() => ({
   display: 'flex',
   flexDirection: 'column',
@@ -99,6 +107,11 @@ const DesktopView: React.FC<DesktopViewProps> = ({ viewModel }) => {
               <AvailableSoon fontWeight="fontWeightMedium" lineHeight="24px">
                 {viewModel.availableSoon}
               </AvailableSoon>
+            )}
+            {viewModel.showSalePending() && (
+              <SalePending fontWeight="fontWeightMedium" lineHeight="24px">
+                {viewModel.salePending}
+              </SalePending>
             )}
           </Media>
           <Content>

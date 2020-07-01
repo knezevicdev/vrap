@@ -1,6 +1,13 @@
 /* eslint-disable @typescript-eslint/camelcase */
 import * as yup from 'yup';
 
+export enum SoldStatusInt {
+  FOR_SALE = 0,
+  SALE_PENDING = 1,
+  SOLD = 2,
+  DELIVERED = 3,
+}
+
 export type Car = {
   vin: string;
   bodyType: string;
@@ -42,7 +49,7 @@ export type Car = {
   style: string;
   optionalFeatures: string;
   zone: string;
-  soldStatus: number;
+  soldStatus: SoldStatusInt;
   otherPhotos: string[] | null;
   ownerCount: number;
   cityMpg: number;

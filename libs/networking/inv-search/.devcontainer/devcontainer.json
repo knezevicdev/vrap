@@ -1,7 +1,7 @@
 {
   "name": "Vroom Web - Inv Search Networking",
   "dockerComposeFile": "../docker/docker-compose.yaml",
-  "service": "test",
+  "service": "inv-search-networking",
   "workspaceFolder": "/www/libs/networking/inv-search",
   // Use 'settings' to set *default* container specific settings.json values on container create.
   // You can edit these settings after create using File > Preferences > Settings > Remote.
