@@ -38,7 +38,8 @@ const CarsPage: NextPage<Props> = ({ initialStoreState }) => {
   const head = (
     <>
       <title>{title}</title>
-      <meta name="description" content={description}></meta>
+      <meta name="description" content={description} />
+      <meta name="robots" content="noindex, nofollow" />
     </>
   );
 
