@@ -15,7 +15,7 @@ const isProd = process.env.NODE_ENV === 'production';
 
 const config = {
   env: {
-    PUBLIC_URL: `${process.env.CDN_URL}/${gitHash}/public`,
+    SHORT_HASH: `${gitHash}`,
   },
   // assetPrefix: isProd ? `/hp` : '',
   assetPrefix: isProd ? `/homepage/${gitHash}` : '',

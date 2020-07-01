@@ -1,5 +1,6 @@
 import { HomeStore } from '../../store';
 
+import globalEnv from 'src/globalEnv';
 import { showDefaultVariant } from 'src/integrations/experimentSDK';
 
 interface Link {
@@ -17,7 +18,7 @@ class HeroViewModel {
   };
   readonly mobileButtonLabel: string = 'Browse All Vehicles';
   readonly car: { src: string; alt: string } = {
-    src: `${process.env.PUBLIC_URL}/modules/home/images/prius.png`,
+    src: `${globalEnv.PUBLIC_URL}/modules/home/images/prius.png`,
     alt: 'Prius',
   };
   readonly sellTradeExperimentVariant: boolean;

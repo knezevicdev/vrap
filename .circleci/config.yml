@@ -188,8 +188,6 @@ workflows:
         s3: s3://static-assets.n.vroom.systems/catalog
   homepage:
     jobs:
-    - sonarcloud:
-        context: SonarCloud
     - danger:
         context: dangerjs
     - lint

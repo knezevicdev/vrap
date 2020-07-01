@@ -1,5 +1,7 @@
 import React from 'react';
 
+import globalEnv from 'src/globalEnv';
+
 const FontsSnippet: React.FC = () => {
   return (
     <>
@@ -16,17 +18,17 @@ const FontsSnippet: React.FC = () => {
           __html: `
             @font-face {
               font-family: 'VroomSans';
-              src: url('${process.env.PUBLIC_URL}/fonts/VroomSansSMALL-ExtraBoldItalicWEB.woff') format('woff');
+              src: url('${globalEnv.PUBLIC_URL}/fonts/VroomSansSMALL-ExtraBoldItalicWEB.woff') format('woff');
             }
             @font-face {
               font-family: Calibre;
               font-weight: 400;
-              src: url('${process.env.PUBLIC_URL}/fonts/CalibreWeb-Regular.woff') format('woff');
+              src: url('${globalEnv.PUBLIC_URL}/fonts/CalibreWeb-Regular.woff') format('woff');
             }
             @font-face {
               font-family: 'Calibre';
               font-weight: 600;
-              src: url('${process.env.PUBLIC_URL}/fonts/CalibreWeb-Semibold.woff') format('woff');
+              src: url('${globalEnv.PUBLIC_URL}/fonts/CalibreWeb-Semibold.woff') format('woff');
             }
           `,
         }}
