@@ -4,8 +4,6 @@ import React from 'react';
 
 import ViewModel from './ViewModel';
 
-import globalEnv from 'src/globalEnv';
-
 const Background = styled('div')(() => {
   const config = {
     backgroundImage: '',
@@ -18,9 +16,9 @@ const Background = styled('div')(() => {
     const jpeg2000 = window.Modernizr.jpeg2000;
 
     if (jpeg2000) {
-      config.backgroundImage = `url(${globalEnv.PUBLIC_URL}/modules/home/images/jp2/who-we-are-background.jp2)`;
+      config.backgroundImage = `url(/modules/home/images/jp2/who-we-are-background.jp2)`;
     } else {
-      config.backgroundImage = `url(${globalEnv.PUBLIC_URL}/modules/home/images/who-we-are-background.png)`;
+      config.backgroundImage = `url(/modules/home/images/who-we-are-background.png)`;
     }
   }
 

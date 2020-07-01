@@ -6,7 +6,6 @@ services:
       dockerfile: ./apps/homepage/docker/Dockerfile
     user: 'root'
     environment:
-      - CDN_URL=
       - GEARBOX_PRIVATE_URL=https://gearbox-qa-int.vroomapi.com/query-private
       - GEARBOX_PUBLIC_URL=https://gearbox-dev-int.vroomapi.com/query-public
       - INVSEARCH_V3_URL=https://invsearch-v3-prod-ext.aws.vroomapi.com/v3

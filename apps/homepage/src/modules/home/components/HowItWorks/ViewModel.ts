@@ -1,4 +1,3 @@
-import globalEnv from 'src/globalEnv';
 import AnalyticsHandler, {
   VideoEvent,
   VideoProperties,
@@ -29,11 +28,11 @@ class HowItWorksViewModel {
     label: '',
   };
   readonly video: Video = {
-    src: `${globalEnv.PUBLIC_URL}/modules/home/videos/how-it-works-promo.mp4`,
+    src: `/modules/home/videos/how-it-works-promo.mp4`,
     poster: {
-      default: `${globalEnv.PUBLIC_URL}/modules/home/images/how-it-works-poster.png`,
-      jpeg2000: `${globalEnv.PUBLIC_URL}/modules/home/images/jp2/how-it-works-poster.jp2`,
-      webp: `${globalEnv.PUBLIC_URL}/modules/home/images/webp/how-it-works-poster.webp`,
+      default: `/modules/home/images/how-it-works-poster.png`,
+      jpeg2000: `/modules/home/images/jp2/how-it-works-poster.jp2`,
+      webp: `/modules/home/images/webp/how-it-works-poster.webp`,
     },
   };
 

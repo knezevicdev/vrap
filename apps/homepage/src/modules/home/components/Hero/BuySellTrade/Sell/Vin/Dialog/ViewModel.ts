@@ -1,7 +1,5 @@
 import { VinStore } from '../store';
 
-import globalEnv from 'src/globalEnv';
-
 class VinDialogViewModel {
   private readonly store: VinStore;
   readonly title: string = `What's a VIN, and where's mine?`;
@@ -21,7 +19,7 @@ class VinDialogViewModel {
     `Driver door jam (open the door first)`,
   ];
   readonly image = {
-    src: `${globalEnv.PUBLIC_URL}/modules/home/images/where-is-vin.png`,
+    src: `/modules/home/images/where-is-vin.png`,
     alt: 'Car with VIN hot spots.',
   };
   readonly documentationTitle: string = 'In Your Documentation';

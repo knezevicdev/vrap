@@ -7,7 +7,6 @@ homepage:
   - lint
   - homepage_build:
       context: aws-non-prod
-      s3: s3://static-assets.n.vroom.systems/homepage
       filters:
         tags:
           only: /^homepage-v.*/
@@ -69,7 +68,6 @@ homepage:
       name: homepage_deploy_prod
       context: aws-prod
       env: "prod"
-      s3: s3://static-assets.p.vroom.systems/homepage
       requires:
         - hold_prod
       filters:

@@ -14,11 +14,7 @@ const gitHash = childProcess
 const isProd = process.env.NODE_ENV === 'production';
 
 const config = {
-  env: {
-    SHORT_HASH: `${gitHash}`,
-  },
-  // assetPrefix: isProd ? `/hp` : '',
-  assetPrefix: isProd ? `/homepage/${gitHash}` : '',
+  assetPrefix: isProd ? `/hp` : '',
   generateBuildId: () => gitHash,
   /* Custom webpack configuration. */
   webpack: (config) => {

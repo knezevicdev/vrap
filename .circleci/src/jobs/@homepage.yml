@@ -22,9 +22,6 @@ sonarcloud:
 homepage_build:
   docker:
   - image: vroom/mlp:3.0.1
-  parameters:
-    s3:
-      type: string
   steps:
     - checkout
     - setup_remote_docker:
@@ -32,20 +29,6 @@ homepage_build:
     - run:
         command: |-
           build -a vroom-web/apps/homepage/docker
-
-          SHORT_HASH=$(git rev-parse --short HEAD)
-
-          IMAGE_ID=$(docker images --filter=reference='*/vroom-web/apps/homepage/docker' --format "{{.ID}}" | head -1)
-          docker run --cidfile ./docker.cid $IMAGE_ID /bin/ash
-          CID=$(cat docker.cid)
-          docker cp $CID:/www/apps/homepage/.next ./apps/homepage/
-
-          sudo apt-get install python-pip && pip install awscli
-
-          aws s3 sync ./apps/homepage/.next/static << parameters.s3 >>/$SHORT_HASH/.next/static --acl public-read
-          aws s3 sync ./apps/homepage/public << parameters.s3 >>/$SHORT_HASH/public --acl public-read --exclude '*.webp' --exclude '*.mp4'
-          aws s3 sync ./apps/homepage/public << parameters.s3 >>/$SHORT_HASH/public --acl public-read --exclude '*' --include '*.webp' --content-type 'image/webp'
-          aws s3 sync ./apps/homepage/public << parameters.s3 >>/$SHORT_HASH/public --acl public-read --exclude '*' --include '*.mp4' --content-type 'video/mp4'
 homepage_deploy:
   docker:
   - image: vroom/mlp:3.0.1
@@ -68,20 +51,12 @@ homepage_prod:
   parameters:
     env:
       type: string
-    s3:
-      type: string
   steps:
     - checkout
     - setup_remote_docker:
         version: 18.09.3
     - run:
         command: |-
-          sudo apt-get install python-pip && pip install awscli
-
-          aws s3 sync ./apps/homepage/public << parameters.s3 >> --acl public-read --exclude '*.webp' --exclude '*.mp4'
-          aws s3 sync ./apps/homepage/public << parameters.s3 >> --acl public-read --exclude '*' --include '*.webp' --content-type 'image/webp'
-          aws s3 sync ./apps/homepage/public << parameters.s3 >> --acl public-read --exclude '*' --include '*.mp4' --content-type 'video/mp4'
-
           build ./apps/homepage/docker
           deploy << parameters.env >> ./apps/homepage/docker
 
