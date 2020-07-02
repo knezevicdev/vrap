@@ -19,7 +19,10 @@ const config = {
   env: {
     assetPrefix,
   },
-  assetPrefix,
+  // assetPrefix,
+  experimental: {
+    basePath: assetPrefix,
+  },
   generateBuildId: () => shortHash,
   /* Custom webpack configuration. */
   webpack: (config) => {
