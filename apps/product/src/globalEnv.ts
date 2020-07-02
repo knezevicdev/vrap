@@ -3,6 +3,7 @@ import { name, version } from 'package.json';
 export interface GlobalEnv {
   CDN_URL?: string;
   INVSEARCH_V3_URL?: string;
+  INV_SERVICE_V2_URL?: string;
   LEADS_URL?: string;
   NAME?: string;
   VERSION?: string;

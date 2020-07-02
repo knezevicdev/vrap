@@ -16,6 +16,7 @@ RUN yarn install --silent
 RUN yarn workspace @vroom-web/analytics-integration build
 RUN yarn workspace @vroom-web/deals-v2-networking build
 RUN yarn workspace @vroom-web/inv-search-networking build
+RUN yarn workspace @vroom-web/inv-service-networking build
 RUN yarn workspace @vroom-web/ui build
 RUN yarn workspace @vroom-web/header-components build
 RUN yarn workspace @vroom-web/footer-components build

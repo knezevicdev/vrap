@@ -7,7 +7,8 @@ services:
     user: 'root'
     environment:
       - CDN_URL=
-      - INVSEARCH_V3_URL=https://invsearch-v3-prod-ext.aws.vroomapi.com/v3
+      - INVSEARCH_V3_URL=https://invsearch-v3-dev-int.aws.vroomapi.com:8443/v3
+      - INV_SERVICE_V2_URL=https://inventory-dev-int.vroomapi.com:8443/v2
       - SEGMENT_WRITE_KEY=N0pxERRIw4iYCoxZREMZj1yWBIoARIz4
     command: ash -c "yarn workspace @vroom-web/product dev --port 8080"
     # This starts nothing but leaves the container running, useful for
@@ -32,6 +33,8 @@ services:
       - '/www/libs/networking/deals-v2/node_modules'
       - '/www/libs/networking/inv-search/dist'
       - '/www/libs/networking/inv-search/node_modules'
+      - '/www/libs/networking/inv-service/dist'
+      - '/www/libs/networking/inv-service/node_modules'
       - '/www/libs/ui/dist'
       - '/www/libs/ui/node_modules'
       - '/www/libs/components/header/dist'
