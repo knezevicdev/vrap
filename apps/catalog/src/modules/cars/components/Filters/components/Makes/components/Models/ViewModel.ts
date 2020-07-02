@@ -1,11 +1,12 @@
-import { CarsStore } from 'src/modules/cars/store';
 import {
   addAllModels,
   addModel,
   Filters,
   removeAllModels,
   removeModel,
-} from 'src/modules/cars/utils/url';
+} from '@vroom-web/catalog-url-integration';
+
+import { CarsStore } from 'src/modules/cars/store';
 
 export interface Model {
   display: string;

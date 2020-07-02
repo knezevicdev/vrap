@@ -1,10 +1,11 @@
-import { CarsStore } from 'src/modules/cars/store';
 import {
   Filters,
   MaxAndMin,
   resetFilter,
   setYear,
-} from 'src/modules/cars/utils/url';
+} from '@vroom-web/catalog-url-integration';
+
+import { CarsStore } from 'src/modules/cars/store';
 
 class YearViewModel {
   private readonly carsStore: CarsStore;

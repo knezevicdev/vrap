@@ -1,12 +1,13 @@
-import { BodyType } from 'src/modules/cars/data';
-import { CarsStore } from 'src/modules/cars/store';
 import {
   addBodyType,
   BodyType as FiltersDataBodyType,
   Filters,
   removeBodyType,
   resetFilter,
-} from 'src/modules/cars/utils/url';
+} from '@vroom-web/catalog-url-integration';
+
+import { BodyType } from 'src/modules/cars/data';
+import { CarsStore } from 'src/modules/cars/store';
 
 class BodyTypesViewModel {
   private readonly carsStore: CarsStore;

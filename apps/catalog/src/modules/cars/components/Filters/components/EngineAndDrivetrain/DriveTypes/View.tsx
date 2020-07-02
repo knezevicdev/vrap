@@ -2,12 +2,11 @@ import Checkbox from '@material-ui/core/Checkbox';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormGroup from '@material-ui/core/FormGroup';
 import withStyles from '@material-ui/core/styles/withStyles';
+import { DriveType as FiltersDataDriveType } from '@vroom-web/catalog-url-integration';
 import { observer } from 'mobx-react';
 import React from 'react';
 
 import DriveTypesViewModel from './ViewModel';
-
-import { DriveType as FiltersDataDriveType } from 'src/modules/cars/utils/url';
 
 interface Props {
   viewModel: DriveTypesViewModel;

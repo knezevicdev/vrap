@@ -1,9 +1,8 @@
+import { MaxAndMin } from '@vroom-web/catalog-url-integration';
 import debounce from 'lodash.debounce';
 import { action, observable } from 'mobx';
 
 import { Variant } from './index';
-
-import { MaxAndMin } from 'src/modules/cars/utils/url';
 
 // The amount of time a user must stop typing before we commit to what's typed.
 const INPUT_DEBOUNCE_WAIT = 650; // milliseconds

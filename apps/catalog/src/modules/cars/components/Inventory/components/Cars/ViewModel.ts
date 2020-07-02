@@ -1,9 +1,9 @@
+import { Filters } from '@vroom-web/catalog-url-integration';
 import { Car, Hit, Inventory } from '@vroom-web/inv-search-networking';
 import { reaction } from 'mobx';
 
 import AnalyticsHandler, { Product } from 'src/integrations/AnalyticsHandler';
 import { CarsStore } from 'src/modules/cars/store';
-import { Filters } from 'src/modules/cars/utils/url';
 import { Status } from 'src/networking/types';
 
 class CarsViewModel {

@@ -1,5 +1,6 @@
+import { Filters, resetFilters } from '@vroom-web/catalog-url-integration';
+
 import { CarsStore } from 'src/modules/cars/store';
-import { Filters, resetFilters } from 'src/modules/cars/utils/url';
 
 class EngineAndDrivetrainViewModel {
   private readonly carsStore: CarsStore;

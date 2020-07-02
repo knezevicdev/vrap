@@ -1,11 +1,12 @@
-import { Transmission } from 'src/modules/cars/data';
-import { CarsStore } from 'src/modules/cars/store';
 import {
   Filters,
   resetFilter,
   setTransmission,
   Transmission as FiltersDataTransmission,
-} from 'src/modules/cars/utils/url';
+} from '@vroom-web/catalog-url-integration';
+
+import { Transmission } from 'src/modules/cars/data';
+import { CarsStore } from 'src/modules/cars/store';
 
 class TransmissionsViewModel {
   private readonly carsStore: CarsStore;

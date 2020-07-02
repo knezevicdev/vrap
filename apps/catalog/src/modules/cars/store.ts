@@ -1,4 +1,10 @@
 import {
+  Filters,
+  FiltersData,
+  getFiltersDataFromUrl,
+  getUrlFromFiltersData,
+} from '@vroom-web/catalog-url-integration';
+import {
   Inventory,
   InvSearchNetworker,
   MakeBucket,
@@ -31,12 +37,6 @@ import {
 } from './data';
 
 import globalEnv from 'src/globalEnv';
-import {
-  Filters,
-  FiltersData,
-  getFiltersDataFromUrl,
-  getUrlFromFiltersData,
-} from 'src/modules/cars/utils/url';
 import { Status } from 'src/networking/types';
 
 export interface InitialCarsStoreState {

@@ -1,6 +1,7 @@
+import { Filters, FiltersData } from '@vroom-web/catalog-url-integration';
+
 import { Sort } from 'src/modules/cars/data';
 import { CarsStore } from 'src/modules/cars/store';
-import { Filters, FiltersData } from 'src/modules/cars/utils/url';
 
 class SortViewModel {
   private readonly carsStore: CarsStore;

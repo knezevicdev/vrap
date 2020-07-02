@@ -1,7 +1,7 @@
+import { MaxAndMin } from '@vroom-web/catalog-url-integration';
+
 import { Variant } from './index';
 import MaxAndMinInputsStore from './store';
-
-import { MaxAndMin } from 'src/modules/cars/utils/url';
 
 interface ConstructorProps {
   inputErrorLabel: string;

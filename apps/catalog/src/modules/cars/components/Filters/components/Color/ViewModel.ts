@@ -1,12 +1,13 @@
-import { Color } from 'src/modules/cars/data';
-import { CarsStore } from 'src/modules/cars/store';
 import {
   addColor,
   Color as FiltersDataColor,
   Filters,
   removeColor,
   resetFilter,
-} from 'src/modules/cars/utils/url';
+} from '@vroom-web/catalog-url-integration';
+
+import { Color } from 'src/modules/cars/data';
+import { CarsStore } from 'src/modules/cars/store';
 
 class ColorViewModel {
   private readonly carsStore: CarsStore;

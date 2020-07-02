@@ -1,5 +1,6 @@
+import { Filters, setPage } from '@vroom-web/catalog-url-integration';
+
 import { CarsStore } from 'src/modules/cars/store';
-import { Filters, setPage } from 'src/modules/cars/utils/url';
 
 class PaginationViewModel {
   private readonly carsStore: CarsStore;

@@ -1,11 +1,12 @@
-import { DriveType } from 'src/modules/cars/data';
-import { CarsStore } from 'src/modules/cars/store';
 import {
   addDriveType,
   DriveType as FiltersDataDriveType,
   Filters,
   removeDriveType,
-} from 'src/modules/cars/utils/url';
+} from '@vroom-web/catalog-url-integration';
+
+import { DriveType } from 'src/modules/cars/data';
+import { CarsStore } from 'src/modules/cars/store';
 
 class DriveTypesViewModel {
   private readonly carsStore: CarsStore;

@@ -1,4 +1,3 @@
-import { CarsStore } from 'src/modules/cars/store';
 import {
   Filters,
   FiltersData,
@@ -8,7 +7,9 @@ import {
   removeDriveType,
   removeModel,
   resetFilter,
-} from 'src/modules/cars/utils/url';
+} from '@vroom-web/catalog-url-integration';
+
+import { CarsStore } from 'src/modules/cars/store';
 
 export interface Chip {
   display: string;

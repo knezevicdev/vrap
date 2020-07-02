@@ -1,4 +1,21 @@
 /* eslint-disable @typescript-eslint/camelcase */
+import {
+  addAllModels,
+  addBodyType,
+  addColor,
+  addDriveType,
+  addModel,
+  BodyType as FiltersDataBodyType,
+  Color as FiltersDataColor,
+  DriveType as FiltersDataDriveType,
+  FiltersData,
+  setMiles,
+  setPrice,
+  setSearch,
+  setTransmission,
+  setYear,
+  Transmission as FiltersDataTransmission,
+} from '@vroom-web/catalog-url-integration';
 import { MakeBucket } from '@vroom-web/inv-search-networking';
 
 import ViewModel from './ViewModel';
@@ -19,23 +36,6 @@ import {
   TransmissionDisplay,
 } from 'src/modules/cars/data';
 import { CarsStore } from 'src/modules/cars/store';
-import {
-  addAllModels,
-  addBodyType,
-  addColor,
-  addDriveType,
-  addModel,
-  BodyType as FiltersDataBodyType,
-  Color as FiltersDataColor,
-  DriveType as FiltersDataDriveType,
-  FiltersData,
-  setMiles,
-  setPrice,
-  setSearch,
-  setTransmission,
-  setYear,
-  Transmission as FiltersDataTransmission,
-} from 'src/modules/cars/utils/url';
 
 describe('getMakeAndModelsChips', () => {
   test('1', () => {
