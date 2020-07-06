@@ -1,4 +1,3 @@
-import globalEnv from 'src/globalEnv';
 import AnalyticsHandler from 'src/integrations/AnalyticsHandler';
 import { showDefaultVariant } from 'src/integrations/experimentSDK';
 import { HomeStore } from 'src/modules/home/store';
@@ -12,19 +11,20 @@ class SearchViewModel {
   private analyticsHandler: AnalyticsHandler = new AnalyticsHandler();
 
   readonly mobileButtonLabel: string = 'Browse All Vehicles';
-
+  condenseCatalogLinksDefaultVariant: boolean;
   link: Link = {
     href: '/catalog',
     label: '',
-  };
-  readonly car: { src: string; alt: string } = {
-    src: `${globalEnv.ASSET_PREFIX}/modules/home/images/prius.png`,
-    alt: 'Prius',
   };
 
   constructor(store: HomeStore) {
     const browseAllVehiclesTextExperimentVaraint = showDefaultVariant(
       'snd-homepage-browse-all-low-mileage-vs-browse-our-low-mileage',
+      store.experiments,
+      store.query
+    );
+    this.condenseCatalogLinksDefaultVariant = showDefaultVariant(
+      'snd-home-condense-catalog-links',
       store.experiments,
       store.query
     );

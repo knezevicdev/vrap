@@ -1,5 +1,6 @@
+import { Filters, resetFilters } from '@vroom-web/catalog-url-integration';
+
 import { CarsStore } from 'src/modules/cars/store';
-import { Filters, FiltersData } from 'src/modules/cars/utils/url';
 
 class EngineAndDrivetrainViewModel {
   private readonly carsStore: CarsStore;
@@ -24,11 +25,10 @@ class EngineAndDrivetrainViewModel {
 
   reset = (): void => {
     const filtersData = this.carsStore.filtersData;
-    const updatedFiltersData: FiltersData = {
-      ...filtersData,
-      [Filters.DRIVE_TYPE]: undefined,
-      [Filters.TRANSMISSION]: undefined,
-    };
+    const updatedFiltersData = resetFilters(
+      [Filters.DRIVE_TYPE, Filters.TRANSMISSION],
+      filtersData
+    );
     this.carsStore.updateFiltersData(updatedFiltersData);
   };
 }

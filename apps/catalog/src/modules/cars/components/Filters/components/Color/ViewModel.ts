@@ -1,10 +1,13 @@
-import { Color } from 'src/modules/cars/data';
-import { CarsStore } from 'src/modules/cars/store';
 import {
+  addColor,
   Color as FiltersDataColor,
   Filters,
-  FiltersData,
-} from 'src/modules/cars/utils/url';
+  removeColor,
+  resetFilter,
+} from '@vroom-web/catalog-url-integration';
+
+import { Color } from 'src/modules/cars/data';
+import { CarsStore } from 'src/modules/cars/store';
 
 class ColorViewModel {
   private readonly carsStore: CarsStore;
@@ -42,65 +45,14 @@ class ColorViewModel {
     return { isSelected, fontWeight, hasBorder, isMetallic };
   };
 
-  private removeFiltersDataColor = (
-    filtersDataValue: FiltersDataColor,
-    filtersDataColors?: FiltersDataColor[]
-  ): FiltersDataColor[] | undefined => {
-    if (!filtersDataColors) {
-      return undefined;
-    }
-    if (!filtersDataColors.includes(filtersDataValue)) {
-      return undefined;
-    }
-    const updatedFiltersDataColors = filtersDataColors.filter(
-      (c) => c !== filtersDataValue
-    );
-    return updatedFiltersDataColors.length > 0
-      ? updatedFiltersDataColors
-      : undefined;
-  };
-
-  private addFiltersDataColor = (
-    filtersDataValue: FiltersDataColor,
-    filtersDataColors?: FiltersDataColor[]
-  ): FiltersDataColor[] | undefined => {
-    if (!filtersDataColors) {
-      return [filtersDataValue];
-    }
-    if (filtersDataColors.includes(filtersDataValue)) {
-      return filtersDataColors;
-    }
-    return [...filtersDataColors, filtersDataValue];
-  };
-
-  private getUpdatedFiltersDataColors(
-    filtersDataValue: FiltersDataColor,
-    isSelected: boolean,
-    filtersDataColors?: FiltersDataColor[]
-  ): FiltersDataColor[] | undefined {
-    if (isSelected) {
-      return this.removeFiltersDataColor(filtersDataValue, filtersDataColors);
-    }
-    return this.addFiltersDataColor(filtersDataValue, filtersDataColors);
-  }
-
   handleListItemClick = (
     filtersDataValue: FiltersDataColor,
     isSelected: boolean
   ) => (): void => {
     const filtersData = this.carsStore.filtersData;
-    const filtersDataColors = filtersData
-      ? filtersData[Filters.COLORS]
-      : undefined;
-    const updatedFiltersDataColors = this.getUpdatedFiltersDataColors(
-      filtersDataValue,
-      isSelected,
-      filtersDataColors
-    );
-    const updatedFiltersData: FiltersData = {
-      ...filtersData,
-      [Filters.COLORS]: updatedFiltersDataColors,
-    };
+    const updatedFiltersData = isSelected
+      ? removeColor(filtersDataValue, filtersData)
+      : addColor(filtersDataValue, filtersData);
     this.carsStore.updateFiltersData(updatedFiltersData);
   };
 
@@ -118,17 +70,7 @@ class ColorViewModel {
 
   reset = (): void => {
     const filtersData = this.carsStore.filtersData;
-    if (!filtersData) {
-      return;
-    }
-    const filtersDataColors = filtersData[Filters.COLORS];
-    if (!filtersDataColors) {
-      return;
-    }
-    const updatedFiltersData: FiltersData = {
-      ...filtersData,
-      [Filters.COLORS]: undefined,
-    };
+    const updatedFiltersData = resetFilter(Filters.COLORS, filtersData);
     this.carsStore.updateFiltersData(updatedFiltersData);
   };
 }

@@ -2,12 +2,11 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import withStyles from '@material-ui/core/styles/withStyles';
+import { Transmission as FiltersDataTransmission } from '@vroom-web/catalog-url-integration';
 import { observer } from 'mobx-react';
 import React from 'react';
 
 import TransmissionsViewModel from './ViewModel';
-
-import { Transmission as FiltersDataTransmission } from 'src/modules/cars/utils/url';
 
 interface Props {
   viewModel: TransmissionsViewModel;

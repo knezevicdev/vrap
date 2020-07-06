@@ -12,6 +12,7 @@ export type {
   PostInventoryRequestData,
   PostInventoryResponse,
 } from './PostInventory';
+export { SoldStatusInt } from './Inventory';
 export type {
   Car,
   Hit,

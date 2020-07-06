@@ -5,7 +5,7 @@ import {
   SortBy as FiltersDataSortBy,
   SortDirection as FiltersDataSortDirection,
   Transmission as FiltersDataTransmission,
-} from './utils/url';
+} from '@vroom-web/catalog-url-integration';
 
 export const INVENTORY_CARDS_PER_PAGE = 24;
 export const POPULAR_CAR_LIMIT = 12;

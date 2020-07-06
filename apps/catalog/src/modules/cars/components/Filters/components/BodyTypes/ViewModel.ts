@@ -1,10 +1,13 @@
-import { BodyType } from 'src/modules/cars/data';
-import { CarsStore } from 'src/modules/cars/store';
 import {
+  addBodyType,
   BodyType as FiltersDataBodyType,
   Filters,
-  FiltersData,
-} from 'src/modules/cars/utils/url';
+  removeBodyType,
+  resetFilter,
+} from '@vroom-web/catalog-url-integration';
+
+import { BodyType } from 'src/modules/cars/data';
+import { CarsStore } from 'src/modules/cars/store';
 
 class BodyTypesViewModel {
   private readonly carsStore: CarsStore;
@@ -18,68 +21,14 @@ class BodyTypesViewModel {
     return this.carsStore.bodyTypes;
   };
 
-  private removeFiltersDataBodyTypes = (
-    filtersDataValue: FiltersDataBodyType,
-    filtersDataBodyTypes?: FiltersDataBodyType[]
-  ): FiltersDataBodyType[] | undefined => {
-    if (!filtersDataBodyTypes) {
-      return undefined;
-    }
-    if (!filtersDataBodyTypes.includes(filtersDataValue)) {
-      return undefined;
-    }
-    const updatedFiltersDataBodyTypes = filtersDataBodyTypes.filter(
-      (bt) => bt !== filtersDataValue
-    );
-    return updatedFiltersDataBodyTypes.length > 0
-      ? updatedFiltersDataBodyTypes
-      : undefined;
-  };
-
-  private addFiltersDataBodyTypes = (
-    filtersDataValue: FiltersDataBodyType,
-    filtersDataBodyTypes?: FiltersDataBodyType[]
-  ): FiltersDataBodyType[] | undefined => {
-    if (!filtersDataBodyTypes) {
-      return [filtersDataValue];
-    }
-    if (filtersDataBodyTypes.includes(filtersDataValue)) {
-      return filtersDataBodyTypes;
-    }
-    return [...filtersDataBodyTypes, filtersDataValue];
-  };
-
-  private getUpdatedFiltersDataBodyTypes(
-    filtersDataValue: FiltersDataBodyType,
-    isSelected: boolean,
-    filtersDataBodyTypes?: FiltersDataBodyType[]
-  ): FiltersDataBodyType[] | undefined {
-    if (isSelected) {
-      return this.removeFiltersDataBodyTypes(
-        filtersDataValue,
-        filtersDataBodyTypes
-      );
-    }
-    return this.addFiltersDataBodyTypes(filtersDataValue, filtersDataBodyTypes);
-  }
-
   handleListItemClick = (
     filtersDataValue: FiltersDataBodyType,
     isSelected: boolean
   ) => (): void => {
     const filtersData = this.carsStore.filtersData;
-    const filtersDataBodyTypes = filtersData
-      ? filtersData[Filters.BODY_TYPES]
-      : undefined;
-    const updatedFiltersDataBodyTypes = this.getUpdatedFiltersDataBodyTypes(
-      filtersDataValue,
-      isSelected,
-      filtersDataBodyTypes
-    );
-    const updatedFiltersData: FiltersData = {
-      ...filtersData,
-      [Filters.BODY_TYPES]: updatedFiltersDataBodyTypes,
-    };
+    const updatedFiltersData = isSelected
+      ? removeBodyType(filtersDataValue, filtersData)
+      : addBodyType(filtersDataValue, filtersData);
     this.carsStore.updateFiltersData(updatedFiltersData);
   };
 
@@ -109,17 +58,7 @@ class BodyTypesViewModel {
 
   reset = (): void => {
     const filtersData = this.carsStore.filtersData;
-    if (!filtersData) {
-      return;
-    }
-    const filtersDataBodyTypes = filtersData[Filters.BODY_TYPES];
-    if (!filtersDataBodyTypes) {
-      return;
-    }
-    const updatedFiltersData: FiltersData = {
-      ...filtersData,
-      [Filters.BODY_TYPES]: undefined,
-    };
+    const updatedFiltersData = resetFilter(Filters.BODY_TYPES, filtersData);
     this.carsStore.updateFiltersData(updatedFiltersData);
   };
 }

@@ -1,7 +1,6 @@
 import { NextPage } from 'next';
 import React from 'react';
 
-import Page from 'src/components/Page';
 import Inventory from 'src/modules/inventory';
 import {
   getInitialInventoryStoreState,
@@ -10,6 +9,7 @@ import {
   InventoryStoreState,
 } from 'src/modules/inventory/store';
 import { Status } from 'src/networking/types';
+import Page from 'src/Page';
 
 export interface Props {
   initialState: InventoryStoreState;

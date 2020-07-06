@@ -1,12 +1,10 @@
 import Grid from '@material-ui/core/Grid';
 import { styled } from '@material-ui/core/styles';
+import { Button, Typography } from '@vroom-web/ui';
 import { observer } from 'mobx-react';
 import React from 'react';
 
 import ViewModel from './ViewModel';
-
-import Button from 'src/ui/Button';
-import Typography from 'src/ui/Typography';
 
 interface Props {
   viewModel: ViewModel;

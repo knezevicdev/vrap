@@ -58,13 +58,14 @@ class VroomDocument extends Document {
           <FontsSnippet />
           {segmentWriteKey && (
             <AnalyticsSnippet
-              appName="Vroom Web - Homepage"
+              appName="Vroom Web - Product"
               segmentWriteKey={segmentWriteKey}
             />
           )}
           <GlobalEnvSnippet
             CDN_URL={process.env.CDN_URL}
             INVSEARCH_V3_URL={process.env.INVSEARCH_V3_URL}
+            INV_SERVICE_V2_URL={process.env.INV_SERVICE_V2_URL}
           />
         </Head>
         <body>

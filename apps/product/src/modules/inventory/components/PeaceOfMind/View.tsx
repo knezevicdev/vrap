@@ -3,13 +3,11 @@ import Grid from '@material-ui/core/Grid';
 import { useTheme } from '@material-ui/core/styles';
 import SvgIcon from '@material-ui/core/SvgIcon';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
+import { Container, Typography } from '@vroom-web/ui';
 import React from 'react';
 
 import { ReactComponent as PeaceOfMindIcon } from './svg/peace-of-mind.svg';
 import ViewModel from './ViewModel';
-
-import Container from 'src/ui/Container';
-import Typography from 'src/ui/Typography';
 
 interface Props {
   viewModel: ViewModel;
@@ -52,7 +50,7 @@ const HowItWorks: React.FC<Props> = (props) => {
 
   return (
     <Box bgcolor="background.paper" overflow="hidden">
-      <Container content>
+      <Container>
         <Box
           flexDirection="column"
           py={{ xs: 6, md: 12 }}

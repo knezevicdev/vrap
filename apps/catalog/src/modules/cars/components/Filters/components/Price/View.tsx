@@ -1,14 +1,13 @@
+import InputAdornment from '@material-ui/core/InputAdornment';
 import ListItem from '@material-ui/core/ListItem';
 import { styled } from '@material-ui/core/styles';
+import { MaxAndMin } from '@vroom-web/catalog-url-integration';
+import { Typography } from '@vroom-web/ui';
 import { observer } from 'mobx-react';
 import React from 'react';
 
-import Inputs from './components/Inputs';
-import Slider from './components/Slider';
+import MaxAndMinInputs from '../MaxAndMinInputs';
 import PriceViewModel from './ViewModel';
-
-import { MaxAndMin } from 'src/modules/cars/utils/url';
-import Typography from 'src/ui/Typography';
 
 const Container = styled('div')(({ theme }) => ({
   display: 'flex',
@@ -24,12 +23,8 @@ interface Props {
   viewModel: PriceViewModel;
 }
 const PriceView: React.FC<Props> = ({ viewModel }) => {
-  const handleInputsChange = (value: MaxAndMin | undefined): void => {
-    viewModel.handleInputsChange(value);
-  };
-
-  const handleSliderChange = (value: MaxAndMin | undefined): void => {
-    viewModel.handleSliderChange(value);
+  const handleMaxAndMinInputsChange = (value?: MaxAndMin): void => {
+    viewModel.handleMaxAndMinInputsChange(value);
   };
 
   const handleResetClick = (): void => {
@@ -40,14 +35,14 @@ const PriceView: React.FC<Props> = ({ viewModel }) => {
 
   return (
     <Container>
-      <Inputs
-        onChange={handleInputsChange}
+      <MaxAndMinInputs
+        inputStartAdornment={
+          <InputAdornment position="start">$</InputAdornment>
+        }
+        inputErrorLabel={viewModel.errorLabel}
+        onChange={handleMaxAndMinInputsChange}
         range={viewModel.range}
-        value={price}
-      />
-      <Slider
-        onChange={handleSliderChange}
-        range={viewModel.range}
+        step={viewModel.step}
         value={price}
       />
       <Reset

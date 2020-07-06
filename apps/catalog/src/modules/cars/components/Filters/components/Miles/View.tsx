@@ -1,14 +1,12 @@
 import ListItem from '@material-ui/core/ListItem';
 import { styled } from '@material-ui/core/styles';
+import { MaxAndMin } from '@vroom-web/catalog-url-integration';
+import { Typography } from '@vroom-web/ui';
 import { observer } from 'mobx-react';
 import React from 'react';
 
-import Inputs from './components/Inputs';
-import Slider from './components/Slider';
+import MaxAndMinInputs, { Variant } from '../MaxAndMinInputs';
 import MilesViewModel from './ViewModel';
-
-import { MaxAndMin } from 'src/modules/cars/utils/url';
-import Typography from 'src/ui/Typography';
 
 const MilesContainer = styled('div')(({ theme }) => ({
   display: 'flex',
@@ -29,20 +27,22 @@ const MilesView: React.FC<Props> = ({ viewModel }) => {
     viewModel.handleResetClick();
   };
 
-  const handleInputsDone = (values: MaxAndMin | undefined): void => {
+  const handleMaxAndMinInputsChange = (values?: MaxAndMin): void => {
     viewModel.handleInputsDone(values);
   };
 
-  const handleSliderDone = (values: MaxAndMin | undefined): void => {
-    viewModel.handleSliderDone(values);
-  };
-
-  const state = viewModel.getState();
-
   return (
     <MilesContainer>
-      <Inputs onDone={handleInputsDone} range={viewModel.range} state={state} />
-      <Slider onDone={handleSliderDone} range={viewModel.range} state={state} />
+      <MaxAndMinInputs
+        inputErrorLabel={viewModel.errorLabel}
+        maxInputPlaceholder={viewModel.maxInputPlaceholder}
+        maxOnlyInputLabel={viewModel.maxOnlyInputLabel}
+        onChange={handleMaxAndMinInputsChange}
+        range={viewModel.range}
+        step={viewModel.step}
+        variant={Variant.MAX_ONLY}
+        value={viewModel.getMaxAndMinInputsValue()}
+      />
       <Reset
         button
         onClick={handleResetClick}

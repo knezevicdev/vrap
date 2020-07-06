@@ -1,3 +1,13 @@
+import {
+  BodyType,
+  Color,
+  DriveType,
+  Filters,
+  FiltersData,
+  SortBy,
+  SortDirection,
+  Transmission,
+} from '@vroom-web/catalog-url-integration';
 import { PostInventoryRequestData } from '@vroom-web/inv-search-networking';
 
 import {
@@ -18,16 +28,6 @@ import {
   getSortRequestData,
   getTransmissionRequestData,
 } from './store';
-import {
-  BodyType,
-  Color,
-  DriveType,
-  Filters,
-  FiltersData,
-  SortBy,
-  SortDirection,
-  Transmission,
-} from './utils/url';
 
 describe('getBodyTypeRequestData', () => {
   test('1', () => {

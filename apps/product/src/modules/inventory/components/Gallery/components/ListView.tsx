@@ -1,6 +1,7 @@
 import { styled } from '@material-ui/core/styles';
 import CloseIcon from '@material-ui/icons/Close';
 import FullscreenExitIcon from '@material-ui/icons/FullscreenExit';
+import { Container } from '@vroom-web/ui';
 import { observer } from 'mobx-react';
 import React, { useEffect } from 'react';
 
@@ -8,8 +9,6 @@ import ViewModel from '../ViewModel';
 import GalleryConditionEnd from './ConditionEnd';
 import GalleryGeneralToCondition from './GeneralToCondition';
 import GallerySelect from './Select';
-
-import Container from 'src/ui/Container';
 
 interface Props {
   viewModel: ViewModel;

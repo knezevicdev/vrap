@@ -1,10 +1,12 @@
-import { Transmission } from 'src/modules/cars/data';
-import { CarsStore } from 'src/modules/cars/store';
 import {
   Filters,
-  FiltersData,
+  resetFilter,
+  setTransmission,
   Transmission as FiltersDataTransmission,
-} from 'src/modules/cars/utils/url';
+} from '@vroom-web/catalog-url-integration';
+
+import { Transmission } from 'src/modules/cars/data';
+import { CarsStore } from 'src/modules/cars/store';
 
 class TransmissionsViewModel {
   private readonly carsStore: CarsStore;
@@ -37,13 +39,11 @@ class TransmissionsViewModel {
   handleRadioGroupChange = (
     filtersDataValue: FiltersDataTransmission
   ): void => {
-    const updatedFiltersDataTransmission =
-      filtersDataValue === this.allOption.value ? undefined : filtersDataValue;
     const filtersData = this.carsStore.filtersData;
-    const updatedFiltersData: FiltersData = {
-      ...filtersData,
-      [Filters.TRANSMISSION]: updatedFiltersDataTransmission,
-    };
+    const isAllOption = filtersDataValue === this.allOption.value;
+    const updatedFiltersData = isAllOption
+      ? resetFilter(Filters.TRANSMISSION, filtersData)
+      : setTransmission(filtersDataValue, filtersData);
     this.carsStore.updateFiltersData(updatedFiltersData);
   };
 }

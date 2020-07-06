@@ -2,7 +2,6 @@ import { useTheme } from '@material-ui/core/styles';
 import { NextPage, NextPageContext } from 'next';
 import React, { useEffect, useState } from 'react';
 
-import Page from 'src/components/Page';
 import Cars from 'src/modules/cars';
 import {
   CarsStore,
@@ -10,6 +9,7 @@ import {
   getInitialCarsStoreState,
   InitialCarsStoreState,
 } from 'src/modules/cars/store';
+import Page from 'src/Page';
 
 interface Props {
   initialStoreState: InitialCarsStoreState;
@@ -38,7 +38,8 @@ const CarsPage: NextPage<Props> = ({ initialStoreState }) => {
   const head = (
     <>
       <title>{title}</title>
-      <meta name="description" content={description}></meta>
+      <meta name="description" content={description} />
+      <meta name="robots" content="noindex, nofollow" />
     </>
   );
 

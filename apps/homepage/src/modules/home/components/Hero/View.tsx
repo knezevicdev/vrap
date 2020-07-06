@@ -80,10 +80,16 @@ const Container: React.FC<{ maxWidth?: 'sm' | 'lg' }> = ({
   );
 };
 
+interface CarImageProps {
+  alt: string;
+  src: string;
+  carImageHeight: string;
+}
+
 const useCarImageStyles = makeStyles((theme) => ({
   image: {
     gridArea: 'i',
-    height: '176px',
+    height: (props: CarImageProps): string => props.carImageHeight,
     width: '100%',
     objectFit: 'contain',
     alignSelf: 'end',
@@ -93,13 +99,9 @@ const useCarImageStyles = makeStyles((theme) => ({
   },
 }));
 
-interface CarImageProps {
-  alt: string;
-  src: string;
-}
-
-const CarImage: React.FC<CarImageProps> = ({ alt, src }) => {
-  const classes = useCarImageStyles();
+const CarImage: React.FC<CarImageProps> = (props) => {
+  const { alt, src } = props;
+  const classes = useCarImageStyles(props);
   return <img className={classes.image} alt={alt} src={src} loading="lazy" />;
 };
 
@@ -141,7 +143,11 @@ const HeroView: React.FC<Props> = ({ viewModel }) => {
             {viewModel.subtitleLink.label}
           </SubTitleLink>
         </SubTitle>
-        <CarImage alt={viewModel.car.alt} src={viewModel.car.src} />
+        <CarImage
+          alt={viewModel.car.alt}
+          src={viewModel.car.src}
+          carImageHeight={viewModel.carImageHeight}
+        />
         {viewModel.sellTradeExperimentVariant ? <Search /> : <BuySellTrade />}
       </Container>
     </Background>

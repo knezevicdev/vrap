@@ -1,15 +1,13 @@
 import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
+import { Button, Container, Typography } from '@vroom-web/ui';
 import { observer } from 'mobx-react';
 import React from 'react';
 
+import CarCard from './components/CarCard';
 import ViewModel from './ViewModel';
 
-import CarCard from 'src/components/CarCard';
-import Button from 'src/ui/Button';
-import Container from 'src/ui/Container';
-import InternalLink from 'src/ui/InternalLink';
-import Typography from 'src/ui/Typography';
+import ExternalLink from 'src/ui/ExternalLink';
 
 interface Props {
   viewModel: ViewModel;
@@ -44,7 +42,7 @@ const SimilarVehiclesView: React.FC<Props> = (props) => {
   }
 
   return (
-    <Container content>
+    <Container>
       <Box mb={{ xs: 2, md: 4 }}>
         <Grid container alignItems="center">
           <Grid item xs={6}>
@@ -58,7 +56,7 @@ const SimilarVehiclesView: React.FC<Props> = (props) => {
           </Grid>
           <Grid item xs={6}>
             <Box textAlign="right">
-              <InternalLink href="/cars">
+              <ExternalLink href="/cars">
                 <Typography
                   variant="body1"
                   fontWeight="fontWeightMedium"
@@ -67,7 +65,7 @@ const SimilarVehiclesView: React.FC<Props> = (props) => {
                 >
                   {viewModel.viewAll}
                 </Typography>
-              </InternalLink>
+              </ExternalLink>
             </Box>
           </Grid>
         </Grid>

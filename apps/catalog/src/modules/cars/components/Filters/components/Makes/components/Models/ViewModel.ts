@@ -1,9 +1,12 @@
-import { CarsStore } from 'src/modules/cars/store';
 import {
+  addAllModels,
+  addModel,
   Filters,
-  FiltersData,
-  MakeAndModels as FiltersDataMakeAndModels,
-} from 'src/modules/cars/utils/url';
+  removeAllModels,
+  removeModel,
+} from '@vroom-web/catalog-url-integration';
+
+import { CarsStore } from 'src/modules/cars/store';
 
 export interface Model {
   display: string;
@@ -15,7 +18,7 @@ interface AllModel extends Model {
 }
 
 class ModelsViewModel {
-  private readonly allModelSlug = 'all';
+  private readonly allModelSlug = 'all-models';
   private readonly allModelSelected: AllModel = {
     display: 'Unselect All',
     slug: this.allModelSlug,
@@ -79,147 +82,27 @@ class ModelsViewModel {
     return matchingFiltersDataMake.modelSlugs.includes(modelSlug);
   };
 
-  private removeFiltersDataMakeAndModels = (
-    makeSlug: string,
-    modelSlug: string,
-    filtersDataMakeAndModels?: FiltersDataMakeAndModels
-  ): FiltersDataMakeAndModels | undefined => {
-    if (!filtersDataMakeAndModels) {
-      return undefined;
-    }
-    const matchingMakeAndModel = filtersDataMakeAndModels.find(
-      (m) => m.makeSlug === makeSlug
-    );
-    if (!matchingMakeAndModel) {
-      return filtersDataMakeAndModels;
-    }
-    const isAllModel = modelSlug === this.allModelSlug;
-    if (isAllModel) {
-      const updatedFiltersDataMakeAndModels = filtersDataMakeAndModels.filter(
-        (m) => m.makeSlug !== this.makeSlug
-      );
-      return updatedFiltersDataMakeAndModels.length > 0
-        ? updatedFiltersDataMakeAndModels
-        : undefined;
-    }
-    const updatedModelSlugs = matchingMakeAndModel.modelSlugs
-      ? matchingMakeAndModel.modelSlugs.filter((m) => m !== modelSlug)
-      : [];
-    if (updatedModelSlugs.length === 0) {
-      const updatedFiltersDataMakeAndModels = filtersDataMakeAndModels.filter(
-        (m) => m.makeSlug !== this.makeSlug
-      );
-      return updatedFiltersDataMakeAndModels.length > 0
-        ? updatedFiltersDataMakeAndModels
-        : undefined;
-    }
-    const updatedFiltersDataMakeAndModels = filtersDataMakeAndModels.map(
-      (makeAndModels) => {
-        if (makeAndModels.makeSlug !== this.makeSlug) {
-          return makeAndModels;
-        }
-        return {
-          makeSlug: makeAndModels.makeSlug,
-          modelSlugs: updatedModelSlugs,
-        };
-      }
-    );
-    return updatedFiltersDataMakeAndModels;
+  private handleClickAllModel = (isSelected: boolean): void => {
+    const filtersData = this.carsStore.filtersData;
+    const updatedFiltersData = isSelected
+      ? removeAllModels(this.makeSlug, filtersData)
+      : addAllModels(this.makeSlug, filtersData);
+    this.carsStore.updateFiltersData(updatedFiltersData);
   };
 
-  private addFiltersDataMakeAndModels = (
-    makeSlug: string,
-    modelSlug: string,
-    filtersDataMakeAndModels?: FiltersDataMakeAndModels
-  ): FiltersDataMakeAndModels => {
-    const isAllModel = modelSlug === this.allModelSlug;
-    if (!filtersDataMakeAndModels) {
-      return [
-        {
-          makeSlug,
-          modelSlugs: isAllModel ? undefined : [modelSlug],
-        },
-      ];
-    }
-    const matchingMakeAndModel = filtersDataMakeAndModels.find(
-      (m) => m.makeSlug === makeSlug
-    );
-    if (!matchingMakeAndModel) {
-      return [
-        ...filtersDataMakeAndModels,
-        {
-          makeSlug,
-          modelSlugs: isAllModel ? undefined : [modelSlug],
-        },
-      ];
-    }
-    const existingModelSlugs = matchingMakeAndModel.modelSlugs;
-    if (!existingModelSlugs) {
-      const updatedModelSlugs = isAllModel ? undefined : [modelSlug];
-      return filtersDataMakeAndModels.map((makeAndModels) => {
-        if (makeAndModels.makeSlug !== this.makeSlug) {
-          return makeAndModels;
-        }
-        return {
-          makeSlug: makeAndModels.makeSlug,
-          modelSlugs: updatedModelSlugs,
-        };
-      });
-    }
-    if (existingModelSlugs.includes(modelSlug)) {
-      return filtersDataMakeAndModels;
-    }
-    const updatedModelSlugs = isAllModel
-      ? undefined
-      : [...existingModelSlugs, modelSlug];
-    return filtersDataMakeAndModels.map((makeAndModels) => {
-      if (makeAndModels.makeSlug !== this.makeSlug) {
-        return makeAndModels;
-      }
-      return {
-        makeSlug: makeAndModels.makeSlug,
-        modelSlugs: updatedModelSlugs,
-      };
-    });
-  };
-
-  private getUpdatedFiltersDataMakeAndModels = (
-    makeSlug: string,
-    modelSlug: string,
-    isSelected: boolean,
-    filtersDataMakeAndModels?: FiltersDataMakeAndModels
-  ): FiltersDataMakeAndModels | undefined => {
-    if (isSelected) {
-      return this.removeFiltersDataMakeAndModels(
-        makeSlug,
-        modelSlug,
-        filtersDataMakeAndModels
-      );
-    } else {
-      return this.addFiltersDataMakeAndModels(
-        makeSlug,
-        modelSlug,
-        filtersDataMakeAndModels
-      );
-    }
+  private handleClickModel = (modelSlug: string, isSelected: boolean): void => {
+    const filtersData = this.carsStore.filtersData;
+    const updatedFiltersData = isSelected
+      ? removeModel(this.makeSlug, modelSlug, filtersData)
+      : addModel(this.makeSlug, modelSlug, filtersData);
+    this.carsStore.updateFiltersData(updatedFiltersData);
   };
 
   handleClick = (modelSlug: string, isSelected: boolean) => (): void => {
-    const filtersData = this.carsStore.filtersData;
-    const filtersDataMakeAndModels = filtersData
-      ? filtersData[Filters.MAKE_AND_MODELS]
-      : undefined;
-    const updatedFiltersDataMakeAndModels = this.getUpdatedFiltersDataMakeAndModels(
-      this.makeSlug,
-      modelSlug,
-      isSelected,
-      filtersDataMakeAndModels
-    );
-    const updatedFiltersData: FiltersData = {
-      ...filtersData,
-      [Filters.MAKE_AND_MODELS]: updatedFiltersDataMakeAndModels,
-    };
-    this.carsStore.updateFiltersData(updatedFiltersData);
+    const isAllModel = modelSlug === this.allModelSlug;
+    isAllModel
+      ? this.handleClickAllModel(isSelected)
+      : this.handleClickModel(modelSlug, isSelected);
   };
 }
 

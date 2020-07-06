@@ -1,12 +1,10 @@
 import Grid from '@material-ui/core/Grid';
 import { styled } from '@material-ui/core/styles';
+import { Container, Typography } from '@vroom-web/ui';
 import { observer } from 'mobx-react';
 import React from 'react';
 
 import ViewModel from './ViewModel';
-
-import Container from 'src/ui/Container';
-import Typography from 'src/ui/Typography';
 
 interface Props {
   viewModel: ViewModel;
@@ -34,7 +32,7 @@ const BreadcrumbsView: React.FC<Props> = (props) => {
   const lastIndex = crumbs.length - 1;
 
   return (
-    <Container content>
+    <Container>
       <Grid container spacing={1}>
         {/*TODO: How do we do SEO for link at bottom?*/}
         {crumbs.map((crumb, index) => {

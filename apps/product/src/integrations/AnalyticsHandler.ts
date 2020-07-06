@@ -1,16 +1,67 @@
 import { AnalyticsHandler as BaseAnalyticsHandler } from '@vroom-web/analytics-integration';
 
+export type ProductInventoryType = 'Consignment' | 'Vroom';
+export type ProductPhotoType = 'Illustration' | 'Stock' | 'Vroom';
+
+export interface Product {
+  imageUrl: string;
+  inventoryType: ProductInventoryType;
+  make: string;
+  model: string;
+  name: string;
+  partnerId?: string;
+  photoType?: ProductPhotoType;
+  position?: number;
+  price: number;
+  sku: number;
+  soldStatus?: number;
+  url?: string;
+  vin: string;
+  year: number;
+  defectPhotos?: boolean;
+  hasStockPhotos?: boolean;
+}
+
 class AnalyticsHandler extends BaseAnalyticsHandler {
-  trackProductSearched(
-    label: 'Autocomplete' | 'Free Form',
-    query: string
-  ): void {
-    const event = 'Product Searched';
-    const properties = {
-      category: 'Home',
-      label,
-      query,
-    };
+  trackProductClicked(product: Product): void {
+    const event = 'Product Clicked';
+    const category = 'Catalog';
+    const properties = { ...product, category };
+    this.track(event, properties);
+  }
+
+  trackProductViewed(product: Product): void {
+    const event = 'Product Viewed';
+    const category = 'Product';
+    const properties = { ...product, category, nonInteraction: 1 };
+    this.track(event, properties);
+  }
+
+  trackProductAdded(product: Product): void {
+    const event = 'Product Added';
+    const category = 'Product';
+    const properties = { ...product, category };
+    this.track(event, properties);
+  }
+
+  trackGallerySelection(product: Product, selection: string): void {
+    const event = `${selection} Button Clicked`;
+    const category = 'Product';
+    const properties = { product, category };
+    this.track(event, properties);
+  }
+
+  trackConditionCTA(): void {
+    const event = 'Condition CTA Clicked';
+    const category = 'Product';
+    const properties = { category };
+    this.track(event, properties);
+  }
+
+  trackGalleryListView(product: Product, selection: string): void {
+    const event = `${selection} Image List Viewed`;
+    const category = 'Product';
+    const properties = { product, category };
     this.track(event, properties);
   }
 }

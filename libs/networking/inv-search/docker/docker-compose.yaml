@@ -1,16 +1,14 @@
 version: '3'
 services:
-  test:
+  inv-search-networking:
     build:
       context: ../../../../
       dockerfile: ./libs/networking/inv-search/docker/Dockerfile
-    image: vroom-web-inv-search-networking:latest
-    container_name: test
     user: 'root'
     command: >
       ash -c "yarn workspace @vroom-web/inv-search-networking test --watch"
     volumes:
-      - '../../../../:/www/:cached'
-      # stop dependencies and build artifacts from copying to host
+      - '../../../../:/www/'
+      - '/www/node_modules'
       - '/www/libs/networking/inv-search/dist'
       - '/www/libs/networking/inv-search/node_modules'

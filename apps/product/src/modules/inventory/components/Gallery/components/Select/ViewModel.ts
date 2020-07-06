@@ -1,8 +1,6 @@
 import { GallerySelections, GalleryStore } from '../../store';
 
-import AnalyticsHandler, {
-  Product,
-} from 'src/integrations/analytics/AnalyticsHandler';
+import AnalyticsHandler, { Product } from 'src/integrations/AnalyticsHandler';
 
 class GallerySelectorViewModel {
   private store: GalleryStore;

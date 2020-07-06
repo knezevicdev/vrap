@@ -2,6 +2,7 @@ import Box from '@material-ui/core/Box';
 import MuiPaper from '@material-ui/core/Paper';
 import { styled, useTheme } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
+import { Container, Typography } from '@vroom-web/ui';
 import { observer } from 'mobx-react';
 import React, { useRef, useState } from 'react';
 import ImageGallery from 'react-image-gallery';
@@ -10,9 +11,6 @@ import ListView from './components/ListView';
 import NoImagesView from './components/NoImagesView';
 import GallerySelect from './components/Select';
 import ViewModel from './ViewModel';
-
-import Container from 'src/ui/Container';
-import Typography from 'src/ui/Typography';
 
 //#region Styling
 const Paper = styled(MuiPaper)(({ theme }) => ({
@@ -85,7 +83,7 @@ const GalleryView: React.FC<Props> = (props) => {
       </Box>
       {viewModel.showBanner() && (
         <Paper elevation={0} square>
-          <Container content>
+          <Container>
             <Box pb={2}>
               <Typography
                 variant="body1"

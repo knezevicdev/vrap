@@ -11,7 +11,7 @@ class ConditionEndViewModel {
   readonly faqPreText: string =
     'For information on our mechanical and safety standards, ';
   readonly faqLink = {
-    text: 'please visit out FAQ.',
+    text: 'please visit our FAQ.',
     url: `https://vroom.zendesk.com/hc/en-us/articles/205360495-How-do-you-ensure-the-quality-of-your-vehicles-`,
   };
   readonly defaultImage = {

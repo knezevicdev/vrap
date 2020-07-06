@@ -2,9 +2,7 @@ import { reaction } from 'mobx';
 
 import { InventoryStore } from './store';
 
-import AnalyticsHandler, {
-  Product,
-} from 'src/integrations/analytics/AnalyticsHandler';
+import AnalyticsHandler, { Product } from 'src/integrations/AnalyticsHandler';
 import { Status } from 'src/networking/types';
 
 class InventoryViewModel {

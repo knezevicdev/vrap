@@ -2,9 +2,7 @@ import Router from 'next/router';
 
 import { InventoryStore } from '../../store';
 
-import AnalyticsHandler, {
-  Product,
-} from 'src/integrations/analytics/AnalyticsHandler';
+import AnalyticsHandler, { Product } from 'src/integrations/AnalyticsHandler';
 
 class StartPurchaseViewModel {
   private store: InventoryStore;

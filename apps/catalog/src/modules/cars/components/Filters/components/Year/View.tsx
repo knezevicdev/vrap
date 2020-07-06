@@ -1,14 +1,12 @@
 import ListItem from '@material-ui/core/ListItem';
 import { styled } from '@material-ui/core/styles';
+import { MaxAndMin } from '@vroom-web/catalog-url-integration';
+import { Typography } from '@vroom-web/ui';
 import { observer } from 'mobx-react';
 import React from 'react';
 
-import Inputs from './components/Inputs';
-import Slider from './components/Slider';
+import MaxAndMinInputs from '../MaxAndMinInputs';
 import ViewModel from './ViewModel';
-
-import { MaxAndMin } from 'src/modules/cars/utils/url';
-import Typography from 'src/ui/Typography';
 
 const Container = styled('div')(({ theme }) => ({
   display: 'flex',
@@ -24,31 +22,22 @@ interface Props {
   viewModel: ViewModel;
 }
 const YearView: React.FC<Props> = ({ viewModel }) => {
-  const handleInputsChange = (value: MaxAndMin | undefined): void => {
-    viewModel.handleInputsChange(value);
-  };
-
-  const handleSliderChange = (value: MaxAndMin | undefined): void => {
-    viewModel.handleSliderChange(value);
+  const handleMaxAndMinInputsChange = (value?: MaxAndMin): void => {
+    viewModel.handleMaxAndMinInputsChange(value);
   };
 
   const handleResetClick = (): void => {
     viewModel.handleResetClick();
   };
 
-  const year = viewModel.getYear();
-
   return (
     <Container>
-      <Inputs
-        onChange={handleInputsChange}
+      <MaxAndMinInputs
+        inputErrorLabel={viewModel.errorLabel}
+        onChange={handleMaxAndMinInputsChange}
         range={viewModel.range}
-        value={year}
-      />
-      <Slider
-        onChange={handleSliderChange}
-        range={viewModel.range}
-        value={year}
+        step={viewModel.step}
+        value={viewModel.getMaxAndMinInputsValue()}
       />
       <Reset
         button

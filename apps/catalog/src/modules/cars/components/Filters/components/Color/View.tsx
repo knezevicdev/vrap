@@ -2,12 +2,11 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import { styled } from '@material-ui/core/styles';
 import Check from '@material-ui/icons/Check';
+import { Typography } from '@vroom-web/ui';
 import { observer } from 'mobx-react';
 import React from 'react';
 
 import ColorViewModel from './ViewModel';
-
-import Typography from 'src/ui/Typography';
 
 const StyledListItem = styled(ListItem)(({ theme }) => ({
   padding: theme.spacing(1, 0),

@@ -6,9 +6,7 @@ import GalleryGeneralToCondition from './components/GeneralToCondition';
 import { GallerySelections, GalleryStore } from './store';
 
 import globalEnv from 'src/globalEnv';
-import AnalyticsHandler, {
-  Product,
-} from 'src/integrations/analytics/AnalyticsHandler';
+import AnalyticsHandler, { Product } from 'src/integrations/AnalyticsHandler';
 import { DefectTypes } from 'src/networking/models/Inventory.v3';
 
 interface GeneralPhoto {

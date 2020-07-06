@@ -58,7 +58,9 @@ class InProgressDealBarStore {
         this.inProgressDealStatus = Status.SUCCESS;
       });
     } catch {
-      this.inProgressDealStatus = Status.ERROR;
+      runInAction(() => {
+        this.inProgressDealStatus = Status.ERROR;
+      });
     }
   };
 

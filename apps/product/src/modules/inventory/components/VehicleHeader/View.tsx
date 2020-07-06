@@ -3,14 +3,12 @@ import Grid from '@material-ui/core/Grid';
 import MuiPaper from '@material-ui/core/Paper';
 import { styled, useTheme } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
+import { Container, Typography } from '@vroom-web/ui';
 import { observer } from 'mobx-react';
 import React from 'react';
 
 import StartPurchase from '../StartPurchase';
 import ViewModel from './ViewModel';
-
-import Container from 'src/ui/Container';
-import Typography from 'src/ui/Typography';
 
 //#region Styling
 const Paper = styled(MuiPaper)(({ theme }) => ({
@@ -33,13 +31,13 @@ const VehicleHeaderView: React.FC<Props> = (props) => {
 
   return (
     <Paper elevation={0} square>
-      <Container content>
+      <Container>
         <Box py={{ xs: 2, md: 4 }}>
           <Grid container spacing={2}>
             <Grid item xs={12} sm={6} spacing={1} container>
               <Grid item xs={12}>
                 <Typography
-                  variant={xsDown ? 'h3' : 'h2'}
+                  variant="h2"
                   fontWeight="fontWeightMedium"
                   textAlign={xsDown ? 'center' : 'inherit'}
                 >
@@ -48,7 +46,7 @@ const VehicleHeaderView: React.FC<Props> = (props) => {
               </Grid>
               <Grid item xs={12}>
                 <Typography
-                  variant={xsDown ? 'h3' : 'h2'}
+                  variant="h2"
                   fontWeight="fontWeightLight"
                   textAlign={xsDown ? 'center' : 'inherit'}
                 >
@@ -65,10 +63,7 @@ const VehicleHeaderView: React.FC<Props> = (props) => {
               alignItems="center"
               justify={xsDown ? 'center' : 'flex-end'}
             >
-              <Typography
-                variant={xsDown ? 'h3' : 'h2'}
-                fontWeight="fontWeightMedium"
-              >
+              <Typography variant="h2" fontWeight="fontWeightMedium">
                 {summary.price}
               </Typography>
             </Grid>

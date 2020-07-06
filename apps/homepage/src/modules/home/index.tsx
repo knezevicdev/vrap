@@ -14,6 +14,7 @@ import globalEnv from 'src/globalEnv';
 
 const Home: React.FC = () => {
   const gearboxPrivateUrl = globalEnv.GEARBOX_PRIVATE_URL;
+
   return (
     <>
       <SimpleHeader />
