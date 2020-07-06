@@ -1,7 +1,10 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 
 const childProcess = require('child_process');
-const shortHash = childProcess.execSync('git rev-parse HEAD').toString().trim();
+const shortHash = childProcess
+  .execSync('git rev-parse --short=8 HEAD')
+  .toString()
+  .trim();
 
 // TODO: remove once interchange (nginx) is setup locally
 const isProd = process.env.NODE_ENV === 'production';
