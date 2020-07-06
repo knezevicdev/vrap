@@ -23,7 +23,10 @@ const FaviconSnippet: React.FC = () => {
         sizes="16x16"
         href={`${globalEnv.ASSET_PREFIX}/favicon-16x16.png`}
       />
-      <link rel="manifest" href={`/site.webmanifest`} />
+      <link
+        rel="manifest"
+        href={`${globalEnv.ASSET_PREFIX}/site.webmanifest`}
+      />
       <link
         rel="mask-icon"
         href={`${globalEnv.ASSET_PREFIX}/safari-pinned-tab.svg`}
