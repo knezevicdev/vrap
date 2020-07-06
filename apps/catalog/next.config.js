@@ -12,7 +12,7 @@ const assetPrefix = isProd ? `/catalog/${shortHash}` : '';
 
 module.exports = {
   env: {
-    assetPrefix,
+    ASSET_PREFIX: assetPrefix,
   },
   assetPrefix,
   experimental: {

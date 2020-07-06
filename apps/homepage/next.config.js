@@ -16,7 +16,7 @@ const assetPrefix = isProd ? `/hp/${shortHash}` : '';
 
 const config = {
   env: {
-    assetPrefix,
+    ASSET_PREFIX: assetPrefix,
   },
   assetPrefix,
   generateBuildId: () => shortHash,
