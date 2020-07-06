@@ -72,6 +72,8 @@ class VroomDocument extends Document {
             DATA_DOG_LOG_COLLECTION_TOKEN={
               globalEnv.DATA_DOG_LOG_COLLECTION_TOKEN
             }
+            NAME={globalEnv.NAME}
+            VERSION={globalEnv.VERSION}
           />
           <ModernizrSnippet />
         </Head>

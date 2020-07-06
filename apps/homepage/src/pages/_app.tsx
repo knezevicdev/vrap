@@ -23,11 +23,14 @@ class VroomApp extends App {
         datacenter: 'us' as LogsUserConfiguration['datacenter'],
         forwardErrorsToLogs: true,
         sampleRate: 100,
+        service: globalEnv.NAME,
         silentMultipleInit: true,
+        version: globalEnv.VERSION,
       };
       const context = {
-        service: '@vroom-web/homepage',
+        service: globalEnv.NAME,
         host: window.location.host,
+        version: globalEnv.VERSION,
       };
       datadogLogs.init(init);
       datadogLogs.setLoggerGlobalContext(context);
