@@ -6,7 +6,6 @@ services:
       dockerfile: ./apps/product/docker/Dockerfile
     user: 'root'
     environment:
-      - CDN_URL=
       - INVSEARCH_V3_URL=https://invsearch-v3-prod-ext.aws.vroomapi.com/v3
       - SEGMENT_WRITE_KEY=N0pxERRIw4iYCoxZREMZj1yWBIoARIz4
     command: ash -c "yarn workspace @vroom-web/product dev --port 8080"

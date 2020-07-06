@@ -1,11 +1,11 @@
 import { name, version } from 'package.json';
 
 export interface GlobalEnv {
-  CDN_URL?: string;
   INVSEARCH_V3_URL?: string;
   LEADS_URL?: string;
   NAME?: string;
   VERSION?: string;
+  ASSET_PREFIX?: string;
 }
 
 declare global {
@@ -17,5 +17,9 @@ declare global {
 const globalEnv: GlobalEnv = process.browser
   ? window.__GLOBAL_ENV__
   : { ...process.env, NAME: name, VERSION: version };
+
+if (!globalEnv.ASSET_PREFIX && process.env.assetPrefix) {
+  globalEnv.ASSET_PREFIX = process.env.assetPrefix;
+}
 
 export default globalEnv;

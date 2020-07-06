@@ -9,7 +9,7 @@ class GalleryToConditionViewModel {
   readonly goToConditionText: string = 'VIEW IMPERFECTIONS PHOTOS';
   readonly defaultImage = {
     alt: 'Gallery To Condition Photo',
-    src: `${globalEnv.CDN_URL}/modules/inventory/components/gallery/LastGallery.png`,
+    src: `${globalEnv.ASSET_PREFIX}/modules/inventory/components/gallery/LastGallery.png`,
   };
 
   constructor(galleryStore: GalleryStore) {

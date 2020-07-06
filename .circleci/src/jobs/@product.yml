@@ -1,4 +1,4 @@
-catalog_build:
+product_build:
   docker:
   - image: vroom/mlp:3.0.1
   steps:
@@ -7,8 +7,8 @@ catalog_build:
         version: 18.09.3
     - run:
         command: |-
-          build -a vroom-web/apps/catalog/docker
-catalog_deploy:
+          build -a vroom-web/apps/product/docker
+product_deploy:
   docker:
   - image: vroom/mlp:3.0.1
   parameters:
@@ -21,4 +21,4 @@ catalog_deploy:
     - run:
         command: |-
           login
-          deploy -a vroom-web/apps/catalog/docker -n << parameters.env >>
+          deploy -a vroom-web/apps/product/docker -n << parameters.env >>

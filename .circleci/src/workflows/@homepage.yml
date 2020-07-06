@@ -1,7 +1,7 @@
 homepage:
   jobs:
-  # - sonarcloud:
-  #     context: SonarCloud
+  - sonarcloud:
+      context: SonarCloud
   - danger:
       context: dangerjs
   - lint

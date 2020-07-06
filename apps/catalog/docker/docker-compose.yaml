@@ -6,7 +6,6 @@ services:
       dockerfile: ./apps/catalog/docker/Dockerfile
     user: 'root'
     environment:
-      - CDN_URL=
       - INVSEARCH_V3_URL=https://invsearch-v3-dev-int.aws.vroomapi.com:8443/v3
       # - INVSEARCH_V3_URL=https://invsearch-v3-prod-ext.aws.vroomapi.com/v3
       - SEGMENT_WRITE_KEY=N0pxERRIw4iYCoxZREMZj1yWBIoARIz4

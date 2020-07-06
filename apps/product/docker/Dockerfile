@@ -10,18 +10,16 @@ COPY . .
 RUN chown -R 1000:1000 .
 
 # Bootstrap yarn workspaces.
-RUN yarn install --silent
-
-# Build libraries.
-RUN yarn workspace @vroom-web/analytics-integration build
-RUN yarn workspace @vroom-web/deals-v2-networking build
-RUN yarn workspace @vroom-web/inv-search-networking build
-RUN yarn workspace @vroom-web/ui build
-RUN yarn workspace @vroom-web/header-components build
-RUN yarn workspace @vroom-web/footer-components build
-
-# Build the main app.
-RUN yarn workspace @vroom-web/product build
+RUN yarn install --silent &&\
+  # Build libraries.
+  yarn workspace @vroom-web/analytics-integration build &&\
+  yarn workspace @vroom-web/deals-v2-networking build &&\
+  yarn workspace @vroom-web/inv-search-networking build &&\
+  yarn workspace @vroom-web/ui build &&\
+  yarn workspace @vroom-web/header-components build &&\
+  yarn workspace @vroom-web/footer-components build &&\
+  # Build the main app.
+  yarn workspace @vroom-web/product build
 
 EXPOSE 8080
 

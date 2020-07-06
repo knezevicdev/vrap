@@ -1,11 +1,11 @@
-catalog:
+product:
   jobs:
   - lint
-  - catalog_build:
+  - product_build:
       context: aws-non-prod
       filters:
         tags:
-          only: /^catalog-v.*/
+          only: /^product-v.*/
         branches:
           ignore: /.*/
   - hold:
@@ -15,14 +15,14 @@ catalog:
         parameters:
           env: ["dev", "qa", "uat"]
       requires:
-        - catalog_build
+        - product_build
       filters:
         tags:
-          only: /^catalog-v.*/
+          only: /^product-v.*/
         branches:
           ignore: /.*/
-  - catalog_deploy:
-      name: catalog_deploy_<< matrix.env >>
+  - product_deploy:
+      name: product_deploy_<< matrix.env >>
       context: aws-non-prod
       matrix:
         parameters:
@@ -31,23 +31,23 @@ catalog:
         - hold_<< matrix.env >>
       filters:
         tags:
-          only: /^catalog-v.*/
+          only: /^product-v.*/
         branches:
           ignore: /.*/
   # - hold:
   #     name: hold_prod
   #     type: approval
   #     requires:
-  #       - catalog_deploy_dev
-  #       - catalog_deploy_qa
-  #       - catalog_deploy_uat
+  #       - product_deploy_dev
+  #       - product_deploy_qa
+  #       - product_deploy_uat
   #     filters:
   #       tags:
-  #         only: /^catalog-v.*/
+  #         only: /^product-v.*/
   #       branches:
   #         ignore: /.*/
-  # - catalog_deploy:
-  #     name: catalog_deploy_prod
+  # - product_deploy:
+  #     name: product_deploy_prod
   #     context: aws-prod
   #     env: "prod"
   #     s3: s3://static-assets.p.vroom.systems
@@ -55,6 +55,6 @@ catalog:
   #       - hold_prod
   #     filters:
   #       tags:
-  #         only: /^catalog-v.*/
+  #         only: /^product-v.*/
   #       branches:
   #         ignore: /.*/
