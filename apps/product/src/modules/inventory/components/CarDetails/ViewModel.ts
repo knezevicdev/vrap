@@ -1,6 +1,6 @@
-import { InventoryStore } from '../../store';
+import { Car } from '@vroom-web/inv-search-networking';
 
-import { Car } from 'src/networking/models/Inventory.v3';
+import { InventoryStore } from '../../store';
 
 interface History {
   title: string;

@@ -1,3 +1,4 @@
+import { DefectType } from '@vroom-web/inv-search-networking';
 import isEmpty from 'lodash/isEmpty';
 
 import { InventoryStore } from '../../store';
@@ -7,7 +8,6 @@ import { GallerySelections, GalleryStore } from './store';
 
 import globalEnv from 'src/globalEnv';
 import AnalyticsHandler, { Product } from 'src/integrations/AnalyticsHandler';
-import { DefectTypes } from 'src/networking/models/Inventory.v3';
 
 interface GeneralPhoto {
   original: string;
@@ -122,12 +122,13 @@ class GalleryViewModel {
   getGeneralImages(): GeneralPhoto[] {
     const {
       leadFlagPhotoUrl,
-      otherPhotos = [],
+      otherPhotos,
       interiorPhotoUrl,
     } = this.inventoryStore.vehicle._source;
     const { isListView } = this.galleryStore;
 
-    const vehiclePhotos = [leadFlagPhotoUrl, ...otherPhotos];
+    const nonNullOtherPhotos = otherPhotos ? otherPhotos : [];
+    const vehiclePhotos = [leadFlagPhotoUrl, ...nonNullOtherPhotos];
     const interiorPhotoIndex = vehiclePhotos.indexOf(interiorPhotoUrl);
     vehiclePhotos.splice(1, 0, vehiclePhotos.splice(interiorPhotoIndex, 1)[0]);
 
@@ -156,19 +157,24 @@ class GalleryViewModel {
   getDefectImages(): DefectPhoto[] {
     const { defectPhotos } = this.inventoryStore.vehicle._source;
     const { isListView } = this.galleryStore;
-    const defectImages = !isEmpty(defectPhotos)
-      ? defectPhotos.map(
-          (img: { url: string; defectType: DefectTypes; location: string }) => {
-            return {
-              original: this.getHiResImageUrl(img.url),
-              thumbnail: img.url,
-              description: `${this.getDefectDisplay(img.defectType)} - ${
-                img.location
-              }`,
-            };
-          }
-        )
-      : [];
+    const defectImages =
+      !!defectPhotos && !isEmpty(defectPhotos)
+        ? defectPhotos.map(
+            (img: {
+              url: string;
+              defectType: DefectType;
+              location: string;
+            }) => {
+              return {
+                original: this.getHiResImageUrl(img.url),
+                thumbnail: img.url,
+                description: `${this.getDefectDisplay(img.defectType)} - ${
+                  img.location
+                }`,
+              };
+            }
+          )
+        : [];
     if (!isListView) {
       const addGalleryEndCard: {
         original: string;
@@ -229,19 +235,19 @@ class GalleryViewModel {
     }
   }
 
-  private getDefectDisplay(defect: DefectTypes): string {
+  private getDefectDisplay(defect: DefectType): string {
     switch (defect) {
-      case DefectTypes.SCRATCH:
+      case DefectType.SCRATCH:
         return 'Scratch';
-      case DefectTypes.OXIDATION:
+      case DefectType.OXIDATION:
         return 'Paint Imperfection';
-      case DefectTypes.SPIDER_CRACKING:
+      case DefectType.SPIDER_CRACKING:
         return 'Paint Imperfection';
-      case DefectTypes.RUN:
+      case DefectType.RUN:
         return 'Paint Imperfection';
-      case DefectTypes.DENT:
+      case DefectType.DENT:
         return 'Dent';
-      case DefectTypes.CHIP:
+      case DefectType.CHIP:
         return 'Chip';
       default:
         return '';

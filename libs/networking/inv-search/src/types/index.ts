@@ -12,9 +12,10 @@ export type {
   PostInventoryRequestData,
   PostInventoryResponse,
 } from './PostInventory';
-export { SoldStatusInt } from './Inventory';
+export { DefectType, SoldStatusInt } from './Inventory';
 export type {
   Car,
+  DefectPhoto,
   Hit,
   Hits,
   ModelBucket,

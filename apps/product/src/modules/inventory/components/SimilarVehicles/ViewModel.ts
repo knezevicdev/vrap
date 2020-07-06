@@ -1,9 +1,9 @@
+import { Car } from '@vroom-web/inv-search-networking';
 import Router from 'next/router';
 import React from 'react';
 
 import { InventoryStore } from '../../store';
 
-import { Car } from 'src/networking/models/Inventory.v3';
 import { Status } from 'src/networking/types';
 
 class SimilarVehiclesViewModel {

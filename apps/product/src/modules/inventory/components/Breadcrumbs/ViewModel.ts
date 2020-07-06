@@ -1,8 +1,9 @@
+import { Car } from '@vroom-web/inv-search-networking';
+
 import { InventoryStore } from '../../store';
 
 import { updateUrl } from 'src/modules/cars/utils/navigation';
 import { ALL_KEY, Filters } from 'src/modules/cars/utils/types';
-import { Car } from 'src/networking/models/Inventory.v3';
 
 interface Crumb {
   key: string;
