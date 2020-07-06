@@ -1,12 +1,9 @@
 import Box from '@material-ui/core/Box';
 import { styled } from '@material-ui/core/styles';
+import { Button, Container, Typography } from '@vroom-web/ui';
 import React from 'react';
 
 import ViewModel from './ViewModel';
-
-import Button from 'src/ui/Button';
-import Container from 'src/ui/Container';
-import Typography from 'src/ui/Typography';
 
 const StyledImg = styled('img')(({ theme }) => ({
   width: '50%',

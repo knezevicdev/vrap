@@ -5,6 +5,7 @@ import { styled, useTheme } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { StandardFooter } from '@vroom-web/footer-components';
 import { SimpleHeader } from '@vroom-web/header-components';
+import { Container, Typography } from '@vroom-web/ui';
 import { observer } from 'mobx-react';
 import React, { useEffect } from 'react';
 
@@ -12,16 +13,13 @@ import Breadcrumbs from './components/Breadcrumbs';
 import CarDetails from './components/CarDetails';
 import Features from './components/Features';
 import Gallery from './components/Gallery/';
+import HowItWorks from './components/HowItWorks';
 import PeaceOfMind from './components/PeaceOfMind';
 import SimilarVehicles from './components/SimilarVehicles';
 import StartPurchase from './components/StartPurchase';
 import VehicleHeader from './components/VehicleHeader';
+import VehicleNotFound from './components/VehicleNotFound';
 import ViewModel from './ViewModel';
-
-import HowItWorks from 'src/components/HowItWorks';
-import VehicleNotFound from 'src/components/VehicleNotFound';
-import Container from 'src/ui/Container';
-import Typography from 'src/ui/Typography';
 
 export interface Props {
   viewModel: ViewModel;
@@ -123,9 +121,9 @@ const VehicleDetails: React.FC<Props> = (props) => {
           </Grid>
           {viewModel.ready() && (
             <Grid item xs={12}>
-              <Container content>
+              <Container>
                 <Box pt={{ xs: 4, md: 12 }}>
-                  <Typography variant="overline" fontWeight="fontWeightLight">
+                  <Typography fontWeight="fontWeightLight">
                     {viewModel.disclaimer}
                   </Typography>
                 </Box>

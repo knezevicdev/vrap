@@ -2,9 +2,8 @@ import Box from '@material-ui/core/Box';
 import { useTheme } from '@material-ui/core/styles';
 import SvgIcon from '@material-ui/core/SvgIcon';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
+import { Typography } from '@vroom-web/ui';
 import React from 'react';
-
-import Typography from 'src/ui/Typography';
 
 interface StepProps {
   description: string;

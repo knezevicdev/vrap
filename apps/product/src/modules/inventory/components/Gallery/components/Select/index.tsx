@@ -4,7 +4,7 @@ import { GalleryStore, GalleryStoreContext } from '../../store';
 import View from './View';
 import ViewModel from './ViewModel';
 
-import { Product } from 'src/integrations/analytics/AnalyticsHandler';
+import { Product } from 'src/integrations/AnalyticsHandler';
 
 interface Props {
   product: Product;

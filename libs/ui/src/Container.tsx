@@ -30,8 +30,14 @@ const Container: React.FC<Props> = ({
   maxWidth,
 }) => {
   const theme = useTheme();
+  const smDown = useMediaQuery(theme.breakpoints.down('sm'));
   const mdUp = useMediaQuery(theme.breakpoints.up('md'));
-  const defaultMaxWidth = mdUp ? 'lg' : 'sm';
+  let defaultMaxWidth: 'sm' | 'lg' | undefined;
+  if (smDown) {
+    defaultMaxWidth = 'sm';
+  } else if (mdUp) {
+    defaultMaxWidth = 'lg';
+  }
 
   return (
     <StyledMuiContainer

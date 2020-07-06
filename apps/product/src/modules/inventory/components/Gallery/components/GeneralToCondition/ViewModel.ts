@@ -1,7 +1,7 @@
 import { GallerySelections, GalleryStore } from '../../store';
 
 import globalEnv from 'src/globalEnv';
-import AnalyticsHandler from 'src/integrations/analytics/AnalyticsHandler';
+import AnalyticsHandler from 'src/integrations/AnalyticsHandler';
 
 class GalleryToConditionViewModel {
   private store: GalleryStore;

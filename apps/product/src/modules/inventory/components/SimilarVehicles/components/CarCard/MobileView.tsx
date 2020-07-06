@@ -4,11 +4,10 @@ import CardContent from '@material-ui/core/CardContent';
 import Grid from '@material-ui/core/Grid';
 import { styled } from '@material-ui/core/styles';
 import Skeleton from '@material-ui/lab/Skeleton';
+import { Typography } from '@vroom-web/ui';
 import React from 'react';
 
 import CarCardViewModel from './ViewModel';
-
-import Typography from 'src/ui/Typography';
 
 interface MobileViewProps {
   viewModel: CarCardViewModel;
@@ -101,11 +100,7 @@ const RegularCard: React.FC<MobileViewProps> = ({ viewModel }) => {
           <EvoxLogo src={viewModel.evoxLogo.src} alt={viewModel.evoxLogo.alt} />
         )}
         {viewModel.showAvailableSoon() && (
-          <AvailableSoon
-            fontWeight="fontWeightMedium"
-            variant="overline"
-            lineHeight="24px"
-          >
+          <AvailableSoon fontWeight="fontWeightMedium" lineHeight="24px">
             {viewModel.availableSoon}
           </AvailableSoon>
         )}

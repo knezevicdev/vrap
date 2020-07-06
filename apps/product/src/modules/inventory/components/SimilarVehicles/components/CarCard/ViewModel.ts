@@ -4,7 +4,7 @@ import globalEnv from 'src/globalEnv';
 import AnalyticsHandler, {
   Product,
   ProductPhotoType,
-} from 'src/integrations/analytics/AnalyticsHandler';
+} from 'src/integrations/AnalyticsHandler';
 import { Car } from 'src/networking/models/Inventory.v3';
 
 interface Summary {

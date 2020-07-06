@@ -58,7 +58,7 @@ class VroomDocument extends Document {
           <FontsSnippet />
           {segmentWriteKey && (
             <AnalyticsSnippet
-              appName="Vroom Web - Homepage"
+              appName="Vroom Web - Product"
               segmentWriteKey={segmentWriteKey}
             />
           )}

@@ -2,15 +2,14 @@ import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
 import { useTheme } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
+import { Container, Typography } from '@vroom-web/ui';
 import { observer } from 'mobx-react';
 import React from 'react';
 import reactStringReplace from 'react-string-replace';
 
 import ViewModel from './ViewModel';
 
-import Container from 'src/ui/Container';
 import ExternalLink from 'src/ui/ExternalLink';
-import Typography from 'src/ui/Typography';
 
 interface Props {
   viewModel: ViewModel;
@@ -28,7 +27,7 @@ const CarDetailsView: React.FC<Props> = (props) => {
   const recalls = viewModel.recalls();
 
   return (
-    <Container content>
+    <Container>
       <Box mb={{ xs: 2, sm: 4 }}>
         <Grid container>
           <Grid item xs={12}>

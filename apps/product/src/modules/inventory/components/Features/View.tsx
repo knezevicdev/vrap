@@ -2,14 +2,12 @@ import Box from '@material-ui/core/Box';
 import ButtonBase from '@material-ui/core/ButtonBase';
 import Grid from '@material-ui/core/Grid';
 import { styled } from '@material-ui/core/styles';
+import { Container, Typography } from '@vroom-web/ui';
 import { observer } from 'mobx-react';
 import React, { useState } from 'react';
 import reactStringReplace from 'react-string-replace';
 
 import ViewModel from './ViewModel';
-
-import Container from 'src/ui/Container';
-import Typography from 'src/ui/Typography';
 
 interface Props {
   viewModel: ViewModel;
@@ -40,7 +38,7 @@ const FeaturesView: React.FC<Props> = (props) => {
   const items = viewModel.display(limited);
 
   return (
-    <Container content>
+    <Container>
       <Box mb={{ xs: 2, md: 4 }}>
         <Grid container>
           <Grid item xs={12} md={6}>

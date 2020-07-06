@@ -2,13 +2,11 @@ import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
 import { useTheme } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
+import { Container, Typography } from '@vroom-web/ui';
 import React from 'react';
 
 import Step from './Step';
 import HowItWorksViewModel from './ViewModel';
-
-import Container from 'src/ui/Container';
-import Typography from 'src/ui/Typography';
 
 interface HowItWorksViewProps {
   viewModel: HowItWorksViewModel;
@@ -23,7 +21,7 @@ const HowItWorksView: React.FC<HowItWorksViewProps> = ({ viewModel }) => {
       color="secondary.contrastText"
       overflow="hidden"
     >
-      <Container content>
+      <Container>
         <Box
           flexDirection="column"
           py={{ xs: 6, md: 10 }}
