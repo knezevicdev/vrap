@@ -79,10 +79,7 @@ const ColorView: React.FC<Props> = ({ viewModel }) => {
         onClick={viewModel.reset}
         disabled={viewModel.isResetDisabled()}
       >
-        <Value
-          fontWeight="fontWeightMedium"
-          color="primary.main"
-        >
+        <Value fontWeight="fontWeightMedium" color="primary.main">
           {viewModel.resetButtonLabel}
         </Value>
       </Reset>

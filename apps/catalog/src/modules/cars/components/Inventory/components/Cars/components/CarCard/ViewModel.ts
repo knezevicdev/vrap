@@ -63,6 +63,13 @@ class CarCardViewModel {
     );
   };
 
+  getPhotoStyle = (): { opacity: string } => {
+    const { leadFlagPhotoUrl } = this.car;
+
+    const opacity = leadFlagPhotoUrl ? '100%' : '30%';
+    return { opacity: opacity };
+  };
+
   getSummary(): Summary {
     const {
       leadFlagPhotoUrl,

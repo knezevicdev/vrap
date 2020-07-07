@@ -22,7 +22,7 @@ const TopSectionGrid = styled(Grid)(({ theme }) => ({
 const FiltersButton = styled(Typography)(({ theme }) => ({
   paddingLeft: theme.spacing(1),
   cursor: 'pointer',
-  fontSize: '16px'
+  fontSize: '16px',
 }));
 
 const StyledFiltersIcon = styled(FiltersIcon)(() => ({

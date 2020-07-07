@@ -1,6 +1,7 @@
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import { styled } from '@material-ui/core/styles';
+import Check from '@material-ui/icons/Check';
 import { Typography } from '@vroom-web/ui';
 import { observer } from 'mobx-react';
 import React from 'react';
@@ -12,7 +13,11 @@ const StyledList = styled(List)(() => ({
 }));
 
 const Value = styled(Typography)(() => ({
-    fontSize: '16px',
+  fontSize: '16px',
+}));
+
+const StyledCheck = styled(Check)(() => ({
+  marginLeft: 'auto',
 }));
 
 interface Props {
@@ -35,6 +40,9 @@ const ModelsView: React.FC<Props> = ({ viewModel }) => {
         >
           {allModel.display}
         </Value>
+        {allModel.isSelected && (
+          <StyledCheck fontSize="small" color="secondary" />
+        )}
       </ListItem>
       {viewModel.models.map((model) => {
         const { display, slug } = model;
@@ -50,6 +58,7 @@ const ModelsView: React.FC<Props> = ({ viewModel }) => {
             >
               {display}
             </Value>
+            {isSelected && <StyledCheck fontSize="small" color="secondary" />}
           </ListItem>
         );
       })}

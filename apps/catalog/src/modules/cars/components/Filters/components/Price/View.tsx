@@ -20,13 +20,12 @@ const Reset = styled(ListItem)(() => ({
 }));
 
 const Value = styled(Typography)(() => ({
-    fontSize: '16px',
+  fontSize: '16px',
 }));
 
 interface Props {
   viewModel: PriceViewModel;
 }
-
 
 const PriceView: React.FC<Props> = ({ viewModel }) => {
   const handleMaxAndMinInputsChange = (value?: MaxAndMin): void => {

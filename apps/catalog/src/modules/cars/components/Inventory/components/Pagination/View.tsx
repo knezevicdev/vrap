@@ -35,7 +35,7 @@ const PaginationView: React.FC<Props> = ({ viewModel }) => {
 
   return (
     <StyledPagination
-        color="secondary"
+      color="secondary"
       size={isMobile ? 'small' : 'medium'}
       count={pageInfo.count}
       page={pageInfo.page}

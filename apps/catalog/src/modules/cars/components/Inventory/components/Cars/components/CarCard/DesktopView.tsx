@@ -66,7 +66,7 @@ const TrimAndMiles = styled('div')(() => ({
   color: '#041022',
 }));
 
-const Divider = styled(Typography)(({theme}) => ({
+const Divider = styled(Typography)(({ theme }) => ({
   margin: '0 4px',
   color: theme.palette.grey['A100'],
 }));
@@ -76,7 +76,7 @@ const Price = styled(Typography)(() => ({
   fontSize: '16px',
 }));
 
-const Value = styled(Typography)(( ) => ({
+const Value = styled(Typography)(() => ({
   fontSize: '16px',
 }));
 
@@ -106,7 +106,7 @@ const DesktopView: React.FC<DesktopViewProps> = ({ viewModel }) => {
       <Container>
         <HiddenAnchor href={viewModel.link()} onClick={handleActionClick}>
           <Media>
-            <Photo src={image} alt={title} />
+            <Photo src={image} alt={title} style={viewModel.getPhotoStyle()} />
             {viewModel.showLogo() && (
               <EvoxLogo
                 src={viewModel.evoxLogo.src}

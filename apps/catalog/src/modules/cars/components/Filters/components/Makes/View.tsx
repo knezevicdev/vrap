@@ -21,6 +21,11 @@ const Value = styled(Typography)(() => ({
   fontSize: '16px',
 }));
 
+const ShowMore = styled(Typography)(() => ({
+  fontSize: '16px',
+  margin: 'auto',
+}));
+
 interface Props {
   viewModel: MakesViewModel;
 }
@@ -54,12 +59,9 @@ const MakesView: React.FC<Props> = ({ viewModel }) => {
         );
       })}
       <StyledListItem button onClick={handleShowMoreClick}>
-        <Value
-          fontWeight="fontWeightMedium"
-          color="primary.main"
-        >
+        <ShowMore fontWeight="fontWeightMedium" color="primary.main">
           {viewModel.getShowMoreLabel()}
-        </Value>
+        </ShowMore>
       </StyledListItem>
     </StyledList>
   );

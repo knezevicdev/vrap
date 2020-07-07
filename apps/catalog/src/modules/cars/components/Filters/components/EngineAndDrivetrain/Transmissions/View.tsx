@@ -21,7 +21,7 @@ const Label = withStyles((theme) => ({
 
 const RadioCustom = withStyles((theme) => ({
   root: {
-    color: theme.palette.grey['A100']
+    color: theme.palette.grey['A100'],
   },
 }))(Radio);
 

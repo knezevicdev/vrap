@@ -25,7 +25,6 @@ interface Props {
 }
 
 const LoadingCard: React.FC<Props> = ({ mobile }) => {
-
   return (
     <Grid item xs={12} sm={6} md={3}>
       {mobile ? (

@@ -26,7 +26,7 @@ const Titles = styled(Typography)(() => ({
 }));
 
 const Value = styled(Typography)(() => ({
-    fontSize: '16px',
+  fontSize: '16px',
 }));
 
 interface Props {

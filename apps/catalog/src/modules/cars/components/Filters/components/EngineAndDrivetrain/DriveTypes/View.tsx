@@ -21,7 +21,7 @@ const Label = withStyles((theme) => ({
 
 const CheckboxCustom = withStyles((theme) => ({
   root: {
-    color: theme.palette.grey['A100']
+    color: theme.palette.grey['A100'],
   },
 }))(Checkbox);
 

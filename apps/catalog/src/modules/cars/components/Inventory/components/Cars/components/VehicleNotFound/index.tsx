@@ -1,9 +1,9 @@
 import Grid from '@material-ui/core/Grid';
+import { styled } from '@material-ui/core/styles';
 import { Typography } from '@vroom-web/ui';
 import React from 'react';
 
 import { ReactComponent as NoVehiclesFoundIcon } from './no-results.svg';
-import {styled} from "@material-ui/core/styles";
 
 interface Props {
   errorTop: string;
@@ -11,33 +11,27 @@ interface Props {
 }
 
 const Top = styled(Typography)(() => ({
-    fontSize: '28px',
+  fontSize: '28px',
 }));
 
 const Bottom = styled(Typography)(() => ({
-    fontSize: '28px',
+  fontSize: '28px',
 }));
 
 const Icon = styled(NoVehiclesFoundIcon)(() => ({
-    width: '64px',
+  width: '64px',
 }));
 
 const VehicleNotFound: React.FC<Props> = (props) => {
   const { errorTop, errorBottom } = props;
   return (
     <Grid container spacing={6} justify="center">
-        <Icon />
+      <Icon />
       <Grid item xs={12}>
-          <Top
-            fontWeight="fontWeightMedium"
-            textAlign="center"
-          >
-            {errorTop}
-          </Top>
-        <Bottom
-          fontWeight="fontWeightLight"
-          textAlign="center"
-        >
+        <Top fontWeight="fontWeightMedium" textAlign="center">
+          {errorTop}
+        </Top>
+        <Bottom fontWeight="fontWeightLight" textAlign="center">
           {errorBottom}
         </Bottom>
       </Grid>
