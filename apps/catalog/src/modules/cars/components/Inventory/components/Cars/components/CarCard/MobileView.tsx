@@ -50,6 +50,7 @@ const AvailableSoon = styled(Typography)(({ theme }) => ({
   left: 0,
   padding: theme.spacing(0, 1),
   background: theme.palette.grey['400'],
+  fontSize: '14px',
 }));
 
 const SalePending = styled(Typography)(({ theme }) => ({
@@ -58,6 +59,7 @@ const SalePending = styled(Typography)(({ theme }) => ({
   left: 0,
   padding: theme.spacing(0, 1),
   background: '#ffd400',
+  fontSize: '14px',
 }));
 
 const Content = styled(CardContent)(() => ({

@@ -10,6 +10,8 @@ import CarCardViewModel from './ViewModel';
 const Container = styled(Card)(() => ({
   height: '100%',
   minHeight: '296px',
+  boxShadow: '0px 0px 6px rgba(0, 0, 0, 0.15)',
+  borderRadius: '0px',
 }));
 
 const Media = styled('div')(({ theme }) => ({
@@ -39,6 +41,7 @@ const AvailableSoon = styled(Typography)(({ theme }) => ({
   left: 0,
   padding: theme.spacing(0, 1),
   background: theme.palette.grey['400'],
+  fontSize: '14px',
 }));
 
 const SalePending = styled(Typography)(({ theme }) => ({
@@ -47,6 +50,7 @@ const SalePending = styled(Typography)(({ theme }) => ({
   left: 0,
   padding: theme.spacing(0, 1),
   background: '#ffd400',
+  fontSize: '14px',
 }));
 
 const Content = styled(CardContent)(() => ({
@@ -62,12 +66,18 @@ const TrimAndMiles = styled('div')(() => ({
   color: '#041022',
 }));
 
-const Divider = styled(Typography)(() => ({
+const Divider = styled(Typography)(({theme}) => ({
   margin: '0 4px',
+  color: theme.palette.grey['A100'],
 }));
 
 const Price = styled(Typography)(() => ({
   marginTop: 'auto',
+  fontSize: '16px',
+}));
+
+const Value = styled(Typography)(( ) => ({
+  fontSize: '16px',
 }));
 
 const HiddenAnchor = styled('a')(() => ({
@@ -115,27 +125,27 @@ const DesktopView: React.FC<DesktopViewProps> = ({ viewModel }) => {
             )}
           </Media>
           <Content>
-            <Typography
+            <Value
               fontWeight="fontWeightMedium"
               lineHeight="24px"
               whiteSpace="nowrap"
             >
               {title}
-            </Typography>
+            </Value>
             <TrimAndMiles>
-              <Typography
+              <Value
                 fontWeight="fontWeightLight"
                 lineHeight="24px"
                 whiteSpace="nowrap"
               >
                 {trim}
-              </Typography>
+              </Value>
               <Divider fontWeight="fontWeightLight" lineHeight="24px">
                 |
               </Divider>
-              <Typography fontWeight="fontWeightLight" lineHeight="24px">
+              <Value fontWeight="fontWeightLight" lineHeight="24px">
                 {miles}
-              </Typography>
+              </Value>
             </TrimAndMiles>
             <Price fontWeight="fontWeightMedium">{price}</Price>
           </Content>
