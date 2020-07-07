@@ -11,6 +11,10 @@ const StyledList = styled(List)(() => ({
   padding: '0',
 }));
 
+const Value = styled(Typography)(() => ({
+    fontSize: '16px',
+}));
+
 interface Props {
   viewModel: ModelsViewModel;
 }
@@ -24,13 +28,13 @@ const ModelsView: React.FC<Props> = ({ viewModel }) => {
         button
         onClick={viewModel.handleClick(allModel.slug, allModel.isSelected)}
       >
-        <Typography
+        <Value
           fontWeight={
             allModel.isSelected ? 'fontWeightSemibold' : 'fontWeightLight'
           }
         >
           {allModel.display}
-        </Typography>
+        </Value>
       </ListItem>
       {viewModel.models.map((model) => {
         const { display, slug } = model;
@@ -41,11 +45,11 @@ const ModelsView: React.FC<Props> = ({ viewModel }) => {
             button
             onClick={viewModel.handleClick(slug, isSelected)}
           >
-            <Typography
+            <Value
               fontWeight={isSelected ? 'fontWeightSemibold' : 'fontWeightLight'}
             >
               {display}
-            </Typography>
+            </Value>
           </ListItem>
         );
       })}

@@ -21,7 +21,12 @@ const Reset = styled(ListItem)(() => ({
 }));
 
 const Titles = styled(Typography)(() => ({
+  fontSize: '16px',
   padding: '8px 0',
+}));
+
+const Value = styled(Typography)(() => ({
+    fontSize: '16px',
 }));
 
 interface Props {
@@ -44,9 +49,9 @@ const EngineAndDrivetrainView: React.FC<Props> = ({ viewModel }) => {
         onClick={viewModel.reset}
         disabled={viewModel.isResetButtonDisabled()}
       >
-        <Typography fontWeight="fontWeightMedium" color="secondary.main">
+        <Value fontWeight="fontWeightMedium" color="primary.main">
           {viewModel.resetButtonLabel}
-        </Typography>
+        </Value>
       </Reset>
     </EngineAndDrivetrainContainer>
   );

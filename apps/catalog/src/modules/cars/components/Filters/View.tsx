@@ -21,15 +21,14 @@ const FiltersContainer = styled(List)(({ theme }) => ({
   maxWidth: '250px',
   background: 'white',
   padding: theme.spacing(2),
-  borderRight: 'solid 1px #bebebe',
-  borderBottom: 'solid 1px #bebebe',
+  boxShadow: '0px 0px 6px rgba(0, 0, 0, 0.15)',
   [theme.breakpoints.only('xs')]: {
     height: '100%',
   },
 }));
 
 const StyledFilter = styled('div')(() => ({
-  borderBottom: 'solid 1px #bebebe',
+  borderBottom: 'solid 1px #F1F1F1',
 }));
 
 const StyledListItem = styled(ListItem)(({ theme }) => ({
@@ -39,10 +38,12 @@ const StyledListItem = styled(ListItem)(({ theme }) => ({
 
 const Title = styled(Typography)(() => ({
   textTransform: 'uppercase',
+  fontSize: '16px',
 }));
 
 const FiltersButton = styled(Typography)(({ theme }) => ({
   paddingLeft: theme.spacing(1),
+  fontSize: '16px',
 }));
 
 const StyledFiltersIcon = styled(FiltersIcon)(() => ({
@@ -81,7 +82,7 @@ const FiltersView: React.FC<FiltersViewProps> = ({ viewModel }) => {
     <FiltersContainer>
       <FiltersCloseContainer onClick={handleFiltersCloseContainerClick}>
         <StyledFiltersIcon />
-        <FiltersButton fontWeight="fontWeightLight">Filters</FiltersButton>
+        <FiltersButton fontWeight="fontWeightMedium">Filters</FiltersButton>
         <CloseIcon fontSize="small" />
       </FiltersCloseContainer>
       {viewModel.getFilters().map((filter) => {

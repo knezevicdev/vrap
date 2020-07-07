@@ -18,6 +18,10 @@ const Reset = styled(ListItem)(() => ({
   flexDirection: 'column',
 }));
 
+const Value = styled(Typography)(() => ({
+    fontSize: '16px',
+}));
+
 interface Props {
   viewModel: ViewModel;
 }
@@ -44,9 +48,9 @@ const YearView: React.FC<Props> = ({ viewModel }) => {
         onClick={handleResetClick}
         disabled={viewModel.isResetButtonDisabled()}
       >
-        <Typography fontWeight="fontWeightMedium" color="secondary.main">
+        <Value fontWeight="fontWeightMedium" color="primary.main">
           {viewModel.resetButtonLabel}
-        </Typography>
+        </Value>
       </Reset>
     </Container>
   );

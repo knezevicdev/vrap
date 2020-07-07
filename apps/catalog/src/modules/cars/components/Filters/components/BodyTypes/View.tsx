@@ -25,6 +25,10 @@ const StyledCheck = styled(Check)(() => ({
   marginLeft: 'auto',
 }));
 
+const Value = styled(Typography)(() => ({
+  fontSize: '16px',
+}));
+
 interface Props {
   viewModel: BodyTypesViewModel;
 }
@@ -47,7 +51,7 @@ const BodyTypesView: React.FC<Props> = ({ viewModel }) => {
               isSelected
             )}
           >
-            <Typography fontWeight={fontWeight}>{display}</Typography>
+            <Value fontWeight={fontWeight}>{display}</Value>
             {isSelected && <StyledCheck fontSize="small" color="secondary" />}
           </StyledListItem>
         );
@@ -57,13 +61,12 @@ const BodyTypesView: React.FC<Props> = ({ viewModel }) => {
         onClick={viewModel.reset}
         disabled={viewModel.isResetDisabled()}
       >
-        <Typography
-          variant="body1"
+        <Value
           fontWeight="fontWeightMedium"
-          color="secondary.main"
+          color="primary.main"
         >
           {resetButtonLabel}
-        </Typography>
+        </Value>
       </Reset>
     </StyledList>
   );

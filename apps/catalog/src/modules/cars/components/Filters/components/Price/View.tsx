@@ -19,9 +19,15 @@ const Reset = styled(ListItem)(() => ({
   flexDirection: 'column',
 }));
 
+const Value = styled(Typography)(() => ({
+    fontSize: '16px',
+}));
+
 interface Props {
   viewModel: PriceViewModel;
 }
+
+
 const PriceView: React.FC<Props> = ({ viewModel }) => {
   const handleMaxAndMinInputsChange = (value?: MaxAndMin): void => {
     viewModel.handleMaxAndMinInputsChange(value);
@@ -50,9 +56,9 @@ const PriceView: React.FC<Props> = ({ viewModel }) => {
         onClick={handleResetClick}
         disabled={viewModel.isResetButtonDisabled()}
       >
-        <Typography fontWeight="fontWeightMedium" color="secondary.main">
+        <Value fontWeight="fontWeightMedium" color="primary.main">
           {viewModel.resetButtonLabel}
-        </Typography>
+        </Value>
       </Reset>
     </Container>
   );

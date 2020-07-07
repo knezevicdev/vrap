@@ -15,8 +15,15 @@ interface Props {
 const Label = withStyles((theme) => ({
   label: {
     fontWeight: theme.typography.fontWeightLight,
+    fontSize: '16px',
   },
 }))(FormControlLabel);
+
+const RadioCustom = withStyles((theme) => ({
+  root: {
+    color: theme.palette.grey['A100']
+  },
+}))(Radio);
 
 const Transmissions: React.FC<Props> = ({ viewModel }) => {
   const onChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
@@ -27,7 +34,7 @@ const Transmissions: React.FC<Props> = ({ viewModel }) => {
   return (
     <RadioGroup value={viewModel.getActiveTransmission()} onChange={onChange}>
       <Label
-        control={<Radio color="primary" />}
+        control={<RadioCustom color="primary" />}
         label={viewModel.allOption.display}
         value={viewModel.allOption.value}
       />
@@ -37,7 +44,7 @@ const Transmissions: React.FC<Props> = ({ viewModel }) => {
           <Label
             key={display}
             value={filtersDataValue}
-            control={<Radio color="primary" />}
+            control={<RadioCustom color="primary" />}
             label={display}
           />
         );

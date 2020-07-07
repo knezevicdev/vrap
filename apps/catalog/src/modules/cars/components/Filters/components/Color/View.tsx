@@ -32,6 +32,10 @@ const Circle = styled('div')(() => ({
   borderRadius: '50%',
 }));
 
+const Value = styled(Typography)(() => ({
+  fontSize: '16px',
+}));
+
 export interface Props {
   viewModel: ColorViewModel;
 }
@@ -65,7 +69,7 @@ const ColorView: React.FC<Props> = ({ viewModel }) => {
                   : 'none',
               }}
             />
-            <Typography fontWeight={fontWeight}>{display}</Typography>
+            <Value fontWeight={fontWeight}>{display}</Value>
             {isSelected && <StyledCheck fontSize="small" color="secondary" />}
           </StyledListItem>
         );
@@ -75,13 +79,12 @@ const ColorView: React.FC<Props> = ({ viewModel }) => {
         onClick={viewModel.reset}
         disabled={viewModel.isResetDisabled()}
       >
-        <Typography
-          variant="body1"
+        <Value
           fontWeight="fontWeightMedium"
-          color="secondary.main"
+          color="primary.main"
         >
           {viewModel.resetButtonLabel}
-        </Typography>
+        </Value>
       </Reset>
     </StyledList>
   );
