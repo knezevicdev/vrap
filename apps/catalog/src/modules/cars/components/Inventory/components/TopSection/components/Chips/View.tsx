@@ -4,6 +4,7 @@ import { styled } from '@material-ui/core/styles';
 import { Typography } from '@vroom-web/ui';
 import { observer } from 'mobx-react';
 import React from 'react';
+import Close from '@material-ui/icons/Close';
 
 import ChipsViewModel from './ViewModel';
 
@@ -17,6 +18,19 @@ const Clear = styled(Typography)(({ theme }) => ({
   padding: theme.spacing(1),
   alignSelf: 'center',
   fontSize: '16px',
+}));
+
+const CustomChip = styled(Chip)(({ theme }) => ({
+    fontSize: '16px',
+    fontWeight: theme.typography.fontWeightMedium
+}));
+
+const CloseIcon = styled(Close)(() => ({
+    width: '12px',
+    color: 'white',
+    marginLeft: '-2px',
+    marginRight: '8px',
+    marginTop: '2px'
 }));
 
 interface Props {
@@ -34,11 +48,12 @@ const ChipsView: React.FC<Props> = ({ viewModel }) => {
         const { display, handleDelete } = chip;
         return (
           <Grid item key={display}>
-            <Chip
+            <CustomChip
               color="secondary"
               label={display}
               onClick={handleDelete}
               onDelete={handleDelete}
+              deleteIcon={<CloseIcon/>}
             />
           </Grid>
         );
