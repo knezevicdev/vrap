@@ -22,6 +22,8 @@ const globalEnv: GlobalEnv | NodeJS.ProcessEnv = process.browser
 
 if (!globalEnv.ASSET_PREFIX && process.env.ASSET_PREFIX) {
   globalEnv.ASSET_PREFIX = process.env.ASSET_PREFIX;
+} else {
+  globalEnv.ASSET_PREFIX = '';
 }
 
 export default globalEnv;
