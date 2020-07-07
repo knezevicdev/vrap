@@ -16,10 +16,6 @@ declare global {
   }
 }
 
-// const globalEnv: GlobalEnv | NodeJS.ProcessEnv = process.browser
-//   ? window.__GLOBAL_ENV__
-//   : { ...process.env, NAME: name, VERSION: version };
-
 const globalEnv: GlobalEnv = process.browser
   ? window.__GLOBAL_ENV__
   : Object.assign(
@@ -35,11 +31,5 @@ const globalEnv: GlobalEnv = process.browser
         VERSION: version,
       }
     );
-
-// if (!globalEnv.ASSET_PREFIX && process.env.ASSET_PREFIX) {
-//   globalEnv.ASSET_PREFIX = process.env.ASSET_PREFIX;
-// } else {
-//   globalEnv.ASSET_PREFIX = '';
-// }
 
 export default globalEnv;
