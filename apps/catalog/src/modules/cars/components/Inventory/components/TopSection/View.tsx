@@ -22,6 +22,7 @@ const TopSectionGrid = styled(Grid)(({ theme }) => ({
 const FiltersButton = styled(Typography)(({ theme }) => ({
   paddingLeft: theme.spacing(1),
   cursor: 'pointer',
+  fontSize: '16px'
 }));
 
 const StyledFiltersIcon = styled(FiltersIcon)(() => ({
@@ -71,7 +72,7 @@ const TopSectionView: React.FC<Props> = ({ viewModel }) => {
             <FiltersDesktop>
               <StyledFiltersIcon onClick={handleClickFiltersIcon} />
               <FiltersButton
-                fontWeight="fontWeightLight"
+                fontWeight="fontWeightMedium"
                 onClick={handleFiltersButtonClick}
               >
                 {buttonLabel}

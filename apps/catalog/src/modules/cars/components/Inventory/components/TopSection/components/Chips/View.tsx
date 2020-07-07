@@ -9,12 +9,14 @@ import ChipsViewModel from './ViewModel';
 
 const ChipsContainer = styled(Grid)(({ theme }) => ({
   paddingRight: theme.spacing(1),
+    alignItems: 'center',
 }));
 
 const Clear = styled(Typography)(({ theme }) => ({
   cursor: 'pointer',
   padding: theme.spacing(1),
   alignSelf: 'center',
+    fontSize: '16px',
 }));
 
 interface Props {
@@ -43,7 +45,7 @@ const ChipsView: React.FC<Props> = ({ viewModel }) => {
       })}
       <Clear
         fontWeight="fontWeightMedium"
-        color="secondary.main"
+        color="text.primary"
         onClick={viewModel.clearFilters}
       >
         {viewModel.clearButtonLabel}

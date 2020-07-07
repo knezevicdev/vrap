@@ -20,7 +20,7 @@ class ChipsViewModel {
   private readonly carsStore: CarsStore;
   private currencyFormatter: Intl.NumberFormat;
   private numberFormatter: Intl.NumberFormat;
-  readonly clearButtonLabel: string = 'Clear Filters';
+  readonly clearButtonLabel: string = 'Clear filters';
 
   constructor(carsStore: CarsStore) {
     this.carsStore = carsStore;
