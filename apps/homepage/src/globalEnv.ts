@@ -16,14 +16,30 @@ declare global {
   }
 }
 
-const globalEnv: GlobalEnv | NodeJS.ProcessEnv = process.browser
-  ? window.__GLOBAL_ENV__
-  : { ...process.env, NAME: name, VERSION: version };
+// const globalEnv: GlobalEnv | NodeJS.ProcessEnv = process.browser
+//   ? window.__GLOBAL_ENV__
+//   : { ...process.env, NAME: name, VERSION: version };
 
-if (!globalEnv.ASSET_PREFIX && process.env.ASSET_PREFIX) {
-  globalEnv.ASSET_PREFIX = process.env.ASSET_PREFIX;
-} else {
-  globalEnv.ASSET_PREFIX = '';
-}
+const globalEnv: GlobalEnv = process.browser
+  ? window.__GLOBAL_ENV__
+  : Object.assign(
+      {},
+      {
+        GEARBOX_PRIVATE_URL: process.env.GEARBOX_PRIVATE_URL,
+        GEARBOX_PUBLIC_URL: process.env.GEARBOX_PUBLIC_URL,
+        INVSEARCH_V3_URL: process.env.INVSEARCH_V3_URL,
+        ASSET_PREFIX: process.env.ASSET_PREFIX || '',
+        DATA_DOG_LOG_COLLECTION_TOKEN:
+          process.env.DATA_DOG_LOG_COLLECTION_TOKEN,
+        NAME: name,
+        VERSION: version,
+      }
+    );
+
+// if (!globalEnv.ASSET_PREFIX && process.env.ASSET_PREFIX) {
+//   globalEnv.ASSET_PREFIX = process.env.ASSET_PREFIX;
+// } else {
+//   globalEnv.ASSET_PREFIX = '';
+// }
 
 export default globalEnv;
