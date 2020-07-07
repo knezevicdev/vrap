@@ -4,7 +4,7 @@ export interface GlobalEnv {
   INVSEARCH_V3_URL?: string;
   NAME?: string;
   VERSION?: string;
-  ASSET_PREFIX?: string;
+  ASSET_PREFIX: string;
 }
 
 declare global {
@@ -19,6 +19,8 @@ const globalEnv: GlobalEnv | NodeJS.ProcessEnv = process.browser
 
 if (!globalEnv.ASSET_PREFIX && process.env.ASSET_PREFIX) {
   globalEnv.ASSET_PREFIX = process.env.ASSET_PREFIX;
+} else {
+  globalEnv.ASSET_PREFIX = '';
 }
 
 export default globalEnv;

@@ -6,7 +6,7 @@ export interface GlobalEnv {
   LEADS_URL?: string;
   NAME?: string;
   VERSION?: string;
-  ASSET_PREFIX?: string;
+  ASSET_PREFIX: string;
 }
 
 declare global {
@@ -15,12 +15,14 @@ declare global {
   }
 }
 
-const globalEnv: GlobalEnv = process.browser
+const globalEnv: GlobalEnv | NodeJS.ProcessEnv = process.browser
   ? window.__GLOBAL_ENV__
   : { ...process.env, NAME: name, VERSION: version };
 
 if (!globalEnv.ASSET_PREFIX && process.env.ASSET_PREFIX) {
   globalEnv.ASSET_PREFIX = process.env.ASSET_PREFIX;
+} else {
+  globalEnv.ASSET_PREFIX = '';
 }
 
 export default globalEnv;
