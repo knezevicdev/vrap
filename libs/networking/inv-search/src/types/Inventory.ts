@@ -1,6 +1,21 @@
 /* eslint-disable @typescript-eslint/camelcase */
 import * as yup from 'yup';
 
+export enum DefectType {
+  SCRATCH = 'Scratch',
+  OXIDATION = 'Oxidation',
+  SPIDER_CRACKING = 'Spider Cracking',
+  CHIP = 'Chip',
+  RUN = 'Run',
+  DENT = 'Dent',
+}
+
+export interface DefectPhoto {
+  url: string;
+  defectType: DefectType;
+  location: string;
+}
+
 export enum SoldStatusInt {
   FOR_SALE = 0,
   SALE_PENDING = 1,
@@ -29,11 +44,13 @@ export type Car = {
   hiresPhotos: string[] | null;
   warranty: number;
   model: string;
+  modelSlug: string;
   extColor: string;
   text: string;
   engId: number;
   bodyId: number;
   make: string;
+  makeSlug: string;
   vehicleType: string;
   doorCount: number;
   roof: number;
@@ -51,6 +68,7 @@ export type Car = {
   zone: string;
   soldStatus: SoldStatusInt;
   otherPhotos: string[] | null;
+  defectPhotos: DefectPhoto[] | null;
   ownerCount: number;
   cityMpg: number;
   highwayMpg: number;
@@ -81,11 +99,13 @@ export const carSchema: yup.ObjectSchema<Car> = yup
     hiresPhotos: yup.array(yup.string().defined()).defined().nullable(),
     warranty: yup.number().defined(),
     model: yup.string().defined(),
+    modelSlug: yup.string().defined(),
     extColor: yup.string().defined(),
     text: yup.string().defined(),
     engId: yup.number().defined(),
     bodyId: yup.number().defined(),
     make: yup.string().defined(),
+    makeSlug: yup.string().defined(),
     vehicleType: yup.string().defined(),
     doorCount: yup.number().defined(),
     roof: yup.number().defined(),
@@ -103,6 +123,18 @@ export const carSchema: yup.ObjectSchema<Car> = yup
     zone: yup.string().defined(),
     soldStatus: yup.number().defined(),
     otherPhotos: yup.array(yup.string().defined()).defined().nullable(),
+    defectPhotos: yup
+      .array(
+        yup
+          .object<DefectPhoto>({
+            url: yup.string().defined(),
+            defectType: yup.string().oneOf(Object.values(DefectType)).defined(),
+            location: yup.string().defined(),
+          })
+          .defined()
+      )
+      .defined()
+      .nullable(),
     ownerCount: yup.number().defined(),
     cityMpg: yup.number().defined(),
     highwayMpg: yup.number().defined(),

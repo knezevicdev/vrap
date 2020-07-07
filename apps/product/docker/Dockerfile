@@ -4,7 +4,8 @@ WORKDIR /www
 COPY . .
 
 RUN \
-  # Install git so editor git commands work
+  # Install git so editor git commands work inside dev container
+  # (This could be removed if the image already has git installed.)
   apk --no-cache add git &&\
   # Bootstrap yarn workspaces.
   yarn install --silent &&\
@@ -18,6 +19,7 @@ RUN \
   yarn workspace @vroom-web/footer-components build &&\
   # Build the main app.
   yarn workspace @vroom-web/product build &&\
+  # Change user for created files
   chown -R 1000:1000 .
 
 EXPOSE 8080

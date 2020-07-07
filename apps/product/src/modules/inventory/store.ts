@@ -1,13 +1,12 @@
+import {
+  Hit,
+  InvSearchNetworker,
+  SoldStatus,
+} from '@vroom-web/inv-search-networking';
 import { action, observable, runInAction } from 'mobx';
 import { createContext } from 'react';
 
 import globalEnv from 'src/globalEnv';
-import {
-  Hit,
-  Inventory as InventoryV3,
-  SoldStatus,
-} from 'src/networking/models/Inventory.v3';
-import { Networker } from 'src/networking/Networker';
 import { Status } from 'src/networking/types';
 
 export interface InventoryStoreState {
@@ -27,17 +26,17 @@ export async function getInitialInventoryStoreState(
     vehicle: {} as Hit,
   };
 
-  const networker = new Networker();
+  const invSearchNetworker = new InvSearchNetworker(
+    globalEnv.INVSEARCH_V3_URL || ''
+  );
 
   try {
-    const response = (
-      await networker.postInventory({
-        fulldetails: true,
-        'sold-status': SoldStatus.FOR_SALE,
-        source: `${globalEnv.NAME}-${globalEnv.VERSION}`,
-        vin: [vin],
-      })
-    ).data as InventoryV3;
+    const response = await invSearchNetworker.postInventory({
+      fulldetails: true,
+      'sold-status': SoldStatus.FOR_SALE,
+      source: `${globalEnv.NAME}-${globalEnv.VERSION}`,
+      vin: [vin],
+    });
 
     const vehicle = response.data.hits.hits.find(
       (i) => i._source.vin.toLowerCase() === vin.toLowerCase()
@@ -54,12 +53,10 @@ export async function getInitialInventoryStoreState(
   }
 
   try {
-    const similarResponse = (
-      await networker.getInventorySimilar({
-        vin,
-        min: 4,
-      })
-    ).data as InventoryV3;
+    const similarResponse = await invSearchNetworker.getInventorySimilar({
+      vin,
+      min: 4,
+    });
 
     initState.similar = similarResponse.data.hits.hits;
     initState.similarStatus = Status.SUCCESS;
@@ -76,10 +73,12 @@ export class InventoryStore {
   @observable vehicleStatus: Status = Status.FETCHING;
   @observable vehicle: Hit = {} as Hit;
 
-  private networker: Networker;
+  private invSearchNetworker: InvSearchNetworker;
 
   constructor(initialState?: InventoryStoreState) {
-    this.networker = new Networker();
+    this.invSearchNetworker = new InvSearchNetworker(
+      globalEnv.INVSEARCH_V3_URL || ''
+    );
     if (initialState) {
       this.vehicleStatus = initialState.vehicleStatus;
       this.vehicle = initialState.vehicle;
@@ -91,14 +90,12 @@ export class InventoryStore {
   @action
   getInventory = async (vin: string): Promise<void> => {
     try {
-      const response = (
-        await this.networker.postInventory({
-          fulldetails: true,
-          'sold-status': SoldStatus.FOR_SALE,
-          source: `${globalEnv.NAME}-${globalEnv.VERSION}`,
-          vin: [vin],
-        })
-      ).data as InventoryV3;
+      const response = await this.invSearchNetworker.postInventory({
+        fulldetails: true,
+        'sold-status': SoldStatus.FOR_SALE,
+        source: `${globalEnv.NAME}-${globalEnv.VERSION}`,
+        vin: [vin],
+      });
 
       const vehicle = response.data.hits.hits.find(
         (i) => i._source.vin.toLowerCase() === vin.toLowerCase()
@@ -122,12 +119,10 @@ export class InventoryStore {
   @action
   getSimilar = async (vin: string, min = 4): Promise<void> => {
     try {
-      const response = (
-        await this.networker.getInventorySimilar({
-          vin,
-          min,
-        })
-      ).data as InventoryV3;
+      const response = await this.invSearchNetworker.getInventorySimilar({
+        vin,
+        min,
+      });
 
       runInAction(() => {
         this.similarStatus = Status.SUCCESS;
