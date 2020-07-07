@@ -6,7 +6,7 @@ class FeaturesViewModel {
   private features: string[];
   readonly title: string = 'Features';
   readonly logo = {
-    src: `${globalEnv.CDN_URL}/modules/vroom_logo_red.svg`,
+    src: `${globalEnv.ASSET_PREFIX}/modules/vroom_logo_red.svg`,
     alt: 'Vroom',
   };
   readonly poweredBy: string = 'Inventory provided by our partner Vroom';

@@ -1,0 +1,77 @@
+homepage:
+  jobs:
+  - sonarcloud:
+      context: SonarCloud
+  - danger:
+      context: dangerjs
+  - lint
+  - homepage_build:
+      context: aws-non-prod
+      filters:
+        tags:
+          only: /^homepage-v.*/
+        branches:
+          ignore: /.*/
+  - hold:
+      name: hold_<< matrix.env >>
+      type: approval
+      matrix:
+        parameters:
+          env: ["dev", "qa", "uat"]
+      requires:
+        - homepage_build
+      filters:
+        tags:
+          only: /^homepage-v.*/
+        branches:
+          ignore: /.*/
+  - homepage_deploy:
+      name: homepage_deploy_<< matrix.env >>
+      context: aws-non-prod
+      matrix:
+        parameters:
+          env: ["dev", "qa", "uat"]
+      requires:
+        - hold_<< matrix.env >>
+      filters:
+        tags:
+          only: /^homepage-v.*/
+        branches:
+          ignore: /.*/
+  - hold:
+      name: hold_prod
+      type: approval
+      requires:
+        - homepage_deploy_dev
+        - homepage_deploy_qa
+        - homepage_deploy_uat
+      filters:
+        tags:
+          only: /^homepage-v.*/
+        branches:
+          ignore: /.*/
+  # - homepage_deploy:
+  #     name: homepage_deploy_prod
+  #     context: aws-prod
+  #     env: "prod"
+  #     s3: s3://static-assets.p.vroom.systems/homepage
+  #     requires:
+  #       - hold_prod
+  #     filters:
+  #       tags:
+  #         only: /^homepage-v.*/
+  #       branches:
+  #         ignore: /.*/
+  # FIT-541
+  # This is a stopgap until we can figure out how to deploy to prod using MLP 3.
+  - homepage_prod:
+      name: homepage_deploy_prod
+      context: aws-prod
+      env: "prod"
+      requires:
+        - hold_prod
+      filters:
+        tags:
+          only: /^homepage-v.*/
+        branches:
+          ignore: /.*/

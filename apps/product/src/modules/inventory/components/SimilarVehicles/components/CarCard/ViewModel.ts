@@ -20,7 +20,7 @@ class CarCardViewModel {
   private readonly car?: Car;
   readonly evoxLogo = {
     alt: 'Evox Images',
-    src: `${globalEnv.CDN_URL}/components/evox-logo.png`,
+    src: `${globalEnv.ASSET_PREFIX}/components/evox-logo.png`,
   };
   readonly availableSoon: string = 'AVAILABLE SOON';
 
@@ -89,7 +89,7 @@ class CarCardViewModel {
       listingPrice,
     } = this.car;
 
-    const noPhoto = `${globalEnv.CDN_URL}/components/ghost-suv-with-padding.png`;
+    const noPhoto = `${globalEnv.ASSET_PREFIX}/components/ghost-suv-with-padding.png`;
     const image = leadFlagPhotoUrl || noPhoto;
 
     return {

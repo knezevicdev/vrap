@@ -37,7 +37,7 @@ class HeroViewModel {
         ? '225px'
         : '176px';
     this.car = {
-      src: `${globalEnv.CDN_URL}/modules/home/images/${
+      src: `${globalEnv.ASSET_PREFIX}/modules/home/images/${
         priusVsf150ImageDefaultVariant ? 'prius' : 'ford'
       }.png`,
       alt: priusVsf150ImageDefaultVariant ? 'Prius' : 'F-150',

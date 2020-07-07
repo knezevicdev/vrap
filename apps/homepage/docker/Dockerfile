@@ -1,27 +1,23 @@
 FROM node:erbium-alpine
 
-# Install git so editor git commands work
-RUN apk --no-cache add git
-
-RUN mkdir -p /www
-
 WORKDIR /www
 COPY . .
-RUN chown -R 1000:1000 .
 
-# Bootstrap yarn workspaces.
-RUN yarn install --silent
-
-# Build libraries.
-RUN yarn workspace @vroom-web/analytics-integration build
-RUN yarn workspace @vroom-web/deals-v2-networking build
-RUN yarn workspace @vroom-web/inv-search-networking build
-RUN yarn workspace @vroom-web/ui build
-RUN yarn workspace @vroom-web/header-components build
-RUN yarn workspace @vroom-web/footer-components build
-
-# Build the main app.
-RUN yarn workspace @vroom-web/homepage build
+RUN \
+  # Install git so editor git commands work
+  apk --no-cache add git &&\
+  # Bootstrap yarn workspaces.
+  yarn install --silent &&\
+  # Build libraries.
+  yarn workspace @vroom-web/analytics-integration build &&\
+  yarn workspace @vroom-web/deals-v2-networking build &&\
+  yarn workspace @vroom-web/inv-search-networking build &&\
+  yarn workspace @vroom-web/ui build &&\
+  yarn workspace @vroom-web/header-components build &&\
+  yarn workspace @vroom-web/footer-components build &&\
+  # Build the main app.
+  yarn workspace @vroom-web/homepage build &&\
+  chown -R 1000:1000 .
 
 EXPOSE 8080
 

@@ -49,6 +49,7 @@ allAppFiles.forEach((file) => {
     !file.includes('/api') &&
     !file.includes('_app') &&
     !file.includes('_document') &&
+    !file.includes('hp') &&
     !content.includes('getInitialProps')
   ) {
     warn(

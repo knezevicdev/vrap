@@ -1,0 +1,24 @@
+catalog_build:
+  docker:
+  - image: vroom/mlp:3.0.1
+  steps:
+    - checkout
+    - setup_remote_docker:
+        version: 18.09.3
+    - run:
+        command: |-
+          build -a vroom-web/apps/catalog/docker
+catalog_deploy:
+  docker:
+  - image: vroom/mlp:3.0.1
+  parameters:
+    env:
+      type: string
+  steps:
+    - checkout
+    - setup_remote_docker:
+        version: 18.09.3
+    - run:
+        command: |-
+          login
+          deploy -a vroom-web/apps/catalog/docker -n << parameters.env >>
