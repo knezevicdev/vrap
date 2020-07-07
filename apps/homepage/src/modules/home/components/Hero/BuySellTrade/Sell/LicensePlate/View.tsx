@@ -98,7 +98,10 @@ const LicensePlateView: React.FC<Props> = ({ viewModel }) => {
       >
         {viewModel.getButtonLabel()}
       </SubmitButton>
-      <LicensePlateDialog licensePlateStore={viewModel.store} />
+      <LicensePlateDialog
+        homeStore={viewModel.homeStore}
+        licensePlateStore={viewModel.licensePlateStore}
+      />
     </LicensePlateContainer>
   );
 };

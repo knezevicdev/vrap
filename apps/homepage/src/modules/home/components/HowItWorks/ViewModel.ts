@@ -1,3 +1,5 @@
+import { stringify } from 'qs';
+
 import globalEnv from 'src/globalEnv';
 import AnalyticsHandler, {
   VideoEvent,
@@ -24,10 +26,7 @@ class HowItWorksViewModel {
   readonly title: string = 'how it works';
   readonly subtitle: string =
     'Vroom is changing the way people buy, sell, and trade in cars. Here’s a step-by-step guide on what\xa0to\xa0expect.';
-  readonly link: Link = {
-    href: '/how-it-works',
-    label: '',
-  };
+  readonly link: Link;
   readonly video: Video = {
     src: `${globalEnv.ASSET_PREFIX}/modules/home/videos/how-it-works-promo.mp4`,
     poster: {
@@ -40,6 +39,17 @@ class HowItWorksViewModel {
   private analyticsHandler: AnalyticsHandler = new AnalyticsHandler();
 
   constructor(store: HomeStore) {
+    // FIT-566
+    // Persist query string across navigation.
+    // This allows vlassic attributuion to work until we can implement a better system.
+    const queryString = stringify(store.query, {
+      addQueryPrefix: true,
+    });
+    this.link = {
+      href: `/how-it-works${queryString}`,
+      label: '',
+    };
+
     const learnMoreLinkLabelExperimentVariant = showDefaultVariant(
       'snd-homepage-learn-more-vs-learn-more-about-vroom',
       store.experiments,

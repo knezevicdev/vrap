@@ -1,15 +1,19 @@
+import { stringify } from 'qs';
 import React from 'react';
 
 import { VinStore } from './store';
 
 import AnalyticsHandler from 'src/integrations/AnalyticsHandler';
+import { HomeStore } from 'src/modules/home/store';
 
 class VinViewModel {
   private analyticsHandler: AnalyticsHandler = new AnalyticsHandler();
-  readonly store: VinStore;
+  private readonly homeStore: HomeStore;
+  readonly vinStore: VinStore;
 
-  constructor(store: VinStore) {
-    this.store = store;
+  constructor(homeStore: HomeStore, vinStore: VinStore) {
+    this.homeStore = homeStore;
+    this.vinStore = vinStore;
   }
 
   readonly buttonLabel: string = "What's my car worth?";
@@ -20,17 +24,24 @@ class VinViewModel {
 
   handleButtonClick = (): void => {
     this.analyticsHandler.trackWhatIsMyCarWorthClicked(true);
-    window.location.href = `sell/vehicleInformation/${this.store.vin}`;
+
+    // FIT-566
+    // Persist query string across navigation.
+    // This allows vlassic attributuion to work until we can implement a better system.
+    const queryString = stringify(this.homeStore.query, {
+      addQueryPrefix: true,
+    });
+    window.location.href = `sell/vehicleInformation/${this.vinStore.vin}${queryString}`;
   };
 
   getInputValue = (): string => {
-    return this.store.vin;
+    return this.vinStore.vin;
   };
 
   onChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
     const value = event.target.value;
-    this.store.setVin(value);
-    this.store.setHasError(!this.isInputValid());
+    this.vinStore.setVin(value);
+    this.vinStore.setHasError(!this.isInputValid());
   };
 
   isButtonDisabled = (): boolean => {
@@ -38,11 +49,11 @@ class VinViewModel {
   };
 
   openDialog = (): void => {
-    this.store.setIsDialogOpen();
+    this.vinStore.setIsDialogOpen();
   };
 
   hasError = (): boolean => {
-    return this.store.hasError;
+    return this.vinStore.hasError;
   };
 
   /* Based off vroom-com TODO: Could use better validation*/

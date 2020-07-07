@@ -1,3 +1,5 @@
+import { stringify } from 'qs';
+
 import { HomeStore } from '../../store';
 
 import globalEnv from 'src/globalEnv';
@@ -12,6 +14,9 @@ interface Highlight {
 }
 
 class HighlightsViewModel {
+  private readonly analyticsHandler: AnalyticsHandler = new AnalyticsHandler();
+  private readonly store: HomeStore;
+
   ctaLabel: string;
   condenseCatalogLinksDefaultVariant: boolean;
   readonly highlights: Highlight[] = [
@@ -37,9 +42,9 @@ class HighlightsViewModel {
     },
   ];
 
-  private analyticsHandler: AnalyticsHandler = new AnalyticsHandler();
-
   constructor(store: HomeStore) {
+    this.store = store;
+
     const homeWarrantyTextExperimentVariant = showDefaultVariant(
       'snd-homepage-complimentary-limited-warranty-vs-free-limited-warranty',
       store.experiments,
@@ -79,7 +84,13 @@ class HighlightsViewModel {
 
   handleButtonClick(): void {
     this.analyticsHandler.trackShowNowClicked();
-    window.location.href = '/catalog';
+    // FIT-566
+    // Persist query string across navigation.
+    // This allows vlassic attributuion to work until we can implement a better system.
+    const queryString = stringify(this.store.query, {
+      addQueryPrefix: true,
+    });
+    window.location.href = `/catalog${queryString}`;
   }
 }
 
