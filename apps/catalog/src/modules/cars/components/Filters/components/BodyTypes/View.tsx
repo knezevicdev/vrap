@@ -13,8 +13,11 @@ const StyledListItem = styled(ListItem)(({ theme }) => ({
   height: theme.spacing(4),
 }));
 
-const Reset = styled(StyledListItem)(() => ({
+const Reset = styled(StyledListItem)(({ theme }) => ({
   flexDirection: 'column',
+  '&.MuiListItem-root.Mui-disabled >p': {
+    color: theme.palette.grey['A100'],
+  },
 }));
 
 const StyledList = styled(List)(({ theme }) => ({

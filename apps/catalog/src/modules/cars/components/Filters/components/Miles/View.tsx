@@ -14,8 +14,11 @@ const MilesContainer = styled('div')(({ theme }) => ({
   paddingBottom: theme.spacing(2),
 }));
 
-const Reset = styled(ListItem)(() => ({
+const Reset = styled(ListItem)(({ theme }) => ({
   flexDirection: 'column',
+  '&.MuiListItem-root.Mui-disabled >p': {
+    color: theme.palette.grey['A100'],
+  },
 }));
 
 const Value = styled(Typography)(() => ({

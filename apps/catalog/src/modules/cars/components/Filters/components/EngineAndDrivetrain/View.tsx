@@ -14,10 +14,13 @@ const EngineAndDrivetrainContainer = styled('div')(() => ({
   paddingBottom: '16px',
 }));
 
-const Reset = styled(ListItem)(() => ({
+const Reset = styled(ListItem)(({ theme }) => ({
   padding: '8px 0',
   height: '36px',
   flexDirection: 'column',
+  '&.MuiListItem-root.Mui-disabled >p': {
+    color: theme.palette.grey['A100'],
+  },
 }));
 
 const Titles = styled(Typography)(() => ({
