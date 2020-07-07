@@ -4,7 +4,7 @@ export interface GlobalEnv {
   INVSEARCH_V3_URL?: string;
   NAME?: string;
   VERSION?: string;
-  ASSET_PREFIX: string;
+  ASSET_PREFIX?: string;
 }
 
 declare global {
