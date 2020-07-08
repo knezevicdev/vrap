@@ -15,7 +15,6 @@ import globalEnv from '../../globalEnv';
 import FaviconSnippet from './FaviconSnippet';
 import FontsSnippet from './FontsSnippet';
 import GlobalEnvSnippet from './GlobalEnvSnippet';
-import ModernizrSnippet from './ModernizrSnippet';
 
 class VroomDocument extends Document {
   static async getInitialProps(
@@ -75,7 +74,6 @@ class VroomDocument extends Document {
             NAME={globalEnv.NAME}
             VERSION={globalEnv.VERSION}
           />
-          <ModernizrSnippet />
         </Head>
         <body>
           <Main />
