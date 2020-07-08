@@ -15,11 +15,7 @@ interface Link {
 
 interface Video {
   src: string;
-  poster: {
-    default: string;
-    jpeg2000: string;
-    webp: string;
-  };
+  poster: string;
 }
 
 class HowItWorksViewModel {
@@ -29,11 +25,7 @@ class HowItWorksViewModel {
   readonly link: Link;
   readonly video: Video = {
     src: `${globalEnv.ASSET_PREFIX}/modules/home/videos/how-it-works-promo.mp4`,
-    poster: {
-      default: `${globalEnv.ASSET_PREFIX}/modules/home/images/how-it-works-poster.png`,
-      jpeg2000: `${globalEnv.ASSET_PREFIX}/modules/home/images/jp2/how-it-works-poster.jp2`,
-      webp: `${globalEnv.ASSET_PREFIX}/modules/home/images/webp/how-it-works-poster.webp`,
-    },
+    poster: `${globalEnv.ASSET_PREFIX}/modules/home/images/how-it-works-poster.png`,
   };
 
   private analyticsHandler: AnalyticsHandler = new AnalyticsHandler();
@@ -58,23 +50,6 @@ class HowItWorksViewModel {
     this.link.label = learnMoreLinkLabelExperimentVariant
       ? 'LEARN MORE ABOUT VROOM'
       : 'BUYING AND SELLING MADE EASY';
-  }
-
-  getPoster(): string {
-    const jpeg2000 = window.Modernizr.jpeg2000;
-
-    const webp =
-      typeof window.Modernizr.webp === 'boolean'
-        ? window.Modernizr.webp
-        : Object.values(window.Modernizr.webp).indexOf(false) === -1;
-
-    if (jpeg2000) {
-      return this.video.poster.jpeg2000;
-    }
-    if (webp) {
-      return this.video.poster.webp;
-    }
-    return this.video.poster.default;
   }
 
   handleLearnMoreClick(): void {
