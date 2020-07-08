@@ -1,25 +1,29 @@
 import Grid from '@material-ui/core/Grid';
-import { styled } from '@material-ui/core/styles';
-import { useTheme } from '@material-ui/core/styles';
+import { styled, useTheme } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
+import { Typography } from '@vroom-web/ui';
 import { observer } from 'mobx-react';
 import React, { useEffect } from 'react';
 
 import CarCard from './components/CarCard';
-import VehicleNotFound from './components/VehicleNotFound';
+import Error from './components/Error';
 import ViewModel from './ViewModel';
-
-const ErrorAndNoResultsContainer = styled('div')(({ theme }) => ({
-  margin: theme.spacing(4, 0),
-  '& .MuiGrid-spacing-xs-6': {
-    width: '100%',
-    margin: 0,
-  },
-}));
 
 interface Props {
   viewModel: ViewModel;
 }
+
+const CarsContainer = styled('div')(() => ({
+  display: 'flex',
+  flexDirection: 'column',
+  width: '100%',
+}));
+
+const Message = styled(Typography)(({ theme }) => ({
+  fontSize: '24px',
+  marginTop: theme.spacing(8),
+  marginBottom: theme.spacing(3),
+}));
 
 const CarsView: React.FC<Props> = ({ viewModel }) => {
   const theme = useTheme();
@@ -31,23 +35,28 @@ const CarsView: React.FC<Props> = ({ viewModel }) => {
   }, [viewModel]);
 
   return (
-    <>
-      {viewModel.hasError() && (
-        <ErrorAndNoResultsContainer>
-          <VehicleNotFound
-            errorTop={viewModel.errorTop()}
-            errorBottom={viewModel.errorBottom()}
-          />
-        </ErrorAndNoResultsContainer>
+    <CarsContainer>
+      {(viewModel.hasNoInventory() || viewModel.hasError()) && (
+        <Error
+          isError={viewModel.hasError()}
+          message={viewModel.getErrorMessage()}
+        />
       )}
       {viewModel.hasCars() && (
-        <Grid container spacing={isMobile ? 0 : 2}>
-          {viewModel.cars().map((car, index) => (
-            <CarCard key={car ? car.vin : index} car={car} />
-          ))}
-        </Grid>
+        <>
+          {viewModel.hasNoInventory() && (
+            <Message fontWeight="fontWeightMedium" textAlign="center">
+              {viewModel.getPopularCarsMessage()}
+            </Message>
+          )}
+          <Grid container spacing={isMobile ? 0 : 2}>
+            {viewModel.cars().map((car, index) => (
+              <CarCard key={car ? car.vin : index} car={car} />
+            ))}
+          </Grid>
+        </>
       )}
-    </>
+    </CarsContainer>
   );
 };
 
