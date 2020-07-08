@@ -15,7 +15,7 @@ const StyledPagination = styled(Pagination)(({ theme }) => ({
   },
   marginTop: theme.spacing(4),
   '& .MuiPaginationItem-page.Mui-selected': {
-    color: 'white',
+    color: '#ffffff',
   },
 }));
 
