@@ -8,7 +8,7 @@ import DriveTypes from './DriveTypes';
 import Transmissions from './Transmissions';
 import EngineAndDrivetrainViewModel from './ViewModel';
 
-const EngineAndDrivetrainContainer = styled('div')(({theme}) => ({
+const EngineAndDrivetrainContainer = styled('div')(({ theme }) => ({
   display: 'flex',
   flexDirection: 'column',
   paddingBottom: theme.spacing(2),
@@ -23,7 +23,7 @@ const Reset = styled(ListItem)(({ theme }) => ({
   },
 }));
 
-const Titles = styled(Typography)(({theme}) => ({
+const Titles = styled(Typography)(({ theme }) => ({
   fontSize: '16px',
   padding: theme.spacing(1, 0),
 }));
