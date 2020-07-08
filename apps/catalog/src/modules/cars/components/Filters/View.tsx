@@ -21,7 +21,9 @@ const FiltersContainer = styled(List)(({ theme }) => ({
   maxWidth: '250px',
   background: 'white',
   padding: theme.spacing(2),
-  boxShadow: '0px 0px 6px rgba(0, 0, 0, 0.15)',
+  [theme.breakpoints.up('sm')]: {
+    boxShadow: '0px 0px 6px rgba(0, 0, 0, 0.15)',
+  },
   [theme.breakpoints.only('xs')]: {
     height: '100%',
   },
