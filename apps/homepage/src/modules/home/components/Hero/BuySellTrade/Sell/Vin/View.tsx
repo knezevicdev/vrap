@@ -96,7 +96,7 @@ const VinView: React.FC<Props> = ({ viewModel }) => {
       >
         {viewModel.buttonLabel}
       </SubmitButton>
-      <VinDialog store={viewModel.store} />
+      <VinDialog store={viewModel.vinStore} />
     </VinContainer>
   );
 };

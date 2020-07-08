@@ -1,4 +1,27 @@
 jobs:
+  catalog_build:
+    docker:
+    - image: vroom/mlp:3.0.1
+    steps:
+    - checkout
+    - setup_remote_docker:
+        version: 18.09.3
+    - run:
+        command: build -a vroom-web/apps/catalog/docker
+  catalog_deploy:
+    docker:
+    - image: vroom/mlp:3.0.1
+    parameters:
+      env:
+        type: string
+    steps:
+    - checkout
+    - setup_remote_docker:
+        version: 18.09.3
+    - run:
+        command: |-
+          login
+          deploy -a vroom-web/apps/catalog/docker -n << parameters.env >>
   danger:
     docker:
     - image: node:erbium-alpine
@@ -24,20 +47,12 @@ jobs:
     parameters:
       env:
         type: string
-      s3:
-        type: string
     steps:
     - checkout
     - setup_remote_docker:
         version: 18.09.3
     - run:
         command: |-
-          sudo apt-get install python-pip && pip install awscli
-
-          aws s3 sync ./apps/homepage/public << parameters.s3 >> --acl public-read --exclude '*.webp' --exclude '*.mp4'
-          aws s3 sync ./apps/homepage/public << parameters.s3 >> --acl public-read --exclude '*' --include '*.webp' --content-type 'image/webp'
-          aws s3 sync ./apps/homepage/public << parameters.s3 >> --acl public-read --exclude '*' --include '*.mp4' --content-type 'video/mp4'
-
           login
           deploy -a vroom-web/apps/homepage/docker -n << parameters.env >>
   homepage_prod:
@@ -46,26 +61,17 @@ jobs:
     parameters:
       env:
         type: string
-      s3:
-        type: string
     steps:
     - checkout
     - setup_remote_docker:
         version: 18.09.3
     - run:
         command: |-
-          sudo apt-get install python-pip && pip install awscli
-
-          aws s3 sync ./apps/homepage/public << parameters.s3 >> --acl public-read --exclude '*.webp' --exclude '*.mp4'
-          aws s3 sync ./apps/homepage/public << parameters.s3 >> --acl public-read --exclude '*' --include '*.webp' --content-type 'image/webp'
-          aws s3 sync ./apps/homepage/public << parameters.s3 >> --acl public-read --exclude '*' --include '*.mp4' --content-type 'video/mp4'
-
           build ./apps/homepage/docker
           deploy << parameters.env >> ./apps/homepage/docker
 
-          sleep 240
-
-          if [ -z "${FASTLY_PURGE_KEY}" ]; then echo "FASTLY_PURGE_KEY not set"; return 1; elif [ -z "${FASTLY_SERVICE_ID}" ]; then echo "FASTLY_SERVICE_ID not set"; return 1; else echo "Purging Fastly for service ${FASTLY_SERVICE_ID}"; curl -X POST -H "Fastly-Key: ${FASTLY_PURGE_KEY}" -H "Accept: application/json" https://api.fastly.com/service/${FASTLY_SERVICE_ID}/purge_all ; fi
+          # sleep 240
+          # if [ -z "${FASTLY_PURGE_KEY}" ]; then echo "FASTLY_PURGE_KEY not set"; return 1; elif [ -z "${FASTLY_SERVICE_ID}" ]; then echo "FASTLY_SERVICE_ID not set"; return 1; else echo "Purging Fastly for service ${FASTLY_SERVICE_ID}"; curl -X POST -H "Fastly-Key: ${FASTLY_PURGE_KEY}" -H "Accept: application/json" https://api.fastly.com/service/${FASTLY_SERVICE_ID}/purge_all ; fi
   lint:
     docker:
     - image: circleci/node:erbium
@@ -76,6 +82,29 @@ jobs:
           yarn install --silent
           yarn workspaces run lint
         name: Lint
+  product_build:
+    docker:
+    - image: vroom/mlp:3.0.1
+    steps:
+    - checkout
+    - setup_remote_docker:
+        version: 18.09.3
+    - run:
+        command: build -a vroom-web/apps/product/docker
+  product_deploy:
+    docker:
+    - image: vroom/mlp:3.0.1
+    parameters:
+      env:
+        type: string
+    steps:
+    - checkout
+    - setup_remote_docker:
+        version: 18.09.3
+    - run:
+        command: |-
+          login
+          deploy -a vroom-web/apps/product/docker -n << parameters.env >>
   sonarcloud:
     docker:
     - image: circleci/node:erbium-browsers
@@ -101,6 +130,48 @@ orbs:
   sonarcloud: sonarsource/sonarcloud@1.0.1
 version: 2.1
 workflows:
+  catalog:
+    jobs:
+    - lint
+    - catalog_build:
+        context: aws-non-prod
+        filters:
+          branches:
+            ignore: /.*/
+          tags:
+            only: /^catalog-v.*/
+    - hold:
+        filters:
+          branches:
+            ignore: /.*/
+          tags:
+            only: /^catalog-v.*/
+        matrix:
+          parameters:
+            env:
+            - dev
+            - qa
+            - uat
+        name: hold_<< matrix.env >>
+        requires:
+        - catalog_build
+        type: approval
+    - catalog_deploy:
+        context: aws-non-prod
+        filters:
+          branches:
+            ignore: /.*/
+          tags:
+            only: /^catalog-v.*/
+        matrix:
+          parameters:
+            env:
+            - dev
+            - qa
+            - uat
+        name: catalog_deploy_<< matrix.env >>
+        requires:
+        - hold_<< matrix.env >>
   homepage:
     jobs:
     - sonarcloud:
@@ -147,7 +218,6 @@ workflows:
         name: homepage_deploy_<< matrix.env >>
         requires:
         - hold_<< matrix.env >>
-        s3: s3://homepage-assets-<< matrix.env >>.n.vroom.systems
     - hold:
         filters:
           branches:
@@ -171,6 +241,47 @@ workflows:
         name: homepage_deploy_prod
         requires:
         - hold_prod
-        s3: s3://homepage-assets-prod.p.vroom.systems
+  product:
+    jobs:
+    - lint
+    - product_build:
+        context: aws-non-prod
+        filters:
+          branches:
+            ignore: /.*/
+          tags:
+            only: /^product-v.*/
+    - hold:
+        filters:
+          branches:
+            ignore: /.*/
+          tags:
+            only: /^product-v.*/
+        matrix:
+          parameters:
+            env:
+            - dev
+            - qa
+            - uat
+        name: hold_<< matrix.env >>
+        requires:
+        - product_build
+        type: approval
+    - product_deploy:
+        context: aws-non-prod
+        filters:
+          branches:
+            ignore: /.*/
+          tags:
+            only: /^product-v.*/
+        matrix:
+          parameters:
+            env:
+            - dev
+            - qa
+            - uat
+        name: product_deploy_<< matrix.env >>
+        requires:
+        - hold_<< matrix.env >>
   version: 2
 

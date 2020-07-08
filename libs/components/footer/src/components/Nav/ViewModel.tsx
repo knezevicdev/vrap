@@ -51,21 +51,25 @@ class NavigationViewModel {
   };
 
   links(): Section[] {
+    // FIT-566
+    // Persist query string across navigation so that vlassic attribution works.
+    // This is a stopgap until a better attribution system is in place.
+    const queryString = this.store.queryString;
     return [
       {
         title: 'Vroom',
         links: [
           {
             label: 'Buy',
-            href: `/catalog`,
+            href: `/catalog${queryString}`,
           },
           {
             label: 'Sell/Trade',
-            href: `/sell`,
+            href: `/sell${queryString}`,
           },
           {
             label: 'Finance',
-            href: `/finance`,
+            href: `/finance${queryString}`,
           },
         ],
       },
@@ -74,15 +78,15 @@ class NavigationViewModel {
         links: [
           {
             label: 'About Us',
-            href: `/about`,
+            href: `/about${queryString}`,
           },
           {
             label: 'Vroom Protection',
-            href: `/protection`,
+            href: `/protection${queryString}`,
           },
           {
             label: 'How It Works',
-            href: `/how-it-works`,
+            href: `/how-it-works${queryString}`,
           },
           {
             label: 'Investor Relations',
@@ -102,7 +106,7 @@ class NavigationViewModel {
           },
           {
             label: 'Contact Us',
-            href: `/contact`,
+            href: `/contact${queryString}`,
           },
         ],
       },
@@ -111,15 +115,15 @@ class NavigationViewModel {
         links: [
           {
             label: 'Privacy Policy',
-            href: `/legal/privacy-policy`,
+            href: `/legal/privacy-policy${queryString}`,
           },
           {
             label: 'Terms of Use',
-            href: `/legal/terms-of-use`,
+            href: `/legal/terms-of-use${queryString}`,
           },
           {
             label: 'Careers',
-            href: `/careers`,
+            href: `/careers${queryString}`,
             target: '_blank',
           },
           {

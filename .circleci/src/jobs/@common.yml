@@ -1,0 +1,20 @@
+danger:
+  docker:
+    - image: node:erbium-alpine
+  steps:
+    - checkout
+    - run:
+        name: Danger
+        command: |-
+          yarn install
+          yarn danger ci
+lint:
+  docker:
+    - image: circleci/node:erbium
+  steps:
+    - checkout
+    - run:
+        name: Lint
+        command: |-
+          yarn install --silent
+          yarn workspaces run lint

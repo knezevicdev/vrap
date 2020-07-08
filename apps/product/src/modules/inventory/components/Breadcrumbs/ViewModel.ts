@@ -1,9 +1,11 @@
+import {
+  addAllModels,
+  addModel,
+  getUrlFromFiltersData,
+} from '@vroom-web/catalog-url-integration';
 import { Car } from '@vroom-web/inv-search-networking';
 
 import { InventoryStore } from '../../store';
-
-import { updateUrl } from 'src/modules/cars/utils/navigation';
-import { ALL_KEY, Filters } from 'src/modules/cars/utils/types';
 
 interface Crumb {
   key: string;
@@ -18,39 +20,41 @@ class BreadcrumbsViewModel {
     this.car = inventoryStore.vehicle._source;
   }
 
-  private sanitize(str: string): string {
-    const toUnderscoreRegex = /-| /g;
-    return str.replace(toUnderscoreRegex, '_').toLowerCase();
-  }
-
   crumbs(): Crumb[] {
-    const { make, model } = this.car;
-    const sMake = this.sanitize(make);
-    const sModel = this.sanitize(model);
+    const { make, makeSlug, model, modelSlug } = this.car;
 
-    const makeFilter = {
-      [Filters.MAKE_AND_MODELS]: { [sMake]: [ALL_KEY] },
+    const catalogHref = getUrlFromFiltersData();
+    const navigateToCatalog = (): void => {
+      window.location.href = catalogHref;
     };
 
-    const modelFilter = {
-      [Filters.MAKE_AND_MODELS]: { [sMake]: [sModel] },
+    const allModelsFiltersData = addAllModels(makeSlug);
+    const allModelsHref = getUrlFromFiltersData(allModelsFiltersData);
+    const navigateToAllModels = (): void => {
+      window.location.href = allModelsHref;
+    };
+
+    const modelFiltersData = addModel(makeSlug, modelSlug);
+    const modelHref = getUrlFromFiltersData(modelFiltersData);
+    const navigateToModel = (): void => {
+      window.location.href = modelHref;
     };
 
     return [
       {
         key: 'all',
         name: 'All Cars',
-        onClick: (): void => updateUrl(undefined),
+        onClick: navigateToCatalog,
       },
       {
         key: 'make',
         name: make,
-        onClick: (): void => updateUrl(makeFilter),
+        onClick: navigateToAllModels,
       },
       {
         key: 'model',
         name: model,
-        onClick: (): void => updateUrl(modelFilter),
+        onClick: navigateToModel,
       },
     ];
   }

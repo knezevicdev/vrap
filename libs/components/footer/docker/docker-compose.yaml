@@ -1,6 +1,6 @@
 version: '3'
 services:
-  storybook:
+  footer-components:
     build:
       context: ../../../../
       dockerfile: ./libs/components/footer/docker/Dockerfile

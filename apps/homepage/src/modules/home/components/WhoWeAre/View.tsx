@@ -6,25 +6,11 @@ import ViewModel from './ViewModel';
 
 import globalEnv from 'src/globalEnv';
 
-const Background = styled('div')(() => {
-  const config = {
-    backgroundImage: '',
-    backgroundRepeat: 'no-repeat',
-    backgroundSize: 'cover',
-    backgroundPosition: 'center top',
-  };
-
-  if (typeof window !== 'undefined') {
-    const jpeg2000 = window.Modernizr.jpeg2000;
-
-    if (jpeg2000) {
-      config.backgroundImage = `url(${globalEnv.CDN_URL}/modules/home/images/jp2/who-we-are-background.jp2)`;
-    } else {
-      config.backgroundImage = `url(${globalEnv.CDN_URL}/modules/home/images/who-we-are-background.png)`;
-    }
-  }
-
-  return config;
+const Background = styled('div')({
+  backgroundImage: `url(${globalEnv.ASSET_PREFIX}/modules/home/images/who-we-are-background.png)`,
+  backgroundRepeat: 'no-repeat',
+  backgroundSize: 'cover',
+  backgroundPosition: 'center top',
 });
 
 const StyledContainer = styled(Container)(({ theme }) => ({

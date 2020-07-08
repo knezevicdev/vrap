@@ -1,3 +1,5 @@
+import { stringify } from 'qs';
+
 import globalEnv from 'src/globalEnv';
 import AnalyticsHandler, {
   VideoEvent,
@@ -13,33 +15,33 @@ interface Link {
 
 interface Video {
   src: string;
-  poster: {
-    default: string;
-    jpeg2000: string;
-    webp: string;
-  };
+  poster: string;
 }
 
 class HowItWorksViewModel {
   readonly title: string = 'how it works';
   readonly subtitle: string =
     'Vroom is changing the way people buy, sell, and trade in cars. Here’s a step-by-step guide on what\xa0to\xa0expect.';
-  readonly link: Link = {
-    href: '/how-it-works',
-    label: '',
-  };
+  readonly link: Link;
   readonly video: Video = {
-    src: `${globalEnv.CDN_URL}/modules/home/videos/how-it-works-promo.mp4`,
-    poster: {
-      default: `${globalEnv.CDN_URL}/modules/home/images/how-it-works-poster.png`,
-      jpeg2000: `${globalEnv.CDN_URL}/modules/home/images/jp2/how-it-works-poster.jp2`,
-      webp: `${globalEnv.CDN_URL}/modules/home/images/webp/how-it-works-poster.webp`,
-    },
+    src: `${globalEnv.ASSET_PREFIX}/modules/home/videos/how-it-works-promo.mp4`,
+    poster: `${globalEnv.ASSET_PREFIX}/modules/home/images/how-it-works-poster.png`,
   };
 
   private analyticsHandler: AnalyticsHandler = new AnalyticsHandler();
 
   constructor(store: HomeStore) {
+    // FIT-566
+    // Persist query string across navigation.
+    // This allows vlassic attributuion to work until we can implement a better system.
+    const queryString = stringify(store.query, {
+      addQueryPrefix: true,
+    });
+    this.link = {
+      href: `/how-it-works${queryString}`,
+      label: '',
+    };
+
     const learnMoreLinkLabelExperimentVariant = showDefaultVariant(
       'snd-homepage-learn-more-vs-learn-more-about-vroom',
       store.experiments,
@@ -48,23 +50,6 @@ class HowItWorksViewModel {
     this.link.label = learnMoreLinkLabelExperimentVariant
       ? 'LEARN MORE ABOUT VROOM'
       : 'BUYING AND SELLING MADE EASY';
-  }
-
-  getPoster(): string {
-    const jpeg2000 = window.Modernizr.jpeg2000;
-
-    const webp =
-      typeof window.Modernizr.webp === 'boolean'
-        ? window.Modernizr.webp
-        : Object.values(window.Modernizr.webp).indexOf(false) === -1;
-
-    if (jpeg2000) {
-      return this.video.poster.jpeg2000;
-    }
-    if (webp) {
-      return this.video.poster.webp;
-    }
-    return this.video.poster.default;
   }
 
   handleLearnMoreClick(): void {

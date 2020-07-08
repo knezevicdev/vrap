@@ -1,3 +1,5 @@
+import { stringify } from 'qs';
+
 import { HomeStore } from '../../store';
 
 import globalEnv from 'src/globalEnv';
@@ -12,34 +14,37 @@ interface Highlight {
 }
 
 class HighlightsViewModel {
+  private readonly analyticsHandler: AnalyticsHandler = new AnalyticsHandler();
+  private readonly store: HomeStore;
+
   ctaLabel: string;
   condenseCatalogLinksDefaultVariant: boolean;
   readonly highlights: Highlight[] = [
     {
       description: '',
       imgAlt: 'High-Quality Cars',
-      imgSrc: `${globalEnv.CDN_URL}/modules/home/images/highlight-1.png`,
+      imgSrc: `${globalEnv.ASSET_PREFIX}/modules/home/images/highlight-1.png`,
       title: 'High-Quality Cars',
     },
     {
       description:
         'No haggling. No hassles. An easy and efficient car buying process— the way it should be.',
       imgAlt: 'Buying Made Easy',
-      imgSrc: `${globalEnv.CDN_URL}/modules/home/images/highlight-2.png`,
+      imgSrc: `${globalEnv.ASSET_PREFIX}/modules/home/images/highlight-2.png`,
       title: 'Buying Made Easy',
     },
     {
       description:
         'Get your car or truck shipped to your home or a convenient nearby\xa0location.',
       imgAlt: 'Delivered Right to You',
-      imgSrc: `${globalEnv.CDN_URL}/modules/home/images/highlight-3.png`,
+      imgSrc: `${globalEnv.ASSET_PREFIX}/modules/home/images/highlight-3.png`,
       title: '',
     },
   ];
 
-  private analyticsHandler: AnalyticsHandler = new AnalyticsHandler();
-
   constructor(store: HomeStore) {
+    this.store = store;
+
     const homeWarrantyTextExperimentVariant = showDefaultVariant(
       'snd-homepage-complimentary-limited-warranty-vs-free-limited-warranty',
       store.experiments,
@@ -79,7 +84,13 @@ class HighlightsViewModel {
 
   handleButtonClick(): void {
     this.analyticsHandler.trackShowNowClicked();
-    window.location.href = '/catalog';
+    // FIT-566
+    // Persist query string across navigation.
+    // This allows vlassic attributuion to work until we can implement a better system.
+    const queryString = stringify(this.store.query, {
+      addQueryPrefix: true,
+    });
+    window.location.href = `/catalog${queryString}`;
   }
 }
 

@@ -1,16 +1,12 @@
 FROM node:erbium-alpine
 
-# Install git so editor git commands work
-RUN apk --no-cache add git
-
-RUN mkdir -p /www
-
 WORKDIR /www
 COPY . .
-RUN chown -R 1000:1000 .
-
-RUN yarn install --silent
-RUN yarn workspace @vroom-web/ui build
+RUN \
+  apk --no-cache add git &&\
+  yarn install --silent &&\
+  yarn workspace @vroom-web/ui build &&\
+  chown -R 1000:1000 .
 
 EXPOSE 8080
 

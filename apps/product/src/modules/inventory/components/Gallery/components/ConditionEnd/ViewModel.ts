@@ -16,7 +16,7 @@ class ConditionEndViewModel {
   };
   readonly defaultImage = {
     alt: 'Condition End Photo',
-    src: `${globalEnv.CDN_URL}/modules/inventory/components/gallery/LastCondition.png`,
+    src: `${globalEnv.ASSET_PREFIX}/modules/inventory/components/gallery/LastCondition.png`,
   };
 }
 

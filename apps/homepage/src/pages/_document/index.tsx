@@ -15,7 +15,6 @@ import globalEnv from '../../globalEnv';
 import FaviconSnippet from './FaviconSnippet';
 import FontsSnippet from './FontsSnippet';
 import GlobalEnvSnippet from './GlobalEnvSnippet';
-import ModernizrSnippet from './ModernizrSnippet';
 
 class VroomDocument extends Document {
   static async getInitialProps(
@@ -65,17 +64,16 @@ class VroomDocument extends Document {
             />
           )}
           <GlobalEnvSnippet
-            CDN_URL={globalEnv.CDN_URL}
             GEARBOX_PRIVATE_URL={globalEnv.GEARBOX_PRIVATE_URL}
             GEARBOX_PUBLIC_URL={globalEnv.GEARBOX_PUBLIC_URL}
             INVSEARCH_V3_URL={globalEnv.INVSEARCH_V3_URL}
+            ASSET_PREFIX={globalEnv.ASSET_PREFIX}
             DATA_DOG_LOG_COLLECTION_TOKEN={
               globalEnv.DATA_DOG_LOG_COLLECTION_TOKEN
             }
             NAME={globalEnv.NAME}
             VERSION={globalEnv.VERSION}
           />
-          <ModernizrSnippet />
         </Head>
         <body>
           <Main />
