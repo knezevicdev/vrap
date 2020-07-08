@@ -1,11 +1,9 @@
 version: '3'
 services:
-  header-storybook:
+  header-components:
     build:
       context: ../../../../
       dockerfile: ./libs/components/header/docker/Dockerfile
-    image: vroom-web-header-components:latest
-    container_name: storybook
     user: 'root'
     command: ash -c "yarn workspace @vroom-web/header-components storybook"
     ports:

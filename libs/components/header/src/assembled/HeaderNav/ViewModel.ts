@@ -68,23 +68,27 @@ class HeaderNavViewModel {
     const phoneNumberLinkData = this.getPhoneNumberLinkData(
       this.store.phoneNumber
     );
+    // FIT-566
+    // Persist query string across navigation so that vlassic attribution works.
+    // This is a stopgap until a better attribution system is in place.
+    const queryString = this.store.queryString;
     if (!this.store.loggedIn) {
       return [
         {
           type: 'link',
-          href: '/catalog',
+          href: `/catalog${queryString}`,
           label: 'BUY',
           onClick: (): void => this.analyticsHandler.trackBuyClicked(),
         },
         {
           type: 'link',
-          href: '/sell',
+          href: `/sell${queryString}`,
           label: 'SELL/TRADE',
           onClick: (): void => this.analyticsHandler.trackSellTradeClicked(),
         },
         {
           type: 'link',
-          href: '/finance',
+          href: `/finance${queryString}`,
           label: 'FINANCE',
           onClick: (): void => this.analyticsHandler.trackFinanceClicked(),
         },
@@ -93,24 +97,24 @@ class HeaderNavViewModel {
           label: 'ABOUT',
           links: [
             {
-              href: '/about',
+              href: `/about${queryString}`,
               label: 'About Us',
               onClick: (): void => this.analyticsHandler.trackAboutUsClicked(),
             },
             {
-              href: '/protection',
+              href: `/protection${queryString}`,
               label: 'Vroom Protection',
               onClick: (): void =>
                 this.analyticsHandler.trackVroomProtectionClicked(),
             },
             {
-              href: '/how-it-works',
+              href: `/how-it-works${queryString}`,
               label: 'How It Works',
               onClick: (): void =>
                 this.analyticsHandler.trackHowItWorksClicked(),
             },
             {
-              href: '/reviews',
+              href: `/reviews${queryString}`,
               label: 'Customer Reviews',
               onClick: (): void =>
                 this.analyticsHandler.trackCustomerReviewsClicked(),
@@ -138,7 +142,7 @@ class HeaderNavViewModel {
               onClick: (): void => this.analyticsHandler.trackPhoneClicked(),
             },
             {
-              href: '/contact',
+              href: `/contact${queryString}`,
               label: 'Contact Us',
               onClick: (): void =>
                 this.analyticsHandler.trackContactUsClicked(),
@@ -150,18 +154,18 @@ class HeaderNavViewModel {
           label: 'LOG IN',
           links: [
             {
-              href: '/account/login',
+              href: `/account/login${queryString}`,
               label: 'Log In / Register',
               onClick: (): void => this.analyticsHandler.trackLoginClicked(),
             },
             {
-              href: '/my-account/favorites',
+              href: `/my-account/favorites${queryString}`,
               label: 'Favorites',
               onClick: (): void =>
                 this.analyticsHandler.trackFavoritesClicked(),
             },
             {
-              href: '/my-account/profile',
+              href: `/my-account/profile${queryString}`,
               label: 'Profile',
               onClick: (): void => this.analyticsHandler.trackProfileClicked(),
             },
@@ -173,19 +177,19 @@ class HeaderNavViewModel {
     return [
       {
         type: 'link',
-        href: '/catalog',
+        href: `/catalog${queryString}`,
         label: 'BUY',
         onClick: (): void => this.analyticsHandler.trackBuyClicked(),
       },
       {
         type: 'link',
-        href: '/sell',
+        href: `/sell${queryString}`,
         label: 'SELL/TRADE',
         onClick: (): void => this.analyticsHandler.trackSellTradeClicked(),
       },
       {
         type: 'link',
-        href: '/finance',
+        href: `/finance${queryString}`,
         label: 'FINANCE',
         onClick: (): void => this.analyticsHandler.trackFinanceClicked(),
       },
@@ -194,23 +198,23 @@ class HeaderNavViewModel {
         label: 'ABOUT',
         links: [
           {
-            href: '/about',
+            href: `/about${queryString}`,
             label: 'About Us',
             onClick: (): void => this.analyticsHandler.trackAboutUsClicked(),
           },
           {
-            href: '/protection',
+            href: `/protection${queryString}`,
             label: 'Vroom Protection',
             onClick: (): void =>
               this.analyticsHandler.trackVroomProtectionClicked(),
           },
           {
-            href: '/how-it-works',
+            href: `/how-it-works${queryString}`,
             label: 'How It Works',
             onClick: (): void => this.analyticsHandler.trackHowItWorksClicked(),
           },
           {
-            href: '/reviews',
+            href: `/reviews${queryString}`,
             label: 'Customer Reviews',
             onClick: (): void =>
               this.analyticsHandler.trackCustomerReviewsClicked(),
@@ -238,7 +242,7 @@ class HeaderNavViewModel {
             onClick: (): void => this.analyticsHandler.trackPhoneClicked(),
           },
           {
-            href: '/contact',
+            href: `/contact${queryString}`,
             label: 'Contact Us',
             onClick: (): void => this.analyticsHandler.trackContactUsClicked(),
           },
@@ -246,7 +250,7 @@ class HeaderNavViewModel {
       },
       {
         type: 'link',
-        href: '/my-account/favorites',
+        href: `/my-account/favorites${queryString}`,
         IconComponent: FavoritesHeartIconComponent,
         onClick: (): void => this.analyticsHandler.trackFavoritesHeartClicked(),
       },
@@ -256,28 +260,28 @@ class HeaderNavViewModel {
         label: this.getAccountLabel(),
         links: [
           {
-            href: '/my-account/favorites',
+            href: `/my-account/favorites${queryString}`,
             label: 'Favorites',
             onClick: (): void => this.analyticsHandler.trackFavoritesClicked(),
           },
           {
-            href: '/my-account/profile',
+            href: `/my-account/profile${queryString}`,
             label: 'Profile',
             onClick: (): void => this.analyticsHandler.trackProfileClicked(),
           },
           {
-            href: '/my-account/addresses',
+            href: `/my-account/addresses${queryString}`,
             label: 'Addresses',
             onClick: (): void => this.analyticsHandler.trackAddressesClicked(),
           },
           {
-            href: '/my-account/transactions',
+            href: `/my-account/transactions${queryString}`,
             label: 'Transactions',
             onClick: (): void =>
               this.analyticsHandler.trackTransactionsClicked(),
           },
           {
-            href: '/catalog',
+            href: `/catalog${queryString}`,
             label: 'Sign Out',
             onClick: this.handleSignOutClick,
           },
@@ -290,60 +294,64 @@ class HeaderNavViewModel {
     const phoneNumberLinkData = this.getPhoneNumberLinkData(
       this.store.phoneNumber
     );
+    // FIT-566
+    // Persist query string across navigation so that vlassic attribution works.
+    // This is a stopgap until a better attribution system is in place.
+    const queryString = this.store.queryString;
     if (!this.store.loggedIn) {
       return [
         {
           type: 'link',
-          href: '/account/login',
+          href: `/account/login${queryString}`,
           label: 'LOG IN',
           onClick: (): void => this.analyticsHandler.trackLoginClicked(),
         },
         {
           type: 'link',
-          href: '/',
+          href: `/${queryString}`,
           label: 'HOME',
           onClick: (): void => this.analyticsHandler.trackHomeClicked(),
         },
         {
           type: 'link',
-          href: '/catalog',
+          href: `/catalog${queryString}`,
           label: 'BUY',
           onClick: (): void => this.analyticsHandler.trackBuyClicked(),
         },
         {
           type: 'link',
-          href: '/sell',
+          href: `/sell${queryString}`,
           label: 'SELL/TRADE',
           onClick: (): void => this.analyticsHandler.trackSellTradeClicked(),
         },
         {
           type: 'link',
-          href: '/finance',
+          href: `/finance${queryString}`,
           label: 'FINANCE',
           onClick: (): void => this.analyticsHandler.trackFinanceClicked(),
         },
         {
           type: 'link',
-          href: '/about',
+          href: `/about${queryString}`,
           label: 'ABOUT US',
           onClick: (): void => this.analyticsHandler.trackAboutUsClicked(),
         },
         {
           type: 'link',
-          href: '/protection',
+          href: `/protection${queryString}`,
           label: 'VROOM PROTECTION',
           onClick: (): void =>
             this.analyticsHandler.trackVroomProtectionClicked(),
         },
         {
           type: 'link',
-          href: '/how-it-works',
+          href: `/how-it-works${queryString}`,
           label: 'HOW IT WORKS',
           onClick: (): void => this.analyticsHandler.trackHowItWorksClicked(),
         },
         {
           type: 'link',
-          href: '/reviews',
+          href: `/reviews${queryString}`,
           label: 'CUSTOMER REVIEWS',
           onClick: (): void =>
             this.analyticsHandler.trackCustomerReviewsClicked(),
@@ -369,7 +377,7 @@ class HeaderNavViewModel {
         },
         {
           type: 'link',
-          href: '/contact',
+          href: `/contact${queryString}`,
           label: 'CONTACT US',
           onClick: (): void => this.analyticsHandler.trackContactUsClicked(),
         },
@@ -383,22 +391,22 @@ class HeaderNavViewModel {
         label: this.getAccountLabel(),
         links: [
           {
-            href: '/my-account/favorites',
+            href: `/my-account/favorites${queryString}`,
             label: 'Favorites',
             onClick: (): void => this.analyticsHandler.trackFavoritesClicked(),
           },
           {
-            href: '/my-account/profile',
+            href: `/my-account/profile${queryString}`,
             label: 'Profile',
             onClick: (): void => this.analyticsHandler.trackProfileClicked(),
           },
           {
-            href: '/my-account/addresses',
+            href: `/my-account/addresses${queryString}`,
             label: 'Addresses',
             onClick: (): void => this.analyticsHandler.trackAddressesClicked(),
           },
           {
-            href: '/my-account/transactions',
+            href: `/my-account/transactions${queryString}`,
             label: 'Transactions',
             onClick: (): void =>
               this.analyticsHandler.trackTransactionsClicked(),
@@ -407,50 +415,50 @@ class HeaderNavViewModel {
       },
       {
         type: 'link',
-        href: '/',
+        href: `/${queryString}`,
         label: 'HOME',
         onClick: (): void => this.analyticsHandler.trackHomeClicked(),
       },
       {
         type: 'link',
-        href: '/catalog',
+        href: `/catalog${queryString}`,
         label: 'BUY',
         onClick: (): void => this.analyticsHandler.trackBuyClicked(),
       },
       {
         type: 'link',
-        href: '/sell',
+        href: `/sell${queryString}`,
         label: 'SELL/TRADE',
         onClick: (): void => this.analyticsHandler.trackSellTradeClicked(),
       },
       {
         type: 'link',
-        href: '/finance',
+        href: `/finance${queryString}`,
         label: 'FINANCE',
         onClick: (): void => this.analyticsHandler.trackFinanceClicked(),
       },
       {
         type: 'link',
-        href: '/about',
+        href: `/about${queryString}`,
         label: 'ABOUT US',
         onClick: (): void => this.analyticsHandler.trackAboutUsClicked(),
       },
       {
         type: 'link',
-        href: '/protection',
+        href: `/protection${queryString}`,
         label: 'VROOM PROTECTION',
         onClick: (): void =>
           this.analyticsHandler.trackVroomProtectionClicked(),
       },
       {
         type: 'link',
-        href: '/how-it-works',
+        href: `/how-it-works${queryString}`,
         label: 'HOW IT WORKS',
         onClick: (): void => this.analyticsHandler.trackHowItWorksClicked(),
       },
       {
         type: 'link',
-        href: '/reviews',
+        href: `/reviews${queryString}`,
         label: 'CUSTOMER REVIEWS',
         onClick: (): void =>
           this.analyticsHandler.trackCustomerReviewsClicked(),
@@ -476,13 +484,13 @@ class HeaderNavViewModel {
       },
       {
         type: 'link',
-        href: '/contact',
+        href: `/contact${queryString}`,
         label: 'CONTACT US',
         onClick: (): void => this.analyticsHandler.trackContactUsClicked(),
       },
       {
         type: 'link',
-        href: '/catalog',
+        href: `/catalog${queryString}`,
         label: 'SIGN OUT',
         onClick: this.handleSignOutClick,
       },
