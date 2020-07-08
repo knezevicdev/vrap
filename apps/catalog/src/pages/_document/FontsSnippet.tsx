@@ -28,7 +28,7 @@ const FontsSnippet: React.FC = () => {
             @font-face {
               font-family: Calibre;
               font-weight: 500;
-              src: url('${globalEnv.CDN_URL}/fonts/CalibreWeb-Semibold.woff') format('woff');
+              src: url('${globalEnv.ASSET_PREFIX}/fonts/CalibreWeb-Semibold.woff') format('woff');
             }
             @font-face {
               font-family: 'Calibre';

@@ -65,7 +65,7 @@ class VroomDocument extends Document {
             />
           )}
           <GlobalEnvSnippet
-            CDN_URL={globalEnv.CDN_URL}
+            ASSET_PREFIX={globalEnv.ASSET_PREFIX}
             INVSEARCH_V3_URL={globalEnv.INVSEARCH_V3_URL}
             NAME={globalEnv.NAME}
             VERSION={globalEnv.VERSION}
