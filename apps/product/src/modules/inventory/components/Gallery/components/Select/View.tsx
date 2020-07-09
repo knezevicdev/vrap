@@ -1,10 +1,10 @@
+import { makeStyles } from '@material-ui/core/styles';
 import Tab from '@material-ui/core/Tab';
 import Tabs from '@material-ui/core/Tabs';
 import { observer } from 'mobx-react';
 import React from 'react';
 
 import ViewModel from './ViewModel';
-import {makeStyles} from "@material-ui/core/styles";
 
 function a11yProps(selected: string): object {
   return {
@@ -41,13 +41,13 @@ const GallerySelectorView: React.FC<Props> = (props) => {
         aria-label="gallery selection tabs"
       >
         <Tab
-            classes={tabClass}
+          classes={tabClass}
           value={viewModel.general}
           label={viewModel.general.toUpperCase()}
           {...a11yProps(viewModel.general)}
         />
         <Tab
-            classes={tabClass}
+          classes={tabClass}
           value={viewModel.imperfections}
           label={viewModel.imperfections.toUpperCase()}
           {...a11yProps(viewModel.imperfections)}

@@ -21,16 +21,16 @@ const StartPurchaseView: React.FC<Props> = (props) => {
   const handleClick = (): void => viewModel.handleClick();
 
   return (
-      <>
+    <>
       <CustomButton
         variant="contained"
         color="primary"
         onClick={handleClick}
         disabled={viewModel.isAvailableSoon()}
       >
-          {viewModel.isAvailableSoon()
-            ? viewModel.availableSoon
-            : viewModel.purchaseText}
+        {viewModel.isAvailableSoon()
+          ? viewModel.availableSoon
+          : viewModel.purchaseText}
       </CustomButton>
     </>
   );
