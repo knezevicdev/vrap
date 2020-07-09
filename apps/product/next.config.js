@@ -15,7 +15,7 @@ module.exports = {
     ASSET_PREFIX: assetPrefix,
   },
   assetPrefix,
-  generateBuildId: () => assetPrefix,
+  generateBuildId: () => shortHash,
   /* Custom webpack configuration. */
   webpack: (config) => {
     /* Enable SVG imports. */
