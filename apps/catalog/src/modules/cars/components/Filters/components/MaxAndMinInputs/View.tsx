@@ -40,7 +40,12 @@ const Error = styled(Typography)(({ theme }) => ({
 
 const StyledSlider = styled(UISlider)(({ theme }) => ({
   width: theme.spacing(24),
-  margin: theme.spacing(2, 0, 4, 2),
+  margin: theme.spacing(2, 0, 2, 2),
+}));
+
+const Value = styled(Typography)(() => ({
+  fontSize: '16px',
+  alignSelf: 'center',
 }));
 
 interface Props {
@@ -80,7 +85,7 @@ const MaxAndMinInputsView: React.FC<Props> = ({ viewModel }) => {
 
   const getMinInputForVariant = (): React.ReactNode => {
     if (viewModel.variant === Variant.MAX_ONLY) {
-      return <Typography>{viewModel.maxOnlyInputLabel}</Typography>;
+      return <Value>{viewModel.maxOnlyInputLabel}</Value>;
     }
     return (
       <Input

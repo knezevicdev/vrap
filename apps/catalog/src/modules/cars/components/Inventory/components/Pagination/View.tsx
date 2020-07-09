@@ -15,8 +15,7 @@ const StyledPagination = styled(Pagination)(({ theme }) => ({
   },
   marginTop: theme.spacing(4),
   '& .MuiPaginationItem-page.Mui-selected': {
-    backgroundColor: '#c8102e',
-    color: 'white',
+    color: '#ffffff',
   },
 }));
 
@@ -36,6 +35,7 @@ const PaginationView: React.FC<Props> = ({ viewModel }) => {
 
   return (
     <StyledPagination
+      color="secondary"
       size={isMobile ? 'small' : 'medium'}
       count={pageInfo.count}
       page={pageInfo.page}

@@ -8,20 +8,28 @@ import DriveTypes from './DriveTypes';
 import Transmissions from './Transmissions';
 import EngineAndDrivetrainViewModel from './ViewModel';
 
-const EngineAndDrivetrainContainer = styled('div')(() => ({
+const EngineAndDrivetrainContainer = styled('div')(({ theme }) => ({
   display: 'flex',
   flexDirection: 'column',
-  paddingBottom: '16px',
+  paddingBottom: theme.spacing(2),
 }));
 
-const Reset = styled(ListItem)(() => ({
-  padding: '8px 0',
+const Reset = styled(ListItem)(({ theme }) => ({
+  padding: theme.spacing(1, 0),
   height: '36px',
   flexDirection: 'column',
+  '&.MuiListItem-root.Mui-disabled >p': {
+    color: theme.palette.grey['A100'],
+  },
 }));
 
-const Titles = styled(Typography)(() => ({
-  padding: '8px 0',
+const Titles = styled(Typography)(({ theme }) => ({
+  fontSize: '16px',
+  padding: theme.spacing(1, 0),
+}));
+
+const Value = styled(Typography)(() => ({
+  fontSize: '16px',
 }));
 
 interface Props {
@@ -44,9 +52,9 @@ const EngineAndDrivetrainView: React.FC<Props> = ({ viewModel }) => {
         onClick={viewModel.reset}
         disabled={viewModel.isResetButtonDisabled()}
       >
-        <Typography fontWeight="fontWeightMedium" color="secondary.main">
+        <Value fontWeight="fontWeightMedium" color="primary.main">
           {viewModel.resetButtonLabel}
-        </Typography>
+        </Value>
       </Reset>
     </EngineAndDrivetrainContainer>
   );

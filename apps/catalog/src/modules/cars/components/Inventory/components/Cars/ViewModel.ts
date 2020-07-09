@@ -143,28 +143,26 @@ class CarsViewModel {
     }
   }
 
-  hasError = (): boolean => {
+  hasNoInventory = (): boolean => {
     return !this.isLoading() && !this.store.hasInventory;
   };
 
-  private hasFullError = (): boolean => {
-    return this.hasError() && !this.store.hasPopularCars;
+  hasError = (): boolean => {
+    return this.hasNoInventory() && !this.store.hasPopularCars;
   };
 
-  errorTop = (): string => {
-    return this.hasFullError()
-      ? 'Something went wrong.'
-      : `Looks like we couldn't find what you were looking for.`;
+  getErrorMessage = (): string => {
+    return this.hasError()
+      ? `Something went wrong.\nPlease try again.`
+      : `Looks like we couldn’t find what\nyou were looking for.`;
   };
 
-  errorBottom = (): string => {
-    return this.hasFullError()
-      ? 'Please try again.'
-      : 'Check out other popular cars.';
+  getPopularCarsMessage = (): string => {
+    return `Check out other popular cars.`;
   };
 
   hasCars = (): boolean => {
-    return !this.hasFullError();
+    return this.store.hasInventory || this.store.hasPopularCars;
   };
 
   isLoading = (): boolean => {
@@ -197,7 +195,7 @@ class CarsViewModel {
     if (this.isLoading()) {
       return this.loadingCars();
     }
-    if (this.hasError()) {
+    if (this.hasNoInventory()) {
       return this.popularCars();
     }
     return this.inventoryCars();

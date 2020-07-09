@@ -13,8 +13,11 @@ const StyledListItem = styled(ListItem)(({ theme }) => ({
   height: theme.spacing(4),
 }));
 
-const Reset = styled(StyledListItem)(() => ({
+const Reset = styled(StyledListItem)(({ theme }) => ({
   flexDirection: 'column',
+  '&.MuiListItem-root.Mui-disabled >p': {
+    color: theme.palette.grey['A100'],
+  },
 }));
 
 const StyledList = styled(List)(({ theme }) => ({
@@ -23,6 +26,10 @@ const StyledList = styled(List)(({ theme }) => ({
 
 const StyledCheck = styled(Check)(() => ({
   marginLeft: 'auto',
+}));
+
+const Value = styled(Typography)(() => ({
+  fontSize: '16px',
 }));
 
 interface Props {
@@ -47,7 +54,7 @@ const BodyTypesView: React.FC<Props> = ({ viewModel }) => {
               isSelected
             )}
           >
-            <Typography fontWeight={fontWeight}>{display}</Typography>
+            <Value fontWeight={fontWeight}>{display}</Value>
             {isSelected && <StyledCheck fontSize="small" color="secondary" />}
           </StyledListItem>
         );
@@ -57,13 +64,9 @@ const BodyTypesView: React.FC<Props> = ({ viewModel }) => {
         onClick={viewModel.reset}
         disabled={viewModel.isResetDisabled()}
       >
-        <Typography
-          variant="body1"
-          fontWeight="fontWeightMedium"
-          color="secondary.main"
-        >
+        <Value fontWeight="fontWeightMedium" color="primary.main">
           {resetButtonLabel}
-        </Typography>
+        </Value>
       </Reset>
     </StyledList>
   );

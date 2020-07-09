@@ -13,8 +13,11 @@ const StyledListItem = styled(ListItem)(({ theme }) => ({
   height: theme.spacing(4),
 }));
 
-const Reset = styled(StyledListItem)(() => ({
+const Reset = styled(StyledListItem)(({ theme }) => ({
   flexDirection: 'column',
+  '&.MuiListItem-root.Mui-disabled >p': {
+    color: theme.palette.grey['A100'],
+  },
 }));
 
 const StyledList = styled(List)(({ theme }) => ({
@@ -30,6 +33,10 @@ const Circle = styled('div')(() => ({
   width: '24px',
   marginRight: '8px',
   borderRadius: '50%',
+}));
+
+const Value = styled(Typography)(() => ({
+  fontSize: '16px',
 }));
 
 export interface Props {
@@ -65,7 +72,7 @@ const ColorView: React.FC<Props> = ({ viewModel }) => {
                   : 'none',
               }}
             />
-            <Typography fontWeight={fontWeight}>{display}</Typography>
+            <Value fontWeight={fontWeight}>{display}</Value>
             {isSelected && <StyledCheck fontSize="small" color="secondary" />}
           </StyledListItem>
         );
@@ -75,13 +82,9 @@ const ColorView: React.FC<Props> = ({ viewModel }) => {
         onClick={viewModel.reset}
         disabled={viewModel.isResetDisabled()}
       >
-        <Typography
-          variant="body1"
-          fontWeight="fontWeightMedium"
-          color="secondary.main"
-        >
+        <Value fontWeight="fontWeightMedium" color="primary.main">
           {viewModel.resetButtonLabel}
-        </Typography>
+        </Value>
       </Reset>
     </StyledList>
   );

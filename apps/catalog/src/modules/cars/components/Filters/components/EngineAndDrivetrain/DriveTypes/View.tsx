@@ -15,8 +15,15 @@ interface Props {
 const Label = withStyles((theme) => ({
   label: {
     fontWeight: theme.typography.fontWeightLight,
+    fontSize: '16px',
   },
 }))(FormControlLabel);
+
+const CheckboxCustom = withStyles((theme) => ({
+  root: {
+    color: theme.palette.grey['A100'],
+  },
+}))(Checkbox);
 
 const DriveTypesView: React.FC<Props> = ({ viewModel }) => {
   const handleCheckboxChange = (
@@ -37,7 +44,7 @@ const DriveTypesView: React.FC<Props> = ({ viewModel }) => {
           <Label
             key={display}
             control={
-              <Checkbox
+              <CheckboxCustom
                 color="primary"
                 checked={checked}
                 onChange={handleCheckboxChange}

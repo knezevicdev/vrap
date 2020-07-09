@@ -17,6 +17,15 @@ const StyledList = styled(List)(({ theme }) => ({
   padding: theme.spacing(0, 0, 2, 0),
 }));
 
+const Value = styled(Typography)(() => ({
+  fontSize: '16px',
+}));
+
+const ShowMore = styled(Typography)(() => ({
+  fontSize: '16px',
+  margin: 'auto',
+}));
+
 interface Props {
   viewModel: MakesViewModel;
 }
@@ -37,11 +46,11 @@ const MakesView: React.FC<Props> = ({ viewModel }) => {
         return (
           <div key={display}>
             <StyledListItem button onClick={handleMakeClick(slug)}>
-              <Typography
+              <Value
                 fontWeight={isSelected ? 'fontWeightMedium' : 'fontWeightLight'}
               >
                 {display}
-              </Typography>
+              </Value>
             </StyledListItem>
             <Collapse in={isSelected} timeout="auto" unmountOnExit>
               <Models makeSlug={slug} models={models} />
@@ -50,13 +59,9 @@ const MakesView: React.FC<Props> = ({ viewModel }) => {
         );
       })}
       <StyledListItem button onClick={handleShowMoreClick}>
-        <Typography
-          variant="body1"
-          fontWeight="fontWeightMedium"
-          color="secondary.main"
-        >
+        <ShowMore fontWeight="fontWeightMedium" color="primary.main">
           {viewModel.getShowMoreLabel()}
-        </Typography>
+        </ShowMore>
       </StyledListItem>
     </StyledList>
   );

@@ -15,13 +15,21 @@ const Container = styled('div')(({ theme }) => ({
   paddingBottom: theme.spacing(2),
 }));
 
-const Reset = styled(ListItem)(() => ({
+const Reset = styled(ListItem)(({ theme }) => ({
   flexDirection: 'column',
+  '&.MuiListItem-root.Mui-disabled >p': {
+    color: theme.palette.grey['A100'],
+  },
+}));
+
+const Value = styled(Typography)(() => ({
+  fontSize: '16px',
 }));
 
 interface Props {
   viewModel: PriceViewModel;
 }
+
 const PriceView: React.FC<Props> = ({ viewModel }) => {
   const handleMaxAndMinInputsChange = (value?: MaxAndMin): void => {
     viewModel.handleMaxAndMinInputsChange(value);
@@ -50,9 +58,9 @@ const PriceView: React.FC<Props> = ({ viewModel }) => {
         onClick={handleResetClick}
         disabled={viewModel.isResetButtonDisabled()}
       >
-        <Typography fontWeight="fontWeightMedium" color="secondary.main">
+        <Value fontWeight="fontWeightMedium" color="primary.main">
           {viewModel.resetButtonLabel}
-        </Typography>
+        </Value>
       </Reset>
     </Container>
   );

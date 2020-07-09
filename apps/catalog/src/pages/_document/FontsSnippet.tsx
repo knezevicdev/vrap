@@ -26,6 +26,11 @@ const FontsSnippet: React.FC = () => {
               src: url('${globalEnv.ASSET_PREFIX}/fonts/CalibreWeb-Regular.woff') format('woff');
             }
             @font-face {
+              font-family: Calibre;
+              font-weight: 500;
+              src: url('${globalEnv.ASSET_PREFIX}/fonts/CalibreWeb-Semibold.woff') format('woff');
+            }
+            @font-face {
               font-family: 'Calibre';
               font-weight: 600;
               src: url('${globalEnv.ASSET_PREFIX}/fonts/CalibreWeb-Semibold.woff') format('woff');

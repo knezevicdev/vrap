@@ -1,6 +1,5 @@
 import 'mobx-react/batchingForReactDom';
 
-import { CssBaseline } from '@material-ui/core';
 import { ThemeProvider } from '@vroom-web/ui';
 import { configure as configureMobx } from 'mobx';
 import App from 'next/app';
@@ -25,7 +24,6 @@ class VroomApp extends App {
           <title>Vroom</title>
         </Head>
         <ThemeProvider>
-          <CssBaseline />
           <Component {...pageProps} />
         </ThemeProvider>
       </>

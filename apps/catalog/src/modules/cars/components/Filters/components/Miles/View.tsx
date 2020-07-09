@@ -14,8 +14,15 @@ const MilesContainer = styled('div')(({ theme }) => ({
   paddingBottom: theme.spacing(2),
 }));
 
-const Reset = styled(ListItem)(() => ({
+const Reset = styled(ListItem)(({ theme }) => ({
   flexDirection: 'column',
+  '&.MuiListItem-root.Mui-disabled >p': {
+    color: theme.palette.grey['A100'],
+  },
+}));
+
+const Value = styled(Typography)(() => ({
+  fontSize: '16px',
 }));
 
 interface Props {
@@ -48,9 +55,9 @@ const MilesView: React.FC<Props> = ({ viewModel }) => {
         onClick={handleResetClick}
         disabled={viewModel.isResetButtonDisabled()}
       >
-        <Typography fontWeight="fontWeightMedium" color="secondary.main">
+        <Value fontWeight="fontWeightMedium" color="primary.main">
           {viewModel.resetButtonLabel}
-        </Typography>
+        </Value>
       </Reset>
     </MilesContainer>
   );
