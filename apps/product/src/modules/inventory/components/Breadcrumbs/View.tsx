@@ -31,7 +31,7 @@ const BreadcrumbsContainer = styled('div')(({theme}) => ({
   alignItems: 'center',
   margin: theme.spacing(4, 'auto'),
   maxWidth: '1280px',
-  width: '1280px',
+  width: '100%',
   padding: theme.spacing(0, 3)
 }));
 
