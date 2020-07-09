@@ -30,12 +30,6 @@ const InventoryViewContainer = styled('div')(() => ({
     flexGrow: 1,
 }));
 
-const StickyTop = styled(Box)(({theme}) => ({
-    position: 'sticky',
-    top: 0,
-    zIndex: theme.zIndex.appBar,
-}));
-
 const StickyBottom = styled(Box)(({theme}) => ({
     position: 'sticky',
     bottom: 0,
@@ -69,13 +63,7 @@ const InventoryView: React.FC<Props> = (props) => {
                             <Breadcrumbs/>
                         )}
                         <Gallery/>
-                        {xsDown ? (
-                            <VehicleHeader/>
-                        ) : (
-                            <StickyTop>
-                                <VehicleHeader/>
-                            </StickyTop>
-                        )}
+                        <VehicleHeader/>
                         <CarDetails/>
                         <Features/>
                         <PeaceOfMind/>

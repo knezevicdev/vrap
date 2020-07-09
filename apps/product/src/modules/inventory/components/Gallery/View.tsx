@@ -26,7 +26,6 @@ const GalleryContainer = styled('div')(({theme}) => ({
     padding: theme.spacing(0, 3)
 }));
 
-
 const GalleryContainerContent = styled('div')(({theme}) => ({
     display: 'flex',
     flexDirection: 'column',
