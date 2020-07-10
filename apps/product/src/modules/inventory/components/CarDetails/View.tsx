@@ -86,6 +86,7 @@ const HistoryDescription = styled(Typography)(({ theme }) => ({
   fontSize: '20px',
   marginTop: theme.spacing(1),
   marginBottom: theme.spacing(1),
+  lineHeight: 'normal',
 }));
 
 const CarfaxLink = styled(Typography)(({ theme }) => ({
