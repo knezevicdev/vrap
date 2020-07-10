@@ -20,8 +20,7 @@ const globalEnv: GlobalEnv = process.browser
   ? window.__GLOBAL_ENV__
   : {
       ASSET_PREFIX: process.env.ASSET_PREFIX || '',
-      DATA_DOG_LOG_COLLECTION_TOKEN:
-        process.env.DATA_DOG_LOG_COLLECTION_TOKEN,
+      DATA_DOG_LOG_COLLECTION_TOKEN: process.env.DATA_DOG_LOG_COLLECTION_TOKEN,
       GEARBOX_PRIVATE_URL: process.env.GEARBOX_PRIVATE_URL,
       GEARBOX_PUBLIC_URL: process.env.GEARBOX_PUBLIC_URL,
       INVSEARCH_V3_URL: process.env.INVSEARCH_V3_URL,
