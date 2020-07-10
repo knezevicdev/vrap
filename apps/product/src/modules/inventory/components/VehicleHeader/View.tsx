@@ -8,6 +8,7 @@ import { observer } from 'mobx-react';
 import React from 'react';
 
 import StartPurchase from '../StartPurchase';
+import StatusBanner from '../StatusBanner';
 import ViewModel from './ViewModel';
 
 //#region Styling
@@ -33,6 +34,7 @@ const VehicleHeaderView: React.FC<Props> = (props) => {
     <Paper elevation={0} square>
       <Container>
         <Box py={{ xs: 2, md: 4 }}>
+          <StatusBanner />
           <Grid container spacing={2}>
             <Grid item xs={12} sm={6} spacing={1} container>
               <Grid item xs={12}>
