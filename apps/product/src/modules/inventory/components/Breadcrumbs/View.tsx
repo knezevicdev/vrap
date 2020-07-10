@@ -26,6 +26,11 @@ const ArrowIcon = styled(Arrow)(({ theme }) => ({
   margin: theme.spacing(0, 1),
 }));
 
+const CrumbContainer = styled('div')(() => ({
+  display: 'flex',
+  alignItems: 'center',
+}));
+
 const BreadcrumbsContainer = styled('div')(({ theme }) => ({
   display: 'flex',
   alignItems: 'center',
@@ -43,12 +48,10 @@ const BreadcrumbsView: React.FC<Props> = (props) => {
       {viewModel.crumbs().map((crumb, index, { length }) => {
         const isNotLast = length - 1 !== index;
         return (
-          <>
-            <Crumb onClick={crumb.onClick} key={crumb.key}>
-              {crumb.name}
-            </Crumb>
+          <CrumbContainer key={crumb.key}>
+            <Crumb onClick={crumb.onClick}>{crumb.name}</Crumb>
             {isNotLast && <ArrowIcon />}
-          </>
+          </CrumbContainer>
         );
       })}
     </BreadcrumbsContainer>

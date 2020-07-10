@@ -34,7 +34,7 @@ const GalleryContainerContent = styled('div')(({ theme }) => ({
   backgroundColor: theme.palette.background.paper,
 }));
 
-const ImageGalleryContainer = styled(Typography)(({ theme }) => ({
+const ImageGalleryContainer = styled('div')(({ theme }) => ({
   padding: theme.spacing(4),
 }));
 

@@ -1,8 +1,5 @@
-import Box from '@material-ui/core/Box';
-import Grid from '@material-ui/core/Grid';
-import { useTheme } from '@material-ui/core/styles';
-import useMediaQuery from '@material-ui/core/useMediaQuery';
-import { Container, Typography } from '@vroom-web/ui';
+import { styled } from '@material-ui/core/styles';
+import { Typography } from '@vroom-web/ui';
 import { observer } from 'mobx-react';
 import React from 'react';
 import reactStringReplace from 'react-string-replace';
@@ -15,11 +12,102 @@ interface Props {
   viewModel: ViewModel;
 }
 
+const CarDetailsContainer = styled('div')(({ theme }) => ({
+  display: 'flex',
+  margin: theme.spacing(4, 'auto'),
+  maxWidth: '1280px',
+  width: '100%',
+  padding: theme.spacing(0, 3),
+}));
+
+const CarDetailsContainerContent = styled('div')(({ theme }) => ({
+  display: 'flex',
+  flexDirection: 'column',
+  width: '100%',
+  border: `1px solid ${theme.palette.grey.A100}`,
+  backgroundColor: theme.palette.background.paper,
+  padding: theme.spacing(3),
+}));
+
+const DetailsData = styled('div')(({ theme }) => ({
+  display: 'flex',
+  marginTop: theme.spacing(3),
+}));
+
+const Basics = styled('div')(({ theme }) => ({
+  display: 'flex',
+  flexDirection: 'column',
+  marginRight: theme.spacing(2),
+}));
+
+const Performance = styled('div')(() => ({
+  display: 'flex',
+  flexDirection: 'column',
+}));
+
+const History = styled('div')(({ theme }) => ({
+  display: 'flex',
+  flexDirection: 'column',
+  marginLeft: theme.spacing(3),
+}));
+
+const DetailsRow = styled('div')(({ theme }) => ({
+  display: 'flex',
+  width: '100%',
+  borderBottom: `1px solid rgba(214, 215, 218, 0.6)`,
+  paddingTop: theme.spacing(2),
+  paddingBottom: theme.spacing(1),
+}));
+
+const Label = styled(Typography)(({ theme }) => ({
+  fontWeight: 600,
+  fontSize: '20px',
+  minWidth: '140px',
+  color: theme.palette.grey['700'],
+}));
+
+const Value = styled(Typography)(({ theme }) => ({
+  fontSize: '20px',
+  whiteSpace: 'nowrap',
+  letterSpacing: '0.75px',
+  marginBottom: theme.spacing(2),
+}));
+
+const HistoryContent = styled('div')(({ theme }) => ({
+  marginTop: theme.spacing(2),
+}));
+
+const HistoryTitle = styled(Typography)(() => ({
+  fontWeight: 600,
+  fontSize: '20px',
+}));
+
+const HistoryDescription = styled(Typography)(({ theme }) => ({
+  fontSize: '20px',
+  marginTop: theme.spacing(1),
+  marginBottom: theme.spacing(1),
+}));
+
+const CarfaxLink = styled(Typography)(({ theme }) => ({
+  fontSize: '20px',
+  marginBottom: theme.spacing(1),
+}));
+
+const RecallLink = styled(Typography)(({ theme }) => ({
+  fontSize: '20px',
+  marginTop: theme.spacing(2),
+}));
+
+const Title = styled(Typography)(({ theme }) => ({
+  fontWeight: 600,
+  fontSize: '14px',
+  letterSpacing: '1.75px',
+  color: theme.palette.grey['500'],
+  textTransform: 'uppercase',
+}));
+
 const CarDetailsView: React.FC<Props> = (props) => {
   const { viewModel } = props;
-
-  const theme = useTheme();
-  const xsDown = useMediaQuery(theme.breakpoints.down('xs'));
 
   const history = viewModel.history();
   const basics = viewModel.basics();
@@ -27,185 +115,86 @@ const CarDetailsView: React.FC<Props> = (props) => {
   const recalls = viewModel.recalls();
 
   return (
-    <Container>
-      <Box mb={{ xs: 2, sm: 4 }}>
-        <Grid container>
-          <Grid item xs={12}>
-            <Typography variant="h2" fontWeight="fontWeightMedium">
-              {viewModel.title}
-            </Typography>
-          </Grid>
-        </Grid>
-      </Box>
-      <Grid container justify="space-around">
-        <Grid item xs={12} sm={4}>
-          <Box pr={{ xs: 0, sm: 6 }} pb={{ xs: 2, sm: 0 }}>
-            <Grid container spacing={xsDown ? 1 : 2}>
-              <Grid item xs={12}>
-                <Typography
-                  variant="body1"
-                  fontWeight="fontWeightMedium"
-                  color="grey.700"
-                >
-                  {history.title}
-                </Typography>
-              </Grid>
-              {history.isWarrantyAvailable && (
-                <Grid item xs={12}>
-                  <Box mb={1}>
-                    <Typography variant="body1" fontWeight="fontWeightMedium">
-                      {history.manufacturersWarranty}
-                    </Typography>
-                  </Box>
-                  <Typography
-                    variant="body1"
-                    fontWeight="fontWeightLight"
-                    lineHeight="24px"
-                  >
-                    {history.residualText}
-                  </Typography>
-                </Grid>
-              )}
-              <Grid item xs={12}>
-                <Box mb={1}>
-                  <Typography variant="body1" fontWeight="fontWeightMedium">
-                    {history.cleanHistory}
-                  </Typography>
-                </Box>
-                <Box mb={1}>
-                  <Typography
-                    variant="body1"
-                    fontWeight="fontWeightLight"
-                    lineHeight="24px"
-                  >
-                    {history.cleanHistoryDescription}
-                  </Typography>
-                </Box>
-                <ExternalLink href={history.carfax.href} target="_blank">
-                  <Typography
-                    variant="body1"
-                    fontWeight="fontWeightMedium"
-                    color="primary.main"
-                  >
-                    {history.carfax.text}
-                  </Typography>
-                </ExternalLink>
-              </Grid>
-              <Grid item xs={12}>
-                <Typography variant="body1" fontWeight="fontWeightMedium">
-                  {history.ownerCount}
-                </Typography>
-              </Grid>
-              {!history.isWarrantyAvailable && (
-                <Grid item xs={12}>
-                  <Box mb={1}>
-                    <Typography variant="body1" fontWeight="fontWeightMedium">
-                      {history.vroomProtect}
-                    </Typography>
-                  </Box>
-                  <Typography
-                    variant="body1"
-                    fontWeight="fontWeightLight"
-                    display="inline"
-                    lineHeight="24px"
-                  >
-                    {reactStringReplace(
-                      history.vroomProtectDescription.text,
-                      /<link>(.*)<\/link>/,
-                      (match, index) => (
-                        <ExternalLink
-                          key={index}
-                          href={history.vroomProtectDescription.href}
-                          target="_blank"
-                        >
-                          <Typography
-                            variant="body1"
-                            fontWeight="fontWeightMedium"
-                            color="primary.main"
-                            display="inline"
-                            component="span"
-                          >
-                            {match}
-                          </Typography>
-                        </ExternalLink>
-                      )
-                    )}
-                  </Typography>
-                </Grid>
-              )}
-            </Grid>
-          </Box>
-        </Grid>
-        <Grid item xs={12} sm={4}>
-          <Box pr={{ xs: 0, sm: 6 }} pb={{ xs: 2, sm: 0 }}>
-            <Grid container>
-              <Grid item xs={12}>
-                <Box pb={{ xs: 1, sm: 2 }}>
-                  <Typography
-                    variant="body1"
-                    fontWeight="fontWeightMedium"
-                    color="grey.700"
-                  >
-                    {basics.title}
-                  </Typography>
-                </Box>
-              </Grid>
-              <Grid item xs={12}>
-                {basics.items.map((text) => {
-                  return (
-                    <Box mb={2} key={text}>
-                      <Typography variant="body1" fontWeight="fontWeightLight">
-                        {text}
-                      </Typography>
-                    </Box>
-                  );
-                })}
-              </Grid>
-            </Grid>
-          </Box>
-        </Grid>
-        <Grid item xs={12} sm={4}>
-          <Box pb={{ xs: 2, sm: 0 }}>
-            <Grid container>
-              <Grid item xs={12}>
-                <Box pb={{ xs: 1, sm: 2 }}>
-                  <Typography
-                    variant="body1"
-                    fontWeight="fontWeightMedium"
-                    color="grey.700"
-                  >
-                    {performance.title}
-                  </Typography>
-                </Box>
-              </Grid>
-              <Grid item xs={12}>
-                {performance.items.map((text) => {
-                  return (
-                    <Box mb={2} key={text}>
-                      <Typography variant="body1" fontWeight="fontWeightLight">
-                        {text}
-                      </Typography>
-                    </Box>
-                  );
-                })}
-              </Grid>
-              <Grid item xs={12}>
-                <ExternalLink href={recalls.href} target="_blank">
-                  <Typography
-                    variant="body1"
-                    fontWeight="fontWeightMedium"
-                    color="primary.main"
-                    display="inline"
-                  >
-                    {recalls.text}
-                  </Typography>
-                </ExternalLink>
-              </Grid>
-            </Grid>
-          </Box>
-        </Grid>
-      </Grid>
-    </Container>
+    <CarDetailsContainer>
+      <CarDetailsContainerContent>
+        <Typography variant="h2" fontWeight="fontWeightMedium">
+          {viewModel.title}
+        </Typography>
+
+        <DetailsData>
+          <Basics>
+            <Title>{basics.title}</Title>
+            {basics.items.map((item) => {
+              return (
+                <DetailsRow key={item.value}>
+                  <Label>{item.label}</Label>
+                  <Value>{item.value}</Value>
+                </DetailsRow>
+              );
+            })}
+          </Basics>
+          <Performance>
+            <Title>{performance.title}</Title>
+
+            {performance.items.map((item) => {
+              return (
+                <DetailsRow key={item.value}>
+                  <Label>{item.label}</Label>
+                  <Value>{item.value}</Value>
+                </DetailsRow>
+              );
+            })}
+
+            <ExternalLink href={recalls.href} target="_blank">
+              <RecallLink>{recalls.text}</RecallLink>
+            </ExternalLink>
+          </Performance>
+          <History>
+            <Title>{history.title}</Title>
+            {history.isWarrantyAvailable && (
+              <HistoryContent>
+                <HistoryTitle>{history.manufacturersWarranty}</HistoryTitle>
+                <HistoryDescription>{history.residualText}</HistoryDescription>
+              </HistoryContent>
+            )}
+
+            <HistoryContent>
+              <HistoryTitle>{history.cleanHistory}</HistoryTitle>
+              <HistoryDescription>
+                {history.cleanHistoryDescription}
+              </HistoryDescription>
+              <ExternalLink href={history.carfax.href} target="_blank">
+                <CarfaxLink>{history.carfax.text}</CarfaxLink>
+              </ExternalLink>
+            </HistoryContent>
+
+            <HistoryContent>
+              <HistoryTitle>{history.ownerCount}</HistoryTitle>
+            </HistoryContent>
+            {!history.isWarrantyAvailable && (
+              <HistoryContent>
+                <HistoryTitle>{history.vroomProtect}</HistoryTitle>
+                <HistoryDescription>
+                  {reactStringReplace(
+                    history.vroomProtectDescription.text,
+                    /<link>(.*)<\/link>/,
+                    (match, index) => (
+                      <ExternalLink
+                        key={index}
+                        href={history.vroomProtectDescription.href}
+                        target="_blank"
+                      >
+                        {match}
+                      </ExternalLink>
+                    )
+                  )}
+                </HistoryDescription>
+              </HistoryContent>
+            )}
+          </History>
+        </DetailsData>
+      </CarDetailsContainerContent>
+    </CarDetailsContainer>
   );
 };
 

@@ -29,9 +29,7 @@ class SimilarVehiclesViewModel {
   }
 
   error(): boolean {
-    return (
-      this.store.similarStatus === Status.ERROR || this.store.similar.length < 4
-    );
+    return this.store.similarStatus === Status.ERROR;
   }
 
   getNumCards(): number {
