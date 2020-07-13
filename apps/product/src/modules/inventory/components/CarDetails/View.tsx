@@ -64,13 +64,13 @@ const Label = styled(Typography)(({ theme }) => ({
   fontSize: '20px',
   minWidth: '140px',
   color: theme.palette.grey['700'],
+  marginBottom: theme.spacing(2),
 }));
 
-const Value = styled(Typography)(({ theme }) => ({
+const Value = styled(Typography)(() => ({
   fontSize: '20px',
   whiteSpace: 'nowrap',
   letterSpacing: '0.75px',
-  marginBottom: theme.spacing(2),
 }));
 
 const HistoryContent = styled('div')(({ theme }) => ({

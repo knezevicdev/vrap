@@ -35,6 +35,8 @@ const Features = styled('div')(({ theme }) => ({
 const Feature = styled(Typography)(({ theme }) => ({
   fontSize: '20px',
   minWidth: '25%',
+  maxWidth: '25%',
+  lineHeight: 'normal',
   [theme.breakpoints.only('xs')]: {
     minWidth: '100%',
   },
