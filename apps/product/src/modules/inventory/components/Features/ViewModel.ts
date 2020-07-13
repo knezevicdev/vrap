@@ -28,8 +28,8 @@ class FeaturesViewModel {
 
   getButtonLabel = (): string => {
     return this.featuresStore.limited
-      ? 'SHOW LESS FEATURES'
-      : 'SHOW ALL FEATURES';
+      ? 'SHOW ALL FEATURES'
+      : 'SHOW LESS FEATURES';
   };
 
   showButton = (): boolean => {

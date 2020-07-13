@@ -74,7 +74,7 @@ const Label = styled(Typography)(({ theme }) => ({
   marginBottom: theme.spacing(2),
 }));
 
-const Value = styled(Typography)(({theme}) => ({
+const Value = styled(Typography)(() => ({
   fontSize: '20px',
   whiteSpace: 'nowrap',
   letterSpacing: '0.75px',
@@ -135,7 +135,7 @@ const CarDetailsView: React.FC<Props> = (props) => {
             <Title>{basics.title}</Title>
             {basics.items.map((item) => {
               return (
-                <DetailsRow key={item.value}>
+                <DetailsRow key={`${item.label}-${item.value}`}>
                   <Label>{item.label}</Label>
                   <Value>{item.value}</Value>
                 </DetailsRow>
@@ -147,7 +147,7 @@ const CarDetailsView: React.FC<Props> = (props) => {
 
             {performance.items.map((item) => {
               return (
-                <DetailsRow key={item.value}>
+                <DetailsRow key={`${item.label}-${item.value}`}>
                   <Label>{item.label}</Label>
                   <Value>{item.value}</Value>
                 </DetailsRow>
