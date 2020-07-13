@@ -10,7 +10,7 @@ class SimilarVehiclesViewModel {
   private store: InventoryStore;
   readonly title: string = 'Similar Vehicles';
   readonly viewAllCars: string = 'View All Cars';
-  readonly viewAll: string = 'View All';
+  readonly viewAll: string = 'VIEW ALL';
 
   constructor(inventoryStore: InventoryStore) {
     this.store = inventoryStore;
@@ -32,12 +32,8 @@ class SimilarVehiclesViewModel {
     return this.store.similarStatus === Status.ERROR;
   }
 
-  getNumCards(): number {
-    return this.store.similar.length;
-  }
-
-  get(index: number): Car {
-    return this.store.similar[index]._source;
+  getCars = (): Car[] => {
+    return this.store.similar.map(car => car._source);
   }
 
   handleClick(event: React.MouseEvent<HTMLButtonElement>): void {

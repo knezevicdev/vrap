@@ -1,80 +1,109 @@
-import Box from '@material-ui/core/Box';
-import Grid from '@material-ui/core/Grid';
-import { Button, Container, Typography } from '@vroom-web/ui';
-import { observer } from 'mobx-react';
+import {Button, Typography} from '@vroom-web/ui';
+import {observer} from 'mobx-react';
 import React from 'react';
 
 import CarCard from './components/CarCard';
 import ViewModel from './ViewModel';
 
 import ExternalLink from 'src/ui/ExternalLink';
+import {styled} from "@material-ui/core/styles";
+
+
+const SimilaVehiclesContainer = styled('div')(({theme}) => ({
+    display: 'flex',
+    margin: theme.spacing(0, 'auto', 4, 'auto'),
+    width: '100%',
+    padding: theme.spacing(0, 3),
+}));
+
+const SimilaVehiclesContainerContent = styled('div')(({theme}) => ({
+    display: 'flex',
+    flexDirection: 'column',
+    width: '100%',
+    maxWidth: '1232px',
+    margin: '0 auto',
+    padding: theme.spacing(5, 3),
+}));
+
+const Content = styled('div')(({theme}) => ({
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: theme.spacing(3)
+}));
+
+const Cars = styled('div')(({theme}) => ({
+    display: 'flex',
+    width: '100%',
+    justifyContent: 'space-between',
+    [theme.breakpoints.only('sm')]: {
+        '& #car:nth-child(n+4)': {
+            display: 'none'
+        },
+        '& #car:nth-child(n+3)': {
+            marginRight: 0
+        },
+    },
+    [theme.breakpoints.only('xs')]: {
+        '& #car:nth-child(n+3)': {
+            display: 'none'
+        },
+        flexDirection: 'column',
+        margin: theme.spacing(0),
+    },
+    '& #car:last-child': {
+        marginRight: 0
+    },
+}));
+
+const ViewAll = styled(Typography)(({theme}) => ({
+    fontWeight: 600,
+    fontSize: '16px',
+    letterSpacing: '1.75px',
+    color: theme.palette.primary.main,
+    cursor: 'pointer',
+}));
 
 interface Props {
-  viewModel: ViewModel;
+    viewModel: ViewModel;
 }
 
-const SimilarVehiclesView: React.FC<Props> = (props) => {
-  const { viewModel } = props;
-
-  if (viewModel.error()) {
+const SimilarVehiclesView: React.FC<Props> = ({viewModel}) => {
     return (
-      <Grid container spacing={3} justify="center">
-        <Grid item xs={12} md={4}>
-          <Button
-            variant="contained"
-            fullWidth
-            color="primary"
-            onClick={viewModel.handleClick}
-          >
-            <Typography variant="body1" fontWeight="fontWeightMedium">
-              {viewModel.viewAllCars}
-            </Typography>
-          </Button>
-        </Grid>
-      </Grid>
+        <SimilaVehiclesContainer>
+            <SimilaVehiclesContainerContent>
+                {viewModel.error() ?
+                    <Button
+                        variant="contained"
+                        color="primary"
+                        onClick={viewModel.handleClick}
+                    >
+                        <Typography variant="body1" fontWeight={600}>
+                            {viewModel.viewAllCars}
+                        </Typography>
+                    </Button>
+                    : (
+                        <>
+                            <Content>
+                                <Typography
+                                    variant="h2"
+                                    fontWeight="fontWeightMedium"
+                                    display="inline"
+                                >
+                                    {viewModel.title}
+                                </Typography>
+                                <ExternalLink href="/cars">
+                                    <ViewAll>{viewModel.viewAll}</ViewAll>
+                                </ExternalLink>
+                            </Content>
+                            <Cars>
+                                {viewModel.getCars().map(car => <CarCard car={car} key={car.vin}/>)}
+                            </Cars>
+                        </>
+                    )}
+            </SimilaVehiclesContainerContent>
+        </SimilaVehiclesContainer>
     );
-  }
-
-  const cards = [];
-  for (let i = 0; i < viewModel.getNumCards(); i++) {
-    const car = viewModel.get(i);
-    cards.push(<CarCard key={car.vin} car={car} />);
-  }
-
-  return (
-    <Container>
-      <Box mb={{ xs: 2, md: 4 }}>
-        <Grid container alignItems="center">
-          <Grid item xs={6}>
-            <Typography
-              variant="h2"
-              fontWeight="fontWeightMedium"
-              display="inline"
-            >
-              {viewModel.title}
-            </Typography>
-          </Grid>
-          <Grid item xs={6}>
-            <Box textAlign="right">
-              <ExternalLink href="/cars">
-                <Typography
-                  variant="body1"
-                  fontWeight="fontWeightMedium"
-                  display="inline"
-                  color="primary.main"
-                >
-                  {viewModel.viewAll}
-                </Typography>
-              </ExternalLink>
-            </Box>
-          </Grid>
-        </Grid>
-      </Box>
-      <Grid container spacing={2} justify="space-evenly">
-        {cards}
-      </Grid>
-    </Container>
-  );
 };
 
 export default observer(SimilarVehiclesView);

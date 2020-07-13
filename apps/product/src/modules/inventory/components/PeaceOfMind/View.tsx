@@ -21,7 +21,7 @@ const PeaceOfMindContainerContent = styled('div')(({theme}) => ({
     width: '100%',
     maxWidth: '1232px',
     margin: '0 auto',
-    padding: theme.spacing(3),
+    padding: theme.spacing(5, 3),
 }));
 
 const Steps = styled('div')(({theme}) => ({

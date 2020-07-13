@@ -67,9 +67,6 @@ const InventoryView: React.FC<Props> = (props) => {
           </>
         )}
         <SimilarVehicles />
-        <Typography fontWeight="fontWeightLight">
-          {viewModel.disclaimer}
-        </Typography>
       </InventoryViewContainer>
       <StandardFooter />
       {xsDown && viewModel.ready() && (
