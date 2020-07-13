@@ -11,10 +11,10 @@ class MilesViewModel {
   private readonly carsStore: CarsStore;
   private readonly numberFormatter: Intl.NumberFormat;
 
-  readonly range: MaxAndMin = { min: 0, max: 200000 };
+  readonly range: MaxAndMin = { min: 100, max: 200000 };
   readonly errorLabel: string;
   readonly resetButtonLabel: string = 'Reset';
-  readonly step = 1000;
+  readonly step = 100;
 
   readonly maxInputPlaceholder: string = 'No Maximum';
   readonly maxOnlyInputLabel: string = 'Mileage Maximum';
@@ -25,9 +25,9 @@ class MilesViewModel {
       minimumFractionDigits: 0,
       maximumFractionDigits: 0,
     });
-    this.errorLabel = `Please enter a mileage less than or equal to ${this.numberFormatter.format(
-      this.range.max
-    )}`;
+    this.errorLabel = `Please enter a mileage between ${this.numberFormatter.format(
+      this.range.min
+    )} and ${this.numberFormatter.format(this.range.max)}`;
   }
 
   getMaxAndMinInputsValue = (): MaxAndMin | undefined => {
