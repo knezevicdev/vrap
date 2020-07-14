@@ -32,7 +32,7 @@ jobs:
         name: Danger
   homepage_build:
     docker:
-    - image: vroom/mlp:3.0.1
+    - image: vroom/mlp:3.0.2
     steps:
     - checkout
     - setup_remote_docker:
@@ -41,7 +41,7 @@ jobs:
         command: build -a vroom-web/apps/homepage/docker
   homepage_deploy:
     docker:
-    - image: vroom/mlp:3.0.1
+    - image: vroom/mlp:3.0.2
     parameters:
       env:
         type: string
@@ -51,25 +51,10 @@ jobs:
         version: 18.09.3
     - run:
         command: |-
-          login
           deploy -a vroom-web/apps/homepage/docker -n << parameters.env >>
-  homepage_prod:
-    docker:
-    - image: vroom/mlp:2.0
-    parameters:
-      env:
-        type: string
-    steps:
-    - checkout
-    - setup_remote_docker:
-        version: 18.09.3
-    - run:
-        command: |-
-          build ./apps/homepage/docker
-          deploy << parameters.env >> ./apps/homepage/docker
 
-          # sleep 240
-          # if [ -z "${FASTLY_PURGE_KEY}" ]; then echo "FASTLY_PURGE_KEY not set"; return 1; elif [ -z "${FASTLY_SERVICE_ID}" ]; then echo "FASTLY_SERVICE_ID not set"; return 1; else echo "Purging Fastly for service ${FASTLY_SERVICE_ID}"; curl -X POST -H "Fastly-Key: ${FASTLY_PURGE_KEY}" -H "Accept: application/json" https://api.fastly.com/service/${FASTLY_SERVICE_ID}/purge_all ; fi
+          sleep 240
+          if [ -z "${FASTLY_PURGE_KEY}" ]; then echo "FASTLY_PURGE_KEY not set"; return 1; elif [ -z "${FASTLY_SERVICE_ID}" ]; then echo "FASTLY_SERVICE_ID not set"; return 1; else echo "Purging Fastly for service ${FASTLY_SERVICE_ID}"; curl -X POST -H "Fastly-Key: ${FASTLY_PURGE_KEY}" -H "Accept: application/json" https://api.fastly.com/service/${FASTLY_SERVICE_ID}/purge_all ; fi
   lint:
     docker:
     - image: circleci/node:erbium
@@ -82,7 +67,7 @@ jobs:
         name: Lint
   product_build:
     docker:
-    - image: vroom/mlp:3.0.1
+    - image: vroom/mlp:3.0.2
     steps:
     - checkout
     - setup_remote_docker:
@@ -91,7 +76,7 @@ jobs:
         command: build -a vroom-web/apps/product/docker
   product_deploy:
     docker:
-    - image: vroom/mlp:3.0.1
+    - image: vroom/mlp:3.0.2
     parameters:
       env:
         type: string
@@ -100,9 +85,7 @@ jobs:
     - setup_remote_docker:
         version: 18.09.3
     - run:
-        command: |-
-          login
-          deploy -a vroom-web/apps/product/docker -n << parameters.env >>
+        command: deploy -a vroom-web/apps/product/docker -n << parameters.env >>
   sonarcloud:
     docker:
     - image: circleci/node:erbium-browsers
@@ -251,8 +234,8 @@ workflows:
         - homepage_deploy_qa
         - homepage_deploy_uat
         type: approval
-    - homepage_prod:
-        context: aws-prod
+    - homepage_deploy:
+        context: aws-non-prod
         env: prod
         filters:
           branches:
@@ -304,5 +287,28 @@ workflows:
         name: product_deploy_<< matrix.env >>
         requires:
         - hold_<< matrix.env >>
+    - hold:
+        filters:
+          branches:
+            ignore: /.*/
+          tags:
+            only: /^product-v.*/
+        name: hold_prod
+        requires:
+        - product_deploy_dev
+        - product_deploy_qa
+        - product_deploy_uat
+        type: approval
+    - product_deploy:
+        context: aws-non-prod
+        env: prod
+        filters:
+          branches:
+            ignore: /.*/
+          tags:
+            only: /^product-v.*/
+        name: product_deploy_prod
+        requires:
+        - hold_prod
   version: 2
 
