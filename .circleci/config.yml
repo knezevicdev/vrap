@@ -183,7 +183,7 @@ workflows:
         - catalog_deploy_uat
         type: approval
     - catalog_deploy:
-        context: aws-prod
+        context: aws-non-prod
         env: prod
         filters:
           branches:

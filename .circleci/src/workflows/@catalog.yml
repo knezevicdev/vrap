@@ -48,7 +48,7 @@ catalog:
           ignore: /.*/
   - catalog_deploy:
       name: catalog_deploy_prod
-      context: aws-prod
+      context: aws-non-prod
       env: "prod"
       requires:
         - hold_prod
