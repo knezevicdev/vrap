@@ -43,6 +43,7 @@ const ConditionEndView: React.FC<Props> = ({ viewModel }) => {
         <Typography
           component="div"
           variant="body1"
+          lineHeight="normal"
           fontWeight="fontWeightLight"
         >
           {viewModel.bodyText}

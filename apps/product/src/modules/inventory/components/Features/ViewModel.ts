@@ -36,7 +36,7 @@ class FeaturesViewModel {
     return this.features.length > this.limitedLength;
   };
 
-  onClick = () => {
+  onClick = (): void => {
     this.featuresStore.toggleLimited();
   };
 }

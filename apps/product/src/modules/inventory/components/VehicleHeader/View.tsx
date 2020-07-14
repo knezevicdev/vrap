@@ -18,13 +18,13 @@ const VehicleHeaderContainer = styled('div')(({ theme }) => ({
 const VehicleHeaderContainerContent = styled('div')(({ theme }) => ({
   display: 'flex',
   width: '100%',
-  height: '155px',
+  height: 'auto',
   alignItems: 'center',
   borderLeft: `1px solid ${theme.palette.grey.A100}`,
   borderBottom: `1px solid ${theme.palette.grey.A100}`,
   borderRight: `1px solid ${theme.palette.grey.A100}`,
   backgroundColor: theme.palette.background.paper,
-  padding: theme.spacing(0, 3),
+  padding: theme.spacing(4, 3),
 }));
 
 const LeftContent = styled('div')(() => ({
@@ -77,7 +77,7 @@ const VehicleHeaderView: React.FC<Props> = (props) => {
         </LeftContent>
         <RightContent>
           <Price variant="body1">{summary.price}</Price>
-          <Divider />
+          {!xsDown && <Divider />}
           {!xsDown && <StartPurchase />}
         </RightContent>
       </VehicleHeaderContainerContent>
