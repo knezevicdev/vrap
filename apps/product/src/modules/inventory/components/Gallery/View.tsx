@@ -106,11 +106,11 @@ const GalleryView: React.FC<Props> = (props) => {
           </Box>
           {viewModel.showBanner() && (
             <Paper elevation={0} square>
-              <Container>
+              <Box pt={2}>
                 <Box pb={2}>
                   <Typography
                     variant="body1"
-                    fontWeight="fontWeightMedium"
+                    fontWeight={600}
                     textAlign="center"
                   >
                     {viewModel.photosComing}
@@ -123,7 +123,7 @@ const GalleryView: React.FC<Props> = (props) => {
                 >
                   {viewModel.stockPhotoBody}
                 </Typography>
-              </Container>
+              </Box>
             </Paper>
           )}
         </ImageGalleryContainer>
