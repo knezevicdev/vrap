@@ -10,9 +10,12 @@ interface Props {
 }
 
 const CustomButton = styled(Button)(({ theme }) => ({
-  '&.MuiButton-contained.Mui-disabled': {
-    backgroundColor: theme.palette.grey['400'],
-    color: theme.palette.text.primary,
+    width: '100%',
+
+    '&.MuiButton-contained.Mui-disabled': {
+    backgroundColor: '#f5f5f5',
+    color: theme.palette.grey['A100'],
+    border: `1px solid ${theme.palette.grey['A100']}`,
   },
 }));
 

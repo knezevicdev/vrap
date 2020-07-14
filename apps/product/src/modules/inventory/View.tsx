@@ -1,4 +1,3 @@
-import Box from '@material-ui/core/Box';
 import { styled, useTheme } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { StandardFooter } from '@vroom-web/footer-components';
@@ -28,10 +27,13 @@ const InventoryViewContainer = styled('div')(() => ({
   flexGrow: 1,
 }));
 
-const StickyBottom = styled(Box)(({ theme }) => ({
+const StickyBottom = styled('div')(({ theme }) => ({
   position: 'sticky',
   bottom: 0,
   zIndex: theme.zIndex.appBar,
+  padding: theme.spacing(3),
+  background: theme.palette.background.paper,
+  borderTop: `solid 1px ${theme.palette.grey.A100}`
 }));
 //#endregion
 
