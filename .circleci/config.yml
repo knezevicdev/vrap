@@ -1,7 +1,7 @@
 jobs:
   catalog_build:
     docker:
-    - image: vroom/mlp:3.0.1
+    - image: vroom/mlp:3.0.2
     steps:
     - checkout
     - setup_remote_docker:
@@ -10,7 +10,7 @@ jobs:
         command: build -a vroom-web/apps/catalog/docker
   catalog_deploy:
     docker:
-    - image: vroom/mlp:3.0.1
+    - image: vroom/mlp:3.0.2
     parameters:
       env:
         type: string
@@ -172,6 +172,29 @@ workflows:
         name: catalog_deploy_<< matrix.env >>
         requires:
         - hold_<< matrix.env >>
+    - hold:
+        filters:
+          branches:
+            ignore: /.*/
+          tags:
+            only: /^catalog-v.*/
+        name: hold_prod
+        requires:
+        - catalog_deploy_dev
+        - catalog_deploy_qa
+        - catalog_deploy_uat
+        type: approval
+    - catalog_deploy:
+        context: aws-prod
+        env: prod
+        filters:
+          branches:
+            ignore: /.*/
+          tags:
+            only: /^catalog-v.*/
+        name: catalog_deploy_prod
+        requires:
+        - hold_prod
   homepage:
     jobs:
     - sonarcloud:
