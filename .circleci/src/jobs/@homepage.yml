@@ -21,7 +21,7 @@ sonarcloud:
     - sonarcloud/scan
 homepage_build:
   docker:
-  - image: vroom/mlp:3.0.1
+  - image: vroom/mlp:3.0.2
   steps:
     - checkout
     - setup_remote_docker:
@@ -31,7 +31,7 @@ homepage_build:
           build -a vroom-web/apps/homepage/docker
 homepage_deploy:
   docker:
-  - image: vroom/mlp:3.0.1
+  - image: vroom/mlp:3.0.2
   parameters:
     env:
       type: string
@@ -41,24 +41,7 @@ homepage_deploy:
         version: 18.09.3
     - run:
         command: |-
-          login
           deploy -a vroom-web/apps/homepage/docker -n << parameters.env >>
-# FIT-541
-# This is a stopgap until we can figure out how to deploy to prod using MLP 3.
-homepage_prod:
-  docker:
-  - image: vroom/mlp:2.0
-  parameters:
-    env:
-      type: string
-  steps:
-    - checkout
-    - setup_remote_docker:
-        version: 18.09.3
-    - run:
-        command: |-
-          build ./apps/homepage/docker
-          deploy << parameters.env >> ./apps/homepage/docker
 
-          # sleep 240
-          # if [ -z "${FASTLY_PURGE_KEY}" ]; then echo "FASTLY_PURGE_KEY not set"; return 1; elif [ -z "${FASTLY_SERVICE_ID}" ]; then echo "FASTLY_SERVICE_ID not set"; return 1; else echo "Purging Fastly for service ${FASTLY_SERVICE_ID}"; curl -X POST -H "Fastly-Key: ${FASTLY_PURGE_KEY}" -H "Accept: application/json" https://api.fastly.com/service/${FASTLY_SERVICE_ID}/purge_all ; fi
+          sleep 240
+          if [ -z "${FASTLY_PURGE_KEY}" ]; then echo "FASTLY_PURGE_KEY not set"; return 1; elif [ -z "${FASTLY_SERVICE_ID}" ]; then echo "FASTLY_SERVICE_ID not set"; return 1; else echo "Purging Fastly for service ${FASTLY_SERVICE_ID}"; curl -X POST -H "Fastly-Key: ${FASTLY_PURGE_KEY}" -H "Accept: application/json" https://api.fastly.com/service/${FASTLY_SERVICE_ID}/purge_all ; fi

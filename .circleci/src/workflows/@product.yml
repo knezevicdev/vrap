@@ -34,27 +34,26 @@ product:
           only: /^product-v.*/
         branches:
           ignore: /.*/
-  # - hold:
-  #     name: hold_prod
-  #     type: approval
-  #     requires:
-  #       - product_deploy_dev
-  #       - product_deploy_qa
-  #       - product_deploy_uat
-  #     filters:
-  #       tags:
-  #         only: /^product-v.*/
-  #       branches:
-  #         ignore: /.*/
-  # - product_deploy:
-  #     name: product_deploy_prod
-  #     context: aws-prod
-  #     env: "prod"
-  #     s3: s3://static-assets.p.vroom.systems
-  #     requires:
-  #       - hold_prod
-  #     filters:
-  #       tags:
-  #         only: /^product-v.*/
-  #       branches:
-  #         ignore: /.*/
+  - hold:
+      name: hold_prod
+      type: approval
+      requires:
+        - product_deploy_dev
+        - product_deploy_qa
+        - product_deploy_uat
+      filters:
+        tags:
+          only: /^product-v.*/
+        branches:
+          ignore: /.*/
+  - product_deploy:
+      name: product_deploy_prod
+      context: aws-non-prod
+      env: "prod"
+      requires:
+        - hold_prod
+      filters:
+        tags:
+          only: /^product-v.*/
+        branches:
+          ignore: /.*/

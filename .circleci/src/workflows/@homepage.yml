@@ -50,23 +50,9 @@ homepage:
           only: /^homepage-v.*/
         branches:
           ignore: /.*/
-  # - homepage_deploy:
-  #     name: homepage_deploy_prod
-  #     context: aws-prod
-  #     env: "prod"
-  #     s3: s3://static-assets.p.vroom.systems/homepage
-  #     requires:
-  #       - hold_prod
-  #     filters:
-  #       tags:
-  #         only: /^homepage-v.*/
-  #       branches:
-  #         ignore: /.*/
-  # FIT-541
-  # This is a stopgap until we can figure out how to deploy to prod using MLP 3.
-  - homepage_prod:
+  - homepage_deploy:
       name: homepage_deploy_prod
-      context: aws-prod
+      context: aws-non-prod
       env: "prod"
       requires:
         - hold_prod
