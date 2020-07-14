@@ -1,6 +1,20 @@
 /* eslint-disable @typescript-eslint/camelcase */
 import * as yup from 'yup';
 
+export enum SoldStatusInt {
+  FOR_SALE = 0,
+  SALE_PENDING = 1,
+  SOLD = 2,
+  DELIVERED = 3,
+}
+
+export enum SoldStatus {
+  FOR_SALE = 'for_sale',
+  SALE_PENDING = 'sales_pending',
+  SOLD = 'sold',
+  DELIVERED = 'delivered',
+}
+
 export interface VehicleStatus {
   key: string;
   display: string;

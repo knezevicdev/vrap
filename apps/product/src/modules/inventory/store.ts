@@ -1,8 +1,5 @@
-import {
-  Hit,
-  InvSearchNetworker,
-  SoldStatus,
-} from '@vroom-web/inv-search-networking';
+import { Hit, InvSearchNetworker } from '@vroom-web/inv-search-networking';
+import { InvServiceNetworker } from '@vroom-web/inv-service-networking';
 import { observable } from 'mobx';
 import { createContext } from 'react';
 
@@ -14,6 +11,7 @@ export interface InventoryStoreState {
   similar: Hit[];
   vehicleStatus: Status;
   vehicle: Hit;
+  isAvailable: boolean;
 }
 
 export async function getInitialInventoryStoreState(
@@ -24,16 +22,19 @@ export async function getInitialInventoryStoreState(
     similar: [] as Hit[],
     vehicleStatus: Status.INITIAL,
     vehicle: {} as Hit,
+    isAvailable: false,
   };
 
   const invSearchNetworker = new InvSearchNetworker(
     globalEnv.INVSEARCH_V3_URL || ''
   );
+  const invServiceNetworker = new InvServiceNetworker(
+    globalEnv.INV_SERVICE_V2_URL || ''
+  );
 
   try {
     const response = await invSearchNetworker.postInventory({
       fulldetails: true,
-      'sold-status': SoldStatus.FOR_SALE,
       source: `${globalEnv.NAME}-${globalEnv.VERSION}`,
       vin: [vin],
     });
@@ -53,15 +54,22 @@ export async function getInitialInventoryStoreState(
   }
 
   try {
-    const similarResponse = await invSearchNetworker.getInventorySimilar({
+    const response = await invSearchNetworker.getInventorySimilar({
       vin,
       min: 4,
     });
 
-    initState.similar = similarResponse.data.hits.hits;
+    initState.similar = response.data.hits.hits;
     initState.similarStatus = Status.SUCCESS;
   } catch (err) {
     initState.similarStatus = Status.ERROR;
+  }
+
+  try {
+    const response = await invServiceNetworker.getInventoryAvailability(vin);
+    initState.isAvailable = response;
+  } catch {
+    initState.isAvailable = false;
   }
 
   return initState;
@@ -72,6 +80,7 @@ export class InventoryStore {
   @observable similar: Hit[] = [] as Hit[];
   @observable vehicleStatus: Status = Status.FETCHING;
   @observable vehicle: Hit = {} as Hit;
+  @observable isAvailable = false;
 
   constructor(initialState?: InventoryStoreState) {
     if (initialState) {
@@ -79,6 +88,7 @@ export class InventoryStore {
       this.vehicle = initialState.vehicle;
       this.similarStatus = initialState.similarStatus;
       this.similar = initialState.similar;
+      this.isAvailable = initialState.isAvailable;
     }
   }
 }

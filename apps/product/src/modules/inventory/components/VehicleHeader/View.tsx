@@ -5,6 +5,7 @@ import { observer } from 'mobx-react';
 import React from 'react';
 
 import StartPurchase from '../StartPurchase';
+import StatusBanner from '../StatusBanner';
 import ViewModel from './ViewModel';
 
 const VehicleHeaderContainer = styled('div')(({ theme }) => ({
@@ -69,6 +70,7 @@ const VehicleHeaderView: React.FC<Props> = (props) => {
   return (
     <VehicleHeaderContainer>
       <VehicleHeaderContainerContent>
+        <StatusBanner />
         <LeftContent>
           <YearMakeModel variant="body1">{summary.ymm}</YearMakeModel>
           <Typography variant="body1">

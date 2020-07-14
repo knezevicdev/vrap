@@ -44,6 +44,13 @@ class AnalyticsHandler extends BaseAnalyticsHandler {
     this.track(event, properties);
   }
 
+  trackFindANewMatchClicked(product: Product): void {
+    const event = 'Find A New Match Clicked';
+    const category = 'Product';
+    const properties = { ...product, category };
+    this.track(event, properties);
+  }
+
   trackGallerySelection(product: Product, selection: string): void {
     const event = `${selection} Button Clicked`;
     const category = 'Product';

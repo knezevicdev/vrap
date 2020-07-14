@@ -8,7 +8,7 @@ const shortHash = childProcess
 
 // TODO: remove once interchange (nginx) is setup locally
 const isProd = process.env.NODE_ENV === 'production';
-const assetPrefix = isProd ? `/catalog/${shortHash}` : '';
+const assetPrefix = isProd ? `/cars/${shortHash}` : '';
 
 module.exports = {
   env: {

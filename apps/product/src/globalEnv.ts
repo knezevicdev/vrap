@@ -1,12 +1,11 @@
 import { name, version } from 'package.json';
 
 export interface GlobalEnv {
+  ASSET_PREFIX?: string;
   INVSEARCH_V3_URL?: string;
   INV_SERVICE_V2_URL?: string;
-  LEADS_URL?: string;
   NAME?: string;
   VERSION?: string;
-  ASSET_PREFIX?: string;
 }
 
 declare global {
@@ -15,14 +14,14 @@ declare global {
   }
 }
 
-const globalEnv: GlobalEnv | NodeJS.ProcessEnv = process.browser
+const globalEnv: GlobalEnv = process.browser
   ? window.__GLOBAL_ENV__
-  : { ...process.env, NAME: name, VERSION: version };
-
-if (!globalEnv.ASSET_PREFIX && process.env.ASSET_PREFIX) {
-  globalEnv.ASSET_PREFIX = process.env.ASSET_PREFIX;
-} else {
-  globalEnv.ASSET_PREFIX = '';
-}
+  : {
+      ASSET_PREFIX: process.env.ASSET_PREFIX || '',
+      INVSEARCH_V3_URL: process.env.INVSEARCH_V3_URL,
+      INV_SERVICE_V2_URL: process.env.INV_SERVICE_V2_URL,
+      NAME: name,
+      VERSION: version,
+    };
 
 export default globalEnv;

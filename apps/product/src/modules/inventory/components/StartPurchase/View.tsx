@@ -1,5 +1,5 @@
 import { styled } from '@material-ui/core/styles';
-import { Button } from '@vroom-web/ui';
+import { Button, Typography } from '@vroom-web/ui';
 import { observer } from 'mobx-react';
 import React from 'react';
 
@@ -31,9 +31,9 @@ const StartPurchaseView: React.FC<Props> = (props) => {
         onClick={handleClick}
         disabled={viewModel.isAvailableSoon()}
       >
-        {viewModel.isAvailableSoon()
-          ? viewModel.availableSoon
-          : viewModel.purchaseText}
+        <Typography variant="body1" fontWeight="fontWeightMedium">
+          {viewModel.getButtonText()}
+        </Typography>
       </CustomButton>
     </>
   );
