@@ -10,7 +10,7 @@ interface CarCardProps {
 
 const CarCard: React.FC<CarCardProps> = ({ car }) => {
   const viewModel = new ViewModel(car);
-  return <View viewModel={viewModel} />
+  return <View viewModel={viewModel} />;
 };
 
 export default CarCard;

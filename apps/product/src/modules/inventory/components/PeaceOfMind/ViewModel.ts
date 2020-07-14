@@ -1,4 +1,4 @@
-import globalEnv from "src/globalEnv";
+import globalEnv from 'src/globalEnv';
 
 interface Step {
   description: string;
@@ -6,7 +6,7 @@ interface Step {
   img: {
     alt: string;
     src: string;
-  }
+  };
 }
 
 class PeaceOfMindViewModel {

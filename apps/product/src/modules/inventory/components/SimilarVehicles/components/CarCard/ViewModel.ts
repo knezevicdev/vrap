@@ -1,4 +1,4 @@
-import {Car, SoldStatusInt} from '@vroom-web/inv-search-networking';
+import { Car, SoldStatusInt } from '@vroom-web/inv-search-networking';
 import Router from 'next/router';
 
 import globalEnv from 'src/globalEnv';
@@ -59,8 +59,8 @@ class CarCardViewModel {
 
   showSalePending = (): boolean => {
     return (
-        !this.showAvailableSoon() &&
-        this.car.soldStatus === SoldStatusInt.SALE_PENDING
+      !this.showAvailableSoon() &&
+      this.car.soldStatus === SoldStatusInt.SALE_PENDING
     );
   };
 

@@ -2,7 +2,7 @@ import Box from '@material-ui/core/Box';
 import MuiPaper from '@material-ui/core/Paper';
 import { styled, useTheme } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
-import { Container, Typography } from '@vroom-web/ui';
+import { Typography } from '@vroom-web/ui';
 import { observer } from 'mobx-react';
 import React, { useRef, useState } from 'react';
 import ImageGallery from 'react-image-gallery';
@@ -24,6 +24,9 @@ const GalleryContainer = styled('div')(({ theme }) => ({
   maxWidth: '1280px',
   width: '100%',
   padding: theme.spacing(0, 3),
+  [theme.breakpoints.only('xs')]: {
+    paddingTop: theme.spacing(3),
+  },
 }));
 
 const GalleryContainerContent = styled('div')(({ theme }) => ({

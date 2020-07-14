@@ -31,31 +31,33 @@ const CarDetailsContainerContent = styled('div')(({ theme }) => ({
 
 const DetailsData = styled('div')(({ theme }) => ({
   display: 'flex',
-  [theme.breakpoints.only('xs')]: {flexDirection: 'column'},
-  [theme.breakpoints.only('sm')]: {flexWrap: 'wrap'},
+  [theme.breakpoints.only('xs')]: { flexDirection: 'column' },
+  [theme.breakpoints.only('sm')]: { flexWrap: 'wrap' },
 }));
 
 const Basics = styled('div')(({ theme }) => ({
   display: 'flex',
   flexDirection: 'column',
-  margin: theme.spacing(3,2,0,0),
-  [theme.breakpoints.only('xs')]: {marginRight: 0},
-  [theme.breakpoints.only('sm')]: {minWidth: '50%'},
+  margin: theme.spacing(3, 2, 0, 0),
+  [theme.breakpoints.only('xs')]: { marginRight: 0 },
+  [theme.breakpoints.only('sm')]: { minWidth: '50%' },
 }));
 
-const Performance = styled('div')(({theme}) => ({
+const Performance = styled('div')(({ theme }) => ({
   display: 'flex',
   flexDirection: 'column',
-  margin: theme.spacing(3,0,0,0),
-  [theme.breakpoints.only('sm')]: {minWidth: `calc(50% - ${theme.spacing(2)}px)`},
+  margin: theme.spacing(3, 0, 0, 0),
+  [theme.breakpoints.only('sm')]: {
+    minWidth: `calc(50% - ${theme.spacing(2)}px)`,
+  },
 }));
 
 const History = styled('div')(({ theme }) => ({
   display: 'flex',
   flexDirection: 'column',
-  margin: theme.spacing(3,0,0,3),
-  [theme.breakpoints.only('xs')]: {marginLeft: 0},
-  [theme.breakpoints.only('sm')]: {marginLeft: 0},
+  margin: theme.spacing(3, 0, 0, 3),
+  [theme.breakpoints.only('xs')]: { marginLeft: 0 },
+  [theme.breakpoints.only('sm')]: { marginLeft: 0 },
 }));
 
 const DetailsRow = styled('div')(({ theme }) => ({
@@ -74,11 +76,15 @@ const Label = styled(Typography)(({ theme }) => ({
   marginBottom: theme.spacing(2),
 }));
 
-const Value = styled(Typography)(() => ({
+const Value = styled(Typography)(({ theme }) => ({
   fontSize: '20px',
   whiteSpace: 'nowrap',
   letterSpacing: '0.75px',
   lineHeight: 'normal',
+  [theme.breakpoints.only('xs')]: {
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+  },
 }));
 
 const HistoryContent = styled('div')(({ theme }) => ({

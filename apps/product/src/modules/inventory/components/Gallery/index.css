@@ -30,3 +30,6 @@ must when all other approaches fail you.
   font-size: 16px;
 }
 
+.image-gallery-icon:hover {
+  color: #041022;
+}
