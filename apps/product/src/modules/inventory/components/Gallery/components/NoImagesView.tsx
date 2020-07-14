@@ -8,7 +8,7 @@ const StyledImg = styled('img')(({ theme }) => ({
   maxWidth: '350px',
   opacity: '30%',
   margin: theme.spacing(4),
-  width: `calc(100% - ${theme.spacing(4)}px)`
+  width: `calc(100% - ${theme.spacing(4)}px)`,
 }));
 
 const GalleryNoImagesContainer = styled('div')(({ theme }) => ({
@@ -32,19 +32,18 @@ const GalleryNoImagesContainerContent = styled('div')(({ theme }) => ({
 }));
 
 const Title = styled(Typography)(({ theme }) => ({
-  margin: theme.spacing(0,1,1,1),
+  margin: theme.spacing(0, 1, 1, 1),
   fontSize: '24px',
   textAlign: 'center',
-  lineHeight: 'normal'
+  lineHeight: 'normal',
 }));
 
 const Description = styled(Typography)(({ theme }) => ({
-  margin: theme.spacing(0,1,1,1),
+  margin: theme.spacing(0, 1, 1, 1),
   fontSize: '16px',
   textAlign: 'center',
-  lineHeight: 'normal'
+  lineHeight: 'normal',
 }));
-
 
 interface Props {
   viewModel: ViewModel;
@@ -58,12 +57,8 @@ const GalleryNoImagesView: React.FC<Props> = ({ viewModel }) => {
           alt={viewModel.defaultImage.alt}
           src={viewModel.defaultImage.src}
         />
-          <Title variant="h2">
-            {viewModel.photosComing}
-          </Title>
-        <Description>
-          {viewModel.noPhotosSubtitle}
-        </Description>
+        <Title variant="h2">{viewModel.photosComing}</Title>
+        <Description>{viewModel.noPhotosSubtitle}</Description>
       </GalleryNoImagesContainerContent>
     </GalleryNoImagesContainer>
   );

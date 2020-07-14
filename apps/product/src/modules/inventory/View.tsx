@@ -33,7 +33,7 @@ const StickyBottom = styled('div')(({ theme }) => ({
   zIndex: theme.zIndex.appBar,
   padding: theme.spacing(3),
   background: theme.palette.background.paper,
-  borderTop: `solid 1px ${theme.palette.grey.A100}`
+  borderTop: `solid 1px ${theme.palette.grey.A100}`,
 }));
 //#endregion
 

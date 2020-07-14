@@ -38,10 +38,6 @@ const StyledBox = styled(Box)(({ theme }) => ({
   },
 }));
 
-const StyledButton = styled(Button)(() => ({
-  height: '80px',
-}));
-
 interface Props {
   viewModel: ViewModel;
 }
@@ -50,16 +46,15 @@ const GeneralToConditionView: React.FC<Props> = ({ viewModel }) => {
   return (
     <StyledContainer>
       <StyledBox>
-        <StyledButton
-          variant="outlined"
+        <Button
+          variant="contained"
           color="primary"
-          size="large"
           onClick={viewModel.goToCondition}
         >
-          <Typography variant="body1" fontWeight="fontWeightMedium">
+          <Typography variant="body1" fontWeight={600}>
             {viewModel.goToConditionText}
           </Typography>
-        </StyledButton>
+        </Button>
       </StyledBox>
       <StyledImg
         alt={viewModel.defaultImage.alt}
