@@ -13,7 +13,7 @@ class StatusBannerViewModel {
     label: 'Sales Pending',
     color: '#ffd400',
   };
-  private avaiableSoon = {
+  private availableSoon = {
     label: 'Available Soon',
     color: '#bdbdbd',
   };
@@ -30,7 +30,7 @@ class StatusBannerViewModel {
     } = this.store.vehicle._source;
     const vehicleServiceAvailability = this.store.isAvailable;
     if (hasStockPhotos || isEmpty(leadFlagPhotoUrl)) {
-      return this.avaiableSoon;
+      return this.availableSoon;
     }
     if (
       soldStatus === SoldStatusInt.SALE_PENDING ||

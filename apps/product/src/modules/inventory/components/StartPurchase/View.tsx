@@ -32,9 +32,7 @@ const StartPurchaseView: React.FC<Props> = (props) => {
         disabled={viewModel.isAvailableSoon()}
       >
         <Typography variant="body1" fontWeight="fontWeightMedium">
-          {viewModel.isAvailableSoon()
-            ? viewModel.availableSoon
-            : viewModel.purchaseText}
+          {viewModel.getButtonText()}
         </Typography>
       </CustomButton>
     </Grid>
