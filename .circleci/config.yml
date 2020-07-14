@@ -19,9 +19,7 @@ jobs:
     - setup_remote_docker:
         version: 18.09.3
     - run:
-        command: |-
-          login
-          deploy -a vroom-web/apps/catalog/docker -n << parameters.env >>
+        command: deploy -a vroom-web/apps/catalog/docker -n << parameters.env >>
   danger:
     docker:
     - image: node:erbium-alpine

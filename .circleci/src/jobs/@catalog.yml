@@ -20,5 +20,4 @@ catalog_deploy:
         version: 18.09.3
     - run:
         command: |-
-          login
           deploy -a vroom-web/apps/catalog/docker -n << parameters.env >>
