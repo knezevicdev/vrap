@@ -1,6 +1,6 @@
 catalog_build:
   docker:
-  - image: vroom/mlp:3.0.1
+  - image: vroom/mlp:3.0.2
   steps:
     - checkout
     - setup_remote_docker:
@@ -10,7 +10,7 @@ catalog_build:
           build -a vroom-web/apps/catalog/docker
 catalog_deploy:
   docker:
-  - image: vroom/mlp:3.0.1
+  - image: vroom/mlp:3.0.2
   parameters:
     env:
       type: string
