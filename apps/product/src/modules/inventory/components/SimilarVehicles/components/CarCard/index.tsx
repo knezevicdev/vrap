@@ -5,7 +5,7 @@ import View from './View';
 import ViewModel from './ViewModel';
 
 interface CarCardProps {
-  car: Car | undefined;
+  car: Car;
 }
 
 const CarCard: React.FC<CarCardProps> = ({ car }) => {

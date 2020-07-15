@@ -12,8 +12,13 @@ interface Props {
 const Banner = styled('div')(({ theme }) => ({
   position: 'absolute',
   top: 0,
-  left: 0,
-  padding: theme.spacing(0, 1),
+  left: theme.spacing(3),
+  padding: theme.spacing(1),
+}));
+
+const Label = styled(Typography)(() => ({
+  fontWeight: 600,
+  fontSize: '12px',
 }));
 
 const StatusBannerView: React.FC<Props> = (props) => {
@@ -24,9 +29,7 @@ const StatusBannerView: React.FC<Props> = (props) => {
   }
   return (
     <Banner style={{ backgroundColor: bannerInfo.color }}>
-      <Typography fontWeight="fontWeightMedium" lineHeight="24px">
-        {bannerInfo.label}
-      </Typography>
+      <Label>{bannerInfo.label}</Label>
     </Banner>
   );
 };

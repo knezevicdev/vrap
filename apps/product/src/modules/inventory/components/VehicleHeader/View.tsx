@@ -17,6 +17,7 @@ const VehicleHeaderContainer = styled('div')(({ theme }) => ({
 }));
 
 const VehicleHeaderContainerContent = styled('div')(({ theme }) => ({
+  position: 'relative',
   display: 'flex',
   width: '100%',
   height: 'auto',

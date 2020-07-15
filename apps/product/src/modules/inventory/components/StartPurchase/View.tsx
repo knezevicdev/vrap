@@ -31,7 +31,7 @@ const StartPurchaseView: React.FC<Props> = (props) => {
         onClick={handleClick}
         disabled={viewModel.isAvailableSoon()}
       >
-        <Typography variant="body1" fontWeight="fontWeightMedium">
+        <Typography variant="button" fontWeight={600}>
           {viewModel.getButtonText()}
         </Typography>
       </CustomButton>
