@@ -52,10 +52,7 @@ const InventoryView: React.FC<Props> = (props) => {
       <SimpleHeader />
       <InventoryViewContainer>
         {viewModel.error() && (
-          <VehicleNotFound
-            errorTop={viewModel.errorTop}
-            errorBottom={viewModel.errorBottom}
-          />
+          <VehicleNotFound message={viewModel.noVehicleFound} />
         )}
         {viewModel.ready() && (
           <>

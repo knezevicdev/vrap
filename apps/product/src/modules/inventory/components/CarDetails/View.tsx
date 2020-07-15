@@ -82,8 +82,7 @@ const Value = styled(Typography)(({ theme }) => ({
   letterSpacing: '0.75px',
   lineHeight: 'normal',
   [theme.breakpoints.only('xs')]: {
-    overflow: 'hidden',
-    textOverflow: 'ellipsis',
+    whiteSpace: 'normal',
   },
 }));
 

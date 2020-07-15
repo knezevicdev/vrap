@@ -81,6 +81,12 @@ const MobileViewAll = styled(ExternalLink)(({ theme }) => ({
   },
 }));
 
+const ViewAllError = styled(Button)(() => ({
+  maxWidth: '256px',
+  minWidth: '256px',
+  alignSelf: 'center',
+}));
+
 interface Props {
   viewModel: ViewModel;
 }
@@ -90,7 +96,7 @@ const SimilarVehiclesView: React.FC<Props> = ({ viewModel }) => {
     <SimilarVehiclesContainer>
       <SimilarVehiclesContainerContent>
         {viewModel.error() ? (
-          <Button
+          <ViewAllError
             variant="contained"
             color="primary"
             onClick={viewModel.handleClick}
@@ -98,7 +104,7 @@ const SimilarVehiclesView: React.FC<Props> = ({ viewModel }) => {
             <Typography variant="body1" fontWeight={600}>
               {viewModel.viewAllCars}
             </Typography>
-          </Button>
+          </ViewAllError>
         ) : (
           <>
             <Content>
