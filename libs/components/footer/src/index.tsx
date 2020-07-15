@@ -5,3 +5,4 @@ export { default as Copyright } from './Vroom/components/Copyright';
 export { default as Logo } from './Vroom/components/Logo';
 export { default as Social } from './Vroom/components/Social';
 export { default as Nav } from './Vroom/components/Nav';
+export { default as SantanderFooter } from './Santander';
