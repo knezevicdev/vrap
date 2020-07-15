@@ -4,7 +4,7 @@ import { FeaturesStore } from './store';
 class FeaturesViewModel {
   private readonly features: string[] = [];
   private readonly featuresStore: FeaturesStore;
-  private readonly limitedLength = 15;
+  private readonly limitedLength = 14;
 
   readonly title: string = 'Features';
 
@@ -19,7 +19,7 @@ class FeaturesViewModel {
       return [...this.features, oneKey];
     }
     if (this.featuresStore.limited) {
-      const displayLength = this.limitedLength - 2;
+      const displayLength = this.limitedLength - 1;
       return [...this.features.slice(0, displayLength), oneKey];
     } else {
       return [...this.features, oneKey];
