@@ -5,7 +5,6 @@ import {
 import { Car } from '@vroom-web/inv-search-networking';
 import { SoldStatusInt } from '@vroom-web/inv-service-networking';
 import isEmpty from 'lodash.isempty';
-import Router from 'next/router';
 
 import { InventoryStore } from '../../store';
 
@@ -77,11 +76,11 @@ class StartPurchaseViewModel {
       const { makeSlug, modelSlug } = this.car;
       const modelFiltersData = addModel(makeSlug, modelSlug);
       const modelHref = getUrlFromFiltersData(modelFiltersData);
-      Router.push(modelHref);
+      window.location.href = modelHref;
     } else {
       this.analyticsHandler.trackProductAdded(product);
-      const url = `/inventory/${Router.query.slug}/submit-contact`;
-      Router.push('/inventory/[slug]/submit-contact', url);
+      const url = `/e2e/${vin}/checkoutTradeIn`;
+      window.location.href = url;
     }
   }
 
