@@ -67,7 +67,7 @@ class InProgressDealBarViewModel {
       case 'PaymentType':
         return `/e2e/${vin}/payment`;
       case 'DepositPaymentInfo':
-        return `/e2e/${vin}/review`;
+        return `/e2e/${vin}/dealReview`;
       case 'DealSummary':
         return `/deal/${vin}/congratulations`;
       case 'FinancingOption':
@@ -77,7 +77,7 @@ class InProgressDealBarViewModel {
       case 'BackendProducts':
         return `/e2e/${vin}/dealCoverage`;
       case 'Review':
-        return `/e2e/${vin}/review`;
+        return `/e2e/${vin}/dealReview`;
       case 'DocumentUpload':
         return `/e2e/${vin}/documentUpload`;
       default:
