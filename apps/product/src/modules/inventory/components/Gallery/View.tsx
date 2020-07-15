@@ -25,7 +25,7 @@ const GalleryContainer = styled('div')(({ theme }) => ({
   width: '100%',
   padding: theme.spacing(0, 3),
   [theme.breakpoints.only('xs')]: {
-    paddingTop: theme.spacing(3),
+    padding: theme.spacing(0),
   },
 }));
 
@@ -39,6 +39,9 @@ const GalleryContainerContent = styled('div')(({ theme }) => ({
 
 const ImageGalleryContainer = styled('div')(({ theme }) => ({
   padding: theme.spacing(4),
+  [theme.breakpoints.only('xs')]: {
+    padding: theme.spacing(2),
+  },
 }));
 
 //#endregion

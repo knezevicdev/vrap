@@ -8,20 +8,23 @@ import ViewModel from './ViewModel';
 
 import ExternalLink from 'src/ui/ExternalLink';
 
-const SimilaVehiclesContainer = styled('div')(({ theme }) => ({
+const SimilarVehiclesContainer = styled('div')(({ theme }) => ({
   display: 'flex',
   margin: theme.spacing(0, 'auto', 4, 'auto'),
   width: '100%',
   padding: theme.spacing(0, 3),
 }));
 
-const SimilaVehiclesContainerContent = styled('div')(({ theme }) => ({
+const SimilarVehiclesContainerContent = styled('div')(({ theme }) => ({
   display: 'flex',
   flexDirection: 'column',
   width: '100%',
   maxWidth: '1232px',
   margin: '0 auto',
   padding: theme.spacing(5, 3),
+  [theme.breakpoints.only('xs')]: {
+    padding: theme.spacing(0),
+  },
 }));
 
 const Content = styled('div')(({ theme }) => ({
@@ -63,14 +66,29 @@ const ViewAll = styled(Typography)(({ theme }) => ({
   cursor: 'pointer',
 }));
 
+const DesktopViewAll = styled(ExternalLink)(({ theme }) => ({
+  display: 'flex',
+  [theme.breakpoints.only('xs')]: {
+    display: 'none',
+  },
+}));
+
+const MobileViewAll = styled(ExternalLink)(({ theme }) => ({
+  display: 'none',
+  [theme.breakpoints.only('xs')]: {
+    display: 'flex',
+    marginTop: theme.spacing(2),
+  },
+}));
+
 interface Props {
   viewModel: ViewModel;
 }
 
 const SimilarVehiclesView: React.FC<Props> = ({ viewModel }) => {
   return (
-    <SimilaVehiclesContainer>
-      <SimilaVehiclesContainerContent>
+    <SimilarVehiclesContainer>
+      <SimilarVehiclesContainerContent>
         {viewModel.error() ? (
           <Button
             variant="contained"
@@ -91,19 +109,22 @@ const SimilarVehiclesView: React.FC<Props> = ({ viewModel }) => {
               >
                 {viewModel.title}
               </Typography>
-              <ExternalLink href="/cars">
+              <DesktopViewAll href="/cars">
                 <ViewAll>{viewModel.viewAll}</ViewAll>
-              </ExternalLink>
+              </DesktopViewAll>
             </Content>
             <Cars>
               {viewModel.getCars().map((car) => (
                 <CarCard car={car} key={car.vin} />
               ))}
             </Cars>
+            <MobileViewAll href="/cars">
+              <ViewAll>{viewModel.viewAll}</ViewAll>
+            </MobileViewAll>
           </>
         )}
-      </SimilaVehiclesContainerContent>
-    </SimilaVehiclesContainer>
+      </SimilarVehiclesContainerContent>
+    </SimilarVehiclesContainer>
   );
 };
 

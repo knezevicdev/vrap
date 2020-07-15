@@ -14,6 +14,9 @@ const VehicleHeaderContainer = styled('div')(({ theme }) => ({
   maxWidth: '1280px',
   width: '100%',
   padding: theme.spacing(0, 3),
+  [theme.breakpoints.only('xs')]: {
+    padding: theme.spacing(0),
+  },
 }));
 
 const VehicleHeaderContainerContent = styled('div')(({ theme }) => ({

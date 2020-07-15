@@ -18,7 +18,7 @@ const GalleryNoImagesContainer = styled('div')(({ theme }) => ({
   width: '100%',
   padding: theme.spacing(0, 3),
   [theme.breakpoints.only('xs')]: {
-    paddingTop: theme.spacing(3),
+    padding: theme.spacing(0),
   },
 }));
 
@@ -39,7 +39,7 @@ const Title = styled(Typography)(({ theme }) => ({
 }));
 
 const Description = styled(Typography)(({ theme }) => ({
-  margin: theme.spacing(0, 1, 1, 1),
+  margin: theme.spacing(0, 1, 2, 1),
   fontSize: '16px',
   textAlign: 'center',
   lineHeight: 'normal',
