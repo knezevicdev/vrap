@@ -9,12 +9,7 @@ class InventoryViewModel {
   private store: InventoryStore;
   private analyticsHandler: AnalyticsHandler;
   private disposeReaction?: () => void;
-  readonly errorTop: string = 'Looks like that car is no longer available.';
-  readonly errorBottom: string = 'Check out more options.';
-  readonly disclaimer: string = `* Prices are subject to change and exclude all tax,
-        title, tags, and other fees, which will be calculated at the time of
-        purchase. We make every effort to provide accurate vehicle information on
-        this page, but please verify before purchasing.`;
+  readonly noVehicleFound: string = 'This vehicle is no longer available';
 
   constructor(inventoryStore: InventoryStore) {
     this.store = inventoryStore;

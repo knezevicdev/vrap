@@ -1,25 +1,16 @@
-import { useTheme } from '@material-ui/core/styles';
-import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { Car } from '@vroom-web/inv-search-networking';
 import React from 'react';
 
-import DesktopView from './DesktopView';
-import MobileView from './MobileView';
-import CarCardViewModel from './ViewModel';
+import View from './View';
+import ViewModel from './ViewModel';
 
 interface CarCardProps {
-  car: Car | undefined;
+  car: Car;
 }
 
 const CarCard: React.FC<CarCardProps> = ({ car }) => {
-  const viewModel = new CarCardViewModel(car);
-  const theme = useTheme();
-  const xsDown = useMediaQuery(theme.breakpoints.down('xs'));
-  return xsDown ? (
-    <MobileView viewModel={viewModel} />
-  ) : (
-    <DesktopView viewModel={viewModel} />
-  );
+  const viewModel = new ViewModel(car);
+  return <View viewModel={viewModel} />;
 };
 
 export default CarCard;

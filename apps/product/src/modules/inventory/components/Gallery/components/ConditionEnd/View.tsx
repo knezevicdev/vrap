@@ -1,6 +1,6 @@
 import Box from '@material-ui/core/Box';
 import { styled } from '@material-ui/core/styles';
-import { Container, Typography } from '@vroom-web/ui';
+import { Typography } from '@vroom-web/ui';
 import React from 'react';
 
 import ViewModel from './ViewModel';
@@ -14,14 +14,12 @@ const StyledImg = styled('img')(({ theme }) => ({
   },
 }));
 
-const StyledContainer = styled(Container)(({ theme }) => ({
+const StyledContainer = styled('div')(({ theme }) => ({
   display: 'flex',
   flexDirection: 'row',
   whiteSpace: 'normal',
   backgroundColor: theme.palette.background.paper,
 }));
-
-const StyledTypography = styled(Typography)(() => ({}));
 
 const StyledBox = styled(Box)(({ theme }) => ({
   display: 'flex',
@@ -30,7 +28,7 @@ const StyledBox = styled(Box)(({ theme }) => ({
   alignItems: 'center',
   padding: theme.spacing(6),
   [theme.breakpoints.down('sm')]: {
-    padding: theme.spacing(3),
+    padding: theme.spacing(2, 0),
   },
 }));
 
@@ -42,9 +40,10 @@ const ConditionEndView: React.FC<Props> = ({ viewModel }) => {
   return (
     <StyledContainer>
       <StyledBox>
-        <StyledTypography
+        <Typography
           component="div"
           variant="body1"
+          lineHeight="normal"
           fontWeight="fontWeightLight"
         >
           {viewModel.bodyText}
@@ -61,7 +60,7 @@ const ConditionEndView: React.FC<Props> = ({ viewModel }) => {
           >
             {viewModel.faqLink.text}
           </a>
-        </StyledTypography>
+        </Typography>
       </StyledBox>
       <StyledImg
         alt={viewModel.defaultImage.alt}

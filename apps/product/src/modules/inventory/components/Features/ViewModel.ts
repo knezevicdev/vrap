@@ -1,35 +1,44 @@
 import { InventoryStore } from '../../store';
-
-import globalEnv from 'src/globalEnv';
+import { FeaturesStore } from './store';
 
 class FeaturesViewModel {
-  private features: string[];
+  private readonly features: string[] = [];
+  private readonly featuresStore: FeaturesStore;
+  private readonly limitedLength = 14;
+
   readonly title: string = 'Features';
-  readonly logo = {
-    src: `${globalEnv.ASSET_PREFIX}/modules/vroom_logo_red.svg`,
-    alt: 'Vroom',
-  };
-  readonly poweredBy: string = 'Inventory provided by our partner Vroom';
 
-  constructor(inventoryStore: InventoryStore) {
+  constructor(inventoryStore: InventoryStore, featuresStore: FeaturesStore) {
     this.features = inventoryStore.vehicle._source.optionalFeatures.split(',');
+    this.featuresStore = featuresStore;
   }
-
-  display(limited: boolean): string[] {
+  getFeatures = (): string[] => {
     const oneKey = '1 Key';
-    const limitedLength = 15;
 
-    const toggle = `<button>Show ${limited ? 'More' : 'Less'}</button>`;
-    if (this.features.length < limitedLength) {
+    if (this.features.length < this.limitedLength) {
       return [...this.features, oneKey];
     }
-    if (limited) {
-      const displayLength = limitedLength - 2;
-      return [...this.features.slice(0, displayLength), oneKey, toggle];
+    if (this.featuresStore.limited) {
+      const displayLength = this.limitedLength - 1;
+      return [...this.features.slice(0, displayLength), oneKey];
     } else {
-      return [...this.features, oneKey, toggle];
+      return [...this.features, oneKey];
     }
-  }
+  };
+
+  getButtonLabel = (): string => {
+    return this.featuresStore.limited
+      ? 'SHOW ALL FEATURES'
+      : 'SHOW LESS FEATURES';
+  };
+
+  showButton = (): boolean => {
+    return this.features.length > this.limitedLength;
+  };
+
+  onClick = (): void => {
+    this.featuresStore.toggleLimited();
+  };
 }
 
 export default FeaturesViewModel;

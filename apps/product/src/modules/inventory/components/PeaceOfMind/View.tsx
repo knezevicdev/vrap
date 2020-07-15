@@ -1,75 +1,119 @@
-import Box from '@material-ui/core/Box';
-import Grid from '@material-ui/core/Grid';
-import { useTheme } from '@material-ui/core/styles';
-import SvgIcon from '@material-ui/core/SvgIcon';
-import useMediaQuery from '@material-ui/core/useMediaQuery';
-import { Container, Typography } from '@vroom-web/ui';
+import { styled } from '@material-ui/core/styles';
+import { Typography } from '@vroom-web/ui';
 import React from 'react';
 
-import { ReactComponent as PeaceOfMindIcon } from './svg/peace-of-mind.svg';
 import ViewModel from './ViewModel';
+
+const PeaceOfMindContainer = styled('div')(({ theme }) => ({
+  display: 'flex',
+  margin: theme.spacing(0, 'auto', 4, 'auto'),
+  width: '100%',
+  padding: theme.spacing(0, 3),
+  backgroundColor: theme.palette.background.paper,
+  borderTop: `1px solid ${theme.palette.grey.A100}`,
+  borderBottom: `1px solid ${theme.palette.grey.A100}`,
+}));
+
+const PeaceOfMindContainerContent = styled('div')(({ theme }) => ({
+  display: 'flex',
+  flexDirection: 'column',
+  width: '100%',
+  maxWidth: '1232px',
+  margin: '0 auto',
+  padding: theme.spacing(5, 3),
+  [theme.breakpoints.only('xs')]: {
+    padding: theme.spacing(5, 0),
+  },
+}));
+
+const Steps = styled('div')(({ theme }) => ({
+  display: 'flex',
+  [theme.breakpoints.only('xs')]: { flexDirection: 'column' },
+}));
+
+const Step = styled('div')(({ theme }) => ({
+  display: 'flex',
+  alignItems: 'center',
+  [theme.breakpoints.only('sm')]: {
+    flexDirection: 'column',
+    textAlign: 'center',
+  },
+  [theme.breakpoints.only('xs')]: { marginBottom: theme.spacing(2) },
+}));
+
+const Image = styled('img')(({ theme }) => ({
+  maxWidth: '80px',
+  minWidth: '80px',
+  maxHeight: '80px',
+  minHeight: '80px',
+  marginRight: theme.spacing(2),
+  [theme.breakpoints.only('sm')]: {
+    marginRight: '0',
+    marginBottom: theme.spacing(2),
+  },
+}));
+
+const Header = styled(Typography)(({ theme }) => ({
+  display: 'block',
+  marginBottom: theme.spacing(3),
+  textAlign: 'center',
+  [theme.breakpoints.only('xs')]: { textAlign: 'left' },
+}));
+
+const StepContent = styled('div')(() => ({
+  display: 'flex',
+  flexDirection: 'column',
+}));
+
+const Title = styled(Typography)(({ theme }) => ({
+  fontSize: '20px',
+  [theme.breakpoints.only('xs')]: { fontSize: '18px' },
+  [theme.breakpoints.only('sm')]: { minWidth: '16px' },
+  marginBottom: theme.spacing(1),
+  paddingRight: theme.spacing(1),
+  fontWeight: 600,
+}));
+
+const Description = styled(Typography)(({ theme }) => ({
+  fontSize: '20px',
+  [theme.breakpoints.only('xs')]: { fontSize: '18px' },
+  [theme.breakpoints.only('sm')]: { minWidth: '16px' },
+  lineHeight: 'normal',
+  paddingRight: theme.spacing(1),
+}));
 
 interface Props {
   viewModel: ViewModel;
 }
 
-const HowItWorks: React.FC<Props> = (props) => {
-  const { viewModel } = props;
-  const theme = useTheme();
-  const mdAndUp = useMediaQuery(theme.breakpoints.up('md'));
-
-  const steps = viewModel.steps.map((i, idx) => {
-    const { title, description } = i;
-    const viewBox = '0 0 35 35';
-    return (
-      <Grid key={idx} item xs={12} md={4}>
-        <Box display="flex">
-          <SvgIcon
-            component={PeaceOfMindIcon}
-            viewBox={viewBox}
-            style={{ fontSize: 35 }}
-          />
-          <Box ml={2} textAlign="left">
-            <Box mt={{ xs: 1 }} mb={{ xs: 1 }}>
-              <Typography fontWeight="fontWeightMedium" variant="body1">
-                {title}
-              </Typography>
-            </Box>
-            <Typography
-              fontWeight="fontWeightLight"
-              lineHeight="1.5"
-              variant="body1"
-            >
-              {description}
-            </Typography>
-          </Box>
-        </Box>
-      </Grid>
-    );
-  });
-
+const PeaceOfMind: React.FC<Props> = ({ viewModel }) => {
   return (
-    <Box bgcolor="background.paper" overflow="hidden">
-      <Container>
-        <Box
-          flexDirection="column"
-          py={{ xs: 6, md: 12 }}
-          textAlign={{ xs: 'left', md: 'center' }}
-        >
-          <Box mb={{ xs: 2, md: 4 }}>
-            <Typography fontWeight="fontWeightMedium" variant="h2">
-              {viewModel.title}
-            </Typography>
-          </Box>
-          <Box mb={{ xs: 2, md: 4 }}>
-            <Grid container spacing={mdAndUp ? 10 : 3}>
-              {steps}
-            </Grid>
-          </Box>
-        </Box>
-      </Container>
-    </Box>
+    <PeaceOfMindContainer>
+      <PeaceOfMindContainerContent>
+        <Header variant="h2" fontWeight="fontWeightMedium">
+          {viewModel.title}
+        </Header>
+        <Steps>
+          {viewModel.steps.map((step) => {
+            const {
+              title,
+              description,
+              img: { alt, src },
+            } = step;
+            return (
+              <Step key={title}>
+                <Image alt={alt} src={src} />
+                <StepContent>
+                  <Title>{title}</Title>
+                  <Description>{description}</Description>
+                </StepContent>
+              </Step>
+            );
+          })}
+        </Steps>
+      </PeaceOfMindContainerContent>
+    </PeaceOfMindContainer>
   );
 };
 
-export default HowItWorks;
+export default PeaceOfMind;

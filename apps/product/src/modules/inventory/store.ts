@@ -1,6 +1,6 @@
 import { Hit, InvSearchNetworker } from '@vroom-web/inv-search-networking';
 import { InvServiceNetworker } from '@vroom-web/inv-service-networking';
-import { action, observable, runInAction } from 'mobx';
+import { observable } from 'mobx';
 import { createContext } from 'react';
 
 import globalEnv from 'src/globalEnv';
@@ -82,12 +82,7 @@ export class InventoryStore {
   @observable vehicle: Hit = {} as Hit;
   @observable isAvailable = false;
 
-  private invSearchNetworker: InvSearchNetworker;
-
   constructor(initialState?: InventoryStoreState) {
-    this.invSearchNetworker = new InvSearchNetworker(
-      globalEnv.INVSEARCH_V3_URL || ''
-    );
     if (initialState) {
       this.vehicleStatus = initialState.vehicleStatus;
       this.vehicle = initialState.vehicle;
@@ -96,52 +91,6 @@ export class InventoryStore {
       this.isAvailable = initialState.isAvailable;
     }
   }
-
-  @action
-  getInventory = async (vin: string): Promise<void> => {
-    try {
-      const response = await this.invSearchNetworker.postInventory({
-        fulldetails: true,
-        source: `${globalEnv.NAME}-${globalEnv.VERSION}`,
-        vin: [vin],
-      });
-
-      const vehicle = response.data.hits.hits.find(
-        (i) => i._source.vin.toLowerCase() === vin.toLowerCase()
-      );
-
-      if (!vehicle) {
-        throw new Error('No vehicle found with that VIN in inventory');
-      }
-      runInAction(() => {
-        this.vehicleStatus = Status.SUCCESS;
-        this.vehicle = vehicle;
-      });
-    } catch (err) {
-      runInAction(() => {
-        this.vehicleStatus = Status.ERROR;
-      });
-    }
-  };
-
-  @action
-  getSimilar = async (vin: string, min = 4): Promise<void> => {
-    try {
-      const response = await this.invSearchNetworker.getInventorySimilar({
-        vin,
-        min,
-      });
-
-      runInAction(() => {
-        this.similarStatus = Status.SUCCESS;
-        this.similar = response.data.hits.hits;
-      });
-    } catch (err) {
-      runInAction(() => {
-        this.similarStatus = Status.ERROR;
-      });
-    }
-  };
 }
 
 export const InventoryStoreContext = createContext<InventoryStore>(

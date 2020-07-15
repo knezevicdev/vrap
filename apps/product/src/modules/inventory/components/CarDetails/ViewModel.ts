@@ -22,7 +22,7 @@ interface Link {
 
 interface Section {
   title: string;
-  items: string[];
+  items: { label: string; value: string }[];
 }
 
 class CarDetailsViewModel {
@@ -74,10 +74,22 @@ class CarDetailsViewModel {
     return {
       title: 'Basics',
       items: [
-        `Body Type: ${bodyType}`,
-        `Interior: ${intColor}`,
-        `Exterior: ${extColor}`,
-        `VIN: ${vin}`,
+        {
+          label: 'Body Type',
+          value: bodyType,
+        },
+        {
+          label: 'Interior',
+          value: intColor,
+        },
+        {
+          label: 'Exterior',
+          value: extColor,
+        },
+        {
+          label: 'VIN',
+          value: vin,
+        },
       ],
     };
   }
@@ -93,15 +105,31 @@ class CarDetailsViewModel {
     } = this.car;
 
     const items = [
-      `Engine: ${engine}`,
-      `Transmission: ${transmission}`,
-      `Drive Type: ${driveType}`,
-      `Fuel Type: ${fuelType}`,
+      {
+        label: 'Engine',
+        value: engine,
+      },
+      {
+        label: 'Transmission',
+        value: transmission,
+      },
+      {
+        label: 'Drive Type',
+        value: driveType,
+      },
+      {
+        label: 'Fuel Type',
+        value: fuelType,
+      },
     ];
 
     if (cityMpg > 0 && highwayMpg > 0) {
-      items.push(`MPG: ${cityMpg} City / ${highwayMpg} Hwy`);
+      items.push({
+        label: 'MPG',
+        value: `${cityMpg} City / ${highwayMpg} Hwy`,
+      });
     }
+
     return {
       title: 'Performance',
       items,

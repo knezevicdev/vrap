@@ -1,22 +1,48 @@
-import Box from '@material-ui/core/Box';
 import { styled } from '@material-ui/core/styles';
-import { Container, Typography } from '@vroom-web/ui';
+import { Typography } from '@vroom-web/ui';
 import React from 'react';
 
 import ViewModel from '../ViewModel';
 
-const ImgContainer = styled(Container)(() => ({
-  display: 'flex',
-  justifyContent: 'center',
+const StyledImg = styled('img')(({ theme }) => ({
+  maxWidth: '350px',
+  opacity: '30%',
+  margin: theme.spacing(4),
+  width: `calc(100% - ${theme.spacing(4)}px)`,
 }));
 
-const StyledImg = styled('img')(({ theme }) => ({
-  width: '50%',
-  height: 'auto',
-  marginBottom: theme.spacing(3),
-  [theme.breakpoints.up('md')]: {
-    width: '100%',
+const GalleryNoImagesContainer = styled('div')(({ theme }) => ({
+  display: 'flex',
+  margin: theme.spacing(0, 'auto'),
+  maxWidth: '1280px',
+  width: '100%',
+  padding: theme.spacing(0, 3),
+  [theme.breakpoints.only('xs')]: {
+    padding: theme.spacing(0),
   },
+}));
+
+const GalleryNoImagesContainerContent = styled('div')(({ theme }) => ({
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'center',
+  width: '100%',
+  border: `1px solid ${theme.palette.grey.A100}`,
+  backgroundColor: theme.palette.background.paper,
+}));
+
+const Title = styled(Typography)(({ theme }) => ({
+  margin: theme.spacing(0, 1, 1, 1),
+  fontSize: '24px',
+  textAlign: 'center',
+  lineHeight: 'normal',
+}));
+
+const Description = styled(Typography)(({ theme }) => ({
+  margin: theme.spacing(0, 1, 2, 1),
+  fontSize: '16px',
+  textAlign: 'center',
+  lineHeight: 'normal',
 }));
 
 interface Props {
@@ -25,28 +51,16 @@ interface Props {
 
 const GalleryNoImagesView: React.FC<Props> = ({ viewModel }) => {
   return (
-    <Box bgcolor="background.paper" py={{ xs: 4, md: 10 }}>
-      <ImgContainer maxWidth="xs">
+    <GalleryNoImagesContainer>
+      <GalleryNoImagesContainerContent>
         <StyledImg
           alt={viewModel.defaultImage.alt}
           src={viewModel.defaultImage.src}
         />
-      </ImgContainer>
-      <Container maxWidth="sm">
-        <Box mb={2}>
-          <Typography
-            fontWeight="fontWeightMedium"
-            textAlign="center"
-            variant="h2"
-          >
-            {viewModel.photosComing}
-          </Typography>
-        </Box>
-        <Typography lineHeight="1.3" textAlign="center" variant="h2">
-          {viewModel.noPhotosSubtitle}
-        </Typography>
-      </Container>
-    </Box>
+        <Title variant="h2">{viewModel.photosComing}</Title>
+        <Description>{viewModel.noPhotosSubtitle}</Description>
+      </GalleryNoImagesContainerContent>
+    </GalleryNoImagesContainer>
   );
 };
 

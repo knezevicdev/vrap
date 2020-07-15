@@ -1,11 +1,7 @@
-import Box from '@material-ui/core/Box';
-import ButtonBase from '@material-ui/core/ButtonBase';
-import Grid from '@material-ui/core/Grid';
 import { styled } from '@material-ui/core/styles';
-import { Container, Typography } from '@vroom-web/ui';
+import { Typography } from '@vroom-web/ui';
 import { observer } from 'mobx-react';
-import React, { useState } from 'react';
-import reactStringReplace from 'react-string-replace';
+import React from 'react';
 
 import ViewModel from './ViewModel';
 
@@ -13,78 +9,69 @@ interface Props {
   viewModel: ViewModel;
 }
 
-const PoweredBy = styled('div')(() => ({
+const FeaturesContainer = styled('div')(({ theme }) => ({
   display: 'flex',
-  alignItems: 'center',
+  margin: theme.spacing(0, 'auto', 4, 'auto'),
+  maxWidth: '1280px',
+  width: '100%',
+  padding: theme.spacing(0, 3),
 }));
 
-const Logo = styled('img')(({ theme }) => ({
-  height: theme.spacing(2),
+const FeaturesContainerContent = styled('div')(({ theme }) => ({
+  display: 'flex',
+  flexDirection: 'column',
+  width: '100%',
+  border: `1px solid ${theme.palette.grey.A100}`,
+  backgroundColor: theme.palette.background.paper,
+  padding: theme.spacing(3),
 }));
 
-const Message = styled(Typography)(({ theme }) => ({
-  borderLeft: `solid 1px ${theme.palette.grey['400']}`,
-  marginLeft: theme.spacing(2),
-  paddingLeft: theme.spacing(2),
-  lineHeight: 'inherit',
+const Features = styled('div')(({ theme }) => ({
+  display: 'flex',
+  flexWrap: 'wrap',
+  marginTop: theme.spacing(3),
 }));
 
-const FeaturesView: React.FC<Props> = (props) => {
-  const { viewModel } = props;
+const Feature = styled(Typography)(({ theme }) => ({
+  fontSize: '20px',
+  minWidth: '25%',
+  maxWidth: '25%',
+  lineHeight: 'normal',
+  [theme.breakpoints.only('xs')]: {
+    minWidth: '100%',
+  },
+  [theme.breakpoints.only('sm')]: {
+    minWidth: '50%',
+  },
+  letterSpacing: '0.25px',
+  marginBottom: theme.spacing(2),
+}));
 
-  const [limited, setLimited] = useState(true);
-  const handleClick = (): void => setLimited(!limited);
+const Show = styled(Typography)(({ theme }) => ({
+  fontWeight: 600,
+  fontSize: '16px',
+  letterSpacing: '1.75px',
+  color: theme.palette.primary.main,
+  cursor: 'pointer',
+}));
 
-  const items = viewModel.display(limited);
-
+const FeaturesView: React.FC<Props> = ({ viewModel }) => {
   return (
-    <Container>
-      <Box mb={{ xs: 2, md: 4 }}>
-        <Grid container>
-          <Grid item xs={12} md={6}>
-            <Typography variant="h2" fontWeight="fontWeightMedium">
-              {viewModel.title}
-            </Typography>
-          </Grid>
-        </Grid>
-      </Box>
-      <Grid container>
-        {items.map((i) => {
-          return (
-            <Grid key={i} item xs={12} sm={6} md={4}>
-              <Box pb={2}>
-                <Typography variant="body1" fontWeight="fontWeightLight">
-                  {reactStringReplace(
-                    i,
-                    /<button>(.*)<\/button>/g,
-                    (match, index) => (
-                      <ButtonBase key={`rsr-${index}`} onClick={handleClick}>
-                        <Typography
-                          variant="body1"
-                          fontWeight="fontWeightMedium"
-                          color="primary.main"
-                          display="inline"
-                          component="span"
-                        >
-                          {match}
-                        </Typography>
-                      </ButtonBase>
-                    )
-                  )}
-                </Typography>
-              </Box>
-            </Grid>
-          );
-        })}
-      </Grid>
-
-      <PoweredBy>
-        <Logo src={viewModel.logo.src} alt={viewModel.logo.alt} />
-        <Message variant="body1" fontWeight="fontWeightLight">
-          {viewModel.poweredBy}
-        </Message>
-      </PoweredBy>
-    </Container>
+    <FeaturesContainer>
+      <FeaturesContainerContent>
+        <Typography variant="h2" fontWeight="fontWeightMedium">
+          {viewModel.title}
+        </Typography>
+        <Features>
+          {viewModel.getFeatures().map((feature, index) => {
+            return <Feature key={`${index}: feature`}>{feature}</Feature>;
+          })}
+        </Features>
+        {viewModel.showButton() && (
+          <Show onClick={viewModel.onClick}>{viewModel.getButtonLabel()}</Show>
+        )}
+      </FeaturesContainerContent>
+    </FeaturesContainer>
   );
 };
 

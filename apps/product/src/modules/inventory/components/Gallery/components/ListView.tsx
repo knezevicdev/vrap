@@ -1,7 +1,7 @@
 import { styled } from '@material-ui/core/styles';
 import CloseIcon from '@material-ui/icons/Close';
 import FullscreenExitIcon from '@material-ui/icons/FullscreenExit';
-import { Container } from '@vroom-web/ui';
+import { Typography } from '@vroom-web/ui';
 import { observer } from 'mobx-react';
 import React, { useEffect } from 'react';
 
@@ -14,7 +14,7 @@ interface Props {
   viewModel: ViewModel;
 }
 
-const StyledContainer = styled(Container)(() => ({
+const StyledContainer = styled('div')(() => ({
   zIndex: 1101,
   position: 'fixed',
   top: 0,
@@ -42,12 +42,12 @@ const StyledImage = styled('img')(() => ({
   width: '100%',
 }));
 
-const ImagesContainer = styled('div')(() => ({
-  paddingTop: '40px',
+const ImagesContainer = styled('div')(({ theme }) => ({
+  paddingTop: theme.spacing(6),
 }));
 
-const ImageHeader = styled('div')(() => ({
-  padding: '15px 0',
+const ImageHeader = styled(Typography)(({ theme }) => ({
+  padding: theme.spacing(2, 1),
 }));
 
 const FullscreenContainer = styled('div')(() => ({
@@ -74,6 +74,10 @@ const StyledFullscreenExitIcon = styled(FullscreenExitIcon)(({ theme }) => ({
   right: 0,
   bottom: 0,
   color: theme.palette.grey[100],
+}));
+
+const Imperfections = styled('div')(({ theme }) => ({
+  padding: theme.spacing(0, 2),
 }));
 
 const GalleryListView: React.FC<Props> = ({ viewModel }) => {
@@ -125,7 +129,6 @@ const GalleryListView: React.FC<Props> = ({ viewModel }) => {
                     {index + 1}
                     {viewModel.indexSeparator}
                     {images.length + 1}
-                    <div>{image.description}</div>
                   </ImageHeader>
                   <StyledImage
                     src={image.thumbnail}
@@ -145,7 +148,9 @@ const GalleryListView: React.FC<Props> = ({ viewModel }) => {
             {images.length + 1}
           </ImageHeader>
         )}
-        {isDefect ? <GalleryConditionEnd /> : <GalleryGeneralToCondition />}
+        <Imperfections>
+          {isDefect ? <GalleryConditionEnd /> : <GalleryGeneralToCondition />}
+        </Imperfections>
       </StyledContainer>
     </>
   );

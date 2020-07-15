@@ -1,4 +1,3 @@
-import Grid from '@material-ui/core/Grid';
 import { styled } from '@material-ui/core/styles';
 import { Button, Typography } from '@vroom-web/ui';
 import { observer } from 'mobx-react';
@@ -11,9 +10,12 @@ interface Props {
 }
 
 const CustomButton = styled(Button)(({ theme }) => ({
+  width: '100%',
+
   '&.MuiButton-contained.Mui-disabled': {
-    backgroundColor: theme.palette.grey['400'],
-    color: theme.palette.text.primary,
+    backgroundColor: '#f5f5f5',
+    color: theme.palette.grey['A100'],
+    border: `1px solid ${theme.palette.grey['A100']}`,
   },
 }));
 
@@ -22,20 +24,18 @@ const StartPurchaseView: React.FC<Props> = (props) => {
   const handleClick = (): void => viewModel.handleClick();
 
   return (
-    <Grid item xs={12} sm={3} md={2} container alignItems="center">
+    <>
       <CustomButton
         variant="contained"
         color="primary"
-        size="large"
-        fullWidth
         onClick={handleClick}
         disabled={viewModel.isAvailableSoon()}
       >
-        <Typography variant="body1" fontWeight="fontWeightMedium">
+        <Typography variant="button" fontWeight={600}>
           {viewModel.getButtonText()}
         </Typography>
       </CustomButton>
-    </Grid>
+    </>
   );
 };
 
