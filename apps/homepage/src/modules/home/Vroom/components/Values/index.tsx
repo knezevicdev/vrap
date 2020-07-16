@@ -1,10 +1,11 @@
 import React from 'react';
 
-import { HomeStore, HomeStoreContext } from '../../store';
 import View from './View';
 import ViewModel from './ViewModel';
 
-const Hero: React.FC = () => {
+import { HomeStore, HomeStoreContext } from 'src/modules/home/store';
+
+const Values: React.FC = () => {
   return (
     <HomeStoreContext.Consumer>
       {(store: HomeStore): JSX.Element => {
@@ -15,4 +16,4 @@ const Hero: React.FC = () => {
   );
 };
 
-export default Hero;
+export default Values;

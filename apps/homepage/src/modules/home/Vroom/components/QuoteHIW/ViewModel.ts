@@ -1,6 +1,5 @@
-import { HomeStore } from '../../store';
-
 import { showDefaultVariant } from 'src/integrations/experimentSDK';
+import { HomeStore } from 'src/modules/home/store';
 
 class QuoteHIWModel {
   quoteHIWPositionDefaultVariant: boolean;

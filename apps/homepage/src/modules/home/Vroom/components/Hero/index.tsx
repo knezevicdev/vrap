@@ -1,10 +1,11 @@
 import React from 'react';
 
-import { HomeStore, HomeStoreContext } from '../../store';
 import View from './View';
 import ViewModel from './ViewModel';
 
-const QuoteHIW: React.FC = () => {
+import { HomeStore, HomeStoreContext } from 'src/modules/home/store';
+
+const Hero: React.FC = () => {
   return (
     <HomeStoreContext.Consumer>
       {(store: HomeStore): JSX.Element => {
@@ -15,4 +16,4 @@ const QuoteHIW: React.FC = () => {
   );
 };
 
-export default QuoteHIW;
+export default Hero;

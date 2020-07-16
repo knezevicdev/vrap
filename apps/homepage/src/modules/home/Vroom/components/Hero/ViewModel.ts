@@ -1,7 +1,6 @@
-import { HomeStore } from '../../store';
-
 import globalEnv from 'src/globalEnv';
 import { showDefaultVariant } from 'src/integrations/experimentSDK';
+import { HomeStore } from 'src/modules/home/store';
 
 interface Link {
   label: string;
