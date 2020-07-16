@@ -42,7 +42,7 @@ const Links = styled('div')(({ theme }) => ({
   },
 }));
 
-const Title = styled(Typography)(() => ({
+const Title = styled(MULink)(() => ({
   fontWeight: 600,
   color: '#767676',
   fontSize: '14px',
@@ -112,13 +112,25 @@ const View: React.FC<Props> = ({ viewModel }) => {
       <Sections>
         {sections.map((section) => {
           const { title, links } = section;
+          const titleStyle = title.href ? {} : { textDecoration: 'none' };
+
           return (
-            <Links key={title}>
-              <Title>{title}</Title>
+            <Links key={title.label}>
+              <Typography>
+                <Title
+                  href={title.href}
+                  style={titleStyle}
+                  target={title.target}
+                >
+                  {title.label}
+                </Title>
+              </Typography>
               {links.map((link) => {
                 return (
                   <Link key={link.label}>
-                    <CustomLink href={link.href}>{link.label}</CustomLink>
+                    <CustomLink href={link.href} target={link.target}>
+                      {link.label}
+                    </CustomLink>
                   </Link>
                 );
               })}
@@ -129,7 +141,11 @@ const View: React.FC<Props> = ({ viewModel }) => {
       <Copyright>
         <CopyrightLabel>
           {viewModel.copyrightLabel}
-          <CopyrightLink href={viewModel.copyrightLink.href} underline="always">
+          <CopyrightLink
+            href={viewModel.copyrightLink.href}
+            target={viewModel.copyrightLink.target}
+            underline="always"
+          >
             {viewModel.copyrightLink.label}
           </CopyrightLink>
         </CopyrightLabel>
