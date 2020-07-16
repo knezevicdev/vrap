@@ -1,16 +1,17 @@
-import createMuiTheme, {
-  Theme as MuiTheme,
-} from '@material-ui/core/styles/createMuiTheme';
-import { Typography as MuiTypography } from '@material-ui/core/styles/createTypography';
+// TODO: update this to the actual Santander branding.
+
+import createMuiTheme from '@material-ui/core/styles/createMuiTheme';
+
+import { Theme } from '../types';
 
 const muiTheme = createMuiTheme({
   palette: {
     primary: {
-      main: '#e7131a',
+      main: '#FFFF00',
       contrastText: '#fff',
     },
     secondary: {
-      main: '#041022',
+      main: '#0000FF',
       contrastText: '#fff',
     },
     background: {
@@ -38,15 +39,7 @@ const muiTheme = createMuiTheme({
   },
 });
 
-interface Typography extends MuiTypography {
-  fontWeightSemibold: number;
-}
-
-export interface Theme extends MuiTheme {
-  typography: Typography;
-}
-
-const theme: Theme = {
+const santanderTheme: Theme = {
   ...muiTheme,
   typography: {
     pxToRem: muiTheme.typography.pxToRem,
@@ -103,4 +96,4 @@ const theme: Theme = {
   },
 };
 
-export default theme;
+export default santanderTheme;

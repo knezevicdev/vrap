@@ -1,8 +1,10 @@
 import React from 'react';
 
-import globalEnv from 'src/globalEnv';
+interface Props {
+  hostUrl: string;
+}
 
-const FontsSnippet: React.FC = () => {
+const VroomFontsSnippet: React.FC<Props> = ({ hostUrl }) => {
   return (
     <>
       {/*
@@ -18,17 +20,22 @@ const FontsSnippet: React.FC = () => {
           __html: `
             @font-face {
               font-family: 'VroomSans';
-              src: url('${globalEnv.ASSET_PREFIX}/fonts/VroomSansSMALL-ExtraBoldItalicWEB.woff') format('woff');
+              src: url('${hostUrl}/fonts/VroomSansSMALL-ExtraBoldItalicWEB.woff') format('woff');
             }
             @font-face {
               font-family: Calibre;
               font-weight: 400;
-              src: url('${globalEnv.ASSET_PREFIX}/fonts/CalibreWeb-Regular.woff') format('woff');
+              src: url('${hostUrl}/fonts/CalibreWeb-Regular.woff') format('woff');
+            }
+            @font-face {
+              font-family: Calibre;
+              font-weight: 500;
+              src: url('${hostUrl}/fonts/CalibreWeb-Semibold.woff') format('woff');
             }
             @font-face {
               font-family: 'Calibre';
               font-weight: 600;
-              src: url('${globalEnv.ASSET_PREFIX}/fonts/CalibreWeb-Semibold.woff') format('woff');
+              src: url('${hostUrl}/fonts/CalibreWeb-Semibold.woff') format('woff');
             }
           `,
         }}
@@ -37,4 +44,4 @@ const FontsSnippet: React.FC = () => {
   );
 };
 
-export default FontsSnippet;
+export default VroomFontsSnippet;

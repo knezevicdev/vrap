@@ -1,5 +1,6 @@
 import { ServerStyleSheets } from '@material-ui/core/styles';
 import { AnalyticsSnippet } from '@vroom-web/analytics-integration';
+import { UISnippet } from '@vroom-web/ui';
 import { AppType, Enhancer, RenderPage } from 'next/dist/next-server/lib/utils';
 import Document, {
   DocumentContext,
@@ -11,8 +12,6 @@ import Document, {
 } from 'next/document';
 import React from 'react';
 
-import FaviconSnippet from './FaviconSnippet';
-import FontsSnippet from './FontsSnippet';
 import GlobalEnvSnippet from './GlobalEnvSnippet';
 
 import globalEnv from 'src/globalEnv';
@@ -56,8 +55,7 @@ class VroomDocument extends Document {
             name="viewport"
             content="minimum-scale=1, initial-scale=1, width=device-width"
           />
-          <FaviconSnippet />
-          <FontsSnippet />
+          <UISnippet hostUrl={globalEnv.ASSET_PREFIX || ''} />
           {segmentWriteKey && (
             <AnalyticsSnippet
               appName="Vroom Web - Catalog"

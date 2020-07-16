@@ -1,10 +1,8 @@
 import 'mobx-react/batchingForReactDom';
 
 import { datadogLogs, LogsUserConfiguration } from '@datadog/browser-logs';
-import { ThemeProvider } from '@vroom-web/ui';
 import { configure as configureMobx } from 'mobx';
 import App from 'next/app';
-import Head from 'next/head';
 import React from 'react';
 import smoothscroll from 'smoothscroll-polyfill';
 
@@ -39,16 +37,7 @@ class VroomApp extends App {
 
   render(): JSX.Element {
     const { Component, pageProps } = this.props;
-    return (
-      <>
-        <Head>
-          <title>Vroom</title>
-        </Head>
-        <ThemeProvider>
-          <Component {...pageProps} />
-        </ThemeProvider>
-      </>
-    );
+    return <Component {...pageProps} />;
   }
 }
 

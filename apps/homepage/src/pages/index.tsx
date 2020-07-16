@@ -1,3 +1,4 @@
+import { ThemeProvider } from '@vroom-web/ui';
 import { NextPage, NextPageContext } from 'next';
 import { parseCookies } from 'nookies';
 import React from 'react';
@@ -33,11 +34,14 @@ const HomePage: NextPage<Props> = ({
   );
 
   return (
-    <Page experiments={experiments} name="Home" head={head}>
-      <HomeStoreContext.Provider value={store}>
-        <Home />
-      </HomeStoreContext.Provider>
-    </Page>
+    // TODO: add "brand" prop to "ThemeProvider"
+    <ThemeProvider>
+      <Page experiments={experiments} name="Home" head={head}>
+        <HomeStoreContext.Provider value={store}>
+          <Home />
+        </HomeStoreContext.Provider>
+      </Page>
+    </ThemeProvider>
   );
 };
 

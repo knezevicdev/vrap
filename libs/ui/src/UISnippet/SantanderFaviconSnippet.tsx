@@ -1,35 +1,38 @@
-import { theme } from '@vroom-web/ui';
+// TODO: update this to the actual Santander favicons
+
 import React from 'react';
 
-import globalEnv from 'src/globalEnv';
+import { Theme } from '../types';
 
-const FaviconSnippet: React.FC = () => {
+interface Props {
+  hostUrl: string;
+  theme: Theme;
+}
+
+const SantanderFaviconSnippet: React.FC<Props> = ({ hostUrl, theme }) => {
   return (
     <>
       <link
         rel="apple-touch-icon"
         sizes="180x180"
-        href={`${globalEnv.ASSET_PREFIX}/apple-touch-icon.png`}
+        href={`${hostUrl}/apple-touch-icon.png`}
       />
       <link
         rel="icon"
         type="image/png"
         sizes="32x32"
-        href={`${globalEnv.ASSET_PREFIX}/favicon-32x32.png`}
+        href={`${hostUrl}/favicon-32x32.png`}
       />
       <link
         rel="icon"
         type="image/png"
         sizes="16x16"
-        href={`${globalEnv.ASSET_PREFIX}/favicon-16x16.png`}
+        href={`${hostUrl}/favicon-16x16.png`}
       />
-      <link
-        rel="manifest"
-        href={`${globalEnv.ASSET_PREFIX}/site.webmanifest`}
-      />
+      <link rel="manifest" href={`${hostUrl}/site.webmanifest`} />
       <link
         rel="mask-icon"
-        href={`${globalEnv.ASSET_PREFIX}/safari-pinned-tab.svg`}
+        href={`${hostUrl}/safari-pinned-tab.svg`}
         color={theme.palette.primary.main}
       />
       <meta
@@ -41,4 +44,4 @@ const FaviconSnippet: React.FC = () => {
   );
 };
 
-export default FaviconSnippet;
+export default SantanderFaviconSnippet;
