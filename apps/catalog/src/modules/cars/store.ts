@@ -40,6 +40,7 @@ import globalEnv from 'src/globalEnv';
 import { Status } from 'src/networking/types';
 
 export interface InitialCarsStoreState {
+  attributionQueryString: string;
   filtersData?: FiltersData;
   makeBuckets?: MakeBucket[];
   makeBucketsStatus: Status;
@@ -223,9 +224,11 @@ export const getPostInventoryRequestDataFromFilterData = (
 };
 
 export async function getInitialCarsStoreState(
+  attributionQueryString: string,
   filtersQueryParam?: string
 ): Promise<InitialCarsStoreState> {
   const initialState: InitialCarsStoreState = {
+    attributionQueryString,
     makeBucketsStatus: Status.INITIAL,
     inventoryStatus: Status.INITIAL,
     popularCarsStatus: Status.INITIAL,
@@ -305,6 +308,8 @@ export async function getInitialCarsStoreState(
 export class CarsStore {
   private readonly invSearchNetworker: InvSearchNetworker;
 
+  readonly attributionQueryString: string = '';
+
   readonly inventoryCardsPerPage: number = INVENTORY_CARDS_PER_PAGE;
   readonly bodyTypes: BodyType[] = bodyTypes;
   readonly colors: Color[] = colors;
@@ -343,6 +348,7 @@ export class CarsStore {
     );
 
     if (initialState) {
+      this.attributionQueryString = initialState.attributionQueryString;
       this.filtersData = initialState.filtersData;
       this.makeBuckets = initialState.makeBuckets;
       this.makeBucketsStatus = initialState.makeBucketsStatus;
@@ -431,7 +437,23 @@ export class CarsStore {
           [Filters.PAGE]: undefined,
         };
     const as = getUrlFromFiltersData(filtersDataToUse);
-    Router.replace('/cars/[[...params]]', as, { shallow: true });
+
+    // FIT-583
+    // Persist key attribution query params across navigation.
+    // This is a stopgap so that vlassic attributuion works.
+    // We should come back and remove this when a better attribution system is in place.
+    let asWithAttributionQueryString = as;
+    if (this.attributionQueryString !== '') {
+      asWithAttributionQueryString =
+        as.indexOf('?') === -1
+          ? `${as}?${this.attributionQueryString}`
+          : `${as}&${this.attributionQueryString}`;
+    }
+
+    Router.replace('/cars/[[...params]]', asWithAttributionQueryString, {
+      shallow: true,
+    });
+
     window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
     this.filtersData = filtersDataToUse;
     await this.fetchInventoryData();

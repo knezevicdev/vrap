@@ -1,5 +1,7 @@
+/* eslint-disable @typescript-eslint/camelcase */
 import { useTheme } from '@material-ui/core/styles';
 import { NextPage, NextPageContext } from 'next';
+import { stringify } from 'qs';
 import React, { useEffect, useState } from 'react';
 
 import Cars from 'src/modules/cars';
@@ -54,10 +56,48 @@ const CarsPage: NextPage<Props> = ({ initialStoreState }) => {
 
 CarsPage.getInitialProps = async (context: NextPageContext): Promise<Props> => {
   const {
-    query: { filters },
+    query: {
+      filters,
+      gclid,
+      subid,
+      utm_source,
+      utm_medium,
+      utm_campaign,
+      utm_term,
+      utm_content,
+      utm_keyword,
+      utm_subsource,
+      utm_site,
+    },
   } = context;
+
+  const filtersQueryParam =
+    typeof filters === 'string' ? (filters as string) : undefined;
+
+  // FIT-583
+  // Persist key attribution query params across navigation.
+  // This is a stopgap so that vlassic attributuion works.
+  // We should come back and remove this when a better attribution system is in place.
+  const attributionQueryString = stringify(
+    {
+      gclid,
+      subid,
+      utm_source,
+      utm_medium,
+      utm_campaign,
+      utm_term,
+      utm_content,
+      utm_keyword,
+      utm_subsource,
+      utm_site,
+    },
+    {
+      addQueryPrefix: false,
+    }
+  );
   const initialStoreState = await getInitialCarsStoreState(
-    typeof filters === 'string' ? (filters as string) : undefined
+    attributionQueryString,
+    filtersQueryParam
   );
   return {
     initialStoreState,

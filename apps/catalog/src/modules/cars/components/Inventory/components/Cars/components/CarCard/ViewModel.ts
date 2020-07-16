@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/camelcase */
 import { Car, SoldStatusInt } from '@vroom-web/inv-search-networking';
 
 import globalEnv from 'src/globalEnv';
@@ -5,6 +6,7 @@ import AnalyticsHandler, {
   Product,
   ProductPhotoType,
 } from 'src/integrations/AnalyticsHandler';
+import { CarsStore } from 'src/modules/cars/store';
 
 interface Summary {
   image: string;
@@ -16,6 +18,7 @@ interface Summary {
 
 class CarCardViewModel {
   private analyticsHandler: AnalyticsHandler;
+  private readonly carsStore: CarsStore;
   private readonly car: Car;
   readonly evoxLogo = {
     alt: 'Evox Images',
@@ -24,8 +27,9 @@ class CarCardViewModel {
   readonly availableSoon: string = 'AVAILABLE SOON';
   readonly salePending: string = 'SALE PENDING';
 
-  constructor(car: Car) {
+  constructor(carsStore: CarsStore, car: Car) {
     this.analyticsHandler = new AnalyticsHandler();
+    this.carsStore = carsStore;
     this.car = car;
   }
 
@@ -94,7 +98,15 @@ class CarCardViewModel {
   }
 
   link(): string {
-    return `/inventory/${this.car.vin}`;
+    // FIT-583
+    // Persist key attribution query params across navigation.
+    // This is a stopgap so that vlassic attributuion works.
+    // TODO: We should come back and remove this when a better attribution system is in place.
+    const attributionQueryString =
+      this.carsStore.attributionQueryString !== ''
+        ? `?${this.carsStore.attributionQueryString}`
+        : '';
+    return `/inventory/${this.car.vin}${attributionQueryString}`;
   }
 
   trackProductClick = (): void => {
