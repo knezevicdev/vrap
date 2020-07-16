@@ -62,13 +62,6 @@ class CarDetailsViewModel {
       },
     };
   }
-
-  recalls(): Link {
-    return {
-      text: 'Check for Safety Recalls',
-      href: `https://www.nhtsa.gov/recalls?vin=${this.car.vin}`,
-    };
-  }
 }
 
 export default CarDetailsViewModel;

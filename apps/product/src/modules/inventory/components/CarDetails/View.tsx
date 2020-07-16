@@ -8,6 +8,7 @@ import ViewModel from './ViewModel';
 
 import ExternalLink from 'src/ui/ExternalLink';
 import Basics from "./components/Basics";
+import Performance from "./components/Performance";
 
 interface Props {
   viewModel: ViewModel;
@@ -34,15 +35,6 @@ const DetailsData = styled('div')(({ theme }) => ({
   display: 'flex',
   [theme.breakpoints.only('xs')]: { flexDirection: 'column' },
   [theme.breakpoints.only('sm')]: { flexWrap: 'wrap' },
-}));
-
-const Performance = styled('div')(({ theme }) => ({
-  display: 'flex',
-  flexDirection: 'column',
-  margin: theme.spacing(3, 0, 0, 0),
-  [theme.breakpoints.only('sm')]: {
-    minWidth: `calc(50% - ${theme.spacing(2)}px)`,
-  },
 }));
 
 const History = styled('div')(({ theme }) => ({
@@ -74,10 +66,6 @@ const CarfaxLink = styled(Typography)(({ theme }) => ({
   marginBottom: theme.spacing(1),
 }));
 
-const RecallLink = styled(Typography)(({ theme }) => ({
-  fontSize: '20px',
-  marginTop: theme.spacing(2),
-}));
 
 const Title = styled(Typography)(({ theme }) => ({
   fontWeight: 600,
@@ -90,7 +78,6 @@ const Title = styled(Typography)(({ theme }) => ({
 const CarDetailsView: React.FC<Props> = (props) => {
   const { viewModel } = props;
   const history = viewModel.history();
-  const recalls = viewModel.recalls();
 
   return (
     <CarDetailsContainer>
@@ -101,22 +88,7 @@ const CarDetailsView: React.FC<Props> = (props) => {
 
         <DetailsData>
           <Basics/>
-          <Performance>
-            {/* <Title>{performance.title}</Title>
-
-            {performance.items.map((item) => {
-              return (
-                <DetailsRow key={`${item.label}-${item.value}`}>
-                  <Label>{item.label}</Label>
-                  <Value>{item.value}</Value>
-                </DetailsRow>
-              );
-            })} */}
-
-            <ExternalLink href={recalls.href} target="_blank">
-              <RecallLink>{recalls.text}</RecallLink>
-            </ExternalLink>
-          </Performance>
+          <Performance/>
           <History>
             <Title>{history.title}</Title>
             {history.isWarrantyAvailable && (
