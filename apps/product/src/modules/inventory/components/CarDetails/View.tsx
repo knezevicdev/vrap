@@ -4,7 +4,7 @@ import { observer } from 'mobx-react';
 import React from 'react';
 import reactStringReplace from 'react-string-replace';
 
-import InfoSction from './InfoSection';
+import InfoSection from './InfoSection';
 import ViewModel from './ViewModel';
 
 import ExternalLink from 'src/ui/ExternalLink';
@@ -61,32 +61,6 @@ const History = styled('div')(({ theme }) => ({
   [theme.breakpoints.only('sm')]: { marginLeft: 0 },
 }));
 
-const DetailsRow = styled('div')(({ theme }) => ({
-  display: 'flex',
-  width: '100%',
-  borderBottom: `1px solid rgba(214, 215, 218, 0.6)`,
-  paddingTop: theme.spacing(2),
-  paddingBottom: theme.spacing(1),
-}));
-
-const Label = styled(Typography)(({ theme }) => ({
-  fontWeight: 600,
-  fontSize: '20px',
-  minWidth: '140px',
-  color: theme.palette.grey['700'],
-  marginBottom: theme.spacing(2),
-}));
-
-const Value = styled(Typography)(({ theme }) => ({
-  fontSize: '20px',
-  whiteSpace: 'nowrap',
-  letterSpacing: '0.75px',
-  lineHeight: 'normal',
-  [theme.breakpoints.only('xs')]: {
-    whiteSpace: 'normal',
-  },
-}));
-
 const HistoryContent = styled('div')(({ theme }) => ({
   marginTop: theme.spacing(2),
 }));
@@ -123,7 +97,6 @@ const Title = styled(Typography)(({ theme }) => ({
 
 const CarDetailsView: React.FC<Props> = (props) => {
   const { viewModel } = props;
-
   const history = viewModel.history();
   const recalls = viewModel.recalls();
 
@@ -136,10 +109,10 @@ const CarDetailsView: React.FC<Props> = (props) => {
 
         <DetailsData>
           <Basics>
-            <InfoSction />
+            <InfoSection />
           </Basics>
-          {/* <Performance>
-            <Title>{performance.title}</Title>
+          <Performance>
+            {/* <Title>{performance.title}</Title>
 
             {performance.items.map((item) => {
               return (
@@ -148,12 +121,12 @@ const CarDetailsView: React.FC<Props> = (props) => {
                   <Value>{item.value}</Value>
                 </DetailsRow>
               );
-            })}
+            })} */}
 
             <ExternalLink href={recalls.href} target="_blank">
               <RecallLink>{recalls.text}</RecallLink>
             </ExternalLink>
-          </Performance> */}
+          </Performance>
           <History>
             <Title>{history.title}</Title>
             {history.isWarrantyAvailable && (

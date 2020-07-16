@@ -20,11 +20,6 @@ interface Link {
   href: string;
 }
 
-interface Section {
-  title: string;
-  items: { label: string; value: string }[];
-}
-
 class CarDetailsViewModel {
   private car: Car;
   readonly title: string = 'Car Details';

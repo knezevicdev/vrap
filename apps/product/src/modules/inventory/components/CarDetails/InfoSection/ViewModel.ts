@@ -11,6 +11,7 @@ class InfoSectionViewModel {
   private car: Car;
   constructor(inventoryStore: InventoryStore) {
     this.car = inventoryStore.vehicle._source;
+    console.log(this.car, inventoryStore);
   }
   sections: Section[] = [
     {
