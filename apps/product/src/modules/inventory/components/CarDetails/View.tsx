@@ -4,6 +4,7 @@ import { observer } from 'mobx-react';
 import React from 'react';
 import reactStringReplace from 'react-string-replace';
 
+import InfoSction from './InfoSection';
 import ViewModel from './ViewModel';
 
 import ExternalLink from 'src/ui/ExternalLink';
@@ -124,8 +125,6 @@ const CarDetailsView: React.FC<Props> = (props) => {
   const { viewModel } = props;
 
   const history = viewModel.history();
-  const basics = viewModel.basics();
-  const performance = viewModel.performance();
   const recalls = viewModel.recalls();
 
   return (
@@ -137,17 +136,9 @@ const CarDetailsView: React.FC<Props> = (props) => {
 
         <DetailsData>
           <Basics>
-            <Title>{basics.title}</Title>
-            {basics.items.map((item) => {
-              return (
-                <DetailsRow key={`${item.label}-${item.value}`}>
-                  <Label>{item.label}</Label>
-                  <Value>{item.value}</Value>
-                </DetailsRow>
-              );
-            })}
+            <InfoSction />
           </Basics>
-          <Performance>
+          {/* <Performance>
             <Title>{performance.title}</Title>
 
             {performance.items.map((item) => {
@@ -162,7 +153,7 @@ const CarDetailsView: React.FC<Props> = (props) => {
             <ExternalLink href={recalls.href} target="_blank">
               <RecallLink>{recalls.text}</RecallLink>
             </ExternalLink>
-          </Performance>
+          </Performance> */}
           <History>
             <Title>{history.title}</Title>
             {history.isWarrantyAvailable && (
