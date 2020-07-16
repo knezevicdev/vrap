@@ -4,11 +4,12 @@ import { observer } from 'mobx-react';
 import React from 'react';
 import reactStringReplace from 'react-string-replace';
 
+import Basics from './components/Basics';
+import Performance from './components/Performance';
+import VehicleSize from './components/VehicleSize';
 import ViewModel from './ViewModel';
 
 import ExternalLink from 'src/ui/ExternalLink';
-import Basics from "./components/Basics";
-import Performance from "./components/Performance";
 
 interface Props {
   viewModel: ViewModel;
@@ -35,6 +36,11 @@ const DetailsData = styled('div')(({ theme }) => ({
   display: 'flex',
   [theme.breakpoints.only('xs')]: { flexDirection: 'column' },
   [theme.breakpoints.only('sm')]: { flexWrap: 'wrap' },
+}));
+
+const FlexColumn = styled('div')(({ theme }) => ({
+  display: 'flex',
+  flexDirection: 'column',
 }));
 
 const History = styled('div')(({ theme }) => ({
@@ -66,13 +72,16 @@ const CarfaxLink = styled(Typography)(({ theme }) => ({
   marginBottom: theme.spacing(1),
 }));
 
-
 const Title = styled(Typography)(({ theme }) => ({
   fontWeight: 600,
   fontSize: '14px',
   letterSpacing: '1.75px',
   color: theme.palette.grey['500'],
   textTransform: 'uppercase',
+}));
+
+const Spacer = styled('div')(({ theme }) => ({
+  height: '23px',
 }));
 
 const CarDetailsView: React.FC<Props> = (props) => {
@@ -87,8 +96,12 @@ const CarDetailsView: React.FC<Props> = (props) => {
         </Typography>
 
         <DetailsData>
-          <Basics/>
-          <Performance/>
+          <FlexColumn>
+            <Basics />
+            <Spacer />
+            <Performance />
+          </FlexColumn>
+          <VehicleSize />
           <History>
             <Title>{history.title}</Title>
             {history.isWarrantyAvailable && (

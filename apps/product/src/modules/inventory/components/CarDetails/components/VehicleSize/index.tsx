@@ -1,10 +1,10 @@
 import React from 'react';
 
-import { InventoryStore, InventoryStoreContext } from '../../../store';
+import { InventoryStore, InventoryStoreContext } from '../../../../store';
 import View from './View';
 import ViewModel from './ViewModel';
 
-const InfoSection: React.FC = () => {
+const VehicleSize: React.FC = () => {
   return (
     <InventoryStoreContext.Consumer>
       {(store: InventoryStore): JSX.Element => {
@@ -15,4 +15,4 @@ const InfoSection: React.FC = () => {
   );
 };
 
-export default InfoSection;
+export default VehicleSize;

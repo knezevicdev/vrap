@@ -2,11 +2,19 @@ import { styled } from '@material-ui/core/styles';
 import { Typography } from '@vroom-web/ui';
 import React from 'react';
 
-import InfoSectionViewModel from './ViewModel';
+import ViewModel from './ViewModel';
 
-interface InfoSectionViewProps {
-  viewModel: InfoSectionViewModel;
+interface Props {
+  viewModel: ViewModel;
 }
+
+const Basics = styled('div')(({ theme }) => ({
+  display: 'flex',
+  flexDirection: 'column',
+  margin: theme.spacing(3, 2, 0, 0),
+  [theme.breakpoints.only('xs')]: { marginRight: 0 },
+  [theme.breakpoints.only('sm')]: { minWidth: '50%' },
+}));
 
 const Title = styled(Typography)(({ theme }) => ({
   fontWeight: 600,
@@ -27,7 +35,7 @@ const DetailsRow = styled('div')(({ theme }) => ({
 const Label = styled(Typography)(({ theme }) => ({
   fontWeight: 600,
   fontSize: '20px',
-  minWidth: '140px',
+  minWidth: '155px',
   color: theme.palette.grey['700'],
   marginBottom: theme.spacing(2),
 }));
@@ -42,27 +50,21 @@ const Value = styled(Typography)(({ theme }) => ({
   },
 }));
 
-const InfoSectionView: React.FC<InfoSectionViewProps> = ({ viewModel }) => {
+const View: React.FC<Props> = ({ viewModel }) => {
+  const { title, items } = viewModel.getInformation();
   return (
-    <>
-      {viewModel.sections.map((section) => {
-        const { title, items } = section;
+    <Basics>
+      <Title>{title}</Title>
+      {items.map((item) => {
         return (
-          <>
-            <Title>{title}</Title>
-            {items.map((item) => {
-              return (
-                <DetailsRow key={`${item.label}-${item.value}`}>
-                  <Label>{item.label}</Label>
-                  <Value>{item.value}</Value>
-                </DetailsRow>
-              );
-            })}
-          </>
+          <DetailsRow key={`${item.label}-${item.value}`}>
+            <Label>{item.label}</Label>
+            <Value>{item.value}</Value>
+          </DetailsRow>
         );
       })}
-    </>
+    </Basics>
   );
 };
 
-export default InfoSectionView;
+export default View;
