@@ -4,10 +4,10 @@ import { observer } from 'mobx-react';
 import React from 'react';
 import reactStringReplace from 'react-string-replace';
 
-import InfoSection from './InfoSection';
 import ViewModel from './ViewModel';
 
 import ExternalLink from 'src/ui/ExternalLink';
+import Basics from "./components/Basics";
 
 interface Props {
   viewModel: ViewModel;
@@ -34,14 +34,6 @@ const DetailsData = styled('div')(({ theme }) => ({
   display: 'flex',
   [theme.breakpoints.only('xs')]: { flexDirection: 'column' },
   [theme.breakpoints.only('sm')]: { flexWrap: 'wrap' },
-}));
-
-const Basics = styled('div')(({ theme }) => ({
-  display: 'flex',
-  flexDirection: 'column',
-  margin: theme.spacing(3, 2, 0, 0),
-  [theme.breakpoints.only('xs')]: { marginRight: 0 },
-  [theme.breakpoints.only('sm')]: { minWidth: '50%' },
 }));
 
 const Performance = styled('div')(({ theme }) => ({
@@ -108,9 +100,7 @@ const CarDetailsView: React.FC<Props> = (props) => {
         </Typography>
 
         <DetailsData>
-          <Basics>
-            <InfoSection />
-          </Basics>
+          <Basics/>
           <Performance>
             {/* <Title>{performance.title}</Title>
 
