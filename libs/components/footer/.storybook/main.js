@@ -1,5 +1,5 @@
 module.exports = {
-  addons: ['@storybook/preset-typescript'],
+  addons: ['@storybook/preset-typescript', '@storybook/addon-viewport'],
   stories: ['../src/**/*.stories.tsx'],
   webpackFinal: async (config, { configType }) => {
     // `configType` has a value of 'DEVELOPMENT' or 'PRODUCTION'
