@@ -1,7 +1,7 @@
 import { SoldStatusInt } from '@vroom-web/inv-service-networking';
 import isEmpty from 'lodash.isempty';
 
-import { InventoryStore } from '../../store';
+import { InventoryStore } from 'src/modules/inventory/store';
 
 interface BannerInfo {
   label: string;

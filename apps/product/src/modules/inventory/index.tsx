@@ -1,18 +1,16 @@
-import React from 'react';
+import { Brand } from '@vroom-web/ui';
+import React, { useContext } from 'react';
 
-import { InventoryStore, InventoryStoreContext } from './store';
-import View from './View';
-import ViewModel from './ViewModel';
+import { BrandContext } from './BrandContext';
+import Santander from './Santader';
+import Vroom from './Vroom';
 
 const Inventory: React.FC = () => {
-  return (
-    <InventoryStoreContext.Consumer>
-      {(store: InventoryStore): JSX.Element => {
-        const viewModel = new ViewModel(store);
-        return <View viewModel={viewModel} />;
-      }}
-    </InventoryStoreContext.Consumer>
-  );
+  const brand = useContext(BrandContext);
+  if (brand === Brand.SANTANDER) {
+    return <Santander />;
+  }
+  return <Vroom />;
 };
 
 export default Inventory;

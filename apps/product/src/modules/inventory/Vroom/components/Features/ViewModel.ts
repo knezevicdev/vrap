@@ -1,5 +1,6 @@
-import { InventoryStore } from '../../store';
 import { FeaturesStore } from './store';
+
+import { InventoryStore } from 'src/modules/inventory/store';
 
 class FeaturesViewModel {
   private readonly features: string[] = [];

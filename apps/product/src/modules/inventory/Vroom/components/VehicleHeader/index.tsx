@@ -1,10 +1,14 @@
 import React from 'react';
 
-import { InventoryStore, InventoryStoreContext } from '../../store';
 import View from './View';
 import ViewModel from './ViewModel';
 
-const CarDetails: React.FC = () => {
+import {
+  InventoryStore,
+  InventoryStoreContext,
+} from 'src/modules/inventory/store';
+
+const VehicleHeader: React.FC = () => {
   return (
     <InventoryStoreContext.Consumer>
       {(store: InventoryStore): JSX.Element => {
@@ -15,4 +19,4 @@ const CarDetails: React.FC = () => {
   );
 };
 
-export default CarDetails;
+export default VehicleHeader;

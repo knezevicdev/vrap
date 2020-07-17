@@ -6,9 +6,8 @@ import { Car } from '@vroom-web/inv-search-networking';
 import { SoldStatusInt } from '@vroom-web/inv-service-networking';
 import isEmpty from 'lodash.isempty';
 
-import { InventoryStore } from '../../store';
-
 import AnalyticsHandler, { Product } from 'src/integrations/AnalyticsHandler';
+import { InventoryStore } from 'src/modules/inventory/store';
 
 class StartPurchaseViewModel {
   private store: InventoryStore;

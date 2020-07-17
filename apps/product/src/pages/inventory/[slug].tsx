@@ -1,7 +1,9 @@
+import { Brand, ThemeProvider } from '@vroom-web/ui';
 import { NextPage } from 'next';
 import React from 'react';
 
 import Inventory from 'src/modules/inventory';
+import { BrandContext } from 'src/modules/inventory/BrandContext';
 import {
   getInitialInventoryStoreState,
   InventoryStore,
@@ -15,10 +17,11 @@ export interface Props {
   canonicalHref?: string;
   initialState: InventoryStoreState;
   title: string;
+  brand: Brand;
 }
 
-const VehicleDetails: NextPage<Props> = (props: Props) => {
-  const { canonicalHref, initialState, title } = props;
+const InventoryPage: NextPage<Props> = (props: Props) => {
+  const { canonicalHref, initialState, title, brand } = props;
   const store = new InventoryStore(initialState);
   const head = (
     <>
@@ -28,15 +31,19 @@ const VehicleDetails: NextPage<Props> = (props: Props) => {
     </>
   );
   return (
-    <Page name="Product Details" head={head}>
-      <InventoryStoreContext.Provider value={store}>
-        <Inventory />
-      </InventoryStoreContext.Provider>
-    </Page>
+    <ThemeProvider brand={brand}>
+      <Page name="Product Details" head={head}>
+        <BrandContext.Provider value={brand}>
+          <InventoryStoreContext.Provider value={store}>
+            <Inventory />
+          </InventoryStoreContext.Provider>
+        </BrandContext.Provider>
+      </Page>
+    </ThemeProvider>
   );
 };
 
-VehicleDetails.getInitialProps = async ({ query, res }): Promise<Props> => {
+InventoryPage.getInitialProps = async ({ query, res }): Promise<Props> => {
   const slug = query.slug as string;
   const slugArray = slug.split('-');
   const vin = slugArray[slugArray.length - 1];
@@ -69,7 +76,9 @@ VehicleDetails.getInitialProps = async ({ query, res }): Promise<Props> => {
     }
   }
 
-  return { canonicalHref, initialState, title };
+  const brand = query.brand === 'santander' ? Brand.SANTANDER : Brand.VROOM;
+
+  return { canonicalHref, initialState, title, brand };
 };
 
-export default VehicleDetails;
+export default InventoryPage;
