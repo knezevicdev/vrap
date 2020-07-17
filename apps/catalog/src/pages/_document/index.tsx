@@ -1,6 +1,6 @@
 import { ServerStyleSheets } from '@material-ui/core/styles';
 import { AnalyticsSnippet } from '@vroom-web/analytics-integration';
-import { UISnippet } from '@vroom-web/ui';
+import { Brand, UISnippet } from '@vroom-web/ui';
 import { AppType, Enhancer, RenderPage } from 'next/dist/next-server/lib/utils';
 import Document, {
   DocumentContext,
@@ -47,6 +47,14 @@ class VroomDocument extends Document {
   render(): JSX.Element {
     const segmentWriteKey = process.env.SEGMENT_WRITE_KEY;
 
+    // FIT-570
+    // TODO: replace this mechanism with the actual one.
+    // Some data should come from ctx.req, rather than from ctx.query.
+    const query = this.props.__NEXT_DATA__.query;
+    const brandQueryParam = query.brand;
+    const brand =
+      brandQueryParam === 'santander' ? Brand.SANTANDER : Brand.VROOM;
+
     return (
       <Html lang="en">
         <Head>
@@ -55,7 +63,7 @@ class VroomDocument extends Document {
             name="viewport"
             content="minimum-scale=1, initial-scale=1, width=device-width"
           />
-          <UISnippet hostUrl={globalEnv.ASSET_PREFIX || ''} />
+          <UISnippet brand={brand} hostUrl={globalEnv.ASSET_PREFIX || ''} />
           {segmentWriteKey && (
             <AnalyticsSnippet
               appName="Vroom Web - Catalog"

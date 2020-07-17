@@ -1,10 +1,12 @@
 /* eslint-disable @typescript-eslint/camelcase */
 import { useTheme } from '@material-ui/core/styles';
+import { Brand, ThemeProvider } from '@vroom-web/ui';
 import { NextPage, NextPageContext } from 'next';
 import { stringify } from 'qs';
 import React, { useEffect, useState } from 'react';
 
 import Cars from 'src/modules/cars';
+import { BrandContext } from 'src/modules/cars/BrandContext';
 import {
   CarsStore,
   CarsStoreContext,
@@ -14,10 +16,11 @@ import {
 import Page from 'src/Page';
 
 interface Props {
+  brand: Brand;
   initialStoreState: InitialCarsStoreState;
 }
 
-const CarsPage: NextPage<Props> = ({ initialStoreState }) => {
+const CarsPage: NextPage<Props> = ({ brand, initialStoreState }) => {
   // Persist store instance across URL updates.
   const [carsStore] = useState<CarsStore>(new CarsStore(initialStoreState));
 
@@ -46,17 +49,22 @@ const CarsPage: NextPage<Props> = ({ initialStoreState }) => {
   );
 
   return (
-    <Page name="Catalog" head={head}>
-      <CarsStoreContext.Provider value={carsStore}>
-        <Cars />
-      </CarsStoreContext.Provider>
-    </Page>
+    <ThemeProvider brand={brand}>
+      <Page name="Catalog" head={head}>
+        <BrandContext.Provider value={brand}>
+          <CarsStoreContext.Provider value={carsStore}>
+            <Cars />
+          </CarsStoreContext.Provider>
+        </BrandContext.Provider>
+      </Page>
+    </ThemeProvider>
   );
 };
 
 CarsPage.getInitialProps = async (context: NextPageContext): Promise<Props> => {
   const {
     query: {
+      brand: brandQueryParam,
       filters,
       gclid,
       subid,
@@ -70,6 +78,11 @@ CarsPage.getInitialProps = async (context: NextPageContext): Promise<Props> => {
       utm_site,
     },
   } = context;
+
+  // FIT-570
+  // TODO: replace this mechanism with the actual one.
+  // Some data should come from ctx.req, rather than from query.
+  const brand = brandQueryParam === 'santander' ? Brand.SANTANDER : Brand.VROOM;
 
   const filtersQueryParam =
     typeof filters === 'string' ? (filters as string) : undefined;
@@ -100,6 +113,7 @@ CarsPage.getInitialProps = async (context: NextPageContext): Promise<Props> => {
     filtersQueryParam
   );
   return {
+    brand,
     initialStoreState,
   };
 };
