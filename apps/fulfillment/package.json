@@ -1,5 +1,5 @@
 {
-  "name": "@vroom-web/outbound",
+  "name": "@vroom-web/fulfillment",
   "version": "0.0.0",
   "private": true,
   "scripts": {

@@ -1,12 +1,12 @@
 version: '3'
 services:
-  outbound:
+  fulfillment:
     build:
       context: ../../../
-      dockerfile: ./apps/outbound/docker/Dockerfile
+      dockerfile: ./apps/fulfillment/docker/Dockerfile
     user: 'root'
     # environment:
-    # command: ash -c "yarn workspace @vroom-web/outbound dev --port 8080"
+    # command: ash -c "yarn workspace @vroom-web/fulfillment dev --port 8080"
     # This starts nothing but leaves the container running, useful for
     # debugging nextjs start / config operations
     command: ash -c "tail -f /dev/null"
@@ -21,5 +21,5 @@ services:
       # It also makes sure that the built artifacts are only present on the container,
       # and not copied back to the host machine.
       - '/www/node_modules'
-      - '/www/apps/outbound/.next'
-      - '/www/apps/outbound/node_modules'
+      - '/www/apps/fulfillment/.next'
+      - '/www/apps/fulfillment/node_modules'

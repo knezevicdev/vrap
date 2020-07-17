@@ -9,11 +9,11 @@ RUN \
   # Bootstrap yarn workspaces.
   yarn install --silent &&\
   # Build the main app.
-  # yarn workspace @vroom-web/outbound build &&\
+  # yarn workspace @vroom-web/fulfillment build &&\
   chown -R 1000:1000 .
 
 EXPOSE 8080
 
 USER 1000
 
-CMD ["yarn", "workspace", "@vroom-web/outbound", "start", "--port", "8080"]
+CMD ["yarn", "workspace", "@vroom-web/fulfillment", "start", "--port", "8080"]

@@ -1,8 +1,8 @@
 {
-  "name": "Outbound Orders",
+  "name": "fulfillment",
   "dockerComposeFile": "../docker/docker-compose.yaml",
-  "service": "outbound",
-  "workspaceFolder": "/www/apps/outbound",
+  "service": "fulfillment",
+  "workspaceFolder": "/www/apps/fulfillment",
   // Use 'settings' to set *default* container specific settings.json values on container create.
   // You can edit these settings after create using File > Preferences > Settings > Remote.
   "settings": {
