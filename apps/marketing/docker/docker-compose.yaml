@@ -1,0 +1,41 @@
+version: '3'
+services:
+  marketing:
+    build:
+      context: ../../../
+      dockerfile: ./apps/marketing/docker/Dockerfile
+    user: 'root'
+    environment:
+      - DATA_DOG_LOG_COLLECTION_TOKEN=pubb20b42f026cc404ce1fe7588cdf993d8
+      - SEGMENT_WRITE_KEY=N0pxERRIw4iYCoxZREMZj1yWBIoARIz4
+    command: ash -c "yarn workspace @vroom-web/marketing dev --port 8080"
+    # This starts nothing but leaves the container running, useful for
+    # debugging nextjs start / config operations
+    # command: ash -c "tail -f /dev/null"
+    ports:
+      - '8080:8080'
+    volumes:
+      # Setup a volume so source code edits will be reflected outside the container.
+      - '../../../:/www/'
+      # Setup volumes for dependencies and built artifacts.
+      # This allows the node_modules created during the build to not be overwritten.
+      # https://stackoverflow.com/questions/30043872/docker-compose-node-modules-not-present-in-a-volume-after-npm-install-succeeds
+      # It also makes sure that the built artifacts are only present on the container,
+      # and not copied back to the host machine.
+      - '/www/node_modules'
+      - '/www/apps/marketing/.next'
+      - '/www/apps/marketing/node_modules'
+      - '/www/libs/integrations/analytics/dist'
+      - '/www/libs/integrations/analytics/node_modules'
+      # TODO: remove dependence on these networking libs.
+      # We need to extract the networking from the header to do this.
+      - '/www/libs/networking/deals-v2/dist'
+      - '/www/libs/networking/deals-v2/node_modules'
+      - '/www/libs/networking/inv-search/dist'
+      - '/www/libs/networking/inv-search/node_modules'
+      - '/www/libs/ui/dist'
+      - '/www/libs/ui/node_modules'
+      - '/www/libs/components/header/dist'
+      - '/www/libs/components/header/node_modules'
+      - '/www/libs/components/footer/dist'
+      - '/www/libs/components/footer/node_modules'
