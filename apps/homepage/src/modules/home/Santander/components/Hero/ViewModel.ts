@@ -8,7 +8,7 @@ interface Link {
 }
 
 class HeroViewModel {
-  readonly title: string = 'delivering, now and\xa0always.';
+  readonly title: string = 'Great cars.\nDelivered to you.';
   readonly subtitle: string =
     'Buy a car entirely online, and have it safely delivered, contact-free.';
   readonly subtitleLink: Link = {
