@@ -21,23 +21,22 @@ const SantanderFontsSnippet: React.FC<Props> = ({ hostUrl }) => {
         dangerouslySetInnerHTML={{
           __html: `
             @font-face {
-              font-family: 'VroomSans';
-              src: url('${hostUrl}/fonts/VroomSansSMALL-ExtraBoldItalicWEB.woff') format('woff');
+              font-family: 'SantanderHeadline';
+              src: url('${hostUrl}/fonts/SantanderHeadline-Regular.ttf') format('truetype');
             }
             @font-face {
-              font-family: Calibre;
-              font-weight: 400;
-              src: url('${hostUrl}/fonts/CalibreWeb-Regular.woff') format('woff');
+              font-family: 'SantanderHeadline';
+              font-weight: 700
+              src: url('${hostUrl}/fonts/SantanderHeadline-Bold.ttf') format('truetype');
             }
             @font-face {
-              font-family: Calibre;
-              font-weight: 500;
-              src: url('${hostUrl}/fonts/CalibreWeb-Semibold.woff') format('woff');
+              font-family: 'SantanderText';
+              src: url('${hostUrl}/fonts/SantanderText-Regular.ttf') format('truetype');
             }
             @font-face {
-              font-family: 'Calibre';
-              font-weight: 600;
-              src: url('${hostUrl}/fonts/CalibreWeb-Semibold.woff') format('woff');
+              font-family: 'SantanderText';
+              font-weight: 700
+              src: url('${hostUrl}/fonts/SantanderText-Bold.ttf') format('truetype');
             }
           `,
         }}

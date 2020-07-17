@@ -7,33 +7,33 @@ import { Theme } from '../types';
 const muiTheme = createMuiTheme({
   palette: {
     primary: {
-      main: '#FFFF00',
+      main: '#EC0000',
       contrastText: '#fff',
     },
     secondary: {
-      main: '#0000FF',
+      main: '#257FA4',
       contrastText: '#fff',
     },
     background: {
       paper: '#fff',
-      default: '#f5f5f5',
+      default: '#f1f1f1',
     },
     // Define as needed.
     // Try to assign a key as close to the actual values defined here:
     // https://material-ui.com/customization/default-theme/
     // For example, since #bebebe is super close in value to the default grey.400 (#bdbdbd), Motown used grey.400 for #bebebe.
-    grey: {
-      // 100: '#f5f5f5',
-      // 200: '#eaeaea',
-      // 400: '#bebebe',
-      500: '#999da3',
-      // 600: '#808080',
-      700: '#6c717a',
-      // 900: '#333333',
-      A100: '#d6d7da',
-    },
+    // grey: {
+    //   // 100: '#f5f5f5',
+    //   // 200: '#eaeaea',
+    //   // 400: '#bebebe',
+    //   500: '#999da3',
+    //   // 600: '#808080',
+    //   700: '#6c717a',
+    //   // 900: '#333333',
+    //   A100: '#d6d7da',
+    // },
     text: {
-      primary: '#041022',
+      primary: '#444444',
       secondary: '#fff',
     },
   },
@@ -43,15 +43,15 @@ const santanderTheme: Theme = {
   ...muiTheme,
   typography: {
     pxToRem: muiTheme.typography.pxToRem,
-    fontFamily: 'Calibre, Arial, sans-serif',
-    fontSize: 16,
+    fontFamily: 'SantanderText, Arial, sans-serif',
+    fontSize: 14,
     fontWeightBold: 700,
     fontWeightSemibold: 600,
     fontWeightMedium: 500,
     fontWeightRegular: 400,
     fontWeightLight: 300,
     h1: {
-      fontFamily: 'VroomSans, serif',
+      fontFamily: 'SantanderHeadline, Arial, sans-serif',
       fontSize: '36px',
       [muiTheme.breakpoints.only('md')]: {
         fontSize: '42px',
@@ -61,10 +61,10 @@ const santanderTheme: Theme = {
       },
     },
     h2: {
-      fontFamily: 'VroomSans, serif',
-      fontSize: '36px',
+      fontFamily: 'SantanderHeadline, Arial, sans-serif',
+      fontSize: '22px',
       [muiTheme.breakpoints.up('md')]: {
-        fontSize: '42px',
+        fontSize: '30px',
       },
     },
     h3: {},
@@ -74,24 +74,21 @@ const santanderTheme: Theme = {
     subtitle1: {},
     subtitle2: {},
     body1: {
-      fontFamily: 'Calibre, Arial, sans-serif',
-      fontSize: '16px',
-      [muiTheme.breakpoints.only('md')]: {
+      fontFamily: 'SantanderText, Arial, sans-serif',
+      fontSize: '14px',
+      [muiTheme.breakpoints.up('md')]: {
         fontSize: '18px',
-      },
-      [muiTheme.breakpoints.up('lg')]: {
-        fontSize: '20px',
       },
     },
     body2: {},
     button: {
-      fontFamily: 'Calibre, Arial, sans-serif',
-      fontSize: '16px',
-    },
-    caption: {
-      fontFamily: 'Calibre, Arial, sans-serif',
+      fontFamily: 'SantanderText, Arial, sans-serif',
       fontSize: '14px',
+      [muiTheme.breakpoints.up('md')]: {
+        fontSize: '16px',
+      },
     },
+    caption: {},
     overline: {},
   },
 };

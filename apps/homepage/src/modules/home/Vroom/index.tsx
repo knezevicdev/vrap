@@ -12,7 +12,7 @@ import WhoWeAre from './components/WhoWeAre';
 
 import globalEnv from 'src/globalEnv';
 
-const Home: React.FC = () => {
+const Vroom: React.FC = () => {
   const gearboxPrivateUrl = globalEnv.GEARBOX_PRIVATE_URL;
 
   return (
@@ -33,4 +33,4 @@ const Home: React.FC = () => {
   );
 };
 
-export default Home;
+export default Vroom;

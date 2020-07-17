@@ -1,9 +1,15 @@
-import React from 'react';
+import { Brand } from '@vroom-web/ui';
+import React, { useContext } from 'react';
 
+import { BrandContext } from './BrandContext';
+import Santander from './Santander';
 import Vroom from './Vroom';
 
-// TODO: decide what to render based on a brand.
 const Home: React.FC = () => {
+  const brand = useContext(BrandContext);
+  if (brand === Brand.SANTANDER) {
+    return <Santander />;
+  }
   return <Vroom />;
 };
 

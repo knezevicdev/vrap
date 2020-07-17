@@ -85,6 +85,9 @@ const vroomTheme: Theme = {
     button: {
       fontFamily: 'Calibre, Arial, sans-serif',
       fontSize: '16px',
+      fontWeight: 600,
+      textTransform: 'uppercase',
+      letterSpacing: '1.75px',
     },
     caption: {
       fontFamily: 'Calibre, Arial, sans-serif',
