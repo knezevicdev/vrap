@@ -23,3 +23,5 @@ services:
       - '/www/node_modules'
       - '/www/apps/fulfillment/.next'
       - '/www/apps/fulfillment/node_modules'
+      - '/www/libs/ui/dist'
+      - '/www/libs/ui/node_modules'

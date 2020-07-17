@@ -10,7 +10,16 @@ const shortHash = childProcess
   .toString()
   .trim();
 
+// TODO: remove once interchange (nginx) is setup locally
+// const isProd = process.env.NODE_ENV === 'production';
+// const assetPrefix = isProd ? `/fulfillment/${shortHash}` : '';
+const assetPrefix = '';
+
 const config = {
+  env: {
+    ASSET_PREFIX: assetPrefix,
+  },
+  assetPrefix,
   generateBuildId: () => shortHash,
   /* Custom webpack configuration. */
   webpack: (config) => {
