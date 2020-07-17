@@ -1,19 +1,22 @@
 import React from 'react';
 
-import { InventoryStore, InventoryStoreContext } from '../../store';
-import { FeaturesStore } from './store';
 import View from './View';
 import ViewModel from './ViewModel';
 
-const Features: React.FC = () => {
+import {
+  InventoryStore,
+  InventoryStoreContext,
+} from 'src/modules/inventory/store';
+
+const StatusBanner: React.FC = () => {
   return (
     <InventoryStoreContext.Consumer>
       {(store: InventoryStore): JSX.Element => {
-        const viewModel = new ViewModel(store, new FeaturesStore());
+        const viewModel = new ViewModel(store);
         return <View viewModel={viewModel} />;
       }}
     </InventoryStoreContext.Consumer>
   );
 };
 
-export default Features;
+export default StatusBanner;

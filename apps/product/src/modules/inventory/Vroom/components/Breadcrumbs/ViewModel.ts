@@ -5,7 +5,7 @@ import {
 } from '@vroom-web/catalog-url-integration';
 import { Car } from '@vroom-web/inv-search-networking';
 
-import { InventoryStore } from '../../store';
+import { InventoryStore } from 'src/modules/inventory/store';
 
 interface Crumb {
   key: string;

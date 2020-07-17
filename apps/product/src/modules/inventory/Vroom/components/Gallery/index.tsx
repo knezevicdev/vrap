@@ -1,9 +1,13 @@
 import React from 'react';
 
-import { InventoryStore, InventoryStoreContext } from '../../store';
 import { GalleryStore, GalleryStoreContext } from './store';
 import View from './View';
 import ViewModel from './ViewModel';
+
+import {
+  InventoryStore,
+  InventoryStoreContext,
+} from 'src/modules/inventory/store';
 
 const Gallery: React.FC = () => {
   return (

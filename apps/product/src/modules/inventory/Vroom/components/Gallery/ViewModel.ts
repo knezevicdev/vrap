@@ -1,13 +1,13 @@
 import { DefectType } from '@vroom-web/inv-search-networking';
 import isEmpty from 'lodash/isEmpty';
 
-import { InventoryStore } from '../../store';
 import GalleryConditionEnd from './components/ConditionEnd';
 import GalleryGeneralToCondition from './components/GeneralToCondition';
 import { GallerySelections, GalleryStore } from './store';
 
 import globalEnv from 'src/globalEnv';
 import AnalyticsHandler, { Product } from 'src/integrations/AnalyticsHandler';
+import { InventoryStore } from 'src/modules/inventory/store';
 
 interface GeneralPhoto {
   original: string;

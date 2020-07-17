@@ -1,10 +1,14 @@
 import React from 'react';
 
-import { InventoryStore, InventoryStoreContext } from '../../store';
 import View from './View';
 import ViewModel from './ViewModel';
 
-const Breadcrumbs: React.FC = () => {
+import {
+  InventoryStore,
+  InventoryStoreContext,
+} from 'src/modules/inventory/store';
+
+const StartPurchase: React.FC = () => {
   return (
     <InventoryStoreContext.Consumer>
       {(store: InventoryStore): JSX.Element => {
@@ -15,4 +19,4 @@ const Breadcrumbs: React.FC = () => {
   );
 };
 
-export default Breadcrumbs;
+export default StartPurchase;

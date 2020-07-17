@@ -1,4 +1,4 @@
-import { InventoryStore } from '../../store';
+import { InventoryStore } from 'src/modules/inventory/store';
 
 interface Summary {
   ymm: string;
