@@ -1,7 +1,9 @@
 import { styled } from '@material-ui/core/styles';
+import { Typography } from '@vroom-web/ui';
 import React from 'react';
 
 import Step from './Step';
+import ViewModel from './ViewModel';
 
 const ViewContainer = styled('div')(() => ({
   display: 'flex',
@@ -24,10 +26,33 @@ const ViewContent = styled('div')(({ theme }) => ({
   },
 }));
 
-const View: React.FC = () => {
+const Title = styled(Typography)(({ theme }) => ({
+  color: '#444444',
+  fontSize: '30px',
+  fontFamily: 'SantanderHeadline',
+  marginBottom: theme.spacing(6),
+  textAlign: 'center',
+  [theme.breakpoints.only('sm')]: {
+    marginBottom: theme.spacing(4),
+    textAlign: 'left',
+  },
+  [theme.breakpoints.only('xs')]: {
+    fontSize: '22px',
+    marginBottom: theme.spacing(4),
+    textAlign: 'left',
+    fontWeight: 'bold',
+  },
+}));
+
+interface Props {
+  viewModel: ViewModel;
+}
+
+const View: React.FC<Props> = ({ viewModel }) => {
   return (
     <ViewContainer>
       <ViewContent>
+        <Title>{viewModel.title}</Title>
         <Step />
       </ViewContent>
     </ViewContainer>
