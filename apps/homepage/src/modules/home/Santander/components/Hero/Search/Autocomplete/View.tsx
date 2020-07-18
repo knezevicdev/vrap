@@ -29,6 +29,7 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   inputRoot: {
+    maxHeight: '48px',
     paddingRight: theme.spacing(2),
     backgroundColor: theme.palette.background.paper,
   },
@@ -36,17 +37,29 @@ const useStyles = makeStyles((theme) => ({
     ...theme.typography.body1,
     color: theme.palette.text.primary,
     letterSpacing: '0.25px',
-    lineHeight: '1.3',
-    padding: `${theme.spacing(2, 6, 2, 2)} !important`,
+    height: '48px',
+    padding: `${theme.spacing(0, 2)} !important`,
     '&::placeholder, &::-webkit-input-placeholder': {
-      color: theme.palette.grey[500],
+      color: '#767676',
       opacity: 1,
     },
   },
 }));
 
 const HeroAutoCompleteBox = styled(Box)(() => ({
-  maxWidth: '680px',
+  maxWidth: '580px',
+  maxHeight: '48px',
+}));
+
+const Search = styled(Button)(() => ({
+    fontSize: '16px',
+    height: '48px',
+    background: '#EC0000',
+    color: '#FFFFFF',
+    fontWeight: 'bold',
+    '&:hover': {
+      background: '#CC0000',
+    }
 }));
 
 interface HeroAutocompleteProps {
@@ -135,9 +148,9 @@ const HeroAutocomplete: React.FC<HeroAutocompleteProps> = ({
         )}
         style={{ flexGrow: 1 }}
       />
-      <Button onClick={handleButtonClick} variant="contained" color="secondary">
+      <Search onClick={handleButtonClick} variant="contained">
         {viewModel.buttonLabel}
-      </Button>
+      </Search>
     </HeroAutoCompleteBox>
   );
 };

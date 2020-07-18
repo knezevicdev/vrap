@@ -21,7 +21,7 @@ class AutocompleteViewModel {
   private autocompleteStore: AutocompleteStore;
   private homeStore: HomeStore;
 
-  readonly buttonLabel: string = 'SEARCH';
+  readonly buttonLabel: string = 'Search';
   readonly inputPlaceholder: string = 'Search by make, model, or body type';
 
   constructor(homeStore: HomeStore, autocompleteStore: AutocompleteStore) {

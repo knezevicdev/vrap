@@ -22,23 +22,34 @@ const ViewContent = styled('div')(({ theme }) => ({
   display: 'flex',
   flexDirection: 'column',
   width: '100%',
-  padding: theme.spacing(8,2)
+  padding: theme.spacing(16,8,24,8),
+  maxWidth: '1280px',
+  margin: '0 auto',
+  [theme.breakpoints.only('xs')]: {
+    padding: theme.spacing(8,2),
+  },
+  [theme.breakpoints.only('sm')]: {
+    padding: theme.spacing(12,4,12,4),
+
+  },
 }));
 
 
 const Title = styled(Typography)(({ theme }) => ({
   color: '#FFFFFF',
   whiteSpace: 'pre',
-  lineHeight: '40px',
+  lineHeight: '56px',
   fontSize: '48px',
   fontWeight: 600,
   fontFamily: 'SantanderHeadline',
   marginBottom: theme.spacing(4),
   [theme.breakpoints.only('sm')]: {
     fontSize: '42px',
+    lineHeight: '48px',
   },
   [theme.breakpoints.only('xs')]: {
     fontSize: '36px',
+    lineHeight: '40px',
     marginBottom: theme.spacing(2),
   },
 }));
