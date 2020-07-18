@@ -52,14 +52,14 @@ const HeroAutoCompleteBox = styled(Box)(() => ({
 }));
 
 const Search = styled(Button)(() => ({
-    fontSize: '16px',
-    height: '48px',
-    background: '#EC0000',
-    color: '#FFFFFF',
-    fontWeight: 'bold',
-    '&:hover': {
-      background: '#CC0000',
-    }
+  fontSize: '16px',
+  height: '48px',
+  background: '#EC0000',
+  color: '#FFFFFF',
+  fontWeight: 'bold',
+  '&:hover': {
+    background: '#CC0000',
+  },
 }));
 
 interface HeroAutocompleteProps {

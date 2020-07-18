@@ -10,14 +10,14 @@ interface Highlight {
 class ViewModel {
   readonly highlights: Highlight[] = [
     {
-      description: 'Multiple inspections. Free CARFAX history report. Complimentary limited warranty.',
+      description:
+        'Multiple inspections. Free CARFAX history report. Complimentary limited warranty.',
       alt: 'High-Quality Vehicles',
       src: `${globalEnv.ASSET_PREFIX}/modules/home/santander/images/highlight-one.png`,
       title: 'High-Quality Vehicles',
     },
     {
-      description:
-        'Competitive rates and flexible terms to meet your needs.',
+      description: 'Competitive rates and flexible terms to meet your needs.',
       alt: 'Flexible Financing',
       src: `${globalEnv.ASSET_PREFIX}/modules/home/santander/images/highlight-two.png`,
       title: 'Flexible Financing',

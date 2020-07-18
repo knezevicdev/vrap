@@ -8,7 +8,7 @@ class ViewModel {
   readonly browseLink: Link = {
     label: 'Browse all low-mileage cars and trucks',
     href: '/cars',
-  }
+  };
 }
 
 export default ViewModel;

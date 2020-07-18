@@ -1,10 +1,10 @@
 import Divider from '@material-ui/core/Divider';
+import { SantanderFooter } from '@vroom-web/footer-components';
 import React from 'react';
 
 import Hero from './components/Hero';
 import Highlights from './components/Highlights';
 import HowItWorks from './components/HowItWorks';
-import {SantanderFooter} from "@vroom-web/footer-components";
 
 const Santander: React.FC = () => {
   return (
@@ -13,7 +13,7 @@ const Santander: React.FC = () => {
       <Highlights />
       <Divider />
       <HowItWorks />
-      <SantanderFooter/>
+      <SantanderFooter />
     </>
   );
 };

@@ -1,12 +1,12 @@
+import Link from '@material-ui/core/Link';
 import { styled } from '@material-ui/core/styles';
 import { Typography } from '@vroom-web/ui';
 import React from 'react';
 
 import Search from './Search';
 import ViewModel from './ViewModel';
-import globalEnv from "src/globalEnv";
-import Link from "@material-ui/core/Link";
 
+import globalEnv from 'src/globalEnv';
 
 const ViewContainer = styled('div')(({ theme }) => ({
   display: 'flex',
@@ -22,18 +22,16 @@ const ViewContent = styled('div')(({ theme }) => ({
   display: 'flex',
   flexDirection: 'column',
   width: '100%',
-  padding: theme.spacing(16,8,24,8),
+  padding: theme.spacing(16, 8, 24, 8),
   maxWidth: '1280px',
   margin: '0 auto',
-  [theme.breakpoints.only('xs')]: {
-    padding: theme.spacing(8,2),
-  },
   [theme.breakpoints.only('sm')]: {
-    padding: theme.spacing(12,4,12,4),
-
+    padding: theme.spacing(12, 4, 12, 4),
+  },
+  [theme.breakpoints.only('xs')]: {
+    padding: theme.spacing(8, 2),
   },
 }));
-
 
 const Title = styled(Typography)(({ theme }) => ({
   color: '#FFFFFF',
@@ -67,7 +65,7 @@ const Browse = styled(Typography)(({ theme }) => ({
   },
   '& > a': {
     color: '#FFFFFF',
-  }
+  },
 }));
 
 interface Props {
@@ -81,7 +79,9 @@ const View: React.FC<Props> = ({ viewModel }) => {
         <Title>{viewModel.title}</Title>
         <Search />
         <Browse>
-        <Link href={viewModel.browseLink.href}>{viewModel.browseLink.label}</Link>
+          <Link href={viewModel.browseLink.href}>
+            {viewModel.browseLink.label}
+          </Link>
         </Browse>
       </ViewContent>
     </ViewContainer>

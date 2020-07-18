@@ -21,7 +21,7 @@ class ViewModel {
       addQueryPrefix: true,
     });
     window.location.href = `/catalog${queryString}`;
-  }
+  };
 }
 
 export default ViewModel;
