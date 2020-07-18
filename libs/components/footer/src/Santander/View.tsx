@@ -22,11 +22,10 @@ const Sections = styled('div')(({ theme }) => ({
   whiteSpace: 'nowrap',
   flexWrap: 'wrap',
   borderTop: 'solid 1px #C4C4C4',
-  width: '80%',
+  width: '100%',
   [theme.breakpoints.only('sm')]: { padding: theme.spacing(8, 4) },
   [theme.breakpoints.only('xs')]: {
     padding: theme.spacing(6, 2),
-    width: '100%',
   },
 }));
 
