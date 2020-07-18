@@ -1,72 +1,52 @@
-import Grid from '@material-ui/core/Grid';
-import { styled, useTheme } from '@material-ui/core/styles';
-import useMediaQuery from '@material-ui/core/useMediaQuery';
-import { Button, Container } from '@vroom-web/ui';
+import {styled} from '@material-ui/core/styles';
+import {Button} from '@vroom-web/ui';
 import React from 'react';
-
-import HighlightView from './HighlightView';
 import ViewModel from './ViewModel';
+import Highlight from './Highlight';
 
-const Background = styled('div')(({ theme }) => ({
-  backgroundColor: theme.palette.background.paper,
+const ViewContainer = styled('div')(({theme}) => ({
+    display: 'flex',
+    maxWidth: '1280px',
+    width: '100%',
+    background: "#FFFFFF",
+    padding: theme.spacing(4, 2),
 }));
 
-const StyledContainer = styled(Container)(({ theme }) => ({
-  display: 'flex',
-  flexDirection: 'column',
-  [theme.breakpoints.up('sm')]: {
-    alignItems: 'center',
-  },
+const ViewContent = styled('div')(({theme}) => ({
+    display: 'flex',
+    width: '100%',
+    flexDirection: 'column',
 }));
 
-const StyledButton = styled(Button)(({ theme }) => ({
-  minWidth: '180px',
-  letterSpacing: '1.75px',
-  fontWeight: 600,
-  marginTop: theme.spacing(2),
-  [theme.breakpoints.up('md')]: {
-    marginTop: theme.spacing(4),
-  },
+const ShopNow = styled(Button)(({theme}) => ({
+    fontSize: '14px',
+    height: '48px',
+    width: '100%',
+    background: '#EC0000',
+    color: '#FFFFFF',
+    fontWeight: 'bold',
+    '&:hover': {
+        background: '#CC0000',
+    }
 }));
 
 interface Props {
-  viewModel: ViewModel;
+    viewModel: ViewModel;
 }
 
-const HighlightsView: React.FC<Props> = ({ viewModel }) => {
-  const theme = useTheme();
-  const mdUp = useMediaQuery(theme.breakpoints.up('md'));
-  const handleButtonClick = (): void => {
-    viewModel.handleButtonClick();
-  };
-
-  return (
-    <Background>
-      <StyledContainer>
-        <Grid container spacing={mdUp ? 6 : 2}>
-          {viewModel.highlights.map((highlight, index) => (
-            <Grid key={index} item xs={12} md={4}>
-              <HighlightView
-                description={highlight.description}
-                imgAlt={highlight.imgAlt}
-                imgSrc={highlight.imgSrc}
-                title={highlight.title}
-              />
-            </Grid>
-          ))}
-        </Grid>
-        {viewModel.condenseCatalogLinksDefaultVariant && (
-          <StyledButton
-            color="primary"
-            onClick={handleButtonClick}
-            variant="contained"
-          >
-            {viewModel.ctaLabel}
-          </StyledButton>
-        )}
-      </StyledContainer>
-    </Background>
-  );
+const View: React.FC<Props> = ({viewModel}) => {
+    return (
+        <ViewContainer>
+            <ViewContent>
+                <Highlight/>
+                <ShopNow
+                    onClick={viewModel.handleButtonClick}
+                    variant="contained">
+                    {viewModel.button}
+                </ShopNow>
+            </ViewContent>
+        </ViewContainer>
+    );
 };
 
-export default HighlightsView;
+export default View;

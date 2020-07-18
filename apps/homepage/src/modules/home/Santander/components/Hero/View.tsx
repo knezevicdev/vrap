@@ -10,7 +10,7 @@ import Link from "@material-ui/core/Link";
 
 const ViewContainer = styled('div')(({ theme }) => ({
   display: 'flex',
-  margin: theme.spacing(0, 'auto', 4, 'auto'),
+  margin: theme.spacing(0, 'auto'),
   width: '100%',
   backgroundImage: `url(${globalEnv.ASSET_PREFIX}/modules/home/santander/images/Santander-Hero@3x.jpg)`,
   backgroundRepeat: 'no-repeat',
