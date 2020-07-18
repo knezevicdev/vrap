@@ -1,34 +1,34 @@
 import { styled } from '@material-ui/core/styles';
 import React from 'react';
 
-import Step from './Step';
-
 const ViewContainer = styled('div')(() => ({
   display: 'flex',
   width: '100%',
   background: '#FFFFFF',
+  justifyContent: 'center',
 }));
 
 const ViewContent = styled('div')(({ theme }) => ({
-  display: 'flex',
-  flexDirection: 'column',
   width: '100%',
-  padding: theme.spacing(8),
   maxWidth: '1280px',
-  margin: '0 auto',
+  padding: theme.spacing(0, 8),
   [theme.breakpoints.only('sm')]: {
-    padding: theme.spacing(8, 4),
+    padding: theme.spacing(0, 4),
   },
   [theme.breakpoints.only('xs')]: {
-    padding: theme.spacing(4, 2),
+    padding: theme.spacing(0, 2),
   },
+}));
+
+const Divider = styled('div')(() => ({
+  border: 'solid 1px #F1F1F1',
 }));
 
 const View: React.FC = () => {
   return (
     <ViewContainer>
       <ViewContent>
-        <Step />
+        <Divider />
       </ViewContent>
     </ViewContainer>
   );
