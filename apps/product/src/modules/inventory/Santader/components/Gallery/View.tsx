@@ -9,7 +9,6 @@ import ImageGallery from 'react-image-gallery';
 
 import ListView from './components/ListView';
 import NoImagesView from './components/NoImagesView';
-import GallerySelect from './components/Select';
 import ViewModel from './ViewModel';
 
 //#region Styling
@@ -82,7 +81,6 @@ const GalleryView: React.FC<Props> = (props) => {
   return (
     <GalleryContainer>
       <GalleryContainerContent>
-        <GallerySelect product={viewModel.getCurrentProduct()} />
         <ImageGalleryContainer>
           <Box className={viewModel.showBanner() ? 'stock-photos' : ''}>
             <Typography

@@ -1,6 +1,5 @@
 import { styled, useTheme } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
-import { SimpleHeader } from '@vroom-web/header-components';
 import { observer } from 'mobx-react';
 import React, { useEffect } from 'react';
 
@@ -49,7 +48,6 @@ const InventoryView: React.FC<Props> = (props) => {
 
   return (
     <>
-      <SimpleHeader />
       <InventoryViewContainer>
         {viewModel.error() && (
           <VehicleNotFound message={viewModel.noVehicleFound} />

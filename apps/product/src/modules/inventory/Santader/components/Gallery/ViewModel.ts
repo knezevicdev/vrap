@@ -1,9 +1,4 @@
-import { DefectType } from '@vroom-web/inv-search-networking';
-import isEmpty from 'lodash/isEmpty';
-
-import GalleryConditionEnd from './components/ConditionEnd';
-import GalleryGeneralToCondition from './components/GeneralToCondition';
-import { GallerySelections, GalleryStore } from './store';
+import { GalleryStore } from './store';
 
 import globalEnv from 'src/globalEnv';
 import AnalyticsHandler, { Product } from 'src/integrations/AnalyticsHandler';
@@ -106,17 +101,8 @@ class GalleryViewModel {
     return leadFlagPhotoUrl === '';
   }
 
-  getSelectedGallery(): string {
-    return this.galleryStore.selectedGallery;
-  }
-
   getGalleryImages(): (GeneralPhoto | DefectPhoto)[] {
-    const { selectedGallery } = this.galleryStore;
-    if (selectedGallery === GallerySelections.DEFECTS) {
-      return this.getDefectImages();
-    } else {
-      return this.getGeneralImages();
-    }
+    return this.getGeneralImages();
   }
 
   getGeneralImages(): GeneralPhoto[] {
@@ -125,7 +111,6 @@ class GalleryViewModel {
       otherPhotos,
       interiorPhotoUrl,
     } = this.inventoryStore.vehicle._source;
-    const { isListView } = this.galleryStore;
 
     const nonNullOtherPhotos = otherPhotos ? otherPhotos : [];
     const vehiclePhotos = [leadFlagPhotoUrl, ...nonNullOtherPhotos];
@@ -138,63 +123,7 @@ class GalleryViewModel {
         thumbnail: img,
       };
     });
-    if (vehiclePhotos.length > 1 && !isListView) {
-      const addGeneralToCondition: {
-        original: string;
-        thumbnail: string;
-        renderItem: React.FunctionComponent;
-      } = {
-        original: this.defaultImage.src,
-        //TODO: Replace with designs photo
-        thumbnail: this.defaultImage.src,
-        renderItem: GalleryGeneralToCondition,
-      };
-      generalPhotos.push(addGeneralToCondition);
-    }
     return generalPhotos;
-  }
-
-  getDefectImages(): DefectPhoto[] {
-    const { defectPhotos } = this.inventoryStore.vehicle._source;
-    const { isListView } = this.galleryStore;
-    const defectImages =
-      !!defectPhotos && !isEmpty(defectPhotos)
-        ? defectPhotos.map(
-            (img: {
-              url: string;
-              defectType: DefectType;
-              location: string;
-            }) => {
-              return {
-                original: this.getHiResImageUrl(img.url),
-                thumbnail: img.url,
-                description: `${this.getDefectDisplay(img.defectType)} - ${
-                  img.location
-                }`,
-              };
-            }
-          )
-        : [];
-    if (!isListView) {
-      const addGalleryEndCard: {
-        original: string;
-        thumbnail: string;
-        description: string;
-        renderItem: React.FunctionComponent;
-      } = {
-        original: this.defaultImage.src,
-        //TODO: Replace with designs photo
-        thumbnail: this.defaultImage.src,
-        description: 'Condition End Card',
-        renderItem: GalleryConditionEnd,
-      };
-      defectImages.push(addGalleryEndCard);
-    }
-    return defectImages;
-  }
-
-  isDefectView(): boolean {
-    return this.galleryStore.selectedGallery === GallerySelections.DEFECTS;
   }
 
   isListView(): boolean {
@@ -232,25 +161,6 @@ class GalleryViewModel {
       //Fyusion Image
       const fyusionImgURL = img.replace('/edit/', '/');
       return fyusionImgURL.split('?')[0];
-    }
-  }
-
-  private getDefectDisplay(defect: DefectType): string {
-    switch (defect) {
-      case DefectType.SCRATCH:
-        return 'Scratch';
-      case DefectType.OXIDATION:
-        return 'Paint Imperfection';
-      case DefectType.SPIDER_CRACKING:
-        return 'Paint Imperfection';
-      case DefectType.RUN:
-        return 'Paint Imperfection';
-      case DefectType.DENT:
-        return 'Dent';
-      case DefectType.CHIP:
-        return 'Chip';
-      default:
-        return '';
     }
   }
 }

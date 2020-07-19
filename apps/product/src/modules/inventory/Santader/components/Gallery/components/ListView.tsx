@@ -3,12 +3,9 @@ import CloseIcon from '@material-ui/icons/Close';
 import FullscreenExitIcon from '@material-ui/icons/FullscreenExit';
 import { Typography } from '@vroom-web/ui';
 import { observer } from 'mobx-react';
-import React, { useEffect } from 'react';
+import React  from 'react';
 
 import ViewModel from '../ViewModel';
-import GalleryConditionEnd from './ConditionEnd';
-import GalleryGeneralToCondition from './GeneralToCondition';
-import GallerySelect from './Select';
 
 interface Props {
   viewModel: ViewModel;
@@ -76,25 +73,11 @@ const StyledFullscreenExitIcon = styled(FullscreenExitIcon)(({ theme }) => ({
   color: theme.palette.grey[100],
 }));
 
-const Imperfections = styled('div')(({ theme }) => ({
-  padding: theme.spacing(0, 2),
-}));
-
 const GalleryListView: React.FC<Props> = ({ viewModel }) => {
-  const currentSelection = viewModel.getSelectedGallery();
-  //This is to ensure that the list returns to the top when selection is changed
-  useEffect(() => {
-    const listViewImagesContainer = document.getElementById(
-      'listViewImagesContainer'
-    );
-    listViewImagesContainer && listViewImagesContainer.scrollIntoView();
-  }, [currentSelection]);
-
   const handleCloseIconClick = (): void => {
     viewModel.setListView();
   };
   const images = viewModel.getGalleryImages();
-  const isDefect = viewModel.isDefectView();
 
   return (
     <>
@@ -110,7 +93,6 @@ const GalleryListView: React.FC<Props> = ({ viewModel }) => {
       )}
       <StyledContainer>
         <Header>
-          <GallerySelect product={viewModel.getCurrentProduct()} />
           <StyledCloseIcon onClick={handleCloseIconClick} />
         </Header>
         <ImagesContainer id="listViewImagesContainer">
@@ -148,9 +130,6 @@ const GalleryListView: React.FC<Props> = ({ viewModel }) => {
             {images.length + 1}
           </ImageHeader>
         )}
-        <Imperfections>
-          {isDefect ? <GalleryConditionEnd /> : <GalleryGeneralToCondition />}
-        </Imperfections>
       </StyledContainer>
     </>
   );

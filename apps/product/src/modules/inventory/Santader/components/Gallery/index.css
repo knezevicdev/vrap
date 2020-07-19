@@ -10,6 +10,10 @@ must when all other approaches fail you.
   background: #041022;
 }
 
+.stock-photos .image-gallery-content.right .image-gallery-slide{
+  background: #ffffff;
+}
+
 .image-gallery-content.right .image-gallery-slide .image-gallery-image {
   max-height: 60vh;
 }
@@ -48,5 +52,5 @@ must when all other approaches fail you.
 }
 
 .image-gallery-icon:hover {
-  color: #e7131a;
+  color: #EE231A;
 }
