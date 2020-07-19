@@ -20,7 +20,6 @@ const Label = styled(Typography)(() => ({
   fontWeight: 600,
   fontSize: '12px',
   textTransform: 'uppercase',
-  letterSpacing: '1.25px',
 }));
 
 const StatusBannerView: React.FC<Props> = (props) => {
