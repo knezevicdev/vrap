@@ -44,12 +44,29 @@ const RightContent = styled('div')(() => ({
 }));
 
 const YearMakeModel = styled(Typography)(({ theme }) => ({
-  fontWeight: 600,
   marginBottom: theme.spacing(1),
+  fontWeight: 600,
+  fontSize: '24px',
+  [theme.breakpoints.only('xs')]: {
+    fontSize: '22px',
+  },
+  fontFamily: 'SantanderHeadline, Arial, sans-serif',
 }));
 
-const Price = styled(Typography)(() => ({
+const Price = styled(Typography)(({theme}) => ({
   fontWeight: 600,
+  fontSize: '24px',
+  [theme.breakpoints.only('xs')]: {
+    fontSize: '22px',
+  },
+  fontFamily: 'SantanderHeadline, Arial, sans-serif',
+}));
+
+const Summary = styled(Typography)(({theme}) => ({
+  fontSize: '18px',
+  [theme.breakpoints.only('xs')]: {
+    fontSize: '14px',
+  },
 }));
 
 const Divider = styled('div')(({ theme }) => ({
@@ -76,13 +93,13 @@ const VehicleHeaderView: React.FC<Props> = (props) => {
       <VehicleHeaderContainerContent>
         <StatusBanner />
         <LeftContent>
-          <YearMakeModel variant="body1">{summary.ymm}</YearMakeModel>
-          <Typography variant="body1">
+          <YearMakeModel>{summary.ymm}</YearMakeModel>
+          <Summary>
             {summary.trim} | {summary.miles}
-          </Typography>
+          </Summary>
         </LeftContent>
         <RightContent>
-          <Price variant="body1">{summary.price}</Price>
+          <Price>{summary.price}</Price>
           {!xsDown && <Divider />}
           {!xsDown && <StartPurchase />}
         </RightContent>
