@@ -69,55 +69,84 @@ const DetailsRow = styled('div')(({ theme }) => ({
 }));
 
 const Label = styled(Typography)(({ theme }) => ({
-  fontWeight: 600,
-  fontSize: '20px',
+  fontSize: '16px',
+  [theme.breakpoints.only('xs')]: {
+    fontSize: '14px',
+  },
   minWidth: '140px',
   color: theme.palette.grey['700'],
   marginBottom: theme.spacing(2),
 }));
 
 const Value = styled(Typography)(({ theme }) => ({
-  fontSize: '20px',
-  whiteSpace: 'nowrap',
-  letterSpacing: '0.75px',
-  lineHeight: 'normal',
+  fontWeight: 600,
+  fontSize: '16px',
   [theme.breakpoints.only('xs')]: {
+    fontSize: '14px',
     whiteSpace: 'normal',
   },
+  whiteSpace: 'nowrap',
+  lineHeight: 'normal',
 }));
 
 const HistoryContent = styled('div')(({ theme }) => ({
   marginTop: theme.spacing(2),
 }));
 
-const HistoryTitle = styled(Typography)(() => ({
+const HistoryTitle = styled(Typography)(({theme}) => ({
   fontWeight: 600,
-  fontSize: '20px',
+  fontSize: '16px',
+  [theme.breakpoints.only('xs')]: {
+    fontSize: '14px',
+  },
 }));
 
 const HistoryDescription = styled(Typography)(({ theme }) => ({
-  fontSize: '20px',
+  fontSize: '16px',
+  [theme.breakpoints.only('xs')]: {
+    fontSize: '14px',
+  },
   marginTop: theme.spacing(1),
   marginBottom: theme.spacing(1),
   lineHeight: 'normal',
 }));
 
-const CarfaxLink = styled(Typography)(({ theme }) => ({
-  fontSize: '20px',
+const ColoredExternalLink = styled(ExternalLink)(( ) => ({
+  color: '#257FA4',
+}));
+
+const Carfax = styled(Typography)(({ theme }) => ({
+  fontSize: '16px',
+  [theme.breakpoints.only('xs')]: {
+    fontSize: '14px',
+  },
   marginBottom: theme.spacing(1),
 }));
 
 const RecallLink = styled(Typography)(({ theme }) => ({
-  fontSize: '20px',
+  fontSize: '16px',
+  [theme.breakpoints.only('xs')]: {
+    fontSize: '14px',
+  },
   marginTop: theme.spacing(2),
 }));
 
 const Title = styled(Typography)(({ theme }) => ({
   fontWeight: 600,
+  color: '#767676',
   fontSize: '14px',
-  letterSpacing: '1.75px',
-  color: theme.palette.grey['500'],
-  textTransform: 'uppercase',
+  [theme.breakpoints.only('xs')]: {
+    fontSize: '13px',
+  },
+}));
+
+const CarDetailsTitle = styled(Typography)(({ theme }) => ({
+  fontWeight: 600,
+  fontSize: '24px',
+  [theme.breakpoints.only('xs')]: {
+    fontSize: '22px',
+  },
+  fontFamily: 'SantanderHeadline, Arial, sans-serif',
 }));
 
 const CarDetailsView: React.FC<Props> = (props) => {
@@ -131,9 +160,7 @@ const CarDetailsView: React.FC<Props> = (props) => {
   return (
     <CarDetailsContainer>
       <CarDetailsContainerContent>
-        <Typography variant="h2" fontWeight="fontWeightMedium">
-          {viewModel.title}
-        </Typography>
+        <CarDetailsTitle>{viewModel.title}</CarDetailsTitle>
 
         <DetailsData>
           <Basics>
@@ -159,9 +186,9 @@ const CarDetailsView: React.FC<Props> = (props) => {
               );
             })}
 
-            <ExternalLink href={recalls.href} target="_blank">
+            <ColoredExternalLink href={recalls.href} target="_blank">
               <RecallLink>{recalls.text}</RecallLink>
-            </ExternalLink>
+            </ColoredExternalLink>
           </Performance>
           <History>
             <Title>{history.title}</Title>
@@ -177,9 +204,9 @@ const CarDetailsView: React.FC<Props> = (props) => {
               <HistoryDescription>
                 {history.cleanHistoryDescription}
               </HistoryDescription>
-              <ExternalLink href={history.carfax.href} target="_blank">
-                <CarfaxLink>{history.carfax.text}</CarfaxLink>
-              </ExternalLink>
+              <ColoredExternalLink href={history.carfax.href} target="_blank">
+                <Carfax>{history.carfax.text}</Carfax>
+              </ColoredExternalLink>
             </HistoryContent>
 
             <HistoryContent>
@@ -193,13 +220,13 @@ const CarDetailsView: React.FC<Props> = (props) => {
                     history.vroomProtectDescription.text,
                     /<link>(.*)<\/link>/,
                     (match, index) => (
-                      <ExternalLink
+                      <ColoredExternalLink
                         key={index}
                         href={history.vroomProtectDescription.href}
                         target="_blank"
                       >
                         {match}
-                      </ExternalLink>
+                      </ColoredExternalLink>
                     )
                   )}
                 </HistoryDescription>
