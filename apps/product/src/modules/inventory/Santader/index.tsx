@@ -1,13 +1,22 @@
-import { SantanderFooter } from '@vroom-web/footer-components';
 import React from 'react';
 
+import View from './View';
+import ViewModel from './ViewModel';
+
+import {
+    InventoryStore,
+    InventoryStoreContext,
+} from 'src/modules/inventory/store';
+
 const Santander: React.FC = () => {
-  return (
-    <>
-      <p>Santander under development...</p>
-      <SantanderFooter />
-    </>
-  );
+    return (
+        <InventoryStoreContext.Consumer>
+            {(store: InventoryStore): JSX.Element => {
+                const viewModel = new ViewModel(store);
+                return <View viewModel={viewModel} />;
+            }}
+        </InventoryStoreContext.Consumer>
+    );
 };
 
 export default Santander;

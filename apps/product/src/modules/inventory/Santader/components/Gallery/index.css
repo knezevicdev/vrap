@@ -1,0 +1,52 @@
+/*
+Here Be Dragons
+This was done as a last resort in order to get the necessary specificity for
+react-image-gallery to appropriately size images. Only create css files as a
+must when all other approaches fail you.
+*/
+
+.image-gallery-content.right .image-gallery-slide {
+  max-height: 60vh;
+  background: #041022;
+}
+
+.image-gallery-content.right .image-gallery-slide .image-gallery-image {
+  max-height: 60vh;
+}
+
+.image-gallery-content.fullscreen {
+  max-height: 100vh;
+}
+
+.stock-photos .image-gallery-content.fullscreen {
+  background: #ffffff;
+}
+
+.image-gallery-thumbnails-wrapper.left, .image-gallery-thumbnails-wrapper.right{
+  margin: 0 0 0 28px;
+  width: 180px;
+}
+
+.image-gallery-slide-wrapper.left, .image-gallery-slide-wrapper.right {
+  width: calc(100% - 220px)
+}
+
+.image-gallery-thumbnails-wrapper.left .image-gallery-thumbnails .image-gallery-thumbnail, .image-gallery-thumbnails-wrapper.right .image-gallery-thumbnails .image-gallery-thumbnail {
+  width: 100%;
+}
+
+.image-gallery-thumbnail.active, .image-gallery-thumbnail:hover, .image-gallery-thumbnail:focus {
+  border: 5px solid #041022;
+}
+
+.image-gallery-index {
+  width: 100%;
+  text-align: center;
+  background: rgba(255, 255, 255, 0.75);
+  color: #000000;
+  font-size: 16px;
+}
+
+.image-gallery-icon:hover {
+  color: #e7131a;
+}
