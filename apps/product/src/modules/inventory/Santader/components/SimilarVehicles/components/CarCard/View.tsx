@@ -62,10 +62,13 @@ const Content = styled(CardContent)(() => ({
   height: '110px',
 }));
 
-const TrimAndMiles = styled('div')(() => ({
+const TrimAndMiles = styled('div')(({theme}) => ({
   display: 'flex',
   whiteSpace: 'nowrap',
-  color: '#041022',
+  fontSize: '16px',
+  [theme.breakpoints.only('xs')]: {
+    fontSize: '14px',
+  },
 }));
 
 const Divider = styled(Typography)(({ theme }) => ({
@@ -73,14 +76,20 @@ const Divider = styled(Typography)(({ theme }) => ({
   color: theme.palette.grey['A100'],
 }));
 
-const Price = styled(Typography)(() => ({
+const Price = styled(Typography)(({theme}) => ({
   marginTop: 'auto',
   fontSize: '16px',
+  [theme.breakpoints.only('xs')]: {
+    fontSize: '14px',
+  },
   fontWeight: 600,
 }));
 
-const Value = styled(Typography)(() => ({
+const Value = styled(Typography)(({theme}) => ({
   fontSize: '16px',
+  [theme.breakpoints.only('xs')]: {
+    fontSize: '14px',
+  },
 }));
 
 const HiddenAnchor = styled('a')(() => ({
@@ -132,16 +141,15 @@ const CarCardView: React.FC<DesktopViewProps> = ({ viewModel }) => {
           </Value>
           <TrimAndMiles>
             <Value
-              fontWeight="fontWeightLight"
               lineHeight="24px"
               whiteSpace="nowrap"
             >
               {trim}
             </Value>
-            <Divider fontWeight="fontWeightLight" lineHeight="24px">
+            <Divider lineHeight="24px">
               |
             </Divider>
-            <Value fontWeight="fontWeightLight" lineHeight="24px">
+            <Value lineHeight="24px">
               {miles}
             </Value>
           </TrimAndMiles>

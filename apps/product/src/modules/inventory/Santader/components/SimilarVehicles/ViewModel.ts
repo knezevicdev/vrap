@@ -9,7 +9,7 @@ class SimilarVehiclesViewModel {
   private store: InventoryStore;
   readonly title: string = 'Similar Vehicles';
   readonly viewAllCars: string = 'View All Cars';
-  readonly viewAll: string = 'VIEW ALL';
+  readonly viewAll: string = 'View all';
 
   constructor(inventoryStore: InventoryStore) {
     this.store = inventoryStore;

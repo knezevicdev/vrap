@@ -60,14 +60,16 @@ const Cars = styled('div')(({ theme }) => ({
 
 const ViewAll = styled(Typography)(({ theme }) => ({
   fontWeight: 600,
-  fontSize: '16px',
-  letterSpacing: '1.75px',
-  color: theme.palette.primary.main,
   cursor: 'pointer',
+  fontSize: '16px',
+  [theme.breakpoints.only('xs')]: {
+    fontSize: '14px',
+  },
 }));
 
 const DesktopViewAll = styled(ExternalLink)(({ theme }) => ({
   display: 'flex',
+  color: '#257FA4',
   [theme.breakpoints.only('xs')]: {
     display: 'none',
   },
@@ -75,6 +77,7 @@ const DesktopViewAll = styled(ExternalLink)(({ theme }) => ({
 
 const MobileViewAll = styled(ExternalLink)(({ theme }) => ({
   display: 'none',
+  color: '#257FA4',
   [theme.breakpoints.only('xs')]: {
     display: 'flex',
     marginTop: theme.spacing(2),
@@ -85,6 +88,15 @@ const ViewAllError = styled(Button)(() => ({
   maxWidth: '256px',
   minWidth: '256px',
   alignSelf: 'center',
+}));
+
+const Title = styled(Typography)(({ theme }) => ({
+  fontWeight: 600,
+  fontSize: '24px',
+  [theme.breakpoints.only('xs')]: {
+    fontSize: '22px',
+  },
+  fontFamily: 'SantanderHeadline, Arial, sans-serif',
 }));
 
 interface Props {
@@ -108,13 +120,9 @@ const SimilarVehiclesView: React.FC<Props> = ({ viewModel }) => {
         ) : (
           <>
             <Content>
-              <Typography
-                variant="h2"
-                fontWeight="fontWeightMedium"
-                display="inline"
-              >
+              <Title>
                 {viewModel.title}
-              </Typography>
+              </Title>
               <DesktopViewAll href="/cars">
                 <ViewAll>{viewModel.viewAll}</ViewAll>
               </DesktopViewAll>
