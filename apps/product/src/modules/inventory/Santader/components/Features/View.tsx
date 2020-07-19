@@ -36,7 +36,7 @@ const Feature = styled(Typography)(({ theme }) => ({
   minWidth: '25%',
   maxWidth: '25%',
   fontSize: '16px',
-  lineHeight: 'normal',
+  lineHeight: '24px',
   [theme.breakpoints.only('xs')]: {
     minWidth: '100%',
     fontSize: '14px',

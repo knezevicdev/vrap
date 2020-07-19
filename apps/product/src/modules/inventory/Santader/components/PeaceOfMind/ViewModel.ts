@@ -10,14 +10,14 @@ interface Step {
 }
 
 class PeaceOfMindViewModel {
-  readonly title: string = 'Peace of Mind';
+  readonly title: string = 'Peace Of Mind';
   readonly steps: Step[] = [
     {
       img: {
-        alt: 'Delivered to You Photo',
+        alt: 'Delivered To You Photo',
         src: `${globalEnv.ASSET_PREFIX}/modules/inventory/components/peaceofmind/delivered.png`,
       },
-      title: 'Delivered to You',
+      title: 'Delivered To You',
       description:
         'Get this car shipped to your home or a convenient nearby location',
     },

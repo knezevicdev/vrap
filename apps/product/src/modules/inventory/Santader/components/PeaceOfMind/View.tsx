@@ -57,7 +57,13 @@ const Header = styled(Typography)(({ theme }) => ({
   display: 'block',
   marginBottom: theme.spacing(3),
   textAlign: 'center',
-  [theme.breakpoints.only('xs')]: { textAlign: 'left' },
+  fontWeight: 600,
+  fontSize: '24px',
+  [theme.breakpoints.only('xs')]: {
+    fontSize: '22px',
+    textAlign: 'left'
+  },
+  fontFamily: 'SantanderHeadline, Arial, sans-serif',
 }));
 
 const StepContent = styled('div')(() => ({
@@ -66,8 +72,10 @@ const StepContent = styled('div')(() => ({
 }));
 
 const Title = styled(Typography)(({ theme }) => ({
-  fontSize: '20px',
-  [theme.breakpoints.only('xs')]: { fontSize: '18px' },
+  fontSize: '16px',
+  [theme.breakpoints.only('xs')]: {
+    fontSize: '14px',
+  },
   [theme.breakpoints.only('sm')]: { minWidth: '16px' },
   marginBottom: theme.spacing(1),
   paddingRight: theme.spacing(1),
@@ -75,10 +83,10 @@ const Title = styled(Typography)(({ theme }) => ({
 }));
 
 const Description = styled(Typography)(({ theme }) => ({
-  fontSize: '20px',
-  [theme.breakpoints.only('xs')]: { fontSize: '18px' },
+  fontSize: '16px',
+  [theme.breakpoints.only('xs')]: {fontSize: '14px',},
   [theme.breakpoints.only('sm')]: { minWidth: '16px' },
-  lineHeight: 'normal',
+  lineHeight: '24px',
   paddingRight: theme.spacing(1),
 }));
 
@@ -90,9 +98,7 @@ const PeaceOfMind: React.FC<Props> = ({ viewModel }) => {
   return (
     <PeaceOfMindContainer>
       <PeaceOfMindContainerContent>
-        <Header variant="h2" fontWeight="fontWeightMedium">
-          {viewModel.title}
-        </Header>
+        <Header>{viewModel.title}</Header>
         <Steps>
           {viewModel.steps.map((step) => {
             const {

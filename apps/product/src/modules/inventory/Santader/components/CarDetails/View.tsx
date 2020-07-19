@@ -86,7 +86,7 @@ const Value = styled(Typography)(({ theme }) => ({
     whiteSpace: 'normal',
   },
   whiteSpace: 'nowrap',
-  lineHeight: 'normal',
+  lineHeight: '24px',
 }));
 
 const HistoryContent = styled('div')(({ theme }) => ({
@@ -108,7 +108,7 @@ const HistoryDescription = styled(Typography)(({ theme }) => ({
   },
   marginTop: theme.spacing(1),
   marginBottom: theme.spacing(1),
-  lineHeight: 'normal',
+  lineHeight: '24px',
 }));
 
 const ColoredExternalLink = styled(ExternalLink)(( ) => ({
