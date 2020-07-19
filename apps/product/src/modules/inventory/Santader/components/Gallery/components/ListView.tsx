@@ -3,7 +3,7 @@ import CloseIcon from '@material-ui/icons/Close';
 import FullscreenExitIcon from '@material-ui/icons/FullscreenExit';
 import { Typography } from '@vroom-web/ui';
 import { observer } from 'mobx-react';
-import React  from 'react';
+import React from 'react';
 
 import ViewModel from '../ViewModel';
 

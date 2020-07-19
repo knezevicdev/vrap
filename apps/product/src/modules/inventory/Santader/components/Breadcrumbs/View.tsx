@@ -10,12 +10,12 @@ interface Props {
   viewModel: ViewModel;
 }
 
-const Crumb = styled(Typography)(( ) => ({
+const Crumb = styled(Typography)(() => ({
   cursor: 'pointer',
   fontSize: '14px',
   fontWeight: 600,
   fontFamily: 'SantanderHeadline, Arial, sans-serif',
-  color: "#257FA4",
+  color: '#257FA4',
   borderBottom: 'solid 1px transparent',
   '&:hover': {
     borderBottom: 'solid 1px',

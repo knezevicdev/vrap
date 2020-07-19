@@ -53,7 +53,7 @@ const YearMakeModel = styled(Typography)(({ theme }) => ({
   fontFamily: 'SantanderHeadline, Arial, sans-serif',
 }));
 
-const Price = styled(Typography)(({theme}) => ({
+const Price = styled(Typography)(({ theme }) => ({
   fontWeight: 600,
   fontSize: '24px',
   [theme.breakpoints.only('xs')]: {
@@ -62,7 +62,7 @@ const Price = styled(Typography)(({theme}) => ({
   fontFamily: 'SantanderHeadline, Arial, sans-serif',
 }));
 
-const Summary = styled(Typography)(({theme}) => ({
+const Summary = styled(Typography)(({ theme }) => ({
   fontSize: '18px',
   [theme.breakpoints.only('xs')]: {
     fontSize: '14px',

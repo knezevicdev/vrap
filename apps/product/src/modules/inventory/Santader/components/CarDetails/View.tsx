@@ -93,7 +93,7 @@ const HistoryContent = styled('div')(({ theme }) => ({
   marginTop: theme.spacing(2),
 }));
 
-const HistoryTitle = styled(Typography)(({theme}) => ({
+const HistoryTitle = styled(Typography)(({ theme }) => ({
   fontWeight: 600,
   fontSize: '16px',
   [theme.breakpoints.only('xs')]: {
@@ -111,7 +111,7 @@ const HistoryDescription = styled(Typography)(({ theme }) => ({
   lineHeight: '24px',
 }));
 
-const ColoredExternalLink = styled(ExternalLink)(( ) => ({
+const ColoredExternalLink = styled(ExternalLink)(() => ({
   color: '#257FA4',
 }));
 

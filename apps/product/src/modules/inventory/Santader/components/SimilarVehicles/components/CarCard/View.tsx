@@ -62,7 +62,7 @@ const Content = styled(CardContent)(() => ({
   height: '110px',
 }));
 
-const TrimAndMiles = styled('div')(({theme}) => ({
+const TrimAndMiles = styled('div')(({ theme }) => ({
   display: 'flex',
   whiteSpace: 'nowrap',
   fontSize: '16px',
@@ -76,7 +76,7 @@ const Divider = styled(Typography)(({ theme }) => ({
   color: theme.palette.grey['A100'],
 }));
 
-const Price = styled(Typography)(({theme}) => ({
+const Price = styled(Typography)(({ theme }) => ({
   marginTop: 'auto',
   fontSize: '16px',
   [theme.breakpoints.only('xs')]: {
@@ -85,7 +85,7 @@ const Price = styled(Typography)(({theme}) => ({
   fontWeight: 600,
 }));
 
-const Value = styled(Typography)(({theme}) => ({
+const Value = styled(Typography)(({ theme }) => ({
   fontSize: '16px',
   [theme.breakpoints.only('xs')]: {
     fontSize: '14px',
@@ -140,18 +140,11 @@ const CarCardView: React.FC<DesktopViewProps> = ({ viewModel }) => {
             {title}
           </Value>
           <TrimAndMiles>
-            <Value
-              lineHeight="24px"
-              whiteSpace="nowrap"
-            >
+            <Value lineHeight="24px" whiteSpace="nowrap">
               {trim}
             </Value>
-            <Divider lineHeight="24px">
-              |
-            </Divider>
-            <Value lineHeight="24px">
-              {miles}
-            </Value>
+            <Divider lineHeight="24px">|</Divider>
+            <Value lineHeight="24px">{miles}</Value>
           </TrimAndMiles>
           <Price>{price}</Price>
         </Content>

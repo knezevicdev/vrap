@@ -1,10 +1,10 @@
 import { styled } from '@material-ui/core/styles';
-import {Button, Typography} from '@vroom-web/ui';
+import { Button, Typography } from '@vroom-web/ui';
 import { observer } from 'mobx-react';
 import React from 'react';
 
-import ViewModel from './ViewModel';
 import { ReactComponent as VroomLogoSvg } from './svg/vroom.svg';
+import ViewModel from './ViewModel';
 
 interface Props {
   viewModel: ViewModel;
@@ -25,7 +25,7 @@ const CustomButton = styled(Button)(({ theme }) => ({
   margin: '0 auto',
   [theme.breakpoints.only('xs')]: {
     width: '100%',
-    maxWidth: '100%'
+    maxWidth: '100%',
   },
   '&.MuiButton-contained.Mui-disabled': {
     backgroundColor: '#f5f5f5',
@@ -34,7 +34,7 @@ const CustomButton = styled(Button)(({ theme }) => ({
   },
 }));
 
-const PoweredBy = styled('div')(({theme}) => ({
+const PoweredBy = styled('div')(({ theme }) => ({
   display: 'flex',
   alignItems: 'center',
   marginTop: theme.spacing(2),
@@ -52,8 +52,8 @@ const VroomLogo = styled(VroomLogoSvg)(({ theme }) => ({
 const ViewContainer = styled('div')(() => ({
   display: 'flex',
   flexDirection: 'column',
-  alignItems: 'center'
-}))
+  alignItems: 'center',
+}));
 
 const StartPurchaseView: React.FC<Props> = (props) => {
   const { viewModel } = props;
@@ -65,7 +65,8 @@ const StartPurchaseView: React.FC<Props> = (props) => {
         variant="contained"
         onClick={handleClick}
         disabled={viewModel.isAvailableSoon()}
-      >{viewModel.getButtonText()}
+      >
+        {viewModel.getButtonText()}
       </CustomButton>
       <PoweredBy>
         <PoweredByLabel>{viewModel.poweredBy}</PoweredByLabel>

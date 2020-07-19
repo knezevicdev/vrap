@@ -1,5 +1,6 @@
 import { styled, useTheme } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
+import { SantanderFooter } from '@vroom-web/footer-components';
 import { observer } from 'mobx-react';
 import React, { useEffect } from 'react';
 
@@ -13,7 +14,6 @@ import StartPurchase from './components/StartPurchase';
 import VehicleHeader from './components/VehicleHeader';
 import VehicleNotFound from './components/VehicleNotFound';
 import ViewModel from './ViewModel';
-import {SantanderFooter} from "@vroom-web/footer-components";
 
 export interface Props {
   viewModel: ViewModel;

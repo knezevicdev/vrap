@@ -61,7 +61,7 @@ const Header = styled(Typography)(({ theme }) => ({
   fontSize: '24px',
   [theme.breakpoints.only('xs')]: {
     fontSize: '22px',
-    textAlign: 'left'
+    textAlign: 'left',
   },
   fontFamily: 'SantanderHeadline, Arial, sans-serif',
 }));
@@ -84,7 +84,7 @@ const Title = styled(Typography)(({ theme }) => ({
 
 const Description = styled(Typography)(({ theme }) => ({
   fontSize: '16px',
-  [theme.breakpoints.only('xs')]: {fontSize: '14px',},
+  [theme.breakpoints.only('xs')]: { fontSize: '14px' },
   [theme.breakpoints.only('sm')]: { minWidth: '16px' },
   lineHeight: '24px',
   paddingRight: theme.spacing(1),

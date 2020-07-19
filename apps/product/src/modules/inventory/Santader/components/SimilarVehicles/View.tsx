@@ -120,9 +120,7 @@ const SimilarVehiclesView: React.FC<Props> = ({ viewModel }) => {
         ) : (
           <>
             <Content>
-              <Title>
-                {viewModel.title}
-              </Title>
+              <Title>{viewModel.title}</Title>
               <DesktopViewAll href="/cars">
                 <ViewAll>{viewModel.viewAll}</ViewAll>
               </DesktopViewAll>
