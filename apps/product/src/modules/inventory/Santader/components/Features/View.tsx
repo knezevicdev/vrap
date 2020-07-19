@@ -33,35 +33,44 @@ const Features = styled('div')(({ theme }) => ({
 }));
 
 const Feature = styled(Typography)(({ theme }) => ({
-  fontSize: '20px',
   minWidth: '25%',
   maxWidth: '25%',
+  fontSize: '16px',
   lineHeight: 'normal',
   [theme.breakpoints.only('xs')]: {
     minWidth: '100%',
+    fontSize: '14px',
   },
   [theme.breakpoints.only('sm')]: {
     minWidth: '50%',
   },
-  letterSpacing: '0.25px',
   marginBottom: theme.spacing(2),
 }));
 
 const Show = styled(Typography)(({ theme }) => ({
   fontWeight: 600,
-  fontSize: '16px',
-  letterSpacing: '1.75px',
-  color: theme.palette.primary.main,
+  color: '#257FA4',
   cursor: 'pointer',
+  fontSize: '16px',
+  [theme.breakpoints.only('xs')]: {
+    fontSize: '14px',
+  },
+}));
+
+const Title = styled(Typography)(({ theme }) => ({
+  fontWeight: 600,
+  fontSize: '24px',
+  [theme.breakpoints.only('xs')]: {
+    fontSize: '22px',
+  },
+  fontFamily: 'SantanderHeadline, Arial, sans-serif',
 }));
 
 const FeaturesView: React.FC<Props> = ({ viewModel }) => {
   return (
     <FeaturesContainer>
       <FeaturesContainerContent>
-        <Typography variant="h2" fontWeight="fontWeightMedium">
-          {viewModel.title}
-        </Typography>
+        <Title>{viewModel.title}</Title>
         <Features>
           {viewModel.getFeatures().map((feature, index) => {
             return <Feature key={`${index}: feature`}>{feature}</Feature>;
