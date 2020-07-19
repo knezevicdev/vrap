@@ -73,7 +73,7 @@ const Divider = styled('div')(({ theme }) => ({
   margin: theme.spacing(0, 4),
   backgroundColor: theme.palette.grey['A100'],
   width: '1px',
-  height: '48px',
+  height: '80px',
 }));
 
 interface Props {

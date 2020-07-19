@@ -16,6 +16,7 @@ class StartPurchaseViewModel {
   readonly purchaseText: string = 'Start Purchase';
   readonly availableSoon: string = 'Available Soon';
   readonly findNewMatch: string = 'Find A New Match';
+  readonly poweredBy = 'Powered by';
 
   constructor(inventoryStore: InventoryStore) {
     this.store = inventoryStore;

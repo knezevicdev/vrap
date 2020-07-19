@@ -1,17 +1,32 @@
 import { styled } from '@material-ui/core/styles';
-import { Button, Typography } from '@vroom-web/ui';
+import {Button, Typography} from '@vroom-web/ui';
 import { observer } from 'mobx-react';
 import React from 'react';
 
 import ViewModel from './ViewModel';
+import { ReactComponent as VroomLogoSvg } from './svg/vroom.svg';
 
 interface Props {
   viewModel: ViewModel;
 }
 
 const CustomButton = styled(Button)(({ theme }) => ({
-  width: '100%',
-
+  fontSize: '18px',
+  height: '48px',
+  maxWidth: '280px',
+  minWidth: '280px',
+  whiteSpace: 'nowrap',
+  background: '#EC0000',
+  color: '#FFFFFF',
+  fontWeight: 'bold',
+  '&:hover': {
+    background: '#CC0000',
+  },
+  margin: '0 auto',
+  [theme.breakpoints.only('xs')]: {
+    width: '100%',
+    maxWidth: '100%'
+  },
   '&.MuiButton-contained.Mui-disabled': {
     backgroundColor: '#f5f5f5',
     color: theme.palette.grey['A100'],
@@ -19,23 +34,44 @@ const CustomButton = styled(Button)(({ theme }) => ({
   },
 }));
 
+const PoweredBy = styled('div')(({theme}) => ({
+  display: 'flex',
+  alignItems: 'center',
+  marginTop: theme.spacing(2),
+}));
+
+const PoweredByLabel = styled(Typography)(() => ({
+  color: '#767676',
+  fontSize: '16px',
+}));
+
+const VroomLogo = styled(VroomLogoSvg)(({ theme }) => ({
+  marginLeft: theme.spacing(1),
+}));
+
+const ViewContainer = styled('div')(() => ({
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'center'
+}))
+
 const StartPurchaseView: React.FC<Props> = (props) => {
   const { viewModel } = props;
   const handleClick = (): void => viewModel.handleClick();
 
   return (
-    <>
+    <ViewContainer>
       <CustomButton
         variant="contained"
-        color="primary"
         onClick={handleClick}
         disabled={viewModel.isAvailableSoon()}
-      >
-        <Typography variant="button" fontWeight={600}>
-          {viewModel.getButtonText()}
-        </Typography>
+      >{viewModel.getButtonText()}
       </CustomButton>
-    </>
+      <PoweredBy>
+        <PoweredByLabel>{viewModel.poweredBy}</PoweredByLabel>
+        <VroomLogo />
+      </PoweredBy>
+    </ViewContainer>
   );
 };
 
