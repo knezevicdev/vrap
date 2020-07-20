@@ -1,157 +1,91 @@
-import { makeStyles, styled, useTheme } from '@material-ui/core/styles';
-import useMediaQuery from '@material-ui/core/useMediaQuery';
-import { Container as VroomContainer, Typography } from '@vroom-web/ui';
-import { observer } from 'mobx-react';
+import Link from '@material-ui/core/Link';
+import { styled } from '@material-ui/core/styles';
+import { Typography } from '@vroom-web/ui';
 import React from 'react';
 
-import BuySellTrade from './BuySellTrade';
 import Search from './Search';
 import ViewModel from './ViewModel';
 
-import ExternalLink from 'src/ui/ExternalLink';
+import globalEnv from 'src/globalEnv';
 
-//#region Styling
-const useBackgroundStyles = makeStyles((theme) => ({
-  background: {
-    overflow: 'hidden',
-    background: theme.palette.primary.main,
-    [theme.breakpoints.up('md')]: {
-      background: `linear-gradient(100deg, ${theme.palette.primary.main} 71.9%, ${theme.palette.background.paper} 72%)`,
-    },
-    [theme.breakpoints.only('md')]: {
-      paddingTop: theme.spacing(5),
-      paddingBottom: theme.spacing(5),
-    },
-    [theme.breakpoints.up('lg')]: {
-      paddingTop: theme.spacing(10),
-      paddingBottom: theme.spacing(10),
-    },
-  },
+const ViewContainer = styled('div')(({ theme }) => ({
+  display: 'flex',
+  margin: theme.spacing(0, 'auto'),
+  width: '100%',
+  backgroundImage: `url(${globalEnv.ASSET_PREFIX}/modules/home/santander/images/Santander-Hero@3x.jpg)`,
+  backgroundRepeat: 'no-repeat',
+  backgroundSize: 'cover',
+  backgroundPosition: 'center',
 }));
 
-const Background: React.FC = ({ children }) => {
-  const classes = useBackgroundStyles();
-  return <div className={classes.background}>{children}</div>;
-};
-
-const useContainerStyles = makeStyles((theme) => ({
-  grid: {
-    display: 'grid',
-    gridTemplateColumns: '1fr 1fr 1fr 1fr 1fr 1fr',
-    gridTemplateAreas: `
-      "t t t t . ."
-      "s s s i i i"
-      "sv sv sv i i i" 
-    `,
-    [theme.breakpoints.only('sm')]: {
-      textAlign: 'center',
-      gap: `${theme.spacing(1)}px`,
-      gridTemplateAreas: `
-      "i"
-      "t"
-      "s"
-      "sv"
-      `,
-      gridTemplateColumns: 'none',
-    },
-    [theme.breakpoints.only('xs')]: {
-      gap: `${theme.spacing(1)}px`,
-      gridTemplateAreas: `
-      "t"
-      "s"
-      "i"
-      "sv"
-    `,
-      gridTemplateColumns: 'none',
-    },
+const ViewContent = styled('div')(({ theme }) => ({
+  display: 'flex',
+  flexDirection: 'column',
+  width: '100%',
+  padding: theme.spacing(16, 8, 24, 8),
+  maxWidth: '1280px',
+  margin: '0 auto',
+  [theme.breakpoints.only('sm')]: {
+    padding: theme.spacing(12, 4, 12, 4),
+  },
+  [theme.breakpoints.only('xs')]: {
+    padding: theme.spacing(8, 2),
   },
 }));
-
-const Container: React.FC<{ maxWidth?: 'sm' | 'lg' }> = ({
-  children,
-  maxWidth,
-}) => {
-  const classes = useContainerStyles();
-
-  return (
-    <VroomContainer className={classes.grid} maxWidth={maxWidth}>
-      {children}
-    </VroomContainer>
-  );
-};
-
-interface CarImageProps {
-  alt: string;
-  src: string;
-  carImageHeight: string;
-}
-
-const useCarImageStyles = makeStyles((theme) => ({
-  image: {
-    gridArea: 'i',
-    height: (props: CarImageProps): string => props.carImageHeight,
-    width: '100%',
-    objectFit: 'contain',
-    alignSelf: 'end',
-    [theme.breakpoints.only('xs')]: {
-      width: '150%',
-    },
-  },
-}));
-
-const CarImage: React.FC<CarImageProps> = (props) => {
-  const { alt, src } = props;
-  const classes = useCarImageStyles(props);
-  return <img className={classes.image} alt={alt} src={src} loading="lazy" />;
-};
 
 const Title = styled(Typography)(({ theme }) => ({
-  color: theme.palette.text.secondary,
-  gridArea: 't',
+  color: '#FFFFFF',
+  whiteSpace: 'pre',
+  lineHeight: '56px',
+  fontSize: '48px',
+  fontWeight: 600,
+  fontFamily: 'SantanderHeadline',
+  marginBottom: theme.spacing(4),
+  [theme.breakpoints.only('sm')]: {
+    fontSize: '42px',
+    lineHeight: '48px',
+  },
+  [theme.breakpoints.only('xs')]: {
+    fontSize: '36px',
+    lineHeight: '40px',
+    marginBottom: theme.spacing(2),
+  },
 }));
 
-const SubTitle = styled(Typography)(({ theme }) => ({
-  color: theme.palette.text.secondary,
+const Browse = styled(Typography)(({ theme }) => ({
+  fontSize: '16px',
   fontWeight: 600,
-  gridArea: 's',
-  letterSpacing: '0.25px',
-  lineHeight: '1.3',
+  marginTop: theme.spacing(2),
+  [theme.breakpoints.only('sm')]: {
+    fontSize: '18px',
+  },
+  [theme.breakpoints.only('xs')]: {
+    fontSize: '14px',
+    marginTop: theme.spacing(1),
+  },
+  '& > a': {
+    color: '#FFFFFF',
+  },
 }));
-
-const SubTitleLink = styled(ExternalLink)(({ theme }) => ({
-  color: theme.palette.text.secondary,
-  fontWeight: 600,
-  textDecoration: 'underline',
-}));
-//#endregion
 
 interface Props {
   viewModel: ViewModel;
 }
 
-const HeroView: React.FC<Props> = ({ viewModel }) => {
-  const theme = useTheme();
-  const smDown = useMediaQuery(theme.breakpoints.down('sm'));
-
+const View: React.FC<Props> = ({ viewModel }) => {
   return (
-    <Background>
-      <Container maxWidth={smDown ? 'sm' : 'lg'}>
-        <Title variant="h1">{viewModel.title}</Title>
-        <SubTitle>
-          {viewModel.subtitle}{' '}
-          <SubTitleLink href={viewModel.subtitleLink.href}>
-            {viewModel.subtitleLink.label}
-          </SubTitleLink>
-        </SubTitle>
-        <CarImage
-          alt={viewModel.car.alt}
-          src={viewModel.car.src}
-          carImageHeight={viewModel.carImageHeight}
-        />
-        {viewModel.sellTradeExperimentVariant ? <Search /> : <BuySellTrade />}
-      </Container>
-    </Background>
+    <ViewContainer>
+      <ViewContent>
+        <Title>{viewModel.title}</Title>
+        <Search />
+        <Browse>
+          <Link href={viewModel.browseLink.href}>
+            {viewModel.browseLink.label}
+          </Link>
+        </Browse>
+      </ViewContent>
+    </ViewContainer>
   );
 };
 
-export default observer(HeroView);
+export default View;
