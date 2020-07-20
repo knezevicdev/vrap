@@ -124,6 +124,7 @@ class GalleryViewModel {
       leadFlagPhotoUrl,
       otherPhotos,
       interiorPhotoUrl,
+      hasStockPhotos,
     } = this.inventoryStore.vehicle._source;
     const { isListView } = this.galleryStore;
 
@@ -138,7 +139,7 @@ class GalleryViewModel {
         thumbnail: img,
       };
     });
-    if (vehiclePhotos.length > 1 && !isListView) {
+    if (vehiclePhotos.length > 1 && !isListView && !hasStockPhotos) {
       const addGeneralToCondition: {
         original: string;
         thumbnail: string;
