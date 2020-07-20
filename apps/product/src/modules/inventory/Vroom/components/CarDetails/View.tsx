@@ -38,21 +38,32 @@ const DetailsData = styled('div')(({ theme }) => ({
   [theme.breakpoints.only('sm')]: { flexWrap: 'wrap' },
 }));
 
-const FlexColumn = styled('div')(({ theme }) => ({
+const FlexColumn = styled('div')(() => ({
   display: 'flex',
   flexDirection: 'column',
 }));
 
+const FlexColumnRight = styled(FlexColumn)(() => ({
+  marginRight: '25px',
+}));
+
 const History = styled('div')(({ theme }) => ({
   display: 'flex',
-  flexDirection: 'column',
-  margin: theme.spacing(3, 0, 0, 3),
+  flexDirection: 'row',
+  margin: theme.spacing(3, 0, 0, 0),
   [theme.breakpoints.only('xs')]: { marginLeft: 0 },
   [theme.breakpoints.only('sm')]: { marginLeft: 0 },
 }));
 
 const HistoryContent = styled('div')(({ theme }) => ({
   marginTop: theme.spacing(2),
+}));
+
+const StyledOwners = styled(HistoryContent)(({ theme }) => ({
+  marginTop: theme.spacing(3),
+}));
+const CleanHistory = styled(HistoryContent)(({ theme }) => ({
+  marginTop: theme.spacing(3),
 }));
 
 const HistoryTitle = styled(Typography)(() => ({
@@ -80,8 +91,17 @@ const Title = styled(Typography)(({ theme }) => ({
   textTransform: 'uppercase',
 }));
 
-const Spacer = styled('div')(({ theme }) => ({
-  height: '23px',
+const StyledPerformance = styled('div')(() => ({
+  marginTop: '23px',
+  maxWidth: '98%',
+}));
+
+const StyledSize = styled('div')(() => ({
+  marginTop: '28px',
+}));
+
+const Warranty = styled('div')(() => ({
+  marginTop: '66px',
 }));
 
 const CarDetailsView: React.FC<Props> = (props) => {
@@ -96,54 +116,60 @@ const CarDetailsView: React.FC<Props> = (props) => {
         </Typography>
 
         <DetailsData>
-          <FlexColumn>
-            <Basics />
-            <Spacer />
-            <Performance />
-          </FlexColumn>
-          <VehicleSize />
           <History>
-            <Title>{history.title}</Title>
-            {history.isWarrantyAvailable && (
-              <HistoryContent>
-                <HistoryTitle>{history.manufacturersWarranty}</HistoryTitle>
-                <HistoryDescription>{history.residualText}</HistoryDescription>
-              </HistoryContent>
-            )}
-
-            <HistoryContent>
-              <HistoryTitle>{history.cleanHistory}</HistoryTitle>
-              <HistoryDescription>
-                {history.cleanHistoryDescription}
-              </HistoryDescription>
-              <ExternalLink href={history.carfax.href} target="_blank">
-                <CarfaxLink>{history.carfax.text}</CarfaxLink>
-              </ExternalLink>
-            </HistoryContent>
-
-            <HistoryContent>
-              <HistoryTitle>{history.ownerCount}</HistoryTitle>
-            </HistoryContent>
-            {!history.isWarrantyAvailable && (
-              <HistoryContent>
-                <HistoryTitle>{history.vroomProtect}</HistoryTitle>
+            <FlexColumnRight>
+              <Title>{history.title}</Title>
+              <StyledOwners>
+                <HistoryTitle>{history.ownerCount}</HistoryTitle>
+              </StyledOwners>
+              <CleanHistory>
+                <HistoryTitle>{history.cleanHistory}</HistoryTitle>
                 <HistoryDescription>
-                  {reactStringReplace(
-                    history.vroomProtectDescription.text,
-                    /<link>(.*)<\/link>/,
-                    (match, index) => (
-                      <ExternalLink
-                        key={index}
-                        href={history.vroomProtectDescription.href}
-                        target="_blank"
-                      >
-                        {match}
-                      </ExternalLink>
-                    )
-                  )}
+                  {history.cleanHistoryDescription}
                 </HistoryDescription>
-              </HistoryContent>
-            )}
+                <ExternalLink href={history.carfax.href} target="_blank">
+                  <CarfaxLink>{history.carfax.text}</CarfaxLink>
+                </ExternalLink>
+              </CleanHistory>
+              <Basics />
+              <StyledPerformance>
+                <Performance />
+              </StyledPerformance>
+            </FlexColumnRight>
+            <FlexColumn>
+              <Warranty>
+                {history.isWarrantyAvailable ? (
+                  <HistoryContent>
+                    <HistoryTitle>{history.manufacturersWarranty}</HistoryTitle>
+                    <HistoryDescription>
+                      {history.residualText}
+                    </HistoryDescription>
+                  </HistoryContent>
+                ) : (
+                  <HistoryContent>
+                    <HistoryTitle>{history.vroomProtect}</HistoryTitle>
+                    <HistoryDescription>
+                      {reactStringReplace(
+                        history.vroomProtectDescription.text,
+                        /<link>(.*)<\/link>/,
+                        (match, index) => (
+                          <ExternalLink
+                            key={index}
+                            href={history.vroomProtectDescription.href}
+                            target="_blank"
+                          >
+                            {match}
+                          </ExternalLink>
+                        )
+                      )}
+                    </HistoryDescription>
+                  </HistoryContent>
+                )}
+              </Warranty>
+              <StyledSize>
+                <VehicleSize />
+              </StyledSize>
+            </FlexColumn>
           </History>
         </DetailsData>
       </CarDetailsContainerContent>

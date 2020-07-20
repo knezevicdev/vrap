@@ -149,6 +149,13 @@ export const carSchema: yup.ObjectSchema<Car> = yup
     inventoryId: yup.number().defined(),
     consignmentPartnerId: yup.string().defined(),
     hasStockPhotos: yup.boolean().defined(),
+    height: yup.number().defined(),
+    length: yup.number().defined(),
+    width: yup.number().defined(),
+    groundClearance: yup.number().defined(),
+    wheelBase: yup.number().defined(),
+    frontTrackWidth: yup.number().defined(),
+    rearTrackWidth: yup.number().defined(),
   })
   .defined()
   .strict(true);

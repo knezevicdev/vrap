@@ -35,7 +35,7 @@ const DetailsRow = styled('div')(({ theme }) => ({
 const Label = styled(Typography)(({ theme }) => ({
   fontWeight: 600,
   fontSize: '20px',
-  minWidth: '155px',
+  minWidth: '190px',
   color: theme.palette.grey['700'],
   marginBottom: theme.spacing(2),
 }));
