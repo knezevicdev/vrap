@@ -17,7 +17,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import clsx from 'clsx';
 import React from 'react';
 
-import { Theme } from './theme';
+import { Theme } from './types';
 
 function capitalize(str: string): string {
   return str.charAt(0).toUpperCase() + str.slice(1);

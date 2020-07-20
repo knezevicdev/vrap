@@ -12,6 +12,7 @@ import {
   SoldStatus,
 } from '@vroom-web/inv-search-networking';
 import { action, computed, observable, runInAction } from 'mobx';
+import getConfig from 'next/config';
 import Router from 'next/router';
 import { createContext } from 'react';
 
@@ -36,10 +37,12 @@ import {
   transmissions,
 } from './data';
 
-import globalEnv from 'src/globalEnv';
 import { Status } from 'src/networking/types';
 
+const { publicRuntimeConfig } = getConfig();
+
 export interface InitialCarsStoreState {
+  attributionQueryString: string;
   filtersData?: FiltersData;
   makeBuckets?: MakeBucket[];
   makeBucketsStatus: Status;
@@ -223,9 +226,11 @@ export const getPostInventoryRequestDataFromFilterData = (
 };
 
 export async function getInitialCarsStoreState(
+  attributionQueryString: string,
   filtersQueryParam?: string
 ): Promise<InitialCarsStoreState> {
   const initialState: InitialCarsStoreState = {
+    attributionQueryString,
     makeBucketsStatus: Status.INITIAL,
     inventoryStatus: Status.INITIAL,
     popularCarsStatus: Status.INITIAL,
@@ -233,11 +238,13 @@ export async function getInitialCarsStoreState(
 
   initialState.filtersData = getFiltersDataFromUrl(filtersQueryParam);
 
-  if (!globalEnv.INVSEARCH_V3_URL) {
-    throw new Error('globalEnv.INVSEARCH_V3_URL is undefined');
+  if (!publicRuntimeConfig.INVSEARCH_V3_URL) {
+    throw new Error('publicRuntimeConfig.INVSEARCH_V3_URL is undefined');
   }
 
-  const invSearchNetworker = new InvSearchNetworker(globalEnv.INVSEARCH_V3_URL);
+  const invSearchNetworker = new InvSearchNetworker(
+    publicRuntimeConfig.INVSEARCH_V3_URL
+  );
 
   try {
     initialState.makeBucketsStatus = Status.FETCHING;
@@ -245,7 +252,7 @@ export async function getInitialCarsStoreState(
       fulldetails: false,
       limit: 1,
       sortdirection: 'asc',
-      source: `${globalEnv.NAME}-${globalEnv.VERSION}`,
+      source: `${publicRuntimeConfig.NAME}-${publicRuntimeConfig.VERSION}`,
     };
     const makesResponse = await invSearchNetworker.postInventory(
       makesRequestData
@@ -266,7 +273,7 @@ export async function getInitialCarsStoreState(
       ...postInventoryRequestDataFromFiltersData,
       fulldetails: true,
       limit: INVENTORY_CARDS_PER_PAGE,
-      source: `${globalEnv.NAME}-${globalEnv.VERSION}`,
+      source: `${publicRuntimeConfig.NAME}-${publicRuntimeConfig.VERSION}`,
     };
     const inventoryResponse = await invSearchNetworker.postInventory(
       inventoryRequestData
@@ -286,7 +293,7 @@ export async function getInitialCarsStoreState(
         limit: POPULAR_CAR_LIMIT,
         sortdirection: 'asc',
         'sold-status': SoldStatus.FOR_SALE,
-        source: `${globalEnv.NAME}-${globalEnv.VERSION}`,
+        source: `${publicRuntimeConfig.NAME}-${publicRuntimeConfig.VERSION}`,
       };
       const inventoryResponse = await invSearchNetworker.postInventory(
         popularCarsRequestData
@@ -304,6 +311,8 @@ export async function getInitialCarsStoreState(
 
 export class CarsStore {
   private readonly invSearchNetworker: InvSearchNetworker;
+
+  readonly attributionQueryString: string = '';
 
   readonly inventoryCardsPerPage: number = INVENTORY_CARDS_PER_PAGE;
   readonly bodyTypes: BodyType[] = bodyTypes;
@@ -339,10 +348,11 @@ export class CarsStore {
 
   constructor(initialState?: InitialCarsStoreState) {
     this.invSearchNetworker = new InvSearchNetworker(
-      globalEnv.INVSEARCH_V3_URL || ''
+      publicRuntimeConfig.INVSEARCH_V3_URL || ''
     );
 
     if (initialState) {
+      this.attributionQueryString = initialState.attributionQueryString;
       this.filtersData = initialState.filtersData;
       this.makeBuckets = initialState.makeBuckets;
       this.makeBucketsStatus = initialState.makeBucketsStatus;
@@ -374,7 +384,7 @@ export class CarsStore {
         ...postInventoryRequestDataFromFiltersData,
         fulldetails: true,
         limit: INVENTORY_CARDS_PER_PAGE,
-        source: `${globalEnv.NAME}-${globalEnv.VERSION}`,
+        source: `${publicRuntimeConfig.NAME}-${publicRuntimeConfig.VERSION}`,
       };
       const inventoryResponse = await this.invSearchNetworker.postInventory(
         inventoryRequestData
@@ -400,7 +410,7 @@ export class CarsStore {
         limit: POPULAR_CAR_LIMIT,
         sortdirection: 'asc',
         'sold-status': SoldStatus.FOR_SALE,
-        source: `${globalEnv.NAME}-${globalEnv.VERSION}`,
+        source: `${publicRuntimeConfig.NAME}-${publicRuntimeConfig.VERSION}`,
       };
       const inventoryResponse = await this.invSearchNetworker.postInventory(
         popularCarsRequestData
@@ -431,7 +441,23 @@ export class CarsStore {
           [Filters.PAGE]: undefined,
         };
     const as = getUrlFromFiltersData(filtersDataToUse);
-    Router.replace('/cars/[[...params]]', as, { shallow: true });
+
+    // FIT-583
+    // Persist key attribution query params across navigation.
+    // This is a stopgap so that vlassic attributuion works.
+    // We should come back and remove this when a better attribution system is in place.
+    let asWithAttributionQueryString = as;
+    if (this.attributionQueryString !== '') {
+      asWithAttributionQueryString =
+        as.indexOf('?') === -1
+          ? `${as}?${this.attributionQueryString}`
+          : `${as}&${this.attributionQueryString}`;
+    }
+
+    Router.replace('/cars/[[...params]]', asWithAttributionQueryString, {
+      shallow: true,
+    });
+
     window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
     this.filtersData = filtersDataToUse;
     await this.fetchInventoryData();
