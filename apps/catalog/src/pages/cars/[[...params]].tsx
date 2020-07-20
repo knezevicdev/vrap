@@ -36,9 +36,9 @@ const CarsPage: NextPage<Props> = ({ brand, initialStoreState }) => {
     }
   }, [carsStore, theme]);
 
-  const title = 'Shop Used Cars Online - Rocket Auto';
+  const title = 'Buy Low-Mileage Used Cars & Trucks Online - Vroom';
   const description =
-    'Buy your next car online with Rocket Auto. We offer certified used vehicles, easy car buying, and delivery anywhere in the USA.';
+    'Buy your next car online with Vroom. We offer certified used cars for sale, no haggle car buying, full warranties and home shipping anywhere in the USA.';
 
   const head = (
     <>
