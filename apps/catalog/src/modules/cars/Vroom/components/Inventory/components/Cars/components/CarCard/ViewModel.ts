@@ -1,12 +1,14 @@
 /* eslint-disable @typescript-eslint/camelcase */
 import { Car, SoldStatusInt } from '@vroom-web/inv-search-networking';
+import getConfig from 'next/config';
 
-import globalEnv from 'src/globalEnv';
 import AnalyticsHandler, {
   Product,
   ProductPhotoType,
 } from 'src/integrations/AnalyticsHandler';
 import { CarsStore } from 'src/modules/cars/store';
+
+const { publicRuntimeConfig } = getConfig();
 
 interface Summary {
   image: string;
@@ -22,7 +24,7 @@ class CarCardViewModel {
   private readonly car: Car;
   readonly evoxLogo = {
     alt: 'Evox Images',
-    src: `${globalEnv.ASSET_PREFIX}/components/evox-logo.png`,
+    src: `${publicRuntimeConfig.ASSET_PREFIX}/components/evox-logo.png`,
   };
   readonly availableSoon: string = 'AVAILABLE SOON';
   readonly salePending: string = 'SALE PENDING';
@@ -85,7 +87,7 @@ class CarCardViewModel {
       listingPrice,
     } = this.car;
 
-    const noPhoto = `${globalEnv.ASSET_PREFIX}/components/ghost-suv-with-padding.png`;
+    const noPhoto = `${publicRuntimeConfig.ASSET_PREFIX}/components/ghost-suv-with-padding.png`;
     const image = leadFlagPhotoUrl || noPhoto;
 
     return {

@@ -1,6 +1,7 @@
 import { ServerStyleSheets } from '@material-ui/core/styles';
 import { AnalyticsSnippet } from '@vroom-web/analytics-integration';
 import { Brand, UISnippet } from '@vroom-web/ui';
+import getConfig from 'next/config';
 import { AppType, Enhancer, RenderPage } from 'next/dist/next-server/lib/utils';
 import Document, {
   DocumentContext,
@@ -12,9 +13,7 @@ import Document, {
 } from 'next/document';
 import React from 'react';
 
-import GlobalEnvSnippet from './GlobalEnvSnippet';
-
-import globalEnv from 'src/globalEnv';
+const { serverRuntimeConfig, publicRuntimeConfig } = getConfig();
 
 class VroomDocument extends Document {
   static async getInitialProps(
@@ -45,8 +44,6 @@ class VroomDocument extends Document {
   }
 
   render(): JSX.Element {
-    const segmentWriteKey = process.env.SEGMENT_WRITE_KEY;
-
     // FIT-570
     // TODO: replace this mechanism with the actual one.
     // Some data should come from ctx.req, rather than from ctx.query.
@@ -63,19 +60,13 @@ class VroomDocument extends Document {
             name="viewport"
             content="minimum-scale=1, initial-scale=1, width=device-width"
           />
-          <UISnippet brand={brand} hostUrl={globalEnv.ASSET_PREFIX || ''} />
-          {segmentWriteKey && (
+          <UISnippet brand={brand} hostUrl={publicRuntimeConfig.ASSET_PREFIX} />
+          {serverRuntimeConfig.SEGMENT_WRITE_KEY && (
             <AnalyticsSnippet
               appName="Vroom Web - Catalog"
-              segmentWriteKey={segmentWriteKey}
+              segmentWriteKey={serverRuntimeConfig.SEGMENT_WRITE_KEY}
             />
           )}
-          <GlobalEnvSnippet
-            ASSET_PREFIX={globalEnv.ASSET_PREFIX}
-            INVSEARCH_V3_URL={globalEnv.INVSEARCH_V3_URL}
-            NAME={globalEnv.NAME}
-            VERSION={globalEnv.VERSION}
-          />
         </Head>
         <body>
           <Main />
