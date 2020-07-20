@@ -2,7 +2,7 @@ import { styled } from '@material-ui/core/styles';
 import { Typography } from '@vroom-web/ui';
 import React from 'react';
 
-import ExternalLink from '../../../../../../ui/ExternalLink';
+import ExternalLink from 'src/ui/ExternalLink';
 import ViewModel from './ViewModel';
 
 interface Props {

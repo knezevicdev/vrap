@@ -1,10 +1,9 @@
 import React from 'react';
-
-import { InventoryStore, InventoryStoreContext } from '../../../../store';
 import View from './View';
 import ViewModel from './ViewModel';
+import { InventoryStoreContext, InventoryStore } from 'src/modules/inventory/store';
 
-const Performance: React.FC = () => {
+const Basics: React.FC = () => {
     return (
         <InventoryStoreContext.Consumer>
             {(store: InventoryStore): JSX.Element => {
@@ -15,4 +14,4 @@ const Performance: React.FC = () => {
     );
 };
 
-export default Performance;
+export default Basics;

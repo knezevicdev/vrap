@@ -1,5 +1,5 @@
-import {InventoryStore} from "../../../../store";
-import {Car} from "@vroom-web/inv-search-networking";
+import { Car } from "@vroom-web/inv-search-networking";
+import { InventoryStore } from "src/modules/inventory/store";
 
 class ViewModel {
     private car: Car;
