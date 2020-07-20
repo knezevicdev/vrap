@@ -90,7 +90,7 @@ const MobileNavView: React.FC<Props> = ({ viewModel }) => {
                 return (
                   <Box key={index} display="flex" flex={1} py={1}>
                     <Link href={link.href} target={link.target}>
-                      <Typography variant="button" color="text.secondary">
+                      <Typography variant="body1" color="text.secondary">
                         {link.label}
                       </Typography>
                     </Link>
