@@ -8,9 +8,16 @@ import SortViewModel from './ViewModel';
 
 const SortContainer = styled(Select)(({ theme }) => ({
   marginLeft: 'auto',
-  fontWeight: theme.typography.fontWeightMedium,
+  fontWeight: 600,
   fontSize: '16px',
+  color: "#257FA4",
   height: theme.spacing(4),
+  '&:before': {
+    borderBottom: 'solid 1px #444444'
+  },
+  '&:after': {
+    borderBottom: 'solid 1px #444444'
+  },
 }));
 
 const Value = styled(MenuItem)(() => ({
@@ -35,7 +42,6 @@ const SortView: React.FC<Props> = ({ viewModel }) => {
     <SortContainer
       value={activeSortValue}
       onChange={handleChange}
-      color="primary"
     >
       <Value key={viewModel.nonSortDisplay} value={viewModel.nonSortDisplay}>
         {viewModel.nonSortDisplay}
