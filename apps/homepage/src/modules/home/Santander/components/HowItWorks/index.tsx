@@ -1,11 +1,10 @@
 import React from 'react';
 
-import HowItWorksView from './View';
-import HowItWorksViewModel from './ViewModel';
+import View from './View';
+import ViewModel from './ViewModel';
 
 const HowItWorks: React.FC = () => {
-  const viewModel = new HowItWorksViewModel();
-  return <HowItWorksView viewModel={viewModel} />;
+  return <View viewModel={new ViewModel()} />;
 };
 
 export default HowItWorks;

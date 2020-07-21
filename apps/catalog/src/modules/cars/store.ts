@@ -12,6 +12,7 @@ import {
   SoldStatus,
 } from '@vroom-web/inv-search-networking';
 import { action, computed, observable, runInAction } from 'mobx';
+import getConfig from 'next/config';
 import Router from 'next/router';
 import { createContext } from 'react';
 
@@ -36,8 +37,9 @@ import {
   transmissions,
 } from './data';
 
-import globalEnv from 'src/globalEnv';
 import { Status } from 'src/networking/types';
+
+const { publicRuntimeConfig } = getConfig();
 
 export interface InitialCarsStoreState {
   attributionQueryString: string;
@@ -236,11 +238,13 @@ export async function getInitialCarsStoreState(
 
   initialState.filtersData = getFiltersDataFromUrl(filtersQueryParam);
 
-  if (!globalEnv.INVSEARCH_V3_URL) {
-    throw new Error('globalEnv.INVSEARCH_V3_URL is undefined');
+  if (!publicRuntimeConfig.INVSEARCH_V3_URL) {
+    throw new Error('publicRuntimeConfig.INVSEARCH_V3_URL is undefined');
   }
 
-  const invSearchNetworker = new InvSearchNetworker(globalEnv.INVSEARCH_V3_URL);
+  const invSearchNetworker = new InvSearchNetworker(
+    publicRuntimeConfig.INVSEARCH_V3_URL
+  );
 
   try {
     initialState.makeBucketsStatus = Status.FETCHING;
@@ -248,7 +252,7 @@ export async function getInitialCarsStoreState(
       fulldetails: false,
       limit: 1,
       sortdirection: 'asc',
-      source: `${globalEnv.NAME}-${globalEnv.VERSION}`,
+      source: `${publicRuntimeConfig.NAME}-${publicRuntimeConfig.VERSION}`,
     };
     const makesResponse = await invSearchNetworker.postInventory(
       makesRequestData
@@ -269,7 +273,7 @@ export async function getInitialCarsStoreState(
       ...postInventoryRequestDataFromFiltersData,
       fulldetails: true,
       limit: INVENTORY_CARDS_PER_PAGE,
-      source: `${globalEnv.NAME}-${globalEnv.VERSION}`,
+      source: `${publicRuntimeConfig.NAME}-${publicRuntimeConfig.VERSION}`,
     };
     const inventoryResponse = await invSearchNetworker.postInventory(
       inventoryRequestData
@@ -289,7 +293,7 @@ export async function getInitialCarsStoreState(
         limit: POPULAR_CAR_LIMIT,
         sortdirection: 'asc',
         'sold-status': SoldStatus.FOR_SALE,
-        source: `${globalEnv.NAME}-${globalEnv.VERSION}`,
+        source: `${publicRuntimeConfig.NAME}-${publicRuntimeConfig.VERSION}`,
       };
       const inventoryResponse = await invSearchNetworker.postInventory(
         popularCarsRequestData
@@ -344,7 +348,7 @@ export class CarsStore {
 
   constructor(initialState?: InitialCarsStoreState) {
     this.invSearchNetworker = new InvSearchNetworker(
-      globalEnv.INVSEARCH_V3_URL || ''
+      publicRuntimeConfig.INVSEARCH_V3_URL || ''
     );
 
     if (initialState) {
@@ -380,7 +384,7 @@ export class CarsStore {
         ...postInventoryRequestDataFromFiltersData,
         fulldetails: true,
         limit: INVENTORY_CARDS_PER_PAGE,
-        source: `${globalEnv.NAME}-${globalEnv.VERSION}`,
+        source: `${publicRuntimeConfig.NAME}-${publicRuntimeConfig.VERSION}`,
       };
       const inventoryResponse = await this.invSearchNetworker.postInventory(
         inventoryRequestData
@@ -406,7 +410,7 @@ export class CarsStore {
         limit: POPULAR_CAR_LIMIT,
         sortdirection: 'asc',
         'sold-status': SoldStatus.FOR_SALE,
-        source: `${globalEnv.NAME}-${globalEnv.VERSION}`,
+        source: `${publicRuntimeConfig.NAME}-${publicRuntimeConfig.VERSION}`,
       };
       const inventoryResponse = await this.invSearchNetworker.postInventory(
         popularCarsRequestData

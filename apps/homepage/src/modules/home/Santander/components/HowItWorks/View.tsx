@@ -1,55 +1,62 @@
-import Box from '@material-ui/core/Box';
-import Grid from '@material-ui/core/Grid';
-import { useTheme } from '@material-ui/core/styles';
-import useMediaQuery from '@material-ui/core/useMediaQuery';
-import { Container, Typography } from '@vroom-web/ui';
+import { styled } from '@material-ui/core/styles';
+import { Typography } from '@vroom-web/ui';
 import React from 'react';
 
 import Step from './Step';
-import HowItWorksViewModel from './ViewModel';
+import ViewModel from './ViewModel';
 
-interface HowItWorksViewProps {
-  viewModel: HowItWorksViewModel;
+const ViewContainer = styled('div')(() => ({
+  display: 'flex',
+  width: '100%',
+  background: '#FFFFFF',
+}));
+
+const ViewContent = styled('div')(({ theme }) => ({
+  display: 'flex',
+  flexDirection: 'column',
+  width: '100%',
+  padding: theme.spacing(8),
+  maxWidth: '1280px',
+  margin: '0 auto',
+  [theme.breakpoints.only('sm')]: {
+    padding: theme.spacing(8, 4),
+  },
+  [theme.breakpoints.only('xs')]: {
+    padding: theme.spacing(4, 2),
+  },
+}));
+
+const Title = styled(Typography)(({ theme }) => ({
+  color: '#444444',
+  fontSize: '30px',
+  fontFamily: 'SantanderHeadline',
+  marginBottom: theme.spacing(6),
+  textAlign: 'center',
+  [theme.breakpoints.only('sm')]: {
+    marginBottom: theme.spacing(4),
+    textAlign: 'left',
+  },
+  [theme.breakpoints.only('xs')]: {
+    fontSize: '22px',
+    marginBottom: theme.spacing(4),
+    textAlign: 'left',
+    fontWeight: 'bold',
+  },
+}));
+
+interface Props {
+  viewModel: ViewModel;
 }
 
-const HowItWorksView: React.FC<HowItWorksViewProps> = ({ viewModel }) => {
-  const theme = useTheme();
-  const mdAndUp = useMediaQuery(theme.breakpoints.up('md'));
+const View: React.FC<Props> = ({ viewModel }) => {
   return (
-    <Box
-      bgcolor="secondary.main"
-      color="secondary.contrastText"
-      overflow="hidden"
-    >
-      <Container>
-        <Box
-          flexDirection="column"
-          py={{ xs: 6, md: 10 }}
-          textAlign={{ xs: 'left', md: 'center' }}
-        >
-          <Box mb={{ xs: 2, md: 4 }}>
-            <Typography fontWeight="fontWeightMedium" variant="h2">
-              {viewModel.title()}
-            </Typography>
-          </Box>
-          <Box mb={{ xs: 2, md: 4 }}>
-            <Grid container spacing={mdAndUp ? 10 : 3}>
-              {viewModel.steps().map((step, index) => (
-                <Grid key={index} item xs={12} md={4}>
-                  <Step
-                    description={step.description}
-                    title={step.title}
-                    IconComponent={step.IconComponent}
-                    iconViewBox={step.iconViewBox}
-                  />
-                </Grid>
-              ))}
-            </Grid>
-          </Box>
-        </Box>
-      </Container>
-    </Box>
+    <ViewContainer>
+      <ViewContent>
+        <Title>{viewModel.title}</Title>
+        <Step />
+      </ViewContent>
+    </ViewContainer>
   );
 };
 
-export default HowItWorksView;
+export default View;

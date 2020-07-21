@@ -17,7 +17,7 @@ const DesktopNavigationView: React.FC<Props> = ({ viewModel }) => {
   }, [viewModel]);
 
   return (
-    <Grid container>
+    <Grid container spacing={2}>
       {viewModel.links().map((section, index) => {
         return (
           <Grid key={index} item xs={3}>
@@ -34,7 +34,7 @@ const DesktopNavigationView: React.FC<Props> = ({ viewModel }) => {
               return (
                 <Box key={index} display="flex" pb={1}>
                   <Link href={link.href} target={link.target} rel={link.rel}>
-                    <Typography variant="button" color="text.secondary">
+                    <Typography variant="body1" color="text.secondary">
                       {link.label}
                     </Typography>
                   </Link>
