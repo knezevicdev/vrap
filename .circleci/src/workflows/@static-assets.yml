@@ -1,0 +1,9 @@
+static-assets:
+  jobs:
+  - static-assets_deploy:
+      context: aws-prod
+      filters:
+        tags:
+          only: /^static-assets-v.*/
+        branches:
+          ignore: /.*/

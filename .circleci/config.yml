@@ -107,6 +107,16 @@ jobs:
           # Build the main app.
           yarn workspace @vroom-web/homepage build
     - sonarcloud/scan
+  static-assets_deploy:
+    docker:
+    - image: vroom/mlp:3.0.2
+    steps:
+    - checkout
+    - run:
+        command: |-
+          aws s3 sync ./static-assets s3://static-assets.p.vroom.systems --acl public-read --exclude '*.webp' --exclude '*.mp4'
+          aws s3 sync ./static-assets s3://static-assets.p.vroom.systems --acl public-read --exclude '*' --include '*.webp' --content-type 'image/webp'
+          aws s3 sync ./static-assets s3://static-assets.p.vroom.systems --acl public-read --exclude '*' --include '*.mp4' --content-type 'video/mp4'
 orbs:
   sonarcloud: sonarsource/sonarcloud@1.0.1
 version: 2.1
@@ -310,5 +320,14 @@ workflows:
         name: product_deploy_prod
         requires:
         - hold_prod
+  static-assets:
+    jobs:
+    - static-assets_deploy:
+        context: aws-prod
+        filters:
+          branches:
+            ignore: /.*/
+          tags:
+            only: /^static-assets-v.*/
   version: 2
 
