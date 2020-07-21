@@ -25,7 +25,7 @@ class ColorViewModel {
     filtersDataValue: FiltersDataColor
   ): {
     isSelected: boolean;
-    fontWeight: string;
+    fontWeight: string | number;
     hasBorder: boolean;
     isMetallic: boolean;
   } => {
@@ -37,7 +37,7 @@ class ColorViewModel {
     const isSelected = filtersDataColors
       ? filtersDataColors.includes(filtersDataValue)
       : false;
-    const fontWeight = isSelected ? 'fontWeightMedium' : 'fontWeightLight';
+    const fontWeight = isSelected ? 600 : 'fontWeightLight';
     const hasBorder = filtersDataValue === FiltersDataColor.WHITE;
     const isMetallic =
       filtersDataValue === FiltersDataColor.SILVER ||

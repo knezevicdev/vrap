@@ -36,7 +36,7 @@ const Circle = styled('div')(() => ({
 }));
 
 const Value = styled(Typography)(() => ({
-  fontSize: '16px',
+  fontSize: '14px',
 }));
 
 export interface Props {
@@ -82,7 +82,7 @@ const ColorView: React.FC<Props> = ({ viewModel }) => {
         onClick={viewModel.reset}
         disabled={viewModel.isResetDisabled()}
       >
-        <Value fontWeight="fontWeightMedium" color="primary.main">
+        <Value fontWeight={600} color="#257FA4">
           {viewModel.resetButtonLabel}
         </Value>
       </Reset>
