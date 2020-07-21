@@ -14,11 +14,7 @@ const ViewContainer = styled('div')(() => ({
 }));
 
 const View: React.FC<Props> = ({ viewModel }) => {
-  return (
-    <ViewContainer>
-      hello
-    </ViewContainer>
-  );
+  return <ViewContainer>hello</ViewContainer>;
 };
 
 export default View;

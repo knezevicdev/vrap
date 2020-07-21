@@ -5,7 +5,6 @@ interface Link {
   rel?: string;
 }
 
-class ViewModel {
-}
+class ViewModel {}
 
 export default ViewModel;
