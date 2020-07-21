@@ -29,7 +29,7 @@ const StyledCheck = styled(Check)(() => ({
 }));
 
 const Value = styled(Typography)(() => ({
-  fontSize: '16px',
+  fontSize: '14px',
 }));
 
 interface Props {
@@ -64,7 +64,7 @@ const BodyTypesView: React.FC<Props> = ({ viewModel }) => {
         onClick={viewModel.reset}
         disabled={viewModel.isResetDisabled()}
       >
-        <Value fontWeight="fontWeightMedium" color="primary.main">
+        <Value fontWeight={600} color="#257FA4">
           {resetButtonLabel}
         </Value>
       </Reset>

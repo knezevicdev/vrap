@@ -34,7 +34,7 @@ class BodyTypesViewModel {
 
   getItemInformation = (
     filtersDataValue: FiltersDataBodyType
-  ): { isSelected: boolean; fontWeight: string } => {
+  ): { isSelected: boolean; fontWeight: string | number } => {
     const filtersData = this.carsStore.filtersData;
     const filtersDataBodyTypes =
       filtersData && filtersData[Filters.BODY_TYPES]
@@ -43,7 +43,7 @@ class BodyTypesViewModel {
     const isSelected = filtersDataBodyTypes
       ? filtersDataBodyTypes.includes(filtersDataValue)
       : false;
-    const fontWeight = isSelected ? 'fontWeightMedium' : 'fontWeightLight';
+    const fontWeight = isSelected ? 600 : 'fontWeightLight';
     return { isSelected, fontWeight };
   };
 
