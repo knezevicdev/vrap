@@ -16,6 +16,11 @@ interface History {
   vroomProtectDescription: Link;
 }
 
+export interface Section {
+  title: string;
+  items: { label: string; value: string }[];
+}
+
 interface Link {
   text: string;
   href: string;

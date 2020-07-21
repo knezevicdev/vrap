@@ -1,6 +1,7 @@
 import { Car } from '@vroom-web/inv-search-networking';
 
 import { InventoryStore } from 'src/modules/inventory/store';
+import { Section } from '../../ViewModel';
 
 class ViewModel {
   private car: Car;
@@ -8,7 +9,7 @@ class ViewModel {
     this.car = store.vehicle._source;
   }
 
-  getInformation = () => {
+  getInformation= (): Section => {
     return {
       title: 'Basics',
       items: [
@@ -19,7 +20,7 @@ class ViewModel {
         {
           label: 'Interior',
           value: this.car.intColor,
-        },
+        },``
         {
           label: 'Exterior',
           value: this.car.extColor,

@@ -1,5 +1,7 @@
 import { Car } from '@vroom-web/inv-search-networking';
 
+import { Section } from '../../ViewModel';
+
 import { InventoryStore } from 'src/modules/inventory/store';
 
 class ViewModel {
@@ -9,7 +11,7 @@ class ViewModel {
     this.car = store.vehicle._source;
   }
 
-  getInformation = () => {
+  getInformation = (): Section => {
     return {
       title: 'Performance',
       items: [
