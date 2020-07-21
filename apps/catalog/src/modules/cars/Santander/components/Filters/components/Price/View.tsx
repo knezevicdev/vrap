@@ -23,7 +23,7 @@ const Reset = styled(ListItem)(({ theme }) => ({
 }));
 
 const Value = styled(Typography)(() => ({
-  fontSize: '16px',
+  fontSize: '14px',
 }));
 
 interface Props {
@@ -58,7 +58,7 @@ const PriceView: React.FC<Props> = ({ viewModel }) => {
         onClick={handleResetClick}
         disabled={viewModel.isResetButtonDisabled()}
       >
-        <Value fontWeight="fontWeightMedium" color="primary.main">
+          <Value fontWeight={600} color="#257FA4">
           {viewModel.resetButtonLabel}
         </Value>
       </Reset>

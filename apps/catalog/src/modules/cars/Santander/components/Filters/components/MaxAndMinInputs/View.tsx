@@ -30,21 +30,30 @@ const Input = styled(OutlinedInput)(({ theme }) => ({
   '& .MuiOutlinedInput-adornedStart': {
     paddingLeft: theme.spacing(1),
   },
+  '& .Mui-error .MuiInputBase': {
+    outline: 'yellow'
+  },
+  '& .MuiInputBase-input:focus': {
+    outline: 'green'
+  },
 }));
 
 const Error = styled(Typography)(({ theme }) => ({
   marginBottom: theme.spacing(2),
   lineHeight: '1.4',
   textAlign: 'center',
+  fontSize: '14px',
+  color: '#257FA4'
 }));
 
 const StyledSlider = styled(UISlider)(({ theme }) => ({
   width: theme.spacing(24),
   margin: theme.spacing(2, 0, 2, 2),
+  color: '#257FA4'
 }));
 
 const Value = styled(Typography)(() => ({
-  fontSize: '16px',
+  fontSize: '14px',
   alignSelf: 'center',
 }));
 
@@ -102,9 +111,7 @@ const MaxAndMinInputsView: React.FC<Props> = ({ viewModel }) => {
     <>
       <ContainerForErrorAndInputs>
         {hasInputError && (
-          <Error variant="body1" color="error.main">
-            {viewModel.inputErrorLabel}
-          </Error>
+          <Error>{viewModel.inputErrorLabel}</Error>
         )}
 
         <InputsContainer>
