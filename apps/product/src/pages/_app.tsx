@@ -1,7 +1,6 @@
 import 'mobx-react/batchingForReactDom';
 import 'react-image-gallery/styles/css/image-gallery.css';
 import 'src/modules/inventory/Vroom/components/Gallery/index.css';
-import 'src/modules/inventory/Santader/components/Gallery/index.css';
 
 import { configure as configureMobx } from 'mobx';
 import App from 'next/app';

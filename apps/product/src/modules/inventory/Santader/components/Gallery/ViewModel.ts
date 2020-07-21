@@ -131,11 +131,11 @@ class GalleryViewModel {
   }
 
   setListView(): void {
-    const { selectedGallery, isListView } = this.galleryStore;
+    const { isListView } = this.galleryStore;
     const product = this.getCurrentProduct();
     this.galleryStore.changeListView();
     !isListView &&
-      this.analyticsHandler.trackGalleryListView(product, selectedGallery);
+      this.analyticsHandler.trackGalleryListView(product, 'General Photos');
   }
 
   handleListViewImageClick(image: string): void {
