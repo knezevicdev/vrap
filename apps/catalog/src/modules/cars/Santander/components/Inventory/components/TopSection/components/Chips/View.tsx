@@ -18,13 +18,13 @@ const Clear = styled(Typography)(({ theme }) => ({
   padding: theme.spacing(1),
   alignSelf: 'center',
   fontSize: '16px',
-  color: '#444444'
+  color: '#444444',
 }));
 
-const CustomChip = styled(Chip)(( ) => ({
+const CustomChip = styled(Chip)(() => ({
   fontSize: '14px',
   backgroundColor: '#444444',
-  color: "#ffffff",
+  color: '#ffffff',
 }));
 
 const CloseIcon = styled(Close)(() => ({
@@ -59,10 +59,7 @@ const ChipsView: React.FC<Props> = ({ viewModel }) => {
           </Grid>
         );
       })}
-      <Clear
-        fontWeight={600}
-        onClick={viewModel.clearFilters}
-      >
+      <Clear fontWeight={600} onClick={viewModel.clearFilters}>
         {viewModel.clearButtonLabel}
       </Clear>
     </ChipsContainer>

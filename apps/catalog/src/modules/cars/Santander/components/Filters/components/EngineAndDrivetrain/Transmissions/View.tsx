@@ -34,7 +34,7 @@ const Transmissions: React.FC<Props> = ({ viewModel }) => {
   return (
     <RadioGroup value={viewModel.getActiveTransmission()} onChange={onChange}>
       <Label
-        control={<RadioCustom/>}
+        control={<RadioCustom />}
         label={viewModel.allOption.display}
         value={viewModel.allOption.value}
       />

@@ -55,7 +55,7 @@ const MilesView: React.FC<Props> = ({ viewModel }) => {
         onClick={handleResetClick}
         disabled={viewModel.isResetButtonDisabled()}
       >
-          <Value fontWeight={600} color="#257FA4">
+        <Value fontWeight={600} color="#257FA4">
           {viewModel.resetButtonLabel}
         </Value>
       </Reset>

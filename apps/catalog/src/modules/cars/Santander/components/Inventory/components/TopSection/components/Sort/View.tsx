@@ -10,13 +10,13 @@ const SortContainer = styled(Select)(({ theme }) => ({
   marginLeft: 'auto',
   fontWeight: 600,
   fontSize: '16px',
-  color: "#257FA4",
+  color: '#257FA4',
   height: theme.spacing(4),
   '&:before': {
-    borderBottom: 'solid 1px #444444'
+    borderBottom: 'solid 1px #444444',
   },
   '&:after': {
-    borderBottom: 'solid 1px #444444'
+    borderBottom: 'solid 1px #444444',
   },
 }));
 
@@ -39,10 +39,7 @@ const SortView: React.FC<Props> = ({ viewModel }) => {
   };
 
   return (
-    <SortContainer
-      value={activeSortValue}
-      onChange={handleChange}
-    >
+    <SortContainer value={activeSortValue} onChange={handleChange}>
       <Value key={viewModel.nonSortDisplay} value={viewModel.nonSortDisplay}>
         {viewModel.nonSortDisplay}
       </Value>

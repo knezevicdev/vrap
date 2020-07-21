@@ -48,9 +48,7 @@ const MakesView: React.FC<Props> = ({ viewModel }) => {
         return (
           <div key={display}>
             <StyledListItem button onClick={handleMakeClick(slug)}>
-              <Value
-                fontWeight={isSelected ? 600 : 'fontWeightLight'}
-              >
+              <Value fontWeight={isSelected ? 600 : 'fontWeightLight'}>
                 {display}
               </Value>
             </StyledListItem>
@@ -61,9 +59,7 @@ const MakesView: React.FC<Props> = ({ viewModel }) => {
         );
       })}
       <StyledListItem button onClick={handleShowMoreClick}>
-        <ShowMore>
-          {viewModel.getShowMoreLabel()}
-        </ShowMore>
+        <ShowMore>{viewModel.getShowMoreLabel()}</ShowMore>
       </StyledListItem>
     </StyledList>
   );

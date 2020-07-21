@@ -33,11 +33,7 @@ const ModelsView: React.FC<Props> = ({ viewModel }) => {
         button
         onClick={viewModel.handleClick(allModel.slug, allModel.isSelected)}
       >
-        <Value
-          fontWeight={
-            allModel.isSelected ? 600 : 'fontWeightLight'
-          }
-        >
+        <Value fontWeight={allModel.isSelected ? 600 : 'fontWeightLight'}>
           {allModel.display}
         </Value>
         {allModel.isSelected && (
@@ -53,9 +49,7 @@ const ModelsView: React.FC<Props> = ({ viewModel }) => {
             button
             onClick={viewModel.handleClick(slug, isSelected)}
           >
-            <Value
-              fontWeight={isSelected ? 600 : 'fontWeightLight'}
-            >
+            <Value fontWeight={isSelected ? 600 : 'fontWeightLight'}>
               {display}
             </Value>
             {isSelected && <StyledCheck fontSize="small" color="secondary" />}

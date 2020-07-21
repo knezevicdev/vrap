@@ -125,11 +125,7 @@ const DesktopView: React.FC<DesktopViewProps> = ({ viewModel }) => {
             )}
           </Media>
           <Content>
-            <Value
-              fontWeight={600}
-              lineHeight="24px"
-              whiteSpace="nowrap"
-            >
+            <Value fontWeight={600} lineHeight="24px" whiteSpace="nowrap">
               {title}
             </Value>
             <TrimAndMiles>
