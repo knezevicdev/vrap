@@ -114,19 +114,19 @@ const DesktopView: React.FC<DesktopViewProps> = ({ viewModel }) => {
               />
             )}
             {viewModel.showAvailableSoon() && (
-              <AvailableSoon fontWeight="fontWeightMedium" lineHeight="24px">
+              <AvailableSoon fontWeight={600} lineHeight="24px">
                 {viewModel.availableSoon}
               </AvailableSoon>
             )}
             {viewModel.showSalePending() && (
-              <SalePending fontWeight="fontWeightMedium" lineHeight="24px">
+              <SalePending fontWeight={600} lineHeight="24px">
                 {viewModel.salePending}
               </SalePending>
             )}
           </Media>
           <Content>
             <Value
-              fontWeight="fontWeightMedium"
+              fontWeight={600}
               lineHeight="24px"
               whiteSpace="nowrap"
             >
@@ -147,7 +147,7 @@ const DesktopView: React.FC<DesktopViewProps> = ({ viewModel }) => {
                 {miles}
               </Value>
             </TrimAndMiles>
-            <Price fontWeight="fontWeightMedium">{price}</Price>
+            <Price fontWeight={600}>{price}</Price>
           </Content>
         </HiddenAnchor>
       </Container>

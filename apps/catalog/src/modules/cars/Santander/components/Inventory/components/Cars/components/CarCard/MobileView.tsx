@@ -107,19 +107,19 @@ const MobileView: React.FC<MobileViewProps> = ({ viewModel }) => {
                 />
               )}
               {viewModel.showAvailableSoon() && (
-                <AvailableSoon fontWeight="fontWeightMedium" lineHeight="24px">
+                <AvailableSoon fontWeight={600} lineHeight="24px">
                   {viewModel.availableSoon}
                 </AvailableSoon>
               )}
               {viewModel.showSalePending() && (
-                <SalePending fontWeight="fontWeightMedium" lineHeight="24px">
+                <SalePending fontWeight={600} lineHeight="24px">
                   {viewModel.salePending}
                 </SalePending>
               )}
             </Media>
             <Content>
               <Typography
-                fontWeight="fontWeightMedium"
+                fontWeight={600}
                 lineHeight="24px"
                 whiteSpace="nowrap"
               >
@@ -136,7 +136,7 @@ const MobileView: React.FC<MobileViewProps> = ({ viewModel }) => {
               <Typography fontWeight="fontWeightLight" lineHeight="24px">
                 {miles}
               </Typography>
-              <Price fontWeight="fontWeightMedium">{price}</Price>
+              <Price fontWeight={600}>{price}</Price>
             </Content>
           </Action>
         </StyledCard>
