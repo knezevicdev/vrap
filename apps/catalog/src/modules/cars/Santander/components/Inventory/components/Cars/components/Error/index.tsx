@@ -33,7 +33,7 @@ const Empty: React.FC<Props> = (props) => {
   return (
     <ErrorContainer>
       <Icon />
-      <Message fontWeight="fontWeightMedium" textAlign="center">
+      <Message fontWeight={600} textAlign="center">
         {message}
       </Message>
     </ErrorContainer>

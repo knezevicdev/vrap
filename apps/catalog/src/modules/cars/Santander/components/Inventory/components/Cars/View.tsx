@@ -45,7 +45,7 @@ const CarsView: React.FC<Props> = ({ viewModel }) => {
       {viewModel.hasCars() && (
         <>
           {viewModel.hasNoInventory() && (
-            <Message fontWeight="fontWeightMedium" textAlign="center">
+            <Message fontWeight={600} textAlign="center">
               {viewModel.getPopularCarsMessage()}
             </Message>
           )}
