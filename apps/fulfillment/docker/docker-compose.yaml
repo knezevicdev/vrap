@@ -6,10 +6,10 @@ services:
       dockerfile: ./apps/fulfillment/docker/Dockerfile
     user: 'root'
     # environment:
-    # command: ash -c "yarn workspace @vroom-web/fulfillment dev --port 8080"
+    command: ash -c "yarn workspace @vroom-web/fulfillment dev --port 8080"
     # This starts nothing but leaves the container running, useful for
     # debugging nextjs start / config operations
-    command: ash -c "tail -f /dev/null"
+    # command: ash -c "tail -f /dev/null"
     ports:
       - '8080:8080'
     volumes:

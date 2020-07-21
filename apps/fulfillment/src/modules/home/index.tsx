@@ -1,13 +1,17 @@
 import React from 'react';
 
-import Header from 'src/components/Header';
+import { HomeStore, HomeStoreContext } from './store';
+import View from './View';
+import ViewModel from './ViewModel';
 
 const Home: React.FC = () => {
   return (
-    <>
-      <Header />
-      Stuff
-    </>
+    <HomeStoreContext.Consumer>
+      {(store: HomeStore): JSX.Element => {
+        const viewModel = new ViewModel(store);
+        return <View viewModel={viewModel} />;
+      }}
+    </HomeStoreContext.Consumer>
   );
 };
 

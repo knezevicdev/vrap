@@ -1,35 +1,32 @@
 import { theme } from '@vroom-web/ui';
+import getConfig from 'next/config';
 import React from 'react';
 
-import globalEnv from 'src/globalEnv';
-
+const { ASSET_PREFIX } = getConfig().publicRuntimeConfig;
 const FaviconSnippet: React.FC = () => {
   return (
     <>
       <link
         rel="apple-touch-icon"
         sizes="180x180"
-        href={`${globalEnv.ASSET_PREFIX}/apple-touch-icon.png`}
+        href={`${ASSET_PREFIX}/apple-touch-icon.png`}
       />
       <link
         rel="icon"
         type="image/png"
         sizes="32x32"
-        href={`${globalEnv.ASSET_PREFIX}/favicon-32x32.png`}
+        href={`${ASSET_PREFIX}/favicon-32x32.png`}
       />
       <link
         rel="icon"
         type="image/png"
         sizes="16x16"
-        href={`${globalEnv.ASSET_PREFIX}/favicon-16x16.png`}
+        href={`${ASSET_PREFIX}/favicon-16x16.png`}
       />
-      <link
-        rel="manifest"
-        href={`${globalEnv.ASSET_PREFIX}/site.webmanifest`}
-      />
+      <link rel="manifest" href={`${ASSET_PREFIX}/site.webmanifest`} />
       <link
         rel="mask-icon"
-        href={`${globalEnv.ASSET_PREFIX}/safari-pinned-tab.svg`}
+        href={`${ASSET_PREFIX}/safari-pinned-tab.svg`}
         color={theme.palette.primary.main}
       />
       <meta

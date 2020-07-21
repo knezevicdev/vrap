@@ -1,8 +1,8 @@
-import { execSync } from 'child_process';
 import { NextApiRequest, NextApiResponse } from 'next';
-import { version } from 'package.json';
+import getConfig from 'next/config';
+
+const { VERSION, SHORT_HASH } = getConfig().publicRuntimeConfig;
 
 export default (_req: NextApiRequest, res: NextApiResponse): void => {
-  const gitHash = execSync('git rev-parse --short=8 HEAD').toString().trim();
-  res.status(200).json({ version, hash: gitHash });
+  res.status(200).json({ version: VERSION, hash: SHORT_HASH });
 };

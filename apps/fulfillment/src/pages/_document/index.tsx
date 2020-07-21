@@ -10,10 +10,8 @@ import Document, {
 } from 'next/document';
 import React from 'react';
 
-import globalEnv from '../../globalEnv';
 import FaviconSnippet from './FaviconSnippet';
 import FontsSnippet from './FontsSnippet';
-import GlobalEnvSnippet from './GlobalEnvSnippet';
 
 class VroomDocument extends Document {
   static async getInitialProps(
@@ -54,11 +52,6 @@ class VroomDocument extends Document {
           />
           <FaviconSnippet />
           <FontsSnippet />
-          <GlobalEnvSnippet
-            NAME={globalEnv.NAME}
-            VERSION={globalEnv.VERSION}
-            ASSET_PREFIX={globalEnv.ASSET_PREFIX}
-          />
         </Head>
         <body>
           <Main />

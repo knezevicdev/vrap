@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
+const { name, version } = require('./package.json');
 
 const withBundleAnalyzer = require('@next/bundle-analyzer')({
   enabled: process.env.ANALYZE === 'true',
@@ -16,11 +17,14 @@ const shortHash = childProcess
 const assetPrefix = '';
 
 const config = {
-  env: {
-    ASSET_PREFIX: assetPrefix,
-  },
   assetPrefix,
   generateBuildId: () => shortHash,
+  publicRuntimeConfig: {
+    ASSET_PREFIX: assetPrefix,
+    NAME: name,
+    VERSION: version,
+    SHORT_HASH: shortHash,
+  },
   /* Custom webpack configuration. */
   webpack: (config) => {
     /* Enable SVG imports. */
