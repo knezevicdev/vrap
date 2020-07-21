@@ -2,7 +2,11 @@ import React from 'react';
 
 import View from './View';
 import ViewModel from './ViewModel';
-import { InventoryStoreContext, InventoryStore } from 'src/modules/inventory/store';
+
+import {
+  InventoryStore,
+  InventoryStoreContext,
+} from 'src/modules/inventory/store';
 
 const VehicleSize: React.FC = () => {
   return (
