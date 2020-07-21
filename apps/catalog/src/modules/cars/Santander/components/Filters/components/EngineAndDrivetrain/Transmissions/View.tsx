@@ -15,7 +15,7 @@ interface Props {
 const Label = withStyles((theme) => ({
   label: {
     fontWeight: theme.typography.fontWeightLight,
-    fontSize: '16px',
+    fontSize: '14px',
   },
 }))(FormControlLabel);
 
@@ -34,7 +34,7 @@ const Transmissions: React.FC<Props> = ({ viewModel }) => {
   return (
     <RadioGroup value={viewModel.getActiveTransmission()} onChange={onChange}>
       <Label
-        control={<RadioCustom color="primary" />}
+        control={<RadioCustom/>}
         label={viewModel.allOption.display}
         value={viewModel.allOption.value}
       />
@@ -44,7 +44,7 @@ const Transmissions: React.FC<Props> = ({ viewModel }) => {
           <Label
             key={display}
             value={filtersDataValue}
-            control={<RadioCustom color="primary" />}
+            control={<RadioCustom />}
             label={display}
           />
         );
