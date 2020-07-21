@@ -39,17 +39,20 @@ const StyledListItem = styled(ListItem)(({ theme }) => ({
 }));
 
 const Title = styled(Typography)(() => ({
-  textTransform: 'uppercase',
   fontSize: '16px',
+  fontWeight: 600,
 }));
 
 const FiltersButton = styled(Typography)(({ theme }) => ({
   paddingLeft: theme.spacing(1),
   fontSize: '16px',
+  fontWeight: 600,
+  color: '#257FA4',
 }));
 
 const StyledFiltersIcon = styled(FiltersIcon)(() => ({
   cursor: 'pointer',
+  color: '#257FA4',
 }));
 
 const FiltersCloseContainer = styled('div')(({ theme }) => ({
@@ -84,7 +87,7 @@ const FiltersView: React.FC<FiltersViewProps> = ({ viewModel }) => {
     <FiltersContainer>
       <FiltersCloseContainer onClick={handleFiltersCloseContainerClick}>
         <StyledFiltersIcon />
-        <FiltersButton fontWeight="fontWeightMedium">Filters</FiltersButton>
+        <FiltersButton>Filters</FiltersButton>
         <CloseIcon fontSize="small" />
       </FiltersCloseContainer>
       {viewModel.getFilters().map((filter) => {

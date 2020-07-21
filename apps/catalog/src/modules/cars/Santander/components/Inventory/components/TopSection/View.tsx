@@ -23,6 +23,8 @@ const FiltersButton = styled(Typography)(({ theme }) => ({
   paddingLeft: theme.spacing(1),
   cursor: 'pointer',
   fontSize: '16px',
+  fontWeight: 600,
+  color: '#257FA4',
 }));
 
 const StyledFiltersIcon = styled(FiltersIcon)(() => ({
@@ -71,10 +73,7 @@ const TopSectionView: React.FC<Props> = ({ viewModel }) => {
           {viewModel.areFiltersClosed() && (
             <FiltersDesktop>
               <StyledFiltersIcon onClick={handleClickFiltersIcon} />
-              <FiltersButton
-                fontWeight="fontWeightMedium"
-                onClick={handleFiltersButtonClick}
-              >
+              <FiltersButton onClick={handleFiltersButtonClick}>
                 {buttonLabel}
               </FiltersButton>
             </FiltersDesktop>
@@ -86,10 +85,7 @@ const TopSectionView: React.FC<Props> = ({ viewModel }) => {
         <MobileContainer>
           <FiltersAndSort>
             <StyledFiltersIcon onClick={handleClickFiltersIcon} />
-            <FiltersButton
-              fontWeight="fontWeightLight"
-              onClick={handleFiltersButtonClick}
-            >
+            <FiltersButton onClick={handleFiltersButtonClick}>
               {buttonLabel}
             </FiltersButton>
             <Sort />

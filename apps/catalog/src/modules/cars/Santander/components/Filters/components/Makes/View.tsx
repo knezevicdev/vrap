@@ -18,12 +18,14 @@ const StyledList = styled(List)(({ theme }) => ({
 }));
 
 const Value = styled(Typography)(() => ({
-  fontSize: '16px',
+  fontSize: '14px',
 }));
 
 const ShowMore = styled(Typography)(() => ({
-  fontSize: '16px',
+  fontSize: '14px',
   margin: 'auto',
+  color: '#257FA4',
+  fontWeight: 600,
 }));
 
 interface Props {
@@ -47,7 +49,7 @@ const MakesView: React.FC<Props> = ({ viewModel }) => {
           <div key={display}>
             <StyledListItem button onClick={handleMakeClick(slug)}>
               <Value
-                fontWeight={isSelected ? 'fontWeightMedium' : 'fontWeightLight'}
+                fontWeight={isSelected ? 600 : 'fontWeightLight'}
               >
                 {display}
               </Value>
@@ -59,7 +61,7 @@ const MakesView: React.FC<Props> = ({ viewModel }) => {
         );
       })}
       <StyledListItem button onClick={handleShowMoreClick}>
-        <ShowMore fontWeight="fontWeightMedium" color="primary.main">
+        <ShowMore>
           {viewModel.getShowMoreLabel()}
         </ShowMore>
       </StyledListItem>

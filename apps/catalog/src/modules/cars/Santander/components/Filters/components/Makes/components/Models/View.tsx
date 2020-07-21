@@ -13,7 +13,7 @@ const StyledList = styled(List)(() => ({
 }));
 
 const Value = styled(Typography)(() => ({
-  fontSize: '16px',
+  fontSize: '14px',
 }));
 
 const StyledCheck = styled(Check)(() => ({
@@ -35,7 +35,7 @@ const ModelsView: React.FC<Props> = ({ viewModel }) => {
       >
         <Value
           fontWeight={
-            allModel.isSelected ? 'fontWeightSemibold' : 'fontWeightLight'
+            allModel.isSelected ? 600 : 'fontWeightLight'
           }
         >
           {allModel.display}
@@ -54,7 +54,7 @@ const ModelsView: React.FC<Props> = ({ viewModel }) => {
             onClick={viewModel.handleClick(slug, isSelected)}
           >
             <Value
-              fontWeight={isSelected ? 'fontWeightSemibold' : 'fontWeightLight'}
+              fontWeight={isSelected ? 600 : 'fontWeightLight'}
             >
               {display}
             </Value>
