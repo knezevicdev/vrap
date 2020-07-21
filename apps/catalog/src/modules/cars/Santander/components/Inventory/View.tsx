@@ -13,7 +13,6 @@ const StyledGrid = styled(Grid)(({ theme }) => ({
     padding: '0',
   },
   padding: theme.spacing(4, 2),
-  borderBottom: 'solid 1px #bebebe',
 }));
 
 interface Props {
