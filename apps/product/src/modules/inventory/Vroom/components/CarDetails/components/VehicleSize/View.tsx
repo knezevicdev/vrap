@@ -8,17 +8,17 @@ interface Props {
   viewModel: ViewModel;
 }
 
-const Basics = styled('div')(({ theme }) => ({
+const VehicleSize = styled('div')(({ theme }) => ({
+  width: '50%',
   display: 'flex',
+  marginTop: theme.spacing(3),
   flexDirection: 'column',
-  margin: theme.spacing(3, 2, 0, 0),
-  [theme.breakpoints.only('xs')]: { marginRight: 0 },
-  [theme.breakpoints.only('sm')]: { minWidth: '50%' },
+  [theme.breakpoints.down('sm')]: { marginRight: 0, width: '100%' },
 }));
 
 const Title = styled(Typography)(({ theme }) => ({
-  fontWeight: 600,
   fontSize: '14px',
+  fontWeight: 600,
   letterSpacing: '1.75px',
   color: theme.palette.grey['500'],
   textTransform: 'uppercase',
@@ -34,14 +34,18 @@ const DetailsRow = styled('div')(({ theme }) => ({
 
 const Label = styled(Typography)(({ theme }) => ({
   fontWeight: 600,
-  fontSize: '20px',
   minWidth: '190px',
   color: theme.palette.grey['700'],
   marginBottom: theme.spacing(2),
+  [theme.breakpoints.only('sm')]: {
+    minWidth: '50%',
+  },
+  [theme.breakpoints.only('xs')]: {
+    minWidth: '140px',
+  },
 }));
 
 const Value = styled(Typography)(({ theme }) => ({
-  fontSize: '20px',
   whiteSpace: 'nowrap',
   letterSpacing: '0.75px',
   lineHeight: 'normal',
@@ -53,7 +57,7 @@ const Value = styled(Typography)(({ theme }) => ({
 const View: React.FC<Props> = ({ viewModel }) => {
   const { title, items } = viewModel.getInformation();
   return (
-    <Basics>
+    <VehicleSize>
       <Title>{title}</Title>
       {items.map((item) => {
         return (
@@ -63,7 +67,7 @@ const View: React.FC<Props> = ({ viewModel }) => {
           </DetailsRow>
         );
       })}
-    </Basics>
+    </VehicleSize>
   );
 };
 

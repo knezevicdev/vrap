@@ -34,52 +34,29 @@ const CarDetailsContainerContent = styled('div')(({ theme }) => ({
 
 const DetailsData = styled('div')(({ theme }) => ({
   display: 'flex',
-  [theme.breakpoints.only('xs')]: { flexDirection: 'column' },
-  [theme.breakpoints.only('sm')]: { flexWrap: 'wrap' },
-}));
-
-const FlexColumn = styled('div')(() => ({
-  display: 'flex',
   flexDirection: 'column',
-}));
-
-const FlexColumnRight = styled(FlexColumn)(() => ({
-  marginRight: '25px',
+  [theme.breakpoints.down('sm')]: { flexWrap: 'wrap' },
 }));
 
 const History = styled('div')(({ theme }) => ({
   display: 'flex',
-  flexDirection: 'row',
+  flexDirection: 'column',
   margin: theme.spacing(3, 0, 0, 0),
   [theme.breakpoints.only('xs')]: { marginLeft: 0 },
   [theme.breakpoints.only('sm')]: { marginLeft: 0 },
 }));
 
-const HistoryContent = styled('div')(({ theme }) => ({
-  marginTop: theme.spacing(2),
-}));
-
-const StyledOwners = styled(HistoryContent)(({ theme }) => ({
+const HistoryTitle = styled(Typography)(({ theme }) => ({
   marginTop: theme.spacing(3),
-}));
-const CleanHistory = styled(HistoryContent)(({ theme }) => ({
-  marginTop: theme.spacing(3),
-}));
-
-const HistoryTitle = styled(Typography)(() => ({
   fontWeight: 600,
-  fontSize: '20px',
 }));
 
 const HistoryDescription = styled(Typography)(({ theme }) => ({
-  fontSize: '20px',
-  marginTop: theme.spacing(1),
   marginBottom: theme.spacing(1),
   lineHeight: 'normal',
 }));
 
 const CarfaxLink = styled(Typography)(({ theme }) => ({
-  fontSize: '20px',
   marginBottom: theme.spacing(1),
 }));
 
@@ -91,17 +68,25 @@ const Title = styled(Typography)(({ theme }) => ({
   textTransform: 'uppercase',
 }));
 
-const StyledPerformance = styled('div')(() => ({
-  marginTop: '23px',
-  maxWidth: '98%',
+const WarrantyHistoryContainer = styled('div')(({ theme }) => ({
+  width: '50%',
+  [theme.breakpoints.down('sm')]: { width: '100%' },
 }));
 
-const StyledSize = styled('div')(() => ({
-  marginTop: '28px',
+const HistoryContentContainer = styled('div')(() => ({
+  display: 'flex',
+  flexWrap: 'wrap',
 }));
 
-const Warranty = styled('div')(() => ({
-  marginTop: '66px',
+const DetailsContainer = styled('div')(() => ({
+  display: 'flex',
+  flexWrap: 'wrap',
+}));
+
+const BodyAndPerformance = styled('div')(({ theme }) => ({
+  width: '50%',
+  maxWidth: '50%',
+  [theme.breakpoints.down('sm')]: { width: '100%', maxWidth: '100%' },
 }));
 
 const CarDetailsView: React.FC<Props> = (props) => {
@@ -117,12 +102,15 @@ const CarDetailsView: React.FC<Props> = (props) => {
 
         <DetailsData>
           <History>
-            <FlexColumnRight>
-              <Title>{history.title}</Title>
-              <StyledOwners>
-                <HistoryTitle>{history.ownerCount}</HistoryTitle>
-              </StyledOwners>
-              <CleanHistory>
+            <Title>{history.title}</Title>
+            <HistoryTitle>
+              {history.ownerTitle}
+              <Typography fontWeight="fontWeightRegular" display="inline">
+                {history.ownerCount}
+              </Typography>
+            </HistoryTitle>
+            <HistoryContentContainer>
+              <WarrantyHistoryContainer>
                 <HistoryTitle>{history.cleanHistory}</HistoryTitle>
                 <HistoryDescription>
                   {history.cleanHistoryDescription}
@@ -130,23 +118,17 @@ const CarDetailsView: React.FC<Props> = (props) => {
                 <ExternalLink href={history.carfax.href} target="_blank">
                   <CarfaxLink>{history.carfax.text}</CarfaxLink>
                 </ExternalLink>
-              </CleanHistory>
-              <Basics />
-              <StyledPerformance>
-                <Performance />
-              </StyledPerformance>
-            </FlexColumnRight>
-            <FlexColumn>
-              <Warranty>
+              </WarrantyHistoryContainer>
+              <WarrantyHistoryContainer>
                 {history.isWarrantyAvailable ? (
-                  <HistoryContent>
+                  <div>
                     <HistoryTitle>{history.manufacturersWarranty}</HistoryTitle>
                     <HistoryDescription>
                       {history.residualText}
                     </HistoryDescription>
-                  </HistoryContent>
+                  </div>
                 ) : (
-                  <HistoryContent>
+                  <div>
                     <HistoryTitle>{history.vroomProtect}</HistoryTitle>
                     <HistoryDescription>
                       {reactStringReplace(
@@ -163,14 +145,18 @@ const CarDetailsView: React.FC<Props> = (props) => {
                         )
                       )}
                     </HistoryDescription>
-                  </HistoryContent>
+                  </div>
                 )}
-              </Warranty>
-              <StyledSize>
-                <VehicleSize />
-              </StyledSize>
-            </FlexColumn>
+              </WarrantyHistoryContainer>
+            </HistoryContentContainer>
           </History>
+          <DetailsContainer>
+            <BodyAndPerformance>
+              <Basics />
+              <Performance />
+            </BodyAndPerformance>
+            <VehicleSize />
+          </DetailsContainer>
         </DetailsData>
       </CarDetailsContainerContent>
     </CarDetailsContainer>

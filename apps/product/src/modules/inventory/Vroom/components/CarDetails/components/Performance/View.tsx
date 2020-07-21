@@ -2,8 +2,9 @@ import { styled } from '@material-ui/core/styles';
 import { Typography } from '@vroom-web/ui';
 import React from 'react';
 
-import ExternalLink from 'src/ui/ExternalLink';
 import ViewModel from './ViewModel';
+
+import ExternalLink from 'src/ui/ExternalLink';
 
 interface Props {
   viewModel: ViewModel;
@@ -12,15 +13,15 @@ interface Props {
 const Performance = styled('div')(({ theme }) => ({
   display: 'flex',
   flexDirection: 'column',
-  margin: theme.spacing(3, 0, 0, 0),
+  margin: theme.spacing('47px', 2, 0, 0),
   [theme.breakpoints.only('sm')]: {
     minWidth: `calc(50% - ${theme.spacing(2)}px)`,
   },
 }));
 
 const Title = styled(Typography)(({ theme }) => ({
-  fontWeight: 600,
   fontSize: '14px',
+  fontWeight: 600,
   letterSpacing: '1.75px',
   color: theme.palette.grey['500'],
   textTransform: 'uppercase',
@@ -36,14 +37,18 @@ const DetailsRow = styled('div')(({ theme }) => ({
 
 const Label = styled(Typography)(({ theme }) => ({
   fontWeight: 600,
-  fontSize: '20px',
   minWidth: '155px',
+  [theme.breakpoints.only('sm')]: {
+    minWidth: '50%',
+  },
+  [theme.breakpoints.only('xs')]: {
+    minWidth: '140px',
+  },
   color: theme.palette.grey['700'],
   marginBottom: theme.spacing(2),
 }));
 
 const Value = styled(Typography)(({ theme }) => ({
-  fontSize: '20px',
   whiteSpace: 'nowrap',
   letterSpacing: '0.75px',
   lineHeight: 'normal',
@@ -53,7 +58,6 @@ const Value = styled(Typography)(({ theme }) => ({
 }));
 
 const RecallLink = styled(Typography)(({ theme }) => ({
-  fontSize: '20px',
   marginTop: theme.spacing(2),
 }));
 

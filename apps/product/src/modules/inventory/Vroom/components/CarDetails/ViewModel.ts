@@ -10,7 +10,8 @@ interface History {
   cleanHistory: string;
   cleanHistoryDescription: string;
   carfax: Link;
-  ownerCount: string;
+  ownerCount: number;
+  ownerTitle: string;
   vroomProtect: string;
   vroomProtectDescription: Link;
 }
@@ -54,7 +55,8 @@ class CarDetailsViewModel {
         text: 'See The Report',
         href: `https://www.carfax.com/VehicleHistory/p/Report.cfx?partner=VAU_0&UID=C520459&vin=${vin}`,
       },
-      ownerCount: `Number of Owners: ${ownerCount}`,
+      ownerTitle: 'Number of Owners: ',
+      ownerCount: ownerCount,
       vroomProtect: 'Eligible for Vroom Protect',
       vroomProtectDescription: {
         text: `This vehicle is covered by <link>Vroom Protect</link>, which provides additional mechanical coverage.`,

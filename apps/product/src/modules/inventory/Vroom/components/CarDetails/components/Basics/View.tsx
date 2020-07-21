@@ -13,12 +13,14 @@ const Basics = styled('div')(({ theme }) => ({
   flexDirection: 'column',
   margin: theme.spacing(3, 2, 0, 0),
   [theme.breakpoints.only('xs')]: { marginRight: 0 },
-  [theme.breakpoints.only('sm')]: { minWidth: '50%' },
+  [theme.breakpoints.only('sm')]: {
+    minWidth: '50%',
+  },
 }));
 
 const Title = styled(Typography)(({ theme }) => ({
-  fontWeight: 600,
   fontSize: '14px',
+  fontWeight: 600,
   letterSpacing: '1.75px',
   color: theme.palette.grey['500'],
   textTransform: 'uppercase',
@@ -34,14 +36,18 @@ const DetailsRow = styled('div')(({ theme }) => ({
 
 const Label = styled(Typography)(({ theme }) => ({
   fontWeight: 600,
-  fontSize: '20px',
   minWidth: '155px',
+  [theme.breakpoints.only('sm')]: {
+    minWidth: '50%',
+  },
+  [theme.breakpoints.only('xs')]: {
+    minWidth: '140px',
+  },
   color: theme.palette.grey['700'],
   marginBottom: theme.spacing(2),
 }));
 
 const Value = styled(Typography)(({ theme }) => ({
-  fontSize: '20px',
   whiteSpace: 'nowrap',
   letterSpacing: '0.75px',
   lineHeight: 'normal',
