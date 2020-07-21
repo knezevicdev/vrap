@@ -17,6 +17,13 @@ const StyledPagination = styled(Pagination)(({ theme }) => ({
   '& .MuiPaginationItem-page.Mui-selected': {
     color: '#ffffff',
   },
+  '& .MuiPaginationItem-textSecondary.Mui-selected': {
+    backgroundColor: '#444444',
+  },
+  '& .MuiPaginationItem-root': {
+    color: '#257FA4',
+    fontWeight: 600,
+  },
 }));
 
 interface Props {
