@@ -18,6 +18,9 @@ const ContainerForErrorAndInputs = styled('div')(() => ({
 const InputsContainer = styled('div')(() => ({
   display: 'flex',
   justifyContent: 'space-around',
+  '& .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline': {
+    borderColor: '#257FA4',
+  },
 }));
 
 const Input = styled(OutlinedInput)(({ theme }) => ({
@@ -30,12 +33,6 @@ const Input = styled(OutlinedInput)(({ theme }) => ({
   '& .MuiOutlinedInput-adornedStart': {
     paddingLeft: theme.spacing(1),
   },
-  '& .Mui-error .MuiInputBase': {
-    outline: 'yellow',
-  },
-  '& .MuiInputBase-input:focus': {
-    outline: 'green',
-  },
 }));
 
 const Error = styled(Typography)(({ theme }) => ({
@@ -43,7 +40,7 @@ const Error = styled(Typography)(({ theme }) => ({
   lineHeight: '1.4',
   textAlign: 'center',
   fontSize: '14px',
-  color: '#257FA4',
+  color: '#CC0000',
 }));
 
 const StyledSlider = styled(UISlider)(({ theme }) => ({
