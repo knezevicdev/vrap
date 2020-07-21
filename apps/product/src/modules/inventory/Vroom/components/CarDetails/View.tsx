@@ -49,6 +49,9 @@ const History = styled('div')(({ theme }) => ({
 const HistoryTitle = styled(Typography)(({ theme }) => ({
   marginTop: theme.spacing(3),
   fontWeight: 600,
+  '& .bold': {
+    fontWeight: 400,
+  },
 }));
 
 const HistoryDescription = styled(Typography)(({ theme }) => ({
@@ -105,9 +108,7 @@ const CarDetailsView: React.FC<Props> = (props) => {
             <Title>{history.title}</Title>
             <HistoryTitle>
               {history.ownerTitle}
-              <Typography fontWeight="fontWeightRegular" display="inline">
-                {history.ownerCount}
-              </Typography>
+              <span className="bold">{history.ownerCount}</span>
             </HistoryTitle>
             <HistoryContentContainer>
               <WarrantyHistoryContainer>
