@@ -1,6 +1,8 @@
+import Drawer from '@material-ui/core/Drawer';
 import { styled } from '@material-ui/core/styles';
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
+import Menu from '@material-ui/icons/Menu';
 import { Typography } from '@vroom-web/ui';
 import { observer } from 'mobx-react';
 import React from 'react';
@@ -20,7 +22,6 @@ const ViewContainer = styled('div')(() => ({
 
 const Top = styled('div')(({ theme }) => ({
   display: 'flex',
-  justifyContent: 'space-between',
   color: '#FFFFFF',
   background: '#CC0000',
   maxHeight: '48px',
@@ -42,11 +43,13 @@ const Bottom = styled('div')(({ theme }) => ({
 }));
 
 const Logo = styled(LogoSvg)(() => ({
-  width: '295px',
+  maxWidth: '295px',
+  minWidth: '295px',
 }));
 
 const DesktopView = styled('div')(({ theme }) => ({
   display: 'flex',
+  width: '100%',
   alignItems: 'center',
   [theme.breakpoints.only('xs')]: { display: 'none' },
 }));
@@ -54,14 +57,15 @@ const DesktopView = styled('div')(({ theme }) => ({
 const MobileView = styled('div')(({ theme }) => ({
   display: 'none',
   width: '100%',
+  alignItems: 'center',
   [theme.breakpoints.only('xs')]: { display: 'flex' },
 }));
 
-const ShopNowContainer = styled('a')(({ theme }) => ({
+const ShopNowContainer = styled('a')(() => ({
   display: 'flex',
   alignItems: 'center',
   textDecoration: 'none',
-  [theme.breakpoints.only('xs')]: { marginLeft: 'auto' },
+  marginLeft: 'auto',
 }));
 
 const ShopLabel = styled(Typography)(({ theme }) => ({
@@ -89,6 +93,17 @@ const Link = styled('a')(({ theme }) => ({
   },
   color: '#767676',
   marginRight: theme.spacing(4),
+}));
+
+const MenuLink = styled('a')(({ theme }) => ({
+  display: 'flex',
+  textDecoration: 'none',
+  '& >p': {
+    fontSize: '18px',
+  },
+  color: '#767676',
+  padding: theme.spacing(2),
+  borderBottom: 'solid 1px #D8D8D8',
 }));
 
 const DropdownLink = styled(Link)(({ theme }) => ({
@@ -134,6 +149,33 @@ const ExpandMoreIcon = styled(ExpandMore)(() => ({
   height: '22px',
 }));
 
+const MenuIcon = styled(Menu)(() => ({
+  marginLeft: 'auto',
+  cursor: 'pointer',
+}));
+
+const LearningCenter = styled('div')(({ theme }) => ({
+  borderBottom: 'solid 1px #D8D8D8',
+  padding: theme.spacing(2),
+}));
+
+const LearningLabel = styled(Typography)(({ theme }) => ({
+  color: '#767676',
+  fontSize: '18px',
+  fontWeight: 600,
+  paddingBottom: theme.spacing(1),
+}));
+
+const LearningLinks = styled('a')(({ theme }) => ({
+  display: 'flex',
+  textDecoration: 'none',
+  '& >p': {
+    fontSize: '18px',
+  },
+  color: '#767676',
+  padding: theme.spacing(1),
+}));
+
 const View: React.FC<Props> = ({ viewModel }) => {
   return (
     <ViewContainer>
@@ -145,6 +187,44 @@ const View: React.FC<Props> = ({ viewModel }) => {
             <ShopLabel>{viewModel.shopNow.label}</ShopLabel>
           </ShopNowContainer>
         </DesktopView>
+        <MobileView>
+          <MenuIcon onClick={viewModel.onDrawerClick} />
+          <Drawer
+            anchor="right"
+            open={viewModel.isDrawerOpen()}
+            onClose={viewModel.onDrawerClick}
+          >
+            <MenuLink
+              href={viewModel.financeCalculators.href}
+              target={viewModel.financeCalculators.target}
+            >
+              <Typography>{viewModel.financeCalculators.label}</Typography>
+            </MenuLink>
+            <LearningCenter>
+              <LearningLabel>{viewModel.learningCenterLabel}</LearningLabel>
+              {viewModel.learningCenterLinks.map((link) => {
+                return (
+                  <LearningLinks
+                    key={link.href}
+                    href={link.href}
+                    target={link.target}
+                  >
+                    <Typography>{link.label}</Typography>
+                  </LearningLinks>
+                );
+              })}
+            </LearningCenter>
+            <MenuLink href={viewModel.contactUs.href}>
+              <Typography>{viewModel.contactUs.label}</Typography>
+            </MenuLink>
+            <MenuLink
+              href={viewModel.backToCorporate.href}
+              target={viewModel.backToCorporate.target}
+            >
+              <Typography>{viewModel.backToCorporate.label}</Typography>
+            </MenuLink>
+          </Drawer>
+        </MobileView>
       </Top>
       <Bottom>
         <DesktopView>
@@ -154,7 +234,7 @@ const View: React.FC<Props> = ({ viewModel }) => {
           >
             <Typography>{viewModel.financeCalculators.label}</Typography>
           </Link>
-          <DropdownLabelContainer onClick={viewModel.onClick}>
+          <DropdownLabelContainer onClick={viewModel.onDropdownClick}>
             <Typography>{viewModel.learningCenterLabel}</Typography>
             {viewModel.isDropdownOpen() ? (
               <ExpandLessIcon />

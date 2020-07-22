@@ -60,15 +60,31 @@ class ViewModel {
     return this.store.isOpen;
   };
 
-  onClick = (): void => {
+  isDrawerOpen = (): boolean => {
+    return this.store.isDrawerOpen;
+  };
+
+  onDrawerClick = (): void => {
+    this.store.isDrawerOpen ? this.closeDrawer() : this.openDrawer();
+  };
+
+  onDropdownClick = (): void => {
     this.store.isOpen ? this.closeDropdown() : this.openDropdown();
   };
 
-  closeDropdown = (): void => {
+  private closeDrawer = (): void => {
+    this.store.setIsDrawerOpen(false);
+  };
+
+  private openDrawer = (): void => {
+    this.store.setIsDrawerOpen(true);
+  };
+
+  private closeDropdown = (): void => {
     this.store.setIsOpen(false);
   };
 
-  openDropdown = (): void => {
+  private openDropdown = (): void => {
     this.store.setIsOpen(true);
   };
 }
