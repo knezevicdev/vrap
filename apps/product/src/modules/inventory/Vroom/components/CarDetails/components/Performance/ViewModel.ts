@@ -2,11 +2,10 @@ import { Car } from '@vroom-web/inv-search-networking';
 
 import { InventoryStore } from 'src/modules/inventory/store';
 
-
 interface PerformanceSection {
   title: string;
   items: { label: string; value: string }[];
-  recallLink: { text: string; href: string; }
+  recallLink: { text: string; href: string };
 }
 class ViewModel {
   private car: Car;
@@ -14,7 +13,6 @@ class ViewModel {
   constructor(store: InventoryStore) {
     this.car = store.vehicle._source;
   }
-
 
   getInformation = (): PerformanceSection => {
     return {
@@ -38,11 +36,11 @@ class ViewModel {
         },
         ...(this.car.cityMpg > 0 && this.car.highwayMpg > 0
           ? [
-            {
-              label: 'MPG',
-              value: `${this.car.cityMpg} City / ${this.car.highwayMpg} Hwy`,
-            },
-          ]
+              {
+                label: 'MPG',
+                value: `${this.car.cityMpg} City / ${this.car.highwayMpg} Hwy`,
+              },
+            ]
           : []),
       ],
       recallLink: {
