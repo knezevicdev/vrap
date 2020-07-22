@@ -2,6 +2,7 @@ import { styled } from '@material-ui/core/styles';
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
 import { Typography } from '@vroom-web/ui';
+import { observer } from 'mobx-react';
 import React from 'react';
 
 import { ReactComponent as LogoSvg } from './svg/logo.svg';
@@ -37,6 +38,7 @@ const Bottom = styled('div')(({ theme }) => ({
   alignItems: 'center',
   padding: theme.spacing(1, 2),
   [theme.breakpoints.only('xs')]: { padding: theme.spacing(1, 2) },
+  borderBottom: 'solid 1px #F1F1F1',
 }));
 
 const Logo = styled(LogoSvg)(() => ({
@@ -101,9 +103,7 @@ const DropdownLabelContainer = styled('div')(({ theme }) => ({
   display: 'flex',
   alignItems: 'center',
   color: '#767676',
-  '& >p': {
-    fontSize: '16px',
-  },
+  '& >p': { fontSize: '16px' },
   marginRight: theme.spacing(4),
   [theme.breakpoints.only('xs')]: { display: 'none' },
   cursor: 'pointer',
@@ -114,8 +114,13 @@ const Dropdown = styled('div')(({ theme }) => ({
   position: 'absolute',
   background: '#FFFFFF',
   top: '37px',
+  left: '-16px',
+  right: '-16px',
   padding: theme.spacing(2),
   boxShadow: '0px 3px 4px rgba(0, 0, 0, 0.15)',
+  '& >a:last-child': { marginBottom: 0 },
+  '& >a': { pointerEvents: 'all' },
+  pointerEvents: 'none',
 }));
 
 const ExpandLessIcon = styled(ExpandLess)(() => ({
@@ -147,9 +152,9 @@ const View: React.FC<Props> = ({ viewModel }) => {
         >
           <Typography>{viewModel.financeCalculators.label}</Typography>
         </Link>
-        <DropdownLabelContainer>
+        <DropdownLabelContainer onClick={viewModel.onClick}>
           <Typography>{viewModel.learningCenterLabel}</Typography>
-          <ExpandMoreIcon />
+          {viewModel.isDropdownOpen() ? <ExpandLessIcon /> : <ExpandMoreIcon />}
           {viewModel.isDropdownOpen() && (
             <Dropdown>
               {viewModel.learningCenterLinks.map((link) => {
@@ -186,4 +191,4 @@ const View: React.FC<Props> = ({ viewModel }) => {
   );
 };
 
-export default View;
+export default observer(View);

@@ -60,6 +60,10 @@ class ViewModel {
     return this.store.isOpen;
   };
 
+  onClick = (): void => {
+    this.store.isOpen ? this.closeDropdown() : this.openDropdown();
+  };
+
   closeDropdown = (): void => {
     this.store.setIsOpen(false);
   };

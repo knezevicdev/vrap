@@ -1,7 +1,7 @@
 import { action, observable } from 'mobx';
 
 class Store {
-  @observable isOpen = true;
+  @observable isOpen = false;
 
   @action
   setIsOpen = (isOpen: boolean): void => {
