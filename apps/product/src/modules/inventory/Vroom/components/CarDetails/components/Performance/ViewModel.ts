@@ -1,7 +1,5 @@
 import { Car } from '@vroom-web/inv-search-networking';
 
-import { InventoryStore } from 'src/modules/inventory/store';
-
 interface PerformanceSection {
   title: string;
   items: { label: string; value: string }[];
