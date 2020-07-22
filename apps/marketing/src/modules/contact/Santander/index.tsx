@@ -1,7 +1,15 @@
+import { SantanderFooter } from '@vroom-web/footer-components';
 import React from 'react';
 
+import Content from './content';
+
 const Santander: React.FC = () => {
-  return <p>Santander contact us under development...</p>;
+  return (
+    <>
+      <Content />
+      <SantanderFooter />
+    </>
+  );
 };
 
 export default Santander;
