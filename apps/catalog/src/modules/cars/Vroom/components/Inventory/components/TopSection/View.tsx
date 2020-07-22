@@ -7,6 +7,7 @@ import { observer } from 'mobx-react';
 import React from 'react';
 
 import { ReactComponent as FiltersIcon } from '../../../filters.svg';
+import Autocomplete from './components/Autocomplete';
 import Chips from './components/Chips';
 import Sort from './components/Sort';
 import TopSectionViewModel from './ViewModel';
@@ -38,11 +39,30 @@ const MobileContainer = styled('div')(({ theme }) => ({
 
 const FiltersAndSort = styled('div')(({ theme }) => ({
   display: 'flex',
+  marginTop: theme.spacing(2),
   marginBottom: theme.spacing(2),
   alignItems: 'center',
 }));
 
 const FiltersDesktop = styled('div')(({ theme }) => ({
+  display: 'flex',
+  alignItems: 'center',
+  marginRight: theme.spacing(2),
+}));
+
+const DesktopContainer = styled('div')(() => ({
+  display: 'flex',
+  width: '100%',
+  flexDirection: 'column',
+}));
+
+const FiltersAndAutocomplete = styled('div')(({ theme }) => ({
+  display: 'flex',
+  alignItems: 'center',
+  marginBottom: theme.spacing(2),
+}));
+
+const ChipsAndSort = styled('div')(({ theme }) => ({
   display: 'flex',
   alignItems: 'center',
   marginRight: theme.spacing(1),
@@ -67,23 +87,29 @@ const TopSectionView: React.FC<Props> = ({ viewModel }) => {
   return (
     <TopSectionGrid>
       {isDesktop ? (
-        <>
-          {viewModel.areFiltersClosed() && (
-            <FiltersDesktop>
-              <StyledFiltersIcon onClick={handleClickFiltersIcon} />
-              <FiltersButton
-                fontWeight="fontWeightMedium"
-                onClick={handleFiltersButtonClick}
-              >
-                {buttonLabel}
-              </FiltersButton>
-            </FiltersDesktop>
-          )}
-          <Chips />
-          <Sort />
-        </>
+        <DesktopContainer>
+          <FiltersAndAutocomplete>
+            {viewModel.areFiltersClosed() && (
+              <FiltersDesktop>
+                <StyledFiltersIcon onClick={handleClickFiltersIcon} />
+                <FiltersButton
+                  fontWeight="fontWeightMedium"
+                  onClick={handleFiltersButtonClick}
+                >
+                  {buttonLabel}
+                </FiltersButton>
+              </FiltersDesktop>
+            )}
+            <Autocomplete />
+          </FiltersAndAutocomplete>
+          <ChipsAndSort>
+            <Chips />
+            <Sort />
+          </ChipsAndSort>
+        </DesktopContainer>
       ) : (
         <MobileContainer>
+          <Autocomplete />
           <FiltersAndSort>
             <StyledFiltersIcon onClick={handleClickFiltersIcon} />
             <FiltersButton
