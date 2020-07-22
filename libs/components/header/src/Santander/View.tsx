@@ -45,21 +45,23 @@ const Logo = styled(LogoSvg)(() => ({
   width: '295px',
 }));
 
-const DesktopShopNow = styled('div')(({ theme }) => ({
+const DesktopView = styled('div')(({ theme }) => ({
   display: 'flex',
+  alignItems: 'center',
   [theme.breakpoints.only('xs')]: { display: 'none' },
 }));
 
-const MobileShopNow = styled('div')(({ theme }) => ({
+const MobileView = styled('div')(({ theme }) => ({
   display: 'none',
-  marginLeft: 'auto',
+  width: '100%',
   [theme.breakpoints.only('xs')]: { display: 'flex' },
 }));
 
-const ShopNowContainer = styled('a')(() => ({
+const ShopNowContainer = styled('a')(({ theme }) => ({
   display: 'flex',
   alignItems: 'center',
   textDecoration: 'none',
+  [theme.breakpoints.only('xs')]: { marginLeft: 'auto' },
 }));
 
 const ShopLabel = styled(Typography)(({ theme }) => ({
@@ -87,7 +89,6 @@ const Link = styled('a')(({ theme }) => ({
   },
   color: '#767676',
   marginRight: theme.spacing(4),
-  [theme.breakpoints.only('xs')]: { display: 'none' },
 }));
 
 const DropdownLink = styled(Link)(({ theme }) => ({
@@ -138,54 +139,60 @@ const View: React.FC<Props> = ({ viewModel }) => {
     <ViewContainer>
       <Top>
         <Logo />
-        <DesktopShopNow>
+        <DesktopView>
           <ShopNowContainer href={viewModel.shopNow.href}>
             <ShopIcon />
             <ShopLabel>{viewModel.shopNow.label}</ShopLabel>
           </ShopNowContainer>
-        </DesktopShopNow>
+        </DesktopView>
       </Top>
       <Bottom>
-        <Link
-          href={viewModel.financeCalculators.href}
-          target={viewModel.financeCalculators.target}
-        >
-          <Typography>{viewModel.financeCalculators.label}</Typography>
-        </Link>
-        <DropdownLabelContainer onClick={viewModel.onClick}>
-          <Typography>{viewModel.learningCenterLabel}</Typography>
-          {viewModel.isDropdownOpen() ? <ExpandLessIcon /> : <ExpandMoreIcon />}
-          {viewModel.isDropdownOpen() && (
-            <Dropdown>
-              {viewModel.learningCenterLinks.map((link) => {
-                return (
-                  <DropdownLink
-                    key={link.href}
-                    href={link.href}
-                    target={link.target}
-                  >
-                    <Typography>{link.label}</Typography>
-                  </DropdownLink>
-                );
-              })}
-            </Dropdown>
-          )}
-        </DropdownLabelContainer>
-        <Link href={viewModel.contactUs.href}>
-          <Typography>{viewModel.contactUs.label}</Typography>
-        </Link>
-        <Link
-          href={viewModel.backToCorporate.href}
-          target={viewModel.backToCorporate.target}
-        >
-          <Typography>{viewModel.backToCorporate.label}</Typography>
-        </Link>
-        <MobileShopNow>
+        <DesktopView>
+          <Link
+            href={viewModel.financeCalculators.href}
+            target={viewModel.financeCalculators.target}
+          >
+            <Typography>{viewModel.financeCalculators.label}</Typography>
+          </Link>
+          <DropdownLabelContainer onClick={viewModel.onClick}>
+            <Typography>{viewModel.learningCenterLabel}</Typography>
+            {viewModel.isDropdownOpen() ? (
+              <ExpandLessIcon />
+            ) : (
+              <ExpandMoreIcon />
+            )}
+            {viewModel.isDropdownOpen() && (
+              <Dropdown>
+                {viewModel.learningCenterLinks.map((link) => {
+                  return (
+                    <DropdownLink
+                      key={link.href}
+                      href={link.href}
+                      target={link.target}
+                    >
+                      <Typography>{link.label}</Typography>
+                    </DropdownLink>
+                  );
+                })}
+              </Dropdown>
+            )}
+          </DropdownLabelContainer>
+          <Link href={viewModel.contactUs.href}>
+            <Typography>{viewModel.contactUs.label}</Typography>
+          </Link>
+          <Link
+            href={viewModel.backToCorporate.href}
+            target={viewModel.backToCorporate.target}
+          >
+            <Typography>{viewModel.backToCorporate.label}</Typography>
+          </Link>
+        </DesktopView>
+        <MobileView>
           <ShopNowContainer href={viewModel.shopNow.href}>
             <ShopIcon />
             <ShopLabel>{viewModel.shopNow.label}</ShopLabel>
           </ShopNowContainer>
-        </MobileShopNow>
+        </MobileView>
       </Bottom>
     </ViewContainer>
   );
