@@ -18,6 +18,9 @@ interface Props {
 const ViewContainer = styled('div')(() => ({
   display: 'flex',
   flexDirection: 'column',
+  position: 'sticky',
+  zIndex: 1001,
+  top: 0
 }));
 
 const Top = styled('div')(({ theme }) => ({
