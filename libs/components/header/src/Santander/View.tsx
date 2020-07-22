@@ -20,7 +20,7 @@ const ViewContainer = styled('div')(() => ({
   flexDirection: 'column',
   position: 'sticky',
   zIndex: 1001,
-  top: 0
+  top: 0,
 }));
 
 const Top = styled('div')(({ theme }) => ({
