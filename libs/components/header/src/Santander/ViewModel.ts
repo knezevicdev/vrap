@@ -1,3 +1,5 @@
+import Store from './store';
+
 interface Link {
   href?: string;
   label: string;
@@ -6,6 +8,12 @@ interface Link {
 }
 
 class ViewModel {
+  private readonly store: Store;
+
+  constructor(store: Store) {
+    this.store = store;
+  }
+
   readonly shopNow: Link = { label: 'Shop now', href: `/cars` };
 
   readonly financeCalculators: Link = {
@@ -46,6 +54,18 @@ class ViewModel {
   readonly backToCorporate: Link = {
     label: 'Back to Corporate Site',
     href: 'https://santanderconsumerusa.com/',
+  };
+
+  isDropdownOpen = (): boolean => {
+    return this.store.isOpen;
+  };
+
+  closeDropdown = (): void => {
+    this.store.setIsOpen(false);
+  };
+
+  openDropdown = (): void => {
+    this.store.setIsOpen(true);
   };
 }
 

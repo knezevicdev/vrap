@@ -1,4 +1,6 @@
 import { styled } from '@material-ui/core/styles';
+import ExpandLess from '@material-ui/icons/ExpandLess';
+import ExpandMore from '@material-ui/icons/ExpandMore';
 import { Typography } from '@vroom-web/ui';
 import React from 'react';
 
@@ -23,7 +25,7 @@ const Top = styled('div')(({ theme }) => ({
   maxHeight: '48px',
   minHeight: '48px',
   padding: theme.spacing(1, 2),
-  [theme.breakpoints.only('xs')]: { padding: theme.spacing(1, 0) },
+  [theme.breakpoints.only('xs')]: { padding: theme.spacing(1, 2) },
 }));
 
 const Bottom = styled('div')(({ theme }) => ({
@@ -32,8 +34,9 @@ const Bottom = styled('div')(({ theme }) => ({
   background: '#FFFFFF',
   maxHeight: '48px',
   minHeight: '48px',
+  alignItems: 'center',
   padding: theme.spacing(1, 2),
-  [theme.breakpoints.only('xs')]: { padding: theme.spacing(1, 3) },
+  [theme.breakpoints.only('xs')]: { padding: theme.spacing(1, 2) },
 }));
 
 const Logo = styled(LogoSvg)(() => ({
@@ -74,6 +77,57 @@ const ShopIcon = styled(ShopSvg)(({ theme }) => ({
   [theme.breakpoints.only('xs')]: { fill: '#767676' },
 }));
 
+const Link = styled('a')(({ theme }) => ({
+  display: 'flex',
+  textDecoration: 'none',
+  '& >p': {
+    fontSize: '16px',
+  },
+  color: '#767676',
+  marginRight: theme.spacing(4),
+  [theme.breakpoints.only('xs')]: { display: 'none' },
+}));
+
+const DropdownLink = styled(Link)(({ theme }) => ({
+  '& >p': {
+    lineHeight: '20px',
+    fontSize: '14px',
+  },
+  marginRight: theme.spacing(0),
+  marginBottom: theme.spacing(1),
+}));
+
+const DropdownLabelContainer = styled('div')(({ theme }) => ({
+  display: 'flex',
+  alignItems: 'center',
+  color: '#767676',
+  '& >p': {
+    fontSize: '16px',
+  },
+  marginRight: theme.spacing(4),
+  [theme.breakpoints.only('xs')]: { display: 'none' },
+  cursor: 'pointer',
+  position: 'relative',
+}));
+
+const Dropdown = styled('div')(({ theme }) => ({
+  position: 'absolute',
+  background: '#FFFFFF',
+  top: '37px',
+  padding: theme.spacing(2),
+  boxShadow: '0px 3px 4px rgba(0, 0, 0, 0.15)',
+}));
+
+const ExpandLessIcon = styled(ExpandLess)(() => ({
+  marginTop: '4px',
+  height: '22px',
+}));
+
+const ExpandMoreIcon = styled(ExpandMore)(() => ({
+  marginTop: '4px',
+  height: '22px',
+}));
+
 const View: React.FC<Props> = ({ viewModel }) => {
   return (
     <ViewContainer>
@@ -87,6 +141,40 @@ const View: React.FC<Props> = ({ viewModel }) => {
         </DesktopShopNow>
       </Top>
       <Bottom>
+        <Link
+          href={viewModel.financeCalculators.href}
+          target={viewModel.financeCalculators.target}
+        >
+          <Typography>{viewModel.financeCalculators.label}</Typography>
+        </Link>
+        <DropdownLabelContainer>
+          <Typography>{viewModel.learningCenterLabel}</Typography>
+          <ExpandMoreIcon />
+          {viewModel.isDropdownOpen() && (
+            <Dropdown>
+              {viewModel.learningCenterLinks.map((link) => {
+                return (
+                  <DropdownLink
+                    key={link.href}
+                    href={link.href}
+                    target={link.target}
+                  >
+                    <Typography>{link.label}</Typography>
+                  </DropdownLink>
+                );
+              })}
+            </Dropdown>
+          )}
+        </DropdownLabelContainer>
+        <Link href={viewModel.contactUs.href}>
+          <Typography>{viewModel.contactUs.label}</Typography>
+        </Link>
+        <Link
+          href={viewModel.backToCorporate.href}
+          target={viewModel.backToCorporate.target}
+        >
+          <Typography>{viewModel.backToCorporate.label}</Typography>
+        </Link>
         <MobileShopNow>
           <ShopNowContainer href={viewModel.shopNow.href}>
             <ShopIcon />
