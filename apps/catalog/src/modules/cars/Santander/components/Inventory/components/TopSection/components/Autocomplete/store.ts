@@ -1,11 +1,17 @@
-import {
-  InventorySuggestions,
-  InvSearchNetworker,
-} from '@vroom-web/inv-search-networking';
+import { InvSearchNetworker } from '@vroom-web/inv-search-networking';
 import debounce from 'lodash.debounce';
 import { action, observable, runInAction } from 'mobx';
+import getConfig from 'next/config';
 
-import { Status } from '../../networking/types';
+import { Status } from 'src/networking/types';
+
+const { publicRuntimeConfig } = getConfig();
+
+export interface InventorySuggestions {
+  BodyType: string[];
+  Make: string[];
+  Model: string[];
+}
 
 // The amount of time a user must stop typing before we get autcomplete options.
 const INPUT_DEBOUNCE_WAIT = 400; // milliseconds
@@ -17,8 +23,10 @@ export class AutocompleteStore {
 
   private invSearchNetworker: InvSearchNetworker;
 
-  constructor(invSearchV3Url: string) {
-    this.invSearchNetworker = new InvSearchNetworker(invSearchV3Url);
+  constructor() {
+    this.invSearchNetworker = new InvSearchNetworker(
+      publicRuntimeConfig.INVSEARCH_V3_URL
+    );
   }
 
   @action
