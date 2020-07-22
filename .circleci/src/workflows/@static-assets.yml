@@ -1,0 +1,22 @@
+static-assets:
+  jobs:
+  - static-assets_deploy:
+      name: static-assets_deploy-non-prod
+      context: aws-non-prod
+      s3BucketUrl: s3://static-assets.n.vroom.systems
+      filters:
+        tags:
+          only: /^static-assets-v.*/
+        branches:
+          ignore: /.*/
+  - static-assets_deploy:
+      name: static-assets_deploy-prod
+      context: aws-prod
+      s3BucketUrl: s3://static-assets.p.vroom.systems
+      filters:
+        tags:
+          only: /^static-assets-v.*/
+        branches:
+          ignore: /.*/
+
+

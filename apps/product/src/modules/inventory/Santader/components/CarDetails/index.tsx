@@ -8,7 +8,7 @@ import {
   InventoryStoreContext,
 } from 'src/modules/inventory/store';
 
-const Santander: React.FC = () => {
+const CarDetails: React.FC = () => {
   return (
     <InventoryStoreContext.Consumer>
       {(store: InventoryStore): JSX.Element => {
@@ -19,4 +19,4 @@ const Santander: React.FC = () => {
   );
 };
 
-export default Santander;
+export default CarDetails;
