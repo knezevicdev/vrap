@@ -28,6 +28,17 @@ class ViewModel {
     href: 'https://santanderconsumerusa.com/support/contact',
     target: '_blank',
   };
+
+  readonly callVroomButton: string = 'Call Vroom support';
+  readonly callSantanderButton: string = 'Call Santander support';
+
+  onClickCallVroom = (): void => {
+    window.open('tel:18882224227')
+  }
+
+  onClickCallSantander = (): void => {
+    window.open('tel:18882224227')
+  }
 }
 
 export default ViewModel;

@@ -1,5 +1,5 @@
 import { styled } from '@material-ui/core/styles';
-import { Typography } from '@vroom-web/ui';
+import {Button, Typography} from '@vroom-web/ui';
 import React from 'react';
 
 import { ReactComponent as VroomLogoSvg } from './svg/logo.svg';
@@ -114,6 +114,25 @@ const Description = styled(Typography)(() => ({
   lineHeight: '24px',
 }));
 
+const MobileButton = styled(Button)(({ theme }) => ({
+  display: 'none',
+  fontSize: '18px',
+  height: '48px',
+  whiteSpace: 'nowrap',
+  background: '#EC0000',
+  color: '#FFFFFF',
+  fontWeight: 'bold',
+  width: '100%',
+  '&:hover': {
+    background: '#CC0000',
+  },
+  '&:active': {
+    background: '#990000',
+  },
+  marginTop: theme.spacing(3),
+  [theme.breakpoints.only('xs')]: {display: 'flex'},
+}));
+
 const View: React.FC<Props> = ({ viewModel }) => {
   return (
     <ViewContainer>
@@ -132,6 +151,9 @@ const View: React.FC<Props> = ({ viewModel }) => {
                 {viewModel.vroomNumber.label}.
               </PhoneNumber>
             </Description>
+            <MobileButton onClick={viewModel.onClickCallVroom}>
+              {viewModel.callVroomButton}
+            </MobileButton>
           </Vehicle>
           <Account>
             <Title>{viewModel.accountTitle}</Title>
@@ -148,6 +170,9 @@ const View: React.FC<Props> = ({ viewModel }) => {
                 {viewModel.supportOptions.label}
               </Link>
             </Description>
+            <MobileButton onClick={viewModel.onClickCallSantander}>
+              {viewModel.callSantanderButton}
+            </MobileButton>
           </Account>
         </ComponentsContainer>
       </ViewContent>
