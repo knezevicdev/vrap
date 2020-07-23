@@ -76,6 +76,13 @@ export type Car = {
   inventoryId: number;
   consignmentPartnerId: string;
   hasStockPhotos: boolean;
+  height: number;
+  length: number;
+  width: number;
+  groundClearance: number;
+  wheelBase: number;
+  frontTrackWidth: number;
+  rearTrackWidth: number;
 };
 export const carSchema: yup.ObjectSchema<Car> = yup
   .object({
@@ -142,6 +149,13 @@ export const carSchema: yup.ObjectSchema<Car> = yup
     inventoryId: yup.number().defined(),
     consignmentPartnerId: yup.string().defined(),
     hasStockPhotos: yup.boolean().defined(),
+    height: yup.number().defined(),
+    length: yup.number().defined(),
+    width: yup.number().defined(),
+    groundClearance: yup.number().defined(),
+    wheelBase: yup.number().defined(),
+    frontTrackWidth: yup.number().defined(),
+    rearTrackWidth: yup.number().defined(),
   })
   .defined()
   .strict(true);
