@@ -3,6 +3,7 @@ import { Button, Typography } from '@vroom-web/ui';
 import { observer } from 'mobx-react';
 import React from 'react';
 
+import Redirect from './components';
 import { ReactComponent as VroomLogoSvg } from './svg/vroom.svg';
 import ViewModel from './ViewModel';
 
@@ -72,6 +73,7 @@ const StartPurchaseView: React.FC<Props> = (props) => {
         <PoweredByLabel>{viewModel.poweredBy}</PoweredByLabel>
         <VroomLogo />
       </PoweredBy>
+      {viewModel.showRedirect() && <Redirect />}
     </ViewContainer>
   );
 };
