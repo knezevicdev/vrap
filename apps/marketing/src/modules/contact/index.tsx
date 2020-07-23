@@ -5,7 +5,7 @@ import { BrandContext } from './BrandContext';
 import Santander from './Santander';
 import Vroom from './Vroom';
 
-const Home: React.FC = () => {
+const Contact: React.FC = () => {
   const brand = useContext(BrandContext);
   if (brand === Brand.SANTANDER) {
     return <Santander />;
@@ -13,4 +13,4 @@ const Home: React.FC = () => {
   return <Vroom />;
 };
 
-export default Home;
+export default Contact;
