@@ -61,6 +61,19 @@ class AnalyticsHandler extends BaseAnalyticsHandler {
     const properties = { ...product, category };
     this.track(event, properties);
   }
+
+  trackProductSearched(
+    label: 'Autocomplete' | 'Free Form',
+    query: string
+  ): void {
+    const event = 'Product Searched';
+    const properties = {
+      category: 'Catalog',
+      label,
+      query,
+    };
+    this.track(event, properties);
+  }
 }
 
 export default AnalyticsHandler;
