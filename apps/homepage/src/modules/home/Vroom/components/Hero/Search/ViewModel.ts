@@ -15,6 +15,7 @@ class SearchViewModel {
 
   readonly mobileButtonLabel: string = 'Browse All Vehicles';
   condenseCatalogLinksDefaultVariant: boolean;
+  oldCatalogVsNewCatalogDefaultVarient: boolean;
   link: Link;
 
   constructor(store: HomeStore) {
@@ -26,9 +27,16 @@ class SearchViewModel {
     const queryString = stringify(this.store.query, {
       addQueryPrefix: true,
     });
+    this.oldCatalogVsNewCatalogDefaultVarient = showDefaultVariant(
+      'snd-old-catalog-vs-new-catalog',
+      this.store.experiments,
+      this.store.query
+    );
 
     this.link = {
-      href: `/catalog${queryString}`,
+      href: `/${
+        this.oldCatalogVsNewCatalogDefaultVarient ? `catalog` : `cars`
+      }${queryString}`,
       label: '',
     };
 
@@ -54,7 +62,9 @@ class SearchViewModel {
     const queryString = stringify(this.store.query, {
       addQueryPrefix: true,
     });
-    window.location.href = `/catalog${queryString}`;
+    window.location.href = `/${
+      this.oldCatalogVsNewCatalogDefaultVarient ? `catalog` : `cars`
+    }${queryString}`;
   };
 
   handleHomeCatalogCTACLicked = (): void => {

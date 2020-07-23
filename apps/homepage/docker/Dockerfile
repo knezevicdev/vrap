@@ -10,6 +10,7 @@ RUN \
   yarn install --silent &&\
   # Build libraries.
   yarn workspace @vroom-web/analytics-integration build &&\
+  yarn workspace @vroom-web/catalog-url-integration build &&\
   yarn workspace @vroom-web/deals-v2-networking build &&\
   yarn workspace @vroom-web/inv-search-networking build &&\
   yarn workspace @vroom-web/ui build &&\

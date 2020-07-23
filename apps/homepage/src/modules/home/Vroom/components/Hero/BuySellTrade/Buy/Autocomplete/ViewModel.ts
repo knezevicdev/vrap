@@ -1,8 +1,16 @@
+import {
+  addAllModels,
+  addBodyType,
+  addModel,
+  BodyType as FilterBodyTypeData,
+  getUrlFromFiltersData,
+} from '@vroom-web/catalog-url-integration';
 import { stringify } from 'qs';
 
 import { AutocompleteStore } from './store';
 
 import AnalyticsHandler from 'src/integrations/AnalyticsHandler';
+import { showDefaultVariant } from 'src/integrations/experimentSDK';
 import { HomeStore } from 'src/modules/home/store';
 import { Status } from 'src/networking/types';
 
@@ -93,8 +101,13 @@ class AutocompleteViewModel {
     // Persist query string across navigation.
     // This allows vlassic attributuion to work until we can implement a better system.
     const queryString = stringify(this.homeStore.query, {
-      addQueryPrefix: true,
+      addQueryPrefix: false,
     });
+    const oldCatalogVsNewCatalogDefaultVarient = showDefaultVariant(
+      'snd-old-catalog-vs-new-catalog',
+      this.homeStore.experiments,
+      this.homeStore.query
+    );
 
     if (suggestion.group === 'Body Type') {
       if (!suggestion.bodyType) {
@@ -104,7 +117,11 @@ class AutocompleteViewModel {
         suggestion.bodyType === 'Van Minivan'
           ? 'minivan'
           : suggestion.bodyType.toLowerCase();
-      window.location.href = `/catalog/all-years/all-makes/${bodyType}${queryString}`;
+      const filterBodyType = addBodyType(bodyType as FilterBodyTypeData);
+      const bodyHref = getUrlFromFiltersData(filterBodyType);
+      oldCatalogVsNewCatalogDefaultVarient
+        ? (window.location.href = `/catalog/all-years/all-makes/${bodyType}?${queryString}`)
+        : (window.location.href = `${bodyHref}&${queryString}`);
       return;
     }
 
@@ -113,7 +130,11 @@ class AutocompleteViewModel {
         return;
       }
       const make = suggestion.make.toLowerCase().replace(/[\s-]/g, '_');
-      window.location.href = `/catalog/all-years/${make}${queryString}`;
+      const allModelsFiltersData = addAllModels(make);
+      const allModelsHref = getUrlFromFiltersData(allModelsFiltersData);
+      oldCatalogVsNewCatalogDefaultVarient
+        ? (window.location.href = `/catalog/all-years/${make}?${queryString}`)
+        : (window.location.href = `${allModelsHref}&${queryString}`);
       return;
     }
 
@@ -123,7 +144,11 @@ class AutocompleteViewModel {
       }
       const make = suggestion.make.toLowerCase().replace(/[\s-]/g, '_');
       const model = suggestion.model.toLowerCase().replace(/[\s-]/g, '_');
-      window.location.href = `/catalog/all-years/${make}_${model}${queryString}`;
+      const modelFiltersData = addModel(make, model);
+      const modelHref = getUrlFromFiltersData(modelFiltersData);
+      oldCatalogVsNewCatalogDefaultVarient
+        ? (window.location.href = `/catalog/all-years/${make}_${model}?${queryString}`)
+        : (window.location.href = `${modelHref}&${queryString}`);
       return;
     }
   }
@@ -142,7 +167,14 @@ class AutocompleteViewModel {
     const queryString = stringify(query, {
       addQueryPrefix: true,
     });
-    window.location.href = `/catalog${queryString}`;
+    const oldCatalogVsNewCatalogDefaultVarient = showDefaultVariant(
+      'snd-old-catalog-vs-new-catalog',
+      this.homeStore.experiments,
+      this.homeStore.query
+    );
+    window.location.href = `/${
+      oldCatalogVsNewCatalogDefaultVarient ? `catalog` : `cars`
+    }${queryString}`;
   }
 }
 

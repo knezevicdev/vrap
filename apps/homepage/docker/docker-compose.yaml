@@ -31,6 +31,8 @@ services:
       - '/www/apps/homepage/node_modules'
       - '/www/libs/integrations/analytics/dist'
       - '/www/libs/integrations/analytics/node_modules'
+      - '/www/libs/integrations/catalog-url/dist'
+      - '/www/libs/integrations/catalog-url/node_modules'
       - '/www/libs/networking/deals-v2/dist'
       - '/www/libs/networking/deals-v2/node_modules'
       - '/www/libs/networking/inv-search/dist'
