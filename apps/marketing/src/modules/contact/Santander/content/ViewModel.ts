@@ -10,14 +10,14 @@ class ViewModel {
   readonly accountTitle: string =
     'For questions about your\nSantander Consumer USA account';
 
-  readonly callVroom = 'Call our partner';
-  readonly callSantander = 'Call us at ';
+  readonly callVroom = 'Call our partners';
+  readonly callSantander = 'Call us ';
   readonly vroomNumber: Link = {
     label: 'at 1-855-659-0278',
     href: 'tel:+18556590278',
   };
   readonly santanderNumber: Link = {
-    label: '1-888-222-4227',
+    label: 'at 1-888-222-4227',
     href: 'tel:+18882224227',
   };
 
@@ -33,12 +33,12 @@ class ViewModel {
   readonly callSantanderButton: string = 'Call Santander support';
 
   onClickCallVroom = (): void => {
-    window.open('tel:18882224227')
-  }
+    window.open('tel:18882224227');
+  };
 
   onClickCallSantander = (): void => {
-    window.open('tel:18882224227')
-  }
+    window.open('tel:18882224227');
+  };
 }
 
 export default ViewModel;

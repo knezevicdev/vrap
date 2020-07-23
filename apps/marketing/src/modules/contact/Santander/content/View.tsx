@@ -1,5 +1,5 @@
 import { styled } from '@material-ui/core/styles';
-import {Button, Typography} from '@vroom-web/ui';
+import { Button, Typography } from '@vroom-web/ui';
 import React from 'react';
 
 import { ReactComponent as VroomLogoSvg } from './svg/logo.svg';
@@ -30,14 +30,14 @@ const ViewContent = styled('div')(({ theme }) => ({
   display: 'flex',
   flexDirection: 'column',
   width: '100%',
-  padding: theme.spacing(8),
+  padding: theme.spacing(8, 8, 16, 8),
   maxWidth: '1280px',
   margin: '0 auto',
   [theme.breakpoints.only('sm')]: {
-    padding: theme.spacing(8, 4),
+    padding: theme.spacing(8, 4, 16, 4),
   },
   [theme.breakpoints.only('xs')]: {
-    padding: theme.spacing(4, 2),
+    padding: theme.spacing(4, 2, 8, 2),
   },
 }));
 
@@ -96,22 +96,24 @@ const Title = styled(Typography)(({ theme }) => ({
   },
 }));
 
-const PhoneNumber = styled('a')(() => ({
+const PhoneNumber = styled('a')(({ theme }) => ({
   color: '#444444',
   textDecoration: 'none',
   '&:hover': {
     textDecoration: 'underline',
   },
+  [theme.breakpoints.only('xs')]: { display: 'none' },
 }));
 
 const Link = styled('a')(() => ({
   color: '#257FA4',
 }));
 
-const Description = styled(Typography)(() => ({
+const Description = styled(Typography)(({ theme }) => ({
   fontSize: '16px',
   whiteSpace: 'pre-wrap',
   lineHeight: '24px',
+  [theme.breakpoints.only('xs')]: { whiteSpace: 'normal' },
 }));
 
 const MobileButton = styled(Button)(({ theme }) => ({
@@ -130,7 +132,7 @@ const MobileButton = styled(Button)(({ theme }) => ({
     background: '#990000',
   },
   marginTop: theme.spacing(3),
-  [theme.breakpoints.only('xs')]: {display: 'flex'},
+  [theme.breakpoints.only('xs')]: { display: 'flex' },
 }));
 
 const View: React.FC<Props> = ({ viewModel }) => {
