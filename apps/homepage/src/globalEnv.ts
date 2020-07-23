@@ -7,6 +7,7 @@ export interface GlobalEnv {
   GEARBOX_PUBLIC_URL?: string;
   INVSEARCH_V3_URL?: string;
   NAME?: string;
+  STATIC_ASSETS_HOST_URL?: string;
   VERSION?: string;
 }
 
@@ -25,6 +26,7 @@ const globalEnv: GlobalEnv = process.browser
       GEARBOX_PUBLIC_URL: process.env.GEARBOX_PUBLIC_URL,
       INVSEARCH_V3_URL: process.env.INVSEARCH_V3_URL,
       NAME: name,
+      STATIC_ASSETS_HOST_URL: process.env.STATIC_ASSETS_HOST_URL,
       VERSION: version,
     };
 

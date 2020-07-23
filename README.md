@@ -12,6 +12,13 @@
 
 - Pull the lastest from this `vroom-web` repo.
 
+- Setup and use `local.vroom.com` instead of `localhost`
+  - Modify your `/etc/hosts` file to include this line: `127.0.0.1 local.vroom.com`
+  - (E.g `sudo vim /etc/hosts`, add the line)
+  - When developing locally, use `local.vroom.com` in place of `localhost`.
+  - This provides a more consistent environment from local -> deployed environment.
+  - It also gets around an long-standing issue in chrome: https://bugs.chromium.org/p/chromium/issues/detail?id=67743
+
 - Determine which monorepo package you want to run. There are several here, so a good place to start would be one of the packages under the `/apps` folder.
 
 - Build Your Image, Run Your Container

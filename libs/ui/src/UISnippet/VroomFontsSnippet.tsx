@@ -1,10 +1,10 @@
 import React from 'react';
 
 interface Props {
-  hostUrl: string;
+  staticAssetsHostUrl: string;
 }
 
-const VroomFontsSnippet: React.FC<Props> = ({ hostUrl }) => {
+const VroomFontsSnippet: React.FC<Props> = ({ staticAssetsHostUrl }) => {
   return (
     <>
       {/*
@@ -20,22 +20,27 @@ const VroomFontsSnippet: React.FC<Props> = ({ hostUrl }) => {
           __html: `
             @font-face {
               font-family: 'VroomSans';
-              src: url('${hostUrl}/fonts/VroomSansSMALL-ExtraBoldItalicWEB.woff') format('woff');
+              src: url('${staticAssetsHostUrl}/vroom/fonts/VroomSans-ExtraBoldItalic.woff') format('woff');
             }
             @font-face {
               font-family: Calibre;
               font-weight: 400;
-              src: url('${hostUrl}/fonts/CalibreWeb-Regular.woff') format('woff');
+              src: url('${staticAssetsHostUrl}/vroom/fonts/Calibre-Regular.woff') format('woff');
             }
             @font-face {
               font-family: Calibre;
               font-weight: 500;
-              src: url('${hostUrl}/fonts/CalibreWeb-Semibold.woff') format('woff');
+              src: url('${staticAssetsHostUrl}/vroom/fonts/Calibre-Medium.woff') format('woff');
             }
             @font-face {
               font-family: 'Calibre';
               font-weight: 600;
-              src: url('${hostUrl}/fonts/CalibreWeb-Semibold.woff') format('woff');
+              src: url('${staticAssetsHostUrl}/vroom/fonts/Calibre-Semibold.woff') format('woff');
+            }
+            @font-face {
+              font-family: 'Calibre';
+              font-weight: 700;
+              src: url('${staticAssetsHostUrl}/vroom/fonts/Calibre-Bold.woff') format('woff');
             }
           `,
         }}

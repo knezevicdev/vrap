@@ -5,6 +5,7 @@ export interface GlobalEnv {
   INVSEARCH_V3_URL?: string;
   INV_SERVICE_V2_URL?: string;
   NAME?: string;
+  STATIC_ASSETS_HOST_URL?: string;
   VERSION?: string;
 }
 
@@ -21,6 +22,7 @@ const globalEnv: GlobalEnv = process.browser
       INVSEARCH_V3_URL: process.env.INVSEARCH_V3_URL,
       INV_SERVICE_V2_URL: process.env.INV_SERVICE_V2_URL,
       NAME: name,
+      STATIC_ASSETS_HOST_URL: process.env.STATIC_ASSETS_HOST_URL || '',
       VERSION: version,
     };
 
