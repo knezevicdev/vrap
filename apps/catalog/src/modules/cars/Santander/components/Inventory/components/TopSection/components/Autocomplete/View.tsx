@@ -99,7 +99,6 @@ const StyledButton = styled(Button)(({ theme }) => ({
   '&:active': {
     background: '#990000',
   },
-
 }));
 
 interface HeroAutocompleteProps {
@@ -208,10 +207,7 @@ const HeroAutocomplete: React.FC<HeroAutocompleteProps> = ({
         )}
         style={{ flexGrow: 1 }}
       />
-      <StyledButton
-        onClick={handleButtonClick}
-        variant="contained"
-      >
+      <StyledButton onClick={handleButtonClick} variant="contained">
         {viewModel.buttonLabel}
       </StyledButton>
     </Box>
