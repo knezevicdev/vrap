@@ -6,14 +6,14 @@ import { Car } from '@vroom-web/inv-search-networking';
 import { SoldStatusInt } from '@vroom-web/inv-service-networking';
 import isEmpty from 'lodash.isempty';
 
-import { Store } from './store';
+import { StartPurchaseStore } from './store';
 
 import AnalyticsHandler, { Product } from 'src/integrations/AnalyticsHandler';
 import { InventoryStore } from 'src/modules/inventory/store';
 
 class StartPurchaseViewModel {
   private inventoryStore: InventoryStore;
-  private store: Store;
+  private startPurchaseStore: StartPurchaseStore;
   private analyticsHandler: AnalyticsHandler;
   private car: Car;
   readonly purchaseText: string = 'Start Purchase';
@@ -21,11 +21,14 @@ class StartPurchaseViewModel {
   readonly findNewMatch: string = 'Find A New Match';
   readonly poweredBy = 'Powered by';
 
-  constructor(inventoryStore: InventoryStore, store: Store) {
+  constructor(
+    inventoryStore: InventoryStore,
+    startPurchaseStore: StartPurchaseStore
+  ) {
     this.inventoryStore = inventoryStore;
     this.analyticsHandler = new AnalyticsHandler();
     this.car = inventoryStore.vehicle._source;
-    this.store = store;
+    this.startPurchaseStore = startPurchaseStore;
   }
 
   getButtonText(): string {
@@ -82,17 +85,12 @@ class StartPurchaseViewModel {
       const modelHref = getUrlFromFiltersData(modelFiltersData);
       window.location.href = modelHref;
     } else {
-      this.store.setShowRedirectToTrue();
-      setTimeout(() => {
-        this.analyticsHandler.trackProductAdded(product);
-        const url = `/e2e/${vin}/checkoutTradeIn`;
-        window.location.href = url;
-      }, 6000);
+      this.startPurchaseStore.setShowRedirectToTrue();
     }
   }
 
   showRedirect = (): boolean => {
-    return this.store.showRedirect;
+    return this.startPurchaseStore.showRedirect;
   };
 
   isAvailableSoon = (): boolean => {

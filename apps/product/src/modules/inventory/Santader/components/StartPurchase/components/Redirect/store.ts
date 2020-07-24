@@ -1,6 +1,6 @@
 import { action, observable } from 'mobx';
 
-export class Store {
+export class RedirectStore {
   @observable secondsLeft = 6;
 
   @action

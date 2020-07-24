@@ -1,6 +1,6 @@
 import { action, observable } from 'mobx';
 
-export class Store {
+export class StartPurchaseStore {
   @observable showRedirect = false;
 
   @action

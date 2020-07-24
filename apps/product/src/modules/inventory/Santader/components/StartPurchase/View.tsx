@@ -3,7 +3,7 @@ import { Button, Typography } from '@vroom-web/ui';
 import { observer } from 'mobx-react';
 import React from 'react';
 
-import Redirect from './components';
+import Redirect from './components/Redirect';
 import { ReactComponent as VroomLogoSvg } from './svg/vroom.svg';
 import ViewModel from './ViewModel';
 
