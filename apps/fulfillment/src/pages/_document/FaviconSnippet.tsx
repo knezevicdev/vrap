@@ -1,4 +1,4 @@
-import { theme } from '@vroom-web/ui';
+import { vroomTheme as theme } from '@vroom-web/ui';
 import getConfig from 'next/config';
 import React from 'react';
 

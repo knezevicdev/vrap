@@ -12,7 +12,7 @@ class HomeViewModel {
     let results: string[] = [];
     if (this.store.deliveryOrders) {
       results = this.store.deliveryOrders.map((i) => {
-        return `${i.make} ${i.model} ${i.year} is at ${i.currentLocation}`;
+        return `${i.vehicle.make} ${i.vehicle.model} ${i.vehicle.year} is at ${i.currentLocation}`;
       });
     }
     return results;

@@ -16,4 +16,3 @@ services:
       # Setup volumes for dependencies and built artifacts.
       - '/www/node_modules'
       - '/www/libs/ui/node_modules'
-      - '/www/libs/ui/dist'
