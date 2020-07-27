@@ -155,7 +155,6 @@ export const getSortRequestData = (
   sortby?: SortAPIBy;
   sortdirection?: SortAPIDirection;
 } => {
-  console.log(geoLocationSortDefaultVariant, 'geo');
   const filtersDataSort = filtersData[Filters.SORT];
   if (!filtersDataSort) {
     return {
