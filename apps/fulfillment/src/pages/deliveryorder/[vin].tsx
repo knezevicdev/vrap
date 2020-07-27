@@ -16,7 +16,11 @@ interface Props {
   initialState: DeliveryOrderStoreState;
 }
 
-const HomePage: NextPage<Props> = ({ description, title, initialState }) => {
+const DeliveryOrderPage: NextPage<Props> = ({
+  description,
+  title,
+  initialState,
+}) => {
   const head = (
     <>
       <title>{title}</title>
@@ -35,7 +39,7 @@ const HomePage: NextPage<Props> = ({ description, title, initialState }) => {
   );
 };
 
-HomePage.getInitialProps = async ({ query }): Promise<Props> => {
+DeliveryOrderPage.getInitialProps = async ({ query }): Promise<Props> => {
   const vin = query.vin as string;
 
   const title = 'Vroom Fulfillment';
@@ -45,4 +49,4 @@ HomePage.getInitialProps = async ({ query }): Promise<Props> => {
   return { description, title, initialState };
 };
 
-export default HomePage;
+export default DeliveryOrderPage;

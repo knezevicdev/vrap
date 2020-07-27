@@ -35,6 +35,8 @@ export interface Details {
   deliveryAddress: Address;
   recommendedDeliveryLocation: string;
   reasonCode?: string;
+  created: string;
+  createdBy: string;
   updated: string;
   updatedBy: string;
 }
