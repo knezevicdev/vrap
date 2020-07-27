@@ -52,7 +52,7 @@ class ViewModel {
       this.redirectStore.decrementSeconds();
       if (this.redirectStore.secondsLeft === 0) {
         this.analyticsHandler.trackProductAdded(product);
-        const url = `/e2e/${vin}/checkoutTradeIn`;
+        const url = `/e2e/${vin}/checkoutTradeIn?utm_source=santander&utm_campaign=national&utm_medium=listings`;
         window.location.href = url;
       }
     }, 1000);
