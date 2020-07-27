@@ -4,6 +4,7 @@ import {
   addModel,
   BodyType as FilterBodyTypeData,
   getUrlFromFiltersData,
+  setSearch,
 } from '@vroom-web/catalog-url-integration';
 import { stringify } from 'qs';
 
@@ -108,7 +109,10 @@ class AutocompleteViewModel {
       this.homeStore.experiments,
       this.homeStore.query
     );
-
+    //TODO: Replace with makeSlug from suggestion api
+    const replaceCharacterForSlug = oldCatalogVsNewCatalogDefaultVarient
+      ? '_'
+      : '-';
     if (suggestion.group === 'Body Type') {
       if (!suggestion.bodyType) {
         return;
@@ -129,7 +133,9 @@ class AutocompleteViewModel {
       if (!suggestion.make) {
         return;
       }
-      const make = suggestion.make.toLowerCase().replace(/[\s-]/g, '_');
+      const make = suggestion.make
+        .toLowerCase()
+        .replace(/[\s-_]/g, replaceCharacterForSlug);
       const allModelsFiltersData = addAllModels(make);
       const allModelsHref = getUrlFromFiltersData(allModelsFiltersData);
       oldCatalogVsNewCatalogDefaultVarient
@@ -142,8 +148,12 @@ class AutocompleteViewModel {
       if (!suggestion.make || !suggestion.model) {
         return;
       }
-      const make = suggestion.make.toLowerCase().replace(/[\s-]/g, '_');
-      const model = suggestion.model.toLowerCase().replace(/[\s-]/g, '_');
+      const make = suggestion.make
+        .toLowerCase()
+        .replace(/[\s-_]/g, replaceCharacterForSlug);
+      const model = suggestion.model
+        .toLowerCase()
+        .replace(/[\s-_]/g, replaceCharacterForSlug);
       const modelFiltersData = addModel(make, model);
       const modelHref = getUrlFromFiltersData(modelFiltersData);
       oldCatalogVsNewCatalogDefaultVarient
@@ -172,9 +182,13 @@ class AutocompleteViewModel {
       this.homeStore.experiments,
       this.homeStore.query
     );
-    window.location.href = `/${
-      oldCatalogVsNewCatalogDefaultVarient ? `catalog` : `cars`
-    }${queryString}`;
+    if (oldCatalogVsNewCatalogDefaultVarient) {
+      window.location.href = `/catalog/${queryString}`;
+    } else {
+      const filtersData = setSearch(inputValue);
+      const searchUrl = getUrlFromFiltersData(filtersData);
+      window.location.href = `${searchUrl}&${queryString}`;
+    }
   }
 }
 
