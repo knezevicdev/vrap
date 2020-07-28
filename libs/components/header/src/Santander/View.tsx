@@ -243,7 +243,7 @@ const View: React.FC<Props> = ({ viewModel }) => {
           >
             <Typography>{viewModel.financeCalculators.label}</Typography>
           </Link>
-          <ClickAwayListener onClickAway={viewModel.onDropdownClick}>
+          <ClickAwayListener onClickAway={viewModel.onClickAway}>
             <CustomTooltip
               onClose={viewModel.onDropdownClick}
               open={viewModel.isDropdownOpen()}
