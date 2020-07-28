@@ -5,7 +5,6 @@ import { NextPage, NextPageContext } from 'next';
 import { parseCookies } from 'nookies';
 import { stringify } from 'qs';
 import React, { useEffect, useState } from 'react';
-import { Experiment } from 'vroom-abtesting-sdk/types';
 
 import experimentSDK, {
   showDefaultVariant,
