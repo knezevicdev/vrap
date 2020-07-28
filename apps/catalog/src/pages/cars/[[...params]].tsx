@@ -2,9 +2,13 @@
 import { useTheme } from '@material-ui/core/styles';
 import { Brand, ThemeProvider } from '@vroom-web/ui';
 import { NextPage, NextPageContext } from 'next';
+import { parseCookies } from 'nookies';
 import { stringify } from 'qs';
 import React, { useEffect, useState } from 'react';
 
+import experimentSDK, {
+  showDefaultVariant,
+} from 'src/integrations/experimentSDK';
 import Cars from 'src/modules/cars';
 import { BrandContext } from 'src/modules/cars/BrandContext';
 import {
@@ -62,6 +66,9 @@ const CarsPage: NextPage<Props> = ({ brand, initialStoreState }) => {
 };
 
 CarsPage.getInitialProps = async (context: NextPageContext): Promise<Props> => {
+  const cookies = parseCookies(context);
+  const marketingId = cookies['uuid'];
+
   const {
     query: {
       brand: brandQueryParam,
@@ -83,7 +90,16 @@ CarsPage.getInitialProps = async (context: NextPageContext): Promise<Props> => {
   // TODO: replace this mechanism with the actual one.
   // Some data should come from ctx.req, rather than from query.
   const brand = brandQueryParam === 'santander' ? Brand.SANTANDER : Brand.VROOM;
+  const experiments =
+    brand === Brand.VROOM
+      ? await experimentSDK.getRunningExperiments(marketingId)
+      : [];
 
+  const geoLocationSortDefaultVariant = showDefaultVariant(
+    'snd-catalog-sort-by-geo-location',
+    experiments,
+    context.query
+  );
   const filtersQueryParam =
     typeof filters === 'string' ? (filters as string) : undefined;
 
@@ -110,6 +126,7 @@ CarsPage.getInitialProps = async (context: NextPageContext): Promise<Props> => {
   );
   const initialStoreState = await getInitialCarsStoreState(
     attributionQueryString,
+    geoLocationSortDefaultVariant,
     filtersQueryParam
   );
   return {
