@@ -121,7 +121,7 @@ class AutocompleteViewModel {
       if (!suggestion.make) {
         return;
       }
-      const make = suggestion.make.toLowerCase().replace(/[\s-]/g, '_');
+      const make = suggestion.make.toLowerCase().replace(/[\s-_]/g, '-');
       const allModelsFiltersData = addAllModels(make);
       const allModelsHref = getUrlFromFiltersData(allModelsFiltersData);
       window.location.href = `${allModelsHref}${queryString}`;
@@ -132,8 +132,8 @@ class AutocompleteViewModel {
       if (!suggestion.make || !suggestion.model) {
         return;
       }
-      const make = suggestion.make.toLowerCase().replace(/[\s-]/g, '_');
-      const model = suggestion.model.toLowerCase().replace(/[\s-]/g, '_');
+      const make = suggestion.make.toLowerCase().replace(/[\s-_]/g, '-');
+      const model = suggestion.model.toLowerCase().replace(/[\s-_]/g, '-');
       const modelFiltersData = addModel(make, model);
       const modelHref = getUrlFromFiltersData(modelFiltersData);
       window.location.href = `${modelHref}${queryString}`;
