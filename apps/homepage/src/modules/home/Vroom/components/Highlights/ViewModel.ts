@@ -17,7 +17,6 @@ class HighlightsViewModel {
   private readonly store: HomeStore;
 
   ctaLabel: string;
-  condenseCatalogLinksDefaultVariant: boolean;
   readonly highlights: Highlight[] = [
     {
       description: '',
@@ -56,11 +55,6 @@ class HighlightsViewModel {
     );
     const homeShopButtonDefaultVariant = showDefaultVariant(
       'snd-homepage-shop-now-vs-shop-vehicles',
-      store.experiments,
-      store.query
-    );
-    this.condenseCatalogLinksDefaultVariant = showDefaultVariant(
-      'snd-home-condense-catalog-links',
       store.experiments,
       store.query
     );
