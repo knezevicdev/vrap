@@ -1,3 +1,11 @@
+import {
+  addAllModels,
+  addBodyType,
+  addModel,
+  BodyType as FilterBodyTypeData,
+  getUrlFromFiltersData,
+  setSearch,
+} from '@vroom-web/catalog-url-integration';
 import { stringify } from 'qs';
 
 import { AutocompleteStore } from './store';
@@ -103,7 +111,9 @@ class AutocompleteViewModel {
         suggestion.bodyType === 'Van Minivan'
           ? 'minivan'
           : suggestion.bodyType.toLowerCase();
-      window.location.href = `/catalog/all-years/all-makes/${bodyType}${queryString}`;
+      const filterBodyType = addBodyType(bodyType as FilterBodyTypeData);
+      const bodyHref = getUrlFromFiltersData(filterBodyType);
+      window.location.href = `${bodyHref}${queryString}`;
       return;
     }
 
@@ -112,7 +122,9 @@ class AutocompleteViewModel {
         return;
       }
       const make = suggestion.make.toLowerCase().replace(/[\s-]/g, '_');
-      window.location.href = `/catalog/all-years/${make}${queryString}`;
+      const allModelsFiltersData = addAllModels(make);
+      const allModelsHref = getUrlFromFiltersData(allModelsFiltersData);
+      window.location.href = `${allModelsHref}${queryString}`;
       return;
     }
 
@@ -122,7 +134,9 @@ class AutocompleteViewModel {
       }
       const make = suggestion.make.toLowerCase().replace(/[\s-]/g, '_');
       const model = suggestion.model.toLowerCase().replace(/[\s-]/g, '_');
-      window.location.href = `/catalog/all-years/${make}_${model}${queryString}`;
+      const modelFiltersData = addModel(make, model);
+      const modelHref = getUrlFromFiltersData(modelFiltersData);
+      window.location.href = `${modelHref}${queryString}`;
       return;
     }
   }
@@ -141,7 +155,9 @@ class AutocompleteViewModel {
     const queryString = stringify(query, {
       addQueryPrefix: true,
     });
-    window.location.href = `/catalog${queryString}`;
+    const filtersData = setSearch(inputValue);
+    const searchUrl = getUrlFromFiltersData(filtersData);
+    window.location.href = `${searchUrl}${queryString}`;
   }
 }
 
