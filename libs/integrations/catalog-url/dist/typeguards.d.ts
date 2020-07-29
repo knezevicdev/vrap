@@ -1,0 +1,11 @@
+import { Make, MakeAndModels, MaxAndMin, Sort } from './types';
+export declare const isEnum: <T>(e: T) => (token: any) => token is T[keyof T];
+export declare const isEnumArray: <T>(e: T) => (token: any) => token is T[keyof T][];
+export declare const isNumber: (x: any) => x is number;
+export declare const isString: (x: any) => x is string;
+export declare const isStringArray: (x: any) => x is string[];
+export declare const isObject: (x: any) => boolean;
+export declare const isMake: (x: any) => x is Make;
+export declare const isMakeAndModels: (x: any) => x is MakeAndModels;
+export declare const isMaxAndMin: (x: any) => x is MaxAndMin;
+export declare const isSort: (x: any) => x is Sort;
