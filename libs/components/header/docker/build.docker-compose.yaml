@@ -5,7 +5,7 @@ services:
       context: ../../../../
       dockerfile: ./libs/components/header/docker/Dockerfile
     user: 'root'
-    command: ash -c "yarn workspace @vroom-web/header-components storybook"
+    command: ash -c "yarn workspace @vroom-web/header-components build"
     ports:
       - '8080:8080'
     volumes:
