@@ -1,5 +1,7 @@
 import Dialog from '@material-ui/core/Dialog';
+import IconButton from '@material-ui/core/IconButton';
 import { styled } from '@material-ui/core/styles';
+import CloseIcon from '@material-ui/icons/Close';
 import { Button, Typography } from '@vroom-web/ui';
 import { observer } from 'mobx-react';
 import React from 'react';
@@ -22,6 +24,13 @@ const CustomButton = styled(Button)(({ theme }) => ({
 
 const DialogTitle = styled(Typography)(({ theme }) => ({
   padding: theme.spacing(4),
+}));
+
+const StyledIconButton = styled(IconButton)(({ theme }) => ({
+  position: 'absolute',
+  top: 0,
+  right: 0,
+  padding: theme.spacing(2),
 }));
 
 const DialogContent = styled('div')(({ theme }) => ({
@@ -66,6 +75,9 @@ const NotifyMeView: React.FC<Props> = (props) => {
         <DialogContent>
           <DialogTitle variant="h2" fontWeight="fontWeightMedium">
             {viewModel.dialogTitle}
+            <StyledIconButton aria-label="close" onClick={handleDialogClick}>
+              <CloseIcon />
+            </StyledIconButton>
           </DialogTitle>
           <DialogBody>{viewModel.dialogBody}</DialogBody>
           <DialogButton
