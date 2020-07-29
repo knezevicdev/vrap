@@ -200,7 +200,9 @@ export const getPostInventoryRequestDataFromFilterData = (
   geoLocationSortDefaultVariant?: boolean
 ): PostInventoryRequestData => {
   if (!filtersData) {
-    return {};
+    return {
+      ...(geoLocationSortDefaultVariant ? {} : { sortby: 'geo' }),
+    };
   }
 
   const bodytype = getBodyTypeRequestData(filtersData);
@@ -275,14 +277,14 @@ export async function getInitialCarsStoreState(
   try {
     initialState.inventoryStatus = Status.FETCHING;
     const postInventoryRequestDataFromFiltersData = getPostInventoryRequestDataFromFilterData(
-      initialState.filtersData
+      initialState.filtersData,
+      geoLocationSortDefaultVariant
     );
     const inventoryRequestData: PostInventoryRequestData = {
       ...postInventoryRequestDataFromFiltersData,
       fulldetails: true,
       limit: INVENTORY_CARDS_PER_PAGE,
       source: `${publicRuntimeConfig.NAME}-${publicRuntimeConfig.VERSION}`,
-      ...(geoLocationSortDefaultVariant ? {} : { sortby: 'geo' }),
     };
     const inventoryResponse = await invSearchNetworker.postInventory(
       inventoryRequestData
