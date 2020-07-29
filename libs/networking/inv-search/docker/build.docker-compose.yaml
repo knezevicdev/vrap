@@ -6,7 +6,7 @@ services:
       dockerfile: ./libs/networking/inv-search/docker/Dockerfile
     user: 'root'
     command: >
-      ash -c "yarn workspace @vroom-web/inv-search-networking test --watch"
+      ash -c "yarn workspace @vroom-web/inv-search-networking build"
     volumes:
       - '../../../../:/www/'
       - '/www/node_modules'
