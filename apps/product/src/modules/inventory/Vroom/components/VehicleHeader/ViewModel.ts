@@ -29,6 +29,11 @@ class VehicleHeaderViewModel {
       price: `$${listingPrice.toLocaleString('en-US')}`,
     };
   }
+
+  isAvailableSoon = (): boolean => {
+    const { leadFlagPhotoUrl, hasStockPhotos } = this.store.vehicle._source;
+    return leadFlagPhotoUrl === '' || hasStockPhotos;
+  };
 }
 
 export default VehicleHeaderViewModel;

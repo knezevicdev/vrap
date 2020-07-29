@@ -19,7 +19,7 @@ const CustomButton = styled(Button)(({ theme }) => ({
   },
 }));
 
-const StartPurchaseView: React.FC<Props> = (props) => {
+const NotifyMeView: React.FC<Props> = (props) => {
   const { viewModel } = props;
   const handleClick = (): void => viewModel.handleClick();
 
@@ -27,11 +27,11 @@ const StartPurchaseView: React.FC<Props> = (props) => {
     <>
       <CustomButton variant="contained" color="primary" onClick={handleClick}>
         <Typography variant="button" fontWeight={600}>
-          {viewModel.getButtonText()}
+          {viewModel.notifyMeText}
         </Typography>
       </CustomButton>
     </>
   );
 };
 
-export default observer(StartPurchaseView);
+export default observer(NotifyMeView);

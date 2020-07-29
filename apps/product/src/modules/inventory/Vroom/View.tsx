@@ -10,6 +10,7 @@ import CarDetails from './components/CarDetails';
 import Features from './components/Features';
 import Gallery from './components/Gallery/';
 import LegalFooter from './components/LegalFooter';
+import NotifyMe from './components/NotifyMe';
 import PeaceOfMind from './components/PeaceOfMind';
 import SimilarVehicles from './components/SimilarVehicles';
 import StartPurchase from './components/StartPurchase';
@@ -71,7 +72,7 @@ const InventoryView: React.FC<Props> = (props) => {
       <StandardFooter />
       {xsDown && viewModel.ready() && (
         <StickyBottom>
-          <StartPurchase />
+          {viewModel.isAvailableSoon() ? <NotifyMe /> : <StartPurchase />}
         </StickyBottom>
       )}
     </>

@@ -4,6 +4,7 @@ import { Typography } from '@vroom-web/ui';
 import { observer } from 'mobx-react';
 import React from 'react';
 
+import NotifyMe from '../NotifyMe';
 import StartPurchase from '../StartPurchase';
 import StatusBanner from '../StatusBanner';
 import ViewModel from './ViewModel';
@@ -84,7 +85,8 @@ const VehicleHeaderView: React.FC<Props> = (props) => {
         <RightContent>
           <Price variant="body1">{summary.price}</Price>
           {!xsDown && <Divider />}
-          {!xsDown && <StartPurchase />}
+          {!xsDown &&
+            (viewModel.isAvailableSoon() ? <NotifyMe /> : <StartPurchase />)}
         </RightContent>
       </VehicleHeaderContainerContent>
     </VehicleHeaderContainer>

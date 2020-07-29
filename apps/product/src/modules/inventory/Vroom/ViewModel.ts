@@ -79,6 +79,11 @@ class InventoryViewModel {
   error(): boolean {
     return this.store.vehicleStatus === Status.ERROR;
   }
+
+  isAvailableSoon = (): boolean => {
+    const { leadFlagPhotoUrl, hasStockPhotos } = this.store.vehicle._source;
+    return leadFlagPhotoUrl === '' || hasStockPhotos;
+  };
 }
 
 export default InventoryViewModel;
