@@ -42,19 +42,25 @@ const DialogButton = styled(Button)(({ theme }) => ({
 
 const NotifyMeView: React.FC<Props> = (props) => {
   const { viewModel } = props;
-  const handleClick = (): void => viewModel.handleClick();
+  const handleDialogClick = (): void => viewModel.handleClick();
+  const handleDialogActions = (location: string): void =>
+    viewModel.handleDialogActions(location);
 
   return (
     <>
-      <CustomButton variant="contained" color="primary" onClick={handleClick}>
+      <CustomButton
+        variant="contained"
+        color="primary"
+        onClick={handleDialogClick}
+      >
         <Typography variant="button" fontWeight={600}>
           {viewModel.notifyMeButton}
         </Typography>
       </CustomButton>
       <Dialog
-        onClose={handleClick}
-        //fullWidth={true}
-        //maxWidth={'sm'}
+        onClose={handleDialogClick}
+        fullWidth={true}
+        maxWidth={'sm'}
         open={viewModel.isOpen()}
       >
         <DialogContent>
@@ -65,7 +71,7 @@ const NotifyMeView: React.FC<Props> = (props) => {
           <DialogButton
             variant="contained"
             color="primary"
-            onClick={handleClick}
+            onClick={(): void => handleDialogActions('create')}
           >
             <Typography variant="button" fontWeight={600}>
               {viewModel.createAccountButton}
@@ -74,7 +80,7 @@ const NotifyMeView: React.FC<Props> = (props) => {
           <DialogButton
             variant="outlined"
             color="primary"
-            onClick={handleClick}
+            onClick={(): void => handleDialogActions('login')}
           >
             <Typography variant="button" fontWeight={600}>
               {viewModel.logInButton}

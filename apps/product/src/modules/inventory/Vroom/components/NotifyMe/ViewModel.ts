@@ -2,7 +2,7 @@ import { NotifyMeStore } from './store';
 
 import { InventoryStore } from 'src/modules/inventory/store';
 
-class StartPurchaseViewModel {
+class NotifyMeViewModel {
   private inventoryStore: InventoryStore;
   private notifyMeStore: NotifyMeStore;
   readonly notifyMeButton: string = 'Notify Me';
@@ -25,6 +25,12 @@ class StartPurchaseViewModel {
     this.notifyMeStore.toggleModal();
   }
 
+  handleDialogActions(location: string): void {
+    const currentUrl = window.location.pathname;
+    const newUrl = `/account/${location}?redirect=${currentUrl}`;
+    window.location.href = newUrl;
+  }
+
   isOpen(): boolean {
     return this.notifyMeStore.modalOpen;
   }
@@ -34,4 +40,4 @@ class StartPurchaseViewModel {
   }
 }
 
-export default StartPurchaseViewModel;
+export default NotifyMeViewModel;
