@@ -284,7 +284,6 @@ export async function getInitialCarsStoreState(
       source: `${publicRuntimeConfig.NAME}-${publicRuntimeConfig.VERSION}`,
       ...(geoLocationSortDefaultVariant ? {} : { sortby: 'geo' }),
     };
-    console.log(inventoryRequestData);
     const inventoryResponse = await invSearchNetworker.postInventory(
       inventoryRequestData
     );
