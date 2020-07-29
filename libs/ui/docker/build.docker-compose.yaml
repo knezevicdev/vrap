@@ -1,13 +1,12 @@
 version: '3'
 services:
-  storybook:
+  build:
     build:
       context: ../../../
       dockerfile: ./libs/ui/docker/Dockerfile
     image: vroom-web-ui:latest
-    container_name: storybook
     user: 'root'
-    command: ash -c "yarn workspace @vroom-web/ui storybook"
+    command: ash -c "yarn workspace @vroom-web/ui build"
     ports:
       - '8080:8080'
     volumes:
