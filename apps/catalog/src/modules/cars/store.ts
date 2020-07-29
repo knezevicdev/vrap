@@ -200,7 +200,9 @@ export const getPostInventoryRequestDataFromFilterData = (
   geoLocationSortDefaultVariant?: boolean
 ): PostInventoryRequestData => {
   if (!filtersData) {
-    return {};
+    return {
+      ...(geoLocationSortDefaultVariant ? {} : { sortby: 'geo' }),
+    };
   }
 
   const bodytype = getBodyTypeRequestData(filtersData);

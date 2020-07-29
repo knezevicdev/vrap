@@ -5,6 +5,7 @@ import { NextPage, NextPageContext } from 'next';
 import { parseCookies } from 'nookies';
 import { stringify } from 'qs';
 import React, { useEffect, useState } from 'react';
+import { Experiment } from 'vroom-abtesting-sdk/types';
 
 import experimentSDK, {
   showDefaultVariant,
@@ -22,9 +23,14 @@ import Page from 'src/Page';
 interface Props {
   brand: Brand;
   initialStoreState: InitialCarsStoreState;
+  experiments: Experiment[];
 }
 
-const CarsPage: NextPage<Props> = ({ brand, initialStoreState }) => {
+const CarsPage: NextPage<Props> = ({
+  brand,
+  initialStoreState,
+  experiments,
+}) => {
   // Persist store instance across URL updates.
   const [carsStore] = useState<CarsStore>(new CarsStore(initialStoreState));
 
@@ -54,7 +60,7 @@ const CarsPage: NextPage<Props> = ({ brand, initialStoreState }) => {
 
   return (
     <ThemeProvider brand={brand}>
-      <Page name="Catalog" head={head}>
+      <Page experiments={experiments} name="Catalog" head={head}>
         <BrandContext.Provider value={brand}>
           <CarsStoreContext.Provider value={carsStore}>
             <Cars />
@@ -132,6 +138,7 @@ CarsPage.getInitialProps = async (context: NextPageContext): Promise<Props> => {
   return {
     brand,
     initialStoreState,
+    experiments,
   };
 };
 
