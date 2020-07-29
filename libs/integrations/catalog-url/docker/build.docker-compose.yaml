@@ -7,7 +7,7 @@ services:
     user: 'root'
     # This starts nothing but leaves the container running,
     # useful for this library so you can manually run jest.
-    command: ash -c "tail -f /dev/null"
+    command: ash -c "yarn workspace @vroom-web/catalog-url-integration build"
     volumes:
       - '../../../../:/www/'
       - '/www/node_modules'
