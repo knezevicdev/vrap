@@ -275,15 +275,16 @@ export async function getInitialCarsStoreState(
   try {
     initialState.inventoryStatus = Status.FETCHING;
     const postInventoryRequestDataFromFiltersData = getPostInventoryRequestDataFromFilterData(
-      initialState.filtersData,
-      geoLocationSortDefaultVariant
+      initialState.filtersData
     );
     const inventoryRequestData: PostInventoryRequestData = {
       ...postInventoryRequestDataFromFiltersData,
       fulldetails: true,
       limit: INVENTORY_CARDS_PER_PAGE,
       source: `${publicRuntimeConfig.NAME}-${publicRuntimeConfig.VERSION}`,
+      ...(geoLocationSortDefaultVariant ? {} : { sortby: 'geo' }),
     };
+    console.log(inventoryRequestData);
     const inventoryResponse = await invSearchNetworker.postInventory(
       inventoryRequestData
     );
