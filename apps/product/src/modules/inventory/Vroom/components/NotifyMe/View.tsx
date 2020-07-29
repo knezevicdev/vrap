@@ -1,3 +1,4 @@
+import Dialog from '@material-ui/core/Dialog';
 import { styled } from '@material-ui/core/styles';
 import { Button, Typography } from '@vroom-web/ui';
 import { observer } from 'mobx-react';
@@ -19,6 +20,26 @@ const CustomButton = styled(Button)(({ theme }) => ({
   },
 }));
 
+const DialogTitle = styled(Typography)(({ theme }) => ({
+  padding: theme.spacing(4),
+}));
+
+const DialogContent = styled('div')(({ theme }) => ({
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'center',
+  paddingBottom: theme.spacing(4),
+}));
+
+const DialogBody = styled('div')(({ theme }) => ({
+  padding: theme.spacing(0, 8, 4, 8),
+}));
+
+const DialogButton = styled(Button)(({ theme }) => ({
+  width: '50%',
+  marginBottom: theme.spacing(2),
+}));
+
 const NotifyMeView: React.FC<Props> = (props) => {
   const { viewModel } = props;
   const handleClick = (): void => viewModel.handleClick();
@@ -27,9 +48,40 @@ const NotifyMeView: React.FC<Props> = (props) => {
     <>
       <CustomButton variant="contained" color="primary" onClick={handleClick}>
         <Typography variant="button" fontWeight={600}>
-          {viewModel.notifyMeText}
+          {viewModel.notifyMeButton}
         </Typography>
       </CustomButton>
+      <Dialog
+        onClose={handleClick}
+        //fullWidth={true}
+        //maxWidth={'sm'}
+        open={viewModel.isOpen()}
+      >
+        <DialogContent>
+          <DialogTitle variant="h2" fontWeight="fontWeightMedium">
+            {viewModel.dialogTitle}
+          </DialogTitle>
+          <DialogBody>{viewModel.dialogBody}</DialogBody>
+          <DialogButton
+            variant="contained"
+            color="primary"
+            onClick={handleClick}
+          >
+            <Typography variant="button" fontWeight={600}>
+              {viewModel.createAccountButton}
+            </Typography>
+          </DialogButton>
+          <DialogButton
+            variant="outlined"
+            color="primary"
+            onClick={handleClick}
+          >
+            <Typography variant="button" fontWeight={600}>
+              {viewModel.logInButton}
+            </Typography>
+          </DialogButton>
+        </DialogContent>
+      </Dialog>
     </>
   );
 };
