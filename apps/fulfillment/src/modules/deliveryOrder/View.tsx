@@ -37,14 +37,14 @@ const DeliveryOrderView: React.FC<Props> = (props) => {
       </Grid>
     </Fragment>
   );
-  const general = info.general.items.reduce<JSX.Element[][]>(
-    (result, item, index) => {
+  const general: JSX.Element[][] = [[], []];
+  info.general.items.forEach(
+    (item, index) => {
       if (index <= 2) {
-        result[0].push(element(index, item.label, item.value));
+        general[0].push(element(index, item.label, item.value));
       } else {
-        result[1].push(element(index, item.label, item.value));
+        general[1].push(element(index, item.label, item.value));
       }
-      return result;
     },
     [[], []]
   );
