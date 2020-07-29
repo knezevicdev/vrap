@@ -1,15 +1,15 @@
 version: '3'
 services:
-  test:
+  build:
     build:
       context: ../../../../
       dockerfile: ./libs/integrations/analytics/docker/Dockerfile
     image: vroom-web-analytics-integration:latest
-    container_name: test
+    container_name: build
     user: 'root'
     # This starts nothing but leaves the container running,
     # useful for this library so you can manually run jest.
-    command: ash -c "tail -f /dev/null"
+    command: ash -c "yarn workspace @vroom-web/analytics-integration build"
     volumes:
       - '../../../../:/www/'
       - '/www/node_modules'
