@@ -2,32 +2,53 @@ import { HomeStore } from './store';
 
 import { Status } from 'src/networking/Networker';
 
+interface Header {
+  header: string;
+  accessor: string;
+}
+interface Row {
+  [key: string]: number | string;
+  id: number;
+  vin: string;
+  year: number;
+  make: string;
+  model: string;
+  currentLocation: string;
+}
+
 class HomeViewModel {
   private store: HomeStore;
   constructor(homeStore: HomeStore) {
     this.store = homeStore;
   }
 
-  getDeliveryOrders(): string[] {
-    let results: string[] = [];
-    if (this.store.deliveryOrders) {
-      results = this.store.deliveryOrders.map((i) => {
-        return `${i.vehicle.make} ${i.vehicle.model} ${i.vehicle.year} is at ${i.currentLocation}`;
-      });
-    }
-    return results;
+  getHeaders(): Header[] {
+    return [
+      { header: 'VIN', accessor: 'vin' },
+      { header: 'Year', accessor: 'year' },
+      { header: 'Make', accessor: 'make' },
+      { header: 'Model', accessor: 'model' },
+      { header: 'Currently At', accessor: 'currentLocation' },
+    ];
+  }
+
+  getDeliveryOrders(): Row[] {
+    return (
+      this.store.deliveryOrders?.map((i) => {
+        return { ...i.vehicle, currentLocation: i.currentLocation };
+      }) || []
+    );
   }
 
   loading(): boolean {
-    const result =
+    return (
       this.store.deliveryOrderStatus === Status.FETCHING ||
-      this.store.deliveryOrderStatus === Status.INITIAL;
-    return result;
+      this.store.deliveryOrderStatus === Status.INITIAL
+    );
   }
 
   ready(): boolean {
-    const result = this.store.deliveryOrderStatus === Status.SUCCESS;
-    return result;
+    return this.store.deliveryOrderStatus === Status.SUCCESS;
   }
 
   error(): boolean {
