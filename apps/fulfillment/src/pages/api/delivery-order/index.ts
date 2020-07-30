@@ -18,6 +18,20 @@ export default (_req: NextApiRequest, res: NextApiResponse): void => {
       currentLocation: 'Manheim',
       journeyType: 'Leg-to-hub',
     },
+    {
+      id: 2,
+      vehicle: {
+        id: 3,
+        vin: 'WA1LFAFP4FA045722',
+        year: 2016,
+        make: 'Chevrolet',
+        model: 'Cruze',
+      },
+      readyToShip: new Date('2019-10-07T11:30:00').toISOString(),
+      typeOfOrder: 'Resell',
+      currentLocation: 'Manheim',
+      journeyType: 'Leg-to-hub',
+    },
   ];
   res.status(200).json(items);
 };
