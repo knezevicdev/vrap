@@ -1,18 +1,18 @@
 import React from 'react';
 
-import { DeliveryOrderStore, DeliveryOrderStoreContext } from './store';
-import View from './View';
-import ViewModel from './ViewModel';
+import Information from './components/Information';
+import Status from './components/Status';
 
-const Home: React.FC = () => {
+import Header from 'src/components/Header';
+
+const DeliveryOrder: React.FC = () => {
   return (
-    <DeliveryOrderStoreContext.Consumer>
-      {(store: DeliveryOrderStore): JSX.Element => {
-        const viewModel = new ViewModel(store);
-        return <View viewModel={viewModel} />;
-      }}
-    </DeliveryOrderStoreContext.Consumer>
+    <>
+      <Header />
+      <Status />
+      <Information />
+    </>
   );
 };
 
-export default Home;
+export default DeliveryOrder;

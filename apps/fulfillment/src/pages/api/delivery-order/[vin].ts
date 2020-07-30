@@ -33,9 +33,9 @@ export default (_req: NextApiRequest, res: NextApiResponse): void => {
       postal_code: '28625',
     },
     recommendedDeliveryLocation: 'Vroom - Statesville Recon',
-    created: new Date('1986-12-19T01:51:00').toISOString(),
+    created: new Date('1986-12-19T01:51:00Z').toISOString(),
     createdBy: 'Kevin Parrott',
-    updated: new Date('2020-07-24T14:45:00').toISOString(),
+    updated: new Date('2020-07-24T14:45:00Z').toISOString(),
     updatedBy: 'Andres De Jesus',
   };
   res.status(200).json(item);

@@ -8,8 +8,6 @@ import React, { Fragment } from 'react';
 
 import ViewModel from './ViewModel';
 
-import Header from 'src/components/Header';
-
 const Paper = styled(MuiPaper)(({ theme }) => ({
   padding: theme.spacing(4),
 }));
@@ -63,11 +61,10 @@ const DeliveryOrderView: React.FC<Props> = (props) => {
 
   return (
     <>
-      <Header />
       <Container>
         <Grid container direction="column" spacing={2}>
           <Grid item>
-            <Paper square>
+            <Paper square elevation={0}>
               <Grid container spacing={3}>
                 <Grid item xs={12}>
                   <Typography variant="body1">{info.general.label}</Typography>
@@ -86,7 +83,7 @@ const DeliveryOrderView: React.FC<Props> = (props) => {
             </Paper>
           </Grid>
           <Grid item>
-            <Paper square>
+            <Paper square elevation={0}>
               <Grid container spacing={3}>
                 <Grid item xs={12} md={6}>
                   <Grid container spacing={2}>
