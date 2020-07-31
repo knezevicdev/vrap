@@ -1,5 +1,8 @@
+import ClickAwayListener from '@material-ui/core/ClickAwayListener';
 import Drawer from '@material-ui/core/Drawer';
 import { styled } from '@material-ui/core/styles';
+import withStyles from '@material-ui/core/styles/withStyles';
+import Tooltip from '@material-ui/core/Tooltip';
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
 import Menu from '@material-ui/icons/Menu';
@@ -126,20 +129,23 @@ const DropdownLabelContainer = styled('div')(({ theme }) => ({
   marginRight: theme.spacing(4),
   [theme.breakpoints.only('xs')]: { display: 'none' },
   cursor: 'pointer',
-  position: 'relative',
 }));
 
+const CustomTooltip = withStyles(() => ({
+  tooltip: {
+    backgroundColor: '#FFFFFF',
+    margin: '10px 0',
+    padding: 0,
+    maxWidth: '160px',
+  },
+}))(Tooltip);
+
 const Dropdown = styled('div')(({ theme }) => ({
-  position: 'absolute',
   background: '#FFFFFF',
-  top: '37px',
-  left: '-16px',
-  right: '-16px',
   padding: theme.spacing(2),
-  boxShadow: '0px 3px 4px rgba(0, 0, 0, 0.15)',
+  boxShadow: '0px 3px 6px rgba(0, 0, 0, 0.15)',
   '& >a:last-child': { marginBottom: 0 },
   '& >a': { pointerEvents: 'all' },
-  pointerEvents: 'none',
 }));
 
 const ExpandLessIcon = styled(ExpandLess)(() => ({
@@ -237,29 +243,39 @@ const View: React.FC<Props> = ({ viewModel }) => {
           >
             <Typography>{viewModel.financeCalculators.label}</Typography>
           </Link>
-          <DropdownLabelContainer onClick={viewModel.onDropdownClick}>
-            <Typography>{viewModel.learningCenterLabel}</Typography>
-            {viewModel.isDropdownOpen() ? (
-              <ExpandLessIcon />
-            ) : (
-              <ExpandMoreIcon />
-            )}
-            {viewModel.isDropdownOpen() && (
-              <Dropdown>
-                {viewModel.learningCenterLinks.map((link) => {
-                  return (
-                    <DropdownLink
-                      key={link.href}
-                      href={link.href}
-                      target={link.target}
-                    >
-                      <Typography>{link.label}</Typography>
-                    </DropdownLink>
-                  );
-                })}
-              </Dropdown>
-            )}
-          </DropdownLabelContainer>
+          <ClickAwayListener onClickAway={viewModel.onClickAway}>
+            <CustomTooltip
+              onClose={viewModel.onDropdownClick}
+              open={viewModel.isDropdownOpen()}
+              disableFocusListener
+              disableHoverListener
+              disableTouchListener
+              title={
+                <Dropdown>
+                  {viewModel.learningCenterLinks.map((link) => {
+                    return (
+                      <DropdownLink
+                        key={link.href}
+                        href={link.href}
+                        target={link.target}
+                      >
+                        <Typography>{link.label}</Typography>
+                      </DropdownLink>
+                    );
+                  })}
+                </Dropdown>
+              }
+            >
+              <DropdownLabelContainer onClick={viewModel.onDropdownClick}>
+                <Typography>{viewModel.learningCenterLabel}</Typography>
+                {viewModel.isDropdownOpen() ? (
+                  <ExpandLessIcon />
+                ) : (
+                  <ExpandMoreIcon />
+                )}
+              </DropdownLabelContainer>
+            </CustomTooltip>
+          </ClickAwayListener>
           <Link href={viewModel.contactUs.href}>
             <Typography>{viewModel.contactUs.label}</Typography>
           </Link>

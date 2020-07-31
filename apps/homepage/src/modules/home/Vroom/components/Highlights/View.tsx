@@ -55,15 +55,13 @@ const HighlightsView: React.FC<Props> = ({ viewModel }) => {
             </Grid>
           ))}
         </Grid>
-        {viewModel.condenseCatalogLinksDefaultVariant && (
-          <StyledButton
-            color="primary"
-            onClick={handleButtonClick}
-            variant="contained"
-          >
-            {viewModel.ctaLabel}
-          </StyledButton>
-        )}
+        <StyledButton
+          color="primary"
+          onClick={handleButtonClick}
+          variant="contained"
+        >
+          {viewModel.ctaLabel}
+        </StyledButton>
       </StyledContainer>
     </Background>
   );

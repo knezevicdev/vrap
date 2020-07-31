@@ -72,6 +72,10 @@ class ViewModel {
     this.store.isOpen ? this.closeDropdown() : this.openDropdown();
   };
 
+  onClickAway = (): void => {
+    this.store.isOpen && this.closeDropdown();
+  };
+
   private closeDrawer = (): void => {
     this.store.setIsDrawerOpen(false);
   };

@@ -14,7 +14,7 @@ class SearchViewModel {
   private readonly store: HomeStore;
 
   readonly mobileButtonLabel: string = 'Browse All Vehicles';
-  condenseCatalogLinksDefaultVariant: boolean;
+  oldCatalogVsNewCatalogDefaultVarient: boolean;
   link: Link;
 
   constructor(store: HomeStore) {
@@ -26,25 +26,18 @@ class SearchViewModel {
     const queryString = stringify(this.store.query, {
       addQueryPrefix: true,
     });
+    this.oldCatalogVsNewCatalogDefaultVarient = showDefaultVariant(
+      'snd-old-catalog-vs-new-catalog',
+      this.store.experiments,
+      this.store.query
+    );
 
     this.link = {
-      href: `/catalog${queryString}`,
-      label: '',
+      href: `/${
+        this.oldCatalogVsNewCatalogDefaultVarient ? `catalog` : `cars`
+      }${queryString}`,
+      label: 'Browse all low-mileage cars\xa0and\xa0trucks',
     };
-
-    const browseAllVehiclesTextExperimentVaraint = showDefaultVariant(
-      'snd-homepage-browse-all-low-mileage-vs-browse-our-low-mileage',
-      store.experiments,
-      store.query
-    );
-    this.condenseCatalogLinksDefaultVariant = showDefaultVariant(
-      'snd-home-condense-catalog-links',
-      store.experiments,
-      store.query
-    );
-    this.link.label = `Browse ${
-      browseAllVehiclesTextExperimentVaraint ? 'all' : 'our'
-    } low-mileage cars\xa0and\xa0trucks`;
   }
 
   handleMobileButtonClick = (): void => {
@@ -54,7 +47,9 @@ class SearchViewModel {
     const queryString = stringify(this.store.query, {
       addQueryPrefix: true,
     });
-    window.location.href = `/catalog${queryString}`;
+    window.location.href = `/${
+      this.oldCatalogVsNewCatalogDefaultVarient ? `catalog` : `cars`
+    }${queryString}`;
   };
 
   handleHomeCatalogCTACLicked = (): void => {

@@ -60,6 +60,9 @@ const Search = styled(Button)(() => ({
   '&:hover': {
     background: '#CC0000',
   },
+  '&:active': {
+    background: '#990000',
+  },
 }));
 
 interface HeroAutocompleteProps {

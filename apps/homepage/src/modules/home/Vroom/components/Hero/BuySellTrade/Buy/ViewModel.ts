@@ -1,5 +1,6 @@
 import { stringify } from 'qs';
 
+import { showDefaultVariant } from 'src/integrations/experimentSDK';
 import { HomeStore } from 'src/modules/home/store';
 
 interface Link {
@@ -12,6 +13,7 @@ class BuyViewModel {
 
   readonly mobileButtonLabel: string = 'Browse All Vehicles';
   readonly link: Link;
+  oldCatalogVsNewCatalogDefaultVarient: boolean;
 
   constructor(store: HomeStore) {
     this.store = store;
@@ -22,9 +24,16 @@ class BuyViewModel {
     const queryString = stringify(this.store.query, {
       addQueryPrefix: true,
     });
+    this.oldCatalogVsNewCatalogDefaultVarient = showDefaultVariant(
+      'snd-old-catalog-vs-new-catalog',
+      this.store.experiments,
+      this.store.query
+    );
 
     this.link = {
-      href: `/catalog${queryString}`,
+      href: `/${
+        this.oldCatalogVsNewCatalogDefaultVarient ? `catalog` : `cars`
+      }${queryString}`,
       label: 'Browse thousands of low-mileage cars and trucks',
     };
   }

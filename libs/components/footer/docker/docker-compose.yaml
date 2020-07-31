@@ -12,7 +12,4 @@ services:
       - '../../../../:/www/'
       # stop dependencies and build artifacts from copying to host
       - '/www/node_modules'
-      - '/www/libs/components/footer/dist'
       - '/www/libs/components/footer/node_modules'
-      - '/www/libs/ui/dist'
-      - '/www/libs/ui/node_modules'

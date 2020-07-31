@@ -60,7 +60,10 @@ class VroomDocument extends Document {
             name="viewport"
             content="minimum-scale=1, initial-scale=1, width=device-width"
           />
-          <UISnippet brand={brand} hostUrl={publicRuntimeConfig.ASSET_PREFIX} />
+          <UISnippet
+            brand={brand}
+            staticAssetsHostUrl={publicRuntimeConfig.STATIC_ASSETS_HOST_URL}
+          />
           {serverRuntimeConfig.SEGMENT_WRITE_KEY && (
             <AnalyticsSnippet
               appName="Vroom Web - Catalog"

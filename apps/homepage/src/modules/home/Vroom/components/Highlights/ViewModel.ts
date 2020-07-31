@@ -17,7 +17,6 @@ class HighlightsViewModel {
   private readonly store: HomeStore;
 
   ctaLabel: string;
-  condenseCatalogLinksDefaultVariant: boolean;
   readonly highlights: Highlight[] = [
     {
       description: '',
@@ -59,11 +58,6 @@ class HighlightsViewModel {
       store.experiments,
       store.query
     );
-    this.condenseCatalogLinksDefaultVariant = showDefaultVariant(
-      'snd-home-condense-catalog-links',
-      store.experiments,
-      store.query
-    );
     const carOrTruckVsVehicleDefaultVariant = showDefaultVariant(
       'snd-car-or-truck-vs-vehicle-shipped',
       store.experiments,
@@ -89,7 +83,14 @@ class HighlightsViewModel {
     const queryString = stringify(this.store.query, {
       addQueryPrefix: true,
     });
-    window.location.href = `/catalog${queryString}`;
+    const oldCatalogVsNewCatalogDefaultVarient = showDefaultVariant(
+      'snd-old-catalog-vs-new-catalog',
+      this.store.experiments,
+      this.store.query
+    );
+    window.location.href = `/${
+      oldCatalogVsNewCatalogDefaultVarient ? `catalog` : `cars`
+    }${queryString}`;
   }
 }
 

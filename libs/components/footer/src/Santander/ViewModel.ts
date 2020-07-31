@@ -29,11 +29,6 @@ class ViewModel {
           href: `https://santanderconsumerusa.com/blog`,
           target: '_blank',
         },
-        {
-          label: 'Financial Education',
-          href: `https://santanderconsumerusa.com/learning-center/financial-education`,
-          target: '_blank',
-        },
       ],
     },
     {
@@ -86,7 +81,7 @@ class ViewModel {
     '© 2020 Santander Consumer USA Inc. and its Licensors. All Rights Reserved.';
   readonly copyrightLink = {
     label: 'NMLS Consumer Access ID 4239.',
-    href: '', //TODO: Come back to this after Sarah is back.
+    href: 'http://www.nmlsconsumeraccess.org/EntityDetails.aspx/COMPANY/4239',
     target: '_blank',
   };
   readonly trademark =

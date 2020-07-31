@@ -83,10 +83,21 @@ const StyledButton = styled(Button)(({ theme }) => ({
   [theme.breakpoints.only('xs')]: {
     flexGrow: 0,
     minWidth: 'auto',
-    minHeight: '48px',
+    minHeight: '53px',
+    maxHeight: '53px',
   },
   [theme.breakpoints.up('sm')]: {
-    minHeight: '40px',
+    minHeight: '45px',
+    maxHeight: '45px',
+  },
+  background: '#EC0000',
+  color: '#FFFFFF',
+  fontWeight: 'bold',
+  '&:hover': {
+    background: '#CC0000',
+  },
+  '&:active': {
+    background: '#990000',
   },
 }));
 
@@ -196,11 +207,7 @@ const HeroAutocomplete: React.FC<HeroAutocompleteProps> = ({
         )}
         style={{ flexGrow: 1 }}
       />
-      <StyledButton
-        onClick={handleButtonClick}
-        variant="contained"
-        color="secondary"
-      >
+      <StyledButton onClick={handleButtonClick} variant="contained">
         {viewModel.buttonLabel}
       </StyledButton>
     </Box>

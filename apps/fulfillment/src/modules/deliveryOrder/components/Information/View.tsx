@@ -36,16 +36,13 @@ const DeliveryOrderView: React.FC<Props> = (props) => {
     </Fragment>
   );
   const general: JSX.Element[][] = [[], []];
-  info.general.items.forEach(
-    (item, index) => {
-      if (index <= 2) {
-        general[0].push(element(index, item.label, item.value));
-      } else {
-        general[1].push(element(index, item.label, item.value));
-      }
-    },
-    [[], []]
-  );
+  info.general.items.forEach((item, index) => {
+    if (index <= 2) {
+      general[0].push(element(index, item.label, item.value));
+    } else {
+      general[1].push(element(index, item.label, item.value));
+    }
+  });
 
   const pickup = info.pickup.items.map((item, index) =>
     element(index, item.label, item.value)

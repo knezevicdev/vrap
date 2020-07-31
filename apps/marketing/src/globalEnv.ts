@@ -4,6 +4,7 @@ export interface GlobalEnv {
   ASSET_PREFIX?: string;
   DATA_DOG_LOG_COLLECTION_TOKEN?: string;
   NAME?: string;
+  STATIC_ASSETS_HOST_URL?: string;
   VERSION?: string;
 }
 
@@ -19,6 +20,7 @@ const globalEnv: GlobalEnv = process.browser
       ASSET_PREFIX: process.env.ASSET_PREFIX || '',
       DATA_DOG_LOG_COLLECTION_TOKEN: process.env.DATA_DOG_LOG_COLLECTION_TOKEN,
       NAME: name,
+      STATIC_ASSETS_HOST_URL: process.env.STATIC_ASSETS_HOST_URL || '',
       VERSION: version,
     };
 
