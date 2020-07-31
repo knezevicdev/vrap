@@ -297,7 +297,6 @@ export async function getInitialCarsStoreState(
       limit: INVENTORY_CARDS_PER_PAGE,
       source: `${publicRuntimeConfig.NAME}-${publicRuntimeConfig.VERSION}`,
     };
-    console.log(inventoryRequestData);
     const inventoryResponse = await invSearchNetworker.postInventory(
       inventoryRequestData
     );
