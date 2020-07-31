@@ -73,8 +73,13 @@ class LicensePlateViewModel {
   };
 
   onChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
-    const value = event.target.value;
-    this.licensePlateStore.setLicensePlate(value);
+    const enteredValue = event.target.value;
+    const formattedValue = enteredValue.replace(/\s/g, '');
+    const licenseValidated =
+      formattedValue.length <= 8 && /^[0-9a-zA-Z-]+$/.test(formattedValue);
+
+    this.licensePlateStore.setLicensePlate(formattedValue);
+    this.licensePlateStore.setHasError(!licenseValidated);
   };
 
   constructor(homeStore: HomeStore, licensePlateStore: LicensePlateStore) {

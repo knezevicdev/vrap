@@ -68,4 +68,9 @@ export class LicensePlateStore {
       });
     }
   };
+
+  @action
+  setHasError = (hasError: boolean): void => {
+    this.hasError = hasError;
+  };
 }

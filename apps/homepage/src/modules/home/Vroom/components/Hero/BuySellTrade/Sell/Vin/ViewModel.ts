@@ -45,7 +45,8 @@ class VinViewModel {
   };
 
   isButtonDisabled = (): boolean => {
-    return this.getInputValue() === '' || !this.isVinValid();
+    const vinValue = this.getInputValue();
+    return vinValue === '' || vinValue.length !== 17 || !this.isVinValid();
   };
 
   openDialog = (): void => {

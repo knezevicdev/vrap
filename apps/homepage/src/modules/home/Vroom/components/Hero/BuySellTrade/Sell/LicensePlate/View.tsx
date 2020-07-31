@@ -72,7 +72,7 @@ const LicensePlateView: React.FC<Props> = ({ viewModel }) => {
           onChange={viewModel.onChange}
           error={viewModel.hasError()}
           helperText={viewModel.error}
-          InputProps={{ disableUnderline: true, inputProps: { maxLength: 7 } }}
+          InputProps={{ disableUnderline: true, inputProps: { maxLength: 8 } }}
         />
         <StateSelect
           id="state"
