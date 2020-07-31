@@ -10,5 +10,4 @@ services:
     volumes:
       - '../../../../:/www/'
       - '/www/node_modules'
-      - '/www/libs/networking/inv-search/dist'
       - '/www/libs/networking/inv-search/node_modules'

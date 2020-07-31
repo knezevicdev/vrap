@@ -46,7 +46,7 @@ const SearchView: React.FC<Props> = ({ viewModel }) => {
           {viewModel.mobileButtonLabel}
         </StyledButton>
       )}
-      {smUp && viewModel.condenseCatalogLinksDefaultVariant && (
+      {smUp && (
         <ExternalLink
           href={viewModel.link.href}
           onClick={viewModel.handleHomeCatalogCTACLicked}

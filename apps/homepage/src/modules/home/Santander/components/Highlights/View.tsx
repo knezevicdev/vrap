@@ -36,6 +36,9 @@ const ShopNow = styled(Button)(({ theme }) => ({
   '&:hover': {
     background: '#CC0000',
   },
+  '&:active': {
+    background: '#990000',
+  },
   margin: '0 auto',
   [theme.breakpoints.only('sm')]: { width: '100%' },
   [theme.breakpoints.only('xs')]: { width: '100%' },

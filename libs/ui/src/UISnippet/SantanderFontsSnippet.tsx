@@ -1,12 +1,10 @@
-// TODO: update this to the actual Santander fonts
-
 import React from 'react';
 
 interface Props {
-  hostUrl: string;
+  staticAssetsHostUrl: string;
 }
 
-const SantanderFontsSnippet: React.FC<Props> = ({ hostUrl }) => {
+const SantanderFontsSnippet: React.FC<Props> = ({ staticAssetsHostUrl }) => {
   return (
     <>
       {/*
@@ -22,21 +20,21 @@ const SantanderFontsSnippet: React.FC<Props> = ({ hostUrl }) => {
           __html: `
             @font-face {
               font-family: 'SantanderHeadline';
-              src: url('${hostUrl}/fonts/SantanderHeadline-Regular.ttf') format('truetype');
+              src: url('${staticAssetsHostUrl}/santander/fonts/SantanderHeadline-Regular.ttf') format('truetype');
             }
             @font-face {
               font-family: 'SantanderHeadline';
               font-weight: 700
-              src: url('${hostUrl}/fonts/SantanderHeadline-Bold.ttf') format('truetype');
+              src: url('${staticAssetsHostUrl}/santander/fonts/SantanderHeadline-Bold.ttf') format('truetype');
             }
             @font-face {
               font-family: 'SantanderText';
-              src: url('${hostUrl}/fonts/SantanderText-Regular.ttf') format('truetype');
+              src: url('${staticAssetsHostUrl}/santander/fonts/SantanderText-Regular.ttf') format('truetype');
             }
             @font-face {
               font-family: 'SantanderText';
               font-weight: 700
-              src: url('${hostUrl}/fonts/SantanderText-Bold.ttf') format('truetype');
+              src: url('${staticAssetsHostUrl}/santander/fonts/SantanderText-Bold.ttf') format('truetype');
             }
           `,
         }}

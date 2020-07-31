@@ -3,6 +3,7 @@ import { Button, Typography } from '@vroom-web/ui';
 import { observer } from 'mobx-react';
 import React from 'react';
 
+import Redirect from './components/Redirect';
 import { ReactComponent as VroomLogoSvg } from './svg/vroom.svg';
 import ViewModel from './ViewModel';
 
@@ -21,6 +22,9 @@ const CustomButton = styled(Button)(({ theme }) => ({
   fontWeight: 'bold',
   '&:hover': {
     background: '#CC0000',
+  },
+  '&:active': {
+    background: '#990000',
   },
   margin: '0 auto',
   [theme.breakpoints.only('xs')]: {
@@ -72,6 +76,7 @@ const StartPurchaseView: React.FC<Props> = (props) => {
         <PoweredByLabel>{viewModel.poweredBy}</PoweredByLabel>
         <VroomLogo />
       </PoweredBy>
+      {viewModel.showRedirect() && <Redirect />}
     </ViewContainer>
   );
 };

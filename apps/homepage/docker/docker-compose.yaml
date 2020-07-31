@@ -8,8 +8,9 @@ services:
     environment:
       - GEARBOX_PRIVATE_URL=https://gearbox-qa-int.vroomapi.com/query-private
       - GEARBOX_PUBLIC_URL=https://gearbox-dev-int.vroomapi.com/query-public
-      - INVSEARCH_V3_URL=https://invsearch-v3-prod-ext.aws.vroomapi.com/v3
+      - INVSEARCH_V3_URL=https://invsearch-v3-dev-int.aws.vroomapi.com:8443/v3
       - SEGMENT_WRITE_KEY=N0pxERRIw4iYCoxZREMZj1yWBIoARIz4
+      - STATIC_ASSETS_HOST_URL=https://static-assets.n.vroom.systems
       - DATA_DOG_LOG_COLLECTION_TOKEN=pubb20b42f026cc404ce1fe7588cdf993d8
     command: ash -c "yarn workspace @vroom-web/homepage dev --port 8080"
     # This starts nothing but leaves the container running, useful for
@@ -28,15 +29,3 @@ services:
       - '/www/node_modules'
       - '/www/apps/homepage/.next'
       - '/www/apps/homepage/node_modules'
-      - '/www/libs/integrations/analytics/dist'
-      - '/www/libs/integrations/analytics/node_modules'
-      - '/www/libs/networking/deals-v2/dist'
-      - '/www/libs/networking/deals-v2/node_modules'
-      - '/www/libs/networking/inv-search/dist'
-      - '/www/libs/networking/inv-search/node_modules'
-      - '/www/libs/ui/dist'
-      - '/www/libs/ui/node_modules'
-      - '/www/libs/components/header/dist'
-      - '/www/libs/components/header/node_modules'
-      - '/www/libs/components/footer/dist'
-      - '/www/libs/components/footer/node_modules'

@@ -10,6 +10,7 @@ services:
       - INVSEARCH_V3_URL=https://invsearch-v3-dev-int.aws.vroomapi.com:8443/v3
       - INV_SERVICE_V2_URL=https://inventory-dev-int.vroomapi.com:8443/v2
       - SEGMENT_WRITE_KEY=N0pxERRIw4iYCoxZREMZj1yWBIoARIz4
+      - STATIC_ASSETS_HOST_URL=https://static-assets.n.vroom.systems
     command: ash -c "yarn workspace @vroom-web/product dev --port 8080"
     # This starts nothing but leaves the container running, useful for
     # debugging nextjs start / config operations
@@ -27,19 +28,3 @@ services:
       - '/www/node_modules'
       - '/www/apps/product/.next'
       - '/www/apps/product/node_modules'
-      - '/www/libs/integrations/analytics/dist'
-      - '/www/libs/integrations/analytics/node_modules'
-      - '/www/libs/integrations/catalog-url/dist'
-      - '/www/libs/integrations/catalog-url/node_modules'
-      - '/www/libs/networking/deals-v2/dist'
-      - '/www/libs/networking/deals-v2/node_modules'
-      - '/www/libs/networking/inv-search/dist'
-      - '/www/libs/networking/inv-search/node_modules'
-      - '/www/libs/networking/inv-service/dist'
-      - '/www/libs/networking/inv-service/node_modules'
-      - '/www/libs/ui/dist'
-      - '/www/libs/ui/node_modules'
-      - '/www/libs/components/header/dist'
-      - '/www/libs/components/header/node_modules'
-      - '/www/libs/components/footer/dist'
-      - '/www/libs/components/footer/node_modules'

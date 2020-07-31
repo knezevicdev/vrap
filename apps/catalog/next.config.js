@@ -28,6 +28,7 @@ module.exports = {
     INVSEARCH_V3_URL: process.env.INVSEARCH_V3_URL,
     NAME: name,
     SHORT_HASH: shortHash,
+    STATIC_ASSETS_HOST_URL: process.env.STATIC_ASSETS_HOST_URL,
     VERSION: version,
   },
   serverRuntimeConfig: {

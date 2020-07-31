@@ -63,7 +63,10 @@ class VroomDocument extends Document {
             name="viewport"
             content="minimum-scale=1, initial-scale=1, width=device-width"
           />
-          <UISnippet brand={brand} hostUrl={globalEnv.ASSET_PREFIX || ''} />
+          <UISnippet
+            brand={brand}
+            staticAssetsHostUrl={globalEnv.STATIC_ASSETS_HOST_URL || ''}
+          />
           {segmentWriteKey && (
             <AnalyticsSnippet
               appName="Vroom Web - Homepage"
@@ -79,6 +82,7 @@ class VroomDocument extends Document {
               globalEnv.DATA_DOG_LOG_COLLECTION_TOKEN
             }
             NAME={globalEnv.NAME}
+            STATIC_ASSETS_HOST_URL={globalEnv.STATIC_ASSETS_HOST_URL}
             VERSION={globalEnv.VERSION}
           />
         </Head>

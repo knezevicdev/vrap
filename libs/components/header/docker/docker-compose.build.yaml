@@ -1,0 +1,4 @@
+version: '3'
+services:
+  header-components:
+    command: ash -c "yarn workspace @vroom-web/header-components build"

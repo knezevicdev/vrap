@@ -459,78 +459,41 @@ var Typography = function Typography(props) {
   }, children);
 };
 
-// TODO: update this to the actual Santander favicons
-
-var SantanderFaviconSnippet = function SantanderFaviconSnippet(_ref) {
-  var hostUrl = _ref.hostUrl,
-      theme = _ref.theme;
-  return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("link", {
-    rel: "apple-touch-icon",
-    sizes: "180x180",
-    href: "".concat(hostUrl, "/apple-touch-icon.png")
-  }), /*#__PURE__*/React.createElement("link", {
-    rel: "icon",
-    type: "image/png",
-    sizes: "32x32",
-    href: "".concat(hostUrl, "/favicon-32x32.png")
-  }), /*#__PURE__*/React.createElement("link", {
-    rel: "icon",
-    type: "image/png",
-    sizes: "16x16",
-    href: "".concat(hostUrl, "/favicon-16x16.png")
-  }), /*#__PURE__*/React.createElement("link", {
-    rel: "manifest",
-    href: "".concat(hostUrl, "/site.webmanifest")
-  }), /*#__PURE__*/React.createElement("link", {
-    rel: "mask-icon",
-    href: "".concat(hostUrl, "/safari-pinned-tab.svg"),
-    color: theme.palette.primary.main
-  }), /*#__PURE__*/React.createElement("meta", {
-    name: "msapplication-TileColor",
-    content: theme.palette.primary.main
-  }), /*#__PURE__*/React.createElement("meta", {
-    name: "theme-color",
-    content: theme.palette.primary.main
-  }));
-};
-
-// TODO: update this to the actual Santander fonts
-
 var SantanderFontsSnippet = function SantanderFontsSnippet(_ref) {
-  var hostUrl = _ref.hostUrl;
+  var staticAssetsHostUrl = _ref.staticAssetsHostUrl;
   return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("link", {
     rel: "stylesheet",
     href: "https://fonts.googleapis.com/icon?family=Material+Icons"
   }), /*#__PURE__*/React.createElement("style", {
     dangerouslySetInnerHTML: {
-      __html: "\n            @font-face {\n              font-family: 'SantanderHeadline';\n              src: url('".concat(hostUrl, "/fonts/SantanderHeadline-Regular.ttf') format('truetype');\n            }\n            @font-face {\n              font-family: 'SantanderHeadline';\n              font-weight: 700\n              src: url('").concat(hostUrl, "/fonts/SantanderHeadline-Bold.ttf') format('truetype');\n            }\n            @font-face {\n              font-family: 'SantanderText';\n              src: url('").concat(hostUrl, "/fonts/SantanderText-Regular.ttf') format('truetype');\n            }\n            @font-face {\n              font-family: 'SantanderText';\n              font-weight: 700\n              src: url('").concat(hostUrl, "/fonts/SantanderText-Bold.ttf') format('truetype');\n            }\n          ")
+      __html: "\n            @font-face {\n              font-family: 'SantanderHeadline';\n              src: url('".concat(staticAssetsHostUrl, "/santander/fonts/SantanderHeadline-Regular.ttf') format('truetype');\n            }\n            @font-face {\n              font-family: 'SantanderHeadline';\n              font-weight: 700\n              src: url('").concat(staticAssetsHostUrl, "/santander/fonts/SantanderHeadline-Bold.ttf') format('truetype');\n            }\n            @font-face {\n              font-family: 'SantanderText';\n              src: url('").concat(staticAssetsHostUrl, "/santander/fonts/SantanderText-Regular.ttf') format('truetype');\n            }\n            @font-face {\n              font-family: 'SantanderText';\n              font-weight: 700\n              src: url('").concat(staticAssetsHostUrl, "/santander/fonts/SantanderText-Bold.ttf') format('truetype');\n            }\n          ")
     }
   }));
 };
 
 var VroomFaviconSnippet = function VroomFaviconSnippet(_ref) {
-  var hostUrl = _ref.hostUrl,
+  var staticAssetsHostUrl = _ref.staticAssetsHostUrl,
       theme = _ref.theme;
   return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("link", {
     rel: "apple-touch-icon",
     sizes: "180x180",
-    href: "".concat(hostUrl, "/apple-touch-icon.png")
+    href: "".concat(staticAssetsHostUrl, "/vroom/favicons/apple-touch-icon.png")
   }), /*#__PURE__*/React.createElement("link", {
     rel: "icon",
     type: "image/png",
     sizes: "32x32",
-    href: "".concat(hostUrl, "/favicon-32x32.png")
+    href: "".concat(staticAssetsHostUrl, "/vroom/favicons/favicon-32x32.png")
   }), /*#__PURE__*/React.createElement("link", {
     rel: "icon",
     type: "image/png",
     sizes: "16x16",
-    href: "".concat(hostUrl, "/favicon-16x16.png")
+    href: "".concat(staticAssetsHostUrl, "/vroom/favicons/favicon-16x16.png")
   }), /*#__PURE__*/React.createElement("link", {
     rel: "manifest",
-    href: "".concat(hostUrl, "/site.webmanifest")
+    href: "".concat(staticAssetsHostUrl, "/vroom/favicons/site.webmanifest")
   }), /*#__PURE__*/React.createElement("link", {
     rel: "mask-icon",
-    href: "".concat(hostUrl, "/safari-pinned-tab.svg"),
+    href: "".concat(staticAssetsHostUrl, "/vroom/favicons/safari-pinned-tab.svg"),
     color: theme.palette.primary.main
   }), /*#__PURE__*/React.createElement("meta", {
     name: "msapplication-TileColor",
@@ -542,13 +505,13 @@ var VroomFaviconSnippet = function VroomFaviconSnippet(_ref) {
 };
 
 var VroomFontsSnippet = function VroomFontsSnippet(_ref) {
-  var hostUrl = _ref.hostUrl;
+  var staticAssetsHostUrl = _ref.staticAssetsHostUrl;
   return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("link", {
     rel: "stylesheet",
     href: "https://fonts.googleapis.com/icon?family=Material+Icons"
   }), /*#__PURE__*/React.createElement("style", {
     dangerouslySetInnerHTML: {
-      __html: "\n            @font-face {\n              font-family: 'VroomSans';\n              src: url('".concat(hostUrl, "/fonts/VroomSansSMALL-ExtraBoldItalicWEB.woff') format('woff');\n            }\n            @font-face {\n              font-family: Calibre;\n              font-weight: 400;\n              src: url('").concat(hostUrl, "/fonts/CalibreWeb-Regular.woff') format('woff');\n            }\n            @font-face {\n              font-family: Calibre;\n              font-weight: 500;\n              src: url('").concat(hostUrl, "/fonts/CalibreWeb-Semibold.woff') format('woff');\n            }\n            @font-face {\n              font-family: 'Calibre';\n              font-weight: 600;\n              src: url('").concat(hostUrl, "/fonts/CalibreWeb-Semibold.woff') format('woff');\n            }\n          ")
+      __html: "\n            @font-face {\n              font-family: 'VroomSans';\n              src: url('".concat(staticAssetsHostUrl, "/vroom/fonts/VroomSans-ExtraBoldItalic.woff') format('woff');\n            }\n            @font-face {\n              font-family: Calibre;\n              font-weight: 400;\n              src: url('").concat(staticAssetsHostUrl, "/vroom/fonts/Calibre-Regular.woff') format('woff');\n            }\n            @font-face {\n              font-family: Calibre;\n              font-weight: 500;\n              src: url('").concat(staticAssetsHostUrl, "/vroom/fonts/Calibre-Medium.woff') format('woff');\n            }\n            @font-face {\n              font-family: 'Calibre';\n              font-weight: 600;\n              src: url('").concat(staticAssetsHostUrl, "/vroom/fonts/Calibre-Semibold.woff') format('woff');\n            }\n            @font-face {\n              font-family: 'Calibre';\n              font-weight: 700;\n              src: url('").concat(staticAssetsHostUrl, "/vroom/fonts/Calibre-Bold.woff') format('woff');\n            }\n          ")
     }
   }));
 };
@@ -556,23 +519,21 @@ var VroomFontsSnippet = function VroomFontsSnippet(_ref) {
 var UISnippet = function UISnippet(_ref) {
   var _ref$brand = _ref.brand,
       brand = _ref$brand === void 0 ? exports.Brand.VROOM : _ref$brand,
-      hostUrl = _ref.hostUrl;
+      staticAssetsHostUrl = _ref.staticAssetsHostUrl;
   var theme = getThemeForBrand(brand);
 
   if (brand === exports.Brand.SANTANDER) {
-    return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(SantanderFaviconSnippet, {
-      hostUrl: hostUrl,
-      theme: theme
-    }), /*#__PURE__*/React.createElement(SantanderFontsSnippet, {
-      hostUrl: hostUrl
-    }));
+    // TODO: add Santander favicon snippet.
+    return /*#__PURE__*/React.createElement(SantanderFontsSnippet, {
+      staticAssetsHostUrl: staticAssetsHostUrl
+    });
   }
 
   return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(VroomFaviconSnippet, {
-    hostUrl: hostUrl,
+    staticAssetsHostUrl: staticAssetsHostUrl,
     theme: theme
   }), /*#__PURE__*/React.createElement(VroomFontsSnippet, {
-    hostUrl: hostUrl
+    staticAssetsHostUrl: staticAssetsHostUrl
   }));
 };
 

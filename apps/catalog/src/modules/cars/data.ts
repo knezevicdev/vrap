@@ -255,6 +255,7 @@ export enum SortAPIBy {
   LISTING_PRICE = 'listingPrice',
   MILES = 'miles',
   YEAR = 'year',
+  GEO = 'geo',
 }
 
 export enum SortAPIDirection {

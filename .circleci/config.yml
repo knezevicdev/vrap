@@ -65,6 +65,27 @@ jobs:
           yarn install --silent
           yarn workspaces run lint
         name: Lint
+  marketing_build:
+    docker:
+    - image: vroom/mlp:3.0.2
+    steps:
+    - checkout
+    - setup_remote_docker:
+        version: 18.09.3
+    - run:
+        command: build -a vroom-web/apps/marketing/docker
+  marketing_deploy:
+    docker:
+    - image: vroom/mlp:3.0.2
+    parameters:
+      env:
+        type: string
+    steps:
+    - checkout
+    - setup_remote_docker:
+        version: 18.09.3
+    - run:
+        command: deploy -a vroom-web/apps/marketing/docker -n << parameters.env >>
   product_build:
     docker:
     - image: vroom/mlp:3.0.2
@@ -98,6 +119,7 @@ jobs:
 
           # Build libraries.
           yarn workspace @vroom-web/analytics-integration build
+          yarn workspace @vroom-web/catalog-url-integration build
           yarn workspace @vroom-web/deals-v2-networking build
           yarn workspace @vroom-web/inv-search-networking build
           yarn workspace @vroom-web/ui build
@@ -256,6 +278,71 @@ workflows:
           tags:
             only: /^homepage-v.*/
         name: homepage_deploy_prod
+        requires:
+        - hold_prod
+  marketing:
+    jobs:
+    - lint
+    - marketing_build:
+        context: aws-non-prod
+        filters:
+          branches:
+            ignore: /.*/
+          tags:
+            only: /^marketing-v.*/
+    - hold:
+        filters:
+          branches:
+            ignore: /.*/
+          tags:
+            only: /^marketing-v.*/
+        matrix:
+          parameters:
+            env:
+            - dev
+            - qa
+            - uat
+        name: hold_<< matrix.env >>
+        requires:
+        - marketing_build
+        type: approval
+    - marketing_deploy:
+        context: aws-non-prod
+        filters:
+          branches:
+            ignore: /.*/
+          tags:
+            only: /^marketing-v.*/
+        matrix:
+          parameters:
+            env:
+            - dev
+            - qa
+            - uat
+        name: marketing_deploy_<< matrix.env >>
+        requires:
+        - hold_<< matrix.env >>
+    - hold:
+        filters:
+          branches:
+            ignore: /.*/
+          tags:
+            only: /^marketing-v.*/
+        name: hold_prod
+        requires:
+        - marketing_deploy_dev
+        - marketing_deploy_qa
+        - marketing_deploy_uat
+        type: approval
+    - marketing_deploy:
+        context: aws-non-prod
+        env: prod
+        filters:
+          branches:
+            ignore: /.*/
+          tags:
+            only: /^marketing-v.*/
+        name: marketing_deploy_prod
         requires:
         - hold_prod
   product:
