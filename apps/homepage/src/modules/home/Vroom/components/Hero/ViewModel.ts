@@ -17,24 +17,15 @@ class HeroViewModel {
   };
   readonly mobileButtonLabel: string = 'Browse All Vehicles';
   car: { src: string; alt: string };
-  readonly sellTradeExperimentVariant: boolean;
   carImageHeight: string;
 
   constructor(store: HomeStore) {
-    this.sellTradeExperimentVariant = showDefaultVariant(
-      'fit-homepage-selltrade',
-      store.experiments,
-      store.query
-    );
     const priusVsf150ImageDefaultVariant = showDefaultVariant(
       'snd-homepage-prius-vs-f150',
       store.experiments,
       store.query
     );
-    this.carImageHeight =
-      !priusVsf150ImageDefaultVariant && !this.sellTradeExperimentVariant
-        ? '225px'
-        : '176px';
+    this.carImageHeight = '225px';
     this.car = {
       src: `${globalEnv.ASSET_PREFIX}/modules/home/images/${
         priusVsf150ImageDefaultVariant ? 'prius' : 'ford'
