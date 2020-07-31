@@ -1,6 +1,6 @@
 import axios, { AxiosInstance, AxiosResponse } from 'axios';
 
-import { DeliveryOrder } from './models/Shipment';
+import { Details, Summary } from './models/DeliveryOrder';
 
 export enum Status {
   INITIAL = 'initial',
@@ -10,7 +10,7 @@ export enum Status {
 }
 
 // TODO: Replace with runtime config
-const SHIPMENT_URL = 'http://localhost:8080';
+const SHIPPING_URL = 'http://localhost:8080';
 
 export class Networker {
   private readonly axiosInstance: AxiosInstance;
@@ -19,8 +19,13 @@ export class Networker {
     this.axiosInstance = axiosInstance;
   }
 
-  getDeliveryOrders(): Promise<AxiosResponse<DeliveryOrder[]>> {
-    const url = `${SHIPMENT_URL}/api/shipment`;
+  getDeliveryOrders(): Promise<AxiosResponse<Summary[]>> {
+    const url = `${SHIPPING_URL}/api/delivery-order`;
+    return this.axiosInstance.get(url);
+  }
+
+  getDeliveryOrder(vin: string): Promise<AxiosResponse<Details>> {
+    const url = `${SHIPPING_URL}/api/delivery-order/${vin}`;
     return this.axiosInstance.get(url);
   }
 }
