@@ -74,7 +74,7 @@ const CarsPage: NextPage<Props> = ({
 CarsPage.getInitialProps = async (context: NextPageContext): Promise<Props> => {
   const cookies = parseCookies(context);
   const marketingId = cookies['uuid'];
-
+  console.log(context.req.headers['client-geo-latitude']);
   const {
     query: {
       brand: brandQueryParam,
@@ -90,8 +90,12 @@ CarsPage.getInitialProps = async (context: NextPageContext): Promise<Props> => {
       utm_subsource,
       utm_site,
     },
+    req: { headers },
   } = context;
-
+  const geo: { lat: string; long: string } = {
+    lat: headers['client-geo-latitude'],
+    long: headers['client-geo-longitude'],
+  };
   // FIT-570
   // TODO: replace this mechanism with the actual one.
   // Some data should come from ctx.req, rather than from query.
@@ -133,6 +137,7 @@ CarsPage.getInitialProps = async (context: NextPageContext): Promise<Props> => {
   const initialStoreState = await getInitialCarsStoreState(
     attributionQueryString,
     geoLocationSortDefaultVariant,
+    geo,
     filtersQueryParam
   );
   return {
