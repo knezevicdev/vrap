@@ -25,11 +25,14 @@ const ContactPage: NextPage<Props> = ({ brand }) => {
 ContactPage.getInitialProps = async (ctx: NextPageContext): Promise<Props> => {
   const query = ctx.query;
 
-  // FIT-570
-  // TODO: replace this mechanism with the actual one.
-  // Some data should come from ctx.req, rather than from query.
-  const brandQueryParam = query.brand;
-  const brand = brandQueryParam === 'santander' ? Brand.SANTANDER : Brand.VROOM;
+  const { req } = ctx;
+  const headerBrandKey = 'x-brand';
+  const santanderKey = 'santander';
+  const brandHeader = req && req.headers[headerBrandKey];
+  const queryBrand = query.brand;
+
+  const brand =
+    (brandHeader || queryBrand) == santanderKey ? Brand.SANTANDER : Brand.VROOM;
 
   return { brand };
 };

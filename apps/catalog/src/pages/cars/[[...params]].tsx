@@ -77,7 +77,6 @@ CarsPage.getInitialProps = async (context: NextPageContext): Promise<Props> => {
 
   const {
     query: {
-      brand: brandQueryParam,
       filters,
       gclid,
       subid,
@@ -92,10 +91,15 @@ CarsPage.getInitialProps = async (context: NextPageContext): Promise<Props> => {
     },
   } = context;
 
-  // FIT-570
-  // TODO: replace this mechanism with the actual one.
-  // Some data should come from ctx.req, rather than from query.
-  const brand = brandQueryParam === 'santander' ? Brand.SANTANDER : Brand.VROOM;
+  const { req, query } = context;
+  const headerBrandKey = 'x-brand';
+  const santanderKey = 'santander';
+  const brandHeader = req && req.headers[headerBrandKey];
+  const queryBrand = query.brand;
+
+  const brand =
+    (brandHeader || queryBrand) == santanderKey ? Brand.SANTANDER : Brand.VROOM;
+
   const experiments =
     brand === Brand.VROOM
       ? await experimentSDK.getRunningExperiments(marketingId)
