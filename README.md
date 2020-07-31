@@ -59,6 +59,12 @@ Doing the following will open up disc space from the resources allocated by Dock
   docker volume prune
 ```
 
+## Libraries
+We store our built libraries in code to expediate app container build time. As such it is your responsibilty to run the build once your work is complete. If you are working on a library and said library contains a `build.docker-compose.yaml` please be sure to run
+```bash
+  docker-compose -f [PATH]/docker-compose.yaml -f [PATH]/docker-compose.build.yaml up --build
+```
+
 # Context
 
 At Vroom, we have multiple teams, all collaborating on one website. This presents an issue, as it increases the risk of developers stepping on each other's toes.
@@ -126,7 +132,7 @@ Do not import something because it's easy. If you are unsure of what to import i
 
 # Limitations
 
-This monorepo is only intended to house frontend code for use on the vroom website. This limitation helps define the scope of what you should expect to find here. Code for backend services should not be included. 
+This monorepo is only intended to house frontend code for use on the vroom website. This limitation helps define the scope of what you should expect to find here. Code for backend services should not be included.
 
 # Tooling
 

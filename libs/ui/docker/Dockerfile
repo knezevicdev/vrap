@@ -1,15 +1,14 @@
 FROM node:erbium-alpine
 
-# Install git so editor git commands work
-RUN apk --no-cache add git
-
-RUN mkdir -p /www
-
 WORKDIR /www
 COPY . .
-RUN chown -R 1000:1000 .
 
-RUN yarn install
+RUN \
+  # Install git so editor git commands work
+  apk --no-cache add git &&\
+  # Bootstrap yarn workspaces
+  yarn install --silent &&\
+  chown -R 1000:1000 .
 
 EXPOSE 8080
 

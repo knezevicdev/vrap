@@ -1,0 +1,4 @@
+version: '3'
+services:
+  footer-components:
+    command: ash -c "yarn workspace @vroom-web/footer-components build"
