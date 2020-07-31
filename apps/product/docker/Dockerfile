@@ -9,15 +9,6 @@ RUN \
   apk --no-cache add git &&\
   # Bootstrap yarn workspaces.
   yarn install --silent &&\
-  # Build libraries.
-  yarn workspace @vroom-web/analytics-integration build &&\
-  yarn workspace @vroom-web/catalog-url-integration build &&\
-  yarn workspace @vroom-web/deals-v2-networking build &&\
-  yarn workspace @vroom-web/inv-search-networking build &&\
-  yarn workspace @vroom-web/inv-service-networking build &&\
-  yarn workspace @vroom-web/ui build &&\
-  yarn workspace @vroom-web/header-components build &&\
-  yarn workspace @vroom-web/footer-components build &&\
   # Build the main app.
   yarn workspace @vroom-web/product build &&\
   # Change user for created files

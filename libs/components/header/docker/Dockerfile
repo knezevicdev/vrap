@@ -5,9 +5,6 @@ COPY . .
 RUN \
   apk --no-cache add git &&\
   yarn install --silent &&\
-  yarn workspace @vroom-web/analytics-integration build &&\
-  yarn workspace @vroom-web/deals-v2-networking build &&\
-  yarn workspace @vroom-web/ui build &&\
   chown -R 1000:1000 .
 
 EXPOSE 8080

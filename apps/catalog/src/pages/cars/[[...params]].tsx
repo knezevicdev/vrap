@@ -74,10 +74,8 @@ const CarsPage: NextPage<Props> = ({
 CarsPage.getInitialProps = async (context: NextPageContext): Promise<Props> => {
   const cookies = parseCookies(context);
   const marketingId = cookies['uuid'];
-  console.log(context.req.headers['client-geo-latitude']);
   const {
     query: {
-      brand: brandQueryParam,
       filters,
       gclid,
       subid,
@@ -90,16 +88,34 @@ CarsPage.getInitialProps = async (context: NextPageContext): Promise<Props> => {
       utm_subsource,
       utm_site,
     },
-    req: { headers },
   } = context;
-  const geo: { lat: string; long: string } = {
-    lat: headers['client-geo-latitude'],
-    long: headers['client-geo-longitude'],
-  };
-  // FIT-570
-  // TODO: replace this mechanism with the actual one.
-  // Some data should come from ctx.req, rather than from query.
-  const brand = brandQueryParam === 'santander' ? Brand.SANTANDER : Brand.VROOM;
+
+  const { req, query } = context;
+  const headerBrandKey = 'x-brand';
+  const santanderKey = 'santander';
+  const brandHeader = req && req.headers[headerBrandKey];
+  const queryBrand = query.brand;
+
+  const brand =
+    (brandHeader || queryBrand) == santanderKey ? Brand.SANTANDER : Brand.VROOM;
+
+  const geoQuery = query.geo;
+  const geo: {
+    lat: string | string[] | undefined;
+    long: string | string[] | undefined;
+  } =
+    req &&
+    req.headers['client-geo-latitude'] &&
+    req.headers['client-geo-longitude']
+      ? {
+          lat: req.headers['client-geo-latitude'],
+          long: req.headers['client-geo-longitude'],
+        }
+      : geoQuery === 'detroit' && {
+          lat: '72',
+          long: '65',
+        };
+
   const experiments =
     brand === Brand.VROOM
       ? await experimentSDK.getRunningExperiments(marketingId)

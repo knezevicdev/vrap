@@ -1,7 +1,7 @@
 {
   "name": "Vroom Web - Deals V2 Networking",
   "dockerComposeFile": "../docker/docker-compose.yaml",
-  "service": "test",
+  "service": "deals-v2-networking",
   "workspaceFolder": "/www/libs/networking/deals-v2",
   // Use 'settings' to set *default* container specific settings.json values on container create.
   // You can edit these settings after create using File > Preferences > Settings > Remote.
