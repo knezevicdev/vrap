@@ -43,7 +43,7 @@ const InventoryPage: NextPage<Props> = (props: Props) => {
   );
 };
 
-InventoryPage.getInitialProps = async ({ query, res }): Promise<Props> => {
+InventoryPage.getInitialProps = async ({ query, res, req }): Promise<Props> => {
   const slug = query.slug as string;
   const slugArray = slug.split('-');
   const vin = slugArray[slugArray.length - 1];
@@ -76,7 +76,13 @@ InventoryPage.getInitialProps = async ({ query, res }): Promise<Props> => {
     }
   }
 
-  const brand = query.brand === 'santander' ? Brand.SANTANDER : Brand.VROOM;
+  const headerBrandKey = 'x-brand';
+  const santanderKey = 'santander';
+  const brandHeader = req && req.headers[headerBrandKey];
+  const queryBrand = query.brand;
+
+  const brand =
+    (brandHeader || queryBrand) == santanderKey ? Brand.SANTANDER : Brand.VROOM;
 
   return { canonicalHref, initialState, title, brand };
 };
