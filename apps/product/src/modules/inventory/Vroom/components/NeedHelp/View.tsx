@@ -72,6 +72,10 @@ const BoxContent = styled('div')(({ theme }) => ({
   paddingLeft: theme.spacing(1),
 }));
 
+const BodyBody = styled(Typography)(() => ({
+  lineHeight: 'normal',
+}));
+
 const StyledHelpIcon = styled(HelpIcon)(({ theme }) => ({
   height: '80px',
   width: '80px',
@@ -101,19 +105,19 @@ const NeedHelpView: React.FC<Props> = ({ viewModel }) => {
             <StyledHelpIcon />
             <BoxContent>
               <BoxTitle>{viewModel.faq.title}</BoxTitle>
-              <Typography>
+              <BodyBody>
                 <ExternalLink href={viewModel.faq.href} target="_blank">
                   {viewModel.faq.hrefText}
                 </ExternalLink>
                 {viewModel.faq.body}
-              </Typography>
+              </BodyBody>
             </BoxContent>
           </BoxLeft>
           <BoxRight>
             <StyledPhoneIcon />
             <BoxContent>
               <BoxTitle>{viewModel.call.title}</BoxTitle>
-              <Typography>{viewModel.call.body}</Typography>
+              <BodyBody>{viewModel.call.body}</BodyBody>
             </BoxContent>
           </BoxRight>
         </Body>
