@@ -1,3 +1,4 @@
 common:
   jobs:
+    - danger
     - lint_build
