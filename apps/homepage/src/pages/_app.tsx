@@ -36,7 +36,7 @@ class VroomApp extends App {
   }
 
   render(): JSX.Element {
-    const { Component, pageProps } = this.props;
+    const { Component } = this.props;
     return <Component {...pageProps} />;
   }
 }
