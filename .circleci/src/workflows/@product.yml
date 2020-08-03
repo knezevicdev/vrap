@@ -1,6 +1,5 @@
 product:
   jobs:
-  - lint
   - product_build:
       context: aws-non-prod
       filters:
