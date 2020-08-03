@@ -151,6 +151,7 @@ workflows:
     jobs:
       - lint_and_build
   catalog:
+    jobs:
     - catalog_build:
         context: aws-non-prod
         filters:
@@ -214,6 +215,7 @@ workflows:
         requires:
         - hold_prod
   homepage:
+    jobs:
     - homepage_build:
         context: aws-non-prod
         filters:
@@ -277,6 +279,7 @@ workflows:
         requires:
         - hold_prod
   marketing:
+    jobs:
     - marketing_build:
         context: aws-non-prod
         filters:
@@ -340,6 +343,7 @@ workflows:
         requires:
         - hold_prod
   product:
+    jobs:
     - product_build:
         context: aws-non-prod
         filters:
