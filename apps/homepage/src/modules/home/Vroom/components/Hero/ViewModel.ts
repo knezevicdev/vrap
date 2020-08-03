@@ -17,7 +17,6 @@ class HeroViewModel {
   };
   readonly mobileButtonLabel: string = 'Browse All Vehicles';
   car: { src: string; alt: string };
-  carImageHeight: string;
 
   constructor(store: HomeStore) {
     const priusVsf150ImageDefaultVariant = showDefaultVariant(
