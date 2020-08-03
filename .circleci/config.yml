@@ -147,9 +147,10 @@ orbs:
   sonarcloud: sonarsource/sonarcloud@1.0.1
 version: 2.1
 workflows:
-  catalog:
+  pr:
     jobs:
-    - lint_and_build
+      - lint_and_build
+  catalog:
     - catalog_build:
         context: aws-non-prod
         filters:
@@ -213,8 +214,6 @@ workflows:
         requires:
         - hold_prod
   homepage:
-    jobs:
-    - lint_and_build
     - homepage_build:
         context: aws-non-prod
         filters:
@@ -278,8 +277,6 @@ workflows:
         requires:
         - hold_prod
   marketing:
-    jobs:
-    - lint_and_build
     - marketing_build:
         context: aws-non-prod
         filters:
@@ -343,8 +340,6 @@ workflows:
         requires:
         - hold_prod
   product:
-    jobs:
-    - lint_and_build
     - product_build:
         context: aws-non-prod
         filters:
