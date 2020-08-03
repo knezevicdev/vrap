@@ -1,6 +1,6 @@
 catalog:
   jobs:
-  - lint
+  - lint_and_build
   - catalog_build:
       context: aws-non-prod
       filters:

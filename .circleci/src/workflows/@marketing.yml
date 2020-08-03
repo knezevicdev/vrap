@@ -1,6 +1,6 @@
 marketing:
   jobs:
-  - lint
+  - lint_and_build
   - marketing_build:
       context: aws-non-prod
       filters:
