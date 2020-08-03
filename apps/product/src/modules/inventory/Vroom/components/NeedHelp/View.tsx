@@ -1,9 +1,9 @@
 import { styled } from '@material-ui/core/styles';
-import HelpIcon from '@material-ui/icons/Help';
-import PhoneIcon from '@material-ui/icons/Phone';
 import { Typography } from '@vroom-web/ui';
 import React from 'react';
 
+import { ReactComponent as CallUsIcon } from './svg/CallUs.svg';
+import { ReactComponent as QuestionIcon } from './svg/Question.svg';
 import ViewModel from './ViewModel';
 
 import ExternalLink from 'src/ui/ExternalLink';
@@ -76,18 +76,6 @@ const BodyBody = styled(Typography)(() => ({
   lineHeight: 'normal',
 }));
 
-const StyledHelpIcon = styled(HelpIcon)(({ theme }) => ({
-  height: '80px',
-  width: '80px',
-  color: theme.palette.grey['A100'],
-}));
-
-const StyledPhoneIcon = styled(PhoneIcon)(({ theme }) => ({
-  height: '80px',
-  width: '80px',
-  color: theme.palette.grey['A100'],
-}));
-
 interface Props {
   viewModel: ViewModel;
 }
@@ -102,7 +90,9 @@ const NeedHelpView: React.FC<Props> = ({ viewModel }) => {
         <Subtitle>{viewModel.subtitle}</Subtitle>
         <Body>
           <BoxLeft>
-            <StyledHelpIcon />
+            <div>
+              <QuestionIcon />
+            </div>
             <BoxContent>
               <BoxTitle>{viewModel.faq.title}</BoxTitle>
               <BodyBody>
@@ -114,7 +104,9 @@ const NeedHelpView: React.FC<Props> = ({ viewModel }) => {
             </BoxContent>
           </BoxLeft>
           <BoxRight>
-            <StyledPhoneIcon />
+            <div>
+              <CallUsIcon />
+            </div>
             <BoxContent>
               <BoxTitle>{viewModel.call.title}</BoxTitle>
               <BodyBody>{viewModel.call.body}</BodyBody>
