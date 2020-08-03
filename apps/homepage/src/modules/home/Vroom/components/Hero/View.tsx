@@ -145,7 +145,7 @@ const HeroView: React.FC<Props> = ({ viewModel }) => {
         <CarImage
           alt={viewModel.car.alt}
           src={viewModel.car.src}
-          carImageHeight={viewModel.carImageHeight}
+          carImageHeight={'225px'}
         />
         <BuySellTrade />
       </Container>

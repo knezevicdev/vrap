@@ -25,7 +25,6 @@ class HeroViewModel {
       store.experiments,
       store.query
     );
-    this.carImageHeight = '225px';
     this.car = {
       src: `${globalEnv.ASSET_PREFIX}/modules/home/images/${
         priusVsf150ImageDefaultVariant ? 'prius' : 'ford'
