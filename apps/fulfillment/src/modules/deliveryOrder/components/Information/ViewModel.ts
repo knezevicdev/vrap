@@ -1,6 +1,6 @@
-import { DeliveryOrderStore } from '../../store';
-
+import { DeliveryOrderStore } from 'src/modules/deliveryOrder/store';
 import { Status } from 'src/networking/Networker';
+
 interface Info {
   general: Section;
   pickup: Section;

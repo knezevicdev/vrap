@@ -16,7 +16,6 @@ interface Props {
 }
 
 const StatusView: React.FC<Props> = ({ viewModel }) => {
-  console.log(viewModel.statuses);
   return (
     <Container>
       <Stepper nonLinear activeStep={viewModel.active}>

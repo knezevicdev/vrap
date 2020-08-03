@@ -4,7 +4,7 @@ import { DeliveryOrderStore, DeliveryOrderStoreContext } from '../../store';
 import View from './View';
 import ViewModel from './ViewModel';
 
-const Home: React.FC = () => {
+const Status: React.FC = () => {
   return (
     <DeliveryOrderStoreContext.Consumer>
       {(store: DeliveryOrderStore): JSX.Element => {
@@ -15,4 +15,4 @@ const Home: React.FC = () => {
   );
 };
 
-export default Home;
+export default Status;
