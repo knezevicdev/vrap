@@ -36,12 +36,14 @@ const VehicleHeaderContainerContent = styled('div')(({ theme }) => ({
 const LeftContent = styled('div')(() => ({
   display: 'flex',
   flexDirection: 'column',
+  flexGrow: 2,
 }));
 
 const RightContent = styled('div')(() => ({
   display: 'flex',
   marginLeft: 'auto',
   alignItems: 'center',
+  flexBasis: '20rem',
 }));
 
 const YearMakeModel = styled(Typography)(({ theme }) => ({

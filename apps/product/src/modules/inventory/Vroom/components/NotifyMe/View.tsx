@@ -62,7 +62,7 @@ const NotifyMeView: React.FC<Props> = (props) => {
   return (
     <>
       <CustomButton
-        variant="contained"
+        variant="outlined"
         color="primary"
         onClick={handleDialogClick}
       >
