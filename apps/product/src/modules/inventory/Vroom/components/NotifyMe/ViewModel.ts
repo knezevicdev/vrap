@@ -7,14 +7,19 @@ class NotifyMeViewModel {
   private notifyMeStore: NotifyMeStore;
   readonly notifyMeButton: string = 'Notify Me';
   readonly dialogTitle: string = 'Notify Me When Available';
-  readonly dialogBody: string =
+  readonly dialogBodyLoggedOut: string =
     'Please create an account to receive an email notification when this car becomes available for sale.';
+  readonly dialogBodyLoggedIn: string = 'LOGGED IN OMG';
   readonly createAccountButton: string = 'CREATE AN ACCOUNT';
   readonly logInButton: string = 'LOG IN';
 
   constructor(inventoryStore: InventoryStore, notifyMeStore: NotifyMeStore) {
     this.inventoryStore = inventoryStore;
     this.notifyMeStore = notifyMeStore;
+  }
+
+  handleMount(): void {
+    this.notifyMeStore.initClientSide();
   }
 
   getVehicleInfo(): void {
@@ -37,6 +42,10 @@ class NotifyMeViewModel {
 
   toggleModal(): void {
     this.notifyMeStore.toggleModal();
+  }
+
+  isLoggedIn(): boolean {
+    return this.notifyMeStore.accessToken !== undefined;
   }
 }
 

@@ -51,10 +51,14 @@ const DialogButton = styled(Button)(({ theme }) => ({
 
 const NotifyMeView: React.FC<Props> = (props) => {
   const { viewModel } = props;
+
+  React.useEffect(() => {
+    viewModel.handleMount();
+  }, [viewModel]);
+
   const handleDialogClick = (): void => viewModel.handleClick();
   const handleDialogActions = (location: string): void =>
     viewModel.handleDialogActions(location);
-
   return (
     <>
       <CustomButton
@@ -66,40 +70,59 @@ const NotifyMeView: React.FC<Props> = (props) => {
           {viewModel.notifyMeButton}
         </Typography>
       </CustomButton>
-      <Dialog
-        onClose={handleDialogClick}
-        fullWidth={true}
-        maxWidth={'sm'}
-        open={viewModel.isOpen()}
-      >
-        <DialogContent>
-          <DialogTitle variant="h2" fontWeight="fontWeightMedium">
-            {viewModel.dialogTitle}
-            <StyledIconButton aria-label="close" onClick={handleDialogClick}>
-              <CloseIcon />
-            </StyledIconButton>
-          </DialogTitle>
-          <DialogBody>{viewModel.dialogBody}</DialogBody>
-          <DialogButton
-            variant="contained"
-            color="primary"
-            onClick={(): void => handleDialogActions('create')}
-          >
-            <Typography variant="button" fontWeight={600}>
-              {viewModel.createAccountButton}
-            </Typography>
-          </DialogButton>
-          <DialogButton
-            variant="outlined"
-            color="primary"
-            onClick={(): void => handleDialogActions('login')}
-          >
-            <Typography variant="button" fontWeight={600}>
-              {viewModel.logInButton}
-            </Typography>
-          </DialogButton>
-        </DialogContent>
-      </Dialog>
+      {viewModel.isLoggedIn() ? (
+        <Dialog
+          onClose={handleDialogClick}
+          fullWidth={true}
+          maxWidth={'sm'}
+          open={viewModel.isOpen()}
+        >
+          <DialogContent>
+            <DialogTitle variant="h2" fontWeight="fontWeightMedium">
+              {viewModel.dialogTitle}
+              <StyledIconButton aria-label="close" onClick={handleDialogClick}>
+                <CloseIcon />
+              </StyledIconButton>
+            </DialogTitle>
+            <DialogBody>{viewModel.dialogBodyLoggedIn}</DialogBody>
+          </DialogContent>
+        </Dialog>
+      ) : (
+        <Dialog
+          onClose={handleDialogClick}
+          fullWidth={true}
+          maxWidth={'sm'}
+          open={viewModel.isOpen()}
+        >
+          <DialogContent>
+            <DialogTitle variant="h2" fontWeight="fontWeightMedium">
+              {viewModel.dialogTitle}
+              <StyledIconButton aria-label="close" onClick={handleDialogClick}>
+                <CloseIcon />
+              </StyledIconButton>
+            </DialogTitle>
+            <DialogBody>{viewModel.dialogBodyLoggedOut}</DialogBody>
+            <DialogButton
+              variant="contained"
+              color="primary"
+              onClick={(): void => handleDialogActions('create')}
+            >
+              <Typography variant="button" fontWeight={600}>
+                {viewModel.createAccountButton}
+              </Typography>
+            </DialogButton>
+            <DialogButton
+              variant="outlined"
+              color="primary"
+              onClick={(): void => handleDialogActions('login')}
+            >
+              <Typography variant="button" fontWeight={600}>
+                {viewModel.logInButton}
+              </Typography>
+            </DialogButton>
+          </DialogContent>
+        </Dialog>
+      )}
     </>
   );
 };
