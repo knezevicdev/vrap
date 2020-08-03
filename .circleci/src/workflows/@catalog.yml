@@ -1,6 +1,5 @@
 catalog:
   jobs:
-  - pr_build
   - lint
   - catalog_build:
       context: aws-non-prod
