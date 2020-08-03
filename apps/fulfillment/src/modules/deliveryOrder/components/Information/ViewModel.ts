@@ -1,6 +1,6 @@
-import { DeliveryOrderStore } from './store';
-
+import { DeliveryOrderStore } from 'src/modules/deliveryOrder/store';
 import { Status } from 'src/networking/Networker';
+
 interface Info {
   general: Section;
   pickup: Section;
@@ -110,11 +110,11 @@ class DeliveryOrderViewModel {
       delivery,
       created: {
         label: 'Created By',
-        value: `${dor.createdBy} ${new Date(dor.created).toLocaleString()}`,
+        value: `${dor.createdBy} ${dor.created}`,
       },
       modified: {
         label: 'Last Modified By',
-        value: `${dor.updatedBy} ${new Date(dor.updated).toLocaleString()}`,
+        value: `${dor.updatedBy} ${dor.updated}`,
       },
     };
     return result;
