@@ -149,7 +149,7 @@ version: 2.1
 workflows:
   catalog:
     jobs:
-    - lint
+    - lint_and_build
     - catalog_build:
         context: aws-non-prod
         filters:
@@ -214,11 +214,7 @@ workflows:
         - hold_prod
   homepage:
     jobs:
-    - sonarcloud:
-        context: SonarCloud
-    - danger:
-        context: dangerjs
-    - lint
+    - lint_and_build
     - homepage_build:
         context: aws-non-prod
         filters:
@@ -283,7 +279,7 @@ workflows:
         - hold_prod
   marketing:
     jobs:
-    - lint
+    - lint_and_build
     - marketing_build:
         context: aws-non-prod
         filters:
@@ -348,7 +344,7 @@ workflows:
         - hold_prod
   product:
     jobs:
-    - lint
+    - lint_and_build
     - product_build:
         context: aws-non-prod
         filters:
