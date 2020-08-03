@@ -1,4 +1,5 @@
 common:
   jobs:
-    - danger
+    - danger:
+        context: dangerjs
     - lint_build
