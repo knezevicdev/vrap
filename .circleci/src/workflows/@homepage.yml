@@ -1,6 +1,5 @@
 homepage:
   jobs:
-  - lint_and_build
   - homepage_build:
       context: aws-non-prod
       filters:

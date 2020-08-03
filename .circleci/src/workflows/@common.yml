@@ -1,0 +1,3 @@
+common:
+  jobs:
+    - lint_build
