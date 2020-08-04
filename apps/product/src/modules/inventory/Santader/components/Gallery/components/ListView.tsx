@@ -110,7 +110,7 @@ const GalleryListView: React.FC<Props> = ({ viewModel }) => {
                   <ImageHeader>
                     {index + 1}
                     {viewModel.indexSeparator}
-                    {images.length + 1}
+                    {images.length}
                   </ImageHeader>
                   <StyledImage
                     src={image.thumbnail}
@@ -123,13 +123,6 @@ const GalleryListView: React.FC<Props> = ({ viewModel }) => {
             }
           )}
         </ImagesContainer>
-        {viewModel.showImageHeader(images.length) && (
-          <ImageHeader>
-            {images.length + 1}
-            {viewModel.indexSeparator}
-            {images.length + 1}
-          </ImageHeader>
-        )}
       </StyledContainer>
     </>
   );
