@@ -60,7 +60,8 @@ InventoryPage.getInitialProps = async ({ query, res, req }): Promise<Props> => {
       modelSlug,
       listingPrice,
     } = initialState.vehicle._source;
-    canonicalHref = `/inventory/${makeSlug}-${modelSlug}-${year}-${vin}`;
+    //TODO: Replace vehicle -> inventory after AB test
+    canonicalHref = `/vehicle/${makeSlug}-${modelSlug}-${year}-${vin}`;
     const currencyFormatter = new Intl.NumberFormat('en-US', {
       style: 'currency',
       currency: 'USD',
