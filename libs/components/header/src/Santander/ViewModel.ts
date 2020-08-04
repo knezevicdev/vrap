@@ -2,7 +2,7 @@ import Store from './store';
 
 interface Link {
   href?: string;
-  label: string;
+  label?: string;
   target?: string;
   rel?: string;
 }
@@ -15,6 +15,7 @@ class ViewModel {
   }
 
   readonly shopNow: Link = { label: 'Shop now', href: `/cars` };
+  readonly logoLink: Link = {href: '/'}
 
   readonly financeCalculators: Link = {
     label: 'Finance Calculators',
