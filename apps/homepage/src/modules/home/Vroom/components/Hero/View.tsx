@@ -5,7 +5,6 @@ import { observer } from 'mobx-react';
 import React from 'react';
 
 import BuySellTrade from './BuySellTrade';
-import Search from './Search';
 import ViewModel from './ViewModel';
 
 import ExternalLink from 'src/ui/ExternalLink';
@@ -146,9 +145,9 @@ const HeroView: React.FC<Props> = ({ viewModel }) => {
         <CarImage
           alt={viewModel.car.alt}
           src={viewModel.car.src}
-          carImageHeight={viewModel.carImageHeight}
+          carImageHeight={'225px'}
         />
-        {viewModel.sellTradeExperimentVariant ? <Search /> : <BuySellTrade />}
+        <BuySellTrade />
       </Container>
     </Background>
   );
