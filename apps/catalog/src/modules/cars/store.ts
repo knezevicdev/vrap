@@ -198,12 +198,7 @@ export const getTransmissionRequestData = (
 export const getPostInventoryRequestDataFromFilterData = (
   filtersData?: FiltersData,
   geoLocationSortDefaultVariant?: boolean,
-  geo?:
-    | {
-        lat: string | string[];
-        long: string | string[];
-      }
-    | false
+  geo?: Coordinates
 ): PostInventoryRequestData => {
   if (!filtersData) {
     if (geoLocationSortDefaultVariant || !geo) {
@@ -211,7 +206,10 @@ export const getPostInventoryRequestDataFromFilterData = (
     }
     return {
       sortby: 'geo',
-      geo,
+      geo: {
+        lat: `${geo.latitude}`,
+        long: `${geo.longitude}`,
+      },
     };
   }
 
@@ -246,12 +244,7 @@ export const getPostInventoryRequestDataFromFilterData = (
 export async function getInitialCarsStoreState(
   attributionQueryString: string,
   geoLocationSortDefaultVariant: boolean,
-  geo:
-    | {
-        lat: string | string[];
-        long: string | string[];
-      }
-    | false,
+  geo: Coordinates | undefined,
   filtersQueryParam?: string
 ): Promise<InitialCarsStoreState> {
   const initialState: InitialCarsStoreState = {
@@ -303,6 +296,7 @@ export async function getInitialCarsStoreState(
       limit: INVENTORY_CARDS_PER_PAGE,
       source: `${publicRuntimeConfig.NAME}-${publicRuntimeConfig.VERSION}`,
     };
+    console.log(inventoryRequestData);
     const inventoryResponse = await invSearchNetworker.postInventory(
       inventoryRequestData
     );

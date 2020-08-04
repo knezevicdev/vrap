@@ -100,23 +100,32 @@ CarsPage.getInitialProps = async (context: NextPageContext): Promise<Props> => {
     (brandHeader || queryBrand) == santanderKey ? Brand.SANTANDER : Brand.VROOM;
 
   const geoQuery = query.geo;
-  const geo:
-    | {
-        lat: string | string[];
-        long: string | string[];
-      }
-    | false =
+  let geo: Coordinates | undefined;
+  if (
     req &&
     req.headers['client-geo-latitude'] &&
     req.headers['client-geo-longitude']
-      ? {
-          lat: req.headers['client-geo-latitude'],
-          long: req.headers['client-geo-longitude'],
-        }
-      : geoQuery === 'detroit' && {
-          lat: '72',
-          long: '65',
-        };
+  ) {
+    geo = {
+      latitude: parseFloat(req.headers['client-geo-latitude'] as string),
+      longitude: parseFloat(req.headers['client-geo-longitude'] as string),
+      accuracy: 2, //Don't need just to satisfy type
+      altitude: null,
+      altitudeAccuracy: null,
+      heading: null,
+      speed: null,
+    };
+  } else if (geoQuery === 'detroit') {
+    geo = {
+      latitude: 72,
+      longitude: 65,
+      accuracy: 2, //Don't need just to satisfy type
+      altitude: null,
+      altitudeAccuracy: null,
+      heading: null,
+      speed: null,
+    };
+  }
 
   const experiments =
     brand === Brand.VROOM
