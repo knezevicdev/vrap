@@ -55,7 +55,7 @@ jobs:
 
           # sleep 240
           # if [ -z "${FASTLY_PURGE_KEY}" ]; then echo "FASTLY_PURGE_KEY not set"; return 1; elif [ -z "${FASTLY_SERVICE_ID}" ]; then echo "FASTLY_SERVICE_ID not set"; return 1; else echo "Purging Fastly for service ${FASTLY_SERVICE_ID}"; curl -X POST -H "Fastly-Key: ${FASTLY_PURGE_KEY}" -H "Accept: application/json" https://api.fastly.com/service/${FASTLY_SERVICE_ID}/purge_all ; fi
-  lint:
+  lint_build:
     docker:
     - image: circleci/node:erbium
     steps:
@@ -64,7 +64,8 @@ jobs:
         command: |-
           yarn install --silent
           yarn workspaces run lint
-        name: Lint
+          yarn workspaces run build
+        name: Lint & Build
   marketing_build:
     docker:
     - image: vroom/mlp:3.0.2
@@ -148,7 +149,6 @@ version: 2.1
 workflows:
   catalog:
     jobs:
-    - lint
     - catalog_build:
         context: aws-non-prod
         filters:
@@ -211,13 +211,13 @@ workflows:
         name: catalog_deploy_prod
         requires:
         - hold_prod
-  homepage:
+  common:
     jobs:
-    - sonarcloud:
-        context: SonarCloud
     - danger:
         context: dangerjs
-    - lint
+    - lint_build
+  homepage:
+    jobs:
     - homepage_build:
         context: aws-non-prod
         filters:
@@ -282,7 +282,6 @@ workflows:
         - hold_prod
   marketing:
     jobs:
-    - lint
     - marketing_build:
         context: aws-non-prod
         filters:
@@ -347,7 +346,6 @@ workflows:
         - hold_prod
   product:
     jobs:
-    - lint
     - product_build:
         context: aws-non-prod
         filters:

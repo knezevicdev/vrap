@@ -2,6 +2,7 @@ import { name, version } from 'package.json';
 
 export interface GlobalEnv {
   ASSET_PREFIX?: string;
+  CALENDLY_URL?: string;
   DATA_DOG_LOG_COLLECTION_TOKEN?: string;
   NAME?: string;
   STATIC_ASSETS_HOST_URL?: string;
@@ -18,6 +19,7 @@ const globalEnv: GlobalEnv = process.browser
   ? window.__GLOBAL_ENV__
   : {
       ASSET_PREFIX: process.env.ASSET_PREFIX || '',
+      CALENDLY_URL: process.env.CALENDLY_URL,
       DATA_DOG_LOG_COLLECTION_TOKEN: process.env.DATA_DOG_LOG_COLLECTION_TOKEN,
       NAME: name,
       STATIC_ASSETS_HOST_URL: process.env.STATIC_ASSETS_HOST_URL || '',
