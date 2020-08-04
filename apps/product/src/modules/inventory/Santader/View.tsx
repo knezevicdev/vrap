@@ -1,5 +1,4 @@
-import { styled, useTheme } from '@material-ui/core/styles';
-import useMediaQuery from '@material-ui/core/useMediaQuery';
+import { styled } from '@material-ui/core/styles';
 import { SantanderFooter } from '@vroom-web/footer-components';
 import { SantanderHeader } from '@vroom-web/header-components';
 import { observer } from 'mobx-react';
@@ -21,7 +20,6 @@ export interface Props {
   viewModel: ViewModel;
 }
 
-//#region Styling
 const InventoryViewContainer = styled('div')(() => ({
   display: 'flex',
   flexDirection: 'column',
@@ -29,19 +27,27 @@ const InventoryViewContainer = styled('div')(() => ({
 }));
 
 const StickyBottom = styled('div')(({ theme }) => ({
+  display: 'none',
   position: 'sticky',
   bottom: 0,
   zIndex: theme.zIndex.appBar,
   padding: theme.spacing(3),
   background: theme.palette.background.paper,
   borderTop: `solid 1px ${theme.palette.grey.A100}`,
+  [theme.breakpoints.only('xs')]: {
+    display: 'flex',
+  },
 }));
-//#endregion
+
+const DesktopOnly = styled('div')(({ theme }) => ({
+  display: 'flex',
+  [theme.breakpoints.only('xs')]: {
+    display: 'none',
+  },
+}));
 
 const InventoryView: React.FC<Props> = (props) => {
   const { viewModel } = props;
-  const theme = useTheme();
-  const xsDown = useMediaQuery(theme.breakpoints.down('xs'));
 
   useEffect(() => {
     viewModel.startReaction();
@@ -57,7 +63,9 @@ const InventoryView: React.FC<Props> = (props) => {
         )}
         {viewModel.ready() && (
           <>
-            {!xsDown && <Breadcrumbs />}
+            <DesktopOnly>
+              <Breadcrumbs />
+            </DesktopOnly>
             <Gallery />
             <VehicleHeader />
             <CarDetails />
@@ -69,7 +77,7 @@ const InventoryView: React.FC<Props> = (props) => {
         <LegalFooter />
       </InventoryViewContainer>
       <SantanderFooter />
-      {xsDown && viewModel.ready() && (
+      {viewModel.ready() && (
         <StickyBottom>
           <StartPurchase />
         </StickyBottom>

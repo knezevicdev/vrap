@@ -1,5 +1,4 @@
-import { styled, useTheme } from '@material-ui/core/styles';
-import useMediaQuery from '@material-ui/core/useMediaQuery';
+import { styled } from '@material-ui/core/styles';
 import { Typography } from '@vroom-web/ui';
 import { observer } from 'mobx-react';
 import React from 'react';
@@ -76,15 +75,19 @@ const Divider = styled('div')(({ theme }) => ({
   height: '80px',
 }));
 
+const DesktopOnly = styled('div')(({ theme }) => ({
+  display: 'flex',
+  [theme.breakpoints.only('xs')]: {
+    display: 'none',
+  },
+}));
+
 interface Props {
   viewModel: ViewModel;
 }
 
 const VehicleHeaderView: React.FC<Props> = (props) => {
-  const theme = useTheme();
   const { viewModel } = props;
-
-  const xsDown = useMediaQuery(theme.breakpoints.down('xs'));
 
   const summary = viewModel.summary();
 
@@ -100,8 +103,12 @@ const VehicleHeaderView: React.FC<Props> = (props) => {
         </LeftContent>
         <RightContent>
           <Price>{summary.price}</Price>
-          {!xsDown && <Divider />}
-          {!xsDown && <StartPurchase />}
+          <DesktopOnly>
+            <Divider />
+          </DesktopOnly>
+          <DesktopOnly>
+            <StartPurchase />
+          </DesktopOnly>
         </RightContent>
       </VehicleHeaderContainerContent>
     </VehicleHeaderContainer>
