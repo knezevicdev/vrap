@@ -102,8 +102,8 @@ CarsPage.getInitialProps = async (context: NextPageContext): Promise<Props> => {
   const geoQuery = query.geo;
   const geo:
     | {
-        lat: string | string[] | undefined;
-        long: string | string[] | undefined;
+        lat: string | string[];
+        long: string | string[];
       }
     | false =
     req &&

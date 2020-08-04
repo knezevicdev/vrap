@@ -200,8 +200,8 @@ export const getPostInventoryRequestDataFromFilterData = (
   geoLocationSortDefaultVariant?: boolean,
   geo?:
     | {
-        lat: string | string[] | undefined;
-        long: string | string[] | undefined;
+        lat: string | string[];
+        long: string | string[];
       }
     | false
 ): PostInventoryRequestData => {
@@ -248,8 +248,8 @@ export async function getInitialCarsStoreState(
   geoLocationSortDefaultVariant: boolean,
   geo:
     | {
-        lat: string | string[] | undefined;
-        long: string | string[] | undefined;
+        lat: string | string[];
+        long: string | string[];
       }
     | false,
   filtersQueryParam?: string
