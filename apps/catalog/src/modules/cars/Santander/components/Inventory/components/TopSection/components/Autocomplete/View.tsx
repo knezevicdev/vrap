@@ -64,11 +64,11 @@ const useStyles = makeStyles((theme) => ({
   },
   popper: {
     [theme.breakpoints.only('xs')]: {
-      top: `164px !important`,
+      top: `140px !important`,
       right: `0 !important`,
       bottom: `0 !important`,
-      left: `17px !important`,
-      width: 'calc(100% - 34px) !important',
+      left: `0 !important`,
+      width: '100% !important',
       transform: `none !important`,
       zIndex: theme.zIndex.appBar - 1,
     },
