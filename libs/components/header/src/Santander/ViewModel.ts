@@ -15,7 +15,7 @@ class ViewModel {
   }
 
   readonly shopNow: Link = { label: 'Shop now', href: `/cars` };
-  readonly logoLink: Link = {href: '/'}
+  readonly logoLink: Link = { href: '/' };
 
   readonly financeCalculators: Link = {
     label: 'Finance Calculators',

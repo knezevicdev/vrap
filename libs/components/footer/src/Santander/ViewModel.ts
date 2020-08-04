@@ -70,7 +70,7 @@ class ViewModel {
           target: '_blank',
         },
         {
-          label: "Servicemembers Civil Relief Act",
+          label: 'Servicemembers Civil Relief Act',
           href: `https://santanderconsumerusa.com/legal/servicemembers-civil-relief-act`,
           target: '_blank',
         },
