@@ -100,10 +100,12 @@ CarsPage.getInitialProps = async (context: NextPageContext): Promise<Props> => {
     (brandHeader || queryBrand) == santanderKey ? Brand.SANTANDER : Brand.VROOM;
 
   const geoQuery = query.geo;
-  const geo: {
-    lat: string | string[] | undefined;
-    long: string | string[] | undefined;
-  } =
+  const geo:
+    | {
+        lat: string | string[] | undefined;
+        long: string | string[] | undefined;
+      }
+    | false =
     req &&
     req.headers['client-geo-latitude'] &&
     req.headers['client-geo-longitude']
