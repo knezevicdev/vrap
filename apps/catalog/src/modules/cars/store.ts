@@ -197,11 +197,19 @@ export const getTransmissionRequestData = (
 
 export const getPostInventoryRequestDataFromFilterData = (
   filtersData?: FiltersData,
-  geoLocationSortDefaultVariant?: boolean
+  geoLocationSortDefaultVariant?: boolean,
+  geo?: Coordinates
 ): PostInventoryRequestData => {
   if (!filtersData) {
+    if (geoLocationSortDefaultVariant || !geo) {
+      return {};
+    }
     return {
-      ...(geoLocationSortDefaultVariant ? {} : { sortby: 'geo' }),
+      sortby: 'geo',
+      geo: {
+        lat: `${geo.latitude}`,
+        long: `${geo.longitude}`,
+      },
     };
   }
 
@@ -236,6 +244,7 @@ export const getPostInventoryRequestDataFromFilterData = (
 export async function getInitialCarsStoreState(
   attributionQueryString: string,
   geoLocationSortDefaultVariant: boolean,
+  geo: Coordinates | undefined,
   url: string
 ): Promise<InitialCarsStoreState> {
   const initialState: InitialCarsStoreState = {
@@ -278,7 +287,8 @@ export async function getInitialCarsStoreState(
     initialState.inventoryStatus = Status.FETCHING;
     const postInventoryRequestDataFromFiltersData = getPostInventoryRequestDataFromFilterData(
       initialState.filtersData,
-      geoLocationSortDefaultVariant
+      geoLocationSortDefaultVariant,
+      geo
     );
     const inventoryRequestData: PostInventoryRequestData = {
       ...postInventoryRequestDataFromFiltersData,

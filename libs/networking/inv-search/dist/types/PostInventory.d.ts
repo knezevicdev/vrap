@@ -37,6 +37,10 @@ export interface PostInventoryRequestData {
     vin?: string[];
     'sold-status'?: SoldStatus;
     source?: string;
+    geo?: {
+        lat: string;
+        long: string;
+    };
 }
 export declare const postInventoryResponseSchema: import("yup").ObjectSchema<InventoryResponse>;
 export declare type PostInventoryResponse = InventoryResponse;

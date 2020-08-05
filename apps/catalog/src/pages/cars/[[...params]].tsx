@@ -76,7 +76,6 @@ const CarsPage: NextPage<Props> = ({
 CarsPage.getInitialProps = async (context: NextPageContext): Promise<Props> => {
   const cookies = parseCookies(context);
   const marketingId = cookies['uuid'];
-
   const {
     asPath,
     query: {
@@ -102,6 +101,33 @@ CarsPage.getInitialProps = async (context: NextPageContext): Promise<Props> => {
   const brand =
     (brandHeader || queryBrand) == santanderKey ? Brand.SANTANDER : Brand.VROOM;
 
+  const geoQuery = query.geo;
+  let geo: Coordinates | undefined;
+  if (
+    req &&
+    req.headers['client-geo-latitude'] &&
+    req.headers['client-geo-longitude']
+  ) {
+    geo = {
+      latitude: parseFloat(req.headers['client-geo-latitude'] as string),
+      longitude: parseFloat(req.headers['client-geo-longitude'] as string),
+      accuracy: 2, //Don't need just to satisfy type
+      altitude: null,
+      altitudeAccuracy: null,
+      heading: null,
+      speed: null,
+    };
+  } else if (geoQuery === 'detroit') {
+    geo = {
+      latitude: 72,
+      longitude: 65,
+      accuracy: 2, //Don't need just to satisfy type
+      altitude: null,
+      altitudeAccuracy: null,
+      heading: null,
+      speed: null,
+    };
+  }
   const title =
     brand === Brand.SANTANDER
       ? 'Shop Used Cars Online - Santander Consumer USA'
@@ -155,6 +181,7 @@ CarsPage.getInitialProps = async (context: NextPageContext): Promise<Props> => {
   const initialStoreState = await getInitialCarsStoreState(
     attributionQueryString,
     geoLocationSortDefaultVariant,
+    geo,
     url
   );
   return {
