@@ -2,6 +2,7 @@ import React from 'react';
 
 import { Brand } from '../types';
 import { getThemeForBrand } from '../util';
+import SantanderFaviconSnippet from './SantanderFaviconSnippet';
 import SantanderFontsSnippet from './SantanderFontsSnippet';
 import VroomFaviconSnippet from './VroomFaviconSnippet';
 import VroomFontsSnippet from './VroomFontsSnippet';
@@ -17,8 +18,15 @@ const UISnippet: React.FC<Props> = ({
 }) => {
   const theme = getThemeForBrand(brand);
   if (brand === Brand.SANTANDER) {
-    // TODO: add Santander favicon snippet.
-    return <SantanderFontsSnippet staticAssetsHostUrl={staticAssetsHostUrl} />;
+    return (
+      <>
+        <SantanderFaviconSnippet
+          staticAssetsHostUrl={staticAssetsHostUrl}
+          theme={theme}
+        />
+        <SantanderFontsSnippet staticAssetsHostUrl={staticAssetsHostUrl} />
+      </>
+    );
   }
   return (
     <>

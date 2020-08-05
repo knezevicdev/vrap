@@ -50,9 +50,6 @@ const HomePage: NextPage<Props> = ({
 };
 
 HomePage.getInitialProps = async (ctx: NextPageContext): Promise<Props> => {
-  const title = 'Vroom: Buy, Sell or Trade-In Used Vehicles Online';
-  const description =
-    'Buy, sell or trade-in your car entirely online, from the comfort of your home. No haggle, no pressure. Easy online financing available. Browse thousands of high-quality cars, and have it delivered straight to you.';
   const cookies = parseCookies(ctx);
   const marketingId = cookies['uuid'];
   const query = ctx.query;
@@ -65,6 +62,16 @@ HomePage.getInitialProps = async (ctx: NextPageContext): Promise<Props> => {
 
   const brand =
     (brandHeader || queryBrand) == santanderKey ? Brand.SANTANDER : Brand.VROOM;
+
+  const title =
+    brand === Brand.SANTANDER
+      ? 'Santander Consumer USA: Buy Used Cars, Trucks & SUVs Online'
+      : 'Vroom: Buy, Sell or Trade-In Used Vehicles Online';
+
+  const description =
+    brand === Brand.SANTANDER
+      ? 'Buy a used vehicle online from anywhere in the USA. We offer high quality cars, easy car buying, & flexible financing.'
+      : 'Buy, sell or trade-in your car entirely online, from the comfort of your home. No haggle, no pressure. Easy online financing available. Browse thousands of high-quality cars, and have it delivered straight to you.';
 
   const experiments =
     brand === Brand.VROOM

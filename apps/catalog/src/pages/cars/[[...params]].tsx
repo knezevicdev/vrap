@@ -22,14 +22,20 @@ import Page from 'src/Page';
 
 interface Props {
   brand: Brand;
-  initialStoreState: InitialCarsStoreState;
+  description: string;
   experiments: Experiment[];
+  indexPage: boolean;
+  initialStoreState: InitialCarsStoreState;
+  title: string;
 }
 
 const CarsPage: NextPage<Props> = ({
   brand,
-  initialStoreState,
+  description,
   experiments,
+  indexPage,
+  initialStoreState,
+  title,
 }) => {
   // Persist store instance across URL updates.
   const [carsStore] = useState<CarsStore>(new CarsStore(initialStoreState));
@@ -46,15 +52,11 @@ const CarsPage: NextPage<Props> = ({
     }
   }, [carsStore, theme]);
 
-  const title = 'Buy Low-Mileage Used Cars & Trucks Online - Vroom';
-  const description =
-    'Buy your next car online with Vroom. We offer certified used cars for sale, no haggle car buying, full warranties and home shipping anywhere in the USA.';
-
   const head = (
     <>
       <title>{title}</title>
       <meta name="description" content={description} />
-      <meta name="robots" content="noindex, nofollow" />
+      {!indexPage && <meta name="robots" content="noindex, nofollow" />}
     </>
   );
 
@@ -100,6 +102,18 @@ CarsPage.getInitialProps = async (context: NextPageContext): Promise<Props> => {
   const brand =
     (brandHeader || queryBrand) == santanderKey ? Brand.SANTANDER : Brand.VROOM;
 
+  const title =
+    brand === Brand.SANTANDER
+      ? 'Shop Used Cars Online - Santander Consumer USA'
+      : 'Buy Low-Mileage Used Cars & Trucks Online - Vroom';
+
+  const description =
+    brand === Brand.SANTANDER
+      ? 'Buy your next car online with Santander Consumer USA. We offer high quality cars, easy car buying, & delivery anywhere in the USA.'
+      : 'Buy your next car online with Vroom. We offer certified used cars for sale, no haggle car buying, full warranties and home shipping anywhere in the USA.';
+
+  const indexPage = brand === Brand.SANTANDER ? true : false;
+
   const experiments =
     brand === Brand.VROOM
       ? await experimentSDK.getRunningExperiments(marketingId)
@@ -141,8 +155,11 @@ CarsPage.getInitialProps = async (context: NextPageContext): Promise<Props> => {
   );
   return {
     brand,
-    initialStoreState,
+    description,
     experiments,
+    indexPage,
+    initialStoreState,
+    title,
   };
 };
 
