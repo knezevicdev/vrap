@@ -34,6 +34,7 @@ describe('isEnum', () => {
     expect(isTestEnum('value1')).toBeTruthy();
     expect(isTestEnum('value2')).toBeTruthy();
     expect(isTestEnum('non-test-enum')).toBeFalsy();
+    expect(isTestEnum(undefined)).toBeFalsy();
   });
   test('2', () => {
     const isColor = isEnum(Color);

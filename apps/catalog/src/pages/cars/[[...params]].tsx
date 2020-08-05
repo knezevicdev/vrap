@@ -78,8 +78,8 @@ CarsPage.getInitialProps = async (context: NextPageContext): Promise<Props> => {
   const marketingId = cookies['uuid'];
 
   const {
+    asPath,
     query: {
-      filters,
       gclid,
       subid,
       utm_source,
@@ -124,8 +124,6 @@ CarsPage.getInitialProps = async (context: NextPageContext): Promise<Props> => {
     experiments,
     context.query
   );
-  const filtersQueryParam =
-    typeof filters === 'string' ? (filters as string) : undefined;
 
   // FIT-583
   // Persist key attribution query params across navigation.
@@ -148,10 +146,16 @@ CarsPage.getInitialProps = async (context: NextPageContext): Promise<Props> => {
       addQueryPrefix: false,
     }
   );
+
+  // DELTA-4
+  // Based on testing it seems that "asPath" is always a string,
+  // but just to be safe, I'm covering the undefined case.
+  const url = typeof asPath === 'string' ? (asPath as string) : '';
+
   const initialStoreState = await getInitialCarsStoreState(
     attributionQueryString,
     geoLocationSortDefaultVariant,
-    filtersQueryParam
+    url
   );
   return {
     brand,

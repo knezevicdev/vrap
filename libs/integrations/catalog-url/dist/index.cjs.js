@@ -250,6 +250,21 @@ function _typeof(obj) {
   return _typeof(obj);
 }
 
+function _defineProperty(obj, key, value) {
+  if (key in obj) {
+    Object.defineProperty(obj, key, {
+      value: value,
+      enumerable: true,
+      configurable: true,
+      writable: true
+    });
+  } else {
+    obj[key] = value;
+  }
+
+  return obj;
+}
+
 var isEnum = function isEnum(e) {
   return function (token) {
     return Object.values(e).includes(token);
@@ -366,50 +381,56 @@ var isSort = function isSort(x) {
   return true;
 };
 
-var getDescriptorParam = function getDescriptorParam(filtersData) {
-  var descriptorParamArray = [];
-  var filtersDataMakeAndModels = filtersData[exports.Filters.MAKE_AND_MODELS];
-
-  if (filtersDataMakeAndModels && filtersDataMakeAndModels.length > 0) {
-    var makeAndModels = filtersDataMakeAndModels[0];
-    descriptorParamArray.push(makeAndModels.makeSlug);
-
-    if (makeAndModels.modelSlugs && makeAndModels.modelSlugs.length > 0) {
-      descriptorParamArray.push(makeAndModels.modelSlugs[0]);
-    }
+var filtersQueryParamKey = 'filters';
+var paramsBasePath = '/cars';
+var typesKey = 'types';
+var allModelsKey = 'all';
+var getYearParam = function getYearParam(year) {
+  if (year.min === year.max) {
+    return "".concat(year.min);
   }
 
-  var filtersDataBodyTypes = filtersData[exports.Filters.BODY_TYPES];
-
-  if (filtersDataBodyTypes && filtersDataBodyTypes.length > 0) {
-    descriptorParamArray.push(filtersDataBodyTypes[0]);
-  }
-
-  if (descriptorParamArray.length === 0) {
-    return '';
-  }
-
-  return "/".concat(descriptorParamArray.join('/'));
-};
-var getYearParam = function getYearParam(filtersData) {
-  var filtersDataYear = filtersData[exports.Filters.YEAR];
-
-  if (!filtersDataYear) {
-    return '';
-  }
-
-  if (filtersDataYear.min === filtersDataYear.max) {
-    return "/".concat(filtersDataYear.min);
-  }
-
-  return "/".concat(filtersDataYear.min, "-").concat(filtersDataYear.max);
+  return "".concat(year.min, "-").concat(year.max);
 };
 var getParams = function getParams(filtersData) {
   if (!filtersData) {
     return '';
   }
 
-  return "".concat(getDescriptorParam(filtersData)).concat(getYearParam(filtersData));
+  var filtersDataMakeAndModels = filtersData[exports.Filters.MAKE_AND_MODELS];
+  var makeAndModels = filtersDataMakeAndModels && filtersDataMakeAndModels[0];
+  var makeSlug = makeAndModels && makeAndModels.makeSlug;
+  var modelSlugs = makeAndModels && makeAndModels.modelSlugs;
+  var modelSlug = modelSlugs && modelSlugs[0];
+  var year = filtersData[exports.Filters.YEAR];
+  var filtersDataBodyTypes = filtersData[exports.Filters.BODY_TYPES];
+  var bodyType = filtersDataBodyTypes && filtersDataBodyTypes[0];
+
+  if (makeSlug && year) {
+    if (modelSlug) {
+      return "/".concat(makeSlug, "/").concat(modelSlug, "/").concat(getYearParam(year));
+    }
+
+    return "/".concat(makeSlug, "/").concat(allModelsKey, "/").concat(getYearParam(year));
+  }
+
+  if (makeSlug && modelSlug) {
+    return "/".concat(makeSlug, "/").concat(modelSlug);
+  }
+
+  if (makeSlug && bodyType) {
+    return "/".concat(typesKey, "/").concat(bodyType, "/").concat(makeSlug);
+  }
+
+  if (makeSlug) {
+    return "/".concat(makeSlug);
+  }
+
+  if (bodyType) {
+    return "/".concat(typesKey, "/").concat(bodyType);
+  }
+
+  return '';
 };
 var getQuery = function getQuery(filtersData) {
   if (!filtersData) {
@@ -423,18 +444,16 @@ var getQuery = function getQuery(filtersData) {
   }
 
   var encodedFiltersData = jsBase64.Base64.encode(jsonFiltersData);
-  return "?filters=".concat(encodedFiltersData);
+  return "?".concat(filtersQueryParamKey, "=").concat(encodedFiltersData);
 };
-var getUrlFromFiltersData = function getUrlFromFiltersData(filtersData) {
-  var url = "/cars".concat(getParams(filtersData)).concat(getQuery(filtersData));
+var getUrlFromFiltersData = function getUrlFromFiltersData(filtersData, options) {
+  var addFiltersQueryParam = options && options.addFiltersQueryParam;
+  var query = addFiltersQueryParam ? getQuery(filtersData) : '';
+  var url = "".concat(paramsBasePath).concat(getParams(filtersData)).concat(query);
   return url;
 };
-var getFiltersDataFromUrl = function getFiltersDataFromUrl(filtersQueryParam) {
-  if (!filtersQueryParam) {
-    return undefined;
-  } // eslint-disable-next-line @typescript-eslint/no-explicit-any
-
-
+var getFiltersDataFromFiltersQueryParam = function getFiltersDataFromFiltersQueryParam(filtersQueryParam) {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   var parsed;
 
   try {
@@ -502,6 +521,107 @@ var getFiltersDataFromUrl = function getFiltersDataFromUrl(filtersQueryParam) {
   }
 
   return filtersData;
+};
+var getFiltersDataFromTypesTokens = function getFiltersDataFromTypesTokens(tokens) {
+  var _ref;
+
+  var isBodyType = isEnum(exports.BodyType);
+  var bodyTypeToken = tokens[1];
+  var bodyType = isBodyType(bodyTypeToken) ? bodyTypeToken : undefined;
+  var makeSlug = tokens[2];
+
+  if (!bodyType && !makeSlug) {
+    return undefined;
+  }
+
+  return _ref = {}, _defineProperty(_ref, exports.Filters.BODY_TYPES, bodyType ? [bodyType] : undefined), _defineProperty(_ref, exports.Filters.MAKE_AND_MODELS, makeSlug ? [{
+    makeSlug: makeSlug
+  }] : undefined), _ref;
+};
+var getFiltersDataFromMmyTokens = function getFiltersDataFromMmyTokens(tokens) {
+  if (tokens.length === 1) {
+    return _defineProperty({}, exports.Filters.MAKE_AND_MODELS, [{
+      makeSlug: tokens[0]
+    }]);
+  }
+
+  if (tokens.length === 2) {
+    return _defineProperty({}, exports.Filters.MAKE_AND_MODELS, [{
+      makeSlug: tokens[0],
+      modelSlugs: tokens[1] !== allModelsKey ? [tokens[1]] : undefined
+    }]);
+  }
+
+  if (tokens.length === 3) {
+    var _ref4;
+
+    var yearTokens = tokens[2].split('-').map(function (item) {
+      return parseInt(item);
+    }).filter(function (item) {
+      return isNumber(item);
+    });
+    var year;
+
+    if (yearTokens.length === 1) {
+      year = {
+        max: yearTokens[0],
+        min: yearTokens[0]
+      };
+    } else if (yearTokens.length === 2) {
+      year = {
+        max: yearTokens[1],
+        min: yearTokens[0]
+      };
+    }
+
+    return _ref4 = {}, _defineProperty(_ref4, exports.Filters.MAKE_AND_MODELS, [{
+      makeSlug: tokens[0],
+      modelSlugs: tokens[1] !== allModelsKey ? [tokens[1]] : undefined
+    }]), _defineProperty(_ref4, exports.Filters.YEAR, year), _ref4;
+  }
+
+  return undefined;
+};
+var getFiltersDataFromParams = function getFiltersDataFromParams(params) {
+  var tokens = params.split('/').filter(function (item) {
+    return !!item;
+  });
+
+  if (tokens.length === 0) {
+    return undefined;
+  }
+
+  if (tokens[0] === typesKey) {
+    return getFiltersDataFromTypesTokens(tokens);
+  }
+
+  return getFiltersDataFromMmyTokens(tokens);
+};
+var getFiltersDataFromUrl = function getFiltersDataFromUrl(url) {
+  var questionMarkIndex = url.indexOf('?');
+  var queryString = questionMarkIndex !== -1 ? url.substring(questionMarkIndex) : undefined;
+  var query = new URLSearchParams(queryString);
+  var filtersQueryParam = query.get(filtersQueryParamKey);
+
+  if (filtersQueryParam) {
+    return getFiltersDataFromFiltersQueryParam(filtersQueryParam);
+  }
+
+  var paramsBasePathIndex = url.indexOf(paramsBasePath);
+
+  if (paramsBasePathIndex === -1) {
+    return undefined;
+  }
+
+  var paramsStartIndex = paramsBasePathIndex + paramsBasePath.length;
+  var paramsEndIndex = questionMarkIndex !== -1 ? questionMarkIndex : undefined;
+  var params = url.substring(paramsStartIndex, paramsEndIndex);
+
+  if (params) {
+    return getFiltersDataFromParams(params);
+  }
+
+  return undefined;
 };
 
 exports.addAllModels = addAllModels;
