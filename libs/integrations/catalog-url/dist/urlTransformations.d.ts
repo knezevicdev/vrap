@@ -1,7 +1,10 @@
-import { FiltersData } from './types';
-export declare const getDescriptorParam: (filtersData: FiltersData) => string;
-export declare const getYearParam: (filtersData: FiltersData) => string;
+import { FiltersData, GetUrlFromFiltersDataOptions, MaxAndMin } from './types';
+export declare const getYearParam: (year: MaxAndMin) => string;
 export declare const getParams: (filtersData?: FiltersData | undefined) => string;
 export declare const getQuery: (filtersData?: FiltersData | undefined) => string;
-export declare const getUrlFromFiltersData: (filtersData?: FiltersData | undefined) => string;
-export declare const getFiltersDataFromUrl: (filtersQueryParam?: string | undefined) => FiltersData | undefined;
+export declare const getUrlFromFiltersData: (filtersData?: FiltersData | undefined, options?: GetUrlFromFiltersDataOptions | undefined) => string;
+export declare const getFiltersDataFromFiltersQueryParam: (filtersQueryParam: string) => FiltersData | undefined;
+export declare const getFiltersDataFromTypesTokens: (tokens: string[]) => FiltersData | undefined;
+export declare const getFiltersDataFromMmyTokens: (tokens: string[]) => FiltersData | undefined;
+export declare const getFiltersDataFromParams: (params: string) => FiltersData | undefined;
+export declare const getFiltersDataFromUrl: (url: string) => FiltersData | undefined;

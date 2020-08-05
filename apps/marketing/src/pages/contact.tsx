@@ -8,13 +8,22 @@ import Page from 'src/Page';
 
 interface Props {
   brand: Brand;
+  description: string;
+  title: string;
 }
 
-const ContactPage: NextPage<Props> = ({ brand }) => {
+const ContactPage: NextPage<Props> = ({ brand, description, title }) => {
+  const head = (
+    <>
+      <title>{title}</title>
+      <meta name="description" content={description}></meta>
+    </>
+  );
+
   return (
     <BrandContext.Provider value={brand}>
       <ThemeProvider brand={brand}>
-        <Page name="Contact">
+        <Page name="Contact" head={head}>
           <Contact />
         </Page>
       </ThemeProvider>
@@ -34,7 +43,15 @@ ContactPage.getInitialProps = async (ctx: NextPageContext): Promise<Props> => {
   const brand =
     (brandHeader || queryBrand) == santanderKey ? Brand.SANTANDER : Brand.VROOM;
 
-  return { brand };
+  const title =
+    brand === Brand.SANTANDER ? 'Contact Us - Santander Consumer USA' : '';
+
+  const description =
+    brand === Brand.SANTANDER
+      ? 'Call 1-888-222-4227 about your Santander Consumer USA account or call 1-855-659-0278 about purchasing a vehicle. We’re here to help.'
+      : '';
+
+  return { brand, description, title };
 };
 
 export default ContactPage;

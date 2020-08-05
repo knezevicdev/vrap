@@ -459,6 +459,39 @@ var Typography = function Typography(props) {
   }, children);
 };
 
+var SantanderFaviconSnippet = function SantanderFaviconSnippet(_ref) {
+  var staticAssetsHostUrl = _ref.staticAssetsHostUrl,
+      theme = _ref.theme;
+  return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("link", {
+    rel: "apple-touch-icon",
+    sizes: "180x180",
+    href: "".concat(staticAssetsHostUrl, "/santander/favicons/apple-touch-icon.png")
+  }), /*#__PURE__*/React.createElement("link", {
+    rel: "icon",
+    type: "image/png",
+    sizes: "32x32",
+    href: "".concat(staticAssetsHostUrl, "/santander/favicons/favicon-32x32.png")
+  }), /*#__PURE__*/React.createElement("link", {
+    rel: "icon",
+    type: "image/png",
+    sizes: "16x16",
+    href: "".concat(staticAssetsHostUrl, "/santander/favicons/favicon-16x16.png")
+  }), /*#__PURE__*/React.createElement("link", {
+    rel: "manifest",
+    href: "".concat(staticAssetsHostUrl, "/santander/favicons/site.webmanifest")
+  }), /*#__PURE__*/React.createElement("link", {
+    rel: "mask-icon",
+    href: "".concat(staticAssetsHostUrl, "/santander/favicons/safari-pinned-tab.svg"),
+    color: theme.palette.primary.main
+  }), /*#__PURE__*/React.createElement("meta", {
+    name: "msapplication-TileColor",
+    content: theme.palette.primary.main
+  }), /*#__PURE__*/React.createElement("meta", {
+    name: "theme-color",
+    content: theme.palette.primary.main
+  }));
+};
+
 var SantanderFontsSnippet = function SantanderFontsSnippet(_ref) {
   var staticAssetsHostUrl = _ref.staticAssetsHostUrl;
   return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("link", {
@@ -523,10 +556,12 @@ var UISnippet = function UISnippet(_ref) {
   var theme = getThemeForBrand(brand);
 
   if (brand === exports.Brand.SANTANDER) {
-    // TODO: add Santander favicon snippet.
-    return /*#__PURE__*/React.createElement(SantanderFontsSnippet, {
+    return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(SantanderFaviconSnippet, {
+      staticAssetsHostUrl: staticAssetsHostUrl,
+      theme: theme
+    }), /*#__PURE__*/React.createElement(SantanderFontsSnippet, {
       staticAssetsHostUrl: staticAssetsHostUrl
-    });
+    }));
   }
 
   return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(VroomFaviconSnippet, {

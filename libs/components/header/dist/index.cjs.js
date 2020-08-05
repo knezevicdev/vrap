@@ -14761,7 +14761,9 @@ var LearningLinks = styles.styled('a')(function (_ref21) {
 
 var View$2 = function View(_ref22) {
   var viewModel = _ref22.viewModel;
-  return /*#__PURE__*/React__default.createElement(ViewContainer, null, /*#__PURE__*/React__default.createElement(Top, null, /*#__PURE__*/React__default.createElement(Logo$2, null), /*#__PURE__*/React__default.createElement(DesktopView$1, null, /*#__PURE__*/React__default.createElement(ShopNowContainer, {
+  return /*#__PURE__*/React__default.createElement(ViewContainer, null, /*#__PURE__*/React__default.createElement(Top, null, /*#__PURE__*/React__default.createElement("a", {
+    href: viewModel.logoLink.href
+  }, /*#__PURE__*/React__default.createElement(Logo$2, null)), /*#__PURE__*/React__default.createElement(DesktopView$1, null, /*#__PURE__*/React__default.createElement(ShopNowContainer, {
     href: viewModel.shopNow.href
   }, /*#__PURE__*/React__default.createElement(ShopIcon, null), /*#__PURE__*/React__default.createElement(ShopLabel, null, viewModel.shopNow.label))), /*#__PURE__*/React__default.createElement(MobileView$1, null, /*#__PURE__*/React__default.createElement(MenuIcon, {
     onClick: viewModel.onDrawerClick
@@ -14825,6 +14827,10 @@ var ViewModel = function ViewModel(store) {
   _defineProperty(this, "shopNow", {
     label: 'Shop now',
     href: "/cars"
+  });
+
+  _defineProperty(this, "logoLink", {
+    href: '/'
   });
 
   _defineProperty(this, "financeCalculators", {

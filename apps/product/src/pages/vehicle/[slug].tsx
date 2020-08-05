@@ -49,6 +49,14 @@ InventoryPage.getInitialProps = async ({ query, res, req }): Promise<Props> => {
   const vin = slugArray[slugArray.length - 1];
   const initialState = await getInitialInventoryStoreState(vin);
 
+  const headerBrandKey = 'x-brand';
+  const santanderKey = 'santander';
+  const brandHeader = req && req.headers[headerBrandKey];
+  const queryBrand = query.brand;
+
+  const brand =
+    (brandHeader || queryBrand) == santanderKey ? Brand.SANTANDER : Brand.VROOM;
+
   let canonicalHref: string | undefined;
   let title = '';
   if (initialState.vehicleStatus === Status.SUCCESS) {
@@ -60,7 +68,8 @@ InventoryPage.getInitialProps = async ({ query, res, req }): Promise<Props> => {
       modelSlug,
       listingPrice,
     } = initialState.vehicle._source;
-    canonicalHref = `/inventory/${makeSlug}-${modelSlug}-${year}-${vin}`;
+    //TODO: Replace vehicle -> inventory after AB test
+    canonicalHref = `/vehicle/${makeSlug}-${modelSlug}-${year}-${vin}`;
     const currencyFormatter = new Intl.NumberFormat('en-US', {
       style: 'currency',
       currency: 'USD',
@@ -68,21 +77,19 @@ InventoryPage.getInitialProps = async ({ query, res, req }): Promise<Props> => {
       maximumFractionDigits: 0,
     });
     const price = currencyFormatter.format(listingPrice);
-    title = `Used ${year} ${make} ${model} For Sale (${price}) | Vroom`;
+    title =
+      brand === Brand.SANTANDER
+        ? `Used ${year} ${make} ${model} - Santander Consumer USA`
+        : `Used ${year} ${make} ${model} For Sale (${price}) | Vroom`;
   } else {
-    title = 'Car Not Available | Vroom';
+    title =
+      brand === Brand.SANTANDER
+        ? 'Car Not Available - Santander Consumer USA'
+        : 'Car Not Available | Vroom';
     if (res) {
       res.statusCode = 404;
     }
   }
-
-  const headerBrandKey = 'x-brand';
-  const santanderKey = 'santander';
-  const brandHeader = req && req.headers[headerBrandKey];
-  const queryBrand = query.brand;
-
-  const brand =
-    (brandHeader || queryBrand) == santanderKey ? Brand.SANTANDER : Brand.VROOM;
 
   return { canonicalHref, initialState, title, brand };
 };

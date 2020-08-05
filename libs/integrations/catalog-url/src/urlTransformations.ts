@@ -16,48 +16,63 @@ import {
   DriveType,
   Filters,
   FiltersData,
+  GetUrlFromFiltersDataOptions,
+  MaxAndMin,
   Transmission,
 } from './types';
 
-export const getDescriptorParam = (filtersData: FiltersData): string => {
-  const descriptorParamArray: string[] = [];
+const filtersQueryParamKey = 'filters';
+const paramsBasePath = '/cars';
+const typesKey = 'types';
+const allModelsKey = 'all';
 
-  const filtersDataMakeAndModels = filtersData[Filters.MAKE_AND_MODELS];
-  if (filtersDataMakeAndModels && filtersDataMakeAndModels.length > 0) {
-    const makeAndModels = filtersDataMakeAndModels[0];
-    descriptorParamArray.push(makeAndModels.makeSlug);
-    if (makeAndModels.modelSlugs && makeAndModels.modelSlugs.length > 0) {
-      descriptorParamArray.push(makeAndModels.modelSlugs[0]);
-    }
+export const getYearParam = (year: MaxAndMin): string => {
+  if (year.min === year.max) {
+    return `${year.min}`;
   }
-
-  const filtersDataBodyTypes = filtersData[Filters.BODY_TYPES];
-  if (filtersDataBodyTypes && filtersDataBodyTypes.length > 0) {
-    descriptorParamArray.push(filtersDataBodyTypes[0]);
-  }
-
-  if (descriptorParamArray.length === 0) {
-    return '';
-  }
-  return `/${descriptorParamArray.join('/')}`;
-};
-
-export const getYearParam = (filtersData: FiltersData): string => {
-  const filtersDataYear = filtersData[Filters.YEAR];
-  if (!filtersDataYear) {
-    return '';
-  }
-  if (filtersDataYear.min === filtersDataYear.max) {
-    return `/${filtersDataYear.min}`;
-  }
-  return `/${filtersDataYear.min}-${filtersDataYear.max}`;
+  return `${year.min}-${year.max}`;
 };
 
 export const getParams = (filtersData?: FiltersData): string => {
   if (!filtersData) {
     return '';
   }
-  return `${getDescriptorParam(filtersData)}${getYearParam(filtersData)}`;
+
+  const filtersDataMakeAndModels = filtersData[Filters.MAKE_AND_MODELS];
+  const makeAndModels = filtersDataMakeAndModels && filtersDataMakeAndModels[0];
+  const makeSlug = makeAndModels && makeAndModels.makeSlug;
+  const modelSlugs = makeAndModels && makeAndModels.modelSlugs;
+  const modelSlug = modelSlugs && modelSlugs[0];
+
+  const year = filtersData[Filters.YEAR];
+
+  const filtersDataBodyTypes = filtersData[Filters.BODY_TYPES];
+  const bodyType = filtersDataBodyTypes && filtersDataBodyTypes[0];
+
+  if (makeSlug && year) {
+    if (modelSlug) {
+      return `/${makeSlug}/${modelSlug}/${getYearParam(year)}`;
+    }
+    return `/${makeSlug}/${allModelsKey}/${getYearParam(year)}`;
+  }
+
+  if (makeSlug && modelSlug) {
+    return `/${makeSlug}/${modelSlug}`;
+  }
+
+  if (makeSlug && bodyType) {
+    return `/${typesKey}/${bodyType}/${makeSlug}`;
+  }
+
+  if (makeSlug) {
+    return `/${makeSlug}`;
+  }
+
+  if (bodyType) {
+    return `/${typesKey}/${bodyType}`;
+  }
+
+  return '';
 };
 
 export const getQuery = (filtersData?: FiltersData): string => {
@@ -69,21 +84,22 @@ export const getQuery = (filtersData?: FiltersData): string => {
     return '';
   }
   const encodedFiltersData = Base64.encode(jsonFiltersData);
-  return `?filters=${encodedFiltersData}`;
+  return `?${filtersQueryParamKey}=${encodedFiltersData}`;
 };
 
-export const getUrlFromFiltersData = (filtersData?: FiltersData): string => {
-  const url = `/cars${getParams(filtersData)}${getQuery(filtersData)}`;
+export const getUrlFromFiltersData = (
+  filtersData?: FiltersData,
+  options?: GetUrlFromFiltersDataOptions
+): string => {
+  const addFiltersQueryParam = options && options.addFiltersQueryParam;
+  const query = addFiltersQueryParam ? getQuery(filtersData) : '';
+  const url = `${paramsBasePath}${getParams(filtersData)}${query}`;
   return url;
 };
 
-export const getFiltersDataFromUrl = (
-  filtersQueryParam?: string
+export const getFiltersDataFromFiltersQueryParam = (
+  filtersQueryParam: string
 ): FiltersData | undefined => {
-  if (!filtersQueryParam) {
-    return undefined;
-  }
-
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   let parsed: any;
 
@@ -149,4 +165,126 @@ export const getFiltersDataFromUrl = (
   }
 
   return filtersData;
+};
+
+export const getFiltersDataFromTypesTokens = (
+  tokens: string[]
+): FiltersData | undefined => {
+  const isBodyType = isEnum(BodyType);
+  const bodyTypeToken = tokens[1];
+  const bodyType: BodyType | undefined = isBodyType(bodyTypeToken)
+    ? (bodyTypeToken as BodyType)
+    : undefined;
+  const makeSlug = tokens[2];
+  if (!bodyType && !makeSlug) {
+    return undefined;
+  }
+  return {
+    [Filters.BODY_TYPES]: bodyType ? [bodyType] : undefined,
+    [Filters.MAKE_AND_MODELS]: makeSlug
+      ? [
+          {
+            makeSlug,
+          },
+        ]
+      : undefined,
+  };
+};
+
+export const getFiltersDataFromMmyTokens = (
+  tokens: string[]
+): FiltersData | undefined => {
+  if (tokens.length === 1) {
+    return {
+      [Filters.MAKE_AND_MODELS]: [
+        {
+          makeSlug: tokens[0],
+        },
+      ],
+    };
+  }
+  if (tokens.length === 2) {
+    return {
+      [Filters.MAKE_AND_MODELS]: [
+        {
+          makeSlug: tokens[0],
+          modelSlugs: tokens[1] !== allModelsKey ? [tokens[1]] : undefined,
+        },
+      ],
+    };
+  }
+  if (tokens.length === 3) {
+    const yearTokens = tokens[2]
+      .split('-')
+      .map((item) => parseInt(item))
+      .filter((item) => isNumber(item));
+
+    let year: MaxAndMin | undefined;
+    if (yearTokens.length === 1) {
+      year = {
+        max: yearTokens[0],
+        min: yearTokens[0],
+      };
+    } else if (yearTokens.length === 2) {
+      year = {
+        max: yearTokens[1],
+        min: yearTokens[0],
+      };
+    }
+
+    return {
+      [Filters.MAKE_AND_MODELS]: [
+        {
+          makeSlug: tokens[0],
+          modelSlugs: tokens[1] !== allModelsKey ? [tokens[1]] : undefined,
+        },
+      ],
+      [Filters.YEAR]: year,
+    };
+  }
+  return undefined;
+};
+
+export const getFiltersDataFromParams = (
+  params: string
+): FiltersData | undefined => {
+  const tokens = params.split('/').filter((item) => !!item);
+  if (tokens.length === 0) {
+    return undefined;
+  }
+
+  if (tokens[0] === typesKey) {
+    return getFiltersDataFromTypesTokens(tokens);
+  }
+
+  return getFiltersDataFromMmyTokens(tokens);
+};
+
+export const getFiltersDataFromUrl = (url: string): FiltersData | undefined => {
+  const questionMarkIndex = url.indexOf('?');
+  const queryString =
+    questionMarkIndex !== -1 ? url.substring(questionMarkIndex) : undefined;
+  const query = new URLSearchParams(queryString);
+
+  const filtersQueryParam = query.get(filtersQueryParamKey);
+
+  if (filtersQueryParam) {
+    return getFiltersDataFromFiltersQueryParam(filtersQueryParam);
+  }
+
+  const paramsBasePathIndex = url.indexOf(paramsBasePath);
+  if (paramsBasePathIndex === -1) {
+    return undefined;
+  }
+
+  const paramsStartIndex = paramsBasePathIndex + paramsBasePath.length;
+  const paramsEndIndex =
+    questionMarkIndex !== -1 ? questionMarkIndex : undefined;
+
+  const params = url.substring(paramsStartIndex, paramsEndIndex);
+  if (params) {
+    return getFiltersDataFromParams(params);
+  }
+
+  return undefined;
 };

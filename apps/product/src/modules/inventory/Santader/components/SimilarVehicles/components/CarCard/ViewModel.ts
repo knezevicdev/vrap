@@ -95,14 +95,16 @@ class CarCardViewModel {
   }
 
   link(): string {
-    return `/inventory/${this.car.vin}`;
+    //TODO: Replace vehicle -> inventory after AB test
+    return `/vehicle/${this.car.vin}`;
   }
 
   navigate = (): void => {
     if (!this.car) {
       return;
     }
-    const link = `/inventory/${this.car.vin}`;
+    //TODO: Replace vehicle -> inventory after AB test
+    const link = `/vehicle/${this.car.vin}`;
     const {
       consignmentPartnerId,
       inventoryId,

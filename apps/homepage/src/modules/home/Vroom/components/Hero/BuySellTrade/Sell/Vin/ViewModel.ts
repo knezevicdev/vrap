@@ -45,7 +45,7 @@ class VinViewModel {
   };
 
   isButtonDisabled = (): boolean => {
-    return this.getInputValue() === '' || !this.isVinValid();
+    return !this.isVinValid();
   };
 
   openDialog = (): void => {
@@ -59,7 +59,7 @@ class VinViewModel {
   /* Based off vroom-com TODO: Could use better validation*/
   isVinValid = (): boolean => {
     const vin = this.getInputValue();
-    return vin.length === 17 && this.isInputValid();
+    return vin !== '' && vin.length === 17 && this.isInputValid();
   };
 
   isInputValid = (): boolean => {

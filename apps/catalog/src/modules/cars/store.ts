@@ -245,7 +245,7 @@ export async function getInitialCarsStoreState(
   attributionQueryString: string,
   geoLocationSortDefaultVariant: boolean,
   geo: Coordinates | undefined,
-  filtersQueryParam?: string
+  url: string
 ): Promise<InitialCarsStoreState> {
   const initialState: InitialCarsStoreState = {
     attributionQueryString,
@@ -255,7 +255,7 @@ export async function getInitialCarsStoreState(
     geoLocationSortDefaultVariant,
   };
 
-  initialState.filtersData = getFiltersDataFromUrl(filtersQueryParam);
+  initialState.filtersData = getFiltersDataFromUrl(url);
 
   if (!publicRuntimeConfig.INVSEARCH_V3_URL) {
     throw new Error('publicRuntimeConfig.INVSEARCH_V3_URL is undefined');
@@ -464,7 +464,9 @@ export class CarsStore {
           ...filtersData,
           [Filters.PAGE]: undefined,
         };
-    const as = getUrlFromFiltersData(filtersDataToUse);
+    const as = getUrlFromFiltersData(filtersDataToUse, {
+      addFiltersQueryParam: true,
+    });
 
     // FIT-583
     // Persist key attribution query params across navigation.

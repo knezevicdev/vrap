@@ -189,7 +189,9 @@ const View: React.FC<Props> = ({ viewModel }) => {
   return (
     <ViewContainer>
       <Top>
-        <Logo />
+        <a href={viewModel.logoLink.href}>
+          <Logo />
+        </a>
         <DesktopView>
           <ShopNowContainer href={viewModel.shopNow.href}>
             <ShopIcon />

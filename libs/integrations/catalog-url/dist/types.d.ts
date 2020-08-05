@@ -80,3 +80,6 @@ export interface FiltersData {
     [Filters.TRANSMISSION]?: Transmission;
     [Filters.YEAR]?: MaxAndMin;
 }
+export interface GetUrlFromFiltersDataOptions {
+    addFiltersQueryParam?: boolean;
+}
