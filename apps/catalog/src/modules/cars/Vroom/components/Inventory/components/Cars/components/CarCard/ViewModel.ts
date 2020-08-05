@@ -108,8 +108,7 @@ class CarCardViewModel {
       this.carsStore.attributionQueryString !== ''
         ? `?${this.carsStore.attributionQueryString}`
         : '';
-    //TODO: Replace vehicle -> inventory after AB test
-    return `/vehicle/${this.car.vin}${attributionQueryString}`;
+    return `/inventory/${this.car.vin}${attributionQueryString}`;
   }
 
   trackProductClick = (): void => {
