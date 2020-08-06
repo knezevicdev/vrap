@@ -6,10 +6,11 @@ import { Status } from 'src/networking/types';
 
 export class NotifyMeStore {
   @observable modalOpen = false;
-  @observable accessToken: string | undefined = undefined;
   @observable userTokenStatus: Status = Status.INITIAL;
+  @observable email?: string;
 
-  private getAccessToken = (): string | undefined => {
+  @action
+  private initUserAccount = async (): Promise<void> => {
     try {
       // https://github.com/js-cookie/js-cookie/blob/master/SERVER_SIDE.md#express
       const authTokenWithExpressPrefix = ClientSideCookies.get('authToken');
@@ -22,20 +23,11 @@ export class NotifyMeStore {
       if (!loggedIn) {
         return undefined;
       }
-      return authToken.accessToken;
-    } catch {
-      return undefined;
-    }
-  };
-  @action
-  private initUserAccount = async (): Promise<void> => {
-    try {
-      const accessToken = this.getAccessToken();
-      if (accessToken !== undefined) {
-        runInAction(() => {
-          this.accessToken = accessToken;
-          this.userTokenStatus = Status.SUCCESS;
-        });
+      try {
+        const { email } = jwtDecode(authToken.idToken);
+        this.email = email;
+      } catch {
+        this.email = undefined;
       }
     } catch {
       runInAction(() => {

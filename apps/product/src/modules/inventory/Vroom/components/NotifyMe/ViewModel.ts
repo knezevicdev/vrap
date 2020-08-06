@@ -9,7 +9,6 @@ class NotifyMeViewModel {
   readonly dialogTitle: string = 'Notify Me When Available';
   readonly dialogBodyLoggedOut: string =
     'Please create an account to receive an email notification when this car becomes available for sale.';
-  readonly dialogBodyLoggedIn: string = 'LOGGED IN OMG';
   readonly createAccountButton: string = 'CREATE AN ACCOUNT';
   readonly logInButton: string = 'LOG IN';
 
@@ -45,7 +44,11 @@ class NotifyMeViewModel {
   }
 
   isLoggedIn(): boolean {
-    return this.notifyMeStore.accessToken !== undefined;
+    return this.notifyMeStore.email !== undefined;
+  }
+
+  getUserEmail(): string | undefined {
+    return this.notifyMeStore.email;
   }
 }
 

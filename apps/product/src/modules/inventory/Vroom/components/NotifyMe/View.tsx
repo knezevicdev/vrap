@@ -84,7 +84,7 @@ const NotifyMeView: React.FC<Props> = (props) => {
                 <CloseIcon />
               </StyledIconButton>
             </DialogTitle>
-            <DialogBody>{viewModel.dialogBodyLoggedIn}</DialogBody>
+            <DialogBody>{viewModel.getUserEmail()}</DialogBody>
           </DialogContent>
         </Dialog>
       ) : (
