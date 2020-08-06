@@ -657,6 +657,85 @@ function _defineProperty$1(obj, key, value) {
   return obj;
 }
 
+function _inherits(subClass, superClass) {
+  if (typeof superClass !== "function" && superClass !== null) {
+    throw new TypeError("Super expression must either be null or a function");
+  }
+
+  subClass.prototype = Object.create(superClass && superClass.prototype, {
+    constructor: {
+      value: subClass,
+      writable: true,
+      configurable: true
+    }
+  });
+  if (superClass) _setPrototypeOf(subClass, superClass);
+}
+
+function _getPrototypeOf(o) {
+  _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) {
+    return o.__proto__ || Object.getPrototypeOf(o);
+  };
+  return _getPrototypeOf(o);
+}
+
+function _setPrototypeOf(o, p) {
+  _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) {
+    o.__proto__ = p;
+    return o;
+  };
+
+  return _setPrototypeOf(o, p);
+}
+
+function _isNativeReflectConstruct() {
+  if (typeof Reflect === "undefined" || !Reflect.construct) return false;
+  if (Reflect.construct.sham) return false;
+  if (typeof Proxy === "function") return true;
+
+  try {
+    Date.prototype.toString.call(Reflect.construct(Date, [], function () {}));
+    return true;
+  } catch (e) {
+    return false;
+  }
+}
+
+function _assertThisInitialized(self) {
+  if (self === void 0) {
+    throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
+  }
+
+  return self;
+}
+
+function _possibleConstructorReturn(self, call) {
+  if (call && (typeof call === "object" || typeof call === "function")) {
+    return call;
+  }
+
+  return _assertThisInitialized(self);
+}
+
+function _createSuper(Derived) {
+  var hasNativeReflectConstruct = _isNativeReflectConstruct();
+
+  return function () {
+    var Super = _getPrototypeOf(Derived),
+        result;
+
+    if (hasNativeReflectConstruct) {
+      var NewTarget = _getPrototypeOf(this).constructor;
+
+      result = Reflect.construct(Super, arguments, NewTarget);
+    } else {
+      result = Super.apply(this, arguments);
+    }
+
+    return _possibleConstructorReturn(this, result);
+  };
+}
+
 function _slicedToArray(arr, i) {
   return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest();
 }
@@ -13429,84 +13508,328 @@ var View = function View(_ref11) {
     var titleStyle = title.href ? {} : {
       textDecoration: 'none'
     };
+    var titleOnClick = title.href ? title.handleAnalytics : undefined;
     return /*#__PURE__*/React__default.createElement(Links, {
       key: title.label
     }, /*#__PURE__*/React__default.createElement(Typography, null, /*#__PURE__*/React__default.createElement(Title, {
       href: title.href,
       style: titleStyle,
-      target: title.target
+      target: title.target,
+      onClick: titleOnClick
     }, title.label)), links.map(function (link) {
       return /*#__PURE__*/React__default.createElement(Link, {
         key: link.label
       }, /*#__PURE__*/React__default.createElement(CustomLink, {
         href: link.href,
-        target: link.target
+        target: link.target,
+        onClick: link.handleAnalytics
       }, link.label));
     }));
   })), /*#__PURE__*/React__default.createElement(Copyright, null, /*#__PURE__*/React__default.createElement(CopyrightLabel, null, viewModel.copyrightLabel, /*#__PURE__*/React__default.createElement(CopyrightLink, {
+    onClick: viewModel.copyrightLink.handleAnalytics,
     href: viewModel.copyrightLink.href,
     target: viewModel.copyrightLink.target,
     underline: "always"
   }, viewModel.copyrightLink.label)), /*#__PURE__*/React__default.createElement(Trademark, null, viewModel.trademark), /*#__PURE__*/React__default.createElement(PoweredBy, null, /*#__PURE__*/React__default.createElement(PoweredByLabel, null, viewModel.poweredBy), /*#__PURE__*/React__default.createElement(VroomLogo, null))));
 };
 
+function _classCallCheck$9(instance, Constructor) {
+  if (!(instance instanceof Constructor)) {
+    throw new TypeError("Cannot call a class as a function");
+  }
+}
+
+function _defineProperties$8(target, props) {
+  for (var i = 0; i < props.length; i++) {
+    var descriptor = props[i];
+    descriptor.enumerable = descriptor.enumerable || false;
+    descriptor.configurable = true;
+    if ("value" in descriptor) descriptor.writable = true;
+    Object.defineProperty(target, descriptor.key, descriptor);
+  }
+}
+
+function _createClass$8(Constructor, protoProps, staticProps) {
+  if (protoProps) _defineProperties$8(Constructor.prototype, protoProps);
+  if (staticProps) _defineProperties$8(Constructor, staticProps);
+  return Constructor;
+}
+
+function _defineProperty$a(obj, key, value) {
+  if (key in obj) {
+    Object.defineProperty(obj, key, {
+      value: value,
+      enumerable: true,
+      configurable: true,
+      writable: true
+    });
+  } else {
+    obj[key] = value;
+  }
+
+  return obj;
+}
+
+function ownKeys$1(object, enumerableOnly) {
+  var keys = Object.keys(object);
+
+  if (Object.getOwnPropertySymbols) {
+    var symbols = Object.getOwnPropertySymbols(object);
+    if (enumerableOnly) symbols = symbols.filter(function (sym) {
+      return Object.getOwnPropertyDescriptor(object, sym).enumerable;
+    });
+    keys.push.apply(keys, symbols);
+  }
+
+  return keys;
+}
+
+function _objectSpread2$1(target) {
+  for (var i = 1; i < arguments.length; i++) {
+    var source = arguments[i] != null ? arguments[i] : {};
+
+    if (i % 2) {
+      ownKeys$1(Object(source), true).forEach(function (key) {
+        _defineProperty$a(target, key, source[key]);
+      });
+    } else if (Object.getOwnPropertyDescriptors) {
+      Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));
+    } else {
+      ownKeys$1(Object(source)).forEach(function (key) {
+        Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
+      });
+    }
+  }
+
+  return target;
+}
+
+function onAnalyticsReady(callback) {
+  try {
+    window.analytics.ready(callback);
+  } catch (_unused) {
+    console.log('window.analytics is not defined');
+  }
+}
+
+function setAnonymousId(anonymousId) {
+  onAnalyticsReady(function () {
+    window.analytics.user().anonymousId(anonymousId);
+  });
+}
+
+function page(name, properties) {
+  onAnalyticsReady(function () {
+    window.analytics.page(name, properties);
+  });
+}
+
+function track(event, properties) {
+  onAnalyticsReady(function () {
+    window.analytics.track(event, properties);
+  });
+}
+
+function identify(traits, userId) {
+  onAnalyticsReady(function () {
+    if (userId) {
+      window.analytics.identify(userId, traits);
+    } else {
+      window.analytics.identify(traits);
+    }
+  });
+}
+
+var AnalyticsHandler = /*#__PURE__*/function () {
+  function AnalyticsHandler() {
+    _classCallCheck$9(this, AnalyticsHandler);
+  }
+
+  _createClass$8(AnalyticsHandler, [{
+    key: "track",
+    value: function track$1(event, properties) {
+      var propertiesWithExperimentCombination = _objectSpread2$1(_objectSpread2$1({}, properties), {}, {
+        experimentCombination: AnalyticsHandler.optimizeExperimentsString
+      });
+
+      track(event, propertiesWithExperimentCombination);
+    }
+  }, {
+    key: "setAnonymousId",
+    value: function setAnonymousId$1(anonymousId) {
+      setAnonymousId(anonymousId);
+    }
+  }, {
+    key: "setExperiments",
+    value: function setExperiments(experiments) {
+      AnalyticsHandler.optimizeExperimentsString = experiments ? experiments.filter(function (experiment) {
+        return experiment.optimizeId;
+      }).map(function (experiment) {
+        return "".concat(experiment.optimizeId, ".").concat(experiment.assignedVariant);
+      }).join('!') : undefined;
+      onAnalyticsReady(function () {
+        try {
+          if (typeof window.ga === 'undefined') {
+            throw new Error('window.ga is undefined');
+          }
+
+          window.ga('set', 'exp', AnalyticsHandler.optimizeExperimentsString);
+        } catch (e) {
+          console.error(e);
+        }
+      });
+    }
+  }, {
+    key: "page",
+    value: function page$1(name, category) {
+      var properties = {
+        category: category,
+        experimentCombination: AnalyticsHandler.optimizeExperimentsString,
+        name: name
+      };
+      page(name, properties);
+    }
+  }, {
+    key: "identify",
+    value: function identify$1(traits, userId) {
+      identify(traits, userId);
+    }
+  }]);
+
+  return AnalyticsHandler;
+}();
+
+_defineProperty$a(AnalyticsHandler, "optimizeExperimentsString", void 0);
+
+var AnalyticsHandler$1 = /*#__PURE__*/function (_BaseAnalyticsHandler) {
+  _inherits(AnalyticsHandler, _BaseAnalyticsHandler);
+
+  var _super = _createSuper(AnalyticsHandler);
+
+  function AnalyticsHandler() {
+    var _this;
+
+    _classCallCheck(this, AnalyticsHandler);
+
+    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    _this = _super.call.apply(_super, [this].concat(args));
+
+    _defineProperty$1(_assertThisInitialized(_this), "getPageName", function () {
+      var page = window.location.pathname.split('/')[1];
+
+      switch (page) {
+        case 'cars':
+          {
+            return 'Catalog';
+          }
+
+        case 'vehicle':
+          {
+            return 'Product';
+          }
+
+        case 'contact':
+          {
+            return 'Contact Us';
+          }
+
+        default:
+          return 'Home';
+      }
+    });
+
+    _defineProperty$1(_assertThisInitialized(_this), "trackLinkClicked", function (label) {
+      return function () {
+        var event = 'Footer Clicked';
+        var properties = {
+          category: _this.getPageName(),
+          label: label
+        };
+
+        _this.track(event, properties);
+      };
+    });
+
+    return _this;
+  }
+
+  return AnalyticsHandler;
+}(AnalyticsHandler);
+
 var ViewModel = function ViewModel() {
   _classCallCheck(this, ViewModel);
+
+  _defineProperty$1(this, "analyticsHandler", new AnalyticsHandler$1());
 
   _defineProperty$1(this, "sections", [{
     title: {
       label: 'Learning Center',
       href: 'https://santanderconsumerusa.com/learning-center',
-      target: '_blank'
+      target: '_blank',
+      handleAnalytics: this.analyticsHandler.trackLinkClicked('Learning Center')
     },
     links: [{
       label: 'Finance Calculators',
       href: "https://santanderconsumerusa.com/learning-center/finance-calculators",
-      target: '_blank'
+      target: '_blank',
+      handleAnalytics: this.analyticsHandler.trackLinkClicked('Finance Calculators')
     }, {
       label: 'Blog',
       href: "https://santanderconsumerusa.com/blog",
-      target: '_blank'
+      target: '_blank',
+      handleAnalytics: this.analyticsHandler.trackLinkClicked('Blog')
     }]
   }, {
     title: {
       label: 'Help & Support',
       href: 'https://santanderconsumerusa.com/support',
-      target: '_blank'
+      target: '_blank',
+      handleAnalytics: this.analyticsHandler.trackLinkClicked('Help & Support')
     },
     links: [{
       label: 'Payment Options',
       href: "https://santanderconsumerusa.com/support/payments",
-      target: '_blank'
+      target: '_blank',
+      handleAnalytics: this.analyticsHandler.trackLinkClicked('Payment Options')
     }, {
       label: 'Contact Us',
-      href: "/contact"
+      href: "/contact",
+      handleAnalytics: this.analyticsHandler.trackLinkClicked('Contact Us')
     }, {
       label: 'Accessibility Services',
       href: "https://santanderconsumerusa.com/our-company/accessibility",
-      target: '_blank'
+      target: '_blank',
+      handleAnalytics: this.analyticsHandler.trackLinkClicked('Accessibility Services')
     }]
   }, {
     title: {
       label: 'Legal',
-      href: undefined
+      href: undefined,
+      handleAnalytics: this.analyticsHandler.trackLinkClicked('Legal')
     },
     links: [{
       label: 'Terms & Conditions',
       href: "https://santanderconsumerusa.com/legal/terms-conditions",
-      target: '_blank'
+      target: '_blank',
+      handleAnalytics: this.analyticsHandler.trackLinkClicked('Terms & Conditions')
     }, {
       label: 'Privacy & Security',
       href: "https://santanderconsumerusa.com/legal/privacy-security",
-      target: '_blank'
+      target: '_blank',
+      handleAnalytics: this.analyticsHandler.trackLinkClicked('Privacy & Security')
     }, {
       label: 'Fair Lending',
       href: "https://santanderconsumerusa.com/legal/fair-lending",
-      target: '_blank'
+      target: '_blank',
+      handleAnalytics: this.analyticsHandler.trackLinkClicked('Fair Lending')
     }, {
-      label: "Servicemembers Civil Relief Act",
+      label: 'Servicemembers Civil Relief Act',
       href: "https://santanderconsumerusa.com/legal/servicemembers-civil-relief-act",
-      target: '_blank'
+      target: '_blank',
+      handleAnalytics: this.analyticsHandler.trackLinkClicked('Servicemembers Civil Relief Act')
     }]
   }]);
 
@@ -13515,7 +13838,8 @@ var ViewModel = function ViewModel() {
   _defineProperty$1(this, "copyrightLink", {
     label: 'NMLS Consumer Access ID 4239.',
     href: 'http://www.nmlsconsumeraccess.org/EntityDetails.aspx/COMPANY/4239',
-    target: '_blank'
+    target: '_blank',
+    handleAnalytics: this.analyticsHandler.trackLinkClicked('NMLS Consumer Access ID 4239.')
   });
 
   _defineProperty$1(this, "trademark", 'Chrysler Capital is a registered trademark of FCA US LLC and licensed to Santander Consumer USA Inc. Chrysler, Dodge, Jeep, Ram, Mopar and SRT are registered trademarks of FCA US LLC. ALFA ROMEO and FIAT are registered trademarks of FCA Group Marketing S.p.A., used with permission.');
