@@ -163,7 +163,10 @@ const View: React.FC<Props> = ({ viewModel }) => {
             <Description>
               {viewModel.callVroom}
               <VroomLogo />
-              <PhoneNumber href={viewModel.vroomNumber.href}>
+              <PhoneNumber
+                href={viewModel.vroomNumber.href}
+                onClick={viewModel.vroomNumber.handleAnalytics}
+              >
                 {viewModel.vroomNumber.label}.
               </PhoneNumber>
             </Description>
@@ -175,11 +178,15 @@ const View: React.FC<Props> = ({ viewModel }) => {
             <Title>{viewModel.accountTitle}</Title>
             <Description>
               {viewModel.callSantander}
-              <PhoneNumber href={viewModel.santanderNumber.href}>
+              <PhoneNumber
+                href={viewModel.santanderNumber.href}
+                onClick={viewModel.santanderNumber.handleAnalytics}
+              >
                 {viewModel.santanderNumber.label}
               </PhoneNumber>
               {viewModel.afterSantanderNumber}
               <Link
+                onClick={viewModel.supportOptions.handleAnalytics}
                 href={viewModel.supportOptions.href}
                 target={viewModel.supportOptions.target}
               >
