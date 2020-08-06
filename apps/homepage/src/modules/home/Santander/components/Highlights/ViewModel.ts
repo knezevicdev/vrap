@@ -1,10 +1,10 @@
 import { stringify } from 'qs';
 
-import AnalyticsHandler from 'src/integrations/AnalyticsHandler';
+import SantanderAnalyticsHandler from 'src/integrations/SantanderAnalyticsHandler';
 import { HomeStore } from 'src/modules/home/store';
 
 class ViewModel {
-  private readonly analyticsHandler: AnalyticsHandler = new AnalyticsHandler();
+  private readonly analyticsHandler: SantanderAnalyticsHandler = new SantanderAnalyticsHandler();
   private readonly store: HomeStore;
   readonly button: string = 'Shop Now';
 
@@ -13,7 +13,7 @@ class ViewModel {
   }
 
   handleButtonClick = (): void => {
-    this.analyticsHandler.trackShowNowClicked();
+    this.analyticsHandler.trackShopNow();
     // FIT-566
     // Persist query string across navigation.
     // This allows vlassic attributuion to work until we can implement a better system.

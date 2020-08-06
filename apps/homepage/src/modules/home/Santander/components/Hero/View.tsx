@@ -79,7 +79,10 @@ const View: React.FC<Props> = ({ viewModel }) => {
         <Title>{viewModel.title}</Title>
         <Search />
         <Browse>
-          <Link href={viewModel.browseLink.href}>
+          <Link
+            href={viewModel.browseLink.href}
+            onClick={viewModel.browseLink.handleAnalytics}
+          >
             {viewModel.browseLink.label}
           </Link>
         </Browse>
