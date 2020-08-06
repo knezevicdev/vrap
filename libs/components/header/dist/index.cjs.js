@@ -14762,9 +14762,11 @@ var LearningLinks = styles.styled('a')(function (_ref21) {
 var View$2 = function View(_ref22) {
   var viewModel = _ref22.viewModel;
   return /*#__PURE__*/React__default.createElement(ViewContainer, null, /*#__PURE__*/React__default.createElement(Top, null, /*#__PURE__*/React__default.createElement("a", {
-    href: viewModel.logoLink.href
+    href: viewModel.logoLink.href,
+    onClick: viewModel.logoLink.handleAnalytics
   }, /*#__PURE__*/React__default.createElement(Logo$2, null)), /*#__PURE__*/React__default.createElement(DesktopView$1, null, /*#__PURE__*/React__default.createElement(ShopNowContainer, {
-    href: viewModel.shopNow.href
+    href: viewModel.shopNow.href,
+    onClick: viewModel.shopNow.handleAnalytics
   }, /*#__PURE__*/React__default.createElement(ShopIcon, null), /*#__PURE__*/React__default.createElement(ShopLabel, null, viewModel.shopNow.label))), /*#__PURE__*/React__default.createElement(MobileView$1, null, /*#__PURE__*/React__default.createElement(MenuIcon, {
     onClick: viewModel.onDrawerClick
   }), /*#__PURE__*/React__default.createElement(Drawer, {
@@ -14772,20 +14774,25 @@ var View$2 = function View(_ref22) {
     open: viewModel.isDrawerOpen(),
     onClose: viewModel.onDrawerClick
   }, /*#__PURE__*/React__default.createElement(MenuLink, {
+    onClick: viewModel.financeCalculators.handleAnalytics,
     href: viewModel.financeCalculators.href,
     target: viewModel.financeCalculators.target
   }, /*#__PURE__*/React__default.createElement(ui.Typography, null, viewModel.financeCalculators.label)), /*#__PURE__*/React__default.createElement(LearningCenter, null, /*#__PURE__*/React__default.createElement(LearningLabel, null, viewModel.learningCenterLabel), viewModel.learningCenterLinks.map(function (link) {
     return /*#__PURE__*/React__default.createElement(LearningLinks, {
+      onClick: link.handleAnalytics,
       key: link.href,
       href: link.href,
       target: link.target
     }, /*#__PURE__*/React__default.createElement(ui.Typography, null, link.label));
   })), /*#__PURE__*/React__default.createElement(MenuLink, {
-    href: viewModel.contactUs.href
+    href: viewModel.contactUs.href,
+    onClick: viewModel.contactUs.handleAnalytics
   }, /*#__PURE__*/React__default.createElement(ui.Typography, null, viewModel.contactUs.label)), /*#__PURE__*/React__default.createElement(MenuLink, {
+    onClick: viewModel.backToCorporate.handleAnalytics,
     href: viewModel.backToCorporate.href,
     target: viewModel.backToCorporate.target
   }, /*#__PURE__*/React__default.createElement(ui.Typography, null, viewModel.backToCorporate.label))))), /*#__PURE__*/React__default.createElement(Bottom, null, /*#__PURE__*/React__default.createElement(DesktopView$1, null, /*#__PURE__*/React__default.createElement(Link, {
+    onClick: viewModel.financeCalculators.handleAnalytics,
     href: viewModel.financeCalculators.href,
     target: viewModel.financeCalculators.target
   }, /*#__PURE__*/React__default.createElement(ui.Typography, null, viewModel.financeCalculators.label)), /*#__PURE__*/React__default.createElement(ClickAwayListener, {
@@ -14798,6 +14805,7 @@ var View$2 = function View(_ref22) {
     disableTouchListener: true,
     title: /*#__PURE__*/React__default.createElement(Dropdown, null, viewModel.learningCenterLinks.map(function (link) {
       return /*#__PURE__*/React__default.createElement(DropdownLink, {
+        onClick: link.handleAnalytics,
         key: link.href,
         href: link.href,
         target: link.target
@@ -14806,16 +14814,126 @@ var View$2 = function View(_ref22) {
   }, /*#__PURE__*/React__default.createElement(DropdownLabelContainer, {
     onClick: viewModel.onDropdownClick
   }, /*#__PURE__*/React__default.createElement(ui.Typography, null, viewModel.learningCenterLabel), viewModel.isDropdownOpen() ? /*#__PURE__*/React__default.createElement(ExpandLessIcon, null) : /*#__PURE__*/React__default.createElement(ExpandMoreIcon, null)))), /*#__PURE__*/React__default.createElement(Link, {
-    href: viewModel.contactUs.href
+    href: viewModel.contactUs.href,
+    onClick: viewModel.contactUs.handleAnalytics
   }, /*#__PURE__*/React__default.createElement(ui.Typography, null, viewModel.contactUs.label)), /*#__PURE__*/React__default.createElement(Link, {
+    onClick: viewModel.backToCorporate.handleAnalytics,
     href: viewModel.backToCorporate.href,
     target: viewModel.backToCorporate.target
   }, /*#__PURE__*/React__default.createElement(ui.Typography, null, viewModel.backToCorporate.label))), /*#__PURE__*/React__default.createElement(MobileView$1, null, /*#__PURE__*/React__default.createElement(ShopNowContainer, {
-    href: viewModel.shopNow.href
+    href: viewModel.shopNow.href,
+    onClick: viewModel.shopNow.handleAnalytics
   }, /*#__PURE__*/React__default.createElement(ShopIcon, null), /*#__PURE__*/React__default.createElement(ShopLabel, null, viewModel.shopNow.label)))));
 };
 
 var View$3 = observer$1(View$2);
+
+var AnalyticsHandler$1 = /*#__PURE__*/function (_BaseAnalyticsHandler) {
+  _inherits(AnalyticsHandler, _BaseAnalyticsHandler);
+
+  var _super = _createSuper(AnalyticsHandler);
+
+  function AnalyticsHandler() {
+    var _this;
+
+    _classCallCheck(this, AnalyticsHandler);
+
+    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    _this = _super.call.apply(_super, [this].concat(args));
+
+    _defineProperty(_assertThisInitialized(_this), "trackShopNow", function () {
+      var event = 'Shop Now Clicked';
+      var properties = {
+        category: 'Main Navigation'
+      };
+
+      _this.track(event, properties);
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "trackLogo", function () {
+      var event = 'Home Clicked';
+      var properties = {
+        category: 'Main Navigation'
+      };
+
+      _this.track(event, properties);
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "trackFinancialCalculator", function () {
+      var event = 'Financial Calculators Clicked';
+      var properties = {
+        category: 'Main Navigation'
+      };
+
+      _this.track(event, properties);
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "trackContact", function () {
+      var event = 'Contact Us Clicked';
+      var properties = {
+        category: 'Main Navigation'
+      };
+
+      _this.track(event, properties);
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "trackCorporateSite", function () {
+      var event = 'Back to Corporate Site Clicked';
+      var properties = {
+        category: 'Main Navigation'
+      };
+
+      _this.track(event, properties);
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "trackLearningOverview", function () {
+      var event = 'Learning Center Overview Clicked';
+      var properties = {
+        category: 'Main Navigation',
+        label: 'Learning Center'
+      };
+
+      _this.track(event, properties);
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "trackLearningBlog", function () {
+      var event = 'Learning Center Blog Clicked';
+      var properties = {
+        category: 'Main Navigation',
+        label: 'Learning Center'
+      };
+
+      _this.track(event, properties);
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "trackLearningEducation", function () {
+      var event = 'Learning Center Financial Education Clicked';
+      var properties = {
+        category: 'Main Navigation',
+        label: 'Learning Center'
+      };
+
+      _this.track(event, properties);
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "trackLearningServicemembers", function () {
+      var event = 'Learning Center Servicemembers Civil Relief Act Clicked';
+      var properties = {
+        category: 'Main Navigation',
+        label: 'Learning Center'
+      };
+
+      _this.track(event, properties);
+    });
+
+    return _this;
+  }
+
+  return AnalyticsHandler;
+}(analyticsIntegration.AnalyticsHandler);
 
 var ViewModel = function ViewModel(store) {
   var _this = this;
@@ -14824,19 +14942,24 @@ var ViewModel = function ViewModel(store) {
 
   _defineProperty(this, "store", void 0);
 
+  _defineProperty(this, "analyticsHandler", new AnalyticsHandler$1());
+
   _defineProperty(this, "shopNow", {
     label: 'Shop now',
-    href: "/cars"
+    href: "/cars",
+    handleAnalytics: this.analyticsHandler.trackShopNow
   });
 
   _defineProperty(this, "logoLink", {
-    href: '/'
+    href: '/',
+    handleAnalytics: this.analyticsHandler.trackLogo
   });
 
   _defineProperty(this, "financeCalculators", {
     label: 'Finance Calculators',
     href: 'https://santanderconsumerusa.com/learning-center/finance-calculators',
-    target: '_blank'
+    target: '_blank',
+    handleAnalytics: this.analyticsHandler.trackFinancialCalculator
   });
 
   _defineProperty(this, "learningCenterLabel", 'Learning Center');
@@ -14844,29 +14967,35 @@ var ViewModel = function ViewModel(store) {
   _defineProperty(this, "learningCenterLinks", [{
     label: 'Overview',
     href: 'https://santanderconsumerusa.com/learning-center',
-    target: '_blank'
+    target: '_blank',
+    handleAnalytics: this.analyticsHandler.trackLearningOverview
   }, {
     label: 'Blog',
     href: 'https://santanderconsumerusa.com/blog',
-    target: '_blank'
+    target: '_blank',
+    handleAnalytics: this.analyticsHandler.trackLearningBlog
   }, {
     label: 'Financial Education',
     href: 'https://santanderconsumerusa.com/learning-center/financial-education',
-    target: '_blank'
+    target: '_blank',
+    handleAnalytics: this.analyticsHandler.trackLearningEducation
   }, {
     label: 'Servicemembers Civil Relief Act',
     href: 'https://santanderconsumerusa.com/legal/servicemembers-civil-relief-act',
-    target: '_blank'
+    target: '_blank',
+    handleAnalytics: this.analyticsHandler.trackLearningServicemembers
   }]);
 
   _defineProperty(this, "contactUs", {
     label: 'Contact Us',
-    href: "/contact"
+    href: "/contact",
+    handleAnalytics: this.analyticsHandler.trackContact
   });
 
   _defineProperty(this, "backToCorporate", {
     label: 'Back to Corporate Site',
-    href: 'https://santanderconsumerusa.com/'
+    href: 'https://santanderconsumerusa.com/',
+    handleAnalytics: this.analyticsHandler.trackCorporateSite
   });
 
   _defineProperty(this, "isDropdownOpen", function () {

@@ -4,9 +4,11 @@ interface Link {
     label?: string;
     target?: string;
     rel?: string;
+    handleAnalytics: () => void;
 }
 declare class ViewModel {
     private readonly store;
+    private analyticsHandler;
     constructor(store: Store);
     readonly shopNow: Link;
     readonly logoLink: Link;
