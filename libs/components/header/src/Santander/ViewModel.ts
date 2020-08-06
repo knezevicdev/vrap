@@ -1,3 +1,4 @@
+import AnalyticsHandler from './integrations/AnalyticsHandler';
 import Store from './store';
 
 interface Link {
@@ -5,23 +6,33 @@ interface Link {
   label?: string;
   target?: string;
   rel?: string;
+  handleAnalytics: () => void;
 }
 
 class ViewModel {
   private readonly store: Store;
+  private analyticsHandler = new AnalyticsHandler();
 
   constructor(store: Store) {
     this.store = store;
   }
 
-  readonly shopNow: Link = { label: 'Shop now', href: `/cars` };
-  readonly logoLink: Link = { href: '/' };
+  readonly shopNow: Link = {
+    label: 'Shop now',
+    href: `/cars`,
+    handleAnalytics: this.analyticsHandler.trackShopNow,
+  };
+  readonly logoLink: Link = {
+    href: '/',
+    handleAnalytics: this.analyticsHandler.trackLogo,
+  };
 
   readonly financeCalculators: Link = {
     label: 'Finance Calculators',
     href:
       'https://santanderconsumerusa.com/learning-center/finance-calculators',
     target: '_blank',
+    handleAnalytics: this.analyticsHandler.trackFinancialCalculator,
   };
   readonly learningCenterLabel: string = 'Learning Center';
 
@@ -30,31 +41,40 @@ class ViewModel {
       label: 'Overview',
       href: 'https://santanderconsumerusa.com/learning-center',
       target: '_blank',
+      handleAnalytics: this.analyticsHandler.trackLearningOverview,
     },
     {
       label: 'Blog',
       href: 'https://santanderconsumerusa.com/blog',
       target: '_blank',
+      handleAnalytics: this.analyticsHandler.trackLearningBlog,
     },
     {
       label: 'Financial Education',
       href:
         'https://santanderconsumerusa.com/learning-center/financial-education',
       target: '_blank',
+      handleAnalytics: this.analyticsHandler.trackLearningEducation,
     },
     {
       label: 'Servicemembers Civil Relief Act',
       href:
         'https://santanderconsumerusa.com/legal/servicemembers-civil-relief-act',
       target: '_blank',
+      handleAnalytics: this.analyticsHandler.trackLearningServicemembers,
     },
   ];
 
-  readonly contactUs: Link = { label: 'Contact Us', href: `/contact` };
+  readonly contactUs: Link = {
+    label: 'Contact Us',
+    href: `/contact`,
+    handleAnalytics: this.analyticsHandler.trackContact,
+  };
 
   readonly backToCorporate: Link = {
     label: 'Back to Corporate Site',
     href: 'https://santanderconsumerusa.com/',
+    handleAnalytics: this.analyticsHandler.trackCorporateSite,
   };
 
   isDropdownOpen = (): boolean => {
