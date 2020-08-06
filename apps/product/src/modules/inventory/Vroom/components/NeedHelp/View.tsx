@@ -109,7 +109,11 @@ const NeedHelpView: React.FC<Props> = ({ viewModel }) => {
             </div>
             <BoxContent>
               <BoxTitle>{viewModel.call.title}</BoxTitle>
-              <BodyBody>{viewModel.call.body}</BodyBody>
+              <BodyBody>
+                {viewModel.call.body1}
+                <br />
+                {viewModel.call.body2}
+              </BodyBody>
             </BoxContent>
           </BoxRight>
         </Body>
