@@ -99,9 +99,7 @@ class AutocompleteViewModel {
     // FIT-566
     // Persist query string across navigation.
     // This allows vlassic attributuion to work until we can implement a better system.
-    const queryString = stringify(this.homeStore.query, {
-      addQueryPrefix: true,
-    });
+    const queryString = stringify(this.homeStore.query);
 
     if (suggestion.group === 'Body Type') {
       if (!suggestion.bodyType) {
@@ -113,7 +111,9 @@ class AutocompleteViewModel {
           : suggestion.bodyType.toLowerCase();
       const filterBodyType = addBodyType(bodyType as FilterBodyTypeData);
       const bodyHref = getUrlFromFiltersData(filterBodyType);
-      window.location.href = `${bodyHref}${queryString}`;
+      const bodyHrefQueryStringPrefix =
+        bodyHref.indexOf('?') === -1 ? '?' : '&';
+      window.location.href = `${bodyHref}${bodyHrefQueryStringPrefix}${queryString}`;
       return;
     }
 
@@ -124,7 +124,9 @@ class AutocompleteViewModel {
       const make = suggestion.make.toLowerCase().replace(/[\s-_]/g, '-');
       const allModelsFiltersData = addAllModels(make);
       const allModelsHref = getUrlFromFiltersData(allModelsFiltersData);
-      window.location.href = `${allModelsHref}${queryString}`;
+      const allModelsHrefQueryStringPrefix =
+        allModelsHref.indexOf('?') === -1 ? '?' : '&';
+      window.location.href = `${allModelsHref}${allModelsHrefQueryStringPrefix}${queryString}`;
       return;
     }
 
@@ -136,7 +138,9 @@ class AutocompleteViewModel {
       const model = suggestion.model.toLowerCase().replace(/[\s-_]/g, '-');
       const modelFiltersData = addModel(make, model);
       const modelHref = getUrlFromFiltersData(modelFiltersData);
-      window.location.href = `${modelHref}${queryString}`;
+      const modelHrefQueryStringPrefix =
+        modelHref.indexOf('?') === -1 ? '?' : '&';
+      window.location.href = `${modelHref}${modelHrefQueryStringPrefix}${queryString}`;
       return;
     }
   }
@@ -147,17 +151,12 @@ class AutocompleteViewModel {
 
     // FIT-566
     // Persist query string across navigation.
-    // This allows vlassic attributuion to work until we can implement a better system.
-    const query = {
-      ...this.homeStore.query,
-      search: inputValue,
-    };
-    const queryString = stringify(query, {
-      addQueryPrefix: true,
-    });
+    // This allows vlassic attribution to work until we can implement a better system.
+    const queryString = stringify(this.homeStore.query);
     const filtersData = setSearch(inputValue);
     const searchUrl = getUrlFromFiltersData(filtersData);
-    window.location.href = `${searchUrl}${queryString}`;
+    const queryStringPrefix = searchUrl.indexOf('?') === -1 ? '?' : '&';
+    window.location.href = `${searchUrl}${queryStringPrefix}${queryString}`;
   }
 }
 

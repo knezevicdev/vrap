@@ -25,7 +25,12 @@ export class LicensePlateStore {
 
   @action
   setLicensePlate = (licensePlate: string): void => {
-    this.licensePlate = licensePlate;
+    const formattedValue = licensePlate.replace(/\s/g, '');
+    const licenseValidated =
+      formattedValue.length <= 8 && /^[0-9a-zA-Z-]+$/.test(formattedValue);
+
+    this.licensePlate = formattedValue;
+    this.hasError = !licenseValidated;
   };
 
   @action

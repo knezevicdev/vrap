@@ -1,6 +1,6 @@
 version: '3'
 services:
-  storybook:
+  ui:
     build:
       context: ../../../
       dockerfile: ./libs/ui/docker/Dockerfile
@@ -16,4 +16,3 @@ services:
       # Setup volumes for dependencies and built artifacts.
       - '/www/node_modules'
       - '/www/libs/ui/node_modules'
-      - '/www/libs/ui/dist'

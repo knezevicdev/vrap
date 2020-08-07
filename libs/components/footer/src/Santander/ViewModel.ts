@@ -20,7 +20,7 @@ class ViewModel {
       },
       links: [
         {
-          label: 'Finance calculators',
+          label: 'Finance Calculators',
           href: `https://santanderconsumerusa.com/learning-center/finance-calculators`,
           target: '_blank',
         },
@@ -70,7 +70,7 @@ class ViewModel {
           target: '_blank',
         },
         {
-          label: "Service Member's Civil Relief Act",
+          label: 'Servicemembers Civil Relief Act',
           href: `https://santanderconsumerusa.com/legal/servicemembers-civil-relief-act`,
           target: '_blank',
         },

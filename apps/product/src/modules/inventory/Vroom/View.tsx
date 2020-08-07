@@ -11,6 +11,7 @@ import Features from './components/Features';
 import Gallery from './components/Gallery/';
 import LegalFooter from './components/LegalFooter';
 import NotifyMe from './components/NotifyMe';
+import NeedHelp from './components/NeedHelp';
 import PeaceOfMind from './components/PeaceOfMind';
 import SimilarVehicles from './components/SimilarVehicles';
 import StartPurchase from './components/StartPurchase';
@@ -67,6 +68,7 @@ const InventoryView: React.FC<Props> = (props) => {
           </>
         )}
         <SimilarVehicles />
+        <NeedHelp />
         <LegalFooter />
       </InventoryViewContainer>
       <StandardFooter />

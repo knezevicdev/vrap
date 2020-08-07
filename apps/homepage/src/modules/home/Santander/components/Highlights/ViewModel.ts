@@ -20,7 +20,7 @@ class ViewModel {
     const queryString = stringify(this.store.query, {
       addQueryPrefix: true,
     });
-    window.location.href = `/catalog${queryString}`;
+    window.location.href = `/cars${queryString}`;
   };
 }
 

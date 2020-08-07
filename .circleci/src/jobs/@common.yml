@@ -8,13 +8,14 @@ danger:
         command: |-
           yarn install
           yarn danger ci
-lint:
+lint_build:
   docker:
     - image: circleci/node:erbium
   steps:
     - checkout
     - run:
-        name: Lint
+        name: Lint & Build
         command: |-
           yarn install --silent
           yarn workspaces run lint
+          yarn workspaces run build

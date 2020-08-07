@@ -1,12 +1,12 @@
 import { action, observable, runInAction } from 'mobx';
 import { createContext } from 'react';
 
-import { DeliveryOrder } from 'src/networking/models/Shipment';
+import { Summary } from 'src/networking/models/DeliveryOrder';
 import { Networker, Status } from 'src/networking/Networker';
 
 export interface HomeStoreState {
   deliveryOrderStatus: Status;
-  deliveryOrders?: DeliveryOrder[];
+  deliveryOrders?: Summary[];
 }
 
 export async function getInitialHomeStoreState(): Promise<HomeStoreState> {
@@ -27,7 +27,7 @@ export async function getInitialHomeStoreState(): Promise<HomeStoreState> {
 
 export class HomeStore {
   @observable deliveryOrderStatus: Status = Status.INITIAL;
-  @observable deliveryOrders?: DeliveryOrder[];
+  @observable deliveryOrders?: Summary[];
 
   private networker: Networker;
 

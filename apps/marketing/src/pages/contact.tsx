@@ -8,13 +8,22 @@ import Page from 'src/Page';
 
 interface Props {
   brand: Brand;
+  description: string;
+  title: string;
 }
 
-const ContactPage: NextPage<Props> = ({ brand }) => {
+const ContactPage: NextPage<Props> = ({ brand, description, title }) => {
+  const head = (
+    <>
+      <title>{title}</title>
+      <meta name="description" content={description}></meta>
+    </>
+  );
+
   return (
     <BrandContext.Provider value={brand}>
       <ThemeProvider brand={brand}>
-        <Page name="Contact">
+        <Page name="Contact" head={head}>
           <Contact />
         </Page>
       </ThemeProvider>
@@ -25,13 +34,24 @@ const ContactPage: NextPage<Props> = ({ brand }) => {
 ContactPage.getInitialProps = async (ctx: NextPageContext): Promise<Props> => {
   const query = ctx.query;
 
-  // FIT-570
-  // TODO: replace this mechanism with the actual one.
-  // Some data should come from ctx.req, rather than from query.
-  const brandQueryParam = query.brand;
-  const brand = brandQueryParam === 'santander' ? Brand.SANTANDER : Brand.VROOM;
+  const { req } = ctx;
+  const headerBrandKey = 'x-brand';
+  const santanderKey = 'santander';
+  const brandHeader = req && req.headers[headerBrandKey];
+  const queryBrand = query.brand;
 
-  return { brand };
+  const brand =
+    (brandHeader || queryBrand) == santanderKey ? Brand.SANTANDER : Brand.VROOM;
+
+  const title =
+    brand === Brand.SANTANDER ? 'Contact Us - Santander Consumer USA' : '';
+
+  const description =
+    brand === Brand.SANTANDER
+      ? 'Call 1-888-222-4227 about your Santander Consumer USA account or call 1-855-659-0278 about purchasing a vehicle. We’re here to help.'
+      : '';
+
+  return { brand, description, title };
 };
 
 export default ContactPage;
