@@ -43,7 +43,6 @@ class ViewModel {
   readonly callSantanderButton: string = 'Call Santander support';
 
   onClickCallVroom = (): void => {
-    console.log('onClickCallVroom');
     this.analyticsHandler.trackVroomSupport();
     window.open('tel:18882224227');
   };

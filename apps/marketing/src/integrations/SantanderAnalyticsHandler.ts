@@ -2,7 +2,6 @@ import { AnalyticsHandler as BaseAnalyticsHandler } from '@vroom-web/analytics-i
 
 class SantanderAnalyticsHandler extends BaseAnalyticsHandler {
   trackVroomSupport = (): void => {
-    console.log('trackVroomSupport');
     const event = 'Call Vroom Support Clicked';
     const properties = {
       category: 'Contact Us',
