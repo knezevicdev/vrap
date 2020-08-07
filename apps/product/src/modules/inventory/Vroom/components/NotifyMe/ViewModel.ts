@@ -50,6 +50,10 @@ class NotifyMeViewModel {
   getUserEmail(): string | undefined {
     return this.notifyMeStore.email;
   }
+
+  getAccessToken(): string | undefined {
+    return this.notifyMeStore.accesstoken;
+  }
 }
 
 export default NotifyMeViewModel;

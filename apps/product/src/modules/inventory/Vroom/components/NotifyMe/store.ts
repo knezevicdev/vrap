@@ -8,6 +8,7 @@ export class NotifyMeStore {
   @observable modalOpen = false;
   @observable userTokenStatus: Status = Status.INITIAL;
   @observable email?: string;
+  @observable accesstoken?: string;
 
   @action
   private initUserAccount = async (): Promise<void> => {
@@ -26,8 +27,10 @@ export class NotifyMeStore {
       try {
         const { email } = jwtDecode(authToken.idToken);
         this.email = email;
+        this.accesstoken = authToken.accessToken;
       } catch {
         this.email = undefined;
+        this.accesstoken = undefined;
       }
     } catch {
       runInAction(() => {

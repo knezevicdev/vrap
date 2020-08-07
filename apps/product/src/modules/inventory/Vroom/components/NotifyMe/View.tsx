@@ -29,6 +29,7 @@ const NotifyMeView: React.FC<Props> = (props) => {
   }, [viewModel]);
 
   const handleDialogClick = (): void => viewModel.handleClick();
+  console.log(viewModel.getAccessToken(), 'token');
   return (
     <>
       <CustomButton
