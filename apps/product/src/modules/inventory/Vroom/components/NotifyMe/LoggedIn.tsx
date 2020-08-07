@@ -72,6 +72,10 @@ const StyledCheckbox = styled(Checkbox)(({ theme }) => ({
   color: theme.palette.grey[900],
 }));
 
+const CheckboxTypography = styled(Typography)(() => ({
+  cursor: 'pointer',
+}));
+
 interface Props {
   viewModel: ViewModel;
 }
@@ -118,7 +122,9 @@ const LoggedInView: React.FC<Props> = ({ viewModel }) => {
               onChange={handleCheckboxChange}
               inputProps={{ 'aria-label': 'primary checkbox' }}
             />
-            <Typography>{viewModel.loggedIn.checkboxText}</Typography>
+            <CheckboxTypography onClick={handleCheckboxChange}>
+              {viewModel.loggedIn.checkboxText}
+            </CheckboxTypography>
           </CheckboxContainer>
         </DialogBody>
         <DialogButton

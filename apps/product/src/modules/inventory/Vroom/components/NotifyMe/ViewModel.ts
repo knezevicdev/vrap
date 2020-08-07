@@ -24,7 +24,7 @@ class NotifyMeViewModel {
   readonly logInButton: string = 'LOG IN';
 
   readonly loggedIn: LoggedIn = {
-    header1: `We’re working to get this 2017 Nissan Armada inspected, photographed and ready for purchase.`,
+    header1: '',
     header2: 'Sign up below to be emailed when this vehicle is available.',
     bodyTitle: "We'll email you at:",
     body:
@@ -37,6 +37,7 @@ class NotifyMeViewModel {
   constructor(inventoryStore: InventoryStore, notifyMeStore: NotifyMeStore) {
     this.inventoryStore = inventoryStore;
     this.notifyMeStore = notifyMeStore;
+    this.loggedIn.header1 = `We’re working to get this ${this.getYearMakeModel()} inspected, photographed and ready for purchase.`;
   }
 
   getYearMakeModel(): string {
