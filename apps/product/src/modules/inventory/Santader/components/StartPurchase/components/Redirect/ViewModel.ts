@@ -10,7 +10,7 @@ class ViewModel {
   private analyticsHandler: AnalyticsHandler = new AnalyticsHandler();
   readonly image = {
     alt: 'Exit Santander',
-    src: `${globalEnv.ASSET_PREFIX}/modules/inventory/components/exit-santander.png`,
+    src: `${globalEnv.BASE_PATH}/modules/inventory/components/exit-santander.png`,
   };
   readonly message: string =
     'We’re now sending you to checkout with our partner, Vroom.';

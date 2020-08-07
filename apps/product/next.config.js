@@ -6,15 +6,14 @@ const shortHash = childProcess
   .toString()
   .trim();
 
-// TODO: remove once interchange (nginx) is setup locally
-const isProd = process.env.NODE_ENV === 'production';
-const assetPrefix = isProd ? `/product/${shortHash}` : '';
+const basePath = '/apps/product';
 
 module.exports = {
   env: {
-    ASSET_PREFIX: assetPrefix,
+    BASE_PATH: basePath,
   },
-  assetPrefix,
+  basePath,
+  distDir: `.next/${shortHash}`,
   generateBuildId: () => shortHash,
   /* Custom webpack configuration. */
   webpack: (config) => {

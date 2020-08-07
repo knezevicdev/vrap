@@ -19,7 +19,7 @@ class GalleryViewModel {
   private analyticsHandler: AnalyticsHandler;
   readonly defaultImage = {
     alt: 'No photos',
-    src: `${globalEnv.ASSET_PREFIX}/components/ghost-suv.png`,
+    src: `${globalEnv.BASE_PATH}/components/ghost-suv.png`,
   };
   readonly indexSeparator: string = ' of ';
   readonly photosComing: string = 'Photos Coming Soon';

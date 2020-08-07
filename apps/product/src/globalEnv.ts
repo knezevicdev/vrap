@@ -1,7 +1,7 @@
 import { name, version } from 'package.json';
 
 export interface GlobalEnv {
-  ASSET_PREFIX?: string;
+  BASE_PATH?: string;
   INVSEARCH_V3_URL?: string;
   INV_SERVICE_V2_URL?: string;
   NAME?: string;
@@ -18,7 +18,7 @@ declare global {
 const globalEnv: GlobalEnv = process.browser
   ? window.__GLOBAL_ENV__
   : {
-      ASSET_PREFIX: process.env.ASSET_PREFIX || '',
+      BASE_PATH: process.env.BASE_PATH || '',
       INVSEARCH_V3_URL: process.env.INVSEARCH_V3_URL,
       INV_SERVICE_V2_URL: process.env.INV_SERVICE_V2_URL,
       NAME: name,

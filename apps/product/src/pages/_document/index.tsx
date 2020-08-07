@@ -79,7 +79,7 @@ class VroomDocument extends Document<Props> {
             />
           )}
           <GlobalEnvSnippet
-            ASSET_PREFIX={globalEnv.ASSET_PREFIX}
+            BASE_PATH={globalEnv.BASE_PATH}
             INVSEARCH_V3_URL={globalEnv.INVSEARCH_V3_URL}
             INV_SERVICE_V2_URL={globalEnv.INV_SERVICE_V2_URL}
             NAME={globalEnv.NAME}
