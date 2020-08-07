@@ -10,7 +10,7 @@ import { stringify } from 'qs';
 
 import { AutocompleteStore } from './store';
 
-import AnalyticsHandler from 'src/integrations/AnalyticsHandler';
+import SantanderAnalyticsHandler from 'src/integrations/SantanderAnalyticsHandler';
 import { HomeStore } from 'src/modules/home/store';
 import { Status } from 'src/networking/types';
 
@@ -25,7 +25,7 @@ export interface Suggestion {
 export type Suggestions = Suggestion[];
 
 class AutocompleteViewModel {
-  private analyticsHandler: AnalyticsHandler;
+  private analyticsHandler: SantanderAnalyticsHandler = new SantanderAnalyticsHandler();
   private autocompleteStore: AutocompleteStore;
   private homeStore: HomeStore;
 
@@ -33,7 +33,6 @@ class AutocompleteViewModel {
   readonly inputPlaceholder: string = 'Search by make, model, or body type';
 
   constructor(homeStore: HomeStore, autocompleteStore: AutocompleteStore) {
-    this.analyticsHandler = new AnalyticsHandler();
     this.autocompleteStore = autocompleteStore;
     this.homeStore = homeStore;
   }

@@ -85,6 +85,7 @@ class StartPurchaseViewModel {
       const modelHref = getUrlFromFiltersData(modelFiltersData);
       window.location.href = modelHref;
     } else {
+      this.analyticsHandler.trackProductAdded(product);
       this.startPurchaseStore.setShowRedirectToTrue();
     }
   }

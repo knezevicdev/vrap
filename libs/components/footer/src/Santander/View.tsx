@@ -112,6 +112,7 @@ const View: React.FC<Props> = ({ viewModel }) => {
         {sections.map((section) => {
           const { title, links } = section;
           const titleStyle = title.href ? {} : { textDecoration: 'none' };
+          const titleOnClick = title.href ? title.handleAnalytics : undefined;
 
           return (
             <Links key={title.label}>
@@ -120,6 +121,7 @@ const View: React.FC<Props> = ({ viewModel }) => {
                   href={title.href}
                   style={titleStyle}
                   target={title.target}
+                  onClick={titleOnClick}
                 >
                   {title.label}
                 </Title>
@@ -127,7 +129,11 @@ const View: React.FC<Props> = ({ viewModel }) => {
               {links.map((link) => {
                 return (
                   <Link key={link.label}>
-                    <CustomLink href={link.href} target={link.target}>
+                    <CustomLink
+                      href={link.href}
+                      target={link.target}
+                      onClick={link.handleAnalytics}
+                    >
                       {link.label}
                     </CustomLink>
                   </Link>
@@ -141,6 +147,7 @@ const View: React.FC<Props> = ({ viewModel }) => {
         <CopyrightLabel>
           {viewModel.copyrightLabel}
           <CopyrightLink
+            onClick={viewModel.copyrightLink.handleAnalytics}
             href={viewModel.copyrightLink.href}
             target={viewModel.copyrightLink.target}
             underline="always"

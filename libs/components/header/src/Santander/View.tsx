@@ -189,11 +189,17 @@ const View: React.FC<Props> = ({ viewModel }) => {
   return (
     <ViewContainer>
       <Top>
-        <a href={viewModel.logoLink.href}>
+        <a
+          href={viewModel.logoLink.href}
+          onClick={viewModel.logoLink.handleAnalytics}
+        >
           <Logo />
         </a>
         <DesktopView>
-          <ShopNowContainer href={viewModel.shopNow.href}>
+          <ShopNowContainer
+            href={viewModel.shopNow.href}
+            onClick={viewModel.shopNow.handleAnalytics}
+          >
             <ShopIcon />
             <ShopLabel>{viewModel.shopNow.label}</ShopLabel>
           </ShopNowContainer>
@@ -206,6 +212,7 @@ const View: React.FC<Props> = ({ viewModel }) => {
             onClose={viewModel.onDrawerClick}
           >
             <MenuLink
+              onClick={viewModel.financeCalculators.handleAnalytics}
               href={viewModel.financeCalculators.href}
               target={viewModel.financeCalculators.target}
             >
@@ -216,6 +223,7 @@ const View: React.FC<Props> = ({ viewModel }) => {
               {viewModel.learningCenterLinks.map((link) => {
                 return (
                   <LearningLinks
+                    onClick={link.handleAnalytics}
                     key={link.href}
                     href={link.href}
                     target={link.target}
@@ -225,10 +233,14 @@ const View: React.FC<Props> = ({ viewModel }) => {
                 );
               })}
             </LearningCenter>
-            <MenuLink href={viewModel.contactUs.href}>
+            <MenuLink
+              href={viewModel.contactUs.href}
+              onClick={viewModel.contactUs.handleAnalytics}
+            >
               <Typography>{viewModel.contactUs.label}</Typography>
             </MenuLink>
             <MenuLink
+              onClick={viewModel.backToCorporate.handleAnalytics}
               href={viewModel.backToCorporate.href}
               target={viewModel.backToCorporate.target}
             >
@@ -240,6 +252,7 @@ const View: React.FC<Props> = ({ viewModel }) => {
       <Bottom>
         <DesktopView>
           <Link
+            onClick={viewModel.financeCalculators.handleAnalytics}
             href={viewModel.financeCalculators.href}
             target={viewModel.financeCalculators.target}
           >
@@ -257,6 +270,7 @@ const View: React.FC<Props> = ({ viewModel }) => {
                   {viewModel.learningCenterLinks.map((link) => {
                     return (
                       <DropdownLink
+                        onClick={link.handleAnalytics}
                         key={link.href}
                         href={link.href}
                         target={link.target}
@@ -278,10 +292,14 @@ const View: React.FC<Props> = ({ viewModel }) => {
               </DropdownLabelContainer>
             </CustomTooltip>
           </ClickAwayListener>
-          <Link href={viewModel.contactUs.href}>
+          <Link
+            href={viewModel.contactUs.href}
+            onClick={viewModel.contactUs.handleAnalytics}
+          >
             <Typography>{viewModel.contactUs.label}</Typography>
           </Link>
           <Link
+            onClick={viewModel.backToCorporate.handleAnalytics}
             href={viewModel.backToCorporate.href}
             target={viewModel.backToCorporate.target}
           >
@@ -289,7 +307,10 @@ const View: React.FC<Props> = ({ viewModel }) => {
           </Link>
         </DesktopView>
         <MobileView>
-          <ShopNowContainer href={viewModel.shopNow.href}>
+          <ShopNowContainer
+            href={viewModel.shopNow.href}
+            onClick={viewModel.shopNow.handleAnalytics}
+          >
             <ShopIcon />
             <ShopLabel>{viewModel.shopNow.label}</ShopLabel>
           </ShopNowContainer>
