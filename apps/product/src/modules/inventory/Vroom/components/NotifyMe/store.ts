@@ -8,6 +8,7 @@ export class NotifyMeStore {
   @observable modalOpen = false;
   @observable userTokenStatus: Status = Status.INITIAL;
   @observable email?: string;
+  @observable isChecked = false;
 
   @action
   private initUserAccount = async (): Promise<void> => {
@@ -44,5 +45,10 @@ export class NotifyMeStore {
   @action
   toggleModal = (): void => {
     this.modalOpen = !this.modalOpen;
+  };
+
+  @action
+  toggleCheckbox = (): void => {
+    this.isChecked = !this.isChecked;
   };
 }
