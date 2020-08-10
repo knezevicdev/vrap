@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charSet="utf-8"/>
+<meta name="viewport" content="minimum-scale=1, initial-scale=1, width=device-width"/>
+<link rel="apple-touch-icon" sizes="180x180" href="/static-assets/favicons/apple-touch-icon.png"/>
+<link rel="icon" type="image/png" sizes="32x32" href="/static-assets/favicons/favicon-32x32.png"/>
+<link rel="icon" type="image/png" sizes="16x16" href="/static-assets/favicons/favicon-16x16.png"/>
+<link rel="manifest" href="/static-assets/favicons/site.webmanifest"/>
+<link rel="mask-icon" href="/static-assets/favicons/safari-pinned-tab.svg" color="#e7131a"/>
+<link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Muli" />
+<meta name="msapplication-TileColor" content="#e7131a"/>
+<meta name="theme-color" content="#e7131a"/>
+
+<style type="text/css">
+@font-face {
+  font-family: 'VroomSans';
+  src: url('/static-assets/fonts/VroomSans-ExtraBoldItalic.woff') format('woff');
+}
+@font-face {
+  font-family: 'Calibre';
+  font-weight: 400;
+  src: url('/static-assets/fonts/Calibre-Regular.woff') format('woff');
+}
+@font-face {
+  font-family: 'Calibre';
+  font-weight: 600;
+  src: url('/static-assets/fonts/Calibre-Semibold.woff') format('woff');
+}
+.logo {
+  padding: 20px;
+  box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.15);
+}
+.heading {
+  font-family: VroomSans;
+  font-style: italic;
+  font-weight: 800;
+  font-size: 36px;
+  line-height: 40px;
+  letter-spacing: 1px;
+  margin: 0;
+  padding: 0;
+}
+.subheading {
+  font-family: Muli;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 16px;
+}
+.continue-message{
+  font-family: Calibre;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 20px;
+  color: #041022;
+  clear: both;
+  padding-top: 50px;
+}
+.install-link {
+  font-family: Calibre;
+  color: #E7131A;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 18px;
+  line-height: 24px;
+  text-decoration: none;
+}
+.unsupported-page {
+    text-align: center;
+    width: 100%;
+    padding-top: 50px;
+}
+.unsupported-page .browser-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+.unsupported-page .browser-list li.browser-vendor {
+    font-family: Calibre;
+    font-style: normal;
+    font-weight: 600;
+    height: 160px;
+    width: 192px; 
+    box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.15);
+}
+.unsupported-page .browser-list li {
+    display: table-cell;
+    vertical-align: middle;
+}
+.unsupported-page .browser-list li a {
+  text-decoration: none;
+}
+.table {
+  display: table;  
+  margin: 0 auto;
+  padding-top: 20px;
+}
+body {
+   padding:0;
+   margin:0;
+}
+</style>
+</head>
+<body>
+  <div class="logo">
+    <img src="/static-assets/images/vroom-main-logo-116x20.png" alt="Vroom"/>
+  </div>
+  <div class="unsupported-page">
+    <h1 class="heading">please install a supported browser</h1>
+    <p class="subheading">Older browsers can’t provide a reliable experience. Many features of this site may not work properly.</p>
+    <div class="table">
+      <ul class="browser-list">
+        <li class="browser-vendor">
+          <a href="https://www.google.com/intl/en/chrome/browser/desktop/" target="_blank" title="Download Chrome">
+          <img src="/static-assets/images/browser-chrome-112x112.png" height="56" alt="Chrome"/><br/>
+          <span class="install-link">Install Chrome</span>
+          </a>
+        </li>
+        <li style="width:25px;">&nbsp;</li>
+        <li class="browser-vendor">
+          <a href="https://www.microsoft.com/en-us/windows/microsoft-edge" target="_blank" title="Download Edge">
+          <img src="/static-assets/images/browser-edge-112x112.png" height="56" alt="Edge"/><br/>
+          <span class="install-link">Install Edge</span>
+          </a>
+        </li>
+        <li style="width:25px;">&nbsp;</li>
+        <li class="browser-vendor">
+          <a href="https://www.mozilla.org/en-US/firefox/new/" target="_blank" title="Download Firefox">
+          <img src="/static-assets/images/browser-firefox-109x112.png" height="56" alt="Firefox"/><br/>
+          <span class="install-link">Install Firefox</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+    <div class="continue-message">  
+      <a href="/?bypass=1" class="continue-message">Continue with my current browser</a>
+    </div>
+  </div>
+</body>
+</html>
