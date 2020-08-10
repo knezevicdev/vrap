@@ -159,6 +159,33 @@ var AnalyticsHandler = /*#__PURE__*/function () {
       });
     }
   }, {
+    key: "createAdditionalTracker",
+    value: function createAdditionalTracker(id, name) {
+      onAnalyticsReady(function () {
+        if (typeof window.ga === 'undefined') {
+          throw new Error('window.ga is undefined');
+        }
+
+        window.ga('create', id, 'auto', {
+          name: name
+        });
+        window.ga("".concat(name, ".send"), 'pageview');
+        window.analytics.on('track', function (event, properties) {
+          if (typeof window.ga === 'undefined') {
+            throw new Error('window.ga is undefined');
+          }
+
+          var prop = properties;
+          window.ga("".concat(name, ".send"), {
+            hitType: 'event',
+            eventCategory: prop.category || 'All',
+            eventAction: event,
+            eventLabel: prop.label || 'All'
+          });
+        });
+      });
+    }
+  }, {
     key: "page",
     value: function page$1(name, category) {
       var properties = {

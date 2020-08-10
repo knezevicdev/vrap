@@ -194,7 +194,7 @@ const CarsPage: NextPage<Props> = ({
 
   return (
     <ThemeProvider brand={brand}>
-      <Page experiments={experiments} name="Catalog" head={head}>
+      <Page brand={brand} experiments={experiments} name="Catalog" head={head}>
         <BrandContext.Provider value={brand}>
           <CarsStoreContext.Provider value={carsStore}>
             <Cars />

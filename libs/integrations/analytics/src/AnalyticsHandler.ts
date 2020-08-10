@@ -12,6 +12,11 @@ declare global {
   }
 }
 
+interface Properties {
+  category: string;
+  label: string;
+}
+
 interface Experiment {
   assignedVariant: 0 | 1;
   optimizeId?: string;
@@ -52,6 +57,31 @@ class AnalyticsHandler {
       } catch (e) {
         console.error(e);
       }
+    });
+  }
+
+  createAdditionalTracker(id: string, name: string): void {
+    onSegmentAnalyticsReady(() => {
+      if (typeof window.ga === 'undefined') {
+        throw new Error('window.ga is undefined');
+      }
+      window.ga('create', id, 'auto', { name: name });
+      window.ga(`${name}.send`, 'pageview');
+      window.analytics.on('track', function (
+        event: string,
+        properties: object
+      ) {
+        if (typeof window.ga === 'undefined') {
+          throw new Error('window.ga is undefined');
+        }
+        const prop = properties as Properties;
+        window.ga(`${name}.send`, {
+          hitType: 'event',
+          eventCategory: prop.category || 'All',
+          eventAction: event,
+          eventLabel: prop.label || 'All',
+        });
+      });
     });
   }
 
