@@ -1,25 +1,4 @@
 jobs:
-  catalog_build:
-    docker:
-    - image: vroom/mlp:3.0.2
-    steps:
-    - checkout
-    - setup_remote_docker:
-        version: 18.09.3
-    - run:
-        command: build -a vroom-web/apps/catalog/docker
-  catalog_deploy:
-    docker:
-    - image: vroom/mlp:3.0.2
-    parameters:
-      env:
-        type: string
-    steps:
-    - checkout
-    - setup_remote_docker:
-        version: 18.09.3
-    - run:
-        command: deploy -a vroom-web/apps/catalog/docker -n << parameters.env >>
   danger:
     docker:
     - image: node:erbium-alpine
@@ -30,7 +9,7 @@ jobs:
           yarn install
           yarn danger ci
         name: Danger
-  homepage_build:
+  home_build:
     docker:
     - image: vroom/mlp:3.0.2
     steps:
@@ -38,8 +17,8 @@ jobs:
     - setup_remote_docker:
         version: 18.09.3
     - run:
-        command: build -a vroom-web/apps/homepage/docker
-  homepage_deploy:
+        command: build -a vroom-web/apps/home/docker
+  home_deploy:
     docker:
     - image: vroom/mlp:3.0.2
     parameters:
@@ -50,11 +29,7 @@ jobs:
     - setup_remote_docker:
         version: 18.09.3
     - run:
-        command: |-
-          deploy -a vroom-web/apps/homepage/docker -n << parameters.env >>
-
-          # sleep 240
-          # if [ -z "${FASTLY_PURGE_KEY}" ]; then echo "FASTLY_PURGE_KEY not set"; return 1; elif [ -z "${FASTLY_SERVICE_ID}" ]; then echo "FASTLY_SERVICE_ID not set"; return 1; else echo "Purging Fastly for service ${FASTLY_SERVICE_ID}"; curl -X POST -H "Fastly-Key: ${FASTLY_PURGE_KEY}" -H "Accept: application/json" https://api.fastly.com/service/${FASTLY_SERVICE_ID}/purge_all ; fi
+        command: deploy -a vroom-web/apps/home/docker -n << parameters.env >>
   lint_build:
     docker:
     - image: circleci/node:erbium
@@ -66,6 +41,27 @@ jobs:
           yarn workspaces run lint
           yarn workspaces run build
         name: Lint & Build
+  listing_build:
+    docker:
+    - image: vroom/mlp:3.0.2
+    steps:
+    - checkout
+    - setup_remote_docker:
+        version: 18.09.3
+    - run:
+        command: build -a vroom-web/apps/listing/docker
+  listing_deploy:
+    docker:
+    - image: vroom/mlp:3.0.2
+    parameters:
+      env:
+        type: string
+    steps:
+    - checkout
+    - setup_remote_docker:
+        version: 18.09.3
+    - run:
+        command: deploy -a vroom-web/apps/listing/docker -n << parameters.env >>
   marketing_build:
     docker:
     - image: vroom/mlp:3.0.2
@@ -128,7 +124,7 @@ jobs:
           yarn workspace @vroom-web/footer-components build
 
           # Build the main app.
-          yarn workspace @vroom-web/homepage build
+          yarn workspace @vroom-web/home build
     - sonarcloud/scan
   static-assets_deploy:
     docker:
@@ -147,90 +143,26 @@ orbs:
   sonarcloud: sonarsource/sonarcloud@1.0.1
 version: 2.1
 workflows:
-  catalog:
-    jobs:
-    - catalog_build:
-        context: aws-non-prod
-        filters:
-          branches:
-            ignore: /.*/
-          tags:
-            only: /^catalog-v.*/
-    - hold:
-        filters:
-          branches:
-            ignore: /.*/
-          tags:
-            only: /^catalog-v.*/
-        matrix:
-          parameters:
-            env:
-            - dev
-            - qa
-            - uat
-        name: hold_<< matrix.env >>
-        requires:
-        - catalog_build
-        type: approval
-    - catalog_deploy:
-        context: aws-non-prod
-        filters:
-          branches:
-            ignore: /.*/
-          tags:
-            only: /^catalog-v.*/
-        matrix:
-          parameters:
-            env:
-            - dev
-            - qa
-            - uat
-        name: catalog_deploy_<< matrix.env >>
-        requires:
-        - hold_<< matrix.env >>
-    - hold:
-        filters:
-          branches:
-            ignore: /.*/
-          tags:
-            only: /^catalog-v.*/
-        name: hold_prod
-        requires:
-        - catalog_deploy_dev
-        - catalog_deploy_qa
-        - catalog_deploy_uat
-        type: approval
-    - catalog_deploy:
-        context: aws-non-prod
-        env: prod
-        filters:
-          branches:
-            ignore: /.*/
-          tags:
-            only: /^catalog-v.*/
-        name: catalog_deploy_prod
-        requires:
-        - hold_prod
   common:
     jobs:
     - danger:
         context: dangerjs
     - lint_build
-  homepage:
+  home:
     jobs:
-    - homepage_build:
+    - home_build:
         context: aws-non-prod
         filters:
           branches:
             ignore: /.*/
           tags:
-            only: /^homepage-v.*/
+            only: /^home-v.*/
     - hold:
         filters:
           branches:
             ignore: /.*/
           tags:
-            only: /^homepage-v.*/
+            only: /^home-v.*/
         matrix:
           parameters:
             env:
@@ -239,22 +171,22 @@ workflows:
             - uat
         name: hold_<< matrix.env >>
         requires:
-        - homepage_build
+        - home_build
         type: approval
-    - homepage_deploy:
+    - home_deploy:
         context: aws-non-prod
         filters:
           branches:
             ignore: /.*/
           tags:
-            only: /^homepage-v.*/
+            only: /^home-v.*/
         matrix:
           parameters:
             env:
             - dev
             - qa
             - uat
-        name: homepage_deploy_<< matrix.env >>
+        name: home_deploy_<< matrix.env >>
         requires:
         - hold_<< matrix.env >>
     - hold:
@@ -262,22 +194,86 @@ workflows:
           branches:
             ignore: /.*/
           tags:
-            only: /^homepage-v.*/
+            only: /^home-v.*/
         name: hold_prod
         requires:
-        - homepage_deploy_dev
-        - homepage_deploy_qa
-        - homepage_deploy_uat
+        - home_deploy_dev
+        - home_deploy_qa
+        - home_deploy_uat
         type: approval
-    - homepage_deploy:
+    - home_deploy:
         context: aws-non-prod
         env: prod
         filters:
           branches:
             ignore: /.*/
           tags:
-            only: /^homepage-v.*/
-        name: homepage_deploy_prod
+            only: /^home-v.*/
+        name: home_deploy_prod
+        requires:
+        - hold_prod
+  listing:
+    jobs:
+    - listing_build:
+        context: aws-non-prod
+        filters:
+          branches:
+            ignore: /.*/
+          tags:
+            only: /^listing-v.*/
+    - hold:
+        filters:
+          branches:
+            ignore: /.*/
+          tags:
+            only: /^listing-v.*/
+        matrix:
+          parameters:
+            env:
+            - dev
+            - qa
+            - uat
+        name: hold_<< matrix.env >>
+        requires:
+        - listing_build
+        type: approval
+    - listing_deploy:
+        context: aws-non-prod
+        filters:
+          branches:
+            ignore: /.*/
+          tags:
+            only: /^listing-v.*/
+        matrix:
+          parameters:
+            env:
+            - dev
+            - qa
+            - uat
+        name: listing_deploy_<< matrix.env >>
+        requires:
+        - hold_<< matrix.env >>
+    - hold:
+        filters:
+          branches:
+            ignore: /.*/
+          tags:
+            only: /^listing-v.*/
+        name: hold_prod
+        requires:
+        - listing_deploy_dev
+        - listing_deploy_qa
+        - listing_deploy_uat
+        type: approval
+    - listing_deploy:
+        context: aws-non-prod
+        env: prod
+        filters:
+          branches:
+            ignore: /.*/
+          tags:
+            only: /^listing-v.*/
+        name: listing_deploy_prod
         requires:
         - hold_prod
   marketing:

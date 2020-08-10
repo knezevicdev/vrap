@@ -33,7 +33,7 @@
     - Saving changes to code will cause the app to hotreload.
   - Approach #2
     - Open a terminal in the project root.
-    - Figure out the path from the root to the `docker-compose.yaml` file for the package you want to run. (E.g. `/apps/homepage/docker/docker-compose.yaml`)
+    - Figure out the path from the root to the `docker-compose.yaml` file for the package you want to run. (E.g. `/apps/home/docker/docker-compose.yaml`)
     - Run `docker-compose -f <path-to-docker-compose.yaml> up --build`.
     - Wait for Docker to build your image and run your container.
 
@@ -201,7 +201,7 @@ Notice that in each package, there is a `/docker` folder which describes how to 
 # Gotchas
 When adding local packages you must specify the version and add from root, eg
 
-> yarn workspace @vroom-web/homepage add @vroom-web/banner@^0.1.0
+> yarn workspace @vroom-web/home add @vroom-web/banner@^0.1.0
 
 Otherwise yarn tries to grab from the registry.
 
