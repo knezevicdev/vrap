@@ -59,15 +59,6 @@ class AnalyticsHandler extends BaseAnalyticsHandler {
     this.track(event, properties);
   };
 
-  trackLearningEducation = (): void => {
-    const event = 'Learning Center Financial Education Clicked';
-    const properties = {
-      category: 'Main Navigation',
-      label: 'Learning Center',
-    };
-    this.track(event, properties);
-  };
-
   trackLearningServicemembers = (): void => {
     const event = 'Learning Center Servicemembers Civil Relief Act Clicked';
     const properties = {

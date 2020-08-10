@@ -7,7 +7,6 @@ declare class AnalyticsHandler extends BaseAnalyticsHandler {
     trackCorporateSite: () => void;
     trackLearningOverview: () => void;
     trackLearningBlog: () => void;
-    trackLearningEducation: () => void;
     trackLearningServicemembers: () => void;
 }
 export default AnalyticsHandler;

@@ -14902,16 +14902,6 @@ var AnalyticsHandler$1 = /*#__PURE__*/function (_BaseAnalyticsHandler) {
       _this.track(event, properties);
     });
 
-    _defineProperty(_assertThisInitialized(_this), "trackLearningEducation", function () {
-      var event = 'Learning Center Financial Education Clicked';
-      var properties = {
-        category: 'Main Navigation',
-        label: 'Learning Center'
-      };
-
-      _this.track(event, properties);
-    });
-
     _defineProperty(_assertThisInitialized(_this), "trackLearningServicemembers", function () {
       var event = 'Learning Center Servicemembers Civil Relief Act Clicked';
       var properties = {
@@ -14967,11 +14957,6 @@ var ViewModel = function ViewModel(store) {
     href: 'https://santanderconsumerusa.com/blog',
     target: '_blank',
     handleAnalytics: this.analyticsHandler.trackLearningBlog
-  }, {
-    label: 'Financial Education',
-    href: 'https://santanderconsumerusa.com/learning-center/financial-education',
-    target: '_blank',
-    handleAnalytics: this.analyticsHandler.trackLearningEducation
   }, {
     label: 'Servicemembers Civil Relief Act',
     href: 'https://santanderconsumerusa.com/legal/servicemembers-civil-relief-act',

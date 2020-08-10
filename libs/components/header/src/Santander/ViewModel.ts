@@ -50,13 +50,6 @@ class ViewModel {
       handleAnalytics: this.analyticsHandler.trackLearningBlog,
     },
     {
-      label: 'Financial Education',
-      href:
-        'https://santanderconsumerusa.com/learning-center/financial-education',
-      target: '_blank',
-      handleAnalytics: this.analyticsHandler.trackLearningEducation,
-    },
-    {
       label: 'Servicemembers Civil Relief Act',
       href:
         'https://santanderconsumerusa.com/legal/servicemembers-civil-relief-act',
