@@ -184,6 +184,7 @@ const HeroAutocomplete: React.FC<HeroAutocompleteProps> = ({
                   {params.InputProps.endAdornment}
                 </React.Fragment>
               ),
+              style: { fontSize: '16px' },
               startAdornment: (
                 <React.Fragment>
                   <SearchIcon
