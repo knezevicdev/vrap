@@ -1,5 +1,5 @@
 import { styled } from '@material-ui/core/styles';
-import { Container } from '@vroom-web/ui';
+import { Brand, Container } from '@vroom-web/ui';
 import Head from 'next/head';
 import { parseCookies } from 'nookies';
 import React from 'react';
@@ -22,6 +22,7 @@ interface PageProps {
   experiments?: Experiment[];
   head?: React.ReactNode;
   name: string;
+  brand: Brand;
 }
 
 class Page extends React.Component<PageProps> {
@@ -37,6 +38,12 @@ class Page extends React.Component<PageProps> {
     const { category, experiments, name } = this.props;
     const cookies = parseCookies();
     const anonymousId: string | undefined = cookies['uuid'];
+    if (this.props.brand === Brand.SANTANDER) {
+      this.analyticsHandler.createAdditionalTracker(
+        'UA-2348754-3',
+        'santander'
+      );
+    }
     if (anonymousId) {
       this.analyticsHandler.setAnonymousId(anonymousId);
     }

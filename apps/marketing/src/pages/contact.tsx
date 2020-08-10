@@ -23,7 +23,7 @@ const ContactPage: NextPage<Props> = ({ brand, description, title }) => {
   return (
     <BrandContext.Provider value={brand}>
       <ThemeProvider brand={brand}>
-        <Page name="Contact" head={head}>
+        <Page brand={brand} name="Contact" head={head}>
           <Contact />
         </Page>
       </ThemeProvider>
