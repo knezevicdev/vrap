@@ -38,7 +38,7 @@ const HomePage: NextPage<Props> = ({
 
   return (
     <ThemeProvider brand={brand}>
-      <Page experiments={experiments} name="Home" head={head}>
+      <Page brand={brand} experiments={experiments} name="Home" head={head}>
         <BrandContext.Provider value={brand}>
           <HomeStoreContext.Provider value={store}>
             <Home />
