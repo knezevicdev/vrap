@@ -1,0 +1,58 @@
+listing:
+  jobs:
+  - listing_build:
+      context: aws-non-prod
+      filters:
+        tags:
+          only: /^listing-v.*/
+        branches:
+          ignore: /.*/
+  - hold:
+      name: hold_<< matrix.env >>
+      type: approval
+      matrix:
+        parameters:
+          env: ["dev", "qa", "uat"]
+      requires:
+        - listing_build
+      filters:
+        tags:
+          only: /^listing-v.*/
+        branches:
+          ignore: /.*/
+  - listing_deploy:
+      name: listing_deploy_<< matrix.env >>
+      context: aws-non-prod
+      matrix:
+        parameters:
+          env: ["dev", "qa", "uat"]
+      requires:
+        - hold_<< matrix.env >>
+      filters:
+        tags:
+          only: /^listing-v.*/
+        branches:
+          ignore: /.*/
+  - hold:
+      name: hold_prod
+      type: approval
+      requires:
+        - listing_deploy_dev
+        - listing_deploy_qa
+        - listing_deploy_uat
+      filters:
+        tags:
+          only: /^listing-v.*/
+        branches:
+          ignore: /.*/
+  - listing_deploy:
+      name: listing_deploy_prod
+      context: aws-non-prod
+      env: "prod"
+      requires:
+        - hold_prod
+      filters:
+        tags:
+          only: /^listing-v.*/
+        branches:
+          ignore: /.*/
