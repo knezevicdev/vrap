@@ -79,7 +79,7 @@ class VroomDocument extends Document<Props> {
             />
           )}
           <GlobalEnvSnippet
-            ASSET_PREFIX={globalEnv.ASSET_PREFIX}
+            BASE_PATH={globalEnv.BASE_PATH}
             CALENDLY_URL={globalEnv.CALENDLY_URL}
             DATA_DOG_LOG_COLLECTION_TOKEN={
               globalEnv.DATA_DOG_LOG_COLLECTION_TOKEN
