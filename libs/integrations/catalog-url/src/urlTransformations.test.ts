@@ -457,4 +457,19 @@ describe('getFiltersDataFromUrl', () => {
       mockFiltersData1WithoutFiltersQueryParam
     );
   });
+  test('3', () => {
+    expect(getFiltersDataFromUrl('/types/truck')).toEqual({
+      [Filters.BODY_TYPES]: ['truck'],
+    });
+  });
+  test('4', () => {
+    expect(getFiltersDataFromUrl('/types/truck/ford')).toEqual({
+      [Filters.BODY_TYPES]: ['truck'],
+      [Filters.MAKE_AND_MODELS]: [
+        {
+          makeSlug: 'ford',
+        },
+      ],
+    });
+  });
 });

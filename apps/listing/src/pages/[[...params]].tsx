@@ -1,5 +1,15 @@
 /* eslint-disable @typescript-eslint/camelcase */
 import { useTheme } from '@material-ui/core/styles';
+import {
+  addAllModels,
+  addBodyType,
+  addModel,
+  BodyType,
+  FiltersData,
+  getUrlFromFiltersData,
+  MaxAndMin,
+  setYear,
+} from '@vroom-web/catalog-url-integration';
 import { Brand, ThemeProvider } from '@vroom-web/ui';
 import { NextPage, NextPageContext } from 'next';
 import { parseCookies } from 'nookies';
@@ -49,36 +59,44 @@ const CarsPage: NextPage<Props> = ({
     }
   }, [carsStore, theme]);
 
-  // DELTA-5
+  // DELTA-5 / DELTA-56
   // This is more complex than I would like.
   // TODO: investigate a better solution that will play nicely with chips as well.
-  const getDisplayAttributesFromUrl = (): {
-    bodyType?: string;
-    make?: string;
-    model?: string;
-    year?: string;
+  const getAttributesFromUrl = (): {
+    bodyTypeDisplay?: string;
+    bodyTypeSlug?: BodyType;
+    makeDisplay?: string;
+    makeSlug?: string;
+    modelDisplay?: string;
+    modelSlug?: string;
+    yearDisplay?: string;
+    year?: MaxAndMin;
   } => {
     if (!carsStore.filtersData) {
       return {};
     }
 
-    let bodyType: string | undefined;
+    let bodyTypeDisplay: string | undefined;
+    let bodyTypeSlug: BodyType | undefined;
     if (
       carsStore.filtersData.bodytypes &&
       carsStore.filtersData.bodytypes.length > 0 &&
       carsStore.bodyTypes.length > 0
     ) {
-      const bodyTypeSlug = carsStore.filtersData.bodytypes[0];
+      const bodyTypeSlugToMatch = carsStore.filtersData.bodytypes[0];
       const matchingBodyType = carsStore.bodyTypes.find(
-        (bt) => bt.filtersDataValue === bodyTypeSlug
+        (bt) => bt.filtersDataValue === bodyTypeSlugToMatch
       );
       if (matchingBodyType) {
-        bodyType = matchingBodyType.display;
+        bodyTypeDisplay = matchingBodyType.display;
+        bodyTypeSlug = matchingBodyType.filtersDataValue;
       }
     }
 
-    let make: string | undefined;
-    let model: string | undefined;
+    let makeDisplay: string | undefined;
+    let makeSlug: string | undefined;
+    let modelDisplay: string | undefined;
+    let modelSlug: string | undefined;
     if (
       carsStore.filtersData.makesandmodels &&
       carsStore.filtersData.makesandmodels.length > 0 &&
@@ -86,46 +104,63 @@ const CarsPage: NextPage<Props> = ({
       carsStore.makeBuckets.length > 0
     ) {
       const makeAndModels = carsStore.filtersData.makesandmodels[0];
-      const makeSlug = makeAndModels.makeSlug;
+      const makeSlugToMatch = makeAndModels.makeSlug;
       const matchingMakeBucket = carsStore.makeBuckets.find(
-        (mb) => mb.slug === makeSlug
+        (mb) => mb.slug === makeSlugToMatch
       );
       if (matchingMakeBucket) {
-        make = matchingMakeBucket.key;
+        makeDisplay = matchingMakeBucket.key;
+        makeSlug = matchingMakeBucket.slug;
         if (
           makeAndModels.modelSlugs &&
           makeAndModels.modelSlugs.length > 0 &&
           matchingMakeBucket.model_count.buckets.length > 0
         ) {
-          const modelSlug = makeAndModels.modelSlugs[0];
+          const modelSlugToMatch = makeAndModels.modelSlugs[0];
           const matchingModelBucket = matchingMakeBucket.model_count.buckets.find(
-            (mb) => mb.slug === modelSlug
+            (mb) => mb.slug === modelSlugToMatch
           );
           if (matchingModelBucket) {
-            model = matchingModelBucket.key;
+            modelDisplay = matchingModelBucket.key;
+            modelSlug = matchingModelBucket.slug;
           }
         }
       }
     }
 
-    let year: string | undefined;
+    let yearDisplay: string | undefined;
+    let year: MaxAndMin | undefined;
     if (carsStore.filtersData.year) {
+      year = carsStore.filtersData.year;
       if (carsStore.filtersData.year.max !== carsStore.filtersData.year.min) {
-        year = `${carsStore.filtersData.year.min}-${carsStore.filtersData.year.max}`;
+        yearDisplay = `${carsStore.filtersData.year.min}-${carsStore.filtersData.year.max}`;
       } else {
-        year = `${carsStore.filtersData.year.max}`;
+        yearDisplay = `${carsStore.filtersData.year.max}`;
       }
     }
 
     return {
-      bodyType,
-      make,
-      model,
+      bodyTypeDisplay,
+      bodyTypeSlug,
+      makeDisplay,
+      makeSlug,
+      modelDisplay,
+      modelSlug,
+      yearDisplay,
       year,
     };
   };
 
-  const { bodyType, make, model, year } = getDisplayAttributesFromUrl();
+  const {
+    bodyTypeDisplay,
+    bodyTypeSlug,
+    makeDisplay,
+    makeSlug,
+    modelDisplay,
+    modelSlug,
+    yearDisplay,
+    year,
+  } = getAttributesFromUrl();
 
   const getTitle = (): string => {
     if (brand === Brand.SANTANDER) {
@@ -141,28 +176,28 @@ const CarsPage: NextPage<Props> = ({
       return `Used ${pluralDescriptor} for Sale: Buy Online + Home Delivery | Vroom`;
     };
 
-    if (make && model && year) {
-      return template(`${year} ${make} ${model}`);
+    if (makeDisplay && modelDisplay && yearDisplay) {
+      return template(`${yearDisplay} ${makeDisplay} ${modelDisplay}`);
     }
 
-    if (make && model) {
-      return template(`${make} ${model}`);
+    if (makeDisplay && modelDisplay) {
+      return template(`${makeDisplay} ${modelDisplay}`);
     }
 
-    if (make && year) {
-      return template(`${year} ${make}`);
+    if (makeDisplay && yearDisplay) {
+      return template(`${yearDisplay} ${makeDisplay}`);
     }
 
-    if (bodyType && make) {
-      return template(`${make} ${bodyType}`);
+    if (bodyTypeDisplay && makeDisplay) {
+      return template(`${makeDisplay} ${bodyTypeDisplay}`);
     }
 
-    if (make) {
-      return template(make);
+    if (makeDisplay) {
+      return template(makeDisplay);
     }
 
-    if (bodyType) {
-      return template(`${bodyType}`);
+    if (bodyTypeDisplay) {
+      return template(`${bodyTypeDisplay}`);
     }
 
     return template('Cars');
@@ -174,20 +209,41 @@ const CarsPage: NextPage<Props> = ({
       return 'Buy your next car online with Santander Consumer USA. We offer high quality cars, easy car buying, & delivery anywhere in the USA.';
     }
 
-    const descriptorArray = [make, model, bodyType].filter((item) => !!item);
+    const descriptorArray = [makeDisplay, modelDisplay, bodyTypeDisplay].filter(
+      (item) => !!item
+    );
     const descriptor =
       descriptorArray.length > 0 ? descriptorArray.join(' ') : 'car';
 
     return `Buy your next used ${descriptor} with Vroom. Browse our high-quality ${
-      year || ''
+      yearDisplay || ''
     } ${descriptor} inventory, buy online, and have it delivered straight to you.`;
   };
   const description = getDescription();
+
+  const getCanonicalHref = (): string => {
+    let filtersData: FiltersData = {};
+    if (bodyTypeSlug) {
+      filtersData = addBodyType(bodyTypeSlug, filtersData);
+    }
+    if (makeSlug && modelSlug) {
+      filtersData = addModel(makeSlug, modelSlug, filtersData);
+    } else if (makeSlug) {
+      filtersData = addAllModels(makeSlug, filtersData);
+    }
+    if (year) {
+      filtersData = setYear(year, filtersData);
+    }
+    // Return url without trailing slash.
+    return getUrlFromFiltersData(filtersData).replace(/\/$/, '');
+  };
+  const canonicalHref = getCanonicalHref();
 
   const head = (
     <>
       <title>{title}</title>
       <meta name="description" content={description} />
+      <link rel="canonical" href={canonicalHref} />
       {!indexPage && <meta name="robots" content="noindex, nofollow" />}
     </>
   );

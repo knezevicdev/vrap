@@ -610,12 +610,7 @@ var getFiltersDataFromUrl = function getFiltersDataFromUrl(url) {
   }
 
   var paramsBasePathIndex = url.indexOf(paramsBasePath);
-
-  if (paramsBasePathIndex === -1) {
-    return undefined;
-  }
-
-  var paramsStartIndex = paramsBasePathIndex + paramsBasePath.length;
+  var paramsStartIndex = paramsBasePathIndex !== -1 ? paramsBasePathIndex + paramsBasePath.length : 0;
   var paramsEndIndex = questionMarkIndex !== -1 ? questionMarkIndex : undefined;
   var params = url.substring(paramsStartIndex, paramsEndIndex);
 

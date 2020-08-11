@@ -275,11 +275,11 @@ export const getFiltersDataFromUrl = (url: string): FiltersData | undefined => {
   }
 
   const paramsBasePathIndex = url.indexOf(paramsBasePath);
-  if (paramsBasePathIndex === -1) {
-    return undefined;
-  }
 
-  const paramsStartIndex = paramsBasePathIndex + paramsBasePath.length;
+  const paramsStartIndex =
+    paramsBasePathIndex !== -1
+      ? paramsBasePathIndex + paramsBasePath.length
+      : 0;
   const paramsEndIndex =
     questionMarkIndex !== -1 ? questionMarkIndex : undefined;
 
