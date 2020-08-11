@@ -32,6 +32,7 @@ const HomePage: NextPage<Props> = ({
   const head = (
     <>
       <title>{title}</title>
+      <link rel="canonical" href="/" />
       <meta name="description" content={description}></meta>
     </>
   );
