@@ -19,9 +19,6 @@ const ErrorContainer = styled('div')(({ theme }) => ({
 const Message = styled(Typography)(({ theme }) => ({
   fontSize: '28px',
   marginTop: theme.spacing(3),
-  [theme.breakpoints.only('xs')]: {
-    whiteSpace: 'pre',
-  },
 }));
 
 const Icon = styled(NoVehiclesFoundIcon)(() => ({
