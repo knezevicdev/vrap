@@ -90,6 +90,8 @@ class AutocompleteViewModel {
   }
 
   navigateUsingAutocomplete(suggestion: Suggestion): void {
+    const element = document.activeElement as HTMLElement;
+    element && element.blur();
     this.analyticsHandler.trackProductSearched(
       'Autocomplete',
       suggestion.label
