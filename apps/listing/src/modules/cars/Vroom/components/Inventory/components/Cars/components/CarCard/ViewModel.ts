@@ -108,7 +108,8 @@ class CarCardViewModel {
       this.carsStore.attributionQueryString !== ''
         ? `?${this.carsStore.attributionQueryString}`
         : '';
-    return `/inventory/${this.car.vin}${attributionQueryString}`;
+    const { makeSlug, modelSlug, vin, year } = this.car;
+    return `/inventory/${makeSlug}-${modelSlug}-${year}-${vin}${attributionQueryString}`;
   }
 
   trackProductClick = (): void => {

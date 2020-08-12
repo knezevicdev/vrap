@@ -31,13 +31,15 @@ class CarsViewModel {
         leadFlagPhotoUrl,
         listingPrice,
         make,
+        makeSlug,
         model,
+        modelSlug,
         soldStatus,
         vin,
         year,
       } = car;
       const name = `${year} ${make} ${model}`;
-      const url = `/inventory/${vin}`;
+      const url = `/inventory/${makeSlug}-${modelSlug}-${year}-${vin}`;
       return {
         imageUrl: leadFlagPhotoUrl,
         inventoryType: consignmentPartnerId ? 'Consignment' : 'Vroom',

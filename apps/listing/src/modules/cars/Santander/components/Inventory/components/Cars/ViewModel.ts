@@ -31,14 +31,16 @@ class CarsViewModel {
         leadFlagPhotoUrl,
         listingPrice,
         make,
+        makeSlug,
         model,
+        modelSlug,
         soldStatus,
         vin,
         year,
       } = car;
       const name = `${year} ${make} ${model}`;
       //TODO: Replace vehicle -> inventory after AB test
-      const url = `/vehicle/${vin}`;
+      const url = `/vehicle/${makeSlug}-${modelSlug}-${year}-${vin}`;
       return {
         imageUrl: leadFlagPhotoUrl,
         inventoryType: consignmentPartnerId ? 'Consignment' : 'Vroom',
