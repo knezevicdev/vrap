@@ -10,7 +10,7 @@ const shortHash = childProcess
   .toString()
   .trim();
 
-const basePath = '/apps/home';
+const basePath = '/home';
 
 const config = {
   env: {

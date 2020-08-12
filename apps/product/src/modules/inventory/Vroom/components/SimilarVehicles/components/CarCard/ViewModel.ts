@@ -95,16 +95,13 @@ class CarCardViewModel {
   }
 
   link(): string {
-    //TODO: Replace vehicle -> inventory after AB test
-    return `/vehicle/${this.car.vin}`;
+    return `${globalEnv.BASE_PATH}/${this.car.vin}`;
   }
 
   navigate = (): void => {
     if (!this.car) {
       return;
     }
-    //TODO: Replace vehicle -> inventory after AB test
-    const link = `/vehicle/${this.car.vin}`;
     const {
       consignmentPartnerId,
       inventoryId,
@@ -116,6 +113,7 @@ class CarCardViewModel {
       vin,
       soldStatus,
     } = this.car;
+    const link = `/${vin}`;
     const name = `${year} ${make} ${model}`;
     const photoType = this.getPhotoType();
     const product: Product = {

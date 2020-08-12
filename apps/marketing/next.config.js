@@ -10,7 +10,8 @@ const shortHash = childProcess
   .toString()
   .trim();
 
-const basePath = '/apps/marketing';
+// TODO: investigate how to client-side navigate without adding base path.
+const basePath = '/marketing';
 
 const config = {
   env: {

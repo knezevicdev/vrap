@@ -8,7 +8,7 @@ const shortHash = childProcess
   .toString()
   .trim();
 
-const basePath = '/apps/listing';
+const basePath = '/cars';
 
 module.exports = {
   basePath,

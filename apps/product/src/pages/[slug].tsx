@@ -2,6 +2,7 @@ import { Brand, ThemeProvider } from '@vroom-web/ui';
 import { NextPage } from 'next';
 import React from 'react';
 
+import globalEnv from 'src/globalEnv';
 import Inventory from 'src/modules/inventory';
 import { BrandContext } from 'src/modules/inventory/BrandContext';
 import {
@@ -68,8 +69,7 @@ InventoryPage.getInitialProps = async ({ query, res, req }): Promise<Props> => {
       modelSlug,
       listingPrice,
     } = initialState.vehicle._source;
-    //TODO: Replace vehicle -> inventory after AB test
-    canonicalHref = `/vehicle/${makeSlug}-${modelSlug}-${year}-${vin}`;
+    canonicalHref = `${globalEnv.BASE_PATH}/${makeSlug}-${modelSlug}-${year}-${vin}`;
     const currencyFormatter = new Intl.NumberFormat('en-US', {
       style: 'currency',
       currency: 'USD',
