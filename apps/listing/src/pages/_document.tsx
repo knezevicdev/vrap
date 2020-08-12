@@ -60,11 +60,6 @@ class VroomDocument extends Document<Props> {
     return (
       <Html lang="en">
         <Head>
-          <meta charSet="utf-8" />
-          <meta
-            name="viewport"
-            content="minimum-scale=1, initial-scale=1, width=device-width"
-          />
           <UISnippet
             brand={this.props.brand}
             staticAssetsHostUrl={publicRuntimeConfig.STATIC_ASSETS_HOST_URL}
