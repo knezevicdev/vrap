@@ -40,7 +40,7 @@ class Page extends React.Component<PageProps> {
     const anonymousId: string | undefined = cookies['uuid'];
     if (this.props.brand === Brand.SANTANDER) {
       this.analyticsHandler.createAdditionalTracker(
-        'UA-2348754-3',
+        'UA-2348754-1',
         'santander'
       );
     }
