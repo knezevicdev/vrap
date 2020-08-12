@@ -4,9 +4,9 @@ import 'src/modules/inventory/Vroom/components/Gallery/index.css';
 
 import { configure as configureMobx } from 'mobx';
 import App from 'next/app';
+import Head from 'next/head';
 import React from 'react';
 import smoothscroll from 'smoothscroll-polyfill';
-import Head from "next/head";
 
 configureMobx({
   enforceActions: 'observed', // don't allow state modifications outside actions
@@ -20,16 +20,16 @@ class VroomApp extends App {
   render(): JSX.Element {
     const { Component, pageProps } = this.props;
     return (
-        <>
-          <Head>
-            <meta charSet="utf-8" />
-            <meta
-                name="viewport"
-                content="minimum-scale=1, initial-scale=1, width=device-width"
-            />
-          </Head>
-          <Component {...pageProps} />
-        </>
+      <>
+        <Head>
+          <meta charSet="utf-8" />
+          <meta
+            name="viewport"
+            content="minimum-scale=1, initial-scale=1, width=device-width"
+          />
+        </Head>
+        <Component {...pageProps} />
+      </>
     );
   }
 }
