@@ -74,7 +74,7 @@ interface Props {
 
 const TopSectionView: React.FC<Props> = ({ viewModel }) => {
   const theme = useTheme();
-  const isDesktop = useMediaQuery(theme.breakpoints.up('sm'));
+  const isDesktop = useMediaQuery(theme.breakpoints.up('md'));
   const buttonLabel = viewModel.buttonLabel;
 
   const handleClickFiltersIcon = (): void => {
