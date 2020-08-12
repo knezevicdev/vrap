@@ -4,6 +4,7 @@ import { datadogLogs, LogsUserConfiguration } from '@datadog/browser-logs';
 import { configure as configureMobx } from 'mobx';
 import App from 'next/app';
 import getConfig from 'next/config';
+import Head from 'next/head';
 import React from 'react';
 import smoothscroll from 'smoothscroll-polyfill';
 
@@ -45,7 +46,18 @@ class VroomApp extends App {
 
   render(): JSX.Element {
     const { Component, pageProps } = this.props;
-    return <Component {...pageProps} />;
+    return (
+      <>
+        <Head>
+          <meta charSet="utf-8" />
+          <meta
+            name="viewport"
+            content="minimum-scale=1, initial-scale=1, width=device-width"
+          />
+        </Head>
+        <Component {...pageProps} />
+      </>
+    );
   }
 }
 
