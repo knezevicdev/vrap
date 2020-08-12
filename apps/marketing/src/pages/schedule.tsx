@@ -18,7 +18,7 @@ const SchedulePage: NextPage<Props> = ({ brand, query }) => {
     <BrandContext.Provider value={brand}>
       <QueryContext.Provider value={query}>
         <ThemeProvider brand={brand}>
-          <Page name="Contact">
+          <Page brand={brand} name="Contact">
             <Schedule />
           </Page>
         </ThemeProvider>

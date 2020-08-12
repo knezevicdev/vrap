@@ -32,7 +32,7 @@ const InventoryPage: NextPage<Props> = (props: Props) => {
   );
   return (
     <ThemeProvider brand={brand}>
-      <Page name="Product Details" head={head}>
+      <Page brand={brand} name="Product Details" head={head}>
         <BrandContext.Provider value={brand}>
           <InventoryStoreContext.Provider value={store}>
             <Inventory />
