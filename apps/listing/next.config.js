@@ -17,6 +17,7 @@ module.exports = {
   publicRuntimeConfig: {
     // Will be available on both server-side and client-side
     BASE_PATH: basePath,
+    DATA_DOG_LOG_COLLECTION_TOKEN: process.env.DATA_DOG_LOG_COLLECTION_TOKEN,
     INVSEARCH_V3_URL: process.env.INVSEARCH_V3_URL,
     NAME: name,
     SHORT_HASH: shortHash,
