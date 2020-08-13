@@ -1,0 +1,4 @@
+version: '3'
+services:
+  inv-search-networking:
+    command: ash -c "yarn workspace @vroom-web/inv-search-networking build"

@@ -26,10 +26,13 @@ export default class NotifyMeNetworker {
     this.hostUrl = hostUrl;
   }
 
-  async registerEmail(): Promise<void> {
+  async registerEmail(accessToken: string | undefined): Promise<void> {
     const url = `${this.hostUrl}/v2/devices`;
+    const options = {
+      headers: { Authorization: `Bearer ${accessToken}` },
+    };
     const payload: NotifyMeRequest = {
-      correlationId: `${Math.random() * 1000000}`,
+      correlationId: `${Math.floor(Math.random() * 1000000)}`,
       version: '1',
       timestamp: `${Date.now()}`,
       source: 'vroom-web',
@@ -37,16 +40,19 @@ export default class NotifyMeNetworker {
         type: 'email',
       },
     };
-    await this.axiosInstance.post(url, payload);
+    await this.axiosInstance.post(url, payload, options);
   }
 
-  async createSubscription(vin: string, accessToken: string): Promise<void> {
+  async createSubscription(
+    vin: string,
+    accessToken: string | undefined
+  ): Promise<any> {
     const url = `${this.hostUrl}/v2/subscriptions`;
     const options = {
       headers: { Authorization: `Bearer ${accessToken}` },
     };
     const payload: NotifyMeRequest = {
-      correlationId: `${Math.random() * 1000000}`,
+      correlationId: `${Math.floor(Math.random() * 1000000)}`,
       version: '1',
       timestamp: `${Date.now()}`,
       source: 'vroom-web',
@@ -57,6 +63,6 @@ export default class NotifyMeNetworker {
         },
       },
     };
-    const response = await this.axiosInstance.post(url, payload, options);
+    return await this.axiosInstance.post(url, payload, options);
   }
 }

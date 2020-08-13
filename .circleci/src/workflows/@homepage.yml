@@ -1,10 +1,5 @@
 homepage:
   jobs:
-  - sonarcloud:
-      context: SonarCloud
-  - danger:
-      context: dangerjs
-  - lint
   - homepage_build:
       context: aws-non-prod
       filters:

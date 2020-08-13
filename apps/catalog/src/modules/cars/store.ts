@@ -197,10 +197,20 @@ export const getTransmissionRequestData = (
 
 export const getPostInventoryRequestDataFromFilterData = (
   filtersData?: FiltersData,
-  geoLocationSortDefaultVariant?: boolean
+  geoLocationSortDefaultVariant?: boolean,
+  geo?: Coordinates
 ): PostInventoryRequestData => {
   if (!filtersData) {
-    return {};
+    if (geoLocationSortDefaultVariant || !geo) {
+      return {};
+    }
+    return {
+      sortby: 'geo',
+      geo: {
+        lat: `${geo.latitude}`,
+        long: `${geo.longitude}`,
+      },
+    };
   }
 
   const bodytype = getBodyTypeRequestData(filtersData);
@@ -234,7 +244,8 @@ export const getPostInventoryRequestDataFromFilterData = (
 export async function getInitialCarsStoreState(
   attributionQueryString: string,
   geoLocationSortDefaultVariant: boolean,
-  filtersQueryParam?: string
+  geo: Coordinates | undefined,
+  url: string
 ): Promise<InitialCarsStoreState> {
   const initialState: InitialCarsStoreState = {
     attributionQueryString,
@@ -244,7 +255,7 @@ export async function getInitialCarsStoreState(
     geoLocationSortDefaultVariant,
   };
 
-  initialState.filtersData = getFiltersDataFromUrl(filtersQueryParam);
+  initialState.filtersData = getFiltersDataFromUrl(url);
 
   if (!publicRuntimeConfig.INVSEARCH_V3_URL) {
     throw new Error('publicRuntimeConfig.INVSEARCH_V3_URL is undefined');
@@ -276,7 +287,8 @@ export async function getInitialCarsStoreState(
     initialState.inventoryStatus = Status.FETCHING;
     const postInventoryRequestDataFromFiltersData = getPostInventoryRequestDataFromFilterData(
       initialState.filtersData,
-      geoLocationSortDefaultVariant
+      geoLocationSortDefaultVariant,
+      geo
     );
     const inventoryRequestData: PostInventoryRequestData = {
       ...postInventoryRequestDataFromFiltersData,
@@ -452,7 +464,9 @@ export class CarsStore {
           ...filtersData,
           [Filters.PAGE]: undefined,
         };
-    const as = getUrlFromFiltersData(filtersDataToUse);
+    const as = getUrlFromFiltersData(filtersDataToUse, {
+      addFiltersQueryParam: true,
+    });
 
     // FIT-583
     // Persist key attribution query params across navigation.

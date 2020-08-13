@@ -23,6 +23,7 @@ const Phone = styled(PhoneSvg)(({ theme }) => ({
   marginRight: theme.spacing(1),
   minWidth: '32px',
   maxWidth: '32px',
+  alignSelf: 'baseline',
   [theme.breakpoints.only('xs')]: { marginRight: theme.spacing(2) },
 }));
 
@@ -49,11 +50,21 @@ const Header = styled('div')(({ theme }) => ({
   [theme.breakpoints.only('xs')]: { marginBottom: theme.spacing(2) },
 }));
 
-const HeaderText = styled(Typography)(({ theme }) => ({
+const HeaderText = styled('div')(() => ({
+  display: 'flex',
+  flexDirection: 'column',
+}));
+
+const HeaderTitle = styled(Typography)(() => ({
   fontWeight: 600,
   fontSize: '24px',
   lineHeight: '32px',
-  [theme.breakpoints.only('xs')]: { whiteSpace: 'pre-wrap' },
+}));
+
+const HeaderDescription = styled(Typography)(() => ({
+  fontWeight: 600,
+  fontSize: '16px',
+  lineHeight: '24px',
 }));
 
 const ComponentsContainer = styled('div')(({ theme }) => ({
@@ -141,7 +152,10 @@ const View: React.FC<Props> = ({ viewModel }) => {
       <ViewContent>
         <Header>
           <Phone />
-          <HeaderText>{viewModel.header}</HeaderText>
+          <HeaderText>
+            <HeaderTitle>{viewModel.headerTitle}</HeaderTitle>
+            <HeaderDescription>{viewModel.headerDescription}</HeaderDescription>
+          </HeaderText>
         </Header>
         <ComponentsContainer>
           <Vehicle>

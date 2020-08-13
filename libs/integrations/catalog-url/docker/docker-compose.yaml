@@ -12,4 +12,3 @@ services:
       - '../../../../:/www/'
       - '/www/node_modules'
       - '/www/libs/integrations/catalog-url/node_modules'
-      - '/www/libs/integrations/catalog-url/dist'

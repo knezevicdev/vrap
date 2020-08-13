@@ -15,10 +15,12 @@ import React from 'react';
 
 const { serverRuntimeConfig, publicRuntimeConfig } = getConfig();
 
-class VroomDocument extends Document {
-  static async getInitialProps(
-    ctx: DocumentContext
-  ): Promise<DocumentInitialProps> {
+interface Props extends DocumentInitialProps {
+  brand: Brand;
+}
+
+class VroomDocument extends Document<Props> {
+  static async getInitialProps(ctx: DocumentContext): Promise<Props> {
     const materialSheets = new ServerStyleSheets();
     const originalRenderPage = ctx.renderPage;
 
@@ -31,9 +33,20 @@ class VroomDocument extends Document {
       });
     ctx.renderPage = customRenderPage;
 
+    const { req, query } = ctx;
+    const headerBrandKey = 'x-brand';
+    const santanderKey = 'santander';
+    const brandHeader = req && req.headers[headerBrandKey];
+    const queryBrand = query.brand;
+    const brand: Brand =
+      (brandHeader || queryBrand) == santanderKey
+        ? Brand.SANTANDER
+        : Brand.VROOM;
+
     const initialProps = await Document.getInitialProps(ctx);
     return {
       ...initialProps,
+      brand,
       styles: (
         <>
           {initialProps.styles}
@@ -44,14 +57,6 @@ class VroomDocument extends Document {
   }
 
   render(): JSX.Element {
-    // FIT-570
-    // TODO: replace this mechanism with the actual one.
-    // Some data should come from ctx.req, rather than from ctx.query.
-    const query = this.props.__NEXT_DATA__.query;
-    const brandQueryParam = query.brand;
-    const brand =
-      brandQueryParam === 'santander' ? Brand.SANTANDER : Brand.VROOM;
-
     return (
       <Html lang="en">
         <Head>
@@ -61,7 +66,7 @@ class VroomDocument extends Document {
             content="minimum-scale=1, initial-scale=1, width=device-width"
           />
           <UISnippet
-            brand={brand}
+            brand={this.props.brand}
             staticAssetsHostUrl={publicRuntimeConfig.STATIC_ASSETS_HOST_URL}
           />
           {serverRuntimeConfig.SEGMENT_WRITE_KEY && (

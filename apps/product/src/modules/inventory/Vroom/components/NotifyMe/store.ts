@@ -9,6 +9,9 @@ export class NotifyMeStore {
   @observable userTokenStatus: Status = Status.INITIAL;
   @observable email?: string;
   @observable accesstoken?: string;
+  @observable isChecked = false;
+  @observable isError = false;
+  @observable isSuccessful = false;
 
   @action
   private initUserAccount = async (): Promise<void> => {
@@ -47,5 +50,20 @@ export class NotifyMeStore {
   @action
   toggleModal = (): void => {
     this.modalOpen = !this.modalOpen;
+  };
+
+  @action
+  toggleCheckbox = (): void => {
+    this.isChecked = !this.isChecked;
+  };
+
+  @action
+  setError = (value: boolean): void => {
+    this.isError = value;
+  };
+
+  @action
+  setSuccess = (value: boolean): void => {
+    this.isSuccessful = value;
   };
 }

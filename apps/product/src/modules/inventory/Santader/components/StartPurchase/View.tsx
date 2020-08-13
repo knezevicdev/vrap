@@ -57,6 +57,7 @@ const ViewContainer = styled('div')(() => ({
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'center',
+  width: '100%',
 }));
 
 const StartPurchaseView: React.FC<Props> = (props) => {

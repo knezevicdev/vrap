@@ -18,7 +18,7 @@ class ViewModel {
     },
     {
       title: 'Make It Yours',
-      description: 'Find the one, customize your deal and sign..',
+      description: 'Find the one, customize your deal and sign.',
       alt: 'Flexible Financing',
       src: `${globalEnv.ASSET_PREFIX}/modules/home/santander/images/icon_ownership.svg`,
     },

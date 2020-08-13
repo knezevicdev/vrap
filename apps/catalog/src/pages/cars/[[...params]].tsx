@@ -5,6 +5,7 @@ import { NextPage, NextPageContext } from 'next';
 import { parseCookies } from 'nookies';
 import { stringify } from 'qs';
 import React, { useEffect, useState } from 'react';
+import { Experiment } from 'vroom-abtesting-sdk/types';
 
 import experimentSDK, {
   showDefaultVariant,
@@ -21,10 +22,21 @@ import Page from 'src/Page';
 
 interface Props {
   brand: Brand;
+  description: string;
+  experiments: Experiment[];
+  indexPage: boolean;
   initialStoreState: InitialCarsStoreState;
+  title: string;
 }
 
-const CarsPage: NextPage<Props> = ({ brand, initialStoreState }) => {
+const CarsPage: NextPage<Props> = ({
+  brand,
+  description,
+  experiments,
+  indexPage,
+  initialStoreState,
+  title,
+}) => {
   // Persist store instance across URL updates.
   const [carsStore] = useState<CarsStore>(new CarsStore(initialStoreState));
 
@@ -40,21 +52,17 @@ const CarsPage: NextPage<Props> = ({ brand, initialStoreState }) => {
     }
   }, [carsStore, theme]);
 
-  const title = 'Buy Low-Mileage Used Cars & Trucks Online - Vroom';
-  const description =
-    'Buy your next car online with Vroom. We offer certified used cars for sale, no haggle car buying, full warranties and home shipping anywhere in the USA.';
-
   const head = (
     <>
       <title>{title}</title>
       <meta name="description" content={description} />
-      <meta name="robots" content="noindex, nofollow" />
+      {!indexPage && <meta name="robots" content="noindex, nofollow" />}
     </>
   );
 
   return (
     <ThemeProvider brand={brand}>
-      <Page name="Catalog" head={head}>
+      <Page experiments={experiments} name="Catalog" head={head}>
         <BrandContext.Provider value={brand}>
           <CarsStoreContext.Provider value={carsStore}>
             <Cars />
@@ -68,11 +76,9 @@ const CarsPage: NextPage<Props> = ({ brand, initialStoreState }) => {
 CarsPage.getInitialProps = async (context: NextPageContext): Promise<Props> => {
   const cookies = parseCookies(context);
   const marketingId = cookies['uuid'];
-
   const {
+    asPath,
     query: {
-      brand: brandQueryParam,
-      filters,
       gclid,
       subid,
       utm_source,
@@ -86,10 +92,54 @@ CarsPage.getInitialProps = async (context: NextPageContext): Promise<Props> => {
     },
   } = context;
 
-  // FIT-570
-  // TODO: replace this mechanism with the actual one.
-  // Some data should come from ctx.req, rather than from query.
-  const brand = brandQueryParam === 'santander' ? Brand.SANTANDER : Brand.VROOM;
+  const { req, query } = context;
+  const headerBrandKey = 'x-brand';
+  const santanderKey = 'santander';
+  const brandHeader = req && req.headers[headerBrandKey];
+  const queryBrand = query.brand;
+
+  const brand =
+    (brandHeader || queryBrand) == santanderKey ? Brand.SANTANDER : Brand.VROOM;
+
+  const geoQuery = query.geo;
+  let geo: Coordinates | undefined;
+  if (
+    req &&
+    req.headers['client-geo-latitude'] &&
+    req.headers['client-geo-longitude']
+  ) {
+    geo = {
+      latitude: parseFloat(req.headers['client-geo-latitude'] as string),
+      longitude: parseFloat(req.headers['client-geo-longitude'] as string),
+      accuracy: 2, //Don't need just to satisfy type
+      altitude: null,
+      altitudeAccuracy: null,
+      heading: null,
+      speed: null,
+    };
+  } else if (geoQuery === 'detroit') {
+    geo = {
+      latitude: 72,
+      longitude: 65,
+      accuracy: 2, //Don't need just to satisfy type
+      altitude: null,
+      altitudeAccuracy: null,
+      heading: null,
+      speed: null,
+    };
+  }
+  const title =
+    brand === Brand.SANTANDER
+      ? 'Shop Used Cars Online - Santander Consumer USA'
+      : 'Buy Low-Mileage Used Cars & Trucks Online - Vroom';
+
+  const description =
+    brand === Brand.SANTANDER
+      ? 'Buy your next car online with Santander Consumer USA. We offer high quality cars, easy car buying, & delivery anywhere in the USA.'
+      : 'Buy your next car online with Vroom. We offer certified used cars for sale, no haggle car buying, full warranties and home shipping anywhere in the USA.';
+
+  const indexPage = brand === Brand.SANTANDER ? true : false;
+
   const experiments =
     brand === Brand.VROOM
       ? await experimentSDK.getRunningExperiments(marketingId)
@@ -100,8 +150,6 @@ CarsPage.getInitialProps = async (context: NextPageContext): Promise<Props> => {
     experiments,
     context.query
   );
-  const filtersQueryParam =
-    typeof filters === 'string' ? (filters as string) : undefined;
 
   // FIT-583
   // Persist key attribution query params across navigation.
@@ -124,14 +172,25 @@ CarsPage.getInitialProps = async (context: NextPageContext): Promise<Props> => {
       addQueryPrefix: false,
     }
   );
+
+  // DELTA-4
+  // Based on testing it seems that "asPath" is always a string,
+  // but just to be safe, I'm covering the undefined case.
+  const url = typeof asPath === 'string' ? (asPath as string) : '';
+
   const initialStoreState = await getInitialCarsStoreState(
     attributionQueryString,
     geoLocationSortDefaultVariant,
-    filtersQueryParam
+    geo,
+    url
   );
   return {
     brand,
+    description,
+    experiments,
+    indexPage,
     initialStoreState,
+    title,
   };
 };
 

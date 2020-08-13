@@ -1,0 +1,4 @@
+version: '3'
+services:
+  analytics-integration:
+    command: ash -c "yarn workspace @vroom-web/analytics-integration build"

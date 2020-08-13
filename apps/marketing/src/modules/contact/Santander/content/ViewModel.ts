@@ -5,7 +5,10 @@ interface Link {
 }
 
 class ViewModel {
-  readonly header: string = 'Need assistance?\nWe’re here to help.';
+  readonly headerTitle: string = 'Contact Us';
+  readonly headerDescription: string =
+    'Need assistance? Please choose from the following options';
+
   readonly vehicleTitle: string = 'For questions about a vehicle';
   readonly accountTitle: string =
     'For questions about your\nSantander Consumer USA account';
