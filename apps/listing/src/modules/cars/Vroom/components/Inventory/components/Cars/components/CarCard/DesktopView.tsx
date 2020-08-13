@@ -7,11 +7,14 @@ import React from 'react';
 
 import CarCardViewModel from './ViewModel';
 
-const Container = styled(Card)(() => ({
+const Container = styled(Card)(({ theme }) => ({
   height: '100%',
   minHeight: '296px',
   boxShadow: '0px 0px 6px rgba(0, 0, 0, 0.15)',
   borderRadius: '0px',
+  [theme.breakpoints.up('xl')]: {
+    minHeight: '315px',
+  },
 }));
 
 const Media = styled('div')(({ theme }) => ({
@@ -19,12 +22,18 @@ const Media = styled('div')(({ theme }) => ({
   width: '100%',
   height: '186px',
   borderBottom: `2px solid ${theme.palette.grey[200]}`,
+  [theme.breakpoints.up('xl')]: {
+    height: '265px',
+  },
 }));
 
-const Photo = styled('img')(() => ({
+const Photo = styled('img')(({ theme }) => ({
   width: '100%',
   height: '186px',
   objectFit: 'cover',
+  [theme.breakpoints.up('xl')]: {
+    height: '100%',
+  },
 }));
 
 const EvoxLogo = styled('img')(({ theme }) => ({
