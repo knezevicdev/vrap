@@ -123,9 +123,19 @@ class AutocompleteViewModel {
           : suggestion.bodyType.toLowerCase();
       const filterBodyType = addBodyType(bodyType as FilterBodyTypeData);
       const bodyHref = getUrlFromFiltersData(filterBodyType);
+      const bodyHrefNewCatalogQueryStringSep =
+        bodyHref.indexOf('?') === -1 ? '?' : '&';
+      const bodyHrefOldCatalogHref =
+        queryString.length > 0
+          ? `/catalog/all-years/all-makes/${bodyType}?${queryString}`
+          : `/catalog/all-years/all-makes/${bodyType}`;
+      const bodyHrefNewCatalogHref =
+        queryString.length > 0
+          ? `${bodyHref}${bodyHrefNewCatalogQueryStringSep}${queryString}`
+          : bodyHref;
       oldCatalogVsNewCatalogDefaultVarient
-        ? (window.location.href = `/catalog/all-years/all-makes/${bodyType}?${queryString}`)
-        : (window.location.href = `${bodyHref}&${queryString}`);
+        ? (window.location.href = bodyHrefOldCatalogHref)
+        : (window.location.href = bodyHrefNewCatalogHref);
       return;
     }
 
@@ -138,9 +148,19 @@ class AutocompleteViewModel {
         .replace(/[\s-_]/g, replaceCharacterForSlug);
       const allModelsFiltersData = addAllModels(make);
       const allModelsHref = getUrlFromFiltersData(allModelsFiltersData);
+      const allModelsHrefNewCatalogQueryStringSep =
+        allModelsHref.indexOf('?') === -1 ? '?' : '&';
+      const allModelsHrefOldCatalogHref =
+        queryString.length > 0
+          ? `/catalog/all-years/${make}?${queryString}`
+          : `/catalog/all-years/${make}`;
+      const allModelsHrefNewCatalogHref =
+        queryString.length > 0
+          ? `${allModelsHref}${allModelsHrefNewCatalogQueryStringSep}${queryString}`
+          : allModelsHref;
       oldCatalogVsNewCatalogDefaultVarient
-        ? (window.location.href = `/catalog/all-years/${make}?${queryString}`)
-        : (window.location.href = `${allModelsHref}&${queryString}`);
+        ? (window.location.href = allModelsHrefOldCatalogHref)
+        : (window.location.href = allModelsHrefNewCatalogHref);
       return;
     }
 
@@ -156,9 +176,19 @@ class AutocompleteViewModel {
         .replace(/[\s-_]/g, replaceCharacterForSlug);
       const modelFiltersData = addModel(make, model);
       const modelHref = getUrlFromFiltersData(modelFiltersData);
+      const modelHrefOldCatalogHref =
+        queryString.length > 0
+          ? `/catalog/all-years/${make}_${model}?${queryString}`
+          : `/catalog/all-years/${make}_${model}`;
+      const modelHrefNewCatalogQueryStringSep =
+        modelHref.indexOf('?') === -1 ? '?' : '&';
+      const modelHrefNewCatalogHref =
+        queryString.length > 0
+          ? `${modelHref}${modelHrefNewCatalogQueryStringSep}${queryString}`
+          : modelHref;
       oldCatalogVsNewCatalogDefaultVarient
-        ? (window.location.href = `/catalog/all-years/${make}_${model}?${queryString}`)
-        : (window.location.href = `${modelHref}&${queryString}`);
+        ? (window.location.href = modelHrefOldCatalogHref)
+        : (window.location.href = modelHrefNewCatalogHref);
       return;
     }
   }
@@ -175,7 +205,7 @@ class AutocompleteViewModel {
       search: inputValue,
     };
     const queryString = stringify(query, {
-      addQueryPrefix: true,
+      addQueryPrefix: false,
     });
     const oldCatalogVsNewCatalogDefaultVarient = showDefaultVariant(
       'snd-old-catalog-vs-new-catalog',
@@ -183,11 +213,14 @@ class AutocompleteViewModel {
       this.homeStore.query
     );
     if (oldCatalogVsNewCatalogDefaultVarient) {
-      window.location.href = `/catalog/${queryString}`;
+      window.location.href = `/catalog/?${queryString}`;
     } else {
       const filtersData = setSearch(inputValue);
-      const searchUrl = getUrlFromFiltersData(filtersData);
-      window.location.href = `${searchUrl}&${queryString}`;
+      const searchUrl = getUrlFromFiltersData(filtersData, {
+        addFiltersQueryParam: true,
+      });
+      const queryStringSep = searchUrl.indexOf('?') === -1 ? '?' : '&';
+      window.location.href = `${searchUrl}${queryStringSep}${queryString}`;
     }
   }
 }

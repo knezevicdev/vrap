@@ -45,7 +45,16 @@ class BuyViewModel {
     const queryString = stringify(this.store.query, {
       addQueryPrefix: true,
     });
-    window.location.href = `/catalog${queryString}`;
+
+    this.oldCatalogVsNewCatalogDefaultVarient = showDefaultVariant(
+      'snd-old-catalog-vs-new-catalog',
+      this.store.experiments,
+      this.store.query
+    );
+
+    window.location.href = `/${
+      this.oldCatalogVsNewCatalogDefaultVarient ? `catalog` : `cars`
+    }${queryString}`;
   };
 }
 

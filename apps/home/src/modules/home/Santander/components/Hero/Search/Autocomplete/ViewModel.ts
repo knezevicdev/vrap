@@ -153,7 +153,9 @@ class AutocompleteViewModel {
     // This allows vlassic attribution to work until we can implement a better system.
     const queryString = stringify(this.homeStore.query);
     const filtersData = setSearch(inputValue);
-    const searchUrl = getUrlFromFiltersData(filtersData);
+    const searchUrl = getUrlFromFiltersData(filtersData, {
+      addFiltersQueryParam: true,
+    });
     const queryStringPrefix = searchUrl.indexOf('?') === -1 ? '?' : '&';
     window.location.href = `${searchUrl}${queryStringPrefix}${queryString}`;
   }
