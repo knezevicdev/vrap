@@ -99,6 +99,10 @@ const ErrorBody = styled(Typography)(({ theme }) => ({
   fontSize: '18px',
 }));
 
+const CheckboxTypography = styled(Typography)(() => ({
+  cursor: 'pointer',
+}));
+
 interface Props {
   viewModel: ViewModel;
 }
