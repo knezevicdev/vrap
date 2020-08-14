@@ -35,9 +35,12 @@ const NotifyMeView: React.FC<Props> = (props) => {
         variant="outlined"
         color="primary"
         onClick={handleDialogClick}
+        disabled={viewModel.isSuccessful()}
       >
         <Typography variant="button" fontWeight={600}>
-          {viewModel.notifyMeButton}
+          {viewModel.isSuccessful()
+            ? viewModel.notifiedButton
+            : viewModel.notifyMeButton}
         </Typography>
       </CustomButton>
       {viewModel.isLoggedIn() ? (

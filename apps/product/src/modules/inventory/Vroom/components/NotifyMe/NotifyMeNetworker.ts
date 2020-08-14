@@ -40,7 +40,7 @@ export default class NotifyMeNetworker {
         type: 'email',
       },
     };
-    await this.axiosInstance.post(url, payload, options);
+    return await this.axiosInstance.post(url, payload, options);
   }
 
   async createSubscription(

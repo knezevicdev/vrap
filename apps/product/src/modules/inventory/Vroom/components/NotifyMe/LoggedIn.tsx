@@ -47,13 +47,14 @@ const DialogButton = styled(Button)(({ theme }) => ({
 
 const HeaderContent = styled('div')(({ theme }) => ({
   display: 'flex',
+  width: '38%',
   flexDirection: 'column',
   margin: theme.spacing(8, 0),
   justifyContent: 'space-between',
 }));
 
 const CarCardContainer = styled('div')(({ theme }) => ({
-  width: '25%',
+  width: '22%',
   margin: theme.spacing(0, 8),
 }));
 
@@ -168,7 +169,7 @@ const LoggedInView: React.FC<Props> = ({ viewModel }) => {
             variant="contained"
             color="primary"
             onClick={(): void => handleDialogActions('submit')}
-            disabled={!viewModel.isChecked()}
+            disabled={!viewModel.isChecked() || viewModel.isSuccessful()}
           >
             <Typography variant="button" fontWeight={600}>
               {viewModel.loggedIn.buttonText}
@@ -184,7 +185,7 @@ const LoggedInView: React.FC<Props> = ({ viewModel }) => {
               variant="contained"
               color="primary"
               onClick={(): void => handleDialogActions('submit')}
-              disabled={!viewModel.isChecked()}
+              disabled={!viewModel.isChecked() || viewModel.isSuccessful()}
             >
               <Typography variant="button" fontWeight={600}>
                 {viewModel.loggedIn.error.buttonText}

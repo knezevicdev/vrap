@@ -24,6 +24,8 @@ class NotifyMeViewModel {
   private notifyMeStore: NotifyMeStore;
   private notifyMeNetworker: NotifyMeNetworker;
   readonly notifyMeButton: string = 'Notify Me';
+  readonly notifiedButton: string =
+    'You’ll recieve an email when this vehicle is available.';
   readonly dialogTitle: string = 'Notify Me When Available';
   readonly dialogTitleSucess: string = 'We’ll Email You Soon';
   readonly dialogBodySuccess: string =
@@ -90,13 +92,21 @@ class NotifyMeViewModel {
   }
 
   createNotifyMeSubscription(): void {
+    const accesstoken = this.getAccessToken();
     this.notifyMeNetworker
-      .createSubscription(this.getVin(), this.getAccessToken())
+      .registerEmail(accesstoken)
       .then(() => {
-        this.setSuccessful(true);
+        this.notifyMeNetworker
+          .createSubscription(this.getVin(), accesstoken)
+          .then(() => {
+            this.setSuccessful(true);
+            this.handleClick();
+          })
+          .catch(() => {
+            this.setError(true);
+          });
       })
       .catch(() => {
-        this.setSuccessful(true);
         this.setError(true);
       });
   }
