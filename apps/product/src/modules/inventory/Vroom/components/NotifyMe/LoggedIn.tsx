@@ -154,7 +154,9 @@ const LoggedInView: React.FC<Props> = ({ viewModel }) => {
               onChange={handleCheckboxChange}
               inputProps={{ 'aria-label': 'primary checkbox' }}
             />
-            <Typography>{viewModel.loggedIn.checkboxText}</Typography>
+            <CheckboxTypography onClick={handleCheckboxChange}>
+              {viewModel.loggedIn.checkboxText}
+            </CheckboxTypography>
           </CheckboxContainer>
         </DialogBody>
         {!viewModel.hasError() ? (
