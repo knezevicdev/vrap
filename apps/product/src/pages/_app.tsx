@@ -20,9 +20,7 @@ class VroomApp extends App {
   componentDidMount(): void {
     const {
       DATA_DOG_LOG_COLLECTION_TOKEN,
-
       NAME,
-
       VERSION,
     } = publicRuntimeConfig;
 
