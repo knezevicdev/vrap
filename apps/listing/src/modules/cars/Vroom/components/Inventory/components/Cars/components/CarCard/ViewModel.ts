@@ -6,6 +6,7 @@ import AnalyticsHandler, {
   Product,
   ProductPhotoType,
 } from 'src/integrations/AnalyticsHandler';
+import { showDefaultVariant } from 'src/integrations/experimentSDK';
 import { CarsStore } from 'src/modules/cars/store';
 
 const { publicRuntimeConfig } = getConfig();
@@ -28,8 +29,14 @@ class CarCardViewModel {
   };
   readonly availableSoon: string = 'AVAILABLE SOON';
   readonly salePending: string = 'SALE PENDING';
+  oldProductVsNewProductDefaultVariant: boolean;
 
   constructor(carsStore: CarsStore, car: Car) {
+    this.oldProductVsNewProductDefaultVariant = showDefaultVariant(
+      'snd-old-pdp-vs-new-pdp',
+      this.carsStore.experiments,
+      this.carsStore.query
+    );
     this.analyticsHandler = new AnalyticsHandler();
     this.carsStore = carsStore;
     this.car = car;

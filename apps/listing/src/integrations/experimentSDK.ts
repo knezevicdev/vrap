@@ -9,9 +9,10 @@ export const showDefaultVariant = (
   query: any //{ [key: string]: string }
 ): boolean => {
   const forcedExperimentId = `experiment-${experimentId}`;
-  const queryIsNotEmpty = Object.keys(query).length > 0;
+  const queries = Object.keys(query);
+  const queryIsNotEmpty = queries.length > 0;
 
-  if (queryIsNotEmpty) {
+  if (queryIsNotEmpty && queries.includes(forcedExperimentId)) {
     const forcedVariant = query[forcedExperimentId];
     return !forcedVariant || forcedVariant === '0';
   }
