@@ -1,9 +1,11 @@
+import getConfig from 'next/config';
 import { stringify } from 'qs';
 
-import globalEnv from 'src/globalEnv';
 import AnalyticsHandler from 'src/integrations/AnalyticsHandler';
 import { showDefaultVariant } from 'src/integrations/experimentSDK';
 import { HomeStore } from 'src/modules/home/store';
+
+const { publicRuntimeConfig } = getConfig();
 
 interface Highlight {
   description: string;
@@ -21,21 +23,21 @@ class HighlightsViewModel {
     {
       description: '',
       imgAlt: 'High-Quality Cars',
-      imgSrc: `${globalEnv.BASE_PATH}/modules/home/images/highlight-1.png`,
+      imgSrc: `${publicRuntimeConfig.BASE_PATH}/modules/home/images/highlight-1.png`,
       title: 'High-Quality Cars',
     },
     {
       description:
         'No haggling. No hassles. An easy and efficient car buying process— the way it should be.',
       imgAlt: 'Buying Made Easy',
-      imgSrc: `${globalEnv.BASE_PATH}/modules/home/images/highlight-2.png`,
+      imgSrc: `${publicRuntimeConfig.BASE_PATH}/modules/home/images/highlight-2.png`,
       title: 'Buying Made Easy',
     },
     {
       description:
         'Get your car or truck shipped to your home or a convenient nearby\xa0location.',
       imgAlt: 'Delivered Right to You',
-      imgSrc: `${globalEnv.BASE_PATH}/modules/home/images/highlight-3.png`,
+      imgSrc: `${publicRuntimeConfig.BASE_PATH}/modules/home/images/highlight-3.png`,
       title: '',
     },
   ];

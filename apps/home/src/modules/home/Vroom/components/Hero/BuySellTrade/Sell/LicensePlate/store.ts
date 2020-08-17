@@ -1,14 +1,15 @@
 import { action, observable, runInAction } from 'mobx';
+import getConfig from 'next/config';
 
 import LicensePlateToVinNetworker, {
   Vehicles,
 } from './LicensePlateToVinNetworker';
 
-import globalEnv from 'src/globalEnv';
+const { publicRuntimeConfig } = getConfig();
 
 export class LicensePlateStore {
   private licensePlateToVinNetworker = new LicensePlateToVinNetworker(
-    globalEnv.GEARBOX_PUBLIC_URL as string
+    publicRuntimeConfig.GEARBOX_PUBLIC_URL as string
   );
 
   @observable selectedState = '';

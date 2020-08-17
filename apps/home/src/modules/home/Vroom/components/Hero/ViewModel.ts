@@ -1,6 +1,9 @@
-import globalEnv from 'src/globalEnv';
+import getConfig from 'next/config';
+
 import { showDefaultVariant } from 'src/integrations/experimentSDK';
 import { HomeStore } from 'src/modules/home/store';
+
+const { publicRuntimeConfig } = getConfig();
 
 interface Link {
   label: string;
@@ -25,7 +28,7 @@ class HeroViewModel {
       store.query
     );
     this.car = {
-      src: `${globalEnv.BASE_PATH}/modules/home/images/${
+      src: `${publicRuntimeConfig.BASE_PATH}/modules/home/images/${
         priusVsf150ImageDefaultVariant ? 'prius' : 'ford'
       }.png`,
       alt: priusVsf150ImageDefaultVariant ? 'Prius' : 'F-150',

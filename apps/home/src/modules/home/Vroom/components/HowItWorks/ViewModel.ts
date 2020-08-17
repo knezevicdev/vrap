@@ -1,12 +1,14 @@
+import getConfig from 'next/config';
 import { stringify } from 'qs';
 
-import globalEnv from 'src/globalEnv';
 import AnalyticsHandler, {
   VideoEvent,
   VideoProperties,
 } from 'src/integrations/AnalyticsHandler';
 import { showDefaultVariant } from 'src/integrations/experimentSDK';
 import { HomeStore } from 'src/modules/home/store';
+
+const { publicRuntimeConfig } = getConfig();
 
 interface Link {
   label: string;
@@ -24,8 +26,8 @@ class HowItWorksViewModel {
     'Vroom is changing the way people buy, sell, and trade in cars. Here’s a step-by-step guide on what\xa0to\xa0expect.';
   readonly link: Link;
   readonly video: Video = {
-    src: `${globalEnv.STATIC_ASSETS_HOST_URL}/vroom/videos/how-it-works-promo.mp4`,
-    poster: `${globalEnv.STATIC_ASSETS_HOST_URL}/vroom/images/how-it-works-poster.png`,
+    src: `${publicRuntimeConfig.STATIC_ASSETS_HOST_URL}/vroom/videos/how-it-works-promo.mp4`,
+    poster: `${publicRuntimeConfig.STATIC_ASSETS_HOST_URL}/vroom/images/how-it-works-poster.png`,
   };
 
   private analyticsHandler: AnalyticsHandler = new AnalyticsHandler();

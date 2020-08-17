@@ -1,5 +1,6 @@
 import { StandardFooter } from '@vroom-web/footer-components';
 import { InProgressDealBar, SimpleHeader } from '@vroom-web/header-components';
+import getConfig from 'next/config';
 import React from 'react';
 
 import Hero from './components/Hero';
@@ -10,10 +11,10 @@ import Quotes from './components/Quotes';
 import Values from './components/Values';
 import WhoWeAre from './components/WhoWeAre';
 
-import globalEnv from 'src/globalEnv';
+const { publicRuntimeConfig } = getConfig();
 
 const Vroom: React.FC = () => {
-  const gearboxPrivateUrl = globalEnv.GEARBOX_PRIVATE_URL;
+  const gearboxPrivateUrl = publicRuntimeConfig.GEARBOX_PRIVATE_URL;
 
   return (
     <>

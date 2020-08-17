@@ -1,6 +1,8 @@
+import getConfig from 'next/config';
+
 import { VinStore } from '../store';
 
-import globalEnv from 'src/globalEnv';
+const { publicRuntimeConfig } = getConfig();
 
 class VinDialogViewModel {
   private readonly store: VinStore;
@@ -21,7 +23,7 @@ class VinDialogViewModel {
     `Driver door jam (open the door first)`,
   ];
   readonly image = {
-    src: `${globalEnv.BASE_PATH}/modules/home/images/where-is-vin.png`,
+    src: `${publicRuntimeConfig.BASE_PATH}/modules/home/images/where-is-vin.png`,
     alt: 'Car with VIN hot spots.',
   };
   readonly documentationTitle: string = 'In Your Documentation';

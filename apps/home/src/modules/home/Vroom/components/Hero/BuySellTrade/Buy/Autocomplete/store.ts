@@ -1,9 +1,11 @@
 import { InvSearchNetworker } from '@vroom-web/inv-search-networking';
 import debounce from 'lodash.debounce';
 import { action, observable, runInAction } from 'mobx';
+import getConfig from 'next/config';
 
-import globalEnv from 'src/globalEnv';
 import { Status } from 'src/networking/types';
+
+const { publicRuntimeConfig } = getConfig();
 
 export interface InventorySuggestions {
   BodyType: string[];
@@ -22,11 +24,11 @@ export class AutocompleteStore {
   private invSearchNetworker: InvSearchNetworker;
 
   constructor() {
-    if (!globalEnv.INVSEARCH_V3_URL) {
-      throw new Error('globalEnv.INVSEARCH_V3_URL is undefined');
+    if (!publicRuntimeConfig.INVSEARCH_V3_URL) {
+      throw new Error('publicRuntimeConfig.INVSEARCH_V3_URL is undefined');
     }
     this.invSearchNetworker = new InvSearchNetworker(
-      globalEnv.INVSEARCH_V3_URL
+      publicRuntimeConfig.INVSEARCH_V3_URL
     );
   }
 

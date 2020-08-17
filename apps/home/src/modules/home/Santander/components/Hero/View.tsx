@@ -1,18 +1,19 @@
 import Link from '@material-ui/core/Link';
 import { styled } from '@material-ui/core/styles';
 import { Typography } from '@vroom-web/ui';
+import getConfig from 'next/config';
 import React from 'react';
 
 import Search from './Search';
 import ViewModel from './ViewModel';
 
-import globalEnv from 'src/globalEnv';
+const { publicRuntimeConfig } = getConfig();
 
 const ViewContainer = styled('div')(({ theme }) => ({
   display: 'flex',
   margin: theme.spacing(0, 'auto'),
   width: '100%',
-  backgroundImage: `url(${globalEnv.BASE_PATH}/modules/home/santander/images/Santander-Hero@3x.jpg)`,
+  backgroundImage: `url(${publicRuntimeConfig.BASE_PATH}/modules/home/santander/images/Santander-Hero@3x.jpg)`,
   backgroundRepeat: 'no-repeat',
   backgroundSize: 'cover',
   backgroundPosition: 'center',

@@ -1,6 +1,7 @@
 import { ServerStyleSheets } from '@material-ui/core/styles';
 import { AnalyticsSnippet } from '@vroom-web/analytics-integration';
 import { Brand, UISnippet } from '@vroom-web/ui';
+import getConfig from 'next/config';
 import { AppType, Enhancer, RenderPage } from 'next/dist/next-server/lib/utils';
 import Document, {
   DocumentContext,
@@ -12,8 +13,7 @@ import Document, {
 } from 'next/document';
 import React from 'react';
 
-import globalEnv from '../../globalEnv';
-import GlobalEnvSnippet from './GlobalEnvSnippet';
+const { serverRuntimeConfig, publicRuntimeConfig } = getConfig();
 
 interface Props extends DocumentInitialProps {
   brand: Brand;
@@ -58,14 +58,14 @@ class VroomDocument extends Document<Props> {
   }
 
   render(): JSX.Element {
-    const segmentWriteKey = process.env.SEGMENT_WRITE_KEY;
+    const segmentWriteKey = serverRuntimeConfig.SEGMENT_WRITE_KEY;
 
     return (
       <Html lang="en">
         <Head>
           <UISnippet
             brand={this.props.brand}
-            staticAssetsHostUrl={globalEnv.STATIC_ASSETS_HOST_URL || ''}
+            staticAssetsHostUrl={publicRuntimeConfig.STATIC_ASSETS_HOST_URL}
           />
           {segmentWriteKey && (
             <AnalyticsSnippet
@@ -73,18 +73,6 @@ class VroomDocument extends Document<Props> {
               segmentWriteKey={segmentWriteKey}
             />
           )}
-          <GlobalEnvSnippet
-            GEARBOX_PRIVATE_URL={globalEnv.GEARBOX_PRIVATE_URL}
-            GEARBOX_PUBLIC_URL={globalEnv.GEARBOX_PUBLIC_URL}
-            INVSEARCH_V3_URL={globalEnv.INVSEARCH_V3_URL}
-            BASE_PATH={globalEnv.BASE_PATH}
-            DATA_DOG_LOG_COLLECTION_TOKEN={
-              globalEnv.DATA_DOG_LOG_COLLECTION_TOKEN
-            }
-            NAME={globalEnv.NAME}
-            STATIC_ASSETS_HOST_URL={globalEnv.STATIC_ASSETS_HOST_URL}
-            VERSION={globalEnv.VERSION}
-          />
         </Head>
         <body>
           <Main />

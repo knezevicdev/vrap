@@ -1,4 +1,6 @@
-import globalEnv from 'src/globalEnv';
+import getConfig from 'next/config';
+
+const { publicRuntimeConfig } = getConfig();
 
 class CustomerQuoteViewModel {
   readonly quote =
@@ -6,7 +8,7 @@ class CustomerQuoteViewModel {
   readonly name = 'Michael W.';
   readonly location = 'COLORADO SPRINGS, CO';
   readonly image = {
-    src: `${globalEnv.BASE_PATH}/modules/home/images/customer-quote.png`,
+    src: `${publicRuntimeConfig.BASE_PATH}/modules/home/images/customer-quote.png`,
     alt: 'Person taking a photo.',
   };
 }

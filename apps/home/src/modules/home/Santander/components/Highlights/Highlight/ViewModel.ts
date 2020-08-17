@@ -1,4 +1,6 @@
-import globalEnv from 'src/globalEnv';
+import getConfig from 'next/config';
+
+const { publicRuntimeConfig } = getConfig();
 
 interface Highlight {
   description: string;
@@ -13,20 +15,20 @@ class ViewModel {
       description:
         'Multiple inspections. Free CARFAX history report. Complimentary limited warranty.',
       alt: 'High-Quality Vehicles',
-      src: `${globalEnv.BASE_PATH}/modules/home/santander/images/highlight-one.png`,
+      src: `${publicRuntimeConfig.BASE_PATH}/modules/home/santander/images/highlight-one.png`,
       title: 'High-Quality Vehicles',
     },
     {
       description: 'Competitive rates and flexible terms to meet your needs.',
       alt: 'Flexible Financing',
-      src: `${globalEnv.BASE_PATH}/modules/home/santander/images/highlight-two.png`,
+      src: `${publicRuntimeConfig.BASE_PATH}/modules/home/santander/images/highlight-two.png`,
       title: 'Flexible Financing',
     },
     {
       description:
         'Purchase online with haggle-free pricing, then have your car shipped to home or a convenient nearby location.',
       alt: 'Buying Made Easy',
-      src: `${globalEnv.BASE_PATH}/modules/home/santander/images/highlight-three.png`,
+      src: `${publicRuntimeConfig.BASE_PATH}/modules/home/santander/images/highlight-three.png`,
       title: 'Buying Made Easy',
     },
   ];

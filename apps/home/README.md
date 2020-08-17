@@ -92,20 +92,8 @@ Then, add a line to the docker-compose.yaml file like this:
 
 By performing these steps, docker will define your environment variables, when it starts up the container.
 
-For environment variables that are only accessed server-side, this is all you need to do. You can access these env vars server-side through node's process.env object.
+This prepares the environment in which the application runs, but now how do we access these values from within our application?
 
-If, however, your environment variable can be consumed client-side, you need to do 3 things.
+Because we want our built images to be environment-agnostic (meaning the same image can run in multiple environments), we do not bake any env vars into our images. This requires runtime environment variable injection. Thankfully, NextJS provides a solution for this: https://nextjs.org/docs/api-reference/next.config.js/runtime-configuration
 
-First, modify the "GlobalEnv" interface in src/globalEnv to accept your new env var.
-Second, add a new prop to <GlobalEnvSnippet ... /> in /src/pages/_document/index.tsx that references process.env.
-Third, import globalEnv from 'src/globalEnv' and use that object instead of process.env.
-
-The globalEnv object uses process.env on server-side, and window.__GLOBAL_ENV__ on client-side.
-The <GlobalEnvSnippet /> is what sets window.__GLOBAL_ENV__ so those values are accessible client-side.
-
-DO NOT ADD SECRETS TO THE GLOBALENV!
-Values in globalEnv are available client side and are not secret.
-
-## start .env template
-# No secrets have been added yet!
-## end .env template
+Please view the link above for details on how to setup and access runtime-injected env variables.

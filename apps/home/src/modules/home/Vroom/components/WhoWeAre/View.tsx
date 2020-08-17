@@ -1,13 +1,14 @@
 import { styled } from '@material-ui/core/styles';
 import { Button, Container, Typography } from '@vroom-web/ui';
+import getConfig from 'next/config';
 import React from 'react';
 
 import ViewModel from './ViewModel';
 
-import globalEnv from 'src/globalEnv';
+const { publicRuntimeConfig } = getConfig();
 
 const Background = styled('div')({
-  backgroundImage: `url(${globalEnv.BASE_PATH}/modules/home/images/who-we-are-background.png)`,
+  backgroundImage: `url(${publicRuntimeConfig.BASE_PATH}/modules/home/images/who-we-are-background.png)`,
   backgroundRepeat: 'no-repeat',
   backgroundSize: 'cover',
   backgroundPosition: 'center top',
