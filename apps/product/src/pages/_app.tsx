@@ -19,18 +19,14 @@ const { publicRuntimeConfig } = getConfig();
 class VroomApp extends App {
   componentDidMount(): void {
     const {
-
       DATA_DOG_LOG_COLLECTION_TOKEN,
 
       NAME,
 
       VERSION,
-
     } = publicRuntimeConfig;
 
-
     if (DATA_DOG_LOG_COLLECTION_TOKEN) {
-
       const init: LogsUserConfiguration = {
         clientToken: DATA_DOG_LOG_COLLECTION_TOKEN,
         datacenter: 'us' as LogsUserConfiguration['datacenter'],
