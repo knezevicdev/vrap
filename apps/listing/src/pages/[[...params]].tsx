@@ -14,6 +14,7 @@ import { Brand, ThemeProvider } from '@vroom-web/ui';
 import { NextPage, NextPageContext } from 'next';
 import { parseCookies } from 'nookies';
 import { stringify } from 'qs';
+import { ParsedUrlQuery } from 'querystring';
 import React, { useEffect, useState } from 'react';
 import { Experiment } from 'vroom-abtesting-sdk/types';
 
@@ -22,6 +23,7 @@ import experimentSDK, {
 } from 'src/integrations/experimentSDK';
 import Cars from 'src/modules/cars';
 import { BrandContext } from 'src/modules/cars/BrandContext';
+import { ExperimentContext } from 'src/modules/cars/ExperimentContext';
 import {
   CarsStore,
   CarsStoreContext,
@@ -36,6 +38,7 @@ interface Props {
   experiments: Experiment[];
   indexPage: boolean;
   initialStoreState: InitialCarsStoreState;
+  query: ParsedUrlQuery;
 }
 
 const CarsPage: NextPage<Props> = ({
@@ -43,6 +46,7 @@ const CarsPage: NextPage<Props> = ({
   experiments,
   indexPage,
   initialStoreState,
+  query,
 }) => {
   // Persist store instance across URL updates.
   const [carsStore] = useState<CarsStore>(new CarsStore(initialStoreState));
@@ -251,11 +255,13 @@ const CarsPage: NextPage<Props> = ({
   return (
     <ThemeProvider brand={brand}>
       <Page brand={brand} experiments={experiments} name="Catalog" head={head}>
-        <BrandContext.Provider value={brand}>
-          <CarsStoreContext.Provider value={carsStore}>
-            <Cars />
-          </CarsStoreContext.Provider>
-        </BrandContext.Provider>
+        <ExperimentContext.Provider value={{ experiments, query }}>
+          <BrandContext.Provider value={brand}>
+            <CarsStoreContext.Provider value={carsStore}>
+              <Cars />
+            </CarsStoreContext.Provider>
+          </BrandContext.Provider>
+        </ExperimentContext.Provider>
       </Page>
     </ThemeProvider>
   );
@@ -384,6 +390,7 @@ CarsPage.getInitialProps = async (context: NextPageContext): Promise<Props> => {
     experiments,
     indexPage,
     initialStoreState,
+    query,
   };
 };
 
