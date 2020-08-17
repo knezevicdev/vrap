@@ -1,11 +1,13 @@
 import { Car, SoldStatusInt } from '@vroom-web/inv-search-networking';
+import getConfig from 'next/config';
 import Router from 'next/router';
 
-import globalEnv from 'src/globalEnv';
 import AnalyticsHandler, {
   Product,
   ProductPhotoType,
 } from 'src/integrations/AnalyticsHandler';
+
+const { publicRuntimeConfig } = getConfig();
 
 interface Summary {
   image: string;
@@ -20,7 +22,7 @@ class CarCardViewModel {
   private readonly car: Car;
   readonly evoxLogo = {
     alt: 'Evox Images',
-    src: `${globalEnv.BASE_PATH}/components/evox-logo.png`,
+    src: `${publicRuntimeConfig.BASE_PATH}/components/evox-logo.png`,
   };
   readonly availableSoon: string = 'AVAILABLE SOON';
   readonly salePending: string = 'SALE PENDING';
@@ -82,7 +84,7 @@ class CarCardViewModel {
       listingPrice,
     } = this.car;
 
-    const noPhoto = `${globalEnv.BASE_PATH}/components/ghost-suv-with-padding.png`;
+    const noPhoto = `${publicRuntimeConfig.BASE_PATH}/components/ghost-suv-with-padding.png`;
     const image = leadFlagPhotoUrl || noPhoto;
 
     return {
@@ -95,7 +97,7 @@ class CarCardViewModel {
   }
 
   link(): string {
-    return `${globalEnv.BASE_PATH}/${this.car.vin}`;
+    return `${publicRuntimeConfig.BASE_PATH}/${this.car.vin}`;
   }
 
   navigate = (): void => {

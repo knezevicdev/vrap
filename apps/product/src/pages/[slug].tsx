@@ -1,8 +1,8 @@
 import { Brand, ThemeProvider } from '@vroom-web/ui';
 import { NextPage } from 'next';
+import getConfig from 'next/config';
 import React from 'react';
 
-import globalEnv from 'src/globalEnv';
 import Inventory from 'src/modules/inventory';
 import { BrandContext } from 'src/modules/inventory/BrandContext';
 import {
@@ -13,6 +13,8 @@ import {
 } from 'src/modules/inventory/store';
 import { Status } from 'src/networking/types';
 import Page from 'src/Page';
+
+const { publicRuntimeConfig } = getConfig();
 
 export interface Props {
   canonicalHref?: string;
@@ -69,7 +71,7 @@ InventoryPage.getInitialProps = async ({ query, res, req }): Promise<Props> => {
       modelSlug,
       listingPrice,
     } = initialState.vehicle._source;
-    canonicalHref = `${globalEnv.BASE_PATH}/${makeSlug}-${modelSlug}-${year}-${vin}`;
+    canonicalHref = `${publicRuntimeConfig.BASE_PATH}/${makeSlug}-${modelSlug}-${year}-${vin}`;
     const currencyFormatter = new Intl.NumberFormat('en-US', {
       style: 'currency',
       currency: 'USD',

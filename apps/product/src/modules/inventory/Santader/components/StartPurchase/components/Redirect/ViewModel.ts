@@ -1,8 +1,11 @@
+import getConfig from 'next/config';
+
 import { RedirectStore } from './store';
 
-import globalEnv from 'src/globalEnv';
 import AnalyticsHandler, { Product } from 'src/integrations/AnalyticsHandler';
 import { InventoryStore } from 'src/modules/inventory/store';
+
+const { publicRuntimeConfig } = getConfig();
 
 class ViewModel {
   private readonly redirectStore: RedirectStore;
@@ -10,7 +13,7 @@ class ViewModel {
   private analyticsHandler: AnalyticsHandler = new AnalyticsHandler();
   readonly image = {
     alt: 'Exit Santander',
-    src: `${globalEnv.BASE_PATH}/modules/inventory/components/exit-santander.png`,
+    src: `${publicRuntimeConfig.BASE_PATH}/modules/inventory/components/exit-santander.png`,
   };
   readonly message: string =
     'We’re now sending you to checkout with our partner, Vroom.';
