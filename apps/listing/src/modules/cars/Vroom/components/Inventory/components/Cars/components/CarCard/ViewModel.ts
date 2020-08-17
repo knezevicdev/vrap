@@ -7,6 +7,7 @@ import AnalyticsHandler, {
   ProductPhotoType,
 } from 'src/integrations/AnalyticsHandler';
 import { showDefaultVariant } from 'src/integrations/experimentSDK';
+import { ExperimentData } from 'src/modules/cars/ExperimentContext';
 import { CarsStore } from 'src/modules/cars/store';
 
 const { publicRuntimeConfig } = getConfig();
@@ -23,6 +24,7 @@ class CarCardViewModel {
   private analyticsHandler: AnalyticsHandler;
   private readonly carsStore: CarsStore;
   private readonly car: Car;
+  private readonly experimentData: ExperimentData;
   readonly evoxLogo = {
     alt: 'Evox Images',
     src: `${publicRuntimeConfig.BASE_PATH}/components/evox-logo.png`,
@@ -31,15 +33,17 @@ class CarCardViewModel {
   readonly salePending: string = 'SALE PENDING';
   oldProductVsNewProductDefaultVariant: boolean;
 
-  constructor(carsStore: CarsStore, car: Car) {
-    this.oldProductVsNewProductDefaultVariant = showDefaultVariant(
-      'snd-old-pdp-vs-new-pdp',
-      this.carsStore.experiments,
-      this.carsStore.query
-    );
+  constructor(carsStore: CarsStore, car: Car, experimentData: ExperimentData) {
+    this.experimentData = experimentData;
     this.analyticsHandler = new AnalyticsHandler();
     this.carsStore = carsStore;
     this.car = car;
+
+    this.oldProductVsNewProductDefaultVariant = showDefaultVariant(
+      'snd-old-pdp-vs-new-pdp',
+      this.experimentData.experiments,
+      this.experimentData.query
+    );
   }
 
   private getPhotoType(): ProductPhotoType {
@@ -116,7 +120,9 @@ class CarCardViewModel {
         ? `?${this.carsStore.attributionQueryString}`
         : '';
     const { makeSlug, modelSlug, vin, year } = this.car;
-    return `/inventory/${makeSlug}-${modelSlug}-${year}-${vin}${attributionQueryString}`;
+    return `/${
+      this.oldProductVsNewProductDefaultVariant ? 'inventory' : 'vehicle'
+    }/${makeSlug}-${modelSlug}-${year}-${vin}${attributionQueryString}`;
   }
 
   trackProductClick = (): void => {
