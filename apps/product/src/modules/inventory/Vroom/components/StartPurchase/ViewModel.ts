@@ -29,9 +29,6 @@ class StartPurchaseViewModel {
   getButtonText(): string {
     const { soldStatus } = this.car;
     const vehicleServiceAvailability = this.store.isAvailable;
-    // if (hasStockPhotos || isEmpty(leadFlagPhotoUrl)) {
-    //   return this.availableSoon;
-    // }
     if (
       soldStatus === SoldStatusInt.SALE_PENDING ||
       !vehicleServiceAvailability
@@ -114,11 +111,6 @@ class StartPurchaseViewModel {
       window.location.href = url;
     }
   }
-
-  // isAvailableSoon = (): boolean => {
-  //   const { leadFlagPhotoUrl, hasStockPhotos } = this.store.vehicle._source;
-  //   return leadFlagPhotoUrl === '' || hasStockPhotos;
-  // };
 }
 
 export default StartPurchaseViewModel;

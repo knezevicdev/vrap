@@ -110,7 +110,7 @@ interface Props {
 
 const LoggedInView: React.FC<Props> = ({ viewModel }) => {
   const handleDialogClick = (): void => viewModel.handleClick();
-  const handleDialogActions = (location: string): void =>
+  const handleDialogActions = (location: string) => (): void =>
     viewModel.handleDialogActions(location);
   const handleCheckboxChange = (): void => viewModel.handleCheckbox();
   return (
@@ -127,17 +127,14 @@ const LoggedInView: React.FC<Props> = ({ viewModel }) => {
           </CarCardContainer>
           <HeaderContent>
             <Typography variant="h2">
-              {viewModel.isSuccessful()
-                ? viewModel.dialogTitleSucess
-                : viewModel.dialogTitle}
+              {viewModel.isSuccessful().dialogTitle}
             </Typography>
             <Typography variant="body1">
-              {viewModel.isSuccessful()
-                ? viewModel.dialogBodySuccess
-                : viewModel.loggedIn.header1}
-              {viewModel.isSuccessful() && viewModel.getUserEmail()}
+              {viewModel.isSuccessful().body}
+              {viewModel.isSuccessful().isSuccessful &&
+                viewModel.getUserEmail()}
             </Typography>
-            {!viewModel.isSuccessful() && (
+            {!viewModel.isSuccessful().isSuccessful && (
               <Typography variant="body1">
                 {viewModel.loggedIn.header2}
               </Typography>
@@ -168,8 +165,10 @@ const LoggedInView: React.FC<Props> = ({ viewModel }) => {
           <DialogButton
             variant="contained"
             color="primary"
-            onClick={(): void => handleDialogActions('submit')}
-            disabled={!viewModel.isChecked() || viewModel.isSuccessful()}
+            onClick={handleDialogActions('submit')}
+            disabled={
+              !viewModel.isChecked() || viewModel.isSuccessful().isSuccessful
+            }
           >
             <Typography variant="button" fontWeight={600}>
               {viewModel.loggedIn.buttonText}
@@ -184,8 +183,10 @@ const LoggedInView: React.FC<Props> = ({ viewModel }) => {
             <ErrorButton
               variant="contained"
               color="primary"
-              onClick={(): void => handleDialogActions('submit')}
-              disabled={!viewModel.isChecked() || viewModel.isSuccessful()}
+              onClick={handleDialogActions('submit')}
+              disabled={
+                !viewModel.isChecked() || viewModel.isSuccessful().isSuccessful
+              }
             >
               <Typography variant="button" fontWeight={600}>
                 {viewModel.loggedIn.error.buttonText}

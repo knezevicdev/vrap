@@ -40,7 +40,7 @@ interface Props {
 }
 
 const LoggedOutView: React.FC<Props> = ({ viewModel }) => {
-  const handleDialogActions = (location: string): void =>
+  const handleDialogActions = (location: string) => (): void =>
     viewModel.handleDialogActions(location);
   const handleDialogClick = (): void => viewModel.handleClick();
   return (
@@ -61,7 +61,7 @@ const LoggedOutView: React.FC<Props> = ({ viewModel }) => {
         <DialogButton
           variant="contained"
           color="primary"
-          onClick={(): void => handleDialogActions('create')}
+          onClick={handleDialogActions('create')}
         >
           <Typography variant="button" fontWeight={600}>
             {viewModel.createAccountButton}
@@ -70,7 +70,7 @@ const LoggedOutView: React.FC<Props> = ({ viewModel }) => {
         <DialogButton
           variant="outlined"
           color="primary"
-          onClick={(): void => handleDialogActions('login')}
+          onClick={handleDialogActions('login')}
         >
           <Typography variant="button" fontWeight={600}>
             {viewModel.logInButton}

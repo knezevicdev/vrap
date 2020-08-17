@@ -27,7 +27,7 @@ class NotifyMeViewModel {
   readonly notifiedButton: string =
     'You’ll recieve an email when this vehicle is available.';
   readonly dialogTitle: string = 'Notify Me When Available';
-  readonly dialogTitleSucess: string = 'We’ll Email You Soon';
+  readonly dialogTitleSuccess: string = 'We’ll Email You Soon';
   readonly dialogBodySuccess: string =
     'You’ll receive an email from availablenow@vroom.com as soon as this vehicle can be purchased. The email will be sent to ';
   readonly dialogBodyLoggedOut: string =
@@ -119,8 +119,19 @@ class NotifyMeViewModel {
     return this.notifyMeStore.isError;
   }
 
-  isSuccessful(): boolean {
-    return this.notifyMeStore.isSuccessful;
+  isSuccessful(): {
+    isSuccessful: boolean;
+    dialogTitle: string;
+    body: string;
+    button: string;
+  } {
+    const isSuccessful = this.notifyMeStore.isSuccessful;
+    return {
+      isSuccessful,
+      dialogTitle: isSuccessful ? this.dialogTitleSuccess : this.dialogTitle,
+      body: isSuccessful ? this.dialogBodySuccess : this.loggedIn.header1,
+      button: isSuccessful ? this.notifiedButton : this.notifyMeButton,
+    };
   }
 
   isOpen(): boolean {
