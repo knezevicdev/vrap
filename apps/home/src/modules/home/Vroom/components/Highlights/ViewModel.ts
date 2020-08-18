@@ -85,14 +85,7 @@ class HighlightsViewModel {
     const queryString = stringify(this.store.query, {
       addQueryPrefix: true,
     });
-    const oldCatalogVsNewCatalogDefaultVarient = showDefaultVariant(
-      'snd-old-catalog-vs-new-catalog',
-      this.store.experiments,
-      this.store.query
-    );
-    window.location.href = `/${
-      oldCatalogVsNewCatalogDefaultVarient ? `catalog` : `cars`
-    }${queryString}`;
+    window.location.href = `/cars${queryString}`;
   }
 }
 

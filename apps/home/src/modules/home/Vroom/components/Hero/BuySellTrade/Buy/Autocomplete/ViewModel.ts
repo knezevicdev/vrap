@@ -11,7 +11,6 @@ import { stringify } from 'qs';
 import { AutocompleteStore } from './store';
 
 import AnalyticsHandler from 'src/integrations/AnalyticsHandler';
-import { showDefaultVariant } from 'src/integrations/experimentSDK';
 import { HomeStore } from 'src/modules/home/store';
 import { Status } from 'src/networking/types';
 
@@ -104,15 +103,8 @@ class AutocompleteViewModel {
     const queryString = stringify(this.homeStore.query, {
       addQueryPrefix: false,
     });
-    const oldCatalogVsNewCatalogDefaultVarient = showDefaultVariant(
-      'snd-old-catalog-vs-new-catalog',
-      this.homeStore.experiments,
-      this.homeStore.query
-    );
     //TODO: Replace with makeSlug from suggestion api
-    const replaceCharacterForSlug = oldCatalogVsNewCatalogDefaultVarient
-      ? '_'
-      : '-';
+    const replaceCharacterForSlug = '-';
     if (suggestion.group === 'Body Type') {
       if (!suggestion.bodyType) {
         return;
@@ -125,17 +117,11 @@ class AutocompleteViewModel {
       const bodyHref = getUrlFromFiltersData(filterBodyType);
       const bodyHrefNewCatalogQueryStringSep =
         bodyHref.indexOf('?') === -1 ? '?' : '&';
-      const bodyHrefOldCatalogHref =
-        queryString.length > 0
-          ? `/catalog/all-years/all-makes/${bodyType}?${queryString}`
-          : `/catalog/all-years/all-makes/${bodyType}`;
       const bodyHrefNewCatalogHref =
         queryString.length > 0
           ? `${bodyHref}${bodyHrefNewCatalogQueryStringSep}${queryString}`
           : bodyHref;
-      oldCatalogVsNewCatalogDefaultVarient
-        ? (window.location.href = bodyHrefOldCatalogHref)
-        : (window.location.href = bodyHrefNewCatalogHref);
+      window.location.href = bodyHrefNewCatalogHref;
       return;
     }
 
@@ -150,17 +136,11 @@ class AutocompleteViewModel {
       const allModelsHref = getUrlFromFiltersData(allModelsFiltersData);
       const allModelsHrefNewCatalogQueryStringSep =
         allModelsHref.indexOf('?') === -1 ? '?' : '&';
-      const allModelsHrefOldCatalogHref =
-        queryString.length > 0
-          ? `/catalog/all-years/${make}?${queryString}`
-          : `/catalog/all-years/${make}`;
       const allModelsHrefNewCatalogHref =
         queryString.length > 0
           ? `${allModelsHref}${allModelsHrefNewCatalogQueryStringSep}${queryString}`
           : allModelsHref;
-      oldCatalogVsNewCatalogDefaultVarient
-        ? (window.location.href = allModelsHrefOldCatalogHref)
-        : (window.location.href = allModelsHrefNewCatalogHref);
+      window.location.href = allModelsHrefNewCatalogHref;
       return;
     }
 
@@ -176,19 +156,13 @@ class AutocompleteViewModel {
         .replace(/[\s-_]/g, replaceCharacterForSlug);
       const modelFiltersData = addModel(make, model);
       const modelHref = getUrlFromFiltersData(modelFiltersData);
-      const modelHrefOldCatalogHref =
-        queryString.length > 0
-          ? `/catalog/all-years/${make}_${model}?${queryString}`
-          : `/catalog/all-years/${make}_${model}`;
       const modelHrefNewCatalogQueryStringSep =
         modelHref.indexOf('?') === -1 ? '?' : '&';
       const modelHrefNewCatalogHref =
         queryString.length > 0
           ? `${modelHref}${modelHrefNewCatalogQueryStringSep}${queryString}`
           : modelHref;
-      oldCatalogVsNewCatalogDefaultVarient
-        ? (window.location.href = modelHrefOldCatalogHref)
-        : (window.location.href = modelHrefNewCatalogHref);
+      window.location.href = modelHrefNewCatalogHref;
       return;
     }
   }
@@ -207,21 +181,12 @@ class AutocompleteViewModel {
     const queryString = stringify(query, {
       addQueryPrefix: false,
     });
-    const oldCatalogVsNewCatalogDefaultVarient = showDefaultVariant(
-      'snd-old-catalog-vs-new-catalog',
-      this.homeStore.experiments,
-      this.homeStore.query
-    );
-    if (oldCatalogVsNewCatalogDefaultVarient) {
-      window.location.href = `/catalog/?${queryString}`;
-    } else {
-      const filtersData = setSearch(inputValue);
-      const searchUrl = getUrlFromFiltersData(filtersData, {
-        addFiltersQueryParam: true,
-      });
-      const queryStringSep = searchUrl.indexOf('?') === -1 ? '?' : '&';
-      window.location.href = `${searchUrl}${queryStringSep}${queryString}`;
-    }
+    const filtersData = setSearch(inputValue);
+    const searchUrl = getUrlFromFiltersData(filtersData, {
+      addFiltersQueryParam: true,
+    });
+    const queryStringSep = searchUrl.indexOf('?') === -1 ? '?' : '&';
+    window.location.href = `${searchUrl}${queryStringSep}${queryString}`;
   }
 }
 
