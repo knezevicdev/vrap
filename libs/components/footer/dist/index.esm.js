@@ -13143,7 +13143,7 @@ var NavigationViewModel = /*#__PURE__*/function () {
         title: 'Vroom',
         links: [{
           label: 'Buy',
-          href: "/catalog".concat(queryString)
+          href: "/cars".concat(queryString)
         }, {
           label: 'Sell/Trade',
           href: "/sell".concat(queryString)
@@ -13670,6 +13670,33 @@ var AnalyticsHandler = /*#__PURE__*/function () {
         } catch (e) {
           console.error(e);
         }
+      });
+    }
+  }, {
+    key: "createAdditionalTracker",
+    value: function createAdditionalTracker(id, name) {
+      onAnalyticsReady(function () {
+        if (typeof window.ga === 'undefined') {
+          throw new Error('window.ga is undefined');
+        }
+
+        window.ga('create', id, 'auto', {
+          name: name
+        });
+        window.ga("".concat(name, ".send"), 'pageview');
+        window.analytics.on('track', function (event, properties) {
+          if (typeof window.ga === 'undefined') {
+            throw new Error('window.ga is undefined');
+          }
+
+          var prop = properties;
+          window.ga("".concat(name, ".send"), {
+            hitType: 'event',
+            eventCategory: prop.category || 'All',
+            eventAction: event,
+            eventLabel: prop.label || 'All'
+          });
+        });
       });
     }
   }, {

@@ -13441,7 +13441,7 @@ var HeaderNavViewModel = /*#__PURE__*/function () {
       if (!this.store.loggedIn) {
         return [{
           type: 'link',
-          href: "/catalog".concat(queryString),
+          href: "/cars".concat(queryString),
           label: 'BUY',
           onClick: function onClick() {
             return _this2.analyticsHandler.trackBuyClicked();
@@ -13543,7 +13543,7 @@ var HeaderNavViewModel = /*#__PURE__*/function () {
 
       return [{
         type: 'link',
-        href: "/catalog".concat(queryString),
+        href: "/cars".concat(queryString),
         label: 'BUY',
         onClick: function onClick() {
           return _this2.analyticsHandler.trackBuyClicked();
@@ -13654,7 +13654,7 @@ var HeaderNavViewModel = /*#__PURE__*/function () {
             return _this2.analyticsHandler.trackTransactionsClicked();
           }
         }, {
-          href: "/catalog".concat(queryString),
+          href: "/cars".concat(queryString),
           label: 'Sign Out',
           onClick: this.handleSignOutClick
         }]
@@ -13688,7 +13688,7 @@ var HeaderNavViewModel = /*#__PURE__*/function () {
           }
         }, {
           type: 'link',
-          href: "/catalog".concat(queryString),
+          href: "/cars".concat(queryString),
           label: 'BUY',
           onClick: function onClick() {
             return _this3.analyticsHandler.trackBuyClicked();
@@ -13804,7 +13804,7 @@ var HeaderNavViewModel = /*#__PURE__*/function () {
         }
       }, {
         type: 'link',
-        href: "/catalog".concat(queryString),
+        href: "/cars".concat(queryString),
         label: 'BUY',
         onClick: function onClick() {
           return _this3.analyticsHandler.trackBuyClicked();
@@ -13881,7 +13881,7 @@ var HeaderNavViewModel = /*#__PURE__*/function () {
         }
       }, {
         type: 'link',
-        href: "/catalog".concat(queryString),
+        href: "/cars".concat(queryString),
         label: 'SIGN OUT',
         onClick: this.handleSignOutClick
       }];

@@ -76,7 +76,7 @@ class HeaderNavViewModel {
       return [
         {
           type: 'link',
-          href: `/catalog${queryString}`,
+          href: `/cars${queryString}`,
           label: 'BUY',
           onClick: (): void => this.analyticsHandler.trackBuyClicked(),
         },
@@ -177,7 +177,7 @@ class HeaderNavViewModel {
     return [
       {
         type: 'link',
-        href: `/catalog${queryString}`,
+        href: `/cars${queryString}`,
         label: 'BUY',
         onClick: (): void => this.analyticsHandler.trackBuyClicked(),
       },
@@ -281,7 +281,7 @@ class HeaderNavViewModel {
               this.analyticsHandler.trackTransactionsClicked(),
           },
           {
-            href: `/catalog${queryString}`,
+            href: `/cars${queryString}`,
             label: 'Sign Out',
             onClick: this.handleSignOutClick,
           },
@@ -314,7 +314,7 @@ class HeaderNavViewModel {
         },
         {
           type: 'link',
-          href: `/catalog${queryString}`,
+          href: `/cars${queryString}`,
           label: 'BUY',
           onClick: (): void => this.analyticsHandler.trackBuyClicked(),
         },
@@ -421,7 +421,7 @@ class HeaderNavViewModel {
       },
       {
         type: 'link',
-        href: `/catalog${queryString}`,
+        href: `/cars${queryString}`,
         label: 'BUY',
         onClick: (): void => this.analyticsHandler.trackBuyClicked(),
       },
@@ -490,7 +490,7 @@ class HeaderNavViewModel {
       },
       {
         type: 'link',
-        href: `/catalog${queryString}`,
+        href: `/cars${queryString}`,
         label: 'SIGN OUT',
         onClick: this.handleSignOutClick,
       },
