@@ -1,7 +1,7 @@
 import React from 'react';
 import styled, { ThemeProvider } from 'styled-components';
 
-import { Body, Hero, Title } from './atoms/Typography';
+import { Body, Hero, Link, Title } from './atoms/Typography';
 import { theme as SantanderTheme } from './themes/New/Santander';
 import { theme as VroomTheme } from './themes/New/Vroom';
 
@@ -33,6 +33,12 @@ const SectionContainer = styled.div`
   width: 100%;
 `;
 
+const CustomLink = styled(Link)`
+  font-size: 22px;
+  font-weight: 600;
+  color: red;
+`;
+
 const Typography = (): JSX.Element => {
   return (
     <SectionContainer>
@@ -47,6 +53,10 @@ const Typography = (): JSX.Element => {
       <Body.Regular>Body regular</Body.Regular>
       <Body.Small>Body small</Body.Small>
       <Body.Fine>Body fine</Body.Fine>
+      <Link href="https://www.vroom.com/">Vroom.com Link</Link>
+      <CustomLink href="https://www.vroom.com/" blank>
+        Custom Vroom.com Link opens in new tab
+      </CustomLink>
     </SectionContainer>
   );
 };

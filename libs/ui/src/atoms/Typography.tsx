@@ -1,30 +1,37 @@
+import React from 'react';
 import styled, { css } from 'styled-components';
 
 import { ThemeProps } from '../themes/types';
 
-const heroFamily = (props: ThemeProps): string =>
-  props.theme.typography.family.hero;
-const titleFamily = (props: ThemeProps): string =>
-  props.theme.typography.family.title;
-const bodyFamily = (props: ThemeProps): string =>
-  props.theme.typography.family.body;
+interface Props {
+  theme: ThemeProps;
+}
+
+const heroFamily = ({ theme }: Props): string => theme.typography.family.hero;
+const titleFamily = ({ theme }: Props): string => theme.typography.family.title;
+const bodyFamily = ({ theme }: Props): string => theme.typography.family.body;
+const color = ({ theme }: Props): string => theme.typography.color;
 
 const heroBase = css`
   margin: 0;
   font-family: ${heroFamily};
   font-weight: normal;
   letter-spacing: 1px;
+  color: ${color};
 `;
 
 const titleBase = css`
   font-family: ${titleFamily};
+  font-weight: 600;
   letter-spacing: 0.25px;
+  color: ${color};
 `;
 
 const bodyBase = css`
   font-family: ${bodyFamily};
   font-weight: normal;
   letter-spacing: 0.25px;
+  color: ${color};
 `;
 
 const Hero1 = styled.h1`
@@ -105,3 +112,34 @@ export class Body {
   static Small = BodySmall;
   static Fine = BodyFine;
 }
+
+interface LinkProps {
+  className?: string;
+  children: string;
+  href: string;
+  blank?: boolean;
+}
+
+const A = styled.a`
+  ${bodyBase}
+  font-size: 18px;
+  line-height: 24px;
+  text-decoration: none;
+  &:hover {
+    text-decoration: underline;
+  }
+`;
+
+export const Link: React.FC<LinkProps> = ({
+  className,
+  children,
+  href,
+  blank,
+}) => {
+  const target = (blank && '_blank') || undefined;
+  return (
+    <A className={className} href={href} target={target}>
+      {children}
+    </A>
+  );
+};

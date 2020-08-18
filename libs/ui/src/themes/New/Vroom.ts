@@ -3,14 +3,16 @@ import { createGlobalStyle } from 'styled-components';
 import CalibreRegular from '../fonts/Vroom/Calibre-Regular.woff2';
 import CalibreSemibold from '../fonts/Vroom/Calibre-Semibold.woff2';
 import VroomSans from '../fonts/Vroom/Vroom-Sans.woff2';
+import { ThemeProps } from '../types';
 
-export const theme = {
+export const theme: ThemeProps = {
   typography: {
     family: {
       hero: 'Vroom Sans',
       title: 'Calibre',
       body: 'Calibre',
     },
+    color: '#041022',
   },
 };
 

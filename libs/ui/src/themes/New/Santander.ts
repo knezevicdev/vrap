@@ -2,14 +2,16 @@ import { createGlobalStyle } from 'styled-components';
 
 import Headline from '../fonts/Santander/SantanderHeadline-Regular.ttf';
 import Regular from '../fonts/Santander/SantanderText-Regular.ttf';
+import { ThemeProps } from '../types';
 
-export const theme = {
+export const theme: ThemeProps = {
   typography: {
     family: {
       hero: 'SantanderHeadline',
       title: 'SantanderText',
       body: 'SantanderText',
     },
+    color: '#041022',
   },
 };
 
