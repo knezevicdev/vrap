@@ -55,7 +55,7 @@ class ViewModel {
       this.redirectStore.decrementSeconds();
       if (this.redirectStore.secondsLeft === 0) {
         this.analyticsHandler.trackProductAdded(product);
-        const url = `https://www.vroom.com/e2e/${vin}/checkoutTradeIn?utm_source=santander&utm_campaign=national&utm_medium=listings`;
+        const url = `https://www.vroom.com/e2e/${vin}/checkoutTradeIn?utm_source=santander&utm_campaign=national&utm_medium=listings&vit_source=santanderconsumerusa&vit_medium=wl&vit_dest=vroom`;
         window.location.href = url;
       }
     }, 1000);
