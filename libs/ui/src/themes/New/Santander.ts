@@ -1,16 +1,16 @@
 import { createGlobalStyle } from 'styled-components';
 
-import Headline from './fonts/Santander/SantanderHeadline-Regular.ttf';
-import Regular from './fonts/Santander/SantanderText-Regular.ttf';
+import Headline from '../fonts/Santander/SantanderHeadline-Regular.ttf';
+import Regular from '../fonts/Santander/SantanderText-Regular.ttf';
 
 export const theme = {
-    typography: {
-        family: {
-            hero: 'SantanderHeadline',
-            title: 'SantanderText',
-            body: 'SantanderText',
-        },
+  typography: {
+    family: {
+      hero: 'SantanderHeadline',
+      title: 'SantanderText',
+      body: 'SantanderText',
     },
+  },
 };
 
 export const GlobalStyle = createGlobalStyle`

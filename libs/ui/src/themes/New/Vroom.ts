@@ -1,17 +1,17 @@
 import { createGlobalStyle } from 'styled-components';
 
-import CalibreRegular from './fonts/Vroom/Calibre-Regular.woff2';
-import CalibreSemibold from './fonts/Vroom/Calibre-Semibold.woff2';
-import VroomSans from './fonts/Vroom/Vroom-Sans.woff2';
+import CalibreRegular from '../fonts/Vroom/Calibre-Regular.woff2';
+import CalibreSemibold from '../fonts/Vroom/Calibre-Semibold.woff2';
+import VroomSans from '../fonts/Vroom/Vroom-Sans.woff2';
 
 export const theme = {
-    typography: {
-        family: {
-            hero: 'Vroom Sans',
-            title: 'Calibre',
-            body: 'Calibre',
-        },
+  typography: {
+    family: {
+      hero: 'Vroom Sans',
+      title: 'Calibre',
+      body: 'Calibre',
     },
+  },
 };
 
 export const GlobalStyle = createGlobalStyle`
