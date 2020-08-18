@@ -36,7 +36,6 @@ import Page from 'src/Page';
 interface Props {
   brand: Brand;
   experiments: Experiment[];
-  indexPage: boolean;
   initialStoreState: InitialCarsStoreState;
   query: ParsedUrlQuery;
 }
@@ -44,7 +43,6 @@ interface Props {
 const CarsPage: NextPage<Props> = ({
   brand,
   experiments,
-  indexPage,
   initialStoreState,
   query,
 }) => {
@@ -248,7 +246,6 @@ const CarsPage: NextPage<Props> = ({
       <title>{title}</title>
       <meta name="description" content={description} />
       <link rel="canonical" href={canonicalHref} />
-      {!indexPage && <meta name="robots" content="noindex, nofollow" />}
     </>
   );
 
@@ -383,12 +380,9 @@ CarsPage.getInitialProps = async (context: NextPageContext): Promise<Props> => {
     res.statusCode = 404;
   }
 
-  const indexPage = brand === Brand.SANTANDER ? true : false;
-
   return {
     brand,
     experiments,
-    indexPage,
     initialStoreState,
     query,
   };
