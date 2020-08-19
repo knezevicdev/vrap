@@ -7,6 +7,12 @@ interface Props {
   theme: ThemeProps;
 }
 
+/*
+  TODO: Discuss how we want to inject breakpoint specific styles as we work more with design
+  - Where they should live
+  - What are the specific breakpoints
+*/
+
 const heroFamily = ({ theme }: Props): string => theme.typography.family.hero;
 const titleFamily = ({ theme }: Props): string => theme.typography.family.title;
 const bodyFamily = ({ theme }: Props): string => theme.typography.family.body;
@@ -34,16 +40,32 @@ const bodyBase = css`
   color: ${color};
 `;
 
+/* TODO: Meet with Dempsey on breakpoints and implement better injection into CSS*/
 const Hero1 = styled.h1`
   ${heroBase}
   font-size: 62px;
   line-height: 72px;
+
+  @media (min-width: 600px) and (max-width: 959px) {
+    font-size: 42px;
+    line-height: 64px;
+  }
+
+  @media (max-width: 599px) {
+    font-size: 36px;
+    line-height: 40px;
+  }
 `;
 
 const Hero2 = styled.h2`
   ${heroBase}
   font-size: 42px;
   line-height: 64px;
+
+  @media (max-width: 599px) {
+    font-size: 36px;
+    line-height: 40px;
+  }
 `;
 
 const Hero3 = styled.h3`
