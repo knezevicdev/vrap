@@ -113,19 +113,74 @@ function identify(traits, userId) {
   });
 }
 
+var VitParam;
+
+(function (VitParam) {
+  VitParam["SOURCE"] = "vit_source";
+  VitParam["MEDIUM"] = "vit_medium";
+  VitParam["CAMPAIGN"] = "vit_campaign";
+  VitParam["TERM"] = "vit_term";
+  VitParam["CONTENT"] = "vit_content";
+  VitParam["DEST"] = "vit_dest";
+})(VitParam || (VitParam = {}));
+
 var AnalyticsHandler = /*#__PURE__*/function () {
   function AnalyticsHandler() {
     _classCallCheck(this, AnalyticsHandler);
   }
 
   _createClass(AnalyticsHandler, [{
+    key: "getVitParams",
+    value: function getVitParams() {
+      if (typeof window === 'undefined') {
+        return {};
+      }
+
+      var urlSearchParams = new URLSearchParams(window.location.search);
+      var source = urlSearchParams.get(VitParam.SOURCE);
+      var medium = urlSearchParams.get(VitParam.MEDIUM);
+      var campaign = urlSearchParams.get(VitParam.CAMPAIGN);
+      var term = urlSearchParams.get(VitParam.TERM);
+      var content = urlSearchParams.get(VitParam.CONTENT);
+      var dest = urlSearchParams.get(VitParam.DEST);
+      var vitParams = {};
+
+      if (source) {
+        vitParams[VitParam.SOURCE] = source;
+      }
+
+      if (medium) {
+        vitParams[VitParam.MEDIUM] = medium;
+      }
+
+      if (campaign) {
+        vitParams[VitParam.CAMPAIGN] = campaign;
+      }
+
+      if (term) {
+        vitParams[VitParam.TERM] = term;
+      }
+
+      if (content) {
+        vitParams[VitParam.CONTENT] = content;
+      }
+
+      if (dest) {
+        vitParams[VitParam.DEST] = dest;
+      }
+
+      return vitParams;
+    }
+  }, {
     key: "track",
     value: function track$1(event, properties) {
-      var propertiesWithExperimentCombination = _objectSpread2(_objectSpread2({}, properties), {}, {
+      var vitParams = this.getVitParams();
+
+      var fullProperties = _objectSpread2(_objectSpread2(_objectSpread2({}, properties), vitParams), {}, {
         experimentCombination: AnalyticsHandler.optimizeExperimentsString
       });
 
-      track(event, propertiesWithExperimentCombination);
+      track(event, fullProperties);
     }
   }, {
     key: "setAnonymousId",
@@ -182,11 +237,14 @@ var AnalyticsHandler = /*#__PURE__*/function () {
   }, {
     key: "page",
     value: function page$1(name, category) {
-      var properties = {
+      var vitParams = this.getVitParams();
+
+      var properties = _objectSpread2({
         category: category,
         experimentCombination: AnalyticsHandler.optimizeExperimentsString,
         name: name
-      };
+      }, vitParams);
+
       page(name, properties);
     }
   }, {

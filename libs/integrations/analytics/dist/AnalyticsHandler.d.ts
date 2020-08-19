@@ -9,6 +9,7 @@ interface Experiment {
 }
 declare class AnalyticsHandler {
     private static optimizeExperimentsString?;
+    private getVitParams;
     track(event: string, properties?: object): void;
     setAnonymousId(anonymousId: string): void;
     setExperiments(experiments?: Experiment[]): void;
