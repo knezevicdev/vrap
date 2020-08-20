@@ -40,7 +40,7 @@ const CustomLink = styled(Link)`
   color: red;
 `;
 
-const CustomButton = styled(Button.Primary)`
+const CustomPrimary = styled(Button.Primary)`
   width: 100%;
   max-height: 52px;
   height: 52px;
@@ -75,9 +75,26 @@ const Buttons = (): JSX.Element => {
   return (
     <SectionContainer>
       <SectionTitle>Buttons</SectionTitle>
-      <Button.Primary onClick={onClick}>Button</Button.Primary>
-      <Button.Secondary onClick={onClick}>Button</Button.Secondary>
-      <CustomButton onClick={onClick}>Custom Button</CustomButton>
+      <Button.Primary onClick={onClick}>Primary</Button.Primary>
+      <Button.Secondary onClick={onClick}>Secondary</Button.Secondary>
+      <Button.Bare onClick={onClick}>Bare</Button.Bare>
+      <Button.Outline onClick={onClick}>Outline</Button.Outline>
+      <CustomPrimary onClick={onClick}>Custom Primary</CustomPrimary>
+      <Button.Primary disabled onClick={onClick}>
+        Primary
+      </Button.Primary>
+      <Button.Secondary disabled onClick={onClick}>
+        Secondary
+      </Button.Secondary>
+      <Button.Bare disabled onClick={onClick}>
+        Bare
+      </Button.Bare>
+      <Button.Outline disabled onClick={onClick}>
+        Outline
+      </Button.Outline>
+      <CustomPrimary disabled onClick={onClick}>
+        Custom Primary
+      </CustomPrimary>
     </SectionContainer>
   );
 };

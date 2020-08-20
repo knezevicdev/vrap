@@ -19,6 +19,7 @@ const base = css`
   height: 48px !important;
   width: max-content;
   padding: 0 32px;
+  margin: 4px;
 
   font-family: ${bodyFamily};
   letter-spacing: 1.25px;
@@ -33,7 +34,12 @@ const Primary = styled.button`
   ${base}
   background: ${(props): string => (props.disabled ? '#D6D7DA' : '#e7131a')};
 
+  &:hover {
+    background: ${(props): string => (props.disabled ? '#D6D7DA' : '#FC4349')};
+  }
+  
   &:active {
+    background: ${(props): string => (props.disabled ? '#D6D7DA' : '#e7131a')};
     box-shadow: 0 0 0 ${(props): string =>
       props.disabled ? '0px' : '4px'} #fcd6d7;
   }
@@ -44,6 +50,46 @@ const Secondary = styled(Primary)`
 
   &:hover {
     background: ${(props): string => (props.disabled ? '#D6D7DA' : '#6C717A')};
+  }
+
+  &:active {
+    background: ${(props): string => (props.disabled ? '#D6D7DA' : '#041022')};
+  }
+`;
+
+const Bare = styled(Primary)`
+  background: #ffffff;
+  margin: 0px;
+  color: ${(props): string => (props.disabled ? '#D6D7DA' : '#E7131A')};
+
+  &:hover {
+    background: #ffffff;
+    color: ${(props): string => (props.disabled ? '#D6D7DA' : '#FC4349')};
+  }
+
+  &:active {
+    background: #ffffff;
+    box-shadow: none;
+    color: ${(props): string => (props.disabled ? '#D6D7DA' : '#E7131A')};
+  }
+`;
+
+const Outline = styled(Primary)`
+  background: #ffffff;
+  color: ${(props): string => (props.disabled ? '#D6D7DA' : '#E7131A')};
+  border: 2px solid
+    ${(props): string => (props.disabled ? '#D6D7DA' : '#E7131A')};
+
+  &:hover {
+    background: #ffffff;
+    color: ${(props): string => (props.disabled ? '#D6D7DA' : '#FC4349')};
+    border: 2px solid
+      ${(props): string => (props.disabled ? '#D6D7DA' : '#FC4349')};
+  }
+
+  &:active {
+    background: #ffffff;
+    color: ${(props): string => (props.disabled ? '#D6D7DA' : '#E7131A')};
   }
 `;
 
@@ -80,7 +126,35 @@ const SecondaryButton: React.FC<ButtonProps> = ({
   );
 };
 
+const BareButton: React.FC<ButtonProps> = ({
+  className,
+  children,
+  onClick,
+  disabled,
+}) => {
+  return (
+    <Bare className={className} disabled={disabled} onClick={onClick}>
+      {children}
+    </Bare>
+  );
+};
+
+const OutlineButton: React.FC<ButtonProps> = ({
+  className,
+  children,
+  onClick,
+  disabled,
+}) => {
+  return (
+    <Outline className={className} disabled={disabled} onClick={onClick}>
+      {children}
+    </Outline>
+  );
+};
+
 export class Button {
   static Primary = PrimaryButton;
   static Secondary = SecondaryButton;
+  static Bare = BareButton;
+  static Outline = OutlineButton;
 }
