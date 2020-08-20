@@ -146,10 +146,7 @@ const A = styled.a`
   ${bodyBase}
   font-size: 18px;
   line-height: 24px;
-  text-decoration: none;
-  &:hover {
-    text-decoration: underline;
-  }
+  text-decoration: underline;
 `;
 
 export const Link: React.FC<LinkProps> = ({
