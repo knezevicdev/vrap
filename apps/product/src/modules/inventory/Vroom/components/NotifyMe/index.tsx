@@ -5,7 +5,7 @@ import { NotifyMeStore } from './store';
 import View from './View';
 import ViewModel from './ViewModel';
 
-// import globalEnv from 'src/globalEnv';
+import globalEnv from 'src/globalEnv';
 import {
   InventoryStore,
   InventoryStoreContext,
