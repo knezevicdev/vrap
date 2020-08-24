@@ -6,6 +6,7 @@ services:
       dockerfile: ./apps/marketing/docker/Dockerfile
     user: 'root'
     environment:
+      - GEARBOX_PRIVATE_URL=https://gearbox-dev-int.vroomapi.com/query-private
       - CALENDLY_URL=https://calendly.com/vroom-test/phone-call
       - DATA_DOG_LOG_COLLECTION_TOKEN=pubb20b42f026cc404ce1fe7588cdf993d8
       - SEGMENT_WRITE_KEY=N0pxERRIw4iYCoxZREMZj1yWBIoARIz4

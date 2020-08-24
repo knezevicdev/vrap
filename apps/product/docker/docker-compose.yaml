@@ -7,6 +7,7 @@ services:
     user: 'root'
     environment:
       - CDN_URL=
+      - GEARBOX_PRIVATE_URL=https://gearbox-dev-int.vroomapi.com/query-private
       - DATA_DOG_LOG_COLLECTION_TOKEN=pubb20b42f026cc404ce1fe7588cdf993d8
       - INVSEARCH_V3_URL=https://invsearch-v3-dev-int.aws.vroomapi.com:8443/v3
       - INV_SERVICE_V2_URL=https://inventory-dev-int.vroomapi.com:8443/v2
