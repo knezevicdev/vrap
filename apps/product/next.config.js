@@ -21,6 +21,7 @@ module.exports = {
     DATA_DOG_LOG_COLLECTION_TOKEN: process.env.DATA_DOG_LOG_COLLECTION_TOKEN,
     INVSEARCH_V3_URL: process.env.INVSEARCH_V3_URL,
     INV_SERVICE_V2_URL: process.env.INV_SERVICE_V2_URL,
+    GEARBOX_PRIVATE_URL: process.env.GEARBOX_PRIVATE_URL,
     NAME: name,
     STATIC_ASSETS_HOST_URL: process.env.STATIC_ASSETS_HOST_URL || '',
     VERSION: version,

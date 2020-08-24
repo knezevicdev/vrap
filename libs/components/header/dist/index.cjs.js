@@ -13899,10 +13899,13 @@ var HeaderNav$1 = function HeaderNav() {
   });
 };
 
-var SimpleHeader = function SimpleHeader() {
-  return /*#__PURE__*/React__default.createElement(Bar, null, /*#__PURE__*/React__default.createElement(Box, {
+var SimpleHeader = function SimpleHeader(_ref) {
+  var gearboxPrivateUrl = _ref.gearboxPrivateUrl;
+  return /*#__PURE__*/React__default.createElement(React__default.Fragment, null, /*#__PURE__*/React__default.createElement(Bar, null, /*#__PURE__*/React__default.createElement(Box, {
     mr: "auto"
-  }, /*#__PURE__*/React__default.createElement(Logo$1, null)), /*#__PURE__*/React__default.createElement(HeaderNav$1, null));
+  }, /*#__PURE__*/React__default.createElement(Logo$1, null)), /*#__PURE__*/React__default.createElement(HeaderNav$1, null)), /*#__PURE__*/React__default.createElement(InProgressDealBar, {
+    gearboxPrivateUrl: gearboxPrivateUrl
+  }));
 };
 
 var Status;
@@ -14097,7 +14100,7 @@ var StyledCartSvg = styles.styled(SvgCart)(function (_ref6) {
   return _defineProperty({
     flexShrink: 0,
     width: '32px',
-    heigth: '32px'
+    height: '32px'
   }, theme.breakpoints.up('sm'), {
     width: '36px',
     height: '36px',
@@ -14184,7 +14187,6 @@ var InProgressDealBarView = function InProgressDealBarView(_ref18) {
 
   var show = viewModel.show();
   return /*#__PURE__*/React__default.createElement(StyledCollapse, {
-    className: viewModel.className,
     "in": show
   }, /*#__PURE__*/React__default.createElement(StyledBar, null, show && /*#__PURE__*/React__default.createElement(React__default.Fragment, null, /*#__PURE__*/React__default.createElement(Information, null, /*#__PURE__*/React__default.createElement(StyledCartSvg, null), mdUp && /*#__PURE__*/React__default.createElement(ui.Typography, {
     fontWeight: "fontWeightMedium"
@@ -14207,14 +14209,12 @@ var InProgressDealBarView = function InProgressDealBarView(_ref18) {
 var View$1 = observer$1(InProgressDealBarView);
 
 var InProgressDealBarViewModel = /*#__PURE__*/function () {
-  function InProgressDealBarViewModel(store, className) {
+  function InProgressDealBarViewModel(store) {
     _classCallCheck(this, InProgressDealBarViewModel);
 
     _defineProperty(this, "statusText", 'Purchase\xa0in\xa0progress');
 
     _defineProperty(this, "buttonText", 'RESUME PURCHASE');
-
-    _defineProperty(this, "className", void 0);
 
     _defineProperty(this, "store", void 0);
 
@@ -14222,7 +14222,6 @@ var InProgressDealBarViewModel = /*#__PURE__*/function () {
 
     _defineProperty(this, "analyticsHandler", void 0);
 
-    this.className = className;
     this.store = store;
     this.currencyFormatter = new Intl.NumberFormat('en-US', {
       style: 'currency',
@@ -14326,10 +14325,9 @@ var InProgressDealBarViewModel = /*#__PURE__*/function () {
 }();
 
 var InProgressDealBar = function InProgressDealBar(_ref) {
-  var className = _ref.className,
-      gearboxPrivateUrl = _ref.gearboxPrivateUrl;
+  var gearboxPrivateUrl = _ref.gearboxPrivateUrl;
   var store = new InProgressDealBarStore(gearboxPrivateUrl);
-  var viewModel = new InProgressDealBarViewModel(store, className);
+  var viewModel = new InProgressDealBarViewModel(store);
   return /*#__PURE__*/React__default.createElement(View$1, {
     viewModel: viewModel
   });

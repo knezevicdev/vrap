@@ -58,6 +58,7 @@ const Vroom: React.FC = () => {
   }
   const queryString = stringify(cleaned, { addQueryPrefix: true });
   const dataUrl = `${CALENDLY_URL}${queryString}`;
+  const gearboxPrivateUrl = publicRuntimeConfig.GEARBOX_PRIVATE_URL;
 
   return (
     <>
@@ -69,7 +70,7 @@ const Vroom: React.FC = () => {
           />
         </Head>
       )}
-      <SimpleHeader />
+      <SimpleHeader gearboxPrivateUrl={gearboxPrivateUrl} />
       <StyledContainer>
         <HackyCircularProgress />
         <div

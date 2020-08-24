@@ -24,6 +24,7 @@ const config = {
     BASE_PATH: process.env.BASE_PATH,
     CALENDLY_URL: process.env.CALENDLY_URL,
     DATA_DOG_LOG_COLLECTION_TOKEN: process.env.DATA_DOG_LOG_COLLECTION_TOKEN,
+    GEARBOX_PRIVATE_URL: process.env.GEARBOX_PRIVATE_URL,
     NAME: name,
     STATIC_ASSETS_HOST_URL: process.env.STATIC_ASSETS_HOST_URL,
     VERSION: version,
