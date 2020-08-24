@@ -7,7 +7,7 @@ services:
     user: 'root'
     environment:
       - CDN_URL=
-      - GEARBOX_PRIVATE_URL=https://gearbox-qa-int.vroomapi.com/query-private
+      - GEARBOX_PRIVATE_URL=https://gearbox-dev-int.vroomapi.com/query-private
       - GEARBOX_PUBLIC_URL=https://gearbox-dev-int.vroomapi.com/query-public
       - INVSEARCH_V3_URL=https://invsearch-v3-dev-int.aws.vroomapi.com:8443/v3
       - INV_SERVICE_V2_URL=https://inventory-dev-int.vroomapi.com:8443/v2
