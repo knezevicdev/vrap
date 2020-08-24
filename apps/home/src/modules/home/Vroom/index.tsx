@@ -1,5 +1,5 @@
 import { StandardFooter } from '@vroom-web/footer-components';
-import { InProgressDealBar, SimpleHeader } from '@vroom-web/header-components';
+import { SimpleHeader } from '@vroom-web/header-components';
 import getConfig from 'next/config';
 import React from 'react';
 
@@ -18,10 +18,7 @@ const Vroom: React.FC = () => {
 
   return (
     <>
-      <SimpleHeader />
-      {gearboxPrivateUrl && (
-        <InProgressDealBar gearboxPrivateUrl={gearboxPrivateUrl} />
-      )}
+      <SimpleHeader gearboxPrivateUrl={gearboxPrivateUrl} />
       <JuneteenthBanner />
       <Hero />
       <Highlights />
