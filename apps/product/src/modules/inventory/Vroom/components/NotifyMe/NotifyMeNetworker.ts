@@ -26,7 +26,7 @@ export default class NotifyMeNetworker {
     this.hostUrl = hostUrl;
   }
 
-  async registerEmail(accessToken: string | undefined): Promise<void> {
+  async registerEmail(accessToken: string): Promise<void> {
     const url = `${this.hostUrl}/v2/devices`;
     const options = {
       headers: { Authorization: `Bearer ${accessToken}` },

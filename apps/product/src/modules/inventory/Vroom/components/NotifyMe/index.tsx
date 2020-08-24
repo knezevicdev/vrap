@@ -5,6 +5,7 @@ import { NotifyMeStore } from './store';
 import View from './View';
 import ViewModel from './ViewModel';
 
+// import globalEnv from 'src/globalEnv';
 import {
   InventoryStore,
   InventoryStoreContext,
@@ -12,7 +13,8 @@ import {
 
 const NotifyMe: React.FC = () => {
   const notifyMeNetworker = new NotifyMeNetworker(
-    'https://horn-dev-int.vroomapi.com'
+    globalEnv.GEARBOX_PUBLIC_URL as string
+    // 'https://gearbox-dev-int.vroomapi.com/query-private'
   );
   return (
     <InventoryStoreContext.Consumer>
