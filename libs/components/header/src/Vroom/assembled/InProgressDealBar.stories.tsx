@@ -5,8 +5,8 @@ import InProgressDealBar from './InProgressDealBar';
 
 export default { title: 'InProgressDealBar' };
 
-// Using QA, so that it's easy to log in to qa.vroom.com and copy the authToken cookie.
-const gearboxPrivateUrl = 'https://gearbox-qa-int.vroomapi.com/query-private';
+// Using DEV, so that it's easy to log in to dev.vroom.com and copy the authToken cookie.
+const gearboxPrivateUrl = 'https://gearbox-dev-int.vroomapi.com/query-private';
 
 export const byItself: React.FC = () => {
   return (

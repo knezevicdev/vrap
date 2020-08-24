@@ -40,7 +40,7 @@ const Information = styled('div')(({ theme }) => ({
 const StyledCartSvg = styled(CartSvg)(({ theme }) => ({
   flexShrink: 0,
   width: '32px',
-  heigth: '32px',
+  height: '32px',
   [theme.breakpoints.up('sm')]: {
     width: '36px',
     height: '36px',
@@ -125,7 +125,7 @@ const InProgressDealBarView: React.FC<Props> = ({ viewModel }) => {
   const show = viewModel.show();
 
   return (
-    <StyledCollapse className={viewModel.className} in={show}>
+    <StyledCollapse in={show}>
       <StyledBar>
         {show && (
           <>
