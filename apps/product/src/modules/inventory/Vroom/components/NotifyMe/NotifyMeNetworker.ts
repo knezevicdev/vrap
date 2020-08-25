@@ -1,4 +1,56 @@
-import axios, { AxiosInstance } from 'axios';
+import axios, { AxiosInstance, AxiosResponse } from 'axios';
+
+interface GearboxRequest {
+  query: string;
+  variables: object;
+  operationName: string;
+}
+
+interface SubjectSubscription {
+  filters: string;
+  id: string;
+  subject: {
+    path: string;
+    name: string;
+  };
+  __typename: string;
+}
+
+interface DuplicateSubscriptionError {
+  __typename: string;
+  message: string;
+}
+
+interface ValidationError {
+  __typename: string;
+  title: string;
+  details: {
+    message: string;
+    path: string;
+    property: string;
+  };
+}
+
+export interface CreateSubscriptionResponse {
+  data: {
+    hornCreateSubscription:
+      | SubjectSubscription
+      | DuplicateSubscriptionError
+      | ValidationError;
+  };
+}
+
+interface Device {
+  __typename: string;
+  id: string;
+  type: string;
+}
+
+interface CreateDeviceResponse {
+  data: {
+    hornCreateDevice: Device | ValidationError;
+  };
+}
 
 export default class NotifyMeNetworker {
   private readonly axiosInstance: AxiosInstance;
@@ -9,19 +61,10 @@ export default class NotifyMeNetworker {
     this.hostUrl = 'https://gearbox-dev-int.vroomapi.com/query-private'; //hostUrl;
   }
 
-  async registerEmail(accessToken: string | undefined): Promise<void> {
+  async registerEmail(accessToken: string | undefined): Promise<void | Error> {
     const options = {
       headers: { Authorization: `Bearer ${accessToken}` },
     };
-    // const payload: NotifyMeRequest = {
-    //   correlationId: `${Math.floor(Math.random() * 1000000)}`,
-    //   version: '1',
-    //   timestamp: `${Date.now()}`,
-    //   source: 'vroom-web',
-    //   payload: {
-    //     type: 'email',
-    //   },
-    // };
     const variables = {
       id: '',
       type: 'EMAIL',
@@ -47,33 +90,30 @@ export default class NotifyMeNetworker {
       }
     }
   `.trim();
-    const data = {
-      notifyMeRegisterQuery,
+    const data: GearboxRequest = {
+      query: notifyMeRegisterQuery,
       variables,
       operationName: 'createDevice',
     };
-    return await this.axiosInstance.post(this.hostUrl, data, options);
+    const registerReturn: AxiosResponse<CreateDeviceResponse> = await this.axiosInstance.post(
+      this.hostUrl,
+      data,
+      options
+    );
+    if (registerReturn.data?.data.hornCreateDevice.__typename === 'Device') {
+      return;
+    } else {
+      return new Error();
+    }
   }
 
   async createSubscription(
     vin: string,
     accessToken: string | undefined
-  ): Promise<any> {
+  ): Promise<CreateSubscriptionResponse | Error> {
     const options = {
       headers: { Authorization: `Bearer ${accessToken}` },
     };
-    // const payload: NotifyMeRequest = {
-    //   correlationId: `${Math.floor(Math.random() * 1000000)}`,
-    //   version: '1',
-    //   timestamp: `${Date.now()}`,
-    //   source: 'vroom-web',
-    //   payload: {
-    //     subject: 'inventory/available-now',
-    //     filters: {
-    //       vin,
-    //     },
-    //   },
-    // };
     const variables = {
       filters: `{ "vin":"${vin}" }`,
       subject: 'inventory/available-now',
@@ -104,7 +144,25 @@ export default class NotifyMeNetworker {
       }
     }
   }`.trim();
-    const data = { notifyMeQuery, variables, operationName: 'createSub' };
-    return await this.axiosInstance.post(this.hostUrl, data, options);
+    const data: GearboxRequest = {
+      query: notifyMeQuery,
+      variables,
+      operationName: 'createSub',
+    };
+    const createSubResponse: AxiosResponse<CreateSubscriptionResponse> = await this.axiosInstance.post(
+      this.hostUrl,
+      data,
+      options
+    );
+    const typename =
+      createSubResponse.data?.data.hornCreateSubscription.__typename;
+    if (
+      typename === 'SubjectSubscription' ||
+      typename === 'DuplicateSubscriptionError'
+    ) {
+      return createSubResponse.data;
+    } else {
+      return new Error();
+    }
   }
 }
