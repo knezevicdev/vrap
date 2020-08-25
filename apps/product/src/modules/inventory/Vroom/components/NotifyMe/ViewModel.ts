@@ -1,6 +1,8 @@
 import { Car } from '@vroom-web/inv-search-networking';
 
-import NotifyMeNetworker from './NotifyMeNetworker';
+import NotifyMeNetworker, {
+  ListSubscriptionResponse,
+} from './NotifyMeNetworker';
 import { NotifyMeStore } from './store';
 
 import { InventoryStore } from 'src/modules/inventory/store';
@@ -70,6 +72,7 @@ class NotifyMeViewModel {
 
   handleMount(): void {
     this.notifyMeStore.initClientSide();
+    this.setSubscription();
   }
 
   getVehicleInfo(): void {
@@ -91,13 +94,29 @@ class NotifyMeViewModel {
     window.location.href = newUrl;
   }
 
-  createNotifyMeSubscription(): void {
-    const accesstoken = this.getAccessToken();
+  // true the user is sub otherwise false
+  setSubscription(): void {
+    const accessToken = this.getAccessToken();
     this.notifyMeNetworker
-      .registerEmail(accesstoken)
+      .listSubscription(accessToken)
+      .then((listSubscriptionResponse: ListSubscriptionResponse) => {
+        const userSubscription = listSubscriptionResponse.data.hornListSubscriptions.subscriptions
+          .map((subscription) => JSON.parse(subscription.filters)['vin'])
+          .some((vin) => vin === this.getVin());
+        this.notifyMeStore.setSuccess(userSubscription);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  }
+
+  createNotifyMeSubscription(): void {
+    const accessToken = this.getAccessToken();
+    this.notifyMeNetworker
+      .registerEmail(accessToken)
       .then(() => {
         this.notifyMeNetworker
-          .createSubscription(this.getVin(), accesstoken)
+          .createSubscription(this.getVin(), accessToken)
           .then(() => {
             this.setSuccessful(true);
             this.handleClick();
@@ -134,6 +153,10 @@ class NotifyMeViewModel {
     };
   }
 
+  dialogButtonDisabled(): boolean {
+    return !this.isChecked() || this.isSuccessful().isSuccessful;
+  }
+
   isOpen(): boolean {
     return this.notifyMeStore.modalOpen;
   }
@@ -163,7 +186,7 @@ class NotifyMeViewModel {
   }
 
   getAccessToken(): string | undefined {
-    return this.notifyMeStore.accesstoken;
+    return this.notifyMeStore.accessToken;
   }
 
   getCar(): Car {

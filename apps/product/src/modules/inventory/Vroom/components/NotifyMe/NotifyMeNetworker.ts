@@ -52,6 +52,15 @@ interface CreateDeviceResponse {
   };
 }
 
+export interface ListSubscriptionResponse {
+  data: {
+    hornListSubscriptions: {
+      subscriptions: SubjectSubscription[];
+      nextpage: any;
+    };
+  };
+}
+
 export default class NotifyMeNetworker {
   private readonly axiosInstance: AxiosInstance;
   private readonly hostUrl: string;
@@ -59,6 +68,31 @@ export default class NotifyMeNetworker {
   constructor(hostUrl: string) {
     this.axiosInstance = axios.create();
     this.hostUrl = 'https://gearbox-dev-int.vroomapi.com/query-private'; //hostUrl;
+  }
+
+  async listSubscription(
+    accessToken: string | undefined
+  ): Promise<ListSubscriptionResponse> {
+    const options = {
+      headers: { Authorization: `Bearer ${accessToken}` },
+    };
+    const checkSubscriptionQuery = `
+      {
+        hornListSubscriptions {
+          subscriptions {
+            subject {
+              path
+              name
+            }
+            id
+            filters
+          }
+          nextPage
+        }
+      }
+    `.trim();
+    const data = { query: checkSubscriptionQuery };
+    return await this.axiosInstance.post(this.hostUrl, data, options);
   }
 
   async registerEmail(accessToken: string | undefined): Promise<void | Error> {

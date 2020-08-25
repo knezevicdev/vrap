@@ -8,7 +8,7 @@ export class NotifyMeStore {
   @observable modalOpen = false;
   @observable userTokenStatus: Status = Status.INITIAL;
   @observable email?: string;
-  @observable accesstoken?: string;
+  @observable accessToken?: string;
   @observable isChecked = false;
   @observable isError = false;
   @observable isSuccessful = false;
@@ -30,10 +30,10 @@ export class NotifyMeStore {
       try {
         const { email } = jwtDecode(authToken.idToken);
         this.email = email;
-        this.accesstoken = authToken.accessToken;
+        this.accessToken = authToken.accessToken;
       } catch {
         this.email = undefined;
-        this.accesstoken = undefined;
+        this.accessToken = undefined;
       }
     } catch {
       runInAction(() => {

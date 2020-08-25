@@ -166,9 +166,7 @@ const LoggedInView: React.FC<Props> = ({ viewModel }) => {
             variant="contained"
             color="primary"
             onClick={handleDialogActions('submit')}
-            disabled={
-              !viewModel.isChecked() || viewModel.isSuccessful().isSuccessful
-            }
+            disabled={viewModel.dialogButtonDisabled()}
           >
             <Typography variant="button" fontWeight={600}>
               {viewModel.loggedIn.buttonText}
@@ -184,9 +182,7 @@ const LoggedInView: React.FC<Props> = ({ viewModel }) => {
               variant="contained"
               color="primary"
               onClick={handleDialogActions('submit')}
-              disabled={
-                !viewModel.isChecked() || viewModel.isSuccessful().isSuccessful
-              }
+              disabled={viewModel.dialogButtonDisabled()}
             >
               <Typography variant="button" fontWeight={600}>
                 {viewModel.loggedIn.error.buttonText}
