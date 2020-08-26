@@ -1,8 +1,6 @@
 import { Car } from '@vroom-web/inv-search-networking';
 
-import NotifyMeNetworker, {
-  ListSubscriptionResponse,
-} from './NotifyMeNetworker';
+import NotifyMeNetworker from './NotifyMeNetworker';
 import { NotifyMeStore } from './store';
 
 import { InventoryStore } from 'src/modules/inventory/store';
@@ -19,6 +17,12 @@ interface LoggedIn {
     headerText: string;
     bodyText: string;
   };
+}
+
+interface VinList {
+  subject: {};
+  id: string;
+  filters: string;
 }
 
 class NotifyMeViewModel {
@@ -95,19 +99,36 @@ class NotifyMeViewModel {
   }
 
   // true the user is sub otherwise false
-  setSubscription(): void {
+  async setSubscription(): Promise<void> {
     const accessToken = this.getAccessToken();
-    this.notifyMeNetworker
-      .listSubscription(accessToken)
-      .then((listSubscriptionResponse: ListSubscriptionResponse) => {
-        const userSubscription = listSubscriptionResponse.data.hornListSubscriptions.subscriptions
-          .map((subscription) => JSON.parse(subscription.filters)['vin'])
-          .some((vin) => vin === this.getVin());
-        this.notifyMeStore.setSuccess(userSubscription);
-      })
-      .catch((err) => {
-        console.error(err);
-      });
+    const vin = this.getVin();
+    try {
+      const listResponse = await this.notifyMeNetworker.listSubscription(
+        accessToken
+      );
+      const vinList =
+        listResponse.data.data.hornListSubscriptions.subscriptions;
+      const found = vinList.find((element: VinList) =>
+        element.filters.includes(vin)
+      );
+      if (found !== undefined) {
+        this.notifyMeStore.setSuccess(true);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+    // this.notifyMeNetworker
+    //   .listSubscription(accessToken)
+    //   .then((listSubscriptionResponse: ListSubscriptionResponse) => {
+    //     const userSubscription = listSubscriptionResponse.data.hornListSubscriptions.subscriptions
+    //       .map((subscription) => JSON.parse(subscription.filters)['vin'])
+    //       .some((vin) => vin === this.getVin());
+    //     //this.notifyMeStore.setSuccess(userSubscription);
+    //     console.log(userSubscription);
+    //   })
+    //   .catch((err) => {
+    //     console.error(err);
+    //   });
   }
 
   createNotifyMeSubscription(): void {

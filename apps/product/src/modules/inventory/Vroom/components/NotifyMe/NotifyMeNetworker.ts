@@ -54,9 +54,11 @@ interface CreateDeviceResponse {
 
 export interface ListSubscriptionResponse {
   data: {
-    hornListSubscriptions: {
-      subscriptions: SubjectSubscription[];
-      nextpage: any;
+    data: {
+      hornListSubscriptions: {
+        subscriptions: SubjectSubscription[];
+        nextpage: any;
+      };
     };
   };
 }
@@ -65,7 +67,8 @@ export default class NotifyMeNetworker {
   private readonly axiosInstance: AxiosInstance;
   private readonly hostUrl: string;
 
-  constructor(hostUrl: string) {
+  //constructor(hostUrl: string) {
+  constructor() {
     this.axiosInstance = axios.create();
     this.hostUrl = 'https://gearbox-dev-int.vroomapi.com/query-private'; //hostUrl;
   }
