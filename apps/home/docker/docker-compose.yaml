@@ -6,14 +6,11 @@ services:
       dockerfile: ./apps/home/docker/Dockerfile
     user: 'root'
     environment:
-      - DATA_DOG_RUM_APPLICATION=e7f48b42-82cb-46e2-b851-90d26c4cfac2
-      - DATA_DOG_RUM_TOKEN=pub4d4bcfd1fdb025834550786951abda6b
       - GEARBOX_PRIVATE_URL=https://gearbox-dev-int.vroomapi.com/query-private
       - GEARBOX_PUBLIC_URL=https://gearbox-dev-int.vroomapi.com/query-public
       - INVSEARCH_V3_URL=https://invsearch-v3-dev-int.aws.vroomapi.com:8443/v3
       - SEGMENT_WRITE_KEY=N0pxERRIw4iYCoxZREMZj1yWBIoARIz4
       - STATIC_ASSETS_HOST_URL=https://static-assets.n.vroom.systems
-      - DATA_DOG_LOG_COLLECTION_TOKEN=pubb20b42f026cc404ce1fe7588cdf993d8
     command: ash -c "yarn workspace @vroom-web/home dev --port 8080"
     # This starts nothing but leaves the container running, useful for
     # debugging nextjs start / config operations
