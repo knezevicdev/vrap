@@ -1,6 +1,6 @@
 import 'mobx-react/batchingForReactDom';
 
-import { datadogLogs, LogsUserConfiguration } from '@datadog/browser-logs';
+import { datadogRum } from '@datadog/browser-rum';
 import { configure as configureMobx } from 'mobx';
 import App from 'next/app';
 import getConfig from 'next/config';
@@ -16,29 +16,16 @@ const { publicRuntimeConfig } = getConfig();
 
 class VroomApp extends App {
   componentDidMount(): void {
-    const {
-      DATA_DOG_LOG_COLLECTION_TOKEN,
-      NAME,
-      VERSION,
-    } = publicRuntimeConfig;
-
-    if (DATA_DOG_LOG_COLLECTION_TOKEN) {
-      const init: LogsUserConfiguration = {
-        clientToken: DATA_DOG_LOG_COLLECTION_TOKEN,
-        datacenter: 'us' as LogsUserConfiguration['datacenter'],
-        forwardErrorsToLogs: true,
+    if (publicRuntimeConfig) {
+      datadogRum.init({
+        applicationId: publicRuntimeConfig.DATA_DOG_RUM_APPLICATION,
+        clientToken: publicRuntimeConfig.DATA_DOG_RUM_TOKEN,
+        site: 'datadoghq.com',
+        service: publicRuntimeConfig.NAME,
+        version: publicRuntimeConfig.VERSION,
         sampleRate: 100,
-        service: NAME,
-        silentMultipleInit: true,
-        version: VERSION,
-      };
-      const context = {
-        service: NAME,
-        host: window.location.host,
-        version: VERSION,
-      };
-      datadogLogs.init(init);
-      datadogLogs.setLoggerGlobalContext(context);
+        trackInteractions: true,
+      });
     }
 
     smoothscroll.polyfill(); // needs access to the window
