@@ -22,6 +22,8 @@ const config = {
   publicRuntimeConfig: {
     // Will be available on both server-side and client-side
     BASE_PATH: process.env.BASE_PATH,
+    DATA_DOG_RUM_APPLICATION: process.env.DATA_DOG_RUM_APPLICATION,
+    DATA_DOG_RUM_TOKEN: process.env.DATA_DOG_RUM_TOKEN,
     CALENDLY_URL: process.env.CALENDLY_URL,
     DATA_DOG_LOG_COLLECTION_TOKEN: process.env.DATA_DOG_LOG_COLLECTION_TOKEN,
     GEARBOX_PRIVATE_URL: process.env.GEARBOX_PRIVATE_URL,

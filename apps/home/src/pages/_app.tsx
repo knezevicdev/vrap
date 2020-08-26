@@ -17,7 +17,7 @@ configureMobx({
 class VroomApp extends App {
   componentDidMount(): void {
     smoothscroll.polyfill(); // needs access to the window
-    if (publicRuntimeConfig) {
+    if (publicRuntimeConfig.DATA_DOG_RUM_APPLICATION) {
       datadogRum.init({
         applicationId: publicRuntimeConfig.DATA_DOG_RUM_APPLICATION,
         clientToken: publicRuntimeConfig.DATA_DOG_RUM_TOKEN,
