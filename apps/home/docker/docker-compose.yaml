@@ -6,6 +6,8 @@ services:
       dockerfile: ./apps/home/docker/Dockerfile
     user: 'root'
     environment:
+      - DATA_DOG_RUM_APPLICATION=e7f48b42-82cb-46e2-b851-90d26c4cfac2
+      - DATA_DOG_RUM_TOKEN=pub4d4bcfd1fdb025834550786951abda6b
       - GEARBOX_PRIVATE_URL=https://gearbox-dev-int.vroomapi.com/query-private
       - GEARBOX_PUBLIC_URL=https://gearbox-dev-int.vroomapi.com/query-public
       - INVSEARCH_V3_URL=https://invsearch-v3-dev-int.aws.vroomapi.com:8443/v3
