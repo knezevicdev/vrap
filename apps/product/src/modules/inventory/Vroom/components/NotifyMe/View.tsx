@@ -1,3 +1,4 @@
+import CircularProgress from '@material-ui/core/CircularProgress';
 import { styled } from '@material-ui/core/styles';
 import { Button, Typography } from '@vroom-web/ui';
 import { observer } from 'mobx-react';
@@ -35,10 +36,14 @@ const NotifyMeView: React.FC<Props> = (props) => {
         variant="outlined"
         color="primary"
         onClick={handleDialogClick}
-        disabled={viewModel.isSuccessful().isSuccessful}
+        disabled={viewModel.isNotifyButtonDisabled()}
       >
         <Typography variant="button" fontWeight={600}>
-          {viewModel.isSuccessful().button}
+          {viewModel.getLoading() ? (
+            <CircularProgress />
+          ) : (
+            viewModel.isSuccessful().button
+          )}
         </Typography>
       </CustomButton>
       {viewModel.isLoggedIn() ? (

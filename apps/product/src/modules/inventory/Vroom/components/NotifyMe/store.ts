@@ -12,6 +12,7 @@ export class NotifyMeStore {
   @observable isChecked = false;
   @observable isError = false;
   @observable isSuccessful = false;
+  @observable isLoading = true;
 
   @action
   private initUserAccount = async (): Promise<void> => {
@@ -65,5 +66,10 @@ export class NotifyMeStore {
   @action
   setSuccess = (value: boolean): void => {
     this.isSuccessful = value;
+  };
+
+  @action
+  setLoading = (value: boolean): void => {
+    this.isLoading = value;
   };
 }

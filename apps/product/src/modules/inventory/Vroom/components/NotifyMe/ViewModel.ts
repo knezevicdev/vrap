@@ -100,35 +100,28 @@ class NotifyMeViewModel {
 
   // true the user is sub otherwise false
   async setSubscription(): Promise<void> {
+    this.setLoading(true);
+    this.setSuccessful(false);
     const accessToken = this.getAccessToken();
     const vin = this.getVin();
     try {
       const listResponse = await this.notifyMeNetworker.listSubscription(
         accessToken
       );
+      this.setLoading(false);
       const vinList =
         listResponse.data.data.hornListSubscriptions.subscriptions;
       const found = vinList.find((element: VinList) =>
         element.filters.includes(vin)
       );
       if (found !== undefined) {
-        this.notifyMeStore.setSuccess(true);
+        console.log('hello');
+        this.setSuccessful(true);
       }
     } catch (err) {
       console.log(err);
+      this.setLoading(false);
     }
-    // this.notifyMeNetworker
-    //   .listSubscription(accessToken)
-    //   .then((listSubscriptionResponse: ListSubscriptionResponse) => {
-    //     const userSubscription = listSubscriptionResponse.data.hornListSubscriptions.subscriptions
-    //       .map((subscription) => JSON.parse(subscription.filters)['vin'])
-    //       .some((vin) => vin === this.getVin());
-    //     //this.notifyMeStore.setSuccess(userSubscription);
-    //     console.log(userSubscription);
-    //   })
-    //   .catch((err) => {
-    //     console.error(err);
-    //   });
   }
 
   createNotifyMeSubscription(): void {
@@ -174,8 +167,20 @@ class NotifyMeViewModel {
     };
   }
 
+  isNotifyButtonDisabled(): boolean {
+    return this.isSuccessful().isSuccessful || this.getLoading();
+  }
+
   dialogButtonDisabled(): boolean {
     return !this.isChecked() || this.isSuccessful().isSuccessful;
+  }
+
+  setLoading(value: boolean): void {
+    this.notifyMeStore.setLoading(value);
+  }
+
+  getLoading(): boolean {
+    return this.notifyMeStore.isLoading;
   }
 
   isOpen(): boolean {
@@ -195,6 +200,7 @@ class NotifyMeViewModel {
   }
 
   setError(value: boolean): void {
+    this.setLoading(false);
     this.notifyMeStore.setError(value);
   }
 
