@@ -6,7 +6,7 @@ type Props = {
   viewModel: ViewModel;
 };
 
-const SalesNumberContainer = styled('div')(({ theme }) => ({
+const SalesContactContainer = styled('div')(({ theme }) => ({
   maxWidth: '1280px',
   width: '100%',
   margin: theme.spacing(1.75, 'auto'),
@@ -23,11 +23,11 @@ const Question = styled(Typography)(() => ({
 
 const View = ({ viewModel }: Props) => {
   return (
-    <SalesNumberContainer>
+    <SalesContactContainer>
       <Typography>
         <Question> {viewModel.title}</Question> {viewModel.body}
       </Typography>
-    </SalesNumberContainer>
+    </SalesContactContainer>
   );
 };
 
