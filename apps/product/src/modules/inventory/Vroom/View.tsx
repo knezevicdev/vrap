@@ -13,6 +13,7 @@ import Gallery from './components/Gallery/';
 import LegalFooter from './components/LegalFooter';
 import NeedHelp from './components/NeedHelp';
 import PeaceOfMind from './components/PeaceOfMind';
+import SalesContact from './components/SalesContact';
 import SimilarVehicles from './components/SimilarVehicles';
 import StartPurchase from './components/StartPurchase';
 import VehicleHeader from './components/VehicleHeader';
@@ -65,6 +66,7 @@ const InventoryView: React.FC<Props> = (props) => {
             {!xsDown && <Breadcrumbs />}
             <Gallery />
             <VehicleHeader />
+            <SalesContact />
             <CarDetails />
             <Features />
             <PeaceOfMind />
