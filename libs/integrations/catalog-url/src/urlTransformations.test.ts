@@ -55,6 +55,8 @@ const mockFiltersQueryParam1 =
 
 const mockUrl1 = `/cars/volvo/xc90/2018-2020?filters=${mockFiltersQueryParam1}`;
 const mockUrl1WithoutFiltersQueryParam = `/cars/volvo/xc90/2018-2020`;
+const mockUrl1WithoutParamsBasePath = `/volvo/xc90/2018-2020?filters=${mockFiltersQueryParam1}`;
+const mockUrl1WithoutStuff = `/volvo/xc90/2018-2020`;
 
 const mockFiltersData1WithoutFiltersQueryParam: FiltersData = {
   [Filters.MAKE_AND_MODELS]: [
@@ -163,7 +165,7 @@ describe('getYearParam', () => {
 
 describe('getParams', () => {
   test('1', () => {
-    expect(getParams(undefined)).toEqual('');
+    expect(getParams(undefined)).toEqual('/');
   });
   test('2', () => {
     const mockFiltersData: FiltersData = {
@@ -318,7 +320,7 @@ describe('getParams', () => {
         min: 2018,
       },
     };
-    expect(getParams(mockFiltersData)).toEqual('');
+    expect(getParams(mockFiltersData)).toEqual('/');
   });
 });
 
@@ -345,6 +347,21 @@ describe('getUrlFromFiltersData', () => {
     expect(getUrlFromFiltersData(mockFiltersData1)).toEqual(
       mockUrl1WithoutFiltersQueryParam
     );
+  });
+  test('3', () => {
+    expect(
+      getUrlFromFiltersData(mockFiltersData1, {
+        addFiltersQueryParam: true,
+        ignoreParamsBasePath: true,
+      })
+    ).toEqual(mockUrl1WithoutParamsBasePath);
+  });
+  test('4', () => {
+    expect(
+      getUrlFromFiltersData(mockFiltersData1, {
+        ignoreParamsBasePath: true,
+      })
+    ).toEqual(mockUrl1WithoutStuff);
   });
 });
 
@@ -439,5 +456,20 @@ describe('getFiltersDataFromUrl', () => {
     expect(getFiltersDataFromUrl(mockUrl1WithoutFiltersQueryParam)).toEqual(
       mockFiltersData1WithoutFiltersQueryParam
     );
+  });
+  test('3', () => {
+    expect(getFiltersDataFromUrl('/types/truck')).toEqual({
+      [Filters.BODY_TYPES]: ['truck'],
+    });
+  });
+  test('4', () => {
+    expect(getFiltersDataFromUrl('/types/truck/ford')).toEqual({
+      [Filters.BODY_TYPES]: ['truck'],
+      [Filters.MAKE_AND_MODELS]: [
+        {
+          makeSlug: 'ford',
+        },
+      ],
+    });
   });
 });

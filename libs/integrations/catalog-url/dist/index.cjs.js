@@ -394,7 +394,7 @@ var getYearParam = function getYearParam(year) {
 };
 var getParams = function getParams(filtersData) {
   if (!filtersData) {
-    return '';
+    return '/';
   }
 
   var filtersDataMakeAndModels = filtersData[exports.Filters.MAKE_AND_MODELS];
@@ -430,7 +430,7 @@ var getParams = function getParams(filtersData) {
     return "/".concat(typesKey, "/").concat(bodyType);
   }
 
-  return '';
+  return '/';
 };
 var getQuery = function getQuery(filtersData) {
   if (!filtersData) {
@@ -449,7 +449,9 @@ var getQuery = function getQuery(filtersData) {
 var getUrlFromFiltersData = function getUrlFromFiltersData(filtersData, options) {
   var addFiltersQueryParam = options && options.addFiltersQueryParam;
   var query = addFiltersQueryParam ? getQuery(filtersData) : '';
-  var url = "".concat(paramsBasePath).concat(getParams(filtersData)).concat(query);
+  var ignoreParamsBasePath = options && options.ignoreParamsBasePath;
+  var actualParamsBasePath = ignoreParamsBasePath ? '' : paramsBasePath;
+  var url = "".concat(actualParamsBasePath).concat(getParams(filtersData)).concat(query);
   return url;
 };
 var getFiltersDataFromFiltersQueryParam = function getFiltersDataFromFiltersQueryParam(filtersQueryParam) {
@@ -608,12 +610,7 @@ var getFiltersDataFromUrl = function getFiltersDataFromUrl(url) {
   }
 
   var paramsBasePathIndex = url.indexOf(paramsBasePath);
-
-  if (paramsBasePathIndex === -1) {
-    return undefined;
-  }
-
-  var paramsStartIndex = paramsBasePathIndex + paramsBasePath.length;
+  var paramsStartIndex = paramsBasePathIndex !== -1 ? paramsBasePathIndex + paramsBasePath.length : 0;
   var paramsEndIndex = questionMarkIndex !== -1 ? questionMarkIndex : undefined;
   var params = url.substring(paramsStartIndex, paramsEndIndex);
 

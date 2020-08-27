@@ -4,6 +4,7 @@ import React from 'react';
 import SimpleHeader from './SimpleHeader';
 
 export default { title: 'SimpleHeader' };
+const gearboxPrivateUrl = 'https://gearbox-dev-int.vroomapi.com/query-private';
 
 export const byItself: React.FC = () => {
   return (
@@ -15,7 +16,7 @@ export const byItself: React.FC = () => {
         qa.vroom.com, copy the authToken cookie that gets set, and paste it into
         you localhost cookies. Then, refresh this page.
       </p>
-      <SimpleHeader />
+      <SimpleHeader gearboxPrivateUrl={gearboxPrivateUrl} />
     </ThemeProvider>
   );
 };

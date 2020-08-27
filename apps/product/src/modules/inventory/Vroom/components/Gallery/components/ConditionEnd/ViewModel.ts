@@ -1,4 +1,7 @@
-import globalEnv from 'src/globalEnv';
+import getConfig from 'next/config';
+
+const { publicRuntimeConfig } = getConfig();
+
 class ConditionEndViewModel {
   readonly bodyText: string = `Our vehicles look nice but they aren’t perfect. We make our best effort to fix anything outside of normal wear and tear. Here’s some things you can expect from Vroom. We:`;
   readonly bullets = [
@@ -16,7 +19,7 @@ class ConditionEndViewModel {
   };
   readonly defaultImage = {
     alt: 'Condition End Photo',
-    src: `${globalEnv.ASSET_PREFIX}/modules/inventory/components/gallery/LastCondition.png`,
+    src: `${publicRuntimeConfig.BASE_PATH}/modules/inventory/components/gallery/LastCondition.png`,
   };
 }
 

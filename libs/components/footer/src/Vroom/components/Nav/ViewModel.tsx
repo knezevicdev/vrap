@@ -61,7 +61,7 @@ class NavigationViewModel {
         links: [
           {
             label: 'Buy',
-            href: `/catalog${queryString}`,
+            href: `/cars${queryString}`,
           },
           {
             label: 'Sell/Trade',

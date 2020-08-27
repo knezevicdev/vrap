@@ -1,5 +1,5 @@
 {
-  "name": "Vroom Web - Homepage",
+  "name": "Vroom Web - UI",
   "dockerComposeFile": "../docker/docker-compose.yaml",
   "service": "ui",
   "workspaceFolder": "/www/libs/ui",

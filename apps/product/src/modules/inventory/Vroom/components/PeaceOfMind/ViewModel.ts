@@ -1,4 +1,6 @@
-import globalEnv from 'src/globalEnv';
+import getConfig from 'next/config';
+
+const { publicRuntimeConfig } = getConfig();
 
 interface Step {
   description: string;
@@ -15,7 +17,7 @@ class PeaceOfMindViewModel {
     {
       img: {
         alt: 'Delivered to You Photo',
-        src: `${globalEnv.ASSET_PREFIX}/modules/inventory/components/peaceofmind/delivered.png`,
+        src: `${publicRuntimeConfig.BASE_PATH}/modules/inventory/components/peaceofmind/delivered.png`,
       },
       title: 'Delivered to You',
       description:
@@ -24,7 +26,7 @@ class PeaceOfMindViewModel {
     {
       img: {
         alt: 'Free Roadside Assistance Photo',
-        src: `${globalEnv.ASSET_PREFIX}/modules/inventory/components/peaceofmind/roadside.png`,
+        src: `${publicRuntimeConfig.BASE_PATH}/modules/inventory/components/peaceofmind/roadside.png`,
       },
       title: 'Free Roadside Assistance',
       description:
@@ -33,7 +35,7 @@ class PeaceOfMindViewModel {
     {
       img: {
         alt: 'Free Limited Warranty Photo',
-        src: `${globalEnv.ASSET_PREFIX}/modules/inventory/components/peaceofmind/warranty.png`,
+        src: `${publicRuntimeConfig.BASE_PATH}/modules/inventory/components/peaceofmind/warranty.png`,
       },
       title: 'Free Limited Warranty',
       description:

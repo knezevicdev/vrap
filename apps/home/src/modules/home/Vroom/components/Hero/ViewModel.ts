@@ -1,0 +1,39 @@
+import getConfig from 'next/config';
+
+import { showDefaultVariant } from 'src/integrations/experimentSDK';
+import { HomeStore } from 'src/modules/home/store';
+
+const { publicRuntimeConfig } = getConfig();
+
+interface Link {
+  label: string;
+  href: string;
+}
+
+class HeroViewModel {
+  readonly title: string = 'delivering, now and\xa0always.';
+  readonly subtitle: string =
+    'Buy a car entirely online, and have it safely delivered, contact-free.';
+  readonly subtitleLink: Link = {
+    href: 'https://vroom.zendesk.com/hc/en-us',
+    label: 'Learn\xa0More',
+  };
+  readonly mobileButtonLabel: string = 'Browse All Vehicles';
+  car: { src: string; alt: string };
+
+  constructor(store: HomeStore) {
+    const priusVsf150ImageDefaultVariant = showDefaultVariant(
+      'snd-homepage-prius-vs-f150',
+      store.experiments,
+      store.query
+    );
+    this.car = {
+      src: `${publicRuntimeConfig.BASE_PATH}/modules/home/images/${
+        priusVsf150ImageDefaultVariant ? 'prius' : 'ford'
+      }.png`,
+      alt: priusVsf150ImageDefaultVariant ? 'Prius' : 'F-150',
+    };
+  }
+}
+
+export default HeroViewModel;

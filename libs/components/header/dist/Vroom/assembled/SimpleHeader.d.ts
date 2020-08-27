@@ -1,3 +1,6 @@
 import React from 'react';
-declare const SimpleHeader: React.FC;
+interface Props {
+    gearboxPrivateUrl: string;
+}
+declare const SimpleHeader: React.FC<Props>;
 export default SimpleHeader;

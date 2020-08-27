@@ -1,8 +1,11 @@
+import getConfig from 'next/config';
+
 import { RedirectStore } from './store';
 
-import globalEnv from 'src/globalEnv';
 import AnalyticsHandler, { Product } from 'src/integrations/AnalyticsHandler';
 import { InventoryStore } from 'src/modules/inventory/store';
+
+const { publicRuntimeConfig } = getConfig();
 
 class ViewModel {
   private readonly redirectStore: RedirectStore;
@@ -10,7 +13,7 @@ class ViewModel {
   private analyticsHandler: AnalyticsHandler = new AnalyticsHandler();
   readonly image = {
     alt: 'Exit Santander',
-    src: `${globalEnv.ASSET_PREFIX}/modules/inventory/components/exit-santander.png`,
+    src: `${publicRuntimeConfig.BASE_PATH}/modules/inventory/components/exit-santander.png`,
   };
   readonly message: string =
     'We’re now sending you to checkout with our partner, Vroom.';
@@ -52,7 +55,7 @@ class ViewModel {
       this.redirectStore.decrementSeconds();
       if (this.redirectStore.secondsLeft === 0) {
         this.analyticsHandler.trackProductAdded(product);
-        const url = `https://www.vroom.com/e2e/${vin}/checkoutTradeIn?utm_source=santander&utm_campaign=national&utm_medium=listings`;
+        const url = `https://www.vroom.com/e2e/${vin}/checkoutTradeIn?utm_source=santander&utm_campaign=national&utm_medium=listings&vit_source=santanderconsumerusa&vit_medium=wl&vit_dest=vroom`;
         window.location.href = url;
       }
     }, 1000);

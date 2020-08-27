@@ -2,11 +2,10 @@ import Store from './store';
 declare class InProgressDealBarViewModel {
     readonly statusText: string;
     readonly buttonText: string;
-    readonly className?: string;
     private store;
     private currencyFormatter;
     private analyticsHandler;
-    constructor(store: Store, className?: string);
+    constructor(store: Store);
     handleMount(): void;
     show(): boolean;
     yearMakeModel(): string;

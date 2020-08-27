@@ -18,7 +18,11 @@
     "storybook": "start-storybook -p 8080 -s ./static --ci --quiet"
   },
   "dependencies": {
-    "clsx": "^1.1.0"
+    "@storybook/addon-viewport": "^6.0.12",
+    "@types/styled-components": "^5.1.2",
+    "clsx": "^1.1.0",
+    "file-loader": "^6.0.0",
+    "styled-components": "^5.1.1"
   },
   "devDependencies": {
     "@babel/core": "^7.9.0",

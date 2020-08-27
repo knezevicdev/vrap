@@ -1,8 +1,11 @@
+import getConfig from 'next/config';
+
 import { GalleryStore } from './store';
 
-import globalEnv from 'src/globalEnv';
 import AnalyticsHandler, { Product } from 'src/integrations/AnalyticsHandler';
 import { InventoryStore } from 'src/modules/inventory/store';
+
+const { publicRuntimeConfig } = getConfig();
 
 interface GeneralPhoto {
   original: string;
@@ -19,7 +22,7 @@ class GalleryViewModel {
   private analyticsHandler: AnalyticsHandler;
   readonly defaultImage = {
     alt: 'No photos',
-    src: `${globalEnv.ASSET_PREFIX}/components/ghost-suv.png`,
+    src: `${publicRuntimeConfig.BASE_PATH}/components/ghost-suv.png`,
   };
   readonly indexSeparator: string = ' of ';
   readonly photosComing: string = 'Photos Coming Soon';

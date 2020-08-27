@@ -3,12 +3,14 @@ import { styled } from '@material-ui/core/styles';
 import { StandardFooter } from '@vroom-web/footer-components';
 import { SimpleHeader } from '@vroom-web/header-components';
 import { Container } from '@vroom-web/ui';
+import getConfig from 'next/config';
 import Head from 'next/head';
 import { stringify } from 'qs';
 import React, { useContext, useEffect, useState } from 'react';
 
-import globalEnv from 'src/globalEnv';
 import { QueryContext } from 'src/modules/schedule/QueryContext';
+
+const { publicRuntimeConfig } = getConfig();
 
 const StyledContainer = styled(Container)(() => ({
   flexGrow: 1,
@@ -29,7 +31,7 @@ const Vroom: React.FC = () => {
   }, []);
   const query = useContext(QueryContext);
 
-  const { CALENDLY_URL } = globalEnv;
+  const { CALENDLY_URL } = publicRuntimeConfig;
   if (!CALENDLY_URL) {
     return null;
   }
@@ -56,6 +58,7 @@ const Vroom: React.FC = () => {
   }
   const queryString = stringify(cleaned, { addQueryPrefix: true });
   const dataUrl = `${CALENDLY_URL}${queryString}`;
+  const gearboxPrivateUrl = publicRuntimeConfig.GEARBOX_PRIVATE_URL;
 
   return (
     <>
@@ -67,7 +70,7 @@ const Vroom: React.FC = () => {
           />
         </Head>
       )}
-      <SimpleHeader />
+      <SimpleHeader gearboxPrivateUrl={gearboxPrivateUrl} />
       <StyledContainer>
         <HackyCircularProgress />
         <div

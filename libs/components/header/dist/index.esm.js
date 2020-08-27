@@ -3,7 +3,7 @@ import React__default, { createElement, useState, useEffect, memo, forwardRef, u
 import { styled, withStyles, useTheme } from '@material-ui/core/styles';
 import Toolbar from '@material-ui/core/Toolbar';
 import { Typography, Button } from '@vroom-web/ui';
-import { AnalyticsHandler as AnalyticsHandler$1 } from '@vroom-web/analytics-integration';
+import { AnalyticsHandler as AnalyticsHandler$2 } from '@vroom-web/analytics-integration';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import Tooltip from '@material-ui/core/Tooltip';
 import Drawer from '@material-ui/core/Drawer';
@@ -1338,7 +1338,7 @@ var AnalyticsHandler = /*#__PURE__*/function (_BaseAnalyticsHandler) {
   }]);
 
   return AnalyticsHandler;
-}(AnalyticsHandler$1);
+}(AnalyticsHandler$2);
 
 var LogoViewModel = /*#__PURE__*/function () {
   function LogoViewModel(propsFromProvider) {
@@ -13434,7 +13434,7 @@ var HeaderNavViewModel = /*#__PURE__*/function () {
       if (!this.store.loggedIn) {
         return [{
           type: 'link',
-          href: "/catalog".concat(queryString),
+          href: "/cars".concat(queryString),
           label: 'BUY',
           onClick: function onClick() {
             return _this2.analyticsHandler.trackBuyClicked();
@@ -13536,7 +13536,7 @@ var HeaderNavViewModel = /*#__PURE__*/function () {
 
       return [{
         type: 'link',
-        href: "/catalog".concat(queryString),
+        href: "/cars".concat(queryString),
         label: 'BUY',
         onClick: function onClick() {
           return _this2.analyticsHandler.trackBuyClicked();
@@ -13647,7 +13647,7 @@ var HeaderNavViewModel = /*#__PURE__*/function () {
             return _this2.analyticsHandler.trackTransactionsClicked();
           }
         }, {
-          href: "/catalog".concat(queryString),
+          href: "/cars".concat(queryString),
           label: 'Sign Out',
           onClick: this.handleSignOutClick
         }]
@@ -13681,7 +13681,7 @@ var HeaderNavViewModel = /*#__PURE__*/function () {
           }
         }, {
           type: 'link',
-          href: "/catalog".concat(queryString),
+          href: "/cars".concat(queryString),
           label: 'BUY',
           onClick: function onClick() {
             return _this3.analyticsHandler.trackBuyClicked();
@@ -13797,7 +13797,7 @@ var HeaderNavViewModel = /*#__PURE__*/function () {
         }
       }, {
         type: 'link',
-        href: "/catalog".concat(queryString),
+        href: "/cars".concat(queryString),
         label: 'BUY',
         onClick: function onClick() {
           return _this3.analyticsHandler.trackBuyClicked();
@@ -13874,7 +13874,7 @@ var HeaderNavViewModel = /*#__PURE__*/function () {
         }
       }, {
         type: 'link',
-        href: "/catalog".concat(queryString),
+        href: "/cars".concat(queryString),
         label: 'SIGN OUT',
         onClick: this.handleSignOutClick
       }];
@@ -13892,10 +13892,13 @@ var HeaderNav$1 = function HeaderNav() {
   });
 };
 
-var SimpleHeader = function SimpleHeader() {
-  return /*#__PURE__*/React__default.createElement(Bar, null, /*#__PURE__*/React__default.createElement(Box, {
+var SimpleHeader = function SimpleHeader(_ref) {
+  var gearboxPrivateUrl = _ref.gearboxPrivateUrl;
+  return /*#__PURE__*/React__default.createElement(React__default.Fragment, null, /*#__PURE__*/React__default.createElement(Bar, null, /*#__PURE__*/React__default.createElement(Box, {
     mr: "auto"
-  }, /*#__PURE__*/React__default.createElement(Logo$1, null)), /*#__PURE__*/React__default.createElement(HeaderNav$1, null));
+  }, /*#__PURE__*/React__default.createElement(Logo$1, null)), /*#__PURE__*/React__default.createElement(HeaderNav$1, null)), /*#__PURE__*/React__default.createElement(InProgressDealBar, {
+    gearboxPrivateUrl: gearboxPrivateUrl
+  }));
 };
 
 var Status;
@@ -14090,7 +14093,7 @@ var StyledCartSvg = styled(SvgCart)(function (_ref6) {
   return _defineProperty({
     flexShrink: 0,
     width: '32px',
-    heigth: '32px'
+    height: '32px'
   }, theme.breakpoints.up('sm'), {
     width: '36px',
     height: '36px',
@@ -14177,7 +14180,6 @@ var InProgressDealBarView = function InProgressDealBarView(_ref18) {
 
   var show = viewModel.show();
   return /*#__PURE__*/React__default.createElement(StyledCollapse, {
-    className: viewModel.className,
     "in": show
   }, /*#__PURE__*/React__default.createElement(StyledBar, null, show && /*#__PURE__*/React__default.createElement(React__default.Fragment, null, /*#__PURE__*/React__default.createElement(Information, null, /*#__PURE__*/React__default.createElement(StyledCartSvg, null), mdUp && /*#__PURE__*/React__default.createElement(Typography, {
     fontWeight: "fontWeightMedium"
@@ -14200,14 +14202,12 @@ var InProgressDealBarView = function InProgressDealBarView(_ref18) {
 var View$1 = observer$1(InProgressDealBarView);
 
 var InProgressDealBarViewModel = /*#__PURE__*/function () {
-  function InProgressDealBarViewModel(store, className) {
+  function InProgressDealBarViewModel(store) {
     _classCallCheck(this, InProgressDealBarViewModel);
 
     _defineProperty(this, "statusText", 'Purchase\xa0in\xa0progress');
 
     _defineProperty(this, "buttonText", 'RESUME PURCHASE');
-
-    _defineProperty(this, "className", void 0);
 
     _defineProperty(this, "store", void 0);
 
@@ -14215,7 +14215,6 @@ var InProgressDealBarViewModel = /*#__PURE__*/function () {
 
     _defineProperty(this, "analyticsHandler", void 0);
 
-    this.className = className;
     this.store = store;
     this.currencyFormatter = new Intl.NumberFormat('en-US', {
       style: 'currency',
@@ -14319,10 +14318,9 @@ var InProgressDealBarViewModel = /*#__PURE__*/function () {
 }();
 
 var InProgressDealBar = function InProgressDealBar(_ref) {
-  var className = _ref.className,
-      gearboxPrivateUrl = _ref.gearboxPrivateUrl;
+  var gearboxPrivateUrl = _ref.gearboxPrivateUrl;
   var store = new InProgressDealBarStore(gearboxPrivateUrl);
-  var viewModel = new InProgressDealBarViewModel(store, className);
+  var viewModel = new InProgressDealBarViewModel(store);
   return /*#__PURE__*/React__default.createElement(View$1, {
     viewModel: viewModel
   });
@@ -14755,9 +14753,11 @@ var LearningLinks = styled('a')(function (_ref21) {
 var View$2 = function View(_ref22) {
   var viewModel = _ref22.viewModel;
   return /*#__PURE__*/React__default.createElement(ViewContainer, null, /*#__PURE__*/React__default.createElement(Top, null, /*#__PURE__*/React__default.createElement("a", {
-    href: viewModel.logoLink.href
+    href: viewModel.logoLink.href,
+    onClick: viewModel.logoLink.handleAnalytics
   }, /*#__PURE__*/React__default.createElement(Logo$2, null)), /*#__PURE__*/React__default.createElement(DesktopView$1, null, /*#__PURE__*/React__default.createElement(ShopNowContainer, {
-    href: viewModel.shopNow.href
+    href: viewModel.shopNow.href,
+    onClick: viewModel.shopNow.handleAnalytics
   }, /*#__PURE__*/React__default.createElement(ShopIcon, null), /*#__PURE__*/React__default.createElement(ShopLabel, null, viewModel.shopNow.label))), /*#__PURE__*/React__default.createElement(MobileView$1, null, /*#__PURE__*/React__default.createElement(MenuIcon, {
     onClick: viewModel.onDrawerClick
   }), /*#__PURE__*/React__default.createElement(Drawer, {
@@ -14765,20 +14765,25 @@ var View$2 = function View(_ref22) {
     open: viewModel.isDrawerOpen(),
     onClose: viewModel.onDrawerClick
   }, /*#__PURE__*/React__default.createElement(MenuLink, {
+    onClick: viewModel.financeCalculators.handleAnalytics,
     href: viewModel.financeCalculators.href,
     target: viewModel.financeCalculators.target
   }, /*#__PURE__*/React__default.createElement(Typography, null, viewModel.financeCalculators.label)), /*#__PURE__*/React__default.createElement(LearningCenter, null, /*#__PURE__*/React__default.createElement(LearningLabel, null, viewModel.learningCenterLabel), viewModel.learningCenterLinks.map(function (link) {
     return /*#__PURE__*/React__default.createElement(LearningLinks, {
+      onClick: link.handleAnalytics,
       key: link.href,
       href: link.href,
       target: link.target
     }, /*#__PURE__*/React__default.createElement(Typography, null, link.label));
   })), /*#__PURE__*/React__default.createElement(MenuLink, {
-    href: viewModel.contactUs.href
+    href: viewModel.contactUs.href,
+    onClick: viewModel.contactUs.handleAnalytics
   }, /*#__PURE__*/React__default.createElement(Typography, null, viewModel.contactUs.label)), /*#__PURE__*/React__default.createElement(MenuLink, {
+    onClick: viewModel.backToCorporate.handleAnalytics,
     href: viewModel.backToCorporate.href,
     target: viewModel.backToCorporate.target
   }, /*#__PURE__*/React__default.createElement(Typography, null, viewModel.backToCorporate.label))))), /*#__PURE__*/React__default.createElement(Bottom, null, /*#__PURE__*/React__default.createElement(DesktopView$1, null, /*#__PURE__*/React__default.createElement(Link, {
+    onClick: viewModel.financeCalculators.handleAnalytics,
     href: viewModel.financeCalculators.href,
     target: viewModel.financeCalculators.target
   }, /*#__PURE__*/React__default.createElement(Typography, null, viewModel.financeCalculators.label)), /*#__PURE__*/React__default.createElement(ClickAwayListener, {
@@ -14791,6 +14796,7 @@ var View$2 = function View(_ref22) {
     disableTouchListener: true,
     title: /*#__PURE__*/React__default.createElement(Dropdown, null, viewModel.learningCenterLinks.map(function (link) {
       return /*#__PURE__*/React__default.createElement(DropdownLink, {
+        onClick: link.handleAnalytics,
         key: link.href,
         href: link.href,
         target: link.target
@@ -14799,16 +14805,116 @@ var View$2 = function View(_ref22) {
   }, /*#__PURE__*/React__default.createElement(DropdownLabelContainer, {
     onClick: viewModel.onDropdownClick
   }, /*#__PURE__*/React__default.createElement(Typography, null, viewModel.learningCenterLabel), viewModel.isDropdownOpen() ? /*#__PURE__*/React__default.createElement(ExpandLessIcon, null) : /*#__PURE__*/React__default.createElement(ExpandMoreIcon, null)))), /*#__PURE__*/React__default.createElement(Link, {
-    href: viewModel.contactUs.href
+    href: viewModel.contactUs.href,
+    onClick: viewModel.contactUs.handleAnalytics
   }, /*#__PURE__*/React__default.createElement(Typography, null, viewModel.contactUs.label)), /*#__PURE__*/React__default.createElement(Link, {
+    onClick: viewModel.backToCorporate.handleAnalytics,
     href: viewModel.backToCorporate.href,
     target: viewModel.backToCorporate.target
   }, /*#__PURE__*/React__default.createElement(Typography, null, viewModel.backToCorporate.label))), /*#__PURE__*/React__default.createElement(MobileView$1, null, /*#__PURE__*/React__default.createElement(ShopNowContainer, {
-    href: viewModel.shopNow.href
+    href: viewModel.shopNow.href,
+    onClick: viewModel.shopNow.handleAnalytics
   }, /*#__PURE__*/React__default.createElement(ShopIcon, null), /*#__PURE__*/React__default.createElement(ShopLabel, null, viewModel.shopNow.label)))));
 };
 
 var View$3 = observer$1(View$2);
+
+var AnalyticsHandler$1 = /*#__PURE__*/function (_BaseAnalyticsHandler) {
+  _inherits(AnalyticsHandler, _BaseAnalyticsHandler);
+
+  var _super = _createSuper(AnalyticsHandler);
+
+  function AnalyticsHandler() {
+    var _this;
+
+    _classCallCheck(this, AnalyticsHandler);
+
+    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    _this = _super.call.apply(_super, [this].concat(args));
+
+    _defineProperty(_assertThisInitialized(_this), "trackShopNow", function () {
+      var event = 'Shop Now Clicked';
+      var properties = {
+        category: 'Main Navigation'
+      };
+
+      _this.track(event, properties);
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "trackLogo", function () {
+      var event = 'Home Clicked';
+      var properties = {
+        category: 'Main Navigation'
+      };
+
+      _this.track(event, properties);
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "trackFinancialCalculator", function () {
+      var event = 'Financial Calculators Clicked';
+      var properties = {
+        category: 'Main Navigation'
+      };
+
+      _this.track(event, properties);
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "trackContact", function () {
+      var event = 'Contact Us Clicked';
+      var properties = {
+        category: 'Main Navigation'
+      };
+
+      _this.track(event, properties);
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "trackCorporateSite", function () {
+      var event = 'Back to Corporate Site Clicked';
+      var properties = {
+        category: 'Main Navigation'
+      };
+
+      _this.track(event, properties);
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "trackLearningOverview", function () {
+      var event = 'Learning Center Overview Clicked';
+      var properties = {
+        category: 'Main Navigation',
+        label: 'Learning Center'
+      };
+
+      _this.track(event, properties);
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "trackLearningBlog", function () {
+      var event = 'Learning Center Blog Clicked';
+      var properties = {
+        category: 'Main Navigation',
+        label: 'Learning Center'
+      };
+
+      _this.track(event, properties);
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "trackLearningServicemembers", function () {
+      var event = 'Learning Center Servicemembers Civil Relief Act Clicked';
+      var properties = {
+        category: 'Main Navigation',
+        label: 'Learning Center'
+      };
+
+      _this.track(event, properties);
+    });
+
+    return _this;
+  }
+
+  return AnalyticsHandler;
+}(AnalyticsHandler$2);
 
 var ViewModel = function ViewModel(store) {
   var _this = this;
@@ -14817,19 +14923,24 @@ var ViewModel = function ViewModel(store) {
 
   _defineProperty(this, "store", void 0);
 
+  _defineProperty(this, "analyticsHandler", new AnalyticsHandler$1());
+
   _defineProperty(this, "shopNow", {
     label: 'Shop now',
-    href: "/cars"
+    href: "/cars",
+    handleAnalytics: this.analyticsHandler.trackShopNow
   });
 
   _defineProperty(this, "logoLink", {
-    href: '/'
+    href: '/',
+    handleAnalytics: this.analyticsHandler.trackLogo
   });
 
   _defineProperty(this, "financeCalculators", {
     label: 'Finance Calculators',
     href: 'https://santanderconsumerusa.com/learning-center/finance-calculators',
-    target: '_blank'
+    target: '_blank',
+    handleAnalytics: this.analyticsHandler.trackFinancialCalculator
   });
 
   _defineProperty(this, "learningCenterLabel", 'Learning Center');
@@ -14837,29 +14948,30 @@ var ViewModel = function ViewModel(store) {
   _defineProperty(this, "learningCenterLinks", [{
     label: 'Overview',
     href: 'https://santanderconsumerusa.com/learning-center',
-    target: '_blank'
+    target: '_blank',
+    handleAnalytics: this.analyticsHandler.trackLearningOverview
   }, {
     label: 'Blog',
     href: 'https://santanderconsumerusa.com/blog',
-    target: '_blank'
-  }, {
-    label: 'Financial Education',
-    href: 'https://santanderconsumerusa.com/learning-center/financial-education',
-    target: '_blank'
+    target: '_blank',
+    handleAnalytics: this.analyticsHandler.trackLearningBlog
   }, {
     label: 'Servicemembers Civil Relief Act',
     href: 'https://santanderconsumerusa.com/legal/servicemembers-civil-relief-act',
-    target: '_blank'
+    target: '_blank',
+    handleAnalytics: this.analyticsHandler.trackLearningServicemembers
   }]);
 
   _defineProperty(this, "contactUs", {
     label: 'Contact Us',
-    href: "/contact"
+    href: "/contact",
+    handleAnalytics: this.analyticsHandler.trackContact
   });
 
   _defineProperty(this, "backToCorporate", {
     label: 'Back to Corporate Site',
-    href: 'https://santanderconsumerusa.com/'
+    href: 'https://santanderconsumerusa.com/',
+    handleAnalytics: this.analyticsHandler.trackCorporateSite
   });
 
   _defineProperty(this, "isDropdownOpen", function () {

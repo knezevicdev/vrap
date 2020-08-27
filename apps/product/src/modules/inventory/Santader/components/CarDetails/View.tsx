@@ -4,6 +4,9 @@ import { observer } from 'mobx-react';
 import React from 'react';
 import reactStringReplace from 'react-string-replace';
 
+import Basics from './components/Basics';
+import Performance from './components/Performance';
+import VehicleSize from './components/VehicleSize';
 import ViewModel from './ViewModel';
 
 import ExternalLink from 'src/ui/ExternalLink';
@@ -14,7 +17,7 @@ interface Props {
 
 const CarDetailsContainer = styled('div')(({ theme }) => ({
   display: 'flex',
-  margin: theme.spacing(4, 'auto'),
+  margin: theme.spacing(0, 'auto', 4, 'auto'),
   maxWidth: '1280px',
   width: '100%',
   padding: theme.spacing(0, 3),
@@ -31,208 +34,130 @@ const CarDetailsContainerContent = styled('div')(({ theme }) => ({
 
 const DetailsData = styled('div')(({ theme }) => ({
   display: 'flex',
-  [theme.breakpoints.only('xs')]: { flexDirection: 'column' },
-  [theme.breakpoints.only('sm')]: { flexWrap: 'wrap' },
-}));
-
-const Basics = styled('div')(({ theme }) => ({
-  display: 'flex',
   flexDirection: 'column',
-  margin: theme.spacing(3, 2, 0, 0),
-  [theme.breakpoints.only('xs')]: { marginRight: 0 },
-  [theme.breakpoints.only('sm')]: { minWidth: '50%' },
-}));
-
-const Performance = styled('div')(({ theme }) => ({
-  display: 'flex',
-  flexDirection: 'column',
-  margin: theme.spacing(3, 0, 0, 0),
-  [theme.breakpoints.only('sm')]: {
-    minWidth: `calc(50% - ${theme.spacing(2)}px)`,
-  },
+  [theme.breakpoints.down('sm')]: { flexWrap: 'wrap' },
 }));
 
 const History = styled('div')(({ theme }) => ({
   display: 'flex',
   flexDirection: 'column',
-  margin: theme.spacing(3, 0, 0, 3),
+  margin: theme.spacing(3, 0, 0, 0),
   [theme.breakpoints.only('xs')]: { marginLeft: 0 },
   [theme.breakpoints.only('sm')]: { marginLeft: 0 },
 }));
 
-const DetailsRow = styled('div')(({ theme }) => ({
-  display: 'flex',
-  width: '100%',
-  borderBottom: `1px solid rgba(214, 215, 218, 0.6)`,
-  paddingTop: theme.spacing(2),
-  paddingBottom: theme.spacing(1),
-}));
-
-const Label = styled(Typography)(({ theme }) => ({
-  fontSize: '16px',
-  [theme.breakpoints.only('xs')]: {
-    fontSize: '14px',
-  },
-  minWidth: '140px',
-  color: theme.palette.grey['700'],
-  marginBottom: theme.spacing(2),
-}));
-
-const Value = styled(Typography)(({ theme }) => ({
-  fontWeight: 600,
-  fontSize: '16px',
-  [theme.breakpoints.only('xs')]: {
-    fontSize: '14px',
-    whiteSpace: 'normal',
-  },
-  whiteSpace: 'nowrap',
-  lineHeight: '24px',
-}));
-
-const HistoryContent = styled('div')(({ theme }) => ({
-  marginTop: theme.spacing(2),
-}));
-
 const HistoryTitle = styled(Typography)(({ theme }) => ({
+  marginTop: theme.spacing(3),
   fontWeight: 600,
-  fontSize: '16px',
-  [theme.breakpoints.only('xs')]: {
-    fontSize: '14px',
+  '& .bold': {
+    fontWeight: 400,
   },
 }));
 
 const HistoryDescription = styled(Typography)(({ theme }) => ({
-  fontSize: '16px',
-  [theme.breakpoints.only('xs')]: {
-    fontSize: '14px',
-  },
-  marginTop: theme.spacing(1),
   marginBottom: theme.spacing(1),
-  lineHeight: '24px',
+  lineHeight: 'normal',
 }));
 
-const ColoredExternalLink = styled(ExternalLink)(() => ({
-  color: '#257FA4',
-}));
-
-const Carfax = styled(Typography)(({ theme }) => ({
-  fontSize: '16px',
-  [theme.breakpoints.only('xs')]: {
-    fontSize: '14px',
-  },
+const CarfaxLink = styled(Typography)(({ theme }) => ({
   marginBottom: theme.spacing(1),
-}));
-
-const RecallLink = styled(Typography)(({ theme }) => ({
-  fontSize: '16px',
-  [theme.breakpoints.only('xs')]: {
-    fontSize: '14px',
-  },
-  marginTop: theme.spacing(2),
 }));
 
 const Title = styled(Typography)(({ theme }) => ({
   fontWeight: 600,
-  color: '#767676',
   fontSize: '14px',
-  [theme.breakpoints.only('xs')]: {
-    fontSize: '13px',
-  },
+  letterSpacing: '1.75px',
+  color: theme.palette.grey['500'],
+  textTransform: 'uppercase',
 }));
 
-const CarDetailsTitle = styled(Typography)(({ theme }) => ({
-  fontWeight: 600,
-  fontSize: '24px',
-  [theme.breakpoints.only('xs')]: {
-    fontSize: '22px',
-  },
-  fontFamily: 'SantanderHeadline, Arial, sans-serif',
+const WarrantyHistoryContainer = styled('div')(({ theme }) => ({
+  width: '50%',
+  [theme.breakpoints.down('sm')]: { width: '100%' },
+}));
+
+const HistoryContentContainer = styled('div')(() => ({
+  display: 'flex',
+  flexWrap: 'wrap',
+}));
+
+const DetailsContainer = styled('div')(() => ({
+  display: 'flex',
+  flexWrap: 'wrap',
+}));
+
+const BodyAndPerformance = styled('div')(({ theme }) => ({
+  width: '50%',
+  maxWidth: '50%',
+  [theme.breakpoints.down('sm')]: { width: '100%', maxWidth: '100%' },
 }));
 
 const CarDetailsView: React.FC<Props> = (props) => {
   const { viewModel } = props;
-
   const history = viewModel.history();
-  const basics = viewModel.basics();
-  const performance = viewModel.performance();
-  const recalls = viewModel.recalls();
 
   return (
     <CarDetailsContainer>
       <CarDetailsContainerContent>
-        <CarDetailsTitle>{viewModel.title}</CarDetailsTitle>
+        <Typography variant="h2" fontWeight="fontWeightMedium">
+          {viewModel.title}
+        </Typography>
 
         <DetailsData>
-          <Basics>
-            <Title>{basics.title}</Title>
-            {basics.items.map((item) => {
-              return (
-                <DetailsRow key={`${item.label}-${item.value}`}>
-                  <Label>{item.label}</Label>
-                  <Value>{item.value}</Value>
-                </DetailsRow>
-              );
-            })}
-          </Basics>
-          <Performance>
-            <Title>{performance.title}</Title>
-
-            {performance.items.map((item) => {
-              return (
-                <DetailsRow key={`${item.label}-${item.value}`}>
-                  <Label>{item.label}</Label>
-                  <Value>{item.value}</Value>
-                </DetailsRow>
-              );
-            })}
-
-            <ColoredExternalLink href={recalls.href} target="_blank">
-              <RecallLink>{recalls.text}</RecallLink>
-            </ColoredExternalLink>
-          </Performance>
           <History>
             <Title>{history.title}</Title>
-            {history.isWarrantyAvailable && (
-              <HistoryContent>
-                <HistoryTitle>{history.manufacturersWarranty}</HistoryTitle>
-                <HistoryDescription>{history.residualText}</HistoryDescription>
-              </HistoryContent>
-            )}
-
-            <HistoryContent>
-              <HistoryTitle>{history.cleanHistory}</HistoryTitle>
-              <HistoryDescription>
-                {history.cleanHistoryDescription}
-              </HistoryDescription>
-              <ColoredExternalLink href={history.carfax.href} target="_blank">
-                <Carfax>{history.carfax.text}</Carfax>
-              </ColoredExternalLink>
-            </HistoryContent>
-
-            <HistoryContent>
-              <HistoryTitle>{history.ownerCount}</HistoryTitle>
-            </HistoryContent>
-            {!history.isWarrantyAvailable && (
-              <HistoryContent>
-                <HistoryTitle>{history.vroomProtect}</HistoryTitle>
+            <HistoryTitle>
+              {history.ownerTitle}
+              <span className="bold">{history.ownerCount}</span>
+            </HistoryTitle>
+            <HistoryContentContainer>
+              <WarrantyHistoryContainer>
+                <HistoryTitle>{history.cleanHistory}</HistoryTitle>
                 <HistoryDescription>
-                  {reactStringReplace(
-                    history.vroomProtectDescription.text,
-                    /<link>(.*)<\/link>/,
-                    (match, index) => (
-                      <ColoredExternalLink
-                        key={index}
-                        href={history.vroomProtectDescription.href}
-                        target="_blank"
-                      >
-                        {match}
-                      </ColoredExternalLink>
-                    )
-                  )}
+                  {history.cleanHistoryDescription}
                 </HistoryDescription>
-              </HistoryContent>
-            )}
+                <ExternalLink href={history.carfax.href} target="_blank">
+                  <CarfaxLink>{history.carfax.text}</CarfaxLink>
+                </ExternalLink>
+              </WarrantyHistoryContainer>
+              <WarrantyHistoryContainer>
+                {history.isWarrantyAvailable ? (
+                  <div>
+                    <HistoryTitle>{history.manufacturersWarranty}</HistoryTitle>
+                    <HistoryDescription>
+                      {history.residualText}
+                    </HistoryDescription>
+                  </div>
+                ) : (
+                  <div>
+                    <HistoryTitle>{history.vroomProtect}</HistoryTitle>
+                    <HistoryDescription>
+                      {reactStringReplace(
+                        history.vroomProtectDescription.text,
+                        /<link>(.*)<\/link>/,
+                        (match, index) => (
+                          <ExternalLink
+                            key={index}
+                            href={history.vroomProtectDescription.href}
+                            target="_blank"
+                          >
+                            {match}
+                          </ExternalLink>
+                        )
+                      )}
+                    </HistoryDescription>
+                  </div>
+                )}
+              </WarrantyHistoryContainer>
+            </HistoryContentContainer>
           </History>
+          <DetailsContainer>
+            <BodyAndPerformance>
+              <Basics />
+              <Performance />
+            </BodyAndPerformance>
+            <VehicleSize />
+          </DetailsContainer>
         </DetailsData>
       </CarDetailsContainerContent>
     </CarDetailsContainer>

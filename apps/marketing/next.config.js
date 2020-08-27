@@ -1,5 +1,7 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 
+const { name, version } = require('./package.json');
+
 const withBundleAnalyzer = require('@next/bundle-analyzer')({
   enabled: process.env.ANALYZE === 'true',
 });
@@ -10,16 +12,29 @@ const shortHash = childProcess
   .toString()
   .trim();
 
-// TODO: remove once interchange (nginx) is setup locally
-const isProd = process.env.NODE_ENV === 'production';
-const assetPrefix = isProd ? `/marketing/${shortHash}` : '';
+// TODO: investigate how to client-side navigate without adding base path.
+const basePath = '/marketing';
 
 const config = {
-  env: {
-    ASSET_PREFIX: assetPrefix,
-  },
-  assetPrefix,
+  basePath,
+  distDir: `.next/${shortHash}`,
   generateBuildId: () => shortHash,
+  publicRuntimeConfig: {
+    // Will be available on both server-side and client-side
+    BASE_PATH: process.env.BASE_PATH,
+    DATA_DOG_RUM_APPLICATION: process.env.DATA_DOG_RUM_APPLICATION,
+    DATA_DOG_RUM_TOKEN: process.env.DATA_DOG_RUM_TOKEN,
+    CALENDLY_URL: process.env.CALENDLY_URL,
+    DATA_DOG_LOG_COLLECTION_TOKEN: process.env.DATA_DOG_LOG_COLLECTION_TOKEN,
+    GEARBOX_PRIVATE_URL: process.env.GEARBOX_PRIVATE_URL,
+    NAME: name,
+    STATIC_ASSETS_HOST_URL: process.env.STATIC_ASSETS_HOST_URL,
+    VERSION: version,
+  },
+  serverRuntimeConfig: {
+    // Will only be available on the server side
+    SEGMENT_WRITE_KEY: process.env.SEGMENT_WRITE_KEY,
+  },
   /* Custom webpack configuration. */
   webpack: (config) => {
     /* Enable SVG imports. */

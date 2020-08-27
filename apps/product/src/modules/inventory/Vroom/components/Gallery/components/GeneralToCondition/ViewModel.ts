@@ -1,7 +1,10 @@
+import getConfig from 'next/config';
+
 import { GallerySelections, GalleryStore } from '../../store';
 
-import globalEnv from 'src/globalEnv';
 import AnalyticsHandler from 'src/integrations/AnalyticsHandler';
+
+const { publicRuntimeConfig } = getConfig();
 
 class GalleryToConditionViewModel {
   private store: GalleryStore;
@@ -9,7 +12,7 @@ class GalleryToConditionViewModel {
   readonly goToConditionText: string = 'VIEW IMPERFECTION PHOTOS';
   readonly defaultImage = {
     alt: 'Gallery To Condition Photo',
-    src: `${globalEnv.ASSET_PREFIX}/modules/inventory/components/gallery/LastGallery.png`,
+    src: `${publicRuntimeConfig.BASE_PATH}/modules/inventory/components/gallery/LastGallery.png`,
   };
 
   constructor(galleryStore: GalleryStore) {

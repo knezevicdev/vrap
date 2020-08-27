@@ -1,10 +1,12 @@
 import { Hit, InvSearchNetworker } from '@vroom-web/inv-search-networking';
 import { InvServiceNetworker } from '@vroom-web/inv-service-networking';
 import { observable } from 'mobx';
+import getConfig from 'next/config';
 import { createContext } from 'react';
 
-import globalEnv from 'src/globalEnv';
 import { Status } from 'src/networking/types';
+
+const { publicRuntimeConfig } = getConfig();
 
 export interface InventoryStoreState {
   similarStatus: Status;
@@ -26,16 +28,16 @@ export async function getInitialInventoryStoreState(
   };
 
   const invSearchNetworker = new InvSearchNetworker(
-    globalEnv.INVSEARCH_V3_URL || ''
+    publicRuntimeConfig.INVSEARCH_V3_URL || ''
   );
   const invServiceNetworker = new InvServiceNetworker(
-    globalEnv.INV_SERVICE_V2_URL || ''
+    publicRuntimeConfig.INV_SERVICE_V2_URL || ''
   );
 
   try {
     const response = await invSearchNetworker.postInventory({
       fulldetails: true,
-      source: `${globalEnv.NAME}-${globalEnv.VERSION}`,
+      source: `${publicRuntimeConfig.NAME}-${publicRuntimeConfig.VERSION}`,
       vin: [vin],
     });
 

@@ -5,14 +5,12 @@ import Store from './store';
 class InProgressDealBarViewModel {
   readonly statusText: string = 'Purchase\xa0in\xa0progress';
   readonly buttonText: string = 'RESUME PURCHASE';
-  readonly className?: string;
 
   private store: Store;
   private currencyFormatter: Intl.NumberFormat;
   private analyticsHandler: AnalyticsHandler;
 
-  constructor(store: Store, className?: string) {
-    this.className = className;
+  constructor(store: Store) {
     this.store = store;
     this.currencyFormatter = new Intl.NumberFormat('en-US', {
       style: 'currency',

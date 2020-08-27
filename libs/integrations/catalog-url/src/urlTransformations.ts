@@ -35,7 +35,7 @@ export const getYearParam = (year: MaxAndMin): string => {
 
 export const getParams = (filtersData?: FiltersData): string => {
   if (!filtersData) {
-    return '';
+    return '/';
   }
 
   const filtersDataMakeAndModels = filtersData[Filters.MAKE_AND_MODELS];
@@ -72,7 +72,7 @@ export const getParams = (filtersData?: FiltersData): string => {
     return `/${typesKey}/${bodyType}`;
   }
 
-  return '';
+  return '/';
 };
 
 export const getQuery = (filtersData?: FiltersData): string => {
@@ -93,7 +93,9 @@ export const getUrlFromFiltersData = (
 ): string => {
   const addFiltersQueryParam = options && options.addFiltersQueryParam;
   const query = addFiltersQueryParam ? getQuery(filtersData) : '';
-  const url = `${paramsBasePath}${getParams(filtersData)}${query}`;
+  const ignoreParamsBasePath = options && options.ignoreParamsBasePath;
+  const actualParamsBasePath = ignoreParamsBasePath ? '' : paramsBasePath;
+  const url = `${actualParamsBasePath}${getParams(filtersData)}${query}`;
   return url;
 };
 
@@ -273,11 +275,11 @@ export const getFiltersDataFromUrl = (url: string): FiltersData | undefined => {
   }
 
   const paramsBasePathIndex = url.indexOf(paramsBasePath);
-  if (paramsBasePathIndex === -1) {
-    return undefined;
-  }
 
-  const paramsStartIndex = paramsBasePathIndex + paramsBasePath.length;
+  const paramsStartIndex =
+    paramsBasePathIndex !== -1
+      ? paramsBasePathIndex + paramsBasePath.length
+      : 0;
   const paramsEndIndex =
     questionMarkIndex !== -1 ? questionMarkIndex : undefined;
 

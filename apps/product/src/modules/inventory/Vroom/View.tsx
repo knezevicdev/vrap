@@ -3,6 +3,7 @@ import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { StandardFooter } from '@vroom-web/footer-components';
 import { SimpleHeader } from '@vroom-web/header-components';
 import { observer } from 'mobx-react';
+import getConfig from 'next/config';
 import React, { useEffect } from 'react';
 
 import Breadcrumbs from './components/Breadcrumbs';
@@ -13,6 +14,7 @@ import LegalFooter from './components/LegalFooter';
 import NeedHelp from './components/NeedHelp';
 import NotifyMe from './components/NotifyMe';
 import PeaceOfMind from './components/PeaceOfMind';
+import SalesContact from './components/SalesContact';
 import SimilarVehicles from './components/SimilarVehicles';
 import StartPurchase from './components/StartPurchase';
 import VehicleHeader from './components/VehicleHeader';
@@ -40,10 +42,13 @@ const StickyBottom = styled('div')(({ theme }) => ({
 }));
 //#endregion
 
+const { publicRuntimeConfig } = getConfig();
+
 const InventoryView: React.FC<Props> = (props) => {
   const { viewModel } = props;
   const theme = useTheme();
   const xsDown = useMediaQuery(theme.breakpoints.down('xs'));
+  const gearboxPrivateUrl = publicRuntimeConfig.GEARBOX_PRIVATE_URL;
 
   useEffect(() => {
     viewModel.startReaction();
@@ -52,7 +57,7 @@ const InventoryView: React.FC<Props> = (props) => {
 
   return (
     <>
-      <SimpleHeader />
+      <SimpleHeader gearboxPrivateUrl={gearboxPrivateUrl} />
       <InventoryViewContainer>
         {viewModel.error() && (
           <VehicleNotFound message={viewModel.noVehicleFound} />
@@ -62,6 +67,7 @@ const InventoryView: React.FC<Props> = (props) => {
             {!xsDown && <Breadcrumbs />}
             <Gallery />
             <VehicleHeader />
+            <SalesContact />
             <CarDetails />
             <Features />
             <PeaceOfMind />

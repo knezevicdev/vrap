@@ -12,20 +12,72 @@ declare global {
   }
 }
 
+interface Properties {
+  category: string;
+  label: string;
+}
+
 interface Experiment {
   assignedVariant: 0 | 1;
   optimizeId?: string;
 }
 
+enum VitParam {
+  SOURCE = 'vit_source',
+  MEDIUM = 'vit_medium',
+  CAMPAIGN = 'vit_campaign',
+  TERM = 'vit_term',
+  CONTENT = 'vit_content',
+  DEST = 'vit_dest',
+}
+
+type VitParams = { [key in VitParam]?: string };
+
 class AnalyticsHandler {
   private static optimizeExperimentsString?: string;
 
+  private getVitParams(): VitParams {
+    if (typeof window === 'undefined') {
+      return {};
+    }
+    const urlSearchParams = new URLSearchParams(window.location.search);
+    const source = urlSearchParams.get(VitParam.SOURCE);
+    const medium = urlSearchParams.get(VitParam.MEDIUM);
+    const campaign = urlSearchParams.get(VitParam.CAMPAIGN);
+    const term = urlSearchParams.get(VitParam.TERM);
+    const content = urlSearchParams.get(VitParam.CONTENT);
+    const dest = urlSearchParams.get(VitParam.DEST);
+
+    const vitParams: VitParams = {};
+    if (source) {
+      vitParams[VitParam.SOURCE] = source;
+    }
+    if (medium) {
+      vitParams[VitParam.MEDIUM] = medium;
+    }
+    if (campaign) {
+      vitParams[VitParam.CAMPAIGN] = campaign;
+    }
+    if (term) {
+      vitParams[VitParam.TERM] = term;
+    }
+    if (content) {
+      vitParams[VitParam.CONTENT] = content;
+    }
+    if (dest) {
+      vitParams[VitParam.DEST] = dest;
+    }
+    return vitParams;
+  }
+
   track(event: string, properties?: object): void {
-    const propertiesWithExperimentCombination = {
+    const vitParams = this.getVitParams();
+    const fullProperties = {
       ...properties,
+      ...vitParams,
       experimentCombination: AnalyticsHandler.optimizeExperimentsString,
     };
-    segmentTrack(event, propertiesWithExperimentCombination);
+    segmentTrack(event, fullProperties);
   }
 
   setAnonymousId(anonymousId: string): void {
@@ -55,11 +107,38 @@ class AnalyticsHandler {
     });
   }
 
+  createAdditionalTracker(id: string, name: string): void {
+    onSegmentAnalyticsReady(() => {
+      if (typeof window.ga === 'undefined') {
+        throw new Error('window.ga is undefined');
+      }
+      window.ga('create', id, 'auto', { name: name });
+      window.ga(`${name}.send`, 'pageview');
+      window.analytics.on('track', function (
+        event: string,
+        properties: object
+      ) {
+        if (typeof window.ga === 'undefined') {
+          throw new Error('window.ga is undefined');
+        }
+        const prop = properties as Properties;
+        window.ga(`${name}.send`, {
+          hitType: 'event',
+          eventCategory: prop.category || 'All',
+          eventAction: event,
+          eventLabel: prop.label || 'All',
+        });
+      });
+    });
+  }
+
   page(name: string, category?: string): void {
+    const vitParams = this.getVitParams();
     const properties = {
       category,
       experimentCombination: AnalyticsHandler.optimizeExperimentsString,
       name,
+      ...vitParams,
     };
     segmentPage(name, properties);
   }
