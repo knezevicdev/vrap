@@ -67,10 +67,9 @@ export default class NotifyMeNetworker {
   private readonly axiosInstance: AxiosInstance;
   private readonly hostUrl: string;
 
-  //constructor(hostUrl: string) {
-  constructor() {
+  constructor(hostUrl: string) {
     this.axiosInstance = axios.create();
-    this.hostUrl = 'https://gearbox-dev-int.vroomapi.com/query-private'; //hostUrl;
+    this.hostUrl = hostUrl;
   }
 
   async listSubscription(
