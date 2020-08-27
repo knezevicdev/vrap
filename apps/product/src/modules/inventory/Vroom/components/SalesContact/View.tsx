@@ -25,7 +25,7 @@ const View = ({ viewModel }: Props) => {
   return (
     <SalesContactContainer>
       <Typography>
-        <Question> {viewModel.title}</Question> {viewModel.body}
+        <Question>{viewModel.title} </Question>{viewModel.body}
       </Typography>
     </SalesContactContainer>
   );
