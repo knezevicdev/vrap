@@ -14,7 +14,7 @@ interface Props {
 
 const CarDetailsContainer = styled('div')(({ theme }) => ({
   display: 'flex',
-  margin: theme.spacing(4, 'auto'),
+  margin: theme.spacing(0, 'auto', 4, 'auto'),
   maxWidth: '1280px',
   width: '100%',
   padding: theme.spacing(0, 3),
