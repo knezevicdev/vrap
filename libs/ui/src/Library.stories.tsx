@@ -1,6 +1,7 @@
 import React from 'react';
 import styled, { ThemeProvider } from 'styled-components';
 
+import { Button } from './atoms/Button';
 import { Body, Hero, Link, Title } from './atoms/Typography';
 import { theme as SantanderTheme } from './themes/New/Santander';
 import { theme as VroomTheme } from './themes/New/Vroom';
@@ -39,6 +40,12 @@ const CustomLink = styled(Link)`
   color: red;
 `;
 
+const CustomPrimary = styled(Button.Primary)`
+  width: 100%;
+  max-height: 52px;
+  height: 52px;
+`;
+
 const Typography = (): JSX.Element => {
   return (
     <SectionContainer>
@@ -61,17 +68,50 @@ const Typography = (): JSX.Element => {
   );
 };
 
+const Buttons = (): JSX.Element => {
+  const onClick = (): void => {
+    alert('clicked');
+  };
+  return (
+    <SectionContainer>
+      <SectionTitle>Buttons</SectionTitle>
+      <Button.Primary onClick={onClick}>Primary</Button.Primary>
+      <Button.Secondary onClick={onClick}>Secondary</Button.Secondary>
+      <Button.Bare onClick={onClick}>Bare</Button.Bare>
+      <Button.Outline onClick={onClick}>Outline</Button.Outline>
+      <CustomPrimary onClick={onClick}>Custom Primary</CustomPrimary>
+      <Button.Primary disabled onClick={onClick}>
+        Primary
+      </Button.Primary>
+      <Button.Secondary disabled onClick={onClick}>
+        Secondary
+      </Button.Secondary>
+      <Button.Bare disabled onClick={onClick}>
+        Bare
+      </Button.Bare>
+      <Button.Outline disabled onClick={onClick}>
+        Outline
+      </Button.Outline>
+      <CustomPrimary disabled onClick={onClick}>
+        Custom Primary
+      </CustomPrimary>
+    </SectionContainer>
+  );
+};
+
 export const Atoms: React.FC = () => {
   return (
     <Container>
       <Client>
         <ThemeProvider theme={VroomTheme}>
           <Typography />
+          <Buttons />
         </ThemeProvider>
       </Client>
       <Client>
         <ThemeProvider theme={SantanderTheme}>
           <Typography />
+          <Buttons />
         </ThemeProvider>
       </Client>
     </Container>

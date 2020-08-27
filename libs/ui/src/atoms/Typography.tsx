@@ -135,7 +135,7 @@ export class Body {
   static Fine = BodyFine;
 }
 
-interface LinkProps {
+export interface LinkProps {
   className?: string;
   children: string;
   href: string;
