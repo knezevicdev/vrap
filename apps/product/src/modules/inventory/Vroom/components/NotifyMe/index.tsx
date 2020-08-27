@@ -14,7 +14,6 @@ import {
 const NotifyMe: React.FC = () => {
   const notifyMeNetworker = new NotifyMeNetworker(
     globalEnv.GEARBOX_PRIVATE_URL as string
-    // 'https://gearbox-dev-int.vroomapi.com/query-private'
   );
   return (
     <InventoryStoreContext.Consumer>
