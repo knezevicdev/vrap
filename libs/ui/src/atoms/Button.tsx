@@ -58,37 +58,37 @@ const Secondary = styled(Primary)`
 `;
 
 const Bare = styled(Primary)`
-  background: #ffffff;
+  background: transparent;
   margin: 0px;
   color: ${(props): string => (props.disabled ? '#D6D7DA' : '#E7131A')};
 
   &:hover {
-    background: #ffffff;
+    background: transparent;
     color: ${(props): string => (props.disabled ? '#D6D7DA' : '#FC4349')};
   }
 
   &:active {
-    background: #ffffff;
+    background: transparent;
     box-shadow: none;
     color: ${(props): string => (props.disabled ? '#D6D7DA' : '#E7131A')};
   }
 `;
 
 const Outline = styled(Primary)`
-  background: #ffffff;
+  background: transparent;
   color: ${(props): string => (props.disabled ? '#D6D7DA' : '#E7131A')};
   border: 2px solid
     ${(props): string => (props.disabled ? '#D6D7DA' : '#E7131A')};
 
   &:hover {
-    background: #ffffff;
+    background: transparent;
     color: ${(props): string => (props.disabled ? '#D6D7DA' : '#FC4349')};
     border: 2px solid
       ${(props): string => (props.disabled ? '#D6D7DA' : '#FC4349')};
   }
 
   &:active {
-    background: #ffffff;
+    background: transparent;
     color: ${(props): string => (props.disabled ? '#D6D7DA' : '#E7131A')};
   }
 `;
