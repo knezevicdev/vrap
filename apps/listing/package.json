@@ -1,6 +1,6 @@
 {
   "name": "@vroom-web/listing",
-  "version": "1.2.3",
+  "version": "1.2.4",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -11,7 +11,7 @@
     "test:ci": "jest --ci"
   },
   "dependencies": {
-    "@datadog/browser-logs": "^1.14.1",
+    "@datadog/browser-rum": "^1.16.0",
     "@material-ui/core": "^4.9.4",
     "@material-ui/icons": "^4.9.1",
     "@material-ui/lab": "^4.0.0-alpha.44",
