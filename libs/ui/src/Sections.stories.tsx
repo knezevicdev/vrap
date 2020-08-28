@@ -1,10 +1,11 @@
 import React from 'react';
 import styled, { ThemeProvider } from 'styled-components';
 
+import { Colors } from './sections/SEM/Colors';
 import { Hero } from './sections/SEM/Hero';
 import { Overview } from './sections/SEM/Overview';
+import { ProsAndCons } from './sections/SEM/ProsAndCons';
 import { theme as VroomTheme } from './themes/New/Vroom';
-import {Colors} from "./sections/SEM/Colors";
 
 export default { title: 'Sections' };
 
@@ -36,7 +37,7 @@ export const SEM_Colors: React.FC = () => {
   return (
     <Container>
       <ThemeProvider theme={VroomTheme}>
-          <Colors/>
+        <Colors />
       </ThemeProvider>
     </Container>
   );
@@ -53,7 +54,9 @@ export const SEM_Features: React.FC = () => {
 export const SEM_Pros_And_Cons: React.FC = () => {
   return (
     <Container>
-      <ThemeProvider theme={VroomTheme}></ThemeProvider>
+      <ThemeProvider theme={VroomTheme}>
+        <ProsAndCons />
+      </ThemeProvider>
     </Container>
   );
 };

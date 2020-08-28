@@ -30,35 +30,35 @@ const Image = styled.div`
 export interface OverviewProps {}
 
 export const Colors: React.FC<OverviewProps> = ({}) => {
-    return (
-        <Container>
-            <Hero.Four>available colors</Hero.Four>
-            <Items>
-                <Item>
-                    <Image/>
-                    <Body.Small>Silver</Body.Small>
-                </Item>
-                <Item>
-                    <Image/>
-                    <Body.Small>Silver</Body.Small>
-                </Item>
-                <Item>
-                    <Image/>
-                    <Body.Small>Silver</Body.Small>
-                </Item>
-                <Item>
-                    <Image/>
-                    <Body.Small>Silver</Body.Small>
-                </Item>
-                <Item>
-                    <Image/>
-                    <Body.Small>Silver</Body.Small>
-                </Item>
-                <Item>
-                    <Image/>
-                    <Body.Small>Silver</Body.Small>
-                </Item>
-            </Items>
-        </Container>
-    );
+  return (
+    <Container>
+      <Hero.Four>available colors</Hero.Four>
+      <Items>
+        <Item>
+          <Image />
+          <Body.Small>Silver</Body.Small>
+        </Item>
+        <Item>
+          <Image />
+          <Body.Small>Silver</Body.Small>
+        </Item>
+        <Item>
+          <Image />
+          <Body.Small>Silver</Body.Small>
+        </Item>
+        <Item>
+          <Image />
+          <Body.Small>Silver</Body.Small>
+        </Item>
+        <Item>
+          <Image />
+          <Body.Small>Silver</Body.Small>
+        </Item>
+        <Item>
+          <Image />
+          <Body.Small>Silver</Body.Small>
+        </Item>
+      </Items>
+    </Container>
+  );
 };
