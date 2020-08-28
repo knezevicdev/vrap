@@ -14,7 +14,7 @@ export default { title: 'Pages' };
 const Page = styled.div`
   display: flex;
   flex-direction: column;
-  margin-bottom: 128px;
+  padding-bottom: 128px;
 `;
 
 const Container = styled.div`
