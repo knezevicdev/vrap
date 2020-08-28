@@ -100,7 +100,7 @@ class NotifyMeViewModel {
 
   // true the user is sub otherwise false
   async setSubscription(): Promise<void> {
-    this.setLoading(true);
+    this.setNotifyMeLoading(true);
     this.setSuccessful(false);
     const accessToken = this.getAccessToken();
     const vin = this.getVin();
@@ -108,7 +108,7 @@ class NotifyMeViewModel {
       const listResponse = await this.notifyMeNetworker.listSubscription(
         accessToken
       );
-      this.setLoading(false);
+      this.setNotifyMeLoading(false);
       const vinList =
         listResponse.data.data.hornListSubscriptions.subscriptions;
       const found = vinList.find((element: VinList) =>
@@ -120,11 +120,12 @@ class NotifyMeViewModel {
       }
     } catch (err) {
       console.log(err);
-      this.setLoading(false);
+      this.setNotifyMeLoading(false);
     }
   }
 
   createNotifyMeSubscription(): void {
+    this.setDialogButtonLoading(true);
     const accessToken = this.getAccessToken();
     this.notifyMeNetworker
       .registerEmail(accessToken)
@@ -132,6 +133,7 @@ class NotifyMeViewModel {
         this.notifyMeNetworker
           .createSubscription(this.getVin(), accessToken)
           .then(() => {
+            this.setDialogButtonLoading(false);
             this.setSuccessful(true);
             this.handleClick();
           })
@@ -168,19 +170,31 @@ class NotifyMeViewModel {
   }
 
   isNotifyButtonDisabled(): boolean {
-    return this.isSuccessful().isSuccessful || this.getLoading();
+    return this.isSuccessful().isSuccessful || this.getNotifyMeLoading();
   }
 
   dialogButtonDisabled(): boolean {
-    return !this.isChecked() || this.isSuccessful().isSuccessful;
+    return (
+      !this.isChecked() ||
+      this.isSuccessful().isSuccessful ||
+      this.getDialogButtonLoading()
+    );
   }
 
-  setLoading(value: boolean): void {
-    this.notifyMeStore.setLoading(value);
+  setNotifyMeLoading(value: boolean): void {
+    this.notifyMeStore.setNotifyMeLoading(value);
   }
 
-  getLoading(): boolean {
-    return this.notifyMeStore.isLoading;
+  getNotifyMeLoading(): boolean {
+    return this.notifyMeStore.notifyMeLoading;
+  }
+
+  setDialogButtonLoading(value: boolean): void {
+    this.notifyMeStore.setDialogButtonLoading(value);
+  }
+
+  getDialogButtonLoading(): boolean {
+    return this.notifyMeStore.dialogButtonLoading;
   }
 
   isOpen(): boolean {
@@ -200,7 +214,8 @@ class NotifyMeViewModel {
   }
 
   setError(value: boolean): void {
-    this.setLoading(false);
+    this.setNotifyMeLoading(false);
+    this.setDialogButtonLoading(false);
     this.notifyMeStore.setError(value);
   }
 

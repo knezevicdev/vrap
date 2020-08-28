@@ -12,7 +12,8 @@ export class NotifyMeStore {
   @observable isChecked = false;
   @observable isError = false;
   @observable isSuccessful = false;
-  @observable isLoading = true;
+  @observable notifyMeLoading = true;
+  @observable dialogButtonLoading = true;
 
   @action
   private initUserAccount = async (): Promise<void> => {
@@ -69,7 +70,12 @@ export class NotifyMeStore {
   };
 
   @action
-  setLoading = (value: boolean): void => {
-    this.isLoading = value;
+  setNotifyMeLoading = (value: boolean): void => {
+    this.notifyMeLoading = value;
+  };
+
+  @action
+  setDialogButtonLoading = (value: boolean): void => {
+    this.dialogButtonLoading = value;
   };
 }

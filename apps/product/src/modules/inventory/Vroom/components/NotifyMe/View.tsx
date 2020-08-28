@@ -39,7 +39,7 @@ const NotifyMeView: React.FC<Props> = (props) => {
         disabled={viewModel.isNotifyButtonDisabled()}
       >
         <Typography variant="button" fontWeight={600}>
-          {viewModel.getLoading() ? (
+          {viewModel.getNotifyMeLoading() ? (
             <CircularProgress />
           ) : (
             viewModel.isSuccessful().button

@@ -1,3 +1,4 @@
+import { CircularProgress } from '@material-ui/core';
 import Checkbox from '@material-ui/core/Checkbox';
 import Dialog from '@material-ui/core/Dialog';
 import IconButton from '@material-ui/core/IconButton';
@@ -169,7 +170,11 @@ const LoggedInView: React.FC<Props> = ({ viewModel }) => {
             disabled={viewModel.dialogButtonDisabled()}
           >
             <Typography variant="button" fontWeight={600}>
-              {viewModel.loggedIn.buttonText}
+              {viewModel.getDialogButtonLoading() ? (
+                <CircularProgress />
+              ) : (
+                viewModel.loggedIn.buttonText
+              )}
             </Typography>
           </DialogButton>
         ) : (
@@ -185,7 +190,11 @@ const LoggedInView: React.FC<Props> = ({ viewModel }) => {
               disabled={viewModel.dialogButtonDisabled()}
             >
               <Typography variant="button" fontWeight={600}>
-                {viewModel.loggedIn.error.buttonText}
+                {viewModel.getDialogButtonLoading() ? (
+                  <CircularProgress />
+                ) : (
+                  viewModel.loggedIn.error.buttonText
+                )}
               </Typography>
             </ErrorButton>
           </ErrorContainer>
