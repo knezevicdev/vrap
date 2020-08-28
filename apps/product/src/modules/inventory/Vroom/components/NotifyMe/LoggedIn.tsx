@@ -16,6 +16,11 @@ const DialogHeader = styled('div')(({ theme }) => ({
   display: 'flex',
   flexDirection: 'row',
   backgroundColor: theme.palette.grey[100],
+  [theme.breakpoints.only('xs')]: {
+    justifyContent: 'center',
+    backgroundColor: 'white',
+    borderBottom: '1px solid rgba(0, 0, 0, .2)',
+  },
 }));
 
 const StyledIconButton = styled(IconButton)(({ theme }) => ({
@@ -37,6 +42,9 @@ const DialogBody = styled('div')(({ theme }) => ({
   flexDirection: 'column',
   padding: theme.spacing(4, 0),
   width: '33%',
+  [theme.breakpoints.only('xs')]: {
+    width: '80%',
+  },
 }));
 
 const DialogButton = styled(Button)(({ theme }) => ({
@@ -44,6 +52,9 @@ const DialogButton = styled(Button)(({ theme }) => ({
   alignSelf: 'center',
   width: '33%',
   marginBottom: theme.spacing(2),
+  [theme.breakpoints.only('xs')]: {
+    width: '90%',
+  },
 }));
 
 const HeaderContent = styled('div')(({ theme }) => ({
@@ -52,16 +63,27 @@ const HeaderContent = styled('div')(({ theme }) => ({
   flexDirection: 'column',
   margin: theme.spacing(8, 0),
   justifyContent: 'space-between',
+  [theme.breakpoints.only('xs')]: {
+    width: '100%',
+    margin: theme.spacing(0),
+  },
 }));
 
 const CarCardContainer = styled('div')(({ theme }) => ({
   width: '22%',
   margin: theme.spacing(0, 8),
+  [theme.breakpoints.only('xs')]: {
+    display: 'none',
+  },
 }));
 
 const Email = styled(Typography)(({ theme }) => ({
   padding: theme.spacing(4, 0),
   alignSelf: 'center',
+  [theme.breakpoints.only('xs')]: {
+    fontWeight: '600',
+    padding: theme.spacing(0, 0, 2, 0),
+  },
 }));
 
 const CheckboxContainer = styled('div')(({ theme }) => ({
@@ -105,6 +127,38 @@ const CheckboxTypography = styled(Typography)(() => ({
   cursor: 'pointer',
 }));
 
+const DialogTitle = styled(Typography)(({ theme }) => ({
+  [theme.breakpoints.only('xs')]: {
+    marginBottom: theme.spacing(1),
+    fontSize: '24px',
+  },
+}));
+
+const DialogHeaderTwo = styled(Typography)(({ theme }) => ({
+  [theme.breakpoints.only('xs')]: {
+    display: 'none',
+  },
+}));
+
+const DialogHeaderBody = styled(Typography)(({ theme }) => ({
+  [theme.breakpoints.only('xs')]: {
+    display: 'none',
+  },
+}));
+
+const DialogBodyTitle = styled(Typography)(({ theme }) => ({
+  fontWeight: 'bold',
+  [theme.breakpoints.only('xs')]: {
+    fontWeight: 'normal',
+    alignSelf: 'center',
+  },
+}));
+
+const CheckboxRed = styled(Typography)(({ theme }) => ({
+  display: 'inline',
+  fontWeight: theme.typography.fontWeightMedium,
+}));
+
 interface Props {
   viewModel: ViewModel;
 }
@@ -127,18 +181,18 @@ const LoggedInView: React.FC<Props> = ({ viewModel }) => {
             <CarCard car={viewModel.getCar()} key={viewModel.getVin()} />
           </CarCardContainer>
           <HeaderContent>
-            <Typography variant="h2">
+            <DialogTitle variant="h2">
               {viewModel.isSuccessful().dialogTitle}
-            </Typography>
-            <Typography variant="body1">
+            </DialogTitle>
+            <DialogHeaderBody variant="body1">
               {viewModel.isSuccessful().body}
               {viewModel.isSuccessful().isSuccessful &&
                 viewModel.getUserEmail()}
-            </Typography>
+            </DialogHeaderBody>
             {!viewModel.isSuccessful().isSuccessful && (
-              <Typography variant="body1">
+              <DialogHeaderTwo variant="body1">
                 {viewModel.loggedIn.header2}
-              </Typography>
+              </DialogHeaderTwo>
             )}
           </HeaderContent>
           <StyledIconButton aria-label="close" onClick={handleDialogClick}>
@@ -146,9 +200,7 @@ const LoggedInView: React.FC<Props> = ({ viewModel }) => {
           </StyledIconButton>
         </DialogHeader>
         <DialogBody>
-          <Typography>
-            <strong>{viewModel.loggedIn.bodyTitle}</strong>
-          </Typography>
+          <DialogBodyTitle>{viewModel.loggedIn.bodyTitle}</DialogBodyTitle>
           <Email>{viewModel.getUserEmail()}</Email>
           <Typography>{viewModel.loggedIn.body}</Typography>
           <CheckboxContainer>
@@ -158,7 +210,10 @@ const LoggedInView: React.FC<Props> = ({ viewModel }) => {
               inputProps={{ 'aria-label': 'primary checkbox' }}
             />
             <CheckboxTypography onClick={handleCheckboxChange}>
-              {viewModel.loggedIn.checkboxText}
+              {viewModel.loggedIn.checkboxText[0]}
+              <CheckboxRed color="red">
+                {viewModel.loggedIn.checkboxText[1]}
+              </CheckboxRed>
             </CheckboxTypography>
           </CheckboxContainer>
         </DialogBody>

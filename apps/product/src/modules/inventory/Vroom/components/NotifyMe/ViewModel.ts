@@ -10,7 +10,7 @@ interface LoggedIn {
   header2: string;
   bodyTitle: string;
   body: string;
-  checkboxText: string;
+  checkboxText: string[];
   buttonText: string;
   error: {
     buttonText: string;
@@ -47,8 +47,10 @@ class NotifyMeViewModel {
     bodyTitle: "We'll email you at:",
     body:
       'Vroom will notify everyone that has expressed an interest in this vehicle at the same time, at which point the vehicle can be reserved by ANY Vroom customer by placing a deposit on the vehicle.',
-    checkboxText:
-      'Signing up to be notified when this vehicle is available DOES NOT reserve it for you.',
+    checkboxText: [
+      'Signing up to be notified when this vehicle is available ',
+      'DOES NOT reserve it for you.',
+    ],
     buttonText: 'EMAIL ME WHEN I CAN BUY THIS VEHICLE',
     error: {
       buttonText: 'TRY AGAIN',
