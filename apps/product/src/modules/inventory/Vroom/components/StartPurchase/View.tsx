@@ -25,12 +25,7 @@ const StartPurchaseView: React.FC<Props> = (props) => {
 
   return (
     <>
-      <CustomButton
-        variant="contained"
-        color="primary"
-        onClick={handleClick}
-        disabled={viewModel.isAvailableSoon()}
-      >
+      <CustomButton variant="contained" color="primary" onClick={handleClick}>
         <Typography variant="button" fontWeight={600}>
           {viewModel.getButtonText()}
         </Typography>

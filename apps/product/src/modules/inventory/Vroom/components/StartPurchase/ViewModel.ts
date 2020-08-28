@@ -5,7 +5,6 @@ import {
 } from '@vroom-web/catalog-url-integration';
 import { Car } from '@vroom-web/inv-search-networking';
 import { SoldStatusInt } from '@vroom-web/inv-service-networking';
-import isEmpty from 'lodash.isempty';
 import { stringify } from 'qs';
 import { ParsedUrlQuery } from 'querystring';
 
@@ -18,7 +17,6 @@ class StartPurchaseViewModel {
   private car: Car;
   private query: ParsedUrlQuery;
   readonly purchaseText: string = 'Start Purchase';
-  readonly availableSoon: string = 'Available Soon';
   readonly findNewMatch: string = 'Find A New Match';
 
   constructor(query: ParsedUrlQuery, inventoryStore: InventoryStore) {
@@ -29,11 +27,8 @@ class StartPurchaseViewModel {
   }
 
   getButtonText(): string {
-    const { hasStockPhotos, leadFlagPhotoUrl, soldStatus } = this.car;
+    const { soldStatus } = this.car;
     const vehicleServiceAvailability = this.store.isAvailable;
-    if (hasStockPhotos || isEmpty(leadFlagPhotoUrl)) {
-      return this.availableSoon;
-    }
     if (
       soldStatus === SoldStatusInt.SALE_PENDING ||
       !vehicleServiceAvailability
@@ -116,15 +111,6 @@ class StartPurchaseViewModel {
       window.location.href = url;
     }
   }
-
-  isAvailableSoon = (): boolean => {
-    /* TODO
-    Replace once the backend team release a new flag.
-    From David - the intention is to add an availableSoon flag ASAP
-    */
-    const { leadFlagPhotoUrl, hasStockPhotos } = this.store.vehicle._source;
-    return leadFlagPhotoUrl === '' || hasStockPhotos;
-  };
 }
 
 export default StartPurchaseViewModel;
