@@ -60,7 +60,7 @@ const BoxBody = styled(Typography)(() => ({
   display: 'block',
 }));
 
-const BoxBodyBold = styled('strong')(() => ({
+const Strong = styled('strong')(() => ({
   fontWeight: 600,
 }));
 
@@ -101,7 +101,7 @@ const NeedHelpView: React.FC<Props> = ({ viewModel }) => {
               <BoxBody>{call.phone}</BoxBody>
               {call.times.map((time) => (
                 <BoxBody key={time.day}>
-                  <BoxBodyBold>{time.day}</BoxBodyBold>
+                  <Strong>{time.day}</Strong>
                   {time.hours}
                 </BoxBody>
               ))}
