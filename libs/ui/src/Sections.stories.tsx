@@ -2,6 +2,7 @@ import React from 'react';
 import styled, { ThemeProvider } from 'styled-components';
 
 import { theme as VroomTheme } from './themes/New/Vroom';
+import {Hero} from "./sections/SEM/Hero";
 
 export default { title: 'Sections' };
 
@@ -12,7 +13,9 @@ const Container = styled.div`
 export const SEM_Hero: React.FC = () => {
   return (
     <Container>
-      <ThemeProvider theme={VroomTheme}></ThemeProvider>
+      <ThemeProvider theme={VroomTheme}>
+          <Hero info={{image: '', title: '2019 wrangler', logo: ''}}/>
+      </ThemeProvider>
     </Container>
   );
 };
