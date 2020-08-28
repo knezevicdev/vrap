@@ -99,10 +99,10 @@ const NeedHelpView: React.FC<Props> = ({ viewModel }) => {
             <BoxContent>
               <BoxTitle>{call.title}</BoxTitle>
               <BoxBody>{call.phone}</BoxBody>
-              {call.times.map((item) => (
-                <BoxBody key={item.day}>
-                  <BoxBodyBold>{item.day}</BoxBodyBold>
-                  {item.time}
+              {call.times.map((time) => (
+                <BoxBody key={time.day}>
+                  <BoxBodyBold>{time.day}</BoxBodyBold>
+                  {time.hours}
                 </BoxBody>
               ))}
               <BoxBody>{call.timezone}</BoxBody>
