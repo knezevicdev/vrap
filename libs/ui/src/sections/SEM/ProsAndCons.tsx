@@ -47,9 +47,9 @@ const Image = styled.div`
   background: lightgray;
 `;
 
-export interface OverviewProps {}
+export interface Props {}
 
-export const ProsAndCons: React.FC<OverviewProps> = ({}) => {
+export const ProsAndCons: React.FC<Props> = ({}) => {
   return (
     <Container>
       <Info>

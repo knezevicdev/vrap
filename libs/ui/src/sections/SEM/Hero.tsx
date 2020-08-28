@@ -23,7 +23,7 @@ const Header = styled.div`
   background: gray;
 `;
 
-export interface HeroProps {
+export interface Props {
   info: {
     image: string;
     logo: string;
@@ -31,7 +31,7 @@ export interface HeroProps {
   };
 }
 
-export const Hero: React.FC<HeroProps> = ({ info: { title } }) => {
+export const Hero: React.FC<Props> = ({ info: { title } }) => {
   return (
     <Container>
       <Image />

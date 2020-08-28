@@ -31,9 +31,9 @@ const DetailBody = styled(Body.Small)`
   color: #6c717a;
 `;
 
-export interface OverviewProps {}
+export interface Props {}
 
-export const Overview: React.FC<OverviewProps> = ({}) => {
+export const Overview: React.FC<Props> = ({}) => {
   return (
     <Container>
       <Hero.Four>overview</Hero.Four>

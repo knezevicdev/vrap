@@ -1,6 +1,7 @@
 import React from 'react';
 import styled, { ThemeProvider } from 'styled-components';
 
+import { Awards } from './sections/SEM/Awards';
 import { Colors } from './sections/SEM/Colors';
 import { Hero } from './sections/SEM/Hero';
 import { Overview } from './sections/SEM/Overview';
@@ -64,7 +65,9 @@ export const SEM_Pros_And_Cons: React.FC = () => {
 export const SEM_Awards: React.FC = () => {
   return (
     <Container>
-      <ThemeProvider theme={VroomTheme}></ThemeProvider>
+      <ThemeProvider theme={VroomTheme}>
+        <Awards />
+      </ThemeProvider>
     </Container>
   );
 };
