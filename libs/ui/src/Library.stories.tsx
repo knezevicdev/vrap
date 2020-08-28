@@ -6,7 +6,7 @@ import { Body, Hero, Link, Title } from './atoms/Typography';
 import { theme as SantanderTheme } from './themes/New/Santander';
 import { theme as VroomTheme } from './themes/New/Vroom';
 
-export default { title: 'Library' };
+export default { title: 'Atoms' };
 
 const Container = styled.div`
   display: flex;
