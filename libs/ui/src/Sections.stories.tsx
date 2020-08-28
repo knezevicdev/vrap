@@ -4,6 +4,7 @@ import styled, { ThemeProvider } from 'styled-components';
 import { Hero } from './sections/SEM/Hero';
 import { Overview } from './sections/SEM/Overview';
 import { theme as VroomTheme } from './themes/New/Vroom';
+import {Colors} from "./sections/SEM/Colors";
 
 export default { title: 'Sections' };
 
@@ -34,7 +35,9 @@ export const SEM_Overview: React.FC = () => {
 export const SEM_Colors: React.FC = () => {
   return (
     <Container>
-      <ThemeProvider theme={VroomTheme}></ThemeProvider>
+      <ThemeProvider theme={VroomTheme}>
+          <Colors/>
+      </ThemeProvider>
     </Container>
   );
 };
