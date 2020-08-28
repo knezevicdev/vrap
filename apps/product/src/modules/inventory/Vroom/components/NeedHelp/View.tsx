@@ -33,34 +33,17 @@ const Subtitle = styled(Typography)(({ theme }) => ({
 }));
 
 const Body = styled('div')(({ theme }) => ({
-  display: 'flex',
-  flexDirection: 'row',
+  display: 'grid',
+  gridTemplateColumns: '1fr 1fr',
+  gap: '1.5rem',
   marginTop: theme.spacing(3),
-  [theme.breakpoints.down('sm')]: { flexDirection: 'column' },
+  [theme.breakpoints.down('sm')]: { gridTemplateColumns: '1fr' },
 }));
 
-const BoxLeft = styled('div')(({ theme }) => ({
+const BodyCard = styled('div')(({ theme }) => ({
   display: 'flex',
-  flexDirectiopn: 'row',
   border: `1px solid ${theme.palette.grey.A100}`,
-  width: '50%',
   padding: theme.spacing(4),
-  marginRight: theme.spacing(2),
-  [theme.breakpoints.down('sm')]: {
-    width: '100%',
-    marginRight: 0,
-    marginBottom: theme.spacing(2),
-  },
-}));
-
-const BoxRight = styled('div')(({ theme }) => ({
-  display: 'flex',
-  flexDirectiopn: 'row',
-  border: `1px solid ${theme.palette.grey.A100}`,
-  width: '50%',
-  padding: theme.spacing(4),
-  marginLeft: theme.spacing(2),
-  [theme.breakpoints.down('sm')]: { width: '100%', marginLeft: 0 },
 }));
 
 const BoxTitle = styled(Typography)(({ theme }) => ({
@@ -69,11 +52,16 @@ const BoxTitle = styled(Typography)(({ theme }) => ({
 }));
 
 const BoxContent = styled('div')(({ theme }) => ({
-  paddingLeft: theme.spacing(1),
+  paddingLeft: theme.spacing(2),
 }));
 
-const BodyBody = styled(Typography)(() => ({
-  lineHeight: 'normal',
+const BoxBody = styled(Typography)(() => ({
+  lineHeight: '26px',
+  display: 'block',
+}));
+
+const BoxBodyBold = styled('strong')(() => ({
+  fontWeight: 600,
 }));
 
 interface Props {
@@ -81,41 +69,45 @@ interface Props {
 }
 
 const NeedHelpView: React.FC<Props> = ({ viewModel }) => {
+  const { title, subtitle, faq, call } = viewModel;
   return (
     <Container>
       <Content>
         <Typography variant="h2" fontWeight="fontWeightMedium">
-          {viewModel.title}
+          {title}
         </Typography>
-        <Subtitle>{viewModel.subtitle}</Subtitle>
+        <Subtitle>{subtitle}</Subtitle>
         <Body>
-          <BoxLeft>
+          <BodyCard>
             <div>
               <QuestionIcon />
             </div>
             <BoxContent>
-              <BoxTitle>{viewModel.faq.title}</BoxTitle>
-              <BodyBody>
-                <ExternalLink href={viewModel.faq.href} target="_blank">
-                  {viewModel.faq.hrefText}
+              <BoxTitle>{faq.title}</BoxTitle>
+              <BoxBody>
+                <ExternalLink href={faq.href} target="_blank">
+                  {faq.hrefText}
                 </ExternalLink>
-                {viewModel.faq.body}
-              </BodyBody>
+                {faq.body}
+              </BoxBody>
             </BoxContent>
-          </BoxLeft>
-          <BoxRight>
+          </BodyCard>
+          <BodyCard>
             <div>
               <CallUsIcon />
             </div>
             <BoxContent>
-              <BoxTitle>{viewModel.call.title}</BoxTitle>
-              <BodyBody>
-                {viewModel.call.body1}
-                <br />
-                {viewModel.call.body2}
-              </BodyBody>
+              <BoxTitle>{call.title}</BoxTitle>
+              <BoxBody>{call.phone}</BoxBody>
+              {call.times.map((item) => (
+                <BoxBody key={item.day}>
+                  <BoxBodyBold>{item.day}</BoxBodyBold>
+                  {item.time}
+                </BoxBody>
+              ))}
+              <BoxBody>{call.timezone}</BoxBody>
             </BoxContent>
-          </BoxRight>
+          </BodyCard>
         </Body>
       </Content>
     </Container>

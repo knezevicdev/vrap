@@ -17,8 +17,7 @@ const SalesContactContainer = styled('div')(({ theme }) => ({
   [theme.breakpoints.down('xs')]: { textAlign: 'center', fontSize: '16px' },
 }));
 
-const Question = styled(Typography)(() => ({
-  display: 'inline',
+const Question = styled('strong')(() => ({
   fontWeight: 600,
 }));
 

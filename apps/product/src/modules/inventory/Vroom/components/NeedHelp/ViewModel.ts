@@ -5,10 +5,16 @@ interface FAQ {
   body: string;
 }
 
+interface Time {
+  day: string;
+  time: string;
+}
+
 interface Call {
   title: string;
-  body1: string;
-  body2: string;
+  phone: string;
+  times: Time[];
+  timezone: string;
 }
 
 class NeedHelpViewModel {
@@ -25,8 +31,22 @@ class NeedHelpViewModel {
 
   readonly call: Call = {
     title: 'Call Us',
-    body1: 'Call us at (855) 524-1300',
-    body2: '9AM-5PM (Eastern Time), Monday through Friday',
+    phone: '(855) 524-1300',
+    times: [
+      {
+        day: 'Mon - Fri: ',
+        time: '9am - 10pm',
+      },
+      {
+        day: 'Sat: ',
+        time: '9am - 8pm',
+      },
+      {
+        day: 'Sun: ',
+        time: '11am - 8pm',
+      },
+    ],
+    timezone: '(Eastern Standard Time)',
   };
 }
 
