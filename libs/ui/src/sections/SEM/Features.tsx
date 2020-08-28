@@ -20,10 +20,16 @@ const FixedColumn = styled.div`
   padding-top: 40px;
   display: flex;
   flex-direction: column;
+  min-width: 152px;
+  @media (max-width: 599px) {
+    border-right: solid 1px #d6d7da;
+  }
 `;
 
+//TODO: Look into scrolling functionality without scrollbar.
 const Columns = styled.div`
   display: flex;
+  overflow: auto;
 `;
 
 const Column = styled.div`
