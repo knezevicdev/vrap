@@ -2,7 +2,7 @@ import { AnalyticsHandler as BaseAnalyticsHandler } from '@vroom-web/analytics-i
 declare class AnalyticsHandler extends BaseAnalyticsHandler {
     trackShopNow: () => void;
     trackLogo: () => void;
-    trackFinancialCalculator: () => void;
+    trackFinanceCalculator: () => void;
     trackContact: () => void;
     trackCorporateSite: () => void;
     trackLearningOverview: () => void;

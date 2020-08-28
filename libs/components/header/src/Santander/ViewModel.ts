@@ -32,7 +32,7 @@ class ViewModel {
     href:
       'https://santanderconsumerusa.com/learning-center/finance-calculators',
     target: '_blank',
-    handleAnalytics: this.analyticsHandler.trackFinancialCalculator,
+    handleAnalytics: this.analyticsHandler.trackFinanceCalculator,
   };
   readonly learningCenterLabel: string = 'Learning Center';
 

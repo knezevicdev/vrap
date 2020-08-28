@@ -14,7 +14,7 @@ class ViewModel {
     {
       title: 'Browse Online',
       description:
-        'Explore thousands of vehicles with new inventory added every week.',
+        'Explore thousands of vehicles from Vroom with new inventory added every week.',
       alt: 'High-Quality Vehicles',
       src: `${publicRuntimeConfig.BASE_PATH}/modules/home/santander/images/icon_online_browse.svg`,
     },

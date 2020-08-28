@@ -14860,8 +14860,8 @@ var AnalyticsHandler$1 = /*#__PURE__*/function (_BaseAnalyticsHandler) {
       _this.track(event, properties);
     });
 
-    _defineProperty(_assertThisInitialized(_this), "trackFinancialCalculator", function () {
-      var event = 'Financial Calculators Clicked';
+    _defineProperty(_assertThisInitialized(_this), "trackFinanceCalculator", function () {
+      var event = 'Finance Calculators Clicked';
       var properties = {
         category: 'Main Navigation'
       };
@@ -14947,7 +14947,7 @@ var ViewModel = function ViewModel(store) {
     label: 'Finance Calculators',
     href: 'https://santanderconsumerusa.com/learning-center/finance-calculators',
     target: '_blank',
-    handleAnalytics: this.analyticsHandler.trackFinancialCalculator
+    handleAnalytics: this.analyticsHandler.trackFinanceCalculator
   });
 
   _defineProperty(this, "learningCenterLabel", 'Learning Center');
