@@ -3,6 +3,8 @@ import styled from 'styled-components';
 
 import { Body, Hero } from '../../atoms/Typography';
 
+//TODO: Mobile layout still needs to be implemented
+
 const Container = styled.div`
   display: flex;
   height: 100%;
