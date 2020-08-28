@@ -10,9 +10,11 @@ const Container = styled.div`
   width: 100%;
 `;
 
+//TODO: Look into scrolling functionality without scrollbar.
 const Items = styled.div`
   display: flex;
   margin-top: 16px;
+  overflow: auto;
 `;
 
 const Item = styled.div`
