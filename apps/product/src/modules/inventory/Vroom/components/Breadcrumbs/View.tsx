@@ -11,11 +11,15 @@ interface Props {
 }
 
 const Crumb = styled(Typography)(({ theme }) => ({
-  cursor: 'pointer',
   fontSize: '13px',
   fontWeight: 600,
   color: theme.palette.primary.main,
   letterSpacing: '0.25px',
+}));
+
+const CrumbLink = styled('a')(() => ({
+  textDecoration: 'none',
+  color: 'inherit',
   borderBottom: 'solid 1px transparent',
   '&:hover': {
     borderBottom: 'solid 1px',
@@ -49,7 +53,13 @@ const BreadcrumbsView: React.FC<Props> = (props) => {
         const isNotLast = length - 1 !== index;
         return (
           <CrumbContainer key={crumb.key}>
-            <Crumb onClick={crumb.onClick}>{crumb.name}</Crumb>
+            {crumb.path !== '' ? (
+              <Crumb>
+                <CrumbLink href={crumb.path}>{crumb.name}</CrumbLink>
+              </Crumb>
+            ) : (
+              <Crumb>{crumb.name}</Crumb>
+            )}
             {isNotLast && <ArrowIcon />}
           </CrumbContainer>
         );

@@ -13,7 +13,7 @@ import { InventoryStore } from 'src/modules/inventory/store';
 interface Crumb {
   key: string;
   name: string;
-  onClick: () => void;
+  path: string;
 }
 
 class BreadcrumbsViewModel {
@@ -26,7 +26,7 @@ class BreadcrumbsViewModel {
   }
 
   crumbs(): Crumb[] {
-    const { make, makeSlug, model, modelSlug } = this.car;
+    const { make, makeSlug, model, modelSlug, year } = this.car;
 
     // FIT-582
     // Persist attributuion query params across navigation.
@@ -60,41 +60,40 @@ class BreadcrumbsViewModel {
     const catalogHref = getUrlFromFiltersData();
     const catalogHrefQueryStringPrefix =
       catalogHref.indexOf('?') === -1 ? '?' : '&';
-    const navigateToCatalog = (): void => {
-      window.location.href = `${catalogHref}${catalogHrefQueryStringPrefix}${attributionQueryString}`;
-    };
+    const catalogPath = `${catalogHref}${catalogHrefQueryStringPrefix}${attributionQueryString}`;
 
     const allModelsFiltersData = addAllModels(makeSlug);
     const allModelsHref = getUrlFromFiltersData(allModelsFiltersData);
     const allModelsHrefQueryStringPrefix =
       allModelsHref.indexOf('?') === -1 ? '?' : '&';
-    const navigateToAllModels = (): void => {
-      window.location.href = `${allModelsHref}${allModelsHrefQueryStringPrefix}${attributionQueryString}`;
-    };
+    const allModelsPath = `${allModelsHref}${allModelsHrefQueryStringPrefix}${attributionQueryString}`;
 
     const modelFiltersData = addModel(makeSlug, modelSlug);
     const modelHref = getUrlFromFiltersData(modelFiltersData);
     const modelHrefQueryStringPrefix =
       modelHref.indexOf('?') === -1 ? '?' : '&';
-    const navigateToModel = (): void => {
-      window.location.href = `${modelHref}${modelHrefQueryStringPrefix}${attributionQueryString}`;
-    };
+    const modelPath = `${modelHref}${modelHrefQueryStringPrefix}${attributionQueryString}`;
 
     return [
       {
         key: 'all',
         name: 'All Cars',
-        onClick: navigateToCatalog,
+        path: catalogPath,
       },
       {
         key: 'make',
         name: make,
-        onClick: navigateToAllModels,
+        path: allModelsPath,
       },
       {
         key: 'model',
         name: model,
-        onClick: navigateToModel,
+        path: modelPath,
+      },
+      {
+        key: 'ymm',
+        name: `${year} ${make} ${model}`,
+        path: '',
       },
     ];
   }
