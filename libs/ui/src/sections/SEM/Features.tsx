@@ -75,9 +75,7 @@ const Icon = styled.div`
   }
 `;
 
-export interface Props {}
-
-export const Features: React.FC<Props> = ({}) => {
+export const Features: React.FC = () => {
   return (
     <Container>
       <Hero.Four>Trim details & features</Hero.Four>

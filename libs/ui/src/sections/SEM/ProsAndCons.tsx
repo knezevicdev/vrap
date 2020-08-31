@@ -49,9 +49,7 @@ const Image = styled.div`
   background: lightgray;
 `;
 
-export interface Props {}
-
-export const ProsAndCons: React.FC<Props> = ({}) => {
+export const ProsAndCons: React.FC = () => {
   return (
     <Container>
       <Info>

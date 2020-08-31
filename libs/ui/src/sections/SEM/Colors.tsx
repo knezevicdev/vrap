@@ -29,9 +29,7 @@ const Image = styled.div`
   background: lightgray;
 `;
 
-export interface Props {}
-
-export const Colors: React.FC<Props> = ({}) => {
+export const Colors: React.FC = () => {
   return (
     <Container>
       <Hero.Four>available colors</Hero.Four>

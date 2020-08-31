@@ -30,9 +30,7 @@ const Info = styled.div`
   flex-direction: column;
 `;
 
-export interface Props {}
-
-export const Awards: React.FC<Props> = ({}) => {
+export const Awards: React.FC = () => {
   return (
     <Container>
       <Hero.Four>Awards & Accolades</Hero.Four>

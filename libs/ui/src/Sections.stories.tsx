@@ -1,6 +1,7 @@
 import React from 'react';
 import styled, { ThemeProvider } from 'styled-components';
 
+/* eslint-disable @typescript-eslint/camelcase */
 import { Awards } from './sections/SEM/Awards';
 import { Colors } from './sections/SEM/Colors';
 import { Features } from './sections/SEM/Features';
