@@ -1,0 +1,23 @@
+landing_build:
+  docker:
+  - image: vroom/mlp:3.0.2
+  steps:
+    - checkout
+    - setup_remote_docker:
+        version: 18.09.3
+    - run:
+        command: |-
+          build -a vroom-web/apps/landing/docker
+landing_deploy:
+  docker:
+  - image: vroom/mlp:3.0.2
+  parameters:
+    env:
+      type: string
+  steps:
+    - checkout
+    - setup_remote_docker:
+        version: 18.09.3
+    - run:
+        command: |-
+          deploy -a vroom-web/apps/landing/docker -n << parameters.env >>

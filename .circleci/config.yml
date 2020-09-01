@@ -30,6 +30,27 @@ jobs:
         version: 18.09.3
     - run:
         command: deploy -a vroom-web/apps/home/docker -n << parameters.env >>
+  landing_build:
+    docker:
+    - image: vroom/mlp:3.0.2
+    steps:
+    - checkout
+    - setup_remote_docker:
+        version: 18.09.3
+    - run:
+        command: build -a vroom-web/apps/landing/docker
+  landing_deploy:
+    docker:
+    - image: vroom/mlp:3.0.2
+    parameters:
+      env:
+        type: string
+    steps:
+    - checkout
+    - setup_remote_docker:
+        version: 18.09.3
+    - run:
+        command: deploy -a vroom-web/apps/landing/docker -n << parameters.env >>
   lint_build:
     docker:
     - image: circleci/node:erbium
@@ -210,6 +231,70 @@ workflows:
           tags:
             only: /^home-v.*/
         name: home_deploy_prod
+        requires:
+        - hold_prod
+  landing:
+    jobs:
+    - landing_build:
+        context: aws-non-prod
+        filters:
+          branches:
+            ignore: /.*/
+          tags:
+            only: /^landing-v.*/
+    - hold:
+        filters:
+          branches:
+            ignore: /.*/
+          tags:
+            only: /^landing-v.*/
+        matrix:
+          parameters:
+            env:
+            - dev
+            - qa
+            - uat
+        name: hold_<< matrix.env >>
+        requires:
+        - landing_build
+        type: approval
+    - landing_deploy:
+        context: aws-non-prod
+        filters:
+          branches:
+            ignore: /.*/
+          tags:
+            only: /^landing-v.*/
+        matrix:
+          parameters:
+            env:
+            - dev
+            - qa
+            - uat
+        name: landing_deploy_<< matrix.env >>
+        requires:
+        - hold_<< matrix.env >>
+    - hold:
+        filters:
+          branches:
+            ignore: /.*/
+          tags:
+            only: /^landing-v.*/
+        name: hold_prod
+        requires:
+        - landing_deploy_dev
+        - landing_deploy_qa
+        - landing_deploy_uat
+        type: approval
+    - landing_deploy:
+        context: aws-non-prod
+        env: prod
+        filters:
+          branches:
+            ignore: /.*/
+          tags:
+            only: /^landing-v.*/
+        name: landing_deploy_prod
         requires:
         - hold_prod
   listing:
