@@ -1,0 +1,22 @@
+User-agent: Yandex
+Disallow: /
+
+User-agent: Baiduspider
+Disallow: /
+
+User-agent: *
+
+Disallow: /signup
+Disallow: /wishlist
+Disallow: /catalog?search=
+Disallow: /web/
+Disallow: /deal
+Disallow: /Legal/
+Disallow: /e2e/
+Disallow: /errors/
+Disallow: /account/login?*
+Disallow: /account/create?*
+Disallow: /trade/
+
+
+Sitemap: https://www.vroom.com/sitemap.xml

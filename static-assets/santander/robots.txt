@@ -1,0 +1,13 @@
+User-agent: Yandex
+Disallow: /
+
+User-agent: Baiduspider
+Disallow: /
+
+User-agent: *
+
+Disallow: /catalog?search=
+Disallow: /web/
+Disallow: /errors/
+
+Sitemap: https://vroom.santanderconsumerusa.com/sitemap.xml
