@@ -74,6 +74,17 @@ class BreadcrumbsViewModel {
       modelHref.indexOf('?') === -1 ? '?' : '&';
     const modelPath = `${modelHref}${modelHrefQueryStringPrefix}${attributionQueryString}`;
 
+    const yearModelFiltersData = addModel(makeSlug, modelSlug, {
+      year: {
+        min: year,
+        max: year,
+      },
+    });
+    const yearModelHref = getUrlFromFiltersData(yearModelFiltersData);
+    const yearModelHrefQueryStringPrefix =
+      modelHref.indexOf('?') === -1 ? '?' : '&';
+    const yearModelPath = `${yearModelHref}${yearModelHrefQueryStringPrefix}${attributionQueryString}`;
+
     return [
       {
         key: 'all',
@@ -89,6 +100,11 @@ class BreadcrumbsViewModel {
         key: 'model',
         name: model,
         path: modelPath,
+      },
+      {
+        key: 'year',
+        name: year.toString(),
+        path: yearModelPath,
       },
       {
         key: 'yearmakemodel',

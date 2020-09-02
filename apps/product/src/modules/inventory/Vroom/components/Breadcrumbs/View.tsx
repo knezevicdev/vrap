@@ -17,21 +17,13 @@ const BreadcrumbsContainer = styled('div')(({ theme }) => ({
   maxWidth: '1280px',
   width: '100%',
   padding: theme.spacing(0, 3),
-  fontSize: '13px',
-  fontWeight: 600,
-  letterSpacing: '0.25px',
 }));
 
 const CatalogBreadcrumbs = styled(Breadcrumbs)(() => ({
   fontSize: '13px',
   fontWeight: 600,
   letterSpacing: '0.25px',
-}));
-
-const Crumb = styled(Typography)(() => ({
-  fontSize: '13px',
-  fontWeight: 600,
-  letterSpacing: '0.25px',
+  lineHeight: '13px',
 }));
 
 const BreadcrumbsView: React.FC<Props> = (props) => {
@@ -46,7 +38,9 @@ const BreadcrumbsView: React.FC<Props> = (props) => {
               {crumb.path !== '' ? (
                 <Link href={crumb.path}>{crumb.name}</Link>
               ) : (
-                <Crumb color="primary">{crumb.name}</Crumb>
+                <Typography color="primary" variant="inherit">
+                  {crumb.name}
+                </Typography>
               )}
             </div>
           );
