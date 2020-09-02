@@ -331,6 +331,13 @@ CarsPage.getInitialProps = async (context: NextPageContext): Promise<Props> => {
     context.query
   );
 
+  if (!geoLocationSortDefaultVariant && req) {
+    console.log({
+      latitude: req.headers['client-geo-latitude'],
+      longitude: req.headers['client-geo-longitude'],
+    });
+  }
+
   // FIT-583
   // Persist key attribution query params across navigation.
   // This is a stopgap so that vlassic attributuion works.
