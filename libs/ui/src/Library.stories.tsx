@@ -2,6 +2,7 @@ import React from 'react';
 import styled, { ThemeProvider } from 'styled-components';
 
 import { Button } from './atoms/Button';
+import { Picture } from './atoms/Picture';
 import { Body, Hero, Link, Title } from './atoms/Typography';
 import { theme as SantanderTheme } from './themes/New/Santander';
 import { theme as VroomTheme } from './themes/New/Vroom';
@@ -99,6 +100,65 @@ const Buttons = (): JSX.Element => {
   );
 };
 
+const Pictures = (): JSX.Element => {
+  return (
+    <SectionContainer>
+      <SectionTitle>Pictures</SectionTitle>
+      <Picture
+        alt="Vroom Logo"
+        src="/images/vroom-main-logo-116x20.png"
+        width="116"
+        height="20"
+      />
+      <Picture
+        alt="Ford F-150"
+        src="/images/ford.png"
+        width="50%"
+        aspectRatio="543:292"
+      />
+      <Picture
+        alt="Prius"
+        src="/images/prius.png"
+        width="150px"
+        aspectRatio="1199:432"
+      />
+      <Picture
+        alt="Where is VIN"
+        src="/images/where-is-vin.png"
+        width="150"
+        aspectRatio="888:336"
+      />
+      <Picture
+        alt="Customer Quote"
+        src="/images/customer-quote.png"
+        width="100%"
+        aspectRatio="592:395"
+      />
+      <Picture
+        alt="Hero Background"
+        src="/images/hero-background.png"
+        width="auto"
+        aspectRatio="1280:496"
+      />
+      <Picture
+        alt="Who We Are Background"
+        src="/images/who-we-are-background.png"
+        width="auto"
+        height="300px"
+        objectFit="cover"
+        objectPosition="25% 25%"
+      />
+      <Picture
+        alt="Who We Are Background"
+        src="/images/who-we-are-background.png"
+        width="auto"
+        height="300px"
+        objectFit="contain"
+      />
+    </SectionContainer>
+  );
+};
+
 export const Atoms: React.FC = () => {
   return (
     <Container>
@@ -106,6 +166,7 @@ export const Atoms: React.FC = () => {
         <ThemeProvider theme={VroomTheme}>
           <Typography />
           <Buttons />
+          <Pictures />
         </ThemeProvider>
       </Client>
       <Client>
