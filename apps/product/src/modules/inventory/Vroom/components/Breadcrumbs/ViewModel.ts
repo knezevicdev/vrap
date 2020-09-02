@@ -57,22 +57,26 @@ class BreadcrumbsViewModel {
       utm_site,
     });
 
+    const queryStringPrefix = (href: string): string => {
+      return href.indexOf('?') === -1 ? '?' : '&';
+    };
+
     const catalogHref = getUrlFromFiltersData();
-    const catalogHrefQueryStringPrefix =
-      catalogHref.indexOf('?') === -1 ? '?' : '&';
-    const catalogPath = `${catalogHref}${catalogHrefQueryStringPrefix}${attributionQueryString}`;
+    const catalogPath = `${catalogHref}${queryStringPrefix(
+      catalogHref
+    )}${attributionQueryString}`;
 
     const allModelsFiltersData = addAllModels(makeSlug);
     const allModelsHref = getUrlFromFiltersData(allModelsFiltersData);
-    const allModelsHrefQueryStringPrefix =
-      allModelsHref.indexOf('?') === -1 ? '?' : '&';
-    const allModelsPath = `${allModelsHref}${allModelsHrefQueryStringPrefix}${attributionQueryString}`;
+    const allModelsPath = `${allModelsHref}${queryStringPrefix(
+      allModelsHref
+    )}${attributionQueryString}`;
 
     const modelFiltersData = addModel(makeSlug, modelSlug);
     const modelHref = getUrlFromFiltersData(modelFiltersData);
-    const modelHrefQueryStringPrefix =
-      modelHref.indexOf('?') === -1 ? '?' : '&';
-    const modelPath = `${modelHref}${modelHrefQueryStringPrefix}${attributionQueryString}`;
+    const modelPath = `${modelHref}${queryStringPrefix(
+      modelHref
+    )}${attributionQueryString}`;
 
     const yearModelFiltersData = addModel(makeSlug, modelSlug, {
       year: {
@@ -81,9 +85,9 @@ class BreadcrumbsViewModel {
       },
     });
     const yearModelHref = getUrlFromFiltersData(yearModelFiltersData);
-    const yearModelHrefQueryStringPrefix =
-      modelHref.indexOf('?') === -1 ? '?' : '&';
-    const yearModelPath = `${yearModelHref}${yearModelHrefQueryStringPrefix}${attributionQueryString}`;
+    const yearModelPath = `${yearModelHref}${queryStringPrefix(
+      yearModelHref
+    )}${attributionQueryString}`;
 
     return [
       {
