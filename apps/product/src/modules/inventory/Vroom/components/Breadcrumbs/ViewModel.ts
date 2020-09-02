@@ -91,7 +91,7 @@ class BreadcrumbsViewModel {
         path: modelPath,
       },
       {
-        key: 'ymm',
+        key: 'yearmakemodel',
         name: `${year} ${make} ${model}`,
         path: '',
       },

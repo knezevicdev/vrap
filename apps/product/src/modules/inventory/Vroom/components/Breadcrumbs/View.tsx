@@ -1,5 +1,5 @@
+import { Breadcrumbs, Link, Typography } from '@material-ui/core';
 import { styled } from '@material-ui/core/styles';
-import { Typography } from '@vroom-web/ui';
 import { observer } from 'mobx-react';
 import React from 'react';
 
@@ -10,31 +10,6 @@ interface Props {
   viewModel: ViewModel;
 }
 
-const Crumb = styled(Typography)(({ theme }) => ({
-  fontSize: '13px',
-  fontWeight: 600,
-  color: theme.palette.primary.main,
-  letterSpacing: '0.25px',
-}));
-
-const CrumbLink = styled('a')(() => ({
-  textDecoration: 'none',
-  color: 'inherit',
-  borderBottom: 'solid 1px transparent',
-  '&:hover': {
-    borderBottom: 'solid 1px',
-  },
-}));
-
-const ArrowIcon = styled(Arrow)(({ theme }) => ({
-  margin: theme.spacing(0, 1),
-}));
-
-const CrumbContainer = styled('div')(() => ({
-  display: 'flex',
-  alignItems: 'center',
-}));
-
 const BreadcrumbsContainer = styled('div')(({ theme }) => ({
   display: 'flex',
   alignItems: 'center',
@@ -42,6 +17,21 @@ const BreadcrumbsContainer = styled('div')(({ theme }) => ({
   maxWidth: '1280px',
   width: '100%',
   padding: theme.spacing(0, 3),
+  fontSize: '13px',
+  fontWeight: 600,
+  letterSpacing: '0.25px',
+}));
+
+const CatalogBreadcrumbs = styled(Breadcrumbs)(() => ({
+  fontSize: '13px',
+  fontWeight: 600,
+  letterSpacing: '0.25px',
+}));
+
+const Crumb = styled(Typography)(() => ({
+  fontSize: '13px',
+  fontWeight: 600,
+  letterSpacing: '0.25px',
 }));
 
 const BreadcrumbsView: React.FC<Props> = (props) => {
@@ -49,21 +39,19 @@ const BreadcrumbsView: React.FC<Props> = (props) => {
 
   return (
     <BreadcrumbsContainer>
-      {viewModel.crumbs().map((crumb, index, { length }) => {
-        const isNotLast = length - 1 !== index;
-        return (
-          <CrumbContainer key={crumb.key}>
-            {crumb.path !== '' ? (
-              <Crumb>
-                <CrumbLink href={crumb.path}>{crumb.name}</CrumbLink>
-              </Crumb>
-            ) : (
-              <Crumb>{crumb.name}</Crumb>
-            )}
-            {isNotLast && <ArrowIcon />}
-          </CrumbContainer>
-        );
-      })}
+      <CatalogBreadcrumbs separator={<Arrow />} aria-label="breadcrumb">
+        {viewModel.crumbs().map((crumb) => {
+          return (
+            <div key={crumb.key}>
+              {crumb.path !== '' ? (
+                <Link href={crumb.path}>{crumb.name}</Link>
+              ) : (
+                <Crumb color="primary">{crumb.name}</Crumb>
+              )}
+            </div>
+          );
+        })}
+      </CatalogBreadcrumbs>
     </BreadcrumbsContainer>
   );
 };

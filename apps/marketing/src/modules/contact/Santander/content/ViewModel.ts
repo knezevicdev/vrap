@@ -11,7 +11,7 @@ class ViewModel {
   private analyticsHandler: SantanderAnalyticsHandler = new SantanderAnalyticsHandler();
   readonly headerTitle: string = 'Contact Us';
   readonly headerDescription: string =
-    'Need assistance? Please choose from the following options';
+    'Need assistance? Please choose from the following options.';
 
   readonly vehicleTitle: string = 'For questions about a vehicle';
   readonly accountTitle: string =

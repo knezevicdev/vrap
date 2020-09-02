@@ -17,8 +17,8 @@ class AnalyticsHandler extends BaseAnalyticsHandler {
     this.track(event, properties);
   };
 
-  trackFinancialCalculator = (): void => {
-    const event = 'Financial Calculators Clicked';
+  trackFinanceCalculator = (): void => {
+    const event = 'Finance Calculators Clicked';
     const properties = {
       category: 'Main Navigation',
     };

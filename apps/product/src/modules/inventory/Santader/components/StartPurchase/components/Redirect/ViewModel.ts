@@ -16,7 +16,7 @@ class ViewModel {
     src: `${publicRuntimeConfig.BASE_PATH}/modules/inventory/components/exit-santander.png`,
   };
   readonly message: string =
-    'We’re now sending you to checkout with our partner, Vroom.';
+    'We’re now sending you to Vroom to continue your purchase.';
   readonly begin: string = 'You’ll be redirected in ';
   readonly end: string = ' seconds';
 
