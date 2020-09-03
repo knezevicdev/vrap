@@ -3,7 +3,7 @@ import { SimpleHeader } from '@vroom-web/header-components';
 import getConfig from 'next/config';
 import React from 'react';
 
-import ContactForm from './components/ContactForm';
+import ContactLabel from './components/ContactLabel';
 
 const { publicRuntimeConfig } = getConfig();
 
@@ -13,7 +13,7 @@ const Vroom: React.FC = () => {
   return (
     <>
       <SimpleHeader gearboxPrivateUrl={gearboxPrivateUrl} />
-      <ContactForm />
+      <ContactLabel />
       <StandardFooter />
     </>
   );
