@@ -58,10 +58,11 @@ class BreadcrumbsViewModel {
     });
 
     const queryStringPrefix = (href: string): string => {
+      if (attributionQueryString.length === 0) return '';
       return href.indexOf('?') === -1 ? '?' : '&';
     };
 
-    const catalogHref = getUrlFromFiltersData();
+    const catalogHref = getUrlFromFiltersData().slice(0, -1);
     const catalogPath = `${catalogHref}${queryStringPrefix(
       catalogHref
     )}${attributionQueryString}`;

@@ -23,7 +23,7 @@ class BreadcrumbsViewModel {
   crumbs(): Crumb[] {
     const { make, makeSlug, model, modelSlug, year } = this.car;
 
-    const catalogHref = getUrlFromFiltersData();
+    const catalogHref = getUrlFromFiltersData().slice(0, -1);
 
     const allModelsFiltersData = addAllModels(makeSlug);
     const allModelsHref = getUrlFromFiltersData(allModelsFiltersData);
