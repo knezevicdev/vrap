@@ -331,6 +331,15 @@ CarsPage.getInitialProps = async (context: NextPageContext): Promise<Props> => {
     context.query
   );
 
+  //TODO: Temp logging for Geo Data. Just to see what is coming
+  // from the fastly headers. Remove once geo sorting is fixed
+  if (!geoLocationSortDefaultVariant && req) {
+    console.log('GEO DATA', {
+      latitude: req.headers['client-geo-latitude'],
+      longitude: req.headers['client-geo-longitude'],
+    });
+  }
+
   // FIT-583
   // Persist key attribution query params across navigation.
   // This is a stopgap so that vlassic attributuion works.
