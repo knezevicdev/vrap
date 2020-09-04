@@ -62,7 +62,10 @@ class BreadcrumbsViewModel {
       return href.indexOf('?') === -1 ? '?' : '&';
     };
 
-    const catalogHref = getUrlFromFiltersData().slice(0, -1);
+    let catalogHref = getUrlFromFiltersData();
+    if (catalogHref.charAt(catalogHref.length - 1) === '/') {
+      catalogHref = catalogHref.slice(0, -1);
+    }
     const catalogPath = `${catalogHref}${queryStringPrefix(
       catalogHref
     )}${attributionQueryString}`;
