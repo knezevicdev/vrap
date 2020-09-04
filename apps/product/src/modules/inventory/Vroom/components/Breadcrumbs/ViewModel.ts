@@ -13,7 +13,7 @@ import { InventoryStore } from 'src/modules/inventory/store';
 interface Crumb {
   key: string;
   name: string;
-  onClick: () => void;
+  path: string;
 }
 
 class BreadcrumbsViewModel {
@@ -26,7 +26,7 @@ class BreadcrumbsViewModel {
   }
 
   crumbs(): Crumb[] {
-    const { make, makeSlug, model, modelSlug } = this.car;
+    const { make, makeSlug, model, modelSlug, year } = this.car;
 
     // FIT-582
     // Persist attributuion query params across navigation.
@@ -57,44 +57,67 @@ class BreadcrumbsViewModel {
       utm_site,
     });
 
-    const catalogHref = getUrlFromFiltersData();
-    const catalogHrefQueryStringPrefix =
-      catalogHref.indexOf('?') === -1 ? '?' : '&';
-    const navigateToCatalog = (): void => {
-      window.location.href = `${catalogHref}${catalogHrefQueryStringPrefix}${attributionQueryString}`;
+    const queryStringPrefix = (href: string): string => {
+      if (attributionQueryString.length === 0) return '';
+      return href.indexOf('?') === -1 ? '?' : '&';
     };
+
+    let catalogHref = getUrlFromFiltersData();
+    if (catalogHref.charAt(catalogHref.length - 1) === '/') {
+      catalogHref = catalogHref.slice(0, -1);
+    }
+    const catalogPath = `${catalogHref}${queryStringPrefix(
+      catalogHref
+    )}${attributionQueryString}`;
 
     const allModelsFiltersData = addAllModels(makeSlug);
     const allModelsHref = getUrlFromFiltersData(allModelsFiltersData);
-    const allModelsHrefQueryStringPrefix =
-      allModelsHref.indexOf('?') === -1 ? '?' : '&';
-    const navigateToAllModels = (): void => {
-      window.location.href = `${allModelsHref}${allModelsHrefQueryStringPrefix}${attributionQueryString}`;
-    };
+    const allModelsPath = `${allModelsHref}${queryStringPrefix(
+      allModelsHref
+    )}${attributionQueryString}`;
 
     const modelFiltersData = addModel(makeSlug, modelSlug);
     const modelHref = getUrlFromFiltersData(modelFiltersData);
-    const modelHrefQueryStringPrefix =
-      modelHref.indexOf('?') === -1 ? '?' : '&';
-    const navigateToModel = (): void => {
-      window.location.href = `${modelHref}${modelHrefQueryStringPrefix}${attributionQueryString}`;
-    };
+    const modelPath = `${modelHref}${queryStringPrefix(
+      modelHref
+    )}${attributionQueryString}`;
+
+    const yearModelFiltersData = addModel(makeSlug, modelSlug, {
+      year: {
+        min: year,
+        max: year,
+      },
+    });
+    const yearModelHref = getUrlFromFiltersData(yearModelFiltersData);
+    const yearModelPath = `${yearModelHref}${queryStringPrefix(
+      yearModelHref
+    )}${attributionQueryString}`;
 
     return [
       {
         key: 'all',
         name: 'All Cars',
-        onClick: navigateToCatalog,
+        path: catalogPath,
       },
       {
         key: 'make',
         name: make,
-        onClick: navigateToAllModels,
+        path: allModelsPath,
       },
       {
         key: 'model',
         name: model,
-        onClick: navigateToModel,
+        path: modelPath,
+      },
+      {
+        key: 'year',
+        name: year.toString(),
+        path: yearModelPath,
+      },
+      {
+        key: 'yearmakemodel',
+        name: `${year} ${make} ${model}`,
+        path: '',
       },
     ];
   }
