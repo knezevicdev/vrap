@@ -1,11 +1,13 @@
 class ContactViewModel {
   readonly title: string = 'Contact Us';
-  readonly supportText: string = `We'd be happy to help. Give us a call us at `;
-  readonly phoneNumber: string;
+  readonly supportText: string = `We'd be happy to help. Give us a call at `;
+  readonly phone: string = '(877) 916-1000';
+  readonly speak: string = ' to speak with a representative.';
+  //readonly phoneNumber: string;
 
-  constructor(phoneNumber: string) {
-    this.phoneNumber = phoneNumber;
-  }
+  // constructor(phoneNumber: string) {
+  //   this.phoneNumber = phoneNumber;
+  // }
 }
 
 export default ContactViewModel;

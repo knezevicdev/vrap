@@ -45,7 +45,8 @@ const Contact: React.FC<Props> = ({ viewModel }) => {
       <StyledBox>
         <SubTitle component="span">
           {viewModel.supportText}
-          <strong>{viewModel.phoneNumber}</strong>
+          <strong>{viewModel.phone}</strong>
+          {viewModel.speak}
         </SubTitle>
       </StyledBox>
     </StyledContainer>
