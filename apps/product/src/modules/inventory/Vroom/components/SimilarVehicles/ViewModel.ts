@@ -32,7 +32,10 @@ class SimilarVehiclesViewModel {
   }
 
   getCars = (): Car[] => {
-    return this.store.similar.map((car) => car._source);
+    const similarVehicleCount = 4;
+    return this.store.similar
+      .slice(0, similarVehicleCount)
+      .map((car) => car._source);
   };
 
   handleClick(event: React.MouseEvent<HTMLButtonElement>): void {

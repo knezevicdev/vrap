@@ -1,8 +1,13 @@
 import { Brand, ThemeProvider } from '@vroom-web/ui';
-import { NextPage } from 'next';
+import { NextPage, NextPageContext } from 'next';
 import getConfig from 'next/config';
+import { parseCookies } from 'nookies';
 import React from 'react';
+import { Experiment } from 'vroom-abtesting-sdk/types';
 
+import experimentSDK, {
+  showDefaultVariant,
+} from 'src/integrations/experimentSDK';
 import Inventory from 'src/modules/inventory';
 import { BrandContext } from 'src/modules/inventory/BrandContext';
 import {
@@ -21,10 +26,11 @@ export interface Props {
   initialState: InventoryStoreState;
   title: string;
   brand: Brand;
+  experiments: Experiment[];
 }
 
 const InventoryPage: NextPage<Props> = (props: Props) => {
-  const { canonicalHref, initialState, title, brand } = props;
+  const { canonicalHref, initialState, title, brand, experiments } = props;
   const store = new InventoryStore(initialState);
   const head = (
     <>
@@ -35,7 +41,12 @@ const InventoryPage: NextPage<Props> = (props: Props) => {
   );
   return (
     <ThemeProvider brand={brand}>
-      <Page brand={brand} name="Product Details" head={head}>
+      <Page
+        brand={brand}
+        experiments={experiments}
+        name="Product Details"
+        head={head}
+      >
         <BrandContext.Provider value={brand}>
           <InventoryStoreContext.Provider value={store}>
             <Inventory />
@@ -46,11 +57,15 @@ const InventoryPage: NextPage<Props> = (props: Props) => {
   );
 };
 
-InventoryPage.getInitialProps = async ({ query, res, req }): Promise<Props> => {
+InventoryPage.getInitialProps = async (
+  context: NextPageContext
+): Promise<Props> => {
+  const cookies = parseCookies(context);
+  const marketingId = cookies['uuid'];
+  const { req, res, query } = context;
   const slug = query.slug as string;
   const slugArray = slug.split('-');
   const vin = slugArray[slugArray.length - 1];
-  const initialState = await getInitialInventoryStoreState(vin);
 
   const headerBrandKey = 'x-brand';
   const santanderKey = 'santander';
@@ -60,6 +75,19 @@ InventoryPage.getInitialProps = async ({ query, res, req }): Promise<Props> => {
   const brand =
     (brandHeader || queryBrand) == santanderKey ? Brand.SANTANDER : Brand.VROOM;
 
+  const experiments =
+    brand === Brand.VROOM
+      ? await experimentSDK.getRunningExperiments(marketingId)
+      : [];
+  const vinClusterDefaultVariant = showDefaultVariant(
+    'snd-pdp-vin-cluster-similar-vehicle',
+    experiments,
+    context.query
+  );
+  const initialState = await getInitialInventoryStoreState(
+    vin,
+    vinClusterDefaultVariant
+  );
   let canonicalHref: string | undefined;
   let title = '';
   if (initialState.vehicleStatus === Status.SUCCESS) {
@@ -93,7 +121,7 @@ InventoryPage.getInitialProps = async ({ query, res, req }): Promise<Props> => {
     }
   }
 
-  return { canonicalHref, initialState, title, brand };
+  return { canonicalHref, initialState, title, brand, experiments };
 };
 
 export default InventoryPage;
