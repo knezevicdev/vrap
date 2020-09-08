@@ -38,6 +38,7 @@ interface Props {
   experiments: Experiment[];
   initialStoreState: InitialCarsStoreState;
   query: ParsedUrlQuery;
+  resumeSearchDefaultVariant: boolean;
 }
 
 const CarsPage: NextPage<Props> = ({
@@ -45,6 +46,7 @@ const CarsPage: NextPage<Props> = ({
   experiments,
   initialStoreState,
   query,
+  resumeSearchDefaultVariant,
 }) => {
   // Persist store instance across URL updates.
   const [carsStore] = useState<CarsStore>(new CarsStore(initialStoreState));
@@ -60,6 +62,25 @@ const CarsPage: NextPage<Props> = ({
       carsStore.setAreFiltersOpen(true);
     }
   }, [carsStore, theme]);
+
+  useEffect(() => {
+    const localStorageKey = 'listing_filters_data';
+    if (resumeSearchDefaultVariant) {
+      if (localStorage.getItem(localStorageKey)) {
+        localStorage.removeItem(localStorageKey);
+      }
+      return;
+    }
+    if (!carsStore.filtersData) {
+      return;
+    }
+    if (Object.values(carsStore.filtersData).filter((i) => !!i).length > 0) {
+      localStorage.setItem(
+        localStorageKey,
+        JSON.stringify(carsStore.filtersData)
+      );
+    }
+  }, [carsStore.filtersData, resumeSearchDefaultVariant]);
 
   // DELTA-5 / DELTA-56
   // This is more complex than I would like.
@@ -331,6 +352,11 @@ CarsPage.getInitialProps = async (context: NextPageContext): Promise<Props> => {
     context.query
   );
 
+  const resumeSearchDefaultVariant = showDefaultVariant(
+    'delta-resume-search',
+    experiments,
+    context.query
+  );
   //TODO: Temp logging for Geo Data. Just to see what is coming
   // from the fastly headers. Remove once geo sorting is fixed
   if (!geoLocationSortDefaultVariant && req) {
@@ -394,6 +420,7 @@ CarsPage.getInitialProps = async (context: NextPageContext): Promise<Props> => {
     experiments,
     initialStoreState,
     query,
+    resumeSearchDefaultVariant,
   };
 };
 
