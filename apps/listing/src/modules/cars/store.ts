@@ -273,14 +273,19 @@ export async function getInitialCarsStoreState(
       sortdirection: 'asc',
       source: `${publicRuntimeConfig.NAME}-${publicRuntimeConfig.VERSION}`,
     };
+
+    console.time('postInventory - Makes & Model');
     const makesResponse = await invSearchNetworker.postInventory(
       makesRequestData
     );
+    console.timeEnd('postInventory - Makes & Model');
+
     const makeBuckets = makesResponse.data.aggregations.make_count.buckets;
     initialState.makeBuckets = makeBuckets;
     initialState.makeBucketsStatus = Status.SUCCESS;
   } catch {
     initialState.makeBucketsStatus = Status.ERROR;
+    console.timeEnd('postInventory - Makes & Model');
   }
 
   try {
@@ -296,13 +301,16 @@ export async function getInitialCarsStoreState(
       limit: INVENTORY_CARDS_PER_PAGE,
       source: `${publicRuntimeConfig.NAME}-${publicRuntimeConfig.VERSION}`,
     };
+    console.time('postInventory - Cars');
     const inventoryResponse = await invSearchNetworker.postInventory(
       inventoryRequestData
     );
     initialState.inventoryData = inventoryResponse.data;
     initialState.inventoryStatus = Status.SUCCESS;
+    console.timeEnd('postInventory - Cars');
   } catch {
     initialState.inventoryStatus = Status.ERROR;
+    console.timeEnd('postInventory - Cars');
   }
 
   const hasNoInventory = initialState.inventoryData?.hits.total === 0;
@@ -316,13 +324,16 @@ export async function getInitialCarsStoreState(
         'sold-status': SoldStatus.FOR_SALE,
         source: `${publicRuntimeConfig.NAME}-${publicRuntimeConfig.VERSION}`,
       };
+      console.time('postInventory - Popular Cars');
       const inventoryResponse = await invSearchNetworker.postInventory(
         popularCarsRequestData
       );
+      console.timeEnd('postInventory - Popular Cars');
       const popularCarsData = inventoryResponse.data;
       initialState.popularCarsData = popularCarsData;
       initialState.popularCarsStatus = Status.SUCCESS;
     } catch {
+      console.timeEnd('postInventory - Popular Cars');
       initialState.popularCarsStatus = Status.ERROR;
     }
   }
