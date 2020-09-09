@@ -258,7 +258,8 @@ const CarsPage: NextPage<Props> = ({
       filtersData = setYear(year, filtersData);
     }
     // Return url without trailing slash.
-    return getUrlFromFiltersData(filtersData).replace(/\/$/, '');
+    const path = getUrlFromFiltersData(filtersData).replace(/\/$/, '');
+    return `https://www.vroom.com${path}`;
   };
   const canonicalHref = getCanonicalHref();
 
