@@ -202,6 +202,14 @@ class CarsViewModel {
     }
     return this.inventoryCars();
   };
+
+  getPage(): number {
+    const filtersData = this.store.filtersData;
+    const filtersDataPage = filtersData ? filtersData[Filters.PAGE] : undefined;
+    const page = filtersDataPage ? filtersDataPage : 1;
+    const arraysStartAtZeroFix = 1;
+    return (page - 1) * this.store.inventoryCardsPerPage + arraysStartAtZeroFix;
+  }
 }
 
 export default CarsViewModel;

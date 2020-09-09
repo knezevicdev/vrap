@@ -13,9 +13,10 @@ import { CarsStoreContext } from 'src/modules/cars/store';
 
 interface CarCardProps {
   car: Car | undefined;
+  position: number;
 }
 
-const CarCard: React.FC<CarCardProps> = ({ car }) => {
+const CarCard: React.FC<CarCardProps> = ({ car, position }) => {
   const theme = useTheme();
   const xsDown = useMediaQuery(theme.breakpoints.down('xs'));
   const experimentData = useContext(ExperimentContext);
@@ -25,7 +26,12 @@ const CarCard: React.FC<CarCardProps> = ({ car }) => {
         if (!car) {
           return <LoadingCard mobile={xsDown} />;
         }
-        const viewModel = new CarCardViewModel(carsStore, car, experimentData);
+        const viewModel = new CarCardViewModel(
+          carsStore,
+          car,
+          experimentData,
+          position
+        );
         if (xsDown) {
           return <MobileView viewModel={viewModel} />;
         }
