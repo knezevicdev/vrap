@@ -380,12 +380,19 @@ CarsPage.getInitialProps = async (context: NextPageContext): Promise<Props> => {
     source: `${NAME}-${VERSION}`,
   };
 
+  const makesStart = new Date().getTime();
   const makesR = await invSearchNetworker.postInventory(makesRequestData);
+  const makesElapsed = new Date().getTime() - makesStart;
+  console.log('{"MAKES_AND_MODELS_FILTERS_ms":' + makesElapsed + '}');
 
+  const popularStart = new Date().getTime();
   const popularCarsR = await invSearchNetworker.postInventory(
     popularCarsRequestData
   );
+  const popularElapsed = new Date().getTime() - popularStart;
+  console.log('{"POPULAR_CARS_ms":' + popularElapsed + '}');
 
+  const experimentsStart = new Date().getTime();
   const experimentsCache = cache.get('experiments');
   const experiments =
     brand === Brand.VROOM
@@ -404,6 +411,8 @@ CarsPage.getInitialProps = async (context: NextPageContext): Promise<Props> => {
               });
           })
       : [];
+  const experimentsElapsed = new Date().getTime() - experimentsStart;
+  console.log('{"EXPERIMENTS_ms":' + experimentsElapsed + '}');
 
   const geoLocationSortDefaultVariant = showDefaultVariant(
     'snd-catalog-sort-by-geo-location',
@@ -424,7 +433,11 @@ CarsPage.getInitialProps = async (context: NextPageContext): Promise<Props> => {
     source: `${NAME}-${VERSION}`,
   };
 
+  const carsStart = new Date().getTime();
   const carsR = await invSearchNetworker.postInventory(inventoryRequestData);
+  const carsElapsed = new Date().getTime() - carsStart;
+  console.log('{"CARS_ms":' + carsElapsed + '}');
+
   const makes = makesR.data.aggregations.make_count.buckets;
   const popularCars = popularCarsR.data;
   const cars = carsR.data;
