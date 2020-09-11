@@ -29,11 +29,11 @@ const config = {
     NAME: name,
     STATIC_ASSETS_HOST_URL: process.env.STATIC_ASSETS_HOST_URL,
     VERSION: version,
+    BRANCH_IO_KEY: process.env.BRANCH_IO_KEY,
   },
   serverRuntimeConfig: {
     // Will only be available on the server side
     SEGMENT_WRITE_KEY: process.env.SEGMENT_WRITE_KEY,
-    BRANCH_IO_KEY: process.env.BRANCH_IO_KEY,
   },
   /* Custom webpack configuration. */
   webpack: (config) => {
