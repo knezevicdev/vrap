@@ -23,6 +23,17 @@ export interface Product {
 }
 
 class AnalyticsHandler extends BaseAnalyticsHandler {
+  trackProductListViewed(products: Product[]): void {
+    const event = 'Product List Viewed';
+    const category = 'Product';
+    const properties = {
+      category,
+      products,
+      nonInteraction: 1,
+    };
+    this.track(event, properties);
+  }
+
   trackProductClicked(product: Product): void {
     const event = 'Product Clicked';
     const category = 'Product';
