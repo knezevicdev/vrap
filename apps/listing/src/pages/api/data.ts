@@ -2,19 +2,29 @@ import { getFiltersDataFromUrl } from '@vroom-web/catalog-url-integration';
 import {
   InvSearchNetworker,
   PostInventoryRequestData,
+  SoldStatus,
 } from '@vroom-web/inv-search-networking';
-import axios from 'axios';
+import { Brand } from '@vroom-web/ui';
 import { NextApiRequest, NextApiResponse } from 'next';
 import getConfig from 'next/config';
 
-import { showDefaultVariant } from '../../integrations/experimentSDK';
+import experimentSDK, {
+  showDefaultVariant,
+} from '../../integrations/experimentSDK';
 
-import { INVENTORY_CARDS_PER_PAGE } from 'src/modules/cars/data';
+import {
+  INVENTORY_CARDS_PER_PAGE,
+  POPULAR_CAR_LIMIT,
+} from 'src/modules/cars/data';
 import { getPostInventoryRequestDataFromFilterData } from 'src/modules/cars/store';
+const NodeCache = require('node-cache');
+const cache = new NodeCache();
 
 const {
   publicRuntimeConfig: { INVSEARCH_V3_URL, NAME, VERSION },
 } = getConfig();
+
+const invSearchNetworker = new InvSearchNetworker(INVSEARCH_V3_URL);
 
 export default async (
   req: NextApiRequest,
@@ -22,17 +32,48 @@ export default async (
 ): Promise<void> => {
   const { query } = req;
   const { data } = query;
-  const dev = process.env.NODE_ENV !== 'production';
-  const timeout = dev ? 3000 : 1000;
-  const { geo, url } = JSON.parse(data as string);
+  const { geo, url, brand, id } = JSON.parse(data as string);
   const filtersData = getFiltersDataFromUrl(url);
-  const invSearchNetworker = new InvSearchNetworker(INVSEARCH_V3_URL);
 
-  const cache = await axios.get(
-    `http://localhost:3000/cars/api/cache?data=${data}`
+  const makesRequestData: PostInventoryRequestData = {
+    fulldetails: false,
+    limit: 1,
+    sortdirection: 'asc',
+    source: `${NAME}-${VERSION}`,
+  };
+
+  const popularCarsRequestData = {
+    fulldetails: true,
+    limit: POPULAR_CAR_LIMIT,
+    sortdirection: 'asc',
+    'sold-status': SoldStatus.FOR_SALE,
+    source: `${NAME}-${VERSION}`,
+  };
+
+  const makesR = await invSearchNetworker.postInventory(makesRequestData);
+
+  const popularCarsR = await invSearchNetworker.postInventory(
+    popularCarsRequestData
   );
 
-  const { experiments, popularCars, makes } = cache.data;
+  const experimentsCache = cache.get('experiments');
+  const experiments =
+    brand === Brand.VROOM
+      ? experimentsCache
+        ? experimentsCache
+        : await new Promise((resolve) => {
+            experimentSDK
+              .getRunningExperiments(id as string)
+              .then((response) => {
+                cache.set('experiments', response, 60);
+                resolve(response);
+              })
+              .catch((error) => {
+                console.log('Experiments failed - ', JSON.stringify(error));
+                resolve([]);
+              });
+          })
+      : [];
 
   const geoLocationSortDefaultVariant = showDefaultVariant(
     'snd-catalog-sort-by-geo-location',
@@ -53,25 +94,10 @@ export default async (
     source: `${NAME}-${VERSION}`,
   };
 
-  const cars = await new Promise((resolve) => {
-    const timer = setTimeout(() => {
-      console.log(`Car results took longer than ${timeout}ms.`);
-      resolve(undefined);
-    }, timeout);
-
-    invSearchNetworker
-      .postInventory(inventoryRequestData)
-      .then((response) => {
-        const cars = response.data;
-        clearTimeout(timer);
-        resolve(cars);
-      })
-      .catch((error) => {
-        console.log('Car results failed - ', JSON.stringify(error));
-        clearTimeout(timer);
-        resolve(undefined);
-      });
-  });
+  const carsR = await invSearchNetworker.postInventory(inventoryRequestData);
+  const makes = makesR.data.aggregations.make_count.buckets;
+  const popularCars = popularCarsR.data;
+  const cars = carsR.data;
 
   res.status(200).json({
     cars: cars,

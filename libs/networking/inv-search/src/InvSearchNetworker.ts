@@ -1,5 +1,7 @@
 import axios, { AxiosInstance } from 'axios';
 import { stringify } from 'qs';
+const NodeCache = require('node-cache');
+const cache = new NodeCache();
 
 import {
   GetInventoryCountResponse,
@@ -70,9 +72,23 @@ export default class InvSearchNetworker implements InvSearchNetworking {
   async postInventory(
     data: PostInventoryRequestData
   ): Promise<PostInventoryResponse> {
+    const isServer = typeof window === 'undefined';
     const url = `${this.hostUrl}/inventory`;
-    const response = await this.axiosInstance.post(url, data);
-    await postInventoryResponseSchema.validate(response.data);
-    return response.data as PostInventoryResponse;
+    const request = JSON.stringify({
+      url: url,
+      data: data,
+    });
+    const requestCached = cache.get(request);
+
+    if (isServer && requestCached) {
+      return requestCached;
+    } else {
+      const response = await this.axiosInstance.post(url, data, {
+        timeout: 3000,
+      });
+      await postInventoryResponseSchema.validate(response.data);
+      cache.set(request, response.data, 60);
+      return response.data as PostInventoryResponse;
+    }
   }
 }

@@ -8447,6 +8447,10 @@ var SoldStatus;
 
 var postInventoryResponseSchema = inventoryResponseSchema;
 
+var NodeCache = require('node-cache');
+
+var cache = new NodeCache();
+
 var InvSearchNetworker = /*#__PURE__*/function () {
   function InvSearchNetworker(hostUrl) {
     classCallCheck(this, InvSearchNetworker);
@@ -8568,24 +8572,42 @@ var InvSearchNetworker = /*#__PURE__*/function () {
     key: "postInventory",
     value: function () {
       var _postInventory = asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee4(data) {
-        var url, response;
+        var isServer, url, request, requestCached, response;
         return regenerator.wrap(function _callee4$(_context4) {
           while (1) {
             switch (_context4.prev = _context4.next) {
               case 0:
+                isServer = typeof window === 'undefined';
                 url = "".concat(this.hostUrl, "/inventory");
-                _context4.next = 3;
-                return this.axiosInstance.post(url, data);
+                request = JSON.stringify({
+                  url: url,
+                  data: data
+                });
+                requestCached = cache.get(request);
 
-              case 3:
+                if (!(isServer && requestCached)) {
+                  _context4.next = 8;
+                  break;
+                }
+
+                return _context4.abrupt("return", requestCached);
+
+              case 8:
+                _context4.next = 10;
+                return this.axiosInstance.post(url, data, {
+                  timeout: 3000
+                });
+
+              case 10:
                 response = _context4.sent;
-                _context4.next = 6;
+                _context4.next = 13;
                 return postInventoryResponseSchema.validate(response.data);
 
-              case 6:
+              case 13:
+                cache.set(request, response.data, 60);
                 return _context4.abrupt("return", response.data);
 
-              case 7:
+              case 15:
               case "end":
                 return _context4.stop();
             }

@@ -42,9 +42,9 @@ const { publicRuntimeConfig } = getConfig();
 
 export interface InitialCarsStoreState {
   attributionQueryString: string;
-  makeBuckets: MakeBucket[] | undefined;
-  inventoryData?: Inventory | undefined;
-  popularCarsData?: Inventory | undefined;
+  makes: MakeBucket[] | undefined;
+  cars: Inventory | undefined;
+  popularCars: Inventory | undefined;
   filtersData: FiltersData | undefined;
   geoLocationSortDefaultVariant: boolean;
 }
@@ -237,24 +237,6 @@ export const getPostInventoryRequestDataFromFilterData = (
   };
 };
 
-export async function getInitialCarsStoreState(
-  attributionQueryString: string,
-  geoLocationSortDefaultVariant: boolean,
-  makes: MakeBucket[] | undefined,
-  cars: Inventory | undefined,
-  popularCars: Inventory | undefined,
-  filtersData: FiltersData | undefined
-): Promise<InitialCarsStoreState> {
-  return {
-    attributionQueryString,
-    geoLocationSortDefaultVariant,
-    makeBuckets: makes,
-    inventoryData: cars,
-    popularCarsData: popularCars,
-    filtersData: filtersData,
-  };
-}
-
 export class CarsStore {
   private readonly invSearchNetworker: InvSearchNetworker;
 
@@ -301,9 +283,9 @@ export class CarsStore {
       this.attributionQueryString = initialState.attributionQueryString;
       this.geoLocationSortDefaultVariant =
         initialState.geoLocationSortDefaultVariant;
-      this.makeBuckets = initialState.makeBuckets;
-      this.inventoryData = initialState.inventoryData;
-      this.popularCarsData = initialState.popularCarsData;
+      this.makeBuckets = initialState.makes;
+      this.inventoryData = initialState.cars;
+      this.popularCarsData = initialState.popularCars;
       this.filtersData = initialState.filtersData;
     }
   }

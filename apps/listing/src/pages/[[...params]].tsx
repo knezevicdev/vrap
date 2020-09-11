@@ -26,7 +26,6 @@ import { ExperimentContext } from 'src/modules/cars/ExperimentContext';
 import {
   CarsStore,
   CarsStoreContext,
-  getInitialCarsStoreState,
   InitialCarsStoreState,
 } from 'src/modules/cars/store';
 import Page from 'src/Page';
@@ -392,16 +391,16 @@ CarsPage.getInitialProps = async (context: NextPageContext): Promise<Props> => {
     }
   );
 
-  const initialStoreState = await getInitialCarsStoreState(
+  const initialStoreState = {
     attributionQueryString,
     geoLocationSortDefaultVariant,
     makes,
     cars,
     popularCars,
-    filtersData
-  );
+    filtersData,
+  };
 
-  const hasInventory = cars ? cars.hits.total !== 0 : false;
+  const hasInventory = true;
 
   if (res && !hasInventory) {
     res.statusCode = 404;
