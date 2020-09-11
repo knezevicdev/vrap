@@ -36,7 +36,7 @@ export interface InvSearchNetworking {
 
 export default class InvSearchNetworker implements InvSearchNetworking {
   private timeout = 3000;
-  private cacheTimeInSeconds = 60;
+  private cacheTimeInSeconds = 3600;
   private readonly axiosInstance: AxiosInstance;
   private readonly hostUrl: string;
 

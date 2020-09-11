@@ -8457,7 +8457,7 @@ var InvSearchNetworker = /*#__PURE__*/function () {
 
     defineProperty(this, "timeout", 3000);
 
-    defineProperty(this, "cacheTimeInSeconds", 60);
+    defineProperty(this, "cacheTimeInSeconds", 3600);
 
     defineProperty(this, "axiosInstance", void 0);
 
