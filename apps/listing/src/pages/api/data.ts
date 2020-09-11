@@ -1,3 +1,6 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
+/* eslint-disable no-nested-ternary */
+
 import { getFiltersDataFromUrl } from '@vroom-web/catalog-url-integration';
 import {
   InvSearchNetworker,
