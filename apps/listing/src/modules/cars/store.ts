@@ -1,7 +1,6 @@
 import {
   Filters,
   FiltersData,
-  getFiltersDataFromUrl,
   getUrlFromFiltersData,
 } from '@vroom-web/catalog-url-integration';
 import {
@@ -43,13 +42,10 @@ const { publicRuntimeConfig } = getConfig();
 
 export interface InitialCarsStoreState {
   attributionQueryString: string;
-  filtersData?: FiltersData;
-  makeBuckets?: MakeBucket[];
-  makeBucketsStatus: Status;
-  inventoryData?: Inventory;
-  inventoryStatus: Status;
-  popularCarsData?: Inventory;
-  popularCarsStatus: Status;
+  makeBuckets: MakeBucket[] | undefined;
+  inventoryData?: Inventory | undefined;
+  popularCarsData?: Inventory | undefined;
+  filtersData: FiltersData | undefined;
   geoLocationSortDefaultVariant: boolean;
 }
 
@@ -244,101 +240,19 @@ export const getPostInventoryRequestDataFromFilterData = (
 export async function getInitialCarsStoreState(
   attributionQueryString: string,
   geoLocationSortDefaultVariant: boolean,
-  geo: Coordinates | undefined,
-  url: string
+  makes: MakeBucket[] | undefined,
+  cars: Inventory | undefined,
+  popularCars: Inventory | undefined,
+  filtersData: FiltersData | undefined
 ): Promise<InitialCarsStoreState> {
-  const initialState: InitialCarsStoreState = {
+  return {
     attributionQueryString,
-    makeBucketsStatus: Status.INITIAL,
-    inventoryStatus: Status.INITIAL,
-    popularCarsStatus: Status.INITIAL,
     geoLocationSortDefaultVariant,
+    makeBuckets: makes,
+    inventoryData: cars,
+    popularCarsData: popularCars,
+    filtersData: filtersData,
   };
-
-  initialState.filtersData = getFiltersDataFromUrl(url);
-
-  if (!publicRuntimeConfig.INVSEARCH_V3_URL) {
-    throw new Error('publicRuntimeConfig.INVSEARCH_V3_URL is undefined');
-  }
-
-  const invSearchNetworker = new InvSearchNetworker(
-    publicRuntimeConfig.INVSEARCH_V3_URL
-  );
-
-  try {
-    initialState.makeBucketsStatus = Status.FETCHING;
-    const makesRequestData: PostInventoryRequestData = {
-      fulldetails: false,
-      limit: 1,
-      sortdirection: 'asc',
-      source: `${publicRuntimeConfig.NAME}-${publicRuntimeConfig.VERSION}`,
-    };
-
-    console.time('postInventory - Makes & Model');
-    const makesResponse = await invSearchNetworker.postInventory(
-      makesRequestData
-    );
-    console.timeEnd('postInventory - Makes & Model');
-
-    const makeBuckets = makesResponse.data.aggregations.make_count.buckets;
-    initialState.makeBuckets = makeBuckets;
-    initialState.makeBucketsStatus = Status.SUCCESS;
-  } catch {
-    initialState.makeBucketsStatus = Status.ERROR;
-    console.timeEnd('postInventory - Makes & Model');
-  }
-
-  try {
-    initialState.inventoryStatus = Status.FETCHING;
-    const postInventoryRequestDataFromFiltersData = getPostInventoryRequestDataFromFilterData(
-      initialState.filtersData,
-      geoLocationSortDefaultVariant,
-      geo
-    );
-    const inventoryRequestData: PostInventoryRequestData = {
-      ...postInventoryRequestDataFromFiltersData,
-      fulldetails: true,
-      limit: INVENTORY_CARDS_PER_PAGE,
-      source: `${publicRuntimeConfig.NAME}-${publicRuntimeConfig.VERSION}`,
-    };
-    console.time('postInventory - Cars');
-    const inventoryResponse = await invSearchNetworker.postInventory(
-      inventoryRequestData
-    );
-    initialState.inventoryData = inventoryResponse.data;
-    initialState.inventoryStatus = Status.SUCCESS;
-    console.timeEnd('postInventory - Cars');
-  } catch {
-    initialState.inventoryStatus = Status.ERROR;
-    console.timeEnd('postInventory - Cars');
-  }
-
-  const hasNoInventory = initialState.inventoryData?.hits.total === 0;
-  if (hasNoInventory) {
-    try {
-      initialState.popularCarsStatus = Status.FETCHING;
-      const popularCarsRequestData = {
-        fulldetails: true,
-        limit: POPULAR_CAR_LIMIT,
-        sortdirection: 'asc',
-        'sold-status': SoldStatus.FOR_SALE,
-        source: `${publicRuntimeConfig.NAME}-${publicRuntimeConfig.VERSION}`,
-      };
-      console.time('postInventory - Popular Cars');
-      const inventoryResponse = await invSearchNetworker.postInventory(
-        popularCarsRequestData
-      );
-      console.timeEnd('postInventory - Popular Cars');
-      const popularCarsData = inventoryResponse.data;
-      initialState.popularCarsData = popularCarsData;
-      initialState.popularCarsStatus = Status.SUCCESS;
-    } catch {
-      console.timeEnd('postInventory - Popular Cars');
-      initialState.popularCarsStatus = Status.ERROR;
-    }
-  }
-
-  return initialState;
 }
 
 export class CarsStore {
@@ -385,15 +299,12 @@ export class CarsStore {
 
     if (initialState) {
       this.attributionQueryString = initialState.attributionQueryString;
-      this.filtersData = initialState.filtersData;
-      this.makeBuckets = initialState.makeBuckets;
-      this.makeBucketsStatus = initialState.makeBucketsStatus;
-      this.inventoryData = initialState.inventoryData;
-      this.inventoryStatus = initialState.inventoryStatus;
-      this.popularCarsData = initialState.popularCarsData;
-      this.popularCarsStatus = initialState.popularCarsStatus;
       this.geoLocationSortDefaultVariant =
         initialState.geoLocationSortDefaultVariant;
+      this.makeBuckets = initialState.makeBuckets;
+      this.inventoryData = initialState.inventoryData;
+      this.popularCarsData = initialState.popularCarsData;
+      this.filtersData = initialState.filtersData;
     }
   }
 

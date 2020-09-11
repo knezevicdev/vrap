@@ -11,6 +11,7 @@ import {
   setYear,
 } from '@vroom-web/catalog-url-integration';
 import { Brand, ThemeProvider } from '@vroom-web/ui';
+import axios from 'axios';
 import { NextPage, NextPageContext } from 'next';
 import { parseCookies } from 'nookies';
 import { stringify } from 'qs';
@@ -18,9 +19,7 @@ import { ParsedUrlQuery } from 'querystring';
 import React, { useEffect, useState } from 'react';
 import { Experiment } from 'vroom-abtesting-sdk/types';
 
-import experimentSDK, {
-  showDefaultVariant,
-} from 'src/integrations/experimentSDK';
+import { showDefaultVariant } from 'src/integrations/experimentSDK';
 import Cars from 'src/modules/cars';
 import { BrandContext } from 'src/modules/cars/BrandContext';
 import { ExperimentContext } from 'src/modules/cars/ExperimentContext';
@@ -30,7 +29,6 @@ import {
   getInitialCarsStoreState,
   InitialCarsStoreState,
 } from 'src/modules/cars/store';
-import { Status } from 'src/networking/types';
 import Page from 'src/Page';
 
 interface Props {
@@ -342,30 +340,35 @@ CarsPage.getInitialProps = async (context: NextPageContext): Promise<Props> => {
     };
   }
 
-  const experiments =
-    brand === Brand.VROOM
-      ? await experimentSDK.getRunningExperiments(marketingId)
-      : [];
+  console.time('data');
+  const url = typeof asPath === 'string' ? (asPath as string) : '';
 
-  const geoLocationSortDefaultVariant = showDefaultVariant(
-    'snd-catalog-sort-by-geo-location',
-    experiments,
-    context.query
+  const dataPackage = JSON.stringify({
+    id: marketingId,
+    brand: brand,
+    geo: geo,
+    url: url,
+  });
+
+  const dataResponse = await axios.get(
+    `http://localhost:3000/cars/api/data?data=${dataPackage}`
   );
+
+  const {
+    experiments,
+    geoLocationSortDefaultVariant,
+    makes,
+    cars,
+    popularCars,
+    filtersData,
+  } = dataResponse.data;
+  console.timeEnd('data');
 
   const resumeSearchDefaultVariant = showDefaultVariant(
     'delta-resume-search',
     experiments,
     context.query
   );
-  //TODO: Temp logging for Geo Data. Just to see what is coming
-  // from the fastly headers. Remove once geo sorting is fixed
-  if (!geoLocationSortDefaultVariant && req) {
-    console.log('GEO DATA', {
-      latitude: req.headers['client-geo-latitude'],
-      longitude: req.headers['client-geo-longitude'],
-    });
-  }
 
   // FIT-583
   // Persist key attribution query params across navigation.
@@ -389,28 +392,16 @@ CarsPage.getInitialProps = async (context: NextPageContext): Promise<Props> => {
     }
   );
 
-  // DELTA-4
-  // Based on testing it seems that "asPath" is always a string,
-  // but just to be safe, I'm covering the undefined case.
-  const url = typeof asPath === 'string' ? (asPath as string) : '';
-
   const initialStoreState = await getInitialCarsStoreState(
     attributionQueryString,
     geoLocationSortDefaultVariant,
-    geo,
-    url
+    makes,
+    cars,
+    popularCars,
+    filtersData
   );
 
-  const getHasInventory = (): boolean => {
-    if (initialStoreState.inventoryStatus !== Status.SUCCESS) {
-      return false;
-    }
-    if (!initialStoreState.inventoryData) {
-      return false;
-    }
-    return initialStoreState.inventoryData.hits.total !== 0;
-  };
-  const hasInventory = getHasInventory();
+  const hasInventory = cars ? cars.hits.total !== 0 : false;
 
   if (res && !hasInventory) {
     res.statusCode = 404;

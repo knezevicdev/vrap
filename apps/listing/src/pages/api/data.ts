@@ -7,6 +7,8 @@ import axios from 'axios';
 import { NextApiRequest, NextApiResponse } from 'next';
 import getConfig from 'next/config';
 
+import { showDefaultVariant } from '../../integrations/experimentSDK';
+
 import { INVENTORY_CARDS_PER_PAGE } from 'src/modules/cars/data';
 import { getPostInventoryRequestDataFromFilterData } from 'src/modules/cars/store';
 
@@ -22,7 +24,7 @@ export default async (
   const { data } = query;
   const dev = process.env.NODE_ENV !== 'production';
   const timeout = dev ? 3000 : 1000;
-  const { geoVariant, geo, url } = JSON.parse(data as string);
+  const { geo, url } = JSON.parse(data as string);
   const filtersData = getFiltersDataFromUrl(url);
   const invSearchNetworker = new InvSearchNetworker(INVSEARCH_V3_URL);
 
@@ -30,9 +32,17 @@ export default async (
     `http://localhost:3000/cars/api/cache?data=${data}`
   );
 
+  const { experiments, popularCars, makes } = cache.data;
+
+  const geoLocationSortDefaultVariant = showDefaultVariant(
+    'snd-catalog-sort-by-geo-location',
+    experiments,
+    query
+  );
+
   const postInventoryRequestDataFromFiltersData = getPostInventoryRequestDataFromFilterData(
     filtersData,
-    geoVariant,
+    geoLocationSortDefaultVariant,
     geo
   );
 
@@ -63,9 +73,12 @@ export default async (
       });
   });
 
-  console.log(cars);
-
   res.status(200).json({
     cars: cars,
+    experiments: experiments,
+    makes: makes,
+    popularCars: popularCars,
+    geoLocationSortDefaultVariant: geoLocationSortDefaultVariant,
+    filtersData: filtersData,
   });
 };
