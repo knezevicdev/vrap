@@ -8455,6 +8455,10 @@ var InvSearchNetworker = /*#__PURE__*/function () {
   function InvSearchNetworker(hostUrl) {
     classCallCheck(this, InvSearchNetworker);
 
+    defineProperty(this, "timeout", 3000);
+
+    defineProperty(this, "cacheTimeInSeconds", 60);
+
     defineProperty(this, "axiosInstance", void 0);
 
     defineProperty(this, "hostUrl", void 0);
@@ -8595,7 +8599,7 @@ var InvSearchNetworker = /*#__PURE__*/function () {
               case 8:
                 _context4.next = 10;
                 return this.axiosInstance.post(url, data, {
-                  timeout: 3000
+                  timeout: this.timeout
                 });
 
               case 10:
@@ -8604,7 +8608,10 @@ var InvSearchNetworker = /*#__PURE__*/function () {
                 return postInventoryResponseSchema.validate(response.data);
 
               case 13:
-                cache.set(request, response.data, 60);
+                if (isServer) {
+                  cache.set(request, response.data, this.cacheTimeInSeconds);
+                }
+
                 return _context4.abrupt("return", response.data);
 
               case 15:

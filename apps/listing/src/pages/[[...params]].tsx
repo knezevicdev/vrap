@@ -13,6 +13,7 @@ import {
 import { Brand, ThemeProvider } from '@vroom-web/ui';
 import axios from 'axios';
 import { NextPage, NextPageContext } from 'next';
+import getConfig from 'next/config';
 import { parseCookies } from 'nookies';
 import { stringify } from 'qs';
 import { ParsedUrlQuery } from 'querystring';
@@ -29,6 +30,9 @@ import {
   InitialCarsStoreState,
 } from 'src/modules/cars/store';
 import Page from 'src/Page';
+const {
+  publicRuntimeConfig: { BASE_PATH },
+} = getConfig();
 
 interface Props {
   brand: Brand;
@@ -350,7 +354,7 @@ CarsPage.getInitialProps = async (context: NextPageContext): Promise<Props> => {
   });
 
   const dataResponse = await axios.get(
-    `http://localhost:3000/cars/api/data?data=${dataPackage}`
+    `http://${req?.headers.host}${BASE_PATH}/api/data?data=${dataPackage}`
   );
 
   const {
@@ -400,7 +404,7 @@ CarsPage.getInitialProps = async (context: NextPageContext): Promise<Props> => {
     filtersData,
   };
 
-  const hasInventory = true;
+  const hasInventory = cars ? cars.hits.total !== 0 : false;
 
   if (res && !hasInventory) {
     res.statusCode = 404;

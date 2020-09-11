@@ -34,6 +34,8 @@ export interface InvSearchNetworking {
 }
 
 export default class InvSearchNetworker implements InvSearchNetworking {
+  private timeout = 3000;
+  private cacheTimeInSeconds = 60;
   private readonly axiosInstance: AxiosInstance;
   private readonly hostUrl: string;
 
@@ -84,10 +86,12 @@ export default class InvSearchNetworker implements InvSearchNetworking {
       return requestCached;
     } else {
       const response = await this.axiosInstance.post(url, data, {
-        timeout: 3000,
+        timeout: this.timeout,
       });
       await postInventoryResponseSchema.validate(response.data);
-      cache.set(request, response.data, 60);
+      if(isServer){
+        cache.set(request, response.data, this.cacheTimeInSeconds);
+      }
       return response.data as PostInventoryResponse;
     }
   }
