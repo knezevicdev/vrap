@@ -1,4 +1,7 @@
 /* eslint-disable @typescript-eslint/camelcase */
+/* eslint-disable @typescript-eslint/no-var-requires */
+/* eslint-disable no-nested-ternary */
+
 import { useTheme } from '@material-ui/core/styles';
 import {
   addAllModels,
@@ -6,12 +9,17 @@ import {
   addModel,
   BodyType,
   FiltersData,
+  getFiltersDataFromUrl,
   getUrlFromFiltersData,
   MaxAndMin,
   setYear,
 } from '@vroom-web/catalog-url-integration';
+import {
+  InvSearchNetworker,
+  PostInventoryRequestData,
+  SoldStatus,
+} from '@vroom-web/inv-search-networking';
 import { Brand, ThemeProvider } from '@vroom-web/ui';
-import axios from 'axios';
 import { NextPage, NextPageContext } from 'next';
 import getConfig from 'next/config';
 import { parseCookies } from 'nookies';
@@ -20,19 +28,30 @@ import { ParsedUrlQuery } from 'querystring';
 import React, { useEffect, useState } from 'react';
 import { Experiment } from 'vroom-abtesting-sdk/types';
 
-import { showDefaultVariant } from 'src/integrations/experimentSDK';
+import experimentSDK, {
+  showDefaultVariant,
+} from 'src/integrations/experimentSDK';
 import Cars from 'src/modules/cars';
 import { BrandContext } from 'src/modules/cars/BrandContext';
+import {
+  INVENTORY_CARDS_PER_PAGE,
+  POPULAR_CAR_LIMIT,
+} from 'src/modules/cars/data';
 import { ExperimentContext } from 'src/modules/cars/ExperimentContext';
 import {
   CarsStore,
   CarsStoreContext,
+  getPostInventoryRequestDataFromFilterData,
   InitialCarsStoreState,
 } from 'src/modules/cars/store';
 import Page from 'src/Page';
 const {
-  publicRuntimeConfig: { BASE_PATH },
+  publicRuntimeConfig: { INVSEARCH_V3_URL, NAME, VERSION },
 } = getConfig();
+const NodeCache = require('node-cache');
+const cache = new NodeCache();
+
+const invSearchNetworker = new InvSearchNetworker(INVSEARCH_V3_URL);
 
 interface Props {
   brand: Brand;
@@ -343,29 +362,72 @@ CarsPage.getInitialProps = async (context: NextPageContext): Promise<Props> => {
     };
   }
 
-  console.time('data');
   const url = typeof asPath === 'string' ? (asPath as string) : '';
+  const filtersData = getFiltersDataFromUrl(url);
 
-  const dataPackage = JSON.stringify({
-    id: marketingId,
-    brand: brand,
-    geo: geo,
-    url: url,
-  });
+  const makesRequestData: PostInventoryRequestData = {
+    fulldetails: false,
+    limit: 1,
+    sortdirection: 'asc',
+    source: `${NAME}-${VERSION}`,
+  };
 
-  const dataResponse = await axios.get(
-    `https://${req?.headers.host}${BASE_PATH}/api/data?data=${dataPackage}`
+  const popularCarsRequestData = {
+    fulldetails: true,
+    limit: POPULAR_CAR_LIMIT,
+    sortdirection: 'asc',
+    'sold-status': SoldStatus.FOR_SALE,
+    source: `${NAME}-${VERSION}`,
+  };
+
+  const makesR = await invSearchNetworker.postInventory(makesRequestData);
+
+  const popularCarsR = await invSearchNetworker.postInventory(
+    popularCarsRequestData
   );
 
-  const {
+  const experimentsCache = cache.get('experiments');
+  const experiments =
+    brand === Brand.VROOM
+      ? experimentsCache
+        ? experimentsCache
+        : await new Promise((resolve) => {
+            experimentSDK
+              .getRunningExperiments(marketingId as string)
+              .then((response) => {
+                cache.set('experiments', response, 60);
+                resolve(response);
+              })
+              .catch((error) => {
+                console.log('Experiments failed - ', JSON.stringify(error));
+                resolve([]);
+              });
+          })
+      : [];
+
+  const geoLocationSortDefaultVariant = showDefaultVariant(
+    'snd-catalog-sort-by-geo-location',
     experiments,
-    geoLocationSortDefaultVariant,
-    makes,
-    cars,
-    popularCars,
+    query
+  );
+
+  const postInventoryRequestDataFromFiltersData = getPostInventoryRequestDataFromFilterData(
     filtersData,
-  } = dataResponse.data;
-  console.timeEnd('data');
+    geoLocationSortDefaultVariant,
+    geo
+  );
+
+  const inventoryRequestData: PostInventoryRequestData = {
+    ...postInventoryRequestDataFromFiltersData,
+    fulldetails: true,
+    limit: INVENTORY_CARDS_PER_PAGE,
+    source: `${NAME}-${VERSION}`,
+  };
+
+  const carsR = await invSearchNetworker.postInventory(inventoryRequestData);
+  const makes = makesR.data.aggregations.make_count.buckets;
+  const popularCars = popularCarsR.data;
+  const cars = carsR.data;
 
   const resumeSearchDefaultVariant = showDefaultVariant(
     'delta-resume-search',
