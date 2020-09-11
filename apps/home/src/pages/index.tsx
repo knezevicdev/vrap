@@ -1,3 +1,6 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
+/* eslint-disable no-nested-ternary */
+
 import { Brand, ThemeProvider } from '@vroom-web/ui';
 import { NextPage, NextPageContext } from 'next';
 import { parseCookies } from 'nookies';
@@ -9,6 +12,9 @@ import Home from 'src/modules/home';
 import { BrandContext } from 'src/modules/home/BrandContext';
 import { HomeStore, HomeStoreContext } from 'src/modules/home/store';
 import Page from 'src/Page';
+
+const NodeCache = require('node-cache');
+const cache = new NodeCache();
 
 interface Props {
   brand: Brand;
@@ -74,9 +80,23 @@ HomePage.getInitialProps = async (ctx: NextPageContext): Promise<Props> => {
       ? 'Buy a used vehicle online from anywhere in the USA. We offer high quality cars, easy car buying, & flexible financing.'
       : 'Buy, sell or trade-in your car entirely online, from the comfort of your home. No haggle, no pressure. Easy online financing available. Browse thousands of high-quality cars, and have it delivered straight to you.';
 
+  const experimentsCache = cache.get('experiments');
   const experiments =
     brand === Brand.VROOM
-      ? await experimentSDK.getRunningExperiments(marketingId)
+      ? experimentsCache
+        ? experimentsCache
+        : await new Promise((resolve) => {
+            experimentSDK
+              .getRunningExperiments(marketingId as string)
+              .then((response) => {
+                cache.set('experiments', response, 60);
+                resolve(response);
+              })
+              .catch((error) => {
+                console.log('Experiments failed - ', JSON.stringify(error));
+                resolve([]);
+              });
+          })
       : [];
 
   return { brand, description, experiments, query, title };
