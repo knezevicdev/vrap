@@ -25,7 +25,7 @@ describe('showDefaultVariant', () => {
 
     test(`query doesn't contain experiment info`, () => {
       const query = {
-        utm_param: 'chase',
+        utmParam: 'chase',
       };
       expect(showDefaultVariant(experimentId, experiments, query)).toEqual(
         true
