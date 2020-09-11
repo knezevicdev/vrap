@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
 import axios, { AxiosInstance } from 'axios';
 import { stringify } from 'qs';
 const NodeCache = require('node-cache');
@@ -89,7 +90,7 @@ export default class InvSearchNetworker implements InvSearchNetworking {
         timeout: this.timeout,
       });
       await postInventoryResponseSchema.validate(response.data);
-      if(isServer){
+      if (isServer) {
         cache.set(request, response.data, this.cacheTimeInSeconds);
       }
       return response.data as PostInventoryResponse;
