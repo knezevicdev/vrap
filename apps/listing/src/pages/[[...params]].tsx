@@ -354,7 +354,7 @@ CarsPage.getInitialProps = async (context: NextPageContext): Promise<Props> => {
   });
 
   const dataResponse = await axios.get(
-    `http://${req?.headers.host}${BASE_PATH}/api/data?data=${dataPackage}`
+    `https://${req?.headers.host}${BASE_PATH}/api/data?data=${dataPackage}`
   );
 
   const {
