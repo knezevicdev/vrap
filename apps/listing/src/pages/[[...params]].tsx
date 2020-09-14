@@ -373,7 +373,7 @@ CarsPage.getInitialProps = async (context: NextPageContext): Promise<Props> => {
   };
 
   const popularCarsRequestData = {
-    fulldetails: true,
+    fulldetails: false,
     limit: POPULAR_CAR_LIMIT,
     sortdirection: 'asc',
     'sold-status': SoldStatus.FOR_SALE,
@@ -402,8 +402,16 @@ CarsPage.getInitialProps = async (context: NextPageContext): Promise<Props> => {
             experimentSDK
               .getRunningExperiments(marketingId as string)
               .then((response) => {
-                cache.set('experiments', response, 60);
-                resolve(response);
+                const experimentsForThisPage = [
+                  'delta-resume-search',
+                  'snd-catalog-sort-by-geo-location',
+                  'snd-old-pdp-vs-new-pdp',
+                ];
+                const filtered = response.filter((experiment) => {
+                  return experimentsForThisPage.includes(experiment.id);
+                });
+                cache.set('experiments', filtered, 60);
+                resolve(filtered);
               })
               .catch((error) => {
                 console.log('Experiments failed - ', JSON.stringify(error));
@@ -428,7 +436,7 @@ CarsPage.getInitialProps = async (context: NextPageContext): Promise<Props> => {
 
   const inventoryRequestData: PostInventoryRequestData = {
     ...postInventoryRequestDataFromFiltersData,
-    fulldetails: true,
+    fulldetails: false,
     limit: INVENTORY_CARDS_PER_PAGE,
     source: `${NAME}-${VERSION}`,
   };
@@ -441,7 +449,6 @@ CarsPage.getInitialProps = async (context: NextPageContext): Promise<Props> => {
   const makes = makesR.data.aggregations.make_count.buckets;
   const popularCars = popularCarsR.data;
   const cars = carsR.data;
-
   const resumeSearchDefaultVariant = showDefaultVariant(
     'delta-resume-search',
     experiments,

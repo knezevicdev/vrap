@@ -310,7 +310,7 @@ export class CarsStore {
       );
       const inventoryRequestData: PostInventoryRequestData = {
         ...postInventoryRequestDataFromFiltersData,
-        fulldetails: true,
+        fulldetails: false,
         limit: INVENTORY_CARDS_PER_PAGE,
         source: `${publicRuntimeConfig.NAME}-${publicRuntimeConfig.VERSION}`,
       };
@@ -334,7 +334,7 @@ export class CarsStore {
     try {
       this.popularCarsStatus = Status.FETCHING;
       const popularCarsRequestData = {
-        fulldetails: true,
+        fulldetails: false,
         limit: POPULAR_CAR_LIMIT,
         sortdirection: 'asc',
         'sold-status': SoldStatus.FOR_SALE,
