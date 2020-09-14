@@ -17,6 +17,9 @@ const StyledPagination = styled(Pagination)(({ theme }) => ({
   '& .MuiPaginationItem-page.Mui-selected': {
     color: '#ffffff',
   },
+  '& .MuiPagination-ul li:nth-last-child(2)': {
+    display: 'none',
+  },
 }));
 
 interface Props {
@@ -40,8 +43,6 @@ const PaginationView: React.FC<Props> = ({ viewModel }) => {
       count={pageInfo.count}
       page={pageInfo.page}
       onChange={onChange}
-      showFirstButton
-      showLastButton
     />
   );
 };

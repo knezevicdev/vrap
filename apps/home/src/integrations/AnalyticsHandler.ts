@@ -90,6 +90,14 @@ class AnalyticsHandler extends BaseAnalyticsHandler {
     };
     this.track(event, properties);
   }
+
+  trackContinueYourSearchClicked(): void {
+    const event = 'Continue Your Search Clicked';
+    const properties = {
+      category: 'Home',
+    };
+    this.track(event, properties);
+  }
 }
 
 export default AnalyticsHandler;

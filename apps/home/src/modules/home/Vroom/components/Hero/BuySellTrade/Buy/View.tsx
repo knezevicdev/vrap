@@ -17,6 +17,10 @@ const BuyContainer = styled('div')(({ theme }) => ({
   paddingTop: theme.spacing(1),
 }));
 
+const ResumeSearch = styled(Button)(({ theme }) => ({
+  marginTop: theme.spacing(2),
+}));
+
 const Browse = styled(Button)(({ theme }) => ({
   marginTop: theme.spacing(2),
 }));
@@ -36,20 +40,50 @@ const BuyView: React.FC<Props> = ({ viewModel }) => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.only('xs'));
 
+  React.useEffect(() => {
+    viewModel.handleMount();
+  }, [viewModel]);
+
   return (
     <BuyContainer>
       {isMobile ? (
-        <Browse
-          fullWidth
-          onClick={viewModel.handleButtonClick}
-          variant="contained"
-          color="secondary"
-        >
-          {viewModel.mobileButtonLabel}
-        </Browse>
+        <>
+          {viewModel.showResumeSearch && (
+            <ResumeSearch
+              fullWidth
+              onClick={viewModel.handleResumeSearchButtonClick}
+              variant="contained"
+              color="secondary"
+            >
+              {viewModel.resumeSearchButtonLabel}
+            </ResumeSearch>
+          )}
+          <Browse
+            fullWidth
+            onClick={viewModel.handleButtonClick}
+            variant={viewModel.showResumeSearch ? 'outlined' : 'contained'}
+            color="secondary"
+          >
+            {viewModel.mobileButtonLabel}
+          </Browse>
+        </>
       ) : (
         <>
-          <Autocomplete />
+          {viewModel.showResumeSearch && (
+            <ResumeSearch
+              fullWidth
+              onClick={viewModel.handleResumeSearchButtonClick}
+              variant="contained"
+              color="secondary"
+            >
+              {viewModel.resumeSearchButtonLabel}
+            </ResumeSearch>
+          )}
+          <Autocomplete
+            buttonVariant={
+              viewModel.showResumeSearch ? 'outlined' : 'contained'
+            }
+          />
           <ExternalLink underline="none" href={viewModel.link.href}>
             <BrowseText>{viewModel.link.label}</BrowseText>
           </ExternalLink>

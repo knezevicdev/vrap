@@ -99,7 +99,7 @@ InventoryPage.getInitialProps = async (
       modelSlug,
       listingPrice,
     } = initialState.vehicle._source;
-    canonicalHref = `${publicRuntimeConfig.BASE_PATH}/${makeSlug}-${modelSlug}-${year}-${vin}`;
+    canonicalHref = `https://www.vroom.com${publicRuntimeConfig.BASE_PATH}/${makeSlug}-${modelSlug}-${year}-${vin}`;
     const currencyFormatter = new Intl.NumberFormat('en-US', {
       style: 'currency',
       currency: 'USD',
