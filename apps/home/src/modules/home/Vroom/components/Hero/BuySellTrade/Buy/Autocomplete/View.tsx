@@ -77,11 +77,13 @@ const HeroAutoCompleteBox = styled(Box)(() => ({
 }));
 
 interface HeroAutocompleteProps {
+  buttonVariant?: 'outlined' | 'contained';
   className?: string;
   viewModel: ViewModel;
 }
 
 const HeroAutocomplete: React.FC<HeroAutocompleteProps> = ({
+  buttonVariant,
   className,
   viewModel,
 }) => {
@@ -165,7 +167,11 @@ const HeroAutocomplete: React.FC<HeroAutocompleteProps> = ({
         )}
         style={{ flexGrow: 1, margin: '16px 0' }}
       />
-      <Button onClick={handleButtonClick} variant="contained" color="secondary">
+      <Button
+        onClick={handleButtonClick}
+        variant={buttonVariant || 'contained'}
+        color="secondary"
+      >
         {viewModel.buttonLabel}
       </Button>
     </HeroAutoCompleteBox>

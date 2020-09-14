@@ -18,6 +18,7 @@
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx,.json"
   },
   "dependencies": {
+    "node-cache": "^5.1.2",
     "qs": "^6.9.1",
     "yup": "^0.29.1"
   },

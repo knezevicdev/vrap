@@ -1,4 +1,7 @@
 /* eslint-disable @typescript-eslint/camelcase */
+/* eslint-disable @typescript-eslint/no-var-requires */
+/* eslint-disable no-nested-ternary */
+
 import { useTheme } from '@material-ui/core/styles';
 import {
   addAllModels,
@@ -6,12 +9,19 @@ import {
   addModel,
   BodyType,
   FiltersData,
+  getFiltersDataFromUrl,
   getUrlFromFiltersData,
   MaxAndMin,
   setYear,
 } from '@vroom-web/catalog-url-integration';
+import {
+  InvSearchNetworker,
+  PostInventoryRequestData,
+  SoldStatus,
+} from '@vroom-web/inv-search-networking';
 import { Brand, ThemeProvider } from '@vroom-web/ui';
 import { NextPage, NextPageContext } from 'next';
+import getConfig from 'next/config';
 import { parseCookies } from 'nookies';
 import { stringify } from 'qs';
 import { ParsedUrlQuery } from 'querystring';
@@ -23,21 +33,32 @@ import experimentSDK, {
 } from 'src/integrations/experimentSDK';
 import Cars from 'src/modules/cars';
 import { BrandContext } from 'src/modules/cars/BrandContext';
+import {
+  INVENTORY_CARDS_PER_PAGE,
+  POPULAR_CAR_LIMIT,
+} from 'src/modules/cars/data';
 import { ExperimentContext } from 'src/modules/cars/ExperimentContext';
 import {
   CarsStore,
   CarsStoreContext,
-  getInitialCarsStoreState,
+  getPostInventoryRequestDataFromFilterData,
   InitialCarsStoreState,
 } from 'src/modules/cars/store';
-import { Status } from 'src/networking/types';
 import Page from 'src/Page';
+const {
+  publicRuntimeConfig: { INVSEARCH_V3_URL, NAME, VERSION },
+} = getConfig();
+const NodeCache = require('node-cache');
+const cache = new NodeCache();
+
+const invSearchNetworker = new InvSearchNetworker(INVSEARCH_V3_URL);
 
 interface Props {
   brand: Brand;
   experiments: Experiment[];
   initialStoreState: InitialCarsStoreState;
   query: ParsedUrlQuery;
+  resumeSearchDefaultVariant: boolean;
 }
 
 const CarsPage: NextPage<Props> = ({
@@ -45,6 +66,7 @@ const CarsPage: NextPage<Props> = ({
   experiments,
   initialStoreState,
   query,
+  resumeSearchDefaultVariant,
 }) => {
   // Persist store instance across URL updates.
   const [carsStore] = useState<CarsStore>(new CarsStore(initialStoreState));
@@ -60,6 +82,25 @@ const CarsPage: NextPage<Props> = ({
       carsStore.setAreFiltersOpen(true);
     }
   }, [carsStore, theme]);
+
+  useEffect(() => {
+    const localStorageKey = 'listing_filters_data';
+    if (resumeSearchDefaultVariant) {
+      if (localStorage.getItem(localStorageKey)) {
+        localStorage.removeItem(localStorageKey);
+      }
+      return;
+    }
+    if (!carsStore.filtersData) {
+      return;
+    }
+    if (Object.values(carsStore.filtersData).filter((i) => !!i).length > 0) {
+      localStorage.setItem(
+        localStorageKey,
+        JSON.stringify(carsStore.filtersData)
+      );
+    }
+  }, [carsStore.filtersData, resumeSearchDefaultVariant]);
 
   // DELTA-5 / DELTA-56
   // This is more complex than I would like.
@@ -237,7 +278,8 @@ const CarsPage: NextPage<Props> = ({
       filtersData = setYear(year, filtersData);
     }
     // Return url without trailing slash.
-    return getUrlFromFiltersData(filtersData).replace(/\/$/, '');
+    const path = getUrlFromFiltersData(filtersData).replace(/\/$/, '');
+    return `https://www.vroom.com${path}`;
   };
   const canonicalHref = getCanonicalHref();
 
@@ -320,25 +362,91 @@ CarsPage.getInitialProps = async (context: NextPageContext): Promise<Props> => {
     };
   }
 
+  const url = typeof asPath === 'string' ? (asPath as string) : '';
+  const filtersData = getFiltersDataFromUrl(url);
+
+  const makesRequestData: PostInventoryRequestData = {
+    fulldetails: false,
+    limit: 1,
+    sortdirection: 'asc',
+    source: `${NAME}-${VERSION}`,
+  };
+
+  const popularCarsRequestData = {
+    fulldetails: true,
+    limit: POPULAR_CAR_LIMIT,
+    sortdirection: 'asc',
+    'sold-status': SoldStatus.FOR_SALE,
+    source: `${NAME}-${VERSION}`,
+  };
+
+  const makesStart = new Date().getTime();
+  const makesR = await invSearchNetworker.postInventory(makesRequestData);
+  const makesElapsed = new Date().getTime() - makesStart;
+  console.log('{"MAKES_AND_MODELS_FILTERS_ms":' + makesElapsed + '}');
+
+  const popularStart = new Date().getTime();
+  const popularCarsR = await invSearchNetworker.postInventory(
+    popularCarsRequestData
+  );
+  const popularElapsed = new Date().getTime() - popularStart;
+  console.log('{"POPULAR_CARS_ms":' + popularElapsed + '}');
+
+  const experimentsStart = new Date().getTime();
+  const experimentsCache = cache.get('experiments');
   const experiments =
     brand === Brand.VROOM
-      ? await experimentSDK.getRunningExperiments(marketingId)
+      ? experimentsCache
+        ? experimentsCache
+        : await new Promise((resolve) => {
+            experimentSDK
+              .getRunningExperiments(marketingId as string)
+              .then((response) => {
+                cache.set('experiments', response, 60);
+                resolve(response);
+              })
+              .catch((error) => {
+                console.log('Experiments failed - ', JSON.stringify(error));
+                resolve([]);
+              });
+          })
       : [];
+  const experimentsElapsed = new Date().getTime() - experimentsStart;
+  console.log('{"EXPERIMENTS_ms":' + experimentsElapsed + '}');
 
   const geoLocationSortDefaultVariant = showDefaultVariant(
     'snd-catalog-sort-by-geo-location',
     experiments,
-    context.query
+    query
   );
 
-  //TODO: Temp logging for Geo Data. Just to see what is coming
-  // from the fastly headers. Remove once geo sorting is fixed
-  if (!geoLocationSortDefaultVariant && req) {
-    console.log('GEO DATA', {
-      latitude: req.headers['client-geo-latitude'],
-      longitude: req.headers['client-geo-longitude'],
-    });
-  }
+  const postInventoryRequestDataFromFiltersData = getPostInventoryRequestDataFromFilterData(
+    filtersData,
+    geoLocationSortDefaultVariant,
+    geo
+  );
+
+  const inventoryRequestData: PostInventoryRequestData = {
+    ...postInventoryRequestDataFromFiltersData,
+    fulldetails: true,
+    limit: INVENTORY_CARDS_PER_PAGE,
+    source: `${NAME}-${VERSION}`,
+  };
+
+  const carsStart = new Date().getTime();
+  const carsR = await invSearchNetworker.postInventory(inventoryRequestData);
+  const carsElapsed = new Date().getTime() - carsStart;
+  console.log('{"CARS_ms":' + carsElapsed + '}');
+
+  const makes = makesR.data.aggregations.make_count.buckets;
+  const popularCars = popularCarsR.data;
+  const cars = carsR.data;
+
+  const resumeSearchDefaultVariant = showDefaultVariant(
+    'delta-resume-search',
+    experiments,
+    context.query
+  );
 
   // FIT-583
   // Persist key attribution query params across navigation.
@@ -362,28 +470,16 @@ CarsPage.getInitialProps = async (context: NextPageContext): Promise<Props> => {
     }
   );
 
-  // DELTA-4
-  // Based on testing it seems that "asPath" is always a string,
-  // but just to be safe, I'm covering the undefined case.
-  const url = typeof asPath === 'string' ? (asPath as string) : '';
-
-  const initialStoreState = await getInitialCarsStoreState(
+  const initialStoreState = {
     attributionQueryString,
     geoLocationSortDefaultVariant,
-    geo,
-    url
-  );
-
-  const getHasInventory = (): boolean => {
-    if (initialStoreState.inventoryStatus !== Status.SUCCESS) {
-      return false;
-    }
-    if (!initialStoreState.inventoryData) {
-      return false;
-    }
-    return initialStoreState.inventoryData.hits.total !== 0;
+    makes,
+    cars,
+    popularCars,
+    filtersData,
   };
-  const hasInventory = getHasInventory();
+
+  const hasInventory = cars ? cars.hits.total !== 0 : false;
 
   if (res && !hasInventory) {
     res.statusCode = 404;
@@ -394,6 +490,7 @@ CarsPage.getInitialProps = async (context: NextPageContext): Promise<Props> => {
     experiments,
     initialStoreState,
     query,
+    resumeSearchDefaultVariant,
   };
 };
 
