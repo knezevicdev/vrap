@@ -25,6 +25,7 @@ class CarCardViewModel {
   private readonly carsStore: CarsStore;
   private readonly car: Car;
   private readonly experimentData: ExperimentData;
+  private readonly position: number;
   readonly evoxLogo = {
     alt: 'Evox Images',
     src: `${publicRuntimeConfig.BASE_PATH}/components/evox-logo.png`,
@@ -33,12 +34,17 @@ class CarCardViewModel {
   readonly salePending: string = 'SALE PENDING';
   oldProductVsNewProductDefaultVariant: boolean;
 
-  constructor(carsStore: CarsStore, car: Car, experimentData: ExperimentData) {
+  constructor(
+    carsStore: CarsStore,
+    car: Car,
+    experimentData: ExperimentData,
+    position: number
+  ) {
     this.experimentData = experimentData;
     this.analyticsHandler = new AnalyticsHandler();
     this.carsStore = carsStore;
     this.car = car;
-
+    this.position = position;
     this.oldProductVsNewProductDefaultVariant = showDefaultVariant(
       'snd-old-pdp-vs-new-pdp',
       this.experimentData.experiments,
@@ -153,6 +159,7 @@ class CarCardViewModel {
       url: this.link(),
       vin,
       year,
+      position: this.position,
     };
     this.analyticsHandler.trackProductClicked(product);
   };

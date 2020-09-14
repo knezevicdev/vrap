@@ -17,7 +17,8 @@ export interface InventoryStoreState {
 }
 
 export async function getInitialInventoryStoreState(
-  vin: string
+  vin: string,
+  vinClusterDefaultVariant: boolean
 ): Promise<InventoryStoreState> {
   const initState: InventoryStoreState = {
     similarStatus: Status.INITIAL,
@@ -59,6 +60,9 @@ export async function getInitialInventoryStoreState(
     const response = await invSearchNetworker.getInventorySimilar({
       vin,
       min: 4,
+      useVinCluster: !vinClusterDefaultVariant,
+      // if vinClusterDefaultVariant is true we are in
+      // the default and useVinCluster should be false
     });
 
     initState.similar = response.data.hits.hits;

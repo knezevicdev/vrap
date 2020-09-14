@@ -24,7 +24,6 @@ class PaginationViewModel {
     const count = Math.ceil(
       this.getTotal() / this.carsStore.inventoryCardsPerPage
     );
-
     return { page, count };
   }
 
