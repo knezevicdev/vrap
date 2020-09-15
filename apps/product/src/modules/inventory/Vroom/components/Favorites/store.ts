@@ -44,7 +44,7 @@ export class FavoritesStore {
 
   @action
   setFavorited = (): void => {
-    this.isFavorited = true;
+    this.isFavorited = !this.isFavorited;
   };
 
   @action

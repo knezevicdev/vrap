@@ -12,13 +12,16 @@ interface Props {
 const Container = styled(Typography)(({ theme }) => ({
   paddingTop: theme.spacing(2),
   color: theme.palette.primary.main,
+  cursor: 'pointer',
 }));
 
 const FavoritesView: React.FC<Props> = (props) => {
   const { viewModel } = props;
 
   const handleClick = (): void => {
-    viewModel.addFavorite();
+    viewModel.isFavorited()
+      ? viewModel.removeFavorite()
+      : viewModel.addFavorite();
   };
 
   React.useEffect(() => {

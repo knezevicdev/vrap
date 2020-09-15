@@ -84,6 +84,22 @@ class FavoritesViewModel {
       console.log(err);
     }
   }
+
+  async removeFavorite(): Promise<void> {
+    const vin = this.getVin();
+    const accessToken = this.getAccessToken();
+    try {
+      const favoritesResponse = await this.favoritesNetworker.removeFavorite(
+        accessToken,
+        vin
+      );
+      if (favoritesResponse.statusText === 'OK') {
+        this.favoritesStore.setFavorited();
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  }
 }
 
 export default FavoritesViewModel;
