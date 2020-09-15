@@ -1,4 +1,6 @@
 import { styled } from '@material-ui/core/styles';
+import FavoriteIcon from '@material-ui/icons/Favorite';
+import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 import { Typography } from '@vroom-web/ui';
 import { observer } from 'mobx-react';
 import React from 'react';
@@ -10,6 +12,7 @@ interface Props {
 }
 
 const Container = styled(Typography)(({ theme }) => ({
+  display: 'flex',
   paddingTop: theme.spacing(2),
   color: theme.palette.primary.main,
   cursor: 'pointer',
@@ -29,10 +32,16 @@ const FavoritesView: React.FC<Props> = (props) => {
   }, [viewModel]);
   return (
     <Container onClick={handleClick}>
-      {!viewModel.isLoading() &&
-        (viewModel.isFavorited()
-          ? viewModel.favorited
-          : viewModel.addToFavorites)}
+      {!viewModel.isLoading() && viewModel.isFavorited() ? (
+        <>
+          <FavoriteIcon /> {viewModel.favorited}
+        </>
+      ) : (
+        <>
+          <FavoriteBorderIcon />
+          {viewModel.addToFavorites}
+        </>
+      )}
     </Container>
   );
 };
