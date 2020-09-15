@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
+import Icon, { Icons } from '../../atoms/Icon';
 import { Body, Hero, Title } from '../../atoms/Typography';
 
 const Container = styled.div`
@@ -64,26 +65,30 @@ export const Overview: React.FC = () => {
       <Hero.Four>overview</Hero.Four>
       <Info>
         <Content>
-          Could probably get formulaic with this copy to describe the high-level
-          vehicle & manufacturer details here that don’t change with packages
-          and trims like seating, MPG, drive type, transmission, fuel type,
-          warranty information, average miles these 2019’s would have etc.
+          The 2019 Jeep Wrangler is a great vehicle for anyone who wants an
+          iconic, dependable, and rugged ride. Mostly influenced by the military
+          Jeep from World War II, it remains the epitome of Jeep's brand. The
+          reason these vehicles are so popular is their versatility to be used
+          as a daily commuter during the week and an off-roader on the weekends.
+          Available with two or four doors (Wrangler Unlimited) and a 6-speed
+          manual or 8-speed automatic transmission, the Wrangler has adapted
+          over the years to accommodate all drivers.
         </Content>
         <Details>
           <Detail>
-            <div>Icon</div>
+            <Icon icon={Icons.GAS} />
             <Title.Two>20 MPG</Title.Two>
             <DetailBody>Combined</DetailBody>
           </Detail>
           <Detail>
-            <div>Icon</div>
-            <Title.Two>20 MPG</Title.Two>
-            <DetailBody>Combined</DetailBody>
+            <Icon icon={Icons.ENGINE} />
+            <Title.Two>285 HP</Title.Two>
+            <DetailBody>{'@6,400 RPMs'}</DetailBody>
           </Detail>
           <Detail>
-            <div>Icon</div>
-            <Title.Two>20 MPG</Title.Two>
-            <DetailBody>Combined</DetailBody>
+            <Icon icon={Icons.SEAT} />
+            <Title.Two>Seats 5</Title.Two>
+            <DetailBody>Passengers</DetailBody>
           </Detail>
         </Details>
       </Info>
