@@ -8,19 +8,11 @@ import { Button, Typography } from '@vroom-web/ui';
 import { observer } from 'mobx-react';
 import React from 'react';
 
-import CarCard from '../SimilarVehicles/components/CarCard';
 import ViewModel from './ViewModel';
 
 const DialogHeader = styled('div')(({ theme }) => ({
-  padding: theme.spacing(4),
-  display: 'flex',
-  flexDirection: 'row',
-  backgroundColor: theme.palette.grey[100],
-  [theme.breakpoints.only('xs')]: {
-    justifyContent: 'center',
-    backgroundColor: 'white',
-    borderBottom: '1px solid rgba(0, 0, 0, .2)',
-  },
+  borderBottom: '1px solid rgba(0, 0, 0, .2)',
+  margin: theme.spacing(2, 0),
 }));
 
 const StyledIconButton = styled(IconButton)(({ theme }) => ({
@@ -40,56 +32,32 @@ const DialogContent = styled('div')(({ theme }) => ({
 const DialogBody = styled('div')(({ theme }) => ({
   display: 'flex',
   flexDirection: 'column',
-  padding: theme.spacing(4, 0),
-  width: '33%',
+  padding: theme.spacing(4, 8),
   [theme.breakpoints.only('xs')]: {
-    width: '80%',
+    padding: theme.spacing(2),
   },
 }));
 
-const DialogButton = styled(Button)(({ theme }) => ({
+const DialogButton = styled(Button)(() => ({
   display: 'flex',
   alignSelf: 'center',
-  width: '33%',
-  marginBottom: theme.spacing(2),
-  [theme.breakpoints.only('xs')]: {
-    width: '90%',
-  },
+  width: '100%',
 }));
 
 const HeaderContent = styled('div')(({ theme }) => ({
-  display: 'flex',
-  width: '38%',
-  flexDirection: 'column',
-  margin: theme.spacing(8, 0),
-  justifyContent: 'space-between',
+  margin: theme.spacing(4, 0),
   [theme.breakpoints.only('xs')]: {
     width: '100%',
     margin: theme.spacing(0),
   },
 }));
 
-const CarCardContainer = styled('div')(({ theme }) => ({
-  width: '22%',
-  margin: theme.spacing(0, 8),
-  [theme.breakpoints.only('xs')]: {
-    display: 'none',
-  },
-}));
-
-const Email = styled(Typography)(({ theme }) => ({
-  padding: theme.spacing(4, 0),
-  alignSelf: 'center',
-  [theme.breakpoints.only('xs')]: {
-    fontWeight: '600',
-    padding: theme.spacing(0, 0, 2, 0),
-  },
-}));
-
 const CheckboxContainer = styled('div')(({ theme }) => ({
   display: 'flex',
   flexDirection: 'row',
-  paddingTop: theme.spacing(3),
+  padding: theme.spacing(2, 0),
+  margin: theme.spacing(4, 0),
+  backgroundColor: theme.palette.grey[100],
 }));
 
 const StyledCheckbox = styled(Checkbox)(({ theme }) => ({
@@ -134,31 +102,6 @@ const DialogTitle = styled(Typography)(({ theme }) => ({
   },
 }));
 
-const DialogHeaderTwo = styled(Typography)(({ theme }) => ({
-  [theme.breakpoints.only('xs')]: {
-    display: 'none',
-  },
-}));
-
-const DialogHeaderBody = styled(Typography)(({ theme }) => ({
-  [theme.breakpoints.only('xs')]: {
-    display: 'none',
-  },
-}));
-
-const DialogBodyTitle = styled(Typography)(({ theme }) => ({
-  fontWeight: 'bold',
-  [theme.breakpoints.only('xs')]: {
-    fontWeight: 'normal',
-    alignSelf: 'center',
-  },
-}));
-
-const CheckboxRed = styled(Typography)(({ theme }) => ({
-  display: 'inline',
-  fontWeight: theme.typography.fontWeightMedium,
-}));
-
 interface Props {
   viewModel: ViewModel;
 }
@@ -171,37 +114,21 @@ const LoggedInView: React.FC<Props> = ({ viewModel }) => {
   return (
     <Dialog
       onClose={handleDialogClick}
-      fullWidth={true}
-      maxWidth={'lg'}
+      maxWidth={'sm'}
       open={viewModel.isOpen()}
     >
       <DialogContent>
         <DialogHeader>
-          <CarCardContainer>
-            <CarCard car={viewModel.getCar()} key={viewModel.getVin()} />
-          </CarCardContainer>
           <HeaderContent>
             <DialogTitle variant="h2">
               {viewModel.isSuccessful().dialogTitle}
             </DialogTitle>
-            <DialogHeaderBody variant="body1">
-              {viewModel.isSuccessful().body}
-              {viewModel.isSuccessful().isSuccessful &&
-                viewModel.getUserEmail()}
-            </DialogHeaderBody>
-            {!viewModel.isSuccessful().isSuccessful && (
-              <DialogHeaderTwo variant="body1">
-                {viewModel.loggedIn.header2}
-              </DialogHeaderTwo>
-            )}
           </HeaderContent>
           <StyledIconButton aria-label="close" onClick={handleDialogClick}>
             <CloseIcon />
           </StyledIconButton>
         </DialogHeader>
         <DialogBody>
-          <DialogBodyTitle>{viewModel.loggedIn.bodyTitle}</DialogBodyTitle>
-          <Email>{viewModel.getUserEmail()}</Email>
           <Typography>{viewModel.loggedIn.body}</Typography>
           <CheckboxContainer>
             <StyledCheckbox
@@ -210,35 +137,11 @@ const LoggedInView: React.FC<Props> = ({ viewModel }) => {
               inputProps={{ 'aria-label': 'primary checkbox' }}
             />
             <CheckboxTypography onClick={handleCheckboxChange}>
-              {viewModel.loggedIn.checkboxText[0]}
-              <CheckboxRed color="red">
-                {viewModel.loggedIn.checkboxText[1]}
-              </CheckboxRed>
+              {viewModel.loggedIn.checkboxText}
             </CheckboxTypography>
           </CheckboxContainer>
-        </DialogBody>
-        {!viewModel.hasError() ? (
-          <DialogButton
-            variant="contained"
-            color="primary"
-            onClick={handleDialogActions('submit')}
-            disabled={viewModel.dialogButtonDisabled()}
-          >
-            <Typography variant="button" fontWeight={600}>
-              {viewModel.getDialogButtonLoading() ? (
-                <CircularProgress />
-              ) : (
-                viewModel.loggedIn.buttonText
-              )}
-            </Typography>
-          </DialogButton>
-        ) : (
-          <ErrorContainer>
-            <ErrorHeader color="orange" fontWeight="fontWeightMedium">
-              {viewModel.loggedIn.error.headerText}
-            </ErrorHeader>
-            <ErrorBody>{viewModel.loggedIn.error.bodyText}</ErrorBody>
-            <ErrorButton
+          {!viewModel.hasError() ? (
+            <DialogButton
               variant="contained"
               color="primary"
               onClick={handleDialogActions('submit')}
@@ -248,12 +151,33 @@ const LoggedInView: React.FC<Props> = ({ viewModel }) => {
                 {viewModel.getDialogButtonLoading() ? (
                   <CircularProgress />
                 ) : (
-                  viewModel.loggedIn.error.buttonText
+                  viewModel.loggedIn.buttonText
                 )}
               </Typography>
-            </ErrorButton>
-          </ErrorContainer>
-        )}
+            </DialogButton>
+          ) : (
+            <ErrorContainer>
+              <ErrorHeader color="orange" fontWeight="fontWeightMedium">
+                {viewModel.loggedIn.error.headerText}
+              </ErrorHeader>
+              <ErrorBody>{viewModel.loggedIn.error.bodyText}</ErrorBody>
+              <ErrorButton
+                variant="contained"
+                color="primary"
+                onClick={handleDialogActions('submit')}
+                disabled={viewModel.dialogButtonDisabled()}
+              >
+                <Typography variant="button" fontWeight={600}>
+                  {viewModel.getDialogButtonLoading() ? (
+                    <CircularProgress />
+                  ) : (
+                    viewModel.loggedIn.error.buttonText
+                  )}
+                </Typography>
+              </ErrorButton>
+            </ErrorContainer>
+          )}
+        </DialogBody>
       </DialogContent>
     </Dialog>
   );

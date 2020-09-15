@@ -7,7 +7,6 @@ import { Status } from 'src/networking/types';
 export class NotifyMeStore {
   @observable modalOpen = false;
   @observable userTokenStatus: Status = Status.INITIAL;
-  @observable email?: string;
   @observable accessToken?: string;
   @observable isChecked = false;
   @observable isError = false;
@@ -30,11 +29,8 @@ export class NotifyMeStore {
         return undefined;
       }
       try {
-        const { email } = jwtDecode(authToken.idToken);
-        this.email = email;
         this.accessToken = authToken.accessToken;
       } catch {
-        this.email = undefined;
         this.accessToken = undefined;
       }
     } catch {
