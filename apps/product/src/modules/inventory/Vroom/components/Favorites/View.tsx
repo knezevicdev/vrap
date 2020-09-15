@@ -13,9 +13,11 @@ interface Props {
 
 const Container = styled(Typography)(({ theme }) => ({
   display: 'flex',
+  alignItems: 'center',
   paddingTop: theme.spacing(2),
   color: theme.palette.primary.main,
   cursor: 'pointer',
+  fontSize: '16px',
 }));
 
 const FavoritesView: React.FC<Props> = (props) => {
