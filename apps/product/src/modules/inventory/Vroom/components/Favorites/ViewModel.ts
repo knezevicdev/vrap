@@ -51,9 +51,10 @@ class FavoritesViewModel {
 
   async checkFavorites(): Promise<void> {
     const vin = this.getVin();
+    const accessToken = this.getAccessToken();
     try {
       const favoritesResponse = await this.favoritesNetworker.listFavorites(
-        this.getAccessToken()
+        accessToken
       );
       const vinList = favoritesResponse.data.data.user.favoriteVehicles;
       const found = vinList.find((element: VinList) =>
@@ -66,6 +67,22 @@ class FavoritesViewModel {
       console.log(err);
     }
     this.favoritesStore.setLoading(false);
+  }
+
+  async addFavorite(): Promise<void> {
+    const vin = this.getVin();
+    const accessToken = this.getAccessToken();
+    try {
+      const favoritesResponse = await this.favoritesNetworker.addFavorite(
+        accessToken,
+        vin
+      );
+      if (favoritesResponse.statusText === 'OK') {
+        this.favoritesStore.setFavorited();
+      }
+    } catch (err) {
+      console.log(err);
+    }
   }
 }
 

@@ -17,11 +17,15 @@ const Container = styled(Typography)(({ theme }) => ({
 const FavoritesView: React.FC<Props> = (props) => {
   const { viewModel } = props;
 
+  const handleClick = (): void => {
+    viewModel.addFavorite();
+  };
+
   React.useEffect(() => {
     viewModel.handleMount();
   }, [viewModel]);
   return (
-    <Container>
+    <Container onClick={handleClick}>
       {!viewModel.isLoading() &&
         (viewModel.isFavorited()
           ? viewModel.favorited

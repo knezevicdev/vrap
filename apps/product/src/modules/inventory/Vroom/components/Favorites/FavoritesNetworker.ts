@@ -1,5 +1,10 @@
 import axios, { AxiosInstance } from 'axios';
 
+interface GearboxRequest {
+  query: string;
+  variables: object;
+}
+
 export interface FavoritesListResponse {
   data: {
     data: {
@@ -12,6 +17,10 @@ export interface FavoritesListResponse {
       };
     };
   };
+}
+
+interface AddFavoriteResponse {
+  statusText: string;
 }
 
 export default class FavoritesNetworker {
@@ -39,6 +48,33 @@ export default class FavoritesNetworker {
       }
     `.trim();
     const data = { query: checkFavoriteQuery };
+    return await this.axiosInstance.post(this.hostUrl, data, options);
+  }
+
+  async addFavorite(
+    accessToken: string | undefined,
+    vin: string
+  ): Promise<AddFavoriteResponse> {
+    const options = {
+      headers: { Authorization: `Bearer ${accessToken}` },
+    };
+    const variables = {
+      vin,
+      source: 'vroom.com',
+    };
+    const checkFavoriteQuery = `
+      mutation ($vin: String! $source: String!) {
+        userAddFavoriteVehicles(vin: $vin, source: $source){
+          favoriteVehicles {
+            vin
+          }
+        }
+      }
+    `.trim();
+    const data: GearboxRequest = {
+      query: checkFavoriteQuery,
+      variables,
+    };
     return await this.axiosInstance.post(this.hostUrl, data, options);
   }
 }
