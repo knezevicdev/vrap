@@ -8,6 +8,7 @@ export class FavoritesStore {
   @observable isFavorited = false;
   @observable userTokenStatus: Status = Status.INITIAL;
   @observable accessToken?: string;
+  @observable loading = true;
 
   @action
   private initUserAccount = async (): Promise<void> => {
@@ -25,6 +26,7 @@ export class FavoritesStore {
       }
       try {
         this.accessToken = authToken.accessToken;
+        this.userTokenStatus = Status.SUCCESS;
       } catch {
         this.accessToken = undefined;
       }
@@ -43,5 +45,10 @@ export class FavoritesStore {
   @action
   setFavorited = (): void => {
     this.isFavorited = true;
+  };
+
+  @action
+  setLoading = (flag: boolean): void => {
+    this.loading = flag;
   };
 }

@@ -11,7 +11,8 @@ class FavoritesViewModel {
   private inventoryStore: InventoryStore;
   private favoritesStore: FavoritesStore;
   private favoritesNetworker: FavoritesNetworker;
-  readonly addToFavorites: string = 'Add To Favorites';
+  readonly addToFavorites: string = 'ADD TO FAVORITES';
+  readonly favorited: string = 'FAVORITED';
 
   constructor(
     inventoryStore: InventoryStore,
@@ -40,6 +41,14 @@ class FavoritesViewModel {
     return this.favoritesStore.accessToken !== undefined;
   }
 
+  isFavorited(): boolean {
+    return this.favoritesStore.isFavorited;
+  }
+
+  isLoading(): boolean {
+    return this.favoritesStore.loading;
+  }
+
   async checkFavorites(): Promise<void> {
     const vin = this.getVin();
     try {
@@ -51,11 +60,12 @@ class FavoritesViewModel {
         element.vin.includes(vin)
       );
       if (found !== undefined) {
-        this.favoritesStore.setFavorited;
+        this.favoritesStore.setFavorited();
       }
     } catch (err) {
       console.log(err);
     }
+    this.favoritesStore.setLoading(false);
   }
 }
 
