@@ -38,7 +38,7 @@ export const SEM: React.FC = () => {
     <ThemeProvider theme={VroomTheme}>
       <Page>
         <Container>
-          <Hero info={{ image: '', title: '2019 wrangler', logo: '' }} />
+          <Hero data={{ title: 'Jeep Wrangler' }} />
           <Space />
           <Overview />
           <Space />

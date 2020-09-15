@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
+import { Picture } from '../../atoms/Picture';
 import { Hero as TypographyHero } from '../../atoms/Typography';
 
 const Container = styled.div`
@@ -10,36 +11,27 @@ const Container = styled.div`
   width: 100%;
 `;
 
-const Image = styled.div`
-  min-height: 486px;
-  background: lightgray;
-`;
-
-const Header = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  min-height: 56px;
-  background: gray;
+const Title = styled(TypographyHero.One)`
+  font-family: Calibre;
+  font-weight: 600;
 `;
 
 export interface Props {
-  info: {
-    image: string;
-    logo: string;
+  data: {
     title: string;
   };
 }
 
-export const Hero: React.FC<Props> = ({ info: { title } }) => {
+export const Hero: React.FC<Props> = ({ data: { title } }) => {
   return (
     <Container>
-      <Image />
-      <Header>
-        <div>logo</div>
-        <div>icon</div>
-      </Header>
-      <TypographyHero.One>{title}</TypographyHero.One>
+      <Picture
+        alt="Hero Background"
+        src="/images/Hero-Jeep-image.png"
+        width="auto"
+        aspectRatio="960:720"
+      />
+      <Title>{title}</Title>
     </Container>
   );
 };
