@@ -13,6 +13,11 @@ class FavoritesViewModel {
   private favoritesNetworker: FavoritesNetworker;
   readonly addToFavorites: string = 'ADD TO FAVORITES';
   readonly favorited: string = 'FAVORITED';
+  readonly dialogTitle: string = 'SAVE THIS CAR TO YOUR LIST';
+  readonly dialogBody: string =
+    'Create an account to keep track and access your saved cars anytime.';
+  readonly createAccountButton: string = 'CREATE ACCOUNT';
+  readonly logInButton: string = 'LOG IN';
 
   constructor(
     inventoryStore: InventoryStore,
@@ -27,6 +32,16 @@ class FavoritesViewModel {
   handleMount(): void {
     this.favoritesStore.initClientSide();
     this.isLoggedIn() && this.checkFavorites();
+  }
+
+  handleDialogActions(location: string): void {
+    const currentUrl = window.location.pathname;
+    const newUrl = `/account/${location}?redirect=${currentUrl}`;
+    window.location.href = newUrl;
+  }
+
+  handleDialog(): void {
+    this.favoritesStore.setDialog();
   }
 
   getVin(): string {
@@ -47,6 +62,10 @@ class FavoritesViewModel {
 
   isLoading(): boolean {
     return this.favoritesStore.loading;
+  }
+
+  isOpen(): boolean {
+    return this.favoritesStore.isDialogOpen;
   }
 
   async checkFavorites(): Promise<void> {

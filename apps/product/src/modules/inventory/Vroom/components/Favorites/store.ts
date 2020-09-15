@@ -9,6 +9,7 @@ export class FavoritesStore {
   @observable userTokenStatus: Status = Status.INITIAL;
   @observable accessToken?: string;
   @observable loading = true;
+  @observable isDialogOpen = false;
 
   @action
   private initUserAccount = async (): Promise<void> => {
@@ -50,5 +51,10 @@ export class FavoritesStore {
   @action
   setLoading = (flag: boolean): void => {
     this.loading = flag;
+  };
+
+  @action
+  setDialog = (): void => {
+    this.isDialogOpen = !this.isDialogOpen;
   };
 }

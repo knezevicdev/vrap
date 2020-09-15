@@ -5,6 +5,7 @@ import { Typography } from '@vroom-web/ui';
 import { observer } from 'mobx-react';
 import React from 'react';
 
+import LoggedOut from './LoggedOut';
 import ViewModel from './ViewModel';
 
 interface Props {
@@ -24,27 +25,34 @@ const FavoritesView: React.FC<Props> = (props) => {
   const { viewModel } = props;
 
   const handleClick = (): void => {
-    viewModel.isFavorited()
-      ? viewModel.removeFavorite()
-      : viewModel.addFavorite();
+    if (viewModel.isLoggedIn()) {
+      viewModel.isFavorited()
+        ? viewModel.removeFavorite()
+        : viewModel.addFavorite();
+    } else {
+      viewModel.handleDialog();
+    }
   };
 
   React.useEffect(() => {
     viewModel.handleMount();
   }, [viewModel]);
   return (
-    <Container onClick={handleClick}>
-      {!viewModel.isLoading() && viewModel.isFavorited() ? (
-        <>
-          <FavoriteIcon /> {viewModel.favorited}
-        </>
-      ) : (
-        <>
-          <FavoriteBorderIcon />
-          {viewModel.addToFavorites}
-        </>
-      )}
-    </Container>
+    <>
+      <Container onClick={handleClick}>
+        {!viewModel.isLoading() && viewModel.isFavorited() ? (
+          <>
+            <FavoriteIcon /> {viewModel.favorited}
+          </>
+        ) : (
+          <>
+            {!viewModel.isLoggedIn() && <LoggedOut viewModel={viewModel} />}
+            <FavoriteBorderIcon />
+            {viewModel.addToFavorites}
+          </>
+        )}
+      </Container>
+    </>
   );
 };
 
