@@ -4,16 +4,10 @@ import { action, observable, runInAction } from 'mobx';
 
 import { Status } from 'src/networking/types';
 
-export class NotifyMeStore {
-  @observable modalOpen = false;
+export class FavoritesStore {
+  @observable isFavorited = false;
   @observable userTokenStatus: Status = Status.INITIAL;
-  @observable email?: string;
   @observable accessToken?: string;
-  @observable isChecked = false;
-  @observable isError = false;
-  @observable isSuccessful = false;
-  @observable notifyMeLoading = true;
-  @observable dialogButtonLoading = true;
 
   @action
   private initUserAccount = async (): Promise<void> => {
@@ -30,12 +24,8 @@ export class NotifyMeStore {
         return undefined;
       }
       try {
-        const { email } = jwtDecode(authToken.idToken);
-        this.email = email;
         this.accessToken = authToken.accessToken;
-        console.log('accesstoken: ', authToken.accessToken);
       } catch {
-        this.email = undefined;
         this.accessToken = undefined;
       }
     } catch {
@@ -51,32 +41,7 @@ export class NotifyMeStore {
   };
 
   @action
-  toggleModal = (): void => {
-    this.modalOpen = !this.modalOpen;
-  };
-
-  @action
-  toggleCheckbox = (): void => {
-    this.isChecked = !this.isChecked;
-  };
-
-  @action
-  setError = (value: boolean): void => {
-    this.isError = value;
-  };
-
-  @action
-  setSuccess = (value: boolean): void => {
-    this.isSuccessful = value;
-  };
-
-  @action
-  setNotifyMeLoading = (value: boolean): void => {
-    this.notifyMeLoading = value;
-  };
-
-  @action
-  setDialogButtonLoading = (value: boolean): void => {
-    this.dialogButtonLoading = value;
+  setFavorited = (): void => {
+    this.isFavorited = true;
   };
 }
