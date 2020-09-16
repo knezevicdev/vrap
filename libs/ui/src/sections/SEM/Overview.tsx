@@ -51,45 +51,62 @@ const Detail = styled.div`
   flex-direction: column;
   text-align: center;
   @media (max-width: 959px) {
-    margin-right: 32px;
+    &:not(:last-child) {
+      margin-right: 32px;
+    }
   }
 `;
 
-const DetailBody = styled(Body.Small)`
+const Description = styled(Body.Small)`
   color: #6c717a;
 `;
 
-export const Overview: React.FC = () => {
-  return (
-    <Container>
-      <Hero.Four>overview</Hero.Four>
-      <Info>
-        <Content>
-          The 2019 Jeep Wrangler is a great vehicle for anyone who wants an
+//TODO: Dynamic content - make these things into injectable content
+
+const content = `The 2019 Jeep Wrangler is a great vehicle for anyone who wants an
           iconic, dependable, and rugged ride. Mostly influenced by the military
           Jeep from World War II, it remains the epitome of Jeep's brand. The
           reason these vehicles are so popular is their versatility to be used
           as a daily commuter during the week and an off-roader on the weekends.
           Available with two or four doors (Wrangler Unlimited) and a 6-speed
           manual or 8-speed automatic transmission, the Wrangler has adapted
-          over the years to accommodate all drivers.
-        </Content>
+          over the years to accommodate all drivers.`;
+
+const details = [
+  {
+    icon: Icons.GAS,
+    title: `20 MPG`,
+    description: `Combined`,
+  },
+  {
+    icon: Icons.ENGINE,
+    title: `285 HP`,
+    description: `@6,400 RPMs`,
+  },
+  {
+    icon: Icons.SEAT,
+    title: `Seats 5`,
+    description: `Passengers`,
+  },
+];
+
+export const Overview: React.FC = () => {
+  return (
+    <Container>
+      <Hero.Four>overview</Hero.Four>
+      <Info>
+        <Content>{content}</Content>
         <Details>
-          <Detail>
-            <Icon icon={Icons.GAS} />
-            <Title.Two>20 MPG</Title.Two>
-            <DetailBody>Combined</DetailBody>
-          </Detail>
-          <Detail>
-            <Icon icon={Icons.ENGINE} />
-            <Title.Two>285 HP</Title.Two>
-            <DetailBody>{'@6,400 RPMs'}</DetailBody>
-          </Detail>
-          <Detail>
-            <Icon icon={Icons.SEAT} />
-            <Title.Two>Seats 5</Title.Two>
-            <DetailBody>Passengers</DetailBody>
-          </Detail>
+          {details.map((detail) => {
+            const { icon, title, description } = detail;
+            return (
+              <Detail key={title}>
+                <Icon icon={icon} />
+                <Title.Two>{title}</Title.Two>
+                <Description>{description}</Description>
+              </Detail>
+            );
+          })}
         </Details>
       </Info>
     </Container>

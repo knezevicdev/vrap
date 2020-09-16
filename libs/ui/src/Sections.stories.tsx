@@ -20,7 +20,7 @@ export const SEM_Hero: React.FC = () => {
   return (
     <Container>
       <ThemeProvider theme={VroomTheme}>
-        <Hero data={{ title: 'Jeep Wrangler' }} />
+        <Hero />
       </ThemeProvider>
     </Container>
   );

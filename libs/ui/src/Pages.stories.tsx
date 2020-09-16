@@ -1,6 +1,7 @@
 import React from 'react';
 import styled, { ThemeProvider } from 'styled-components';
 
+import { Colors } from './sections/SEM/Colors';
 import { Hero } from './sections/SEM/Hero';
 import { Overview } from './sections/SEM/Overview';
 import { theme as VroomTheme } from './themes/New/Vroom';
@@ -19,9 +20,10 @@ const Page = styled.div`
 `;
 
 const Container = styled.div`
+  width: 100%;
   max-width: 864px;
   align-self: center;
-  padding: 36px 36px 128px 36px;
+  margin-bottom: 136px;
 `;
 
 const Space = styled.div`
@@ -34,10 +36,11 @@ export const SEM: React.FC = () => {
     <ThemeProvider theme={VroomTheme}>
       <Page>
         <Container>
-          <Hero data={{ title: 'Jeep Wrangler' }} />
+          <Hero />
           <Space />
           <Overview />
           <Space />
+          <Colors />
         </Container>
       </Page>
     </ThemeProvider>

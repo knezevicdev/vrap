@@ -16,21 +16,21 @@ const Title = styled(TypographyHero.One)`
   font-weight: 600;
 `;
 
-export interface Props {
-  data: {
-    title: string;
-  };
-}
+//TODO: Dynamic content - make these things into injectable content
 
-export const Hero: React.FC<Props> = ({ data: { title } }) => {
+const picture = {
+  alt: 'Jeep',
+  src: '/images/Hero-Jeep-image.png',
+  width: 'auto',
+  aspectRatio: '960:720',
+};
+
+const title = 'Jeep Wrangler';
+
+export const Hero: React.FC = () => {
   return (
     <Container>
-      <Picture
-        alt="Hero Background"
-        src="/images/Hero-Jeep-image.png"
-        width="auto"
-        aspectRatio="960:720"
-      />
+      <Picture {...picture} />
       <Title>{title}</Title>
     </Container>
   );
