@@ -26,7 +26,7 @@ const DialogContent = styled('div')(({ theme }) => ({
   paddingBottom: theme.spacing(4),
 }));
 
-const DialogBody = styled('div')(({ theme }) => ({
+const DialogBody = styled(Typography)(({ theme }) => ({
   padding: theme.spacing(0, 8, 4, 8),
 }));
 
