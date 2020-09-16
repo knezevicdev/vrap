@@ -2,17 +2,12 @@ import React from 'react';
 import styled, { ThemeProvider } from 'styled-components';
 
 import { Colors } from './sections/SEM/Colors';
+import { Features } from './sections/SEM/Features';
 import { Hero } from './sections/SEM/Hero';
 import { Overview } from './sections/SEM/Overview';
 import { theme as VroomTheme } from './themes/New/Vroom';
 
 export default { title: 'Pages' };
-
-/*
-  TODO:
-  Mobile layout broken because sections are not all responsive.
-  Debug by removing sections to see what needs work.
- */
 
 const Page = styled.div`
   display: flex;
@@ -41,6 +36,8 @@ export const SEM: React.FC = () => {
           <Overview />
           <Space />
           <Colors />
+          <Space />
+          <Features />
         </Container>
       </Page>
     </ThemeProvider>
