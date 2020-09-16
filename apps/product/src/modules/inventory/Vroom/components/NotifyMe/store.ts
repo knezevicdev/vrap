@@ -30,7 +30,6 @@ export class NotifyMeStore {
       }
       try {
         this.accessToken = authToken.accessToken;
-        console.log('accesstoken: ', authToken.accessToken);
       } catch {
         this.accessToken = undefined;
       }

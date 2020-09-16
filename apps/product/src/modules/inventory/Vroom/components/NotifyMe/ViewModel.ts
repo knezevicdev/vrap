@@ -45,7 +45,7 @@ class NotifyMeViewModel {
       'Vroom will notify everyone that has expressed an interest in this vehicle at the same time, at which point the vehicle can be reserved by ANY Vroom customer by placing a deposit on the vehicle.',
     checkboxText:
       'Signing up to be notified when this vehicle is available does not reserve it for you',
-    buttonText: 'NOTIFY ME WHEN I CAN BUY THIS VEHICLE',
+    buttonText: 'NOTIFY ME WHEN AVAILABLE',
     error: {
       buttonText: 'TRY AGAIN',
       headerText: 'An Error Occurred',
