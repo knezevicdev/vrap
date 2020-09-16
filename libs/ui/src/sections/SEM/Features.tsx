@@ -196,7 +196,7 @@ const Container = styled.div`
 `;
 
 const CustomTable = styled(Table)`
-  overflow-x: auto;
+  position: relative;
 
   table {
     border-spacing: 0;
@@ -204,6 +204,11 @@ const CustomTable = styled(Table)`
 
   .rc-table-sticky-header {
     position: sticky;
+    background: white;
+  }
+
+  .rc-table-body {
+    overflow-x: auto;
   }
 `;
 
@@ -216,6 +221,7 @@ const HeaderWrapper = styled.thead`
     }
 
     th:first-child {
+      background: white;
       @media (max-width: 599px) {
         border-right: solid 1px #d6d7da;
       }
