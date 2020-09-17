@@ -1,5 +1,6 @@
 import resolve from '@rollup/plugin-node-resolve';
 import babel from 'rollup-plugin-babel';
+import svg from 'rollup-plugin-svg';
 
 import pkg from './package.json';
 
@@ -35,6 +36,7 @@ const config = {
       extensions,
       exclude: ['node_modules/**', '*.stories.*'],
     }),
+    svg(),
   ],
 };
 

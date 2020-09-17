@@ -49,6 +49,7 @@
     "rimraf": "^3.0.2",
     "rollup": "^2.6.1",
     "rollup-plugin-babel": "^4.4.0",
+    "rollup-plugin-svg": "^2.0.0",
     "ts-loader": "^7.0.1",
     "typescript": "^3.8.3"
   },

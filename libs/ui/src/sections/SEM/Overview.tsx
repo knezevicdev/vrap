@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import Icon, { Icons } from '../../atoms/Icon';
+import Icon, { Icons } from '../../atoms/Icon/Icon';
 import { Body, Hero, Title } from '../../atoms/Typography';
 
 const Container = styled.div`

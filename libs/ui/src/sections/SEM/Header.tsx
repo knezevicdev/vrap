@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 import { Button } from '../../atoms/Button';
-import Icon, { Icons } from '../../atoms/Icon';
+import Icon, { Icons } from '../../atoms/Icon/Icon';
 
 const Container = styled.div`
   display: flex;
