@@ -27,25 +27,40 @@ export class Icons {
     height: 9,
   });
 
+  static readonly VROOM = new Icons('VROOM', {
+    name: 'vroom',
+    width: 116,
+    height: 20,
+    color: '#E7131A',
+  });
+
   private constructor(
     protected key: string,
-    public readonly value: { name: string; width: number; height: number }
+    public readonly value: {
+      name: string;
+      width: number;
+      height: number;
+      color?: string;
+    }
   ) {}
 }
 
 interface Props {
   icon: Icons;
   color?: string;
+  className?: string;
 }
 
-const Icon: React.FC<Props> = ({ icon, color }) => {
+const Icon: React.FC<Props> = ({ icon, color, className }) => {
   const width = icon.value.width;
   const height = icon.value.height;
   const name = icon.value.name;
-  const fill = color ? color : '#041022';
+  const iconColor = icon.value.color ? icon.value.color : '#041022';
+  const fill = color ? color : iconColor;
 
   return (
     <svg
+      className={className}
       fill={fill}
       width={width}
       height={height}

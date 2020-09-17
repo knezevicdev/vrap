@@ -3,6 +3,7 @@ import styled, { ThemeProvider } from 'styled-components';
 
 import { Colors } from './sections/SEM/Colors';
 import { Features } from './sections/SEM/Features';
+import { Header } from './sections/SEM/Header';
 import { Hero } from './sections/SEM/Hero';
 import { Overview } from './sections/SEM/Overview';
 import { theme as VroomTheme } from './themes/New/Vroom';
@@ -39,6 +40,7 @@ export const SEM: React.FC = () => {
   return (
     <ThemeProvider theme={VroomTheme}>
       <Page>
+        <Header />
         <Container>
           <Hero />
           <Divider />
