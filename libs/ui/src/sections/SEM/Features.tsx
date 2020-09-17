@@ -222,9 +222,6 @@ const HeaderWrapper = styled.thead`
 
     th:first-child {
       background: white;
-      @media (max-width: 599px) {
-        border-right: solid 1px #d6d7da;
-      }
     }
   }
 `;
@@ -233,29 +230,25 @@ const BodyWrapper = styled.tbody`
   tr {
     height: 36px;
 
-    :nth-child(even) {
-      background: #f5f5f5;
-    }
-
     td:first-child {
       min-width: 144px;
       width: 100%;
-      @media (max-width: 599px) {
-        border-right: solid 1px #d6d7da;
-      }
+      z-index: -1;
     }
 
     td:not(:first-child) {
       min-width: 112px;
       max-width: 122px;
       text-align: center;
+      z-index: -2;
+      position: relative;
     }
 
-    :nth-child(even) > td:first-child {
+    :nth-child(odd) > td {
       background: #f5f5f5;
     }
 
-    :nth-child(odd) > td:first-child {
+    :nth-child(even) > td {
       background: white;
     }
 
