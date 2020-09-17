@@ -46,12 +46,12 @@ const FavoritesView: React.FC<Props> = (props) => {
           </>
         ) : (
           <>
-            {!viewModel.isLoggedIn() && <LoggedOut viewModel={viewModel} />}
             <FavoriteBorderIcon />
             {viewModel.addToFavorites}
           </>
         )}
       </Container>
+      {!viewModel.isLoggedIn() && <LoggedOut viewModel={viewModel} />}
     </>
   );
 };

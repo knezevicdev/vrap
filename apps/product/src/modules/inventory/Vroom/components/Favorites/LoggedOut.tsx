@@ -53,7 +53,7 @@ const LoggedOutView: React.FC<Props> = ({ viewModel }) => {
       <DialogContent>
         <DialogTitle variant="h2" fontWeight="fontWeightMedium">
           {viewModel.dialogTitle}
-          <StyledIconButton aria-label="close">
+          <StyledIconButton aria-label="close" onClick={handleDialogClick}>
             <CloseIcon />
           </StyledIconButton>
         </DialogTitle>
