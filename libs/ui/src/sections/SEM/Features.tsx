@@ -221,7 +221,13 @@ const HeaderWrapper = styled.thead`
     }
 
     th:first-child {
+      min-width: 144px;
       background: white;
+    }
+
+    th:not(:first-child) {
+      min-width: 112px;
+      max-width: 122px;
     }
   }
 `;
