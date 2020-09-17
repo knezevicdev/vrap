@@ -42,7 +42,7 @@ interface Props {
 const LoggedOutView: React.FC<Props> = ({ viewModel }) => {
   const handleDialogActions = (location: string) => (): void =>
     viewModel.handleDialogActions(location);
-  const handleDialogClick = (): void => viewModel.handleClick();
+  const handleDialogClick = (): void => viewModel.handleDialog();
   return (
     <Dialog
       onClose={handleDialogClick}
@@ -57,7 +57,7 @@ const LoggedOutView: React.FC<Props> = ({ viewModel }) => {
             <CloseIcon />
           </StyledIconButton>
         </DialogTitle>
-        <DialogBody>{viewModel.dialogBodyLoggedOut}</DialogBody>
+        <DialogBody>{viewModel.dialogBody}</DialogBody>
         <DialogButton
           variant="contained"
           color="primary"
