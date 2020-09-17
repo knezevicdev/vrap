@@ -1,6 +1,6 @@
 import React from 'react';
 
-import IconsSheet from '../../static/icons/icons.svg';
+import IconsSheet from '../../../static/icons/icons.svg';
 
 export class Icons {
   static readonly GAS = new Icons('GAS', {

@@ -35,7 +35,7 @@ const colors = [
       src: '/images/JeepColors/firecraker_red.png',
       width: '113.5px',
       height: '64px',
-      objectFit: 'contain',
+      objectFit: 'cover',
     },
   },
   {
@@ -45,7 +45,7 @@ const colors = [
       src: '/images/JeepColors/billet_silver_metallic.png',
       width: '113.5px',
       height: '64px',
-      objectFit: 'contain',
+      objectFit: 'cover',
     },
   },
   {
@@ -55,7 +55,7 @@ const colors = [
       src: '/images/JeepColors/hellayella.png',
       width: '113.5px',
       height: '64px',
-      objectFit: 'contain',
+      objectFit: 'cover',
     },
   },
   {
@@ -65,7 +65,7 @@ const colors = [
       src: '/images/JeepColors/ocean_blue_metallic.png',
       width: '113.5px',
       height: '64px',
-      objectFit: 'contain',
+      objectFit: 'cover',
     },
   },
   {
@@ -75,7 +75,7 @@ const colors = [
       src: '/images/JeepColors/black.png',
       width: '113.5px',
       height: '64px',
-      objectFit: 'contain',
+      objectFit: 'cover',
     },
   },
   {
@@ -85,7 +85,7 @@ const colors = [
       src: '/images/JeepColors/granite_crystal_metallic.png',
       width: '113.5px',
       height: '64px',
-      objectFit: 'contain',
+      objectFit: 'cover',
     },
   },
   {
@@ -95,7 +95,7 @@ const colors = [
       src: '/images/JeepColors/mojito.png',
       width: '113.5px',
       height: '64px',
-      objectFit: 'contain',
+      objectFit: 'cover',
     },
   },
   {
@@ -105,7 +105,7 @@ const colors = [
       src: '/images/JeepColors/bright_white.png',
       width: '113.5px',
       height: '64px',
-      objectFit: 'contain',
+      objectFit: 'cover',
     },
   },
   {
@@ -115,7 +115,7 @@ const colors = [
       src: '/images/JeepColors/sting_gray.png',
       width: '113.5px',
       height: '64px',
-      objectFit: 'contain',
+      objectFit: 'cover',
     },
   },
   {
@@ -125,7 +125,7 @@ const colors = [
       src: '/images/JeepColors/punk_metallic.png',
       width: '113.5px',
       height: '64px',
-      objectFit: 'contain',
+      objectFit: 'cover',
     },
   },
 ];

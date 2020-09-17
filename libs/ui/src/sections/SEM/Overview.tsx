@@ -20,12 +20,12 @@ const Info = styled.div`
 const Content = styled(Body.Regular)`
   width: 50%;
 
-  @media (max-width: 959px) {
+  @media (max-width: 839px) {
     width: 100%;
     order: 2;
   }
 
-  @media (min-width: 600px) and (max-width: 959px) {
+  @media (min-width: 600px) and (max-width: 839px) {
     margin-top: 48px;
   }
 
@@ -38,10 +38,16 @@ const Details = styled.div`
   display: flex;
   width: 50%;
   justify-content: space-evenly;
-  @media (max-width: 959px) {
+
+  @media (min-width: 600) and (max-width: 839px) {
     width: 100%;
     order: 1;
     justify-content: flex-start;
+  }
+
+  @media (max-width: 599px) {
+    width: 100%;
+    order: 1;
   }
 `;
 

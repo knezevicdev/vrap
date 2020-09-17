@@ -19,10 +19,6 @@ const Logo = styled(Icon)`
   margin-left: 24px;
 `;
 
-const CustomPrimary = styled(Button.Primary)`
-  margin-right: 24px;
-`;
-
 export const Header: React.FC = () => {
   const onClick = (): void => {
     alert('clicked');
@@ -30,7 +26,7 @@ export const Header: React.FC = () => {
   return (
     <Container>
       <Logo icon={Icons.VROOM} />
-      <CustomPrimary onClick={onClick}>FIND YOURS</CustomPrimary>
+      <Button.Bare onClick={onClick}>FIND YOURS</Button.Bare>
     </Container>
   );
 };
