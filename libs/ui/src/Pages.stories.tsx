@@ -17,13 +17,22 @@ const Page = styled.div`
 const Container = styled.div`
   width: 100%;
   max-width: 864px;
-  align-self: center;
   margin-bottom: 136px;
+  margin-left: auto;
+  margin-right: auto;
 `;
 
 const Space = styled.div`
   min-height: 64px;
   max-height: 64px;
+`;
+
+const Divider = styled.div`
+  min-height: 1px;
+  max-height: 1px;
+  width: 100%;
+  background-color: #d6d7da;
+  margin: 32px 0;
 `;
 
 export const SEM: React.FC = () => {
@@ -32,7 +41,7 @@ export const SEM: React.FC = () => {
       <Page>
         <Container>
           <Hero />
-          <Space />
+          <Divider />
           <Overview />
           <Space />
           <Colors />
