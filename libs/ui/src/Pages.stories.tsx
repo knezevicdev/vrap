@@ -1,6 +1,7 @@
 import React from 'react';
 import styled, { ThemeProvider } from 'styled-components';
 
+import { Footer } from './core/Footer';
 import { Colors } from './sections/SEM/Colors';
 import { Features } from './sections/SEM/Features';
 import { Header } from './sections/SEM/Header';
@@ -50,6 +51,7 @@ export const SEM: React.FC = () => {
           <Space />
           <Features />
         </Container>
+        <Footer />
       </Page>
     </ThemeProvider>
   );
