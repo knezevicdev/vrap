@@ -32,8 +32,9 @@
     - Edits to code are shared between your volume and the container's volume.
     - Saving changes to code will cause the app to hotreload.
   - Approach #2
-    - Open a terminal in the project root.
-    - Figure out the path from the root to the `docker-compose.yaml` file for the package you want to run. (E.g. `/apps/home/docker/docker-compose.yaml`)
+    - Pick an app you want to run locally
+    - Install dependencies with `yarn install` 
+    - Find the `docker-compose.yaml` file from your app path. (E.g. `/apps/home/docker/docker-compose.yaml`)
     - Run `docker-compose -f <path-to-docker-compose.yaml> up --build`.
     - Wait for Docker to build your image and run your container.
 
