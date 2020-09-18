@@ -5,6 +5,8 @@ import { Body, Link } from '../../atoms/Typography';
 
 const Links = styled.div`
   display: flex;
+  margin-left: auto;
+  padding-left: 16px;
   @media (max-width: 599px) {
     display: none;
   }
@@ -13,6 +15,10 @@ const Links = styled.div`
 const Category = styled.div`
   display: flex;
   flex-direction: column;
+  width: 25%;
+  :not(:last-child) {
+    padding-right: 16px;
+  }
 `;
 
 const Title = styled(Body.Regular)`

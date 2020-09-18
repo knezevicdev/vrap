@@ -10,39 +10,53 @@ const Links = styled.div`
     display: flex;
     flex-direction: column;
     order: 1;
+    margin-bottom: 16px;
   }
 `;
 
-const Section = styled.div`
+const Section = styled.div<{ visible: boolean }>`
   display: flex;
   flex-direction: column;
   cursor: pointer;
+
+  ${(props): string | undefined =>
+    !props.visible ? 'border-bottom: solid 1px #FFFFFF;' : undefined};
 `;
 
 const TitleContainer = styled.div`
   display: flex;
   justify-content: space-between;
+  align-items: center;
 `;
 
 const Title = styled(Body.Regular)`
   color: #999da3;
   font-weight: 600;
-  margin-bottom: 8px;
+  margin: 8px 0;
 `;
 
-const CustomLink = styled(Link)`
+const CustomLink = styled(Link)<{ visible: boolean }>`
   :hover {
     text-decoration-color: red;
   }
+  ${(props): string | undefined =>
+    props.visible
+      ? `
+        :last-child {
+           border-bottom: solid 1px #FFFFFF;
+           padding-bottom: 8px;
+         }
+        `
+      : undefined}
 `;
 
 const Arrow = styled(Icon)<{ visible: boolean }>`
-  transform: rotate(${(props) => (props.visible ? '180deg' : '0deg')});
+  transform: rotate(${(props): string => (props.visible ? '180deg' : '0deg')});
   transition: transform 250ms;
 `;
 
 const LinksContainer = styled.div<{ visible: boolean }>`
-  display: ${(props) => (props.visible ? 'flex' : 'none')};
+  display: ${(props): string => (props.visible ? 'flex' : 'none')};
   flex-direction: column;
 `;
 
@@ -134,7 +148,7 @@ const sections = [
 export const MobileLinks: React.FC = () => {
   const [visibleSection, setVisibleSection] = useState('');
 
-  const onClick = (title: string) => () => {
+  const onClick = (title: string) => (): void => {
     const section = title === visibleSection ? '' : title;
     setVisibleSection(section);
   };
@@ -145,7 +159,7 @@ export const MobileLinks: React.FC = () => {
         const { title, links } = section;
         const visible = visibleSection === title;
         return (
-          <Section key={title} onClick={onClick(title)}>
+          <Section key={title} onClick={onClick(title)} visible={visible}>
             <TitleContainer>
               <Title>{title}</Title>
               <Arrow visible={visible} icon={Icons.ARROW_DOWN} />
@@ -154,7 +168,7 @@ export const MobileLinks: React.FC = () => {
               {links.map((link) => {
                 const { href, name } = link;
                 return (
-                  <CustomLink key={href} href={href}>
+                  <CustomLink key={href} href={href} visible={visible}>
                     <LinkText>{name}</LinkText>
                   </CustomLink>
                 );

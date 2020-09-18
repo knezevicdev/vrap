@@ -8,7 +8,6 @@ import { MobileLinks } from './Mobile/Links';
 
 const Container = styled.div`
   display: flex;
-  width: 100%;
   background: #041022;
   padding: 48px 64px 32px 64px;
   @media (max-width: 599px) {
@@ -31,8 +30,7 @@ const Apps = styled.div`
 
 const Socials = styled.div`
   display: flex;
-  margin-top: 32px;
-  margin-bottom: 16px;
+  margin: 16px 0;
 `;
 
 const IconSpaced = styled(Icon)`
