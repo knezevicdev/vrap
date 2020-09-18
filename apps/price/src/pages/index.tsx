@@ -1,6 +1,7 @@
+import Link from '@material-ui/core/Link';
 import { NextPage } from 'next';
 import React from 'react';
-import Link from '@material-ui/core/Link';
+
 import Page from 'src/Page';
 
 interface Props {

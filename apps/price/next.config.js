@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 
-const { name, version } = require('./package.json');
+// const { name, version } = require('./package.json');
 
 const withBundleAnalyzer = require('@next/bundle-analyzer')({
   enabled: process.env.ANALYZE === 'true',
@@ -21,17 +21,17 @@ const config = {
   generateBuildId: () => shortHash,
   publicRuntimeConfig: {
     // Will be available on both server-side and client-side
-//     BASE_PATH: process.env.BASE_PATH,
-//     DATA_DOG_RUM_APPLICATION: process.env.DATA_DOG_RUM_APPLICATION,
-//     DATA_DOG_RUM_TOKEN: process.env.DATA_DOG_RUM_TOKEN,
-//     DATA_DOG_LOG_COLLECTION_TOKEN: process.env.DATA_DOG_LOG_COLLECTION_TOKEN,
-//     NAME: name,
-//     STATIC_ASSETS_HOST_URL: process.env.STATIC_ASSETS_HOST_URL,
-//     VERSION: version,
+    //     BASE_PATH: process.env.BASE_PATH,
+    //     DATA_DOG_RUM_APPLICATION: process.env.DATA_DOG_RUM_APPLICATION,
+    //     DATA_DOG_RUM_TOKEN: process.env.DATA_DOG_RUM_TOKEN,
+    //     DATA_DOG_LOG_COLLECTION_TOKEN: process.env.DATA_DOG_LOG_COLLECTION_TOKEN,
+    //     NAME: name,
+    //     STATIC_ASSETS_HOST_URL: process.env.STATIC_ASSETS_HOST_URL,
+    //     VERSION: version,
   },
   serverRuntimeConfig: {
     // Will only be available on the server side
-//    SEGMENT_WRITE_KEY: process.env.SEGMENT_WRITE_KEY,
+    //    SEGMENT_WRITE_KEY: process.env.SEGMENT_WRITE_KEY,
   },
   /* Custom webpack configuration. */
   webpack: (config) => {
