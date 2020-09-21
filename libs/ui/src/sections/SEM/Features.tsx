@@ -205,6 +205,7 @@ const CustomTable = styled(Table)`
   .rc-table-sticky-header {
     position: sticky;
     background: white;
+    top: 56px !important;
   }
 
   .rc-table-body {

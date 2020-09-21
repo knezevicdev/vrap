@@ -13,6 +13,9 @@ const Container = styled.div`
   width: 100%;
   background: #ffffff;
   box-shadow: 0px 6px 6px -6px rgba(0, 0, 0, 0.15);
+  position: sticky;
+  top: 0;
+  z-index: 1;
 `;
 
 const Logo = styled(Icon)`
