@@ -21,7 +21,7 @@ export declare class Body {
 }
 export interface LinkProps {
     className?: string;
-    children: string;
+    children: string | JSX.Element;
     href: string;
     blank?: boolean;
 }
