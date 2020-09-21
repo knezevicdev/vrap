@@ -7,53 +7,46 @@ import { Body, Hero, Title } from '../../atoms/Typography';
 const Container = styled.div`
   display: flex;
   flex-direction: column;
-  height: 100%;
-  width: 100%;
-`;
-
-const Info = styled.div`
-  display: flex;
-  margin-top: 16px;
-  flex-wrap: wrap;
-`;
-
-const Content = styled(Body.Regular)`
-  width: 50%;
-
-  @media (max-width: 839px) {
-    width: 100%;
-    order: 2;
-  }
+  max-width: 100%;
 
   @media (min-width: 600px) and (max-width: 839px) {
-    margin-top: 32px;
     margin-left: 64px;
     margin-right: 64px;
   }
 
   @media (max-width: 599px) {
-    margin-top: 16px;
     margin-left: 24px;
     margin-right: 24px;
+  }
+`;
+
+const Info = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin-top: 16px;
+`;
+
+const Content = styled(Body.Regular)`
+  @media (min-width: 600px) {
+    margin-top: 32px;
+  }
+
+  @media (max-width: 599px) {
+    margin-top: 16px;
   }
 `;
 
 const Details = styled.div`
   display: flex;
   width: 50%;
-  margin: 0px 64px;
 
   @media (min-width: 600px) and (max-width: 839px) {
-    margin: 0px 64px;
     width: 100%;
-    order: 1;
     justify-content: flex-start;
   }
 
   @media (max-width: 599px) {
-    margin: 0px 24px;
     width: 100%;
-    order: 1;
   }
 `;
 
@@ -79,16 +72,6 @@ const Detail = styled.div`
 
 const Description = styled(Body.Small)`
   color: #6c717a;
-`;
-
-const SectionTitle = styled(Hero.Four)`
-  @media (min-width: 600px) and (max-width: 839px) {
-    margin: 0px 64px;
-  }
-
-  @media (max-width: 599px) {
-    margin: 0px 24px;
-  }
 `;
 
 //TODO: Dynamic content - make these things into injectable content
@@ -123,9 +106,8 @@ const details = [
 export const Overview: React.FC = () => {
   return (
     <Container>
-      <SectionTitle>overview</SectionTitle>
+      <Hero.Four>overview</Hero.Four>
       <Info>
-        <Content>{content}</Content>
         <Details>
           {details.map((detail) => {
             const { icon, title, description } = detail;
@@ -138,6 +120,7 @@ export const Overview: React.FC = () => {
             );
           })}
         </Details>
+        <Content>{content}</Content>
       </Info>
     </Container>
   );

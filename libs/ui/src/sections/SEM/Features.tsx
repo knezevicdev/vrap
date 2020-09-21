@@ -212,7 +212,7 @@ const CustomTable = styled(Table)`
     overflow-x: auto;
   }
 
-  @media (min-width: 600px) {
+  @media (min-width: 600px) and (max-width: 839px) {
     margin: 0px 64px;
   }
 `;
