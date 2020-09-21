@@ -28,6 +28,7 @@ const base = css`
   font-weight: 600;
 
   color: white;
+  white-space: nowrap;
 `;
 
 const Primary = styled.button`

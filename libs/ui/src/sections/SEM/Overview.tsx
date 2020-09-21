@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
+import Icon, { Icons } from '../../atoms/Icon/Icon';
 import { Body, Hero, Title } from '../../atoms/Typography';
 
 const Container = styled.div`
@@ -19,12 +20,12 @@ const Info = styled.div`
 const Content = styled(Body.Regular)`
   width: 50%;
 
-  @media (max-width: 959px) {
+  @media (max-width: 839px) {
     width: 100%;
     order: 2;
   }
 
-  @media (min-width: 600px) and (max-width: 959px) {
+  @media (min-width: 600px) and (max-width: 839px) {
     margin-top: 48px;
   }
 
@@ -37,10 +38,16 @@ const Details = styled.div`
   display: flex;
   width: 50%;
   justify-content: space-evenly;
-  @media (max-width: 959px) {
+
+  @media (min-width: 600) and (max-width: 839px) {
     width: 100%;
     order: 1;
     justify-content: flex-start;
+  }
+
+  @media (max-width: 599px) {
+    width: 100%;
+    order: 1;
   }
 `;
 
@@ -50,41 +57,62 @@ const Detail = styled.div`
   flex-direction: column;
   text-align: center;
   @media (max-width: 959px) {
-    margin-right: 32px;
+    &:not(:last-child) {
+      margin-right: 32px;
+    }
   }
 `;
 
-const DetailBody = styled(Body.Small)`
+const Description = styled(Body.Small)`
   color: #6c717a;
 `;
+
+//TODO: Dynamic content - make these things into injectable content
+
+const content = `The 2019 Jeep Wrangler is a great vehicle for anyone who wants an
+          iconic, dependable, and rugged ride. Mostly influenced by the military
+          Jeep from World War II, it remains the epitome of Jeep's brand. The
+          reason these vehicles are so popular is their versatility to be used
+          as a daily commuter during the week and an off-roader on the weekends.
+          Available with two or four doors (Wrangler Unlimited) and a 6-speed
+          manual or 8-speed automatic transmission, the Wrangler has adapted
+          over the years to accommodate all drivers.`;
+
+const details = [
+  {
+    icon: Icons.GAS,
+    title: `20 MPG`,
+    description: `Combined`,
+  },
+  {
+    icon: Icons.ENGINE,
+    title: `285 HP`,
+    description: `@6,400 RPMs`,
+  },
+  {
+    icon: Icons.SEAT,
+    title: `Seats 5`,
+    description: `Passengers`,
+  },
+];
 
 export const Overview: React.FC = () => {
   return (
     <Container>
       <Hero.Four>overview</Hero.Four>
       <Info>
-        <Content>
-          Could probably get formulaic with this copy to describe the high-level
-          vehicle & manufacturer details here that don’t change with packages
-          and trims like seating, MPG, drive type, transmission, fuel type,
-          warranty information, average miles these 2019’s would have etc.
-        </Content>
+        <Content>{content}</Content>
         <Details>
-          <Detail>
-            <div>Icon</div>
-            <Title.Two>20 MPG</Title.Two>
-            <DetailBody>Combined</DetailBody>
-          </Detail>
-          <Detail>
-            <div>Icon</div>
-            <Title.Two>20 MPG</Title.Two>
-            <DetailBody>Combined</DetailBody>
-          </Detail>
-          <Detail>
-            <div>Icon</div>
-            <Title.Two>20 MPG</Title.Two>
-            <DetailBody>Combined</DetailBody>
-          </Detail>
+          {details.map((detail) => {
+            const { icon, title, description } = detail;
+            return (
+              <Detail key={title}>
+                <Icon icon={icon} />
+                <Title.Two>{title}</Title.Two>
+                <Description>{description}</Description>
+              </Detail>
+            );
+          })}
         </Details>
       </Info>
     </Container>
