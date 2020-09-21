@@ -211,6 +211,10 @@ const CustomTable = styled(Table)`
   .rc-table-body {
     overflow-x: auto;
   }
+
+  @media (min-width: 600px) {
+    margin: 0px 64px;
+  }
 `;
 
 const HeaderWrapper = styled.thead`
@@ -267,7 +271,7 @@ const BodyWrapper = styled.tbody`
 
 const SectionTitle = styled(Hero.Four)`
   @media (min-width: 600px) and (max-width: 839px) {
-    margin: 0px 64px;
+    margin: 0px 64px 16px 64px;
   }
 
   @media (max-width: 599px) {

@@ -26,13 +26,13 @@ const Content = styled(Body.Regular)`
   }
 
   @media (min-width: 600px) and (max-width: 839px) {
-    margin-top: 48px;
+    margin-top: 32px;
     margin-left: 64px;
     margin-right: 64px;
   }
 
   @media (max-width: 599px) {
-    margin-top: 32px;
+    margin-top: 16px;
     margin-left: 24px;
     margin-right: 24px;
   }
@@ -41,9 +41,9 @@ const Content = styled(Body.Regular)`
 const Details = styled.div`
   display: flex;
   width: 50%;
-  justify-content: space-evenly;
+  margin: 0px 64px;
 
-  @media (min-width: 600) and (max-width: 839px) {
+  @media (min-width: 600px) and (max-width: 839px) {
     margin: 0px 64px;
     width: 100%;
     order: 1;
@@ -62,9 +62,17 @@ const Detail = styled.div`
   align-items: center;
   flex-direction: column;
   text-align: center;
-  @media (max-width: 959px) {
+
+  @media (min-width: 600px) {
     &:not(:last-child) {
-      margin-right: 32px;
+      margin-right: 64px;
+    }
+  }
+
+  @media (max-width: 599px) {
+    :nth-child(2) {
+      margin-right: auto;
+      margin-left: auto;
     }
   }
 `;

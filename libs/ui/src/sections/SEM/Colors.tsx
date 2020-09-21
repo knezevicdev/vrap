@@ -16,6 +16,10 @@ const Items = styled.div`
   margin-top: 16px;
   overflow: auto;
 
+  @media (min-width: 600px) and (max-width: 839px) {
+    margin-left: 64px;
+  }
+
   @media (max-width: 599px) {
     margin-left: 24px;
   }
