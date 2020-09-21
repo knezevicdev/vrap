@@ -11,11 +11,14 @@ const Container = styled.div`
   width: 100%;
 `;
 
-//TODO: Look into scrolling functionality without scrollbar.
 const Items = styled.div`
   display: flex;
   margin-top: 16px;
   overflow: auto;
+
+  @media (max-width: 599px) {
+    margin-left: 24px;
+  }
 `;
 
 const Item = styled.div`
@@ -23,6 +26,16 @@ const Item = styled.div`
   align-items: center;
   flex-direction: column;
   text-align: center;
+`;
+
+const SectionTitle = styled(Hero.Four)`
+  @media (min-width: 600px) and (max-width: 839px) {
+    margin: 0px 64px;
+  }
+
+  @media (max-width: 599px) {
+    margin: 0px 24px;
+  }
 `;
 
 //TODO: Dynamic content - make these things into injectable content
@@ -133,7 +146,7 @@ const colors = [
 export const Colors: React.FC = () => {
   return (
     <Container>
-      <Hero.Four>available colors</Hero.Four>
+      <SectionTitle>available colors</SectionTitle>
       <Items>
         {colors.map((color) => {
           const { name, picture } = color;

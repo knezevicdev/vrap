@@ -14,6 +14,14 @@ const Container = styled.div`
 const Title = styled(TypographyHero.One)`
   font-family: Calibre;
   font-weight: 600;
+
+  @media (min-width: 600px) and (max-width: 839px) {
+    margin: 0px 64px;
+  }
+
+  @media (max-width: 599px) {
+    margin: 0px 24px;
+  }
 `;
 
 //TODO: Dynamic content - make these things into injectable content

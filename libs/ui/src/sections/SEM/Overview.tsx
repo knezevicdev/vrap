@@ -27,10 +27,14 @@ const Content = styled(Body.Regular)`
 
   @media (min-width: 600px) and (max-width: 839px) {
     margin-top: 48px;
+    margin-left: 64px;
+    margin-right: 64px;
   }
 
   @media (max-width: 599px) {
     margin-top: 32px;
+    margin-left: 24px;
+    margin-right: 24px;
   }
 `;
 
@@ -40,12 +44,14 @@ const Details = styled.div`
   justify-content: space-evenly;
 
   @media (min-width: 600) and (max-width: 839px) {
+    margin: 0px 64px;
     width: 100%;
     order: 1;
     justify-content: flex-start;
   }
 
   @media (max-width: 599px) {
+    margin: 0px 24px;
     width: 100%;
     order: 1;
   }
@@ -65,6 +71,16 @@ const Detail = styled.div`
 
 const Description = styled(Body.Small)`
   color: #6c717a;
+`;
+
+const SectionTitle = styled(Hero.Four)`
+  @media (min-width: 600px) and (max-width: 839px) {
+    margin: 0px 64px;
+  }
+
+  @media (max-width: 599px) {
+    margin: 0px 24px;
+  }
 `;
 
 //TODO: Dynamic content - make these things into injectable content
@@ -99,7 +115,7 @@ const details = [
 export const Overview: React.FC = () => {
   return (
     <Container>
-      <Hero.Four>overview</Hero.Four>
+      <SectionTitle>overview</SectionTitle>
       <Info>
         <Content>{content}</Content>
         <Details>
