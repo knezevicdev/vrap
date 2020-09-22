@@ -428,9 +428,13 @@ CarsPage.getInitialProps = async (context: NextPageContext): Promise<Props> => {
     query
   );
 
+  const { isTitleQAPass } = query;
+  const titleQuery = isTitleQAPass === 'true' ? true : undefined;
+
   const postInventoryRequestDataFromFiltersData = getPostInventoryRequestDataFromFilterData(
     filtersData,
     geoLocationSortDefaultVariant,
+    titleQuery,
     geo
   );
 
@@ -442,7 +446,10 @@ CarsPage.getInitialProps = async (context: NextPageContext): Promise<Props> => {
   };
 
   const carsStart = new Date().getTime();
+  console.log(inventoryRequestData);
+
   const carsR = await invSearchNetworker.postInventory(inventoryRequestData);
+
   const carsElapsed = new Date().getTime() - carsStart;
   console.log('{"CARS_ms":' + carsElapsed + '}');
 
@@ -484,6 +491,7 @@ CarsPage.getInitialProps = async (context: NextPageContext): Promise<Props> => {
     cars,
     popularCars,
     filtersData,
+    titleQuery,
   };
 
   const hasInventory = cars ? cars.hits.total !== 0 : false;

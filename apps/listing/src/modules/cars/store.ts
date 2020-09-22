@@ -47,6 +47,7 @@ export interface InitialCarsStoreState {
   popularCars: Inventory | undefined;
   filtersData: FiltersData | undefined;
   geoLocationSortDefaultVariant: boolean;
+  titleQuery?: boolean;
 }
 
 export const getBodyTypeRequestData = (
@@ -194,13 +195,23 @@ export const getTransmissionRequestData = (
 export const getPostInventoryRequestDataFromFilterData = (
   filtersData?: FiltersData,
   geoLocationSortDefaultVariant?: boolean,
+  isTitleQAPass?: boolean,
   geo?: Coordinates
 ): PostInventoryRequestData => {
+  let requestData = {};
+
+  if (isTitleQAPass) {
+    requestData = {
+      isTitleQAPass: isTitleQAPass,
+    };
+  }
+
   if (!filtersData) {
     if (geoLocationSortDefaultVariant || !geo) {
-      return {};
+      return requestData;
     }
     return {
+      ...requestData,
       sortby: 'geo',
       geo: {
         lat: `${geo.latitude}`,
@@ -221,6 +232,7 @@ export const getPostInventoryRequestDataFromFilterData = (
   const transmissionid = getTransmissionRequestData(filtersData);
 
   return {
+    ...requestData,
     bodytype,
     color,
     drivetype,
@@ -241,6 +253,7 @@ export class CarsStore {
   private readonly invSearchNetworker: InvSearchNetworker;
 
   readonly attributionQueryString: string = '';
+  readonly isTitleQAPass: boolean | undefined;
   readonly geoLocationSortDefaultVariant: boolean = true;
   readonly inventoryCardsPerPage: number = INVENTORY_CARDS_PER_PAGE;
   readonly bodyTypes: BodyType[] = bodyTypes;
@@ -281,6 +294,7 @@ export class CarsStore {
 
     if (initialState) {
       this.attributionQueryString = initialState.attributionQueryString;
+      this.isTitleQAPass = initialState.titleQuery;
       this.geoLocationSortDefaultVariant =
         initialState.geoLocationSortDefaultVariant;
       this.makeBuckets = initialState.makes;
@@ -306,7 +320,8 @@ export class CarsStore {
       this.inventoryStatus = Status.FETCHING;
       const postInventoryRequestDataFromFiltersData = getPostInventoryRequestDataFromFilterData(
         this.filtersData,
-        this.geoLocationSortDefaultVariant
+        this.geoLocationSortDefaultVariant,
+        this.isTitleQAPass
       );
       const inventoryRequestData: PostInventoryRequestData = {
         ...postInventoryRequestDataFromFiltersData,
@@ -314,6 +329,7 @@ export class CarsStore {
         limit: INVENTORY_CARDS_PER_PAGE,
         source: `${publicRuntimeConfig.NAME}-${publicRuntimeConfig.VERSION}`,
       };
+      console.log(inventoryRequestData);
       const inventoryResponse = await this.invSearchNetworker.postInventory(
         inventoryRequestData
       );
