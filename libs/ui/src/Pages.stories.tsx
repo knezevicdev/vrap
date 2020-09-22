@@ -6,6 +6,7 @@ import { Colors } from './sections/SEM/Colors';
 import { Features } from './sections/SEM/Features';
 import { Header } from './sections/SEM/Header';
 import { Hero } from './sections/SEM/Hero';
+import { Legal } from './sections/SEM/Legal';
 import { Overview } from './sections/SEM/Overview';
 import { theme as VroomTheme } from './themes/New/Vroom';
 
@@ -19,7 +20,6 @@ const Page = styled.div`
 const Container = styled.div`
   width: 100%;
   max-width: 864px;
-  margin-bottom: 136px;
   margin-left: auto;
   margin-right: auto;
 `;
@@ -61,6 +61,7 @@ export const SEM: React.FC = () => {
           <Colors />
           <Space />
           <Features />
+          <Legal />
         </Container>
         <Footer />
       </Page>
