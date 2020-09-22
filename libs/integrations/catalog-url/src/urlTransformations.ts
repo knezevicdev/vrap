@@ -87,6 +87,17 @@ export const getQuery = (filtersData?: FiltersData): string => {
   return `?${filtersQueryParamKey}=${encodedFiltersData}`;
 };
 
+const getTitleQuery = (
+  filtersData?: FiltersData,
+  titleQuery?: boolean
+): string => {
+  const query = `isTitleQAPass=${titleQuery}`;
+  if (!filtersData || JSON.stringify(filtersData) === '{}') {
+    return `?${query}`;
+  }
+  return `&${query}`;
+};
+
 export const getUrlFromFiltersData = (
   filtersData?: FiltersData,
   options?: GetUrlFromFiltersDataOptions
@@ -95,7 +106,10 @@ export const getUrlFromFiltersData = (
   const query = addFiltersQueryParam ? getQuery(filtersData) : '';
   const ignoreParamsBasePath = options && options.ignoreParamsBasePath;
   const actualParamsBasePath = ignoreParamsBasePath ? '' : paramsBasePath;
-  const url = `${actualParamsBasePath}${getParams(filtersData)}${query}`;
+  const titleQuery = getTitleQuery(filtersData, options?.titleQuery);
+  const url = `${actualParamsBasePath}${getParams(
+    filtersData
+  )}${query}${titleQuery}`;
   return url;
 };
 

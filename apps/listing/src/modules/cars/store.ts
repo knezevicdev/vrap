@@ -387,6 +387,7 @@ export class CarsStore {
     const as = getUrlFromFiltersData(filtersDataToUse, {
       addFiltersQueryParam: true,
       ignoreParamsBasePath: true,
+      titleQuery: this.isTitleQAPass,
     });
 
     // FIT-583
