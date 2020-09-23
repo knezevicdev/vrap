@@ -1,4 +1,8 @@
-import { Hit, InvSearchNetworker } from '@vroom-web/inv-search-networking';
+import {
+  Hit,
+  InventoryResponse,
+  InvSearchNetworker,
+} from '@vroom-web/inv-search-networking';
 import { InvServiceNetworker } from '@vroom-web/inv-service-networking';
 import { observable } from 'mobx';
 import getConfig from 'next/config';
@@ -14,6 +18,31 @@ export interface InventoryStoreState {
   vehicleStatus: Status;
   vehicle: Hit;
   isAvailable: boolean;
+}
+
+export async function getVehicleReponse(
+  invSearchNetworker: InvSearchNetworker,
+  vin: string
+): Promise<InventoryResponse | undefined> {
+  try {
+    const response = await invSearchNetworker.postInventory({
+      fulldetails: true,
+      source: `${publicRuntimeConfig.NAME}-${publicRuntimeConfig.VERSION}`,
+      vin: [vin],
+    });
+    return response;
+  } catch (err) {
+    return undefined;
+  }
+}
+
+export function getVehicle(
+  response: InventoryResponse,
+  vin: string
+): Hit | undefined {
+  return response.data.hits.hits.find(
+    (i) => i._source.vin.toLowerCase() === vin.toLowerCase()
+  );
 }
 
 export async function getInitialInventoryStoreState(
@@ -36,22 +65,16 @@ export async function getInitialInventoryStoreState(
   );
 
   try {
-    const response = await invSearchNetworker.postInventory({
-      fulldetails: true,
-      source: `${publicRuntimeConfig.NAME}-${publicRuntimeConfig.VERSION}`,
-      vin: [vin],
-    });
-
-    const vehicle = response.data.hits.hits.find(
-      (i) => i._source.vin.toLowerCase() === vin.toLowerCase()
-    );
-
-    if (!vehicle) {
-      throw new Error('No vehicle found with that VIN in inventory');
+    const response = getVehicleReponse(invSearchNetworker, vin);
+    if (!response) {
+      throw new Error('Failed to post inventory');
     }
+    // if (!vehicle) {
+    //   throw new Error('No vehicle found with that VIN in inventory');
+    // }
 
-    initState.vehicleStatus = Status.SUCCESS;
-    initState.vehicle = vehicle;
+    // initState.vehicleStatus = Status.SUCCESS;
+    // initState.vehicle = vehicle;
   } catch (err) {
     initState.vehicleStatus = Status.ERROR;
   }
