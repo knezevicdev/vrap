@@ -15,6 +15,11 @@ const config = {
   publicRuntimeConfig: {},
   serverRuntimeConfig: {},
   webpack: (config) => {
+    config.module.rules.push({
+      test: /\.(woff2|woff|eot|ttf|otf)$/,
+      use: ['file-loader'],
+    });
+    config.resolve.modules.push(__dirname);
     return config;
   },
 };

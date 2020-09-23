@@ -2,19 +2,49 @@ import App from 'next/app';
 import React from 'react';
 import { createGlobalStyle, ThemeProvider } from 'styled-components';
 
-const GlobalStyle = createGlobalStyle`
-  body {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
-`;
+import CalibreRegular from '../fonts/Vroom/Calibre-Regular.woff2';
+import CalibreSemibold from '../fonts/Vroom/Calibre-Semibold.woff2';
+import VroomSans from '../fonts/Vroom/Vroom-Sans.woff2';
 
-const theme = {
-  colors: {
-    primary: '#0070f3',
+interface ThemeProps {
+  typography: {
+    family: {
+      hero: string;
+      title: string;
+      body: string;
+    };
+    color: string;
+  };
+}
+
+const theme: ThemeProps = {
+  typography: {
+    family: {
+      hero: 'Vroom Sans',
+      title: 'Calibre',
+      body: 'Calibre',
+    },
+    color: '#041022',
   },
 };
+
+const GlobalStyle = createGlobalStyle`
+  @font-face {
+    font-family: Calibre;
+    font-weight: normal;
+    src: url(${CalibreRegular}) format('woff2');
+  }
+  @font-face {
+    font-family: Calibre;
+    font-weight: 600;
+    src: url(${CalibreSemibold}) format('woff2');
+  }
+  @font-face {
+    font-family: Vroom Sans;
+    font-weight: normal;
+    src: url(${VroomSans}) format('woff2');
+  }
+`;
 
 export default class VroomApp extends App {
   render(): JSX.Element {
