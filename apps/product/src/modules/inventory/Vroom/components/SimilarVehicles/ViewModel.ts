@@ -74,11 +74,15 @@ class SimilarVehiclesViewModel {
 
   getCars = (): Car[] => {
     const similarVehicleCount = 4;
-    const similarCars = this.store.similar
-      .slice(0, similarVehicleCount)
-      .map((car) => car._source);
-    this.trackProductList(similarCars);
-    return similarCars;
+    try {
+      const similarCars = this.store.similar
+        .slice(0, similarVehicleCount)
+        .map((car) => car._source);
+      this.trackProductList(similarCars);
+      return similarCars;
+    } catch {
+      return [];
+    }
   };
 
   handleClick(event: React.MouseEvent<HTMLButtonElement>): void {
