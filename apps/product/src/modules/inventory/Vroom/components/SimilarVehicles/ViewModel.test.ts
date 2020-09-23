@@ -93,16 +93,16 @@ describe('Similar Vehicles View Model', () => {
     const analyticsHandler = new AnalyticsHandler();
     const viewModel = new SimilarVehiclesViewModel(store, analyticsHandler);
 
-    test('getCars when null similar cars', () => {
+    test('getCars when null similar cars, should return []', () => {
       expect(viewModel.getCars()).toEqual([]);
     });
 
-    test('getCars when 0 similar cars', () => {
+    test('getCars when 0 similar cars, should return []', () => {
       store.similar = [];
       expect(viewModel.getCars()).toEqual([]);
     });
 
-    test('getCars when similar cars > 0, should return ', async () => {
+    test('getCars when similar cars > 0, should return those similar cars', async () => {
       const source: Car = {
         vin: 'JF2SJABC9JH572398',
         bodyType: 'Wagon',
