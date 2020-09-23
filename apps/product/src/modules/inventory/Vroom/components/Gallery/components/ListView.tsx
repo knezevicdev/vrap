@@ -6,8 +6,6 @@ import { observer } from 'mobx-react';
 import React, { useEffect } from 'react';
 
 import ViewModel from '../ViewModel';
-import GalleryConditionEnd from './ConditionEnd';
-import GalleryGeneralToCondition from './GeneralToCondition';
 import GallerySelect from './Select';
 
 interface Props {
@@ -76,10 +74,6 @@ const StyledFullscreenExitIcon = styled(FullscreenExitIcon)(({ theme }) => ({
   color: theme.palette.grey[100],
 }));
 
-const Imperfections = styled('div')(({ theme }) => ({
-  padding: theme.spacing(0, 2),
-}));
-
 const GalleryListView: React.FC<Props> = ({ viewModel }) => {
   const currentSelection = viewModel.getSelectedGallery();
   //This is to ensure that the list returns to the top when selection is changed
@@ -94,7 +88,6 @@ const GalleryListView: React.FC<Props> = ({ viewModel }) => {
     viewModel.setListView();
   };
   const images = viewModel.getGalleryImages();
-  const isDefect = viewModel.isDefectView();
 
   return (
     <>
@@ -128,7 +121,7 @@ const GalleryListView: React.FC<Props> = ({ viewModel }) => {
                   <ImageHeader>
                     {index + 1}
                     {viewModel.indexSeparator}
-                    {images.length + 1}
+                    {images.length}
                   </ImageHeader>
                   <StyledImage
                     src={image.thumbnail}
@@ -141,16 +134,6 @@ const GalleryListView: React.FC<Props> = ({ viewModel }) => {
             }
           )}
         </ImagesContainer>
-        {viewModel.showImageHeader(images.length) && (
-          <ImageHeader>
-            {images.length + 1}
-            {viewModel.indexSeparator}
-            {images.length + 1}
-          </ImageHeader>
-        )}
-        <Imperfections>
-          {isDefect ? <GalleryConditionEnd /> : <GalleryGeneralToCondition />}
-        </Imperfections>
       </StyledContainer>
     </>
   );

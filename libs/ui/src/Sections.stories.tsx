@@ -1,6 +1,7 @@
 import React from 'react';
 import styled, { ThemeProvider } from 'styled-components';
 
+import { Footer } from './core/Footer';
 /* eslint-disable @typescript-eslint/camelcase */
 import { Awards } from './sections/SEM/Awards';
 import { Colors } from './sections/SEM/Colors';
@@ -21,6 +22,16 @@ export const SEM_Hero: React.FC = () => {
     <Container>
       <ThemeProvider theme={VroomTheme}>
         <Hero />
+      </ThemeProvider>
+    </Container>
+  );
+};
+
+export const SEM_FOOTER: React.FC = () => {
+  return (
+    <Container>
+      <ThemeProvider theme={VroomTheme}>
+        <Footer />
       </ThemeProvider>
     </Container>
   );

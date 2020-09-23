@@ -77,6 +77,7 @@ export declare type Car = {
     wheelBase: number;
     frontTrackWidth: number;
     rearTrackWidth: number;
+    spincarSpinUrl?: string | null;
 };
 export declare const carSchema: yup.ObjectSchema<Car>;
 export declare type Hit = {

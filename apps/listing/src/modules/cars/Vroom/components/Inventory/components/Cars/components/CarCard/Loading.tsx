@@ -1,4 +1,5 @@
 import Card from '@material-ui/core/Card';
+import CardContent from '@material-ui/core/CardContent';
 import Grid from '@material-ui/core/Grid';
 import { styled } from '@material-ui/core/styles';
 import Skeleton from '@material-ui/lab/Skeleton';
@@ -11,7 +12,15 @@ const DesktopCard = styled(Card)(() => ({
   borderRadius: '0px',
 }));
 
+const DesktopContent = styled(CardContent)(() => ({
+  display: 'flex',
+  flexDirection: 'column',
+  width: '100%',
+  height: '110px',
+}));
+
 const MobileCard = styled(Card)(() => ({
+  display: 'flex',
   width: '100%',
   minHeight: '127px',
   maxHeight: '127px',
@@ -20,20 +29,78 @@ const MobileCard = styled(Card)(() => ({
   borderBottom: 'solid 1px #bebebe',
 }));
 
+const MobileContent = styled(CardContent)(() => ({
+  display: 'flex',
+  flexDirection: 'column',
+  minWidth: '60%',
+  maxWidth: '60%',
+}));
+
 interface Props {
   mobile?: boolean;
+  xl?: boolean;
 }
 
-const LoadingCard: React.FC<Props> = ({ mobile }) => {
+const LoadingCard: React.FC<Props> = ({ mobile, xl }) => {
   return (
     <Grid item xs={12} sm={6} md={3}>
       {mobile ? (
         <MobileCard>
-          <Skeleton variant={'rect'} height={'127px'} />
+          <Skeleton
+            variant={'rect'}
+            width="40%"
+            height={'127px'}
+            animation="wave"
+          />
+          <MobileContent>
+            <Skeleton
+              variant={'text'}
+              animation="wave"
+              width="60%"
+              height="24px"
+            />
+            <Skeleton
+              variant={'text'}
+              animation="wave"
+              width="80%"
+              height="24px"
+            />
+            <Skeleton
+              variant={'text'}
+              animation="wave"
+              width="40%"
+              height="24px"
+            />
+            <Skeleton
+              variant={'text'}
+              animation="wave"
+              width="30%"
+              height="24px"
+            />
+          </MobileContent>
         </MobileCard>
       ) : (
         <DesktopCard>
-          <Skeleton variant={'rect'} height={'100%'} />
+          <Skeleton
+            variant={'rect'}
+            height={xl ? '265px' : '186px'}
+            animation="wave"
+          />
+          <DesktopContent>
+            <Skeleton
+              variant={'text'}
+              animation="wave"
+              width="80%"
+              height="24px"
+            />
+            <Skeleton variant={'text'} animation="wave" height="24px" />
+            <Skeleton
+              variant={'text'}
+              animation="wave"
+              width="35%"
+              height="24px"
+            />
+          </DesktopContent>
         </DesktopCard>
       )}
     </Grid>

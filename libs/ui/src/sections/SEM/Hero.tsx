@@ -8,12 +8,20 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   height: 100%;
-  width: 100%;
+  max-width: 100%;
+
+  @media (min-width: 600px) and (max-width: 839px) {
+    margin: 0px 64px;
+  }
 `;
 
 const Title = styled(TypographyHero.One)`
   font-family: Calibre;
   font-weight: 600;
+
+  @media (max-width: 599px) {
+    margin: 0px 24px;
+  }
 `;
 
 //TODO: Dynamic content - make these things into injectable content

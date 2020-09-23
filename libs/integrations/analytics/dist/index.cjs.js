@@ -131,10 +131,6 @@ var VitParam;
 })(VitParam || (VitParam = {}));
 
 var AnalyticsHandler = /*#__PURE__*/function () {
-  function AnalyticsHandler() {
-    _classCallCheck(this, AnalyticsHandler);
-  }
-
   _createClass(AnalyticsHandler, [{
     key: "getVitParams",
     value: function getVitParams() {
@@ -177,7 +173,18 @@ var AnalyticsHandler = /*#__PURE__*/function () {
 
       return vitParams;
     }
-  }, {
+  }]);
+
+  function AnalyticsHandler() {
+    _classCallCheck(this, AnalyticsHandler);
+
+    if (typeof window !== 'undefined') {
+      this.retrieveRegisteredExperiments();
+      this.setOptimizeData();
+    }
+  }
+
+  _createClass(AnalyticsHandler, [{
     key: "track",
     value: function track$1(event, properties) {
       var vitParams = this.getVitParams();
@@ -192,15 +199,27 @@ var AnalyticsHandler = /*#__PURE__*/function () {
     key: "setAnonymousId",
     value: function setAnonymousId$1(anonymousId) {
       setAnonymousId(anonymousId);
-    }
+    } // TODO: depricate this in favor of using registerExperiment directly.
+
   }, {
     key: "setExperiments",
     value: function setExperiments(experiments) {
-      AnalyticsHandler.optimizeExperimentsString = experiments ? experiments.filter(function (experiment) {
+      var _this = this;
+
+      if (experiments) {
+        experiments.forEach(function (experiment) {
+          _this.registerExperiment(experiment);
+        });
+      }
+    }
+  }, {
+    key: "setOptimizeData",
+    value: function setOptimizeData() {
+      AnalyticsHandler.optimizeExperimentsString = AnalyticsHandler.registeredExperiments.filter(function (experiment) {
         return experiment.optimizeId;
       }).map(function (experiment) {
-        return "".concat(experiment.optimizeId, ".").concat(experiment.assignedVariant);
-      }).join('!') : undefined;
+        return "".concat(experiment.optimizeId, ".").concat(experiment.variant);
+      }).join('!');
       onAnalyticsReady(function () {
         try {
           if (typeof window.ga === 'undefined') {
@@ -212,6 +231,45 @@ var AnalyticsHandler = /*#__PURE__*/function () {
           console.error(e);
         }
       });
+    }
+  }, {
+    key: "storeRegisteredExperiments",
+    value: function storeRegisteredExperiments() {
+      var registeredExperimentsString = JSON.stringify(AnalyticsHandler.registeredExperiments);
+      localStorage.setItem(AnalyticsHandler.registeredExperimentsKey, registeredExperimentsString);
+    }
+  }, {
+    key: "retrieveRegisteredExperiments",
+    value: function retrieveRegisteredExperiments() {
+      var registeredExperimentsString = localStorage.getItem(AnalyticsHandler.registeredExperimentsKey);
+
+      if (!registeredExperimentsString) {
+        return;
+      }
+
+      var registeredExperiments = JSON.parse(registeredExperimentsString);
+      AnalyticsHandler.registeredExperiments = registeredExperiments;
+    }
+  }, {
+    key: "registerExperiment",
+    value: function registerExperiment(experiment) {
+      var experimentIndex = AnalyticsHandler.registeredExperiments.findIndex(function (re) {
+        return re.id === experiment.id;
+      });
+
+      if (experimentIndex !== -1) {
+        AnalyticsHandler.registeredExperiments.splice(experimentIndex, 1);
+      }
+
+      var registeredExperiment = {
+        id: experiment.id,
+        variant: experiment.assignedVariant,
+        optimizeId: experiment.optimizeId,
+        time: new Date().toISOString()
+      };
+      AnalyticsHandler.registeredExperiments.push(registeredExperiment);
+      this.storeRegisteredExperiments();
+      this.setOptimizeData();
     }
   }, {
     key: "createAdditionalTracker",
@@ -262,6 +320,10 @@ var AnalyticsHandler = /*#__PURE__*/function () {
 
   return AnalyticsHandler;
 }();
+
+_defineProperty(AnalyticsHandler, "registeredExperimentsKey", 'registered_exp');
+
+_defineProperty(AnalyticsHandler, "registeredExperiments", []);
 
 _defineProperty(AnalyticsHandler, "optimizeExperimentsString", void 0);
 
