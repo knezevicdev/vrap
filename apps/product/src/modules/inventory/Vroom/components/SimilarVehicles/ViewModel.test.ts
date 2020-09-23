@@ -195,6 +195,7 @@ describe('Similar Vehicles View Model', () => {
 
       const expected: Car[] = Array(4).fill(source);
       expect(viewModel.getCars()).toEqual(expected);
+      expect(analyticsHandler.trackProductListViewed).toBeCalled();
     });
   });
 });
