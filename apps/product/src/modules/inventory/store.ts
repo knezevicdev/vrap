@@ -60,7 +60,6 @@ export async function getInitialInventoryStoreState(
     const response = await invSearchNetworker.getInventorySimilar({
       vin,
       min: 4,
-      isAvailableSoon: false,
       useVinCluster: !vinClusterDefaultVariant,
       // if vinClusterDefaultVariant is true we are in
       // the default and useVinCluster should be false
