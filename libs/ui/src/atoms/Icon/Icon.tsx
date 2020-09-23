@@ -34,6 +34,46 @@ export class Icons {
     color: '#E7131A',
   });
 
+  static readonly GOOGLE_PLAY = new Icons('GOOGLE_PLAY', {
+    name: 'google-play',
+    width: 108,
+    height: 32,
+  });
+
+  static readonly APPLE_STORE = new Icons('APPLE_STORE', {
+    name: 'apple-store',
+    width: 96,
+    height: 32,
+  });
+
+  static readonly FACEBOOK = new Icons('FACEBOOK', {
+    name: 'facebook',
+    width: 24,
+    height: 24,
+    color: '#FFFFFF',
+  });
+
+  static readonly TWITTER = new Icons('TWITTER', {
+    name: 'twitter',
+    width: 24,
+    height: 24,
+    color: '#FFFFFF',
+  });
+
+  static readonly INSTAGRAM = new Icons('INSTAGRAM', {
+    name: 'instagram',
+    width: 24,
+    height: 24,
+    color: '#FFFFFF',
+  });
+
+  static readonly ARROW_DOWN = new Icons('ARROW_DOWN', {
+    name: 'arrow-down',
+    width: 24,
+    height: 24,
+    color: '#FFFFFF',
+  });
+
   private constructor(
     protected key: string,
     public readonly value: {

@@ -34,26 +34,26 @@ const GallerySelectorView: React.FC<Props> = (props) => {
   const tabClass = tabStyle();
 
   return (
-    <>
-      <Tabs
-        value={selected}
-        onChange={viewModel.handleChange}
-        aria-label="gallery selection tabs"
-      >
+    <Tabs
+      value={selected}
+      onChange={viewModel.handleChange}
+      aria-label="gallery selection tabs"
+    >
+      <Tab
+        classes={tabClass}
+        value={viewModel.general}
+        label={viewModel.general.toUpperCase()}
+        {...a11yProps(viewModel.general)}
+      />
+      {viewModel.hasDefects() && (
         <Tab
           classes={tabClass}
-          value={viewModel.general}
-          label={viewModel.general.toUpperCase()}
-          {...a11yProps(viewModel.general)}
+          value={viewModel.defects}
+          label={viewModel.defects.toUpperCase()}
+          {...a11yProps(viewModel.defects)}
         />
-        <Tab
-          classes={tabClass}
-          value={viewModel.imperfections}
-          label={viewModel.imperfections.toUpperCase()}
-          {...a11yProps(viewModel.imperfections)}
-        />
-      </Tabs>
-    </>
+      )}
+    </Tabs>
   );
 };
 

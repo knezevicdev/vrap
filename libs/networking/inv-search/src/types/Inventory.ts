@@ -83,6 +83,7 @@ export type Car = {
   wheelBase: number;
   frontTrackWidth: number;
   rearTrackWidth: number;
+  spincarSpinUrl?: string | null;
 };
 export const carSchema: yup.ObjectSchema<Car> = yup
   .object({
@@ -156,6 +157,7 @@ export const carSchema: yup.ObjectSchema<Car> = yup
     wheelBase: yup.number().defined(),
     frontTrackWidth: yup.number().defined(),
     rearTrackWidth: yup.number().defined(),
+    spincarSpinUrl: yup.string().nullable(),
   })
   .defined()
   .strict(true);
