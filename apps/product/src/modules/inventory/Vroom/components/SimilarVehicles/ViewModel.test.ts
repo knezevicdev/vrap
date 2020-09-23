@@ -1,7 +1,9 @@
-import SimilarVehiclesViewModel from './ViewModel';
-import { InventoryStore } from 'src/modules/inventory/store';
-import AnalyticsHandler from 'src/integrations/AnalyticsHandler';
 import { Car, Hit } from '@vroom-web/inv-search-networking';
+
+import SimilarVehiclesViewModel from './ViewModel';
+
+import AnalyticsHandler from 'src/integrations/AnalyticsHandler';
+import { InventoryStore } from 'src/modules/inventory/store';
 
 jest.mock('src/integrations/AnalyticsHandler');
 jest.mock('next/config', () => {
@@ -62,16 +64,13 @@ const source: Car = {
   style: '',
   optionalFeatures: 'Wheel Locks,All-Weather Floor Mats,Roof Rack',
   zone: 'R - Retrieve Unit',
-  zoneID: 0,
   soldStatus: 0,
   otherPhotos: null,
   defectPhotos: null,
   ownerCount: 1,
   cityMpg: 0,
   highwayMpg: 0,
-  combinedMpg: 0,
   inventoryId: 10418659,
-  fyusionId: '',
   frontTrackWidth: 60.9,
   rearTrackWidth: 61.1,
   wheelBase: 103.9,
@@ -79,12 +78,8 @@ const source: Car = {
   length: 181.5,
   groundClearance: 8.7,
   height: 66.4,
-  stockLeadFlagPhotoUrl:
-    'https://i.fuelapi.com/d1b3bc64dbc64d5eb2c5ec581ad2e47e/27017/2/4/color_1280_032/MY2018/12163/12163_cc1280_032_M1Y.jpg',
   hasStockPhotos: false,
   consignmentPartnerId: '',
-  geolocation: '',
-  location: '',
 };
 
 describe('Similar Vehicles View Model', () => {
@@ -102,7 +97,7 @@ describe('Similar Vehicles View Model', () => {
       expect(viewModel.getCars()).toEqual([]);
     });
 
-    test('getCars when similar cars > 0, should return those similar cars', async () => {
+    test('getCars when similar cars > 0, should return those similar cars', () => {
       const source: Car = {
         vin: 'JF2SJABC9JH572398',
         bodyType: 'Wagon',
@@ -187,7 +182,7 @@ describe('Similar Vehicles View Model', () => {
       expect(viewModel.getCars()).toEqual(expected);
     });
 
-    test('getCars when similar cars > 4, should only return 4 cars', async () => {
+    test('getCars when similar cars > 4, should only return 4 cars', () => {
       const similar: Hit[] = Array(7).fill({
         _source: source,
       });

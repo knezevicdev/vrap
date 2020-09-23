@@ -3,8 +3,8 @@ import React, { useContext } from 'react';
 import View from './View';
 import ViewModel from './ViewModel';
 
-import { InventoryStoreContext } from 'src/modules/inventory/store';
 import AnalyticsHandler from 'src/integrations/AnalyticsHandler';
+import { InventoryStoreContext } from 'src/modules/inventory/store';
 
 const SimilarVehicles: React.FC = () => {
   const store = useContext(InventoryStoreContext);
