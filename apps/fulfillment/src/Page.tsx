@@ -10,6 +10,7 @@ const Contents = styled('div')(() => ({
 }));
 
 interface Experiment {
+  id: string;
   assignedVariant: 0 | 1;
   optimizeId?: string;
 }

@@ -28,6 +28,7 @@ module.exports = {
   },
   serverRuntimeConfig: {
     // Will only be available on the server side
+    NODE_ENV: process.env.NODE_ENV,
     SEGMENT_WRITE_KEY: process.env.SEGMENT_WRITE_KEY,
   },
   /* Custom webpack configuration. */

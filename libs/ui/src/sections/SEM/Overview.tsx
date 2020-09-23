@@ -7,47 +7,46 @@ import { Body, Hero, Title } from '../../atoms/Typography';
 const Container = styled.div`
   display: flex;
   flex-direction: column;
-  height: 100%;
-  width: 100%;
+  max-width: 100%;
+
+  @media (min-width: 600px) and (max-width: 839px) {
+    margin-left: 64px;
+    margin-right: 64px;
+  }
+
+  @media (max-width: 599px) {
+    margin-left: 24px;
+    margin-right: 24px;
+  }
 `;
 
 const Info = styled.div`
   display: flex;
+  flex-direction: column;
   margin-top: 16px;
-  flex-wrap: wrap;
 `;
 
 const Content = styled(Body.Regular)`
-  width: 50%;
-
-  @media (max-width: 839px) {
-    width: 100%;
-    order: 2;
-  }
-
-  @media (min-width: 600px) and (max-width: 839px) {
-    margin-top: 48px;
+  @media (min-width: 600px) {
+    margin-top: 32px;
   }
 
   @media (max-width: 599px) {
-    margin-top: 32px;
+    margin-top: 16px;
   }
 `;
 
 const Details = styled.div`
   display: flex;
   width: 50%;
-  justify-content: space-evenly;
 
-  @media (min-width: 600) and (max-width: 839px) {
+  @media (min-width: 600px) and (max-width: 839px) {
     width: 100%;
-    order: 1;
     justify-content: flex-start;
   }
 
   @media (max-width: 599px) {
     width: 100%;
-    order: 1;
   }
 `;
 
@@ -56,9 +55,17 @@ const Detail = styled.div`
   align-items: center;
   flex-direction: column;
   text-align: center;
-  @media (max-width: 959px) {
+
+  @media (min-width: 600px) {
     &:not(:last-child) {
-      margin-right: 32px;
+      margin-right: 64px;
+    }
+  }
+
+  @media (max-width: 599px) {
+    :nth-child(2) {
+      margin-right: auto;
+      margin-left: auto;
     }
   }
 `;
@@ -101,7 +108,6 @@ export const Overview: React.FC = () => {
     <Container>
       <Hero.Four>overview</Hero.Four>
       <Info>
-        <Content>{content}</Content>
         <Details>
           {details.map((detail) => {
             const { icon, title, description } = detail;
@@ -114,6 +120,7 @@ export const Overview: React.FC = () => {
             );
           })}
         </Details>
+        <Content>{content}</Content>
       </Info>
     </Container>
   );

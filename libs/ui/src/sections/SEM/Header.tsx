@@ -8,11 +8,19 @@ const Container = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  min-height: 56px;
-  max-height: 56px;
+  min-height: 64px;
+  max-height: 64px;
   width: 100%;
   background: #ffffff;
   box-shadow: 0px 6px 6px -6px rgba(0, 0, 0, 0.15);
+  position: sticky;
+  top: 0;
+  z-index: 1;
+
+  @media (min-width: 840px) {
+    min-height: 72px;
+    max-height: 72px;
+  }
 `;
 
 const Logo = styled(Icon)`
@@ -26,7 +34,7 @@ export const Header: React.FC = () => {
   return (
     <Container>
       <Logo icon={Icons.VROOM} />
-      <Button.Bare onClick={onClick}>FIND YOURS</Button.Bare>
+      <Button.Primary onClick={onClick}>FIND YOURS</Button.Primary>
     </Container>
   );
 };

@@ -8390,7 +8390,8 @@ var carSchema = ObjectSchema({
   groundClearance: NumberSchema().defined(),
   wheelBase: NumberSchema().defined(),
   frontTrackWidth: NumberSchema().defined(),
-  rearTrackWidth: NumberSchema().defined()
+  rearTrackWidth: NumberSchema().defined(),
+  spincarSpinUrl: StringSchema().nullable()
 }).defined().strict(true);
 var hitSchema = ObjectSchema({
   _source: carSchema

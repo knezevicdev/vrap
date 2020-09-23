@@ -11,11 +11,18 @@ const Container = styled.div`
   width: 100%;
 `;
 
-//TODO: Look into scrolling functionality without scrollbar.
 const Items = styled.div`
   display: flex;
   margin-top: 16px;
   overflow: auto;
+
+  @media (min-width: 600px) and (max-width: 839px) {
+    margin-left: 64px;
+  }
+
+  @media (max-width: 599px) {
+    margin-left: 24px;
+  }
 `;
 
 const Item = styled.div`
@@ -25,6 +32,16 @@ const Item = styled.div`
   text-align: center;
 `;
 
+const SectionTitle = styled(Hero.Four)`
+  @media (min-width: 600px) and (max-width: 839px) {
+    margin: 0px 64px;
+  }
+
+  @media (max-width: 599px) {
+    margin: 0px 24px;
+  }
+`;
+
 //TODO: Dynamic content - make these things into injectable content
 
 const colors = [
@@ -32,7 +49,17 @@ const colors = [
     name: 'Firecracker Red',
     picture: {
       alt: 'Firecracker Red',
-      src: '/images/JeepColors/firecraker_red.png',
+      src: '/images/Hero-Jeep-image.png',
+      width: '113.5px',
+      height: '64px',
+      objectFit: 'cover',
+    },
+  },
+  {
+    name: 'Bikini Pearlcoat',
+    picture: {
+      alt: 'Bikini Pearlcoat',
+      src: '/images/JeepColors/Bikini Pearlcoat.png',
       width: '113.5px',
       height: '64px',
       objectFit: 'cover',
@@ -42,7 +69,7 @@ const colors = [
     name: 'Billet Silver Metallic',
     picture: {
       alt: 'Billet Silver Metallic',
-      src: '/images/JeepColors/billet_silver_metallic.png',
+      src: '/images/JeepColors/Billet Silver Metallic.png',
       width: '113.5px',
       height: '64px',
       objectFit: 'cover',
@@ -52,7 +79,7 @@ const colors = [
     name: 'Hellayella',
     picture: {
       alt: 'Hellayella',
-      src: '/images/JeepColors/hellayella.png',
+      src: '/images/JeepColors/Hellayella.png',
       width: '113.5px',
       height: '64px',
       objectFit: 'cover',
@@ -62,7 +89,7 @@ const colors = [
     name: 'Ocean Blue Metallic',
     picture: {
       alt: 'Ocean Blue Metallic',
-      src: '/images/JeepColors/ocean_blue_metallic.png',
+      src: '/images/JeepColors/Ocean Blue Metallic.png',
       width: '113.5px',
       height: '64px',
       objectFit: 'cover',
@@ -72,7 +99,7 @@ const colors = [
     name: 'Black',
     picture: {
       alt: 'Black',
-      src: '/images/JeepColors/black.png',
+      src: '/images/JeepColors/Black.png',
       width: '113.5px',
       height: '64px',
       objectFit: 'cover',
@@ -82,7 +109,7 @@ const colors = [
     name: 'Granite Crystal Metallic',
     picture: {
       alt: 'Granite Crystal Metallic',
-      src: '/images/JeepColors/granite_crystal_metallic.png',
+      src: '/images/JeepColors/Granite Crystal Metallic.png',
       width: '113.5px',
       height: '64px',
       objectFit: 'cover',
@@ -92,7 +119,7 @@ const colors = [
     name: 'Mojito!',
     picture: {
       alt: 'Mojito!',
-      src: '/images/JeepColors/mojito.png',
+      src: '/images/JeepColors/Mojito!.png',
       width: '113.5px',
       height: '64px',
       objectFit: 'cover',
@@ -102,7 +129,7 @@ const colors = [
     name: 'Bright White',
     picture: {
       alt: 'Bright White',
-      src: '/images/JeepColors/bright_white.png',
+      src: '/images/JeepColors/Bright White.png',
       width: '113.5px',
       height: '64px',
       objectFit: 'cover',
@@ -112,7 +139,7 @@ const colors = [
     name: 'Sting-Gray',
     picture: {
       alt: 'Sting-Gray',
-      src: '/images/JeepColors/sting_gray.png',
+      src: '/images/JeepColors/Sting-Gray.png',
       width: '113.5px',
       height: '64px',
       objectFit: 'cover',
@@ -122,7 +149,7 @@ const colors = [
     name: 'Punk’n Metallic',
     picture: {
       alt: 'Punk’n Metallic',
-      src: '/images/JeepColors/punk_metallic.png',
+      src: '/images/JeepColors/Punk’n Mettalic.png',
       width: '113.5px',
       height: '64px',
       objectFit: 'cover',
@@ -133,7 +160,7 @@ const colors = [
 export const Colors: React.FC = () => {
   return (
     <Container>
-      <Hero.Four>available colors</Hero.Four>
+      <SectionTitle>available colors</SectionTitle>
       <Items>
         {colors.map((color) => {
           const { name, picture } = color;

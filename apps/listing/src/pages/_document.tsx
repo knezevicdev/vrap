@@ -57,9 +57,22 @@ class VroomDocument extends Document<Props> {
   }
 
   render(): JSX.Element {
+    const isProduction = serverRuntimeConfig.NODE_ENV === 'production';
     return (
       <Html lang="en">
         <Head>
+          <script src="/boomerang" />
+          {!isProduction && (
+            <script
+              dangerouslySetInnerHTML={{
+                __html: `
+              if (!window.__vroom_data) {
+                console.warn('window.__vroom_data is not set! This can occur if the call to /boomerang failed. This is expected in all environments not fronted by the interchange, such as your local environment. It is only an issue if it occurs in an environment fronted by the interchange.');
+              }
+            `.trim(),
+              }}
+            />
+          )}
           <UISnippet
             brand={this.props.brand}
             staticAssetsHostUrl={publicRuntimeConfig.STATIC_ASSETS_HOST_URL}

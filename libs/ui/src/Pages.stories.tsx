@@ -1,10 +1,12 @@
 import React from 'react';
 import styled, { ThemeProvider } from 'styled-components';
 
+import { Footer } from './core/Footer';
 import { Colors } from './sections/SEM/Colors';
 import { Features } from './sections/SEM/Features';
 import { Header } from './sections/SEM/Header';
 import { Hero } from './sections/SEM/Hero';
+import { Legal } from './sections/SEM/Legal';
 import { Overview } from './sections/SEM/Overview';
 import { theme as VroomTheme } from './themes/New/Vroom';
 
@@ -18,7 +20,6 @@ const Page = styled.div`
 const Container = styled.div`
   width: 100%;
   max-width: 864px;
-  margin-bottom: 136px;
   margin-left: auto;
   margin-right: auto;
 `;
@@ -29,11 +30,22 @@ const Space = styled.div`
 `;
 
 const Divider = styled.div`
+  display: flex;
   min-height: 1px;
   max-height: 1px;
-  width: 100%;
   background-color: #d6d7da;
-  margin: 32px 0;
+
+  @media (min-width: 840px) {
+    margin: 32px auto;
+  }
+
+  @media (min-width: 600px) and (max-width: 839px) {
+    margin: 32px 64px;
+  }
+
+  @media (max-width: 599px) {
+    margin: 32px 24px;
+  }
 `;
 
 export const SEM: React.FC = () => {
@@ -49,7 +61,9 @@ export const SEM: React.FC = () => {
           <Colors />
           <Space />
           <Features />
+          <Legal />
         </Container>
+        <Footer />
       </Page>
     </ThemeProvider>
   );
