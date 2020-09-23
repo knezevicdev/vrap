@@ -205,10 +205,19 @@ const CustomTable = styled(Table)`
   .rc-table-sticky-header {
     position: sticky;
     background: white;
+    top: 64px !important;
+
+    @media (min-width: 840px) {
+      top: 72px !important;
+    }
   }
 
   .rc-table-body {
     overflow-x: auto;
+  }
+
+  @media (min-width: 600px) and (max-width: 839px) {
+    margin: 0px 64px;
   }
 `;
 
@@ -264,6 +273,16 @@ const BodyWrapper = styled.tbody`
   }
 `;
 
+const SectionTitle = styled(Hero.Four)`
+  @media (min-width: 600px) and (max-width: 839px) {
+    margin: 0px 64px 16px 64px;
+  }
+
+  @media (max-width: 599px) {
+    margin: 0px 24px 16px 24px;
+  }
+`;
+
 const components = {
   header: {
     wrapper: HeaderWrapper,
@@ -276,7 +295,7 @@ const components = {
 export const Features: React.FC = () => {
   return (
     <Container>
-      <Hero.Four>Trim details & features</Hero.Four>
+      <SectionTitle>Trim details & features</SectionTitle>
       <CustomTable
         sticky
         columns={columns}
