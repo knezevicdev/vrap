@@ -52,7 +52,7 @@ const CarsView: React.FC<Props> = ({ viewModel }) => {
           <Grid container spacing={isMobile ? 0 : 2}>
             {viewModel.cars().map((car, index) => (
               <CarCard
-                key={car ? car.vin : index}
+                key={index}
                 car={car}
                 position={index + viewModel.getPage()}
               />

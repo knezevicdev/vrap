@@ -22,54 +22,45 @@ import {
 import { Brand, ThemeProvider } from '@vroom-web/ui';
 import { NextPage, NextPageContext } from 'next';
 import getConfig from 'next/config';
-import { parseCookies } from 'nookies';
 import { stringify } from 'qs';
-import { ParsedUrlQuery } from 'querystring';
 import React, { useEffect, useState } from 'react';
 import { Experiment } from 'vroom-abtesting-sdk/types';
 
-import experimentSDK, {
-  showDefaultVariant,
-} from 'src/integrations/experimentSDK';
+import AnalyticsHandler from 'src/integrations/AnalyticsHandler';
+import { clientGetAndLogExperiment } from 'src/integrations/experimentSDK';
 import Cars from 'src/modules/cars';
 import { BrandContext } from 'src/modules/cars/BrandContext';
 import {
   INVENTORY_CARDS_PER_PAGE,
   POPULAR_CAR_LIMIT,
 } from 'src/modules/cars/data';
-import { ExperimentContext } from 'src/modules/cars/ExperimentContext';
 import {
   CarsStore,
   CarsStoreContext,
   getPostInventoryRequestDataFromFilterData,
   InitialCarsStoreState,
 } from 'src/modules/cars/store';
+import { Status } from 'src/networking/types';
 import Page from 'src/Page';
 const {
   publicRuntimeConfig: { INVSEARCH_V3_URL, NAME, VERSION },
 } = getConfig();
-const NodeCache = require('node-cache');
-const cache = new NodeCache();
-
 const invSearchNetworker = new InvSearchNetworker(INVSEARCH_V3_URL);
 
 interface Props {
   brand: Brand;
-  experiments: Experiment[];
+  carsStatus: Status;
   initialStoreState: InitialCarsStoreState;
-  query: ParsedUrlQuery;
-  resumeSearchDefaultVariant: boolean;
 }
 
 const CarsPage: NextPage<Props> = ({
   brand,
-  experiments,
+  carsStatus,
   initialStoreState,
-  query,
-  resumeSearchDefaultVariant,
 }) => {
   // Persist store instance across URL updates.
   const [carsStore] = useState<CarsStore>(new CarsStore(initialStoreState));
+  const [analyticsHandler] = useState<AnalyticsHandler>(new AnalyticsHandler());
 
   /* FIT-307. This effect allows the filters panel to be initially closed
   on mobile, and initially open on desktop. */
@@ -84,8 +75,53 @@ const CarsPage: NextPage<Props> = ({
   }, [carsStore, theme]);
 
   useEffect(() => {
+    clientGetAndLogExperiment('snd-catalog-sort-by-geo-location').then(
+      (experiment) => {
+        carsStore.setGeoLocationSortExperiment(experiment);
+        if (experiment && experiment.assignedVariant === 1) {
+          carsStore.fetchInventoryData();
+        } else {
+          carsStore.setInventoryStatus(carsStatus);
+        }
+      }
+    );
+  }, [carsStore, carsStatus]);
+  useEffect(() => {
+    if (carsStore.geoLocationSortExperiment) {
+      analyticsHandler.registerExperiment(carsStore.geoLocationSortExperiment);
+    }
+  }, [carsStore.geoLocationSortExperiment, analyticsHandler]);
+
+  useEffect(() => {
+    clientGetAndLogExperiment('snd-old-pdp-vs-new-pdp').then((experiment) =>
+      carsStore.setOldNewPdpExperiment(experiment)
+    );
+  }, [carsStore]);
+  useEffect(() => {
+    if (carsStore.oldNewPdpExperiment) {
+      analyticsHandler.registerExperiment(carsStore.oldNewPdpExperiment);
+    }
+  }, [carsStore.oldNewPdpExperiment, analyticsHandler]);
+
+  const [resumeSearchExperiment, setResumeSearchExperiment] = useState<
+    Experiment | undefined
+  >();
+  useEffect(() => {
+    clientGetAndLogExperiment('delta-resume-search').then((experiment) =>
+      setResumeSearchExperiment(experiment)
+    );
+  }, []);
+  useEffect(() => {
+    if (resumeSearchExperiment) {
+      analyticsHandler.registerExperiment(resumeSearchExperiment);
+    }
+  }, [resumeSearchExperiment, analyticsHandler]);
+  useEffect(() => {
     const localStorageKey = 'listing_filters_data';
-    if (resumeSearchDefaultVariant) {
+    if (!resumeSearchExperiment) {
+      return;
+    }
+    if (resumeSearchExperiment.assignedVariant === 0) {
       if (localStorage.getItem(localStorageKey)) {
         localStorage.removeItem(localStorageKey);
       }
@@ -100,7 +136,7 @@ const CarsPage: NextPage<Props> = ({
         JSON.stringify(carsStore.filtersData)
       );
     }
-  }, [carsStore.filtersData, resumeSearchDefaultVariant]);
+  }, [carsStore.filtersData, resumeSearchExperiment]);
 
   // DELTA-5 / DELTA-56
   // This is more complex than I would like.
@@ -293,22 +329,18 @@ const CarsPage: NextPage<Props> = ({
 
   return (
     <ThemeProvider brand={brand}>
-      <Page brand={brand} experiments={experiments} name="Catalog" head={head}>
-        <ExperimentContext.Provider value={{ experiments, query }}>
-          <BrandContext.Provider value={brand}>
-            <CarsStoreContext.Provider value={carsStore}>
-              <Cars />
-            </CarsStoreContext.Provider>
-          </BrandContext.Provider>
-        </ExperimentContext.Provider>
+      <Page brand={brand} name="Catalog" head={head}>
+        <BrandContext.Provider value={brand}>
+          <CarsStoreContext.Provider value={carsStore}>
+            <Cars />
+          </CarsStoreContext.Provider>
+        </BrandContext.Provider>
       </Page>
     </ThemeProvider>
   );
 };
 
 CarsPage.getInitialProps = async (context: NextPageContext): Promise<Props> => {
-  const cookies = parseCookies(context);
-  const marketingId = cookies['uuid'];
   const {
     asPath,
     query: {
@@ -334,34 +366,6 @@ CarsPage.getInitialProps = async (context: NextPageContext): Promise<Props> => {
   const brand =
     (brandHeader || queryBrand) == santanderKey ? Brand.SANTANDER : Brand.VROOM;
 
-  const geoQuery = query.geo;
-  let geo: Coordinates | undefined;
-  if (
-    req &&
-    req.headers['client-geo-latitude'] &&
-    req.headers['client-geo-longitude']
-  ) {
-    geo = {
-      latitude: parseFloat(req.headers['client-geo-latitude'] as string),
-      longitude: parseFloat(req.headers['client-geo-longitude'] as string),
-      accuracy: 2, //Don't need just to satisfy type
-      altitude: null,
-      altitudeAccuracy: null,
-      heading: null,
-      speed: null,
-    };
-  } else if (geoQuery === 'detroit') {
-    geo = {
-      latitude: 72,
-      longitude: 65,
-      accuracy: 2, //Don't need just to satisfy type
-      altitude: null,
-      altitudeAccuracy: null,
-      heading: null,
-      speed: null,
-    };
-  }
-
   const url = typeof asPath === 'string' ? (asPath as string) : '';
   const filtersData = getFiltersDataFromUrl(url);
 
@@ -376,12 +380,12 @@ CarsPage.getInitialProps = async (context: NextPageContext): Promise<Props> => {
   };
 
   const popularCarsRequestData = {
-    isTitleQAPass: titleQuery,
     fulldetails: false,
     limit: POPULAR_CAR_LIMIT,
     sortdirection: 'asc',
     'sold-status': SoldStatus.FOR_SALE,
     source: `${NAME}-${VERSION}`,
+    isTitleQAPass: titleQuery,
   };
 
   const makesStart = new Date().getTime();
@@ -396,46 +400,8 @@ CarsPage.getInitialProps = async (context: NextPageContext): Promise<Props> => {
   const popularElapsed = new Date().getTime() - popularStart;
   console.log('{"POPULAR_CARS_ms":' + popularElapsed + '}');
 
-  const experimentsStart = new Date().getTime();
-  const experimentsCache = cache.get('experiments');
-  const experiments =
-    brand === Brand.VROOM
-      ? experimentsCache
-        ? experimentsCache
-        : await new Promise((resolve) => {
-            experimentSDK
-              .getRunningExperiments(marketingId as string)
-              .then((response) => {
-                const experimentsForThisPage = [
-                  'delta-resume-search',
-                  'snd-catalog-sort-by-geo-location',
-                  'snd-old-pdp-vs-new-pdp',
-                ];
-                const filtered = response.filter((experiment) => {
-                  return experimentsForThisPage.includes(experiment.id);
-                });
-                cache.set('experiments', filtered, 60);
-                resolve(filtered);
-              })
-              .catch((error) => {
-                console.log('Experiments failed - ', JSON.stringify(error));
-                resolve([]);
-              });
-          })
-      : [];
-  const experimentsElapsed = new Date().getTime() - experimentsStart;
-  console.log('{"EXPERIMENTS_ms":' + experimentsElapsed + '}');
-
-  const geoLocationSortDefaultVariant = showDefaultVariant(
-    'snd-catalog-sort-by-geo-location',
-    experiments,
-    query
-  );
-
   const postInventoryRequestDataFromFiltersData = getPostInventoryRequestDataFromFilterData(
-    filtersData,
-    geoLocationSortDefaultVariant,
-    geo
+    filtersData
   );
 
   const inventoryRequestData: PostInventoryRequestData = {
@@ -449,18 +415,13 @@ CarsPage.getInitialProps = async (context: NextPageContext): Promise<Props> => {
   const carsStart = new Date().getTime();
 
   const carsR = await invSearchNetworker.postInventory(inventoryRequestData);
-
+  const carsStatus = Status.SUCCESS;
   const carsElapsed = new Date().getTime() - carsStart;
   console.log('{"CARS_ms":' + carsElapsed + '}');
 
   const makes = makesR.data.aggregations.make_count.buckets;
   const popularCars = popularCarsR.data;
   const cars = carsR.data;
-  const resumeSearchDefaultVariant = showDefaultVariant(
-    'delta-resume-search',
-    experiments,
-    context.query
-  );
 
   // FIT-583
   // Persist key attribution query params across navigation.
@@ -486,7 +447,6 @@ CarsPage.getInitialProps = async (context: NextPageContext): Promise<Props> => {
 
   const initialStoreState = {
     attributionQueryString,
-    geoLocationSortDefaultVariant,
     makes,
     cars,
     popularCars,
@@ -502,10 +462,8 @@ CarsPage.getInitialProps = async (context: NextPageContext): Promise<Props> => {
 
   return {
     brand,
-    experiments,
+    carsStatus,
     initialStoreState,
-    query,
-    resumeSearchDefaultVariant,
   };
 };
 

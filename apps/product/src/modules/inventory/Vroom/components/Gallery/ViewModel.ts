@@ -2,8 +2,6 @@ import { DefectType } from '@vroom-web/inv-search-networking';
 import isEmpty from 'lodash/isEmpty';
 import getConfig from 'next/config';
 
-import GalleryConditionEnd from './components/ConditionEnd';
-import GalleryGeneralToCondition from './components/GeneralToCondition';
 import { GallerySelections, GalleryStore } from './store';
 
 import AnalyticsHandler, { Product } from 'src/integrations/AnalyticsHandler';
@@ -33,6 +31,7 @@ class GalleryViewModel {
   readonly stockPhotoBody: string = `These are stock photos. When real photos become available, we'll share them here.`;
   readonly noPhotosSubtitle: string =
     "When real photos become available, we'll share\xa0them\xa0here.";
+  readonly iFrameNotSupported: string = 'Iframe Not Supported';
 
   constructor(inventoryStore: InventoryStore, galleryStore: GalleryStore) {
     this.inventoryStore = inventoryStore;
@@ -73,6 +72,7 @@ class GalleryViewModel {
       year,
       defectPhotos,
       hasStockPhotos,
+      spincarSpinUrl,
     } = this.inventoryStore.vehicle._source;
     const name = `${year} ${make} ${model}`;
     const product: Product = {
@@ -88,6 +88,7 @@ class GalleryViewModel {
       year,
       defectPhotos: !!defectPhotos,
       hasStockPhotos,
+      spincarSpinUrl,
     };
     return product;
   }
@@ -116,9 +117,11 @@ class GalleryViewModel {
     const { selectedGallery } = this.galleryStore;
     if (selectedGallery === GallerySelections.DEFECTS) {
       return this.getDefectImages();
-    } else {
-      return this.getGeneralImages();
     }
+    if (selectedGallery === GallerySelections.GENERAL) {
+      return [...this.getGeneralImages(), ...this.getDefectImages()];
+    }
+    return [];
   }
 
   getGeneralImages(): GeneralPhoto[] {
@@ -126,9 +129,7 @@ class GalleryViewModel {
       leadFlagPhotoUrl,
       otherPhotos,
       interiorPhotoUrl,
-      hasStockPhotos,
     } = this.inventoryStore.vehicle._source;
-    const { isListView } = this.galleryStore;
 
     const nonNullOtherPhotos = otherPhotos ? otherPhotos : [];
     const vehiclePhotos = [leadFlagPhotoUrl, ...nonNullOtherPhotos];
@@ -141,25 +142,11 @@ class GalleryViewModel {
         thumbnail: img,
       };
     });
-    if (vehiclePhotos.length > 1 && !isListView && !hasStockPhotos) {
-      const addGeneralToCondition: {
-        original: string;
-        thumbnail: string;
-        renderItem: React.FunctionComponent;
-      } = {
-        original: this.defaultImage.src,
-        //TODO: Replace with designs photo
-        thumbnail: this.defaultImage.src,
-        renderItem: GalleryGeneralToCondition,
-      };
-      generalPhotos.push(addGeneralToCondition);
-    }
     return generalPhotos;
   }
 
   getDefectImages(): DefectPhoto[] {
     const { defectPhotos } = this.inventoryStore.vehicle._source;
-    const { isListView } = this.galleryStore;
     const defectImages =
       !!defectPhotos && !isEmpty(defectPhotos)
         ? defectPhotos.map(
@@ -178,22 +165,23 @@ class GalleryViewModel {
             }
           )
         : [];
-    if (!isListView) {
-      const addGalleryEndCard: {
-        original: string;
-        thumbnail: string;
-        description: string;
-        renderItem: React.FunctionComponent;
-      } = {
-        original: this.defaultImage.src,
-        //TODO: Replace with designs photo
-        thumbnail: this.defaultImage.src,
-        description: 'Condition End Card',
-        renderItem: GalleryConditionEnd,
-      };
-      defectImages.push(addGalleryEndCard);
-    }
     return defectImages;
+  }
+
+  getSpincarIframeUrl(): string | undefined {
+    let { spincarSpinUrl } = this.inventoryStore.vehicle._source;
+    const options =
+      '#hidecarousel!disabledrawer!disableautospin!disablewatermark!hidevehiclehits!stscolor=E7131A%2CFC4349%2CE7131A';
+    if (spincarSpinUrl) {
+      spincarSpinUrl = spincarSpinUrl.concat(options);
+    } else {
+      return (spincarSpinUrl = undefined);
+    }
+    return spincarSpinUrl;
+  }
+
+  isSpincarView(): boolean {
+    return this.galleryStore.selectedGallery === GallerySelections.THREE_SIXTY;
   }
 
   isDefectView(): boolean {

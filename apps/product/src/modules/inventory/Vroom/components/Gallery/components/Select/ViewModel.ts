@@ -4,15 +4,18 @@ import AnalyticsHandler, { Product } from 'src/integrations/AnalyticsHandler';
 
 class GallerySelectorViewModel {
   private store: GalleryStore;
-  private analyticsHandler: AnalyticsHandler;
+  public analyticsHandler: AnalyticsHandler;
   private readonly product: Product;
   readonly general: string = GallerySelections.GENERAL;
-  readonly imperfections: string = GallerySelections.DEFECTS;
+  public defects = '';
 
   constructor(galleryStore: GalleryStore, product: Product) {
     this.store = galleryStore;
     this.analyticsHandler = new AnalyticsHandler();
     this.product = product;
+    this.defects = this.product.spincarSpinUrl
+      ? GallerySelections.THREE_SIXTY
+      : GallerySelections.DEFECTS;
   }
 
   handleChange = (
@@ -27,6 +30,10 @@ class GallerySelectorViewModel {
   getSelectedGallery(): string {
     return this.store.selectedGallery;
   }
+
+  hasDefects = (): boolean => {
+    return !!this.product.spincarSpinUrl || !!this.product.defectPhotos;
+  };
 }
 
 export default GallerySelectorViewModel;

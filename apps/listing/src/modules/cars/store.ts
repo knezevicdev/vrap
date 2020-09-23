@@ -14,6 +14,7 @@ import { action, computed, observable, runInAction } from 'mobx';
 import getConfig from 'next/config';
 import Router from 'next/router';
 import { createContext } from 'react';
+import { Experiment } from 'vroom-abtesting-sdk/types';
 
 import {
   BodyType,
@@ -46,13 +47,15 @@ export interface InitialCarsStoreState {
   cars: Inventory | undefined;
   popularCars: Inventory | undefined;
   filtersData: FiltersData | undefined;
-  geoLocationSortDefaultVariant: boolean;
   titleQuery?: boolean;
 }
 
 export const getBodyTypeRequestData = (
-  filtersData: FiltersData
+  filtersData?: FiltersData
 ): BodyTypeAPI[] | undefined => {
+  if (!filtersData) {
+    return undefined;
+  }
   const filtersDataBodyTypes = filtersData[Filters.BODY_TYPES];
   if (!filtersDataBodyTypes || !bodyTypes) {
     return undefined;
@@ -70,8 +73,11 @@ export const getBodyTypeRequestData = (
 };
 
 export const getColorRequestData = (
-  filtersData: FiltersData
+  filtersData?: FiltersData
 ): ColorAPI[] | undefined => {
+  if (!filtersData) {
+    return undefined;
+  }
   const filtersDataColors = filtersData[Filters.COLORS];
   if (!filtersDataColors || !colors) {
     return undefined;
@@ -89,8 +95,11 @@ export const getColorRequestData = (
 };
 
 export const getDriveTypeRequestData = (
-  filtersData: FiltersData
+  filtersData?: FiltersData
 ): DriveTypeAPI[] | undefined => {
+  if (!filtersData) {
+    return undefined;
+  }
   const filtersDataDriveType = filtersData[Filters.DRIVE_TYPE];
   if (!filtersDataDriveType || !driveTypes) {
     return undefined;
@@ -108,11 +117,17 @@ export const getDriveTypeRequestData = (
 };
 
 export const getMakeAndModelRequestData = (
-  filtersData: FiltersData
+  filtersData?: FiltersData
 ): {
   makeSlug?: string[];
   modelSlug?: string[];
 } => {
+  if (!filtersData) {
+    return {
+      makeSlug: undefined,
+      modelSlug: undefined,
+    };
+  }
   const filtersDataMakesAndModels = filtersData[Filters.MAKE_AND_MODELS];
   if (!filtersDataMakesAndModels) {
     return {
@@ -136,8 +151,11 @@ export const getMakeAndModelRequestData = (
 };
 
 export const getOffsetRequestData = (
-  filtersData: FiltersData
+  filtersData?: FiltersData
 ): number | undefined => {
+  if (!filtersData) {
+    return undefined;
+  }
   const filtersDataPage = filtersData[Filters.PAGE];
   if (!filtersDataPage) {
     return undefined;
@@ -146,16 +164,32 @@ export const getOffsetRequestData = (
 };
 
 export const getSortRequestData = (
-  filtersData: FiltersData,
-  geoLocationSortDefaultVariant?: boolean
+  filtersData?: FiltersData,
+  geoLocationSortExperiment?: Experiment
 ): {
   sortby?: SortAPIBy;
   sortdirection?: SortAPIDirection;
 } => {
+  if (!filtersData) {
+    const sortby =
+      geoLocationSortExperiment &&
+      geoLocationSortExperiment.assignedVariant === 1
+        ? SortAPIBy.GEO
+        : undefined;
+    return {
+      sortby,
+      sortdirection: undefined,
+    };
+  }
   const filtersDataSort = filtersData[Filters.SORT];
   if (!filtersDataSort) {
+    const sortby =
+      geoLocationSortExperiment &&
+      geoLocationSortExperiment.assignedVariant === 1
+        ? SortAPIBy.GEO
+        : undefined;
     return {
-      sortby: geoLocationSortDefaultVariant ? undefined : SortAPIBy.GEO,
+      sortby,
       sortdirection: undefined,
     };
   }
@@ -177,8 +211,11 @@ export const getSortRequestData = (
 };
 
 export const getTransmissionRequestData = (
-  filtersData: FiltersData
+  filtersData?: FiltersData
 ): TransmissionAPI | undefined => {
+  if (!filtersData) {
+    return undefined;
+  }
   const filtersDataTransmission = filtersData[Filters.TRANSMISSION];
   if (!filtersDataTransmission) {
     return undefined;
@@ -194,22 +231,8 @@ export const getTransmissionRequestData = (
 
 export const getPostInventoryRequestDataFromFilterData = (
   filtersData?: FiltersData,
-  geoLocationSortDefaultVariant?: boolean,
-  geo?: Coordinates
+  geoLocationSortExperiment?: Experiment
 ): PostInventoryRequestData => {
-  if (!filtersData) {
-    if (geoLocationSortDefaultVariant || !geo) {
-      return {};
-    }
-    return {
-      sortby: 'geo',
-      geo: {
-        lat: `${geo.latitude}`,
-        long: `${geo.longitude}`,
-      },
-    };
-  }
-
   const bodytype = getBodyTypeRequestData(filtersData);
   const color = getColorRequestData(filtersData);
   const drivetype = getDriveTypeRequestData(filtersData);
@@ -217,7 +240,7 @@ export const getPostInventoryRequestDataFromFilterData = (
   const offset = getOffsetRequestData(filtersData);
   const { sortby, sortdirection } = getSortRequestData(
     filtersData,
-    geoLocationSortDefaultVariant
+    geoLocationSortExperiment
   );
   const transmissionid = getTransmissionRequestData(filtersData);
 
@@ -226,15 +249,15 @@ export const getPostInventoryRequestDataFromFilterData = (
     color,
     drivetype,
     makeSlug,
-    miles: filtersData[Filters.MILES],
+    miles: filtersData ? filtersData[Filters.MILES] : undefined,
     modelSlug,
     offset,
-    price: filtersData[Filters.PRICE],
-    searchall: filtersData[Filters.SEARCH],
+    price: filtersData ? filtersData[Filters.PRICE] : undefined,
+    searchall: filtersData ? filtersData[Filters.SEARCH] : undefined,
     sortby,
     sortdirection,
     transmissionid,
-    year: filtersData[Filters.YEAR],
+    year: filtersData ? filtersData[Filters.YEAR] : undefined,
   };
 };
 
@@ -257,7 +280,7 @@ export class CarsStore {
   @observable makeBucketsStatus: Status = Status.INITIAL;
 
   @observable inventoryData?: Inventory;
-  @observable inventoryStatus: Status = Status.INITIAL;
+  @observable inventoryStatus: Status = Status.FETCHING;
   @computed get hasInventory(): boolean {
     if (this.inventoryData) {
       return this.inventoryData.hits.total !== 0;
@@ -276,6 +299,9 @@ export class CarsStore {
 
   @observable areFiltersOpen = false;
 
+  @observable oldNewPdpExperiment?: Experiment;
+  @observable geoLocationSortExperiment?: Experiment;
+
   constructor(initialState?: InitialCarsStoreState) {
     this.invSearchNetworker = new InvSearchNetworker(
       publicRuntimeConfig.INVSEARCH_V3_URL || ''
@@ -283,15 +309,25 @@ export class CarsStore {
 
     if (initialState) {
       this.attributionQueryString = initialState.attributionQueryString;
-      this.isTitleQAPass = initialState.titleQuery;
-      this.geoLocationSortDefaultVariant =
-        initialState.geoLocationSortDefaultVariant;
       this.makeBuckets = initialState.makes;
       this.inventoryData = initialState.cars;
       this.popularCarsData = initialState.popularCars;
       this.filtersData = initialState.filtersData;
+      this.isTitleQAPass = initialState.titleQuery;
     }
   }
+
+  @action
+  setOldNewPdpExperiment = (oldNewPdpExperiment?: Experiment): void => {
+    this.oldNewPdpExperiment = oldNewPdpExperiment;
+  };
+
+  @action
+  setGeoLocationSortExperiment = (
+    geoLocationSortExperiment?: Experiment
+  ): void => {
+    this.geoLocationSortExperiment = geoLocationSortExperiment;
+  };
 
   @action
   setAreFiltersOpen = (areFiltersOpen: boolean): void => {
@@ -304,12 +340,17 @@ export class CarsStore {
   };
 
   @action
-  private fetchInventoryData = async (): Promise<void> => {
+  setInventoryStatus = (inventoryStatus: Status): void => {
+    this.inventoryStatus = inventoryStatus;
+  };
+
+  @action
+  fetchInventoryData = async (): Promise<void> => {
     try {
       this.inventoryStatus = Status.FETCHING;
       const postInventoryRequestDataFromFiltersData = getPostInventoryRequestDataFromFilterData(
         this.filtersData,
-        this.geoLocationSortDefaultVariant
+        this.geoLocationSortExperiment
       );
       const inventoryRequestData: PostInventoryRequestData = {
         ...postInventoryRequestDataFromFiltersData,

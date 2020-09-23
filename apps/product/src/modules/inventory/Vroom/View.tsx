@@ -15,6 +15,7 @@ import LegalFooter from './components/LegalFooter';
 import NeedHelp from './components/NeedHelp';
 import NotifyMe from './components/NotifyMe';
 import PeaceOfMind from './components/PeaceOfMind';
+import SafetyAndQuality from './components/SafetyAndQuality';
 import SalesContact from './components/SalesContact';
 import SimilarVehicles from './components/SimilarVehicles';
 import StartPurchase from './components/StartPurchase';
@@ -74,6 +75,7 @@ const InventoryView: React.FC<Props> = (props) => {
             <SalesContact />
             <CarDetails />
             <Features />
+            <SafetyAndQuality />
             <PeaceOfMind />
           </>
         )}
