@@ -13,9 +13,12 @@ class SimilarVehiclesViewModel {
   readonly viewAllCars: string = 'View All Cars';
   readonly viewAll: string = 'VIEW ALL';
 
-  constructor(inventoryStore: InventoryStore) {
+  constructor(
+    inventoryStore: InventoryStore,
+    analyticsHandler: AnalyticsHandler
+  ) {
     this.store = inventoryStore;
-    this.analyticsHandler = new AnalyticsHandler();
+    this.analyticsHandler = analyticsHandler;
   }
 
   private trackProductList(cars: Car[]): void {

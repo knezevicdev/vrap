@@ -1,22 +1,16 @@
-import React from 'react';
+import React, { useContext } from 'react';
 
 import View from './View';
 import ViewModel from './ViewModel';
 
-import {
-  InventoryStore,
-  InventoryStoreContext,
-} from 'src/modules/inventory/store';
+import { InventoryStoreContext } from 'src/modules/inventory/store';
+import AnalyticsHandler from 'src/integrations/AnalyticsHandler';
 
 const SimilarVehicles: React.FC = () => {
-  return (
-    <InventoryStoreContext.Consumer>
-      {(store: InventoryStore): JSX.Element => {
-        const viewModel = new ViewModel(store);
-        return <View viewModel={viewModel} />;
-      }}
-    </InventoryStoreContext.Consumer>
-  );
+  const store = useContext(InventoryStoreContext);
+  const analyticsHandler = new AnalyticsHandler();
+  const viewModel = new ViewModel(store, analyticsHandler);
+  return <View viewModel={viewModel} />;
 };
 
 export default SimilarVehicles;

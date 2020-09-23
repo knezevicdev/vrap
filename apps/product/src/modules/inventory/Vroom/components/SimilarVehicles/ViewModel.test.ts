@@ -1,0 +1,200 @@
+import SimilarVehiclesViewModel from './ViewModel';
+import { InventoryStore } from 'src/modules/inventory/store';
+import AnalyticsHandler from 'src/integrations/AnalyticsHandler';
+import { Car, Hit } from '@vroom-web/inv-search-networking';
+
+jest.mock('src/integrations/AnalyticsHandler');
+jest.mock('next/config', () => {
+  return () => {
+    return {
+      publicRuntimeConfig: {},
+    };
+  };
+});
+
+const source: Car = {
+  vin: 'JF2SJABC9JH572398',
+  bodyType: 'Wagon',
+  interiorPhotoUrl:
+    'https://i.fyu.se/group/0e8fnp23g97si8m0/ydbw2a5jmc78v/snaps/img_M3SHTBFAhwb5lErz.jpg',
+  diesel: 0,
+  leadFlagPhotoUrl:
+    'https://i.fyu.se/group/0e8fnp23g97si8m0/ydbw2a5jmc78v/snaps/img_32pgVhc6ST9ILieY.jpg',
+  listingPrice: 19080,
+  color: 'Red',
+  year: 2018,
+  leadFlagPhotoUrlHiRes:
+    'https://i.fyu.se/group/0e8fnp23g97si8m0/ydbw2a5jmc78v/snaps/img_32pgVhc6ST9ILieY.jpg',
+  subjectLine: '2018 SUBARU FORESTER',
+  warrantyRemaining: '11 months or 5,480 miles',
+  miles: 30520,
+  interiorPhotoUrlHiRes:
+    'https://i.fyu.se/group/0e8fnp23g97si8m0/ydbw2a5jmc78v/snaps/img_M3SHTBFAhwb5lErz.jpg',
+  dvd: 0,
+  transmission: 'Automatic',
+  trim: '2.5i',
+  engine: '2.5L H4 170hp 174ft. lbs.',
+  hiresPhotos: [],
+  warranty: 0,
+  model: 'Forester',
+  modelSlug: 'forester',
+  extColor: 'Red',
+  text:
+    '2018 SUBARU FORESTER JF2SJABC9JH572398 10418659 572398 JH572398 Red Red Sedan Wagon    ',
+  engId: 2,
+  bodyId: 2043,
+  make: 'Subaru',
+  makeSlug: 'subaru',
+  vehicleType: 'Sedan',
+  doorCount: 4,
+  roof: 1,
+  nav: 0,
+  warrantyOriginal: '36 months or 36,000 miles',
+  driveType: 'AWD',
+  intColor: 'Gray',
+  cylinders: 4,
+  awd: 0,
+  fuelType: 'Gasoline',
+  leadPhotoUrlHiRes:
+    'https://i.fyu.se/group/0e8fnp23g97si8m0/ydbw2a5jmc78v/snaps/img_32pgVhc6ST9ILieY.jpg',
+  leadPhotoUrl:
+    'https://i.fyu.se/group/0e8fnp23g97si8m0/ydbw2a5jmc78v/snaps/img_32pgVhc6ST9ILieY.jpg',
+  style: '',
+  optionalFeatures: 'Wheel Locks,All-Weather Floor Mats,Roof Rack',
+  zone: 'R - Retrieve Unit',
+  zoneID: 0,
+  soldStatus: 0,
+  otherPhotos: null,
+  defectPhotos: null,
+  ownerCount: 1,
+  cityMpg: 0,
+  highwayMpg: 0,
+  combinedMpg: 0,
+  inventoryId: 10418659,
+  fyusionId: '',
+  frontTrackWidth: 60.9,
+  rearTrackWidth: 61.1,
+  wheelBase: 103.9,
+  width: 80.5,
+  length: 181.5,
+  groundClearance: 8.7,
+  height: 66.4,
+  stockLeadFlagPhotoUrl:
+    'https://i.fuelapi.com/d1b3bc64dbc64d5eb2c5ec581ad2e47e/27017/2/4/color_1280_032/MY2018/12163/12163_cc1280_032_M1Y.jpg',
+  hasStockPhotos: false,
+  consignmentPartnerId: '',
+  geolocation: '',
+  location: '',
+};
+
+describe('Similar Vehicles View Model', () => {
+  describe('getCars', () => {
+    const store = new InventoryStore();
+    const analyticsHandler = new AnalyticsHandler();
+    const viewModel = new SimilarVehiclesViewModel(store, analyticsHandler);
+
+    test('getCars when null similar cars', () => {
+      expect(viewModel.getCars()).toEqual([]);
+    });
+
+    test('getCars when 0 similar cars', () => {
+      store.similar = [];
+      expect(viewModel.getCars()).toEqual([]);
+    });
+
+    test('getCars when similar cars > 0, should return ', async () => {
+      const source: Car = {
+        vin: 'JF2SJABC9JH572398',
+        bodyType: 'Wagon',
+        interiorPhotoUrl:
+          'https://i.fyu.se/group/0e8fnp23g97si8m0/ydbw2a5jmc78v/snaps/img_M3SHTBFAhwb5lErz.jpg',
+        diesel: 0,
+        leadFlagPhotoUrl:
+          'https://i.fyu.se/group/0e8fnp23g97si8m0/ydbw2a5jmc78v/snaps/img_32pgVhc6ST9ILieY.jpg',
+        listingPrice: 19080,
+        color: 'Red',
+        year: 2018,
+        leadFlagPhotoUrlHiRes:
+          'https://i.fyu.se/group/0e8fnp23g97si8m0/ydbw2a5jmc78v/snaps/img_32pgVhc6ST9ILieY.jpg',
+        subjectLine: '2018 SUBARU FORESTER',
+        warrantyRemaining: '11 months or 5,480 miles',
+        miles: 30520,
+        interiorPhotoUrlHiRes:
+          'https://i.fyu.se/group/0e8fnp23g97si8m0/ydbw2a5jmc78v/snaps/img_M3SHTBFAhwb5lErz.jpg',
+        dvd: 0,
+        transmission: 'Automatic',
+        trim: '2.5i',
+        engine: '2.5L H4 170hp 174ft. lbs.',
+        hiresPhotos: [],
+        warranty: 0,
+        model: 'Forester',
+        modelSlug: 'forester',
+        extColor: 'Red',
+        text:
+          '2018 SUBARU FORESTER JF2SJABC9JH572398 10418659 572398 JH572398 Red Red Sedan Wagon    ',
+        engId: 2,
+        bodyId: 2043,
+        make: 'Subaru',
+        makeSlug: 'subaru',
+        vehicleType: 'Sedan',
+        doorCount: 4,
+        roof: 1,
+        nav: 0,
+        warrantyOriginal: '36 months or 36,000 miles',
+        driveType: 'AWD',
+        intColor: 'Gray',
+        cylinders: 4,
+        awd: 0,
+        fuelType: 'Gasoline',
+        leadPhotoUrlHiRes:
+          'https://i.fyu.se/group/0e8fnp23g97si8m0/ydbw2a5jmc78v/snaps/img_32pgVhc6ST9ILieY.jpg',
+        leadPhotoUrl:
+          'https://i.fyu.se/group/0e8fnp23g97si8m0/ydbw2a5jmc78v/snaps/img_32pgVhc6ST9ILieY.jpg',
+        style: '',
+        optionalFeatures: 'Wheel Locks,All-Weather Floor Mats,Roof Rack',
+        zone: 'R - Retrieve Unit',
+        zoneID: 0,
+        soldStatus: 0,
+        otherPhotos: null,
+        defectPhotos: null,
+        ownerCount: 1,
+        cityMpg: 0,
+        highwayMpg: 0,
+        combinedMpg: 0,
+        inventoryId: 10418659,
+        fyusionId: '',
+        frontTrackWidth: 60.9,
+        rearTrackWidth: 61.1,
+        wheelBase: 103.9,
+        width: 80.5,
+        length: 181.5,
+        groundClearance: 8.7,
+        height: 66.4,
+        stockLeadFlagPhotoUrl:
+          'https://i.fuelapi.com/d1b3bc64dbc64d5eb2c5ec581ad2e47e/27017/2/4/color_1280_032/MY2018/12163/12163_cc1280_032_M1Y.jpg',
+        hasStockPhotos: false,
+        consignmentPartnerId: '',
+        geolocation: '',
+        location: '',
+      };
+      const similar: Hit[] = [
+        {
+          _source: source,
+        },
+      ];
+      const expected: Car[] = [source];
+      store.similar = similar;
+      expect(viewModel.getCars()).toEqual(expected);
+    });
+
+    test('getCars when similar cars > 4, should only return 4 cars', async () => {
+      const similar: Hit[] = Array(7).fill({
+        _source: source,
+      });
+      store.similar = similar;
+
+      const expected: Car[] = Array(4).fill(source);
+      expect(viewModel.getCars()).toEqual(expected);
+    });
+  });
+});
