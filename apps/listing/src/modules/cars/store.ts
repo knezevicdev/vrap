@@ -195,23 +195,13 @@ export const getTransmissionRequestData = (
 export const getPostInventoryRequestDataFromFilterData = (
   filtersData?: FiltersData,
   geoLocationSortDefaultVariant?: boolean,
-  isTitleQAPass?: boolean,
   geo?: Coordinates
 ): PostInventoryRequestData => {
-  let requestData = {};
-
-  if (isTitleQAPass) {
-    requestData = {
-      isTitleQAPass: isTitleQAPass,
-    };
-  }
-
   if (!filtersData) {
     if (geoLocationSortDefaultVariant || !geo) {
-      return requestData;
+      return {};
     }
     return {
-      ...requestData,
       sortby: 'geo',
       geo: {
         lat: `${geo.latitude}`,
@@ -232,7 +222,6 @@ export const getPostInventoryRequestDataFromFilterData = (
   const transmissionid = getTransmissionRequestData(filtersData);
 
   return {
-    ...requestData,
     bodytype,
     color,
     drivetype,
@@ -320,14 +309,14 @@ export class CarsStore {
       this.inventoryStatus = Status.FETCHING;
       const postInventoryRequestDataFromFiltersData = getPostInventoryRequestDataFromFilterData(
         this.filtersData,
-        this.geoLocationSortDefaultVariant,
-        this.isTitleQAPass
+        this.geoLocationSortDefaultVariant
       );
       const inventoryRequestData: PostInventoryRequestData = {
         ...postInventoryRequestDataFromFiltersData,
         fulldetails: false,
         limit: INVENTORY_CARDS_PER_PAGE,
         source: `${publicRuntimeConfig.NAME}-${publicRuntimeConfig.VERSION}`,
+        isTitleQAPass: this.isTitleQAPass,
       };
 
       const inventoryResponse = await this.invSearchNetworker.postInventory(
@@ -350,12 +339,12 @@ export class CarsStore {
     try {
       this.popularCarsStatus = Status.FETCHING;
       const popularCarsRequestData = {
-        isTitleQAPass: this.isTitleQAPass,
         fulldetails: false,
         limit: POPULAR_CAR_LIMIT,
         sortdirection: 'asc',
         'sold-status': SoldStatus.FOR_SALE,
         source: `${publicRuntimeConfig.NAME}-${publicRuntimeConfig.VERSION}`,
+        isTitleQAPass: this.isTitleQAPass,
       };
       const inventoryResponse = await this.invSearchNetworker.postInventory(
         popularCarsRequestData

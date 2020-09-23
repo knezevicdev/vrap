@@ -435,7 +435,6 @@ CarsPage.getInitialProps = async (context: NextPageContext): Promise<Props> => {
   const postInventoryRequestDataFromFiltersData = getPostInventoryRequestDataFromFilterData(
     filtersData,
     geoLocationSortDefaultVariant,
-    titleQuery,
     geo
   );
 
@@ -444,6 +443,7 @@ CarsPage.getInitialProps = async (context: NextPageContext): Promise<Props> => {
     fulldetails: false,
     limit: INVENTORY_CARDS_PER_PAGE,
     source: `${NAME}-${VERSION}`,
+    isTitleQAPass: titleQuery,
   };
 
   const carsStart = new Date().getTime();

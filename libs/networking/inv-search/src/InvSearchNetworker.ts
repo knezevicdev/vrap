@@ -81,7 +81,6 @@ export default class InvSearchNetworker implements InvSearchNetworking {
       url: url,
       data: data,
     });
-
     const requestCached = cache.get(request);
 
     if (isServer && requestCached) {
