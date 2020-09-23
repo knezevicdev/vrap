@@ -240,9 +240,9 @@ export const getPostInventoryRequestDataFromFilterData = (
 
 export class CarsStore {
   private readonly invSearchNetworker: InvSearchNetworker;
+  private readonly isTitleQAPass?: boolean;
 
   readonly attributionQueryString: string = '';
-  readonly isTitleQAPass: boolean | undefined;
   readonly geoLocationSortDefaultVariant: boolean = true;
   readonly inventoryCardsPerPage: number = INVENTORY_CARDS_PER_PAGE;
   readonly bodyTypes: BodyType[] = bodyTypes;
