@@ -329,7 +329,7 @@ export class CarsStore {
         limit: INVENTORY_CARDS_PER_PAGE,
         source: `${publicRuntimeConfig.NAME}-${publicRuntimeConfig.VERSION}`,
       };
-      console.log(inventoryRequestData);
+
       const inventoryResponse = await this.invSearchNetworker.postInventory(
         inventoryRequestData
       );
@@ -350,6 +350,7 @@ export class CarsStore {
     try {
       this.popularCarsStatus = Status.FETCHING;
       const popularCarsRequestData = {
+        isTitleQAPass: this.isTitleQAPass,
         fulldetails: false,
         limit: POPULAR_CAR_LIMIT,
         sortdirection: 'asc',

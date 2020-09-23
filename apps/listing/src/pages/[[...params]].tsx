@@ -365,6 +365,9 @@ CarsPage.getInitialProps = async (context: NextPageContext): Promise<Props> => {
   const url = typeof asPath === 'string' ? (asPath as string) : '';
   const filtersData = getFiltersDataFromUrl(url);
 
+  const { isTitleQAPass } = query;
+  const titleQuery = isTitleQAPass === 'true' ? true : undefined;
+
   const makesRequestData: PostInventoryRequestData = {
     fulldetails: false,
     limit: 1,
@@ -373,6 +376,7 @@ CarsPage.getInitialProps = async (context: NextPageContext): Promise<Props> => {
   };
 
   const popularCarsRequestData = {
+    isTitleQAPass: titleQuery,
     fulldetails: false,
     limit: POPULAR_CAR_LIMIT,
     sortdirection: 'asc',
@@ -427,9 +431,6 @@ CarsPage.getInitialProps = async (context: NextPageContext): Promise<Props> => {
     experiments,
     query
   );
-
-  const { isTitleQAPass } = query;
-  const titleQuery = isTitleQAPass === 'true' ? true : undefined;
 
   const postInventoryRequestDataFromFiltersData = getPostInventoryRequestDataFromFilterData(
     filtersData,
