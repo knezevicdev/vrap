@@ -91,6 +91,7 @@ const getTitleQuery = (
   filtersData?: FiltersData,
   titleQuery?: boolean
 ): string => {
+  if (!titleQuery) return '';
   const query = `isTitleQAPass=${titleQuery}`;
   if (!filtersData || JSON.stringify(filtersData) === '{}') {
     return `?${query}`;

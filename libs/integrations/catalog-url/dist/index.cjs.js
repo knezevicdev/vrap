@@ -448,6 +448,7 @@ var getQuery = function getQuery(filtersData) {
 };
 
 var getTitleQuery = function getTitleQuery(filtersData, titleQuery) {
+  if (!titleQuery) return '';
   var query = "isTitleQAPass=".concat(titleQuery);
 
   if (!filtersData || JSON.stringify(filtersData) === '{}') {
