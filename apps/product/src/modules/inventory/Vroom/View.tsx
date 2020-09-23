@@ -8,12 +8,14 @@ import React, { useEffect } from 'react';
 
 import Breadcrumbs from './components/Breadcrumbs';
 import CarDetails from './components/CarDetails';
+import Favorites from './components/Favorites';
 import Features from './components/Features';
 import Gallery from './components/Gallery/';
 import LegalFooter from './components/LegalFooter';
 import NeedHelp from './components/NeedHelp';
 import NotifyMe from './components/NotifyMe';
 import PeaceOfMind from './components/PeaceOfMind';
+import SafetyAndQuality from './components/SafetyAndQuality';
 import SalesContact from './components/SalesContact';
 import SimilarVehicles from './components/SimilarVehicles';
 import StartPurchase from './components/StartPurchase';
@@ -33,12 +35,15 @@ const InventoryViewContainer = styled('div')(() => ({
 }));
 
 const StickyBottom = styled('div')(({ theme }) => ({
+  display: 'flex',
+  flexDirection: 'column',
   position: 'sticky',
   bottom: 0,
   zIndex: theme.zIndex.appBar,
   padding: theme.spacing(3),
   background: theme.palette.background.paper,
   borderTop: `solid 1px ${theme.palette.grey.A100}`,
+  alignItems: 'center',
 }));
 //#endregion
 
@@ -70,6 +75,7 @@ const InventoryView: React.FC<Props> = (props) => {
             <SalesContact />
             <CarDetails />
             <Features />
+            <SafetyAndQuality />
             <PeaceOfMind />
           </>
         )}
@@ -81,6 +87,7 @@ const InventoryView: React.FC<Props> = (props) => {
       {xsDown && viewModel.ready() && (
         <StickyBottom>
           {viewModel.isAvailableSoon() ? <NotifyMe /> : <StartPurchase />}
+          <Favorites />
         </StickyBottom>
       )}
     </>

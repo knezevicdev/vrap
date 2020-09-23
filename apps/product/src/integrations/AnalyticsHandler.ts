@@ -20,12 +20,24 @@ export interface Product {
   year: number;
   defectPhotos?: boolean;
   hasStockPhotos?: boolean;
+  spincarSpinUrl?: string | null;
 }
 
 class AnalyticsHandler extends BaseAnalyticsHandler {
+  trackProductListViewed(products: Product[]): void {
+    const event = 'Product List Viewed';
+    const category = 'Product';
+    const properties = {
+      category,
+      products,
+      nonInteraction: 1,
+    };
+    this.track(event, properties);
+  }
+
   trackProductClicked(product: Product): void {
     const event = 'Product Clicked';
-    const category = 'Catalog';
+    const category = 'Product';
     const properties = { ...product, category };
     this.track(event, properties);
   }

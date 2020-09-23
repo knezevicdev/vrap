@@ -4,6 +4,7 @@ import { Typography } from '@vroom-web/ui';
 import { observer } from 'mobx-react';
 import React from 'react';
 
+import Favorites from '../Favorites';
 import NotifyMe from '../NotifyMe';
 import StartPurchase from '../StartPurchase';
 import StatusBanner from '../StatusBanner';
@@ -62,6 +63,12 @@ const Divider = styled('div')(({ theme }) => ({
   height: '48px',
 }));
 
+const DesktopButtonContainer = styled('div')(() => ({
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'center',
+}));
+
 interface Props {
   viewModel: ViewModel;
 }
@@ -86,9 +93,15 @@ const VehicleHeaderView: React.FC<Props> = (props) => {
         </LeftContent>
         <RightContent>
           <Price variant="body1">{summary.price}</Price>
-          {!xsDown && <Divider />}
-          {!xsDown &&
-            (viewModel.isAvailableSoon() ? <NotifyMe /> : <StartPurchase />)}
+          {!xsDown && (
+            <>
+              <Divider />
+              <DesktopButtonContainer>
+                {viewModel.isAvailableSoon() ? <NotifyMe /> : <StartPurchase />}
+                <Favorites />
+              </DesktopButtonContainer>
+            </>
+          )}
         </RightContent>
       </VehicleHeaderContainerContent>
     </VehicleHeaderContainer>

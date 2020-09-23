@@ -6,11 +6,9 @@ import { NotifyMeStore } from './store';
 import { InventoryStore } from 'src/modules/inventory/store';
 
 interface LoggedIn {
-  header1: string;
-  header2: string;
-  bodyTitle: string;
+  header: string;
   body: string;
-  checkboxText: string[];
+  checkboxText: string;
   buttonText: string;
   error: {
     buttonText: string;
@@ -31,9 +29,9 @@ class NotifyMeViewModel {
   private notifyMeNetworker: NotifyMeNetworker;
   readonly notifyMeButton: string = 'Notify Me';
   readonly notifiedButton: string =
-    'You’ll recieve an email when this vehicle is available.';
+    'You’ll recieve a notification when this vehicle is available.';
   readonly dialogTitle: string = 'Notify Me When Available';
-  readonly dialogTitleSuccess: string = 'We’ll Email You Soon';
+  readonly dialogTitleSuccess: string = 'We’ll Notify You Soon';
   readonly dialogBodySuccess: string =
     'You’ll receive an email from availablenow@vroom.com as soon as this vehicle can be purchased. The email will be sent to ';
   readonly dialogBodyLoggedOut: string =
@@ -42,16 +40,12 @@ class NotifyMeViewModel {
   readonly logInButton: string = 'LOG IN';
 
   readonly loggedIn: LoggedIn = {
-    header1: '',
-    header2: 'Sign up below to be emailed when this vehicle is available.',
-    bodyTitle: "We'll email you at:",
+    header: 'Sign up below to be notifed when this vehicle is available.',
     body:
       'Vroom will notify everyone that has expressed an interest in this vehicle at the same time, at which point the vehicle can be reserved by ANY Vroom customer by placing a deposit on the vehicle.',
-    checkboxText: [
-      'Signing up to be notified when this vehicle is available ',
-      'DOES NOT reserve it for you.',
-    ],
-    buttonText: 'EMAIL ME WHEN I CAN BUY THIS VEHICLE',
+    checkboxText:
+      'Signing up to be notified when this vehicle is available does not reserve it for you',
+    buttonText: 'NOTIFY ME WHEN AVAILABLE',
     error: {
       buttonText: 'TRY AGAIN',
       headerText: 'An Error Occurred',
@@ -68,7 +62,6 @@ class NotifyMeViewModel {
     this.inventoryStore = inventoryStore;
     this.notifyMeStore = notifyMeStore;
     this.notifyMeNetworker = notifyMeNetworker;
-    this.loggedIn.header1 = `We’re working to get this ${this.getYearMakeModel()} inspected, photographed and ready for purchase.`;
   }
 
   getYearMakeModel(): string {
@@ -78,11 +71,7 @@ class NotifyMeViewModel {
 
   handleMount(): void {
     this.notifyMeStore.initClientSide();
-    this.setSubscription();
-  }
-
-  getVehicleInfo(): void {
-    console.log(this.inventoryStore.vehicle._source.vin);
+    this.isLoggedIn() ? this.setSubscription() : this.setNotifyMeLoading(false);
   }
 
   handleClick(): void {
@@ -117,11 +106,9 @@ class NotifyMeViewModel {
         element.filters.includes(vin)
       );
       if (found !== undefined) {
-        console.log('hello');
         this.setSuccessful(true);
       }
     } catch (err) {
-      console.log(err);
       this.setNotifyMeLoading(false);
     }
   }
@@ -166,7 +153,7 @@ class NotifyMeViewModel {
     return {
       isSuccessful,
       dialogTitle: isSuccessful ? this.dialogTitleSuccess : this.dialogTitle,
-      body: isSuccessful ? this.dialogBodySuccess : this.loggedIn.header1,
+      body: isSuccessful ? this.dialogBodySuccess : this.loggedIn.header,
       button: isSuccessful ? this.notifiedButton : this.notifyMeButton,
     };
   }
@@ -222,11 +209,7 @@ class NotifyMeViewModel {
   }
 
   isLoggedIn(): boolean {
-    return this.notifyMeStore.email !== undefined;
-  }
-
-  getUserEmail(): string | undefined {
-    return this.notifyMeStore.email;
+    return this.notifyMeStore.accessToken !== undefined;
   }
 
   getAccessToken(): string | undefined {

@@ -1,6 +1,6 @@
 {
   "name": "@vroom-web/home",
-  "version": "1.4.6",
+  "version": "1.4.8",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -31,6 +31,7 @@
     "mobx": "^5.15.4",
     "mobx-react": "^6.1.8",
     "next": "^9.5.1",
+    "node-cache": "^5.1.2",
     "nookies": "^2.3.0",
     "qs": "^6.9.1",
     "react": "^16.12.0",

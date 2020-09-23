@@ -9,6 +9,8 @@ export interface InvSearchNetworking {
     postInventory(data: PostInventoryRequestData): Promise<PostInventoryResponse>;
 }
 export default class InvSearchNetworker implements InvSearchNetworking {
+    private timeout;
+    private cacheTimeInSeconds;
     private readonly axiosInstance;
     private readonly hostUrl;
     constructor(hostUrl: string);
