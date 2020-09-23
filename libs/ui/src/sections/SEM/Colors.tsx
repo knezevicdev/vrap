@@ -49,7 +49,17 @@ const colors = [
     name: 'Firecracker Red',
     picture: {
       alt: 'Firecracker Red',
-      src: '/images/JeepColors/firecraker_red.png',
+      src: '/images/Hero-Jeep-image.png',
+      width: '113.5px',
+      height: '64px',
+      objectFit: 'cover',
+    },
+  },
+  {
+    name: 'Bikini Pearlcoat',
+    picture: {
+      alt: 'Bikini Pearlcoat',
+      src: '/images/JeepColors/Bikini Pearlcoat.png',
       width: '113.5px',
       height: '64px',
       objectFit: 'cover',
@@ -59,7 +69,7 @@ const colors = [
     name: 'Billet Silver Metallic',
     picture: {
       alt: 'Billet Silver Metallic',
-      src: '/images/JeepColors/billet_silver_metallic.png',
+      src: '/images/JeepColors/Billet Silver Metallic.png',
       width: '113.5px',
       height: '64px',
       objectFit: 'cover',
@@ -69,7 +79,7 @@ const colors = [
     name: 'Hellayella',
     picture: {
       alt: 'Hellayella',
-      src: '/images/JeepColors/hellayella.png',
+      src: '/images/JeepColors/Hellayella.png',
       width: '113.5px',
       height: '64px',
       objectFit: 'cover',
@@ -79,7 +89,7 @@ const colors = [
     name: 'Ocean Blue Metallic',
     picture: {
       alt: 'Ocean Blue Metallic',
-      src: '/images/JeepColors/ocean_blue_metallic.png',
+      src: '/images/JeepColors/Ocean Blue Metallic.png',
       width: '113.5px',
       height: '64px',
       objectFit: 'cover',
@@ -89,7 +99,7 @@ const colors = [
     name: 'Black',
     picture: {
       alt: 'Black',
-      src: '/images/JeepColors/black.png',
+      src: '/images/JeepColors/Black.png',
       width: '113.5px',
       height: '64px',
       objectFit: 'cover',
@@ -99,7 +109,7 @@ const colors = [
     name: 'Granite Crystal Metallic',
     picture: {
       alt: 'Granite Crystal Metallic',
-      src: '/images/JeepColors/granite_crystal_metallic.png',
+      src: '/images/JeepColors/Granite Crystal Metallic.png',
       width: '113.5px',
       height: '64px',
       objectFit: 'cover',
@@ -109,7 +119,7 @@ const colors = [
     name: 'Mojito!',
     picture: {
       alt: 'Mojito!',
-      src: '/images/JeepColors/mojito.png',
+      src: '/images/JeepColors/Mojito!.png',
       width: '113.5px',
       height: '64px',
       objectFit: 'cover',
@@ -119,7 +129,7 @@ const colors = [
     name: 'Bright White',
     picture: {
       alt: 'Bright White',
-      src: '/images/JeepColors/bright_white.png',
+      src: '/images/JeepColors/Bright White.png',
       width: '113.5px',
       height: '64px',
       objectFit: 'cover',
@@ -129,7 +139,7 @@ const colors = [
     name: 'Sting-Gray',
     picture: {
       alt: 'Sting-Gray',
-      src: '/images/JeepColors/sting_gray.png',
+      src: '/images/JeepColors/Sting-Gray.png',
       width: '113.5px',
       height: '64px',
       objectFit: 'cover',
@@ -139,7 +149,7 @@ const colors = [
     name: 'Punk’n Metallic',
     picture: {
       alt: 'Punk’n Metallic',
-      src: '/images/JeepColors/punk_metallic.png',
+      src: '/images/JeepColors/Punk’n Mettalic.png',
       width: '113.5px',
       height: '64px',
       objectFit: 'cover',
