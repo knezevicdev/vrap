@@ -20,6 +20,7 @@ export interface Product {
   year: number;
   defectPhotos?: boolean;
   hasStockPhotos?: boolean;
+  spincarSpinUrl?: string | null;
 }
 
 class AnalyticsHandler extends BaseAnalyticsHandler {

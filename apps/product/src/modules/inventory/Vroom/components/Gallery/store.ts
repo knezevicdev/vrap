@@ -4,6 +4,7 @@ import { createContext } from 'react';
 export enum GallerySelections {
   GENERAL = 'General Photos',
   DEFECTS = 'Imperfections',
+  THREE_SIXTY = '360\u00B0 View',
 }
 
 export class GalleryStore {

@@ -1,4 +1,5 @@
 import Box from '@material-ui/core/Box';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import MuiPaper from '@material-ui/core/Paper';
 import { styled, useTheme } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
@@ -41,6 +42,31 @@ const ImageGalleryContainer = styled('div')(({ theme }) => ({
   padding: theme.spacing(4),
   [theme.breakpoints.only('xs')]: {
     padding: theme.spacing(2),
+  },
+}));
+
+const IFrameContainer = styled('div')(() => ({
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  position: 'relative',
+  backgroundColor: '#041022',
+}));
+
+const StyledCircularProgress = styled(CircularProgress)(() => ({
+  position: 'absolute',
+  zIndex: 1,
+}));
+
+const SpincarIframe = styled('iframe')(({ theme }) => ({
+  margin: 0,
+  padding: 0,
+  border: 'none',
+  height: '60vh',
+  width: '100%',
+  zIndex: 2,
+  [theme.breakpoints.only('xs')]: {
+    height: '36vh',
   },
 }));
 
@@ -90,24 +116,35 @@ const GalleryView: React.FC<Props> = (props) => {
               variant="body1"
               fontWeight="fontWeightLight"
             >
-              <ImageGallery
-                ref={imageGalleryRef}
-                items={viewModel.getGalleryImages()}
-                showPlayButton={false}
-                showNav={!isMobile}
-                showThumbnails={viewModel.showThumbnails(isMobile)}
-                thumbnailPosition={viewModel.getThumbnailPosition(
-                  isMobile,
-                  fullscreen
-                )}
-                showFullscreenButton={!isMobile}
-                indexSeparator={viewModel.indexSeparator}
-                useBrowserFullscreen={false}
-                showIndex={viewModel.showIndex()}
-                onErrorImageURL={viewModel.defaultImage.src}
-                onScreenChange={handleFullscreen}
-                onClick={handleClick}
-              />
+              {viewModel.isSpincarView() ? (
+                <IFrameContainer>
+                  <SpincarIframe src={viewModel.getSpincarIframeUrl()}>
+                    {viewModel.iFrameNotSupported}
+                  </SpincarIframe>
+                  <StyledCircularProgress />
+                </IFrameContainer>
+              ) : (
+                <>
+                  <ImageGallery
+                    ref={imageGalleryRef}
+                    items={viewModel.getGalleryImages()}
+                    showPlayButton={false}
+                    showNav={!isMobile}
+                    showThumbnails={viewModel.showThumbnails(isMobile)}
+                    thumbnailPosition={viewModel.getThumbnailPosition(
+                      isMobile,
+                      fullscreen
+                    )}
+                    showFullscreenButton={!isMobile}
+                    indexSeparator={viewModel.indexSeparator}
+                    useBrowserFullscreen={false}
+                    showIndex={viewModel.showIndex()}
+                    onErrorImageURL={viewModel.defaultImage.src}
+                    onScreenChange={handleFullscreen}
+                    onClick={handleClick}
+                  />
+                </>
+              )}
             </Typography>
           </Box>
           {viewModel.showBanner() && (
