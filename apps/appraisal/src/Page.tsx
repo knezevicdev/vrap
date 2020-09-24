@@ -1,3 +1,5 @@
+import { StandardFooter } from '@vroom-web/footer-components';
+import { SimpleHeader } from '@vroom-web/header-components';
 import { styled } from '@material-ui/core/styles';
 import { Container } from '@vroom-web/ui';
 import Head from 'next/head';
