@@ -11,15 +11,16 @@
     "test:ci": "jest --ci"
   },
   "dependencies": {
+    "file-loader": "^6.1.0",
     "next": "^9.5.1",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
     "styled-components": "^5.2.0"
   },
   "devDependencies": {
-    "babel-plugin-styled-components": "^1.11.1",
     "@types/react": "^16.9.22",
     "@types/react-dom": "^16.9.5",
+    "babel-plugin-styled-components": "^1.11.1",
     "typescript": "^3.8.2"
   }
 }

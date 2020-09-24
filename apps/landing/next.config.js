@@ -12,7 +12,9 @@ const config = {
   basePath,
   distDir: `.next/${shortHash}`,
   generateBuildId: () => shortHash,
-  publicRuntimeConfig: {},
+  publicRuntimeConfig: {
+    BASE_PATH: basePath,
+  },
   serverRuntimeConfig: {},
   webpack: (config) => {
     config.module.rules.push({

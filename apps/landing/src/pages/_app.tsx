@@ -1,10 +1,11 @@
 import App from 'next/app';
+import getConfig from 'next/config';
 import React from 'react';
 import { createGlobalStyle, ThemeProvider } from 'styled-components';
 
-import CalibreRegular from '../fonts/Vroom/Calibre-Regular.woff2';
-import CalibreSemibold from '../fonts/Vroom/Calibre-Semibold.woff2';
-import VroomSans from '../fonts/Vroom/Vroom-Sans.woff2';
+const {
+  publicRuntimeConfig: { BASE_PATH },
+} = getConfig();
 
 interface ThemeProps {
   typography: {
@@ -32,17 +33,20 @@ const GlobalStyle = createGlobalStyle`
   @font-face {
     font-family: Calibre;
     font-weight: normal;
-    src: url(${CalibreRegular}) format('woff2');
+    src: url(${BASE_PATH}/fonts/Vroom/Calibre-Regular.woff2) format('woff2');
+    font-display: swap;
   }
   @font-face {
     font-family: Calibre;
     font-weight: 600;
-    src: url(${CalibreSemibold}) format('woff2');
+    src: url(${BASE_PATH}/fonts/Vroom/Calibre-Semibold.woff2) format('woff2');
+    font-display: swap;
   }
   @font-face {
     font-family: Vroom Sans;
     font-weight: normal;
-    src: url(${VroomSans}) format('woff2');
+    src: url(${BASE_PATH}/fonts/Vroom/Vroom-Sans.woff2) format('woff2');
+    font-display: swap;
   }
 `;
 
