@@ -12948,6 +12948,18 @@ rc-resize-observer@^0.2.0:
     rc-util "^5.0.0"
     resize-observer-polyfill "^1.5.1"
 
+rc-table@^7.9.10:
+  version "7.9.10"
+  resolved "https://registry.yarnpkg.com/rc-table/-/rc-table-7.9.10.tgz#efd5ad0e643a06eef2b0b7eb9f07bd55e0ff51b5"
+  integrity sha512-WtPBxYsBU/a5MIglilbMlVkiXkPKXpUM/CPCFaqA2veh1b7J40mbTGQmU8VT6S0FClkI5jm0QBtSp6LstPkOMQ==
+  dependencies:
+    "@babel/runtime" "^7.10.1"
+    classnames "^2.2.5"
+    raf "^3.4.1"
+    rc-resize-observer "^0.2.0"
+    rc-util "^5.0.4"
+    shallowequal "^1.1.0"
+
 rc-table@^7.9.9:
   version "7.9.9"
   resolved "https://registry.yarnpkg.com/rc-table/-/rc-table-7.9.9.tgz#6f1203a6ea82507f11f1a0b56e86862193f0ebba"
