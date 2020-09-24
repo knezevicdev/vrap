@@ -29,6 +29,7 @@ module.exports = {
   },
   serverRuntimeConfig: {
     // Will only be available on the server side
+    SANTANDER_SEGMENT_WRITE_KEY: process.env.SANTANDER_SEGMENT_WRITE_KEY,
     SEGMENT_WRITE_KEY: process.env.SEGMENT_WRITE_KEY,
   },
   /* Custom webpack configuration. */

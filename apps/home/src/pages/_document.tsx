@@ -58,7 +58,10 @@ class VroomDocument extends Document<Props> {
   }
 
   render(): JSX.Element {
-    const segmentWriteKey = serverRuntimeConfig.SEGMENT_WRITE_KEY;
+    const segmentWriteKey =
+      this.props.brand === Brand.SANTANDER
+        ? serverRuntimeConfig.SANTANDER_SEGMENT_WRITE_KEY
+        : serverRuntimeConfig.SEGMENT_WRITE_KEY;
 
     return (
       <Html lang="en">
