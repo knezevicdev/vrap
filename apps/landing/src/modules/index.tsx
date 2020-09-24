@@ -3,6 +3,7 @@ import styled from 'styled-components';
 
 import { Colors } from './sections/Colors';
 import { Hero } from './sections/Hero';
+import { Overview } from './sections/Overview';
 
 const Page = styled.div`
   display: flex;
@@ -16,10 +17,10 @@ const Container = styled.div`
   margin-right: auto;
 `;
 
-// const Space = styled.div`
-//   min-height: 64px;
-//   max-height: 64px;
-// `;
+const Space = styled.div`
+  min-height: 64px;
+  max-height: 64px;
+`;
 
 const Divider = styled.div`
   display: flex;
@@ -46,6 +47,8 @@ const Landing: React.FC = () => {
       <Container>
         <Hero />
         <Divider />
+        <Overview />
+        <Space />
         <Colors />
       </Container>
     </Page>
