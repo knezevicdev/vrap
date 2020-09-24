@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 import { Colors } from './sections/Colors';
+import { Header } from './sections/Header';
 import { Hero } from './sections/Hero';
 import { Overview } from './sections/Overview';
 
@@ -44,6 +45,7 @@ const Divider = styled.div`
 const Landing: React.FC = () => {
   return (
     <Page>
+      <Header />
       <Container>
         <Hero />
         <Divider />
