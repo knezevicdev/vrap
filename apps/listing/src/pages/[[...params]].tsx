@@ -369,6 +369,9 @@ CarsPage.getInitialProps = async (context: NextPageContext): Promise<Props> => {
   const url = typeof asPath === 'string' ? (asPath as string) : '';
   const filtersData = getFiltersDataFromUrl(url);
 
+  const { isTitleQAPass } = query;
+  const titleQuery = isTitleQAPass === 'true' ? true : undefined;
+
   const makesRequestData: PostInventoryRequestData = {
     fulldetails: false,
     limit: 1,
@@ -382,6 +385,7 @@ CarsPage.getInitialProps = async (context: NextPageContext): Promise<Props> => {
     sortdirection: 'asc',
     'sold-status': SoldStatus.FOR_SALE,
     source: `${NAME}-${VERSION}`,
+    isTitleQAPass: titleQuery,
   };
 
   const makesStart = new Date().getTime();
@@ -405,9 +409,11 @@ CarsPage.getInitialProps = async (context: NextPageContext): Promise<Props> => {
     fulldetails: false,
     limit: INVENTORY_CARDS_PER_PAGE,
     source: `${NAME}-${VERSION}`,
+    isTitleQAPass: titleQuery,
   };
 
   const carsStart = new Date().getTime();
+
   const carsR = await invSearchNetworker.postInventory(inventoryRequestData);
   const carsStatus = Status.SUCCESS;
   const carsElapsed = new Date().getTime() - carsStart;
@@ -445,6 +451,7 @@ CarsPage.getInitialProps = async (context: NextPageContext): Promise<Props> => {
     cars,
     popularCars,
     filtersData,
+    titleQuery,
   };
 
   const hasInventory = cars ? cars.hits.total !== 0 : false;

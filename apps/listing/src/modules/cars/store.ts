@@ -47,6 +47,7 @@ export interface InitialCarsStoreState {
   cars: Inventory | undefined;
   popularCars: Inventory | undefined;
   filtersData: FiltersData | undefined;
+  titleQuery?: boolean;
 }
 
 export const getBodyTypeRequestData = (
@@ -262,6 +263,7 @@ export const getPostInventoryRequestDataFromFilterData = (
 
 export class CarsStore {
   private readonly invSearchNetworker: InvSearchNetworker;
+  private readonly isTitleQAPass?: boolean;
 
   readonly attributionQueryString: string = '';
   readonly geoLocationSortDefaultVariant: boolean = true;
@@ -311,6 +313,7 @@ export class CarsStore {
       this.inventoryData = initialState.cars;
       this.popularCarsData = initialState.popularCars;
       this.filtersData = initialState.filtersData;
+      this.isTitleQAPass = initialState.titleQuery;
     }
   }
 
@@ -354,7 +357,9 @@ export class CarsStore {
         fulldetails: false,
         limit: INVENTORY_CARDS_PER_PAGE,
         source: `${publicRuntimeConfig.NAME}-${publicRuntimeConfig.VERSION}`,
+        isTitleQAPass: this.isTitleQAPass,
       };
+
       const inventoryResponse = await this.invSearchNetworker.postInventory(
         inventoryRequestData
       );
@@ -380,6 +385,7 @@ export class CarsStore {
         sortdirection: 'asc',
         'sold-status': SoldStatus.FOR_SALE,
         source: `${publicRuntimeConfig.NAME}-${publicRuntimeConfig.VERSION}`,
+        isTitleQAPass: this.isTitleQAPass,
       };
       const inventoryResponse = await this.invSearchNetworker.postInventory(
         popularCarsRequestData
@@ -412,6 +418,7 @@ export class CarsStore {
     const as = getUrlFromFiltersData(filtersDataToUse, {
       addFiltersQueryParam: true,
       ignoreParamsBasePath: true,
+      titleQuery: this.isTitleQAPass,
     });
 
     // FIT-583

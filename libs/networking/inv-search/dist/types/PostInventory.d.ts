@@ -41,6 +41,7 @@ export interface PostInventoryRequestData {
         lat: string;
         long: string;
     };
+    isTitleQAPass?: boolean;
 }
 export declare const postInventoryResponseSchema: import("yup").ObjectSchema<InventoryResponse>;
 export declare type PostInventoryResponse = InventoryResponse;
