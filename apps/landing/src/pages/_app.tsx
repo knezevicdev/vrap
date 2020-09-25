@@ -30,6 +30,10 @@ const theme: ThemeProps = {
 };
 
 const GlobalStyle = createGlobalStyle`
+  body {
+    margin: 0;
+  }
+
   @font-face {
     font-family: Calibre;
     font-weight: normal;
