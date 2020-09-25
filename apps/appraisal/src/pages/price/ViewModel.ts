@@ -12,8 +12,8 @@ class PriceViewModel {
   readonly store: PriceStore;
 
   constructor(store: PriceStore) {
-    this.store = store;
-    this.priceStatus = PriceStatus.INITIAL;
+    this.priceStatus = store.PriceStatus;
+    this.price = store.price;
   }
 }
 
