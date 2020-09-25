@@ -4,9 +4,8 @@ import View from './View';
 import ViewModel from './ViewModel';
 
 const InitialPrice: React.FC = () => {
-  // const viewModel = new ViewModel(store);
-  // return <View viewModel={viewModel} />;
-  return <View/>
+  const viewModel = new ViewModel();
+  return <View viewModel={viewModel} />;
 };
 
 export default InitialPrice;
