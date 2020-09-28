@@ -67,6 +67,7 @@ const DesktopButtonContainer = styled('div')(() => ({
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'center',
+  width: '100%',
 }));
 
 interface Props {
