@@ -2,16 +2,15 @@ import React from 'react';
 
 import InitialPrice from './components/InitialPrice';
 import NextSteps from './components/NextSteps';
-import ViewModel, { PriceStatus } from './ViewModel';
-import Grid from '@material-ui/core/Grid';
-import { Container, Typography } from '@vroom-web/ui';
-import { styled, useTheme } from '@material-ui/core/styles';
+import PriceViewModel, { PriceStatus } from './ViewModel';
+import { Container } from '@vroom-web/ui';
+import { styled } from '@material-ui/core/styles';
 
 interface Props {
-  viewModel: ViewModel;
+  viewModel: PriceViewModel;
 }
 
-const BackgroundContainer = styled(Container)(({ theme }) => ({
+const BackgroundContainer = styled(Container)(() => ({
 }));
 
 const PriceContainer = styled('div')(() => ({

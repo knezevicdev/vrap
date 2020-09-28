@@ -1,5 +1,5 @@
 import { ServerStyleSheets } from '@material-ui/core/styles';
-import { Brand, UISnippet } from '@vroom-web/ui';
+import { UISnippet } from '@vroom-web/ui';
 import getConfig from 'next/config';
 import { AppType, Enhancer, RenderPage } from 'next/dist/next-server/lib/utils';
 import Document, {
@@ -12,10 +12,9 @@ import Document, {
 } from 'next/document';
 import React from 'react';
 
-const { serverRuntimeConfig, publicRuntimeConfig } = getConfig();
+const { publicRuntimeConfig } = getConfig();
 
 interface Props extends DocumentInitialProps {
-  brand: Brand;
 }
 
 class VroomDocument extends Document<Props> {

@@ -2,15 +2,18 @@ import React from 'react';
 import View from './View';
 import ViewModel from './ViewModel';
 import getConfig from 'next/config';
-import { PriceStore, getInitialPriceStoreState } from './store';
+import { NextPage } from 'next';
+import { PriceStore, PriceStoreState, getInitialPriceStoreState } from './store';
 import { SimpleHeader } from '@vroom-web/header-components';
 import { StandardFooter } from '@vroom-web/footer-components';
 
 const { publicRuntimeConfig } = getConfig();
 
-const Price: NextPage<Props> = ({
-  initialState,
-}) => {
+interface Props {
+  initialState: PriceStoreState;
+}
+
+const Price: NextPage = () => {
   const gearboxPrivateUrl = publicRuntimeConfig.GEARBOX_PRIVATE_URL;
 
   const store = new PriceStore();
@@ -26,8 +29,10 @@ const Price: NextPage<Props> = ({
 };
 
 Price.getInitialProps = async ({ query }): Promise<Props> => {
-  const offerId = query.offerId as string;
-  const initialState = await getInitialDeliveryOrderStoreState(offerId);
+  // e93bafe0b739241f875d1e3c35416fff
+  const priceId = query.priceId as string;
+  console.log({priceId});
+  const initialState = await getInitialPriceStoreState(priceId);
 
   return { initialState };
 };

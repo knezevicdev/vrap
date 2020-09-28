@@ -1,8 +1,9 @@
 import React from 'react';
 import { styled } from '@material-ui/core/styles';
 import { Container, Button } from '@vroom-web/ui';
+import PriceViewModel from './ViewModel';
 
-const StyledContainer = styled(Container)(({ theme }) => ({
+const StyledContainer = styled(Container)(() => ({
   backgroundColor: 'white',
 }));
 
@@ -29,7 +30,7 @@ const StyledButton = styled(Button)(({ theme }) => ({
 }));
 
 interface Props {
-  viewModel: ViewModel;
+  viewModel: PriceViewModel;
 }
 
 const handleButtonClick = (

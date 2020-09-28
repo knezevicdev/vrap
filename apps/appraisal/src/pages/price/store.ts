@@ -1,31 +1,39 @@
 import { observable, decorate } from 'mobx';
 import { PriceStatus } from './ViewModel';
-import { Networker, Status } from '../networking/Networker';
+import { Networker } from 'src/networking/Networker';
 
 export interface PriceStoreState {
   priceStatus: PriceStatus;
   price: number;
 }
 
-export async function getInitialPriceStoreState(): Promise<PriceStoreState> {
-  const initState: PriceStoreState = {
-    isAvailable: PriceStatus.INITIAL
+export async function getInitialPriceStoreState(priceId: string): Promise<PriceStoreState> {
+  const initialState: PriceStoreState = {
+    priceStatus: PriceStatus.INITIAL,
+    price: 0
   };
 
   const networker = new Networker();
   try {
-    const response = await networker.getOfferDetails(vin);
-    initialState.priceStatus = response.priceStatus;
-    initialState.price = response.price;
+    const response = await networker.getOfferDetails(priceId);
+    const prices: any = response.data;
+    const price = prices[0];
+
+    console.log({price});
+    initialState.priceStatus = price.offer_status;
+    initialState.price = price.Price__c;
   } catch (err) {
-    initialState.priceStatus = 'initial';
-    initialState.price = 1000;
+    initialState.priceStatus = PriceStatus.INITIAL;
+    initialState.price = 0;
   }
 
-  return initState;
+  return initialState;
 }
 
 export class PriceStore {
+  priceStatus = PriceStatus.INITIAL;
+  price = 0;
+
   constructor(initialState?: PriceStoreState) {
     if (initialState) {
       this.priceStatus = initialState.priceStatus;
@@ -35,6 +43,6 @@ export class PriceStore {
 }
 
 decorate(PriceStore, {
-    priceStatus: observable,
-    price: observable,
+  priceStatus: observable,
+  price: observable,
 })

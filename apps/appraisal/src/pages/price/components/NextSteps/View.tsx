@@ -1,9 +1,9 @@
 import React from 'react';
-import ViewModel from './ViewModel';
+import NextStepsViewModel from './ViewModel';
 import { styled } from '@material-ui/core/styles';
 import { Container, Typography } from '@vroom-web/ui';
 
-const StyledContainer = styled(Container)(({ theme }) => ({
+const StyledContainer = styled(Container)(() => ({
   backgroundColor: 'white',
 }));
 
@@ -49,7 +49,7 @@ const ColoredBulletContent = styled('div')(() => ({
 }));
 
 export interface Props {
-  viewModel: ViewModel;
+  viewModel: NextStepsViewModel;
 }
 
 const NextStepsView: React.FC<Props> = ({viewModel}) => {

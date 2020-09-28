@@ -1,6 +1,8 @@
 import axios, { AxiosInstance, AxiosResponse } from 'axios';
+import getConfig from 'next/config';
+import { PriceResponse } from './models/Price';
 
-import { Details, Summary } from './models/DeliveryOrder';
+const { publicRuntimeConfig } = getConfig();
 
 export enum Status {
   INITIAL = 'initial',
@@ -9,9 +11,6 @@ export enum Status {
   ERROR = 'error',
 }
 
-// TODO: Replace with runtime config
-const SHIPPING_URL = 'http://localhost:8080';
-
 export class Networker {
   private readonly axiosInstance: AxiosInstance;
 
@@ -19,8 +18,10 @@ export class Networker {
     this.axiosInstance = axiosInstance;
   }
 
-  getOfferDetails(): Promise<AxiosResponse<Summary[]>> {
-    const url = `${SHIPPING_URL}/api/delivery-order`;
+  getOfferDetails(priceId: string): Promise<AxiosResponse<PriceResponse>> {
+    // Is this a good way to do it?
+    const url = `${publicRuntimeConfig.ACQUISITIONS_URL}/acquisition/offer?offerID=${priceId}`;
+    console.log({url});
     return this.axiosInstance.get(url);
   }
 }

@@ -1,4 +1,4 @@
-import { PriceStore } from './store.ts';
+import { PriceStore } from './store';
 
 export enum PriceStatus {
   INITIAL = 'initial',
@@ -9,10 +9,11 @@ export enum PriceStatus {
 };
 
 class PriceViewModel {
-  readonly store: PriceStore;
+  priceStatus = PriceStatus.INITIAL;
+  price = 0;
 
   constructor(store: PriceStore) {
-    this.priceStatus = store.PriceStatus;
+    this.priceStatus = store.priceStatus;
     this.price = store.price;
   }
 }
