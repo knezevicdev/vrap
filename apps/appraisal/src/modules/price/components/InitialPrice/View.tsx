@@ -44,6 +44,7 @@ const InitialPriceView: React.FC<Props> = ({ viewModel }) => {
   return (
     <StyledContainer>
       <div>{viewModel.yourPrice}</div>
+      <div>{viewModel.price}</div>
       <StyledButton onClick={handleButtonClick} variant="contained">
         {viewModel.continuePrice}
       </StyledButton>

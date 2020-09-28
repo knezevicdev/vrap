@@ -19,8 +19,8 @@ export class Networker {
   }
 
   getOfferDetails(priceId: string): Promise<AxiosResponse<PriceResponse>> {
-    // Is this a good way to do it?
-    const url = `${publicRuntimeConfig.ACQUISITIONS_URL}/acquisition/offer?offerID=${priceId}`;
+    // const url = `${publicRuntimeConfig.ACQUISITIONS_URL}/acquisition/offer?offerID=${priceId}`;
+    const url = `https://acquisition-dev-int.vroomapi.com:8443/v1/acquisition/offer?offerID=${priceId}`;
     console.log({url});
     return this.axiosInstance.get(url);
   }

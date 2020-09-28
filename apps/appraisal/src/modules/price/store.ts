@@ -17,9 +17,9 @@ export async function getInitialPriceStoreState(priceId: string): Promise<PriceS
   try {
     const response = await networker.getOfferDetails(priceId);
     const prices: any = response.data;
-    const price = prices[0];
+    const price = prices.data[0];
+    console.log(price);
 
-    console.log({price});
     initialState.priceStatus = price.offer_status;
     initialState.price = price.Price__c;
   } catch (err) {

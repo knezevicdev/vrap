@@ -1,9 +1,9 @@
 import React from 'react';
-import View from './View';
-import ViewModel from './ViewModel';
+import View from '../modules/price/View';
+import ViewModel from '../modules/price/ViewModel';
 import getConfig from 'next/config';
 import { NextPage } from 'next';
-import { PriceStore, PriceStoreState, getInitialPriceStoreState } from './store';
+import { PriceStore, PriceStoreState, getInitialPriceStoreState } from '../modules/price/store';
 import { SimpleHeader } from '@vroom-web/header-components';
 import { StandardFooter } from '@vroom-web/footer-components';
 

@@ -22,6 +22,7 @@ const PriceContainer = styled('div')(() => ({
 const PriceView: React.FC<Props> = ({ viewModel }) => {
   let priceComponent = <InitialPrice />;
 
+  // somehow pass the viewModel into here?
   switch(viewModel.priceStatus) {
     case PriceStatus.INITIAL: 
       priceComponent = <InitialPrice />;
