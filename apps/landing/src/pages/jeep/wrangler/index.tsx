@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Landing from '../modules';
+import Landing from '../../../modules';
 
 const LandingPage = () => {
   return <Landing />;
