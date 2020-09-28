@@ -162,9 +162,9 @@ const OutlineButton: React.FC<ButtonProps> = ({
   );
 };
 
-export class Button {
-  static Primary = PrimaryButton;
-  static Secondary = SecondaryButton;
-  static Bare = BareButton;
-  static Outline = OutlineButton;
-}
+export const Button = {
+  Primary: PrimaryButton,
+  Secondary: SecondaryButton,
+  Bare: BareButton,
+  Outline: OutlineButton,
+};
