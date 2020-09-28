@@ -6,7 +6,7 @@ import Colors from './sections/Colors';
 import Features from './sections/Features';
 import { Header } from './sections/Header';
 import Hero from './sections/Hero';
-import { Legal } from './sections/Legal';
+import Legal from './sections/Legal';
 import Overview from './sections/Overview';
 
 const Page = styled.div`
