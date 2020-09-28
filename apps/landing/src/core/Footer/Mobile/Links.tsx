@@ -14,7 +14,7 @@ const Links = styled.div`
   }
 `;
 
-const Section = styled.div<{ visible: boolean }>`
+const SectionDiv = styled.div<{ visible: boolean }>`
   display: flex;
   flex-direction: column;
   cursor: pointer;
@@ -65,87 +65,21 @@ const LinkText = styled(Body.Small)`
   margin-bottom: 8px;
 `;
 
-const sections = [
-  {
-    title: 'Vroom',
-    links: [
-      {
-        href: 'https://www.vroom.com/cars',
-        name: 'Buy',
-      },
-      {
-        href: 'https://www.vroom.com/sell',
-        name: 'Sell/Trade',
-      },
-      {
-        href: 'https://www.vroom.com/finance',
-        name: 'Finance',
-      },
-    ],
-  },
-  {
-    title: 'About',
-    links: [
-      {
-        href: 'https://www.vroom.com/about',
-        name: 'About Us',
-      },
-      {
-        href: 'https://www.vroom.com/protection',
-        name: 'Vroom Protection',
-      },
-      {
-        href: 'https://www.vroom.com/how-it-works',
-        name: 'How It Works',
-      },
-      {
-        href: 'https://ir.vroom.com/',
-        name: 'Investor Relations',
-      },
-    ],
-  },
-  {
-    title: 'Contact',
-    links: [
-      {
-        href: 'tel:+18555241300',
-        name: 'Phone',
-      },
-      {
-        href: 'https://vroom.zendesk.com/hc/en-us',
-        name: 'FAQ',
-      },
-      {
-        href: 'https://www.vroom.com/contact',
-        name: 'Contact Us',
-      },
-    ],
-  },
-  {
-    title: 'Company',
-    links: [
-      {
-        href: 'https://www.vroom.com/legal/privacy-policy',
-        name: 'Privacy Policy',
-      },
-      {
-        href: 'https://www.vroom.com/legal/terms-of-use',
-        name: 'Terms of use',
-      },
-      {
-        href: 'https://www.vroom.com/careers',
-        name: 'Careers',
-      },
-      {
-        href:
-          'https://privacyportal.onetrust.com/webform/8086730d-99f7-48ea-b3a1-0b3bb0cf163e/aa3e2126-7439-411d-a9a2-9fa0c4f8b01d',
-        name: 'Do Not Sell My Info (CA Residents)',
-      },
-    ],
-  },
-];
+interface Link {
+  href: string;
+  name: string;
+}
 
-export const MobileLinks: React.FC = () => {
+interface Section {
+  title: string;
+  links: Link[];
+}
+
+interface Props {
+  sections: Section[];
+}
+
+export const MobileLinks: React.FC<Props> = ({ sections }) => {
   const [visibleSection, setVisibleSection] = useState('');
 
   const onClick = (title: string) => (): void => {
@@ -155,17 +89,17 @@ export const MobileLinks: React.FC = () => {
 
   return (
     <Links>
-      {sections.map((section) => {
+      {sections.map((section: Section) => {
         const { title, links } = section;
         const visible = visibleSection === title;
         return (
-          <Section key={title} onClick={onClick(title)} visible={visible}>
+          <SectionDiv key={title} onClick={onClick(title)} visible={visible}>
             <TitleContainer>
               <Title>{title}</Title>
               <Arrow visible={visible} icon={Icons.ARROW_DOWN} />
             </TitleContainer>
             <LinksContainer visible={visible}>
-              {links.map((link) => {
+              {links.map((link: Link) => {
                 const { href, name } = link;
                 return (
                   <CustomLink key={href} href={href} visible={visible}>
@@ -174,7 +108,7 @@ export const MobileLinks: React.FC = () => {
                 );
               })}
             </LinksContainer>
-          </Section>
+          </SectionDiv>
         );
       })}
     </Links>

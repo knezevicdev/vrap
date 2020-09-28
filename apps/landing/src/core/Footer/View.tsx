@@ -5,6 +5,7 @@ import Icon, { Icons } from '../../core/Icon';
 import { Body } from '../../core/Typography';
 import { DesktopLinks } from './Desktop/Links';
 import { MobileLinks } from './Mobile/Links';
+import FooterViewModel from './ViewModel';
 
 const Container = styled.div`
   display: flex;
@@ -52,45 +53,46 @@ const CustomA = styled.a`
   line-height: 0;
 `;
 
-export const Footer: React.FC = () => {
+interface Props {
+  viewModel: FooterViewModel;
+}
+
+const FooterView: React.FC<Props> = ({ viewModel }) => {
+  const { facebook, twitter, instagram } = viewModel.socialLinks;
+  const { apple, google } = viewModel.appLinks;
+
   return (
     <Container>
       <Information>
-        <CustomA href={'https://www.vroom.com/'}>
+        <CustomA href={viewModel.vroomLink}>
           <Icon icon={Icons.VROOM} color="#FFFFFF" />
         </CustomA>
-        <Message>GET THE VROOM APP</Message>
+        <Message>{viewModel.appMessage}</Message>
         <Apps>
-          <CustomA
-            href={
-              'https://play.google.com/store/apps/details?id=com.vroom.app.android'
-            }
-          >
+          <CustomA href={google}>
             <IconSpaced icon={Icons.GOOGLE_PLAY} />
           </CustomA>
-          <CustomA
-            href={
-              'https://apps.apple.com/app/apple-store/id1494048038?pt=120897984'
-            }
-          >
+          <CustomA href={apple}>
             <Icon icon={Icons.APPLE_STORE} />
           </CustomA>
         </Apps>
         <Socials>
-          <CustomA href={'https://www.facebook.com/vroom'}>
+          <CustomA href={facebook}>
             <IconSpaced icon={Icons.FACEBOOK} />
           </CustomA>
-          <CustomA href={'https://www.twitter.com/vroomcars'}>
+          <CustomA href={twitter}>
             <IconSpaced icon={Icons.TWITTER} />
           </CustomA>
-          <CustomA href={'https://www.instagram.com/vroom'}>
+          <CustomA href={instagram}>
             <Icon icon={Icons.INSTAGRAM} />
           </CustomA>
         </Socials>
-        <Copyright>©2020 VROOM. ALL RIGHTS RESERVED.</Copyright>
+        <Copyright>{viewModel.copyrightMessage}</Copyright>
       </Information>
-      <DesktopLinks />
-      <MobileLinks />
+      <DesktopLinks sections={viewModel.sections} />
+      <MobileLinks sections={viewModel.sections} />
     </Container>
   );
 };
+
+export default FooterView;

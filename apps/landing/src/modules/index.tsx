@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import { Footer } from '../core/Footer/Footer';
+import Footer from '../core/Footer';
 import { Colors } from './sections/Colors';
 import { Features } from './sections/Features';
 import { Header } from './sections/Header';
