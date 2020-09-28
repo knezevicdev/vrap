@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 import Footer from '../core/Footer';
 import Colors from './sections/Colors';
-import { Features } from './sections/Features';
+import Features from './sections/Features';
 import { Header } from './sections/Header';
 import Hero from './sections/Hero';
 import { Legal } from './sections/Legal';
