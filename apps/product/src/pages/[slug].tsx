@@ -11,7 +11,9 @@ import experimentSDK, {
 import Inventory from 'src/modules/inventory';
 import { BrandContext } from 'src/modules/inventory/BrandContext';
 import {
-  getInitialInventoryStoreState,
+  getInventoryAvailabilityState,
+  getVehicleSimilarState,
+  getVehicleState,
   InventoryStore,
   InventoryStoreContext,
   InventoryStoreState,
@@ -84,13 +86,18 @@ InventoryPage.getInitialProps = async (
     experiments,
     context.query
   );
-  const initialState = await getInitialInventoryStoreState(
+
+  const vehicleState = await getVehicleState(vin);
+  const similarState = await getVehicleSimilarState(
     vin,
     vinClusterDefaultVariant
   );
+  const isAvailable = await getInventoryAvailabilityState(vin);
+
+  const initialState = { ...vehicleState, ...similarState, isAvailable };
   let canonicalHref: string | undefined;
   let title = '';
-  if (initialState.vehicleStatus === Status.SUCCESS) {
+  if (initialState.vehicleStatus === Status.SUCCESS && initialState.vehicle) {
     const {
       year,
       make,

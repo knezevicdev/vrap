@@ -14,16 +14,18 @@ const { publicRuntimeConfig } = getConfig();
 
 export interface InventoryStoreState {
   similarStatus: Status;
-  similar: Hit[];
+  similar?: Hit[];
   vehicleStatus: Status;
-  vehicle: Hit;
+  vehicle?: Hit;
   isAvailable: boolean;
 }
 
 export async function getVehicleReponse(
-  invSearchNetworker: InvSearchNetworker,
   vin: string
 ): Promise<InventoryResponse | undefined> {
+  const invSearchNetworker = new InvSearchNetworker(
+    publicRuntimeConfig.INVSEARCH_V3_URL || ''
+  );
   try {
     const response = await invSearchNetworker.postInventory({
       fulldetails: true,
@@ -36,49 +38,39 @@ export async function getVehicleReponse(
   }
 }
 
-export function getVehicle(
-  response: InventoryResponse,
+export async function getVehicleState(
   vin: string
-): Hit | undefined {
-  return response.data.hits.hits.find(
-    (i) => i._source.vin.toLowerCase() === vin.toLowerCase()
-  );
-}
-
-export async function getInitialInventoryStoreState(
-  vin: string,
-  vinClusterDefaultVariant: boolean
-): Promise<InventoryStoreState> {
-  const initState: InventoryStoreState = {
-    similarStatus: Status.INITIAL,
-    similar: [] as Hit[],
-    vehicleStatus: Status.INITIAL,
-    vehicle: {} as Hit,
-    isAvailable: false,
-  };
-
-  const invSearchNetworker = new InvSearchNetworker(
-    publicRuntimeConfig.INVSEARCH_V3_URL || ''
-  );
-  const invServiceNetworker = new InvServiceNetworker(
-    publicRuntimeConfig.INV_SERVICE_V2_URL || ''
-  );
-
+): Promise<{ vehicleStatus: Status; vehicle?: Hit }> {
   try {
-    const response = getVehicleReponse(invSearchNetworker, vin);
+    const response = await getVehicleReponse(vin);
     if (!response) {
       throw new Error('Failed to post inventory');
     }
-    // if (!vehicle) {
-    //   throw new Error('No vehicle found with that VIN in inventory');
-    // }
+    const vehicle = response.data.hits.hits.find(
+      (i) => i._source.vin.toLowerCase() === vin.toLowerCase()
+    );
 
-    // initState.vehicleStatus = Status.SUCCESS;
-    // initState.vehicle = vehicle;
-  } catch (err) {
-    initState.vehicleStatus = Status.ERROR;
+    if (!vehicle) {
+      throw new Error('No vehicle found with that VIN in inventory');
+    }
+    return {
+      vehicleStatus: Status.SUCCESS,
+      vehicle,
+    };
+  } catch {
+    return {
+      vehicleStatus: Status.ERROR,
+    };
   }
+}
 
+export async function getVehicleSimilarState(
+  vin: string,
+  vinClusterDefaultVariant: boolean
+): Promise<{ similarStatus: Status; similar?: Hit[] }> {
+  const invSearchNetworker = new InvSearchNetworker(
+    publicRuntimeConfig.INVSEARCH_V3_URL || ''
+  );
   try {
     const response = await invSearchNetworker.getInventorySimilar({
       vin,
@@ -87,28 +79,36 @@ export async function getInitialInventoryStoreState(
       // if vinClusterDefaultVariant is true we are in
       // the default and useVinCluster should be false
     });
-
-    initState.similar = response.data.hits.hits;
-    initState.similarStatus = Status.SUCCESS;
-  } catch (err) {
-    initState.similarStatus = Status.ERROR;
+    return {
+      similarStatus: Status.SUCCESS,
+      similar: response.data.hits.hits,
+    };
+  } catch {
+    return {
+      similarStatus: Status.ERROR,
+    };
   }
+}
 
+export async function getInventoryAvailabilityState(
+  vin: string
+): Promise<boolean> {
+  const invServiceNetworker = new InvServiceNetworker(
+    publicRuntimeConfig.INV_SERVICE_V2_URL || ''
+  );
   try {
     const response = await invServiceNetworker.getInventoryAvailability(vin);
-    initState.isAvailable = response;
+    return response;
   } catch {
-    initState.isAvailable = false;
+    return false;
   }
-
-  return initState;
 }
 
 export class InventoryStore {
   @observable similarStatus: Status = Status.FETCHING;
-  @observable similar: Hit[] = [] as Hit[];
+  @observable similar?: Hit[] = [] as Hit[];
   @observable vehicleStatus: Status = Status.FETCHING;
-  @observable vehicle: Hit = {} as Hit;
+  @observable vehicle?: Hit = {} as Hit;
   @observable isAvailable = false;
 
   constructor(initialState?: InventoryStoreState) {
