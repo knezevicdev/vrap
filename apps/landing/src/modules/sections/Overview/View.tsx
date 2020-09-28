@@ -1,8 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import Icon, { Icons } from '../../core/Icon';
-import { Body, Hero, Title } from '../../core/Typography';
+import Icon from '../../../core/Icon';
+import { Body, Hero, Title } from '../../../core/Typography';
+import OverviewViewModel from './ViewModel';
 
 const Container = styled.div`
   display: flex;
@@ -74,39 +75,15 @@ const Description = styled(Body.Small)`
   color: #6c717a;
 `;
 
-//TODO: Dynamic content - make these things into injectable content
+interface Props {
+  viewModel: OverviewViewModel;
+}
 
-const content = `The 2019 Jeep Wrangler is a great vehicle for anyone who wants an
-          iconic, dependable, and rugged ride. Mostly influenced by the military
-          Jeep from World War II, it remains the epitome of Jeep's brand. The
-          reason these vehicles are so popular is their versatility to be used
-          as a daily commuter during the week and an off-roader on the weekends.
-          Available with two or four doors (Wrangler Unlimited) and a 6-speed
-          manual or 8-speed automatic transmission, the Wrangler has adapted
-          over the years to accommodate all drivers.`;
-
-const details = [
-  {
-    icon: Icons.GAS,
-    title: `20 MPG`,
-    description: `Combined`,
-  },
-  {
-    icon: Icons.ENGINE,
-    title: `285 HP`,
-    description: `@6,400 RPMs`,
-  },
-  {
-    icon: Icons.SEAT,
-    title: `Seats 5`,
-    description: `Passengers`,
-  },
-];
-
-export const Overview: React.FC = () => {
+const OverviewView: React.FC<Props> = ({ viewModel }) => {
+  const { sectionTitle, details, content } = viewModel;
   return (
     <Container>
-      <Hero.Four>overview</Hero.Four>
+      <Hero.Four>{sectionTitle}</Hero.Four>
       <Info>
         <Details>
           {details.map((detail) => {
@@ -125,3 +102,5 @@ export const Overview: React.FC = () => {
     </Container>
   );
 };
+
+export default OverviewView;
