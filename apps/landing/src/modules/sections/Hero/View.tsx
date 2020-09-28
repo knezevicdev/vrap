@@ -1,13 +1,9 @@
-import getConfig from 'next/config';
 import React from 'react';
 import styled from 'styled-components';
 
-import { Picture } from '../../core/Picture';
-import { Hero as TypographyHero } from '../../core/Typography';
-
-const {
-  publicRuntimeConfig: { BASE_PATH },
-} = getConfig();
+import { Picture } from '../../../core/Picture';
+import { Hero as TypographyHero } from '../../../core/Typography';
+import HeroViewModel from './ViewModel';
 
 const Container = styled.div`
   display: flex;
@@ -29,18 +25,12 @@ const Title = styled(TypographyHero.One)`
   }
 `;
 
-//TODO: Dynamic content - make these things into injectable content
+interface Props {
+  viewModel: HeroViewModel;
+}
 
-const picture = {
-  alt: 'Jeep',
-  src: `${BASE_PATH}/images/Hero-Jeep-image.png`,
-  width: 'auto',
-  aspectRatio: '960:720',
-};
-
-const title = 'Jeep Wrangler';
-
-export const Hero: React.FC = () => {
+const HeroView: React.FC<Props> = ({ viewModel }) => {
+  const { picture, title } = viewModel;
   return (
     <Container>
       <Picture {...picture} />
@@ -48,3 +38,5 @@ export const Hero: React.FC = () => {
     </Container>
   );
 };
+
+export default HeroView;
