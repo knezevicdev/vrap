@@ -7,9 +7,11 @@ import { Status } from 'src/networking/types';
 export class FavoritesStore {
   @observable isFavorited = false;
   @observable userTokenStatus: Status = Status.INITIAL;
-  @observable accessToken?: string;
+  @observable accessToken?: string = undefined;
   @observable loading = true;
   @observable isDialogOpen = false;
+  @observable isSnackbarOpen = false;
+  @observable isError = false;
 
   @action
   private initUserAccount = async (): Promise<void> => {
@@ -56,5 +58,15 @@ export class FavoritesStore {
   @action
   setDialog = (): void => {
     this.isDialogOpen = !this.isDialogOpen;
+  };
+
+  @action
+  setSnackbar = (): void => {
+    this.isSnackbarOpen = !this.isSnackbarOpen;
+  };
+
+  @action
+  setError = (): void => {
+    this.isError = !this.isError;
   };
 }
