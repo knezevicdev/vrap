@@ -58,6 +58,11 @@ class VroomDocument extends Document<Props> {
 
   render(): JSX.Element {
     const isProduction = serverRuntimeConfig.NODE_ENV === 'production';
+    const segmentWriteKey =
+      this.props.brand === Brand.SANTANDER
+        ? serverRuntimeConfig.SANTANDER_SEGMENT_WRITE_KEY
+        : serverRuntimeConfig.SEGMENT_WRITE_KEY;
+
     return (
       <Html lang="en">
         <Head>
@@ -77,10 +82,10 @@ class VroomDocument extends Document<Props> {
             brand={this.props.brand}
             staticAssetsHostUrl={publicRuntimeConfig.STATIC_ASSETS_HOST_URL}
           />
-          {serverRuntimeConfig.SEGMENT_WRITE_KEY && (
+          {segmentWriteKey && (
             <AnalyticsSnippet
               appName="Vroom Web - Listing"
-              segmentWriteKey={serverRuntimeConfig.SEGMENT_WRITE_KEY}
+              segmentWriteKey={segmentWriteKey}
             />
           )}
         </Head>

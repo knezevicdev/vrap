@@ -18,6 +18,9 @@ class FavoritesViewModel {
     'Create an account to keep track and access your saved cars anytime.';
   readonly createAccountButton: string = 'CREATE ACCOUNT';
   readonly logInButton: string = 'LOG IN';
+  readonly snackbarSuccessMessage: string = 'Your favorites have been updated';
+  readonly snackbarErrorMessage: string =
+    'There was a problem. Please try again';
 
   constructor(
     inventoryStore: InventoryStore,
@@ -31,7 +34,7 @@ class FavoritesViewModel {
 
   handleMount(): void {
     this.favoritesStore.initClientSide();
-    this.isLoggedIn() && this.checkFavorites();
+    this.isLoggedIn() ? this.checkFavorites() : this.setLoading(false);
   }
 
   handleDialogActions(location: string): void {
@@ -64,11 +67,38 @@ class FavoritesViewModel {
     return this.favoritesStore.loading;
   }
 
+  setLoading(flag: boolean): void {
+    this.favoritesStore.setLoading(flag);
+  }
+
   isOpen(): boolean {
     return this.favoritesStore.isDialogOpen;
   }
 
+  handleSnackbar(): void {
+    this.favoritesStore.setSnackbar();
+  }
+
+  isSnackbarOpen(): boolean {
+    return this.favoritesStore.isSnackbarOpen;
+  }
+
+  getSnarbarMessage(): string {
+    return this.favoritesStore.isError
+      ? this.snackbarErrorMessage
+      : this.snackbarSuccessMessage;
+  }
+
+  handleError(): void {
+    this.favoritesStore.setError();
+  }
+
+  isError(): boolean {
+    return this.favoritesStore.isError;
+  }
+
   async checkFavorites(): Promise<void> {
+    this.setLoading(true);
     const vin = this.getVin();
     const accessToken = this.getAccessToken();
     try {
@@ -96,11 +126,19 @@ class FavoritesViewModel {
         accessToken,
         vin
       );
-      if (favoritesResponse.statusText === 'OK') {
+      const vinList =
+        favoritesResponse.data.data.userAddFavoriteVehicles.favoriteVehicles;
+      const found = vinList.find((element: VinList) =>
+        element.vin.includes(vin)
+      );
+      if (found) {
+        this.isError() && this.handleError();
         this.favoritesStore.setFavorited();
+        this.handleSnackbar();
       }
-    } catch (err) {
-      console.log(err);
+    } catch {
+      !this.isError() && this.handleError();
+      this.handleSnackbar();
     }
   }
 
@@ -112,11 +150,19 @@ class FavoritesViewModel {
         accessToken,
         vin
       );
-      if (favoritesResponse.statusText === 'OK') {
+      const vinList =
+        favoritesResponse.data.data.userRemoveFavoriteVehicles.favoriteVehicles;
+      const found = vinList.find((element: VinList) =>
+        element.vin.includes(vin)
+      );
+      if (!found) {
+        this.isError() && this.handleError();
         this.favoritesStore.setFavorited();
+        this.handleSnackbar();
       }
-    } catch (err) {
-      console.log(err);
+    } catch {
+      !this.isError() && this.handleError();
+      this.handleSnackbar();
     }
   }
 }
