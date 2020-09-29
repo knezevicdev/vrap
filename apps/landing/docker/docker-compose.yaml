@@ -5,9 +5,6 @@ services:
       context: ../../../
       dockerfile: ./apps/landing/docker/Dockerfile
     user: 'root'
-    environment:
-      - SEGMENT_WRITE_KEY=N0pxERRIw4iYCoxZREMZj1yWBIoARIz4
-      - STATIC_ASSETS_HOST_URL=https://static-assets.n.vroom.systems
     command: ash -c "yarn workspace @vroom-web/landing dev --port 8080"
     # This starts nothing but leaves the container running, useful for
     # debugging nextjs start / config operations
