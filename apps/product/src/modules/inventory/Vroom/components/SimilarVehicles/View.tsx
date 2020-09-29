@@ -119,9 +119,10 @@ const SimilarVehiclesView: React.FC<Props> = ({ viewModel }) => {
               </DesktopViewAll>
             </Content>
             <Cars>
-              {viewModel.getCars().map((car) => (
-                <CarCard car={car} key={car.vin} />
-              ))}
+              <CarCard
+                car={viewModel.getCars()[0]}
+                key={viewModel.getCars()[0].vin}
+              />
             </Cars>
             <MobileViewAll href="/cars">
               <ViewAll>{viewModel.viewAll}</ViewAll>
