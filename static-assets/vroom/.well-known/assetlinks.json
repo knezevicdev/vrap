@@ -1,0 +1,15 @@
+[{
+  "relation": ["delegate_permission/common.handle_all_urls"],
+  "target": {
+    "namespace": "web",
+    "site": "https://www.vroom.com"
+  }
+},{
+  "relation": ["delegate_permission/common.handle_all_urls"],
+  "target": {
+    "namespace": "android_app",
+    "package_name": "com.vroom.app.android",
+    "sha256_cert_fingerprints":
+    ["89:83:13:F2:1C:D2:6F:33:54:D4:F1:89:4C:C4:87:54:F1:92:9B:24:49:79:F0:51:77:6E:C7:D3:BC:E1:A4:90"]
+  }
+}]
