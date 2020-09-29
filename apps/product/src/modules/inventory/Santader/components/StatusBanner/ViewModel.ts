@@ -10,7 +10,7 @@ interface BannerInfo {
 class StatusBannerViewModel {
   private store: InventoryStore;
   private salesPending = {
-    label: 'Sales Pending',
+    label: 'Sale Pending',
     color: '#ffd400',
   };
   private availableSoon = {
