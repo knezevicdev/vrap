@@ -5,7 +5,7 @@ const {
 } = getConfig();
 
 class ColorsViewModel {
-  readonly sectionTitle = 'available color';
+  readonly sectionTitle = 'available colors';
 
   readonly colors = [
     {
