@@ -1,16 +1,7 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
 
-interface ThemeProps {
-  typography: {
-    family: {
-      hero: string;
-      title: string;
-      body: string;
-    };
-    color: string;
-  };
-}
+import { ThemeProps } from './themes/Vroom';
 
 interface CSSProps {
   theme: ThemeProps;

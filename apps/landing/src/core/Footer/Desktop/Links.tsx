@@ -18,7 +18,7 @@ const SectionDiv = styled.div`
   width: 25%;
   :not(:last-child) {
     padding-right: 16px;
-    
+
     @media (min-width: 840px) {
       padding-right: 32px;
     }
