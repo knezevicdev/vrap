@@ -114,6 +114,15 @@ class AnalyticsHandler extends BaseAnalyticsHandler {
     this.track(event, properties);
   }
 
+  trackRegisterClicked(): void {
+    const event = 'Register Clicked';
+    const properties = {
+      category: 'Main Navigation',
+      label: 'Account',
+    };
+    this.track(event, properties);
+  }
+
   trackProfileClicked(): void {
     const event = 'Profile Clicked';
     const properties = {

@@ -155,19 +155,13 @@ class HeaderNavViewModel {
           links: [
             {
               href: `/account/login${queryString}`,
-              label: 'Log In / Register',
+              label: 'Log In',
               onClick: (): void => this.analyticsHandler.trackLoginClicked(),
             },
             {
-              href: `/my-account/favorites${queryString}`,
-              label: 'Favorites',
-              onClick: (): void =>
-                this.analyticsHandler.trackFavoritesClicked(),
-            },
-            {
-              href: `/my-account/profile${queryString}`,
-              label: 'Profile',
-              onClick: (): void => this.analyticsHandler.trackProfileClicked(),
+              href: `/account/create${queryString}`,
+              label: 'Register',
+              onClick: (): void => this.analyticsHandler.trackRegisterClicked(),
             },
           ],
         },

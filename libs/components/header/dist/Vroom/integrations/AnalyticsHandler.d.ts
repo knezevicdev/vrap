@@ -13,6 +13,7 @@ declare class AnalyticsHandler extends BaseAnalyticsHandler {
     trackPhoneClicked(): void;
     trackContactUsClicked(): void;
     trackLoginClicked(): void;
+    trackRegisterClicked(): void;
     trackProfileClicked(): void;
     trackFavoritesClicked(): void;
     trackTransactionsClicked(): void;
