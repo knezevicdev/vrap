@@ -97,7 +97,8 @@ class CarCardViewModel {
   }
 
   link(): string {
-    return `${publicRuntimeConfig.BASE_PATH}/${this.car.vin}`;
+    const { makeSlug, modelSlug, year, vin } = this.car;
+    return `${publicRuntimeConfig.BASE_PATH}/${makeSlug}-${modelSlug}-${year}-${vin}`;
   }
 
   navigate = (): void => {
@@ -114,8 +115,10 @@ class CarCardViewModel {
       listingPrice,
       vin,
       soldStatus,
+      makeSlug,
+      modelSlug,
     } = this.car;
-    const link = `/${vin}`;
+    const link = `/${makeSlug}-${modelSlug}-${year}-${vin}`;
     const name = `${year} ${make} ${model}`;
     const photoType = this.getPhotoType();
     const product: Product = {
