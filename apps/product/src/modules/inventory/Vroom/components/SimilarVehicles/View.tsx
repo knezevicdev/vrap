@@ -37,7 +37,6 @@ const Content = styled('div')(({ theme }) => ({
 const Cars = styled('div')(({ theme }) => ({
   display: 'flex',
   width: '100%',
-  justifyContent: 'space-between',
   [theme.breakpoints.only('sm')]: {
     '& #car:nth-child(n+4)': {
       display: 'none',
