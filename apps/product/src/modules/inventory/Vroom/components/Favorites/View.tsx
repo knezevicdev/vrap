@@ -49,7 +49,7 @@ const FavoritesView: React.FC<Props> = (props) => {
   return (
     <>
       <Container onClick={handleClick}>
-        {!viewModel.isLoading() && viewModel.isFavorited() ? (
+        {viewModel.isFavorited() ? (
           <>
             <FavoriteIcon /> {viewModel.favorited}
           </>

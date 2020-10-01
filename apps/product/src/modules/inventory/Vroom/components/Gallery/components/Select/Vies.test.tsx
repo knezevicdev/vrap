@@ -1,3 +1,5 @@
+import 'mobx-react-lite/batchingForReactDom';
+
 import { screen } from '@testing-library/dom';
 import { render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
@@ -9,6 +11,7 @@ import ViewModel from './ViewModel';
 
 import { Product } from 'src/integrations/AnalyticsHandler';
 import { GalleryStore } from 'src/modules/inventory/Vroom/components/Gallery/store';
+jest.mock('src/integrations/AnalyticsHandler');
 
 describe('Select View', () => {
   const mockProduct: Product = {
