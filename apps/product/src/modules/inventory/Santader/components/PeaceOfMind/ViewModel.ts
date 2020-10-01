@@ -21,7 +21,7 @@ class PeaceOfMindViewModel {
       },
       title: 'Delivered To You',
       description:
-        'Get this car shipped to your home or a convenient nearby location',
+        'Get this car shipped to your home or a convenient nearby location.',
     },
     {
       img: {
