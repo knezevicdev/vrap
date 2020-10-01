@@ -21,6 +21,7 @@ export interface Product {
   defectPhotos?: boolean;
   hasStockPhotos?: boolean;
   spincarSpinUrl?: string | null;
+  pendingDeal?: boolean;
 }
 
 class AnalyticsHandler extends BaseAnalyticsHandler {
