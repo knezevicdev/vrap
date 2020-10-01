@@ -1,4 +1,6 @@
 import Box from '@material-ui/core/Box';
+import CircularProgress from '@material-ui/core/CircularProgress';
+import MuiPaper from '@material-ui/core/Paper';
 import { styled, useTheme } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { Typography } from '@vroom-web/ui';
@@ -8,7 +10,14 @@ import ImageGallery from 'react-image-gallery';
 
 import ListView from './components/ListView';
 import NoImagesView from './components/NoImagesView';
+import GallerySelect from './components/Select';
 import ViewModel from './ViewModel';
+
+//#region Styling
+const Paper = styled(MuiPaper)(({ theme }) => ({
+  borderTop: `1px solid ${theme.palette.grey[400]}`,
+  padding: theme.spacing(2, 0),
+}));
 
 const GalleryContainer = styled('div')(({ theme }) => ({
   display: 'flex',
@@ -36,26 +45,32 @@ const ImageGalleryContainer = styled('div')(({ theme }) => ({
   },
 }));
 
-const Title = styled(Typography)(({ theme }) => ({
-  margin: theme.spacing(0, 1, 1, 1),
-  fontWeight: 600,
-  fontSize: '24px',
-  [theme.breakpoints.only('xs')]: {
-    fontSize: '22px',
-  },
-  fontFamily: 'SantanderHeadline, Arial, sans-serif',
-  textAlign: 'center',
+const IFrameContainer = styled('div')(() => ({
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  position: 'relative',
+  backgroundColor: '#041022',
 }));
 
-const Description = styled(Typography)(({ theme }) => ({
-  margin: theme.spacing(0, 1, 2, 1),
-  fontSize: '16px',
-  [theme.breakpoints.only('xs')]: {
-    fontSize: '14px',
-  },
-  textAlign: 'center',
-  lineHeight: 'normal',
+const StyledCircularProgress = styled(CircularProgress)(() => ({
+  position: 'absolute',
+  zIndex: 1,
 }));
+
+const SpincarIframe = styled('iframe')(({ theme }) => ({
+  margin: 0,
+  padding: 0,
+  border: 'none',
+  height: '60vh',
+  width: '100%',
+  zIndex: 2,
+  [theme.breakpoints.only('xs')]: {
+    height: '36vh',
+  },
+}));
+
+//#endregion
 
 interface LocalImageGallery extends ImageGallery {
   toggleFullScreen: () => void;
@@ -93,6 +108,7 @@ const GalleryView: React.FC<Props> = (props) => {
   return (
     <GalleryContainer>
       <GalleryContainerContent>
+        <GallerySelect product={viewModel.getCurrentProduct()} />
         <ImageGalleryContainer>
           <Box className={viewModel.showBanner() ? 'stock-photos' : ''}>
             <Typography
@@ -100,31 +116,58 @@ const GalleryView: React.FC<Props> = (props) => {
               variant="body1"
               fontWeight="fontWeightLight"
             >
-              <ImageGallery
-                ref={imageGalleryRef}
-                items={viewModel.getGalleryImages()}
-                showPlayButton={false}
-                showNav={!isMobile}
-                showThumbnails={viewModel.showThumbnails(isMobile)}
-                thumbnailPosition={viewModel.getThumbnailPosition(
-                  isMobile,
-                  fullscreen
-                )}
-                showFullscreenButton={!isMobile}
-                indexSeparator={viewModel.indexSeparator}
-                useBrowserFullscreen={false}
-                showIndex={viewModel.showIndex()}
-                onErrorImageURL={viewModel.defaultImage.src}
-                onScreenChange={handleFullscreen}
-                onClick={handleClick}
-              />
+              {viewModel.isSpincarView() ? (
+                <IFrameContainer>
+                  <SpincarIframe src={viewModel.getSpincarIframeUrl()}>
+                    {viewModel.iFrameNotSupported}
+                  </SpincarIframe>
+                  <StyledCircularProgress />
+                </IFrameContainer>
+              ) : (
+                <>
+                  <ImageGallery
+                    ref={imageGalleryRef}
+                    items={viewModel.getGalleryImages()}
+                    showPlayButton={false}
+                    showNav={!isMobile}
+                    showThumbnails={viewModel.showThumbnails(isMobile)}
+                    thumbnailPosition={viewModel.getThumbnailPosition(
+                      isMobile,
+                      fullscreen
+                    )}
+                    showFullscreenButton={!isMobile}
+                    indexSeparator={viewModel.indexSeparator}
+                    useBrowserFullscreen={false}
+                    showIndex={viewModel.showIndex()}
+                    onErrorImageURL={viewModel.defaultImage.src}
+                    onScreenChange={handleFullscreen}
+                    onClick={handleClick}
+                  />
+                </>
+              )}
             </Typography>
           </Box>
           {viewModel.showBanner() && (
-            <>
-              <Title>{viewModel.photosComing}</Title>
-              <Description>{viewModel.stockPhotoBody}</Description>
-            </>
+            <Paper elevation={0} square>
+              <Box pt={2}>
+                <Box pb={2}>
+                  <Typography
+                    variant="body1"
+                    fontWeight={600}
+                    textAlign="center"
+                  >
+                    {viewModel.photosComing}
+                  </Typography>
+                </Box>
+                <Typography
+                  variant="body1"
+                  fontWeight="fontWeightLight"
+                  textAlign="center"
+                >
+                  {viewModel.stockPhotoBody}
+                </Typography>
+              </Box>
+            </Paper>
           )}
         </ImageGalleryContainer>
       </GalleryContainerContent>
