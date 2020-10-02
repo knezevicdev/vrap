@@ -76,22 +76,23 @@ describe('Breadcrumbs ViewModel', () => {
       {
         key: 'all',
         name: 'All Cars',
-        path: '/cars?utm_source=truecar',
+        path: '/cars?utm_source=source&utm_campaign=campaign',
       },
       {
         key: 'make',
         name: 'Subaru',
-        path: '/cars/subaru?utm_source=truecar',
+        path: '/cars/subaru?utm_source=source&utm_campaign=campaign',
       },
       {
         key: 'model',
         name: 'Impreza',
-        path: '/cars/subaru/impreza?utm_source=truecar',
+        path: '/cars/subaru/impreza?utm_source=source&utm_campaign=campaign',
       },
       {
         key: 'year',
         name: '2017',
-        path: '/cars/subaru/impreza/2017?utm_source=truecar',
+        path:
+          '/cars/subaru/impreza/2017?utm_source=source&utm_campaign=campaign',
       },
       {
         key: 'yearmakemodel',
@@ -103,7 +104,8 @@ describe('Breadcrumbs ViewModel', () => {
     const store = new InventoryStore();
     store.vehicle._source = car;
     const query = {
-      utm_source: 'truecar',
+      utm_source: 'source',
+      utm_campaign: 'campaign',
     };
     const viewModel = new ViewModel(query, store);
 
