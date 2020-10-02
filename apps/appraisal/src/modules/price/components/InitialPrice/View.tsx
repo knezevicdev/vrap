@@ -1,6 +1,7 @@
-import React from 'react';
 import { styled } from '@material-ui/core/styles';
-import { Container, Button } from '@vroom-web/ui';
+import { Button, Container } from '@vroom-web/ui';
+import React from 'react';
+
 import PriceViewModel from './ViewModel';
 
 const StyledContainer = styled(Container)(() => ({

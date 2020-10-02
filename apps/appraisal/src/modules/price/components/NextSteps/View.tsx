@@ -1,7 +1,8 @@
-import React from 'react';
-import NextStepsViewModel from './ViewModel';
 import { styled } from '@material-ui/core/styles';
 import { Container, Typography } from '@vroom-web/ui';
+import React from 'react';
+
+import NextStepsViewModel from './ViewModel';
 
 const StyledContainer = styled(Container)(() => ({
   backgroundColor: 'white',
@@ -52,7 +53,7 @@ export interface Props {
   viewModel: NextStepsViewModel;
 }
 
-const NextStepsView: React.FC<Props> = ({viewModel}) => {
+const NextStepsView: React.FC<Props> = ({ viewModel }) => {
   return (
     <StyledContainer>
       <Title variant="h2">{viewModel.nextSteps}</Title>
@@ -64,11 +65,13 @@ const NextStepsView: React.FC<Props> = ({viewModel}) => {
         <ColoredBullet>
           <b>{viewModel.freePickup}</b>
           <ColoredBulletContent>{viewModel.scheduleATime}</ColoredBulletContent>
-				</ColoredBullet>
-				<ColoredBullet>
+        </ColoredBullet>
+        <ColoredBullet>
           <b>{viewModel.wePickIt}</b>
-          <ColoredBulletContent>{viewModel.pickupYourVehicle}</ColoredBulletContent>
-				</ColoredBullet>
+          <ColoredBulletContent>
+            {viewModel.pickupYourVehicle}
+          </ColoredBulletContent>
+        </ColoredBullet>
       </div>
     </StyledContainer>
   );

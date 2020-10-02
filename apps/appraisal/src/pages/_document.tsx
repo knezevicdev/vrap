@@ -14,8 +14,7 @@ import React from 'react';
 
 const { publicRuntimeConfig } = getConfig();
 
-interface Props extends DocumentInitialProps {
-}
+type Props = DocumentInitialProps;
 
 class VroomDocument extends Document<Props> {
   static async getInitialProps(ctx: DocumentContext): Promise<Props> {

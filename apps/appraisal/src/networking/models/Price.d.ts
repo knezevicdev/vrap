@@ -22,4 +22,3 @@ export interface Price {
   verification_url: string | null;
   tax_credit_savings: number | null;
 }
-

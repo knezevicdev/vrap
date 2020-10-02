@@ -1,5 +1,6 @@
 import axios, { AxiosInstance, AxiosResponse } from 'axios';
 import getConfig from 'next/config';
+
 import { PriceResponse } from './models/Price';
 
 const { publicRuntimeConfig } = getConfig();
@@ -19,9 +20,8 @@ export class Networker {
   }
 
   getOfferDetails(priceId: string): Promise<AxiosResponse<PriceResponse>> {
-    // const url = `${publicRuntimeConfig.ACQUISITIONS_URL}/acquisition/offer?offerID=${priceId}`;
-    const url = `https://acquisition-dev-int.vroomapi.com:8443/v1/acquisition/offer?offerID=${priceId}`;
-    console.log({url});
+    const url = `${publicRuntimeConfig.ACQUISITIONS_URL}/acquisition/offer?offerID=${priceId}`;
+    console.log({ url });
     return this.axiosInstance.get(url);
   }
 }

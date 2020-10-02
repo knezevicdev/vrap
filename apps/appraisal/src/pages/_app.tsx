@@ -1,6 +1,6 @@
-import { ThemeProvider } from '@vroom-web/ui';
 import App from 'next/app';
 import Head from 'next/head';
+import React from 'react';
 
 class VroomApp extends App {
   render(): JSX.Element {
@@ -8,11 +8,14 @@ class VroomApp extends App {
     return (
       <>
         <Head>
-          <title>Vroom</title>
+          <title>Your Vroom Price</title>
+          <meta charSet="utf-8" />
+          <meta
+            name="viewport"
+            content="minimum-scale=1, initial-scale=1, width=device-width"
+          />
         </Head>
-        <ThemeProvider>
-          <Component {...pageProps} />
-        </ThemeProvider>
+        <Component {...pageProps} />
       </>
     );
   }

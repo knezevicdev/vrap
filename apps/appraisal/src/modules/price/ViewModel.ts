@@ -5,8 +5,8 @@ export enum PriceStatus {
   ACCEPTED = 'accepted',
   REJECTED = 'rejected',
   REASON_SUBMITTED = 'reasonSubmitted',
-  EXPIRED = 'expired'
-};
+  EXPIRED = 'expired',
+}
 
 class PriceViewModel {
   priceStatus = PriceStatus.INITIAL;
