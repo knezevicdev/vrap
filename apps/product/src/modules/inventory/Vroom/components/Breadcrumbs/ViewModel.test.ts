@@ -72,27 +72,27 @@ describe('Breadcrumbs ViewModel', () => {
   };
 
   it('should return the correct breadcrumbs for a given car', () => {
+    const attributionQS = '?utm_source=source&utm_campaign=campaign';
     const expected = [
       {
         key: 'all',
         name: 'All Cars',
-        path: '/cars?utm_source=source&utm_campaign=campaign',
+        path: `/cars${attributionQS}`,
       },
       {
         key: 'make',
         name: 'Subaru',
-        path: '/cars/subaru?utm_source=source&utm_campaign=campaign',
+        path: `/cars/subaru${attributionQS}`,
       },
       {
         key: 'model',
         name: 'Impreza',
-        path: '/cars/subaru/impreza?utm_source=source&utm_campaign=campaign',
+        path: `/cars/subaru/impreza${attributionQS}`,
       },
       {
         key: 'year',
         name: '2017',
-        path:
-          '/cars/subaru/impreza/2017?utm_source=source&utm_campaign=campaign',
+        path: `/cars/subaru/impreza/2017${attributionQS}`,
       },
       {
         key: 'yearmakemodel',
