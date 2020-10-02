@@ -108,9 +108,7 @@ describe('Breadcrumbs ViewModel', () => {
       utm_campaign: 'campaign',
     };
     const viewModel = new ViewModel(query, store);
-
     const actual = viewModel.crumbs();
-
     expect(actual).toEqual(expected);
   });
 });
