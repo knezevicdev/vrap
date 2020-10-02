@@ -12,6 +12,7 @@ import React from 'react';
 
 import { ReactComponent as LogoSvg } from './svg/logo.svg';
 import { ReactComponent as ShopSvg } from './svg/shop.svg';
+import { ReactComponent as VroomLogoSvg } from './svg/vroom-logo-gray.svg';
 import ViewModel from './ViewModel';
 
 interface Props {
@@ -185,6 +186,21 @@ const LearningLinks = styled('a')(({ theme }) => ({
   padding: theme.spacing(1),
 }));
 
+const PoweredBy = styled('div')(({ theme }) => ({
+  display: 'flex',
+  alignItems: 'center',
+  [theme.breakpoints.up('sm')]: { marginLeft: 'auto' },
+}));
+
+const PoweredByLabel = styled(Typography)(() => ({
+  color: '#767676',
+  fontSize: '16px',
+}));
+
+const VroomLogo = styled(VroomLogoSvg)(({ theme }) => ({
+  marginLeft: theme.spacing(1),
+}));
+
 const View: React.FC<Props> = ({ viewModel }) => {
   return (
     <ViewContainer>
@@ -305,8 +321,16 @@ const View: React.FC<Props> = ({ viewModel }) => {
           >
             <Typography>{viewModel.backToCorporate.label}</Typography>
           </Link>
+          <PoweredBy>
+            <PoweredByLabel>{viewModel.poweredBy}</PoweredByLabel>
+            <VroomLogo />
+          </PoweredBy>
         </DesktopView>
         <MobileView>
+          <PoweredBy>
+            <PoweredByLabel>{viewModel.poweredBy}</PoweredByLabel>
+            <VroomLogo />
+          </PoweredBy>
           <ShopNowContainer
             href={viewModel.shopNow.href}
             onClick={viewModel.shopNow.handleAnalytics}
