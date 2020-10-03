@@ -72,22 +72,22 @@ describe('Notify Me View Model', () => {
     hasStockPhotos: false,
     consignmentPartnerId: '',
   };
+  const inventoryStore = new InventoryStore();
+  inventoryStore.vehicle._source = car;
+  const notifyMeStore = new NotifyMeStore();
+  notifyMeStore.accessToken = 'access-token';
+  const notifyMeNetworker = new NotifyMeNetworker('url');
+
+  const viewModel = new ViewModel(
+    inventoryStore,
+    notifyMeStore,
+    notifyMeNetworker
+  );
+
   describe('Set Subscription', () => {
-    const inventoryStore = new InventoryStore();
-    inventoryStore.vehicle._source = car;
-    const notifyMeStore = new NotifyMeStore();
-    notifyMeStore.accessToken = 'access-token';
-    const notifyMeNetworker = new NotifyMeNetworker('url');
-
-    const viewModel = new ViewModel(
-      inventoryStore,
-      notifyMeStore,
-      notifyMeNetworker
-    );
-
     it('if should call list subscription and VIN found', async () => {
-      viewModel.setNotifyMeLoading = jest.fn();
-      viewModel.setSuccessful = jest.fn();
+      notifyMeStore.setNotifyMeLoading = jest.fn();
+      notifyMeStore.setSuccess = jest.fn();
       notifyMeNetworker.listSubscription = jest.fn().mockResolvedValue({
         data: {
           data: {
@@ -108,13 +108,14 @@ describe('Notify Me View Model', () => {
       });
 
       await viewModel.setSubscription();
-      expect(viewModel.setNotifyMeLoading).toHaveBeenCalledTimes(2);
-      expect(viewModel.setSuccessful).toHaveBeenCalledTimes(2);
+      expect(notifyMeStore.setNotifyMeLoading).toHaveBeenCalledTimes(2);
+      expect(notifyMeStore.setSuccess).toHaveBeenCalledTimes(2);
+      expect(notifyMeStore.setSuccess).toHaveBeenCalledWith(true);
     });
 
     it('if should call list subscription and VIN not found', async () => {
-      viewModel.setNotifyMeLoading = jest.fn();
-      viewModel.setSuccessful = jest.fn();
+      notifyMeStore.setNotifyMeLoading = jest.fn();
+      notifyMeStore.setSuccess = jest.fn();
       notifyMeNetworker.listSubscription = jest.fn().mockResolvedValue({
         data: {
           data: {
@@ -135,8 +136,8 @@ describe('Notify Me View Model', () => {
       });
 
       await viewModel.setSubscription();
-      expect(viewModel.setNotifyMeLoading).toHaveBeenCalledTimes(2);
-      expect(viewModel.setSuccessful).toHaveBeenCalledWith(false);
+      expect(notifyMeStore.setNotifyMeLoading).toHaveBeenCalledTimes(2);
+      expect(notifyMeStore.setSuccess).toHaveBeenCalledWith(false);
     });
   });
 });
