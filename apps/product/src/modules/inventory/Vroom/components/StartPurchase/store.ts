@@ -17,7 +17,7 @@ export class StartPurchaseStore {
   }
 
   @action
-  private initInProgressDeal = async (): Promise<void> => {
+  private initPendingDeal = async (): Promise<void> => {
     try {
       const accessToken = this.accessToken;
       if (!accessToken) {
@@ -26,10 +26,10 @@ export class StartPurchaseStore {
       this.inProgressDealStatus = Status.FETCHING;
       const response = await this.dealsV2Networker.getMyDeals(accessToken);
 
-      const inProgressDeal = response.data.user.deals.find(
-        (deal) => deal.dealSummary.dealStatus.status === 'In-Progress'
+      const isPendingDeal = response.data.user.deals.find(
+        (deal) => deal.dealSummary.dealStatus.status === 'Pending'
       );
-      if (!inProgressDeal) {
+      if (!isPendingDeal) {
         throw new Error('No In-Progress deal was found');
       }
       runInAction(() => {
@@ -71,6 +71,6 @@ export class StartPurchaseStore {
   @action
   initClientSide = (): void => {
     this.initUserAccount();
-    this.initInProgressDeal();
+    this.initPendingDeal();
   };
 }
