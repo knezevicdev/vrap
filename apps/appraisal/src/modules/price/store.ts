@@ -2,8 +2,8 @@ import { decorate, observable } from 'mobx';
 import { createContext, useContext } from 'react';
 
 import { PriceStatus } from './ViewModel';
-import { Prices } from 'src/networking/models/Price';
 
+import { Prices } from 'src/networking/models/Price';
 import { Networker } from 'src/networking/Networker';
 
 export interface PriceStoreState {
