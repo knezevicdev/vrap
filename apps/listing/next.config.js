@@ -25,6 +25,7 @@ module.exports = {
     SHORT_HASH: shortHash,
     STATIC_ASSETS_HOST_URL: process.env.STATIC_ASSETS_HOST_URL,
     VERSION: version,
+    BRANCH_IO_KEY: process.env.BRANCH_IO_KEY,
   },
   serverRuntimeConfig: {
     // Will only be available on the server side
