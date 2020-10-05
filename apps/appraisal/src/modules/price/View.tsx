@@ -7,7 +7,7 @@ import NextSteps from './components/NextSteps';
 import PriceViewModel, { PriceStatus } from './ViewModel';
 
 interface Props {
-  viewModel: PriceViewModel;
+  priceViewModel: PriceViewModel;
 }
 
 const BackgroundContainer = styled(Container)(() => ({}));
@@ -18,11 +18,10 @@ const PriceContainer = styled('div')(() => ({
   justifyContent: 'space-between',
 }));
 
-const PriceView: React.FC<Props> = ({ viewModel }) => {
+const PriceView: React.FC<Props> = ({ priceViewModel }) => {
   let priceComponent = <InitialPrice />;
 
-  // somehow pass the viewModel into here?
-  switch (viewModel.priceStatus) {
+  switch (priceViewModel.priceStatus) {
     case PriceStatus.INITIAL:
       priceComponent = <InitialPrice />;
       break;

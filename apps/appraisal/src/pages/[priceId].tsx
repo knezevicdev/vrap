@@ -4,13 +4,13 @@ import { NextPage } from 'next';
 import getConfig from 'next/config';
 import React from 'react';
 import Page from 'src/Page';
-import Price from 'src/modules/price';
+import PriceView from 'src/modules/price';
 
-import {
-  getInitialPriceStoreState,
-  PriceStore,
-  PriceStoreState,
-} from 'src/modules/price/store';
+// import {
+//   getInitialPriceStoreState,
+//   PriceStore,
+//   PriceStoreState,
+// } from 'src/modules/price/store';
 
 const { publicRuntimeConfig } = getConfig();
 
@@ -18,9 +18,9 @@ const Price: NextPage = () => {
   const gearboxPrivateUrl = publicRuntimeConfig.GEARBOX_PRIVATE_URL;
 
   return (
-    <Page name="Home" head={head}>
+    <Page name="Home">
       <SimpleHeader gearboxPrivateUrl={gearboxPrivateUrl} />
-      <Price />
+      <PriceView />
       <StandardFooter />
     </Page>
   );

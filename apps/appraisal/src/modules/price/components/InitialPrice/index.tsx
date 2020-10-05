@@ -2,9 +2,11 @@ import React from 'react';
 
 import View from './View';
 import ViewModel from './ViewModel';
+import { usePriceStore } from 'src/modules/price/store';
 
 const InitialPrice: React.FC = () => {
-  const viewModel = new ViewModel();
+  const store = usePriceStore(); 
+  const viewModel = new ViewModel(store);
   return <View viewModel={viewModel} />;
 };
 

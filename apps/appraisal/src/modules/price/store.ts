@@ -1,4 +1,4 @@
-import { createContext } from 'react';
+import { createContext, useContext } from 'react';
 import { decorate, observable } from 'mobx';
 import { PriceStatus } from './ViewModel';
 import { Networker } from 'src/networking/Networker';
@@ -50,4 +50,13 @@ decorate(PriceStore, {
   price: observable,
 });
 
-export const PriceStoreContext = createContext<PriceStore>(new PriceStore());
+const PriceStoreContext = createContext<PriceStore>(new PriceStore());
+
+export const usePriceStore = () => {
+  const store = useContext(PriceStoreContext);
+  if (!store) {
+    throw new Error('useStore must be used within a StoreProvider.');
+  }
+  return store;
+};
+

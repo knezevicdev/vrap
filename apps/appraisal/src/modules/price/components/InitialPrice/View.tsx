@@ -1,8 +1,9 @@
+import React from 'react';
+import PriceViewModel from './ViewModel';
+
+import { observer } from 'mobx-react';
 import { styled } from '@material-ui/core/styles';
 import { Button, Container } from '@vroom-web/ui';
-import React from 'react';
-
-import PriceViewModel from './ViewModel';
 
 const StyledContainer = styled(Container)(() => ({
   backgroundColor: 'white',
@@ -53,4 +54,4 @@ const InitialPriceView: React.FC<Props> = ({ viewModel }) => {
   );
 };
 
-export default InitialPriceView;
+export default observer(InitialPriceView);

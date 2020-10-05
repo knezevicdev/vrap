@@ -1,13 +1,14 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import PriceView from 'src/modules/price/View';
 import PriceViewModel from 'src/modules/price/ViewModel';
+import { usePriceStore } from 'src/modules/price/store';
 
 const Price: React.FC = () => {
-  const store = new PriceStore();
-  const priceViewModel = new PriceViewModel(store);
+  const priceStore = usePriceStore();
+  const priceViewModel = new PriceViewModel(priceStore);
 
   return (
-    <PriceView viewModel={priceViewModel} />
+    <PriceView priceViewModel={priceViewModel} />
   );
 };
 
