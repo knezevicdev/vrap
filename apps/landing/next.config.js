@@ -15,7 +15,9 @@ const config = {
   publicRuntimeConfig: {
     BASE_PATH: basePath,
   },
-  serverRuntimeConfig: {},
+  serverRuntimeConfig: {
+    SEGMENT_WRITE_KEY: process.env.SEGMENT_WRITE_KEY,
+  },
   webpack: (config) => {
     config.module.rules.push({
       test: /\.(woff2|woff|eot|ttf|otf)$/,
