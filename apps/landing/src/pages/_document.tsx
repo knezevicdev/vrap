@@ -1,6 +1,19 @@
-import Document, { DocumentContext, DocumentInitialProps } from 'next/document';
+import { AnalyticsSnippet } from '@vroom-web/analytics-integration';
+import getConfig from 'next/config';
+import Document, {
+  DocumentContext,
+  DocumentInitialProps,
+  Head,
+  Html,
+  Main,
+  NextScript,
+} from 'next/document';
 import React from 'react';
 import { ServerStyleSheet } from 'styled-components';
+
+const {
+  serverRuntimeConfig: { SEGMENT_WRITE_KEY },
+} = getConfig();
 
 export default class MyDocument extends Document {
   static async getInitialProps(
@@ -29,5 +42,22 @@ export default class MyDocument extends Document {
     } finally {
       sheet.seal();
     }
+  }
+
+  render(): JSX.Element {
+    return (
+      <Html lang="en">
+        <Head>
+          <AnalyticsSnippet
+            appName="Vroom Web - Landing"
+            segmentWriteKey={SEGMENT_WRITE_KEY}
+          />
+        </Head>
+        <body>
+          <Main />
+          <NextScript />
+        </body>
+      </Html>
+    );
   }
 }
