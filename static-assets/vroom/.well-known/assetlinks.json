@@ -1,11 +1,11 @@
 [{
-  "relation": ["delegate_permission/common.handle_all_urls"],
+  "relation": ["delegate_permission/common.use_as_origin"],
   "target": {
     "namespace": "web",
     "site": "https://www.vroom.com"
   }
 },{
-  "relation": ["delegate_permission/common.handle_all_urls"],
+  "relation": ["delegate_permission/common.use_as_origin"],
   "target": {
     "namespace": "android_app",
     "package_name": "com.vroom.app.android",
