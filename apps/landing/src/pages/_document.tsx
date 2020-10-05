@@ -12,7 +12,7 @@ import React from 'react';
 import { ServerStyleSheet } from 'styled-components';
 
 const {
-  serverRuntimeConfig: { SEGMENT_WRITE_KEY },
+  publicRuntimeConfig: { SEGMENT_WRITE_KEY },
 } = getConfig();
 
 export default class MyDocument extends Document {

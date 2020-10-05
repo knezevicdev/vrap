@@ -14,8 +14,6 @@ const config = {
   generateBuildId: () => shortHash,
   publicRuntimeConfig: {
     BASE_PATH: basePath,
-  },
-  serverRuntimeConfig: {
     SEGMENT_WRITE_KEY: process.env.SEGMENT_WRITE_KEY,
   },
   webpack: (config) => {
