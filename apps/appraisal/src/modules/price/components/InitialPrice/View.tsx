@@ -1,9 +1,9 @@
-import React from 'react';
-import PriceViewModel from './ViewModel';
-
-import { observer } from 'mobx-react';
 import { styled } from '@material-ui/core/styles';
 import { Button, Container } from '@vroom-web/ui';
+import { observer } from 'mobx-react';
+import React from 'react';
+
+import PriceViewModel from './ViewModel';
 
 const StyledContainer = styled(Container)(() => ({
   backgroundColor: 'white',

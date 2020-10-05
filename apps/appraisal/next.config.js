@@ -12,7 +12,7 @@ const shortHash = childProcess
   .toString()
   .trim();
 
-const basePath = '/sell';
+const basePath = '/appraisal';
 
 const config = {
   basePath,

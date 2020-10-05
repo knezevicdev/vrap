@@ -3,8 +3,9 @@ import { SimpleHeader } from '@vroom-web/header-components';
 import { NextPage } from 'next';
 import getConfig from 'next/config';
 import React from 'react';
-import Page from 'src/Page';
+
 import PriceView from 'src/modules/price';
+import Page from 'src/Page';
 
 // import {
 //   getInitialPriceStoreState,
@@ -35,7 +36,7 @@ const Price: NextPage = () => {
 //   const priceId = query.priceId as string;
 //   console.log({ priceId });
 //   const initialState = await getInitialPriceStoreState(priceId);
-// 
+//
 //   return { initialState };
 // };
 

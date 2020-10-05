@@ -1,6 +1,9 @@
-import { createContext, useContext } from 'react';
 import { decorate, observable } from 'mobx';
+import { createContext, useContext } from 'react';
+
 import { PriceStatus } from './ViewModel';
+import { Prices } from 'src/networking/models/Price';
+
 import { Networker } from 'src/networking/Networker';
 
 export interface PriceStoreState {
@@ -19,7 +22,7 @@ export async function getInitialPriceStoreState(
   const networker = new Networker();
   try {
     const response = await networker.getOfferDetails(priceId);
-    const prices: any = response.data;
+    const prices: Prices = response.data;
     const price = prices.data[0];
     console.log(price);
 
@@ -59,4 +62,3 @@ export const usePriceStore = () => {
   }
   return store;
 };
-

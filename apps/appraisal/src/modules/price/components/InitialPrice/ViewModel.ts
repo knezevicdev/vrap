@@ -8,8 +8,8 @@ class PriceViewModel {
   readonly price: number;
 
   constructor(initialState: PriceStoreState) {
-		this.priceStatus = initialState.priceStatus;
-		this.price = initialState.price;
+    this.priceStatus = initialState.priceStatus;
+    this.price = initialState.price;
   }
 }
 

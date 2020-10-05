@@ -1,5 +1,7 @@
-export interface PriceResponse {
-  data: any;
+import { PriceStatus } from './ViewModel';
+
+export interface Prices {
+  data: Price[];
 }
 
 export interface Price {
@@ -15,7 +17,7 @@ export interface Price {
   VIN__c: string;
   offer_id: number;
   created: string;
-  offer_status: string;
+  offer_status: PriceStatus;
   user_email: string;
   active: boolean;
   new_offer: boolean | null;

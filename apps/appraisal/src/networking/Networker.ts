@@ -1,7 +1,7 @@
 import axios, { AxiosInstance, AxiosResponse } from 'axios';
 import getConfig from 'next/config';
 
-import { PriceResponse } from './models/Price';
+import { Prices } from './models/Price';
 
 const { publicRuntimeConfig } = getConfig();
 
@@ -19,7 +19,7 @@ export class Networker {
     this.axiosInstance = axiosInstance;
   }
 
-  getOfferDetails(priceId: string): Promise<AxiosResponse<PriceResponse>> {
+  getOfferDetails(priceId: string): Promise<AxiosResponse<Prices>> {
     const url = `${publicRuntimeConfig.ACQUISITIONS_URL}/acquisition/offer?offerID=${priceId}`;
     console.log({ url });
     return this.axiosInstance.get(url);
