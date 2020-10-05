@@ -26,6 +26,7 @@ describe('Inventory Store', () => {
       source: '',
       vin: [vin],
     };
+
     test('it should return a valid response if the call succeeds', async () => {
       const mockResponseData: InventoryResponse = {
         data: {
@@ -48,6 +49,16 @@ describe('Inventory Store', () => {
       );
       getVehicleReponse(vin).then((response) => {
         expect(response).toEqual(apiResponse);
+      });
+    });
+
+    test('it should return undefined if the call errors', async () => {
+      invSearchNetworkMock.postInventory = jest
+        .fn()
+        .mockImplementationOnce(() => Promise.reject(undefined));
+
+      getVehicleReponse(vin).then((response) => {
+        expect(response).toEqual(undefined);
       });
     });
   });
