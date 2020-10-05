@@ -217,4 +217,12 @@ describe('Notify Me View Model', () => {
       expect(notifyMeStore.setDialogButtonLoading).toHaveBeenCalledTimes(2);
     });
   });
+
+  describe('Get Year Make Model', () => {
+    it('should return year make model as string', () => {
+      const expected = '2017 Subaru Impreza';
+      const actual = viewModel.getYearMakeModel();
+      expect(actual).toEqual(expected);
+    });
+  });
 });
