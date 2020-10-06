@@ -29,6 +29,14 @@ import {
   getTransmissionRequestData,
 } from './store';
 
+jest.mock('next/config', () => {
+  return (): unknown => {
+    return {
+      publicRuntimeConfig: {},
+    };
+  };
+});
+
 describe('getBodyTypeRequestData', () => {
   test('1', () => {
     const mockFiltersData: FiltersData = {};
