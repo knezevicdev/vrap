@@ -14610,7 +14610,7 @@ var DesktopView$1 = styled('div')(function (_ref5) {
     display: 'flex',
     width: '100%',
     alignItems: 'center'
-  }, theme.breakpoints.only('xs'), {
+  }, theme.breakpoints.down('sm'), {
     display: 'none'
   });
 });
@@ -14620,7 +14620,7 @@ var MobileView$1 = styled('div')(function (_ref7) {
     display: 'none',
     width: '100%',
     alignItems: 'center'
-  }, theme.breakpoints.only('xs'), {
+  }, theme.breakpoints.down('sm'), {
     display: 'flex'
   });
 });
@@ -14637,7 +14637,7 @@ var ShopLabel = styled(Typography)(function (_ref9) {
   return _defineProperty({
     color: '#FFFFFF',
     fontSize: '18px'
-  }, theme.breakpoints.only('xs'), {
+  }, theme.breakpoints.down('sm'), {
     color: '#767676',
     fontSize: '14px',
     fontWeight: 600
@@ -14649,7 +14649,7 @@ var ShopIcon = styled(SvgShop)(function (_ref11) {
     width: '20px',
     marginRight: theme.spacing(1),
     fill: '#FFFFFF'
-  }, theme.breakpoints.only('xs'), {
+  }, theme.breakpoints.down('sm'), {
     fill: '#767676'
   });
 });
@@ -14701,7 +14701,7 @@ var DropdownLabelContainer = styled('div')(function (_ref16) {
       fontSize: '16px'
     },
     marginRight: theme.spacing(4)
-  }, _defineProperty(_ref17, theme.breakpoints.only('xs'), {
+  }, _defineProperty(_ref17, theme.breakpoints.down('sm'), {
     display: 'none'
   }), _defineProperty(_ref17, "cursor", 'pointer'), _ref17;
 });
@@ -14780,7 +14780,7 @@ var PoweredBy = styled('div')(function (_ref22) {
   return _defineProperty({
     display: 'flex',
     alignItems: 'center'
-  }, theme.breakpoints.up('sm'), {
+  }, theme.breakpoints.up('md'), {
     marginLeft: 'auto'
   });
 });
