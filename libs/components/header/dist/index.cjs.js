@@ -1274,6 +1274,16 @@ var AnalyticsHandler = /*#__PURE__*/function (_BaseAnalyticsHandler) {
       this.track(event, properties);
     }
   }, {
+    key: "trackRegisterClicked",
+    value: function trackRegisterClicked() {
+      var event = 'Register Clicked';
+      var properties = {
+        category: 'Main Navigation',
+        label: 'Account'
+      };
+      this.track(event, properties);
+    }
+  }, {
     key: "trackProfileClicked",
     value: function trackProfileClicked() {
       var event = 'Profile Clicked';
@@ -13521,21 +13531,15 @@ var HeaderNavViewModel = /*#__PURE__*/function () {
           label: 'LOG IN',
           links: [{
             href: "/account/login".concat(queryString),
-            label: 'Log In / Register',
+            label: 'Log In',
             onClick: function onClick() {
               return _this2.analyticsHandler.trackLoginClicked();
             }
           }, {
-            href: "/my-account/favorites".concat(queryString),
-            label: 'Favorites',
+            href: "/account/create".concat(queryString),
+            label: 'Register',
             onClick: function onClick() {
-              return _this2.analyticsHandler.trackFavoritesClicked();
-            }
-          }, {
-            href: "/my-account/profile".concat(queryString),
-            label: 'Profile',
-            onClick: function onClick() {
-              return _this2.analyticsHandler.trackProfileClicked();
+              return _this2.analyticsHandler.trackRegisterClicked();
             }
           }]
         }];

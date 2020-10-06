@@ -10,17 +10,25 @@ import { ParsedUrlQuery } from 'querystring';
 
 import AnalyticsHandler, { Product } from 'src/integrations/AnalyticsHandler';
 import { InventoryStore } from 'src/modules/inventory/store';
+import { StartPurchaseStore } from 'src/modules/inventory/Vroom/components/StartPurchase/store';
+import { Status } from 'src/networking/types';
 
 class StartPurchaseViewModel {
   private store: InventoryStore;
+  private startPurchaseStore: StartPurchaseStore;
   private analyticsHandler: AnalyticsHandler;
   private car: Car;
   private query: ParsedUrlQuery;
   readonly purchaseText: string = 'Start Purchase';
   readonly findNewMatch: string = 'Find A New Match';
 
-  constructor(query: ParsedUrlQuery, inventoryStore: InventoryStore) {
+  constructor(
+    query: ParsedUrlQuery,
+    inventoryStore: InventoryStore,
+    startPurchaseStore: StartPurchaseStore
+  ) {
     this.store = inventoryStore;
+    this.startPurchaseStore = startPurchaseStore;
     this.analyticsHandler = new AnalyticsHandler();
     this.car = inventoryStore.vehicle._source;
     this.query = query;
@@ -36,6 +44,10 @@ class StartPurchaseViewModel {
       return this.findNewMatch;
     }
     return this.purchaseText;
+  }
+
+  handleMount(): void {
+    this.startPurchaseStore.initClientSide();
   }
 
   handleClick(): void {
@@ -64,6 +76,11 @@ class StartPurchaseViewModel {
       vin,
       year,
       defectPhotos: !!defectPhotos,
+      ...(this.startPurchaseStore.inProgressDealStatus === Status.SUCCESS
+        ? {
+            pendingDeal: true,
+          }
+        : {}),
     };
     // FIT-582
     // Persist attributuion query params across navigation.

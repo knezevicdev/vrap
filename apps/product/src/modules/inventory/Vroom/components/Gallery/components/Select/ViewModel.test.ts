@@ -5,6 +5,7 @@ import {
   GallerySelections,
   GalleryStore,
 } from 'src/modules/inventory/Vroom/components/Gallery/store';
+jest.mock('src/integrations/AnalyticsHandler');
 
 describe('Select View Model', () => {
   const mockProduct: Product = {

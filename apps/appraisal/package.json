@@ -1,0 +1,17 @@
+{
+  "name": "@vroom-web/appraisal",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint . --ext .js,.jsx,.ts,.tsx,.json",
+    "test": "jest --watch",
+    "test:ci": "jest --ci"
+  },
+  "dependencies": {
+    "next": "^9.5.1"
+  },
+  "devDependencies": {}
+}

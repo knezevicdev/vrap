@@ -1,6 +1,8 @@
+import { DefectType } from '@vroom-web/inv-search-networking';
+import isEmpty from 'lodash/isEmpty';
 import getConfig from 'next/config';
 
-import { GalleryStore } from './store';
+import { GallerySelections, GalleryStore } from './store';
 
 import AnalyticsHandler, { Product } from 'src/integrations/AnalyticsHandler';
 import { InventoryStore } from 'src/modules/inventory/store';
@@ -29,6 +31,7 @@ class GalleryViewModel {
   readonly stockPhotoBody: string = `These are stock photos. When real photos become available, we'll share them here.`;
   readonly noPhotosSubtitle: string =
     "When real photos become available, we'll share\xa0them\xa0here.";
+  readonly iFrameNotSupported: string = 'Iframe Not Supported';
 
   constructor(inventoryStore: InventoryStore, galleryStore: GalleryStore) {
     this.inventoryStore = inventoryStore;
@@ -69,6 +72,7 @@ class GalleryViewModel {
       year,
       defectPhotos,
       hasStockPhotos,
+      spincarSpinUrl,
     } = this.inventoryStore.vehicle._source;
     const name = `${year} ${make} ${model}`;
     const product: Product = {
@@ -84,6 +88,7 @@ class GalleryViewModel {
       year,
       defectPhotos: !!defectPhotos,
       hasStockPhotos,
+      spincarSpinUrl,
     };
     return product;
   }
@@ -104,8 +109,19 @@ class GalleryViewModel {
     return leadFlagPhotoUrl === '';
   }
 
+  getSelectedGallery(): string {
+    return this.galleryStore.selectedGallery;
+  }
+
   getGalleryImages(): (GeneralPhoto | DefectPhoto)[] {
-    return this.getGeneralImages();
+    const { selectedGallery } = this.galleryStore;
+    if (selectedGallery === GallerySelections.DEFECTS) {
+      return this.getDefectImages();
+    }
+    if (selectedGallery === GallerySelections.GENERAL) {
+      return [...this.getGeneralImages(), ...this.getDefectImages()];
+    }
+    return [];
   }
 
   getGeneralImages(): GeneralPhoto[] {
@@ -129,16 +145,59 @@ class GalleryViewModel {
     return generalPhotos;
   }
 
+  getDefectImages(): DefectPhoto[] {
+    const { defectPhotos } = this.inventoryStore.vehicle._source;
+    const defectImages =
+      !!defectPhotos && !isEmpty(defectPhotos)
+        ? defectPhotos.map(
+            (img: {
+              url: string;
+              defectType: DefectType;
+              location: string;
+            }) => {
+              return {
+                original: this.getHiResImageUrl(img.url),
+                thumbnail: img.url,
+                description: `${this.getDefectDisplay(img.defectType)} - ${
+                  img.location
+                }`,
+              };
+            }
+          )
+        : [];
+    return defectImages;
+  }
+
+  getSpincarIframeUrl(): string | undefined {
+    let { spincarSpinUrl } = this.inventoryStore.vehicle._source;
+    const options =
+      '#hidecarousel!disabledrawer!disableautospin!disablewatermark!hidevehiclehits!stscolor=E7131A%2CFC4349%2CE7131A';
+    if (spincarSpinUrl) {
+      spincarSpinUrl = spincarSpinUrl.concat(options);
+    } else {
+      return (spincarSpinUrl = undefined);
+    }
+    return spincarSpinUrl;
+  }
+
+  isSpincarView(): boolean {
+    return this.galleryStore.selectedGallery === GallerySelections.THREE_SIXTY;
+  }
+
+  isDefectView(): boolean {
+    return this.galleryStore.selectedGallery === GallerySelections.DEFECTS;
+  }
+
   isListView(): boolean {
     return this.galleryStore.isListView;
   }
 
   setListView(): void {
-    const { isListView } = this.galleryStore;
+    const { selectedGallery, isListView } = this.galleryStore;
     const product = this.getCurrentProduct();
     this.galleryStore.changeListView();
     !isListView &&
-      this.analyticsHandler.trackGalleryListView(product, 'General Photos');
+      this.analyticsHandler.trackGalleryListView(product, selectedGallery);
   }
 
   handleListViewImageClick(image: string): void {
@@ -164,6 +223,25 @@ class GalleryViewModel {
       //Fyusion Image
       const fyusionImgURL = img.replace('/edit/', '/');
       return fyusionImgURL.split('?')[0];
+    }
+  }
+
+  private getDefectDisplay(defect: DefectType): string {
+    switch (defect) {
+      case DefectType.SCRATCH:
+        return 'Scratch';
+      case DefectType.OXIDATION:
+        return 'Paint Imperfection';
+      case DefectType.SPIDER_CRACKING:
+        return 'Paint Imperfection';
+      case DefectType.RUN:
+        return 'Paint Imperfection';
+      case DefectType.DENT:
+        return 'Dent';
+      case DefectType.CHIP:
+        return 'Chip';
+      default:
+        return '';
     }
   }
 }

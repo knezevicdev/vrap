@@ -58,6 +58,11 @@ class VroomDocument extends Document<Props> {
 
   render(): JSX.Element {
     const isProduction = serverRuntimeConfig.NODE_ENV === 'production';
+    const segmentWriteKey =
+      this.props.brand === Brand.SANTANDER
+        ? serverRuntimeConfig.SANTANDER_SEGMENT_WRITE_KEY
+        : serverRuntimeConfig.SEGMENT_WRITE_KEY;
+
     return (
       <Html lang="en">
         <Head>
@@ -77,12 +82,19 @@ class VroomDocument extends Document<Props> {
             brand={this.props.brand}
             staticAssetsHostUrl={publicRuntimeConfig.STATIC_ASSETS_HOST_URL}
           />
-          {serverRuntimeConfig.SEGMENT_WRITE_KEY && (
+          {segmentWriteKey && (
             <AnalyticsSnippet
               appName="Vroom Web - Listing"
-              segmentWriteKey={serverRuntimeConfig.SEGMENT_WRITE_KEY}
+              segmentWriteKey={segmentWriteKey}
             />
           )}
+          <script
+            defer
+            dangerouslySetInnerHTML={{
+              __html: `(function(b,r,a,n,c,h,_,s,d,k){if(!b[n]||!b[n]._q){for(;s<_.length;)c(h,_[s++]);d=r.createElement(a);d.async=1;d.src="https://cdn.branch.io/branch-latest.min.js";k=r.getElementsByTagName(a)[0];k.parentNode.insertBefore(d,k);b[n]=h}})(window,document,"script","branch",function(b,r){b[r]=function(){b._q.push([r,arguments])}},{_q:[],_v:1},"addListener applyCode autoAppIndex banner closeBanner closeJourney creditHistory credits data deepview deepviewCta first getCode init link logout redeem referrals removeListener sendSMS setBranchViewData setIdentity track validateCode trackCommerceEvent logEvent disableTracking".split(" "), 0);
+            branch.init("${publicRuntimeConfig.BRANCH_IO_KEY}");`,
+            }}
+          />
         </Head>
         <body>
           <Main />
