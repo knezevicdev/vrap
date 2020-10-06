@@ -77,6 +77,7 @@ describe('Inventory Store', () => {
     } as unknown) as InventoryResponse;
     const mockErrorState = {
       vehicleStatus: Status.ERROR,
+      vehicle: {} as Hit,
     };
     const mockVehicle = ({
       _source: {
@@ -176,6 +177,7 @@ describe('Inventory Store', () => {
     test('it should set the status to error if the call fails', async () => {
       const mockResponseData = {
         similarStatus: Status.ERROR,
+        similar: [] as Hit[],
       };
 
       invSearchNetworkMock.getInventorySimilar = jest

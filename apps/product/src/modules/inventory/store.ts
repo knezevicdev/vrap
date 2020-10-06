@@ -14,9 +14,9 @@ const { publicRuntimeConfig } = getConfig();
 
 export interface InventoryStoreState {
   similarStatus: Status;
-  similar?: Hit[];
+  similar: Hit[];
   vehicleStatus: Status;
-  vehicle?: Hit;
+  vehicle: Hit;
   isAvailable: boolean;
 }
 
@@ -63,7 +63,7 @@ export async function getVehicleState(
   vin: string,
   getVehicleResponseFn: getVehicleResponseType,
   invSearchNetworker: InvSearchNetworker
-): Promise<{ vehicleStatus: Status; vehicle?: Hit }> {
+): Promise<{ vehicleStatus: Status; vehicle: Hit }> {
   try {
     const response = await getVehicleResponseFn(vin, invSearchNetworker);
     if (!response) {
@@ -84,6 +84,7 @@ export async function getVehicleState(
     console.error(error);
     return {
       vehicleStatus: Status.ERROR,
+      vehicle: {} as Hit,
     };
   }
 }
@@ -92,7 +93,7 @@ export async function getVehicleSimilarState(
   vin: string,
   vinClusterDefaultVariant: boolean,
   invSearchNetworker: InvSearchNetworker
-): Promise<{ similarStatus: Status; similar?: Hit[] }> {
+): Promise<{ similarStatus: Status; similar: Hit[] }> {
   try {
     const response = await invSearchNetworker.getInventorySimilar({
       vin,
@@ -109,6 +110,7 @@ export async function getVehicleSimilarState(
     console.error(error);
     return {
       similarStatus: Status.ERROR,
+      similar: [] as Hit[],
     };
   }
 }
