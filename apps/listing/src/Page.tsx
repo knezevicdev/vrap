@@ -1,7 +1,6 @@
 import { styled } from '@material-ui/core/styles';
 import { Brand, Container } from '@vroom-web/ui';
 import Head from 'next/head';
-import { parseCookies } from 'nookies';
 import React from 'react';
 
 import AnalyticsHandler from 'src/integrations/AnalyticsHandler';
@@ -37,16 +36,11 @@ class Page extends React.Component<PageProps> {
   componentDidMount(): void {
     window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
     const { category, experiments, name } = this.props;
-    const cookies = parseCookies();
-    const anonymousId: string | undefined = cookies['uuid'];
     if (this.props.brand === Brand.SANTANDER) {
       this.analyticsHandler.createAdditionalTracker(
         'UA-2348754-1',
         'santander'
       );
-    }
-    if (anonymousId) {
-      this.analyticsHandler.setAnonymousId(anonymousId);
     }
     if (experiments) {
       this.analyticsHandler.setExperiments(experiments);
