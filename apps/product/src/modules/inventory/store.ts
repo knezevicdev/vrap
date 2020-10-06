@@ -163,9 +163,9 @@ export async function getInitialInventoryStoreState(
 
 export class InventoryStore {
   @observable similarStatus: Status = Status.FETCHING;
-  @observable similar?: Hit[] = [] as Hit[];
+  @observable similar: Hit[] = [] as Hit[];
   @observable vehicleStatus: Status = Status.FETCHING;
-  @observable vehicle?: Hit = {} as Hit;
+  @observable vehicle: Hit = {} as Hit;
   @observable isAvailable = false;
 
   constructor(initialState?: InventoryStoreState) {
