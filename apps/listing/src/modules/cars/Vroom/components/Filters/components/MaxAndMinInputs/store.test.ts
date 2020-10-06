@@ -12,7 +12,7 @@ interface ConstructorProps {
 
 describe('Max and Min Store', () => {
   const range = {
-    min: 0,
+    min: 1,
     max: 10,
   };
 
@@ -55,6 +55,49 @@ describe('Max and Min Store', () => {
         max: 8,
       });
     });
+
+    it('should do nothing when no input', () => {
+      const mockedOnChange = jest.fn();
+      const constructorProps: ConstructorProps = {
+        onChange: mockedOnChange,
+        range: range,
+        variant: variant,
+      };
+      const store = new MaxAndMinInputsStore(constructorProps);
+      store.setMinInputValue('');
+      expect(mockedOnChange).toHaveBeenCalledTimes(1);
+      expect(store.hasInputError).toBeFalsy();
+      expect(mockedOnChange).toHaveBeenCalledWith(undefined);
+    });
+
+    it('should do nothing when no input and has max value', () => {
+      const mockedOnChange = jest.fn();
+      const constructorProps: ConstructorProps = {
+        onChange: mockedOnChange,
+        range: range,
+        variant: variant,
+        value: {
+          min: 3,
+          max: 8,
+        },
+      };
+      const store = new MaxAndMinInputsStore(constructorProps);
+      store.setMinInputValue('');
+      expect(mockedOnChange).not.toHaveBeenCalled();
+    });
+
+    it('should set error when input < range min value', () => {
+      const mockedOnChange = jest.fn();
+      const constructorProps: ConstructorProps = {
+        onChange: mockedOnChange,
+        range: range,
+        variant: variant,
+      };
+      const store = new MaxAndMinInputsStore(constructorProps);
+      store.setMinInputValue('0');
+      expect(mockedOnChange).not.toHaveBeenCalled();
+      expect(store.hasInputError).toBeTruthy();
+    });
   });
 
   describe('Set MAX Input Value', () => {
@@ -70,7 +113,7 @@ describe('Max and Min Store', () => {
       store.setMaxInputValue('8');
       expect(mockedOnChange).toHaveBeenCalledTimes(1);
       expect(mockedOnChange).toHaveBeenCalledWith({
-        min: 0,
+        min: 1,
         max: 8,
       });
     });
@@ -93,6 +136,49 @@ describe('Max and Min Store', () => {
         min: 3,
         max: 10,
       });
+    });
+
+    it('should do nothing when no input', () => {
+      const mockedOnChange = jest.fn();
+      const constructorProps: ConstructorProps = {
+        onChange: mockedOnChange,
+        range: range,
+        variant: variant,
+      };
+      const store = new MaxAndMinInputsStore(constructorProps);
+      store.setMaxInputValue('');
+      expect(mockedOnChange).toHaveBeenCalledTimes(1);
+      expect(store.hasInputError).toBeFalsy();
+      expect(mockedOnChange).toHaveBeenCalledWith(undefined);
+    });
+
+    it('should do nothing when no input and has min value', () => {
+      const mockedOnChange = jest.fn();
+      const constructorProps: ConstructorProps = {
+        onChange: mockedOnChange,
+        range: range,
+        variant: variant,
+        value: {
+          min: 3,
+          max: 8,
+        },
+      };
+      const store = new MaxAndMinInputsStore(constructorProps);
+      store.setMaxInputValue('');
+      expect(mockedOnChange).not.toHaveBeenCalled();
+    });
+
+    it('should set error when input > range max value', () => {
+      const mockedOnChange = jest.fn();
+      const constructorProps: ConstructorProps = {
+        onChange: mockedOnChange,
+        range: range,
+        variant: variant,
+      };
+      const store = new MaxAndMinInputsStore(constructorProps);
+      store.setMaxInputValue('12');
+      expect(mockedOnChange).not.toHaveBeenCalled();
+      expect(store.hasInputError).toBeTruthy();
     });
   });
 
