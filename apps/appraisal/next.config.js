@@ -20,10 +20,6 @@ const config = {
   generateBuildId: () => shortHash,
   publicRuntimeConfig: {
     // Will be available on both server-side and client-side
-    BASE_PATH: basePath,
-    NAME: name,
-    VERSION: version,
-    BRANCH_IO_KEY: process.env.BRANCH_IO_KEY,
   },
   serverRuntimeConfig: {
     // Will only be available on the server side
