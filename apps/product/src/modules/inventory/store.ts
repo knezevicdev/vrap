@@ -20,12 +20,32 @@ export interface InventoryStoreState {
   isAvailable: boolean;
 }
 
-export async function getVehicleReponse(
-  vin: string
+export type getVehicleResponseType = (
+  vin: string,
+  invSearchNetworker: InvSearchNetworker
+) => Promise<InventoryResponse | undefined>;
+
+export type getVehicleStateType = (
+  vin: string,
+  getVehicleResponseFn: getVehicleResponseType,
+  invSearchNetworker: InvSearchNetworker
+) => Promise<{ vehicleStatus: Status; vehicle?: Hit }>;
+
+export type getVehicleSimilarStateType = (
+  vin: string,
+  vinClusterDefaultVariant: boolean,
+  invSearchNetworker: InvSearchNetworker
+) => Promise<{ similarStatus: Status; similar?: Hit[] }>;
+
+export type getInventoryAvailabilityStateType = (
+  vin: string,
+  invServiceNetworker: InvServiceNetworker
+) => Promise<boolean>;
+
+export async function getVehicleResponse(
+  vin: string,
+  invSearchNetworker: InvSearchNetworker
 ): Promise<InventoryResponse | undefined> {
-  const invSearchNetworker = new InvSearchNetworker(
-    publicRuntimeConfig.INVSEARCH_V3_URL || ''
-  );
   try {
     const response = await invSearchNetworker.postInventory({
       fulldetails: true,
@@ -33,16 +53,19 @@ export async function getVehicleReponse(
       vin: [vin],
     });
     return response;
-  } catch (err) {
+  } catch (error) {
+    console.error(error);
     return undefined;
   }
 }
 
 export async function getVehicleState(
-  vin: string
+  vin: string,
+  getVehicleResponseFn: getVehicleResponseType,
+  invSearchNetworker: InvSearchNetworker
 ): Promise<{ vehicleStatus: Status; vehicle?: Hit }> {
   try {
-    const response = await getVehicleReponse(vin);
+    const response = await getVehicleResponseFn(vin, invSearchNetworker);
     if (!response) {
       throw new Error('Failed to post inventory');
     }
@@ -57,7 +80,8 @@ export async function getVehicleState(
       vehicleStatus: Status.SUCCESS,
       vehicle,
     };
-  } catch {
+  } catch (error) {
+    console.error(error);
     return {
       vehicleStatus: Status.ERROR,
     };
@@ -66,11 +90,9 @@ export async function getVehicleState(
 
 export async function getVehicleSimilarState(
   vin: string,
-  vinClusterDefaultVariant: boolean
+  vinClusterDefaultVariant: boolean,
+  invSearchNetworker: InvSearchNetworker
 ): Promise<{ similarStatus: Status; similar?: Hit[] }> {
-  const invSearchNetworker = new InvSearchNetworker(
-    publicRuntimeConfig.INVSEARCH_V3_URL || ''
-  );
   try {
     const response = await invSearchNetworker.getInventorySimilar({
       vin,
@@ -83,7 +105,8 @@ export async function getVehicleSimilarState(
       similarStatus: Status.SUCCESS,
       similar: response.data.hits.hits,
     };
-  } catch {
+  } catch (error) {
+    console.error(error);
     return {
       similarStatus: Status.ERROR,
     };
@@ -91,17 +114,49 @@ export async function getVehicleSimilarState(
 }
 
 export async function getInventoryAvailabilityState(
-  vin: string
+  vin: string,
+  invServiceNetworker: InvServiceNetworker
 ): Promise<boolean> {
-  const invServiceNetworker = new InvServiceNetworker(
-    publicRuntimeConfig.INV_SERVICE_V2_URL || ''
-  );
   try {
     const response = await invServiceNetworker.getInventoryAvailability(vin);
     return response;
-  } catch {
+  } catch (error) {
+    console.error(error);
     return false;
   }
+}
+
+export async function getInitialInventoryStoreState(
+  vin: string,
+  vinClusterDefaultVariant: boolean
+): Promise<InventoryStoreState> {
+  const invSearchNetworker = new InvSearchNetworker(
+    publicRuntimeConfig.INVSEARCH_V3_URL || ''
+  );
+
+  const invServiceNetworker = new InvServiceNetworker(
+    publicRuntimeConfig.INV_SERVICE_V2_URL || ''
+  );
+
+  const vehicleState = await getVehicleState(
+    vin,
+    getVehicleResponse,
+    invSearchNetworker
+  );
+  const vehicleSimilarState = await getVehicleSimilarState(
+    vin,
+    vinClusterDefaultVariant,
+    invSearchNetworker
+  );
+  const inventoryAvailableState = await getInventoryAvailabilityState(
+    vin,
+    invServiceNetworker
+  );
+  return {
+    ...vehicleState,
+    ...vehicleSimilarState,
+    isAvailable: inventoryAvailableState,
+  };
 }
 
 export class InventoryStore {
