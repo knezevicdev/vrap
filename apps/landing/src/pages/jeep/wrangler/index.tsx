@@ -21,4 +21,8 @@ const LandingPage = () => {
   );
 };
 
+LandingPage.getInitialProps = async () => {
+    return {};
+}
+
 export default LandingPage;
