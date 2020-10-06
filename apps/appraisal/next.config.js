@@ -21,16 +21,9 @@ const config = {
   publicRuntimeConfig: {
     // Will be available on both server-side and client-side
     BASE_PATH: basePath,
-    DATA_DOG_RUM_APPLICATION: process.env.DATA_DOG_RUM_APPLICATION,
-    DATA_DOG_RUM_TOKEN: process.env.DATA_DOG_RUM_TOKEN,
-    GEARBOX_PRIVATE_URL: process.env.GEARBOX_PRIVATE_URL,
-    GEARBOX_PUBLIC_URL: process.env.GEARBOX_PUBLIC_URL,
-    INVSEARCH_V3_URL: process.env.INVSEARCH_V3_URL,
     NAME: name,
-    STATIC_ASSETS_HOST_URL: process.env.STATIC_ASSETS_HOST_URL,
     VERSION: version,
     BRANCH_IO_KEY: process.env.BRANCH_IO_KEY,
-    ACQUISITIONS_URL: process.env.ACQUISITIONS_URL,
   },
   serverRuntimeConfig: {
     // Will only be available on the server side
