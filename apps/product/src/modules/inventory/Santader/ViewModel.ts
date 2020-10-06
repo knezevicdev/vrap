@@ -16,35 +16,33 @@ class InventoryViewModel {
   }
 
   private trackProductViewed(): void {
-    if (this.store.vehicle) {
-      const {
-        consignmentPartnerId: partnerId,
-        inventoryId: sku,
-        leadPhotoUrl: imageUrl,
-        listingPrice: price,
-        make,
-        model,
-        vin,
-        year,
-        defectPhotos,
-      } = this.store.vehicle._source;
+    const {
+      consignmentPartnerId: partnerId,
+      inventoryId: sku,
+      leadPhotoUrl: imageUrl,
+      listingPrice: price,
+      make,
+      model,
+      vin,
+      year,
+      defectPhotos,
+    } = this.store.vehicle._source;
 
-      const name = `${year} ${make} ${model}`;
-      const product: Product = {
-        imageUrl,
-        inventoryType: partnerId ? 'Consignment' : 'Vroom',
-        make,
-        model,
-        name,
-        partnerId,
-        price,
-        sku,
-        vin,
-        year,
-        defectPhotos: !!defectPhotos,
-      };
-      this.analyticsHandler.trackProductViewed(product);
-    }
+    const name = `${year} ${make} ${model}`;
+    const product: Product = {
+      imageUrl,
+      inventoryType: partnerId ? 'Consignment' : 'Vroom',
+      make,
+      model,
+      name,
+      partnerId,
+      price,
+      sku,
+      vin,
+      year,
+      defectPhotos: !!defectPhotos,
+    };
+    this.analyticsHandler.trackProductViewed(product);
   }
 
   startReaction(): void {
