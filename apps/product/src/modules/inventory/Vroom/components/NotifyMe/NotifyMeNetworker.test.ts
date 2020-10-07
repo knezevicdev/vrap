@@ -13,13 +13,17 @@ const mockAxios: AxiosInstance = jest.genMockFromModule('axios');
 const VIN = 'some-vin';
 const ACCESS_TOKEN = 'access-token';
 const BASE_URL = 'fake-url';
+const OPTIONS = {
+  headers: { Authorization: `Bearer ${ACCESS_TOKEN}` },
+};
 
 describe('NotifyMe Networker', () => {
-  it('should list subscription', async () => {
+  let notifyMeNetworker: NotifyMeNetworker;
+  beforeEach(() => {
     mocked(axios.create).mockImplementationOnce(() => mockAxios);
-    const notifyMeNetworker: NotifyMeNetworker = new NotifyMeNetworker(
-      BASE_URL
-    );
+    notifyMeNetworker = new NotifyMeNetworker(BASE_URL);
+  });
+  it('should list subscription', async () => {
     const expected: ListSubscriptionResponse = {
       data: {
         data: {
@@ -63,18 +67,11 @@ describe('NotifyMe Networker', () => {
       }
     `.trim();
     const data = { query: checkSubscriptionQuery };
-    const options = {
-      headers: { Authorization: `Bearer ${ACCESS_TOKEN}` },
-    };
-    expect(mockAxios.post).toHaveBeenCalledWith(BASE_URL, data, options);
+
+    expect(mockAxios.post).toHaveBeenCalledWith(BASE_URL, data, OPTIONS);
   });
 
   it('should register email', async () => {
-    mocked(axios.create).mockImplementationOnce(() => mockAxios);
-    const notifyMeNetworker: NotifyMeNetworker = new NotifyMeNetworker(
-      BASE_URL
-    );
-
     const expected: CreateDeviceResponse = {
       data: {
         hornCreateDevice: {
@@ -88,9 +85,6 @@ describe('NotifyMe Networker', () => {
 
     await notifyMeNetworker.registerEmail(ACCESS_TOKEN);
 
-    const options = {
-      headers: { Authorization: `Bearer ${ACCESS_TOKEN}` },
-    };
     const variables = {
       id: '',
       type: 'EMAIL',
@@ -121,14 +115,10 @@ describe('NotifyMe Networker', () => {
       variables,
       operationName: 'createDevice',
     };
-    expect(mockAxios.post).toHaveBeenCalledWith(BASE_URL, data, options);
+    expect(mockAxios.post).toHaveBeenCalledWith(BASE_URL, data, OPTIONS);
   });
 
   it('should create subscription', async () => {
-    mocked(axios.create).mockImplementationOnce(() => mockAxios);
-    const notifyMeNetworker: NotifyMeNetworker = new NotifyMeNetworker(
-      BASE_URL
-    );
     const createSubResponse: CreateSubscriptionResponse = {
       data: {
         hornCreateSubscription: {
@@ -153,9 +143,7 @@ describe('NotifyMe Networker', () => {
     );
 
     expect(actual).toEqual(expected.data);
-    const options = {
-      headers: { Authorization: `Bearer ${ACCESS_TOKEN}` },
-    };
+
     const variables = {
       filters: `{ "vin":"${VIN}" }`,
       subject: 'inventory/available-now',
@@ -191,14 +179,10 @@ describe('NotifyMe Networker', () => {
       variables,
       operationName: 'createSub',
     };
-    expect(mockAxios.post).toHaveBeenCalledWith(BASE_URL, data, options);
+    expect(mockAxios.post).toHaveBeenCalledWith(BASE_URL, data, OPTIONS);
   });
 
   it('should create subscription - Duplicate', async () => {
-    mocked(axios.create).mockImplementationOnce(() => mockAxios);
-    const notifyMeNetworker: NotifyMeNetworker = new NotifyMeNetworker(
-      BASE_URL
-    );
     const expected = {
       data: {
         data: {
@@ -222,9 +206,7 @@ describe('NotifyMe Networker', () => {
     );
 
     expect(actual).toEqual(expected.data);
-    const options = {
-      headers: { Authorization: `Bearer ${ACCESS_TOKEN}` },
-    };
+
     const variables = {
       filters: `{ "vin":"${VIN}" }`,
       subject: 'inventory/available-now',
@@ -260,6 +242,6 @@ describe('NotifyMe Networker', () => {
       variables,
       operationName: 'createSub',
     };
-    expect(mockAxios.post).toHaveBeenCalledWith(BASE_URL, data, options);
+    expect(mockAxios.post).toHaveBeenCalledWith(BASE_URL, data, OPTIONS);
   });
 });
