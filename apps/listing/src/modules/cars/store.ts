@@ -299,7 +299,6 @@ export class CarsStore {
 
   @observable areFiltersOpen = false;
 
-  @observable oldNewPdpExperiment?: Experiment;
   @observable geoLocationSortExperiment?: Experiment;
 
   constructor(initialState?: InitialCarsStoreState) {
@@ -316,11 +315,6 @@ export class CarsStore {
       this.isTitleQAPass = initialState.titleQuery;
     }
   }
-
-  @action
-  setOldNewPdpExperiment = (oldNewPdpExperiment?: Experiment): void => {
-    this.oldNewPdpExperiment = oldNewPdpExperiment;
-  };
 
   @action
   setGeoLocationSortExperiment = (
