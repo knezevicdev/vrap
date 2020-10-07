@@ -22,7 +22,7 @@ const LandingPage = () => {
 };
 
 LandingPage.getInitialProps = async () => {
-    return {};
-}
+  return {};
+};
 
 export default LandingPage;
