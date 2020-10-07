@@ -1,6 +1,6 @@
 import { Car } from '@vroom-web/inv-search-networking';
-import data from '../../testCar.json';
 
+import data from '../../testCar.json';
 import FavoritesNetworker, {
   AddFavroiteResponse,
   FavoritesListResponse,

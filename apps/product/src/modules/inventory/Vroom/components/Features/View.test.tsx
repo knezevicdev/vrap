@@ -1,9 +1,12 @@
-import { render, screen, fireEvent } from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
+import React from 'react';
+
+import data from '../../testCar.json';
+import { FeaturesStore } from './store';
 import View from './View';
 import ViewModel from './ViewModel';
-import { FeaturesStore } from './store';
+
 import { InventoryStore } from 'src/modules/inventory/store';
-import data from '../../testCar.json';
 jest.mock('next/config', () => {
   return (): unknown => {
     return {

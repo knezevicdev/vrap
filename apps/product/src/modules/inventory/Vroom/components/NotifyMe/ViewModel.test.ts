@@ -1,9 +1,11 @@
-import ViewModel from './ViewModel';
-import { InventoryStore } from 'src/modules/inventory/store';
-import { NotifyMeStore } from './store';
-import NotifyMeNetworker from './NotifyMeNetworker';
 import { Car } from '@vroom-web/inv-search-networking';
+
 import data from '../../testCar.json';
+import NotifyMeNetworker from './NotifyMeNetworker';
+import { NotifyMeStore } from './store';
+import ViewModel from './ViewModel';
+
+import { InventoryStore } from 'src/modules/inventory/store';
 
 jest.mock('next/config', () => {
   return (): unknown => {

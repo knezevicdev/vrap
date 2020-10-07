@@ -1,9 +1,12 @@
-import { render, screen, fireEvent } from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
+import React from 'react';
+
+import NotifyMeNetworker from './NotifyMeNetworker';
+import { NotifyMeStore } from './store';
 import View from './View';
 import ViewModel from './ViewModel';
+
 import { InventoryStore } from 'src/modules/inventory/store';
-import { NotifyMeStore } from './store';
-import NotifyMeNetworker from './NotifyMeNetworker';
 jest.mock('next/config', () => {
   return (): unknown => {
     return {

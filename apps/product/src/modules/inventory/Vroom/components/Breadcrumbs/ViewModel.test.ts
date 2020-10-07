@@ -1,7 +1,10 @@
 import { Car } from '@vroom-web/inv-search-networking';
-import ViewModel from './ViewModel';
-import { InventoryStore } from 'src/modules/inventory/store';
+import { ParsedUrlQuery } from 'querystring';
+
 import data from '../../testCar.json';
+import ViewModel from './ViewModel';
+
+import { InventoryStore } from 'src/modules/inventory/store';
 jest.mock('next/config', () => {
   return (): unknown => {
     return {
@@ -45,10 +48,10 @@ describe('Breadcrumbs ViewModel', () => {
 
     const store = new InventoryStore();
     store.vehicle._source = car;
-    const query = {
-      utm_source: 'source',
-      utm_campaign: 'campaign',
-    };
+    const query: ParsedUrlQuery = {};
+    query['utm_source'] = 'source';
+    query['utm_campaign'] = 'campaign';
+
     const viewModel = new ViewModel(query, store);
     const actual = viewModel.crumbs();
     expect(actual).toEqual(expected);

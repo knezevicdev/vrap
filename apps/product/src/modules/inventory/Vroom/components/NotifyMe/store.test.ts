@@ -1,4 +1,5 @@
 import ClientSideCookies from 'js-cookie';
+
 import { NotifyMeStore } from './store';
 jest.mock('js-cookie');
 

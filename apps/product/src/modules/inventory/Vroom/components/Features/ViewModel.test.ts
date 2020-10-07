@@ -1,8 +1,10 @@
-import ViewModel from './ViewModel';
-import { InventoryStore } from 'src/modules/inventory/store';
-import { FeaturesStore } from 'src/modules/inventory/Santader/components/Features/store';
 import { Car } from '@vroom-web/inv-search-networking';
+
 import data from '../../testCar.json';
+import ViewModel from './ViewModel';
+
+import { FeaturesStore } from 'src/modules/inventory/Santader/components/Features/store';
+import { InventoryStore } from 'src/modules/inventory/store';
 jest.mock('next/config', () => {
   return (): unknown => {
     return {
