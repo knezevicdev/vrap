@@ -1,6 +1,8 @@
-import MaxAndMinInputsStore from './store';
-import { Variant } from 'src/modules/cars/Santander/components/Filters/components/MaxAndMinInputs';
 import { MaxAndMin } from '@vroom-web/catalog-url-integration';
+
+import MaxAndMinInputsStore from './store';
+
+import { Variant } from 'src/modules/cars/Santander/components/Filters/components/MaxAndMinInputs';
 jest.mock('lodash.debounce', () => jest.fn((fn) => fn));
 
 interface ConstructorProps {
