@@ -1,3 +1,4 @@
+import { AnalyticsHandler } from '@vroom-web/analytics-integration';
 import { CatSDK } from '@vroom-web/cat-sdk';
 import App from 'next/app';
 import getConfig from 'next/config';
@@ -14,6 +15,7 @@ const dev = NODE_ENV !== 'production';
 
 export default class VroomApp extends App {
   componentDidMount(): void {
+    new AnalyticsHandler().page('Landing - 2019 Jeep Wrangler');
     const catSDK = new CatSDK({
       // Point to dev for local builds.
       serviceBasePath: dev ? 'https://dev.vroom.com' : undefined,

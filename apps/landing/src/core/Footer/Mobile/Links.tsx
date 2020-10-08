@@ -36,6 +36,7 @@ const Title = styled(Body.Regular)`
 `;
 
 const CustomLink = styled(Link)<{ visible: boolean }>`
+  width: max-content;
   :hover {
     text-decoration-color: red;
   }
@@ -45,6 +46,7 @@ const CustomLink = styled(Link)<{ visible: boolean }>`
         :last-child {
            border-bottom: solid 1px #FFFFFF;
            padding-bottom: 8px;
+           width: 100%;
          }
         `
       : undefined}
