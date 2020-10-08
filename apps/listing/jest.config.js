@@ -21,4 +21,5 @@ module.exports = {
     '^src(.*)$': '<rootDir>/src$1',
     //   '^.+\\.module\\.(css|sass|scss)$': 'identity-obj-proxy',
   },
+  reporters: ['default',  'jest-sonar'],
 };
