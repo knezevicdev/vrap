@@ -446,12 +446,25 @@ var getQuery = function getQuery(filtersData) {
   var encodedFiltersData = jsBase64.Base64.encode(jsonFiltersData);
   return "?".concat(filtersQueryParamKey, "=").concat(encodedFiltersData);
 };
+
+var getTitleQuery = function getTitleQuery(filtersData, titleQuery) {
+  if (!titleQuery) return '';
+  var query = "isTitleQAPass=".concat(titleQuery);
+
+  if (!filtersData || JSON.stringify(filtersData) === '{}') {
+    return "?".concat(query);
+  }
+
+  return "&".concat(query);
+};
+
 var getUrlFromFiltersData = function getUrlFromFiltersData(filtersData, options) {
   var addFiltersQueryParam = options && options.addFiltersQueryParam;
   var query = addFiltersQueryParam ? getQuery(filtersData) : '';
   var ignoreParamsBasePath = options && options.ignoreParamsBasePath;
   var actualParamsBasePath = ignoreParamsBasePath ? '' : paramsBasePath;
-  var url = "".concat(actualParamsBasePath).concat(getParams(filtersData)).concat(query);
+  var titleQuery = getTitleQuery(filtersData, options === null || options === void 0 ? void 0 : options.titleQuery);
+  var url = "".concat(actualParamsBasePath).concat(getParams(filtersData)).concat(query).concat(titleQuery);
   return url;
 };
 var getFiltersDataFromFiltersQueryParam = function getFiltersDataFromFiltersQueryParam(filtersQueryParam) {

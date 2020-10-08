@@ -33,20 +33,14 @@ const GalleryNoImagesContainerContent = styled('div')(({ theme }) => ({
 
 const Title = styled(Typography)(({ theme }) => ({
   margin: theme.spacing(0, 1, 1, 1),
-  fontWeight: 600,
   fontSize: '24px',
-  [theme.breakpoints.only('xs')]: {
-    fontSize: '22px',
-  },
-  fontFamily: 'SantanderHeadline, Arial, sans-serif',
+  textAlign: 'center',
+  lineHeight: 'normal',
 }));
 
 const Description = styled(Typography)(({ theme }) => ({
   margin: theme.spacing(0, 1, 2, 1),
   fontSize: '16px',
-  [theme.breakpoints.only('xs')]: {
-    fontSize: '14px',
-  },
   textAlign: 'center',
   lineHeight: 'normal',
 }));
@@ -63,7 +57,7 @@ const GalleryNoImagesView: React.FC<Props> = ({ viewModel }) => {
           alt={viewModel.defaultImage.alt}
           src={viewModel.defaultImage.src}
         />
-        <Title>{viewModel.photosComing}</Title>
+        <Title variant="h2">{viewModel.photosComing}</Title>
         <Description>{viewModel.noPhotosSubtitle}</Description>
       </GalleryNoImagesContainerContent>
     </GalleryNoImagesContainer>

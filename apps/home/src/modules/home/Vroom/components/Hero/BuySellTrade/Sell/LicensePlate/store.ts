@@ -40,38 +40,34 @@ export class LicensePlateStore {
   };
 
   @action
-  getVehicles = async (): Promise<void> => {
-    try {
-      runInAction(() => {
-        this.fetching = true;
-      });
-      this.licensePlateToVinNetworker
-        .getVin(this.licensePlate, this.selectedState)
-        .then((res) => {
-          const data = res.data;
-          if (data) {
-            const vehicles = data.licensePlateToVin.vehicles;
+  getVehicles = (): Promise<void> => {
+    runInAction(() => {
+      this.fetching = true;
+    });
+    return this.licensePlateToVinNetworker
+      .getVin(this.licensePlate, this.selectedState)
+      .then((res) => {
+        const data = res.data;
+        if (data) {
+          const vehicles = data.licensePlateToVin.vehicles;
+          const multipleVehicles = vehicles.length > 1;
 
-            runInAction(() => {
-              this.hasError = false;
-              this.vehicles = vehicles;
-              this.isDialogOpen = true;
-              this.fetching = false;
-            });
-          } else {
-            runInAction(() => {
-              this.hasError = true;
-              this.isDialogOpen = false;
-              this.fetching = false;
-            });
-          }
+          runInAction(() => {
+            this.hasError = false;
+            this.vehicles = vehicles;
+            this.isDialogOpen = multipleVehicles;
+            this.fetching = false;
+          });
+        } else {
+          throw new Error('No vehicle data in getVin response');
+        }
+      })
+      .catch(() => {
+        runInAction(() => {
+          this.hasError = true;
+          this.isDialogOpen = false;
+          this.fetching = false;
         });
-    } catch {
-      runInAction(() => {
-        this.hasError = true;
-        this.isDialogOpen = false;
-        this.fetching = false;
       });
-    }
   };
 }

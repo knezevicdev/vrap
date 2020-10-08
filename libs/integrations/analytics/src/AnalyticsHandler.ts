@@ -18,8 +18,16 @@ interface Properties {
 }
 
 interface Experiment {
+  id: string;
   assignedVariant: 0 | 1;
   optimizeId?: string;
+}
+
+interface RegisteredExperiment {
+  id: string;
+  variant: 0 | 1;
+  optimizeId?: string;
+  time: string;
 }
 
 enum VitParam {
@@ -34,6 +42,8 @@ enum VitParam {
 type VitParams = { [key in VitParam]?: string };
 
 class AnalyticsHandler {
+  private static registeredExperimentsKey = 'registered_exp';
+  private static registeredExperiments: RegisteredExperiment[] = [];
   private static optimizeExperimentsString?: string;
 
   private getVitParams(): VitParams {
@@ -70,6 +80,13 @@ class AnalyticsHandler {
     return vitParams;
   }
 
+  constructor() {
+    if (typeof window !== 'undefined') {
+      this.retrieveRegisteredExperiments();
+      this.setOptimizeData();
+    }
+  }
+
   track(event: string, properties?: object): void {
     const vitParams = this.getVitParams();
     const fullProperties = {
@@ -84,16 +101,20 @@ class AnalyticsHandler {
     segmentSetAnonymousId(anonymousId);
   }
 
+  // TODO: depricate this in favor of using registerExperiment directly.
   setExperiments(experiments?: Experiment[]): void {
-    AnalyticsHandler.optimizeExperimentsString = experiments
-      ? experiments
-          .filter((experiment) => experiment.optimizeId)
-          .map(
-            (experiment) =>
-              `${experiment.optimizeId}.${experiment.assignedVariant}`
-          )
-          .join('!')
-      : undefined;
+    if (experiments) {
+      experiments.forEach((experiment) => {
+        this.registerExperiment(experiment);
+      });
+    }
+  }
+
+  setOptimizeData(): void {
+    AnalyticsHandler.optimizeExperimentsString = AnalyticsHandler.registeredExperiments
+      .filter((experiment) => experiment.optimizeId)
+      .map((experiment) => `${experiment.optimizeId}.${experiment.variant}`)
+      .join('!');
 
     onSegmentAnalyticsReady(() => {
       try {
@@ -105,6 +126,47 @@ class AnalyticsHandler {
         console.error(e);
       }
     });
+  }
+
+  storeRegisteredExperiments(): void {
+    const registeredExperimentsString = JSON.stringify(
+      AnalyticsHandler.registeredExperiments
+    );
+    localStorage.setItem(
+      AnalyticsHandler.registeredExperimentsKey,
+      registeredExperimentsString
+    );
+  }
+
+  retrieveRegisteredExperiments(): void {
+    const registeredExperimentsString = localStorage.getItem(
+      AnalyticsHandler.registeredExperimentsKey
+    );
+    if (!registeredExperimentsString) {
+      return;
+    }
+    const registeredExperiments = JSON.parse(
+      registeredExperimentsString
+    ) as RegisteredExperiment[];
+    AnalyticsHandler.registeredExperiments = registeredExperiments;
+  }
+
+  registerExperiment(experiment: Experiment): void {
+    const experimentIndex = AnalyticsHandler.registeredExperiments.findIndex(
+      (re) => re.id === experiment.id
+    );
+    if (experimentIndex !== -1) {
+      AnalyticsHandler.registeredExperiments.splice(experimentIndex, 1);
+    }
+    const registeredExperiment: RegisteredExperiment = {
+      id: experiment.id,
+      variant: experiment.assignedVariant,
+      optimizeId: experiment.optimizeId,
+      time: new Date().toISOString(),
+    };
+    AnalyticsHandler.registeredExperiments.push(registeredExperiment);
+    this.storeRegisteredExperiments();
+    this.setOptimizeData();
   }
 
   createAdditionalTracker(id: string, name: string): void {

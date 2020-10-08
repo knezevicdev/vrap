@@ -21,6 +21,11 @@ const CustomButton = styled(Button)(({ theme }) => ({
 
 const StartPurchaseView: React.FC<Props> = (props) => {
   const { viewModel } = props;
+
+  React.useEffect(() => {
+    viewModel.handleMount();
+  }, [viewModel]);
+
   const handleClick = (): void => viewModel.handleClick();
 
   return (

@@ -13,9 +13,12 @@ class SimilarVehiclesViewModel {
   readonly viewAllCars: string = 'View All Cars';
   readonly viewAll: string = 'VIEW ALL';
 
-  constructor(inventoryStore: InventoryStore) {
+  constructor(
+    inventoryStore: InventoryStore,
+    analyticsHandler: AnalyticsHandler
+  ) {
     this.store = inventoryStore;
-    this.analyticsHandler = new AnalyticsHandler();
+    this.analyticsHandler = analyticsHandler;
   }
 
   private trackProductList(cars: Car[]): void {
@@ -74,11 +77,15 @@ class SimilarVehiclesViewModel {
 
   getCars = (): Car[] => {
     const similarVehicleCount = 4;
-    const similarCars = this.store.similar
-      .slice(0, similarVehicleCount)
-      .map((car) => car._source);
-    this.trackProductList(similarCars);
-    return similarCars;
+    try {
+      const similarCars = this.store.similar
+        .slice(0, similarVehicleCount)
+        .map((car) => car._source);
+      this.trackProductList(similarCars);
+      return similarCars;
+    } catch {
+      return [];
+    }
   };
 
   handleClick(event: React.MouseEvent<HTMLButtonElement>): void {

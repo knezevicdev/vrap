@@ -40,20 +40,4 @@ allAppFiles.forEach((file) => {
       fail('Apps cannot import library source code. Use the built version!');
     }
   });
-
-  // Check that static nextjs page files are warned about
-  // the limitations of our current env var solution.
-  // If we update our NextJS env var solution to inject env vars at build time, this warning can be removed.
-  if (
-    file.includes('/pages/') &&
-    !file.includes('/api') &&
-    !file.includes('_app') &&
-    !file.includes('_document') &&
-    !file.includes('hp') &&
-    !content.includes('getInitialProps')
-  ) {
-    warn(
-      'There are files within a "pages" directory that have no "getInitialProps" function. If these files are part of a NextJS application, be aware that env vars currently do not work on static pages.'
-    );
-  }
 });

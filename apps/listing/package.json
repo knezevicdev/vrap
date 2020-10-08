@@ -1,6 +1,6 @@
 {
   "name": "@vroom-web/listing",
-  "version": "1.2.9",
+  "version": "1.3.1",
   "private": true,
   "scripts": {
     "dev": "node server.js",
@@ -16,6 +16,7 @@
     "@material-ui/icons": "^4.9.1",
     "@material-ui/lab": "^4.0.0-alpha.44",
     "@vroom-web/analytics-integration": "^1.0.0",
+    "@vroom-web/cat-sdk": "^0.0.0",
     "@vroom-web/deals-v2-networking": "^1.0.0",
     "@vroom-web/footer-components": "^1.0.3",
     "@vroom-web/header-components": "^1.0.2",

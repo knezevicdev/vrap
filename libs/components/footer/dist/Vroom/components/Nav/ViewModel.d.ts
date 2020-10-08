@@ -12,7 +12,6 @@ interface Section {
 declare class NavigationViewModel {
     private store;
     constructor(store: NavStore);
-    handleMount(): void;
     private getPhoneNumberLinkData;
     links(): Section[];
 }

@@ -83,4 +83,5 @@ export interface FiltersData {
 export interface GetUrlFromFiltersDataOptions {
     addFiltersQueryParam?: boolean;
     ignoreParamsBasePath?: boolean;
+    titleQuery?: boolean;
 }

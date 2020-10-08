@@ -17,6 +17,7 @@ declare class ViewModel {
     readonly learningCenterLinks: Link[];
     readonly contactUs: Link;
     readonly backToCorporate: Link;
+    readonly poweredBy = "Powered by";
     isDropdownOpen: () => boolean;
     isDrawerOpen: () => boolean;
     onDrawerClick: () => void;

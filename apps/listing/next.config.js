@@ -22,12 +22,15 @@ module.exports = {
     INVSEARCH_V3_URL: process.env.INVSEARCH_V3_URL,
     GEARBOX_PRIVATE_URL: process.env.GEARBOX_PRIVATE_URL,
     NAME: name,
+    NODE_ENV: process.env.NODE_ENV,
     SHORT_HASH: shortHash,
     STATIC_ASSETS_HOST_URL: process.env.STATIC_ASSETS_HOST_URL,
     VERSION: version,
+    BRANCH_IO_KEY: process.env.BRANCH_IO_KEY,
   },
   serverRuntimeConfig: {
     // Will only be available on the server side
+    SANTANDER_SEGMENT_WRITE_KEY: process.env.SANTANDER_SEGMENT_WRITE_KEY,
     SEGMENT_WRITE_KEY: process.env.SEGMENT_WRITE_KEY,
   },
   /* Custom webpack configuration. */

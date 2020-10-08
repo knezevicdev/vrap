@@ -13,6 +13,7 @@ const extensions = ['.js', '.jsx', '.ts', '.tsx'];
 const rex = (module) => new RegExp(`^${module}(/.+)*$`);
 const external = [
   '@vroom-web/analytics-integration',
+  '@vroom-web/cat-sdk',
   '@vroom-web/deals-v2-networking',
   '@vroom-web/ui',
   'prop-types',

@@ -19,8 +19,32 @@ export interface FavoritesListResponse {
   };
 }
 
-interface AddFavoriteResponse {
-  statusText: string;
+export interface AddFavroiteResponse {
+  data: {
+    data: {
+      userAddFavoriteVehicles: {
+        favoriteVehicles: [
+          {
+            vin: string;
+          }
+        ];
+      };
+    };
+  };
+}
+
+export interface RemoveFavroiteResponse {
+  data: {
+    data: {
+      userRemoveFavoriteVehicles: {
+        favoriteVehicles: [
+          {
+            vin: string;
+          }
+        ];
+      };
+    };
+  };
 }
 
 export default class FavoritesNetworker {
@@ -54,7 +78,7 @@ export default class FavoritesNetworker {
   async addFavorite(
     accessToken: string | undefined,
     vin: string
-  ): Promise<AddFavoriteResponse> {
+  ): Promise<AddFavroiteResponse> {
     const options = {
       headers: { Authorization: `Bearer ${accessToken}` },
     };
@@ -81,7 +105,7 @@ export default class FavoritesNetworker {
   async removeFavorite(
     accessToken: string | undefined,
     vin: string
-  ): Promise<AddFavoriteResponse> {
+  ): Promise<RemoveFavroiteResponse> {
     const options = {
       headers: { Authorization: `Bearer ${accessToken}` },
     };

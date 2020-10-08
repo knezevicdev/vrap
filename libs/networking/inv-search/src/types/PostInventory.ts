@@ -31,6 +31,7 @@ export interface PostInventoryRequestData {
   'sold-status'?: SoldStatus;
   source?: string;
   geo?: { lat: string; long: string };
+  isTitleQAPass?: boolean;
 }
 
 export const postInventoryResponseSchema = inventoryResponseSchema;
