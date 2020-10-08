@@ -2,12 +2,12 @@ FROM node:erbium-alpine
 
 WORKDIR /www
 COPY . .
-
 RUN \
-  apk --no-cache add git docker sudo groupadd &&\
-  sudo groupadd docker &&\
-  sudo usermod -aG docker $(whoami) &&\
-  sudo service docker start &&\
-  docker run sonarsource/sonar-scanner-cli
-#  yarn install --silent &&\
-#  yarn workspace @vroom-web/product test:cc &&\
+  # Install git so editor git commands work inside dev container
+  # (This could be removed if the image already has git installed.)
+  apk --no-cache add git &&\
+  # Bootstrap yarn workspaces.
+  yarn install --silent &&\
+  # Build the main app.
+  yarn workspace @vroom-web/product test:cc
+  # Change user for created files
