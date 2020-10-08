@@ -59,7 +59,7 @@ class MaxAndMinInputsStore {
       return;
     }
 
-    const maxInputInt = parseInt(this.maxInputValue);
+    const maxInputInt = parseInt(this.maxInputValue) || this.range.max;
     const maxInputInvalid = this.isInvalidValue(maxInputInt);
     const minInputInt = parseInt(minInputValue);
     const minInputInvalid =
@@ -67,10 +67,6 @@ class MaxAndMinInputsStore {
 
     if (minInputInvalid) {
       this.setHasInputError(true);
-      return;
-    }
-
-    if (this.maxInputValue === '') {
       return;
     }
 
@@ -99,7 +95,7 @@ class MaxAndMinInputsStore {
       return;
     }
 
-    const minInputInt = parseInt(this.minInputValue);
+    const minInputInt = parseInt(this.minInputValue) || this.range.min;
     const minInputInvalid = this.isInvalidValue(minInputInt);
     const maxInputInt = parseInt(maxInputValue);
     const maxInputInvalid =
@@ -117,7 +113,6 @@ class MaxAndMinInputsStore {
           max: maxInputInt,
         });
       }
-      return;
     }
 
     if (minInputInvalid) {

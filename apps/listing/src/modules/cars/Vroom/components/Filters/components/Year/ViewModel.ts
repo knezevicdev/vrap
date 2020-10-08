@@ -16,7 +16,7 @@ class YearViewModel {
 
   constructor(carsStore: CarsStore) {
     this.carsStore = carsStore;
-    this.errorLabel = `'Please enter a range of years within ${this.range.min}-${this.range.max}`;
+    this.errorLabel = `Please enter a range of years within ${this.range.min}-${this.range.max}`;
   }
 
   getMaxAndMinInputsValue = (): MaxAndMin | undefined => {
