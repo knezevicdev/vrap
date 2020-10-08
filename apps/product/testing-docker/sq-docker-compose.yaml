@@ -4,10 +4,3 @@ services:
     build:
       context: ../../../
       dockerfile: ./apps/product/testing-docker/Dockerfile
-#  test:
-#    build:
-#      context: ../../../
-#      dockerfile: ./apps/product/testing-docker/SQDockerfile
-#    command: "sonar-scanner"
-#
-#

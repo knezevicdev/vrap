@@ -1,13 +1,14 @@
 FROM node:erbium-alpine
+FROM sonarsource/sonar-scanner-cli
 
 WORKDIR /www
 COPY . .
 RUN \
-  # Install git so editor git commands work inside dev container
-  # (This could be removed if the image already has git installed.)
-  apk --no-cache add git &&\
-  # Bootstrap yarn workspaces.
+  apk --no-cache add git yarn &&\
   yarn install --silent &&\
-  # Build the main app.
-  yarn workspace @vroom-web/product test:cc
-  # Change user for created files
+  yarn workspace @vroom-web/product test:cc &&\
+  cd apps/product &&\
+  sonar-scanner
+  #-Dsonar.host.url=https://sonarcloud.io -Dsonar.projectKey=vroom-web:Product -Dsonar.organization=tdalabs-1 -Dsonar.login=c58901283094080bbeb3af613744d497907dbea1
+
+
