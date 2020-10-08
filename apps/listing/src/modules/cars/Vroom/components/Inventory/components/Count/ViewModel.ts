@@ -9,7 +9,10 @@ class CountViewModel {
 
   getCount(): string | undefined {
     const count = this.carsStore.inventoryData?.hits.total;
-    return count?.toLocaleString();
+    if (!count || count < 1) {
+      return;
+    }
+    return count.toLocaleString();
   }
 
   getCountMessage(): string | undefined {

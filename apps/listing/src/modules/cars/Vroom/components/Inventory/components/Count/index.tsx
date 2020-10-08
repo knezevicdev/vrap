@@ -7,7 +7,6 @@ import { CarsStoreContext } from 'src/modules/cars/store';
 
 const Count: React.FC = () => {
   const carsStore = useContext(CarsStoreContext);
-  // const filterStore = useContext(CarsStoreContext);
   const viewModel = new ViewModel(carsStore);
   return <View viewModel={viewModel} />;
 };
