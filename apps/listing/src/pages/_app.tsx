@@ -1,6 +1,7 @@
 import 'mobx-react/batchingForReactDom';
 
 import { datadogRum } from '@datadog/browser-rum';
+import { CatSDK } from '@vroom-web/cat-sdk';
 import { Brand } from '@vroom-web/ui';
 import { Base64 } from 'js-base64';
 import { configure as configureMobx } from 'mobx';
@@ -32,6 +33,12 @@ class VroomApp extends App {
 
     smoothscroll.polyfill(); // needs access to the window
 
+    const dev = publicRuntimeConfig.NODE_ENV !== 'production';
+    const catSDK = new CatSDK({
+      // Point to dev for local builds.
+      serviceBasePath: dev ? 'https://dev.vroom.com' : undefined,
+    });
+    catSDK.initCatData();
     const {
       pageProps: { brand },
     } = this.props;

@@ -1,14 +1,21 @@
 /* eslint-disable @typescript-eslint/camelcase */
+import { CatData, CatSDK } from '@vroom-web/cat-sdk';
 import ClientSideCookies from 'js-cookie';
 import jwtDecode from 'jwt-decode';
-import { action, observable } from 'mobx';
+import { action, computed, observable } from 'mobx';
 import { parse, stringify } from 'qs';
 
 class HeaderNavStore {
   private static authTokenCookieName = 'authToken';
-  private static phoneNumberCookieName = 'sitePhoneNumber';
+  private readonly catSDK = new CatSDK();
 
-  @observable phoneNumber?: string;
+  @observable catData: CatData | undefined;
+  @computed get phoneNumber(): string | undefined {
+    if (!this.catData) {
+      return undefined;
+    }
+    return this.catData.sitePhoneNumber;
+  }
   @observable loggedIn = false;
   @observable name?: string;
 
@@ -78,20 +85,22 @@ class HeaderNavStore {
   };
 
   @action
-  private initPhoneNumberClientSide = (): void => {
-    const phoneNumber = ClientSideCookies.get(
-      HeaderNavStore.phoneNumberCookieName
-    );
-    if (phoneNumber) {
-      this.phoneNumber = phoneNumber;
-    }
+  setCatData = (catData: CatData): void => {
+    this.catData = catData;
   };
 
-  @action
+  catDataEventListener = (catDataEvent: CustomEvent<CatData>): void => {
+    this.setCatData(catDataEvent.detail);
+  };
+
   initClientSide = (): void => {
     this.initQueryStringClientSide();
     this.initAuthTokenClientSide();
-    this.initPhoneNumberClientSide();
+    this.catSDK.observeCatData(this.catDataEventListener);
+  };
+
+  tearDownClientSide = (): void => {
+    this.catSDK.unobserveCatData(this.catDataEventListener);
   };
 
   @action

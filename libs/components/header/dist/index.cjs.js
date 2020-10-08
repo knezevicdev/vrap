@@ -11,6 +11,7 @@ var styles = require('@material-ui/core/styles');
 var Toolbar = _interopDefault(require('@material-ui/core/Toolbar'));
 var ui = require('@vroom-web/ui');
 var analyticsIntegration = require('@vroom-web/analytics-integration');
+var catSdk = require('@vroom-web/cat-sdk');
 var useMediaQuery = _interopDefault(require('@material-ui/core/useMediaQuery'));
 var Tooltip = _interopDefault(require('@material-ui/core/Tooltip'));
 var Drawer = _interopDefault(require('@material-ui/core/Drawer'));
@@ -2316,6 +2317,38 @@ var computedDecorator = createPropDecorator(false, function (instance, propertyN
 var computedStructDecorator = computedDecorator({
   equals: comparer.structural
 });
+/**
+ * Decorator for class properties: @computed get value() { return expr; }.
+ * For legacy purposes also invokable as ES5 observable created: `computed(() => expr)`;
+ */
+
+var computed = function computed(arg1, arg2, arg3) {
+  if (typeof arg2 === "string") {
+    // @computed
+    return computedDecorator.apply(null, arguments);
+  }
+
+  if (arg1 !== null && typeof arg1 === "object" && arguments.length === 1) {
+    // @computed({ options })
+    return computedDecorator.apply(null, arguments);
+  } // computed(expr, options?)
+
+
+  if (process.env.NODE_ENV !== "production") {
+    invariant(typeof arg1 === "function", "First argument to `computed` should be an expression.");
+    invariant(arguments.length < 3, "Computed takes one or two arguments if used as function");
+  }
+
+  var opts = typeof arg2 === "object" ? arg2 : {};
+  opts.get = arg1;
+  opts.set = typeof arg2 === "function" ? arg2 : opts.set;
+  opts.name = opts.name || arg1.name || "";
+  /* for generated name */
+
+  return new ComputedValue(opts);
+};
+
+computed.struct = computedStructDecorator;
 var IDerivationState;
 
 (function (IDerivationState) {
@@ -6090,33 +6123,66 @@ if (typeof __MOBX_DEVTOOLS_GLOBAL_HOOK__ === "object") {
   });
 }
 
-var _class, _descriptor, _descriptor2, _descriptor3, _descriptor4, _descriptor5, _descriptor6, _descriptor7, _descriptor8, _descriptor9, _class2, _temp;
-var HeaderNavStore = (_class = (_temp = _class2 = function HeaderNavStore() {
-  _classCallCheck(this, HeaderNavStore);
+var _class, _descriptor, _descriptor2, _descriptor3, _descriptor4, _descriptor5, _descriptor6, _descriptor7, _descriptor8, _class2, _temp;
+var HeaderNavStore = (_class = (_temp = _class2 = /*#__PURE__*/function () {
+  function HeaderNavStore() {
+    var _this = this;
 
-  _initializerDefineProperty(this, "phoneNumber", _descriptor, this);
+    _classCallCheck(this, HeaderNavStore);
 
-  _initializerDefineProperty(this, "loggedIn", _descriptor2, this);
+    _defineProperty(this, "catSDK", new catSdk.CatSDK());
 
-  _initializerDefineProperty(this, "name", _descriptor3, this);
+    _initializerDefineProperty(this, "catData", _descriptor, this);
 
-  _initializerDefineProperty(this, "queryString", _descriptor4, this);
+    _initializerDefineProperty(this, "loggedIn", _descriptor2, this);
 
-  _initializerDefineProperty(this, "initQueryStringClientSide", _descriptor5, this);
+    _initializerDefineProperty(this, "name", _descriptor3, this);
 
-  _initializerDefineProperty(this, "initAuthTokenClientSide", _descriptor6, this);
+    _initializerDefineProperty(this, "queryString", _descriptor4, this);
 
-  _initializerDefineProperty(this, "initPhoneNumberClientSide", _descriptor7, this);
+    _initializerDefineProperty(this, "initQueryStringClientSide", _descriptor5, this);
 
-  _initializerDefineProperty(this, "initClientSide", _descriptor8, this);
+    _initializerDefineProperty(this, "initAuthTokenClientSide", _descriptor6, this);
 
-  _initializerDefineProperty(this, "signOut", _descriptor9, this);
-}, _defineProperty(_class2, "authTokenCookieName", 'authToken'), _defineProperty(_class2, "phoneNumberCookieName", 'sitePhoneNumber'), _temp), (_descriptor = _applyDecoratedDescriptor(_class.prototype, "phoneNumber", [observable], {
+    _initializerDefineProperty(this, "setCatData", _descriptor7, this);
+
+    _defineProperty(this, "catDataEventListener", function (catDataEvent) {
+      _this.setCatData(catDataEvent.detail);
+    });
+
+    _defineProperty(this, "initClientSide", function () {
+      _this.initQueryStringClientSide();
+
+      _this.initAuthTokenClientSide();
+
+      _this.catSDK.observeCatData(_this.catDataEventListener);
+    });
+
+    _defineProperty(this, "tearDownClientSide", function () {
+      _this.catSDK.unobserveCatData(_this.catDataEventListener);
+    });
+
+    _initializerDefineProperty(this, "signOut", _descriptor8, this);
+  }
+
+  _createClass(HeaderNavStore, [{
+    key: "phoneNumber",
+    get: function get() {
+      if (!this.catData) {
+        return undefined;
+      }
+
+      return this.catData.sitePhoneNumber;
+    }
+  }]);
+
+  return HeaderNavStore;
+}(), _defineProperty(_class2, "authTokenCookieName", 'authToken'), _temp), (_descriptor = _applyDecoratedDescriptor(_class.prototype, "catData", [observable], {
   configurable: true,
   enumerable: true,
   writable: true,
   initializer: null
-}), _descriptor2 = _applyDecoratedDescriptor(_class.prototype, "loggedIn", [observable], {
+}), _applyDecoratedDescriptor(_class.prototype, "phoneNumber", [computed], Object.getOwnPropertyDescriptor(_class.prototype, "phoneNumber"), _class.prototype), _descriptor2 = _applyDecoratedDescriptor(_class.prototype, "loggedIn", [observable], {
   configurable: true,
   enumerable: true,
   writable: true,
@@ -6140,7 +6206,7 @@ var HeaderNavStore = (_class = (_temp = _class2 = function HeaderNavStore() {
   enumerable: true,
   writable: true,
   initializer: function initializer() {
-    var _this = this;
+    var _this2 = this;
 
     return function () {
       var query = lib_2(window.location.search, {
@@ -6172,7 +6238,7 @@ var HeaderNavStore = (_class = (_temp = _class2 = function HeaderNavStore() {
         };
       }(query);
 
-      _this.queryString = lib_3(picked, {
+      _this2.queryString = lib_3(picked, {
         addQueryPrefix: true
       });
     };
@@ -6182,7 +6248,7 @@ var HeaderNavStore = (_class = (_temp = _class2 = function HeaderNavStore() {
   enumerable: true,
   writable: true,
   initializer: function initializer() {
-    var _this2 = this;
+    var _this3 = this;
 
     return function () {
       try {
@@ -6190,7 +6256,7 @@ var HeaderNavStore = (_class = (_temp = _class2 = function HeaderNavStore() {
         var authTokenWithExpressPrefix = js_cookie.get(HeaderNavStore.authTokenCookieName);
 
         if (!authTokenWithExpressPrefix) {
-          _this2.loggedIn = false;
+          _this3.loggedIn = false;
           return;
         }
 
@@ -6200,7 +6266,7 @@ var HeaderNavStore = (_class = (_temp = _class2 = function HeaderNavStore() {
             expirationTimestamp = _jwtDecode.exp;
 
         var loggedIn = expirationTimestamp > new Date().getTime() / 1000;
-        _this2.loggedIn = loggedIn; // FIT-488
+        _this3.loggedIn = loggedIn; // FIT-488
         // This is a stopgap until the authToken cookie realiably includes "idToken" data.
         // We will set the "name" field if "idToken" is defined, otherwise gracefully fail.
 
@@ -6208,46 +6274,27 @@ var HeaderNavStore = (_class = (_temp = _class2 = function HeaderNavStore() {
           var _jwtDecode2 = lib$1(authToken.idToken),
               name = _jwtDecode2.name;
 
-          _this2.name = name;
+          _this3.name = name;
         } catch (_unused) {
-          _this2.name = undefined;
+          _this3.name = undefined;
         }
       } catch (_unused2) {
-        _this2.loggedIn = false;
+        _this3.loggedIn = false;
       }
     };
   }
-}), _descriptor7 = _applyDecoratedDescriptor(_class.prototype, "initPhoneNumberClientSide", [action], {
-  configurable: true,
-  enumerable: true,
-  writable: true,
-  initializer: function initializer() {
-    var _this3 = this;
-
-    return function () {
-      var phoneNumber = js_cookie.get(HeaderNavStore.phoneNumberCookieName);
-
-      if (phoneNumber) {
-        _this3.phoneNumber = phoneNumber;
-      }
-    };
-  }
-}), _descriptor8 = _applyDecoratedDescriptor(_class.prototype, "initClientSide", [action], {
+}), _descriptor7 = _applyDecoratedDescriptor(_class.prototype, "setCatData", [action], {
   configurable: true,
   enumerable: true,
   writable: true,
   initializer: function initializer() {
     var _this4 = this;
 
-    return function () {
-      _this4.initQueryStringClientSide();
-
-      _this4.initAuthTokenClientSide();
-
-      _this4.initPhoneNumberClientSide();
+    return function (catData) {
+      _this4.catData = catData;
     };
   }
-}), _descriptor9 = _applyDecoratedDescriptor(_class.prototype, "signOut", [action], {
+}), _descriptor8 = _applyDecoratedDescriptor(_class.prototype, "signOut", [action], {
   configurable: true,
   enumerable: true,
   writable: true,
@@ -7554,9 +7601,6 @@ var Nav = function Nav(_ref) {
 
 var HeaderNav = function HeaderNav(_ref) {
   var viewModel = _ref.viewModel;
-  React__default.useEffect(function () {
-    viewModel.handleMount();
-  }, [viewModel]);
   return /*#__PURE__*/React__default.createElement(Nav, {
     desktopLinks: viewModel.desktopLinks(),
     mobileLinks: viewModel.mobileLinks()
@@ -13395,7 +13439,7 @@ var HeaderNavViewModel = /*#__PURE__*/function () {
         return defaultPhoneNumberLinkData;
       }
 
-      var parsedPhoneNumber = parsePhoneNumberFromString$2(phoneNumber, 'US');
+      var parsedPhoneNumber = parsePhoneNumberFromString$2(decodeURIComponent(phoneNumber), 'US');
 
       if (!parsedPhoneNumber) {
         return defaultPhoneNumberLinkData;
@@ -13898,18 +13942,15 @@ var HeaderNavViewModel = /*#__PURE__*/function () {
 var HeaderNav$1 = function HeaderNav() {
   var store = new HeaderNavStore();
   var viewModel = new HeaderNavViewModel(store);
+  React.useEffect(function () {
+    store.initClientSide();
+    return function () {
+      store.tearDownClientSide();
+    };
+  }, [store]);
   return /*#__PURE__*/React__default.createElement(View, {
     viewModel: viewModel
   });
-};
-
-var SimpleHeader = function SimpleHeader(_ref) {
-  var gearboxPrivateUrl = _ref.gearboxPrivateUrl;
-  return /*#__PURE__*/React__default.createElement(React__default.Fragment, null, /*#__PURE__*/React__default.createElement(Bar, null, /*#__PURE__*/React__default.createElement(Box, {
-    mr: "auto"
-  }, /*#__PURE__*/React__default.createElement(Logo$1, null)), /*#__PURE__*/React__default.createElement(HeaderNav$1, null)), /*#__PURE__*/React__default.createElement(InProgressDealBar, {
-    gearboxPrivateUrl: gearboxPrivateUrl
-  }));
 };
 
 var Status;
@@ -14335,6 +14376,15 @@ var InProgressDealBar = function InProgressDealBar(_ref) {
   return /*#__PURE__*/React__default.createElement(View$1, {
     viewModel: viewModel
   });
+};
+
+var SimpleHeader = function SimpleHeader(_ref) {
+  var gearboxPrivateUrl = _ref.gearboxPrivateUrl;
+  return /*#__PURE__*/React__default.createElement(React__default.Fragment, null, /*#__PURE__*/React__default.createElement(Bar, null, /*#__PURE__*/React__default.createElement(Box, {
+    mr: "auto"
+  }, /*#__PURE__*/React__default.createElement(Logo$1, null)), /*#__PURE__*/React__default.createElement(HeaderNav$1, null)), /*#__PURE__*/React__default.createElement(InProgressDealBar, {
+    gearboxPrivateUrl: gearboxPrivateUrl
+  }));
 };
 
 var _class$2, _descriptor$2, _descriptor2$2, _descriptor3$2, _descriptor4$2, _temp$2;

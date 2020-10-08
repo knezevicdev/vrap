@@ -1,10 +1,10 @@
 import Box from '@material-ui/core/Box';
 import React from 'react';
 
-import { InProgressDealBar } from '../../index';
 import Bar from '../components/Bar';
 import Logo from '../components/Logo';
 import HeaderNav from './HeaderNav';
+import InProgressDealBar from './InProgressDealBar';
 
 interface Props {
   gearboxPrivateUrl: string;

@@ -9,9 +9,6 @@ interface Props {
 }
 
 const HeaderNav: React.FC<Props> = ({ viewModel }) => {
-  React.useEffect(() => {
-    viewModel.handleMount();
-  }, [viewModel]);
   return (
     <Nav
       desktopLinks={viewModel.desktopLinks()}

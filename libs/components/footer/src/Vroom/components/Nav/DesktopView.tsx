@@ -3,7 +3,7 @@ import Grid from '@material-ui/core/Grid';
 import Link from '@material-ui/core/Link';
 import { Typography } from '@vroom-web/ui';
 import { observer } from 'mobx-react';
-import React, { useEffect } from 'react';
+import React from 'react';
 
 import NavigationViewModel from './ViewModel';
 
@@ -12,10 +12,6 @@ interface Props {
 }
 
 const DesktopNavigationView: React.FC<Props> = ({ viewModel }) => {
-  useEffect(() => {
-    viewModel.handleMount();
-  }, [viewModel]);
-
   return (
     <Grid container spacing={2}>
       {viewModel.links().map((section, index) => {

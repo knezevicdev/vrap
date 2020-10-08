@@ -29,6 +29,7 @@ const config = {
     GEARBOX_PRIVATE_URL: process.env.GEARBOX_PRIVATE_URL,
     CREATE_ZENDESK_REQUEST_URL: process.env.CREATE_ZENDESK_REQUEST_URL,
     NAME: name,
+    NODE_ENV: process.env.NODE_ENV,
     STATIC_ASSETS_HOST_URL: process.env.STATIC_ASSETS_HOST_URL,
     VERSION: version,
   },

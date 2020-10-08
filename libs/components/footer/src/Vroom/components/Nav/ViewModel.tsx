@@ -21,21 +21,20 @@ class NavigationViewModel {
     this.store = store;
   }
 
-  handleMount(): void {
-    this.store.initClientSide();
-  }
-
-  private getPhoneNumberLinkData = (phoneNumber?: string): Link => {
+  private getPhoneNumberLinkData = (): Link => {
     const defaultPhoneNumberLinkData: Link = {
       href: 'tel:+18555241300',
       label: '(855) 524-1300',
     };
 
-    if (!phoneNumber) {
+    if (!this.store.phoneNumber) {
       return defaultPhoneNumberLinkData;
     }
 
-    const parsedPhoneNumber = parsePhoneNumberFromString(phoneNumber, 'US');
+    const parsedPhoneNumber = parsePhoneNumberFromString(
+      decodeURIComponent(this.store.phoneNumber),
+      'US'
+    );
 
     if (!parsedPhoneNumber) {
       return defaultPhoneNumberLinkData;
@@ -97,7 +96,7 @@ class NavigationViewModel {
       {
         title: 'Contact',
         links: [
-          this.getPhoneNumberLinkData(this.store.phoneNumber),
+          this.getPhoneNumberLinkData(),
           {
             label: 'FAQ',
             href: 'https://vroom.zendesk.com/hc/en-us',

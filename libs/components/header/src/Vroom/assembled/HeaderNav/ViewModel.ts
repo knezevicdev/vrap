@@ -39,7 +39,10 @@ class HeaderNavViewModel {
     if (!phoneNumber) {
       return defaultPhoneNumberLinkData;
     }
-    const parsedPhoneNumber = parsePhoneNumberFromString(phoneNumber, 'US');
+    const parsedPhoneNumber = parsePhoneNumberFromString(
+      decodeURIComponent(phoneNumber),
+      'US'
+    );
     if (!parsedPhoneNumber) {
       return defaultPhoneNumberLinkData;
     }

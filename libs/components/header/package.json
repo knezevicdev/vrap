@@ -49,6 +49,7 @@
     "@types/lodash.debounce": "^4.0.6",
     "@types/qs": "^6.9.1",
     "@vroom-web/analytics-integration": "^1.0.0",
+    "@vroom-web/cat-sdk": "^0.0.0",
     "@vroom-web/deals-v2-networking": "^1.0.0",
     "@vroom-web/ui": "^1.0.0",
     "babel-jest": "^25.5.1",
@@ -68,6 +69,7 @@
   "peerDependencies": {
     "@material-ui/core": "^4.9.10",
     "@vroom-web/analytics-integration": "^1.0.0",
+    "@vroom-web/cat-sdk": "^0.0.0",
     "@vroom-web/deals-v2-networking": "^1.0.0",
     "@vroom-web/ui": "^1.0.0",
     "react": "^16.13.1",

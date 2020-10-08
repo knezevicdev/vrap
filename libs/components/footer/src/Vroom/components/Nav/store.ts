@@ -1,12 +1,18 @@
 /* eslint-disable @typescript-eslint/camelcase */
-import ClientSideCookies from 'js-cookie';
-import { action, observable } from 'mobx';
+import { CatData, CatSDK } from '@vroom-web/cat-sdk';
+import { action, computed, observable } from 'mobx';
 import { parse, stringify } from 'qs';
 
 class NavStore {
-  private static phoneNumberCookieName = 'sitePhoneNumber';
+  private readonly catSDK: CatSDK = new CatSDK();
 
-  @observable phoneNumber?: string;
+  @observable catData: CatData | undefined;
+  @computed get phoneNumber(): string | undefined {
+    if (!this.catData) {
+      return undefined;
+    }
+    return this.catData.sitePhoneNumber;
+  }
 
   // FIT-566
   // As a stopgap, the we persist certain query params across navigation.
@@ -44,17 +50,23 @@ class NavStore {
   };
 
   @action
-  private initPhoneNumberClientSide = (): void => {
-    const phoneNumber = ClientSideCookies.get(NavStore.phoneNumberCookieName);
-    if (phoneNumber) {
-      this.phoneNumber = phoneNumber;
-    }
+  setCatData = (catData: CatData): void => {
+    this.catData = catData;
+  };
+
+  private catDataEventListener = (catDataEvent: CustomEvent<CatData>): void => {
+    this.setCatData(catDataEvent.detail);
   };
 
   @action
   initClientSide = (): void => {
     this.initQueryStringClientSide();
-    this.initPhoneNumberClientSide();
+    this.catSDK.observeCatData(this.catDataEventListener);
+  };
+
+  @action
+  tearDownClientSide = (): void => {
+    this.catSDK.unobserveCatData(this.catDataEventListener);
   };
 }
 
