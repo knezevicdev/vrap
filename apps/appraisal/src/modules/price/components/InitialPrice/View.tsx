@@ -3,7 +3,7 @@ import { Button, Container } from '@vroom-web/ui';
 import { observer } from 'mobx-react';
 import React from 'react';
 
-import PriceViewModel from './ViewModel';
+import InitialPriceViewModel from './ViewModel';
 
 const StyledContainer = styled(Container)(() => ({
   backgroundColor: 'white',
@@ -32,7 +32,7 @@ const StyledButton = styled(Button)(({ theme }) => ({
 }));
 
 interface Props {
-  viewModel: PriceViewModel;
+  viewModel: InitialPriceViewModel;
 }
 
 const handleButtonClick = (
@@ -47,6 +47,10 @@ const InitialPriceView: React.FC<Props> = ({ viewModel }) => {
     <StyledContainer>
       <div>{viewModel.yourPrice}</div>
       <div>{viewModel.price}</div>
+      <div>{viewModel.offerExpPreDate}</div>
+      <div>{viewModel.goodUntil}</div>
+      <div>{viewModel.offerExpPostDate}</div>
+      <b>{viewModel.miles}</b>
       <StyledButton onClick={handleButtonClick} variant="contained">
         {viewModel.continuePrice}
       </StyledButton>

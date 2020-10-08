@@ -1,67 +1,44 @@
 import { observable } from 'mobx';
 import { createContext, useContext } from 'react';
-
 import { PriceStatus } from './ViewModel';
-
 import { Prices } from 'src/networking/models/Price';
 import { Networker } from 'src/networking/Networker';
 
 export interface PriceStoreState {
-  active: boolean | null;
-  automatedAppraisal: boolean | null;
-  created: string | null;
-  goodUntil: string | null;
-  make: string | null;
-  miles: number | null;
-  model: string | null;
-  newOffer: null | null;
-  xkeId: number | null;
-  price: number | null;
-  priceId: string | null;
-  priceStatus: PriceStatus | null;
-  taxCreditSavings: string | null;
-  trim: string | null;
-  userEmail: string | null;
+  active: boolean;
+  automatedAppraisal: boolean;
+  created: string;
+  goodUntil: string;
+  make: string;
+  miles: number;
+  model: string;
+  newOffer: boolean | null;
+  price: number;
+  priceId: string;
+  priceStatus: PriceStatus;
+  taxCreditSavings: number | null;
+  trim: string;
+  userEmail: string;
   verificationUrl: string | null;
-  vin: string | null;
-  year: number | null;
+  vin: string;
+  xkeId: number;
+  year: number;
 }
 
 export async function getInitialPriceStoreState(
   priceId: string
 ): Promise<PriceStoreState> {
-  const initialState: PriceStoreState = {
-    active: null,
-    automatedAppraisal: null,
-    created: null,
-    goodUntil: null,
-    make: null,
-    miles: null,
-    model: null,
-    newOffer: null,
-    price: null,
-    priceId: null,
-    priceStatus: null,
-    taxCreditSavings: null,
-    trim: null,
-    userEmail: null,
-    verificationUrl: null,
-    vin: null,
-    xkeId: null,
-    year: null,
-  };
-
   const networker = new Networker();
   try {
     const response = await networker.getOfferDetails(priceId);
     const prices: Prices = response.data;
     const price = prices.data[0];
 
-    const priceState = {};
+    const priceState = {} as PriceStoreState;
     priceState.active = price.active;
     priceState.automatedAppraisal = price.automated_appraisal;
-    priceState.created = price.Good_Until__c;
-    priceState.goodUntil = price.created;
+    priceState.created = price.created;
+    priceState.goodUntil = price.Good_Until__c;
     priceState.make = price.Make__c;
     priceState.miles = price.miles;
     priceState.model = price.Model__c;
@@ -76,28 +53,48 @@ export async function getInitialPriceStoreState(
     priceState.vin = price.VIN__c;
     priceState.xkeId = price.offer_id;
     priceState.year = price.Year__c;
-
     return priceState;
   } catch (err) {
-    return initialState;
+    const errorState = {} as PriceStoreState;
+    errorState.active = false;
+    errorState.automatedAppraisal = false;
+    errorState.created = '';
+    errorState.goodUntil = '';
+    errorState.make = '';
+    errorState.miles = 0;
+    errorState.model = '';
+    errorState.newOffer = null;
+    errorState.price = 0;
+    errorState.priceId = '';
+    errorState.priceStatus = PriceStatus.INITIAL;
+    errorState.taxCreditSavings = null;
+    errorState.trim = '';
+    errorState.userEmail = '';
+    errorState.verificationUrl = '';
+    errorState.vin = '';
+    errorState.xkeId = 0;
+    errorState.year = 0;
+    return errorState;
   }
 }
 
 export class PriceStore {
   @observable priceStatus = PriceStatus.INITIAL;
   @observable price = 0;
+  @observable goodUntil = '';
 
   constructor(initialState?: PriceStoreState) {
     if (initialState) {
       this.priceStatus = initialState.priceStatus;
       this.price = initialState.price;
+      this.goodUntil = initialState.goodUntil;
     }
   }
 }
 
 export const PriceStoreContext = createContext<PriceStore>(new PriceStore());
 
-export const usePriceStore = (): PriceStoreState => {
+export const usePriceStore = (): PriceStore => {
   const store = useContext(PriceStoreContext);
   if (!store) {
     throw new Error('useStore must be used within a StoreProvider.');

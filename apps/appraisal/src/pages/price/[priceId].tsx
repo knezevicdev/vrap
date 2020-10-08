@@ -8,14 +8,14 @@ import PriceView from 'src/modules/price';
 import {
   getInitialPriceStoreState,
   PriceStoreContext,
-  PriceStoreState,
+  PriceStore,
 } from 'src/modules/price/store';
 import Page from 'src/Page';
 
 const { publicRuntimeConfig } = getConfig();
 
 interface Props {
-  initialState: PriceStoreState;
+  initialState: PriceStore;
 }
 
 const Price: NextPage<Props> = ({ initialState }) => {
@@ -33,7 +33,7 @@ const Price: NextPage<Props> = ({ initialState }) => {
 };
 
 Price.getInitialProps = async ({ query }): Promise<Props> => {
-  // e93bafe0b739241f875d1e3c35416fff
+  // http://localhost:3000/appraisal/price/e93bafe0b739241f875d1e3c35416fff
   const priceId = query.priceId as string;
   const initialState = await getInitialPriceStoreState(priceId);
   return { initialState };

@@ -9,12 +9,10 @@ export enum PriceStatus {
 }
 
 class PriceViewModel {
-  priceStatus = PriceStatus.INITIAL;
-  price = 0;
+  readonly priceStatus: PriceStatus;
 
   constructor(store: PriceStore) {
     this.priceStatus = store.priceStatus;
-    this.price = store.price;
   }
 }
 
