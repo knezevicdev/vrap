@@ -8,8 +8,7 @@ const shortHash = childProcess
   .toString()
   .trim();
 
-// TODO: update to /inventory after this port is A/B tested.
-const basePath = '/vehicle';
+const basePath = '/inventory';
 
 module.exports = {
   basePath,
