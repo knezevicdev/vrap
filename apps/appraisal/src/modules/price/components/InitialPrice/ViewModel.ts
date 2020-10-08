@@ -3,12 +3,11 @@ import { PriceStoreState } from 'src/modules/price/store';
 class PriceViewModel {
   readonly yourPrice: string = 'your price';
   readonly continuePrice: string = 'continue';
-
-  readonly priceStatus: string;
-  readonly price: number;
+  readonly offerExpPreDate: string = 'This price expires on ';
+  readonly offerExpPostDate: string = ' or upon hitting ';
+  readonly miles: string = '250 miles';
 
   constructor(initialState: PriceStoreState) {
-    console.log({initialState});
     this.priceStatus = initialState.priceStatus;
     this.price = initialState.price;
   }

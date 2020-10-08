@@ -21,7 +21,6 @@ export class Networker {
 
   getOfferDetails(priceId: string): Promise<AxiosResponse<Prices>> {
     const url = `${publicRuntimeConfig.ACQUISITIONS_URL}/acquisition/offer?offerID=${priceId}`;
-    console.log({ url });
     return this.axiosInstance.get(url);
   }
 }

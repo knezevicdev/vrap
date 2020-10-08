@@ -7,8 +7,7 @@
           "loose": true
         }
       }
-    ],
-    "mobx"
+    ]
   ],
   "plugins": [
     [
@@ -16,13 +15,6 @@
       {
         "legacy": true
       }
-    ],
-		[
-			"@babel/plugin-transform-runtime",
-			{
-				"regenerator": true,
-				"corejs": 3 // or 2; if polyfills needed
-			}
-		]
+    ]
   ]
 }
