@@ -1,6 +1,6 @@
 import axios, { AxiosInstance, AxiosResponse } from 'axios';
 
-interface GearboxRequest {
+export interface GearboxRequest {
   query: string;
   variables: object;
   operationName: string;
@@ -40,13 +40,13 @@ export interface CreateSubscriptionResponse {
   };
 }
 
-interface Device {
+export interface Device {
   __typename: string;
   id: string;
   type: string;
 }
 
-interface CreateDeviceResponse {
+export interface CreateDeviceResponse {
   data: {
     hornCreateDevice: Device | ValidationError;
   };
@@ -192,6 +192,7 @@ export default class NotifyMeNetworker {
     );
     const typename =
       createSubResponse.data?.data.hornCreateSubscription.__typename;
+
     if (
       typename === 'SubjectSubscription' ||
       typename === 'DuplicateSubscriptionError'
