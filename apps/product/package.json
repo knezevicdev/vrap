@@ -7,14 +7,9 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx,.json",
-<<<<<<< HEAD
     "test": "jest --watch",
     "test:ci": "jest --ci",
     "test:cc": "jest  --coverage"
-=======
-    "test": "jest --watch --silent",
-    "test:ci": "jest --ci"
->>>>>>> c40ac268915f2567f3da5a1fd526d8e2df23bb22
   },
   "dependencies": {
     "@datadog/browser-rum": "^1.16.0",
