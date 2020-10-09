@@ -5,28 +5,25 @@ const {
 } = getConfig();
 
 export class Icons {
-  static readonly GAS = new Icons('GAS', {
-    name: 'gas',
+  static readonly EMAIL = new Icons('Email', {
+    name: 'email',
     width: 24,
     height: 24,
+    color: '#E7131A',
   });
 
-  static readonly ENGINE = new Icons('ENGINE', {
-    name: 'engine',
+  static readonly FAQ = new Icons('Faq', {
+    name: 'faq',
     width: 24,
     height: 24,
+    color: '#E7131A',
   });
 
-  static readonly SEAT = new Icons('SEAT', {
-    name: 'seat',
+  static readonly PHONE = new Icons('Phone', {
+    name: 'phone',
     width: 24,
     height: 24,
-  });
-
-  static readonly CHECKMARK = new Icons('CHECKMARK', {
-    name: 'checkmark',
-    width: 12,
-    height: 9,
+    color: '#E7131A',
   });
 
   static readonly VROOM = new Icons('VROOM', {

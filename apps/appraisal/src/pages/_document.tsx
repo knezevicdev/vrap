@@ -1,3 +1,4 @@
+import { ServerStyleSheets } from '@material-ui/core/styles';
 import Document, {
   DocumentContext,
   DocumentInitialProps,
@@ -13,14 +14,17 @@ export default class MyDocument extends Document {
   static async getInitialProps(
     ctx: DocumentContext
   ): Promise<DocumentInitialProps> {
-    const sheet = new ServerStyleSheet();
+    const styledComponentsSheet = new ServerStyleSheet();
+    const materialSheets = new ServerStyleSheets();
     const originalRenderPage = ctx.renderPage;
 
     try {
       ctx.renderPage = () =>
         originalRenderPage({
           enhanceApp: (App) => (props) =>
-            sheet.collectStyles(<App {...props} />),
+            styledComponentsSheet.collectStyles(
+              materialSheets.collect(<App {...props} />)
+            ),
         });
 
       const initialProps = await Document.getInitialProps(ctx);
@@ -29,20 +33,20 @@ export default class MyDocument extends Document {
         styles: (
           <>
             {initialProps.styles}
-            {sheet.getStyleElement()}
+            {materialSheets.getStyleElement()}
+            {styledComponentsSheet.getStyleElement()}
           </>
         ),
       };
     } finally {
-      sheet.seal();
+      styledComponentsSheet.seal();
     }
   }
 
   render(): JSX.Element {
     return (
       <Html lang="en">
-        <Head>
-        </Head>
+        <Head></Head>
         <body>
           <Main />
           <NextScript />

@@ -1,27 +1,32 @@
-import { styled } from '@material-ui/core/styles';
-import { Container } from '@vroom-web/ui';
 import React from 'react';
+import styled from 'styled-components';
 
 import InitialPrice from './components/InitialPrice';
 import NextSteps from './components/NextSteps';
 import PriceViewModel, { PriceStatus } from './ViewModel';
 
 interface Props {
-  priceViewModel: PriceViewModel;
+  viewModel: PriceViewModel;
 }
 
-const BackgroundContainer = styled(Container)(() => ({}));
+const BackgroundContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+  position: relative;
+`;
 
-const PriceContainer = styled('div')(() => ({
-  border: '1px solid',
-  display: 'flex',
-  justifyContent: 'space-between',
-}));
+const PriceContainer = styled.div`
+  border: 1px solid;
+  display: flex;
+  justify-content: space-between;
+`;
 
-const PriceView: React.FC<Props> = ({ priceViewModel }) => {
+const PriceView: React.FC<Props> = ({ viewModel }) => {
   let priceComponent = <InitialPrice />;
 
-  switch (priceViewModel.priceStatus) {
+  switch (viewModel.priceStatus) {
     case PriceStatus.INITIAL:
       priceComponent = <InitialPrice />;
       break;

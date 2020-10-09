@@ -1,13 +1,20 @@
-import { styled } from '@material-ui/core/styles';
-import { Container } from '@vroom-web/ui';
 import Head from 'next/head';
 import React from 'react';
+import styled from 'styled-components';
 
-const Contents = styled('div')(() => ({
-  minHeight: '100vh',
-  display: 'flex',
-  flexDirection: 'column',
-}));
+const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+  position: relative;
+`;
+
+const Contents = styled.div`
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+`;
 
 interface PageProps {
   category?: string;
@@ -21,7 +28,7 @@ class Page extends React.Component<PageProps> {
     return (
       <>
         {head && <Head>{head}</Head>}
-        <Container disableDefaultPadding maxWidth="xl">
+        <Container>
           <Contents>{children}</Contents>
         </Container>
       </>
