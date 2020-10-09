@@ -70,6 +70,8 @@ class ViewModel {
     handleAnalytics: this.analyticsHandler.trackCorporateSite,
   };
 
+  readonly poweredBy = 'Powered by';
+
   isDropdownOpen = (): boolean => {
     return this.store.isOpen;
   };

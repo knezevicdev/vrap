@@ -92,17 +92,6 @@ const CarsPage: NextPage<Props> = ({
     }
   }, [carsStore.geoLocationSortExperiment, analyticsHandler]);
 
-  useEffect(() => {
-    clientGetAndLogExperiment('snd-old-pdp-vs-new-pdp').then((experiment) =>
-      carsStore.setOldNewPdpExperiment(experiment)
-    );
-  }, [carsStore]);
-  useEffect(() => {
-    if (carsStore.oldNewPdpExperiment) {
-      analyticsHandler.registerExperiment(carsStore.oldNewPdpExperiment);
-    }
-  }, [carsStore.oldNewPdpExperiment, analyticsHandler]);
-
   const [resumeSearchExperiment, setResumeSearchExperiment] = useState<
     Experiment | undefined
   >();

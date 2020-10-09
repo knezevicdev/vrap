@@ -57,7 +57,7 @@ class VroomDocument extends Document<Props> {
   }
 
   render(): JSX.Element {
-    const isProduction = serverRuntimeConfig.NODE_ENV === 'production';
+    const isProduction = publicRuntimeConfig.NODE_ENV === 'production';
     const segmentWriteKey =
       this.props.brand === Brand.SANTANDER
         ? serverRuntimeConfig.SANTANDER_SEGMENT_WRITE_KEY

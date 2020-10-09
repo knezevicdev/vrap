@@ -1,4 +1,25 @@
 jobs:
+  appraisal_build:
+    docker:
+    - image: vroom/mlp:3.0.2
+    steps:
+    - checkout
+    - setup_remote_docker:
+        version: 18.09.3
+    - run:
+        command: build -a vroom-web/apps/appraisal/docker
+  appraisal_deploy:
+    docker:
+    - image: vroom/mlp:3.0.2
+    parameters:
+      env:
+        type: string
+    steps:
+    - checkout
+    - setup_remote_docker:
+        version: 18.09.3
+    - run:
+        command: deploy -a vroom-web/apps/appraisal/docker -n << parameters.env >>
   danger:
     docker:
     - image: node:erbium-alpine
@@ -135,15 +156,6 @@ jobs:
           # Bootstrap yarn workspaces.
           yarn install --silent
 
-          # Build libraries.
-          yarn workspace @vroom-web/analytics-integration build
-          yarn workspace @vroom-web/catalog-url-integration build
-          yarn workspace @vroom-web/deals-v2-networking build
-          yarn workspace @vroom-web/inv-search-networking build
-          yarn workspace @vroom-web/ui build
-          yarn workspace @vroom-web/header-components build
-          yarn workspace @vroom-web/footer-components build
-
           # Build the main app.
           yarn workspace @vroom-web/home build
     - sonarcloud/scan
@@ -164,6 +176,70 @@ orbs:
   sonarcloud: sonarsource/sonarcloud@1.0.1
 version: 2.1
 workflows:
+  appraisal:
+    jobs:
+    - appraisal_build:
+        context: aws-non-prod
+        filters:
+          branches:
+            ignore: /.*/
+          tags:
+            only: /^appraisal-v.*/
+    - hold:
+        filters:
+          branches:
+            ignore: /.*/
+          tags:
+            only: /^appraisal-v.*/
+        matrix:
+          parameters:
+            env:
+            - dev
+            - qa
+            - uat
+        name: hold_<< matrix.env >>
+        requires:
+        - appraisal_build
+        type: approval
+    - appraisal_deploy:
+        context: aws-non-prod
+        filters:
+          branches:
+            ignore: /.*/
+          tags:
+            only: /^appraisal-v.*/
+        matrix:
+          parameters:
+            env:
+            - dev
+            - qa
+            - uat
+        name: appraisal_deploy_<< matrix.env >>
+        requires:
+        - hold_<< matrix.env >>
+    - hold:
+        filters:
+          branches:
+            ignore: /.*/
+          tags:
+            only: /^appraisal-v.*/
+        name: hold_prod
+        requires:
+        - appraisal_deploy_dev
+        - appraisal_deploy_qa
+        - appraisal_deploy_uat
+        type: approval
+    - appraisal_deploy:
+        context: aws-non-prod
+        env: prod
+        filters:
+          branches:
+            ignore: /.*/
+          tags:
+            only: /^appraisal-v.*/
+        name: appraisal_deploy_prod
+        requires:
+        - hold_prod
   common:
     jobs:
     - danger:

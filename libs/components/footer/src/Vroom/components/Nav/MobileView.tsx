@@ -8,7 +8,7 @@ import { makeStyles, styled } from '@material-ui/core/styles';
 import MuiExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import { Typography } from '@vroom-web/ui';
 import { observer } from 'mobx-react';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 
 import NavigationViewModel from './ViewModel';
 
@@ -48,10 +48,6 @@ interface Props {
 const MobileNavView: React.FC<Props> = ({ viewModel }) => {
   const expansionPanelClasses = useExpansionPanelStyles();
   const [expanded, setExpanded] = useState('');
-
-  useEffect(() => {
-    viewModel.handleMount();
-  }, [viewModel]);
 
   const handleChange = (isExpanded: boolean, panel: string): void => {
     setExpanded(isExpanded ? panel : '');

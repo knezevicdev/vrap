@@ -3,6 +3,7 @@ import 'react-image-gallery/styles/css/image-gallery.css';
 import 'src/modules/inventory/Vroom/components/Gallery/index.css';
 
 import { datadogRum } from '@datadog/browser-rum';
+import { CatSDK } from '@vroom-web/cat-sdk';
 import { configure as configureMobx } from 'mobx';
 import App from 'next/app';
 import getConfig from 'next/config';
@@ -31,6 +32,13 @@ class VroomApp extends App {
     }
 
     smoothscroll.polyfill(); // needs access to the window
+
+    const dev = publicRuntimeConfig.NODE_ENV !== 'production';
+    const catSDK = new CatSDK({
+      // Point to dev for local builds.
+      serviceBasePath: dev ? 'https://dev.vroom.com' : undefined,
+    });
+    catSDK.initCatData();
   }
 
   render(): JSX.Element {

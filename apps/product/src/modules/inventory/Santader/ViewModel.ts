@@ -27,6 +27,7 @@ class InventoryViewModel {
       year,
       defectPhotos,
     } = this.store.vehicle._source;
+
     const name = `${year} ${make} ${model}`;
     const product: Product = {
       imageUrl,

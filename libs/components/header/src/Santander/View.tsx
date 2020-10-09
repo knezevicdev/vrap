@@ -12,6 +12,7 @@ import React from 'react';
 
 import { ReactComponent as LogoSvg } from './svg/logo.svg';
 import { ReactComponent as ShopSvg } from './svg/shop.svg';
+import { ReactComponent as VroomLogoSvg } from './svg/vroom-logo-gray.svg';
 import ViewModel from './ViewModel';
 
 interface Props {
@@ -57,14 +58,14 @@ const DesktopView = styled('div')(({ theme }) => ({
   display: 'flex',
   width: '100%',
   alignItems: 'center',
-  [theme.breakpoints.only('xs')]: { display: 'none' },
+  [theme.breakpoints.down('sm')]: { display: 'none' },
 }));
 
 const MobileView = styled('div')(({ theme }) => ({
   display: 'none',
   width: '100%',
   alignItems: 'center',
-  [theme.breakpoints.only('xs')]: { display: 'flex' },
+  [theme.breakpoints.down('sm')]: { display: 'flex' },
 }));
 
 const ShopNowContainer = styled('a')(() => ({
@@ -77,7 +78,7 @@ const ShopNowContainer = styled('a')(() => ({
 const ShopLabel = styled(Typography)(({ theme }) => ({
   color: '#FFFFFF',
   fontSize: '18px',
-  [theme.breakpoints.only('xs')]: {
+  [theme.breakpoints.down('sm')]: {
     color: '#767676',
     fontSize: '14px',
     fontWeight: 600,
@@ -88,7 +89,7 @@ const ShopIcon = styled(ShopSvg)(({ theme }) => ({
   width: '20px',
   marginRight: theme.spacing(1),
   fill: '#FFFFFF',
-  [theme.breakpoints.only('xs')]: { fill: '#767676' },
+  [theme.breakpoints.down('sm')]: { fill: '#767676' },
 }));
 
 const Link = styled('a')(({ theme }) => ({
@@ -127,7 +128,7 @@ const DropdownLabelContainer = styled('div')(({ theme }) => ({
   color: '#767676',
   '& >p': { fontSize: '16px' },
   marginRight: theme.spacing(4),
-  [theme.breakpoints.only('xs')]: { display: 'none' },
+  [theme.breakpoints.down('sm')]: { display: 'none' },
   cursor: 'pointer',
 }));
 
@@ -183,6 +184,21 @@ const LearningLinks = styled('a')(({ theme }) => ({
   },
   color: '#767676',
   padding: theme.spacing(1),
+}));
+
+const PoweredBy = styled('div')(({ theme }) => ({
+  display: 'flex',
+  alignItems: 'center',
+  [theme.breakpoints.up('md')]: { marginLeft: 'auto' },
+}));
+
+const PoweredByLabel = styled(Typography)(() => ({
+  color: '#767676',
+  fontSize: '16px',
+}));
+
+const VroomLogo = styled(VroomLogoSvg)(({ theme }) => ({
+  marginLeft: theme.spacing(1),
 }));
 
 const View: React.FC<Props> = ({ viewModel }) => {
@@ -305,8 +321,16 @@ const View: React.FC<Props> = ({ viewModel }) => {
           >
             <Typography>{viewModel.backToCorporate.label}</Typography>
           </Link>
+          <PoweredBy>
+            <PoweredByLabel>{viewModel.poweredBy}</PoweredByLabel>
+            <VroomLogo />
+          </PoweredBy>
         </DesktopView>
         <MobileView>
+          <PoweredBy>
+            <PoweredByLabel>{viewModel.poweredBy}</PoweredByLabel>
+            <VroomLogo />
+          </PoweredBy>
           <ShopNowContainer
             href={viewModel.shopNow.href}
             onClick={viewModel.shopNow.handleAnalytics}

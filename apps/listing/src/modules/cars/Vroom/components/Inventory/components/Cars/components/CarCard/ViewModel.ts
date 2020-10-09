@@ -112,12 +112,7 @@ class CarCardViewModel {
         : '';
     const { makeSlug, modelSlug, vin, year } = this.car;
 
-    const productPath =
-      this.carsStore.oldNewPdpExperiment &&
-      this.carsStore.oldNewPdpExperiment.assignedVariant === 1
-        ? 'vehicle'
-        : 'inventory';
-    return `/${productPath}/${makeSlug}-${modelSlug}-${year}-${vin}${attributionQueryString}`;
+    return `/inventory/${makeSlug}-${modelSlug}-${year}-${vin}${attributionQueryString}`;
   }
 
   trackProductClick = (): void => {

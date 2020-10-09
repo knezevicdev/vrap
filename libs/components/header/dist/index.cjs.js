@@ -11,6 +11,7 @@ var styles = require('@material-ui/core/styles');
 var Toolbar = _interopDefault(require('@material-ui/core/Toolbar'));
 var ui = require('@vroom-web/ui');
 var analyticsIntegration = require('@vroom-web/analytics-integration');
+var catSdk = require('@vroom-web/cat-sdk');
 var useMediaQuery = _interopDefault(require('@material-ui/core/useMediaQuery'));
 var Tooltip = _interopDefault(require('@material-ui/core/Tooltip'));
 var Drawer = _interopDefault(require('@material-ui/core/Drawer'));
@@ -2316,6 +2317,38 @@ var computedDecorator = createPropDecorator(false, function (instance, propertyN
 var computedStructDecorator = computedDecorator({
   equals: comparer.structural
 });
+/**
+ * Decorator for class properties: @computed get value() { return expr; }.
+ * For legacy purposes also invokable as ES5 observable created: `computed(() => expr)`;
+ */
+
+var computed = function computed(arg1, arg2, arg3) {
+  if (typeof arg2 === "string") {
+    // @computed
+    return computedDecorator.apply(null, arguments);
+  }
+
+  if (arg1 !== null && typeof arg1 === "object" && arguments.length === 1) {
+    // @computed({ options })
+    return computedDecorator.apply(null, arguments);
+  } // computed(expr, options?)
+
+
+  if (process.env.NODE_ENV !== "production") {
+    invariant(typeof arg1 === "function", "First argument to `computed` should be an expression.");
+    invariant(arguments.length < 3, "Computed takes one or two arguments if used as function");
+  }
+
+  var opts = typeof arg2 === "object" ? arg2 : {};
+  opts.get = arg1;
+  opts.set = typeof arg2 === "function" ? arg2 : opts.set;
+  opts.name = opts.name || arg1.name || "";
+  /* for generated name */
+
+  return new ComputedValue(opts);
+};
+
+computed.struct = computedStructDecorator;
 var IDerivationState;
 
 (function (IDerivationState) {
@@ -6090,33 +6123,66 @@ if (typeof __MOBX_DEVTOOLS_GLOBAL_HOOK__ === "object") {
   });
 }
 
-var _class, _descriptor, _descriptor2, _descriptor3, _descriptor4, _descriptor5, _descriptor6, _descriptor7, _descriptor8, _descriptor9, _class2, _temp;
-var HeaderNavStore = (_class = (_temp = _class2 = function HeaderNavStore() {
-  _classCallCheck(this, HeaderNavStore);
+var _class, _descriptor, _descriptor2, _descriptor3, _descriptor4, _descriptor5, _descriptor6, _descriptor7, _descriptor8, _class2, _temp;
+var HeaderNavStore = (_class = (_temp = _class2 = /*#__PURE__*/function () {
+  function HeaderNavStore() {
+    var _this = this;
 
-  _initializerDefineProperty(this, "phoneNumber", _descriptor, this);
+    _classCallCheck(this, HeaderNavStore);
 
-  _initializerDefineProperty(this, "loggedIn", _descriptor2, this);
+    _defineProperty(this, "catSDK", new catSdk.CatSDK());
 
-  _initializerDefineProperty(this, "name", _descriptor3, this);
+    _initializerDefineProperty(this, "catData", _descriptor, this);
 
-  _initializerDefineProperty(this, "queryString", _descriptor4, this);
+    _initializerDefineProperty(this, "loggedIn", _descriptor2, this);
 
-  _initializerDefineProperty(this, "initQueryStringClientSide", _descriptor5, this);
+    _initializerDefineProperty(this, "name", _descriptor3, this);
 
-  _initializerDefineProperty(this, "initAuthTokenClientSide", _descriptor6, this);
+    _initializerDefineProperty(this, "queryString", _descriptor4, this);
 
-  _initializerDefineProperty(this, "initPhoneNumberClientSide", _descriptor7, this);
+    _initializerDefineProperty(this, "initQueryStringClientSide", _descriptor5, this);
 
-  _initializerDefineProperty(this, "initClientSide", _descriptor8, this);
+    _initializerDefineProperty(this, "initAuthTokenClientSide", _descriptor6, this);
 
-  _initializerDefineProperty(this, "signOut", _descriptor9, this);
-}, _defineProperty(_class2, "authTokenCookieName", 'authToken'), _defineProperty(_class2, "phoneNumberCookieName", 'sitePhoneNumber'), _temp), (_descriptor = _applyDecoratedDescriptor(_class.prototype, "phoneNumber", [observable], {
+    _initializerDefineProperty(this, "setCatData", _descriptor7, this);
+
+    _defineProperty(this, "catDataEventListener", function (catDataEvent) {
+      _this.setCatData(catDataEvent.detail);
+    });
+
+    _defineProperty(this, "initClientSide", function () {
+      _this.initQueryStringClientSide();
+
+      _this.initAuthTokenClientSide();
+
+      _this.catSDK.observeCatData(_this.catDataEventListener);
+    });
+
+    _defineProperty(this, "tearDownClientSide", function () {
+      _this.catSDK.unobserveCatData(_this.catDataEventListener);
+    });
+
+    _initializerDefineProperty(this, "signOut", _descriptor8, this);
+  }
+
+  _createClass(HeaderNavStore, [{
+    key: "phoneNumber",
+    get: function get() {
+      if (!this.catData) {
+        return undefined;
+      }
+
+      return this.catData.sitePhoneNumber;
+    }
+  }]);
+
+  return HeaderNavStore;
+}(), _defineProperty(_class2, "authTokenCookieName", 'authToken'), _temp), (_descriptor = _applyDecoratedDescriptor(_class.prototype, "catData", [observable], {
   configurable: true,
   enumerable: true,
   writable: true,
   initializer: null
-}), _descriptor2 = _applyDecoratedDescriptor(_class.prototype, "loggedIn", [observable], {
+}), _applyDecoratedDescriptor(_class.prototype, "phoneNumber", [computed], Object.getOwnPropertyDescriptor(_class.prototype, "phoneNumber"), _class.prototype), _descriptor2 = _applyDecoratedDescriptor(_class.prototype, "loggedIn", [observable], {
   configurable: true,
   enumerable: true,
   writable: true,
@@ -6140,7 +6206,7 @@ var HeaderNavStore = (_class = (_temp = _class2 = function HeaderNavStore() {
   enumerable: true,
   writable: true,
   initializer: function initializer() {
-    var _this = this;
+    var _this2 = this;
 
     return function () {
       var query = lib_2(window.location.search, {
@@ -6172,7 +6238,7 @@ var HeaderNavStore = (_class = (_temp = _class2 = function HeaderNavStore() {
         };
       }(query);
 
-      _this.queryString = lib_3(picked, {
+      _this2.queryString = lib_3(picked, {
         addQueryPrefix: true
       });
     };
@@ -6182,7 +6248,7 @@ var HeaderNavStore = (_class = (_temp = _class2 = function HeaderNavStore() {
   enumerable: true,
   writable: true,
   initializer: function initializer() {
-    var _this2 = this;
+    var _this3 = this;
 
     return function () {
       try {
@@ -6190,7 +6256,7 @@ var HeaderNavStore = (_class = (_temp = _class2 = function HeaderNavStore() {
         var authTokenWithExpressPrefix = js_cookie.get(HeaderNavStore.authTokenCookieName);
 
         if (!authTokenWithExpressPrefix) {
-          _this2.loggedIn = false;
+          _this3.loggedIn = false;
           return;
         }
 
@@ -6200,7 +6266,7 @@ var HeaderNavStore = (_class = (_temp = _class2 = function HeaderNavStore() {
             expirationTimestamp = _jwtDecode.exp;
 
         var loggedIn = expirationTimestamp > new Date().getTime() / 1000;
-        _this2.loggedIn = loggedIn; // FIT-488
+        _this3.loggedIn = loggedIn; // FIT-488
         // This is a stopgap until the authToken cookie realiably includes "idToken" data.
         // We will set the "name" field if "idToken" is defined, otherwise gracefully fail.
 
@@ -6208,46 +6274,27 @@ var HeaderNavStore = (_class = (_temp = _class2 = function HeaderNavStore() {
           var _jwtDecode2 = lib$1(authToken.idToken),
               name = _jwtDecode2.name;
 
-          _this2.name = name;
+          _this3.name = name;
         } catch (_unused) {
-          _this2.name = undefined;
+          _this3.name = undefined;
         }
       } catch (_unused2) {
-        _this2.loggedIn = false;
+        _this3.loggedIn = false;
       }
     };
   }
-}), _descriptor7 = _applyDecoratedDescriptor(_class.prototype, "initPhoneNumberClientSide", [action], {
-  configurable: true,
-  enumerable: true,
-  writable: true,
-  initializer: function initializer() {
-    var _this3 = this;
-
-    return function () {
-      var phoneNumber = js_cookie.get(HeaderNavStore.phoneNumberCookieName);
-
-      if (phoneNumber) {
-        _this3.phoneNumber = phoneNumber;
-      }
-    };
-  }
-}), _descriptor8 = _applyDecoratedDescriptor(_class.prototype, "initClientSide", [action], {
+}), _descriptor7 = _applyDecoratedDescriptor(_class.prototype, "setCatData", [action], {
   configurable: true,
   enumerable: true,
   writable: true,
   initializer: function initializer() {
     var _this4 = this;
 
-    return function () {
-      _this4.initQueryStringClientSide();
-
-      _this4.initAuthTokenClientSide();
-
-      _this4.initPhoneNumberClientSide();
+    return function (catData) {
+      _this4.catData = catData;
     };
   }
-}), _descriptor9 = _applyDecoratedDescriptor(_class.prototype, "signOut", [action], {
+}), _descriptor8 = _applyDecoratedDescriptor(_class.prototype, "signOut", [action], {
   configurable: true,
   enumerable: true,
   writable: true,
@@ -7554,9 +7601,6 @@ var Nav = function Nav(_ref) {
 
 var HeaderNav = function HeaderNav(_ref) {
   var viewModel = _ref.viewModel;
-  React__default.useEffect(function () {
-    viewModel.handleMount();
-  }, [viewModel]);
   return /*#__PURE__*/React__default.createElement(Nav, {
     desktopLinks: viewModel.desktopLinks(),
     mobileLinks: viewModel.mobileLinks()
@@ -13395,7 +13439,7 @@ var HeaderNavViewModel = /*#__PURE__*/function () {
         return defaultPhoneNumberLinkData;
       }
 
-      var parsedPhoneNumber = parsePhoneNumberFromString$2(phoneNumber, 'US');
+      var parsedPhoneNumber = parsePhoneNumberFromString$2(decodeURIComponent(phoneNumber), 'US');
 
       if (!parsedPhoneNumber) {
         return defaultPhoneNumberLinkData;
@@ -13898,18 +13942,15 @@ var HeaderNavViewModel = /*#__PURE__*/function () {
 var HeaderNav$1 = function HeaderNav() {
   var store = new HeaderNavStore();
   var viewModel = new HeaderNavViewModel(store);
+  React.useEffect(function () {
+    store.initClientSide();
+    return function () {
+      store.tearDownClientSide();
+    };
+  }, [store]);
   return /*#__PURE__*/React__default.createElement(View, {
     viewModel: viewModel
   });
-};
-
-var SimpleHeader = function SimpleHeader(_ref) {
-  var gearboxPrivateUrl = _ref.gearboxPrivateUrl;
-  return /*#__PURE__*/React__default.createElement(React__default.Fragment, null, /*#__PURE__*/React__default.createElement(Bar, null, /*#__PURE__*/React__default.createElement(Box, {
-    mr: "auto"
-  }, /*#__PURE__*/React__default.createElement(Logo$1, null)), /*#__PURE__*/React__default.createElement(HeaderNav$1, null)), /*#__PURE__*/React__default.createElement(InProgressDealBar, {
-    gearboxPrivateUrl: gearboxPrivateUrl
-  }));
 };
 
 var Status;
@@ -14337,6 +14378,15 @@ var InProgressDealBar = function InProgressDealBar(_ref) {
   });
 };
 
+var SimpleHeader = function SimpleHeader(_ref) {
+  var gearboxPrivateUrl = _ref.gearboxPrivateUrl;
+  return /*#__PURE__*/React__default.createElement(React__default.Fragment, null, /*#__PURE__*/React__default.createElement(Bar, null, /*#__PURE__*/React__default.createElement(Box, {
+    mr: "auto"
+  }, /*#__PURE__*/React__default.createElement(Logo$1, null)), /*#__PURE__*/React__default.createElement(HeaderNav$1, null)), /*#__PURE__*/React__default.createElement(InProgressDealBar, {
+    gearboxPrivateUrl: gearboxPrivateUrl
+  }));
+};
+
 var _class$2, _descriptor$2, _descriptor2$2, _descriptor3$2, _descriptor4$2, _temp$2;
 var Store = (_class$2 = (_temp$2 = function Store() {
   _classCallCheck(this, Store);
@@ -14545,6 +14595,28 @@ function SvgShop(props) {
   }, props), _ref$7);
 }
 
+function _extends$9() { _extends$9 = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends$9.apply(this, arguments); }
+
+var _ref$8 = /*#__PURE__*/React.createElement("g", {
+  fill: "#767676"
+}, /*#__PURE__*/React.createElement("path", {
+  d: "M83.102 8.062c.893-.681 1.943-1.334 2.964-1.334 1.078 0 1.575.866 1.362 2.13l-1.575 8.872h5.192l1.63-9.54c.767-4.543-2.155-6.176-4.779-6.176-1.972 0-3.915.866-5.305 2.414-.709-1.818-2.283-2.414-3.773-2.414-1.815 0-3.546.738-4.964 2.314l.369-2.044H66.45l-.808 4.515h2.936L66.663 17.73h5.149l1.702-9.668c.893-.681 1.943-1.334 2.964-1.334 1.078 0 1.575.866 1.362 2.13l-1.575 8.872h5.149z"
+}), /*#__PURE__*/React.createElement("path", {
+  clipRule: "evenodd",
+  d: "M48.962 10.49c0-4.5 3.22-8.49 8.68-8.49 4.326 0 7.815 2.854 7.815 7.51 0 4.5-3.22 8.49-8.68 8.49-4.326 0-7.815-2.84-7.815-7.51zm5.134-.242c0 1.86 1.15 3.308 2.965 3.308 2 0 3.262-1.788 3.276-3.804 0-1.86-1.149-3.308-2.964-3.308-2.014 0-3.277 1.803-3.277 3.804zM31.672 10.49c0-4.5 3.22-8.49 8.68-8.49 4.326 0 7.815 2.854 7.815 7.51 0 4.5-3.22 8.49-8.68 8.49-4.326 0-7.815-2.84-7.815-7.51zm5.134-.242c0 1.86 1.15 3.308 2.965 3.308 2 0 3.276-1.788 3.276-3.804 0-1.86-1.149-3.308-2.964-3.308-2.014 0-3.277 1.803-3.277 3.804z",
+  fillRule: "evenodd"
+}), /*#__PURE__*/React.createElement("path", {
+  d: "M32.211 2L31.19 7.565h-2.1c-1.97 0-2.78.994-3.049 2.598l-1.29 7.567h-5.163L21.502 6.8h-2.936l.809-4.515h7.772l-.553 2.967C27.644 2.752 29.927 2 32.055 2zM0 6.799l.794-4.515h7.404l-.354 10.761L12.78 2.284h5.8L10.766 17.73H2.936V6.8zM101.192 2.96c0-1.696-1.312-2.928-2.896-2.928S95.4 1.264 95.4 2.96s1.312 2.928 2.896 2.928 2.896-1.232 2.896-2.928zm-.496 0c0 1.424-1.072 2.448-2.4 2.448S95.88 4.384 95.88 2.96c0-1.44 1.088-2.464 2.416-2.464s2.4 1.024 2.4 2.464zm-2.464.416l.72 1.088h.752l-.784-1.152c.416-.112.672-.432.672-.912 0-.64-.416-1.008-1.088-1.008H97.16v3.072h.672V3.376zm.72-.976c0 .224-.176.416-.48.416h-.64v-.848h.64c.304 0 .48.192.48.432z"
+}));
+
+function SvgVroomLogoGray(props) {
+  return /*#__PURE__*/React.createElement("svg", _extends$9({
+    fill: "none",
+    height: 20,
+    width: 102
+  }, props), _ref$8);
+}
+
 var ViewContainer = styles.styled('div')(function () {
   return {
     display: 'flex',
@@ -14595,7 +14667,7 @@ var DesktopView$1 = styles.styled('div')(function (_ref5) {
     display: 'flex',
     width: '100%',
     alignItems: 'center'
-  }, theme.breakpoints.only('xs'), {
+  }, theme.breakpoints.down('sm'), {
     display: 'none'
   });
 });
@@ -14605,7 +14677,7 @@ var MobileView$1 = styles.styled('div')(function (_ref7) {
     display: 'none',
     width: '100%',
     alignItems: 'center'
-  }, theme.breakpoints.only('xs'), {
+  }, theme.breakpoints.down('sm'), {
     display: 'flex'
   });
 });
@@ -14622,7 +14694,7 @@ var ShopLabel = styles.styled(ui.Typography)(function (_ref9) {
   return _defineProperty({
     color: '#FFFFFF',
     fontSize: '18px'
-  }, theme.breakpoints.only('xs'), {
+  }, theme.breakpoints.down('sm'), {
     color: '#767676',
     fontSize: '14px',
     fontWeight: 600
@@ -14634,7 +14706,7 @@ var ShopIcon = styles.styled(SvgShop)(function (_ref11) {
     width: '20px',
     marginRight: theme.spacing(1),
     fill: '#FFFFFF'
-  }, theme.breakpoints.only('xs'), {
+  }, theme.breakpoints.down('sm'), {
     fill: '#767676'
   });
 });
@@ -14686,7 +14758,7 @@ var DropdownLabelContainer = styles.styled('div')(function (_ref16) {
       fontSize: '16px'
     },
     marginRight: theme.spacing(4)
-  }, _defineProperty(_ref17, theme.breakpoints.only('xs'), {
+  }, _defineProperty(_ref17, theme.breakpoints.down('sm'), {
     display: 'none'
   }), _defineProperty(_ref17, "cursor", 'pointer'), _ref17;
 });
@@ -14760,9 +14832,30 @@ var LearningLinks = styles.styled('a')(function (_ref21) {
     padding: theme.spacing(1)
   };
 });
+var PoweredBy = styles.styled('div')(function (_ref22) {
+  var theme = _ref22.theme;
+  return _defineProperty({
+    display: 'flex',
+    alignItems: 'center'
+  }, theme.breakpoints.up('md'), {
+    marginLeft: 'auto'
+  });
+});
+var PoweredByLabel = styles.styled(ui.Typography)(function () {
+  return {
+    color: '#767676',
+    fontSize: '16px'
+  };
+});
+var VroomLogo = styles.styled(SvgVroomLogoGray)(function (_ref24) {
+  var theme = _ref24.theme;
+  return {
+    marginLeft: theme.spacing(1)
+  };
+});
 
-var View$2 = function View(_ref22) {
-  var viewModel = _ref22.viewModel;
+var View$2 = function View(_ref25) {
+  var viewModel = _ref25.viewModel;
   return /*#__PURE__*/React__default.createElement(ViewContainer, null, /*#__PURE__*/React__default.createElement(Top, null, /*#__PURE__*/React__default.createElement("a", {
     href: viewModel.logoLink.href,
     onClick: viewModel.logoLink.handleAnalytics
@@ -14822,7 +14915,7 @@ var View$2 = function View(_ref22) {
     onClick: viewModel.backToCorporate.handleAnalytics,
     href: viewModel.backToCorporate.href,
     target: viewModel.backToCorporate.target
-  }, /*#__PURE__*/React__default.createElement(ui.Typography, null, viewModel.backToCorporate.label))), /*#__PURE__*/React__default.createElement(MobileView$1, null, /*#__PURE__*/React__default.createElement(ShopNowContainer, {
+  }, /*#__PURE__*/React__default.createElement(ui.Typography, null, viewModel.backToCorporate.label)), /*#__PURE__*/React__default.createElement(PoweredBy, null, /*#__PURE__*/React__default.createElement(PoweredByLabel, null, viewModel.poweredBy), /*#__PURE__*/React__default.createElement(VroomLogo, null))), /*#__PURE__*/React__default.createElement(MobileView$1, null, /*#__PURE__*/React__default.createElement(PoweredBy, null, /*#__PURE__*/React__default.createElement(PoweredByLabel, null, viewModel.poweredBy), /*#__PURE__*/React__default.createElement(VroomLogo, null)), /*#__PURE__*/React__default.createElement(ShopNowContainer, {
     href: viewModel.shopNow.href,
     onClick: viewModel.shopNow.handleAnalytics
   }, /*#__PURE__*/React__default.createElement(ShopIcon, null), /*#__PURE__*/React__default.createElement(ShopLabel, null, viewModel.shopNow.label)))));
@@ -14984,6 +15077,8 @@ var ViewModel = function ViewModel(store) {
     href: 'https://santanderconsumerusa.com/',
     handleAnalytics: this.analyticsHandler.trackCorporateSite
   });
+
+  _defineProperty(this, "poweredBy", 'Powered by');
 
   _defineProperty(this, "isDropdownOpen", function () {
     return _this.store.isOpen;

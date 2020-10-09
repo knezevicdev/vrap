@@ -1,0 +1,58 @@
+appraisal:
+  jobs:
+  - appraisal_build:
+      context: aws-non-prod
+      filters:
+        tags:
+          only: /^appraisal-v.*/
+        branches:
+          ignore: /.*/
+  - hold:
+      name: hold_<< matrix.env >>
+      type: approval
+      matrix:
+        parameters:
+          env: ["dev", "qa", "uat"]
+      requires:
+        - appraisal_build
+      filters:
+        tags:
+          only: /^appraisal-v.*/
+        branches:
+          ignore: /.*/
+  - appraisal_deploy:
+      name: appraisal_deploy_<< matrix.env >>
+      context: aws-non-prod
+      matrix:
+        parameters:
+          env: ["dev", "qa", "uat"]
+      requires:
+        - hold_<< matrix.env >>
+      filters:
+        tags:
+          only: /^appraisal-v.*/
+        branches:
+          ignore: /.*/
+  - hold:
+      name: hold_prod
+      type: approval
+      requires:
+        - appraisal_deploy_dev
+        - appraisal_deploy_qa
+        - appraisal_deploy_uat
+      filters:
+        tags:
+          only: /^appraisal-v.*/
+        branches:
+          ignore: /.*/
+  - appraisal_deploy:
+      name: appraisal_deploy_prod
+      context: aws-non-prod
+      env: "prod"
+      requires:
+        - hold_prod
+      filters:
+        tags:
+          only: /^appraisal-v.*/
+        branches:
+          ignore: /.*/

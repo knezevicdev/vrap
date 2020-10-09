@@ -90,7 +90,7 @@ InventoryPage.getInitialProps = async (
   );
   let canonicalHref: string | undefined;
   let title = '';
-  if (initialState.vehicleStatus === Status.SUCCESS) {
+  if (initialState.vehicleStatus === Status.SUCCESS && initialState.vehicle) {
     const {
       year,
       make,

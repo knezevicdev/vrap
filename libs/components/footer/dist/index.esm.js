@@ -13,6 +13,7 @@ import MuiExpansionPanel from '@material-ui/core/ExpansionPanel';
 import MuiExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
 import SvgIcon from '@material-ui/core/SvgIcon';
+import { CatSDK } from '@vroom-web/cat-sdk';
 import { Link as Link$2 } from '@material-ui/core';
 
 function _defineProperty(obj, key, value) {
@@ -2337,6 +2338,38 @@ var computedDecorator = createPropDecorator(false, function (instance, propertyN
 var computedStructDecorator = computedDecorator({
   equals: comparer.structural
 });
+/**
+ * Decorator for class properties: @computed get value() { return expr; }.
+ * For legacy purposes also invokable as ES5 observable created: `computed(() => expr)`;
+ */
+
+var computed = function computed(arg1, arg2, arg3) {
+  if (typeof arg2 === "string") {
+    // @computed
+    return computedDecorator.apply(null, arguments);
+  }
+
+  if (arg1 !== null && typeof arg1 === "object" && arguments.length === 1) {
+    // @computed({ options })
+    return computedDecorator.apply(null, arguments);
+  } // computed(expr, options?)
+
+
+  if (process.env.NODE_ENV !== "production") {
+    invariant(typeof arg1 === "function", "First argument to `computed` should be an expression.");
+    invariant(arguments.length < 3, "Computed takes one or two arguments if used as function");
+  }
+
+  var opts = typeof arg2 === "object" ? arg2 : {};
+  opts.get = arg1;
+  opts.set = typeof arg2 === "function" ? arg2 : opts.set;
+  opts.name = opts.name || arg1.name || "";
+  /* for generated name */
+
+  return new ComputedValue(opts);
+};
+
+computed.struct = computedStructDecorator;
 var IDerivationState;
 
 (function (IDerivationState) {
@@ -6835,9 +6868,6 @@ if (!observable) throw new Error("mobx-react requires mobx to be available");
 
 var DesktopNavigationView = function DesktopNavigationView(_ref) {
   var viewModel = _ref.viewModel;
-  useEffect(function () {
-    viewModel.handleMount();
-  }, [viewModel]);
   return /*#__PURE__*/React__default.createElement(Grid, {
     container: true,
     spacing: 2
@@ -7013,10 +7043,6 @@ var MobileNavView = function MobileNavView(_ref4) {
       expanded = _useState2[0],
       setExpanded = _useState2[1];
 
-  useEffect(function () {
-    viewModel.handleMount();
-  }, [viewModel]);
-
   var handleChange = function handleChange(isExpanded, panel) {
     setExpanded(isExpanded ? panel : '');
   };
@@ -7064,188 +7090,53 @@ var MobileNavView = function MobileNavView(_ref4) {
 
 var MobileView = observer$1(MobileNavView);
 
-var js_cookie = createCommonjsModule(function (module, exports) {
+var _class, _descriptor, _descriptor2, _descriptor3, _descriptor4, _descriptor5, _descriptor6, _temp;
+var NavStore = (_class = (_temp = /*#__PURE__*/function () {
+  function NavStore() {
+    var _this = this;
 
-(function (factory) {
-  var registeredInModuleLoader;
+    _classCallCheck(this, NavStore);
 
-  {
-    module.exports = factory();
-    registeredInModuleLoader = true;
+    _defineProperty$1(this, "catSDK", new CatSDK());
+
+    _initializerDefineProperty(this, "catData", _descriptor, this);
+
+    _initializerDefineProperty(this, "queryString", _descriptor2, this);
+
+    _initializerDefineProperty(this, "initQueryStringClientSide", _descriptor3, this);
+
+    _initializerDefineProperty(this, "setCatData", _descriptor4, this);
+
+    _defineProperty$1(this, "catDataEventListener", function (catDataEvent) {
+      _this.setCatData(catDataEvent.detail);
+    });
+
+    _initializerDefineProperty(this, "initClientSide", _descriptor5, this);
+
+    _initializerDefineProperty(this, "tearDownClientSide", _descriptor6, this);
   }
 
-  if (!registeredInModuleLoader) {
-    var OldCookies = window.Cookies;
-    var api = window.Cookies = factory();
-
-    api.noConflict = function () {
-      window.Cookies = OldCookies;
-      return api;
-    };
-  }
-})(function () {
-  function extend() {
-    var i = 0;
-    var result = {};
-
-    for (; i < arguments.length; i++) {
-      var attributes = arguments[i];
-
-      for (var key in attributes) {
-        result[key] = attributes[key];
-      }
-    }
-
-    return result;
-  }
-
-  function decode(s) {
-    return s.replace(/(%[0-9A-Z]{2})+/g, decodeURIComponent);
-  }
-
-  function init(converter) {
-    function api() {}
-
-    function set(key, value, attributes) {
-      if (typeof document === 'undefined') {
-        return;
+  _createClass(NavStore, [{
+    key: "phoneNumber",
+    get: function get() {
+      if (!this.catData) {
+        return undefined;
       }
 
-      attributes = extend({
-        path: '/'
-      }, api.defaults, attributes);
+      return this.catData.sitePhoneNumber;
+    } // FIT-566
+    // As a stopgap, the we persist certain query params across navigation.
+    // This is so that vlassic attribution works until we build a better system.
 
-      if (typeof attributes.expires === 'number') {
-        attributes.expires = new Date(new Date() * 1 + attributes.expires * 864e+5);
-      } // We're using "expires" because "max-age" is not supported by IE
+  }]);
 
-
-      attributes.expires = attributes.expires ? attributes.expires.toUTCString() : '';
-
-      try {
-        var result = JSON.stringify(value);
-
-        if (/^[\{\[]/.test(result)) {
-          value = result;
-        }
-      } catch (e) {}
-
-      value = converter.write ? converter.write(value, key) : encodeURIComponent(String(value)).replace(/%(23|24|26|2B|3A|3C|3E|3D|2F|3F|40|5B|5D|5E|60|7B|7D|7C)/g, decodeURIComponent);
-      key = encodeURIComponent(String(key)).replace(/%(23|24|26|2B|5E|60|7C)/g, decodeURIComponent).replace(/[\(\)]/g, escape);
-      var stringifiedAttributes = '';
-
-      for (var attributeName in attributes) {
-        if (!attributes[attributeName]) {
-          continue;
-        }
-
-        stringifiedAttributes += '; ' + attributeName;
-
-        if (attributes[attributeName] === true) {
-          continue;
-        } // Considers RFC 6265 section 5.2:
-        // ...
-        // 3.  If the remaining unparsed-attributes contains a %x3B (";")
-        //     character:
-        // Consume the characters of the unparsed-attributes up to,
-        // not including, the first %x3B (";") character.
-        // ...
-
-
-        stringifiedAttributes += '=' + attributes[attributeName].split(';')[0];
-      }
-
-      return document.cookie = key + '=' + value + stringifiedAttributes;
-    }
-
-    function get(key, json) {
-      if (typeof document === 'undefined') {
-        return;
-      }
-
-      var jar = {}; // To prevent the for loop in the first place assign an empty array
-      // in case there are no cookies at all.
-
-      var cookies = document.cookie ? document.cookie.split('; ') : [];
-      var i = 0;
-
-      for (; i < cookies.length; i++) {
-        var parts = cookies[i].split('=');
-        var cookie = parts.slice(1).join('=');
-
-        if (!json && cookie.charAt(0) === '"') {
-          cookie = cookie.slice(1, -1);
-        }
-
-        try {
-          var name = decode(parts[0]);
-          cookie = (converter.read || converter)(cookie, name) || decode(cookie);
-
-          if (json) {
-            try {
-              cookie = JSON.parse(cookie);
-            } catch (e) {}
-          }
-
-          jar[name] = cookie;
-
-          if (key === name) {
-            break;
-          }
-        } catch (e) {}
-      }
-
-      return key ? jar[key] : jar;
-    }
-
-    api.set = set;
-
-    api.get = function (key) {
-      return get(key, false
-      /* read as raw */
-      );
-    };
-
-    api.getJSON = function (key) {
-      return get(key, true
-      /* read as json */
-      );
-    };
-
-    api.remove = function (key, attributes) {
-      set(key, '', extend(attributes, {
-        expires: -1
-      }));
-    };
-
-    api.defaults = {};
-    api.withConverter = init;
-    return api;
-  }
-
-  return init(function () {});
-});
-});
-
-var _class, _descriptor, _descriptor2, _descriptor3, _descriptor4, _descriptor5, _class2, _temp;
-var NavStore = (_class = (_temp = _class2 = function NavStore() {
-  _classCallCheck(this, NavStore);
-
-  _initializerDefineProperty(this, "phoneNumber", _descriptor, this);
-
-  _initializerDefineProperty(this, "queryString", _descriptor2, this);
-
-  _initializerDefineProperty(this, "initQueryStringClientSide", _descriptor3, this);
-
-  _initializerDefineProperty(this, "initPhoneNumberClientSide", _descriptor4, this);
-
-  _initializerDefineProperty(this, "initClientSide", _descriptor5, this);
-}, _defineProperty$1(_class2, "phoneNumberCookieName", 'sitePhoneNumber'), _temp), (_descriptor = _applyDecoratedDescriptor(_class.prototype, "phoneNumber", [observable], {
+  return NavStore;
+}(), _temp), (_descriptor = _applyDecoratedDescriptor(_class.prototype, "catData", [observable], {
   configurable: true,
   enumerable: true,
   writable: true,
   initializer: null
-}), _descriptor2 = _applyDecoratedDescriptor(_class.prototype, "queryString", [observable], {
+}), _applyDecoratedDescriptor(_class.prototype, "phoneNumber", [computed], Object.getOwnPropertyDescriptor(_class.prototype, "phoneNumber"), _class.prototype), _descriptor2 = _applyDecoratedDescriptor(_class.prototype, "queryString", [observable], {
   configurable: true,
   enumerable: true,
   writable: true,
@@ -7257,7 +7148,7 @@ var NavStore = (_class = (_temp = _class2 = function NavStore() {
   enumerable: true,
   writable: true,
   initializer: function initializer() {
-    var _this = this;
+    var _this2 = this;
 
     return function () {
       var query = lib_2(window.location.search, {
@@ -7289,24 +7180,20 @@ var NavStore = (_class = (_temp = _class2 = function NavStore() {
         };
       }(query);
 
-      _this.queryString = lib_3(picked, {
+      _this2.queryString = lib_3(picked, {
         addQueryPrefix: true
       });
     };
   }
-}), _descriptor4 = _applyDecoratedDescriptor(_class.prototype, "initPhoneNumberClientSide", [action], {
+}), _descriptor4 = _applyDecoratedDescriptor(_class.prototype, "setCatData", [action], {
   configurable: true,
   enumerable: true,
   writable: true,
   initializer: function initializer() {
-    var _this2 = this;
+    var _this3 = this;
 
-    return function () {
-      var phoneNumber = js_cookie.get(NavStore.phoneNumberCookieName);
-
-      if (phoneNumber) {
-        _this2.phoneNumber = phoneNumber;
-      }
+    return function (catData) {
+      _this3.catData = catData;
     };
   }
 }), _descriptor5 = _applyDecoratedDescriptor(_class.prototype, "initClientSide", [action], {
@@ -7314,12 +7201,23 @@ var NavStore = (_class = (_temp = _class2 = function NavStore() {
   enumerable: true,
   writable: true,
   initializer: function initializer() {
-    var _this3 = this;
+    var _this4 = this;
 
     return function () {
-      _this3.initQueryStringClientSide();
+      _this4.initQueryStringClientSide();
 
-      _this3.initPhoneNumberClientSide();
+      _this4.catSDK.observeCatData(_this4.catDataEventListener);
+    };
+  }
+}), _descriptor6 = _applyDecoratedDescriptor(_class.prototype, "tearDownClientSide", [action], {
+  configurable: true,
+  enumerable: true,
+  writable: true,
+  initializer: function initializer() {
+    var _this5 = this;
+
+    return function () {
+      _this5.catSDK.unobserveCatData(_this5.catDataEventListener);
     };
   }
 })), _class);
@@ -13093,21 +12991,23 @@ AsYouType$1.prototype.constructor = AsYouType$1;
 
 var NavigationViewModel = /*#__PURE__*/function () {
   function NavigationViewModel(store) {
+    var _this = this;
+
     _classCallCheck(this, NavigationViewModel);
 
     _defineProperty$1(this, "store", void 0);
 
-    _defineProperty$1(this, "getPhoneNumberLinkData", function (phoneNumber) {
+    _defineProperty$1(this, "getPhoneNumberLinkData", function () {
       var defaultPhoneNumberLinkData = {
         href: 'tel:+18555241300',
         label: '(855) 524-1300'
       };
 
-      if (!phoneNumber) {
+      if (!_this.store.phoneNumber) {
         return defaultPhoneNumberLinkData;
       }
 
-      var parsedPhoneNumber = parsePhoneNumberFromString$2(phoneNumber, 'US');
+      var parsedPhoneNumber = parsePhoneNumberFromString$2(decodeURIComponent(_this.store.phoneNumber), 'US');
 
       if (!parsedPhoneNumber) {
         return defaultPhoneNumberLinkData;
@@ -13128,11 +13028,6 @@ var NavigationViewModel = /*#__PURE__*/function () {
   }
 
   _createClass(NavigationViewModel, [{
-    key: "handleMount",
-    value: function handleMount() {
-      this.store.initClientSide();
-    }
-  }, {
     key: "links",
     value: function links() {
       // FIT-566
@@ -13168,7 +13063,7 @@ var NavigationViewModel = /*#__PURE__*/function () {
         }]
       }, {
         title: 'Contact',
-        links: [this.getPhoneNumberLinkData(this.store.phoneNumber), {
+        links: [this.getPhoneNumberLinkData(), {
           label: 'FAQ',
           href: 'https://vroom.zendesk.com/hc/en-us',
           target: '_blank',
@@ -13206,6 +13101,12 @@ var Nav = function Nav(props) {
   var desktop = props.desktop;
   var store = new NavStore();
   var viewModel = new NavigationViewModel(store);
+  useEffect(function () {
+    store.initClientSide();
+    return function () {
+      store.tearDownClientSide();
+    };
+  }, [store]);
 
   if (desktop) {
     return /*#__PURE__*/React__default.createElement(DesktopView, {
@@ -13633,33 +13534,107 @@ function identify(traits, userId) {
   });
 }
 
+var VitParam;
+
+(function (VitParam) {
+  VitParam["SOURCE"] = "vit_source";
+  VitParam["MEDIUM"] = "vit_medium";
+  VitParam["CAMPAIGN"] = "vit_campaign";
+  VitParam["TERM"] = "vit_term";
+  VitParam["CONTENT"] = "vit_content";
+  VitParam["DEST"] = "vit_dest";
+})(VitParam || (VitParam = {}));
+
 var AnalyticsHandler = /*#__PURE__*/function () {
+  _createClass$8(AnalyticsHandler, [{
+    key: "getVitParams",
+    value: function getVitParams() {
+      if (typeof window === 'undefined') {
+        return {};
+      }
+
+      var urlSearchParams = new URLSearchParams(window.location.search);
+      var source = urlSearchParams.get(VitParam.SOURCE);
+      var medium = urlSearchParams.get(VitParam.MEDIUM);
+      var campaign = urlSearchParams.get(VitParam.CAMPAIGN);
+      var term = urlSearchParams.get(VitParam.TERM);
+      var content = urlSearchParams.get(VitParam.CONTENT);
+      var dest = urlSearchParams.get(VitParam.DEST);
+      var vitParams = {};
+
+      if (source) {
+        vitParams[VitParam.SOURCE] = source;
+      }
+
+      if (medium) {
+        vitParams[VitParam.MEDIUM] = medium;
+      }
+
+      if (campaign) {
+        vitParams[VitParam.CAMPAIGN] = campaign;
+      }
+
+      if (term) {
+        vitParams[VitParam.TERM] = term;
+      }
+
+      if (content) {
+        vitParams[VitParam.CONTENT] = content;
+      }
+
+      if (dest) {
+        vitParams[VitParam.DEST] = dest;
+      }
+
+      return vitParams;
+    }
+  }]);
+
   function AnalyticsHandler() {
     _classCallCheck$9(this, AnalyticsHandler);
+
+    if (typeof window !== 'undefined') {
+      this.retrieveRegisteredExperiments();
+      this.setOptimizeData();
+    }
   }
 
   _createClass$8(AnalyticsHandler, [{
     key: "track",
     value: function track$1(event, properties) {
-      var propertiesWithExperimentCombination = _objectSpread2$1(_objectSpread2$1({}, properties), {}, {
+      var vitParams = this.getVitParams();
+
+      var fullProperties = _objectSpread2$1(_objectSpread2$1(_objectSpread2$1({}, properties), vitParams), {}, {
         experimentCombination: AnalyticsHandler.optimizeExperimentsString
       });
 
-      track(event, propertiesWithExperimentCombination);
+      track(event, fullProperties);
     }
   }, {
     key: "setAnonymousId",
     value: function setAnonymousId$1(anonymousId) {
       setAnonymousId(anonymousId);
-    }
+    } // TODO: depricate this in favor of using registerExperiment directly.
+
   }, {
     key: "setExperiments",
     value: function setExperiments(experiments) {
-      AnalyticsHandler.optimizeExperimentsString = experiments ? experiments.filter(function (experiment) {
+      var _this = this;
+
+      if (experiments) {
+        experiments.forEach(function (experiment) {
+          _this.registerExperiment(experiment);
+        });
+      }
+    }
+  }, {
+    key: "setOptimizeData",
+    value: function setOptimizeData() {
+      AnalyticsHandler.optimizeExperimentsString = AnalyticsHandler.registeredExperiments.filter(function (experiment) {
         return experiment.optimizeId;
       }).map(function (experiment) {
-        return "".concat(experiment.optimizeId, ".").concat(experiment.assignedVariant);
-      }).join('!') : undefined;
+        return "".concat(experiment.optimizeId, ".").concat(experiment.variant);
+      }).join('!');
       onAnalyticsReady(function () {
         try {
           if (typeof window.ga === 'undefined') {
@@ -13671,6 +13646,45 @@ var AnalyticsHandler = /*#__PURE__*/function () {
           console.error(e);
         }
       });
+    }
+  }, {
+    key: "storeRegisteredExperiments",
+    value: function storeRegisteredExperiments() {
+      var registeredExperimentsString = JSON.stringify(AnalyticsHandler.registeredExperiments);
+      localStorage.setItem(AnalyticsHandler.registeredExperimentsKey, registeredExperimentsString);
+    }
+  }, {
+    key: "retrieveRegisteredExperiments",
+    value: function retrieveRegisteredExperiments() {
+      var registeredExperimentsString = localStorage.getItem(AnalyticsHandler.registeredExperimentsKey);
+
+      if (!registeredExperimentsString) {
+        return;
+      }
+
+      var registeredExperiments = JSON.parse(registeredExperimentsString);
+      AnalyticsHandler.registeredExperiments = registeredExperiments;
+    }
+  }, {
+    key: "registerExperiment",
+    value: function registerExperiment(experiment) {
+      var experimentIndex = AnalyticsHandler.registeredExperiments.findIndex(function (re) {
+        return re.id === experiment.id;
+      });
+
+      if (experimentIndex !== -1) {
+        AnalyticsHandler.registeredExperiments.splice(experimentIndex, 1);
+      }
+
+      var registeredExperiment = {
+        id: experiment.id,
+        variant: experiment.assignedVariant,
+        optimizeId: experiment.optimizeId,
+        time: new Date().toISOString()
+      };
+      AnalyticsHandler.registeredExperiments.push(registeredExperiment);
+      this.storeRegisteredExperiments();
+      this.setOptimizeData();
     }
   }, {
     key: "createAdditionalTracker",
@@ -13702,11 +13716,14 @@ var AnalyticsHandler = /*#__PURE__*/function () {
   }, {
     key: "page",
     value: function page$1(name, category) {
-      var properties = {
+      var vitParams = this.getVitParams();
+
+      var properties = _objectSpread2$1({
         category: category,
         experimentCombination: AnalyticsHandler.optimizeExperimentsString,
         name: name
-      };
+      }, vitParams);
+
       page(name, properties);
     }
   }, {
@@ -13718,6 +13735,10 @@ var AnalyticsHandler = /*#__PURE__*/function () {
 
   return AnalyticsHandler;
 }();
+
+_defineProperty$a(AnalyticsHandler, "registeredExperimentsKey", 'registered_exp');
+
+_defineProperty$a(AnalyticsHandler, "registeredExperiments", []);
 
 _defineProperty$a(AnalyticsHandler, "optimizeExperimentsString", void 0);
 

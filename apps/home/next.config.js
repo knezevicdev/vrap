@@ -27,6 +27,7 @@ const config = {
     GEARBOX_PUBLIC_URL: process.env.GEARBOX_PUBLIC_URL,
     INVSEARCH_V3_URL: process.env.INVSEARCH_V3_URL,
     NAME: name,
+    NODE_ENV: process.env.NODE_ENV,
     STATIC_ASSETS_HOST_URL: process.env.STATIC_ASSETS_HOST_URL,
     VERSION: version,
     BRANCH_IO_KEY: process.env.BRANCH_IO_KEY,
