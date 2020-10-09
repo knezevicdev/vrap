@@ -35,7 +35,6 @@ const InventoryPage: NextPage<Props> = (props: Props) => {
   const head = (
     <>
       <title>{title}</title>)
-      <meta name="robots" content="noindex, nofollow" />
       {canonicalHref && <link rel="canonical" href={canonicalHref} />}
     </>
   );
