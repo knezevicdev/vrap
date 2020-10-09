@@ -1,8 +1,7 @@
-import { StandardFooter } from '@vroom-web/footer-components';
 import { SimpleHeader } from '@vroom-web/header-components';
-import { NextPage } from 'next';
-import getConfig from 'next/config';
+import Footer from 'src/core/Footer';
 import React from 'react';
+import { NextPage } from 'next';
 
 import PriceView from 'src/modules/price';
 import {
@@ -11,12 +10,13 @@ import {
   PriceStore,
 } from 'src/modules/price/store';
 import Page from 'src/Page';
-
-const { publicRuntimeConfig } = getConfig();
+import getConfig from 'next/config';
 
 interface Props {
   initialState: PriceStore;
 }
+
+const { publicRuntimeConfig } = getConfig();
 
 const Price: NextPage<Props> = ({ initialState }) => {
   const gearboxPrivateUrl = publicRuntimeConfig.GEARBOX_PRIVATE_URL;
@@ -26,7 +26,7 @@ const Price: NextPage<Props> = ({ initialState }) => {
       <PriceStoreContext.Provider value={initialState}>
         <SimpleHeader gearboxPrivateUrl={gearboxPrivateUrl} />
         <PriceView />
-        <StandardFooter />
+        <Footer />
       </PriceStoreContext.Provider>
     </Page>
   );

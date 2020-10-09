@@ -1,6 +1,7 @@
 import { styled } from '@material-ui/core/styles';
-import { Button, Container } from '@vroom-web/ui';
 import { observer } from 'mobx-react';
+import { Body, Hero, Title } from 'src/core/Typography';
+import { Button, Container } from '@vroom-web/ui';
 import React from 'react';
 
 import InitialPriceViewModel from './ViewModel';
@@ -45,12 +46,14 @@ const handleButtonClick = (
 const InitialPriceView: React.FC<Props> = ({ viewModel }) => {
   return (
     <StyledContainer>
-      <div>{viewModel.yourPrice}</div>
-      <div>{viewModel.price}</div>
-      <div>{viewModel.offerExpPreDate}</div>
-      <div>{viewModel.goodUntil}</div>
-      <div>{viewModel.offerExpPostDate}</div>
-      <b>{viewModel.miles}</b>
+      <Hero.Four>{viewModel.yourPrice}</Hero.Four>
+      <Hero.One>{viewModel.price}</Hero.One>
+      <Body.Regular>
+        {viewModel.offerExpPreDate}
+        <b>{viewModel.goodUntil}</b>
+      </Body.Regular>
+      <Body.Regular>{viewModel.offerExpPostDate}</Body.Regular>
+      <Title.Three>{viewModel.miles}</Title.Three>
       <StyledButton onClick={handleButtonClick} variant="contained">
         {viewModel.continuePrice}
       </StyledButton>

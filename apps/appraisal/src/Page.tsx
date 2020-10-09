@@ -1,4 +1,3 @@
-// dont forget to add circle ci build stuff
 import { styled } from '@material-ui/core/styles';
 import { Container } from '@vroom-web/ui';
 import Head from 'next/head';
@@ -10,14 +9,8 @@ const Contents = styled('div')(() => ({
   flexDirection: 'column',
 }));
 
-interface Experiment {
-  assignedVariant: 0 | 1;
-  optimizeId?: string;
-}
-
 interface PageProps {
   category?: string;
-  experiments?: Experiment[];
   head?: React.ReactNode;
   name: string;
 }

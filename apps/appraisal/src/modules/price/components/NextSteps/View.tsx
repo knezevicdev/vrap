@@ -1,22 +1,12 @@
 import { styled } from '@material-ui/core/styles';
-import { Container, Typography } from '@vroom-web/ui';
+import { Container } from '@vroom-web/ui';
+import { Body, Hero, Title } from 'src/core/Typography';
 import React from 'react';
 
 import NextStepsViewModel from './ViewModel';
 
 const StyledContainer = styled(Container)(() => ({
   backgroundColor: 'white',
-}));
-
-const Title = styled(Typography)(({ theme }) => ({
-  marginBottom: theme.spacing(1),
-  textAlign: 'center',
-  [theme.breakpoints.only('xs')]: {
-    textAlign: 'center',
-  },
-  [theme.breakpoints.up('lg')]: {
-    marginBottom: theme.spacing(2),
-  },
 }));
 
 const ColoredBullet = styled('div')(() => ({
@@ -45,10 +35,6 @@ const ColoredBullet = styled('div')(() => ({
   },
 }));
 
-const ColoredBulletContent = styled('div')(() => ({
-  padding: '10px 0',
-}));
-
 export interface Props {
   viewModel: NextStepsViewModel;
 }
@@ -56,21 +42,21 @@ export interface Props {
 const NextStepsView: React.FC<Props> = ({ viewModel }) => {
   return (
     <StyledContainer>
-      <Title variant="h2">{viewModel.nextSteps}</Title>
+      <Hero.Three>{viewModel.nextSteps}</Hero.Three>
       <div>
         <ColoredBullet>
-          <b>{viewModel.verifyOwnership}</b>
-          <ColoredBulletContent>{viewModel.quicklyVerify}</ColoredBulletContent>
+          <Title.Three>{viewModel.verifyOwnership}</Title.Three>
+          <Body.Regular>{viewModel.quicklyVerify}</Body.Regular>
         </ColoredBullet>
         <ColoredBullet>
-          <b>{viewModel.freePickup}</b>
-          <ColoredBulletContent>{viewModel.scheduleATime}</ColoredBulletContent>
+          <Title.Three>{viewModel.freePickup}</Title.Three>
+          <Body.Regular>{viewModel.scheduleATime}</Body.Regular>
         </ColoredBullet>
         <ColoredBullet>
-          <b>{viewModel.wePickIt}</b>
-          <ColoredBulletContent>
+          <Title.Three>{viewModel.wePickIt}</Title.Three>
+          <Body.Regular>
             {viewModel.pickupYourVehicle}
-          </ColoredBulletContent>
+          </Body.Regular>
         </ColoredBullet>
       </div>
     </StyledContainer>
