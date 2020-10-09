@@ -15,6 +15,7 @@ class InventoryViewModel {
     if (!filters) return true;
 
     const appliedFilters = Object.keys(filters);
+
     if (appliedFilters.length === 1 && appliedFilters.includes(Filters.PAGE))
       return true;
 

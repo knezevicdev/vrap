@@ -15,7 +15,7 @@ class CountViewModel {
     return count.toLocaleString();
   }
 
-  getCountMessage(): string | undefined {
+  getCountText(): string | undefined {
     if (!this.getCount()) return;
     if (Number(this.getCount()) === 1) return 'Vehicle Found';
     else return 'Vehicles Found';

@@ -19,7 +19,7 @@ const PaginationView: React.FC<Props> = ({ viewModel }) => {
   return (
     <CountContainer>
       <Typography>
-        {viewModel.getCount()} {viewModel.getCountMessage()}
+        {viewModel.getCount()} {viewModel.getCountText()}
       </Typography>
     </CountContainer>
   );
