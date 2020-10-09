@@ -14,6 +14,7 @@ import {
   MaxAndMin,
   setYear,
 } from '@vroom-web/catalog-url-integration';
+import { Experiment } from '@vroom-web/experiment-sdk';
 import {
   InvSearchNetworker,
   PostInventoryRequestData,
@@ -24,7 +25,6 @@ import { NextPage, NextPageContext } from 'next';
 import getConfig from 'next/config';
 import { stringify } from 'qs';
 import React, { useEffect, useState } from 'react';
-import { Experiment } from 'vroom-abtesting-sdk/types';
 
 import AnalyticsHandler from 'src/integrations/AnalyticsHandler';
 import experimentSDK from 'src/integrations/experimentSDK';
