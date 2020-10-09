@@ -32,9 +32,9 @@ class StartPurchaseViewModel {
   }
 
   getButtonText(): string {
-    const { hasStockPhotos, leadFlagPhotoUrl, soldStatus } = this.car;
+    const { isAvailableToSell, leadFlagPhotoUrl, soldStatus } = this.car;
     const vehicleServiceAvailability = this.inventoryStore.isAvailable;
-    if (hasStockPhotos || isEmpty(leadFlagPhotoUrl)) {
+    if (!isAvailableToSell || isEmpty(leadFlagPhotoUrl)) {
       return this.availableSoon;
     }
     if (
@@ -95,15 +95,11 @@ class StartPurchaseViewModel {
   };
 
   isAvailableSoon = (): boolean => {
-    /* TODO
-    Replace once the backend team release a new flag.
-    From David - the intention is to add an availableSoon flag ASAP
-    */
     const {
       leadFlagPhotoUrl,
-      hasStockPhotos,
+      isAvailableToSell,
     } = this.inventoryStore.vehicle._source;
-    return leadFlagPhotoUrl === '' || hasStockPhotos;
+    return leadFlagPhotoUrl === '' || !isAvailableToSell;
   };
 }
 

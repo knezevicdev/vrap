@@ -78,6 +78,7 @@ export declare type Car = {
     frontTrackWidth: number;
     rearTrackWidth: number;
     spincarSpinUrl?: string | null;
+    isAvailableToSell: boolean;
 };
 export declare const carSchema: yup.ObjectSchema<Car>;
 export declare type Hit = {

@@ -73,6 +73,7 @@ const source: Car = {
   height: 0,
   hasStockPhotos: false,
   consignmentPartnerId: '',
+  isAvailableToSell: false,
 };
 
 describe('Similar Vehicles View Model', () => {

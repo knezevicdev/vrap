@@ -31,8 +31,8 @@ class VehicleHeaderViewModel {
   }
 
   isAvailableSoon = (): boolean => {
-    const { leadFlagPhotoUrl, hasStockPhotos } = this.store.vehicle._source;
-    return leadFlagPhotoUrl === '' || hasStockPhotos;
+    const { leadFlagPhotoUrl, isAvailableToSell } = this.store.vehicle._source;
+    return leadFlagPhotoUrl === '' || !isAvailableToSell;
   };
 }
 

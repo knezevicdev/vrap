@@ -36,8 +36,8 @@ class CarCardViewModel {
   }
 
   private getPhotoType(): ProductPhotoType {
-    const { hasStockPhotos, leadFlagPhotoUrl } = this.car;
-    if (hasStockPhotos) {
+    const { isAvailableToSell, leadFlagPhotoUrl } = this.car;
+    if (!isAvailableToSell) {
       return 'Stock';
     }
     if (leadFlagPhotoUrl) {
@@ -47,11 +47,7 @@ class CarCardViewModel {
   }
 
   showLogo = (): boolean => {
-    // FIT-445 this logic should only need to check whether "hasStockPhotos" is true.
-    // However, the backend is returning cars where that field is true, even though there aren't any photos.
-    // For now, we're checking that "leadFlagPhotoUrl" exists so we don't display a logo if there aren't any photos.
-    // Eventually, the backend data should be fixed and this can simply use "hasStockPhotos".
-    return !!this.car.leadFlagPhotoUrl && this.car.hasStockPhotos;
+    return !!this.car.leadFlagPhotoUrl && !this.car.isAvailableToSell;
   };
 
   showAvailableSoon = (): boolean => {
@@ -59,7 +55,7 @@ class CarCardViewModel {
     Replace once the backend team release a new flag.
     From David - the intention is to add an availableSoon flag ASAP
     */
-    return this.car.leadFlagPhotoUrl === '' || this.car.hasStockPhotos;
+    return this.car.leadFlagPhotoUrl === '' || !this.car.isAvailableToSell;
   };
 
   showSalePending = (): boolean => {
