@@ -1,20 +1,5 @@
 import { PriceStore } from 'src/modules/price/store';
 
-class InitialPriceViewModel {
-  readonly yourPrice: string = 'your price';
-  readonly continuePrice: string = 'continue';
-  readonly offerExpPreDate: string = 'This price expires on ';
-  readonly offerExpPostDate: string = ' or upon hitting ';
-  readonly miles: string = '250 miles';
-  readonly price: string = '';
-  readonly goodUntil: string = '';
-
-  constructor(initialPriceState: PriceStore) {
-    this.price = displayCurrency(initialPriceState.price);
-    this.goodUntil = parsedDateTime(initialPriceState.goodUntil);
-  }
-}
-
 const displayCurrency = (num: number): string => {
   return '$' + Math.round(num).toLocaleString();
 };
@@ -44,5 +29,21 @@ const parsedDateTime = (dateTime: string): string => {
 
   return `${month} ${day}, ${year}`;
 };
+
+
+class InitialPriceViewModel {
+  readonly yourPrice: string = 'your price';
+  readonly continuePrice: string = 'continue';
+  readonly offerExpPreDate: string = 'This price expires on ';
+  readonly offerExpPostDate: string = ' or upon hitting ';
+  readonly miles: string = '250 miles';
+  readonly price: string = '';
+  readonly goodUntil: string = '';
+
+  constructor(initialPriceState: PriceStore) {
+    this.price = displayCurrency(initialPriceState.price);
+    this.goodUntil = parsedDateTime(initialPriceState.goodUntil);
+  }
+}
 
 export default InitialPriceViewModel;

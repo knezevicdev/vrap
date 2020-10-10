@@ -1,17 +1,17 @@
-import Footer from 'src/core/Footer';
-import Page from 'src/Page';
-import PriceInfo from 'src/modules/price';
-import React from 'react';
-import Questions from 'src/modules/questions';
-import getConfig from 'next/config';
-
-import { NextPage } from 'next';
 import { SimpleHeader } from '@vroom-web/header-components';
+import { NextPage } from 'next';
+import getConfig from 'next/config';
+import React from 'react';
+
+import Footer from 'src/core/Footer';
+import PriceInfo from 'src/modules/price';
 import {
+  getInitialPriceStoreState,
   PriceStore,
   PriceStoreContext,
-  getInitialPriceStoreState,
 } from 'src/modules/price/store';
+import Questions from 'src/modules/questions';
+import Page from 'src/Page';
 
 interface Props {
   initialState: PriceStore;

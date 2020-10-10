@@ -1,37 +1,52 @@
 import React from 'react';
 import styled from 'styled-components';
+
 import NextStepsViewModel from './ViewModel';
+
 import { Body, Hero, Title } from 'src/core/Typography';
 
 const StyledContainer = styled.div`
-  background-color: white;
   height: 100%;
-  width: 100%;
+`;
+
+const StyledHero = styled(Hero.Three)`
+  padding: 20px 0 35px 0;
+  text-align: center;
 `;
 
 const ColoredBullet = styled.div`
   margin: 0;
-  padding: 0 30px;
+  padding: 0 25px;
   counter-increment: section;
   position: relative;
-  border-left: 1px solid red;
-  margin-left: 30px;
+  border-left: 1px solid #E7131A;
+  margin-left: 20px;
 
   &:before {
-    content: counter(section);
-    left: 0;
-    position: absolute;
+    background-color: #E7131A;
     border-radius: 50%;
-    height: 18px;
-    width: 18px;
-    background-color: red;
-    text-align: center;
     color: white;
+    content: counter(section);
+    font-family: Calibre;
+    height: 20px;
+    left: -10px;
+    position: absolute;
+    text-align: center;
+    width: 20px;
   }
 
   &:last-child {
     border-left: 0;
   }
+`;
+
+const StyledDiv = styled.div`
+  padding: 0 0 20px 0;
+`;
+
+const StyledTitle = styled.div`
+  top: -7px;
+  position: relative;
 `;
 
 export interface Props {
@@ -41,21 +56,31 @@ export interface Props {
 const NextStepsView: React.FC<Props> = ({ viewModel }) => {
   return (
     <StyledContainer>
-      <Hero.Three>{viewModel.nextSteps}</Hero.Three>
-      <div>
-        <ColoredBullet>
+      <StyledHero>{viewModel.nextSteps}</StyledHero>
+      <ColoredBullet>
+        <StyledTitle>
           <Title.Three>{viewModel.verifyOwnership}</Title.Three>
+        </StyledTitle>
+        <StyledDiv>
           <Body.Regular>{viewModel.quicklyVerify}</Body.Regular>
-        </ColoredBullet>
-        <ColoredBullet>
+        </StyledDiv>
+      </ColoredBullet>
+      <ColoredBullet>
+        <StyledTitle>
           <Title.Three>{viewModel.freePickup}</Title.Three>
+        </StyledTitle>
+        <StyledDiv>
           <Body.Regular>{viewModel.scheduleATime}</Body.Regular>
-        </ColoredBullet>
-        <ColoredBullet>
+        </StyledDiv>
+      </ColoredBullet>
+      <ColoredBullet>
+        <StyledTitle>
           <Title.Three>{viewModel.wePickIt}</Title.Three>
+        </StyledTitle>
+        <StyledDiv>
           <Body.Regular>{viewModel.pickupYourVehicle}</Body.Regular>
-        </ColoredBullet>
-      </div>
+        </StyledDiv>
+      </ColoredBullet>
     </StyledContainer>
   );
 };

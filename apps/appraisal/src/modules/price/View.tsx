@@ -1,9 +1,10 @@
+import getConfig from 'next/config';
+import React from 'react';
+import styled from 'styled-components';
+
 import InitialPrice from './components/InitialPrice';
 import NextSteps from './components/NextSteps';
 import PriceViewModel, { PriceStatus } from './ViewModel';
-import React from 'react';
-import getConfig from 'next/config';
-import styled from 'styled-components';
 
 const {
   publicRuntimeConfig: { BASE_PATH },
@@ -23,21 +24,25 @@ const HeroContainer = styled.div`
 
 const PriceContainer = styled.div`
   display: flex;
-  margin: 50px;
+  margin: 50px 100px;
   justify-content: center;
   position: relative;
 `;
 
 const PriceDetailContainer = styled.div`
-	flex-basis: 60%;
+  background-color: white;
   box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.15);
-  margin: 10px;
+  flex-basis: 60%;
+  padding: 50px;
+  z-index: 1;
 `;
 
 const NextStepsContainer = styled.div`
-	flex-basis: 40%;
+  background-color: white;
   box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.15);
-  margin: 10px;
+  flex-basis: 40%;
+  padding: 50px;
+  z-index: 0;
 `;
 
 const PriceView: React.FC<Props> = ({ viewModel }) => {
@@ -52,9 +57,7 @@ const PriceView: React.FC<Props> = ({ viewModel }) => {
   return (
     <HeroContainer>
       <PriceContainer>
-        <PriceDetailContainer>
-          {priceComponent}
-        </PriceDetailContainer>
+        <PriceDetailContainer>{priceComponent}</PriceDetailContainer>
         <NextStepsContainer>
           <NextSteps />
         </NextStepsContainer>

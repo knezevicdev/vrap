@@ -73,6 +73,13 @@ export class Icons {
     color: '#FFFFFF',
   });
 
+  static readonly CAR_OFFER = new Icons('CAR_OFFER', {
+    name: 'car-offer',
+    width: 90,
+    height: 90,
+    path: `${BASE_PATH}/icons/car-offer.svg`,
+  });
+
   private constructor(
     protected key: string,
     public readonly value: {
@@ -91,6 +98,7 @@ interface Props {
 }
 
 const Icon: React.FC<Props> = ({ icon, color, className }) => {
+  const path = icon.value.path;
   const width = icon.value.width;
   const height = icon.value.height;
   const name = icon.value.name;
@@ -101,15 +109,25 @@ const Icon: React.FC<Props> = ({ icon, color, className }) => {
   const xlinkHref = `${file}${id}`;
 
   return (
-    <svg
-      className={className}
-      fill={fill}
-      width={width}
-      height={height}
-      viewBox={`0 0 ${width} ${height}`}
-    >
-      <use xlinkHref={xlinkHref} />
-    </svg>
+    <>
+      { path
+        ? <img
+            className={className}
+            width={width}
+            height={height}
+            src={path} />
+        : (
+            <svg
+              className={className}
+              fill={fill}
+              width={width}
+              height={height}
+              viewBox={`0 0 ${width} ${height}`}
+            >
+              <use xlinkHref={xlinkHref} />
+            </svg>
+      )}
+    </>
   );
 };
 

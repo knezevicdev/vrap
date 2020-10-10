@@ -1,23 +1,32 @@
-import InitialPriceViewModel from './ViewModel';
+import { observer } from 'mobx-react';
 import React from 'react';
 import styled from 'styled-components';
-import { Body, Hero, Title } from 'src/core/Typography';
+import Icon, { Icons } from 'src/core/Icon';
+
+import InitialPriceViewModel from './ViewModel';
+
 import { Button } from 'src/core/Button';
-import { observer } from 'mobx-react';
+import { Body, Hero, Title } from 'src/core/Typography';
 
 const StyledContainer = styled.div`
-  background-color: white;
-  padding: 200px;
+  height: 100%;
   text-align: center;
+`;
+
+const StyledIcon = styled(Icon)`
+  padding: 20px;
+`;
+
+const StyledButton = styled(Button.Primary)`
+  margin: 30px;
+  width: 300px;
 `;
 
 interface Props {
   viewModel: InitialPriceViewModel;
 }
 
-const handleButtonClick = (
-  event: React.MouseEvent<HTMLButtonElement>
-): void => {
+const handleButtonClick = (): void => {
   event.preventDefault();
   // viewModel.navigateUsingSearch();
 };
@@ -27,17 +36,22 @@ const InitialPriceView: React.FC<Props> = ({ viewModel }) => {
     <StyledContainer>
       <Hero.Four>{viewModel.yourPrice}</Hero.Four>
       <Hero.One>{viewModel.price}</Hero.One>
-      <Body.Regular>
-        {viewModel.offerExpPreDate}
-        <b>{viewModel.goodUntil}</b>
-      </Body.Regular>
-      <Body.Regular>{viewModel.offerExpPostDate}</Body.Regular>
-      <Title.Three>{viewModel.miles}</Title.Three>
+      <StyledIcon icon={Icons.CAR_OFFER} />
+
       <div>
-        <Button.Primary onClick={handleButtonClick}>
-          {viewModel.continuePrice}
-        </Button.Primary>
+        <Body.Regular>
+          {viewModel.offerExpPreDate}
+          <b>{viewModel.goodUntil}</b>
+        </Body.Regular>
+        <div>
+          <Body.Regular>{viewModel.offerExpPostDate}</Body.Regular>
+          <Title.Three>{viewModel.miles}</Title.Three>
+        </div>
       </div>
+
+      <StyledButton onClick={handleButtonClick}>
+        {viewModel.continuePrice}
+      </StyledButton>
     </StyledContainer>
   );
 };
