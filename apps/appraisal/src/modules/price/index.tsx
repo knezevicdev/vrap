@@ -1,14 +1,15 @@
 import React from 'react';
 
+import View from './View';
+import ViewModel from './ViewModel';
+
 import { usePriceStore } from 'src/modules/price/store';
-import PriceView from 'src/modules/price/View';
-import PriceViewModel from 'src/modules/price/ViewModel';
 
 const Price: React.FC = () => {
   const priceStore = usePriceStore();
-  const priceViewModel = new PriceViewModel(priceStore);
+  const viewModel = new ViewModel(priceStore);
 
-  return <PriceView priceViewModel={priceViewModel} />;
+  return <View viewModel={viewModel} />;
 };
 
 export default Price;
