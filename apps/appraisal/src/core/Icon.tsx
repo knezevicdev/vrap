@@ -87,6 +87,7 @@ export class Icons {
       width: number;
       height: number;
       color?: string;
+      path?: string;
     }
   ) {}
 }
@@ -110,23 +111,18 @@ const Icon: React.FC<Props> = ({ icon, color, className }) => {
 
   return (
     <>
-      { path
-        ? <img
-            className={className}
-            width={width}
-            height={height}
-            src={path}
-          />
-        : (
-            <svg
-              className={className}
-              fill={fill}
-              width={width}
-              height={height}
-              viewBox={`0 0 ${width} ${height}`}
-            >
-              <use xlinkHref={xlinkHref} />
-            </svg>
+      {path ? (
+        <img className={className} width={width} height={height} src={path} />
+      ) : (
+        <svg
+          className={className}
+          fill={fill}
+          width={width}
+          height={height}
+          viewBox={`0 0 ${width} ${height}`}
+        >
+          <use xlinkHref={xlinkHref} />
+        </svg>
       )}
     </>
   );

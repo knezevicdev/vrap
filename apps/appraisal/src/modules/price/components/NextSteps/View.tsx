@@ -1,6 +1,8 @@
-import NextStepsViewModel from './ViewModel';
 import React from 'react';
 import styled from 'styled-components';
+
+import NextStepsViewModel from './ViewModel';
+
 import { Body, Hero, Title } from 'src/core/Typography';
 
 export interface Props {
@@ -53,11 +55,11 @@ const ColoredBullet = styled.div`
   padding: 0 25px;
   counter-increment: section;
   position: relative;
-  border-left: 1px solid #E7131A;
+  border-left: 1px solid #e7131a;
   margin-left: 20px;
 
   &:before {
-    background-color: #E7131A;
+    background-color: #e7131a;
     border-radius: 50%;
     color: white;
     content: counter(section);

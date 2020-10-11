@@ -30,7 +30,6 @@ const parsedDateTime = (dateTime: string): string => {
   return `${month} ${day}, ${year}`;
 };
 
-
 class InitialPriceViewModel {
   readonly yourPrice: string = 'your price';
   readonly continuePrice: string = 'continue';
@@ -38,11 +37,18 @@ class InitialPriceViewModel {
   readonly offerExpPostDate: string = ' or upon hitting ';
   readonly miles: string = '250 miles';
   readonly price: string = '';
+  readonly priceId: string = '';
   readonly goodUntil: string = '';
 
   constructor(initialPriceState: PriceStore) {
     this.price = displayCurrency(initialPriceState.price);
+    this.priceId = initialPriceState.priceId;
     this.goodUntil = parsedDateTime(initialPriceState.goodUntil);
+  }
+
+  acceptOffer(): void {
+    const url = `/sell/verification/owner/${this.priceId}`;
+    window.location.href = url;
   }
 }
 

@@ -49,7 +49,12 @@ const PriceContainer = styled.div`
   justify-content: center;
   position: relative;
 
-  @media (max-width: 599px) {
+  @media (max-width: 768px) {
+    flex-direction: column;
+    margin: 20px 40px;
+  }
+
+  @media (max-width: 320px) {
     flex-direction: column;
     margin: 20px;
   }
@@ -70,6 +75,5 @@ const NextStepsContainer = styled.div`
   padding: 50px;
   z-index: 0;
 `;
-
 
 export default PriceView;

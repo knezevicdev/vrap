@@ -1,20 +1,21 @@
-import Icon, { Icons } from 'src/core/Icon';
-import InitialPriceViewModel from './ViewModel';
+import { observer } from 'mobx-react';
 import React from 'react';
 import styled from 'styled-components';
-import { Body, Hero, Title } from 'src/core/Typography';
+
+import InitialPriceViewModel from './ViewModel';
+
 import { Button } from 'src/core/Button';
-import { observer } from 'mobx-react';
+import Icon, { Icons } from 'src/core/Icon';
+import { Body, Hero, Title } from 'src/core/Typography';
 interface Props {
   viewModel: InitialPriceViewModel;
 }
 
-const handleButtonClick = (): void => {
-  event.preventDefault();
-  // viewModel.navigateUsingSearch();
-};
-
 const InitialPriceView: React.FC<Props> = ({ viewModel }) => {
+  const handleButtonClick = (): void => {
+    viewModel.acceptOffer();
+  };
+
   return (
     <StyledContainer>
       <Hero.Four>{viewModel.yourPrice}</Hero.Four>

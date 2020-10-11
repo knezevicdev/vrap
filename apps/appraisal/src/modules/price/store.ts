@@ -83,12 +83,14 @@ export async function getInitialPriceStoreState(
 export class PriceStore {
   @observable priceStatus = PriceStatus.INITIAL;
   @observable price = 0;
+  @observable priceId = '';
   @observable goodUntil = '';
 
   constructor(initialState?: PriceStoreState) {
     if (initialState) {
       this.priceStatus = initialState.priceStatus;
       this.price = initialState.price;
+      this.priceId = initialState.priceId;
       this.goodUntil = initialState.goodUntil;
     }
   }
