@@ -1,27 +1,10 @@
-import { observer } from 'mobx-react';
+import Icon, { Icons } from 'src/core/Icon';
+import InitialPriceViewModel from './ViewModel';
 import React from 'react';
 import styled from 'styled-components';
-import Icon, { Icons } from 'src/core/Icon';
-
-import InitialPriceViewModel from './ViewModel';
-
-import { Button } from 'src/core/Button';
 import { Body, Hero, Title } from 'src/core/Typography';
-
-const StyledContainer = styled.div`
-  height: 100%;
-  text-align: center;
-`;
-
-const StyledIcon = styled(Icon)`
-  padding: 20px;
-`;
-
-const StyledButton = styled(Button.Primary)`
-  margin: 30px;
-  width: 300px;
-`;
-
+import { Button } from 'src/core/Button';
+import { observer } from 'mobx-react';
 interface Props {
   viewModel: InitialPriceViewModel;
 }
@@ -55,5 +38,20 @@ const InitialPriceView: React.FC<Props> = ({ viewModel }) => {
     </StyledContainer>
   );
 };
+
+const StyledContainer = styled.div`
+  height: 100%;
+  text-align: center;
+`;
+
+const StyledIcon = styled(Icon)`
+  padding: 20px;
+`;
+
+const StyledButton = styled(Button.Primary)`
+  margin: 30px 0;
+  width: 100%;
+  max-width: 300px;
+`;
 
 export default observer(InitialPriceView);

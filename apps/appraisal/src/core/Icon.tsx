@@ -9,21 +9,21 @@ export class Icons {
     name: 'email',
     width: 24,
     height: 24,
-    color: '#E7131A',
+    path: `${BASE_PATH}/icons/email.svg`,
   });
 
   static readonly FAQ = new Icons('Faq', {
     name: 'faq',
     width: 24,
     height: 24,
-    color: '#E7131A',
+    path: `${BASE_PATH}/icons/faq.svg`,
   });
 
   static readonly PHONE = new Icons('Phone', {
     name: 'phone',
     width: 24,
     height: 24,
-    color: '#E7131A',
+    path: `${BASE_PATH}/icons/phone.svg`,
   });
 
   static readonly VROOM = new Icons('VROOM', {
@@ -115,7 +115,8 @@ const Icon: React.FC<Props> = ({ icon, color, className }) => {
             className={className}
             width={width}
             height={height}
-            src={path} />
+            src={path}
+          />
         : (
             <svg
               className={className}
