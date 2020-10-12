@@ -7,8 +7,10 @@ interface Props {
   viewModel: LandingBannerViewModel;
 }
 const LandingBannerView: React.FC<Props> = ({ viewModel }) => {
-  console.log(viewModel.getFilterData());
-  return <div>{viewModel.test}</div>;
+  if (!viewModel.showJeepWranglerBanner()) {
+    return null;
+  }
+  return <div>{viewModel.jeepWranglerText}</div>;
 };
 
 export default observer(LandingBannerView);
