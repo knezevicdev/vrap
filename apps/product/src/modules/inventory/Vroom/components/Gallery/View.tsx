@@ -59,6 +59,7 @@ const StyledCircularProgress = styled(CircularProgress)(() => ({
 }));
 
 const SpincarIframe = styled('iframe')(({ theme }) => ({
+  position: 'relative',
   margin: 0,
   padding: 0,
   border: 'none',
