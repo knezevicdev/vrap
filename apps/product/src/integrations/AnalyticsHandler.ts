@@ -43,6 +43,13 @@ class AnalyticsHandler extends BaseAnalyticsHandler {
     this.track(event, properties);
   }
 
+  trackSimilarClicked(product: Product): void {
+    const event = 'Similar Vehicle PDP Clicked';
+    const category = 'Product';
+    const properties = { ...product, category };
+    this.track(event, properties);
+  }
+
   trackProductViewed(product: Product): void {
     const event = 'Product Viewed';
     const category = 'Product';
