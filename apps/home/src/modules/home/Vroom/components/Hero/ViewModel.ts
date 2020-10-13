@@ -1,8 +1,5 @@
 import getConfig from 'next/config';
 
-import { showDefaultVariant } from 'src/integrations/experimentSDK';
-import { HomeStore } from 'src/modules/home/store';
-
 const { publicRuntimeConfig } = getConfig();
 
 interface Link {
@@ -19,21 +16,10 @@ class HeroViewModel {
     label: 'Learn\xa0More',
   };
   readonly mobileButtonLabel: string = 'Browse All Vehicles';
-  car: { src: string; alt: string };
-
-  constructor(store: HomeStore) {
-    const priusVsf150ImageDefaultVariant = showDefaultVariant(
-      'snd-homepage-prius-vs-f150',
-      store.experiments,
-      store.query
-    );
-    this.car = {
-      src: `${publicRuntimeConfig.BASE_PATH}/modules/home/images/${
-        priusVsf150ImageDefaultVariant ? 'prius' : 'ford'
-      }.png`,
-      alt: priusVsf150ImageDefaultVariant ? 'Prius' : 'F-150',
-    };
-  }
+  car = {
+    src: `${publicRuntimeConfig.BASE_PATH}/modules/home/images/ford.png`,
+    alt: 'F-150',
+  };
 }
 
 export default HeroViewModel;

@@ -3,11 +3,6 @@ danger:
     - image: node:erbium-alpine
   steps:
     - checkout
-    - run:
-        name: Danger
-        command: |-
-          yarn install
-          yarn danger ci
 lint_build:
   docker:
     - image: circleci/node:erbium

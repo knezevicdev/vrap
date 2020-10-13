@@ -14,6 +14,7 @@ import {
   MaxAndMin,
   setYear,
 } from '@vroom-web/catalog-url-integration';
+import { Experiment } from '@vroom-web/experiment-sdk';
 import {
   InvSearchNetworker,
   PostInventoryRequestData,
@@ -24,10 +25,9 @@ import { NextPage, NextPageContext } from 'next';
 import getConfig from 'next/config';
 import { stringify } from 'qs';
 import React, { useEffect, useState } from 'react';
-import { Experiment } from 'vroom-abtesting-sdk/types';
 
 import AnalyticsHandler from 'src/integrations/AnalyticsHandler';
-import { clientGetAndLogExperiment } from 'src/integrations/experimentSDK';
+import experimentSDK from 'src/integrations/experimentSDK';
 import Cars from 'src/modules/cars';
 import { BrandContext } from 'src/modules/cars/BrandContext';
 import {
@@ -75,16 +75,16 @@ const CarsPage: NextPage<Props> = ({
   }, [carsStore, theme]);
 
   useEffect(() => {
-    clientGetAndLogExperiment('snd-catalog-sort-by-geo-location').then(
-      (experiment) => {
+    experimentSDK
+      .getAndLogExperimentClientSide('snd-catalog-sort-by-geo-location')
+      .then((experiment) => {
         carsStore.setGeoLocationSortExperiment(experiment);
         if (experiment && experiment.assignedVariant === 1) {
           carsStore.fetchInventoryData();
         } else {
           carsStore.setInventoryStatus(carsStatus);
         }
-      }
-    );
+      });
   }, [carsStore, carsStatus]);
   useEffect(() => {
     if (carsStore.geoLocationSortExperiment) {
@@ -96,9 +96,9 @@ const CarsPage: NextPage<Props> = ({
     Experiment | undefined
   >();
   useEffect(() => {
-    clientGetAndLogExperiment('delta-resume-search').then((experiment) =>
-      setResumeSearchExperiment(experiment)
-    );
+    experimentSDK
+      .getAndLogExperimentClientSide('delta-resume-search')
+      .then((experiment) => setResumeSearchExperiment(experiment));
   }, []);
   useEffect(() => {
     if (resumeSearchExperiment) {

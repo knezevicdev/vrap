@@ -2,7 +2,6 @@ import getConfig from 'next/config';
 import { stringify } from 'qs';
 
 import AnalyticsHandler from 'src/integrations/AnalyticsHandler';
-import { showDefaultVariant } from 'src/integrations/experimentSDK';
 import { HomeStore } from 'src/modules/home/store';
 
 const { publicRuntimeConfig } = getConfig();
@@ -18,10 +17,10 @@ class HighlightsViewModel {
   private readonly analyticsHandler: AnalyticsHandler = new AnalyticsHandler();
   private readonly store: HomeStore;
 
-  ctaLabel: string;
+  ctaLabel = 'SHOP VEHICLES';
   readonly highlights: Highlight[] = [
     {
-      description: '',
+      description: `Multiple inspections. Free CARFAX® history report. Free limited\xa0warranty.`,
       imgAlt: 'High-Quality Cars',
       imgSrc: `${publicRuntimeConfig.BASE_PATH}/modules/home/images/highlight-1.png`,
       title: 'High-Quality Cars',
@@ -38,43 +37,12 @@ class HighlightsViewModel {
         'Get your car or truck shipped to your home or a convenient nearby\xa0location.',
       imgAlt: 'Delivered Right to You',
       imgSrc: `${publicRuntimeConfig.BASE_PATH}/modules/home/images/highlight-3.png`,
-      title: '',
+      title: 'Delivered Right to You',
     },
   ];
 
   constructor(store: HomeStore) {
     this.store = store;
-
-    const homeWarrantyTextExperimentVariant = showDefaultVariant(
-      'snd-homepage-complimentary-limited-warranty-vs-free-limited-warranty',
-      store.experiments,
-      store.query
-    );
-    const deliveredToYouExperimentVariant = showDefaultVariant(
-      'snd-homepage-delivered-right-to-you-vs-delivered-safely-to-you',
-      store.experiments,
-      store.query
-    );
-    const homeShopButtonDefaultVariant = showDefaultVariant(
-      'snd-homepage-shop-now-vs-shop-vehicles',
-      store.experiments,
-      store.query
-    );
-    const carOrTruckVsVehicleDefaultVariant = showDefaultVariant(
-      'snd-car-or-truck-vs-vehicle-shipped',
-      store.experiments,
-      store.query
-    );
-    this.ctaLabel = `SHOP ${homeShopButtonDefaultVariant ? 'NOW' : 'VEHICLES'}`;
-    this.highlights[0].description = `Multiple inspections. Free CARFAX® history report. ${
-      homeWarrantyTextExperimentVariant ? 'Complimentary' : 'Free'
-    } limited\xa0warranty.`;
-    this.highlights[2].title = `Delivered ${
-      deliveredToYouExperimentVariant ? 'Right' : 'Safely'
-    } to You`;
-    this.highlights[2].description = `Get your ${
-      carOrTruckVsVehicleDefaultVariant ? 'car or truck' : 'vehicles'
-    } shipped to your home or a convenient nearby\xa0location.`;
   }
 
   handleButtonClick(): void {

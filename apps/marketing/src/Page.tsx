@@ -11,15 +11,8 @@ const Contents = styled('div')(() => ({
   flexDirection: 'column',
 }));
 
-interface Experiment {
-  id: string;
-  assignedVariant: 0 | 1;
-  optimizeId?: string;
-}
-
 interface PageProps {
   category?: string;
-  experiments?: Experiment[];
   head?: React.ReactNode;
   name: string;
   brand: Brand;
@@ -35,15 +28,12 @@ class Page extends React.Component<PageProps> {
 
   componentDidMount(): void {
     window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
-    const { category, experiments, name } = this.props;
+    const { category, name } = this.props;
     if (this.props.brand === Brand.SANTANDER) {
       this.analyticsHandler.createAdditionalTracker(
         'UA-2348754-1',
         'santander'
       );
-    }
-    if (experiments) {
-      this.analyticsHandler.setExperiments(experiments);
     }
     this.analyticsHandler.page(name, category);
   }

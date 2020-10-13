@@ -5,7 +5,6 @@ import AnalyticsHandler, {
   VideoEvent,
   VideoProperties,
 } from 'src/integrations/AnalyticsHandler';
-import { showDefaultVariant } from 'src/integrations/experimentSDK';
 import { HomeStore } from 'src/modules/home/store';
 
 const { publicRuntimeConfig } = getConfig();
@@ -41,17 +40,8 @@ class HowItWorksViewModel {
     });
     this.link = {
       href: `/how-it-works${queryString}`,
-      label: '',
+      label: 'LEARN MORE ABOUT VROOM',
     };
-
-    const learnMoreLinkLabelExperimentVariant = showDefaultVariant(
-      'snd-homepage-learn-more-vs-learn-more-about-vroom',
-      store.experiments,
-      store.query
-    );
-    this.link.label = learnMoreLinkLabelExperimentVariant
-      ? 'LEARN MORE ABOUT VROOM'
-      : 'BUYING AND SELLING MADE EASY';
   }
 
   handleLearnMoreClick(): void {
