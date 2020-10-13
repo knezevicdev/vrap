@@ -28,6 +28,10 @@ class LandingBannerViewModel {
     }
     return !!foundJeepWrangler;
   }
+
+  handleBannerClick(): void {
+    window.open('https://www.vroom.com/landing/jeep/wrangler', '_blank');
+  }
 }
 
 export default LandingBannerViewModel;
