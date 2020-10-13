@@ -1,0 +1,6 @@
+version: '3'
+services:
+  run-unit-tests:
+    build:
+      context: ../../../
+      dockerfile: ./apps/marketing/testing-docker/Dockerfile

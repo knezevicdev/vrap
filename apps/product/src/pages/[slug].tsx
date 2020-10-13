@@ -1,13 +1,10 @@
 import { Brand, ThemeProvider } from '@vroom-web/ui';
 import { NextPage, NextPageContext } from 'next';
 import getConfig from 'next/config';
-import { parseCookies } from 'nookies';
 import React from 'react';
-import { Experiment } from 'vroom-abtesting-sdk/types';
 
-import experimentSDK, {
-  showDefaultVariant,
-} from 'src/integrations/experimentSDK';
+import { analyticsHandler } from 'src/integrations/AnalyticsHandler';
+import experimentSDK from 'src/integrations/experimentSDK';
 import Inventory from 'src/modules/inventory';
 import { BrandContext } from 'src/modules/inventory/BrandContext';
 import {
@@ -26,12 +23,30 @@ export interface Props {
   initialState: InventoryStoreState;
   title: string;
   brand: Brand;
-  experiments: Experiment[];
+  vin: string;
 }
 
 const InventoryPage: NextPage<Props> = (props: Props) => {
-  const { canonicalHref, initialState, title, brand, experiments } = props;
+  const { canonicalHref, initialState, title, brand, vin } = props;
   const store = new InventoryStore(initialState);
+
+  React.useEffect(() => {
+    experimentSDK
+      .getAndLogExperimentClientSide('snd-pdp-vin-cluster-similar-vehicle')
+      .then((experiment) => {
+        if (!experiment) {
+          store.setSimilarStatus(initialState.similarStatus);
+          return;
+        }
+        analyticsHandler.registerExperiment(experiment);
+        if (experiment.assignedVariant === 0) {
+          store.setSimilarStatus(initialState.similarStatus);
+          return;
+        }
+        store.getSimilar(vin, true);
+      });
+  }, [initialState.similarStatus, store, vin]);
+
   const head = (
     <>
       <title>{title}</title>)
@@ -40,12 +55,7 @@ const InventoryPage: NextPage<Props> = (props: Props) => {
   );
   return (
     <ThemeProvider brand={brand}>
-      <Page
-        brand={brand}
-        experiments={experiments}
-        name="Product Details"
-        head={head}
-      >
+      <Page brand={brand} name="Product Details" head={head}>
         <BrandContext.Provider value={brand}>
           <InventoryStoreContext.Provider value={store}>
             <Inventory />
@@ -59,8 +69,6 @@ const InventoryPage: NextPage<Props> = (props: Props) => {
 InventoryPage.getInitialProps = async (
   context: NextPageContext
 ): Promise<Props> => {
-  const cookies = parseCookies(context);
-  const marketingId = cookies['uuid'];
   const { req, res, query } = context;
   const slug = query.slug as string;
   const slugArray = slug.split('-');
@@ -74,19 +82,7 @@ InventoryPage.getInitialProps = async (
   const brand =
     (brandHeader || queryBrand) == santanderKey ? Brand.SANTANDER : Brand.VROOM;
 
-  const experiments =
-    brand === Brand.VROOM
-      ? await experimentSDK.getRunningExperiments(marketingId)
-      : [];
-  const vinClusterDefaultVariant = showDefaultVariant(
-    'snd-pdp-vin-cluster-similar-vehicle',
-    experiments,
-    context.query
-  );
-  const initialState = await getInitialInventoryStoreState(
-    vin,
-    vinClusterDefaultVariant
-  );
+  const initialState = await getInitialInventoryStoreState(vin);
   let canonicalHref: string | undefined;
   let title = '';
   if (initialState.vehicleStatus === Status.SUCCESS && initialState.vehicle) {
@@ -120,7 +116,7 @@ InventoryPage.getInitialProps = async (
     }
   }
 
-  return { canonicalHref, initialState, title, brand, experiments };
+  return { canonicalHref, initialState, title, brand, vin };
 };
 
 export default InventoryPage;

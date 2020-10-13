@@ -1,0 +1,7 @@
+organization=tdalabs-1
+projectKey=vroom-web:Marketing
+serverUrl=https://sonarcloud.io
+serverVersion=8.0.0.13024
+dashboardUrl=https://sonarcloud.io/dashboard?id=vroom-web%3AMarketing
+ceTaskId=AXT-6zbgjuj8lU8knEeX
+ceTaskUrl=https://sonarcloud.io/api/ce/task?id=AXT-6zbgjuj8lU8knEeX

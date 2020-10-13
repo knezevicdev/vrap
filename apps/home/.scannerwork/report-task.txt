@@ -1,0 +1,7 @@
+organization=tdalabs-1
+projectKey=vroom-web:Home
+serverUrl=https://sonarcloud.io
+serverVersion=8.0.0.13024
+dashboardUrl=https://sonarcloud.io/dashboard?id=vroom-web%3AHome
+ceTaskId=AXT--dq5j9WX8czuDtog
+ceTaskUrl=https://sonarcloud.io/api/ce/task?id=AXT--dq5j9WX8czuDtog
