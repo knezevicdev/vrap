@@ -27,32 +27,27 @@ describe('Inventory View Model', () => {
       expect(hideCount).toEqual(true);
     });
 
-    it('should hide Vehicle Count when only Page Filter', () => {
+    it('should show Vehicle Count only when Make/Model Filter is applied', () => {
+      const filters: FiltersData = {
+        makesandmodels: [
+          {
+            makeSlug: 'Subaru',
+            modelSlugs: ['Impreza'],
+          },
+        ],
+      };
+      store.filtersData = filters;
+      const hideCount = viewModel.hideVehicleCount();
+      expect(hideCount).toEqual(false);
+    });
+
+    it('should hide Vehicle Count when any other Filter', () => {
       const filters: FiltersData = {
         page: 20,
       };
       store.filtersData = filters;
       const hideCount = viewModel.hideVehicleCount();
       expect(hideCount).toEqual(true);
-    });
-
-    it('should show Vehicle Count when > 1 Filter', () => {
-      const filters: FiltersData = {
-        page: 20,
-        search: 'subaru',
-      };
-      store.filtersData = filters;
-      const hideCount = viewModel.hideVehicleCount();
-      expect(hideCount).toEqual(false);
-    });
-
-    it('should show Vehicle Count when 1 Filter that is not page', () => {
-      const filters: FiltersData = {
-        search: 'subaru',
-      };
-      store.filtersData = filters;
-      const hideCount = viewModel.hideVehicleCount();
-      expect(hideCount).toEqual(false);
     });
   });
 

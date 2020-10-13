@@ -15,11 +15,9 @@ class InventoryViewModel {
     if (!filters) return true;
 
     const appliedFilters = Object.keys(filters);
+    if (appliedFilters.includes(Filters.MAKE_AND_MODELS)) return false;
 
-    if (appliedFilters.length === 1 && appliedFilters.includes(Filters.PAGE))
-      return true;
-
-    return false;
+    return true;
   }
 
   hidePagination = (): boolean => {
