@@ -14,9 +14,9 @@ class ViewModel {
     {
       description:
         'Multiple inspections. Free CARFAX history report. Complimentary limited warranty.',
-      alt: 'High-Quality Vehicles',
+      alt: 'High-Quality Cars',
       src: `${publicRuntimeConfig.BASE_PATH}/modules/home/santander/images/highlight-one.png`,
-      title: 'High-Quality Vehicles',
+      title: 'High-Quality Cars',
     },
     {
       description: 'Competitive rates and flexible terms to meet your needs.',
@@ -26,7 +26,7 @@ class ViewModel {
     },
     {
       description:
-        'Purchase online with haggle-free pricing, then have your car shipped to home or a convenient nearby location.',
+        'Purchase online with haggle-free pricing, then have your car shipped to home or a nearby location.',
       alt: 'Buying Made Easy',
       src: `${publicRuntimeConfig.BASE_PATH}/modules/home/santander/images/highlight-three.png`,
       title: 'Buying Made Easy',

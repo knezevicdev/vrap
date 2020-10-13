@@ -13363,7 +13363,7 @@ var CopyrightLink = styled(Link$2)(function () {
     fontWeight: 300
   };
 });
-var Trademark = styled(Typography)(function (_ref8) {
+var Disclaimer = styled(Typography)(function (_ref8) {
   var _ref9;
 
   var theme = _ref8.theme;
@@ -13424,7 +13424,7 @@ var View = function View(_ref11) {
     href: viewModel.copyrightLink.href,
     target: viewModel.copyrightLink.target,
     underline: "always"
-  }, viewModel.copyrightLink.label)), /*#__PURE__*/React__default.createElement(Trademark, null, viewModel.trademark), /*#__PURE__*/React__default.createElement(PoweredBy, null, /*#__PURE__*/React__default.createElement(PoweredByLabel, null, viewModel.poweredBy), /*#__PURE__*/React__default.createElement(VroomLogo, null))));
+  }, viewModel.copyrightLink.label)), /*#__PURE__*/React__default.createElement(Disclaimer, null, viewModel.disclaimer), /*#__PURE__*/React__default.createElement(PoweredBy, null, /*#__PURE__*/React__default.createElement(PoweredByLabel, null, viewModel.poweredBy), /*#__PURE__*/React__default.createElement(VroomLogo, null))));
 };
 
 function _classCallCheck$9(instance, Constructor) {
@@ -13839,11 +13839,6 @@ var ViewModel = function ViewModel() {
       label: 'Contact Us',
       href: "/contact",
       handleAnalytics: this.analyticsHandler.trackLinkClicked('Contact Us')
-    }, {
-      label: 'Accessibility Services',
-      href: "https://santanderconsumerusa.com/our-company/accessibility",
-      target: '_blank',
-      handleAnalytics: this.analyticsHandler.trackLinkClicked('Accessibility Services')
     }]
   }, {
     title: {
@@ -13852,25 +13847,15 @@ var ViewModel = function ViewModel() {
       handleAnalytics: this.analyticsHandler.trackLinkClicked('Legal')
     },
     links: [{
-      label: 'Terms & Conditions',
-      href: "https://santanderconsumerusa.com/legal/terms-conditions",
+      label: 'Privacy Policy',
+      href: 'https://www.vroom.com/legal/privacy-policy',
       target: '_blank',
-      handleAnalytics: this.analyticsHandler.trackLinkClicked('Terms & Conditions')
+      handleAnalytics: this.analyticsHandler.trackLinkClicked('Privacy Policy')
     }, {
-      label: 'Privacy & Security',
-      href: "https://santanderconsumerusa.com/legal/privacy-security",
+      label: 'Terms of Use',
+      href: 'https://www.vroom.com/legal/terms-of-use',
       target: '_blank',
-      handleAnalytics: this.analyticsHandler.trackLinkClicked('Privacy & Security')
-    }, {
-      label: 'Fair Lending',
-      href: "https://santanderconsumerusa.com/legal/fair-lending",
-      target: '_blank',
-      handleAnalytics: this.analyticsHandler.trackLinkClicked('Fair Lending')
-    }, {
-      label: 'Servicemembers Civil Relief Act',
-      href: "https://santanderconsumerusa.com/legal/servicemembers-civil-relief-act",
-      target: '_blank',
-      handleAnalytics: this.analyticsHandler.trackLinkClicked('Servicemembers Civil Relief Act')
+      handleAnalytics: this.analyticsHandler.trackLinkClicked('Terms of Use')
     }]
   }]);
 
@@ -13883,9 +13868,9 @@ var ViewModel = function ViewModel() {
     handleAnalytics: this.analyticsHandler.trackLinkClicked('NMLS Consumer Access ID 4239.')
   });
 
-  _defineProperty$1(this, "trademark", 'Chrysler Capital is a registered trademark of FCA US LLC and licensed to Santander Consumer USA Inc. Chrysler, Dodge, Jeep, Ram, Mopar and SRT are registered trademarks of FCA US LLC. ALFA ROMEO and FIAT are registered trademarks of FCA Group Marketing S.p.A., used with permission.');
-
   _defineProperty$1(this, "poweredBy", 'Powered by');
+
+  _defineProperty$1(this, "disclaimer", "Vehicle marketing, inventory, sales and the car-buying transaction are performed, hosted, managed and/or coordinated by Vroom. Santander Consumer USA Inc., its subsidiaries or affiliates are not responsible for the transaction, the outcome of the transaction or any information provided therein, provided that if Santander Consumer is chosen as the lender to finance the vehicle purchase, the financing will be performed by Santander Consumer.");
 };
 
 var SantanderFooter = function SantanderFooter() {
