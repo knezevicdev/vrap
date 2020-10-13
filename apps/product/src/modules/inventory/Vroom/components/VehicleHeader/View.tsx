@@ -24,14 +24,17 @@ const VehicleHeaderContainer = styled('div')(({ theme }) => ({
 const VehicleHeaderContainerContent = styled('div')(({ theme }) => ({
   position: 'relative',
   display: 'flex',
+  alignItems: 'center',
   width: '100%',
   height: 'auto',
-  alignItems: 'center',
   borderLeft: `1px solid ${theme.palette.grey.A100}`,
   borderBottom: `1px solid ${theme.palette.grey.A100}`,
   borderRight: `1px solid ${theme.palette.grey.A100}`,
   backgroundColor: theme.palette.background.paper,
-  padding: theme.spacing(4, 3),
+  padding: theme.spacing(4),
+  [theme.breakpoints.only('xs')]: {
+    padding: theme.spacing(3, 2),
+  },
 }));
 
 const LeftContent = styled('div')(() => ({
@@ -44,7 +47,6 @@ const RightContent = styled('div')(() => ({
   display: 'flex',
   marginLeft: 'auto',
   alignItems: 'center',
-  flexBasis: '20rem',
 }));
 
 const YearMakeModel = styled(Typography)(({ theme }) => ({
@@ -52,7 +54,8 @@ const YearMakeModel = styled(Typography)(({ theme }) => ({
   marginBottom: theme.spacing(1),
 }));
 
-const Price = styled(Typography)(() => ({
+const Price = styled(Typography)(({ theme }) => ({
+  paddingBottom: theme.spacing(3),
   fontWeight: 600,
 }));
 
@@ -60,7 +63,7 @@ const Divider = styled('div')(({ theme }) => ({
   margin: theme.spacing(0, 4),
   backgroundColor: theme.palette.grey['A100'],
   width: '1px',
-  height: '48px',
+  height: '80px',
 }));
 
 const DesktopButtonContainer = styled('div')(() => ({
