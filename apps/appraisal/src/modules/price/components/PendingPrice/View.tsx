@@ -2,39 +2,33 @@ import { observer } from 'mobx-react';
 import React from 'react';
 import styled from 'styled-components';
 
-import InitialPriceViewModel from './ViewModel';
+import PendingPriceViewModel from './ViewModel';
 
 import { Button } from 'src/core/Button';
 import Icon, { Icons } from 'src/core/Icon';
-import { Body, Hero, Title } from 'src/core/Typography';
+import { Body, Hero } from 'src/core/Typography';
 interface Props {
-  viewModel: InitialPriceViewModel;
+  viewModel: PendingPriceViewModel;
 }
 
-const InitialPriceView: React.FC<Props> = ({ viewModel }) => {
+const PendingPriceView: React.FC<Props> = ({ viewModel }) => {
   const handleButtonClick = (): void => {
-    viewModel.acceptOffer();
+    viewModel.handleFindCar();
   };
 
   return (
     <StyledContainer>
-      <Hero.Four>{viewModel.yourPrice}</Hero.Four>
-      <Hero.One>{viewModel.price}</Hero.One>
+      <Hero.Four>{viewModel.sitTight}</Hero.Four>
       <StyledIcon icon={Icons.CAR_OFFER} />
 
-      <div>
+      <StyledBody>
         <Body.Regular>
-          {viewModel.offerExpPreDate}
-          <b>{viewModel.goodUntil}</b>
+          {viewModel.takingALook}
         </Body.Regular>
-        <div>
-          <Body.Regular>{viewModel.offerExpPostDate}</Body.Regular>
-          <Title.Three>{viewModel.miles}</Title.Three>
-        </div>
-      </div>
+      </StyledBody>
 
       <StyledButton onClick={handleButtonClick}>
-        {viewModel.continuePrice}
+        {viewModel.findCar}
       </StyledButton>
     </StyledContainer>
   );
@@ -45,6 +39,11 @@ const StyledContainer = styled.div`
   text-align: center;
 `;
 
+const StyledBody = styled.div`
+  max-width: 410px;
+  margin: auto;
+`;
+
 const StyledIcon = styled(Icon)`
   padding: 20px;
 `;
@@ -53,7 +52,6 @@ const StyledButton = styled(Button.Primary)`
   margin: 30px 0;
   width: 100%;
   max-width: 300px;
-  white-space: normal;
 `;
 
-export default observer(InitialPriceView);
+export default observer(PendingPriceView);

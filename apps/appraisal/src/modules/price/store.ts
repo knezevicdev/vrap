@@ -1,8 +1,6 @@
 import { observable } from 'mobx';
 import { createContext, useContext } from 'react';
 
-import { PriceStatus } from './ViewModel';
-
 import { Prices } from 'src/networking/models/Price';
 import { Networker } from 'src/networking/Networker';
 
@@ -17,7 +15,7 @@ export interface PriceStoreState {
   newOffer: boolean | null;
   price: number;
   priceId: string;
-  priceStatus: PriceStatus;
+  priceStatus: string;
   taxCreditSavings: number | null;
   trim: string;
   userEmail: string;
@@ -61,14 +59,14 @@ export async function getInitialPriceStoreState(
     errorState.active = false;
     errorState.automatedAppraisal = false;
     errorState.created = '';
-    errorState.goodUntil = '';
+    errorState.goodUntil = '2020-01-01T00:00:00Z';
     errorState.make = '';
     errorState.miles = 0;
     errorState.model = '';
     errorState.newOffer = null;
     errorState.price = 0;
     errorState.priceId = '';
-    errorState.priceStatus = PriceStatus.INITIAL;
+    errorState.priceStatus = '';
     errorState.taxCreditSavings = null;
     errorState.trim = '';
     errorState.userEmail = '';
@@ -81,14 +79,14 @@ export async function getInitialPriceStoreState(
 }
 
 export class PriceStore {
-  @observable priceStatus = PriceStatus.INITIAL;
+  @observable automatedAppraisal = false;
   @observable price = 0;
   @observable priceId = '';
-  @observable goodUntil = '';
+  @observable goodUntil = '2020-01-01T00:00:00Z';
 
   constructor(initialState?: PriceStoreState) {
     if (initialState) {
-      this.priceStatus = initialState.priceStatus;
+      this.automatedAppraisal = initialState.automatedAppraisal;
       this.price = initialState.price;
       this.priceId = initialState.priceId;
       this.goodUntil = initialState.goodUntil;

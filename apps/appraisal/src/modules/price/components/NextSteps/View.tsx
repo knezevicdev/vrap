@@ -18,23 +18,23 @@ const NextStepsView: React.FC<Props> = ({ viewModel }) => {
           <Title.Three>{viewModel.verifyOwnership}</Title.Three>
         </StyledTitle>
         <StyledDiv>
-          <Body.Regular>{viewModel.quicklyVerify}</Body.Regular>
+          <Body.Regular>{viewModel.requestDocuments}</Body.Regular>
         </StyledDiv>
       </ColoredBullet>
       <ColoredBullet>
         <StyledTitle>
-          <Title.Three>{viewModel.freePickup}</Title.Three>
+          <Title.Three>{viewModel.signContracts}</Title.Three>
+        </StyledTitle>
+        <StyledDiv>
+          <Body.Regular>{viewModel.sendAnEmail}</Body.Regular>
+        </StyledDiv>
+      </ColoredBullet>
+      <ColoredBullet>
+        <StyledTitle>
+          <Title.Three>{viewModel.wePickUp}</Title.Three>
         </StyledTitle>
         <StyledDiv>
           <Body.Regular>{viewModel.scheduleATime}</Body.Regular>
-        </StyledDiv>
-      </ColoredBullet>
-      <ColoredBullet>
-        <StyledTitle>
-          <Title.Three>{viewModel.wePickIt}</Title.Three>
-        </StyledTitle>
-        <StyledDiv>
-          <Body.Regular>{viewModel.pickupYourVehicle}</Body.Regular>
         </StyledDiv>
       </ColoredBullet>
     </StyledContainer>

@@ -1,10 +1,10 @@
-import getConfig from 'next/config';
-import React from 'react';
-import styled from 'styled-components';
-
 import InitialPrice from './components/InitialPrice';
 import NextSteps from './components/NextSteps';
-import PriceViewModel, { PriceStatus } from './ViewModel';
+import PendingPrice from './components/PendingPrice';
+import PriceViewModel from './ViewModel';
+import React from 'react';
+import getConfig from 'next/config';
+import styled from 'styled-components';
 
 const {
   publicRuntimeConfig: { BASE_PATH },
@@ -15,18 +15,15 @@ interface Props {
 }
 
 const PriceView: React.FC<Props> = ({ viewModel }) => {
-  let priceComponent = <InitialPrice />;
-
-  switch (viewModel.priceStatus) {
-    case PriceStatus.INITIAL:
-      priceComponent = <InitialPrice />;
-      break;
-  }
-
   return (
     <HeroContainer>
       <PriceContainer>
-        <PriceDetailContainer>{priceComponent}</PriceDetailContainer>
+        <PriceDetailContainer>
+          { viewModel.automatedAppraisal
+            ? <InitialPrice />
+            : <PendingPrice /> 
+          }
+        </PriceDetailContainer>
         <NextStepsContainer>
           <NextSteps />
         </NextStepsContainer>
