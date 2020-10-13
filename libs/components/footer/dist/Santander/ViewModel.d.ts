@@ -14,7 +14,7 @@ declare class ViewModel {
     readonly sections: Section[];
     readonly copyrightLabel = "\u00A9 2020 Santander Consumer USA Inc. and its Licensors. All Rights Reserved.";
     readonly copyrightLink: Link;
-    readonly trademark = "Chrysler Capital is a registered trademark of FCA US LLC and licensed to Santander Consumer USA Inc. Chrysler, Dodge, Jeep, Ram, Mopar and SRT are registered trademarks of FCA US LLC. ALFA ROMEO and FIAT are registered trademarks of FCA Group Marketing S.p.A., used with permission.";
     readonly poweredBy = "Powered by";
+    readonly disclaimer = "Vehicle marketing, inventory, sales and the car-buying transaction are performed, hosted, managed and/or coordinated by Vroom. Santander Consumer USA Inc., its subsidiaries or affiliates are not responsible for the transaction, the outcome of the transaction or any information provided therein, provided that if Santander Consumer is chosen as the lender to finance the vehicle purchase, the financing will be performed by Santander Consumer.";
 }
 export default ViewModel;
