@@ -1,5 +1,4 @@
 import { Car } from '@vroom-web/inv-search-networking';
-import Router from 'next/router';
 import React from 'react';
 
 import { analyticsHandler, Product } from 'src/integrations/AnalyticsHandler';
@@ -85,7 +84,7 @@ class SimilarVehiclesViewModel {
 
   handleClick(event: React.MouseEvent<HTMLButtonElement>): void {
     event.preventDefault();
-    Router.push('/cars');
+    window.location.href = '/cars';
   }
 }
 
