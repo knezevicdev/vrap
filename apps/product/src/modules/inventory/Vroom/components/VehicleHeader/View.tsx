@@ -24,14 +24,17 @@ const VehicleHeaderContainer = styled('div')(({ theme }) => ({
 const VehicleHeaderContainerContent = styled('div')(({ theme }) => ({
   position: 'relative',
   display: 'flex',
+  alignItems: 'center',
   width: '100%',
   height: 'auto',
-  alignItems: 'center',
   borderLeft: `1px solid ${theme.palette.grey.A100}`,
   borderBottom: `1px solid ${theme.palette.grey.A100}`,
   borderRight: `1px solid ${theme.palette.grey.A100}`,
   backgroundColor: theme.palette.background.paper,
-  padding: theme.spacing(4, 3),
+  padding: theme.spacing(4),
+  [theme.breakpoints.only('xs')]: {
+    padding: theme.spacing(5, 2),
+  },
 }));
 
 const LeftContent = styled('div')(() => ({
@@ -44,7 +47,6 @@ const RightContent = styled('div')(() => ({
   display: 'flex',
   marginLeft: 'auto',
   alignItems: 'center',
-  flexBasis: '20rem',
 }));
 
 const YearMakeModel = styled(Typography)(({ theme }) => ({
@@ -53,6 +55,7 @@ const YearMakeModel = styled(Typography)(({ theme }) => ({
 }));
 
 const Price = styled(Typography)(() => ({
+  paddingBottom: '28px', // Added padding for now. Can be changed once the monthly price breakdown is added
   fontWeight: 600,
 }));
 
@@ -60,7 +63,7 @@ const Divider = styled('div')(({ theme }) => ({
   margin: theme.spacing(0, 4),
   backgroundColor: theme.palette.grey['A100'],
   width: '1px',
-  height: '48px',
+  height: '88px',
 }));
 
 const DesktopButtonContainer = styled('div')(() => ({
