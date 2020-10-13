@@ -4,6 +4,7 @@ import { observer } from 'mobx-react';
 import React from 'react';
 
 import Cars from './components/Cars';
+import Count from './components/Count';
 import Pagination from './components/Pagination';
 import TopSection from './components/TopSection';
 import ViewModel from './ViewModel';
@@ -25,6 +26,7 @@ const InventoryView: React.FC<Props> = ({ viewModel }) => {
     <StyledGrid container direction="column">
       <TopSection />
       <Cars />
+      {!viewModel.hideVehicleCount() && <Count />}
       {!viewModel.hidePagination() && <Pagination />}
     </StyledGrid>
   );
