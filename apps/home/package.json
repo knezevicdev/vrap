@@ -1,6 +1,6 @@
 {
   "name": "@vroom-web/home",
-  "version": "1.5.1",
+  "version": "1.5.2",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx,.json",
     "test": "jest --watch",
-    "test:ci": "jest --ci"
+    "test:ci": "jest --ci",
+    "test:cc": "jest  --coverage --passWithNoTests"
   },
   "dependencies": {
     "@datadog/browser-rum": "^1.16.0",

@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx,.json",
     "test": "jest --watch",
-    "test:ci": "jest --ci"
+    "test:ci": "jest --ci",
+    "test:cc": "jest  --coverage --passWithNoTests"
   },
   "dependencies": {
     "@material-ui/core": "^4.9.4",

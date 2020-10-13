@@ -4,7 +4,7 @@ import {
   InvSearchNetworker,
 } from '@vroom-web/inv-search-networking';
 import { InvServiceNetworker } from '@vroom-web/inv-service-networking';
-import { observable } from 'mobx';
+import { action, observable, runInAction } from 'mobx';
 import getConfig from 'next/config';
 import { createContext } from 'react';
 
@@ -13,6 +13,7 @@ import { Status } from 'src/networking/types';
 const { publicRuntimeConfig } = getConfig();
 
 export interface InventoryStoreState {
+  vin: string;
   similarStatus: Status;
   similar: Hit[];
   vehicleStatus: Status;
@@ -91,16 +92,14 @@ export async function getVehicleState(
 
 export async function getVehicleSimilarState(
   vin: string,
-  vinClusterDefaultVariant: boolean,
+  useVinCluster: boolean,
   invSearchNetworker: InvSearchNetworker
 ): Promise<{ similarStatus: Status; similar: Hit[] }> {
   try {
     const response = await invSearchNetworker.getInventorySimilar({
       vin,
       min: 4,
-      useVinCluster: !vinClusterDefaultVariant,
-      // if vinClusterDefaultVariant is true we are in
-      // the default and useVinCluster should be false
+      useVinCluster,
     });
     return {
       similarStatus: Status.SUCCESS,
@@ -129,8 +128,7 @@ export async function getInventoryAvailabilityState(
 }
 
 export async function getInitialInventoryStoreState(
-  vin: string,
-  vinClusterDefaultVariant: boolean
+  vin: string
 ): Promise<InventoryStoreState> {
   const invSearchNetworker = new InvSearchNetworker(
     publicRuntimeConfig.INVSEARCH_V3_URL || ''
@@ -147,7 +145,7 @@ export async function getInitialInventoryStoreState(
   );
   const vehicleSimilarState = await getVehicleSimilarState(
     vin,
-    vinClusterDefaultVariant,
+    false,
     invSearchNetworker
   );
   const inventoryAvailableState = await getInventoryAvailabilityState(
@@ -155,6 +153,7 @@ export async function getInitialInventoryStoreState(
     invServiceNetworker
   );
   return {
+    vin,
     ...vehicleState,
     ...vehicleSimilarState,
     isAvailable: inventoryAvailableState,
@@ -162,6 +161,10 @@ export async function getInitialInventoryStoreState(
 }
 
 export class InventoryStore {
+  private readonly invSearchNetworker = new InvSearchNetworker(
+    publicRuntimeConfig.INVSEARCH_V3_URL || ''
+  );
+
   @observable similarStatus: Status = Status.FETCHING;
   @observable similar: Hit[] = [] as Hit[];
   @observable vehicleStatus: Status = Status.FETCHING;
@@ -172,11 +175,33 @@ export class InventoryStore {
     if (initialState) {
       this.vehicleStatus = initialState.vehicleStatus;
       this.vehicle = initialState.vehicle;
-      this.similarStatus = initialState.similarStatus;
+      // DELTA-217, to accommodate the vin cluster A/B test for similar vehicles,
+      // we initialize similarStatus to FETCHING, until we are sure on the client side,
+      // which variant we are in. Only then do we set the status to something other than fetching.
+      // this.similarStatus = initialState.similarStatus;
       this.similar = initialState.similar;
       this.isAvailable = initialState.isAvailable;
     }
   }
+
+  @action
+  setSimilarStatus = (similarStatus: Status): void => {
+    this.similarStatus = similarStatus;
+  };
+
+  @action
+  getSimilar = async (vin: string, useVinCluster: boolean): Promise<void> => {
+    this.similarStatus = Status.FETCHING;
+    const data = await getVehicleSimilarState(
+      vin,
+      useVinCluster,
+      this.invSearchNetworker
+    );
+    runInAction(() => {
+      this.similar = data.similar;
+      this.similarStatus = data.similarStatus;
+    });
+  };
 }
 
 export const InventoryStoreContext = createContext<InventoryStore>(
