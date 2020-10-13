@@ -33,7 +33,7 @@ const VehicleHeaderContainerContent = styled('div')(({ theme }) => ({
   backgroundColor: theme.palette.background.paper,
   padding: theme.spacing(4),
   [theme.breakpoints.only('xs')]: {
-    padding: theme.spacing(3, 2),
+    padding: theme.spacing(5, 2),
   },
 }));
 
