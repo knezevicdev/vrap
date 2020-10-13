@@ -93,4 +93,9 @@ class AnalyticsHandler extends BaseAnalyticsHandler {
   }
 }
 
+// It probably makes more sense to export a single instance
+// than to keep recreating instances all over the place.
+// TODO: replace individual instances by importing this instance.
+export const analyticsHandler = new AnalyticsHandler();
+
 export default AnalyticsHandler;
