@@ -54,8 +54,8 @@ const YearMakeModel = styled(Typography)(({ theme }) => ({
   marginBottom: theme.spacing(1),
 }));
 
-const Price = styled(Typography)(({ theme }) => ({
-  paddingBottom: theme.spacing(3),
+const Price = styled(Typography)(() => ({
+  paddingBottom: '28px', // Added padding for now. Can be changed once the monthly price breakdown is added
   fontWeight: 600,
 }));
 
@@ -63,7 +63,7 @@ const Divider = styled('div')(({ theme }) => ({
   margin: theme.spacing(0, 4),
   backgroundColor: theme.palette.grey['A100'],
   width: '1px',
-  height: '80px',
+  height: '88px',
 }));
 
 const DesktopButtonContainer = styled('div')(() => ({
