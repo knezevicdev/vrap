@@ -3,6 +3,7 @@ import { Typography } from '@vroom-web/ui';
 import { observer } from 'mobx-react';
 import React from 'react';
 
+import { ReactComponent as InfoIcon } from './svg/Info.svg';
 import LandingBannerViewModel from './ViewModel';
 
 const Container = styled('div')(({ theme }) => ({
@@ -19,6 +20,9 @@ const Container = styled('div')(({ theme }) => ({
   '& :hover': {
     color: theme.palette.primary.main,
   },
+  '& :hover svg path': {
+    fill: theme.palette.primary.main,
+  },
 }));
 
 const StyledTypography = styled(Typography)(({ theme }) => ({
@@ -27,6 +31,10 @@ const StyledTypography = styled(Typography)(({ theme }) => ({
   padding: theme.spacing(1, 0),
   alignSelf: 'center',
   width: '100%',
+}));
+
+const StyledInfoIcon = styled(InfoIcon)(({ theme }) => ({
+  margin: theme.spacing(0, 1),
 }));
 
 interface Props {
@@ -41,7 +49,10 @@ const LandingBannerView: React.FC<Props> = ({ viewModel }) => {
   };
   return (
     <Container onClick={handleClick}>
-      <StyledTypography>{viewModel.jeepWranglerText}</StyledTypography>
+      <StyledTypography>
+        <StyledInfoIcon />
+        {viewModel.jeepWranglerText}
+      </StyledTypography>
     </Container>
   );
 };
