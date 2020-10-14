@@ -1,10 +1,9 @@
 import { Car, Hit } from '@vroom-web/inv-search-networking';
 
+import data from '../../testCar.json';
 import SimilarVehiclesViewModel from './ViewModel';
 
 import { InventoryStore } from 'src/modules/inventory/store';
-
-import data from '../../testCar.json';
 
 jest.mock('src/integrations/AnalyticsHandler');
 jest.mock('next/config', () => {
