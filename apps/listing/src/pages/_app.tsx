@@ -49,10 +49,10 @@ class VroomApp extends App {
         if (filtersEncoded) {
           const decoded = Base64.decode(filtersEncoded);
           const decodedURL = url.replace(filtersEncoded, decoded);
-          window && window.ga && window.ga('send', 'pageview', decodedURL);
+          window && window.ga && window.ga('santander.send', 'pageview', decodedURL);
           return;
         }
-        window && window.ga && window.ga('send', 'pageview', url);
+        window && window.ga && window.ga('santander.send', 'pageview', url);
       });
     }
   }
