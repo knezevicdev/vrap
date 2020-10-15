@@ -18,7 +18,6 @@ const config = {
     // Will be available on both server-side and client-side
     BASE_PATH: basePath,
     GEARBOX_PRIVATE_URL: process.env.GEARBOX_PRIVATE_URL,
-    NAME: name,
     ACQUISITIONS_URL: process.env.ACQUISITIONS_URL,
   },
   serverRuntimeConfig: {
