@@ -3,7 +3,7 @@ import { Brand, Container } from '@vroom-web/ui';
 import Head from 'next/head';
 import React from 'react';
 
-import AnalyticsHandler from 'src/integrations/AnalyticsHandler';
+import { analyticsHandler } from 'src/integrations/AnalyticsHandler';
 
 const Contents = styled('div')(() => ({
   minHeight: '100vh',
@@ -26,26 +26,18 @@ interface PageProps {
 }
 
 class Page extends React.Component<PageProps> {
-  private analyticsHandler: AnalyticsHandler;
-
   constructor(props: PageProps) {
     super(props);
-    this.analyticsHandler = new AnalyticsHandler();
   }
 
   componentDidMount(): void {
     window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
     const { category, experiments, name } = this.props;
-    if (this.props.brand === Brand.SANTANDER) {
-      this.analyticsHandler.createAdditionalTracker(
-        'UA-2348754-1',
-        'santander'
-      );
-    }
+
     if (experiments) {
-      this.analyticsHandler.setExperiments(experiments);
+      analyticsHandler.setExperiments(experiments);
     }
-    this.analyticsHandler.page(name, category);
+    analyticsHandler.page(name, category);
   }
 
   render(): React.ReactNode {
