@@ -11,15 +11,8 @@ const Contents = styled('div')(() => ({
   flexDirection: 'column',
 }));
 
-interface Experiment {
-  id: string;
-  assignedVariant: 0 | 1;
-  optimizeId?: string;
-}
-
 interface PageProps {
   category?: string;
-  experiments?: Experiment[];
   head?: React.ReactNode;
   name: string;
   brand: Brand;
@@ -32,11 +25,7 @@ class Page extends React.Component<PageProps> {
 
   componentDidMount(): void {
     window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
-    const { category, experiments, name } = this.props;
-
-    if (experiments) {
-      analyticsHandler.setExperiments(experiments);
-    }
+    const { category, name } = this.props;
     analyticsHandler.page(name, category);
   }
 
