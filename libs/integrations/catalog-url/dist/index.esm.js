@@ -14,6 +14,8 @@ var Filters;
   Filters["SORT"] = "sort";
   Filters["TRANSMISSION"] = "transmission";
   Filters["YEAR"] = "year";
+  Filters["CYLINDERS"] = "cylinders";
+  Filters["OTHER_CYLINDERS"] = "othercylinders";
 })(Filters || (Filters = {}));
 
 var BodyType;
@@ -77,6 +79,14 @@ var Transmission;
   Transmission["MANUAL"] = "manual";
 })(Transmission || (Transmission = {}));
 
+var Cylinder;
+
+(function (Cylinder) {
+  Cylinder["FOUR"] = "4";
+  Cylinder["SIX"] = "6";
+  Cylinder["EIGHT"] = "8";
+})(Cylinder || (Cylinder = {}));
+
 var deepCopyFiltersData = function deepCopyFiltersData(filtersData) {
   return JSON.parse(JSON.stringify(filtersData));
 };
@@ -106,6 +116,27 @@ var removeBodyType = function removeBodyType(bodyType, filtersData) {
     return bt !== bodyType;
   });
   newFiltersData[Filters.BODY_TYPES] = newBodyTypes.length > 0 ? newBodyTypes : undefined;
+  return newFiltersData;
+};
+var addCylinder = function addCylinder(cylinder, filtersData) {
+  var newFiltersData = deepCopyFiltersData(filtersData || {});
+  var newCylinders = newFiltersData[Filters.CYLINDERS] || [];
+  newCylinders.push(cylinder);
+  newFiltersData[Filters.CYLINDERS] = newCylinders;
+  return newFiltersData;
+};
+var removeCylinder = function removeCylinder(cylinder, filtersData) {
+  var newFiltersData = deepCopyFiltersData(filtersData || {});
+  var existingCylinders = newFiltersData[Filters.CYLINDERS] || [];
+  var newCylinders = existingCylinders.filter(function (c) {
+    return c !== cylinder;
+  });
+  newFiltersData[Filters.CYLINDERS] = newCylinders.length > 0 ? newCylinders : undefined;
+  return newFiltersData;
+};
+var setOtherCylinders = function setOtherCylinders(otherCylinders, filtersData) {
+  var newFiltersData = deepCopyFiltersData(filtersData || {});
+  newFiltersData[Filters.OTHER_CYLINDERS] = otherCylinders;
   return newFiltersData;
 };
 var addColor = function addColor(color, filtersData) {
@@ -305,6 +336,10 @@ var isNumber = function isNumber(x) {
 
 var isString = function isString(x) {
   return typeof x === 'string';
+}; // eslint-disable-next-line @typescript-eslint/no-explicit-any
+
+var isBoolean = function isBoolean(x) {
+  return typeof x === 'boolean';
 }; // eslint-disable-next-line @typescript-eslint/no-explicit-any
 
 var isStringArray = function isStringArray(x) {
@@ -511,6 +546,16 @@ var getFiltersDataFromFiltersQueryParam = function getFiltersDataFromFiltersQuer
     filtersData[Filters.DRIVE_TYPE] = parsed[Filters.DRIVE_TYPE];
   }
 
+  var isCylinderArray = isEnumArray(Cylinder);
+
+  if (isCylinderArray(parsed[Filters.CYLINDERS])) {
+    filtersData[Filters.CYLINDERS] = parsed[Filters.CYLINDERS];
+  }
+
+  if (isBoolean(parsed[Filters.OTHER_CYLINDERS])) {
+    filtersData[Filters.OTHER_CYLINDERS] = parsed[Filters.OTHER_CYLINDERS];
+  }
+
   if (isMakeAndModels(parsed[Filters.MAKE_AND_MODELS])) {
     filtersData[Filters.MAKE_AND_MODELS] = parsed[Filters.MAKE_AND_MODELS];
   }
@@ -644,4 +689,4 @@ var getFiltersDataFromUrl = function getFiltersDataFromUrl(url) {
   return undefined;
 };
 
-export { BodyType, Color, DriveType, Filters, SortBy, SortDirection, Transmission, addAllModels, addBodyType, addColor, addDriveType, addModel, getFiltersDataFromUrl, getUrlFromFiltersData, removeAllModels, removeBodyType, removeColor, removeDriveType, removeModel, resetFilter, resetFilters, setMiles, setPage, setPrice, setSearch, setSort, setTransmission, setYear };
+export { BodyType, Color, Cylinder, DriveType, Filters, SortBy, SortDirection, Transmission, addAllModels, addBodyType, addColor, addCylinder, addDriveType, addModel, getFiltersDataFromUrl, getUrlFromFiltersData, removeAllModels, removeBodyType, removeColor, removeCylinder, removeDriveType, removeModel, resetFilter, resetFilters, setMiles, setOtherCylinders, setPage, setPrice, setSearch, setSort, setTransmission, setYear };

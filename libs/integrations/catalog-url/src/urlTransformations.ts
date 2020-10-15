@@ -1,6 +1,7 @@
 import { Base64 } from 'js-base64';
 
 import {
+  isBoolean,
   isEnum,
   isEnumArray,
   isMakeAndModels,
@@ -13,6 +14,7 @@ import {
 import {
   BodyType,
   Color,
+  Cylinder,
   DriveType,
   Filters,
   FiltersData,
@@ -146,6 +148,15 @@ export const getFiltersDataFromFiltersQueryParam = (
   const isDriveTypeArray = isEnumArray(DriveType);
   if (isDriveTypeArray(parsed[Filters.DRIVE_TYPE])) {
     filtersData[Filters.DRIVE_TYPE] = parsed[Filters.DRIVE_TYPE];
+  }
+
+  const isCylinderArray = isEnumArray(Cylinder);
+  if (isCylinderArray(parsed[Filters.CYLINDERS])) {
+    filtersData[Filters.CYLINDERS] = parsed[Filters.CYLINDERS];
+  }
+
+  if (isBoolean(parsed[Filters.OTHER_CYLINDERS])) {
+    filtersData[Filters.OTHER_CYLINDERS] = parsed[Filters.OTHER_CYLINDERS];
   }
 
   if (isMakeAndModels(parsed[Filters.MAKE_AND_MODELS])) {

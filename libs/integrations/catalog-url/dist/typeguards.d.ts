@@ -3,6 +3,7 @@ export declare const isEnum: <T>(e: T) => (token: any) => token is T[keyof T];
 export declare const isEnumArray: <T>(e: T) => (token: any) => token is T[keyof T][];
 export declare const isNumber: (x: any) => x is number;
 export declare const isString: (x: any) => x is string;
+export declare const isBoolean: (x: any) => x is boolean;
 export declare const isStringArray: (x: any) => x is string[];
 export declare const isObject: (x: any) => boolean;
 export declare const isMake: (x: any) => x is Make;

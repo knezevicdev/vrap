@@ -9,7 +9,9 @@ export declare enum Filters {
     SEARCH = "search",
     SORT = "sort",
     TRANSMISSION = "transmission",
-    YEAR = "year"
+    YEAR = "year",
+    CYLINDERS = "cylinders",
+    OTHER_CYLINDERS = "othercylinders"
 }
 export declare enum BodyType {
     CONVERTIBLE = "convertible",
@@ -67,6 +69,11 @@ export declare enum Transmission {
     AUTO = "auto",
     MANUAL = "manual"
 }
+export declare enum Cylinder {
+    FOUR = "4",
+    SIX = "6",
+    EIGHT = "8"
+}
 export interface FiltersData {
     [Filters.BODY_TYPES]?: BodyType[];
     [Filters.COLORS]?: Color[];
@@ -79,6 +86,8 @@ export interface FiltersData {
     [Filters.SORT]?: Sort;
     [Filters.TRANSMISSION]?: Transmission;
     [Filters.YEAR]?: MaxAndMin;
+    [Filters.CYLINDERS]?: Cylinder[];
+    [Filters.OTHER_CYLINDERS]?: boolean;
 }
 export interface GetUrlFromFiltersDataOptions {
     addFiltersQueryParam?: boolean;
