@@ -10,10 +10,12 @@ import PaginationViewModel from './ViewModel';
 const StyledPagination = styled(Pagination)(({ theme }) => ({
   display: 'flex',
   justifyContent: 'center',
+  marginTop: theme.spacing(3),
   [theme.breakpoints.only('xs')]: {
-    margin: theme.spacing(6, 2),
+    marginTop: theme.spacing(3),
+    margin: theme.spacing(6),
   },
-  marginTop: theme.spacing(4),
+
   '& .MuiPaginationItem-page.Mui-selected': {
     color: '#ffffff',
   },

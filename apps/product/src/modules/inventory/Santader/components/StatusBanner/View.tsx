@@ -12,8 +12,11 @@ interface Props {
 const Banner = styled('div')(({ theme }) => ({
   position: 'absolute',
   top: 0,
-  left: theme.spacing(3),
+  left: theme.spacing(4),
   padding: theme.spacing(1),
+  [theme.breakpoints.only('xs')]: {
+    left: theme.spacing(2),
+  },
 }));
 
 const Label = styled(Typography)(() => ({

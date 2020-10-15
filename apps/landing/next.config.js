@@ -1,5 +1,7 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 
+const { name, version } = require('./package.json');
+
 const childProcess = require('child_process');
 const shortHash = childProcess
   .execSync('git rev-parse --short=8 HEAD')
@@ -14,8 +16,12 @@ const config = {
   generateBuildId: () => shortHash,
   publicRuntimeConfig: {
     BASE_PATH: basePath,
+    DATA_DOG_RUM_APPLICATION: process.env.DATA_DOG_RUM_APPLICATION,
+    DATA_DOG_RUM_TOKEN: process.env.DATA_DOG_RUM_TOKEN,
+    NAME: name,
     NODE_ENV: process.env.NODE_ENV,
     SEGMENT_WRITE_KEY: process.env.SEGMENT_WRITE_KEY,
+    VERSION: version,
   },
   webpack: (config) => {
     config.module.rules.push({
