@@ -1,3 +1,4 @@
+import { datadogRum } from '@datadog/browser-rum';
 import { AnalyticsHandler } from '@vroom-web/analytics-integration';
 import { CatSDK } from '@vroom-web/cat-sdk';
 import App from 'next/app';
@@ -8,7 +9,13 @@ import { ThemeProvider } from 'styled-components';
 import { GlobalStyle, theme } from '../core/themes/Vroom';
 
 const {
-  publicRuntimeConfig: { NODE_ENV },
+  publicRuntimeConfig: {
+    DATA_DOG_RUM_APPLICATION,
+    DATA_DOG_RUM_TOKEN,
+    NAME,
+    NODE_ENV,
+    VERSION,
+  },
 } = getConfig();
 
 const dev = NODE_ENV !== 'production';
@@ -16,6 +23,19 @@ const dev = NODE_ENV !== 'production';
 export default class VroomApp extends App {
   componentDidMount(): void {
     new AnalyticsHandler().page('Landing - 2019 Jeep Wrangler');
+
+    if (DATA_DOG_RUM_APPLICATION) {
+      datadogRum.init({
+        applicationId: DATA_DOG_RUM_APPLICATION,
+        clientToken: DATA_DOG_RUM_TOKEN,
+        site: 'datadoghq.com',
+        service: NAME,
+        version: VERSION,
+        sampleRate: 100,
+        trackInteractions: true,
+      });
+    }
+
     const catSDK = new CatSDK({
       // Point to dev for local builds.
       serviceBasePath: dev ? 'https://dev.vroom.com' : undefined,
