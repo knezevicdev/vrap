@@ -29,8 +29,17 @@ export class Networker {
     return this.axiosInstance.get(url);
   }
 
-  submitPriceResponse(data: PriceData): Promise<AxiosResponse<Prices>> {
+  submitPriceResponse(priceData: PriceData): Promise<AxiosResponse<Prices>> {
     const url = `${publicRuntimeConfig.ACQUISITIONS_URL}/acquisition/offer/reject`;
-    return this.axiosInstance.post(url, data);
+    const timestamp = new Date();
+
+    return this.axiosInstance.post(url, {
+      data: {
+        source: 'vroom.com',
+        version: '1',
+        timestamp: timestamp.toISOString(),
+        payload: priceData,
+      },
+    });
   }
 }

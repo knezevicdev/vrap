@@ -12,10 +12,6 @@ interface Props {
 }
 
 const PendingPriceView: React.FC<Props> = ({ viewModel }) => {
-  const handleButtonClick = (): void => {
-    viewModel.handleFindCar();
-  };
-
   return (
     <StyledContainer>
       <Hero.Four>{viewModel.sitTight}</Hero.Four>
@@ -25,7 +21,7 @@ const PendingPriceView: React.FC<Props> = ({ viewModel }) => {
         <Body.Regular>{viewModel.takingALook}</Body.Regular>
       </StyledBody>
 
-      <StyledButton onClick={handleButtonClick}>
+      <StyledButton onClick={viewModel.handleFindCar}>
         {viewModel.findCar}
       </StyledButton>
     </StyledContainer>

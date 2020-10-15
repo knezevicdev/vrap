@@ -1,4 +1,7 @@
+import AnalyticsHandler from 'src/integrations/AnalyticsHandler';
 import { PriceStore } from 'src/modules/price/store';
+import { submitPriceResponse } from 'src/modules/price/store';
+import { PriceData } from 'src/networking/Networker';
 
 const displayCurrency = (num: number): string => {
   return '$' + Math.round(num).toLocaleString();
@@ -31,6 +34,8 @@ const parsedDateTime = (dateTime: string): string => {
 };
 
 class InitialPriceViewModel {
+  private analyticsHandler = new AnalyticsHandler();
+
   readonly yourPrice: string = 'your price';
   readonly continuePrice: string = 'continue';
   readonly offerExpPreDate: string = 'This price expires on ';
@@ -44,7 +49,18 @@ class InitialPriceViewModel {
     this.price = displayCurrency(initialPriceState.price);
     this.priceId = initialPriceState.priceId;
     this.goodUntil = parsedDateTime(initialPriceState.goodUntil);
+    this.analyticsHandler.trackPriceViewed();
   }
+
+  onContinueClick = (): void => {
+    const priceData: PriceData = {
+      priceId: this.priceId,
+      accepted: true,
+    };
+
+    submitPriceResponse(priceData);
+    this.analyticsHandler.trackContinueClick();
+  };
 }
 
 export default InitialPriceViewModel;

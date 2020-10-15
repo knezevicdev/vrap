@@ -7,19 +7,12 @@ import InitialPriceViewModel from './ViewModel';
 import { Button } from 'src/core/Button';
 import Icon, { Icons } from 'src/core/Icon';
 import { Body, Hero, Title } from 'src/core/Typography';
-import { submitPriceResponse } from 'src/modules/price/store';
-import { PriceData } from 'src/networking/Networker';
 
 interface Props {
   viewModel: InitialPriceViewModel;
 }
 
 const InitialPriceView: React.FC<Props> = ({ viewModel }) => {
-  const handleButtonClick = (): void => {
-    const priceData: PriceData = { priceId: viewModel.priceId, accepted: true };
-    submitPriceResponse(priceData);
-  };
-
   return (
     <StyledContainer>
       <Hero.Four>{viewModel.yourPrice}</Hero.Four>
@@ -37,7 +30,7 @@ const InitialPriceView: React.FC<Props> = ({ viewModel }) => {
         </div>
       </div>
 
-      <StyledButton onClick={handleButtonClick}>
+      <StyledButton onClick={viewModel.onContinueClick}>
         {viewModel.continuePrice}
       </StyledButton>
     </StyledContainer>

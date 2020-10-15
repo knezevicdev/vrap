@@ -28,10 +28,12 @@ export interface PriceStoreState {
 export async function submitPriceResponse(priceData: PriceData): Promise<void> {
   const networker = new Networker();
   try {
-    await networker.submitPriceResponse(priceData);
+    const response = await networker.submitPriceResponse(priceData);
+    console.log({ response });
     const url = `/sell/verification/owner/${priceData.priceId}`;
     window.location.href = url;
   } catch (err) {
+    console.log({ err });
     return err;
   }
 }
