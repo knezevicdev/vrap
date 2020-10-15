@@ -34,7 +34,7 @@ export async function submitPriceResponse(priceData: PriceData): Promise<void> {
   } catch (err) {
     return err;
   }
-};
+}
 
 export async function getInitialPriceStoreState(
   priceId: string
@@ -94,7 +94,6 @@ export class PriceStore {
   @observable price = 0;
   @observable priceId = '';
   @observable goodUntil = '2020-01-01T00:00:00Z';
-
 
   constructor(initialState?: PriceStoreState) {
     if (initialState) {

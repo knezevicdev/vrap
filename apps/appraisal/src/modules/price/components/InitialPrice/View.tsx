@@ -1,10 +1,12 @@
-import Icon, { Icons } from 'src/core/Icon';
-import InitialPriceViewModel from './ViewModel';
+import { observer } from 'mobx-react';
 import React from 'react';
 import styled from 'styled-components';
-import { Body, Hero, Title } from 'src/core/Typography';
+
+import InitialPriceViewModel from './ViewModel';
+
 import { Button } from 'src/core/Button';
-import { observer } from 'mobx-react';
+import Icon, { Icons } from 'src/core/Icon';
+import { Body, Hero, Title } from 'src/core/Typography';
 import { submitPriceResponse } from 'src/modules/price/store';
 import { PriceData } from 'src/networking/Networker';
 

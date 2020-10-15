@@ -1,10 +1,11 @@
+import getConfig from 'next/config';
+import React from 'react';
+import styled from 'styled-components';
+
 import InitialPrice from './components/InitialPrice';
 import NextSteps from './components/NextSteps';
 import PendingPrice from './components/PendingPrice';
 import PriceViewModel from './ViewModel';
-import React from 'react';
-import getConfig from 'next/config';
-import styled from 'styled-components';
 
 const {
   publicRuntimeConfig: { BASE_PATH },
@@ -19,10 +20,7 @@ const PriceView: React.FC<Props> = ({ viewModel }) => {
     <HeroContainer>
       <PriceContainer>
         <PriceDetailContainer>
-          { viewModel.automatedAppraisal
-            ? <InitialPrice />
-            : <PendingPrice /> 
-          }
+          {viewModel.automatedAppraisal ? <InitialPrice /> : <PendingPrice />}
         </PriceDetailContainer>
         <NextStepsContainer>
           <NextSteps />

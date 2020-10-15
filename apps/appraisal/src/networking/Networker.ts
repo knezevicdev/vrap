@@ -1,5 +1,6 @@
 import axios, { AxiosInstance, AxiosResponse } from 'axios';
 import getConfig from 'next/config';
+
 import { Prices } from './models/Price';
 
 const { publicRuntimeConfig } = getConfig();

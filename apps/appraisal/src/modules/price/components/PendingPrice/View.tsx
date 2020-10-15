@@ -22,9 +22,7 @@ const PendingPriceView: React.FC<Props> = ({ viewModel }) => {
       <StyledIcon icon={Icons.CAR_OFFER} />
 
       <StyledBody>
-        <Body.Regular>
-          {viewModel.takingALook}
-        </Body.Regular>
+        <Body.Regular>{viewModel.takingALook}</Body.Regular>
       </StyledBody>
 
       <StyledButton onClick={handleButtonClick}>
