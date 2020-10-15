@@ -4,7 +4,7 @@ import { CarsStore } from 'src/modules/cars/store';
 
 class LandingBannerViewModel {
   private readonly carsStore: CarsStore;
-  readonly jeepWranglerText: string = 'Jeep Wrangler Buyers Guide';
+  readonly jeepWranglerText: string = 'Get to Know Jeep Wrangler';
   constructor(carsStore: CarsStore) {
     this.carsStore = carsStore;
   }
