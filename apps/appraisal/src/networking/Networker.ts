@@ -1,6 +1,5 @@
 import axios, { AxiosInstance, AxiosResponse } from 'axios';
 import getConfig from 'next/config';
-
 import { Prices } from './models/Price';
 
 const { publicRuntimeConfig } = getConfig();
@@ -10,6 +9,11 @@ export enum Status {
   FETCHING = 'fetching',
   SUCCESS = 'success',
   ERROR = 'error',
+}
+
+interface PriceData {
+  priceId: string;
+  accepted: boolean;
 }
 
 export class Networker {
@@ -22,5 +26,10 @@ export class Networker {
   getOfferDetails(priceId: string): Promise<AxiosResponse<Prices>> {
     const url = `${publicRuntimeConfig.ACQUISITIONS_URL}/acquisition/offer?offerID=${priceId}`;
     return this.axiosInstance.get(url);
+  }
+
+  submitPriceResponse(data: PriceData): Promise<AxiosResponse<Prices>> {
+    const url = `${publicRuntimeConfig.ACQUISITIONS_URL}/acquisition/offer/reject`;
+    return this.axiosInstance.post(url, data);
   }
 }

@@ -13,6 +13,8 @@ interface Props {
 
 const InitialPriceView: React.FC<Props> = ({ viewModel }) => {
   const handleButtonClick = (): void => {
+    const { priceId } = viewModel;
+    viewModel.submitPriceResponse({ priceId, accepted: true });
     viewModel.acceptOffer();
   };
 
