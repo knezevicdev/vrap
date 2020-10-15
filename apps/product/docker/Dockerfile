@@ -9,6 +9,7 @@ RUN \
   # Bootstrap yarn workspaces.
   yarn install --silent &&\
   # Build the main app.
+  yarn workspace @vroom-web/product test:cc &&\
   yarn workspace @vroom-web/product build &&\
   # Change user for created files
   chown -R 1000:1000 .
