@@ -5,6 +5,7 @@ import React from 'react';
 
 import Cars from './components/Cars';
 import Count from './components/Count';
+import LandingBanner from './components/LandingBanner';
 import Pagination from './components/Pagination';
 import TopSection from './components/TopSection';
 import ViewModel from './ViewModel';
@@ -25,6 +26,7 @@ const InventoryView: React.FC<Props> = ({ viewModel }) => {
   return (
     <StyledGrid container direction="column">
       <TopSection />
+      <LandingBanner />
       <Cars />
       {!viewModel.hideVehicleCount() && <Count />}
       {!viewModel.hidePagination() && <Pagination />}
