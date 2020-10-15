@@ -2,7 +2,7 @@ import { observable } from 'mobx';
 import { createContext, useContext } from 'react';
 
 import { Prices } from 'src/networking/models/Price';
-import { Networker } from 'src/networking/Networker';
+import { Networker, PriceData } from 'src/networking/Networker';
 
 export interface PriceStoreState {
   active: boolean;
@@ -24,6 +24,17 @@ export interface PriceStoreState {
   xkeId: number;
   year: number;
 }
+
+export async function submitPriceResponse(priceData: PriceData): Promise<void> {
+  const networker = new Networker();
+  try {
+    const response = await networker.submitPriceResponse(priceData);
+    const url = `/sell/verification/owner/${priceData.priceId}`;
+    window.location.href = url;
+  } catch (err) {
+    return err;
+  }
+};
 
 export async function getInitialPriceStoreState(
   priceId: string
@@ -83,6 +94,7 @@ export class PriceStore {
   @observable price = 0;
   @observable priceId = '';
   @observable goodUntil = '2020-01-01T00:00:00Z';
+
 
   constructor(initialState?: PriceStoreState) {
     if (initialState) {

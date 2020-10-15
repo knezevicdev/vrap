@@ -45,11 +45,6 @@ class InitialPriceViewModel {
     this.priceId = initialPriceState.priceId;
     this.goodUntil = parsedDateTime(initialPriceState.goodUntil);
   }
-
-  acceptOffer(): void {
-    const url = `/sell/verification/owner/${this.priceId}`;
-    window.location.href = url;
-  }
 }
 
 export default InitialPriceViewModel;

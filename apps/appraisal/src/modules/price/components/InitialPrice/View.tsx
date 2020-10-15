@@ -1,21 +1,21 @@
-import { observer } from 'mobx-react';
+import Icon, { Icons } from 'src/core/Icon';
+import InitialPriceViewModel from './ViewModel';
 import React from 'react';
 import styled from 'styled-components';
-
-import InitialPriceViewModel from './ViewModel';
-
-import { Button } from 'src/core/Button';
-import Icon, { Icons } from 'src/core/Icon';
 import { Body, Hero, Title } from 'src/core/Typography';
+import { Button } from 'src/core/Button';
+import { observer } from 'mobx-react';
+import { submitPriceResponse } from 'src/modules/price/store';
+import { PriceData } from 'src/networking/Networker';
+
 interface Props {
   viewModel: InitialPriceViewModel;
 }
 
 const InitialPriceView: React.FC<Props> = ({ viewModel }) => {
   const handleButtonClick = (): void => {
-    const { priceId } = viewModel;
-    viewModel.submitPriceResponse({ priceId, accepted: true });
-    viewModel.acceptOffer();
+    const priceData: PriceData = { priceId: viewModel.priceId, accepted: true };
+    submitPriceResponse(priceData);
   };
 
   return (

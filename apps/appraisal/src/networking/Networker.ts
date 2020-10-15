@@ -11,7 +11,7 @@ export enum Status {
   ERROR = 'error',
 }
 
-interface PriceData {
+export interface PriceData {
   priceId: string;
   accepted: boolean;
 }
