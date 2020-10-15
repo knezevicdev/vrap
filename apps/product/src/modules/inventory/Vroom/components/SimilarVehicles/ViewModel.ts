@@ -1,24 +1,19 @@
 import { Car } from '@vroom-web/inv-search-networking';
-import Router from 'next/router';
 import React from 'react';
 
-import AnalyticsHandler, { Product } from 'src/integrations/AnalyticsHandler';
+import { analyticsHandler, Product } from 'src/integrations/AnalyticsHandler';
 import { InventoryStore } from 'src/modules/inventory/store';
 import { Status } from 'src/networking/types';
 
 class SimilarVehiclesViewModel {
   private store: InventoryStore;
-  private analyticsHandler: AnalyticsHandler;
   readonly title: string = 'Similar Vehicles';
   readonly viewAllCars: string = 'View All Cars';
   readonly viewAll: string = 'VIEW ALL';
+  readonly similarVehicleCount = 4;
 
-  constructor(
-    inventoryStore: InventoryStore,
-    analyticsHandler: AnalyticsHandler
-  ) {
+  constructor(inventoryStore: InventoryStore) {
     this.store = inventoryStore;
-    this.analyticsHandler = analyticsHandler;
   }
 
   private trackProductList(cars: Car[]): void {
@@ -37,8 +32,7 @@ class SimilarVehiclesViewModel {
         year,
       } = car;
       const name = `${year} ${make} ${model}`;
-      //TODO: Replace vehicle -> inventory after AB test
-      const url = `/vehicle/${makeSlug}-${modelSlug}-${year}-${vin}`;
+      const url = `/inventory/${makeSlug}-${modelSlug}-${year}-${vin}`;
       return {
         imageUrl: leadFlagPhotoUrl,
         inventoryType: consignmentPartnerId ? 'Consignment' : 'Vroom',
@@ -56,7 +50,7 @@ class SimilarVehiclesViewModel {
       };
     });
 
-    this.analyticsHandler.trackProductListViewed(products);
+    analyticsHandler.trackProductListViewed(products);
   }
 
   loading(): boolean {
@@ -72,14 +66,14 @@ class SimilarVehiclesViewModel {
   }
 
   error(): boolean {
-    return this.store.similarStatus === Status.ERROR;
+    const loading = this.loading();
+    return !loading && this.store.similarStatus === Status.ERROR;
   }
 
   getCars = (): Car[] => {
-    const similarVehicleCount = 4;
     try {
       const similarCars = this.store.similar
-        .slice(0, similarVehicleCount)
+        .slice(0, this.similarVehicleCount)
         .map((car) => car._source);
       this.trackProductList(similarCars);
       return similarCars;
@@ -90,7 +84,7 @@ class SimilarVehiclesViewModel {
 
   handleClick(event: React.MouseEvent<HTMLButtonElement>): void {
     event.preventDefault();
-    Router.push('/cars');
+    window.location.href = '/cars';
   }
 }
 

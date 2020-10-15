@@ -1,6 +1,3 @@
-import { showDefaultVariant } from 'src/integrations/experimentSDK';
-import { HomeStore } from 'src/modules/home/store';
-
 class ValuesViewModel {
   readonly title: string = 'vroom values';
   readonly values = [
@@ -36,33 +33,12 @@ class ValuesViewModel {
     },
     {
       type: 'COVERAGE',
-      title: '',
+      title: 'Free Limited Warranty',
       description:
         'A limited warranty is included with most Vroom vehicles, good for 90 days or 6,000 miles. The majority of our cars are still under their manufacturer’s warranty.',
     },
   ];
-  subtitle: string;
-
-  constructor(store: HomeStore) {
-    const homeVroomRevolutionExperimentVariant = showDefaultVariant(
-      'snd-homepage-heres-how-vroom-is-leading-the-revolution-to-heres-how-vroom-is-revolutionizing-the-car-shopping-experience',
-      store.experiments,
-      store.query
-    );
-    const freeVsFREELimitedWarrantyDefaultVariant = showDefaultVariant(
-      'snd-free-vs-free-limited-warranty',
-      store.experiments,
-      store.query
-    );
-    this.values[5].title = `${
-      freeVsFREELimitedWarrantyDefaultVariant ? 'Free' : 'FREE'
-    } Limited Warranty`;
-    this.subtitle = `We believe buying a car should be fun, easy, and affordable.  Here’s how Vroom is ${
-      homeVroomRevolutionExperimentVariant
-        ? 'leading\xa0the\xa0revolution'
-        : 'revolutionizing the car shopping experience'
-    }.`;
-  }
+  subtitle = `We believe buying a car should be fun, easy, and affordable.  Here’s how Vroom is leading\xa0the\xa0revolution`;
 }
 
 export default ValuesViewModel;

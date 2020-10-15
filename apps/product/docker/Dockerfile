@@ -2,7 +2,6 @@ FROM node:erbium-alpine
 
 WORKDIR /www
 COPY . .
-
 RUN \
   # Install git so editor git commands work inside dev container
   # (This could be removed if the image already has git installed.)

@@ -78,7 +78,7 @@ const CopyrightLink = styled(MULink)(() => ({
   fontWeight: 300,
 }));
 
-const Trademark = styled(Typography)(({ theme }) => ({
+const Disclaimer = styled(Typography)(({ theme }) => ({
   marginTop: theme.spacing(2),
   marginBottom: theme.spacing(4),
   [theme.breakpoints.only('xs')]: {
@@ -155,7 +155,7 @@ const View: React.FC<Props> = ({ viewModel }) => {
             {viewModel.copyrightLink.label}
           </CopyrightLink>
         </CopyrightLabel>
-        <Trademark>{viewModel.trademark}</Trademark>
+        <Disclaimer>{viewModel.disclaimer}</Disclaimer>
         <PoweredBy>
           <PoweredByLabel>{viewModel.poweredBy}</PoweredByLabel>
           <VroomLogo />

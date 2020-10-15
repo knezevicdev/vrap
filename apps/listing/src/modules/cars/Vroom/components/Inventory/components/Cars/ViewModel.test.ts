@@ -1,4 +1,5 @@
 import ViewModel from './ViewModel';
+jest.mock('src/integrations/AnalyticsHandler');
 
 import { CarsStore } from 'src/modules/cars/store';
 

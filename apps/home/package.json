@@ -1,6 +1,6 @@
 {
   "name": "@vroom-web/home",
-  "version": "1.5.1",
+  "version": "1.5.2",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx,.json",
     "test": "jest --watch",
-    "test:ci": "jest --ci"
+    "test:ci": "jest --ci",
+    "test:cc": "jest  --coverage --passWithNoTests"
   },
   "dependencies": {
     "@datadog/browser-rum": "^1.16.0",
@@ -39,8 +40,7 @@
     "react-dom": "^16.12.0",
     "react-string-replace": "^0.4.4",
     "smoothscroll-polyfill": "^0.4.4",
-    "ua-parser-js": "^0.7.21",
-    "vroom-abtesting-sdk": "https://experiments-dev.n.vroom.systems/sdk/0.1.6/abtesting-sdk.tar"
+    "ua-parser-js": "^0.7.21"
   },
   "devDependencies": {
     "@babel/plugin-proposal-class-properties": "^7.8.3",
