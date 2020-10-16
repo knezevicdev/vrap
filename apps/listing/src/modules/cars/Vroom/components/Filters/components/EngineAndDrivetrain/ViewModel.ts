@@ -7,6 +7,7 @@ class EngineAndDrivetrainViewModel {
 
   readonly transmissionFilterLabel: string = 'Transmission';
   readonly driveTypeFilterLabel: string = 'Drive Type';
+  readonly cylindersFilterLabel: string = 'Engine Cylinders';
   readonly resetButtonLabel: string = 'Reset';
 
   constructor(carsStore: CarsStore) {

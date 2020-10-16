@@ -23,6 +23,9 @@ import {
   Color,
   ColorAPI,
   colors,
+  Cylinder,
+  CylinderApi,
+  cylinders,
   DriveType,
   DriveTypeAPI,
   driveTypes,
@@ -114,6 +117,28 @@ export const getDriveTypeRequestData = (
     }
   });
   return driveType;
+};
+
+export const getCylinderRequestData = (
+  filtersData?: FiltersData
+): CylinderApi[] | undefined => {
+  if (!filtersData) {
+    return undefined;
+  }
+  const filtersDataCylinder = filtersData[Filters.CYLINDERS];
+  if (!filtersDataCylinder || !cylinders) {
+    return undefined;
+  }
+  const cylinder: CylinderApi[] = [];
+  filtersDataCylinder.forEach((filtersDataCylinder) => {
+    const matchingCylinder = cylinders.find(
+      (cylinder) => cylinder.filtersDataValue === filtersDataCylinder
+    );
+    if (matchingCylinder) {
+      cylinder.push(matchingCylinder.api);
+    }
+  });
+  return cylinder;
 };
 
 export const getMakeAndModelRequestData = (
@@ -236,6 +261,7 @@ export const getPostInventoryRequestDataFromFilterData = (
   const bodytype = getBodyTypeRequestData(filtersData);
   const color = getColorRequestData(filtersData);
   const drivetype = getDriveTypeRequestData(filtersData);
+  const cylinders = getCylinderRequestData(filtersData);
   const { makeSlug, modelSlug } = getMakeAndModelRequestData(filtersData);
   const offset = getOffsetRequestData(filtersData);
   const { sortby, sortdirection } = getSortRequestData(
@@ -258,6 +284,10 @@ export const getPostInventoryRequestDataFromFilterData = (
     sortdirection,
     transmissionid,
     year: filtersData ? filtersData[Filters.YEAR] : undefined,
+    cylinders,
+    cylindersShowOther: filtersData
+      ? filtersData[Filters.OTHER_CYLINDERS]
+      : undefined,
   };
 };
 
@@ -271,6 +301,7 @@ export class CarsStore {
   readonly bodyTypes: BodyType[] = bodyTypes;
   readonly colors: Color[] = colors;
   readonly driveTypes: DriveType[] = driveTypes;
+  readonly cylinders: Cylinder[] = cylinders;
   readonly sorts: Sort[] = sorts;
   readonly transmissions: Transmission[] = transmissions;
 

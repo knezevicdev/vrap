@@ -4,6 +4,7 @@ import { Typography } from '@vroom-web/ui';
 import { observer } from 'mobx-react';
 import React from 'react';
 
+import Cylinders from './Cylinders';
 import DriveTypes from './DriveTypes';
 import Transmissions from './Transmissions';
 import EngineAndDrivetrainViewModel from './ViewModel';
@@ -47,6 +48,10 @@ const EngineAndDrivetrainView: React.FC<Props> = ({ viewModel }) => {
         {viewModel.driveTypeFilterLabel}
       </Titles>
       <DriveTypes />
+      <Titles fontWeight="fontWeightMedium">
+        {viewModel.cylindersFilterLabel}
+      </Titles>
+      <Cylinders />
       <Reset
         button
         onClick={viewModel.reset}
