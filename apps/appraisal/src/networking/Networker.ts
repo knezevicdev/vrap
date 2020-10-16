@@ -31,17 +31,14 @@ export class Networker {
 
   submitPriceResponse(priceData: PriceData): Promise<AxiosResponse<Prices>> {
     const url = `${publicRuntimeConfig.ACQUISITIONS_URL}/acquisition/offer/reject`;
-    const { 
-      priceId: offerId,
-      accepted
-    } = priceData;
+    const { priceId: offerId, accepted } = priceData;
 
     const data = {
       payload: {
         offerId,
-        accepted
-      }
-    }
+        accepted,
+      },
+    };
 
     return this.axiosInstance.post(url, data);
   }
