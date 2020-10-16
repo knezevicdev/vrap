@@ -31,15 +31,18 @@ export class Networker {
 
   submitPriceResponse(priceData: PriceData): Promise<AxiosResponse<Prices>> {
     const url = `${publicRuntimeConfig.ACQUISITIONS_URL}/acquisition/offer/reject`;
-    const timestamp = new Date();
+    const { 
+      priceId: offerId,
+      accepted
+    } = priceData;
 
-    return this.axiosInstance.post(url, {
-      data: {
-        source: 'vroom.com',
-        version: '1',
-        timestamp: timestamp.toISOString(),
-        payload: priceData,
-      },
-    });
+    const data = {
+      payload: {
+        offerId,
+        accepted
+      }
+    }
+
+    return this.axiosInstance.post(url, data);
   }
 }
