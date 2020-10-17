@@ -7,7 +7,11 @@ module.exports = {
     '!**/node_modules/**',
   ],
   // setupFilesAfterEnv: ['<rootDir>/setupTests.js'],
-  testPathIgnorePatterns: ['/node_modules/', '/.next/'],
+  testPathIgnorePatterns: [
+    '/node_modules/',
+    '/.next/',
+    '/product/src/modules/inventory/Santader/',
+  ],
   transform: {
     '^.+\\.(js|jsx|ts|tsx)$': 'babel-jest',
     // '^.+\\.css$': '<rootDir>/config/jest/cssTransform.js',

@@ -1,11 +1,16 @@
 import ViewModel from './ViewModel';
 
 import { Product } from 'src/integrations/AnalyticsHandler';
-import {
-  GallerySelections,
-  GalleryStore,
-} from 'src/modules/inventory/Vroom/components/Gallery/store';
+import { GallerySelections, InventoryStore } from 'src/modules/inventory/store';
 jest.mock('src/integrations/AnalyticsHandler');
+
+jest.mock('next/config', () => {
+  return (): unknown => {
+    return {
+      publicRuntimeConfig: {},
+    };
+  };
+});
 
 describe('Select View Model', () => {
   const mockProduct: Product = {
@@ -20,14 +25,7 @@ describe('Select View Model', () => {
     year: 1,
   };
 
-  const mockStore: GalleryStore = {
-    selectedGallery: GallerySelections.GENERAL,
-    isListView: false,
-    listViewFullscreenImage: undefined,
-    changeSelectedGallery: jest.fn(),
-    changeListView: jest.fn(),
-    setListViewFullscreen: jest.fn(),
-  };
+  const mockStore = new InventoryStore();
 
   describe('hasDefects()', () => {
     test('car has nothing', () => {
@@ -87,6 +85,7 @@ describe('Select View Model', () => {
       preventDefault: jest.fn(),
     } as unknown) as React.ChangeEvent<{}>;
     const mockValue = GallerySelections.GENERAL;
+    mockStore.changeSelectedGallery = jest.fn();
     test('handleChange calls all functions', () => {
       const viewModel = new ViewModel(mockStore, mockProduct);
 

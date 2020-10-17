@@ -1,21 +1,9 @@
 import { action, observable } from 'mobx';
 import { createContext } from 'react';
 
-export enum GallerySelections {
-  GENERAL = 'General Photos',
-  DEFECTS = 'Imperfections',
-  THREE_SIXTY = '360\u00B0 View',
-}
-
 export class GalleryStore {
-  @observable selectedGallery: GallerySelections = GallerySelections.GENERAL;
   @observable isListView = false;
   @observable listViewFullscreenImage: string | undefined = undefined;
-
-  @action
-  changeSelectedGallery = (gallery: GallerySelections): void => {
-    this.selectedGallery = gallery;
-  };
 
   @action
   changeListView = (): void => {

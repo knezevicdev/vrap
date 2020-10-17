@@ -1,16 +1,15 @@
-import { GallerySelections, GalleryStore } from '../../store';
-
 import AnalyticsHandler, { Product } from 'src/integrations/AnalyticsHandler';
+import { GallerySelections, InventoryStore } from 'src/modules/inventory/store';
 
 class GallerySelectorViewModel {
-  private store: GalleryStore;
+  private store: InventoryStore;
   public analyticsHandler: AnalyticsHandler;
   private readonly product: Product;
   readonly general: string = GallerySelections.GENERAL;
   public defects = '';
 
-  constructor(galleryStore: GalleryStore, product: Product) {
-    this.store = galleryStore;
+  constructor(inventoryStore: InventoryStore, product: Product) {
+    this.store = inventoryStore;
     this.analyticsHandler = new AnalyticsHandler();
     this.product = product;
     this.defects = this.product.spincarSpinUrl
