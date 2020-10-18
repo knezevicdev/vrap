@@ -5,6 +5,7 @@ module.exports = {
     '**/*.{js,jsx,ts,tsx}',
     '!**/*.d.ts',
     '!**/node_modules/**',
+    '!**/src/modules/cars/Santander/**',
   ],
   // setupFilesAfterEnv: ['<rootDir>/setupTests.js'],
   testPathIgnorePatterns: [
