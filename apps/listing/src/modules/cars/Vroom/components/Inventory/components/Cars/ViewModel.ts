@@ -1,5 +1,6 @@
 import { Filters } from '@vroom-web/catalog-url-integration';
 import { Car, Hit, Inventory } from '@vroom-web/inv-search-networking';
+import isEmpty from 'lodash.isempty';
 import { reaction } from 'mobx';
 
 import AnalyticsHandler, { Product } from 'src/integrations/AnalyticsHandler';
@@ -119,12 +120,16 @@ class CarsViewModel {
           });
           break;
         case Filters.CYLINDERS:
-        case Filters.OTHER_CYLINDERS:
           cylinders.value = [...cylinders.value, ...value];
-          formattedFilters.push(cylinders);
+          break;
+        case Filters.OTHER_CYLINDERS:
+          cylinders.value = [...cylinders.value, 'Other'];
           break;
       }
     });
+    if (!isEmpty(cylinders.value)) {
+      formattedFilters.push(cylinders);
+    }
 
     const sort = this.store.filtersData[Filters.SORT];
     this.analyticsHandler.trackProductListFiltered(
