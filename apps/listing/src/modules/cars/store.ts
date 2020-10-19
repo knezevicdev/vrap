@@ -134,7 +134,7 @@ export const getCylinderRequestData = (
     const matchingCylinder = cylinders.find(
       (cylinder) => cylinder.filtersDataValue === filtersDataCylinder
     );
-    if (matchingCylinder) {
+    if (matchingCylinder && matchingCylinder.api) {
       cylinder.push(matchingCylinder.api);
     }
   });
@@ -285,9 +285,8 @@ export const getPostInventoryRequestDataFromFilterData = (
     transmissionid,
     year: filtersData ? filtersData[Filters.YEAR] : undefined,
     cylinders,
-    cylindersShowOther: filtersData
-      ? filtersData[Filters.OTHER_CYLINDERS]
-      : undefined,
+    cylindersShowOther:
+      (filtersData && filtersData[Filters.OTHER_CYLINDERS]) || undefined,
   };
 };
 

@@ -34,7 +34,7 @@ const CylindersView: React.FC<Props> = ({ viewModel }) => {
     viewModel.handleCheckboxChange(filtersDataValue, checked);
   };
   const handleOtherCheckboxChange = (
-    event: React.ChangeEvent<HTMLInputElement>,
+    _event: React.ChangeEvent<HTMLInputElement>,
     checked: boolean
   ): void => {
     viewModel.handleOtherCheckboxChange(checked);

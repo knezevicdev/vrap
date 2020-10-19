@@ -64,6 +64,10 @@ class CarsViewModel {
     }
 
     const formattedFilters: { type: string; value: any }[] = [];
+    const cylinders: { type: string; value: string[] } = {
+      type: 'Cylinders',
+      value: [],
+    };
     Object.entries(this.store.filtersData).forEach(([filter, value]) => {
       switch (filter) {
         case Filters.MAKE_AND_MODELS:
@@ -113,6 +117,11 @@ class CarsViewModel {
             type: 'Drive Type',
             value,
           });
+          break;
+        case Filters.CYLINDERS:
+        case Filters.OTHER_CYLINDERS:
+          cylinders.value = [...cylinders.value, ...value];
+          formattedFilters.push(cylinders);
           break;
       }
     });

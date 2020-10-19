@@ -61,7 +61,8 @@ class CylindersViewModel {
   }
 
   handleOtherCheckboxChange(checked: boolean): void {
-    const updatedFiltersData = setOtherCylinders(checked);
+    const filtersData = this.carsStore.filtersData;
+    const updatedFiltersData = setOtherCylinders(checked, filtersData);
     this.carsStore.updateFiltersData(updatedFiltersData);
   }
 }
