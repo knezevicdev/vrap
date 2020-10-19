@@ -25,11 +25,6 @@ jobs:
     - image: node:erbium-alpine
     steps:
     - checkout
-    - run:
-        command: |-
-          yarn install
-          yarn danger ci
-        name: Danger
   home_build:
     docker:
     - image: vroom/mlp:3.0.2
@@ -242,8 +237,6 @@ workflows:
         - hold_prod
   common:
     jobs:
-    - danger:
-        context: dangerjs
     - lint_build
   home:
     jobs:

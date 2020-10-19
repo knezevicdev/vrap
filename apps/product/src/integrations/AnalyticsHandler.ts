@@ -44,6 +44,13 @@ class AnalyticsHandler extends BaseAnalyticsHandler {
     this.track(event, properties);
   }
 
+  trackSimilarClicked(product: Product): void {
+    const event = 'Similar Vehicle PDP Clicked';
+    const category = 'Product';
+    const properties = { ...product, category };
+    this.track(event, properties);
+  }
+
   trackProductViewed(product: Product): void {
     const event = 'Product Viewed';
     const category = 'Product';
@@ -86,5 +93,10 @@ class AnalyticsHandler extends BaseAnalyticsHandler {
     this.track(event, properties);
   }
 }
+
+// It probably makes more sense to export a single instance
+// than to keep recreating instances all over the place.
+// TODO: replace individual instances by importing this instance.
+export const analyticsHandler = new AnalyticsHandler();
 
 export default AnalyticsHandler;

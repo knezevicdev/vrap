@@ -128,7 +128,7 @@ class CarCardViewModel {
       vin,
       year,
     };
-    this.analyticsHandler.trackProductClicked(product);
+    this.analyticsHandler.trackSimilarClicked(product);
     Router.push(link);
   };
 }

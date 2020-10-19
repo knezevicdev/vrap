@@ -28,7 +28,10 @@ const VehicleHeaderContainerContent = styled('div')(({ theme }) => ({
   borderBottom: `1px solid ${theme.palette.grey.A100}`,
   borderRight: `1px solid ${theme.palette.grey.A100}`,
   backgroundColor: theme.palette.background.paper,
-  padding: theme.spacing(4, 3),
+  padding: theme.spacing(4),
+  [theme.breakpoints.only('xs')]: {
+    padding: theme.spacing(5, 2),
+  },
 }));
 
 const LeftContent = styled('div')(() => ({
@@ -53,10 +56,12 @@ const YearMakeModel = styled(Typography)(({ theme }) => ({
 }));
 
 const Price = styled(Typography)(({ theme }) => ({
+  paddingBottom: '26px', // Added padding for now. Can be changed once the monthly price breakdown is added
   fontWeight: 600,
   fontSize: '24px',
   [theme.breakpoints.only('xs')]: {
     fontSize: '22px',
+    paddingBottom: '44px', // Added padding for now. Can be changed once the monthly price breakdown is added
   },
   fontFamily: 'SantanderHeadline, Arial, sans-serif',
 }));

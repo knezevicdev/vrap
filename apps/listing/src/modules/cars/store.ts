@@ -3,6 +3,7 @@ import {
   FiltersData,
   getUrlFromFiltersData,
 } from '@vroom-web/catalog-url-integration';
+import { Experiment } from '@vroom-web/experiment-sdk';
 import {
   Inventory,
   InvSearchNetworker,
@@ -14,7 +15,6 @@ import { action, computed, observable, runInAction } from 'mobx';
 import getConfig from 'next/config';
 import Router from 'next/router';
 import { createContext } from 'react';
-import { Experiment } from 'vroom-abtesting-sdk/types';
 
 import {
   BodyType,

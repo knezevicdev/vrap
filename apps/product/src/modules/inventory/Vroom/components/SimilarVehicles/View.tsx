@@ -4,6 +4,7 @@ import { observer } from 'mobx-react';
 import React from 'react';
 
 import CarCard from './components/CarCard';
+import LoadingCarCard from './components/LoadingCarCard';
 import ViewModel from './ViewModel';
 
 import ExternalLink from 'src/ui/ExternalLink';
@@ -38,21 +39,21 @@ const Cars = styled('div')(({ theme }) => ({
   display: 'flex',
   width: '100%',
   [theme.breakpoints.only('sm')]: {
-    '& #car:nth-child(n+4)': {
+    '& *:nth-child(n+4)': {
       display: 'none',
     },
-    '& #car:nth-child(n+3)': {
+    '& *:nth-child(n+3)': {
       marginRight: 0,
     },
   },
   [theme.breakpoints.only('xs')]: {
-    '& #car:nth-child(n+3)': {
+    '& *:nth-child(n+3)': {
       display: 'none',
     },
     flexDirection: 'column',
     margin: theme.spacing(0),
   },
-  '& #car:last-child': {
+  '& *:last-child': {
     marginRight: 0,
   },
 }));
@@ -119,9 +120,13 @@ const SimilarVehiclesView: React.FC<Props> = ({ viewModel }) => {
               </DesktopViewAll>
             </Content>
             <Cars>
-              {viewModel.getCars().map((car) => (
-                <CarCard car={car} key={car.vin} />
-              ))}
+              {viewModel.loading()
+                ? [...Array(viewModel.similarVehicleCount)].map((_, index) => (
+                    <LoadingCarCard key={index} />
+                  ))
+                : viewModel
+                    .getCars()
+                    .map((car) => <CarCard car={car} key={car.vin} />)}
             </Cars>
             <MobileViewAll href="/cars">
               <ViewAll>{viewModel.viewAll}</ViewAll>

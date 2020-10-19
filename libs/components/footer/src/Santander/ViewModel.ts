@@ -66,14 +66,6 @@ class ViewModel {
           href: `/contact`,
           handleAnalytics: this.analyticsHandler.trackLinkClicked('Contact Us'),
         },
-        {
-          label: 'Accessibility Services',
-          href: `https://santanderconsumerusa.com/our-company/accessibility`,
-          target: '_blank',
-          handleAnalytics: this.analyticsHandler.trackLinkClicked(
-            'Accessibility Services'
-          ),
-        },
       ],
     },
     {
@@ -84,35 +76,19 @@ class ViewModel {
       },
       links: [
         {
-          label: 'Terms & Conditions',
-          href: `https://santanderconsumerusa.com/legal/terms-conditions`,
+          label: 'Privacy Policy',
+          href: 'https://www.vroom.com/legal/privacy-policy',
           target: '_blank',
           handleAnalytics: this.analyticsHandler.trackLinkClicked(
-            'Terms & Conditions'
+            'Privacy Policy'
           ),
         },
         {
-          label: 'Privacy & Security',
-          href: `https://santanderconsumerusa.com/legal/privacy-security`,
+          label: 'Terms of Use',
+          href: 'https://www.vroom.com/legal/terms-of-use',
           target: '_blank',
           handleAnalytics: this.analyticsHandler.trackLinkClicked(
-            'Privacy & Security'
-          ),
-        },
-        {
-          label: 'Fair Lending',
-          href: `https://santanderconsumerusa.com/legal/fair-lending`,
-          target: '_blank',
-          handleAnalytics: this.analyticsHandler.trackLinkClicked(
-            'Fair Lending'
-          ),
-        },
-        {
-          label: 'Servicemembers Civil Relief Act',
-          href: `https://santanderconsumerusa.com/legal/servicemembers-civil-relief-act`,
-          target: '_blank',
-          handleAnalytics: this.analyticsHandler.trackLinkClicked(
-            'Servicemembers Civil Relief Act'
+            'Terms of Use'
           ),
         },
       ],
@@ -128,9 +104,8 @@ class ViewModel {
       'NMLS Consumer Access ID 4239.'
     ),
   };
-  readonly trademark =
-    'Chrysler Capital is a registered trademark of FCA US LLC and licensed to Santander Consumer USA Inc. Chrysler, Dodge, Jeep, Ram, Mopar and SRT are registered trademarks of FCA US LLC. ALFA ROMEO and FIAT are registered trademarks of FCA Group Marketing S.p.A., used with permission.';
   readonly poweredBy = 'Powered by';
+  readonly disclaimer = `Vehicle marketing, inventory, sales and the car-buying transaction are performed, hosted, managed and/or coordinated by Vroom. Santander Consumer USA Inc., its subsidiaries or affiliates are not responsible for the transaction, the outcome of the transaction or any information provided therein, provided that if Santander Consumer is chosen as the lender to finance the vehicle purchase, the financing will be performed by Santander Consumer.`;
 }
 
 export default ViewModel;

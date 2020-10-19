@@ -1,4 +1,5 @@
 import { AnalyticsHandler as BaseAnalyticsHandler } from '@vroom-web/analytics-integration';
+import { Base64 } from 'js-base64';
 
 export type ProductInventoryType = 'Consignment' | 'Vroom';
 export type ProductPhotoType = 'Illustration' | 'Stock' | 'Vroom';
@@ -26,6 +27,9 @@ interface Filter {
 }
 
 type Sort = any;
+
+export const santanderTrackerName = 'santander';
+export const santanderGA = 'UA-2348754-1';
 
 class AnalyticsHandler extends BaseAnalyticsHandler {
   trackProductListViewed(products: Product[]): void {
@@ -74,6 +78,29 @@ class AnalyticsHandler extends BaseAnalyticsHandler {
     };
     this.track(event, properties);
   }
+
+  trackSantanderPageViews(url: string): void {
+    const urlParams = new URLSearchParams(window.location.search);
+    const filtersEncoded = urlParams.get('filters');
+
+    if (filtersEncoded) {
+      const decoded = Base64.decode(filtersEncoded);
+      const decodedURL = url.replace(filtersEncoded, decoded);
+      window &&
+        window.ga &&
+        window.ga(`${santanderTrackerName}.send`, 'pageview', decodedURL);
+      return;
+    }
+
+    window &&
+      window.ga &&
+      window.ga(`${santanderTrackerName}.send`, 'pageview', url);
+  }
 }
+
+// It probably makes more sense to export a single instance
+// than to keep recreating instances all over the place.
+// TODO: replace individual instances by importing this instance.
+export const analyticsHandler = new AnalyticsHandler();
 
 export default AnalyticsHandler;
