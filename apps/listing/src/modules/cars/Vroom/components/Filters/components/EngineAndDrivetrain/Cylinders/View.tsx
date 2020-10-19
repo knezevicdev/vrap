@@ -40,29 +40,42 @@ const CylindersView: React.FC<Props> = ({ viewModel }) => {
     viewModel.handleOtherCheckboxChange(checked);
   };
 
-  return (
-    <FormGroup>
-      {viewModel.getCylinders().map((cylinder) => {
-        const checked = viewModel.isChecked(cylinder);
-        const { display, filtersDataValue } = cylinder;
+  const cylinders = viewModel.getCylinders().map((cylinder) => {
+    const checked = viewModel.isChecked(cylinder);
+    const { display, filtersDataValue } = cylinder;
 
-        return (
-          <Label
-            key={display}
-            control={
-              <CheckboxCustom
-                color="primary"
-                checked={checked}
-                onChange={handleCheckboxChange}
-                value={filtersDataValue}
-              />
-            }
-            label={display}
+    return (
+      <Label
+        key={display}
+        control={
+          <CheckboxCustom
+            color="primary"
+            checked={checked}
+            onChange={handleCheckboxChange}
+            value={filtersDataValue}
           />
-        );
-      })}
-    </FormGroup>
+        }
+        label={display}
+      />
+    );
+  });
+
+  const otherCylinders = (
+    <Label
+      key={viewModel.otherCylinders.key}
+      control={
+        <CheckboxCustom
+          color="primary"
+          checked={viewModel.isOtherChecked()}
+          onChange={handleOtherCheckboxChange}
+          value={viewModel.otherCylinders.key}
+        />
+      }
+      label={viewModel.otherCylinders.display}
+    />
   );
+
+  return <FormGroup>{[...cylinders, otherCylinders]}</FormGroup>;
 };
 
 export default observer(CylindersView);

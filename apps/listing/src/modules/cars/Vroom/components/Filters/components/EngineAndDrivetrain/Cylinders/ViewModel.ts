@@ -12,6 +12,10 @@ import { CarsStore } from 'src/modules/cars/store';
 class CylindersViewModel {
   private readonly carsStore: CarsStore;
   readonly resetButtonLabel: string = 'Reset';
+  readonly otherCylinders = {
+    key: 'other',
+    display: 'Other (5, electric, etc)',
+  };
 
   constructor(carsStore: CarsStore) {
     this.carsStore = carsStore;
@@ -31,6 +35,18 @@ class CylindersViewModel {
       return false;
     }
     return filtersDataCylinder.includes(cylinder.filtersDataValue);
+  };
+
+  isOtherChecked = (): boolean => {
+    const filtersData = this.carsStore.filtersData;
+    if (!filtersData) {
+      return false;
+    }
+    const filtersDataCylinder = filtersData[Filters.OTHER_CYLINDERS];
+    if (!filtersDataCylinder) {
+      return false;
+    }
+    return filtersDataCylinder;
   };
 
   handleCheckboxChange(
