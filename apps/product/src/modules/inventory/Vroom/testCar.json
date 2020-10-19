@@ -56,5 +56,6 @@
   "groundClearance": 0,
   "height": 0,
   "hasStockPhotos": false,
-  "consignmentPartnerId": ""
+  "consignmentPartnerId": "",
+  "isAvailableToSell": false
 }
