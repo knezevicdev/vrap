@@ -6,6 +6,8 @@ services:
       dockerfile: ./apps/appraisal/docker/Dockerfile
     user: 'root'
     environment:
+      - GEARBOX_PRIVATE_URL=https://gearbox-dev-int.vroomapi.com/query-private
+      - ACQUISITIONS_URL=https://acquisition-dev-int.vroomapi.com:8443/v1
     command: ash -c "yarn workspace @vroom-web/appraisal dev --port 8080"
     # This starts nothing but leaves the container running, useful for
     # debugging nextjs start / config operations
