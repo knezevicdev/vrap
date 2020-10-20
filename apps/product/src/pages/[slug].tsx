@@ -93,13 +93,14 @@ InventoryPage.getInitialProps = async (
     model: string,
     price: string
   ): string => {
+    const yearmakemodel = `Used ${year} ${make} ${model}`;
     if (brand === Brand.SANTANDER) {
-      return `Used ${year} ${make} ${model} - Santander Consumer USA`;
+      return `${yearmakemodel} - Santander Consumer USA`;
     }
     if (brand === Brand.TDA) {
-      return `Used ${year} ${make} ${model} - Texas Direct Auto`;
+      return `${yearmakemodel} - Texas Direct Auto`;
     }
-    return `Used ${year} ${make} ${model} For Sale (${price}) | Vroom`;
+    return `${yearmakemodel} For Sale (${price}) | Vroom`;
   };
   const getCarNotAvailableTitle = (): string => {
     if (brand === Brand.SANTANDER) {
