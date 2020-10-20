@@ -22,6 +22,7 @@ export interface Product {
   hasStockPhotos?: boolean;
   spincarSpinUrl?: string | null;
   pendingDeal?: boolean;
+  isAvailableToSell?: boolean;
 }
 
 class AnalyticsHandler extends BaseAnalyticsHandler {
