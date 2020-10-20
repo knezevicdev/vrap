@@ -333,14 +333,109 @@ var vroomTheme = _objectSpread2(_objectSpread2({}, muiTheme$1), {}, {
   }
 });
 
+var _h$2, _body$1;
+var muiTheme$2 = createMuiTheme({
+  palette: {
+    primary: {
+      main: '#e7131a',
+      contrastText: '#fff'
+    },
+    secondary: {
+      main: '#041022',
+      contrastText: '#fff'
+    },
+    background: {
+      paper: '#fff',
+      "default": '#f5f5f5'
+    },
+    // Define as needed.
+    // Try to assign a key as close to the actual values defined here:
+    // https://material-ui.com/customization/default-theme/
+    // For example, since #bebebe is super close in value to the default grey.400 (#bdbdbd), Motown used grey.400 for #bebebe.
+    grey: {
+      // 100: '#f5f5f5',
+      // 200: '#eaeaea',
+      // 400: '#bebebe',
+      500: '#999da3',
+      // 600: '#808080',
+      700: '#6c717a',
+      // 900: '#333333',
+      A100: '#d6d7da'
+    },
+    text: {
+      primary: '#041022',
+      secondary: '#fff'
+    }
+  }
+});
+
+var tdaTheme = _objectSpread2(_objectSpread2({}, muiTheme$2), {}, {
+  typography: {
+    pxToRem: muiTheme$2.typography.pxToRem,
+    fontFamily: 'Calibre, Arial, sans-serif',
+    fontSize: 16,
+    fontWeightBold: 700,
+    fontWeightSemibold: 600,
+    fontWeightMedium: 500,
+    fontWeightRegular: 400,
+    fontWeightLight: 300,
+    h1: (_h$2 = {
+      fontFamily: 'RingsideCompressed, serif',
+      fontSize: '36px'
+    }, _defineProperty(_h$2, muiTheme$2.breakpoints.only('md'), {
+      fontSize: '42px'
+    }), _defineProperty(_h$2, muiTheme$2.breakpoints.up('lg'), {
+      fontSize: '62px'
+    }), _h$2),
+    h2: _defineProperty({
+      fontFamily: 'RingsideCompressed, serif',
+      fontSize: '36px'
+    }, muiTheme$2.breakpoints.up('md'), {
+      fontSize: '42px'
+    }),
+    h3: {},
+    h4: {},
+    h5: {},
+    h6: {},
+    subtitle1: {},
+    subtitle2: {},
+    body1: (_body$1 = {
+      fontFamily: 'Calibre, Arial, sans-serif',
+      fontSize: '16px'
+    }, _defineProperty(_body$1, muiTheme$2.breakpoints.only('md'), {
+      fontSize: '18px'
+    }), _defineProperty(_body$1, muiTheme$2.breakpoints.up('lg'), {
+      fontSize: '20px'
+    }), _body$1),
+    body2: {},
+    button: {
+      fontFamily: 'Calibre, Arial, sans-serif',
+      fontSize: '16px',
+      fontWeight: 600,
+      textTransform: 'uppercase',
+      letterSpacing: '1.75px'
+    },
+    caption: {
+      fontFamily: 'Calibre, Arial, sans-serif',
+      fontSize: '14px'
+    },
+    overline: {}
+  }
+});
+
 (function (Brand) {
   Brand["VROOM"] = "vroom";
   Brand["SANTANDER"] = "santander";
+  Brand["TDA"] = "tda";
 })(exports.Brand || (exports.Brand = {}));
 
 var getThemeForBrand = function getThemeForBrand(brand) {
   if (brand === exports.Brand.SANTANDER) {
     return santanderTheme;
+  }
+
+  if (brand === exports.Brand.TDA) {
+    return tdaTheme;
   }
 
   return vroomTheme;
@@ -504,6 +599,51 @@ var SantanderFontsSnippet = function SantanderFontsSnippet(_ref) {
   }));
 };
 
+var TDAFaviconSnippet = function TDAFaviconSnippet(_ref) {
+  var staticAssetsHostUrl = _ref.staticAssetsHostUrl,
+      theme = _ref.theme;
+  return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("link", {
+    rel: "apple-touch-icon",
+    sizes: "180x180",
+    href: "".concat(staticAssetsHostUrl, "/tda/favicons/apple-touch-icon.png")
+  }), /*#__PURE__*/React.createElement("link", {
+    rel: "icon",
+    type: "image/png",
+    sizes: "32x32",
+    href: "".concat(staticAssetsHostUrl, "/tda/favicons/favicon-32x32.png")
+  }), /*#__PURE__*/React.createElement("link", {
+    rel: "icon",
+    type: "image/png",
+    sizes: "16x16",
+    href: "".concat(staticAssetsHostUrl, "/tda/favicons/favicon-16x16.png")
+  }), /*#__PURE__*/React.createElement("link", {
+    rel: "manifest",
+    href: "".concat(staticAssetsHostUrl, "/tda/favicons/site.webmanifest")
+  }), /*#__PURE__*/React.createElement("link", {
+    rel: "mask-icon",
+    href: "".concat(staticAssetsHostUrl, "/tda/favicons/safari-pinned-tab.svg"),
+    color: theme.palette.primary.main
+  }), /*#__PURE__*/React.createElement("meta", {
+    name: "msapplication-TileColor",
+    content: theme.palette.primary.main
+  }), /*#__PURE__*/React.createElement("meta", {
+    name: "theme-color",
+    content: theme.palette.primary.main
+  }));
+};
+
+var TDAFontsSnippet = function TDAFontsSnippet(_ref) {
+  var staticAssetsHostUrl = _ref.staticAssetsHostUrl;
+  return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("link", {
+    rel: "stylesheet",
+    href: "https://fonts.googleapis.com/icon?family=Material+Icons"
+  }), /*#__PURE__*/React.createElement("style", {
+    dangerouslySetInnerHTML: {
+      __html: "\n            @font-face {\n              font-family: 'RingsideCompressed';\n              src: url('".concat(staticAssetsHostUrl, "/tda/fonts/RingsideCompressed-Bold.woff2') format('woff2');\n            }\n            @font-face {\n              font-family: Calibre;\n              font-weight: 400;\n              src: url('").concat(staticAssetsHostUrl, "/tda/fonts/Calibre-Regular.woff') format('woff');\n            }\n            @font-face {\n              font-family: Calibre;\n              font-weight: 500;\n              src: url('").concat(staticAssetsHostUrl, "/tda/fonts/Calibre-Medium.woff') format('woff');\n            }\n            @font-face {\n              font-family: 'Calibre';\n              font-weight: 600;\n              src: url('").concat(staticAssetsHostUrl, "/tda/fonts/Calibre-Semibold.woff') format('woff');\n            }\n            @font-face {\n              font-family: 'Calibre';\n              font-weight: 700;\n              src: url('").concat(staticAssetsHostUrl, "/tda/fonts/Calibre-Bold.woff') format('woff');\n            }\n          ")
+    }
+  }));
+};
+
 var VroomFaviconSnippet = function VroomFaviconSnippet(_ref) {
   var staticAssetsHostUrl = _ref.staticAssetsHostUrl,
       theme = _ref.theme;
@@ -562,6 +702,13 @@ var UISnippet = function UISnippet(_ref) {
     }), /*#__PURE__*/React.createElement(SantanderFontsSnippet, {
       staticAssetsHostUrl: staticAssetsHostUrl
     }));
+  } else if (brand === exports.Brand.TDA) {
+    return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(TDAFaviconSnippet, {
+      staticAssetsHostUrl: staticAssetsHostUrl,
+      theme: theme
+    }), /*#__PURE__*/React.createElement(TDAFontsSnippet, {
+      staticAssetsHostUrl: staticAssetsHostUrl
+    }));
   }
 
   return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(VroomFaviconSnippet, {
@@ -579,4 +726,5 @@ exports.Typography = Typography;
 exports.UISnippet = UISnippet;
 exports.getThemeForBrand = getThemeForBrand;
 exports.santanderTheme = santanderTheme;
+exports.tdaTheme = tdaTheme;
 exports.vroomTheme = vroomTheme;

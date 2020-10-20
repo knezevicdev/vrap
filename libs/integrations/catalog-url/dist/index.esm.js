@@ -12,6 +12,7 @@ var Filters;
   Filters["PRICE"] = "price";
   Filters["SEARCH"] = "search";
   Filters["SORT"] = "sort";
+  Filters["TEST_DRIVE"] = "testdrive";
   Filters["TRANSMISSION"] = "transmission";
   Filters["YEAR"] = "year";
 })(Filters || (Filters = {}));
@@ -69,6 +70,12 @@ var SortDirection;
   SortDirection["ASCENDING"] = "asc";
   SortDirection["DESCENDING"] = "desc";
 })(SortDirection || (SortDirection = {}));
+
+var TestDrive;
+
+(function (TestDrive) {
+  TestDrive["AVAILABLE"] = "available";
+})(TestDrive || (TestDrive = {}));
 
 var Transmission;
 
@@ -138,6 +145,11 @@ var removeDriveType = function removeDriveType(driveType, filtersData) {
     return dt !== driveType;
   });
   newFiltersData[Filters.DRIVE_TYPE] = newDriveTypes.length > 0 ? newDriveTypes : undefined;
+  return newFiltersData;
+};
+var setTestDrive = function setTestDrive(testDrive, filtersData) {
+  var newFiltersData = deepCopyFiltersData(filtersData || {});
+  newFiltersData[Filters.TEST_DRIVE] = testDrive;
   return newFiltersData;
 };
 var setTransmission = function setTransmission(transmission, filtersData) {
@@ -535,6 +547,12 @@ var getFiltersDataFromFiltersQueryParam = function getFiltersDataFromFiltersQuer
     filtersData[Filters.SORT] = parsed[Filters.SORT];
   }
 
+  var isTestDrive = isEnum(TestDrive);
+
+  if (isTestDrive(parsed[Filters.TEST_DRIVE])) {
+    filtersData[Filters.TEST_DRIVE] = parsed[Filters.TEST_DRIVE];
+  }
+
   var isTransmission = isEnum(Transmission);
 
   if (isTransmission(parsed[Filters.TRANSMISSION])) {
@@ -644,4 +662,4 @@ var getFiltersDataFromUrl = function getFiltersDataFromUrl(url) {
   return undefined;
 };
 
-export { BodyType, Color, DriveType, Filters, SortBy, SortDirection, Transmission, addAllModels, addBodyType, addColor, addDriveType, addModel, getFiltersDataFromUrl, getUrlFromFiltersData, removeAllModels, removeBodyType, removeColor, removeDriveType, removeModel, resetFilter, resetFilters, setMiles, setPage, setPrice, setSearch, setSort, setTransmission, setYear };
+export { BodyType, Color, DriveType, Filters, SortBy, SortDirection, TestDrive, Transmission, addAllModels, addBodyType, addColor, addDriveType, addModel, getFiltersDataFromUrl, getUrlFromFiltersData, removeAllModels, removeBodyType, removeColor, removeDriveType, removeModel, resetFilter, resetFilters, setMiles, setPage, setPrice, setSearch, setSort, setTestDrive, setTransmission, setYear };

@@ -14,6 +14,7 @@ var jsBase64 = require('js-base64');
   Filters["PRICE"] = "price";
   Filters["SEARCH"] = "search";
   Filters["SORT"] = "sort";
+  Filters["TEST_DRIVE"] = "testdrive";
   Filters["TRANSMISSION"] = "transmission";
   Filters["YEAR"] = "year";
 })(exports.Filters || (exports.Filters = {}));
@@ -61,6 +62,10 @@ var jsBase64 = require('js-base64');
   SortDirection["ASCENDING"] = "asc";
   SortDirection["DESCENDING"] = "desc";
 })(exports.SortDirection || (exports.SortDirection = {}));
+
+(function (TestDrive) {
+  TestDrive["AVAILABLE"] = "available";
+})(exports.TestDrive || (exports.TestDrive = {}));
 
 (function (Transmission) {
   Transmission["AUTO"] = "auto";
@@ -128,6 +133,11 @@ var removeDriveType = function removeDriveType(driveType, filtersData) {
     return dt !== driveType;
   });
   newFiltersData[exports.Filters.DRIVE_TYPE] = newDriveTypes.length > 0 ? newDriveTypes : undefined;
+  return newFiltersData;
+};
+var setTestDrive = function setTestDrive(testDrive, filtersData) {
+  var newFiltersData = deepCopyFiltersData(filtersData || {});
+  newFiltersData[exports.Filters.TEST_DRIVE] = testDrive;
   return newFiltersData;
 };
 var setTransmission = function setTransmission(transmission, filtersData) {
@@ -525,6 +535,12 @@ var getFiltersDataFromFiltersQueryParam = function getFiltersDataFromFiltersQuer
     filtersData[exports.Filters.SORT] = parsed[exports.Filters.SORT];
   }
 
+  var isTestDrive = isEnum(exports.TestDrive);
+
+  if (isTestDrive(parsed[exports.Filters.TEST_DRIVE])) {
+    filtersData[exports.Filters.TEST_DRIVE] = parsed[exports.Filters.TEST_DRIVE];
+  }
+
   var isTransmission = isEnum(exports.Transmission);
 
   if (isTransmission(parsed[exports.Filters.TRANSMISSION])) {
@@ -653,5 +669,6 @@ exports.setPage = setPage;
 exports.setPrice = setPrice;
 exports.setSearch = setSearch;
 exports.setSort = setSort;
+exports.setTestDrive = setTestDrive;
 exports.setTransmission = setTransmission;
 exports.setYear = setYear;

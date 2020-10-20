@@ -32,6 +32,9 @@ import {
   SortAPIBy,
   SortAPIDirection,
   sorts,
+  TestDrive,
+  TestDriveAPI,
+  testDrives,
   Transmission,
   TransmissionAPI,
   transmissions,
@@ -210,6 +213,25 @@ export const getSortRequestData = (
   };
 };
 
+export const getTestDriveOnlyRequestData = (
+  filtersData?: FiltersData
+): boolean | undefined => {
+  if (!filtersData) {
+    return undefined;
+  }
+  const filtersDataTestDrive = filtersData[Filters.TEST_DRIVE];
+  if (!filtersDataTestDrive) {
+    return undefined;
+  }
+  const matchingTestDrive = testDrives.find(
+    (t) => t.filtersDataValue === filtersDataTestDrive
+  );
+  if (!matchingTestDrive) {
+    return undefined;
+  }
+  return matchingTestDrive.api === TestDriveAPI.AVAILABLE;
+};
+
 export const getTransmissionRequestData = (
   filtersData?: FiltersData
 ): TransmissionAPI | undefined => {
@@ -242,6 +264,7 @@ export const getPostInventoryRequestDataFromFilterData = (
     filtersData,
     geoLocationSortExperiment
   );
+  const testdriveonly = getTestDriveOnlyRequestData(filtersData);
   const transmissionid = getTransmissionRequestData(filtersData);
 
   return {
@@ -256,6 +279,7 @@ export const getPostInventoryRequestDataFromFilterData = (
     searchall: filtersData ? filtersData[Filters.SEARCH] : undefined,
     sortby,
     sortdirection,
+    testdriveonly,
     transmissionid,
     year: filtersData ? filtersData[Filters.YEAR] : undefined,
   };
@@ -272,6 +296,7 @@ export class CarsStore {
   readonly colors: Color[] = colors;
   readonly driveTypes: DriveType[] = driveTypes;
   readonly sorts: Sort[] = sorts;
+  readonly testDrives: TestDrive[] = testDrives;
   readonly transmissions: Transmission[] = transmissions;
 
   @observable filtersData?: FiltersData;
@@ -348,7 +373,12 @@ export class CarsStore {
       );
       const inventoryRequestData: PostInventoryRequestData = {
         ...postInventoryRequestDataFromFiltersData,
-        fulldetails: false,
+        // DELTA-228.
+        // fulldetails should be false.
+        // However, it's needed on the TDA whitelabel b/c the 'zone' field is how we determine
+        // whether a vehicle is test drivable.
+        // TODO: move that logic to the backend and set this back to false.
+        fulldetails: true,
         limit: INVENTORY_CARDS_PER_PAGE,
         source: `${publicRuntimeConfig.NAME}-${publicRuntimeConfig.VERSION}`,
         isTitleQAPass: this.isTitleQAPass,

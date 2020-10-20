@@ -1,5 +1,5 @@
 import { styled } from '@material-ui/core/styles';
-import { Brand, Container } from '@vroom-web/ui';
+import { Container } from '@vroom-web/ui';
 import Head from 'next/head';
 import React from 'react';
 
@@ -15,7 +15,6 @@ interface PageProps {
   category?: string;
   head?: React.ReactNode;
   name: string;
-  brand: Brand;
 }
 
 class Page extends React.Component<PageProps> {

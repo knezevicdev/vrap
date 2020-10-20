@@ -4,6 +4,7 @@ import { Typography as MuiThemeTypography } from '@material-ui/core/styles/creat
 export enum Brand {
   VROOM = 'vroom',
   SANTANDER = 'santander',
+  TDA = 'tda',
 }
 
 export interface ThemeTypography extends MuiThemeTypography {

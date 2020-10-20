@@ -235,6 +235,10 @@ const CarsPage: NextPage<Props> = ({
       return 'Shop Used Cars Online - Santander Consumer USA';
     }
 
+    if (brand === Brand.TDA) {
+      return 'Shop Used Cars Online - Texas Direct Auto';
+    }
+
     const template = (descriptor: string): string => {
       const pluralRegExp = new RegExp('^(.*)(s|z)$');
       const descriptorIsPlural = pluralRegExp.test(descriptor);
@@ -275,6 +279,10 @@ const CarsPage: NextPage<Props> = ({
   const getDescription = (): string => {
     if (brand === Brand.SANTANDER) {
       return 'Buy your next car online with Santander Consumer USA. We offer high quality cars, easy car buying, & delivery anywhere in the USA.';
+    }
+
+    if (brand === Brand.TDA) {
+      return 'Buy your next car online with Texas Direct Auto. We offer high quality cars, easy car buying, & delivery anywhere in the USA.';
     }
 
     const descriptorArray = [makeDisplay, modelDisplay, bodyTypeDisplay].filter(
@@ -318,7 +326,7 @@ const CarsPage: NextPage<Props> = ({
 
   return (
     <ThemeProvider brand={brand}>
-      <Page brand={brand} name="Catalog" head={head}>
+      <Page name="Catalog" head={head}>
         <BrandContext.Provider value={brand}>
           <CarsStoreContext.Provider value={carsStore}>
             <Cars />
@@ -349,11 +357,16 @@ CarsPage.getInitialProps = async (context: NextPageContext): Promise<Props> => {
   const { req, res, query } = context;
   const headerBrandKey = 'x-brand';
   const santanderKey = 'santander';
+  const tdaKey = 'tda';
   const brandHeader = req && req.headers[headerBrandKey];
   const queryBrand = query.brand;
 
-  const brand =
-    (brandHeader || queryBrand) == santanderKey ? Brand.SANTANDER : Brand.VROOM;
+  let brand = Brand.VROOM;
+  if ((brandHeader || queryBrand) == santanderKey) {
+    brand = Brand.SANTANDER;
+  } else if ((brandHeader || queryBrand) == tdaKey) {
+    brand = Brand.TDA;
+  }
 
   const url = typeof asPath === 'string' ? (asPath as string) : '';
   const filtersData = getFiltersDataFromUrl(url);
@@ -395,7 +408,12 @@ CarsPage.getInitialProps = async (context: NextPageContext): Promise<Props> => {
 
   const inventoryRequestData: PostInventoryRequestData = {
     ...postInventoryRequestDataFromFiltersData,
-    fulldetails: false,
+    // DELTA-228.
+    // fulldetails should be false.
+    // However, it's needed on the TDA whitelabel b/c the 'zone' field is how we determine
+    // whether a vehicle is test drivable.
+    // TODO: move that logic to the backend and set this back to false.
+    fulldetails: true,
     limit: INVENTORY_CARDS_PER_PAGE,
     source: `${NAME}-${VERSION}`,
     isTitleQAPass: titleQuery,

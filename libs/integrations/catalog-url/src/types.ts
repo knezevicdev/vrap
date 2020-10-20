@@ -8,6 +8,7 @@ export enum Filters {
   PRICE = 'price',
   SEARCH = 'search',
   SORT = 'sort',
+  TEST_DRIVE = 'testdrive',
   TRANSMISSION = 'transmission',
   YEAR = 'year',
 }
@@ -73,6 +74,10 @@ export interface Sort {
   direction: SortDirection;
 }
 
+export enum TestDrive {
+  AVAILABLE = 'available',
+}
+
 export enum Transmission {
   AUTO = 'auto',
   MANUAL = 'manual',
@@ -88,6 +93,7 @@ export interface FiltersData {
   [Filters.PRICE]?: MaxAndMin;
   [Filters.SEARCH]?: string;
   [Filters.SORT]?: Sort;
+  [Filters.TEST_DRIVE]?: TestDrive;
   [Filters.TRANSMISSION]?: Transmission;
   [Filters.YEAR]?: MaxAndMin;
 }
