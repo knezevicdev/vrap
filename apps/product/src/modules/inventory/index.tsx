@@ -3,8 +3,8 @@ import React, { useContext } from 'react';
 
 import { BrandContext } from './BrandContext';
 import Santander from './Santader';
-import Vroom from './Vroom';
 import TDA from './TDA';
+import Vroom from './Vroom';
 
 const Inventory: React.FC = () => {
   const brand = useContext(BrandContext);
