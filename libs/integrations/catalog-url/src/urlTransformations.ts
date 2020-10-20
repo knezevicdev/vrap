@@ -20,6 +20,7 @@ import {
   FiltersData,
   GetUrlFromFiltersDataOptions,
   MaxAndMin,
+  TestDrive,
   Transmission,
 } from './types';
 
@@ -181,6 +182,11 @@ export const getFiltersDataFromFiltersQueryParam = (
 
   if (isSort(parsed[Filters.SORT])) {
     filtersData[Filters.SORT] = parsed[Filters.SORT];
+  }
+
+  const isTestDrive = isEnum(TestDrive);
+  if (isTestDrive(parsed[Filters.TEST_DRIVE])) {
+    filtersData[Filters.TEST_DRIVE] = parsed[Filters.TEST_DRIVE];
   }
 
   const isTransmission = isEnum(Transmission);

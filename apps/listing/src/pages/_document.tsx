@@ -35,13 +35,16 @@ class VroomDocument extends Document<Props> {
 
     const { req, query } = ctx;
     const headerBrandKey = 'x-brand';
+    const tdaKey = 'tda';
     const santanderKey = 'santander';
     const brandHeader = req && req.headers[headerBrandKey];
     const queryBrand = query.brand;
-    const brand: Brand =
-      (brandHeader || queryBrand) == santanderKey
-        ? Brand.SANTANDER
-        : Brand.VROOM;
+    let brand: Brand = Brand.VROOM;
+    if ((brandHeader || queryBrand) == santanderKey) {
+      brand = Brand.SANTANDER;
+    } else if ((brandHeader || queryBrand) == tdaKey) {
+      brand = Brand.TDA;
+    }
 
     const initialProps = await Document.getInitialProps(ctx);
     return {

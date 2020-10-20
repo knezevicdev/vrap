@@ -9,6 +9,7 @@ import {
   MaxAndMin,
   SortBy,
   SortDirection,
+  TestDrive,
   Transmission,
 } from './types';
 
@@ -133,6 +134,15 @@ export const removeDriveType = (
   const newDriveTypes = existingDriveTypes.filter((dt) => dt !== driveType);
   newFiltersData[Filters.DRIVE_TYPE] =
     newDriveTypes.length > 0 ? newDriveTypes : undefined;
+  return newFiltersData;
+};
+
+export const setTestDrive = (
+  testDrive: TestDrive,
+  filtersData?: FiltersData
+): FiltersData => {
+  const newFiltersData = deepCopyFiltersData(filtersData || {});
+  newFiltersData[Filters.TEST_DRIVE] = testDrive;
   return newFiltersData;
 };
 

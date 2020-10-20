@@ -19,6 +19,7 @@ export {
   setPrice,
   setSearch,
   setSort,
+  setTestDrive,
   setTransmission,
   setYear,
 } from './filtersDataModifications';
@@ -29,6 +30,7 @@ export {
   Filters,
   SortBy,
   SortDirection,
+  TestDrive,
   Transmission,
   Cylinder,
 } from './types';

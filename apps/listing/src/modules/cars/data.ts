@@ -5,6 +5,7 @@ import {
   DriveType as FiltersDataDriveType,
   SortBy as FiltersDataSortBy,
   SortDirection as FiltersDataSortDirection,
+  TestDrive as FiltersDataTestDrive,
   Transmission as FiltersDataTransmission,
 } from '@vroom-web/catalog-url-integration';
 
@@ -343,6 +344,28 @@ export const sorts: Sort[] = [
     display: SortDisplay.LOWEST_MILES,
     filtersDataByValue: FiltersDataSortBy.MILES,
     filtersDataDirectionValue: FiltersDataSortDirection.ASCENDING,
+  },
+];
+
+export enum TestDriveAPI {
+  AVAILABLE = 'available',
+}
+
+export enum TestDriveDisplay {
+  AVAILABLE = 'Test Drive Available',
+}
+
+export interface TestDrive {
+  api: TestDriveAPI;
+  display: TestDriveDisplay;
+  filtersDataValue: FiltersDataTestDrive;
+}
+
+export const testDrives: TestDrive[] = [
+  {
+    api: TestDriveAPI.AVAILABLE,
+    display: TestDriveDisplay.AVAILABLE,
+    filtersDataValue: FiltersDataTestDrive.AVAILABLE,
   },
 ];
 
