@@ -12,21 +12,28 @@ interface Props {
   viewModel: InitialPriceViewModel;
 }
 
-const isVisible = (el): void => {
-  const rect = el.getBoundingClientRect();
-  const elemTop = rect.top;
-  const elemBottom = rect.bottom;
-  const isVisible = elemTop >= 0 && elemBottom <= window.innerHeight;
-
-  return isVisible;
+const isVisible = (el: HTMLElement): boolean => {
+  if (el) {
+    const rect = el.getBoundingClientRect();
+    const elemTop = rect.top;
+    const elemBottom = rect.bottom;
+    const isVisible = elemTop >= 0 && elemBottom <= window.innerHeight;
+    return isVisible;
+  } else {
+    return false;
+  }
 };
 
 const InitialPriceView: React.FC<Props> = ({ viewModel }) => {
   useEffect(() => {
     const handleScroll = (): void => {
+      const stickyFooter = document.getElementById('stickyFooter');
       const priceDetails = document.getElementById('priceDetails');
-      const footerDisplay = isVisible(priceDetails) ? 'none' : 'block';
-      document.getElementById('stickyFooter').style.display = footerDisplay;
+
+      if (priceDetails && stickyFooter) {
+        const footerDisplay = isVisible(priceDetails) ? 'none' : 'block';
+        stickyFooter.style.display = footerDisplay;
+      }
     };
 
     document.addEventListener('scroll', handleScroll);
