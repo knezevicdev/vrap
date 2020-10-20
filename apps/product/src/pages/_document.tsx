@@ -40,8 +40,8 @@ class VroomDocument extends Document<Props> {
 
     let brand = Brand.VROOM;
     const whitelabel = brandHeader || queryBrand;
-    if (whitelabel == Brand.SANTANDER) brand = Brand.SANTANDER;
-    else if (whitelabel == Brand.TDA) brand = Brand.TDA;
+    if (whitelabel === Brand.SANTANDER) brand = Brand.SANTANDER;
+    else if (whitelabel === Brand.TDA) brand = Brand.TDA;
 
     const initialProps = await Document.getInitialProps(ctx);
     return {

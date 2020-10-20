@@ -80,8 +80,8 @@ InventoryPage.getInitialProps = async (
 
   let brand = Brand.VROOM;
   const whitelabel = brandHeader || queryBrand;
-  if (whitelabel == Brand.SANTANDER) brand = Brand.SANTANDER;
-  else if (whitelabel == Brand.TDA) brand = Brand.TDA;
+  if (whitelabel === Brand.SANTANDER) brand = Brand.SANTANDER;
+  else if (whitelabel === Brand.TDA) brand = Brand.TDA;
 
   const initialState = await getInitialInventoryStoreState(vin);
   let canonicalHref: string | undefined;
