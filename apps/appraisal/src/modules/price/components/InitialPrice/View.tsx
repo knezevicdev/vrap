@@ -1,5 +1,5 @@
 import { observer } from 'mobx-react';
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
 
 import InitialPriceViewModel from './ViewModel';
@@ -12,7 +12,28 @@ interface Props {
   viewModel: InitialPriceViewModel;
 }
 
+const isVisible = (el): void => {
+  const rect = el.getBoundingClientRect();
+  const elemTop = rect.top;
+  const elemBottom = rect.bottom;
+  const isVisible = elemTop >= 0 && elemBottom <= window.innerHeight;
+
+  return isVisible;
+};
+
 const InitialPriceView: React.FC<Props> = ({ viewModel }) => {
+  useEffect(() => {
+    const handleScroll = (): void => {
+      const priceDetails = document.getElementById('priceDetails');
+      const footerDisplay = isVisible(priceDetails) ? 'none' : 'block';
+      document.getElementById('stickyFooter').style.display = footerDisplay;
+    };
+
+    document.addEventListener('scroll', handleScroll);
+    // cleanup event listener
+    return (): void => document.removeEventListener('scroll', handleScroll);
+  }, []);
+
   return (
     <StyledContainer>
       <Hero.Four>{viewModel.yourPrice}</Hero.Four>
@@ -30,9 +51,21 @@ const InitialPriceView: React.FC<Props> = ({ viewModel }) => {
         </div>
       </div>
 
-      <StyledButton onClick={viewModel.onContinueClick}>
+      <StyledButton id="priceDetails" onClick={viewModel.onContinueClick}>
         {viewModel.continuePrice}
       </StyledButton>
+
+      <StickyFooter id="stickyFooter">
+        <StickyContent>
+          <StickyDetails>
+            <Title.Four>{viewModel.yourPriceCamel}</Title.Four>
+            <Hero.Four>{viewModel.price}</Hero.Four>
+          </StickyDetails>
+          <FullButton onClick={viewModel.onContinueClick}>
+            {viewModel.continuePrice}
+          </FullButton>
+        </StickyContent>
+      </StickyFooter>
     </StyledContainer>
   );
 };
@@ -48,9 +81,35 @@ const StyledIcon = styled(Icon)`
 
 const StyledButton = styled(Button.Primary)`
   margin: 30px 0;
-  width: 100%;
   max-width: 300px;
   white-space: normal;
+  width: 100%;
+`;
+
+const FullButton = styled(Button.Primary)`
+  margin: auto;
+  width: 100%;
+`;
+
+const StickyDetails = styled.div`
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 0;
+`;
+
+const StickyContent = styled.div`
+  padding: 5px 20px;
+`;
+
+const StickyFooter = styled.div`
+  background: white;
+  border-top: 2px solid #d6d7da;
+  bottom: 0;
+  display: none;
+  left: 0;
+  position: fixed;
+  width: 100%;
 `;
 
 export default observer(InitialPriceView);

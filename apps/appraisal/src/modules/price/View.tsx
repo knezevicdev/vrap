@@ -32,10 +32,10 @@ const PriceView: React.FC<Props> = ({ viewModel }) => {
 
 const HeroContainer = styled.div`
   background-color: #f5f5f5;
-  width: 100%;
   background-size: 100% 50%;
   background-repeat: no-repeat;
   background-image: url('${BASE_PATH}/images/offer-hero.png');
+  width: 100%;
 
   @media (max-width: 768px) {
     background-size: 100% 200px;

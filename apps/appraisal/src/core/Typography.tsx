@@ -102,6 +102,12 @@ const Title4 = styled.span`
   ${titleBase}
   font-size: 16px;
   line-height: 32px;
+`;
+
+const Title5 = styled.span`
+  ${titleBase}
+  font-size: 16px;
+  line-height: 32px;
   letter-spacing: 1.25px;
 `;
 
@@ -135,6 +141,7 @@ export class Title {
   static Two = Title2;
   static Three = Title3;
   static Four = Title4;
+  static Five = Title5;
 }
 
 export class Body {

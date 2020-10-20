@@ -37,6 +37,7 @@ class InitialPriceViewModel {
   private analyticsHandler = new AnalyticsHandler();
 
   readonly yourPrice: string = 'your price';
+  readonly yourPriceCamel: string = 'Your Price:';
   readonly continuePrice: string = 'continue';
   readonly offerExpPreDate: string = 'This price expires on ';
   readonly offerExpPostDate: string = ' or upon hitting ';
