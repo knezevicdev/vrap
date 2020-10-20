@@ -2,10 +2,10 @@ import { DefectType } from '@vroom-web/inv-search-networking';
 import isEmpty from 'lodash/isEmpty';
 import getConfig from 'next/config';
 
-import { GallerySelections, GalleryStore } from './store';
+import { GalleryStore } from './store';
 
 import AnalyticsHandler, { Product } from 'src/integrations/AnalyticsHandler';
-import { InventoryStore } from 'src/modules/inventory/store';
+import { GallerySelections, InventoryStore } from 'src/modules/inventory/store';
 
 const { publicRuntimeConfig } = getConfig();
 
@@ -110,11 +110,11 @@ class GalleryViewModel {
   }
 
   getSelectedGallery(): string {
-    return this.galleryStore.selectedGallery;
+    return this.inventoryStore.selectedGallery;
   }
 
   getGalleryImages(): (GeneralPhoto | DefectPhoto)[] {
-    const { selectedGallery } = this.galleryStore;
+    const { selectedGallery } = this.inventoryStore;
     if (selectedGallery === GallerySelections.DEFECTS) {
       return this.getDefectImages();
     }
@@ -181,11 +181,13 @@ class GalleryViewModel {
   }
 
   isSpincarView(): boolean {
-    return this.galleryStore.selectedGallery === GallerySelections.THREE_SIXTY;
+    return (
+      this.inventoryStore.selectedGallery === GallerySelections.THREE_SIXTY
+    );
   }
 
   isDefectView(): boolean {
-    return this.galleryStore.selectedGallery === GallerySelections.DEFECTS;
+    return this.inventoryStore.selectedGallery === GallerySelections.DEFECTS;
   }
 
   isListView(): boolean {
@@ -193,7 +195,8 @@ class GalleryViewModel {
   }
 
   setListView(): void {
-    const { selectedGallery, isListView } = this.galleryStore;
+    const { isListView } = this.galleryStore;
+    const { selectedGallery } = this.inventoryStore;
     const product = this.getCurrentProduct();
     this.galleryStore.changeListView();
     !isListView &&

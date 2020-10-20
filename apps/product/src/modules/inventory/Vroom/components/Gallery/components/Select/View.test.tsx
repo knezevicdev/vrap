@@ -3,12 +3,19 @@ import { render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
 
-import { GallerySelections } from '../../store';
 import View from './View';
 import ViewModel from './ViewModel';
 
 import { Product } from 'src/integrations/AnalyticsHandler';
-import { GalleryStore } from 'src/modules/inventory/Vroom/components/Gallery/store';
+import { GallerySelections, InventoryStore } from 'src/modules/inventory/store';
+
+jest.mock('next/config', () => {
+  return (): unknown => {
+    return {
+      publicRuntimeConfig: {},
+    };
+  };
+});
 
 describe('Select View', () => {
   const mockProduct: Product = {
@@ -23,14 +30,7 @@ describe('Select View', () => {
     year: 1,
   };
 
-  const mockStore: GalleryStore = {
-    selectedGallery: GallerySelections.GENERAL,
-    isListView: false,
-    listViewFullscreenImage: undefined,
-    changeSelectedGallery: jest.fn(),
-    changeListView: jest.fn(),
-    setListViewFullscreen: jest.fn(),
-  };
+  const mockStore = new InventoryStore();
 
   const viewModel = new ViewModel(mockStore, mockProduct);
   viewModel.handleChange = jest.fn();

@@ -1,10 +1,13 @@
 import React from 'react';
 
-import { GalleryStore, GalleryStoreContext } from '../../store';
 import View from './View';
 import ViewModel from './ViewModel';
 
 import { Product } from 'src/integrations/AnalyticsHandler';
+import {
+  InventoryStore,
+  InventoryStoreContext,
+} from 'src/modules/inventory/store';
 
 interface Props {
   product: Product;
@@ -12,12 +15,12 @@ interface Props {
 
 const GallerySelect: React.FC<Props> = ({ product }) => {
   return (
-    <GalleryStoreContext.Consumer>
-      {(store: GalleryStore): JSX.Element => {
+    <InventoryStoreContext.Consumer>
+      {(store: InventoryStore): JSX.Element => {
         const viewModel = new ViewModel(store, product);
         return <View viewModel={viewModel} />;
       }}
-    </GalleryStoreContext.Consumer>
+    </InventoryStoreContext.Consumer>
   );
 };
 

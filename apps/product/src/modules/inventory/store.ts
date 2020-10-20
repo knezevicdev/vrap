@@ -12,6 +12,12 @@ import { Status } from 'src/networking/types';
 
 const { publicRuntimeConfig } = getConfig();
 
+export enum GallerySelections {
+  GENERAL = 'General Photos',
+  DEFECTS = 'Imperfections',
+  THREE_SIXTY = '360\u00B0 View',
+}
+
 export interface InventoryStoreState {
   vin: string;
   similarStatus: Status;
@@ -170,6 +176,7 @@ export class InventoryStore {
   @observable vehicleStatus: Status = Status.FETCHING;
   @observable vehicle: Hit = {} as Hit;
   @observable isAvailable = false;
+  @observable selectedGallery = GallerySelections.GENERAL;
 
   constructor(initialState?: InventoryStoreState) {
     if (initialState) {
@@ -201,6 +208,11 @@ export class InventoryStore {
       this.similar = data.similar;
       this.similarStatus = data.similarStatus;
     });
+  };
+
+  @action
+  changeSelectedGallery = (gallery: GallerySelections): void => {
+    this.selectedGallery = gallery;
   };
 }
 
