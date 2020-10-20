@@ -8,7 +8,6 @@ import ViewModel from './ViewModel';
 
 import { Product } from 'src/integrations/AnalyticsHandler';
 import { GallerySelections, InventoryStore } from 'src/modules/inventory/store';
-//import { GalleryStore } from 'src/modules/inventory/Vroom/components/Gallery/store';
 
 jest.mock('next/config', () => {
   return (): unknown => {
@@ -31,14 +30,6 @@ describe('Select View', () => {
     year: 1,
   };
 
-  // const mockStore: GalleryStore = {
-  //   selectedGallery: GallerySelections.GENERAL,
-  //   isListView: false,
-  //   listViewFullscreenImage: undefined,
-  //   changeSelectedGallery: jest.fn(),
-  //   changeListView: jest.fn(),
-  //   setListViewFullscreen: jest.fn(),
-  // };
   const mockStore = new InventoryStore();
 
   const viewModel = new ViewModel(mockStore, mockProduct);
