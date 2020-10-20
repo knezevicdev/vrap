@@ -120,7 +120,9 @@ class CarsViewModel {
           });
           break;
         case Filters.CYLINDERS:
-          cylinders.value = [...cylinders.value, ...value];
+          if (value) {
+            cylinders.value = [...cylinders.value, ...value];
+          }
           break;
         case Filters.OTHER_CYLINDERS:
           cylinders.value = [...cylinders.value, 'Other'];
