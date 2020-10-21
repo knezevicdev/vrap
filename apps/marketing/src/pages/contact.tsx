@@ -44,13 +44,24 @@ ContactPage.getInitialProps = async (ctx: NextPageContext): Promise<Props> => {
   if (whitelabel === Brand.SANTANDER) brand = Brand.SANTANDER;
   else if (whitelabel === Brand.TDA) brand = Brand.TDA;
 
-  const title =
-    brand === Brand.SANTANDER ? 'Contact Us - Santander Consumer USA' : '';
+  const getTitle = () => {
+    const contactUs = 'Contact Us';
+    if (brand === Brand.SANTANDER)
+      return `${contactUs} - Santander Consumer USA`;
+    if (brand === Brand.TDA) return `${contactUs} - Texas Direct Auto`;
+    return `${contactUs}`;
+  };
 
-  const description =
-    brand === Brand.SANTANDER
-      ? 'Call 1-888-222-4227 about your Santander Consumer USA account or call 1-855-659-0278 about purchasing a vehicle. We’re here to help.'
-      : '';
+  const getDescription = () => {
+    if (brand === Brand.SANTANDER)
+      return 'Call 1-888-222-4227 about your Santander Consumer USA account or call 1-855-659-0278 about purchasing a vehicle. We’re here to help.';
+    if (brand === Brand.TDA) return '';
+    return '';
+  };
+
+  const title = getTitle();
+
+  const description = getDescription();
 
   return { brand, description, title };
 };
