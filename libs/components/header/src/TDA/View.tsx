@@ -120,6 +120,12 @@ const MenuIcon = styled(Menu)(() => ({
   cursor: 'pointer',
 }));
 
+const StyledDrawer = styled(Drawer)(() => ({
+  '& .MuiDrawer-paper': {
+    minWidth: '280px',
+  },
+}));
+
 const View: React.FC<Props> = ({ viewModel }) => {
   return (
     <ViewContainer>
@@ -145,7 +151,7 @@ const View: React.FC<Props> = ({ viewModel }) => {
         </NavDesktopView>
         <NavMobileView>
           <MenuIcon onClick={viewModel.onDrawerClick} />
-          <Drawer
+          <StyledDrawer
             anchor="right"
             open={viewModel.isDrawerOpen()}
             onClose={viewModel.onDrawerClick}
@@ -161,42 +167,7 @@ const View: React.FC<Props> = ({ viewModel }) => {
                 </Typography>
               </MobileNavLink>
             ))}
-            {/* <MenuLink
-              onClick={viewModel.financeCalculators.handleAnalytics}
-              href={viewModel.financeCalculators.href}
-              target={viewModel.financeCalculators.target}
-            >
-              <Typography>{viewModel.financeCalculators.label}</Typography>
-            </MenuLink>
-            <LearningCenter>
-              <LearningLabel>{viewModel.learningCenterLabel}</LearningLabel>
-              {viewModel.learningCenterLinks.map((link) => {
-                return (
-                  <LearningLinks
-                    onClick={link.handleAnalytics}
-                    key={link.href}
-                    href={link.href}
-                    target={link.target}
-                  >
-                    <Typography>{link.label}</Typography>
-                  </LearningLinks>
-                );
-              })}
-            </LearningCenter>
-            <MenuLink
-              href={viewModel.contactUs.href}
-              onClick={viewModel.contactUs.handleAnalytics}
-            >
-              <Typography>{viewModel.contactUs.label}</Typography>
-            </MenuLink>
-            <MenuLink
-              onClick={viewModel.backToCorporate.handleAnalytics}
-              href={viewModel.backToCorporate.href}
-              target={viewModel.backToCorporate.target}
-            >
-              <Typography>{viewModel.backToCorporate.label}</Typography>
-            </MenuLink> */}
-          </Drawer>
+          </StyledDrawer>
         </NavMobileView>
       </Bar>
     </ViewContainer>
