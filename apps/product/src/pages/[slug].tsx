@@ -75,16 +75,43 @@ InventoryPage.getInitialProps = async (
   const vin = slugArray[slugArray.length - 1];
 
   const headerBrandKey = 'x-brand';
-  const santanderKey = 'santander';
   const brandHeader = req && req.headers[headerBrandKey];
   const queryBrand = query.brand;
 
-  const brand =
-    (brandHeader || queryBrand) == santanderKey ? Brand.SANTANDER : Brand.VROOM;
+  let brand = Brand.VROOM;
+  const whitelabel = brandHeader || queryBrand;
+  if (whitelabel === Brand.SANTANDER) brand = Brand.SANTANDER;
+  else if (whitelabel === Brand.TDA) brand = Brand.TDA;
 
   const initialState = await getInitialInventoryStoreState(vin);
   let canonicalHref: string | undefined;
   let title = '';
+
+  const getTitle = (
+    year: number,
+    make: string,
+    model: string,
+    price: string
+  ): string => {
+    const yearmakemodel = `Used ${year} ${make} ${model}`;
+    if (brand === Brand.SANTANDER) {
+      return `${yearmakemodel} - Santander Consumer USA`;
+    }
+    if (brand === Brand.TDA) {
+      return `${yearmakemodel} - Texas Direct Auto`;
+    }
+    return `${yearmakemodel} For Sale (${price}) | Vroom`;
+  };
+  const getCarNotAvailableTitle = (): string => {
+    if (brand === Brand.SANTANDER) {
+      return 'Car Not Available - Santander Consumer USA';
+    }
+    if (brand === Brand.TDA) {
+      return 'Car Not Available - Texas Direct Auto';
+    }
+    return 'Car Not Available | Vroom';
+  };
+
   if (initialState.vehicleStatus === Status.SUCCESS && initialState.vehicle) {
     const {
       year,
@@ -102,15 +129,9 @@ InventoryPage.getInitialProps = async (
       maximumFractionDigits: 0,
     });
     const price = currencyFormatter.format(listingPrice);
-    title =
-      brand === Brand.SANTANDER
-        ? `Used ${year} ${make} ${model} - Santander Consumer USA`
-        : `Used ${year} ${make} ${model} For Sale (${price}) | Vroom`;
+    title = getTitle(year, make, model, price);
   } else {
-    title =
-      brand === Brand.SANTANDER
-        ? 'Car Not Available - Santander Consumer USA'
-        : 'Car Not Available | Vroom';
+    title = getCarNotAvailableTitle();
     if (res) {
       res.statusCode = 404;
     }
