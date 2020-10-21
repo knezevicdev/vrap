@@ -40,7 +40,7 @@ class GalleryViewModel {
   }
 
   showBanner(): boolean {
-    return !this.inventoryStore.vehicle._source.isAvailableToSell;
+    return this.inventoryStore.vehicle._source.hasStockPhotos;
   }
 
   showIndex(): boolean {
@@ -71,7 +71,6 @@ class GalleryViewModel {
       vin,
       year,
       defectPhotos,
-      isAvailableToSell,
       spincarSpinUrl,
     } = this.inventoryStore.vehicle._source;
     const name = `${year} ${make} ${model}`;
@@ -87,7 +86,6 @@ class GalleryViewModel {
       vin,
       year,
       defectPhotos: !!defectPhotos,
-      isAvailableToSell,
       spincarSpinUrl,
     };
     return product;

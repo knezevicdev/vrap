@@ -32,9 +32,9 @@ class StartPurchaseViewModel {
   }
 
   getButtonText(): string {
-    const { isAvailableToSell, leadFlagPhotoUrl, soldStatus } = this.car;
+    const { hasStockPhotos, leadFlagPhotoUrl, soldStatus } = this.car;
     const vehicleServiceAvailability = this.inventoryStore.isAvailable;
-    if (!isAvailableToSell || isEmpty(leadFlagPhotoUrl)) {
+    if (hasStockPhotos || isEmpty(leadFlagPhotoUrl)) {
       return this.availableSoon;
     }
     if (
@@ -97,9 +97,9 @@ class StartPurchaseViewModel {
   isAvailableSoon = (): boolean => {
     const {
       leadFlagPhotoUrl,
-      isAvailableToSell,
+      hasStockPhotos,
     } = this.inventoryStore.vehicle._source;
-    return leadFlagPhotoUrl === '' || !isAvailableToSell;
+    return leadFlagPhotoUrl === '' || hasStockPhotos;
   };
 }
 

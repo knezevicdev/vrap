@@ -36,8 +36,8 @@ class CarCardViewModel {
   }
 
   private getPhotoType(): ProductPhotoType {
-    const { isAvailableToSell, leadFlagPhotoUrl } = this.car;
-    if (!isAvailableToSell) {
+    const { hasStockPhotos, leadFlagPhotoUrl } = this.car;
+    if (hasStockPhotos) {
       return 'Stock';
     }
     if (leadFlagPhotoUrl) {
@@ -47,7 +47,7 @@ class CarCardViewModel {
   }
 
   showLogo = (): boolean => {
-    return !!this.car.leadFlagPhotoUrl && !this.car.isAvailableToSell;
+    return !!this.car.leadFlagPhotoUrl && this.car.hasStockPhotos;
   };
 
   showAvailableSoon = (): boolean => {
@@ -55,7 +55,7 @@ class CarCardViewModel {
     Replace once the backend team release a new flag.
     From David - the intention is to add an availableSoon flag ASAP
     */
-    return this.car.leadFlagPhotoUrl === '' || !this.car.isAvailableToSell;
+    return this.car.leadFlagPhotoUrl === '' || this.car.hasStockPhotos;
   };
 
   showSalePending = (): boolean => {
