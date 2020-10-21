@@ -38,8 +38,8 @@ class CarCardViewModel {
   }
 
   private getPhotoType(): ProductPhotoType {
-    const { isAvailableToSell, leadFlagPhotoUrl } = this.car;
-    if (!isAvailableToSell) {
+    const { hasStockPhotos, leadFlagPhotoUrl } = this.car;
+    if (hasStockPhotos) {
       return 'Stock';
     }
     if (leadFlagPhotoUrl) {
@@ -49,11 +49,11 @@ class CarCardViewModel {
   }
 
   showLogo = (): boolean => {
-    return !!this.car.leadFlagPhotoUrl && !this.car.isAvailableToSell;
+    return !!this.car.leadFlagPhotoUrl && this.car.hasStockPhotos;
   };
 
   showAvailableSoon = (): boolean => {
-    return this.car.leadFlagPhotoUrl === '' || !this.car.isAvailableToSell;
+    return this.car.leadFlagPhotoUrl === '' || this.car.hasStockPhotos;
   };
 
   showSalePending = (): boolean => {

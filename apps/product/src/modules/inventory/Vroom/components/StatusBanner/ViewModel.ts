@@ -24,12 +24,12 @@ class StatusBannerViewModel {
 
   getBanner(): BannerInfo | null {
     const {
-      isAvailableToSell,
+      hasStockPhotos,
       leadFlagPhotoUrl,
       soldStatus,
     } = this.store.vehicle._source;
     const vehicleServiceAvailability = this.store.isAvailable;
-    if (!isAvailableToSell || isEmpty(leadFlagPhotoUrl)) {
+    if (hasStockPhotos || isEmpty(leadFlagPhotoUrl)) {
       return this.availableSoon;
     }
     if (
