@@ -6,9 +6,10 @@ import { NextPage, NextPageContext } from 'next';
 import React from 'react';
 
 import Home from 'src/modules/home';
-import { BrandContext } from 'src/modules/home/BrandContext';
+// import { BrandContext } from 'src/modules/home/BrandContext';
 import { HomeStore, HomeStoreContext } from 'src/modules/home/store';
 import Page from 'src/Page';
+import { determineWhitelabel, returnBrandConfig } from 'src/utils/utils';
 
 interface Props {
   brand: Brand;
@@ -32,39 +33,26 @@ const HomePage: NextPage<Props> = ({ brand, description, query, title }) => {
   return (
     <ThemeProvider brand={brand}>
       <Page brand={brand} name="Home" head={head}>
-        <BrandContext.Provider value={brand}>
-          <HomeStoreContext.Provider value={store}>
-            <Home />
-          </HomeStoreContext.Provider>
-        </BrandContext.Provider>
+        {/* <BrandContext.Provider value={brand}> */}
+        <HomeStoreContext.Provider value={store}>
+          <Home brand={brand} />
+        </HomeStoreContext.Provider>
+        {/* </BrandContext.Provider> */}
       </Page>
     </ThemeProvider>
   );
 };
 
 HomePage.getInitialProps = async (ctx: NextPageContext): Promise<Props> => {
-  const query = ctx.query;
+  const brand = determineWhitelabel(ctx);
+  const brandConfig = returnBrandConfig(brand);
 
-  const { req } = ctx;
-  const headerBrandKey = 'x-brand';
-  const santanderKey = 'santander';
-  const brandHeader = req && req.headers[headerBrandKey];
-  const queryBrand = query.brand;
-
-  const brand =
-    (brandHeader || queryBrand) == santanderKey ? Brand.SANTANDER : Brand.VROOM;
-
-  const title =
-    brand === Brand.SANTANDER
-      ? 'Santander Consumer USA: Buy Used Cars, Trucks & SUVs Online'
-      : 'Vroom: Buy, Sell or Trade-In Used Vehicles Online';
-
-  const description =
-    brand === Brand.SANTANDER
-      ? 'Buy a used vehicle online from anywhere in the USA. We offer high quality cars, easy car buying, & flexible financing.'
-      : 'Buy, sell or trade-in your car entirely online, from the comfort of your home. No haggle, no pressure. Easy online financing available. Browse thousands of high-quality cars, and have it delivered straight to you.';
-
-  return { brand, description, query, title };
+  return {
+    brand,
+    description: brandConfig.description,
+    query: ctx.query,
+    title: brandConfig.title,
+  };
 };
 
 export default HomePage;
