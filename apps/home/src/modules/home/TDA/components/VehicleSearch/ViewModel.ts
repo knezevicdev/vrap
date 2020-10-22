@@ -10,7 +10,7 @@ interface Vehicle {
 }
 
 class ViewModel {
-  readonly title: string = 'Search from thousands of vehicles';
+  readonly title: string = 'Search from thousands\xa0of\xa0vehicles';
   readonly vehicles: Vehicle[] = [
     {
       type: 'Sedans',

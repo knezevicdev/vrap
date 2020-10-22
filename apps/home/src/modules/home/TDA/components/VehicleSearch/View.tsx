@@ -14,7 +14,7 @@ const ViewContainer = styled('div')(({ theme }) => ({
 }));
 
 const Title = styled(Typography)(({ theme }) => ({
-  paddingBottom: theme.spacing(4),
+  padding: theme.spacing(0, 4, 2),
   [theme.breakpoints.only('xs')]: {
     fontSize: '32px',
   },
