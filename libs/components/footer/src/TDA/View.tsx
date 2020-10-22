@@ -11,6 +11,7 @@ interface Props {
 
 const ViewContainer = styled('div')(() => ({
   background: '#F1F1F1',
+  zIndex: 1,
 }));
 
 const LinkContainer = styled('div')(() => ({

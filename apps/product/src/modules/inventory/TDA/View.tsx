@@ -1,5 +1,6 @@
 import { styled, useTheme } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
+import { TDAFooter } from '@vroom-web/footer-components';
 import { TDAHeader } from '@vroom-web/header-components';
 import { observer } from 'mobx-react';
 import React, { useEffect } from 'react';
@@ -78,7 +79,7 @@ const InventoryView: React.FC<Props> = (props) => {
         <NeedHelp />
         <LegalFooter />
       </InventoryViewContainer>
-      {/* TDA footer goes here */}
+      <TDAFooter />
       {xsDown && viewModel.ready() && (
         <StickyBottom>
           {viewModel.isAvailableSoon() ? <NotifyMe /> : <StartPurchase />}

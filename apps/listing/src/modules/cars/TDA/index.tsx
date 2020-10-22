@@ -1,5 +1,6 @@
 import Grid from '@material-ui/core/Grid';
 import { styled } from '@material-ui/core/styles';
+import { TDAFooter } from '@vroom-web/footer-components';
 import { TDAHeader } from '@vroom-web/header-components';
 import React from 'react';
 
@@ -20,6 +21,7 @@ const TDA: React.FC = () => {
         <Filters />
         <Inventory />
       </StyledGrid>
+      <TDAFooter />
     </>
   );
 };

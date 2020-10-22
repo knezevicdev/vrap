@@ -320,11 +320,103 @@ var vroomTheme = _objectSpread2(_objectSpread2({}, muiTheme$1), {}, {
   }
 });
 
+var _h$2, _body$1;
+
+var muiTheme$2 = createMuiTheme({
+  palette: {
+    primary: {
+      main: '#e7131a',
+      contrastText: '#fff'
+    },
+    secondary: {
+      main: '#041022',
+      contrastText: '#fff'
+    },
+    background: {
+      paper: '#fff',
+      "default": '#f5f5f5'
+    },
+    // Define as needed.
+    // Try to assign a key as close to the actual values defined here:
+    // https://material-ui.com/customization/default-theme/
+    // For example, since #bebebe is super close in value to the default grey.400 (#bdbdbd), Motown used grey.400 for #bebebe.
+    grey: {
+      // 100: '#f5f5f5',
+      // 200: '#eaeaea',
+      // 400: '#bebebe',
+      500: '#999da3',
+      // 600: '#808080',
+      700: '#6c717a',
+      // 900: '#333333',
+      A100: '#d6d7da'
+    },
+    text: {
+      primary: '#041022',
+      secondary: '#fff'
+    }
+  }
+});
+
+var tdaTheme = _objectSpread2(_objectSpread2({}, muiTheme$2), {}, {
+  typography: {
+    pxToRem: muiTheme$2.typography.pxToRem,
+    fontFamily: 'Calibre, Arial, sans-serif',
+    fontSize: 16,
+    fontWeightBold: 700,
+    fontWeightSemibold: 600,
+    fontWeightMedium: 500,
+    fontWeightRegular: 400,
+    fontWeightLight: 300,
+    h1: (_h$2 = {
+      fontFamily: 'RingsideCompressed, serif',
+      fontSize: '36px'
+    }, _defineProperty(_h$2, muiTheme$2.breakpoints.only('md'), {
+      fontSize: '42px'
+    }), _defineProperty(_h$2, muiTheme$2.breakpoints.up('lg'), {
+      fontSize: '62px'
+    }), _h$2),
+    h2: _defineProperty({
+      fontFamily: 'RingsideCompressed, serif',
+      fontSize: '36px'
+    }, muiTheme$2.breakpoints.up('md'), {
+      fontSize: '42px'
+    }),
+    h3: {},
+    h4: {},
+    h5: {},
+    h6: {},
+    subtitle1: {},
+    subtitle2: {},
+    body1: (_body$1 = {
+      fontFamily: 'Calibre, Arial, sans-serif',
+      fontSize: '16px'
+    }, _defineProperty(_body$1, muiTheme$2.breakpoints.only('md'), {
+      fontSize: '18px'
+    }), _defineProperty(_body$1, muiTheme$2.breakpoints.up('lg'), {
+      fontSize: '20px'
+    }), _body$1),
+    body2: {},
+    button: {
+      fontFamily: 'Calibre, Arial, sans-serif',
+      fontSize: '16px',
+      fontWeight: 600,
+      textTransform: 'uppercase',
+      letterSpacing: '1.75px'
+    },
+    caption: {
+      fontFamily: 'Calibre, Arial, sans-serif',
+      fontSize: '14px'
+    },
+    overline: {}
+  }
+});
+
 var Brand;
 
 (function (Brand) {
   Brand["VROOM"] = "vroom";
   Brand["SANTANDER"] = "santander";
+  Brand["TDA"] = "tda";
 })(Brand || (Brand = {}));
 
 function capitalize(str) {
@@ -13887,6 +13979,134 @@ var SantanderFooter = function SantanderFooter() {
   });
 };
 
+var ViewContainer$1 = styles.styled('div')(function () {
+  return {
+    background: '#F1F1F1'
+  };
+});
+var LinkContainer = styles.styled('div')(function () {
+  return {
+    display: 'flex',
+    width: '100%',
+    margin: '0 auto',
+    maxWidth: '370px',
+    padding: '16px 0',
+    justifyContent: 'space-between'
+  };
+});
+var CustomLink$1 = styles.styled(core.Link)(function () {
+  return {
+    textDecoration: 'underline',
+    textDecorationColor: '#767676',
+    color: '#767676'
+  };
+});
+var Text = styles.styled(Typography)(function () {
+  return {
+    color: '#767676',
+    fontSize: '14px'
+  };
+});
+
+var View$1 = function View(_ref) {
+  var viewModel = _ref.viewModel;
+  var links = viewModel.links,
+      disclaimer = viewModel.disclaimer;
+  return /*#__PURE__*/React__default.createElement(ViewContainer$1, null, /*#__PURE__*/React__default.createElement(LinkContainer, null, /*#__PURE__*/React__default.createElement(Text, null, disclaimer), links.map(function (link) {
+    return /*#__PURE__*/React__default.createElement(CustomLink$1, {
+      key: link.label,
+      href: link.href,
+      target: link.target,
+      onClick: link.handleAnalytics
+    }, /*#__PURE__*/React__default.createElement(Text, null, link.label));
+  })));
+};
+
+var AnalyticsHandler$2 = /*#__PURE__*/function (_BaseAnalyticsHandler) {
+  _inherits(AnalyticsHandler, _BaseAnalyticsHandler);
+
+  var _super = _createSuper(AnalyticsHandler);
+
+  function AnalyticsHandler() {
+    var _this;
+
+    _classCallCheck(this, AnalyticsHandler);
+
+    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    _this = _super.call.apply(_super, [this].concat(args));
+
+    _defineProperty$1(_assertThisInitialized(_this), "getPageName", function () {
+      var page = window.location.pathname;
+
+      switch (page) {
+        case 'cars':
+          {
+            return 'Catalog';
+          }
+
+        case 'vehicle':
+          {
+            return 'Product';
+          }
+
+        case 'contact':
+          {
+            return 'Contact Us';
+          }
+
+        default:
+          return 'Home';
+      }
+    });
+
+    _defineProperty$1(_assertThisInitialized(_this), "trackLinkClicked", function (label) {
+      return function () {
+        var event = 'Footer Clicked';
+        var properties = {
+          category: _this.getPageName(),
+          label: label
+        };
+
+        _this.track(event, properties);
+      };
+    });
+
+    return _this;
+  }
+
+  return AnalyticsHandler;
+}(AnalyticsHandler);
+
+var ViewModel$1 = function ViewModel() {
+  _classCallCheck(this, ViewModel);
+
+  _defineProperty$1(this, "analyticsHandler", new AnalyticsHandler$2());
+
+  _defineProperty$1(this, "disclaimer", 'Copyright © 2020 Vroom.');
+
+  _defineProperty$1(this, "links", [{
+    label: 'Privacy Policy',
+    href: 'https://www.vroom.com/texas-direct-auto/legal/privacy-policy',
+    target: '_blank',
+    handleAnalytics: this.analyticsHandler.trackLinkClicked('Privacy Policy')
+  }, {
+    label: 'Terms of Use',
+    href: 'https://www.vroom.com/texas-direct-auto/legal/terms-of-use',
+    target: '_blank',
+    handleAnalytics: this.analyticsHandler.trackLinkClicked('Terms of Use')
+  }]);
+};
+
+var TDAFooter = function TDAFooter() {
+  var viewModel = new ViewModel$1();
+  return /*#__PURE__*/React__default.createElement(View$1, {
+    viewModel: viewModel
+  });
+};
+
 exports.Badges = Badges;
 exports.Bar = FooterBar;
 exports.Copyright = NavigationView;
@@ -13895,3 +14115,4 @@ exports.Nav = Nav;
 exports.SantanderFooter = SantanderFooter;
 exports.Social = Social;
 exports.StandardFooter = StandardFooter;
+exports.TDAFooter = TDAFooter;
