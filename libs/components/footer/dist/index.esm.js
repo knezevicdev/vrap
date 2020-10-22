@@ -13974,7 +13974,8 @@ var SantanderFooter = function SantanderFooter() {
 
 var ViewContainer$1 = styled('div')(function () {
   return {
-    background: '#F1F1F1'
+    background: '#F1F1F1',
+    zIndex: 1
   };
 });
 var LinkContainer = styled('div')(function () {
@@ -14082,12 +14083,12 @@ var ViewModel$1 = function ViewModel() {
 
   _defineProperty$1(this, "links", [{
     label: 'Privacy Policy',
-    href: 'https://www.vroom.com/texas-direct-auto/legal/privacy-policy',
+    href: 'https://www.vroom.com/legal/privacy-policy',
     target: '_blank',
     handleAnalytics: this.analyticsHandler.trackLinkClicked('Privacy Policy')
   }, {
     label: 'Terms of Use',
-    href: 'https://www.vroom.com/texas-direct-auto/legal/terms-of-use',
+    href: 'https://www.vroom.com/legal/terms-of-use',
     target: '_blank',
     handleAnalytics: this.analyticsHandler.trackLinkClicked('Terms of Use')
   }]);
