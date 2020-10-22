@@ -13,10 +13,14 @@ import Document, {
 } from 'next/document';
 import React from 'react';
 
-const { serverRuntimeConfig, publicRuntimeConfig } = getConfig();
+import { determineWhitelabel, returnBrandConfig } from 'src/utils/utils';
+
+const { publicRuntimeConfig } = getConfig();
 
 interface Props extends DocumentInitialProps {
   brand: Brand;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  brandConfig: any;
 }
 
 class VroomDocument extends Document<Props> {
@@ -33,21 +37,15 @@ class VroomDocument extends Document<Props> {
       });
     ctx.renderPage = customRenderPage;
 
-    const { req, query } = ctx;
-    const headerBrandKey = 'x-brand';
-    const santanderKey = 'santander';
-    const brandHeader = req && req.headers[headerBrandKey];
-    const queryBrand = query.brand;
-    const brand: Brand =
-      (brandHeader || queryBrand) == santanderKey
-        ? Brand.SANTANDER
-        : Brand.VROOM;
+    const brand = determineWhitelabel(ctx);
+    const brandConfig = returnBrandConfig(brand);
 
     const initialProps = await Document.getInitialProps(ctx);
 
     return {
       ...initialProps,
       brand,
+      brandConfig,
       styles: (
         <>
           {initialProps.styles}
@@ -58,10 +56,7 @@ class VroomDocument extends Document<Props> {
   }
 
   render(): JSX.Element {
-    const segmentWriteKey =
-      this.props.brand === Brand.SANTANDER
-        ? serverRuntimeConfig.SANTANDER_SEGMENT_WRITE_KEY
-        : serverRuntimeConfig.SEGMENT_WRITE_KEY;
+    const segmentWriteKey = this.props.brandConfig.segmentWriteKey;
 
     return (
       <Html lang="en">

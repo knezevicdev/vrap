@@ -46,39 +46,27 @@ const BuyView: React.FC<Props> = ({ viewModel }) => {
 
   return (
     <BuyContainer>
+      {viewModel.showResumeSearch && (
+        <ResumeSearch
+          fullWidth
+          onClick={viewModel.handleResumeSearchButtonClick}
+          variant="contained"
+          color="secondary"
+        >
+          {viewModel.resumeSearchButtonLabel}
+        </ResumeSearch>
+      )}
       {isMobile ? (
-        <>
-          {viewModel.showResumeSearch && (
-            <ResumeSearch
-              fullWidth
-              onClick={viewModel.handleResumeSearchButtonClick}
-              variant="contained"
-              color="secondary"
-            >
-              {viewModel.resumeSearchButtonLabel}
-            </ResumeSearch>
-          )}
-          <Browse
-            fullWidth
-            onClick={viewModel.handleButtonClick}
-            variant={viewModel.showResumeSearch ? 'outlined' : 'contained'}
-            color="secondary"
-          >
-            {viewModel.mobileButtonLabel}
-          </Browse>
-        </>
+        <Browse
+          fullWidth
+          onClick={viewModel.handleButtonClick}
+          variant={viewModel.showResumeSearch ? 'outlined' : 'contained'}
+          color="secondary"
+        >
+          {viewModel.mobileButtonLabel}
+        </Browse>
       ) : (
         <>
-          {viewModel.showResumeSearch && (
-            <ResumeSearch
-              fullWidth
-              onClick={viewModel.handleResumeSearchButtonClick}
-              variant="contained"
-              color="secondary"
-            >
-              {viewModel.resumeSearchButtonLabel}
-            </ResumeSearch>
-          )}
           <Autocomplete
             buttonVariant={
               viewModel.showResumeSearch ? 'outlined' : 'contained'
