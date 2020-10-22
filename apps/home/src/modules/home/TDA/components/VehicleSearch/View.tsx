@@ -3,6 +3,7 @@ import { Typography } from '@vroom-web/ui';
 import React from 'react';
 
 import ViewModel from './ViewModel';
+
 import ExternalLink from 'src/ui/ExternalLink';
 
 const ViewContainer = styled('div')(({ theme }) => ({
