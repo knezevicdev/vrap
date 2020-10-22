@@ -8,9 +8,9 @@ import ExternalLink from 'src/ui/ExternalLink';
 
 const ViewContainer = styled('div')(({ theme }) => ({
   width: '100%',
-  padding: theme.spacing(8, 2),
+  padding: theme.spacing(8, 0),
   textAlign: 'center',
-  background: '#FFF',
+  background: '#fff',
 }));
 
 const Title = styled(Typography)(({ theme }) => ({
@@ -22,20 +22,25 @@ const Title = styled(Typography)(({ theme }) => ({
 
 const VehiclesContainer = styled('div')(() => ({
   display: 'flex',
-  flexDirection: 'row',
   justifyContent: 'center',
   flexWrap: 'wrap',
 }));
 
 const VehicleContainer = styled('div')(({ theme }) => ({
-  padding: theme.spacing(4),
+  padding: theme.spacing(2, 4),
+  [theme.breakpoints.down('md')]: {
+    flexBasis: '20%',
+  },
   [theme.breakpoints.only('xs')]: {
     padding: theme.spacing(2),
   },
 }));
 
 const VehicleLink = styled(ExternalLink)(() => ({
-  color: 'black',
+  color: '#000',
+  '&:hover': {
+    color: 'red',
+  },
 }));
 
 const VehicleImage = styled('img')(({ theme }) => ({
