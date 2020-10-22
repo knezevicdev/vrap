@@ -61,7 +61,7 @@ export async function getVehicleResponse(
     });
     return response;
   } catch (error) {
-    console.error(error);
+    console.error(JSON.stringify(error));
     return undefined;
   }
 }
@@ -88,7 +88,7 @@ export async function getVehicleState(
       vehicle,
     };
   } catch (error) {
-    console.error(error);
+    console.error(JSON.stringify(error));
     return {
       vehicleStatus: Status.ERROR,
       vehicle: {} as Hit,
@@ -112,7 +112,7 @@ export async function getVehicleSimilarState(
       similar: response.data.hits.hits,
     };
   } catch (error) {
-    console.error(error);
+    console.error(JSON.stringify(error));
     return {
       similarStatus: Status.ERROR,
       similar: [] as Hit[],
@@ -128,7 +128,7 @@ export async function getInventoryAvailabilityState(
     const response = await invServiceNetworker.getInventoryAvailability(vin);
     return response;
   } catch (error) {
-    console.error(error);
+    console.error(JSON.stringify(error));
     return false;
   }
 }
