@@ -1,9 +1,7 @@
 class ContactViewModel {
   readonly title: string = 'Contact Us';
   readonly supportText: string = `We'd be happy to help. Give us a call at `;
-
-  //ToDo: Change the Phone Number
-  readonly phone: string = '(877) 916-1000';
+  readonly phone: string = '(832) 225-3686';
   readonly speak: string = ' to speak with a representative.';
 }
 
