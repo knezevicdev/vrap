@@ -62,7 +62,14 @@ const View: React.FC<Props> = ({ viewModel }) => {
         {viewModel.vehicles.map((vehicle) => (
           <VehicleContainer key={vehicle.type}>
             <VehicleLink href={vehicle.link}>
-              <VehicleImage src={vehicle.image} alt={vehicle.type} />
+              <VehicleImage
+                src={vehicle.image}
+                alt={vehicle.type}
+                onMouseOver={(e) =>
+                  (e.currentTarget.src = vehicle.imageSelected)
+                }
+                onMouseOut={(e) => (e.currentTarget.src = vehicle.image)}
+              />
               <VehicleType>{vehicle.type}</VehicleType>
             </VehicleLink>
           </VehicleContainer>
