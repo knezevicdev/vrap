@@ -39,12 +39,15 @@ const VehicleLink = styled(ExternalLink)(() => ({
 }));
 
 const VehicleImage = styled('img')(({ theme }) => ({
+  height: '50px',
+  width: '80px',
   paddingBottom: theme.spacing(1),
 }));
 
 const VehicleType = styled(Typography)(() => ({
   fontSize: '18px',
   fontWeight: 600,
+  textDecoration: 'underline',
 }));
 
 interface Props {
