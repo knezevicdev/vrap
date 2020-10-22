@@ -230,9 +230,9 @@ export interface Cylinder {
 
 export const cylinders: Cylinder[] = [
   {
-    api: CylinderApi.EIGHT,
-    display: CylindersDisplay.EIGHT,
-    filtersDataValue: FiltersDataCylinder.EIGHT,
+    api: CylinderApi.FOUR,
+    display: CylindersDisplay.FOUR,
+    filtersDataValue: FiltersDataCylinder.FOUR,
   },
   {
     api: CylinderApi.SIX,
@@ -240,9 +240,9 @@ export const cylinders: Cylinder[] = [
     filtersDataValue: FiltersDataCylinder.SIX,
   },
   {
-    api: CylinderApi.FOUR,
-    display: CylindersDisplay.FOUR,
-    filtersDataValue: FiltersDataCylinder.FOUR,
+    api: CylinderApi.EIGHT,
+    display: CylindersDisplay.EIGHT,
+    filtersDataValue: FiltersDataCylinder.EIGHT,
   },
 ];
 
