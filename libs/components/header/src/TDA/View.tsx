@@ -31,6 +31,8 @@ const Bar = styled('div')(({ theme }) => ({
     padding: theme.spacing(1, 2),
     height: '56px',
   },
+  borderBottom: `1px solid ${theme.palette.grey[400]}`,
+  boxShadow: `0 1px 4px 0 rgba(51, 51, 51, 0.1)`,
 }));
 
 const LogoAnchor = styled('a')(() => ({
@@ -138,7 +140,11 @@ const View: React.FC<Props> = ({ viewModel }) => {
         </LogoAnchor>
         <NavDesktopView>
           {viewModel.navLinks.map((navLink) => (
-            <NavLink key={navLink.label} href={navLink.href}>
+            <NavLink
+              key={navLink.label}
+              href={navLink.href}
+              onClick={navLink.handleAnalytics}
+            >
               <Typography
                 letterSpacing="1.25px"
                 variant="button"

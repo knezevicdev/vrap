@@ -15239,18 +15239,20 @@ var ViewContainer$1 = styles.styled('div')(function () {
   };
 });
 var Bar$1 = styles.styled('div')(function (_ref) {
+  var _ref2;
+
   var theme = _ref.theme;
-  return _defineProperty({
+  return _ref2 = {
     display: 'flex',
     alignItems: 'center',
     color: '#041022',
     background: '#FFFFFF',
     height: '72px',
     padding: theme.spacing(2, 4)
-  }, theme.breakpoints.down('sm'), {
+  }, _defineProperty(_ref2, theme.breakpoints.down('sm'), {
     padding: theme.spacing(1, 2),
     height: '56px'
-  });
+  }), _defineProperty(_ref2, "borderBottom", "1px solid ".concat(theme.palette.grey[400])), _defineProperty(_ref2, "boxShadow", "0 1px 4px 0 rgba(51, 51, 51, 0.1)"), _ref2;
 });
 var LogoAnchor = styles.styled('a')(function () {
   return {
@@ -15353,6 +15355,13 @@ var MenuIcon$1 = styles.styled(Menu$1)(function () {
     cursor: 'pointer'
   };
 });
+var StyledDrawer$1 = styles.styled(Drawer)(function () {
+  return {
+    '& .MuiDrawer-paper': {
+      minWidth: '280px'
+    }
+  };
+});
 
 var View$4 = function View(_ref11) {
   var viewModel = _ref11.viewModel;
@@ -15362,7 +15371,8 @@ var View$4 = function View(_ref11) {
   }, /*#__PURE__*/React__default.createElement(Logo$3, null)), /*#__PURE__*/React__default.createElement(NavDesktopView, null, viewModel.navLinks.map(function (navLink) {
     return /*#__PURE__*/React__default.createElement(NavLink, {
       key: navLink.label,
-      href: navLink.href
+      href: navLink.href,
+      onClick: navLink.handleAnalytics
     }, /*#__PURE__*/React__default.createElement(ui.Typography, {
       letterSpacing: "1.25px",
       variant: "button",
@@ -15370,7 +15380,7 @@ var View$4 = function View(_ref11) {
     }, navLink.label));
   })), /*#__PURE__*/React__default.createElement(NavMobileView, null, /*#__PURE__*/React__default.createElement(MenuIcon$1, {
     onClick: viewModel.onDrawerClick
-  }), /*#__PURE__*/React__default.createElement(Drawer, {
+  }), /*#__PURE__*/React__default.createElement(StyledDrawer$1, {
     anchor: "right",
     open: viewModel.isDrawerOpen(),
     onClose: viewModel.onDrawerClick
@@ -15394,66 +15404,72 @@ var AnalyticsHandler$2 = /*#__PURE__*/function (_BaseAnalyticsHandler) {
   var _super = _createSuper(AnalyticsHandler);
 
   function AnalyticsHandler() {
+    var _this;
+
     _classCallCheck(this, AnalyticsHandler);
 
-    return _super.apply(this, arguments);
-  }
+    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
 
-  _createClass(AnalyticsHandler, [{
-    key: "trackLogoClicked",
-    value: function trackLogoClicked() {
+    _this = _super.call.apply(_super, [this].concat(args));
+
+    _defineProperty(_assertThisInitialized(_this), "trackLogoClicked", function () {
       var event = 'Logo Clicked';
       var properties = {
         category: 'Main Navigation'
       };
-      this.track(event, properties);
-    }
-  }, {
-    key: "trackBuyClicked",
-    value: function trackBuyClicked() {
+
+      _this.track(event, properties);
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "trackBuyClicked", function () {
       var event = 'Buy Clicked';
       var properties = {
         category: 'Main Navigation'
       };
-      this.track(event, properties);
-    }
-  }, {
-    key: "trackSellTradeClicked",
-    value: function trackSellTradeClicked() {
+
+      _this.track(event, properties);
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "trackSellTradeClicked", function () {
       var event = 'Sell/Trade Clicked';
       var properties = {
         category: 'Main Navigation'
       };
-      this.track(event, properties);
-    }
-  }, {
-    key: "trackFinanceClicked",
-    value: function trackFinanceClicked() {
+
+      _this.track(event, properties);
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "trackFinanceClicked", function () {
       var event = 'Finance Clicked';
       var properties = {
         category: 'Main Navigation'
       };
-      this.track(event, properties);
-    }
-  }, {
-    key: "trackLocationsClicked",
-    value: function trackLocationsClicked() {
+
+      _this.track(event, properties);
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "trackLocationsClicked", function () {
       var event = 'Locations Clicked';
       var properties = {
         category: 'Main Navigation'
       };
-      this.track(event, properties);
-    }
-  }, {
-    key: "trackContactUsClicked",
-    value: function trackContactUsClicked() {
+
+      _this.track(event, properties);
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "trackContactUsClicked", function () {
       var event = 'Contact Us Clicked';
       var properties = {
         category: 'Main Navigation'
       };
-      this.track(event, properties);
-    }
-  }]);
+
+      _this.track(event, properties);
+    });
+
+    return _this;
+  }
 
   return AnalyticsHandler;
 }(analyticsIntegration.AnalyticsHandler);
