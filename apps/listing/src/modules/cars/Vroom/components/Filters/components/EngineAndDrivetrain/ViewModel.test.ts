@@ -30,20 +30,31 @@ describe('Engine and Drivetrain ViewModel', () => {
       const four = {
         [Filters.CYLINDERS]: [Cylinder.FOUR],
       };
-      const six = {
-        [Filters.CYLINDERS]: [Cylinder.SIX],
-      };
       const eight = {
         [Filters.CYLINDERS]: [Cylinder.EIGHT],
-      };
-      const otherTrue = {
-        [Filters.OTHER_CYLINDERS]: true,
       };
       const otherFalse = {
         [Filters.OTHER_CYLINDERS]: false,
       };
       it('should be enabled if four is clicked', () => {
         store.filtersData = four;
+        const resetDisabled = viewModel.isResetButtonDisabled();
+        expect(resetDisabled).toBe(false);
+      });
+      it('should be enabled if four and eight is clicked', () => {
+        store.filtersData = {
+          ...four,
+          ...eight,
+        };
+        const resetDisabled = viewModel.isResetButtonDisabled();
+        expect(resetDisabled).toBe(false);
+      });
+      it('should be enabled if four and eight is clicked but other is not', () => {
+        store.filtersData = {
+          ...four,
+          ...eight,
+          ...otherFalse,
+        };
         const resetDisabled = viewModel.isResetButtonDisabled();
         expect(resetDisabled).toBe(false);
       });

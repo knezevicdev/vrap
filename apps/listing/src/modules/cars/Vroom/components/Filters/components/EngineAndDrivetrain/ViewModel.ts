@@ -46,7 +46,6 @@ class EngineAndDrivetrainViewModel {
   };
 
   showCylindersFilter = (): boolean => {
-    console.log(this.carsStore.cylinderFilterExperiment);
     return this.carsStore.cylinderFilterExperiment?.assignedVariant === 1;
   };
 }
