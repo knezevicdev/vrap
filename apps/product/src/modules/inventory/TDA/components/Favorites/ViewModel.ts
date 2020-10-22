@@ -113,7 +113,7 @@ class FavoritesViewModel {
         this.favoritesStore.setFavorited();
       }
     } catch (err) {
-      console.log(err);
+      console.error(JSON.stringify(err));
     }
     this.favoritesStore.setLoading(false);
   }
