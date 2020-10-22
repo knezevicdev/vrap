@@ -4,6 +4,7 @@ import {
   removeAllModels,
   removeBodyType,
   removeColor,
+  removeCylinder,
   removeDriveType,
   removeModel,
   resetFilter,
@@ -244,6 +245,44 @@ class ChipsViewModel {
     return driveTypesChips;
   }
 
+  getCylinderChips(filtersData: FiltersData): Chip[] {
+    const cylindersChips: Chip[] = [];
+    const filtersDataCylinders = filtersData[Filters.CYLINDERS];
+    const filtersDataOtherCylinders = filtersData[Filters.OTHER_CYLINDERS];
+    if (filtersDataCylinders) {
+      filtersDataCylinders.forEach((filtersDataCylinder) => {
+        const matchingCylinder = this.carsStore.cylinders.find(
+          (cylinder) => cylinder.filtersDataValue === filtersDataCylinder
+        );
+        if (matchingCylinder) {
+          cylindersChips.push({
+            display: matchingCylinder.display,
+            handleDelete: () => {
+              const updatedFiltersData = removeCylinder(
+                filtersDataCylinder,
+                filtersData
+              );
+              this.carsStore.updateFiltersData(updatedFiltersData);
+            },
+          });
+        }
+      });
+    }
+    if (filtersDataOtherCylinders) {
+      cylindersChips.push({
+        display: 'Other Cylinders',
+        handleDelete: () => {
+          const updatedFiltersData = resetFilter(
+            Filters.OTHER_CYLINDERS,
+            filtersData
+          );
+          this.carsStore.updateFiltersData(updatedFiltersData);
+        },
+      });
+    }
+    return cylindersChips;
+  }
+
   getSearchChips(filtersData: FiltersData): Chip[] {
     const searchChips: Chip[] = [];
     const filtersDataSearch = filtersData[Filters.SEARCH];
@@ -274,6 +313,7 @@ class ChipsViewModel {
       ...this.getTransmissionChips(filtersData),
       ...this.getDriveTypesChips(filtersData),
       ...this.getSearchChips(filtersData),
+      ...this.getCylinderChips(filtersData),
     ];
     return chips.length > 0 ? chips : undefined;
   }

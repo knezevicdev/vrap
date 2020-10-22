@@ -7,6 +7,7 @@ class EngineAndDrivetrainViewModel {
 
   readonly transmissionFilterLabel: string = 'Transmission';
   readonly driveTypeFilterLabel: string = 'Drive Type';
+  readonly cylindersFilterLabel: string = 'Engine Cylinders';
   readonly resetButtonLabel: string = 'Reset';
 
   constructor(carsStore: CarsStore) {
@@ -20,16 +21,32 @@ class EngineAndDrivetrainViewModel {
     }
     const filtersDataDriveType = filtersData[Filters.DRIVE_TYPE];
     const filtersDataTransmission = filtersData[Filters.TRANSMISSION];
-    return !filtersDataDriveType && !filtersDataTransmission;
+    const filtersDataCylinders = filtersData[Filters.CYLINDERS];
+    const filtersDataOtherCylinders = filtersData[Filters.OTHER_CYLINDERS];
+    return (
+      !filtersDataDriveType &&
+      !filtersDataTransmission &&
+      !filtersDataCylinders &&
+      !filtersDataOtherCylinders
+    );
   };
 
   reset = (): void => {
     const filtersData = this.carsStore.filtersData;
     const updatedFiltersData = resetFilters(
-      [Filters.DRIVE_TYPE, Filters.TRANSMISSION],
+      [
+        Filters.DRIVE_TYPE,
+        Filters.TRANSMISSION,
+        Filters.CYLINDERS,
+        Filters.OTHER_CYLINDERS,
+      ],
       filtersData
     );
     this.carsStore.updateFiltersData(updatedFiltersData);
+  };
+
+  showCylindersFilter = (): boolean => {
+    return this.carsStore.cylinderFilterExperiment?.assignedVariant === 1;
   };
 }
 

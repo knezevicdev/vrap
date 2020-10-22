@@ -36,6 +36,11 @@ export const isString = (x: any): x is string => {
 };
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
+export const isBoolean = (x: any): x is boolean => {
+  return typeof x === 'boolean';
+};
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const isStringArray = (x: any): x is string[] => {
   if (!(x instanceof Array)) {
     return false;

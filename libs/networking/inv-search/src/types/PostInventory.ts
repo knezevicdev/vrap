@@ -32,6 +32,8 @@ export interface PostInventoryRequestData {
   source?: string;
   geo?: { lat: string; long: string };
   isTitleQAPass?: boolean;
+  cylinders?: number[];
+  cylindersShowOther?: boolean;
 }
 
 export const postInventoryResponseSchema = inventoryResponseSchema;
