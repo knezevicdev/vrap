@@ -15500,12 +15500,7 @@ var ViewModel$1 = function ViewModel(store) {
     href: 'https://www.vroom.com/finance',
     label: 'FINANCE',
     handleAnalytics: this.analyticsHandler.trackFinanceClicked
-  }, // {
-  //   href: '/locations',
-  //   label: 'LOCATIONS',
-  //   handleAnalytics: this.analyticsHandler.trackLocationsClicked,
-  // },
-  {
+  }, {
     href: '/contact',
     label: 'CONTACT US',
     handleAnalytics: this.analyticsHandler.trackContactUsClicked

@@ -38,11 +38,6 @@ class ViewModel {
       label: 'FINANCE',
       handleAnalytics: this.analyticsHandler.trackFinanceClicked,
     },
-    // {
-    //   href: '/locations',
-    //   label: 'LOCATIONS',
-    //   handleAnalytics: this.analyticsHandler.trackLocationsClicked,
-    // },
     {
       href: '/contact',
       label: 'CONTACT US',
