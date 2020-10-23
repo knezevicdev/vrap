@@ -15126,9 +15126,416 @@ var SantanderHeader = function SantanderHeader() {
   });
 };
 
+var _class$3, _descriptor$3, _descriptor2$3, _temp$3;
+var Store$1 = (_class$3 = (_temp$3 = function Store() {
+  _classCallCheck(this, Store);
+
+  _initializerDefineProperty(this, "isDrawerOpen", _descriptor$3, this);
+
+  _initializerDefineProperty(this, "setIsDrawerOpen", _descriptor2$3, this);
+}, _temp$3), (_descriptor$3 = _applyDecoratedDescriptor(_class$3.prototype, "isDrawerOpen", [observable], {
+  configurable: true,
+  enumerable: true,
+  writable: true,
+  initializer: function initializer() {
+    return false;
+  }
+}), _descriptor2$3 = _applyDecoratedDescriptor(_class$3.prototype, "setIsDrawerOpen", [action], {
+  configurable: true,
+  enumerable: true,
+  writable: true,
+  initializer: function initializer() {
+    var _this = this;
+
+    return function (open) {
+      _this.isDrawerOpen = open;
+    };
+  }
+})), _class$3);
+
+function _extends$a() { _extends$a = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends$a.apply(this, arguments); }
+
+var _ref$9 = /*#__PURE__*/React.createElement("defs", null, /*#__PURE__*/React.createElement("style", null, ".logo_svg__cls-7{fill:#999da3}.logo_svg__cls-8{fill:#ed1c24}"));
+
+var _ref2 = /*#__PURE__*/React.createElement("path", {
+  d: "M70.07 38.55S50 36.86 30.25 42.43 0 56.11 0 56.11l18.15.11s9.08-8 18.76-11.13a89.87 89.87 0 0117.91-3.87s-13.07 2.18-21.3 6.9-11.38 8-11.38 8h16.34s4.84-3.63 11-8.36 20.59-9.21 20.59-9.21z",
+  transform: "translate(0 -4.42)",
+  fill: "#352d2e"
+});
+
+var _ref3 = /*#__PURE__*/React.createElement("path", {
+  d: "M8.23 41.22L18 12.78s4 3.75 6.66 3.63 8.22-2.06 8.22-2.06l-9.52 28.57s-4.6 3.38-8.6 2.41a13.36 13.36 0 01-6.53-4.11z",
+  transform: "translate(0 -4.42)",
+  fill: "#354c77"
+});
+
+var _ref4 = /*#__PURE__*/React.createElement("path", {
+  d: "M26.87 30.69c.12.36-3.76 12.71-3.76 12.71s6.17-4.4 11.74-3.75 6.17 4.48 11.74 5.2a12.87 12.87 0 009.2-2.18l3.75-14.4s-6.9 2.05-12.83-1.46-8.59-3.38-9.2-3.26-3.63 1.21-4.35 1.45a67.64 67.64 0 00-5.57 4z",
+  transform: "translate(0 -4.42)",
+  fill: "#e82b28"
+});
+
+var _ref5 = /*#__PURE__*/React.createElement("path", {
+  d: "M15.37 26.57s.85.61 1.94 1.33 1.45.73 1.45.73L21.18 25l.12 4a3.31 3.31 0 001.69.13 15.61 15.61 0 002.42-.49l-4.11 2.9.24 3.63a9.61 9.61 0 01-2.18-1.45 5.73 5.73 0 01-.73-1.22s-.24.37-1.57.73a22 22 0 01-2.18.49l2.3-3.4a20.86 20.86 0 01-1.33-2.05 2.81 2.81 0 01-.48-1.7z",
+  transform: "translate(0 -4.42)",
+  fill: "#fff"
+});
+
+var _ref6 = /*#__PURE__*/React.createElement("path", {
+  d: "M64.5 14.11s-5 3.75-9.8 2.06-6.05-6.3-11.62-5.81-10.65 4.35-10.65 4.35l-5.2 15s6.77-5.07 12.34-4.58 6 4.95 11 5.68A13.3 13.3 0 0059.3 29z",
+  transform: "translate(0 -4.42)",
+  fill: "#e9e9e7"
+});
+
+var _ref7 = /*#__PURE__*/React.createElement("path", {
+  d: "M15.49 19.56c-.61-1-.85-8.59 5.32-11.26s16.82 1.57 25.54 12.59 9.8 24.8 5.08 29.52-11 1.82-11 1.82 7.74 3.51 12.22-.36S62 36 47.56 18.1c-25.65-28.49-36.19-4.59-32.07 1.46z",
+  transform: "translate(0 -4.42)",
+  fill: "#857c76"
+});
+
+var _ref8 = /*#__PURE__*/React.createElement("path", {
+  d: "M97 28c0 4.13 0 7.53.21 9.33.13 1.25.39 2.2 1.68 2.37.6.08 1.55.17 1.93.17s.35.13.35.26-.22.34-.69.34c-2.37 0-5.08-.13-5.29-.13s-2.93.13-4.22.13c-.47 0-.69-.08-.69-.34s.09-.26.35-.26a7.25 7.25 0 001.29-.17c.86-.17 1.07-1.12 1.25-2.37.21-1.8.21-5.2.21-9.33V9.75L87 9.83c-2.66.05-3.7.35-4.39 1.38a7.84 7.84 0 00-.73 1.33c-.13.35-.25.43-.43.43s-.21-.13-.21-.38c0-.43.86-4.13.94-4.48s.26-.82.43-.82a8.46 8.46 0 001.9.52c1.25.13 2.88.22 3.4.22H104a17.07 17.07 0 003.06-.22c.64-.09 1-.21 1.2-.21s.22.25.22.51c0 1.29-.13 4.26-.13 4.73s-.13.56-.3.56-.31-.13-.35-.73v-.47c-.13-1.29-1.16-2.28-5.29-2.37L97 9.75zM115.05 23.34c0-5.68 0-6.71-.08-7.87s-.3-1.85-1.55-2a10.59 10.59 0 00-1.29-.09.36.36 0 01-.3-.3c0-.22.17-.3.6-.3 1.72 0 4.17.08 4.39.08s8.17.05 9 0 1.42-.17 1.72-.21a2.63 2.63 0 01.52-.17c.13 0 .17.17.17.34s-.21.69-.3 1.72c0 .35-.13 2-.22 2.41 0 .17-.17.39-.34.39s-.3-.17-.3-.47a3.81 3.81 0 00-.22-1.29c-.25-.61-.64-.87-2.71-1.12-.64-.09-5-.13-5.46-.13-.17 0-.22.13-.22.38v9.94c0 .26 0 .39.22.39.47 0 5.46 0 6.32-.09s1.47-.12 1.85-.51.43-.48.56-.48.22.09.22.31a17.76 17.76 0 00-.3 2c-.09.73-.17 2.11-.17 2.36s-.09.69-.35.69-.26-.13-.26-.34a3.31 3.31 0 00-.17-1.21c-.13-.51-.47-.94-1.94-1.11-1-.13-5.07-.18-5.72-.18a.23.23 0 00-.26.26V36.03c.09 2.46.78 2.93 4.52 2.93a12.54 12.54 0 003.79-.39 2.77 2.77 0 001.75-2.57c.09-.43.17-.55.39-.55s.25.3.25.55a31.06 31.06 0 01-.51 3.53c-.26.95-.65.95-2.11.95-2.84 0-5-.09-6.58-.13s-2.58-.09-3.14-.09c-.09 0-.82 0-1.64.05s-1.59.08-2.19.08c-.39 0-.61-.08-.61-.3a.3.3 0 01.31-.3c.34 0 .81-.13 1.16-.17.73-.13.82-.86 1-1.94a76.36 76.36 0 00.21-7.91zM142.79 26.27l-6-9.81c-.86-1.42-1.59-2.45-2.88-2.84a8 8 0 00-1.59-.26.37.37 0 01-.35-.34c0-.18.18-.26.65-.26 1.07 0 4.13.08 4.43.08s2.41-.08 3.7-.08c.52 0 .65.08.65.26a.34.34 0 01-.35.34 4.15 4.15 0 00-1 .09.51.51 0 00-.47.56 2.88 2.88 0 00.38 1.2c1.6 2.88 3 5.51 5 8.65 1.12-1.59 5.12-7.75 5.47-8.52a2.35 2.35 0 00.39-1.29c0-.26-.26-.47-.65-.6a4.74 4.74 0 00-1-.09.34.34 0 01-.35-.34c0-.18.18-.26.65-.26 1.42 0 3 .08 3.35.08s1.9-.08 3.19-.08c.43 0 .6.08.6.26a.38.38 0 01-.39.34 5 5 0 00-1.29.17c-1.07.35-1.76 1.29-2.84 2.89l-6.06 8.86c.73 1.12 7.18 11.74 8 12.73a3.61 3.61 0 002.15 1.6 8 8 0 001.29.21.27.27 0 01.3.3c0 .17-.17.3-.51.3-2.33 0-4.13 0-6.2-.08-1-.05-1.16-.13-1.16-.3a.34.34 0 01.21-.31c.22 0 .56-.43.22-1-2.07-3.57-4.13-7.1-6.41-10.8L138 37.5a3.56 3.56 0 00-.47 1.63c0 .35.26.52.6.6a3.63 3.63 0 00.69.09.34.34 0 01.34.34c0 .18-.21.26-.47.26-.9 0-3.4-.13-3.74-.13s-2.2.13-3.45.13c-.3 0-.34-.13-.34-.26a.3.3 0 01.3-.34 8.35 8.35 0 001.42-.21c1.12-.31 1.89-1 3.1-2.84zM171.64 13.49c.48-1.21.65-1.42.91-1.42s.51.52.9 1.33c.69 1.55 6.75 16.65 9.08 22.2 1.37 3.27 2.41 3.75 3.22 4a5.32 5.32 0 001.51.21c.22 0 .47.09.47.3s-.43.3-.86.3-3.35 0-6-.08c-.73-.05-1.33-.05-1.33-.26s.08-.17.26-.26a.69.69 0 00.34-1l-3.4-8.39c-.08-.17-.13-.21-.34-.21h-8.74a.38.38 0 00-.38.3l-2.15 5.85a7.41 7.41 0 00-.56 2.45c0 .73.64 1 1.29 1h.34c.3 0 .39.13.39.3s-.22.3-.56.3c-.9 0-3-.13-3.4-.13s-2.28.13-3.83.13c-.47 0-.73-.08-.73-.3a.33.33 0 01.34-.3 9 9 0 001.12-.09c1.72-.21 2.45-1.5 3.19-3.35zm4.22 15.23c.17 0 .17-.09.13-.26l-3.75-10c-.21-.56-.43-.56-.64 0l-3.53 10c0 .17 0 .26.13.26zM189.79 39.91c-.52-.26-.56-.39-.56-1.38 0-1.81.17-3.27.21-3.87 0-.39.09-.6.3-.6s.35.12.35.43a5.44 5.44 0 00.13 1.33c.6 2.67 3.44 3.61 6 3.61 3.74 0 5.68-2.1 5.68-4.86s-1.42-3.87-4.78-6.37l-1.72-1.29c-4.09-3.05-5.42-5.29-5.42-7.83 0-4.3 3.4-6.88 8.39-6.88a18 18 0 013.91.43 5 5 0 001.34.17c.3 0 .38 0 .38.26s-.17 1.38-.17 3.87c0 .56 0 .82-.3.82s-.3-.17-.34-.47a7.3 7.3 0 00-.56-1.81c-.26-.43-1.51-1.81-4.91-1.81-2.75 0-5 1.38-5 4 0 2.32 1.16 3.66 4.9 6.2l1.08.73c4.6 3.14 6.19 5.68 6.19 8.82a7.13 7.13 0 01-3.52 6.24 11.66 11.66 0 01-6 1.29 13.88 13.88 0 01-5.58-1.03zM228.34 20.37c0-6.71 0-7.91-.09-9.29s-.43-2.15-1.85-2.45a7.77 7.77 0 00-1.46-.13c-.18 0-.35-.09-.35-.26s.22-.34.69-.34c1.94 0 4.65.13 4.86.13.52 0 3.23-.13 5.81-.13 4.26 0 12.13-.39 17.25 4.9a15.39 15.39 0 014.18 10.93 17.58 17.58 0 01-4.65 12.13c-1.85 1.94-5.72 5-13 5-1.85 0-4.13-.13-6-.26s-3.35-.26-3.57-.26-.82 0-1.72.05-1.85.08-2.49.08c-.48 0-.69-.08-.69-.34s.08-.26.34-.26a7 7 0 001.29-.17c.86-.17 1.08-1.12 1.25-2.37.22-1.8.22-5.2.22-9.33zM232 25c0 4.56 0 8.52.09 9.34a9.24 9.24 0 00.47 3.27c.56.81 2.24 1.72 7.31 1.72a14.48 14.48 0 0010.24-4c2.24-2.2 3.44-6.33 3.44-10.29a15.37 15.37 0 00-4.13-10.84c-4-4.26-9-4.86-14.07-4.86a11.52 11.52 0 00-2.79.3.78.78 0 00-.52.86v9.17zM267.35 29.8c0 3.52 0 6.41.17 7.91.13 1.08.26 1.77 1.37 1.94a17 17 0 001.72.17.3.3 0 01.31.3c0 .17-.18.3-.61.3-2.1 0-4.56-.13-4.73-.13s-2.58.13-3.74.13c-.39 0-.6-.08-.6-.3a.29.29 0 01.3-.3 5.91 5.91 0 001.16-.17c.73-.17.86-.86 1-1.94.17-1.5.21-4.39.21-7.91v-6.46c0-5.68 0-6.71-.08-7.87s-.39-1.81-1.21-2a6.37 6.37 0 00-1.16-.13.32.32 0 01-.3-.3c0-.22.17-.3.6-.3 1.25 0 3.62.08 3.83.08s2.63-.08 3.79-.08c.43 0 .6.08.6.3a.36.36 0 01-.3.3 4.06 4.06 0 00-.95.09c-1 .21-1.25.73-1.33 2s0 2.19 0 7.87zM277.83 23.34c0-5.68 0-6.71-.08-7.87s-.3-1.85-1.55-2a10.59 10.59 0 00-1.29-.09.36.36 0 01-.3-.3c0-.22.17-.3.6-.3 1.72 0 4.26.08 4.47.08.39 0 3.57-.08 4.74-.08 2.41 0 5.07.21 7.05 1.59a6.41 6.41 0 012.63 5c0 2.71-1.12 5.34-4.65 8.35 3.1 3.87 5.72 7.18 7.92 9.46 2 2.07 3.27 2.41 4.21 2.54a6.92 6.92 0 001.34.13.33.33 0 01.34.3c0 .22-.21.3-.9.3H300a7.57 7.57 0 01-4-.73c-1.64-.86-3-2.62-5.17-5.38-1.59-2-3.26-4.34-4.08-5.33a.59.59 0 00-.52-.22l-4.82-.08c-.17 0-.26.08-.26.3v.86c0 3.53 0 6.37.18 7.87.13 1.08.34 1.77 1.5 1.94a15.37 15.37 0 001.68.17.27.27 0 01.3.3c0 .17-.17.3-.6.3-2.07 0-4.48-.13-4.65-.13s-2.58.13-3.74.13c-.39 0-.6-.08-.6-.3a.29.29 0 01.3-.3 5.8 5.8 0 001.16-.17c.73-.17.82-.86 1-1.94a76.36 76.36 0 00.21-7.91zm3.27 3.1a.54.54 0 00.26.47 12.9 12.9 0 004.18.56 5 5 0 002.84-.64c1.29-.86 2.28-2.8 2.28-5.6 0-4.56-2.5-7.18-6.54-7.18a17.28 17.28 0 00-2.71.21.47.47 0 00-.31.43zM307.29 23.34c0-5.68 0-6.71-.09-7.87s-.3-1.85-1.55-2a10.45 10.45 0 00-1.29-.09.36.36 0 01-.3-.3c0-.22.17-.3.6-.3 1.73 0 4.18.08 4.39.08s8.18.05 9 0 1.42-.17 1.72-.21a2.43 2.43 0 01.52-.17c.13 0 .17.17.17.34a16.92 16.92 0 00-.3 1.72c-.05.35-.13 2-.22 2.41 0 .17-.17.39-.34.39s-.3-.17-.3-.47a4.08 4.08 0 00-.22-1.29c-.26-.61-.64-.87-2.71-1.12-.64-.09-5-.13-5.46-.13-.17 0-.22.13-.22.38v9.94c0 .26 0 .39.22.39.47 0 5.46 0 6.32-.09s1.46-.12 1.85-.51.43-.48.56-.48.22.09.22.31a17.76 17.76 0 00-.3 2c-.09.73-.18 2.11-.18 2.36s-.08.69-.34.69-.26-.13-.26-.34a3.31 3.31 0 00-.17-1.21c-.13-.51-.47-.94-1.94-1.11-1-.13-5.07-.18-5.72-.18a.23.23 0 00-.26.26V36.03c.09 2.46.78 2.93 4.52 2.93a12.54 12.54 0 003.79-.39 2.77 2.77 0 001.76-2.57c.08-.43.17-.55.38-.55s.26.3.26.55a31.06 31.06 0 01-.51 3.53c-.26.95-.65.95-2.11.95-2.84 0-5-.09-6.59-.13s-2.58-.09-3.14-.09c-.08 0-.81 0-1.63.05s-1.59.08-2.2.08c-.38 0-.6-.08-.6-.3a.29.29 0 01.3-.3 11.17 11.17 0 001.16-.17c.74-.13.82-.86 1-1.94a72.91 72.91 0 00.22-7.91zM329 37a13.71 13.71 0 01-4.6-10.84 14.43 14.43 0 014.26-10c2.28-2.2 5.72-3.92 11.53-3.92a37.31 37.31 0 015.51.43 26.35 26.35 0 003.87.56c.39 0 .47.17.47.39s-.08.73-.17 2.06 0 3.23-.09 3.75-.21.77-.43.77-.3-.26-.3-.77a4.76 4.76 0 00-1.59-3.66c-1.33-1.12-4.09-2-7.44-2-4.86 0-7.19 1.29-8.52 2.54-2.8 2.58-3.4 5.85-3.4 9.55a13.29 13.29 0 0013.64 13.25c2.84 0 4.73-.22 6.24-1.72a6.81 6.81 0 001.46-3.06c.09-.38.13-.51.39-.51s.34.26.34.51a37.36 37.36 0 01-.9 4.69c-.22.69-.3.82-.95 1.08a22.46 22.46 0 01-6.84.82C335.83 40.9 332 39.56 329 37zM366.52 29.8c0 3.52 0 6.41.18 7.91.13 1.08.3 1.77 1.46 1.94a16 16 0 001.72.17.27.27 0 01.3.3c0 .17-.17.3-.6.3-2.07 0-4.48-.13-4.69-.13s-2.8.13-3.91.13c-.44 0-.61-.08-.61-.3a.26.26 0 01.3-.26 4.74 4.74 0 001.12-.17c.78-.17 1-.9 1.12-2 .17-1.5.17-4.39.17-7.91V14.44l-5.46.08c-2.37.05-3.27.3-3.83 1.16a6 6 0 00-.6 1.17c-.09.3-.22.34-.39.34a.29.29 0 01-.26-.3c0-.39.78-3.66.82-4s.26-.69.39-.69a12.77 12.77 0 001.67.43c1.08.13 2.54.17 3 .17h14.29a18.37 18.37 0 002.71-.17c.56-.08.9-.17 1.07-.17s.18.21.18.43c0 1.12-.13 3.74-.13 4.17s-.18.48-.35.48-.26-.13-.3-.65v-.39c-.13-1.11-.95-1.93-4.56-2l-4.74-.08zM403.53 9c.51-1.42.68-1.68.94-1.68s.43.22.95 1.55c.64 1.64 7.4 19.41 10 26 1.55 3.83 2.8 4.51 3.7 4.77a5.49 5.49 0 001.73.26c.25 0 .43 0 .43.26s-.39.34-.86.34c-.65 0-3.79 0-6.76-.08-.82-.05-1.29-.05-1.29-.3s.13-.26.3-.31.52-.47.26-1.16L409 28a.38.38 0 00-.39-.26h-9.25c-.22 0-.34.13-.43.34l-2.58 7.62a9 9 0 00-.6 2.88c0 .86.9 1.25 1.63 1.25h.43c.3 0 .43.09.43.26s-.26.34-.64.34c-1 0-2.89-.13-3.36-.13s-2.84.13-4.86.13c-.56 0-.82-.08-.82-.34s.17-.26.39-.26a11.31 11.31 0 001.25-.09c2-.25 2.84-1.89 3.61-4zM408 26.18c.22 0 .22-.13.17-.3l-4.08-11.62c-.22-.64-.43-.64-.65 0l-3.79 11.62c-.08.22 0 .3.13.3zM421.83 23.34c0-5.68 0-6.71-.08-7.87s-.3-1.85-1.55-2a10.59 10.59 0 00-1.29-.09.36.36 0 01-.3-.3c0-.22.17-.3.6-.3 1.72 0 4 .08 4.34.08s2.71-.08 3.83-.08c.43 0 .65.08.65.3a.37.37 0 01-.35.3 4.2 4.2 0 00-.94.09c-1 .17-1.21.81-1.29 2s-.09 2.19-.09 7.87v5.12c0 5.29 1.16 7.49 2.8 8.95a7.36 7.36 0 005.63 2 7.75 7.75 0 005.85-2.58c1.77-2.11 2.16-5.12 2.16-8.86v-4.63c0-5.68-.05-6.71-.09-7.87s-.26-1.85-1.51-2a10.45 10.45 0 00-1.29-.09.32.32 0 01-.3-.3c0-.22.17-.3.6-.3 1.68 0 3.88.08 4.09.08s2.07-.08 3.19-.08c.43 0 .6.08.6.3a.32.32 0 01-.3.3 4.24 4.24 0 00-1 .09c-1 .21-1.25.81-1.33 2s-.05 2.19-.05 7.87v3.92c0 4-.51 8.39-3.52 11A11.5 11.5 0 01433 40.9c-1.25 0-5.21-.09-7.87-2.59-1.85-1.72-3.32-4.25-3.32-9.59zM462.86 29.8c0 3.52 0 6.41.18 7.91.13 1.08.3 1.77 1.46 1.94a16 16 0 001.72.17.27.27 0 01.3.3c0 .17-.17.3-.6.3-2.07 0-4.47-.13-4.69-.13s-2.8.13-3.91.13c-.43 0-.61-.08-.61-.3a.26.26 0 01.3-.26 4.74 4.74 0 001.12-.17c.78-.17 1-.9 1.12-2 .17-1.5.17-4.39.17-7.91V14.44l-5.46.08c-2.37.05-3.27.3-3.83 1.16a6 6 0 00-.6 1.17c-.09.3-.22.34-.39.34a.29.29 0 01-.26-.3c0-.39.78-3.66.82-4s.26-.69.39-.69a13.29 13.29 0 001.67.43c1.08.13 2.54.17 3 .17H469a18.26 18.26 0 002.71-.17c.56-.08.9-.17 1.07-.17s.18.21.18.43c0 1.12-.13 3.74-.13 4.17s-.18.48-.35.48-.26-.13-.3-.65v-.39c-.13-1.11-1-1.93-4.56-2l-4.74-.08zM489 12.24c8.52 0 15 5.21 15 13.73 0 8.17-6.07 14.93-15.19 14.93-10.37 0-14.8-7.79-14.8-14.37A14.49 14.49 0 01489 12.24zm.86 27.15c3.4 0 10.24-1.81 10.24-12.39 0-8.78-5.34-13.38-11.32-13.38-6.32 0-10.88 4-10.88 11.92.03 8.52 5.15 13.85 11.99 13.85z",
+  transform: "translate(0 -4.42)"
+});
+
+var _ref9 = /*#__PURE__*/React.createElement("path", {
+  className: "logo_svg__cls-7",
+  d: "M270.91 62.22v4.91h-2.23V54h5.08c2.72 0 4.5 1.41 4.5 4.14s-1.78 4.11-4.5 4.11zm2.81-6.32h-2.81v4.39h2.81a2.2 2.2 0 100-4.39zM287.92 67.34c-3.56 0-6.06-2.87-6.06-6.79s2.5-6.8 6.06-6.8 6.08 2.85 6.08 6.8-2.52 6.79-6.08 6.79zm0-11.59c-2.31 0-3.81 2-3.81 4.8s1.5 4.8 3.81 4.8 3.84-2 3.84-4.8-1.52-4.8-3.84-4.8zM306.09 54l2.49 9.69L311 54h2.14l-3.39 13.16h-2.06l-2.48-9.41-2.53 9.41h-2L297.22 54h2.18l2.38 9.69 2.51-9.69zM326.05 54v2h-6.41v3.47h5.81v2h-5.81v3.78h6.41v2h-8.59V54zM333.75 61.79v5.34h-2.23V54h5.08c2.72 0 4.48 1.37 4.48 3.94a3.59 3.59 0 01-3.37 3.8l3.82 5.42H339l-3.67-5.34zm0-1.86h2.8c1.48 0 2.32-.8 2.32-2s-.84-2-2.32-2h-2.8zM354.81 54v2h-6.41v3.47h5.81v2h-5.81v3.78h6.41v2h-8.59V54zM360.45 54h4.43c3.88 0 6.39 2.57 6.39 6.58s-2.51 6.58-6.39 6.58h-4.43zm4.35 11.17c2.76 0 4.24-1.78 4.24-4.59s-1.48-4.61-4.24-4.61h-2.12v9.2zM393.53 63.36c0 2.46-1.71 3.77-4.46 3.77h-5V54h4.61c2.74 0 4.45 1.22 4.45 3.58a2.82 2.82 0 01-1.71 2.78 3.19 3.19 0 012.11 3zm-4.91-3.86c1.53 0 2.34-.58 2.34-1.82s-.81-1.78-2.34-1.78h-2.42v3.6zm-2.42 5.7h2.8c1.5 0 2.32-.75 2.32-1.93s-.82-1.93-2.32-1.93h-2.8zM405.93 54h2.36l-4.78 7.91v5.25h-2.21v-5.28L396.54 54H399l3.49 5.89z",
+  transform: "translate(0 -4.42)"
+});
+
+var _ref10 = /*#__PURE__*/React.createElement("path", {
+  className: "logo_svg__cls-8",
+  d: "M447.62 53.51l-.9 4.89h-1.84a2.41 2.41 0 00-2.69 2.28l-1.14 6.65h-4.54l1.69-9.61h-2.58l.7-4h6.85l-.49 2.61a4.81 4.81 0 014.8-2.85z",
+  transform: "translate(0 -4.42)"
+});
+
+var _ref11 = /*#__PURE__*/React.createElement("path", {
+  className: "logo_svg__cls-8",
+  d: "M418.57 53.3l.71-3.97h6.51l-.31 9.46 4.34-9.46h5.1l-6.87 13.58h-6.9V53.3h-2.58z"
+});
+
+var _ref12 = /*#__PURE__*/React.createElement("path", {
+  className: "logo_svg__cls-8",
+  d: "M455.5 53.51a7.28 7.28 0 00-7.63 7.49c0 4.1 3.07 6.6 6.87 6.6a7.28 7.28 0 007.63-7.47c0-4.13-3.07-6.62-6.87-6.62zm-.5 10.16a2.65 2.65 0 01-2.6-2.91 3.07 3.07 0 012.88-3.34 2.65 2.65 0 012.6 2.91 3.07 3.07 0 01-2.88 3.34zM471.42 53.51a7.28 7.28 0 00-7.63 7.49c0 4.1 3.07 6.6 6.87 6.6a7.28 7.28 0 007.63-7.47c0-4.13-3.07-6.62-6.87-6.62zm-.52 10.16a2.65 2.65 0 01-2.6-2.91 3.07 3.07 0 012.88-3.34 2.65 2.65 0 012.6 2.91 3.07 3.07 0 01-2.88 3.34zM494.53 58.83a4.76 4.76 0 012.61-1.16c.95 0 1.38.76 1.19 1.87L497 67.33h4.56l1.44-8.39c.68-4-1.9-5.43-4.21-5.43a6.3 6.3 0 00-4.67 2.12 3.33 3.33 0 00-3.32-2.12 5.76 5.76 0 00-4.37 2l.33-1.8h-6.85l-.7 4h2.58l-1.69 9.61h4.54l1.49-8.5a4.76 4.76 0 012.61-1.16c.95 0 1.38.76 1.19 1.87l-1.38 7.79H493z",
+  transform: "translate(0 -4.42)"
+});
+
+function SvgLogo$2(props) {
+  return /*#__PURE__*/React.createElement("svg", _extends$a({
+    id: "logo_svg__Layer_1",
+    "data-name": "Layer 1",
+    viewBox: "0 0 504 63.16"
+  }, props), _ref$9, _ref2, _ref3, _ref4, _ref5, _ref6, _ref7, _ref8, _ref9, _ref10, _ref11, _ref12);
+}
+
+var ViewContainer$1 = styles.styled('div')(function () {
+  return {
+    display: 'flex',
+    flexDirection: 'column',
+    position: 'sticky',
+    zIndex: 1001,
+    top: 0
+  };
+});
+var Bar$1 = styles.styled('div')(function (_ref) {
+  var _ref2;
+
+  var theme = _ref.theme;
+  return _ref2 = {
+    display: 'flex',
+    alignItems: 'center',
+    color: '#041022',
+    background: '#FFFFFF',
+    height: '72px',
+    padding: theme.spacing(2, 4)
+  }, _defineProperty(_ref2, theme.breakpoints.down('sm'), {
+    padding: theme.spacing(1, 2),
+    height: '56px'
+  }), _defineProperty(_ref2, "borderBottom", "1px solid ".concat(theme.palette.grey[400])), _defineProperty(_ref2, "boxShadow", "0 1px 4px 0 rgba(51, 51, 51, 0.1)"), _ref2;
+});
+var LogoAnchor = styles.styled('a')(function () {
+  return {
+    display: 'flex',
+    marginRight: '16px'
+  };
+});
+var Logo$3 = styles.styled(SvgLogo$2)(function (_ref3) {
+  var theme = _ref3.theme;
+  return _defineProperty({
+    height: '32px'
+  }, theme.breakpoints.down('sm'), {
+    height: '24px'
+  });
+});
+var NavDesktopView = styles.styled('div')(function (_ref5) {
+  var _ref6;
+
+  var theme = _ref5.theme;
+  return _ref6 = {
+    display: 'flex',
+    alignItems: 'center',
+    marginLeft: 'auto'
+  }, _defineProperty(_ref6, theme.breakpoints.down('sm'), {
+    display: 'none'
+  }), _defineProperty(_ref6, '& > *:not(:last-child)', {
+    marginRight: '24px'
+  }), _ref6;
+});
+var NavLink = styles.styled('a')(function (_ref7) {
+  var theme = _ref7.theme;
+  return {
+    display: 'inline-flex',
+    flexDirection: 'column',
+    position: 'relative',
+    color: 'inherit',
+    textDecoration: 'none',
+    '&:visited': {
+      color: 'inherit',
+      textDecoration: 'none'
+    },
+    '&:hover': {
+      color: 'inherit',
+      textDecoration: 'none'
+    },
+    '&:active': {
+      color: 'inherit',
+      textDecoration: 'none'
+    },
+    '&:after': {
+      content: '""',
+      display: 'flex',
+      width: '0px',
+      height: '2px',
+      margin: 'auto',
+      marginTop: '4px',
+      background: theme.palette.primary.main,
+      transition: 'width 250ms ease, background-color 250ms ease'
+    },
+    '&:hover:after': {
+      width: '100%'
+    }
+  };
+});
+var NavMobileView = styles.styled('div')(function (_ref8) {
+  var theme = _ref8.theme;
+  return _defineProperty({
+    display: 'none',
+    width: '100%',
+    alignItems: 'center'
+  }, theme.breakpoints.down('sm'), {
+    display: 'flex'
+  });
+});
+var MobileNavLink = styles.styled('a')(function (_ref10) {
+  var theme = _ref10.theme;
+  return {
+    padding: theme.spacing(2),
+    borderBottom: "1px solid ".concat(theme.palette.grey[300]),
+    color: 'inherit',
+    textDecoration: 'none',
+    display: 'flex',
+    '&:visited': {
+      color: 'inherit',
+      textDecoration: 'none'
+    },
+    '&:hover': {
+      color: theme.palette.primary.main,
+      textDecoration: 'none'
+    },
+    '&:active': {
+      color: 'inherit',
+      textDecoration: 'none'
+    }
+  };
+});
+var MenuIcon$1 = styles.styled(Menu$1)(function () {
+  return {
+    marginLeft: 'auto',
+    cursor: 'pointer'
+  };
+});
+var StyledDrawer$1 = styles.styled(Drawer)(function () {
+  return {
+    '& .MuiDrawer-paper': {
+      minWidth: '280px'
+    }
+  };
+});
+
+var View$4 = function View(_ref11) {
+  var viewModel = _ref11.viewModel;
+  return /*#__PURE__*/React__default.createElement(ViewContainer$1, null, /*#__PURE__*/React__default.createElement(Bar$1, null, /*#__PURE__*/React__default.createElement(LogoAnchor, {
+    href: viewModel.logoLink.href,
+    onClick: viewModel.logoLink.handleAnalytics
+  }, /*#__PURE__*/React__default.createElement(Logo$3, null)), /*#__PURE__*/React__default.createElement(NavDesktopView, null, viewModel.navLinks.map(function (navLink) {
+    return /*#__PURE__*/React__default.createElement(NavLink, {
+      key: navLink.label,
+      href: navLink.href,
+      onClick: navLink.handleAnalytics
+    }, /*#__PURE__*/React__default.createElement(ui.Typography, {
+      letterSpacing: "1.25px",
+      variant: "button",
+      fontWeight: "fontWeightSemibold"
+    }, navLink.label));
+  })), /*#__PURE__*/React__default.createElement(NavMobileView, null, /*#__PURE__*/React__default.createElement(MenuIcon$1, {
+    onClick: viewModel.onDrawerClick
+  }), /*#__PURE__*/React__default.createElement(StyledDrawer$1, {
+    anchor: "right",
+    open: viewModel.isDrawerOpen(),
+    onClose: viewModel.onDrawerClick
+  }, viewModel.navLinks.map(function (navLink) {
+    return /*#__PURE__*/React__default.createElement(MobileNavLink, {
+      key: navLink.label,
+      href: navLink.href
+    }, /*#__PURE__*/React__default.createElement(ui.Typography, {
+      letterSpacing: "1.25px",
+      variant: "button",
+      fontWeight: "fontWeightSemibold"
+    }, navLink.label));
+  })))));
+};
+
+var View$5 = observer$1(View$4);
+
+var AnalyticsHandler$2 = /*#__PURE__*/function (_BaseAnalyticsHandler) {
+  _inherits(AnalyticsHandler, _BaseAnalyticsHandler);
+
+  var _super = _createSuper(AnalyticsHandler);
+
+  function AnalyticsHandler() {
+    var _this;
+
+    _classCallCheck(this, AnalyticsHandler);
+
+    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    _this = _super.call.apply(_super, [this].concat(args));
+
+    _defineProperty(_assertThisInitialized(_this), "trackLogoClicked", function () {
+      var event = 'Logo Clicked';
+      var properties = {
+        category: 'Main Navigation'
+      };
+
+      _this.track(event, properties);
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "trackBuyClicked", function () {
+      var event = 'Buy Clicked';
+      var properties = {
+        category: 'Main Navigation'
+      };
+
+      _this.track(event, properties);
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "trackSellTradeClicked", function () {
+      var event = 'Sell/Trade Clicked';
+      var properties = {
+        category: 'Main Navigation'
+      };
+
+      _this.track(event, properties);
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "trackFinanceClicked", function () {
+      var event = 'Finance Clicked';
+      var properties = {
+        category: 'Main Navigation'
+      };
+
+      _this.track(event, properties);
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "trackLocationsClicked", function () {
+      var event = 'Locations Clicked';
+      var properties = {
+        category: 'Main Navigation'
+      };
+
+      _this.track(event, properties);
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "trackContactUsClicked", function () {
+      var event = 'Contact Us Clicked';
+      var properties = {
+        category: 'Main Navigation'
+      };
+
+      _this.track(event, properties);
+    });
+
+    return _this;
+  }
+
+  return AnalyticsHandler;
+}(analyticsIntegration.AnalyticsHandler);
+
+var ViewModel$1 = function ViewModel(store) {
+  var _this = this;
+
+  _classCallCheck(this, ViewModel);
+
+  _defineProperty(this, "store", void 0);
+
+  _defineProperty(this, "analyticsHandler", new AnalyticsHandler$2());
+
+  _defineProperty(this, "logoLink", {
+    href: '/',
+    handleAnalytics: this.analyticsHandler.trackLogoClicked
+  });
+
+  _defineProperty(this, "navLinks", [{
+    href: '/cars',
+    label: 'BUY',
+    handleAnalytics: this.analyticsHandler.trackBuyClicked
+  }, {
+    href: 'https://www.vroom.com/sell',
+    label: 'SELL/TRADE',
+    handleAnalytics: this.analyticsHandler.trackSellTradeClicked
+  }, {
+    href: 'https://www.vroom.com/finance',
+    label: 'FINANCE',
+    handleAnalytics: this.analyticsHandler.trackFinanceClicked
+  }, {
+    href: '/contact',
+    label: 'CONTACT US',
+    handleAnalytics: this.analyticsHandler.trackContactUsClicked
+  }]);
+
+  _defineProperty(this, "isDrawerOpen", function () {
+    return _this.store.isDrawerOpen;
+  });
+
+  _defineProperty(this, "onDrawerClick", function () {
+    _this.store.isDrawerOpen ? _this.closeDrawer() : _this.openDrawer();
+  });
+
+  _defineProperty(this, "closeDrawer", function () {
+    _this.store.setIsDrawerOpen(false);
+  });
+
+  _defineProperty(this, "openDrawer", function () {
+    _this.store.setIsDrawerOpen(true);
+  });
+
+  this.store = store;
+};
+
+var TDAHeader = function TDAHeader() {
+  var viewModel = new ViewModel$1(new Store$1());
+  return /*#__PURE__*/React__default.createElement(View$5, {
+    viewModel: viewModel
+  });
+};
+
 exports.Bar = Bar;
 exports.InProgressDealBar = InProgressDealBar;
 exports.Logo = Logo$1;
 exports.Nav = Nav;
 exports.SantanderHeader = SantanderHeader;
 exports.SimpleHeader = SimpleHeader;
+exports.TDAHeader = TDAHeader;

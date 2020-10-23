@@ -1,6 +1,6 @@
-// TODO: implement header/footer from UI lib
+// TODO: implement footer from UI lib
 // import { TDAFooter } from '@vroom-web/footer-components';
-// import { TDAHeader } from '@vroom-web/header-components';
+import { TDAHeader } from '@vroom-web/header-components';
 import React from 'react';
 
 import Divider from './components/Divider';
@@ -12,7 +12,7 @@ import HowItWorks from './components/HowItWorks';
 const TDA: React.FC = () => {
   return (
     <>
-      {/* <TDAHeader /> */}
+      <TDAHeader />
       <Hero />
       <Highlights />
       <Divider />

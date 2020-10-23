@@ -1,3 +1,4 @@
+import { TDAHeader } from '@vroom-web/header-components';
 import React from 'react';
 
 import ContactLabel from './components/ContactLabel';
@@ -5,7 +6,7 @@ import ContactLabel from './components/ContactLabel';
 const TDA: React.FC = () => {
   return (
     <>
-      {/* ToDo: TDA Header */}
+      <TDAHeader />
       <ContactLabel />
       {/* ToDo: TDA Footer */}
     </>
