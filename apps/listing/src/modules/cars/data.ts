@@ -1,6 +1,7 @@
 import {
   BodyType as FiltersDataBodyType,
   Color as FiltersDataColor,
+  Cylinder as FiltersDataCylinder,
   DriveType as FiltersDataDriveType,
   SortBy as FiltersDataSortBy,
   SortDirection as FiltersDataSortDirection,
@@ -206,6 +207,42 @@ export const colors: Color[] = [
     display: ColorDisplay.PURPLE,
     filtersDataValue: FiltersDataColor.PURPLE,
     value: ColorValue.PURPLE,
+  },
+];
+
+export enum CylinderApi {
+  EIGHT = 8,
+  SIX = 6,
+  FOUR = 4,
+}
+
+export enum CylindersDisplay {
+  EIGHT = '8 Cylinder',
+  SIX = '6 Cylinder',
+  FOUR = '4 Cylinder',
+}
+
+export interface Cylinder {
+  api?: CylinderApi;
+  display: CylindersDisplay;
+  filtersDataValue: FiltersDataCylinder;
+}
+
+export const cylinders: Cylinder[] = [
+  {
+    api: CylinderApi.FOUR,
+    display: CylindersDisplay.FOUR,
+    filtersDataValue: FiltersDataCylinder.FOUR,
+  },
+  {
+    api: CylinderApi.SIX,
+    display: CylindersDisplay.SIX,
+    filtersDataValue: FiltersDataCylinder.SIX,
+  },
+  {
+    api: CylinderApi.EIGHT,
+    display: CylindersDisplay.EIGHT,
+    filtersDataValue: FiltersDataCylinder.EIGHT,
   },
 ];
 

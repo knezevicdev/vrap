@@ -41,7 +41,7 @@ export const returnBrandConfig = (brand: Brand): BrandConfig => {
     };
   } else if (brand === Brand.TDA) {
     config = {
-      segmentWriteKey: '',
+      segmentWriteKey: serverRuntimeConfig.SEGMENT_WRITE_KEY,
       title: 'Texas Direct Auto: Buy, Sell or Trade-In Used Vehicles Online',
       description:
         'Buy, sell or trade-in your car entirely online, from the comfort of your home. No haggle, no pressure. Easy online financing available. Browse thousands of high-quality cars, and have it delivered straight to you.',

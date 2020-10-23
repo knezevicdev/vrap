@@ -1,6 +1,7 @@
 import {
   BodyType,
   Color,
+  Cylinder,
   DriveType,
   Filters,
   FiltersData,
@@ -56,6 +57,38 @@ export const removeBodyType = (
   const newBodyTypes = existingBodyTypes.filter((bt) => bt !== bodyType);
   newFiltersData[Filters.BODY_TYPES] =
     newBodyTypes.length > 0 ? newBodyTypes : undefined;
+  return newFiltersData;
+};
+
+export const addCylinder = (
+  cylinder: Cylinder,
+  filtersData?: FiltersData
+): FiltersData => {
+  const newFiltersData = deepCopyFiltersData(filtersData || {});
+  const newCylinders = newFiltersData[Filters.CYLINDERS] || [];
+  newCylinders.push(cylinder);
+  newFiltersData[Filters.CYLINDERS] = newCylinders;
+  return newFiltersData;
+};
+
+export const removeCylinder = (
+  cylinder: Cylinder,
+  filtersData?: FiltersData
+): FiltersData => {
+  const newFiltersData = deepCopyFiltersData(filtersData || {});
+  const existingCylinders = newFiltersData[Filters.CYLINDERS] || [];
+  const newCylinders = existingCylinders.filter((c) => c !== cylinder);
+  newFiltersData[Filters.CYLINDERS] =
+    newCylinders.length > 0 ? newCylinders : undefined;
+  return newFiltersData;
+};
+
+export const setOtherCylinders = (
+  otherCylinders: boolean,
+  filtersData?: FiltersData
+): FiltersData => {
+  const newFiltersData = deepCopyFiltersData(filtersData || {});
+  newFiltersData[Filters.OTHER_CYLINDERS] = otherCylinders;
   return newFiltersData;
 };
 

@@ -2,17 +2,20 @@ import {
   addAllModels,
   addBodyType,
   addColor,
+  addCylinder,
   addDriveType,
   addModel,
   deepCopyFiltersData,
   removeAllModels,
   removeBodyType,
   removeColor,
+  removeCylinder,
   removeDriveType,
   removeModel,
   resetFilter,
   resetFilters,
   setMiles,
+  setOtherCylinders,
   setPage,
   setPrice,
   setSearch,
@@ -23,6 +26,7 @@ import {
 import {
   BodyType,
   Color,
+  Cylinder,
   DriveType,
   Filters,
   FiltersData,
@@ -60,6 +64,8 @@ const mockFiltersData1: FiltersData = {
     max: 2020,
     min: 2018,
   },
+  [Filters.CYLINDERS]: [Cylinder.EIGHT, Cylinder.FOUR],
+  [Filters.OTHER_CYLINDERS]: false,
 };
 
 describe('resetFilter', () => {
@@ -76,6 +82,8 @@ describe('resetFilter', () => {
       sort: { by: 'miles', direction: 'asc' },
       transmission: 'auto',
       year: { max: 2020, min: 2018 },
+      cylinders: ['8', '4'],
+      othercylinders: false,
     });
   });
   test('2', () => {
@@ -91,6 +99,8 @@ describe('resetFilter', () => {
       sort: { by: 'miles', direction: 'asc' },
       transmission: 'auto',
       year: { max: 2020, min: 2018 },
+      cylinders: ['8', '4'],
+      othercylinders: false,
     });
   });
 });
@@ -111,6 +121,8 @@ describe('resetFilters', () => {
       sort: { by: 'miles', direction: 'asc' },
       transmission: 'auto',
       year: { max: 2020, min: 2018 },
+      cylinders: ['8', '4'],
+      othercylinders: false,
     });
   });
   test('2', () => {
@@ -128,6 +140,8 @@ describe('resetFilters', () => {
       sort: { by: 'miles', direction: 'asc' },
       transmission: undefined,
       year: { max: 2020, min: 2018 },
+      cylinders: ['8', '4'],
+      othercylinders: false,
     });
   });
 });
@@ -158,6 +172,8 @@ describe('addBodyType', () => {
       sort: { by: 'miles', direction: 'asc' },
       transmission: 'auto',
       year: { max: 2020, min: 2018 },
+      cylinders: ['8', '4'],
+      othercylinders: false,
     });
   });
   test('3', () => {
@@ -224,6 +240,93 @@ describe('removeBodyType', () => {
       sort: { by: 'miles', direction: 'asc' },
       transmission: 'auto',
       year: { max: 2020, min: 2018 },
+      cylinders: ['8', '4'],
+      othercylinders: false,
+    });
+  });
+});
+
+describe('addCylinder', () => {
+  test('it should add the color to no filters', () => {
+    expect(addCylinder(Cylinder.EIGHT, undefined)).toEqual({
+      cylinders: ['8'],
+    });
+  });
+  test('it should add cylinders to filters which already exist', () => {
+    expect(addCylinder(Cylinder.SIX, mockFiltersData1)).toEqual({
+      bodytypes: ['suv'],
+      colors: ['grey'],
+      drivetype: ['awd'],
+      makesandmodels: [{ makeSlug: 'volvo', modelSlugs: ['xc90'] }],
+      miles: { max: 100000, min: 0 },
+      page: 0,
+      price: { max: 100000, min: 0 },
+      search: 'search',
+      sort: { by: 'miles', direction: 'asc' },
+      transmission: 'auto',
+      year: { max: 2020, min: 2018 },
+      cylinders: ['8', '4', '6'],
+      othercylinders: false,
+    });
+  });
+  test('it should add cylinders to filters which already exist but are empty', () => {
+    const mockFiltersData: FiltersData = {};
+    expect(addCylinder(Cylinder.FOUR, mockFiltersData)).toEqual({
+      cylinders: ['4'],
+    });
+  });
+  test('it should add cylinders to filter if there are already cylinders', () => {
+    const mockFiltersData: FiltersData = {
+      [Filters.CYLINDERS]: [Cylinder.EIGHT],
+    };
+    expect(addCylinder(Cylinder.FOUR, mockFiltersData)).toEqual({
+      cylinders: ['8', '4'],
+    });
+  });
+});
+
+describe('removeCylinder', () => {
+  test('it should set the cylinders to undefined', () => {
+    expect(removeCylinder(Cylinder.EIGHT, undefined)).toEqual({
+      cylinders: undefined,
+    });
+  });
+  test('it should set the cylinders to undefined on a defined object', () => {
+    expect(removeCylinder(Cylinder.EIGHT, {})).toEqual({
+      removeCylinder: undefined,
+    });
+  });
+  test('it should remove the cylinders if it exists', () => {
+    const mockFiltersData: FiltersData = {
+      [Filters.CYLINDERS]: [Cylinder.EIGHT],
+    };
+    expect(removeCylinder(Cylinder.EIGHT, mockFiltersData)).toEqual({
+      cylinders: undefined,
+    });
+  });
+  test('it should remove the correct cylinder', () => {
+    const mockFiltersData: FiltersData = {
+      [Filters.CYLINDERS]: [Cylinder.EIGHT, Cylinder.FOUR],
+    };
+    expect(removeCylinder(Cylinder.EIGHT, mockFiltersData)).toEqual({
+      cylinders: ['4'],
+    });
+  });
+  test('it should remove the cylinders from a big filter', () => {
+    expect(removeCylinder(Cylinder.EIGHT, mockFiltersData1)).toEqual({
+      bodytypes: ['suv'],
+      colors: ['grey'],
+      drivetype: ['awd'],
+      makesandmodels: [{ makeSlug: 'volvo', modelSlugs: ['xc90'] }],
+      miles: { max: 100000, min: 0 },
+      page: 0,
+      price: { max: 100000, min: 0 },
+      search: 'search',
+      sort: { by: 'miles', direction: 'asc' },
+      transmission: 'auto',
+      year: { max: 2020, min: 2018 },
+      cylinders: ['4'],
+      othercylinders: false,
     });
   });
 });
@@ -247,6 +350,8 @@ describe('addColor', () => {
       sort: { by: 'miles', direction: 'asc' },
       transmission: 'auto',
       year: { max: 2020, min: 2018 },
+      cylinders: ['8', '4'],
+      othercylinders: false,
     });
   });
   test('3', () => {
@@ -313,6 +418,8 @@ describe('removeColor', () => {
       sort: { by: 'miles', direction: 'asc' },
       transmission: 'auto',
       year: { max: 2020, min: 2018 },
+      cylinders: ['8', '4'],
+      othercylinders: false,
     });
   });
 });
@@ -336,6 +443,8 @@ describe('addDriveType', () => {
       sort: { by: 'miles', direction: 'asc' },
       transmission: 'auto',
       year: { max: 2020, min: 2018 },
+      cylinders: ['8', '4'],
+      othercylinders: false,
     });
   });
   test('3', () => {
@@ -402,6 +511,8 @@ describe('removeDriveType', () => {
       sort: { by: 'miles', direction: 'asc' },
       transmission: 'auto',
       year: { max: 2020, min: 2018 },
+      cylinders: ['8', '4'],
+      othercylinders: false,
     });
   });
 });
@@ -438,6 +549,8 @@ describe('setTransmission', () => {
       sort: { by: 'miles', direction: 'asc' },
       transmission: 'manual',
       year: { max: 2020, min: 2018 },
+      cylinders: ['8', '4'],
+      othercylinders: false,
     });
   });
 });
@@ -509,6 +622,8 @@ describe('addAllModels', () => {
       sort: { by: 'miles', direction: 'asc' },
       transmission: 'auto',
       year: { max: 2020, min: 2018 },
+      cylinders: ['8', '4'],
+      othercylinders: false,
     });
   });
 });
@@ -537,6 +652,8 @@ describe('removeAllModels', () => {
       sort: { by: 'miles', direction: 'asc' },
       transmission: 'auto',
       year: { max: 2020, min: 2018 },
+      cylinders: ['8', '4'],
+      othercylinders: false,
     });
   });
   test('4', () => {
@@ -552,6 +669,8 @@ describe('removeAllModels', () => {
       sort: { by: 'miles', direction: 'asc' },
       transmission: 'auto',
       year: { max: 2020, min: 2018 },
+      cylinders: ['8', '4'],
+      othercylinders: false,
     });
   });
   test('5', () => {
@@ -596,6 +715,8 @@ describe('addModel', () => {
       sort: { by: 'miles', direction: 'asc' },
       transmission: 'auto',
       year: { max: 2020, min: 2018 },
+      cylinders: ['8', '4'],
+      othercylinders: false,
     });
   });
   test('3', () => {
@@ -611,6 +732,8 @@ describe('addModel', () => {
       sort: { by: 'miles', direction: 'asc' },
       transmission: 'auto',
       year: { max: 2020, min: 2018 },
+      cylinders: ['8', '4'],
+      othercylinders: false,
     });
   });
   test('4', () => {
@@ -653,6 +776,8 @@ describe('addModel', () => {
       sort: { by: 'miles', direction: 'asc' },
       transmission: 'auto',
       year: { max: 2020, min: 2018 },
+      cylinders: ['8', '4'],
+      othercylinders: false,
     });
   });
 });
@@ -681,6 +806,8 @@ describe('removeModel', () => {
       sort: { by: 'miles', direction: 'asc' },
       transmission: 'auto',
       year: { max: 2020, min: 2018 },
+      cylinders: ['8', '4'],
+      othercylinders: false,
     });
   });
   test('3', () => {
@@ -701,6 +828,8 @@ describe('removeModel', () => {
       sort: { by: 'miles', direction: 'asc' },
       transmission: 'auto',
       year: { max: 2020, min: 2018 },
+      cylinders: ['8', '4'],
+      othercylinders: false,
     });
   });
   test('4', () => {
@@ -778,6 +907,38 @@ describe('setMiles', () => {
       sort: { by: 'miles', direction: 'asc' },
       transmission: 'auto',
       year: { max: 2020, min: 2018 },
+      cylinders: ['8', '4'],
+      othercylinders: false,
+    });
+  });
+});
+
+describe('setOtherCylinders', () => {
+  test('it should set the otherCylinders', () => {
+    expect(setOtherCylinders(true, undefined)).toEqual({
+      othercylinders: true,
+    });
+  });
+  test('it should set othercylinders on an empty object', () => {
+    expect(setOtherCylinders(true, {})).toEqual({
+      othercylinders: true,
+    });
+  });
+  test('it should set othercylinders on a large filter', () => {
+    expect(setOtherCylinders(true, mockFiltersData1)).toEqual({
+      bodytypes: ['suv'],
+      colors: ['grey'],
+      drivetype: ['awd'],
+      makesandmodels: [{ makeSlug: 'volvo', modelSlugs: ['xc90'] }],
+      miles: { max: 100000, min: 0 },
+      page: 0,
+      price: { max: 100000, min: 0 },
+      search: 'search',
+      sort: { by: 'miles', direction: 'asc' },
+      transmission: 'auto',
+      year: { max: 2020, min: 2018 },
+      cylinders: ['8', '4'],
+      othercylinders: true,
     });
   });
 });
@@ -806,6 +967,8 @@ describe('setPage', () => {
       sort: { by: 'miles', direction: 'asc' },
       transmission: 'auto',
       year: { max: 2020, min: 2018 },
+      cylinders: ['8', '4'],
+      othercylinders: false,
     });
   });
 });
@@ -834,6 +997,8 @@ describe('setPrice', () => {
       sort: { by: 'miles', direction: 'asc' },
       transmission: 'auto',
       year: { max: 2020, min: 2018 },
+      cylinders: ['8', '4'],
+      othercylinders: false,
     });
   });
 });
@@ -862,6 +1027,8 @@ describe('setSearch', () => {
       sort: { by: 'miles', direction: 'asc' },
       transmission: 'auto',
       year: { max: 2020, min: 2018 },
+      cylinders: ['8', '4'],
+      othercylinders: false,
     });
   });
 });
@@ -898,6 +1065,8 @@ describe('setSort', () => {
       sort: { by: 'year', direction: 'desc' },
       transmission: 'auto',
       year: { max: 2020, min: 2018 },
+      cylinders: ['8', '4'],
+      othercylinders: false,
     });
   });
 });
@@ -926,6 +1095,8 @@ describe('setYear', () => {
       sort: { by: 'miles', direction: 'asc' },
       transmission: 'auto',
       year: { max: 2009, min: 2003 },
+      cylinders: ['8', '4'],
+      othercylinders: false,
     });
   });
 });

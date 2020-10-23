@@ -1,4 +1,7 @@
 export {
+  addCylinder,
+  removeCylinder,
+  setOtherCylinders,
   addAllModels,
   addBodyType,
   addColor,
@@ -29,6 +32,7 @@ export {
   SortDirection,
   TestDrive,
   Transmission,
+  Cylinder,
 } from './types';
 export type {
   FiltersData,

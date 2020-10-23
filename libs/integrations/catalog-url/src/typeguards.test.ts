@@ -1,4 +1,5 @@
 import {
+  isBoolean,
   isEnum,
   isEnumArray,
   isMake,
@@ -179,5 +180,19 @@ describe('isSort', () => {
     expect(isSort(sort2)).toBeTruthy();
     expect(isSort(SortBy.MILES)).toBeFalsy();
     expect(isSort(SortDirection.ASCENDING)).toBeFalsy();
+  });
+});
+
+describe('isBoolean', () => {
+  test('1', () => {
+    expect(isBoolean('some-text')).toBeFalsy();
+    expect(isBoolean('0')).toBeFalsy();
+    expect(isBoolean('42')).toBeFalsy();
+    expect(isBoolean('')).toBeFalsy();
+    expect(isBoolean(0)).toBeFalsy();
+    expect(isBoolean(42)).toBeFalsy();
+    expect(isBoolean({})).toBeFalsy();
+    expect(isBoolean(true)).toBeTruthy();
+    expect(isBoolean(false)).toBeTruthy();
   });
 });

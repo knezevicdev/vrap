@@ -1,5 +1,6 @@
 import { Filters } from '@vroom-web/catalog-url-integration';
 import { Car, Hit, Inventory } from '@vroom-web/inv-search-networking';
+import isEmpty from 'lodash.isempty';
 import { reaction } from 'mobx';
 
 import AnalyticsHandler, { Product } from 'src/integrations/AnalyticsHandler';
@@ -64,6 +65,10 @@ class CarsViewModel {
     }
 
     const formattedFilters: { type: string; value: any }[] = [];
+    const cylinders: { type: string; value: string[] } = {
+      type: 'Cylinders',
+      value: [],
+    };
     Object.entries(this.store.filtersData).forEach(([filter, value]) => {
       switch (filter) {
         case Filters.MAKE_AND_MODELS:
@@ -114,8 +119,19 @@ class CarsViewModel {
             value,
           });
           break;
+        case Filters.CYLINDERS:
+          if (value) {
+            cylinders.value = [...cylinders.value, ...value];
+          }
+          break;
+        case Filters.OTHER_CYLINDERS:
+          cylinders.value = [...cylinders.value, 'Other'];
+          break;
       }
     });
+    if (!isEmpty(cylinders.value)) {
+      formattedFilters.push(cylinders);
+    }
 
     const sort = this.store.filtersData[Filters.SORT];
     this.analyticsHandler.trackProductListFiltered(
