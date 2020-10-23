@@ -11,6 +11,7 @@ interface Props {
 
 const ViewContainer = styled('div')(() => ({
   background: '#F1F1F1',
+  zIndex: 1,
 }));
 
 const LinkContainer = styled('div')(() => ({
@@ -18,7 +19,7 @@ const LinkContainer = styled('div')(() => ({
   width: '100%',
   margin: '0 auto',
   maxWidth: '370px',
-  padding: '16px 0',
+  padding: '16px 8px',
   justifyContent: 'space-between',
 }));
 
