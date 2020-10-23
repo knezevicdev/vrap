@@ -13984,7 +13984,7 @@ var LinkContainer = styled('div')(function () {
     width: '100%',
     margin: '0 auto',
     maxWidth: '370px',
-    padding: '16px 0',
+    padding: '16px 8px',
     justifyContent: 'space-between'
   };
 });
