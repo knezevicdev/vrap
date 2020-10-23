@@ -70,10 +70,12 @@ const View: React.FC<Props> = ({ viewModel }) => {
               <VehicleImage
                 src={vehicle.image}
                 alt={vehicle.type}
-                onMouseOver={(e) =>
+                onMouseOver={(e): string =>
                   (e.currentTarget.src = vehicle.imageSelected)
                 }
-                onMouseOut={(e) => (e.currentTarget.src = vehicle.image)}
+                onMouseOut={(e): string =>
+                  (e.currentTarget.src = vehicle.image)
+                }
               />
               <VehicleType>{vehicle.type}</VehicleType>
             </VehicleLink>
