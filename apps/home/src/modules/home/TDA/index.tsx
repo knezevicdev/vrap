@@ -6,12 +6,14 @@ import Divider from './components/Divider';
 import Hero from './components/Hero';
 import Highlights from './components/Highlights';
 import HowItWorks from './components/HowItWorks';
+import VehicleSearch from './components/VehicleSearch';
 
 const TDA: React.FC = () => {
   return (
     <>
       <TDAHeader />
       <Hero />
+      <VehicleSearch />
       <Highlights />
       <Divider />
       <HowItWorks />
