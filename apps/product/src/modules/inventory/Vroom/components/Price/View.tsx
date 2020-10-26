@@ -1,5 +1,7 @@
+import IconButton from '@material-ui/core/IconButton';
 import Popover from '@material-ui/core/Popover';
 import { styled } from '@material-ui/core/styles';
+import CloseIcon from '@material-ui/icons/Close';
 import { Typography } from '@vroom-web/ui';
 import React, { useState } from 'react';
 import reactStringReplace from 'react-string-replace';
@@ -34,6 +36,13 @@ const Container = styled('div')(({ theme }) => ({
   borderBottom: `5px solid ${theme.palette.primary.main}`,
 }));
 
+const StyledIconButton = styled(IconButton)(({ theme }) => ({
+  position: 'absolute',
+  top: 0,
+  right: 0,
+  padding: theme.spacing(2),
+}));
+
 const Header = styled(Typography)(({ theme }) => ({
   paddingBottom: theme.spacing(1),
 }));
@@ -52,12 +61,13 @@ interface Props {
 }
 
 const PriceView: React.FC<Props> = ({ viewModel }) => {
+  //Rather than create a store for tracking a single piece of state,
+  //I thought this would be an approprite time to use local state diretly
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
   const open = Boolean(anchorEl);
   const handleClick = (event: React.MouseEvent<HTMLElement>): void => {
     setAnchorEl(event.currentTarget);
   };
-
   const handleClose = (): void => {
     setAnchorEl(null);
   };
@@ -88,6 +98,9 @@ const PriceView: React.FC<Props> = ({ viewModel }) => {
         }}
       >
         <Container>
+          <StyledIconButton aria-label="close" onClick={handleClose}>
+            <CloseIcon />
+          </StyledIconButton>
           <Header>
             <strong>{viewModel.title}</strong>
           </Header>
