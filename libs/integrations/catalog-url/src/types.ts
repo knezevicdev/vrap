@@ -13,6 +13,8 @@ export enum Filters {
   YEAR = 'year',
   CYLINDERS = 'cylinders',
   OTHER_CYLINDERS = 'othercylinders',
+  FUEL_TYPE = 'fueltype',
+  OTHER_FUEL_TYPE = 'otherfueltype',
 }
 
 export enum BodyType {
@@ -91,6 +93,12 @@ export enum Cylinder {
   EIGHT = '8',
 }
 
+export enum FuelType {
+  GASOLINE = 'gasoline',
+  ELECTRIC = 'electric',
+  HYBRID = 'hybrid',
+}
+
 export interface FiltersData {
   [Filters.BODY_TYPES]?: BodyType[];
   [Filters.COLORS]?: Color[];
@@ -106,6 +114,8 @@ export interface FiltersData {
   [Filters.YEAR]?: MaxAndMin;
   [Filters.CYLINDERS]?: Cylinder[];
   [Filters.OTHER_CYLINDERS]?: boolean;
+  [Filters.FUEL_TYPE]?: FuelType[];
+  [Filters.OTHER_FUEL_TYPE]?: boolean;
 }
 
 export interface GetUrlFromFiltersDataOptions {

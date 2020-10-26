@@ -17,6 +17,8 @@ var Filters;
   Filters["YEAR"] = "year";
   Filters["CYLINDERS"] = "cylinders";
   Filters["OTHER_CYLINDERS"] = "othercylinders";
+  Filters["FUEL_TYPE"] = "fueltype";
+  Filters["OTHER_FUEL_TYPE"] = "otherfueltype";
 })(Filters || (Filters = {}));
 
 var BodyType;
@@ -94,6 +96,14 @@ var Cylinder;
   Cylinder["EIGHT"] = "8";
 })(Cylinder || (Cylinder = {}));
 
+var FuelType;
+
+(function (FuelType) {
+  FuelType["GASOLINE"] = "gasoline";
+  FuelType["ELECTRIC"] = "electric";
+  FuelType["HYBRID"] = "hybrid";
+})(FuelType || (FuelType = {}));
+
 var deepCopyFiltersData = function deepCopyFiltersData(filtersData) {
   return JSON.parse(JSON.stringify(filtersData));
 };
@@ -123,6 +133,27 @@ var removeBodyType = function removeBodyType(bodyType, filtersData) {
     return bt !== bodyType;
   });
   newFiltersData[Filters.BODY_TYPES] = newBodyTypes.length > 0 ? newBodyTypes : undefined;
+  return newFiltersData;
+};
+var addFuelType = function addFuelType(fuelType, filtersData) {
+  var newFiltersData = deepCopyFiltersData(filtersData || {});
+  var newFuelType = newFiltersData[Filters.FUEL_TYPE] || [];
+  newFuelType.push(fuelType);
+  newFiltersData[Filters.FUEL_TYPE] = newFuelType;
+  return newFiltersData;
+};
+var removeFuelType = function removeFuelType(fuelType, filtersData) {
+  var newFiltersData = deepCopyFiltersData(filtersData || {});
+  var existingFuelType = newFiltersData[Filters.FUEL_TYPE] || [];
+  var newFuelType = existingFuelType.filter(function (c) {
+    return c !== fuelType;
+  });
+  newFiltersData[Filters.FUEL_TYPE] = newFuelType.length > 0 ? newFuelType : undefined;
+  return newFiltersData;
+};
+var setOtherFuelType = function setOtherFuelType(otherFuelType, filtersData) {
+  var newFiltersData = deepCopyFiltersData(filtersData || {});
+  newFiltersData[Filters.OTHER_FUEL_TYPE] = otherFuelType;
   return newFiltersData;
 };
 var addCylinder = function addCylinder(cylinder, filtersData) {
@@ -707,4 +738,4 @@ var getFiltersDataFromUrl = function getFiltersDataFromUrl(url) {
   return undefined;
 };
 
-export { BodyType, Color, Cylinder, DriveType, Filters, SortBy, SortDirection, TestDrive, Transmission, addAllModels, addBodyType, addColor, addCylinder, addDriveType, addModel, getFiltersDataFromUrl, getUrlFromFiltersData, removeAllModels, removeBodyType, removeColor, removeCylinder, removeDriveType, removeModel, resetFilter, resetFilters, setMiles, setOtherCylinders, setPage, setPrice, setSearch, setSort, setTestDrive, setTransmission, setYear };
+export { BodyType, Color, Cylinder, DriveType, Filters, FuelType, SortBy, SortDirection, TestDrive, Transmission, addAllModels, addBodyType, addColor, addCylinder, addDriveType, addFuelType, addModel, getFiltersDataFromUrl, getUrlFromFiltersData, removeAllModels, removeBodyType, removeColor, removeCylinder, removeDriveType, removeFuelType, removeModel, resetFilter, resetFilters, setMiles, setOtherCylinders, setOtherFuelType, setPage, setPrice, setSearch, setSort, setTestDrive, setTransmission, setYear };

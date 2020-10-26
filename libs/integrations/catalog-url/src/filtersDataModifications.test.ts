@@ -4,6 +4,7 @@ import {
   addColor,
   addCylinder,
   addDriveType,
+  addFuelType,
   addModel,
   deepCopyFiltersData,
   removeAllModels,
@@ -11,11 +12,13 @@ import {
   removeColor,
   removeCylinder,
   removeDriveType,
+  removeFuelType,
   removeModel,
   resetFilter,
   resetFilters,
   setMiles,
   setOtherCylinders,
+  setOtherFuelType,
   setPage,
   setPrice,
   setSearch,
@@ -30,12 +33,15 @@ import {
   DriveType,
   Filters,
   FiltersData,
+  FuelType,
   SortBy,
   SortDirection,
   Transmission,
 } from './types';
 
 const mockFiltersData1: FiltersData = {
+  [Filters.FUEL_TYPE]: [FuelType.ELECTRIC],
+  [Filters.OTHER_CYLINDERS]: false,
   [Filters.BODY_TYPES]: [BodyType.SUV],
   [Filters.COLORS]: [Color.GREY],
   [Filters.DRIVE_TYPE]: [DriveType.AWD],
@@ -71,36 +77,14 @@ const mockFiltersData1: FiltersData = {
 describe('resetFilter', () => {
   test('1', () => {
     expect(resetFilter(Filters.BODY_TYPES, mockFiltersData1)).toEqual({
+      ...mockFiltersData1,
       bodytypes: undefined,
-      colors: ['grey'],
-      drivetype: ['awd'],
-      makesandmodels: [{ makeSlug: 'volvo', modelSlugs: ['xc90'] }],
-      miles: { max: 100000, min: 0 },
-      page: 0,
-      price: { max: 100000, min: 0 },
-      search: 'search',
-      sort: { by: 'miles', direction: 'asc' },
-      transmission: 'auto',
-      year: { max: 2020, min: 2018 },
-      cylinders: ['8', '4'],
-      othercylinders: false,
     });
   });
   test('2', () => {
     expect(resetFilter(Filters.MAKE_AND_MODELS, mockFiltersData1)).toEqual({
-      bodytypes: ['suv'],
-      colors: ['grey'],
-      drivetype: ['awd'],
+      ...mockFiltersData1,
       makesandmodels: undefined,
-      miles: { max: 100000, min: 0 },
-      page: 0,
-      price: { max: 100000, min: 0 },
-      search: 'search',
-      sort: { by: 'miles', direction: 'asc' },
-      transmission: 'auto',
-      year: { max: 2020, min: 2018 },
-      cylinders: ['8', '4'],
-      othercylinders: false,
     });
   });
 });
@@ -110,38 +94,18 @@ describe('resetFilters', () => {
     expect(
       resetFilters([Filters.BODY_TYPES, Filters.PRICE], mockFiltersData1)
     ).toEqual({
+      ...mockFiltersData1,
       bodytypes: undefined,
-      colors: ['grey'],
-      drivetype: ['awd'],
-      makesandmodels: [{ makeSlug: 'volvo', modelSlugs: ['xc90'] }],
-      miles: { max: 100000, min: 0 },
-      page: 0,
       price: undefined,
-      search: 'search',
-      sort: { by: 'miles', direction: 'asc' },
-      transmission: 'auto',
-      year: { max: 2020, min: 2018 },
-      cylinders: ['8', '4'],
-      othercylinders: false,
     });
   });
   test('2', () => {
     expect(
       resetFilters([Filters.DRIVE_TYPE, Filters.TRANSMISSION], mockFiltersData1)
     ).toEqual({
-      bodytypes: ['suv'],
-      colors: ['grey'],
+      ...mockFiltersData1,
       drivetype: undefined,
-      makesandmodels: [{ makeSlug: 'volvo', modelSlugs: ['xc90'] }],
-      miles: { max: 100000, min: 0 },
-      page: 0,
-      price: { max: 100000, min: 0 },
-      search: 'search',
-      sort: { by: 'miles', direction: 'asc' },
       transmission: undefined,
-      year: { max: 2020, min: 2018 },
-      cylinders: ['8', '4'],
-      othercylinders: false,
     });
   });
 });
@@ -161,19 +125,8 @@ describe('addBodyType', () => {
   });
   test('2', () => {
     expect(addBodyType(BodyType.CONVERTIBLE, mockFiltersData1)).toEqual({
+      ...mockFiltersData1,
       bodytypes: ['suv', 'convertible'],
-      colors: ['grey'],
-      drivetype: ['awd'],
-      makesandmodels: [{ makeSlug: 'volvo', modelSlugs: ['xc90'] }],
-      miles: { max: 100000, min: 0 },
-      page: 0,
-      price: { max: 100000, min: 0 },
-      search: 'search',
-      sort: { by: 'miles', direction: 'asc' },
-      transmission: 'auto',
-      year: { max: 2020, min: 2018 },
-      cylinders: ['8', '4'],
-      othercylinders: false,
     });
   });
   test('3', () => {
@@ -229,44 +182,85 @@ describe('removeBodyType', () => {
   });
   test('6', () => {
     expect(removeBodyType(BodyType.SUV, mockFiltersData1)).toEqual({
+      ...mockFiltersData1,
       bodytypes: undefined,
-      colors: ['grey'],
-      drivetype: ['awd'],
-      makesandmodels: [{ makeSlug: 'volvo', modelSlugs: ['xc90'] }],
-      miles: { max: 100000, min: 0 },
-      page: 0,
-      price: { max: 100000, min: 0 },
-      search: 'search',
-      sort: { by: 'miles', direction: 'asc' },
-      transmission: 'auto',
-      year: { max: 2020, min: 2018 },
-      cylinders: ['8', '4'],
-      othercylinders: false,
+    });
+  });
+});
+
+describe('addFuelType', () => {
+  test('it should add the fuel type to no filters', () => {
+    expect(addFuelType(FuelType.GASOLINE, undefined)).toEqual({
+      fueltype: ['gasoline'],
+    });
+  });
+  test('it should add fuel type to filters which already exist', () => {
+    expect(addFuelType(FuelType.GASOLINE, mockFiltersData1)).toEqual({
+      ...mockFiltersData1,
+      fueltype: ['electric', 'gasoline'],
+    });
+  });
+  test('it should add fuel type to filters which already exist but are empty', () => {
+    const mockFiltersData: FiltersData = {};
+    expect(addFuelType(FuelType.GASOLINE, mockFiltersData)).toEqual({
+      fueltype: ['gasoline'],
+    });
+  });
+  test('it should add fuel type to filter if there are already fuel types', () => {
+    const mockFiltersData: FiltersData = {
+      [Filters.FUEL_TYPE]: [FuelType.ELECTRIC],
+    };
+    expect(addFuelType(FuelType.GASOLINE, mockFiltersData)).toEqual({
+      fueltype: ['electric', 'gasoline'],
+    });
+  });
+});
+
+describe('removeFuelType', () => {
+  test('it should set the fueltype to undefined', () => {
+    expect(removeFuelType(FuelType.ELECTRIC, undefined)).toEqual({
+      fueltype: undefined,
+    });
+  });
+  test('it should set the fueltype to undefined on a defined object', () => {
+    expect(removeFuelType(FuelType.ELECTRIC, {})).toEqual({
+      fueltype: undefined,
+    });
+  });
+  test('it should remove the fueltype if it exists', () => {
+    const mockFiltersData: FiltersData = {
+      [Filters.FUEL_TYPE]: [FuelType.ELECTRIC],
+    };
+    expect(removeFuelType(FuelType.ELECTRIC, mockFiltersData)).toEqual({
+      fueltype: undefined,
+    });
+  });
+  test('it should remove the correct fueltype', () => {
+    const mockFiltersData: FiltersData = {
+      [Filters.FUEL_TYPE]: [FuelType.ELECTRIC, FuelType.GASOLINE],
+    };
+    expect(removeFuelType(FuelType.ELECTRIC, mockFiltersData)).toEqual({
+      fueltype: ['gasoline'],
+    });
+  });
+  test('it should remove the fueltype from a big filter', () => {
+    expect(removeFuelType(FuelType.ELECTRIC, mockFiltersData1)).toEqual({
+      ...mockFiltersData1,
+      fueltype: undefined,
     });
   });
 });
 
 describe('addCylinder', () => {
-  test('it should add the color to no filters', () => {
+  test('it should add the cylinder to no filters', () => {
     expect(addCylinder(Cylinder.EIGHT, undefined)).toEqual({
       cylinders: ['8'],
     });
   });
   test('it should add cylinders to filters which already exist', () => {
     expect(addCylinder(Cylinder.SIX, mockFiltersData1)).toEqual({
-      bodytypes: ['suv'],
-      colors: ['grey'],
-      drivetype: ['awd'],
-      makesandmodels: [{ makeSlug: 'volvo', modelSlugs: ['xc90'] }],
-      miles: { max: 100000, min: 0 },
-      page: 0,
-      price: { max: 100000, min: 0 },
-      search: 'search',
-      sort: { by: 'miles', direction: 'asc' },
-      transmission: 'auto',
-      year: { max: 2020, min: 2018 },
+      ...mockFiltersData1,
       cylinders: ['8', '4', '6'],
-      othercylinders: false,
     });
   });
   test('it should add cylinders to filters which already exist but are empty', () => {
@@ -314,19 +308,8 @@ describe('removeCylinder', () => {
   });
   test('it should remove the cylinders from a big filter', () => {
     expect(removeCylinder(Cylinder.EIGHT, mockFiltersData1)).toEqual({
-      bodytypes: ['suv'],
-      colors: ['grey'],
-      drivetype: ['awd'],
-      makesandmodels: [{ makeSlug: 'volvo', modelSlugs: ['xc90'] }],
-      miles: { max: 100000, min: 0 },
-      page: 0,
-      price: { max: 100000, min: 0 },
-      search: 'search',
-      sort: { by: 'miles', direction: 'asc' },
-      transmission: 'auto',
-      year: { max: 2020, min: 2018 },
+      ...mockFiltersData1,
       cylinders: ['4'],
-      othercylinders: false,
     });
   });
 });
@@ -339,19 +322,8 @@ describe('addColor', () => {
   });
   test('2', () => {
     expect(addColor(Color.RED, mockFiltersData1)).toEqual({
-      bodytypes: ['suv'],
+      ...mockFiltersData1,
       colors: ['grey', 'red'],
-      drivetype: ['awd'],
-      makesandmodels: [{ makeSlug: 'volvo', modelSlugs: ['xc90'] }],
-      miles: { max: 100000, min: 0 },
-      page: 0,
-      price: { max: 100000, min: 0 },
-      search: 'search',
-      sort: { by: 'miles', direction: 'asc' },
-      transmission: 'auto',
-      year: { max: 2020, min: 2018 },
-      cylinders: ['8', '4'],
-      othercylinders: false,
     });
   });
   test('3', () => {
@@ -407,19 +379,8 @@ describe('removeColor', () => {
   });
   test('6', () => {
     expect(removeColor(Color.GREY, mockFiltersData1)).toEqual({
-      bodytypes: ['suv'],
+      ...mockFiltersData1,
       colors: undefined,
-      drivetype: ['awd'],
-      makesandmodels: [{ makeSlug: 'volvo', modelSlugs: ['xc90'] }],
-      miles: { max: 100000, min: 0 },
-      page: 0,
-      price: { max: 100000, min: 0 },
-      search: 'search',
-      sort: { by: 'miles', direction: 'asc' },
-      transmission: 'auto',
-      year: { max: 2020, min: 2018 },
-      cylinders: ['8', '4'],
-      othercylinders: false,
     });
   });
 });
@@ -432,19 +393,8 @@ describe('addDriveType', () => {
   });
   test('2', () => {
     expect(addDriveType(DriveType.FOUR_BY_FOUR, mockFiltersData1)).toEqual({
-      bodytypes: ['suv'],
-      colors: ['grey'],
+      ...mockFiltersData1,
       drivetype: ['awd', '4x4'],
-      makesandmodels: [{ makeSlug: 'volvo', modelSlugs: ['xc90'] }],
-      miles: { max: 100000, min: 0 },
-      page: 0,
-      price: { max: 100000, min: 0 },
-      search: 'search',
-      sort: { by: 'miles', direction: 'asc' },
-      transmission: 'auto',
-      year: { max: 2020, min: 2018 },
-      cylinders: ['8', '4'],
-      othercylinders: false,
     });
   });
   test('3', () => {
@@ -500,19 +450,8 @@ describe('removeDriveType', () => {
   });
   test('6', () => {
     expect(removeDriveType(DriveType.AWD, mockFiltersData1)).toEqual({
-      bodytypes: ['suv'],
-      colors: ['grey'],
+      ...mockFiltersData1,
       drivetype: undefined,
-      makesandmodels: [{ makeSlug: 'volvo', modelSlugs: ['xc90'] }],
-      miles: { max: 100000, min: 0 },
-      page: 0,
-      price: { max: 100000, min: 0 },
-      search: 'search',
-      sort: { by: 'miles', direction: 'asc' },
-      transmission: 'auto',
-      year: { max: 2020, min: 2018 },
-      cylinders: ['8', '4'],
-      othercylinders: false,
     });
   });
 });
@@ -538,19 +477,8 @@ describe('setTransmission', () => {
   });
   test('4', () => {
     expect(setTransmission(Transmission.MANUAL, mockFiltersData1)).toEqual({
-      bodytypes: ['suv'],
-      colors: ['grey'],
-      drivetype: ['awd'],
-      makesandmodels: [{ makeSlug: 'volvo', modelSlugs: ['xc90'] }],
-      miles: { max: 100000, min: 0 },
-      page: 0,
-      price: { max: 100000, min: 0 },
-      search: 'search',
-      sort: { by: 'miles', direction: 'asc' },
+      ...mockFiltersData1,
       transmission: 'manual',
-      year: { max: 2020, min: 2018 },
-      cylinders: ['8', '4'],
-      othercylinders: false,
     });
   });
 });
@@ -608,22 +536,11 @@ describe('addAllModels', () => {
   });
   test('6', () => {
     expect(addAllModels('toyota', mockFiltersData1)).toEqual({
-      bodytypes: ['suv'],
-      colors: ['grey'],
-      drivetype: ['awd'],
+      ...mockFiltersData1,
       makesandmodels: [
         { makeSlug: 'volvo', modelSlugs: ['xc90'] },
         { makeSlug: 'toyota' },
       ],
-      miles: { max: 100000, min: 0 },
-      page: 0,
-      price: { max: 100000, min: 0 },
-      search: 'search',
-      sort: { by: 'miles', direction: 'asc' },
-      transmission: 'auto',
-      year: { max: 2020, min: 2018 },
-      cylinders: ['8', '4'],
-      othercylinders: false,
     });
   });
 });
@@ -640,37 +557,12 @@ describe('removeAllModels', () => {
     });
   });
   test('3', () => {
-    expect(removeAllModels('ford', mockFiltersData1)).toEqual({
-      bodytypes: ['suv'],
-      colors: ['grey'],
-      drivetype: ['awd'],
-      makesandmodels: [{ makeSlug: 'volvo', modelSlugs: ['xc90'] }],
-      miles: { max: 100000, min: 0 },
-      page: 0,
-      price: { max: 100000, min: 0 },
-      search: 'search',
-      sort: { by: 'miles', direction: 'asc' },
-      transmission: 'auto',
-      year: { max: 2020, min: 2018 },
-      cylinders: ['8', '4'],
-      othercylinders: false,
-    });
+    expect(removeAllModels('ford', mockFiltersData1)).toEqual(mockFiltersData1);
   });
   test('4', () => {
     expect(removeAllModels('volvo', mockFiltersData1)).toEqual({
-      bodytypes: ['suv'],
-      colors: ['grey'],
-      drivetype: ['awd'],
+      ...mockFiltersData1,
       makesandmodels: undefined,
-      miles: { max: 100000, min: 0 },
-      page: 0,
-      price: { max: 100000, min: 0 },
-      search: 'search',
-      sort: { by: 'miles', direction: 'asc' },
-      transmission: 'auto',
-      year: { max: 2020, min: 2018 },
-      cylinders: ['8', '4'],
-      othercylinders: false,
     });
   });
   test('5', () => {
@@ -703,37 +595,14 @@ describe('addModel', () => {
     });
   });
   test('3', () => {
-    expect(addModel('volvo', 'xc90', mockFiltersData1)).toEqual({
-      bodytypes: ['suv'],
-      colors: ['grey'],
-      drivetype: ['awd'],
-      makesandmodels: [{ makeSlug: 'volvo', modelSlugs: ['xc90'] }],
-      miles: { max: 100000, min: 0 },
-      page: 0,
-      price: { max: 100000, min: 0 },
-      search: 'search',
-      sort: { by: 'miles', direction: 'asc' },
-      transmission: 'auto',
-      year: { max: 2020, min: 2018 },
-      cylinders: ['8', '4'],
-      othercylinders: false,
-    });
+    expect(addModel('volvo', 'xc90', mockFiltersData1)).toEqual(
+      mockFiltersData1
+    );
   });
   test('3', () => {
     expect(addModel('volvo', 'xc60', mockFiltersData1)).toEqual({
-      bodytypes: ['suv'],
-      colors: ['grey'],
-      drivetype: ['awd'],
+      ...mockFiltersData1,
       makesandmodels: [{ makeSlug: 'volvo', modelSlugs: ['xc90', 'xc60'] }],
-      miles: { max: 100000, min: 0 },
-      page: 0,
-      price: { max: 100000, min: 0 },
-      search: 'search',
-      sort: { by: 'miles', direction: 'asc' },
-      transmission: 'auto',
-      year: { max: 2020, min: 2018 },
-      cylinders: ['8', '4'],
-      othercylinders: false,
     });
   });
   test('4', () => {
@@ -759,9 +628,7 @@ describe('addModel', () => {
   });
   test('5', () => {
     expect(addModel('bmw', '300', mockFiltersData1)).toEqual({
-      bodytypes: ['suv'],
-      colors: ['grey'],
-      drivetype: ['awd'],
+      ...mockFiltersData1,
       makesandmodels: [
         { makeSlug: 'volvo', modelSlugs: ['xc90'] },
         {
@@ -769,15 +636,6 @@ describe('addModel', () => {
           modelSlugs: ['300'],
         },
       ],
-      miles: { max: 100000, min: 0 },
-      page: 0,
-      price: { max: 100000, min: 0 },
-      search: 'search',
-      sort: { by: 'miles', direction: 'asc' },
-      transmission: 'auto',
-      year: { max: 2020, min: 2018 },
-      cylinders: ['8', '4'],
-      othercylinders: false,
     });
   });
 });
@@ -795,42 +653,14 @@ describe('removeModel', () => {
   });
   test('3', () => {
     expect(removeModel('volvo', 'xc90', mockFiltersData1)).toEqual({
-      bodytypes: ['suv'],
-      colors: ['grey'],
-      drivetype: ['awd'],
+      ...mockFiltersData1,
       makesandmodels: undefined,
-      miles: { max: 100000, min: 0 },
-      page: 0,
-      price: { max: 100000, min: 0 },
-      search: 'search',
-      sort: { by: 'miles', direction: 'asc' },
-      transmission: 'auto',
-      year: { max: 2020, min: 2018 },
-      cylinders: ['8', '4'],
-      othercylinders: false,
     });
   });
   test('3', () => {
-    expect(removeModel('toyota', 'camry', mockFiltersData1)).toEqual({
-      bodytypes: ['suv'],
-      colors: ['grey'],
-      drivetype: ['awd'],
-      makesandmodels: [
-        {
-          makeSlug: 'volvo',
-          modelSlugs: ['xc90'],
-        },
-      ],
-      miles: { max: 100000, min: 0 },
-      page: 0,
-      price: { max: 100000, min: 0 },
-      search: 'search',
-      sort: { by: 'miles', direction: 'asc' },
-      transmission: 'auto',
-      year: { max: 2020, min: 2018 },
-      cylinders: ['8', '4'],
-      othercylinders: false,
-    });
+    expect(removeModel('toyota', 'camry', mockFiltersData1)).toEqual(
+      mockFiltersData1
+    );
   });
   test('4', () => {
     const mockFiltersData: FiltersData = {
@@ -896,19 +726,8 @@ describe('setMiles', () => {
   });
   test('3', () => {
     expect(setMiles({ min: 30, max: 10000 }, mockFiltersData1)).toEqual({
-      bodytypes: ['suv'],
-      colors: ['grey'],
-      drivetype: ['awd'],
-      makesandmodels: [{ makeSlug: 'volvo', modelSlugs: ['xc90'] }],
+      ...mockFiltersData1,
       miles: { max: 10000, min: 30 },
-      page: 0,
-      price: { max: 100000, min: 0 },
-      search: 'search',
-      sort: { by: 'miles', direction: 'asc' },
-      transmission: 'auto',
-      year: { max: 2020, min: 2018 },
-      cylinders: ['8', '4'],
-      othercylinders: false,
     });
   });
 });
@@ -926,19 +745,27 @@ describe('setOtherCylinders', () => {
   });
   test('it should set othercylinders on a large filter', () => {
     expect(setOtherCylinders(true, mockFiltersData1)).toEqual({
-      bodytypes: ['suv'],
-      colors: ['grey'],
-      drivetype: ['awd'],
-      makesandmodels: [{ makeSlug: 'volvo', modelSlugs: ['xc90'] }],
-      miles: { max: 100000, min: 0 },
-      page: 0,
-      price: { max: 100000, min: 0 },
-      search: 'search',
-      sort: { by: 'miles', direction: 'asc' },
-      transmission: 'auto',
-      year: { max: 2020, min: 2018 },
-      cylinders: ['8', '4'],
+      ...mockFiltersData1,
       othercylinders: true,
+    });
+  });
+});
+
+describe('setOtherFuelType', () => {
+  test('it should set the otherFuelType', () => {
+    expect(setOtherFuelType(true, undefined)).toEqual({
+      otherfueltype: true,
+    });
+  });
+  test('it should set otherFuelType on an empty object', () => {
+    expect(setOtherFuelType(true, {})).toEqual({
+      otherfueltype: true,
+    });
+  });
+  test('it should set otherFuelType on a large filter', () => {
+    expect(setOtherFuelType(true, mockFiltersData1)).toEqual({
+      ...mockFiltersData1,
+      otherfueltype: true,
     });
   });
 });
@@ -956,19 +783,8 @@ describe('setPage', () => {
   });
   test('3', () => {
     expect(setPage(42, mockFiltersData1)).toEqual({
-      bodytypes: ['suv'],
-      colors: ['grey'],
-      drivetype: ['awd'],
-      makesandmodels: [{ makeSlug: 'volvo', modelSlugs: ['xc90'] }],
-      miles: { max: 100000, min: 0 },
+      ...mockFiltersData1,
       page: 42,
-      price: { max: 100000, min: 0 },
-      search: 'search',
-      sort: { by: 'miles', direction: 'asc' },
-      transmission: 'auto',
-      year: { max: 2020, min: 2018 },
-      cylinders: ['8', '4'],
-      othercylinders: false,
     });
   });
 });
@@ -986,19 +802,8 @@ describe('setPrice', () => {
   });
   test('3', () => {
     expect(setPrice({ min: 30, max: 10000 }, mockFiltersData1)).toEqual({
-      bodytypes: ['suv'],
-      colors: ['grey'],
-      drivetype: ['awd'],
-      makesandmodels: [{ makeSlug: 'volvo', modelSlugs: ['xc90'] }],
-      miles: { max: 100000, min: 0 },
-      page: 0,
+      ...mockFiltersData1,
       price: { max: 10000, min: 30 },
-      search: 'search',
-      sort: { by: 'miles', direction: 'asc' },
-      transmission: 'auto',
-      year: { max: 2020, min: 2018 },
-      cylinders: ['8', '4'],
-      othercylinders: false,
     });
   });
 });
@@ -1016,19 +821,8 @@ describe('setSearch', () => {
   });
   test('3', () => {
     expect(setSearch('something', mockFiltersData1)).toEqual({
-      bodytypes: ['suv'],
-      colors: ['grey'],
-      drivetype: ['awd'],
-      makesandmodels: [{ makeSlug: 'volvo', modelSlugs: ['xc90'] }],
-      miles: { max: 100000, min: 0 },
-      page: 0,
-      price: { max: 100000, min: 0 },
+      ...mockFiltersData1,
       search: 'something',
-      sort: { by: 'miles', direction: 'asc' },
-      transmission: 'auto',
-      year: { max: 2020, min: 2018 },
-      cylinders: ['8', '4'],
-      othercylinders: false,
     });
   });
 });
@@ -1054,19 +848,8 @@ describe('setSort', () => {
     expect(
       setSort(SortBy.YEAR, SortDirection.DESCENDING, mockFiltersData1)
     ).toEqual({
-      bodytypes: ['suv'],
-      colors: ['grey'],
-      drivetype: ['awd'],
-      makesandmodels: [{ makeSlug: 'volvo', modelSlugs: ['xc90'] }],
-      miles: { max: 100000, min: 0 },
-      page: 0,
-      price: { max: 100000, min: 0 },
-      search: 'search',
+      ...mockFiltersData1,
       sort: { by: 'year', direction: 'desc' },
-      transmission: 'auto',
-      year: { max: 2020, min: 2018 },
-      cylinders: ['8', '4'],
-      othercylinders: false,
     });
   });
 });
@@ -1084,19 +867,8 @@ describe('setYear', () => {
   });
   test('3', () => {
     expect(setYear({ min: 2003, max: 2009 }, mockFiltersData1)).toEqual({
-      bodytypes: ['suv'],
-      colors: ['grey'],
-      drivetype: ['awd'],
-      makesandmodels: [{ makeSlug: 'volvo', modelSlugs: ['xc90'] }],
-      miles: { max: 100000, min: 0 },
-      page: 0,
-      price: { max: 100000, min: 0 },
-      search: 'search',
-      sort: { by: 'miles', direction: 'asc' },
-      transmission: 'auto',
+      ...mockFiltersData1,
       year: { max: 2009, min: 2003 },
-      cylinders: ['8', '4'],
-      othercylinders: false,
     });
   });
 });
