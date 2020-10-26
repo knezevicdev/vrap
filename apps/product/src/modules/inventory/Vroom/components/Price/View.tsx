@@ -17,14 +17,34 @@ const PriceContainer = styled('div')(({ theme }) => ({
   },
 }));
 
-const Price = styled(Typography)(() => ({
+const Price = styled(Typography)(({ theme }) => ({
   display: 'flex',
   flexDirection: 'row',
   justifyContent: 'center',
+  marginLeft: theme.spacing(1),
 }));
 
 const StyledInfoIcon = styled(InfoIcon)(({ theme }) => ({
   margin: theme.spacing(0, 1),
+}));
+
+const Container = styled('div')(({ theme }) => ({
+  width: '385px',
+  padding: theme.spacing(3, 4),
+  borderBottom: `5px solid ${theme.palette.primary.main}`,
+}));
+
+const Header = styled(Typography)(({ theme }) => ({
+  paddingBottom: theme.spacing(1),
+}));
+
+const List = styled('ul')(({ theme }) => ({
+  listStylePosition: 'outside',
+  paddingLeft: theme.spacing(2.5),
+}));
+
+const ListItem = styled('li')(({ theme }) => ({
+  paddingBottom: theme.spacing(2),
 }));
 
 interface Props {
@@ -57,6 +77,7 @@ const PriceView: React.FC<Props> = ({ viewModel }) => {
         open={open}
         anchorEl={anchorEl}
         onClose={handleClose}
+        PaperProps={{ square: true }}
         anchorOrigin={{
           vertical: 'center',
           horizontal: 'left',
@@ -66,23 +87,27 @@ const PriceView: React.FC<Props> = ({ viewModel }) => {
           horizontal: 'right',
         }}
       >
-        <Typography>{viewModel.title}</Typography>
-        <Typography>
-          {reactStringReplace(
-            viewModel.list.header,
-            /<bold>(.*)<\/bold>/,
-            (match, i) => (
-              <strong key={i}>{match}</strong>
-            )
-          )}
-        </Typography>
-        <ul>
+        <Container>
+          <Header>
+            <strong>{viewModel.title}</strong>
+          </Header>
           <Typography>
-            {viewModel.list.bullets.map((item: string) => {
-              return <li key={item}>{item}</li>;
-            })}
+            {reactStringReplace(
+              viewModel.list.header,
+              /<bold>(.*)<\/bold>/,
+              (match, i) => (
+                <strong key={i}>{match}</strong>
+              )
+            )}
           </Typography>
-        </ul>
+          <List>
+            <Typography>
+              {viewModel.list.bullets.map((item: string) => {
+                return <ListItem key={item}>{item}</ListItem>;
+              })}
+            </Typography>
+          </List>
+        </Container>
       </Popover>
     </>
   );
