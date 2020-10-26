@@ -1,9 +1,7 @@
-import Button from '@material-ui/core/Button';
 import ClickAwayListener from '@material-ui/core/ClickAwayListener';
-import { Theme, withStyles } from '@material-ui/core/styles';
+import { styled, Theme, withStyles } from '@material-ui/core/styles';
 import Tooltip from '@material-ui/core/Tooltip';
 import { Typography } from '@vroom-web/ui';
-import { observer } from 'mobx-react';
 import React, { useState } from 'react';
 import reactStringReplace from 'react-string-replace';
 
@@ -19,11 +17,15 @@ const HtmlTooltip = withStyles((theme: Theme) => ({
   },
 }))(Tooltip);
 
+const Price = styled('div')(() => ({
+  cursor: 'pointer',
+}));
+
 interface Props {
   viewModel: ViewModel;
 }
 
-const PriceDisclaimerView: React.FC<Props> = ({ viewModel }) => {
+const PriceView: React.FC<Props> = ({ viewModel }) => {
   const [open, setOpen] = useState(false);
   const handleTooltopClose = (): void => {
     setOpen(false);
@@ -63,11 +65,11 @@ const PriceDisclaimerView: React.FC<Props> = ({ viewModel }) => {
             </>
           }
         >
-          <Button onClick={handleTooltopOpen}>Price</Button>
+          <Price onClick={handleTooltopOpen}>${viewModel.price}</Price>
         </HtmlTooltip>
       </ClickAwayListener>
     </>
   );
 };
 
-export default observer(PriceDisclaimerView);
+export default PriceView;

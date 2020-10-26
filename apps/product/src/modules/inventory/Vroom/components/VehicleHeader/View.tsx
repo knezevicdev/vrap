@@ -6,7 +6,7 @@ import React from 'react';
 
 import Favorites from '../Favorites';
 import NotifyMe from '../NotifyMe';
-import PriceDisclaimer from '../PriceDisclaimer';
+import Price from '../Price';
 import StartPurchase from '../StartPurchase';
 import StatusBanner from '../StatusBanner';
 import ViewModel from './ViewModel';
@@ -55,11 +55,6 @@ const YearMakeModel = styled(Typography)(({ theme }) => ({
   marginBottom: theme.spacing(1),
 }));
 
-const Price = styled(Typography)(() => ({
-  paddingBottom: '28px', // Added padding for now. Can be changed once the monthly price breakdown is added
-  fontWeight: 600,
-}));
-
 const Divider = styled('div')(({ theme }) => ({
   margin: theme.spacing(0, 4),
   backgroundColor: theme.palette.grey['A100'],
@@ -97,8 +92,7 @@ const VehicleHeaderView: React.FC<Props> = (props) => {
           </Typography>
         </LeftContent>
         <RightContent>
-          <PriceDisclaimer />
-          <Price variant="body1">{summary.price}</Price>
+          <Price />
           {!xsDown && (
             <>
               <Divider />
