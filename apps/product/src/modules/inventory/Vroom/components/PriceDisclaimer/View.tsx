@@ -5,6 +5,7 @@ import Tooltip from '@material-ui/core/Tooltip';
 import { Typography } from '@vroom-web/ui';
 import { observer } from 'mobx-react';
 import React, { useState } from 'react';
+import reactStringReplace from 'react-string-replace';
 
 import ViewModel from './ViewModel';
 
@@ -42,9 +43,23 @@ const PriceDisclaimerView: React.FC<Props> = ({ viewModel }) => {
           onClose={handleTooltopClose}
           title={
             <>
-              <Typography color="inherit">{viewModel.title}</Typography>
-              <em>{"And here's"}</em> <b>{'some'}</b> <u>{'amazing content'}</u>
-              . {"It's very engaging. Right?"}
+              <Typography>{viewModel.title}</Typography>
+              <Typography>
+                {reactStringReplace(
+                  viewModel.list.header,
+                  /<bold>(.*)<\/bold>/,
+                  (match, i) => (
+                    <strong key={i}>{match}</strong>
+                  )
+                )}
+              </Typography>
+              <ul>
+                <Typography>
+                  {viewModel.list.bullets.map((item: string) => {
+                    return <li key={item}>{item}</li>;
+                  })}
+                </Typography>
+              </ul>
             </>
           }
         >
