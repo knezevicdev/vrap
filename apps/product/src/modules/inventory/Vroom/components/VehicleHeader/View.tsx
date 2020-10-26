@@ -6,6 +6,7 @@ import React from 'react';
 
 import Favorites from '../Favorites';
 import NotifyMe from '../NotifyMe';
+import PriceDisclaimer from '../PriceDisclaimer';
 import StartPurchase from '../StartPurchase';
 import StatusBanner from '../StatusBanner';
 import ViewModel from './ViewModel';
@@ -96,6 +97,7 @@ const VehicleHeaderView: React.FC<Props> = (props) => {
           </Typography>
         </LeftContent>
         <RightContent>
+          <PriceDisclaimer />
           <Price variant="body1">{summary.price}</Price>
           {!xsDown && (
             <>
