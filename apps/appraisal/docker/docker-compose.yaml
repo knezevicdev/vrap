@@ -8,6 +8,8 @@ services:
     environment:
       - GEARBOX_PRIVATE_URL=https://gearbox-dev-int.vroomapi.com/query-private
       - ACQUISITIONS_URL=https://acquisition-dev-int.vroomapi.com:8443/v1
+      - VROOM_URL=https://www.vroom.com
+      - DEV_VROOM_URL=https://qa.vroom.com
     command: ash -c "yarn workspace @vroom-web/appraisal dev --port 8080"
     # This starts nothing but leaves the container running, useful for
     # debugging nextjs start / config operations
