@@ -1,22 +1,11 @@
-import ClickAwayListener from '@material-ui/core/ClickAwayListener';
-import { styled, Theme, withStyles } from '@material-ui/core/styles';
-import Tooltip from '@material-ui/core/Tooltip';
+import Popover from '@material-ui/core/Popover';
+import { styled } from '@material-ui/core/styles';
 import { Typography } from '@vroom-web/ui';
 import React, { useState } from 'react';
 import reactStringReplace from 'react-string-replace';
 
 import { ReactComponent as InfoIcon } from './svg/Info.svg';
 import ViewModel from './ViewModel';
-
-const HtmlTooltip = withStyles((theme: Theme) => ({
-  tooltip: {
-    backgroundColor: theme.palette.common.white,
-    color: 'rgba(0, 0, 0, 0.87)',
-    maxWidth: 350,
-    fontSize: theme.typography.pxToRem(12),
-    border: '1px solid #dadde9',
-  },
-}))(Tooltip);
 
 const PriceContainer = styled('div')(({ theme }) => ({
   cursor: 'pointer',
@@ -43,53 +32,58 @@ interface Props {
 }
 
 const PriceView: React.FC<Props> = ({ viewModel }) => {
-  const [open, setOpen] = useState(false);
-  const handleTooltipClose = (): void => {
-    setOpen(false);
+  const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
+  const open = Boolean(anchorEl);
+  const handleClick = (event: React.MouseEvent<HTMLElement>): void => {
+    setAnchorEl(event.currentTarget);
   };
-  const handleTooltipOpen = (): void => {
-    setOpen(true);
+
+  const handleClose = (): void => {
+    setAnchorEl(null);
   };
   return (
     <>
-      <ClickAwayListener onClickAway={handleTooltipClose}>
-        <HtmlTooltip
-          disableFocusListener
-          disableHoverListener
-          disableTouchListener
-          placement="left"
-          open={open}
-          onClose={handleTooltipClose}
-          title={
-            <>
-              <Typography>{viewModel.title}</Typography>
-              <Typography>
-                {reactStringReplace(
-                  viewModel.list.header,
-                  /<bold>(.*)<\/bold>/,
-                  (match, i) => (
-                    <strong key={i}>{match}</strong>
-                  )
-                )}
-              </Typography>
-              <ul>
-                <Typography>
-                  {viewModel.list.bullets.map((item: string) => {
-                    return <li key={item}>{item}</li>;
-                  })}
-                </Typography>
-              </ul>
-            </>
-          }
-        >
-          <PriceContainer onClick={handleTooltipOpen}>
-            <Price>
-              ${viewModel.price}
-              <StyledInfoIcon />
-            </Price>
-          </PriceContainer>
-        </HtmlTooltip>
-      </ClickAwayListener>
+      <PriceContainer
+        id="price_container"
+        onClick={handleClick}
+        aria-haspopup="true"
+      >
+        <Price>
+          ${viewModel.price}
+          <StyledInfoIcon />
+        </Price>
+      </PriceContainer>
+      <Popover
+        open={open}
+        anchorEl={anchorEl}
+        onClose={handleClose}
+        anchorOrigin={{
+          vertical: 'center',
+          horizontal: 'left',
+        }}
+        transformOrigin={{
+          vertical: 'center',
+          horizontal: 'right',
+        }}
+      >
+        <Typography>{viewModel.title}</Typography>
+        <Typography>
+          {reactStringReplace(
+            viewModel.list.header,
+            /<bold>(.*)<\/bold>/,
+            (match, i) => (
+              <strong key={i}>{match}</strong>
+            )
+          )}
+        </Typography>
+        <ul>
+          <Typography>
+            {viewModel.list.bullets.map((item: string) => {
+              return <li key={item}>{item}</li>;
+            })}
+          </Typography>
+        </ul>
+      </Popover>
     </>
   );
 };
