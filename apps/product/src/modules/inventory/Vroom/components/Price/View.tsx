@@ -5,20 +5,37 @@ import { Typography } from '@vroom-web/ui';
 import React, { useState } from 'react';
 import reactStringReplace from 'react-string-replace';
 
+import { ReactComponent as InfoIcon } from './svg/Info.svg';
 import ViewModel from './ViewModel';
 
 const HtmlTooltip = withStyles((theme: Theme) => ({
   tooltip: {
-    backgroundColor: '#f5f5f9',
+    backgroundColor: theme.palette.common.white,
     color: 'rgba(0, 0, 0, 0.87)',
-    maxWidth: 220,
+    maxWidth: 350,
     fontSize: theme.typography.pxToRem(12),
     border: '1px solid #dadde9',
   },
 }))(Tooltip);
 
-const Price = styled('div')(() => ({
+const PriceContainer = styled('div')(({ theme }) => ({
   cursor: 'pointer',
+  '& svg path': {
+    fill: '#999DA3',
+  },
+  '& :hover svg path': {
+    fill: theme.palette.primary.main,
+  },
+}));
+
+const Price = styled(Typography)(() => ({
+  display: 'flex',
+  flexDirection: 'row',
+  justifyContent: 'center',
+}));
+
+const StyledInfoIcon = styled(InfoIcon)(({ theme }) => ({
+  margin: theme.spacing(0, 1),
 }));
 
 interface Props {
@@ -27,22 +44,22 @@ interface Props {
 
 const PriceView: React.FC<Props> = ({ viewModel }) => {
   const [open, setOpen] = useState(false);
-  const handleTooltopClose = (): void => {
+  const handleTooltipClose = (): void => {
     setOpen(false);
   };
-  const handleTooltopOpen = (): void => {
+  const handleTooltipOpen = (): void => {
     setOpen(true);
   };
   return (
     <>
-      <ClickAwayListener onClickAway={handleTooltopClose}>
+      <ClickAwayListener onClickAway={handleTooltipClose}>
         <HtmlTooltip
           disableFocusListener
           disableHoverListener
           disableTouchListener
           placement="left"
           open={open}
-          onClose={handleTooltopClose}
+          onClose={handleTooltipClose}
           title={
             <>
               <Typography>{viewModel.title}</Typography>
@@ -65,7 +82,12 @@ const PriceView: React.FC<Props> = ({ viewModel }) => {
             </>
           }
         >
-          <Price onClick={handleTooltopOpen}>${viewModel.price}</Price>
+          <PriceContainer onClick={handleTooltipOpen}>
+            <Price>
+              ${viewModel.price}
+              <StyledInfoIcon />
+            </Price>
+          </PriceContainer>
         </HtmlTooltip>
       </ClickAwayListener>
     </>
