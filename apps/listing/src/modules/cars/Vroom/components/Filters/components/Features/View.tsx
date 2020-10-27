@@ -1,8 +1,10 @@
 import Checkbox from '@material-ui/core/Checkbox';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormGroup from '@material-ui/core/FormGroup';
-import withStyles from '@material-ui/core/styles/withStyles';
+import ListItem from '@material-ui/core/ListItem';
+import { styled, withStyles } from '@material-ui/core/styles';
 import { PopularFeatures as FiltersDataPopularFeatures } from '@vroom-web/catalog-url-integration';
+import { Typography } from '@vroom-web/ui';
 import { observer } from 'mobx-react';
 import React from 'react';
 
@@ -24,6 +26,19 @@ const CheckboxCustom = withStyles((theme) => ({
     color: theme.palette.grey['A100'],
   },
 }))(Checkbox);
+
+const Reset = styled(ListItem)(({ theme }) => ({
+  padding: theme.spacing(1, 0),
+  height: '36px',
+  flexDirection: 'column',
+  '&.MuiListItem-root.Mui-disabled >p': {
+    color: theme.palette.grey['A100'],
+  },
+}));
+
+const Value = styled(Typography)(() => ({
+  fontSize: '16px',
+}));
 
 const FeaturesView: React.FC<Props> = ({ viewModel }) => {
   const handleCheckboxChange = (
@@ -54,6 +69,15 @@ const FeaturesView: React.FC<Props> = ({ viewModel }) => {
           />
         );
       })}
+      <Reset
+        button
+        onClick={viewModel.reset}
+        disabled={viewModel.isResetButtonDisabled()}
+      >
+        <Value fontWeight="fontWeightMedium" color="primary.main">
+          {viewModel.resetButtonLabel}
+        </Value>
+      </Reset>
     </FormGroup>
   );
 };
