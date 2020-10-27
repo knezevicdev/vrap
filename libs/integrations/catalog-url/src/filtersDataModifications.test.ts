@@ -17,8 +17,6 @@ import {
   resetFilter,
   resetFilters,
   setMiles,
-  setOtherCylinders,
-  setOtherFuelType,
   setPage,
   setPrice,
   setSearch,
@@ -728,25 +726,6 @@ describe('setMiles', () => {
     expect(setMiles({ min: 30, max: 10000 }, mockFiltersData1)).toEqual({
       ...mockFiltersData1,
       miles: { max: 10000, min: 30 },
-    });
-  });
-});
-
-describe('setOtherCylinders', () => {
-  test('it should set the otherCylinders', () => {
-    expect(setOtherCylinders(true, undefined)).toEqual({
-      othercylinders: true,
-    });
-  });
-  test('it should set othercylinders on an empty object', () => {
-    expect(setOtherCylinders(true, {})).toEqual({
-      othercylinders: true,
-    });
-  });
-  test('it should set othercylinders on a large filter', () => {
-    expect(setOtherCylinders(true, mockFiltersData1)).toEqual({
-      ...mockFiltersData1,
-      othercylinders: true,
     });
   });
 });

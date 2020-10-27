@@ -6,7 +6,6 @@ export declare const addBodyType: (bodyType: BodyType, filtersData?: FiltersData
 export declare const removeBodyType: (bodyType: BodyType, filtersData?: FiltersData | undefined) => FiltersData;
 export declare const addFuelType: (fuelType: FuelType, filtersData?: FiltersData | undefined) => FiltersData;
 export declare const removeFuelType: (fuelType: FuelType, filtersData?: FiltersData | undefined) => FiltersData;
-export declare const setOtherFuelType: (otherFuelType: boolean, filtersData?: FiltersData | undefined) => FiltersData;
 export declare const addCylinder: (cylinder: Cylinder, filtersData?: FiltersData | undefined) => FiltersData;
 export declare const removeCylinder: (cylinder: Cylinder, filtersData?: FiltersData | undefined) => FiltersData;
 export declare const setOtherCylinders: (otherCylinders: boolean, filtersData?: FiltersData | undefined) => FiltersData;

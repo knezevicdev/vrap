@@ -84,15 +84,6 @@ export const removeFuelType = (
   return newFiltersData;
 };
 
-export const setOtherFuelType = (
-  otherFuelType: boolean,
-  filtersData?: FiltersData
-): FiltersData => {
-  const newFiltersData = deepCopyFiltersData(filtersData || {});
-  newFiltersData[Filters.OTHER_FUEL_TYPE] = otherFuelType;
-  return newFiltersData;
-};
-
 export const addCylinder = (
   cylinder: Cylinder,
   filtersData?: FiltersData

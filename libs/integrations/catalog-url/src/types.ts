@@ -14,7 +14,6 @@ export enum Filters {
   CYLINDERS = 'cylinders',
   OTHER_CYLINDERS = 'othercylinders',
   FUEL_TYPE = 'fueltype',
-  OTHER_FUEL_TYPE = 'otherfueltype',
 }
 
 export enum BodyType {
@@ -97,6 +96,14 @@ export enum FuelType {
   GASOLINE = 'gasoline',
   ELECTRIC = 'electric',
   HYBRID = 'hybrid',
+  BIO_DIESEL = 'biodiesel',
+  FLEX_FUEL = 'flexfuel',
+  PLUG_IN_HYBRID = 'pluginhybrid',
+  GAS_ELECTRIC_HYBRID = 'gaselectrichybrid',
+  HYDROGEN_FUEL_CELL = 'hydrogenfuelcell',
+  NATURAL_GAS = 'naturalgas',
+  PROPANE = 'propane',
+  DIESEL = 'diesel',
 }
 
 export interface FiltersData {
@@ -115,7 +122,6 @@ export interface FiltersData {
   [Filters.CYLINDERS]?: Cylinder[];
   [Filters.OTHER_CYLINDERS]?: boolean;
   [Filters.FUEL_TYPE]?: FuelType[];
-  [Filters.OTHER_FUEL_TYPE]?: boolean;
 }
 
 export interface GetUrlFromFiltersDataOptions {
