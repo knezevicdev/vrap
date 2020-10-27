@@ -21,7 +21,7 @@ const config = {
   generateBuildId: () => shortHash,
   publicRuntimeConfig: {
     // Will be available on both server-side and client-side
-    BASE_PATH: process.env.BASE_PATH,
+    BASE_PATH: basePath,
     DATA_DOG_RUM_APPLICATION: process.env.DATA_DOG_RUM_APPLICATION,
     DATA_DOG_RUM_TOKEN: process.env.DATA_DOG_RUM_TOKEN,
     CALENDLY_URL: process.env.CALENDLY_URL,

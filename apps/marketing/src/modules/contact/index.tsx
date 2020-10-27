@@ -8,6 +8,7 @@ import Vroom from './Vroom';
 
 const Contact: React.FC = () => {
   const brand = useContext(BrandContext);
+
   if (brand === Brand.SANTANDER) {
     return <Santander />;
   }

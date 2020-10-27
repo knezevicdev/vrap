@@ -45,6 +45,8 @@ class VroomDocument extends Document<Props> {
 
     const initialProps = await Document.getInitialProps(ctx);
 
+    console.log('Document', brand);
+
     return {
       ...initialProps,
       brand,
