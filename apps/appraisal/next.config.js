@@ -9,8 +9,6 @@ const shortHash = childProcess
   .trim();
 
 const basePath = '/appraisal';
-const isProd = process.env.NODE_ENV === 'production';
-const vroomUrl = isProd ? process.env.VROOM_URL : process.env.DEV_VROOM_URL;
 
 const config = {
   basePath,
@@ -19,7 +17,7 @@ const config = {
   publicRuntimeConfig: {
     // Will be available on both server-side and client-side
     BASE_PATH: basePath,
-    VROOM_URL: vroomUrl,
+    VROOM_URL: process.env.VROOM_URL,
     GEARBOX_PRIVATE_URL: process.env.GEARBOX_PRIVATE_URL,
     ACQUISITIONS_URL: process.env.ACQUISITIONS_URL,
   },
