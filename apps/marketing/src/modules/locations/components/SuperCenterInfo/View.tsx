@@ -59,10 +59,6 @@ const Image = styled('img')(() => ({
   height: '100%',
 }));
 
-const Section = styled('div')(() => ({
-  marginBottom: '10px',
-}));
-
 const Heading = styled(Typography)(() => ({
   lineHeight: '32px',
   marginBottom: '20px',
@@ -81,6 +77,10 @@ const LocationInfo = styled('div')(({ theme }) => ({
   },
 }));
 
+const Section = styled('div')(() => ({
+  marginBottom: '10px',
+}));
+
 const Title = styled(Typography)(({ theme }) => ({
   fontSize: '18px',
   color: theme.palette.primary.main,
@@ -95,8 +95,6 @@ const Info = styled(Typography)(() => ({
   letterSpacing: '0.23px',
 }));
 
-const MapInfo = styled(Link)(() => ({}));
-
 const SuperCenterInfo: React.FC<Props> = ({ viewModel }) => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
@@ -108,9 +106,9 @@ const SuperCenterInfo: React.FC<Props> = ({ viewModel }) => {
         <Title>{locationDetails.name}</Title>
         <Info>{locationDetails.addressLine1}</Info>
         <Info>{locationDetails.addressLine2}</Info>
-        <MapInfo href={locationDetails.map.link} target="_blank">
+        <Link href={locationDetails.map.link} target="_blank">
           <Info>{locationDetails.map.text}</Info>
-        </MapInfo>
+        </Link>
       </Section>
       <Section>
         <Title>{locationDetails.phone.title}</Title>
