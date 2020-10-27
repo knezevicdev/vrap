@@ -1,7 +1,3 @@
-import getConfig from 'next/config';
-
-const { publicRuntimeConfig } = getConfig();
-
 class LocationsViewModel {
   readonly title = 'Houston Sell Us Your Car Centers';
   readonly subTitle =
