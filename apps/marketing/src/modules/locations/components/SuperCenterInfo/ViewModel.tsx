@@ -8,6 +8,7 @@ class SuperCenterViewModel {
     'Looking to buy or sell a car? Call, Click or Stop by our Stafford Campus located on over 70 Acres in Southwest Houston.';
 
   supercenter = {
+    href: '/marketing/locations/stafford',
     src: `${publicRuntimeConfig.BASE_PATH}/modules/tda/images/tda_supercenter.jpg`,
     alt: 'Stafford - TDA Super Center',
   };

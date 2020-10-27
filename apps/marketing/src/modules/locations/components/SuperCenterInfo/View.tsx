@@ -104,7 +104,9 @@ const SuperCenterInfo: React.FC<Props> = ({ viewModel }) => {
   const LocationInfoSection: JSX.Element = (
     <LocationInfo>
       <Section>
-        <Title>{locationDetails.name}</Title>
+        <Link href={supercenter.href}>
+          <Title>{locationDetails.name}</Title>
+        </Link>
         <Info>{locationDetails.addressLine1}</Info>
         <Info>{locationDetails.addressLine2}</Info>
         <Link href={locationDetails.map.link} target="_blank">
