@@ -81,7 +81,9 @@ const Locations: React.FC<Props> = ({ viewModel }) => {
         {viewModel.locations.map((location) => (
           <LocationInfo key={location.name}>
             <Section>
-              <Title>{location.name}</Title>
+              <Link href={location.href}>
+                <Title>{location.name}</Title>
+              </Link>
               <Info>{location.address.street}</Info>
               <Info>
                 {location.address.city}, {location.address.state}{' '}

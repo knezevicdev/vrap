@@ -6,6 +6,7 @@ class LocationsViewModel {
   locations = [
     {
       name: 'Stafford',
+      href: '/marketing/locations/stafford',
       address: {
         street: '12053 Southwest Fwy',
         city: 'Stafford',
@@ -18,10 +19,10 @@ class LocationsViewModel {
       },
       businessHours: 'Hours: Mon - Sat, 10 am - 6 pm',
       googleMapsUrl: 'https://goo.gl/maps/KUwJwFhbxi2tF8NP8',
-      salesforceAPIMapping: 'Texas Direct Auto',
     },
     {
       name: 'Clear\xa0Lake (League\xa0City)',
+      href: '/marketing/locations/clear-lake',
       address: {
         street: '300 Gulf Fwy N',
         city: 'League City',
@@ -34,10 +35,10 @@ class LocationsViewModel {
       },
       businessHours: 'Hours: Mon - Sat, 9 am - 6 pm',
       googleMapsUrl: 'https://goo.gl/maps/y8rvyunyoPWBqkMn7',
-      salesforceAPIMapping: 'suyc_clear_lake',
     },
     {
       name: 'The Woodlands',
+      href: '/marketing/locations/woodlands',
       address: {
         street: '26119 I-45 N',
         city: 'Spring',
@@ -50,10 +51,10 @@ class LocationsViewModel {
       },
       businessHours: 'Hours: Mon - Sat, 9 am - 6 pm',
       googleMapsUrl: 'https://goo.gl/maps/uCkWMp49FBMrjZSFA',
-      salesforceAPIMapping: 'suyc_the_woodlands',
     },
     {
       name: 'Memorial',
+      href: '/marketing/locations/memorial',
       address: {
         street: '12171 Katy Fwy',
         city: 'Houston',
@@ -66,10 +67,10 @@ class LocationsViewModel {
       },
       businessHours: 'Hours: Mon - Sat, 9 am - 6 pm',
       googleMapsUrl: 'https://goo.gl/maps/Yek1r2zTcJvnZtJZ9',
-      salesforceAPIMapping: 'suyc_memorial',
     },
     {
       name: 'Katy',
+      href: '/marketing/locations/katy',
       address: {
         street: '22461 Katy Freeway',
         city: 'Katy',
@@ -82,10 +83,10 @@ class LocationsViewModel {
       },
       businessHours: 'Hours: Mon - Sat, 9 am - 6 pm',
       googleMapsUrl: 'https://goo.gl/maps/VeRiY68MWa24Qx5n7',
-      salesforceAPIMapping: 'suyc_katy',
     },
     {
       name: 'Cypress',
+      href: '/marketing/locations/cypress',
       address: {
         street: '19710 Northwest Freeway #400',
         city: 'Houston',
@@ -98,10 +99,10 @@ class LocationsViewModel {
       },
       businessHours: 'Hours: Mon - Sat, 9 am - 6 pm',
       googleMapsUrl: 'https://goo.gl/maps/rVHXyavJk4v2Qi5v7',
-      salesforceAPIMapping: 'suyc_cypress',
     },
     {
       name: 'Kingwood',
+      href: '/marketing/locations/kingwood',
       address: {
         street: '23906 Eastex Fwy',
         city: 'Kingwood',
@@ -114,10 +115,10 @@ class LocationsViewModel {
       },
       businessHours: 'Hours: Mon - Sat, 9 am - 6 pm',
       googleMapsUrl: 'https://goo.gl/maps/SBhBhUNdCBkCZH9Y7',
-      salesforceAPIMapping: 'suyc_kingwood',
     },
     {
       name: 'Galleria (Westheimer)',
+      href: '/marketing/locations/galleria',
       address: {
         street: '7730 Westheimer Rd',
         city: 'Houston',
@@ -130,7 +131,6 @@ class LocationsViewModel {
       },
       businessHours: 'Hours: Mon - Sat, 9 am - 6 pm',
       googleMapsUrl: 'https://goo.gl/maps/QNpUtKDbv1yy6qLL9',
-      salesforceAPIMapping: 'suyc_westheimer',
     },
   ];
 }
