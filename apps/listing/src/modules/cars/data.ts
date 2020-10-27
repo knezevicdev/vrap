@@ -3,6 +3,7 @@ import {
   Color as FiltersDataColor,
   Cylinder as FiltersDataCylinder,
   DriveType as FiltersDataDriveType,
+  PopularFeatures as FiltersDataPopularFeatures,
   SortBy as FiltersDataSortBy,
   SortDirection as FiltersDataSortDirection,
   TestDrive as FiltersDataTestDrive,
@@ -286,6 +287,70 @@ export const driveTypes: DriveType[] = [
     api: DriveTypeAPI.RWD,
     display: DriveTypeDisplay.RWD,
     filtersDataValue: FiltersDataDriveType.RWD,
+  },
+];
+
+export enum PopularFeatureApi {
+  ANDROID_AUTO = 'android_auto',
+  APPLE_CAR_PLAY = 'apple_car_play',
+  HEATED_SEATS = 'heated_seats',
+  REAR_VIEW_CAMERA = 'rear_view_camera',
+  REMOTE_START = 'remote_start',
+  SUNROOF_MOONROOF = 'sunroof_moonroof',
+  THIRD_ROW_SEATING = 'third_row_seating',
+}
+
+export enum PopularFeatureDisplay {
+  ANDROID_AUTO = 'Android Auto',
+  APPLE_CAR_PLAY = 'Apple Car Play',
+  HEATED_SEATS = 'Heated Seats',
+  REAR_VIEW_CAMERA = 'Rear View Camera',
+  REMOTE_START = 'Remote Start',
+  SUNROOF_MOONROOF = 'Sunroof or Moonroof',
+  THIRD_ROW_SEATING = 'Third Row Searting',
+}
+
+export interface PopularFeature {
+  api?: PopularFeatureApi;
+  display: PopularFeatureDisplay;
+  filtersDataValue: FiltersDataPopularFeatures;
+}
+
+export const popularFeatures: PopularFeature[] = [
+  {
+    api: PopularFeatureApi.ANDROID_AUTO,
+    display: PopularFeatureDisplay.ANDROID_AUTO,
+    filtersDataValue: FiltersDataPopularFeatures.ANDROID_AUTO,
+  },
+  {
+    api: PopularFeatureApi.APPLE_CAR_PLAY,
+    display: PopularFeatureDisplay.APPLE_CAR_PLAY,
+    filtersDataValue: FiltersDataPopularFeatures.APPLE_CAR_PLAY,
+  },
+  {
+    api: PopularFeatureApi.HEATED_SEATS,
+    display: PopularFeatureDisplay.HEATED_SEATS,
+    filtersDataValue: FiltersDataPopularFeatures.HEATED_SEATS,
+  },
+  {
+    api: PopularFeatureApi.REAR_VIEW_CAMERA,
+    display: PopularFeatureDisplay.REAR_VIEW_CAMERA,
+    filtersDataValue: FiltersDataPopularFeatures.REAR_VIEW_CAMERA,
+  },
+  {
+    api: PopularFeatureApi.REMOTE_START,
+    display: PopularFeatureDisplay.REMOTE_START,
+    filtersDataValue: FiltersDataPopularFeatures.REMOTE_START,
+  },
+  {
+    api: PopularFeatureApi.SUNROOF_MOONROOF,
+    display: PopularFeatureDisplay.SUNROOF_MOONROOF,
+    filtersDataValue: FiltersDataPopularFeatures.SUNROOF_MOONROOF,
+  },
+  {
+    api: PopularFeatureApi.THIRD_ROW_SEATING,
+    display: PopularFeatureDisplay.THIRD_ROW_SEATING,
+    filtersDataValue: FiltersDataPopularFeatures.THIRD_ROW_SEATING,
   },
 ];
 

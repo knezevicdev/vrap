@@ -19,6 +19,7 @@ var jsBase64 = require('js-base64');
   Filters["YEAR"] = "year";
   Filters["CYLINDERS"] = "cylinders";
   Filters["OTHER_CYLINDERS"] = "othercylinders";
+  Filters["POPULAR_FEATURES"] = "optionalfeatures";
 })(exports.Filters || (exports.Filters = {}));
 
 (function (BodyType) {
@@ -79,6 +80,16 @@ var jsBase64 = require('js-base64');
   Cylinder["SIX"] = "6";
   Cylinder["EIGHT"] = "8";
 })(exports.Cylinder || (exports.Cylinder = {}));
+
+(function (PopularFeatures) {
+  PopularFeatures["ANDROID_AUTO"] = "android_auto";
+  PopularFeatures["APPLE_CAR_PLAY"] = "apple_car_play";
+  PopularFeatures["HEATED_SEATS"] = "heated_seats";
+  PopularFeatures["REAR_VIEW_CAMERA"] = "rear_view_camera";
+  PopularFeatures["REMOTE_START"] = "remote_start";
+  PopularFeatures["SUNROOF_MOONROOF"] = "sunroof_moonroof";
+  PopularFeatures["THIRD_ROW_SEATING"] = "third_row_seating";
+})(exports.PopularFeatures || (exports.PopularFeatures = {}));
 
 var deepCopyFiltersData = function deepCopyFiltersData(filtersData) {
   return JSON.parse(JSON.stringify(filtersData));
@@ -162,6 +173,22 @@ var removeDriveType = function removeDriveType(driveType, filtersData) {
     return dt !== driveType;
   });
   newFiltersData[exports.Filters.DRIVE_TYPE] = newDriveTypes.length > 0 ? newDriveTypes : undefined;
+  return newFiltersData;
+};
+var addPopularFeature = function addPopularFeature(popularFeature, filtersData) {
+  var newFiltersData = deepCopyFiltersData(filtersData || {});
+  var newFeatures = newFiltersData[exports.Filters.POPULAR_FEATURES] || [];
+  newFeatures.push(popularFeature);
+  newFiltersData[exports.Filters.POPULAR_FEATURES] = newFeatures;
+  return newFiltersData;
+};
+var removePopularFeature = function removePopularFeature(popularFeature, filtersData) {
+  var newFiltersData = deepCopyFiltersData(filtersData || {});
+  var existingFeatures = newFiltersData[exports.Filters.POPULAR_FEATURES] || [];
+  var newFeatures = existingFeatures.filter(function (f) {
+    return f !== popularFeature;
+  });
+  newFiltersData[exports.Filters.POPULAR_FEATURES] = newFeatures.length > 0 ? newFeatures : undefined;
   return newFiltersData;
 };
 var setTestDrive = function setTestDrive(testDrive, filtersData) {
@@ -699,6 +726,7 @@ exports.addColor = addColor;
 exports.addCylinder = addCylinder;
 exports.addDriveType = addDriveType;
 exports.addModel = addModel;
+exports.addPopularFeature = addPopularFeature;
 exports.getFiltersDataFromUrl = getFiltersDataFromUrl;
 exports.getUrlFromFiltersData = getUrlFromFiltersData;
 exports.removeAllModels = removeAllModels;
@@ -707,6 +735,7 @@ exports.removeColor = removeColor;
 exports.removeCylinder = removeCylinder;
 exports.removeDriveType = removeDriveType;
 exports.removeModel = removeModel;
+exports.removePopularFeature = removePopularFeature;
 exports.resetFilter = resetFilter;
 exports.resetFilters = resetFilters;
 exports.setMiles = setMiles;

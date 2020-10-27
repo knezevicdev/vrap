@@ -13,6 +13,7 @@ export enum Filters {
   YEAR = 'year',
   CYLINDERS = 'cylinders',
   OTHER_CYLINDERS = 'othercylinders',
+  POPULAR_FEATURES = 'optionalfeatures',
 }
 
 export enum BodyType {
@@ -91,6 +92,16 @@ export enum Cylinder {
   EIGHT = '8',
 }
 
+export enum PopularFeatures {
+  ANDROID_AUTO = 'android_auto',
+  APPLE_CAR_PLAY = 'apple_car_play',
+  HEATED_SEATS = 'heated_seats',
+  REAR_VIEW_CAMERA = 'rear_view_camera',
+  REMOTE_START = 'remote_start',
+  SUNROOF_MOONROOF = 'sunroof_moonroof',
+  THIRD_ROW_SEATING = 'third_row_seating',
+}
+
 export interface FiltersData {
   [Filters.BODY_TYPES]?: BodyType[];
   [Filters.COLORS]?: Color[];
@@ -106,6 +117,7 @@ export interface FiltersData {
   [Filters.YEAR]?: MaxAndMin;
   [Filters.CYLINDERS]?: Cylinder[];
   [Filters.OTHER_CYLINDERS]?: boolean;
+  [Filters.POPULAR_FEATURES]?: PopularFeatures[];
 }
 
 export interface GetUrlFromFiltersDataOptions {
