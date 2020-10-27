@@ -5,27 +5,6 @@ const {
 } = getConfig();
 
 export class Icons {
-  static readonly EMAIL = new Icons('Email', {
-    name: 'email',
-    width: 24,
-    height: 24,
-    path: `${BASE_PATH}/icons/email.svg`,
-  });
-
-  static readonly FAQ = new Icons('Faq', {
-    name: 'faq',
-    width: 24,
-    height: 24,
-    path: `${BASE_PATH}/icons/faq.svg`,
-  });
-
-  static readonly PHONE = new Icons('Phone', {
-    name: 'phone',
-    width: 24,
-    height: 24,
-    path: `${BASE_PATH}/icons/phone.svg`,
-  });
-
   static readonly VROOM = new Icons('VROOM', {
     name: 'vroom',
     width: 116,
@@ -73,12 +52,12 @@ export class Icons {
     color: '#FFFFFF',
   });
 
-  static readonly CAR_OFFER = new Icons('CAR_OFFER', {
-    name: 'car-offer',
-    width: 90,
-    height: 90,
-    path: `${BASE_PATH}/icons/car-offer.svg`,
-  });
+  static readonly RED_ONE = new Icons('RED_ONE', {
+    name: 'red-one',
+    width: 16,
+    height: 16,
+    path: `${BASE_PATH}/icons/red-one.svg`,
+  })
 
   private constructor(
     protected key: string,
