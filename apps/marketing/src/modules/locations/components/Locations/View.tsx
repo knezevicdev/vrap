@@ -81,19 +81,21 @@ const Locations: React.FC<Props> = ({ viewModel }) => {
           <LocationInfo>
             <Section>
               <Title>{location.name}</Title>
-              <Info>{location.addressLine1}</Info>
-              <Info>{location.addressLine2}</Info>
-              <Link href={location.map.link} target="_blank">
-                <Info>{location.map.text}</Info>
+              <Info>{location.address.street}</Info>
+              <Info>
+                {location.address.city}, {location.address.state}{' '}
+                {location.address.zipCode}
+              </Info>
+            </Section>
+            <Section>
+              <Link href={location.googleMapsUrl} target="_blank">
+                <Info>{viewModel.mapText}</Info>
               </Link>
             </Section>
             <Section>
               <Info>{location.phone.office}</Info>
               <Info>{location.phone.fax}</Info>
-            </Section>
-            <Section>
-              <Info>{location.hoursOfOperation.days}</Info>
-              <Info>{location.hoursOfOperation.time}</Info>
+              <Info>{location.businessHours}</Info>
             </Section>
           </LocationInfo>
         ))}
