@@ -1,8 +1,10 @@
+import { FormatLineSpacingRounded } from '@material-ui/icons';
 import { action, IObservableArray, observable } from 'mobx';
 
 import BodyTypes from './components/BodyTypes';
 import Color from './components/Color';
 import EngineAndDrivetrain from './components/EngineAndDrivetrain';
+import FuelAndEfficiency from './components/EngineAndDrivetrain';
 import Makes from './components/Makes';
 import Miles from './components/Miles';
 import Price from './components/Price';
@@ -16,6 +18,7 @@ export enum FilterDisplay {
   PRICE = 'Price',
   MILES = 'Miles',
   ENGINE_AND_DRIVETRAIN = 'Engine & Drivetrain',
+  FUEL_AND_EFFICIENCY = 'Fuel & Efficiency',
 }
 
 export interface Filter {
@@ -54,6 +57,11 @@ class FiltersStore {
     {
       display: FilterDisplay.MILES,
       FilterComponent: Miles,
+      open: false,
+    },
+    {
+      display: FilterDisplay.FUEL_AND_EFFICIENCY,
+      FilterComponent: FuelAndEfficiency,
       open: false,
     },
     {
