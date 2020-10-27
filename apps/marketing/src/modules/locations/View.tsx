@@ -1,13 +1,14 @@
-import React from 'react';
-import Hero from './components/Hero';
-import SuperCenterInfo from './components/SuperCenterInfo';
-import MarketingInfo from './components/MarketingInfo';
-import Locations from './components/Locations';
-import ContactModule from './components/ContactModule';
-import { TDAHeader } from '@vroom-web/header-components';
 import { TDAFooter } from '@vroom-web/footer-components';
+import { TDAHeader } from '@vroom-web/header-components';
+import React from 'react';
 
-const View = () => {
+import ContactModule from './components/ContactModule';
+import Hero from './components/Hero';
+import Locations from './components/Locations';
+import MarketingInfo from './components/MarketingInfo';
+import SuperCenterInfo from './components/SuperCenterInfo';
+
+const View: React.FC = () => {
   return (
     <>
       <TDAHeader />

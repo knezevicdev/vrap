@@ -1,7 +1,8 @@
-import React from 'react';
-import ViewModel from './ViewModel';
-import { styled, Link } from '@material-ui/core';
+import { Link, styled } from '@material-ui/core';
 import { Typography } from '@vroom-web/ui';
+import React from 'react';
+
+import ViewModel from './ViewModel';
 
 interface Props {
   viewModel: ViewModel;
@@ -78,7 +79,7 @@ const Locations: React.FC<Props> = ({ viewModel }) => {
       <SubHeading>{viewModel.subTitle} </SubHeading>
       <LocationsSection>
         {viewModel.locations.map((location) => (
-          <LocationInfo>
+          <LocationInfo key={location.name}>
             <Section>
               <Title>{location.name}</Title>
               <Info>{location.address.street}</Info>

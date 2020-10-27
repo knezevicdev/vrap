@@ -1,8 +1,9 @@
-import React from 'react';
-import ViewModel from './ViewModel';
 import { styled } from '@material-ui/core';
 import { CheckCircle } from '@material-ui/icons';
 import { Typography } from '@vroom-web/ui';
+import React from 'react';
+
+import ViewModel from './ViewModel';
 
 interface Props {
   viewModel: ViewModel;
@@ -54,7 +55,7 @@ const MarketingInfo: React.FC<Props> = ({ viewModel }) => {
     <Container>
       <ContainerContent>
         {viewModel.info.map((item) => (
-          <Content>
+          <Content key={item.title}>
             <CheckCircle color="primary" />
             <Info>
               <Title variant="h2">{item.title}</Title>

@@ -3,8 +3,8 @@ import { NextPage, NextPageContext } from 'next';
 import React from 'react';
 
 import { BrandContext } from 'src/modules/contact/BrandContext';
-import Page from 'src/Page';
 import Locations from 'src/modules/locations';
+import Page from 'src/Page';
 
 interface Props {
   brand: Brand;
@@ -39,7 +39,7 @@ LocationsPage.getInitialProps = async (
   const brandHeader = req && req.headers[headerBrandKey];
   const queryBrand = query.brand;
 
-  let brand = Brand.TDA;
+  const brand = Brand.TDA;
   // const whitelabel = brandHeader || queryBrand;
   // if (whitelabel === Brand.SANTANDER) brand = Brand.SANTANDER;
   // else if (whitelabel === Brand.TDA) brand = Brand.TDA;

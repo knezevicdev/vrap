@@ -1,7 +1,8 @@
-import React from 'react';
-import ViewModel from './ViewModel';
-import { styled, Link } from '@material-ui/core';
+import { Link, styled } from '@material-ui/core';
 import { Typography } from '@vroom-web/ui';
+import React from 'react';
+
+import ViewModel from './ViewModel';
 
 interface Props {
   viewModel: ViewModel;
@@ -61,7 +62,7 @@ const ConstactModule: React.FC<Props> = ({ viewModel }) => {
       <Heading variant="h2">{viewModel.title}</Heading>
       <ContainerContent>
         {viewModel.links.map((item) => (
-          <Link href={item.link}>
+          <Link href={item.link} key={item.text}>
             <LinkContent>
               <img width={20} height={20} src={item.icon}></img>
               <Info>{item.text}</Info>

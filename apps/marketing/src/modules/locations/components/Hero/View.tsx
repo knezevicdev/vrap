@@ -1,5 +1,5 @@
 import { styled } from '@material-ui/core/styles';
-import { Typography, Button } from '@vroom-web/ui';
+import { Button, Typography } from '@vroom-web/ui';
 import React from 'react';
 
 import ViewModel from './ViewModel';

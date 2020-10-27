@@ -1,13 +1,14 @@
-import React from 'react';
-import ViewModel from './ViewModel';
 import {
-  styled,
-  useTheme,
-  useMediaQuery,
-  Link,
   Divider,
+  Link,
+  styled,
+  useMediaQuery,
+  useTheme,
 } from '@material-ui/core';
 import { Typography } from '@vroom-web/ui';
+import React from 'react';
+
+import ViewModel from './ViewModel';
 
 interface Props {
   viewModel: ViewModel;
