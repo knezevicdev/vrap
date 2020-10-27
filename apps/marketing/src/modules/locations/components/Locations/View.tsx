@@ -7,7 +7,7 @@ interface Props {
   viewModel: ViewModel;
 }
 
-const LocationContent = styled('div')(({ theme }) => ({
+const Container = styled('div')(({ theme }) => ({
   width: '100%',
   maxWidth: '1280px',
   marginLeft: 'auto',
@@ -73,7 +73,7 @@ const Info = styled(Typography)(() => ({
 
 const Locations: React.FC<Props> = ({ viewModel }) => {
   return (
-    <LocationContent>
+    <Container>
       <Heading variant="h2">{viewModel.title}</Heading>
       <SubHeading>{viewModel.subTitle} </SubHeading>
       <LocationsSection>
@@ -100,7 +100,7 @@ const Locations: React.FC<Props> = ({ viewModel }) => {
           </LocationInfo>
         ))}
       </LocationsSection>
-    </LocationContent>
+    </Container>
   );
 };
 

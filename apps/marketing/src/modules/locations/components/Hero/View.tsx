@@ -4,14 +4,14 @@ import React from 'react';
 
 import ViewModel from './ViewModel';
 
-const HeroContainer = styled('div')(({ theme }) => ({
+const Container = styled('div')(({ theme }) => ({
   background: `linear-gradient(100deg, ${theme.palette.background.default} 71.9%, ${theme.palette.primary.main} 72%)`,
   [theme.breakpoints.only('xs')]: {
     background: `linear-gradient(170deg, ${theme.palette.background.default} 71.9%, ${theme.palette.primary.main} 72%)`,
   },
 }));
 
-const HeroContent = styled('div')(({ theme }) => ({
+const ContainerContent = styled('div')(({ theme }) => ({
   width: '100%',
   maxWidth: '1280px',
   marginLeft: 'auto',
@@ -65,6 +65,7 @@ const Title = styled(Typography)(({ theme }) => ({
 
 const SubTitle = styled(Typography)(({ theme }) => ({
   fontSize: '24px',
+  lineHeight: '30px',
   marginBottom: theme.spacing(4),
   [theme.breakpoints.only('xs')]: {
     marginBottom: theme.spacing(2),
@@ -97,8 +98,8 @@ interface Props {
 
 const HeroView: React.FC<Props> = ({ viewModel }) => {
   return (
-    <HeroContainer>
-      <HeroContent>
+    <Container>
+      <ContainerContent>
         <div>
           <TagLine>{viewModel.tagline}</TagLine>
           <Title variant="h1">{viewModel.title}</Title>
@@ -114,8 +115,8 @@ const HeroView: React.FC<Props> = ({ viewModel }) => {
         <HeroImgWrapper>
           <HeroImg alt={viewModel.car.alt} src={viewModel.car.src} />
         </HeroImgWrapper>
-      </HeroContent>
-    </HeroContainer>
+      </ContainerContent>
+    </Container>
   );
 };
 

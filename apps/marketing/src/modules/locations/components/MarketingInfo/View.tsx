@@ -8,11 +8,11 @@ interface Props {
   viewModel: ViewModel;
 }
 
-const SuperCenterContainer = styled('div')(({ theme }) => ({
+const Container = styled('div')(({ theme }) => ({
   backgroundColor: theme.palette.background.paper,
 }));
 
-const SuperCenterContent = styled('div')(({ theme }) => ({
+const ContainerContent = styled('div')(({ theme }) => ({
   width: '100%',
   maxWidth: '1280px',
   marginLeft: 'auto',
@@ -25,8 +25,6 @@ const SuperCenterContent = styled('div')(({ theme }) => ({
     gridTemplateColumns: '1fr',
     maxWidth: '680px',
     padding: theme.spacing(6, 3),
-    flexDirection: 'column',
-    justifyContent: 'center',
   },
 }));
 
@@ -37,11 +35,13 @@ const Content = styled('div')(() => ({
 const Info = styled('div')(() => ({
   marginLeft: '10px',
 }));
+
 const Title = styled(Typography)(() => ({
   fontSize: '24px',
   lineHeight: '24px',
   letterSpacing: '0.25px',
 }));
+
 const Description = styled(Typography)(() => ({
   fontSize: '18px',
   lineHeight: '25px',
@@ -51,8 +51,8 @@ const Description = styled(Typography)(() => ({
 
 const MarketingInfo: React.FC<Props> = ({ viewModel }) => {
   return (
-    <SuperCenterContainer>
-      <SuperCenterContent>
+    <Container>
+      <ContainerContent>
         {viewModel.info.map((item) => (
           <Content>
             <CheckCircle color="primary" />
@@ -62,8 +62,8 @@ const MarketingInfo: React.FC<Props> = ({ viewModel }) => {
             </Info>
           </Content>
         ))}
-      </SuperCenterContent>
-    </SuperCenterContainer>
+      </ContainerContent>
+    </Container>
   );
 };
 

@@ -13,11 +13,11 @@ interface Props {
   viewModel: ViewModel;
 }
 
-const SuperCenterContainer = styled('div')(({ theme }) => ({
+const Container = styled('div')(({ theme }) => ({
   backgroundColor: theme.palette.background.paper,
 }));
 
-const SuperCenterContent = styled('div')(({ theme }) => ({
+const ContainerContent = styled('div')(({ theme }) => ({
   borderBottom: `1px solid ${theme.palette.grey['A100']}`,
   width: '100%',
   maxWidth: '1280px',
@@ -124,8 +124,8 @@ const SuperCenterInfo: React.FC<Props> = ({ viewModel }) => {
   );
 
   return (
-    <SuperCenterContainer>
-      <SuperCenterContent>
+    <Container>
+      <ContainerContent>
         {isMobile ? (
           <>
             <div>
@@ -150,8 +150,8 @@ const SuperCenterInfo: React.FC<Props> = ({ viewModel }) => {
           </>
         )}
         <Divider />
-      </SuperCenterContent>
-    </SuperCenterContainer>
+      </ContainerContent>
+    </Container>
   );
 };
 
