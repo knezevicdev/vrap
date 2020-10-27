@@ -20,7 +20,7 @@ const config = {
     VROOM_URL: process.env.VROOM_URL,
     GEARBOX_PRIVATE_URL: process.env.GEARBOX_PRIVATE_URL,
     ACQUISITIONS_URL: process.env.ACQUISITIONS_URL,
-    STATIC_ASSETS_HOST_URL: process.env.STATIC_ASSETS_HOST_URL
+    STATIC_ASSETS_HOST_URL: process.env.STATIC_ASSETS_HOST_URL,
   },
   serverRuntimeConfig: {
     // Will only be available on the server side

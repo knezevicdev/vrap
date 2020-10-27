@@ -1,5 +1,6 @@
-import { Brand, UISnippet } from '@vroom-web/ui';
+import { ServerStyleSheets } from '@material-ui/core/styles';
 import { AnalyticsSnippet } from '@vroom-web/analytics-integration';
+import { Brand, UISnippet } from '@vroom-web/ui';
 import getConfig from 'next/config';
 import Document, {
   DocumentContext,
@@ -10,7 +11,6 @@ import Document, {
   NextScript,
 } from 'next/document';
 import React from 'react';
-import { ServerStyleSheets } from '@material-ui/core/styles';
 import { ServerStyleSheet } from 'styled-components';
 
 const { serverRuntimeConfig, publicRuntimeConfig } = getConfig();
