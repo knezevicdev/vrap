@@ -9,7 +9,7 @@ interface Props {
 
 const Container = styled('div')(({ theme }) => ({
   backgroundColor: theme.palette.background.paper,
-  padding: theme.spacing(6, 3),
+  padding: theme.spacing(5, 3),
 }));
 
 const ContainerContent = styled('div')(({ theme }) => ({
@@ -19,14 +19,16 @@ const ContainerContent = styled('div')(({ theme }) => ({
   marginRight: 'auto',
   display: 'flex',
   justifyContent: 'center',
-  [theme.breakpoints.down('md')]: {
-    maxWidth: '680px',
+  [theme.breakpoints.down('sm')]: {
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 }));
 
-const Heading = styled(Typography)(() => ({
+const Heading = styled(Typography)(({ theme }) => ({
   lineHeight: '32px',
-  marginBottom: '40px',
+  paddingBottom: theme.spacing(5),
   textAlign: 'center',
 }));
 
@@ -48,6 +50,9 @@ const LinkContent = styled('div')(({ theme }) => ({
   alignItems: 'center',
   padding: theme.spacing(0, 6),
   textAlign: 'center',
+  [theme.breakpoints.down('sm')]: {
+    paddingBottom: theme.spacing(5),
+  },
 }));
 
 const ConstactModule: React.FC<Props> = ({ viewModel }) => {
