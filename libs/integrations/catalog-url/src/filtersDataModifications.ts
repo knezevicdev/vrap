@@ -157,7 +157,7 @@ export const removePopularFeature = (
   const existingFeatures = newFiltersData[Filters.POPULAR_FEATURES] || [];
   const newFeatures = existingFeatures.filter((f) => f !== popularFeature);
   newFiltersData[Filters.POPULAR_FEATURES] =
-  newFeatures.length > 0 ? newFeatures : undefined;
+    newFeatures.length > 0 ? newFeatures : undefined;
   return newFiltersData;
 };
 
