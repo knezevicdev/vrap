@@ -4,7 +4,6 @@ export {
   setOtherCylinders,
   addFuelType,
   removeFuelType,
-  setOtherFuelType,
   addAllModels,
   addBodyType,
   addColor,
