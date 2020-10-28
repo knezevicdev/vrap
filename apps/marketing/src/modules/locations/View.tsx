@@ -8,7 +8,7 @@ import Locations from './components/Locations';
 import MarketingInfo from './components/MarketingInfo';
 import SuperCenterInfo from './components/SuperCenterInfo';
 
-const View: React.FC = () => {
+const LocationsView: React.FC = () => {
   return (
     <>
       <TDAHeader />
@@ -22,4 +22,4 @@ const View: React.FC = () => {
   );
 };
 
-export default View;
+export default LocationsView;

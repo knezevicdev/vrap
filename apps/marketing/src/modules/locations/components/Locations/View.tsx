@@ -37,10 +37,12 @@ const Heading = styled(Typography)(() => ({
   textAlign: 'center',
 }));
 
-const SubHeading = styled(Typography)(() => ({
-  margin: '20px 25% 50px 25%',
+const SubHeading = styled(Typography)(({ theme }) => ({
   lineHeight: '26px',
   textAlign: 'center',
+  [theme.breakpoints.up('md')]: {
+    margin: '20px 25% 50px 25%',
+  },
 }));
 
 const LocationInfo = styled('div')(({ theme }) => ({

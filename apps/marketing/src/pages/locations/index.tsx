@@ -39,18 +39,10 @@ LocationsPage.getInitialProps = async (
   const brandHeader = req && req.headers[headerBrandKey];
   const queryBrand = query.brand;
 
-  const brand = Brand.TDA;
-  // const whitelabel = brandHeader || queryBrand;
-  // if (whitelabel === Brand.SANTANDER) brand = Brand.SANTANDER;
-  // else if (whitelabel === Brand.TDA) brand = Brand.TDA;
-
-  // const getTitle = () => {
-  //   const locations = 'Locations';
-  //   if (brand === Brand.SANTANDER)
-  //     return `${locations} - Santander Consumer USA`;
-  //   if (brand === Brand.TDA) return `Locations - Texas Direct Auto`;
-  //   return `${locations}`;
-  // };
+  let brand = Brand.TDA;
+  const whitelabel = brandHeader || queryBrand;
+  if (whitelabel === Brand.SANTANDER) brand = Brand.SANTANDER;
+  else if (whitelabel === Brand.TDA) brand = Brand.TDA;
 
   const title = `Locations - Texas Direct Auto`;
 

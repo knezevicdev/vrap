@@ -38,8 +38,8 @@ const Info = styled('div')(() => ({
 }));
 
 const Title = styled(Typography)(() => ({
-  fontSize: '24px',
-  lineHeight: '24px',
+  fontSize: '20px',
+  lineHeight: '20px',
   letterSpacing: '0.25px',
 }));
 
