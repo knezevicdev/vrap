@@ -86,11 +86,6 @@ const CarsPage: NextPage<Props> = ({
           carsStore.setInventoryStatus(carsStatus);
         }
       });
-    experimentSDK
-      .getAndLogExperimentClientSide('snd-cylinder-filters')
-      .then((experiment) => {
-        carsStore.setCylindersFilterExperiment(experiment);
-      });
   }, [carsStore, carsStatus]);
 
   // Register experiments with analytics handler
@@ -98,10 +93,21 @@ const CarsPage: NextPage<Props> = ({
     if (carsStore.geoLocationSortExperiment) {
       analyticsHandler.registerExperiment(carsStore.geoLocationSortExperiment);
     }
+  }, [carsStore.geoLocationSortExperiment, analyticsHandler]);
+
+  useEffect(() => {
+    experimentSDK
+      .getAndLogExperimentClientSide('snd-cylinder-filters')
+      .then((experiment) => {
+        carsStore.setCylindersFilterExperiment(experiment);
+      });
+  }, [carsStore]);
+
+  useEffect(() => {
     if (carsStore.cylinderFilterExperiment) {
       analyticsHandler.registerExperiment(carsStore.cylinderFilterExperiment);
     }
-  }, [carsStore, analyticsHandler]);
+  }, [carsStore.cylinderFilterExperiment, analyticsHandler]);
 
   const [resumeSearchExperiment, setResumeSearchExperiment] = useState<
     Experiment | undefined
