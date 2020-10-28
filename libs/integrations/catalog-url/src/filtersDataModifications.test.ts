@@ -730,25 +730,6 @@ describe('setMiles', () => {
   });
 });
 
-describe('setOtherFuelType', () => {
-  test('it should set the otherFuelType', () => {
-    expect(setOtherFuelType(true, undefined)).toEqual({
-      otherfueltype: true,
-    });
-  });
-  test('it should set otherFuelType on an empty object', () => {
-    expect(setOtherFuelType(true, {})).toEqual({
-      otherfueltype: true,
-    });
-  });
-  test('it should set otherFuelType on a large filter', () => {
-    expect(setOtherFuelType(true, mockFiltersData1)).toEqual({
-      ...mockFiltersData1,
-      otherfueltype: true,
-    });
-  });
-});
-
 describe('setPage', () => {
   test('1', () => {
     expect(setPage(42, undefined)).toEqual({
