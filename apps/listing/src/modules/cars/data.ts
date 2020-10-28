@@ -3,7 +3,7 @@ import {
   Color as FiltersDataColor,
   Cylinder as FiltersDataCylinder,
   DriveType as FiltersDataDriveType,
-  FuelType as FiltersDataFuelType,
+  // FuelType as FiltersDataFuelType,
   SortBy as FiltersDataSortBy,
   SortDirection as FiltersDataSortDirection,
   TestDrive as FiltersDataTestDrive,

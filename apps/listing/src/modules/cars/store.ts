@@ -1,6 +1,7 @@
 import {
   Filters,
   FiltersData,
+  FuelType,
   getUrlFromFiltersData,
 } from '@vroom-web/catalog-url-integration';
 import { Experiment } from '@vroom-web/experiment-sdk';
@@ -292,6 +293,7 @@ export const getPostInventoryRequestDataFromFilterData = (
   );
   const testdriveonly = getTestDriveOnlyRequestData(filtersData);
   const transmissionid = getTransmissionRequestData(filtersData);
+  const fuelType = [FuelType.BIO_DIESEL];
 
   return {
     bodytype,
@@ -308,6 +310,7 @@ export const getPostInventoryRequestDataFromFilterData = (
     testdriveonly,
     transmissionid,
     year: filtersData ? filtersData[Filters.YEAR] : undefined,
+    fuelType,
     cylinders,
     cylindersShowOther:
       (filtersData && filtersData[Filters.OTHER_CYLINDERS]) || undefined,

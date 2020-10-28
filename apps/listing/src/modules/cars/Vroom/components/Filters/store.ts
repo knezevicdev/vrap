@@ -1,4 +1,3 @@
-import { FormatLineSpacingRounded } from '@material-ui/icons';
 import { action, IObservableArray, observable } from 'mobx';
 
 import BodyTypes from './components/BodyTypes';
