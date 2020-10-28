@@ -91,7 +91,7 @@ describe('resetFilter', () => {
       year: { max: 2020, min: 2018 },
       cylinders: ['8', '4'],
       othercylinders: false,
-      optionalfeatures: ['android_auto', 'remote_start'],
+      optionalfeatures: ['Android Auto', 'Remote Start'],
     });
   });
   test('2', () => {
@@ -109,7 +109,7 @@ describe('resetFilter', () => {
       year: { max: 2020, min: 2018 },
       cylinders: ['8', '4'],
       othercylinders: false,
-      optionalfeatures: ['android_auto', 'remote_start'],
+      optionalfeatures: ['Android Auto', 'Remote Start'],
     });
   });
 });
@@ -132,7 +132,7 @@ describe('resetFilters', () => {
       year: { max: 2020, min: 2018 },
       cylinders: ['8', '4'],
       othercylinders: false,
-      optionalfeatures: ['android_auto', 'remote_start'],
+      optionalfeatures: ['Android Auto', 'Remote Start'],
     });
   });
   test('2', () => {
@@ -152,7 +152,7 @@ describe('resetFilters', () => {
       year: { max: 2020, min: 2018 },
       cylinders: ['8', '4'],
       othercylinders: false,
-      optionalfeatures: ['android_auto', 'remote_start'],
+      optionalfeatures: ['Android Auto', 'Remote Start'],
     });
   });
 });
@@ -185,7 +185,7 @@ describe('addBodyType', () => {
       year: { max: 2020, min: 2018 },
       cylinders: ['8', '4'],
       othercylinders: false,
-      optionalfeatures: ['android_auto', 'remote_start'],
+      optionalfeatures: ['Android Auto', 'Remote Start'],
     });
   });
   test('3', () => {
@@ -254,7 +254,7 @@ describe('removeBodyType', () => {
       year: { max: 2020, min: 2018 },
       cylinders: ['8', '4'],
       othercylinders: false,
-      optionalfeatures: ['android_auto', 'remote_start'],
+      optionalfeatures: ['Android Auto', 'Remote Start'],
     });
   });
 });
@@ -280,7 +280,7 @@ describe('addCylinder', () => {
       year: { max: 2020, min: 2018 },
       cylinders: ['8', '4', '6'],
       othercylinders: false,
-      optionalfeatures: ['android_auto', 'remote_start'],
+      optionalfeatures: ['Android Auto', 'Remote Start'],
     });
   });
   test('it should add cylinders to filters which already exist but are empty', () => {
@@ -341,7 +341,7 @@ describe('removeCylinder', () => {
       year: { max: 2020, min: 2018 },
       cylinders: ['4'],
       othercylinders: false,
-      optionalfeatures: ['android_auto', 'remote_start'],
+      optionalfeatures: ['Android Auto', 'Remote Start'],
     });
   });
 });
@@ -367,7 +367,7 @@ describe('addColor', () => {
       year: { max: 2020, min: 2018 },
       cylinders: ['8', '4'],
       othercylinders: false,
-      optionalfeatures: ['android_auto', 'remote_start'],
+      optionalfeatures: ['Android Auto', 'Remote Start'],
     });
   });
   test('3', () => {
@@ -436,7 +436,7 @@ describe('removeColor', () => {
       year: { max: 2020, min: 2018 },
       cylinders: ['8', '4'],
       othercylinders: false,
-      optionalfeatures: ['android_auto', 'remote_start'],
+      optionalfeatures: ['Android Auto', 'Remote Start'],
     });
   });
 });
@@ -462,7 +462,7 @@ describe('addDriveType', () => {
       year: { max: 2020, min: 2018 },
       cylinders: ['8', '4'],
       othercylinders: false,
-      optionalfeatures: ['android_auto', 'remote_start'],
+      optionalfeatures: ['Android Auto', 'Remote Start'],
     });
   });
   test('3', () => {
@@ -531,7 +531,7 @@ describe('removeDriveType', () => {
       year: { max: 2020, min: 2018 },
       cylinders: ['8', '4'],
       othercylinders: false,
-      optionalfeatures: ['android_auto', 'remote_start'],
+      optionalfeatures: ['Android Auto', 'Remote Start'],
     });
   });
 });
@@ -539,7 +539,7 @@ describe('removeDriveType', () => {
 describe('addPopularFeature', () => {
   test('it should add a feature to no filters', () => {
     expect(addPopularFeature(PopularFeatures.ANDROID_AUTO, undefined)).toEqual({
-      optionalfeatures: ['android_auto'],
+      optionalfeatures: ['Android Auto'],
     });
   });
   test('it should add features to existing filter sets', () => {
@@ -559,7 +559,7 @@ describe('addPopularFeature', () => {
       year: { max: 2020, min: 2018 },
       cylinders: ['8', '4'],
       othercylinders: false,
-      optionalfeatures: ['android_auto', 'remote_start', 'sunroof_moonroof'],
+      optionalfeatures: ['Android Auto', 'Remote Start', 'Sunroof or Moonroof'],
     });
   });
   test('it should add features to filters which already exist but are empty', () => {
@@ -567,7 +567,7 @@ describe('addPopularFeature', () => {
     expect(
       addPopularFeature(PopularFeatures.ANDROID_AUTO, mockFiltersData)
     ).toEqual({
-      optionalfeatures: ['android_auto'],
+      optionalfeatures: ['Android Auto'],
     });
   });
   test('it should add features to filters if there are already features', () => {
@@ -577,7 +577,7 @@ describe('addPopularFeature', () => {
     expect(
       addPopularFeature(PopularFeatures.ANDROID_AUTO, mockFiltersData)
     ).toEqual({
-      optionalfeatures: ['apple_car_play', 'android_auto'],
+      optionalfeatures: ['Apple Car Play', 'Android Auto'],
     });
   });
 });
@@ -615,7 +615,7 @@ describe('removePopularFeature', () => {
     expect(
       removePopularFeature(PopularFeatures.APPLE_CAR_PLAY, mockFiltersData)
     ).toEqual({
-      optionalfeatures: ['android_auto'],
+      optionalfeatures: ['Android Auto'],
     });
   });
   test('it should remove the feature from a big filter', () => {
@@ -635,7 +635,7 @@ describe('removePopularFeature', () => {
       year: { max: 2020, min: 2018 },
       cylinders: ['8', '4'],
       othercylinders: false,
-      optionalfeatures: ['android_auto'],
+      optionalfeatures: ['Android Auto'],
     });
   });
 });
@@ -674,7 +674,7 @@ describe('setTransmission', () => {
       year: { max: 2020, min: 2018 },
       cylinders: ['8', '4'],
       othercylinders: false,
-      optionalfeatures: ['android_auto', 'remote_start'],
+      optionalfeatures: ['Android Auto', 'Remote Start'],
     });
   });
 });
@@ -748,7 +748,7 @@ describe('addAllModels', () => {
       year: { max: 2020, min: 2018 },
       cylinders: ['8', '4'],
       othercylinders: false,
-      optionalfeatures: ['android_auto', 'remote_start'],
+      optionalfeatures: ['Android Auto', 'Remote Start'],
     });
   });
 });
@@ -779,7 +779,7 @@ describe('removeAllModels', () => {
       year: { max: 2020, min: 2018 },
       cylinders: ['8', '4'],
       othercylinders: false,
-      optionalfeatures: ['android_auto', 'remote_start'],
+      optionalfeatures: ['Android Auto', 'Remote Start'],
     });
   });
   test('4', () => {
@@ -797,7 +797,7 @@ describe('removeAllModels', () => {
       year: { max: 2020, min: 2018 },
       cylinders: ['8', '4'],
       othercylinders: false,
-      optionalfeatures: ['android_auto', 'remote_start'],
+      optionalfeatures: ['Android Auto', 'Remote Start'],
     });
   });
   test('5', () => {
@@ -844,7 +844,7 @@ describe('addModel', () => {
       year: { max: 2020, min: 2018 },
       cylinders: ['8', '4'],
       othercylinders: false,
-      optionalfeatures: ['android_auto', 'remote_start'],
+      optionalfeatures: ['Android Auto', 'Remote Start'],
     });
   });
   test('3', () => {
@@ -862,7 +862,7 @@ describe('addModel', () => {
       year: { max: 2020, min: 2018 },
       cylinders: ['8', '4'],
       othercylinders: false,
-      optionalfeatures: ['android_auto', 'remote_start'],
+      optionalfeatures: ['Android Auto', 'Remote Start'],
     });
   });
   test('4', () => {
@@ -907,7 +907,7 @@ describe('addModel', () => {
       year: { max: 2020, min: 2018 },
       cylinders: ['8', '4'],
       othercylinders: false,
-      optionalfeatures: ['android_auto', 'remote_start'],
+      optionalfeatures: ['Android Auto', 'Remote Start'],
     });
   });
 });
@@ -938,7 +938,7 @@ describe('removeModel', () => {
       year: { max: 2020, min: 2018 },
       cylinders: ['8', '4'],
       othercylinders: false,
-      optionalfeatures: ['android_auto', 'remote_start'],
+      optionalfeatures: ['Android Auto', 'Remote Start'],
     });
   });
   test('3', () => {
@@ -961,7 +961,7 @@ describe('removeModel', () => {
       year: { max: 2020, min: 2018 },
       cylinders: ['8', '4'],
       othercylinders: false,
-      optionalfeatures: ['android_auto', 'remote_start'],
+      optionalfeatures: ['Android Auto', 'Remote Start'],
     });
   });
   test('4', () => {
@@ -1041,7 +1041,7 @@ describe('setMiles', () => {
       year: { max: 2020, min: 2018 },
       cylinders: ['8', '4'],
       othercylinders: false,
-      optionalfeatures: ['android_auto', 'remote_start'],
+      optionalfeatures: ['Android Auto', 'Remote Start'],
     });
   });
 });
@@ -1072,7 +1072,7 @@ describe('setOtherCylinders', () => {
       year: { max: 2020, min: 2018 },
       cylinders: ['8', '4'],
       othercylinders: true,
-      optionalfeatures: ['android_auto', 'remote_start'],
+      optionalfeatures: ['Android Auto', 'Remote Start'],
     });
   });
 });
@@ -1103,7 +1103,7 @@ describe('setPage', () => {
       year: { max: 2020, min: 2018 },
       cylinders: ['8', '4'],
       othercylinders: false,
-      optionalfeatures: ['android_auto', 'remote_start'],
+      optionalfeatures: ['Android Auto', 'Remote Start'],
     });
   });
 });
@@ -1134,7 +1134,7 @@ describe('setPrice', () => {
       year: { max: 2020, min: 2018 },
       cylinders: ['8', '4'],
       othercylinders: false,
-      optionalfeatures: ['android_auto', 'remote_start'],
+      optionalfeatures: ['Android Auto', 'Remote Start'],
     });
   });
 });
@@ -1165,7 +1165,7 @@ describe('setSearch', () => {
       year: { max: 2020, min: 2018 },
       cylinders: ['8', '4'],
       othercylinders: false,
-      optionalfeatures: ['android_auto', 'remote_start'],
+      optionalfeatures: ['Android Auto', 'Remote Start'],
     });
   });
 });
@@ -1204,7 +1204,7 @@ describe('setSort', () => {
       year: { max: 2020, min: 2018 },
       cylinders: ['8', '4'],
       othercylinders: false,
-      optionalfeatures: ['android_auto', 'remote_start'],
+      optionalfeatures: ['Android Auto', 'Remote Start'],
     });
   });
 });
@@ -1235,7 +1235,7 @@ describe('setYear', () => {
       year: { max: 2009, min: 2003 },
       cylinders: ['8', '4'],
       othercylinders: false,
-      optionalfeatures: ['android_auto', 'remote_start'],
+      optionalfeatures: ['Android Auto', 'Remote Start'],
     });
   });
 });

@@ -93,13 +93,13 @@ export enum Cylinder {
 }
 
 export enum PopularFeatures {
-  ANDROID_AUTO = 'android_auto',
-  APPLE_CAR_PLAY = 'apple_car_play',
-  HEATED_SEATS = 'heated_seats',
-  REAR_VIEW_CAMERA = 'rear_view_camera',
-  REMOTE_START = 'remote_start',
-  SUNROOF_MOONROOF = 'sunroof_moonroof',
-  THIRD_ROW_SEATING = 'third_row_seating',
+  ANDROID_AUTO = 'Android Auto',
+  APPLE_CAR_PLAY = 'Apple Car Play',
+  HEATED_SEATS = 'Heated Seats',
+  REAR_VIEW_CAMERA = 'Rear View Camera',
+  REMOTE_START = 'Remote Start',
+  SUNROOF_MOONROOF = 'Sunroof or Moonroof',
+  THIRD_ROW_SEATING = 'Third Row Searting',
 }
 
 export interface FiltersData {

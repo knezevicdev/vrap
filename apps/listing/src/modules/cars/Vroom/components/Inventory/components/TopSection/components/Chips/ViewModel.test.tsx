@@ -36,7 +36,6 @@ import {
   PopularFeature,
   PopularFeatureApi,
   PopularFeatureDisplay,
-  //popularFeatures,
   Transmission,
   TransmissionAPI,
   TransmissionDisplay,
@@ -822,7 +821,7 @@ describe('getPopularFeatureChips', () => {
     expect(chips[0].handleDelete).toBeDefined();
     chips[0].handleDelete();
     expect(mockCarsStore.updateFiltersData).toHaveBeenCalledWith({
-      optionalfeatures: ['apple_car_play', 'heated_seats'],
+      optionalfeatures: ['Apple Car Play', 'Heated Seats'],
     });
     mockCarsStore.updateFiltersData.mockReset();
 
@@ -830,7 +829,7 @@ describe('getPopularFeatureChips', () => {
     expect(chips[1].handleDelete).toBeDefined();
     chips[1].handleDelete();
     expect(mockCarsStore.updateFiltersData).toHaveBeenCalledWith({
-      optionalfeatures: ['android_auto', 'heated_seats'],
+      optionalfeatures: ['Android Auto', 'Heated Seats'],
     });
     mockCarsStore.updateFiltersData.mockReset();
 
@@ -838,7 +837,7 @@ describe('getPopularFeatureChips', () => {
     expect(chips[2].handleDelete).toBeDefined();
     chips[2].handleDelete();
     expect(mockCarsStore.updateFiltersData).toHaveBeenCalledWith({
-      optionalfeatures: ['android_auto', 'apple_car_play'],
+      optionalfeatures: ['Android Auto', 'Apple Car Play'],
     });
     mockCarsStore.updateFiltersData.mockReset();
   });

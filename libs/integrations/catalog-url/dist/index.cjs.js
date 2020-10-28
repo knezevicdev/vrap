@@ -82,13 +82,13 @@ var jsBase64 = require('js-base64');
 })(exports.Cylinder || (exports.Cylinder = {}));
 
 (function (PopularFeatures) {
-  PopularFeatures["ANDROID_AUTO"] = "android_auto";
-  PopularFeatures["APPLE_CAR_PLAY"] = "apple_car_play";
-  PopularFeatures["HEATED_SEATS"] = "heated_seats";
-  PopularFeatures["REAR_VIEW_CAMERA"] = "rear_view_camera";
-  PopularFeatures["REMOTE_START"] = "remote_start";
-  PopularFeatures["SUNROOF_MOONROOF"] = "sunroof_moonroof";
-  PopularFeatures["THIRD_ROW_SEATING"] = "third_row_seating";
+  PopularFeatures["ANDROID_AUTO"] = "Android Auto";
+  PopularFeatures["APPLE_CAR_PLAY"] = "Apple Car Play";
+  PopularFeatures["HEATED_SEATS"] = "Heated Seats";
+  PopularFeatures["REAR_VIEW_CAMERA"] = "Rear View Camera";
+  PopularFeatures["REMOTE_START"] = "Remote Start";
+  PopularFeatures["SUNROOF_MOONROOF"] = "Sunroof or Moonroof";
+  PopularFeatures["THIRD_ROW_SEATING"] = "Third Row Searting";
 })(exports.PopularFeatures || (exports.PopularFeatures = {}));
 
 var deepCopyFiltersData = function deepCopyFiltersData(filtersData) {
