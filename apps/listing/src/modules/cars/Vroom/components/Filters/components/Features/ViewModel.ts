@@ -25,11 +25,11 @@ class FeaturesViewModel {
     if (!filtersData) {
       return false;
     }
-    const filtersDataDriveType = filtersData[Filters.POPULAR_FEATURES];
-    if (!filtersDataDriveType) {
+    const filtersDataPopularFeature = filtersData[Filters.POPULAR_FEATURES];
+    if (!filtersDataPopularFeature) {
       return false;
     }
-    return filtersDataDriveType.includes(popularFeature.filtersDataValue);
+    return filtersDataPopularFeature.includes(popularFeature.filtersDataValue);
   };
 
   handleCheckboxChange(
