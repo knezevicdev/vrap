@@ -99,7 +99,7 @@ export enum PopularFeatures {
   REAR_VIEW_CAMERA = 'Rear View Camera',
   REMOTE_START = 'Remote Start',
   SUNROOF_MOONROOF = 'Sunroof or Moonroof',
-  THIRD_ROW_SEATING = 'Third Row Searting',
+  THIRD_ROW_SEATING = 'Third Row Seating',
 }
 
 export interface FiltersData {

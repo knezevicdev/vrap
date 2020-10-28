@@ -104,7 +104,7 @@ var PopularFeatures;
   PopularFeatures["REAR_VIEW_CAMERA"] = "Rear View Camera";
   PopularFeatures["REMOTE_START"] = "Remote Start";
   PopularFeatures["SUNROOF_MOONROOF"] = "Sunroof or Moonroof";
-  PopularFeatures["THIRD_ROW_SEATING"] = "Third Row Searting";
+  PopularFeatures["THIRD_ROW_SEATING"] = "Third Row Seating";
 })(PopularFeatures || (PopularFeatures = {}));
 
 var deepCopyFiltersData = function deepCopyFiltersData(filtersData) {
