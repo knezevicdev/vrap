@@ -1,4 +1,4 @@
-import { styled, Theme, Typography, Link } from '@material-ui/core';
+import { Link, styled, Theme, Typography } from '@material-ui/core';
 import React from 'react';
 
 import ViewModel from './ViewModel';
