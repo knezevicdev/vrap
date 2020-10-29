@@ -1,4 +1,4 @@
-import { Link, styled, Theme, Typography } from '@material-ui/core';
+import { styled, Theme, Typography, Link } from '@material-ui/core';
 import React from 'react';
 
 import ViewModel from './ViewModel';
@@ -57,6 +57,7 @@ const BackgroundImage = styled('div')(
     zIndex: -1,
 
     [props.theme.breakpoints.only('xs')]: {
+      zIndex: 0,
       left: '-40px',
       height: '200px',
       width: '110%',
@@ -112,8 +113,8 @@ const SubTitle = styled(Typography)(({ theme }) => ({
 
 const Hero: React.FC<Props> = ({ viewModel }) => {
   return (
-    <Link href={viewModel.googleMapsUrl} target="_blank">
-      <Container>
+    <Container>
+      <Link href={viewModel.googleMapsUrl}>
         <InnerContainer>
           <ContainerContent>
             <TextContainer>
@@ -124,8 +125,8 @@ const Hero: React.FC<Props> = ({ viewModel }) => {
           </ContainerContent>
         </InnerContainer>
         <BackgroundImage src={viewModel.imgUrl} />
-      </Container>
-    </Link>
+      </Link>
+    </Container>
   );
 };
 
