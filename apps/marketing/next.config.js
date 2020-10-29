@@ -22,12 +22,12 @@ const config = {
   publicRuntimeConfig: {
     // Will be available on both server-side and client-side
     BASE_PATH: basePath,
+    CALENDLY_URL: process.env.CALENDLY_URL,
+    CREATE_ZENDESK_REQUEST_URL: process.env.CREATE_ZENDESK_REQUEST_URL,
+    DATA_DOG_LOG_COLLECTION_TOKEN: process.env.DATA_DOG_LOG_COLLECTION_TOKEN,
     DATA_DOG_RUM_APPLICATION: process.env.DATA_DOG_RUM_APPLICATION,
     DATA_DOG_RUM_TOKEN: process.env.DATA_DOG_RUM_TOKEN,
-    CALENDLY_URL: process.env.CALENDLY_URL,
-    DATA_DOG_LOG_COLLECTION_TOKEN: process.env.DATA_DOG_LOG_COLLECTION_TOKEN,
     GEARBOX_PRIVATE_URL: process.env.GEARBOX_PRIVATE_URL,
-    CREATE_ZENDESK_REQUEST_URL: process.env.CREATE_ZENDESK_REQUEST_URL,
     NAME: name,
     NODE_ENV: process.env.NODE_ENV,
     STATIC_ASSETS_HOST_URL: process.env.STATIC_ASSETS_HOST_URL,
@@ -37,6 +37,7 @@ const config = {
     // Will only be available on the server side
     SANTANDER_SEGMENT_WRITE_KEY: process.env.SANTANDER_SEGMENT_WRITE_KEY,
     SEGMENT_WRITE_KEY: process.env.SEGMENT_WRITE_KEY,
+    TDA_SEGMENT_WRITE_KEY: process.env.TDA_SEGMENT_WRITE_KEY,
   },
   /* Custom webpack configuration. */
   webpack: (config) => {
