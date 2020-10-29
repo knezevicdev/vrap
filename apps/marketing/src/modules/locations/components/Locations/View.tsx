@@ -100,7 +100,7 @@ const Locations: React.FC<Props> = ({ viewModel }) => {
             <Section>
               <Info>{location.phone.office}</Info>
               <Info>{location.phone.fax}</Info>
-              <Info>{location.businessHours}</Info>
+              <Info>Hours: Mon - Sat, {location.businessHours.hours}</Info>
             </Section>
           </LocationInfo>
         ))}

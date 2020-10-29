@@ -1,5 +1,7 @@
 import { Brand, ThemeProvider } from '@vroom-web/ui';
 import { NextPage, NextPageContext } from 'next';
+import Error from 'next/error';
+
 import React from 'react';
 
 import Locations from 'src/modules/locations';
@@ -12,6 +14,8 @@ interface Props {
 
 const LocationsPage: NextPage<Props> = ({ brand, title }) => {
   const head = <title>{title}</title>;
+
+  if (brand !== Brand.TDA) return <Error statusCode={404} />;
 
   return (
     <ThemeProvider brand={brand}>
@@ -32,10 +36,9 @@ LocationsPage.getInitialProps = async (
   const brandHeader = req && req.headers[headerBrandKey];
   const queryBrand = query.brand;
 
-  let brand = Brand.TDA;
+  let brand = Brand.VROOM;
   const whitelabel = brandHeader || queryBrand;
-  if (whitelabel === Brand.SANTANDER) brand = Brand.SANTANDER;
-  else if (whitelabel === Brand.TDA) brand = Brand.TDA;
+  if (whitelabel === Brand.TDA) brand = Brand.TDA;
 
   const title = `Locations - Texas Direct Auto`;
 
