@@ -11,7 +11,7 @@ class ContactInfoViewModel {
   readonly imgUrl: string;
   readonly googleMapsUrl: string;
 
-  isStafford() {
+  isStafford(): boolean {
     return this.locationName === 'Stafford';
   }
 }
