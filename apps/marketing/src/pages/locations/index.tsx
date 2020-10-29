@@ -39,7 +39,7 @@ LocationsPage.getInitialProps = async (
   const whitelabel = brandHeader || queryBrand;
   if (whitelabel === Brand.TDA) brand = Brand.TDA;
 
-  const title = `Locations - Texas Direct Auto`;
+  const title = `Sell Us Your Car | Texas Direct Auto`;
 
   return { brand, title };
 };

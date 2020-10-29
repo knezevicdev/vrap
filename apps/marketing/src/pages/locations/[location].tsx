@@ -39,13 +39,17 @@ LocationPage.getInitialProps = async (ctx: NextPageContext): Promise<Props> => {
   const whitelabel = brandHeader || queryBrand;
   if (whitelabel === Brand.TDA) brand = Brand.TDA;
 
-  const title = `Locations - Texas Direct Auto`;
+  let title = `Sell Us Your Car Location`;
 
   const queryLocation = query.location;
 
   const carCenter = getLocations().find(
     (location) => location.path === queryLocation
   );
+
+  if (carCenter) {
+    title = `${title} - ${carCenter.name}, ${carCenter.address.state}`;
+  }
 
   return { brand, title, carCenter };
 };
