@@ -1,4 +1,4 @@
-import { styled, Theme, Typography } from '@material-ui/core';
+import { Link, styled, Theme, Typography } from '@material-ui/core';
 import React from 'react';
 
 import ViewModel from './ViewModel';
@@ -112,18 +112,20 @@ const SubTitle = styled(Typography)(({ theme }) => ({
 
 const Hero: React.FC<Props> = ({ viewModel }) => {
   return (
-    <Container>
-      <InnerContainer>
-        <ContainerContent>
-          <TextContainer>
-            <TagLine>{viewModel.tagline}</TagLine>
-            <Title variant="h1">{viewModel.locationName}</Title>
-            <SubTitle>{viewModel.subtitle} </SubTitle>
-          </TextContainer>
-        </ContainerContent>
-      </InnerContainer>
-      <BackgroundImage src={viewModel.imgUrl} />
-    </Container>
+    <Link href={viewModel.googleMapsUrl} target="_blank">
+      <Container>
+        <InnerContainer>
+          <ContainerContent>
+            <TextContainer>
+              <TagLine>{viewModel.tagline}</TagLine>
+              <Title variant="h1">{viewModel.locationName}</Title>
+              <SubTitle>{viewModel.subtitle} </SubTitle>
+            </TextContainer>
+          </ContainerContent>
+        </InnerContainer>
+        <BackgroundImage src={viewModel.imgUrl} />
+      </Container>
+    </Link>
   );
 };
 
