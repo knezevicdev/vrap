@@ -31,6 +31,7 @@ const config = {
     STATIC_ASSETS_HOST_URL: process.env.STATIC_ASSETS_HOST_URL,
     VERSION: version,
     BRANCH_IO_KEY: process.env.BRANCH_IO_KEY,
+    GOOGLE_MAPS_API_KEY: process.env.GOOGLE_MAPS_API_KEY,
   },
   serverRuntimeConfig: {
     // Will only be available on the server side
