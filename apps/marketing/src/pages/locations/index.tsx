@@ -1,7 +1,6 @@
 import { Brand, ThemeProvider } from '@vroom-web/ui';
 import { NextPage, NextPageContext } from 'next';
 import Error from 'next/error';
-
 import React from 'react';
 
 import Locations from 'src/modules/locations';
