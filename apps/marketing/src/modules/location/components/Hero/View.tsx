@@ -30,16 +30,17 @@ const ContainerContent = styled('div')(({ theme }) => ({
   alignItems: 'center',
   padding: theme.spacing(10, 6),
   [theme.breakpoints.down('sm')]: {
-    padding: theme.spacing(4, 3),
+    padding: theme.spacing(3),
   },
   [theme.breakpoints.only('xs')]: {
     textAlign: 'center',
+    alignItems: 'center',
     flexDirection: 'column',
-    justifyContent: 'center',
   },
 }));
 
 const TextContainer = styled('div')(({ theme }) => ({
+  maxWidth: '300px',
   color: theme.palette.text.secondary,
 }));
 
@@ -85,16 +86,11 @@ const TagLine = styled(Typography)(({ theme }) => ({
 
 const Title = styled(Typography)(({ theme }) => ({
   fontSize: '62px',
-  lineHeight: '66px',
+  lineHeight: 1.1,
   textTransform: 'uppercase',
   marginBottom: theme.spacing(2),
-  [theme.breakpoints.only('sm')]: {
-    fontSize: '42px',
-    lineHeight: '42px',
-  },
-  [theme.breakpoints.only('xs')]: {
+  [theme.breakpoints.down('sm')]: {
     fontSize: '36px',
-    lineHeight: '36px',
   },
 }));
 
@@ -120,7 +116,9 @@ const Hero: React.FC<Props> = ({ viewModel }) => {
             <TextContainer>
               <TagLine>{viewModel.tagline}</TagLine>
               <Title variant="h1">{viewModel.locationName}</Title>
-              <SubTitle>{viewModel.subtitle} </SubTitle>
+              {viewModel.isStafford() && (
+                <SubTitle>{viewModel.subtitle} </SubTitle>
+              )}
             </TextContainer>
           </ContainerContent>
         </InnerContainer>
