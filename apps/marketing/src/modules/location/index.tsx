@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { LocationInfo } from '../getLocations';
+import { LocationInfo } from '../locations/getLocations';
 import View from './View';
 
 interface Props {
