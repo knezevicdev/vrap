@@ -22,6 +22,7 @@ const ContainerContent = styled('div')(({ theme }) => ({
   gridTemplateColumns: '1fr 1fr 1fr',
   gridGap: '20px',
   padding: theme.spacing(12, 3),
+  borderTop: '1px solid rgb(214, 215, 218)',
   [theme.breakpoints.down('md')]: {
     gridTemplateColumns: '1fr',
     maxWidth: '680px',

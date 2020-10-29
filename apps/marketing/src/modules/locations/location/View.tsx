@@ -4,16 +4,26 @@ import React from 'react';
 
 import ContactModule from '../components/ContactModule';
 import MarketingInfo from '../components/MarketingInfo';
+import { LocationInfo } from '../getLocations';
 import ContactInfo from './components/ContactInfo';
+import Hero from './components/Hero';
 
-const LocationView: React.FC = () => {
+interface Props {
+  locationInfo: LocationInfo;
+}
+
+const LocationView: React.FC<Props> = ({ locationInfo }) => {
+  const { name, mapsImgUrl, googleMapsUrl } = locationInfo;
   return (
     <>
       <TDAHeader />
-      {/* <Hero />*/}
-      <ContactInfo />
+      <Hero
+        locationTitle={name}
+        imgUrl={mapsImgUrl}
+        googleMapsUrl={googleMapsUrl}
+      />
+      <ContactInfo locationInfo={locationInfo} />
       <MarketingInfo />
-      {/* {/* <Locations /> */}
       <ContactModule />
       <TDAFooter />
     </>

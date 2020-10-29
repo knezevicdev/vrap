@@ -1,4 +1,26 @@
-export function getLocations() {
+export interface LocationInfo {
+  name: string;
+  path: string;
+  href: string;
+  address: {
+    street: string;
+    city: string;
+    state: string;
+    zipCode: string;
+  };
+  phone: {
+    office: string;
+    fax: string;
+  };
+  businessHours: {
+    days: string;
+    hours: string;
+  };
+  googleMapsUrl: string;
+  mapsImgUrl: string;
+}
+
+export function getLocations(): LocationInfo[] {
   return [
     {
       name: 'Stafford',
@@ -14,8 +36,14 @@ export function getLocations() {
         office: 'Office: (281) 499-8200',
         fax: 'Fax: (281) 783-2098',
       },
-      businessHours: 'Hours: Mon - Sat, 10 am - 6 pm',
+      businessHours: {
+        days: 'Monday - Saturday',
+        hours: '10 am - 6 pm',
+      },
       googleMapsUrl: 'https://goo.gl/maps/KUwJwFhbxi2tF8NP8',
+
+      mapsImgUrl:
+        'https://assets.vroomcdn.com/static-rebrand/img/tda/location/stafford.jpg',
     },
     {
       name: 'Clear\xa0Lake (League\xa0City)',
@@ -31,8 +59,13 @@ export function getLocations() {
         office: 'Office: (281) 895-2754',
         fax: 'Fax: (281) 854-2543',
       },
-      businessHours: 'Hours: Mon - Sat, 9 am - 6 pm',
+      businessHours: {
+        days: 'Monday - Saturday',
+        hours: '9 am - 6 pm',
+      },
       googleMapsUrl: 'https://goo.gl/maps/y8rvyunyoPWBqkMn7',
+      mapsImgUrl:
+        'https://assets.vroomcdn.com/static-rebrand/img/tda/location/clear_lake.jpg',
     },
     {
       name: 'The Woodlands',
@@ -48,8 +81,14 @@ export function getLocations() {
         office: 'Office: (281) 895-3464',
         fax: 'Fax: (832) 310-2167',
       },
-      businessHours: 'Hours: Mon - Sat, 9 am - 6 pm',
+      businessHours: {
+        days: 'Monday - Saturday',
+        hours: '9 am - 6 pm',
+      },
       googleMapsUrl: 'https://goo.gl/maps/uCkWMp49FBMrjZSFA',
+
+      mapsImgUrl:
+        'https://assets.vroomcdn.com/static-rebrand/img/tda/location/woodland.jpg',
     },
     {
       name: 'Memorial',
@@ -65,8 +104,14 @@ export function getLocations() {
         office: 'Office: (281) 895-1872',
         fax: 'Fax: (832) 463-1192',
       },
-      businessHours: 'Hours: Mon - Sat, 9 am - 6 pm',
+      businessHours: {
+        days: 'Monday - Saturday',
+        hours: '9 am - 6 pm',
+      },
       googleMapsUrl: 'https://goo.gl/maps/Yek1r2zTcJvnZtJZ9',
+
+      mapsImgUrl:
+        'https://assets.vroomcdn.com/static-rebrand/img/tda/location/memorial.jpg',
     },
     {
       name: 'Katy',
@@ -82,8 +127,13 @@ export function getLocations() {
         office: 'Office: (281) 872-6648',
         fax: 'Fax: (281) 476-7493',
       },
-      businessHours: 'Hours: Mon - Sat, 9 am - 6 pm',
+      businessHours: {
+        days: 'Monday - Saturday',
+        hours: '9 am - 6 pm',
+      },
       googleMapsUrl: 'https://goo.gl/maps/VeRiY68MWa24Qx5n7',
+      mapsImgUrl:
+        'https://assets.vroomcdn.com/static-rebrand/img/tda/location/katy.jpg',
     },
     {
       name: 'Cypress',
@@ -99,8 +149,14 @@ export function getLocations() {
         office: 'Office: (281) 895-1447',
         fax: 'Fax: (281) 854-2547',
       },
-      businessHours: 'Hours: Mon - Sat, 9 am - 6 pm',
+      businessHours: {
+        days: 'Monday - Saturday',
+        hours: '9 am - 6 pm',
+      },
       googleMapsUrl: 'https://goo.gl/maps/rVHXyavJk4v2Qi5v7',
+
+      mapsImgUrl:
+        'https://assets.vroomcdn.com/static-rebrand/img/tda/location/cypress.jpg',
     },
     {
       name: 'Kingwood',
@@ -116,8 +172,13 @@ export function getLocations() {
         office: 'Office: (281) 895-3466',
         fax: 'Fax: (281) 605-5764',
       },
-      businessHours: 'Hours: Mon - Sat, 9 am - 6 pm',
+      businessHours: {
+        days: 'Monday - Saturday',
+        hours: '9 am - 6 pm',
+      },
       googleMapsUrl: 'https://goo.gl/maps/SBhBhUNdCBkCZH9Y7',
+      mapsImgUrl:
+        'https://assets.vroomcdn.com/static-rebrand/img/tda/location/kingwood.jpg',
     },
     {
       name: 'Galleria (Westheimer)',
@@ -133,8 +194,14 @@ export function getLocations() {
         office: 'Office: (281) 895-2405',
         fax: 'Fax: (832) 460-3128',
       },
-      businessHours: 'Hours: Mon - Sat, 9 am - 6 pm',
+      businessHours: {
+        days: 'Monday - Saturday',
+        hours: '9 am - 6 pm',
+      },
       googleMapsUrl: 'https://goo.gl/maps/QNpUtKDbv1yy6qLL9',
+
+      mapsImgUrl:
+        'https://assets.vroomcdn.com/static-rebrand/img/tda/location/galleria.jpg',
     },
   ];
 }
