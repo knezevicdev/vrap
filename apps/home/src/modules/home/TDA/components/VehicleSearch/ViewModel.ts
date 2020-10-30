@@ -22,7 +22,7 @@ class ViewModel {
       type: 'SUVs',
       link: '/cars/types/suv',
       image: `${publicRuntimeConfig.BASE_PATH}/modules/home/tda/images/suv.png`,
-      imageSelected: `${publicRuntimeConfig.BASE_PATH}/modules/home/tda/images/Suv-Selected.png`,
+      imageSelected: `${publicRuntimeConfig.BASE_PATH}/modules/home/tda/images/SUV-Selected.png`,
     },
     {
       type: 'Hatchbacks',
