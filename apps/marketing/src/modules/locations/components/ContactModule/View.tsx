@@ -10,7 +10,10 @@ interface Props {
 
 const Container = styled('div')(({ theme }) => ({
   backgroundColor: theme.palette.background.paper,
-  padding: theme.spacing(5, 3),
+  padding: theme.spacing(4, 0, 7, 0),
+  [theme.breakpoints.down('sm')]: {
+    padding: theme.spacing(4, 0),
+  },
 }));
 
 const ContainerContent = styled('div')(({ theme }) => ({
@@ -29,7 +32,7 @@ const ContainerContent = styled('div')(({ theme }) => ({
 
 const Heading = styled(Typography)(({ theme }) => ({
   lineHeight: '32px',
-  paddingBottom: theme.spacing(5),
+  marginBottom: theme.spacing(7),
   textAlign: 'center',
 }));
 
