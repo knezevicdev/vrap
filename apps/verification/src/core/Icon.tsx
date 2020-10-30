@@ -57,7 +57,14 @@ export class Icons {
     width: 16,
     height: 16,
     path: `${BASE_PATH}/icons/red-one.svg`,
-  })
+  });
+
+  static readonly CHECK_MARK_RED = new Icons('CHECK_MARK_RED', {
+    name: 'check-mark-red',
+    width: 16,
+    height: 16,
+    path: `${BASE_PATH}/icons/check-mark-red.svg`,
+  });
 
   private constructor(
     protected key: string,

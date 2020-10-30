@@ -1,10 +1,15 @@
 import React from 'react';
 import styled from 'styled-components';
+import { observer } from 'mobx-react';
 
 import OptionsViewModel from './ViewModel';
 
 import { Body, Hero, Title } from 'src/core/Typography';
+import { Button } from 'src/core/Button';
 import Icon, { Icons } from 'src/core/Icon';
+import PayOptions from './components/PayOptions';
+import DirectDeposit from './components/DirectDeposit';
+import CheckByMail from './components/CheckByMail';
 
 const OptionsContainer = styled.div`
   background: white;
@@ -23,18 +28,25 @@ const Line = styled.hr`
   margin: 30px 0 20px;
 `;
 
-const SectionTitle = styled(Title.Three)`
+const OptionsTitle = styled(Title.Three)`
   font-weight: 600;
   display: flex;
 `;
 
-const SectionQuestion = styled(Body.Regular)`
+const OptionsBody = styled(Body.Regular)`
   display: flex;
   padding: 15px 0;
 `;
 
-const SectionTitleIcon = styled(Icon)`
+const OptionTitleIcon = styled(Icon)`
   margin: auto 10px auto 0;
+`;
+
+const SubmitButton = styled(Button.Primary)`
+  margin: 15px 0 30px;
+  max-width: 180px;
+  white-space: normal;
+  width: 100%;
 `;
 
 export interface Props {
@@ -42,17 +54,29 @@ export interface Props {
 }
 
 const OptionsView: React.FC<Props> = ({ viewModel }) => {
+  const payOptionArr: Array<any> = [viewModel.payOptionDD, viewModel.payOptionMail];
+
   return (
     <OptionsContainer>
       <StyledHero>{viewModel.hero}</StyledHero>
       <Line />
-      <SectionTitle>
-        <SectionTitleIcon icon={Icons.RED_ONE} />
-        {viewModel.sectionTitle}
-      </SectionTitle>
-      <SectionQuestion>{viewModel.sectionQuestion}</SectionQuestion>
+      <OptionsTitle>
+        <OptionTitleIcon icon={Icons.RED_ONE} />
+        {viewModel.optionTitle}
+      </OptionsTitle>
+      <OptionsBody>{viewModel.optionQuestion}</OptionsBody>
+      <PayOptions
+        optionMeta={payOptionArr}
+        selected={viewModel.getPayOptionSelected()}
+        handleClick={viewModel.onPayOptionClick}
+      />
+      <OptionsBody>{viewModel.bankInfo}</OptionsBody>
+      {viewModel.showDirectDeposit() ? <DirectDeposit /> : <CheckByMail />}
+      <SubmitButton onClick={() => {return}}>
+        {viewModel.submit}
+      </SubmitButton>
     </OptionsContainer>
   );
 };
 
-export default OptionsView;
+export default observer(OptionsView);
