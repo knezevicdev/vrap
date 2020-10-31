@@ -1,4 +1,4 @@
-import { observable } from 'mobx';
+import { runInAction, action, observable } from 'mobx';
 import { createContext, useContext } from 'react';
 
 import { Prices } from 'src/networking/models/Price';
@@ -37,7 +37,7 @@ export async function submitPriceResponse(priceData: PriceData): Promise<void> {
   }
 }
 
-export async function getInitialPriceStoreState(
+async function getInitialPriceStoreState(
   priceId: string
 ): Promise<PriceStoreState> {
   const networker = new Networker();
@@ -95,18 +95,53 @@ export class PriceStore {
   @observable price = 0;
   @observable priceId = '';
   @observable goodUntil = '2020-01-01T00:00:00Z';
+  @observable active = false;
+  @observable created = '';
+  @observable make = '';
+  @observable miles = 0;
+  @observable model = '';
+  @observable newOffer = null;
+  @observable priceStatus = '';
+  @observable taxCreditSavings = null;
+  @observable trim = '';
+  @observable userEmail = '';
+  @observable verificationUrl = '';
+  @observable vin = '';
+  @observable xkeId = 0;
+  @observable year = 0;
 
-  constructor(initialState?: PriceStoreState) {
-    if (initialState) {
+  constructor(priceId: string) {
+    this.init(priceId);
+  }
+
+  @action
+  async init(priceId: string) {
+    const initialState = await getInitialPriceStoreState(priceId);
+    runInAction(() => {
+      console.log({initialState})
       this.automatedAppraisal = initialState.automatedAppraisal;
       this.price = initialState.price;
       this.priceId = initialState.priceId;
       this.goodUntil = initialState.goodUntil;
-    }
+      this.active = initialState.active;
+      this.created = initialState.created;
+      this.make = initialState.make;
+      this.miles = initialState.miles;
+      this.model = initialState.model;
+      this.newOffer = initialState.newOffer;
+      this.priceStatus = initialState.priceStatus;
+      this.taxCreditSavings = initialState.taxCreditSavings;
+      this.trim = initialState.trim;
+      this.userEmail = initialState.userEmail;
+      this.verificationUrl = initialState.verificationUrl;
+      this.vin = initialState.vin;
+      this.xkeId = initialState.xkeId;
+      this.year = initialState.year;
+    });
   }
 }
 
-export const PriceStoreContext = createContext<PriceStore>(new PriceStore());
+export const PriceStoreContext = createContext();
 
 export const usePriceStore = (): PriceStore => {
   const store = useContext(PriceStoreContext);

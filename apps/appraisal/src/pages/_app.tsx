@@ -1,10 +1,12 @@
+import { datadogRum } from '@datadog/browser-rum';
+import { Brand, ThemeProvider } from '@vroom-web/ui';
 import App from 'next/app';
+import getConfig from 'next/config';
 import React from 'react';
 import smoothscroll from 'smoothscroll-polyfill';
-import { Brand, ThemeProvider } from '@vroom-web/ui';
-import { GlobalStyle, theme } from '../core/themes/Vroom';
 import { ThemeProvider as StyledComponentsThemeProvider } from 'styled-components';
-import { datadogRum } from '@datadog/browser-rum';
+
+import { GlobalStyle, theme } from '../core/themes/Vroom';
 
 const { publicRuntimeConfig } = getConfig();
 
