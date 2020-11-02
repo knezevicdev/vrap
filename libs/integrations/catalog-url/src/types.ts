@@ -95,15 +95,10 @@ export enum Cylinder {
 export enum FuelType {
   GASOLINE = 'gasoline',
   ELECTRIC = 'electric',
-  HYBRID = 'hybrid',
-  BIO_DIESEL = 'biodiesel',
-  FLEX_FUEL = 'flexfuel',
   PLUG_IN_HYBRID = 'pluginhybrid',
   GAS_ELECTRIC_HYBRID = 'gaselectrichybrid',
-  HYDROGEN_FUEL_CELL = 'hydrogenfuelcell',
-  NATURAL_GAS = 'naturalgas',
-  PROPANE = 'propane',
   DIESEL = 'diesel',
+  OTHER = 'other',
 }
 
 export interface FiltersData {

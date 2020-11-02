@@ -82,15 +82,10 @@ export declare enum Cylinder {
 export declare enum FuelType {
     GASOLINE = "gasoline",
     ELECTRIC = "electric",
-    HYBRID = "hybrid",
-    BIO_DIESEL = "biodiesel",
-    FLEX_FUEL = "flexfuel",
     PLUG_IN_HYBRID = "pluginhybrid",
     GAS_ELECTRIC_HYBRID = "gaselectrichybrid",
-    HYDROGEN_FUEL_CELL = "hydrogenfuelcell",
-    NATURAL_GAS = "naturalgas",
-    PROPANE = "propane",
-    DIESEL = "diesel"
+    DIESEL = "diesel",
+    OTHER = "other"
 }
 export interface FiltersData {
     [Filters.BODY_TYPES]?: BodyType[];

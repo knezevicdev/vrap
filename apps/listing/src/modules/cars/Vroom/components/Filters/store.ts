@@ -3,7 +3,7 @@ import { action, IObservableArray, observable } from 'mobx';
 import BodyTypes from './components/BodyTypes';
 import Color from './components/Color';
 import EngineAndDrivetrain from './components/EngineAndDrivetrain';
-import FuelAndEfficiency from './components/EngineAndDrivetrain';
+import FuelAndEfficiency from './components/FuelAndEfficiency';
 import Makes from './components/Makes';
 import Miles from './components/Miles';
 import Price from './components/Price';

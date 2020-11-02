@@ -84,15 +84,10 @@ var jsBase64 = require('js-base64');
 (function (FuelType) {
   FuelType["GASOLINE"] = "gasoline";
   FuelType["ELECTRIC"] = "electric";
-  FuelType["HYBRID"] = "hybrid";
-  FuelType["BIO_DIESEL"] = "biodiesel";
-  FuelType["FLEX_FUEL"] = "flexfuel";
   FuelType["PLUG_IN_HYBRID"] = "pluginhybrid";
   FuelType["GAS_ELECTRIC_HYBRID"] = "gaselectrichybrid";
-  FuelType["HYDROGEN_FUEL_CELL"] = "hydrogenfuelcell";
-  FuelType["NATURAL_GAS"] = "naturalgas";
-  FuelType["PROPANE"] = "propane";
   FuelType["DIESEL"] = "diesel";
+  FuelType["OTHER"] = "other";
 })(exports.FuelType || (exports.FuelType = {}));
 
 var deepCopyFiltersData = function deepCopyFiltersData(filtersData) {

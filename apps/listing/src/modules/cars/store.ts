@@ -1,7 +1,6 @@
 import {
   Filters,
   FiltersData,
-  FuelType,
   getUrlFromFiltersData,
 } from '@vroom-web/catalog-url-integration';
 import { Experiment } from '@vroom-web/experiment-sdk';
@@ -30,6 +29,9 @@ import {
   DriveType,
   DriveTypeAPI,
   driveTypes,
+  FuelType,
+  FuelTypeAPI,
+  fuelTypes,
   INVENTORY_CARDS_PER_PAGE,
   POPULAR_CAR_LIMIT,
   Sort,
@@ -143,6 +145,28 @@ export const getCylinderRequestData = (
     }
   });
   return cylinder;
+};
+
+export const getFuelTypeRequestData = (
+  filtersData?: FiltersData
+): FuelTypeAPI[] | undefined => {
+  if (!filtersData) {
+    return undefined;
+  }
+  const filtersDataFuelType = filtersData[Filters.FUEL_TYPE];
+  if (!filtersDataFuelType || !fuelTypes) {
+    return undefined;
+  }
+  const fuelType: FuelTypeAPI[] = [];
+  filtersDataFuelType.forEach((filtersDataFuelType) => {
+    const matchingFuelType = fuelTypes.find(
+      (fuelType) => fuelType.filtersDataValue === filtersDataFuelType
+    );
+    if (matchingFuelType && matchingFuelType.api) {
+      fuelType.push(matchingFuelType.api);
+    }
+  });
+  return fuelType;
 };
 
 export const getMakeAndModelRequestData = (
@@ -293,7 +317,7 @@ export const getPostInventoryRequestDataFromFilterData = (
   );
   const testdriveonly = getTestDriveOnlyRequestData(filtersData);
   const transmissionid = getTransmissionRequestData(filtersData);
-  const fuelType = [FuelType.BIO_DIESEL];
+  const fuelType = getFuelTypeRequestData(filtersData);
 
   return {
     bodytype,
@@ -328,6 +352,7 @@ export class CarsStore {
   readonly colors: Color[] = colors;
   readonly driveTypes: DriveType[] = driveTypes;
   readonly cylinders: Cylinder[] = cylinders;
+  readonly fuelTypes: FuelType[] = fuelTypes;
   readonly sorts: Sort[] = sorts;
   readonly testDrives: TestDrive[] = testDrives;
   readonly transmissions: Transmission[] = transmissions;
