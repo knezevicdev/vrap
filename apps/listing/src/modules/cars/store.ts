@@ -384,6 +384,7 @@ export class CarsStore {
 
   @observable geoLocationSortExperiment?: Experiment;
   @observable cylinderFilterExperiment?: Experiment;
+  @observable fuelTypeFilterExperiment?: Experiment;
 
   constructor(initialState?: InitialCarsStoreState) {
     this.invSearchNetworker = new InvSearchNetworker(
@@ -412,6 +413,13 @@ export class CarsStore {
     cylinderFilterExperiment?: Experiment
   ): void => {
     this.cylinderFilterExperiment = cylinderFilterExperiment;
+  };
+
+  @action
+  setFuelTypeFilterExperiment = (
+    fuelTypeFilterExperiment?: Experiment
+  ): void => {
+    this.fuelTypeFilterExperiment = fuelTypeFilterExperiment;
   };
 
   @action

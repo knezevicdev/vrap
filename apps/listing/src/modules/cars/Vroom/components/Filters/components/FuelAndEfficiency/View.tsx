@@ -38,8 +38,14 @@ interface Props {
 const FuelAndEfficiencyView: React.FC<Props> = ({ viewModel }) => {
   return (
     <FuelAndEfficiencyContainer>
-      <Titles fontWeight="fontWeightMedium">{viewModel.fuelTypeLabel}</Titles>
-      <FuelType />
+      {viewModel.showFuelAndEfficiencyFilters() && (
+        <>
+          <Titles fontWeight="fontWeightMedium">
+            {viewModel.fuelTypeLabel}
+          </Titles>
+          <FuelType />
+        </>
+      )}
       <Reset
         button
         onClick={viewModel.reset}

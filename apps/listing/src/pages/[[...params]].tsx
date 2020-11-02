@@ -109,6 +109,20 @@ const CarsPage: NextPage<Props> = ({
     }
   }, [carsStore.cylinderFilterExperiment, analyticsHandler]);
 
+  useEffect(() => {
+    experimentSDK
+      .getAndLogExperimentClientSide('snd-catalog-fuel-type-filter')
+      .then((experiment) => {
+        carsStore.setFuelTypeFilterExperiment(experiment);
+      });
+  }, [carsStore]);
+
+  useEffect(() => {
+    if (carsStore.fuelTypeFilterExperiment) {
+      analyticsHandler.registerExperiment(carsStore.fuelTypeFilterExperiment);
+    }
+  }, [carsStore.fuelTypeFilterExperiment, analyticsHandler]);
+
   const [resumeSearchExperiment, setResumeSearchExperiment] = useState<
     Experiment | undefined
   >();

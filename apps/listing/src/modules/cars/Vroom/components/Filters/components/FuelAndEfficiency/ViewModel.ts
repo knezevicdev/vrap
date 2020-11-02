@@ -27,6 +27,10 @@ class EngineAndDrivetrainViewModel {
     const updatedFiltersData = resetFilters([Filters.FUEL_TYPE], filtersData);
     this.carsStore.updateFiltersData(updatedFiltersData);
   };
+
+  showFuelAndEfficiencyFilters = (): boolean => {
+    return this.carsStore.fuelTypeFilterExperiment?.assignedVariant === 1;
+  };
 }
 
 export default EngineAndDrivetrainViewModel;
