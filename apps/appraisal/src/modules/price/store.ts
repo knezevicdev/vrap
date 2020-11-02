@@ -1,4 +1,4 @@
-import { runInAction, action, observable } from 'mobx';
+import { action, observable, runInAction } from 'mobx';
 import { createContext, useContext } from 'react';
 
 import { Prices } from 'src/networking/models/Price';
@@ -115,10 +115,9 @@ export class PriceStore {
   }
 
   @action
-  async init(priceId: string) {
+  async init(priceId: string): Promise<PriceStoreState> {
     const initialState = await getInitialPriceStoreState(priceId);
     runInAction(() => {
-      console.log({initialState})
       this.automatedAppraisal = initialState.automatedAppraisal;
       this.price = initialState.price;
       this.priceId = initialState.priceId;
