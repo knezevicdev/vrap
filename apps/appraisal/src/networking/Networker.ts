@@ -35,10 +35,8 @@ export class Networker {
     const { priceId: offerId, accepted } = priceData;
 
     const data = {
-      payload: {
-        offerId,
-        accepted,
-      },
+      offerId,
+      accepted,
     };
 
     return this.axiosInstance.post(url, data);
