@@ -16,7 +16,7 @@ interface Props {
 const LocationPage: NextPage<Props> = ({ brand, title, carCenter }) => {
   const head = <title>{title}</title>;
 
-  if (brand !== Brand.TDA || !carCenter) return <Error statusCode={404} />;
+  if (!carCenter) return <Error statusCode={404} />;
 
   return (
     <ThemeProvider brand={brand}>
