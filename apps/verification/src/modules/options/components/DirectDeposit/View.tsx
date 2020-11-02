@@ -1,35 +1,43 @@
 import React from 'react';
-import styled from 'styled-components';
+import { styled } from '@material-ui/core/styles';
+import TextField from '@material-ui/core/TextField';
 
 import DirectDepositViewModel from './ViewModel';
 
-const InputContainer = styled.div`
-  padding-bottom: 20px;
-`;
+const InputContainer = styled('div')(() => ({
+  paddingBottom: '20px'
+}));
 
-const InputLabel = styled.label`
-  display: flex;
-  letter-spacing: 0.35px;
-  margin-bottom: 5px;
-  font-size: 13px;
-  line-height: 13px;
-  font-family: Calibre;
-  color: #041022;
-`;
-
-const InputComponent = styled.input`
-  outline: none;
-  appearance: none;
-  border: 1px solid #e0e0e0;
-  font-size: 18px;
-  line-height: 18px;
-  border-radius: 0;
-  display: flex;
-  padding: 8px 10px;
-  width: 280px;
-  font-family: Calibre;
-  color: #041022;
-`;
+const Input = styled(TextField)(({ theme }) => ({
+  width: '280px',
+  '& .MuiInput-formControl': {
+    marginTop: theme.spacing(1),
+  },
+  '& .MuiInputLabel-root': {
+    position: 'static',
+    transform: 'none',
+    fontSize: '14px',
+    fontWeight: theme.typography.fontWeightLight,
+    lineHeight: '14px',
+    color: theme.palette.text.primary,
+  },
+  '& input': {
+    padding: theme.spacing(1, 2),
+    border: `1px solid ${theme.palette.grey[400]}`,
+  },
+  '& .Mui-error input': {
+    borderColor: theme.palette.error.main,
+  },
+  '& .Mui-error.MuiInputLabel-root': {
+    color: theme.palette.error.main,
+  },
+  '& .MuiFormHelperText-root': {
+    display: 'none',
+  },
+  '& .MuiFormHelperText-root.Mui-error': {
+    display: 'initial',
+  },
+}));
 
 export interface Props {
   viewModel: DirectDepositViewModel;
@@ -39,12 +47,18 @@ const PayOptionsView: React.FC<Props> = ({ viewModel }) => {
   return (
     <>
       <InputContainer>
-        <InputLabel>{viewModel.routingLabel}</InputLabel>
-        <InputComponent />
+        <Input
+          id='RoutingNumber'
+          label={viewModel.routingLabel}
+          placeholder={viewModel.routingLabel}
+        />
       </InputContainer>
       <InputContainer>
-        <InputLabel>{viewModel.bankAccountLabel}</InputLabel>
-        <InputComponent />
+        <Input
+          id="BankAccountNumber"
+          label={viewModel.bankAccountLabel}
+          placeholder={viewModel.bankAccountLabel}
+        />
       </InputContainer>
     </>
   );

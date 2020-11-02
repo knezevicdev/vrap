@@ -1,10 +1,11 @@
+import { Brand, ThemeProvider } from '@vroom-web/ui';
 import { SimpleHeader } from '@vroom-web/header-components';
-import { NextPage } from 'next';
+import { NextPage, NextPageContext } from 'next';
 import getConfig from 'next/config';
 import React from 'react';
 import styled from 'styled-components';
 
-import Footer from 'src/core/Footer';
+import ToolFooter from 'src/core/ToolFooter';
 import Page from 'src/Page';
 import Options from 'src/modules/options';
 import PaymentOverview from 'src/modules/paymentoverview';
@@ -16,30 +17,43 @@ const ColumnBody = styled.div`
 `;
 
 interface Props {
-  initialState?: any;
+  brand: Brand,
+  offer: string
 }
 
 const { publicRuntimeConfig } = getConfig();
 
-const EPayOptions: NextPage<Props> = () => {
+const EPayOptions: NextPage<Props> = ({ brand }) => {
   const gearboxPrivateUrl = publicRuntimeConfig.GEARBOX_PRIVATE_URL;
 
   return (
-    <Page name="EPayOptions">
-      <SimpleHeader gearboxPrivateUrl={gearboxPrivateUrl} />
-      <ColumnBody>
-        <Options />
-        <PaymentOverview />
-      </ColumnBody>
-      <Footer />
-    </Page>
+    <ThemeProvider brand={brand}>
+      <Page name="EPayOptions">
+        <SimpleHeader gearboxPrivateUrl={gearboxPrivateUrl} />
+        <ColumnBody>
+          <Options />
+          <PaymentOverview />
+        </ColumnBody>
+        <ToolFooter />
+      </Page>
+    </ThemeProvider>
   );
 };
 
-EPayOptions.getInitialProps = async ({ query }): Promise<Props> => {
+EPayOptions.getInitialProps = async (context: NextPageContext): Promise<Props> => {
+  const { req, query } = context;
+
+  const headerBrandKey = 'x-brand';
+  const brandHeader = req && req.headers[headerBrandKey];
+  const queryBrand = query.brand;
+
+  let brand = Brand.VROOM;
+  const whitelabel = brandHeader || queryBrand;
+  if (whitelabel === Brand.SANTANDER) brand = Brand.SANTANDER;
+  else if (whitelabel === Brand.TDA) brand = Brand.TDA;
+
   const offerId = query.offerId as string;
-  const initialState = { offer: offerId };
-  return { initialState };
+  return { brand, offer: offerId };
 };
 
 export default EPayOptions;
