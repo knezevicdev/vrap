@@ -94,6 +94,13 @@ export class Icons {
     path: `${BASE_PATH}/icons/check-mark-red.svg`,
   });
 
+  static readonly CHECK_MARK_WHITE = new Icons('CHECK_MARK_WHITE', {
+    name: 'check-mark-white',
+    width: 16,
+    height: 16,
+    path: `${BASE_PATH}/icons/check-mark-white.svg`,
+  });
+
   private constructor(
     protected key: string,
     public readonly value: {

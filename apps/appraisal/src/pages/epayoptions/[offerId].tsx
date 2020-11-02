@@ -7,6 +7,7 @@ import styled from 'styled-components';
 
 import ToolFooter from 'src/core/ToolFooter';
 import Page from 'src/Page';
+import SuccessBar from 'src/modules/successbar';
 import Options from 'src/modules/options';
 import PaymentOverview from 'src/modules/paymentoverview';
 
@@ -30,6 +31,7 @@ const EPayOptions: NextPage<Props> = ({ brand }) => {
     <ThemeProvider brand={brand}>
       <Page name="EPayOptions">
         <SimpleHeader gearboxPrivateUrl={gearboxPrivateUrl} />
+        <SuccessBar />
         <ColumnBody>
           <Options />
           <PaymentOverview />
