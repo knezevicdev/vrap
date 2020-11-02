@@ -30,7 +30,7 @@ const CustomA = styled.a`
 
 const CustomLink = styled(Link)`
   padding-left: 10px;
- 
+
   :hover {
     text-decoration-color: red;
   }

@@ -47,7 +47,7 @@ class FooterViewModel {
   readonly terms = {
     href: '/legal/terms-of-use',
     name: 'Terms of use',
-  }
+  };
 }
 
 export default FooterViewModel;

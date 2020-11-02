@@ -6,5 +6,5 @@ export class OptionsStore {
   @action
   setPayOptionSelected = (value: string): void => {
     this.payOptionSelected = value;
-  }
+  };
 }

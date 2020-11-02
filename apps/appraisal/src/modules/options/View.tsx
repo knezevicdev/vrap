@@ -1,15 +1,15 @@
+import { observer } from 'mobx-react';
 import React from 'react';
 import styled from 'styled-components';
-import { observer } from 'mobx-react';
 
+import CheckByMail from './components/CheckByMail';
+import DirectDeposit from './components/DirectDeposit';
+import PayOptions from './components/PayOptions';
 import OptionsViewModel from './ViewModel';
 
-import { Body, Hero, Title } from 'src/core/Typography';
 import { Button } from 'src/core/Button';
 import Icon, { Icons } from 'src/core/Icon';
-import PayOptions from './components/PayOptions';
-import DirectDeposit from './components/DirectDeposit';
-import CheckByMail from './components/CheckByMail';
+import { Body, Hero, Title } from 'src/core/Typography';
 
 const OptionsContainer = styled.div`
   background: white;
@@ -54,7 +54,10 @@ export interface Props {
 }
 
 const OptionsView: React.FC<Props> = ({ viewModel }) => {
-  const payOptionArr: Array<any> = [viewModel.payOptionDD, viewModel.payOptionMail];
+  const payOptionArr: Array<string> = [
+    viewModel.payOptionDD,
+    viewModel.payOptionMail,
+  ];
 
   return (
     <OptionsContainer>
@@ -72,7 +75,11 @@ const OptionsView: React.FC<Props> = ({ viewModel }) => {
       />
       <OptionsBody>{viewModel.bankInfo}</OptionsBody>
       {viewModel.showDirectDeposit() ? <DirectDeposit /> : <CheckByMail />}
-      <SubmitButton onClick={() => {return}}>
+      <SubmitButton
+        onClick={() => {
+          return;
+        }}
+      >
         {viewModel.submit}
       </SubmitButton>
     </OptionsContainer>

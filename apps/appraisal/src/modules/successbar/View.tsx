@@ -3,8 +3,8 @@ import styled from 'styled-components';
 
 import SuccessBarViewModel from './ViewModel';
 
-import { Body } from 'src/core/Typography';
 import Icon, { Icons } from 'src/core/Icon';
+import { Body } from 'src/core/Typography';
 
 const SuccessBar = styled(Body.Regular)`
   padding: 15px 0 15px 0;

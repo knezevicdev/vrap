@@ -14,17 +14,19 @@ class OptionsViewModel {
     this.store = store;
   }
 
-  onPayOptionClick = (selectedOption: React.ChangeEvent<HTMLInputElement>): void => {
+  onPayOptionClick = (
+    selectedOption: React.ChangeEvent<HTMLInputElement>
+  ): void => {
     this.store.setPayOptionSelected(selectedOption.currentTarget.name);
-  }
+  };
 
   getPayOptionSelected = (): string => {
     return this.store.payOptionSelected;
-  }
+  };
 
   showDirectDeposit = (): boolean => {
     return this.store.payOptionSelected === this.payOptionDD;
-  }
+  };
 }
 
 export default OptionsViewModel;

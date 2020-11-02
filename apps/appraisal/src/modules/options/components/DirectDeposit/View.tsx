@@ -1,11 +1,11 @@
-import React from 'react';
 import { styled } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
+import React from 'react';
 
 import DirectDepositViewModel from './ViewModel';
 
 const InputContainer = styled('div')(() => ({
-  paddingBottom: '20px'
+  paddingBottom: '20px',
 }));
 
 const Input = styled(TextField)(({ theme }) => ({
@@ -48,7 +48,7 @@ const PayOptionsView: React.FC<Props> = ({ viewModel }) => {
     <>
       <InputContainer>
         <Input
-          id='RoutingNumber'
+          id="RoutingNumber"
           label={viewModel.routingLabel}
           placeholder={viewModel.routingLabel}
         />

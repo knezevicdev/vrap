@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+
 import RadioButton from 'src/core/Radio';
 
 export interface Props {
@@ -15,14 +16,17 @@ const PayOptionsContainer = styled.div`
 const OptionContainer = styled.div<{ selected?: boolean }>`
   width: 50%;
   padding: 20px;
-  outline: ${({ selected }) =>
-    selected ? '2px solid red' : 'none'};
+  outline: ${({ selected }) => (selected ? '2px solid red' : 'none')};
 `;
 
-const PayOptionsView: React.FC<Props> = ({ optionMeta, selected, handleClick }) => {
+const PayOptionsView: React.FC<Props> = ({
+  optionMeta,
+  selected,
+  handleClick,
+}) => {
   return (
     <PayOptionsContainer>
-      {optionMeta.map(option => {
+      {optionMeta.map((option) => {
         const checked = selected === option;
         return (
           <OptionContainer selected={checked} key={option}>

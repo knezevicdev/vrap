@@ -1,15 +1,15 @@
-import { Brand, ThemeProvider } from '@vroom-web/ui';
 import { SimpleHeader } from '@vroom-web/header-components';
+import { Brand, ThemeProvider } from '@vroom-web/ui';
 import { NextPage, NextPageContext } from 'next';
 import getConfig from 'next/config';
 import React from 'react';
 import styled from 'styled-components';
 
 import ToolFooter from 'src/core/ToolFooter';
-import Page from 'src/Page';
-import SuccessBar from 'src/modules/successbar';
 import Options from 'src/modules/options';
 import PaymentOverview from 'src/modules/paymentoverview';
+import SuccessBar from 'src/modules/successbar';
+import Page from 'src/Page';
 
 const ColumnBody = styled.div`
   display: flex;
@@ -18,8 +18,8 @@ const ColumnBody = styled.div`
 `;
 
 interface Props {
-  brand: Brand,
-  offer: string
+  brand: Brand;
+  offer: string;
 }
 
 const { publicRuntimeConfig } = getConfig();
@@ -42,7 +42,9 @@ const EPayOptions: NextPage<Props> = ({ brand }) => {
   );
 };
 
-EPayOptions.getInitialProps = async (context: NextPageContext): Promise<Props> => {
+EPayOptions.getInitialProps = async (
+  context: NextPageContext
+): Promise<Props> => {
   const { req, query } = context;
 
   const headerBrandKey = 'x-brand';
