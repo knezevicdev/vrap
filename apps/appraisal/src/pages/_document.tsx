@@ -13,6 +13,8 @@ import Document, {
 import React from 'react';
 import { ServerStyleSheet } from 'styled-components';
 
+import ENVS from 'src/integrations/Envs';
+
 const { serverRuntimeConfig, publicRuntimeConfig } = getConfig();
 
 export default class MyDocument extends Document {
@@ -56,7 +58,7 @@ export default class MyDocument extends Document {
         <Head>
           <UISnippet
             brand={Brand.VROOM}
-            staticAssetsHostUrl={publicRuntimeConfig.STATIC_ASSETS_HOST_URL}
+            staticAssetsHostUrl={ENVS.STATIC_ASSETS_HOST_URL}
           />
           {segmentWriteKey && (
             <AnalyticsSnippet
