@@ -15,7 +15,7 @@ import { ServerStyleSheet } from 'styled-components';
 
 import ENVS from 'src/integrations/Envs';
 
-const { serverRuntimeConfig, publicRuntimeConfig } = getConfig();
+const { publicRuntimeConfig } = getConfig();
 
 export default class MyDocument extends Document {
   static async getInitialProps(
