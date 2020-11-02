@@ -25,12 +25,13 @@ export class Networker {
   }
 
   getOfferDetails(priceId: string): Promise<AxiosResponse<Prices>> {
-    const url = `${publicRuntimeConfig.ACQUISITIONS_URL}/acquisition/offer?offerID=${priceId}`;
+    const encodedPriceID = encodeURIComponent(priceId);
+    const url = `${publicRuntimeConfig.VROOM_URL}/api/appraisal/get-offer?offerID=${encodedPriceID}`;
     return this.axiosInstance.get(url);
   }
 
   submitPriceResponse(priceData: PriceData): Promise<AxiosResponse<Prices>> {
-    const url = `${publicRuntimeConfig.ACQUISITIONS_URL}/acquisition/offer/reject`;
+    const url = `${publicRuntimeConfig.VROOM_URL}/api/sf/offer`;
     const { priceId: offerId, accepted } = priceData;
 
     const data = {

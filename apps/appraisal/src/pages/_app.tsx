@@ -1,6 +1,7 @@
+import { Brand, ThemeProvider } from '@vroom-web/ui';
 import App from 'next/app';
 import React from 'react';
-import { ThemeProvider } from 'styled-components';
+import { ThemeProvider as StyledComponentsThemeProvider } from 'styled-components';
 
 import { GlobalStyle, theme } from '../core/themes/Vroom';
 
@@ -9,12 +10,12 @@ class VroomApp extends App {
     const { Component, pageProps } = this.props;
     return (
       <>
-        <>
-          <GlobalStyle />
-          <ThemeProvider theme={theme}>
+        <GlobalStyle />
+        <ThemeProvider brand={Brand.VROOM}>
+          <StyledComponentsThemeProvider theme={theme}>
             <Component {...pageProps} />
-          </ThemeProvider>
-        </>
+          </StyledComponentsThemeProvider>
+        </ThemeProvider>
       </>
     );
   }

@@ -11,8 +11,6 @@ const StyledGrid = styled(Grid)(() => ({
   flexGrow: 1,
 }));
 
-// TODO: add TDA footer
-
 const TDA: React.FC = () => {
   return (
     <>
