@@ -51,7 +51,7 @@ export default class MyDocument extends Document {
   }
 
   render(): JSX.Element {
-    const segmentWriteKey = serverRuntimeConfig.SEGMENT_WRITE_KEY;
+    const segmentWriteKey = ENVS.SEGMENT_WRITE_KEY;
 
     return (
       <Html lang="en">
