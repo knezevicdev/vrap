@@ -1,6 +1,5 @@
-import { PriceStore } from './store';
-
 import AnalyticsHandler from 'src/integrations/AnalyticsHandler';
+import { PriceStore } from './store';
 
 class PriceViewModel {
   private analyticsHandler = new AnalyticsHandler();
