@@ -25,6 +25,27 @@ export interface PriceStoreState {
   year: number;
 }
 
+export const defaultPriceState: PriceStoreState = {
+  active: false,
+  automatedAppraisal: false,
+  created: '',
+  goodUntil: '2020-01-01T00:00:00Z',
+  make: '',
+  miles: 0,
+  model: '',
+  newOffer: null,
+  price: 0,
+  priceId: '',
+  priceStatus: '',
+  taxCreditSavings: null,
+  trim: '',
+  userEmail: '',
+  verificationUrl: '',
+  vin: '',
+  xkeId: 0,
+  year: 0,
+};
+
 export async function submitPriceResponse(priceData: PriceData): Promise<void> {
   const networker = new Networker();
   try {
@@ -67,26 +88,7 @@ async function getInitialPriceStoreState(
     priceState.year = price.Year__c;
     return priceState;
   } catch (err) {
-    const errorState = {} as PriceStoreState;
-    errorState.active = false;
-    errorState.automatedAppraisal = false;
-    errorState.created = '';
-    errorState.goodUntil = '2020-01-01T00:00:00Z';
-    errorState.make = '';
-    errorState.miles = 0;
-    errorState.model = '';
-    errorState.newOffer = null;
-    errorState.price = 0;
-    errorState.priceId = '';
-    errorState.priceStatus = '';
-    errorState.taxCreditSavings = null;
-    errorState.trim = '';
-    errorState.userEmail = '';
-    errorState.verificationUrl = '';
-    errorState.vin = '';
-    errorState.xkeId = 0;
-    errorState.year = 0;
-    return errorState;
+    return defaultPriceState;
   }
 }
 
@@ -100,22 +102,22 @@ export class PriceStore {
   @observable make = '';
   @observable miles = 0;
   @observable model = '';
-  @observable newOffer = null;
+  @observable newOffer: boolean | null = null;
   @observable priceStatus = '';
-  @observable taxCreditSavings = null;
+  @observable taxCreditSavings: number | null = null;
   @observable trim = '';
   @observable userEmail = '';
-  @observable verificationUrl = '';
+  @observable verificationUrl: string | null = null;
   @observable vin = '';
   @observable xkeId = 0;
   @observable year = 0;
 
-  constructor(priceId: string) {
-    this.init(priceId);
+  constructor(priceId?: string) {
+    if (priceId) this.init(priceId);
   }
 
   @action
-  async init(priceId: string): Promise<PriceStoreState> {
+  async init(priceId: string): Promise<void> {
     const initialState = await getInitialPriceStoreState(priceId);
     runInAction(() => {
       this.automatedAppraisal = initialState.automatedAppraisal;
@@ -140,7 +142,7 @@ export class PriceStore {
   }
 }
 
-export const PriceStoreContext = createContext();
+export const PriceStoreContext = createContext(new PriceStore());
 
 export const usePriceStore = (): PriceStore => {
   const store = useContext(PriceStoreContext);
