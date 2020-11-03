@@ -2,9 +2,9 @@ import { observer } from 'mobx-react';
 import React from 'react';
 import styled from 'styled-components';
 
-import CheckByMail from './components/CheckByMail';
-import DirectDeposit from './components/DirectDeposit';
-import PayOptions from './components/PayOptions';
+import CheckByMail from '../../components/CheckByMail';
+import DirectDeposit from '../../components/DirectDeposit';
+import PayOptions from '../../components/PayOptions';
 import OptionsViewModel from './ViewModel';
 
 import { Button } from 'src/core/Button';
