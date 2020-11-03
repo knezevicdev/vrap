@@ -19,7 +19,7 @@ const ColumnBody = styled.div`
 
 interface Props {
   brand: Brand;
-  offer: string;
+  price: string;
 }
 
 const { publicRuntimeConfig } = getConfig();
@@ -56,8 +56,8 @@ EPayOptions.getInitialProps = async (
   if (whitelabel === Brand.SANTANDER) brand = Brand.SANTANDER;
   else if (whitelabel === Brand.TDA) brand = Brand.TDA;
 
-  const offerId = query.offerId as string;
-  return { brand, offer: offerId };
+  const priceId = query.priceId as string;
+  return { brand, price: priceId };
 };
 
 export default EPayOptions;
