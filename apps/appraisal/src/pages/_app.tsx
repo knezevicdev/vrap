@@ -6,8 +6,9 @@ import React from 'react';
 import smoothscroll from 'smoothscroll-polyfill';
 import { ThemeProvider as StyledComponentsThemeProvider } from 'styled-components';
 
-import ENVS from 'src/integrations/Envs';
 import { GlobalStyle, theme } from '../core/themes/Vroom';
+
+import ENVS from 'src/integrations/Envs';
 
 class VroomApp extends App {
   componentDidMount(): void {
