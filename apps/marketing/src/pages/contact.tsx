@@ -44,7 +44,7 @@ ContactPage.getInitialProps = async (ctx: NextPageContext): Promise<Props> => {
   if (whitelabel === Brand.SANTANDER) brand = Brand.SANTANDER;
   else if (whitelabel === Brand.TDA) brand = Brand.TDA;
 
-  const getTitle = () => {
+  const getTitle = (): string => {
     const contactUs = 'Contact Us';
     if (brand === Brand.SANTANDER)
       return `${contactUs} - Santander Consumer USA`;
@@ -52,7 +52,7 @@ ContactPage.getInitialProps = async (ctx: NextPageContext): Promise<Props> => {
     return `${contactUs}`;
   };
 
-  const getDescription = () => {
+  const getDescription = (): string => {
     if (brand === Brand.SANTANDER)
       return 'Call 1-888-222-4227 about your Santander Consumer USA account or call 1-855-659-0278 about purchasing a vehicle. We’re here to help.';
     if (brand === Brand.TDA) return '';
