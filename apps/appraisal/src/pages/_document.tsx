@@ -49,6 +49,8 @@ export default class MyDocument extends Document {
 
   render(): JSX.Element {
     const segmentWriteKey = ENVS.SEGMENT_WRITE_KEY;
+    console.log('server envs:');
+    console.log({ ENVS });
 
     return (
       <Html lang="en">

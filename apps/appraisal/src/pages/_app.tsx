@@ -1,25 +1,28 @@
 import { datadogRum } from '@datadog/browser-rum';
 import { Brand, ThemeProvider } from '@vroom-web/ui';
 import App from 'next/app';
-import getConfig from 'next/config';
+import { name, version } from 'package.json';
 import React from 'react';
 import smoothscroll from 'smoothscroll-polyfill';
 import { ThemeProvider as StyledComponentsThemeProvider } from 'styled-components';
 
 import { GlobalStyle, theme } from '../core/themes/Vroom';
 
-const { publicRuntimeConfig } = getConfig();
+import ENVS from 'src/integrations/Envs';
 
 class VroomApp extends App {
   componentDidMount(): void {
+    console.log('client envs:');
+    console.log({ ENVS });
+
     smoothscroll.polyfill(); // needs access to the window
-    if (publicRuntimeConfig.DATA_DOG_RUM_APPLICATION) {
+    if (ENVS.DATA_DOG_RUM_APPLICATION) {
       datadogRum.init({
-        applicationId: publicRuntimeConfig.DATA_DOG_RUM_APPLICATION,
-        clientToken: publicRuntimeConfig.DATA_DOG_RUM_TOKEN,
+        applicationId: ENVS.DATA_DOG_RUM_APPLICATION,
+        clientToken: ENVS.DATA_DOG_RUM_TOKEN,
         site: 'datadoghq.com',
-        service: publicRuntimeConfig.NAME,
-        version: publicRuntimeConfig.VERSION,
+        service: name,
+        version: version,
         sampleRate: 100,
         trackInteractions: true,
       });

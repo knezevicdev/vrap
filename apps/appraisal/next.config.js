@@ -1,5 +1,3 @@
-const { name, version } = require('./package.json');
-
 const withBundleAnalyzer = require('@next/bundle-analyzer')({
   enabled: process.env.ANALYZE === 'true',
 });
@@ -16,15 +14,6 @@ const config = {
   basePath,
   distDir: `.next/${shortHash}`,
   generateBuildId: () => shortHash,
-  publicRuntimeConfig: {
-    // Will be available on both server-side and client-side
-    BASE_PATH: basePath,
-    DATA_DOG_RUM_APPLICATION: process.env.DATA_DOG_RUM_APPLICATION,
-    DATA_DOG_RUM_TOKEN: process.env.DATA_DOG_RUM_TOKEN,
-    GEARBOX_PRIVATE_URL: process.env.GEARBOX_PRIVATE_URL,
-    NAME: name,
-    VERSION: version,
-  },
   /* Custom webpack configuration. */
   webpack: (config) => {
     /* Enable SVG imports. */
