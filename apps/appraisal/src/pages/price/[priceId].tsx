@@ -34,4 +34,8 @@ const Price: NextPage = () => {
   );
 };
 
+export const getServerSideProps = async (): Promise<object> => {
+  return {};
+};
+
 export default Price;

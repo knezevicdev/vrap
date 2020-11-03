@@ -24,6 +24,7 @@ export class Networker {
   }
 
   getOfferDetails(priceId: string): Promise<AxiosResponse<Prices>> {
+    console.log('fetching priceId');
     const encodedPriceID = encodeURIComponent(priceId);
     const url = `${ENVS.VROOM_URL}/api/appraisal/get-offer?offerID=${encodedPriceID}`;
     return this.axiosInstance.get(url);
