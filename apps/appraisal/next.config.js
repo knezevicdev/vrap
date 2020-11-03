@@ -16,7 +16,7 @@ const config = {
   generateBuildId: () => shortHash,
   publicRuntimeConfig: {
     // Will be available on both server-side and client-side
-    NEXT_PUBLIC_BASE_PATH: process.env.NEXT_PUBLIC_BASE_PATH,
+    NEXT_PUBLIC_BASE_PATH: basePath,
     NEXT_PUBLIC_BRANCH_IO_KEY: process.env.NEXT_PUBLIC_BRANCH_IO_KEY,
     NEXT_PUBLIC_DATA_DOG_RUM_APPLICATION:
       process.env.NEXT_PUBLIC_DATA_DOG_RUM_APPLICATION,
