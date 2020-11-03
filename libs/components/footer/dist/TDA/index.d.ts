@@ -1,3 +1,6 @@
 import React from 'react';
-declare const TDAFooter: React.FC;
+interface Props {
+    vroomUrl: string;
+}
+declare const TDAFooter: React.FC<Props>;
 export default TDAFooter;
