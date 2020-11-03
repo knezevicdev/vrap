@@ -1,5 +1,6 @@
 import { TDAFooter } from '@vroom-web/footer-components';
 import { TDAHeader } from '@vroom-web/header-components';
+import getConfig from 'next/config';
 import React from 'react';
 
 import Divider from './components/Divider';
@@ -9,17 +10,21 @@ import HowItWorks from './components/HowItWorks';
 import Location from './components/Location';
 import VehicleSearch from './components/VehicleSearch';
 
+const {
+  publicRuntimeConfig: { VROOM_URL },
+} = getConfig();
+
 const TDA: React.FC = () => {
   return (
     <>
-      <TDAHeader />
+      <TDAHeader vroomUrl={VROOM_URL} />
       <Hero />
       <VehicleSearch />
       <Highlights />
       <Divider />
       <HowItWorks />
       <Location />
-      <TDAFooter />
+      <TDAFooter vroomUrl={VROOM_URL} />
     </>
   );
 };

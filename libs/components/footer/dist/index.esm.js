@@ -14074,28 +14074,41 @@ var AnalyticsHandler$2 = /*#__PURE__*/function (_BaseAnalyticsHandler) {
   return AnalyticsHandler;
 }(AnalyticsHandler);
 
-var ViewModel$1 = function ViewModel() {
+var ViewModel$1 = function ViewModel(vroomUrl) {
+  var _this = this;
+
   _classCallCheck(this, ViewModel);
+
+  _defineProperty$1(this, "TDAQueryString", '?vit_source=texasdirectauto&vit_medium=wl&vit_dest=vroom&vit_brand=TDA');
 
   _defineProperty$1(this, "analyticsHandler", new AnalyticsHandler$2());
 
-  _defineProperty$1(this, "disclaimer", 'Copyright © 2020 Vroom.');
-
   _defineProperty$1(this, "links", [{
+    linkToVroom: true,
     label: 'Privacy Policy',
-    href: 'https://www.vroom.com/legal/privacy-policy',
+    href: '/legal/privacy-policy',
     target: '_blank',
     handleAnalytics: this.analyticsHandler.trackLinkClicked('Privacy Policy')
   }, {
+    linkToVroom: true,
     label: 'Terms of Use',
-    href: 'https://www.vroom.com/legal/terms-of-use',
+    href: '/legal/terms-of-use',
     target: '_blank',
     handleAnalytics: this.analyticsHandler.trackLinkClicked('Terms of Use')
   }]);
+
+  _defineProperty$1(this, "disclaimer", 'Copyright © 2020 Vroom.');
+
+  if (vroomUrl) {
+    this.links.forEach(function (link) {
+      if (link.linkToVroom) link.href = "".concat(vroomUrl).concat(link.href).concat(_this.TDAQueryString);
+    });
+  }
 };
 
-var TDAFooter = function TDAFooter() {
-  var viewModel = new ViewModel$1();
+var TDAFooter = function TDAFooter(_ref) {
+  var vroomUrl = _ref.vroomUrl;
+  var viewModel = new ViewModel$1(vroomUrl);
   return /*#__PURE__*/React__default.createElement(View$1, {
     viewModel: viewModel
   });
