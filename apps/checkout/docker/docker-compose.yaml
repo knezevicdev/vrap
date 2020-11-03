@@ -1,0 +1,24 @@
+version: '3'
+services:
+  checkout:
+    build:
+      context: ../../../
+      dockerfile: ./apps/checkout/docker/Dockerfile
+    user: 'root'
+    command: ash -c "yarn workspace @vroom-web/checkout dev --port 8080"
+    # This starts nothing but leaves the container running, useful for
+    # debugging nextjs start / config operations
+    # command: ash -c "tail -f /dev/null"
+    ports:
+      - '8080:8080'
+    volumes:
+      # Setup a volume so source code edits will be reflected outside the container.
+      - '../../../:/www/'
+      # Setup volumes for dependencies and built artifacts.
+      # This allows the node_modules created during the build to not be overwritten.
+      # https://stackoverflow.com/questions/30043872/docker-compose-node-modules-not-present-in-a-volume-after-npm-install-succeeds
+      # It also makes sure that the built artifacts are only present on the container,
+      # and not copied back to the host machine.
+      - '/www/node_modules'
+      - '/www/apps/checkout/.next'
+      - '/www/apps/checkout/node_modules'

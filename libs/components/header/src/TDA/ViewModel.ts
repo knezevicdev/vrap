@@ -2,6 +2,7 @@ import AnalyticsHandler from './integrations/AnalyticsHandler';
 import Store from './store';
 
 interface Link {
+  linkToVroom: boolean;
   href?: string;
   label?: string;
   target?: string;
@@ -13,32 +14,45 @@ class ViewModel {
   private readonly store: Store;
   private analyticsHandler = new AnalyticsHandler();
 
-  constructor(store: Store) {
+  constructor(store: Store, vroomUrl?: string) {
     this.store = store;
+    if (vroomUrl) {
+      this.navLinks.forEach((navLink) => {
+        if (navLink.linkToVroom)
+          navLink.href = `${vroomUrl}${navLink.href}${this.TDAQueryString}`;
+      });
+    }
   }
+  readonly TDAQueryString: string =
+    '?vit_source=texasdirectauto&vit_medium=wl&vit_dest=vroom&vit_brand=TDA';
 
   readonly logoLink: Link = {
+    linkToVroom: false,
     href: '/',
     handleAnalytics: this.analyticsHandler.trackLogoClicked,
   };
 
   readonly navLinks: Link[] = [
     {
+      linkToVroom: false,
       href: '/cars',
       label: 'BUY',
       handleAnalytics: this.analyticsHandler.trackBuyClicked,
     },
     {
-      href: 'https://www.vroom.com/sell',
+      linkToVroom: true,
+      href: '/sell',
       label: 'SELL/TRADE',
       handleAnalytics: this.analyticsHandler.trackSellTradeClicked,
     },
     {
-      href: 'https://www.vroom.com/finance',
+      linkToVroom: true,
+      href: '/finance',
       label: 'FINANCE',
       handleAnalytics: this.analyticsHandler.trackFinanceClicked,
     },
     {
+      linkToVroom: false,
       href: '/contact',
       label: 'CONTACT US',
       handleAnalytics: this.analyticsHandler.trackContactUsClicked,
