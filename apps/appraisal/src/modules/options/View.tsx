@@ -54,11 +54,6 @@ export interface Props {
 }
 
 const OptionsView: React.FC<Props> = ({ viewModel }) => {
-  const payOptionArr: Array<string> = [
-    viewModel.payOptionDD,
-    viewModel.payOptionMail,
-  ];
-
   return (
     <OptionsContainer>
       <StyledHero>{viewModel.hero}</StyledHero>
@@ -69,7 +64,7 @@ const OptionsView: React.FC<Props> = ({ viewModel }) => {
       </OptionsTitle>
       <OptionsBody>{viewModel.optionQuestion}</OptionsBody>
       <PayOptions
-        optionMeta={payOptionArr}
+        optionMeta={viewModel.getPayOptionArray()}
         selected={viewModel.getPayOptionSelected()}
         handleClick={viewModel.onPayOptionClick}
       />

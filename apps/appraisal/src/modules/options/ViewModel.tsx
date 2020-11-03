@@ -7,8 +7,6 @@ class OptionsViewModel {
   readonly optionQuestion: string = 'How would you like to get paid?';
   readonly bankInfo: string = 'Please provide your bank information.';
   readonly submit: string = 'submit';
-  readonly payOptionDD: string = 'Direct Deposit';
-  readonly payOptionMail: string = 'Check by Mail';
 
   constructor(store: OptionsStore) {
     this.store = store;
@@ -24,8 +22,12 @@ class OptionsViewModel {
     return this.store.payOptionSelected;
   };
 
+  getPayOptionArray = (): Array<string> => {
+    return this.store.payOptionArr;
+  };
+
   showDirectDeposit = (): boolean => {
-    return this.store.payOptionSelected === this.payOptionDD;
+    return this.store.showDD;
   };
 }
 
