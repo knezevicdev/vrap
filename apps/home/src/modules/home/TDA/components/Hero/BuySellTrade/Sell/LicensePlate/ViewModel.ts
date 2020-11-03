@@ -1,3 +1,4 @@
+import getConfig from 'next/config';
 import { stringify } from 'qs';
 import React from 'react';
 
@@ -5,6 +6,10 @@ import { LicensePlateStore } from './store';
 
 import AnalyticsHandler from 'src/integrations/AnalyticsHandler';
 import { HomeStore } from 'src/modules/home/store';
+
+const {
+  publicRuntimeConfig: { VROOM_URL },
+} = getConfig();
 
 class LicensePlateViewModel {
   private analyticsHandler: AnalyticsHandler = new AnalyticsHandler();
@@ -122,7 +127,7 @@ class LicensePlateViewModel {
       });
       const vitParams =
         'vit_source=texasdirectauto&vit_medium=wl&vit_dest=vroom&vit_brand=TDA';
-      window.location.href = `sell/vehicleInformation/${vin}${queryString}${
+      window.location.href = `${VROOM_URL}/sell/vehicleInformation/${vin}${queryString}${
         queryString ? '&' : '?'
       }${vitParams}`;
     }
