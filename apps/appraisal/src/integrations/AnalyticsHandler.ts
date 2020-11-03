@@ -16,9 +16,9 @@ class AnalyticsHandler extends BaseAnalyticsHandler {
   }
 
   trackPriceViewed(): void {
-    const pageName = 'Price Page';
+    const name = 'Price Page';
     const category = 'sell';
-    this.page(pageName, category);
+    this.page(name, category);
   }
 
   trackContinueClick(): void {
