@@ -31,7 +31,11 @@ class VinViewModel {
     const queryString = stringify(this.homeStore.query, {
       addQueryPrefix: true,
     });
-    window.location.href = `sell/vehicleInformation/${this.vinStore.vin}${queryString}`;
+    const vitParams =
+      'vit_source=texasdirectauto&vit_medium=wl&vit_dest=vroom&vit_brand=TDA';
+    window.location.href = `sell/vehicleInformation/${
+      this.vinStore.vin
+    }${queryString}${queryString ? '&' : '?'}${vitParams}`;
   };
 
   getInputValue = (): string => {
