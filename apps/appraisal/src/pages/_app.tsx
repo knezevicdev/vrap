@@ -12,6 +12,9 @@ import ENVS from 'src/integrations/Envs';
 
 class VroomApp extends App {
   componentDidMount(): void {
+    console.log('client envs:');
+    console.log({ ENVS });
+
     smoothscroll.polyfill(); // needs access to the window
     if (ENVS.DATA_DOG_RUM_APPLICATION) {
       datadogRum.init({
