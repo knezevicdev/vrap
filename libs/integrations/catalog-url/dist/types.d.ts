@@ -12,7 +12,8 @@ export declare enum Filters {
     TRANSMISSION = "transmission",
     YEAR = "year",
     CYLINDERS = "cylinders",
-    OTHER_CYLINDERS = "othercylinders"
+    OTHER_CYLINDERS = "othercylinders",
+    POPULAR_FEATURES = "optionalfeatures"
 }
 export declare enum BodyType {
     CONVERTIBLE = "convertible",
@@ -78,6 +79,15 @@ export declare enum Cylinder {
     SIX = "6",
     EIGHT = "8"
 }
+export declare enum PopularFeatures {
+    ANDROID_AUTO = "Android Auto",
+    APPLE_CAR_PLAY = "Apple Car Play",
+    HEATED_SEATS = "Heated Seats",
+    REAR_VIEW_CAMERA = "Rear View Camera",
+    REMOTE_START = "Remote Start",
+    SUNROOF_MOONROOF = "Sunroof or Moonroof",
+    THIRD_ROW_SEATING = "Third Row Seating"
+}
 export interface FiltersData {
     [Filters.BODY_TYPES]?: BodyType[];
     [Filters.COLORS]?: Color[];
@@ -93,6 +103,7 @@ export interface FiltersData {
     [Filters.YEAR]?: MaxAndMin;
     [Filters.CYLINDERS]?: Cylinder[];
     [Filters.OTHER_CYLINDERS]?: boolean;
+    [Filters.POPULAR_FEATURES]?: PopularFeatures[];
 }
 export interface GetUrlFromFiltersDataOptions {
     addFiltersQueryParam?: boolean;

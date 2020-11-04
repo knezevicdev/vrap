@@ -17,6 +17,7 @@ var Filters;
   Filters["YEAR"] = "year";
   Filters["CYLINDERS"] = "cylinders";
   Filters["OTHER_CYLINDERS"] = "othercylinders";
+  Filters["POPULAR_FEATURES"] = "optionalfeatures";
 })(Filters || (Filters = {}));
 
 var BodyType;
@@ -93,6 +94,18 @@ var Cylinder;
   Cylinder["SIX"] = "6";
   Cylinder["EIGHT"] = "8";
 })(Cylinder || (Cylinder = {}));
+
+var PopularFeatures;
+
+(function (PopularFeatures) {
+  PopularFeatures["ANDROID_AUTO"] = "Android Auto";
+  PopularFeatures["APPLE_CAR_PLAY"] = "Apple Car Play";
+  PopularFeatures["HEATED_SEATS"] = "Heated Seats";
+  PopularFeatures["REAR_VIEW_CAMERA"] = "Rear View Camera";
+  PopularFeatures["REMOTE_START"] = "Remote Start";
+  PopularFeatures["SUNROOF_MOONROOF"] = "Sunroof or Moonroof";
+  PopularFeatures["THIRD_ROW_SEATING"] = "Third Row Seating";
+})(PopularFeatures || (PopularFeatures = {}));
 
 var deepCopyFiltersData = function deepCopyFiltersData(filtersData) {
   return JSON.parse(JSON.stringify(filtersData));
@@ -176,6 +189,22 @@ var removeDriveType = function removeDriveType(driveType, filtersData) {
     return dt !== driveType;
   });
   newFiltersData[Filters.DRIVE_TYPE] = newDriveTypes.length > 0 ? newDriveTypes : undefined;
+  return newFiltersData;
+};
+var addPopularFeature = function addPopularFeature(popularFeature, filtersData) {
+  var newFiltersData = deepCopyFiltersData(filtersData || {});
+  var newFeatures = newFiltersData[Filters.POPULAR_FEATURES] || [];
+  newFeatures.push(popularFeature);
+  newFiltersData[Filters.POPULAR_FEATURES] = newFeatures;
+  return newFiltersData;
+};
+var removePopularFeature = function removePopularFeature(popularFeature, filtersData) {
+  var newFiltersData = deepCopyFiltersData(filtersData || {});
+  var existingFeatures = newFiltersData[Filters.POPULAR_FEATURES] || [];
+  var newFeatures = existingFeatures.filter(function (f) {
+    return f !== popularFeature;
+  });
+  newFiltersData[Filters.POPULAR_FEATURES] = newFeatures.length > 0 ? newFeatures : undefined;
   return newFiltersData;
 };
 var setTestDrive = function setTestDrive(testDrive, filtersData) {
@@ -707,4 +736,4 @@ var getFiltersDataFromUrl = function getFiltersDataFromUrl(url) {
   return undefined;
 };
 
-export { BodyType, Color, Cylinder, DriveType, Filters, SortBy, SortDirection, TestDrive, Transmission, addAllModels, addBodyType, addColor, addCylinder, addDriveType, addModel, getFiltersDataFromUrl, getUrlFromFiltersData, removeAllModels, removeBodyType, removeColor, removeCylinder, removeDriveType, removeModel, resetFilter, resetFilters, setMiles, setOtherCylinders, setPage, setPrice, setSearch, setSort, setTestDrive, setTransmission, setYear };
+export { BodyType, Color, Cylinder, DriveType, Filters, PopularFeatures, SortBy, SortDirection, TestDrive, Transmission, addAllModels, addBodyType, addColor, addCylinder, addDriveType, addModel, addPopularFeature, getFiltersDataFromUrl, getUrlFromFiltersData, removeAllModels, removeBodyType, removeColor, removeCylinder, removeDriveType, removeModel, removePopularFeature, resetFilter, resetFilters, setMiles, setOtherCylinders, setPage, setPrice, setSearch, setSort, setTestDrive, setTransmission, setYear };

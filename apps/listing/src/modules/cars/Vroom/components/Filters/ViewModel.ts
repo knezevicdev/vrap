@@ -26,6 +26,10 @@ class FiltersViewModel {
   toggleVisibility = (filter: Filter): void => {
     this.filtersStore.toggleVisibility(filter);
   };
+
+  showFeaturesFilter = (): boolean => {
+    return this.carsStore.featuresFilterExperiment?.assignedVariant === 1;
+  };
 }
 
 export default FiltersViewModel;
