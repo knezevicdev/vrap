@@ -17,7 +17,7 @@ class ContactInfoViewModel {
 
   handleClick(): void {
     const vitParams = `?vit_source=texasdirectauto&vit_medium=wl&vit_dest=vroom&vit_brand=TDA`;
-    const url = `${VROOM_URL}/sell${vitParams}`;
+    const url = `${VROOM_URL || ''}/sell${vitParams}`;
     window.location.href = url;
   }
 }
