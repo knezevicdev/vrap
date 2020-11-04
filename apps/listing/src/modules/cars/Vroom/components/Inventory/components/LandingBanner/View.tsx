@@ -6,7 +6,7 @@ import React from 'react';
 import { ReactComponent as InfoIcon } from './svg/Info.svg';
 import LandingBannerViewModel from './ViewModel';
 
-const Container = styled('div')(({ theme }) => ({
+const Container = styled('a')(({ theme }) => ({
   display: 'flex',
   justifyContent: 'center',
   alignSelf: 'center',
@@ -14,6 +14,8 @@ const Container = styled('div')(({ theme }) => ({
   margin: theme.spacing(2, 0),
   width: '40%',
   cursor: 'pointer',
+  textDecoration: 'none',
+  color: 'unset',
   [theme.breakpoints.only('xs')]: {
     width: '92%',
   },
@@ -44,11 +46,15 @@ const LandingBannerView: React.FC<Props> = ({ viewModel }) => {
   if (!viewModel.showJeepWranglerBanner()) {
     return null;
   }
-  const handleClick = (): void => {
+  const handleClick = (e: React.MouseEvent<HTMLAnchorElement>): void => {
+    e.preventDefault();
     viewModel.handleBannerClick();
   };
   return (
-    <Container onClick={handleClick}>
+    <Container
+      href={viewModel.jeepWranglerUrl}
+      onClick={(e: React.MouseEvent<HTMLAnchorElement>): void => handleClick(e)}
+    >
       <StyledTypography>
         <StyledInfoIcon />
         {viewModel.jeepWranglerText}
