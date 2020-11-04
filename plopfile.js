@@ -52,4 +52,37 @@ module.exports = function (plop) {
       },
     ],
   });
+
+  plop.setGenerator('base-page', {
+    description: 'Create the base page in for /app',
+    prompts: [
+      {
+        type: 'input',
+        name: 'name',
+        message: `Please enter the app you're creating a base Page for`,
+      },
+    ],
+    actions: [
+      {
+        type: 'add',
+        path: 'apps/{{name}}/src/Page.tsx',
+        templateFile: 'plop-templates/base-page/page.hbs',
+      },
+      {
+        type: 'add',
+        path: 'apps/{{name}}/src/pages/_app.tsx',
+        templateFile: 'plop-templates/base-page/_app.hbs',
+      },
+      {
+        type: 'add',
+        path: 'apps/{{name}}/src/pages/_document.tsx',
+        templateFile: 'plop-templates/base-page/_document.hbs',
+      },
+      {
+        type: 'add',
+        path: 'apps/{{name}}/src/pages/index.tsx',
+        templateFile: 'plop-templates/base-page/pageindex.hbs',
+      },
+    ],
+  });
 };
