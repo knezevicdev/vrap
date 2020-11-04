@@ -16,7 +16,7 @@ export const POPULAR_CAR_LIMIT = 12;
 export enum FuelTypeAPI {
   GASOLINE = 'gasoline',
   DIESEL = 'diesel',
-  GAS_ELECTRIC_HYBRID = 'gas_electric_hybird',
+  GAS_ELECTRIC_HYBRID = 'gas_electric_hybrid',
   PLUG_IN_HYBRID = 'plug_in_hybrid',
   ELECTRIC = 'electric',
   OTHER = 'other',
@@ -25,7 +25,7 @@ export enum FuelTypeAPI {
 export enum FuelTypeDisplay {
   GASOLINE = 'Gasoline',
   DIESEL = 'Diesel',
-  GAS_ELECTRIC_HYBRID = 'Gas/Electric Hybird',
+  GAS_ELECTRIC_HYBRID = 'Gas/Electric Hybrid',
   PLUG_IN_HYBRID = 'Plug-in Hybrid',
   ELECTRIC = 'Electric',
   OTHER = 'Other',
