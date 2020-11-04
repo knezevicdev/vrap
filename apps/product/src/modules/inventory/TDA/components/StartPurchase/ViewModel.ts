@@ -130,7 +130,9 @@ class StartPurchaseViewModel {
       window.location.href = `${modelHref}${queryStringPrefix}${attributionQueryString}`;
     } else {
       this.analyticsHandler.trackProductAdded(product);
-      const url = `${VROOM_URL}/e2e/${vin}/checkoutTradeIn?${attributionQueryString}${tdaQueryParams}`;
+      const url = `${
+        VROOM_URL || ''
+      }/e2e/${vin}/checkoutTradeIn?${attributionQueryString}${tdaQueryParams}`;
       window.location.href = url;
     }
   }
