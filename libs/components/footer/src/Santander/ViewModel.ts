@@ -85,7 +85,7 @@ class ViewModel {
       links: [
         {
           label: 'Privacy Policy',
-          href: `${this.vroomUrl}/legal/privacy-policy/${this.utmParams}`,
+          href: `${this.vroomUrl}/legal/privacy-policy${this.utmParams}`,
           target: '_blank',
           handleAnalytics: this.analyticsHandler.trackLinkClicked(
             'Privacy Policy'

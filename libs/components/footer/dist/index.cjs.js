@@ -13951,7 +13951,7 @@ var ViewModel = function ViewModel(vroomUrl) {
     },
     links: [{
       label: 'Privacy Policy',
-      href: "".concat(this.vroomUrl, "/legal/privacy-policy/").concat(this.utmParams),
+      href: "".concat(this.vroomUrl, "/legal/privacy-policy").concat(this.utmParams),
       target: '_blank',
       handleAnalytics: this.analyticsHandler.trackLinkClicked('Privacy Policy')
     }, {
