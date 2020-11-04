@@ -13906,9 +13906,25 @@ var ViewModel = function ViewModel(vroomUrl) {
 
   _defineProperty$1(this, "vroomUrl", '');
 
+  _defineProperty$1(this, "sections", void 0);
+
   _defineProperty$1(this, "utmParams", '?utm_source=vroom_subdomain&utm_medium=referral&utm_campaign=vroom');
 
-  _defineProperty$1(this, "sections", [{
+  _defineProperty$1(this, "copyrightLabel", '© 2020 Santander Consumer USA Inc. and its Licensors. All Rights Reserved.');
+
+  _defineProperty$1(this, "copyrightLink", {
+    label: 'NMLS Consumer Access ID 4239.',
+    href: 'http://www.nmlsconsumeraccess.org/EntityDetails.aspx/COMPANY/4239',
+    target: '_blank',
+    handleAnalytics: this.analyticsHandler.trackLinkClicked('NMLS Consumer Access ID 4239.')
+  });
+
+  _defineProperty$1(this, "poweredBy", 'Powered by');
+
+  _defineProperty$1(this, "disclaimer", "Vehicle marketing, inventory, sales and the car-buying transaction are performed, hosted, managed and/or coordinated by Vroom. Santander Consumer USA Inc., its subsidiaries or affiliates are not responsible for the transaction, the outcome of the transaction or any information provided therein, provided that if Santander Consumer is chosen as the lender to finance the vehicle purchase, the financing will be performed by Santander Consumer.");
+
+  if (vroomUrl) this.vroomUrl = vroomUrl;
+  this.sections = [{
     title: {
       label: 'Learning Center',
       href: 'https://santanderconsumerusa.com/learning-center',
@@ -13960,22 +13976,7 @@ var ViewModel = function ViewModel(vroomUrl) {
       target: '_blank',
       handleAnalytics: this.analyticsHandler.trackLinkClicked('Terms of Use')
     }]
-  }]);
-
-  _defineProperty$1(this, "copyrightLabel", '© 2020 Santander Consumer USA Inc. and its Licensors. All Rights Reserved.');
-
-  _defineProperty$1(this, "copyrightLink", {
-    label: 'NMLS Consumer Access ID 4239.',
-    href: 'http://www.nmlsconsumeraccess.org/EntityDetails.aspx/COMPANY/4239',
-    target: '_blank',
-    handleAnalytics: this.analyticsHandler.trackLinkClicked('NMLS Consumer Access ID 4239.')
-  });
-
-  _defineProperty$1(this, "poweredBy", 'Powered by');
-
-  _defineProperty$1(this, "disclaimer", "Vehicle marketing, inventory, sales and the car-buying transaction are performed, hosted, managed and/or coordinated by Vroom. Santander Consumer USA Inc., its subsidiaries or affiliates are not responsible for the transaction, the outcome of the transaction or any information provided therein, provided that if Santander Consumer is chosen as the lender to finance the vehicle purchase, the financing will be performed by Santander Consumer.");
-
-  if (vroomUrl) this.vroomUrl = vroomUrl;
+  }];
 };
 
 var SantanderFooter = function SantanderFooter(_ref) {
