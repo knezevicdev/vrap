@@ -2,6 +2,11 @@ import { SantanderFooter } from '@vroom-web/footer-components';
 import { SantanderHeader } from '@vroom-web/header-components';
 import React from 'react';
 
+import getConfig from 'next/config';
+const {
+  publicRuntimeConfig: { VROOM_URL },
+} = getConfig();
+
 import Content from './content';
 
 const Santander: React.FC = () => {
@@ -9,7 +14,7 @@ const Santander: React.FC = () => {
     <>
       <SantanderHeader />
       <Content />
-      <SantanderFooter />
+      <SantanderFooter vroomUrl={VROOM_URL} />
     </>
   );
 };

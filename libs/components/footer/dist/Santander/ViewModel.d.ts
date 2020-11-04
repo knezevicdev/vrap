@@ -11,6 +11,9 @@ interface Section {
 }
 declare class ViewModel {
     private analyticsHandler;
+    readonly vroomUrl: string;
+    constructor(vroomUrl?: string);
+    readonly utmParams: string;
     readonly sections: Section[];
     readonly copyrightLabel = "\u00A9 2020 Santander Consumer USA Inc. and its Licensors. All Rights Reserved.";
     readonly copyrightLink: Link;

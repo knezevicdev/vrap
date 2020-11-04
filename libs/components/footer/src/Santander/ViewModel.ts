@@ -15,6 +15,14 @@ interface Section {
 
 class ViewModel {
   private analyticsHandler = new AnalyticsHandler();
+  readonly vroomUrl: string = '';
+
+  constructor(vroomUrl?: string) {
+    if (vroomUrl) this.vroomUrl = vroomUrl;
+  }
+
+  readonly utmParams: string =
+    '?utm_source=vroom_subdomain&utm_medium=referral&utm_campaign=vroom';
 
   readonly sections: Section[] = [
     {
@@ -77,7 +85,7 @@ class ViewModel {
       links: [
         {
           label: 'Privacy Policy',
-          href: 'https://www.vroom.com/legal/privacy-policy',
+          href: `${this.vroomUrl}/legal/privacy-policy/${this.utmParams}`,
           target: '_blank',
           handleAnalytics: this.analyticsHandler.trackLinkClicked(
             'Privacy Policy'
@@ -85,7 +93,7 @@ class ViewModel {
         },
         {
           label: 'Terms of Use',
-          href: 'https://www.vroom.com/legal/terms-of-use',
+          href: `${this.vroomUrl}/legal/terms-of-use${this.utmParams}`,
           target: '_blank',
           handleAnalytics: this.analyticsHandler.trackLinkClicked(
             'Terms of Use'

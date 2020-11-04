@@ -13899,10 +13899,14 @@ var AnalyticsHandler$1 = /*#__PURE__*/function (_BaseAnalyticsHandler) {
   return AnalyticsHandler;
 }(AnalyticsHandler);
 
-var ViewModel = function ViewModel() {
+var ViewModel = function ViewModel(vroomUrl) {
   _classCallCheck(this, ViewModel);
 
   _defineProperty$1(this, "analyticsHandler", new AnalyticsHandler$1());
+
+  _defineProperty$1(this, "vroomUrl", '');
+
+  _defineProperty$1(this, "utmParams", '?utm_source=vroom_subdomain&utm_medium=referral&utm_campaign=vroom');
 
   _defineProperty$1(this, "sections", [{
     title: {
@@ -13947,12 +13951,12 @@ var ViewModel = function ViewModel() {
     },
     links: [{
       label: 'Privacy Policy',
-      href: 'https://www.vroom.com/legal/privacy-policy',
+      href: "".concat(this.vroomUrl, "/legal/privacy-policy/").concat(this.utmParams),
       target: '_blank',
       handleAnalytics: this.analyticsHandler.trackLinkClicked('Privacy Policy')
     }, {
       label: 'Terms of Use',
-      href: 'https://www.vroom.com/legal/terms-of-use',
+      href: "".concat(this.vroomUrl, "/legal/terms-of-use").concat(this.utmParams),
       target: '_blank',
       handleAnalytics: this.analyticsHandler.trackLinkClicked('Terms of Use')
     }]
@@ -13970,10 +13974,13 @@ var ViewModel = function ViewModel() {
   _defineProperty$1(this, "poweredBy", 'Powered by');
 
   _defineProperty$1(this, "disclaimer", "Vehicle marketing, inventory, sales and the car-buying transaction are performed, hosted, managed and/or coordinated by Vroom. Santander Consumer USA Inc., its subsidiaries or affiliates are not responsible for the transaction, the outcome of the transaction or any information provided therein, provided that if Santander Consumer is chosen as the lender to finance the vehicle purchase, the financing will be performed by Santander Consumer.");
+
+  if (vroomUrl) this.vroomUrl = vroomUrl;
 };
 
-var SantanderFooter = function SantanderFooter() {
-  var viewModel = new ViewModel();
+var SantanderFooter = function SantanderFooter(_ref) {
+  var vroomUrl = _ref.vroomUrl;
+  var viewModel = new ViewModel(vroomUrl);
   return /*#__PURE__*/React__default.createElement(View, {
     viewModel: viewModel
   });

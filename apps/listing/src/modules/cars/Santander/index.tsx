@@ -7,6 +7,11 @@ import React from 'react';
 import Filters from '../Santander/components/Filters';
 import Inventory from '../Santander/components/Inventory';
 
+import getConfig from 'next/config';
+const {
+  publicRuntimeConfig: { VROOM_URL },
+} = getConfig();
+
 const StyledGrid = styled(Grid)(() => ({
   flexGrow: 1,
 }));
@@ -19,7 +24,7 @@ const Santander: React.FC = () => {
         <Filters />
         <Inventory />
       </StyledGrid>
-      <SantanderFooter />
+      <SantanderFooter vroomUrl={VROOM_URL} />
     </>
   );
 };

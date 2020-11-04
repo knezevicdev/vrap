@@ -17,6 +17,11 @@ import VehicleHeader from './components/VehicleHeader';
 import VehicleNotFound from './components/VehicleNotFound';
 import ViewModel from './ViewModel';
 
+import getConfig from 'next/config';
+const {
+  publicRuntimeConfig: { VROOM_URL },
+} = getConfig();
+
 export interface Props {
   viewModel: ViewModel;
 }
@@ -78,7 +83,7 @@ const InventoryView: React.FC<Props> = (props) => {
         <SimilarVehicles />
         <LegalFooter />
       </InventoryViewContainer>
-      <SantanderFooter />
+      <SantanderFooter vroomUrl={VROOM_URL} />
       {viewModel.ready() && (
         <StickyBottom>
           <StartPurchase />
