@@ -1,8 +1,7 @@
 import { SantanderFooter } from '@vroom-web/footer-components';
 import { SantanderHeader } from '@vroom-web/header-components';
-import React from 'react';
-
 import getConfig from 'next/config';
+import React from 'react';
 const {
   publicRuntimeConfig: { VROOM_URL },
 } = getConfig();
