@@ -127,6 +127,12 @@ class CarsViewModel {
         case Filters.OTHER_CYLINDERS:
           cylinders.value = [...cylinders.value, 'Other'];
           break;
+        case Filters.POPULAR_FEATURES:
+          formattedFilters.push({
+            type: 'Popular Features',
+            value,
+          });
+          break;
       }
     });
     if (!isEmpty(cylinders.value)) {

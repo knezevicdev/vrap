@@ -109,6 +109,20 @@ const CarsPage: NextPage<Props> = ({
     }
   }, [carsStore.cylinderFilterExperiment, analyticsHandler]);
 
+  useEffect(() => {
+    experimentSDK
+      .getAndLogExperimentClientSide('snd-feature-filter')
+      .then((experiment) => {
+        carsStore.setFeaturesFilterExperiment(experiment);
+      });
+  }, [carsStore]);
+
+  useEffect(() => {
+    if (carsStore.featuresFilterExperiment) {
+      analyticsHandler.registerExperiment(carsStore.featuresFilterExperiment);
+    }
+  }, [carsStore.featuresFilterExperiment, analyticsHandler]);
+
   const [resumeSearchExperiment, setResumeSearchExperiment] = useState<
     Experiment | undefined
   >();

@@ -5,6 +5,7 @@ import {
   addCylinder,
   addDriveType,
   addModel,
+  addPopularFeature,
   deepCopyFiltersData,
   removeAllModels,
   removeBodyType,
@@ -12,6 +13,7 @@ import {
   removeCylinder,
   removeDriveType,
   removeModel,
+  removePopularFeature,
   resetFilter,
   resetFilters,
   setMiles,
@@ -30,6 +32,7 @@ import {
   DriveType,
   Filters,
   FiltersData,
+  PopularFeatures,
   SortBy,
   SortDirection,
   Transmission,
@@ -66,6 +69,10 @@ const mockFiltersData1: FiltersData = {
   },
   [Filters.CYLINDERS]: [Cylinder.EIGHT, Cylinder.FOUR],
   [Filters.OTHER_CYLINDERS]: false,
+  [Filters.POPULAR_FEATURES]: [
+    PopularFeatures.ANDROID_AUTO,
+    PopularFeatures.REMOTE_START,
+  ],
 };
 
 describe('resetFilter', () => {
@@ -84,6 +91,7 @@ describe('resetFilter', () => {
       year: { max: 2020, min: 2018 },
       cylinders: ['8', '4'],
       othercylinders: false,
+      optionalfeatures: ['Android Auto', 'Remote Start'],
     });
   });
   test('2', () => {
@@ -101,6 +109,7 @@ describe('resetFilter', () => {
       year: { max: 2020, min: 2018 },
       cylinders: ['8', '4'],
       othercylinders: false,
+      optionalfeatures: ['Android Auto', 'Remote Start'],
     });
   });
 });
@@ -123,6 +132,7 @@ describe('resetFilters', () => {
       year: { max: 2020, min: 2018 },
       cylinders: ['8', '4'],
       othercylinders: false,
+      optionalfeatures: ['Android Auto', 'Remote Start'],
     });
   });
   test('2', () => {
@@ -142,6 +152,7 @@ describe('resetFilters', () => {
       year: { max: 2020, min: 2018 },
       cylinders: ['8', '4'],
       othercylinders: false,
+      optionalfeatures: ['Android Auto', 'Remote Start'],
     });
   });
 });
@@ -174,6 +185,7 @@ describe('addBodyType', () => {
       year: { max: 2020, min: 2018 },
       cylinders: ['8', '4'],
       othercylinders: false,
+      optionalfeatures: ['Android Auto', 'Remote Start'],
     });
   });
   test('3', () => {
@@ -242,6 +254,7 @@ describe('removeBodyType', () => {
       year: { max: 2020, min: 2018 },
       cylinders: ['8', '4'],
       othercylinders: false,
+      optionalfeatures: ['Android Auto', 'Remote Start'],
     });
   });
 });
@@ -267,6 +280,7 @@ describe('addCylinder', () => {
       year: { max: 2020, min: 2018 },
       cylinders: ['8', '4', '6'],
       othercylinders: false,
+      optionalfeatures: ['Android Auto', 'Remote Start'],
     });
   });
   test('it should add cylinders to filters which already exist but are empty', () => {
@@ -327,6 +341,7 @@ describe('removeCylinder', () => {
       year: { max: 2020, min: 2018 },
       cylinders: ['4'],
       othercylinders: false,
+      optionalfeatures: ['Android Auto', 'Remote Start'],
     });
   });
 });
@@ -352,6 +367,7 @@ describe('addColor', () => {
       year: { max: 2020, min: 2018 },
       cylinders: ['8', '4'],
       othercylinders: false,
+      optionalfeatures: ['Android Auto', 'Remote Start'],
     });
   });
   test('3', () => {
@@ -420,6 +436,7 @@ describe('removeColor', () => {
       year: { max: 2020, min: 2018 },
       cylinders: ['8', '4'],
       othercylinders: false,
+      optionalfeatures: ['Android Auto', 'Remote Start'],
     });
   });
 });
@@ -445,6 +462,7 @@ describe('addDriveType', () => {
       year: { max: 2020, min: 2018 },
       cylinders: ['8', '4'],
       othercylinders: false,
+      optionalfeatures: ['Android Auto', 'Remote Start'],
     });
   });
   test('3', () => {
@@ -513,6 +531,111 @@ describe('removeDriveType', () => {
       year: { max: 2020, min: 2018 },
       cylinders: ['8', '4'],
       othercylinders: false,
+      optionalfeatures: ['Android Auto', 'Remote Start'],
+    });
+  });
+});
+
+describe('addPopularFeature', () => {
+  test('it should add a feature to no filters', () => {
+    expect(addPopularFeature(PopularFeatures.ANDROID_AUTO, undefined)).toEqual({
+      optionalfeatures: ['Android Auto'],
+    });
+  });
+  test('it should add features to existing filter sets', () => {
+    expect(
+      addPopularFeature(PopularFeatures.SUNROOF_MOONROOF, mockFiltersData1)
+    ).toEqual({
+      bodytypes: ['suv'],
+      colors: ['grey'],
+      drivetype: ['awd'],
+      makesandmodels: [{ makeSlug: 'volvo', modelSlugs: ['xc90'] }],
+      miles: { max: 100000, min: 0 },
+      page: 0,
+      price: { max: 100000, min: 0 },
+      search: 'search',
+      sort: { by: 'miles', direction: 'asc' },
+      transmission: 'auto',
+      year: { max: 2020, min: 2018 },
+      cylinders: ['8', '4'],
+      othercylinders: false,
+      optionalfeatures: ['Android Auto', 'Remote Start', 'Sunroof or Moonroof'],
+    });
+  });
+  test('it should add features to filters which already exist but are empty', () => {
+    const mockFiltersData: FiltersData = {};
+    expect(
+      addPopularFeature(PopularFeatures.ANDROID_AUTO, mockFiltersData)
+    ).toEqual({
+      optionalfeatures: ['Android Auto'],
+    });
+  });
+  test('it should add features to filters if there are already features', () => {
+    const mockFiltersData: FiltersData = {
+      [Filters.POPULAR_FEATURES]: [PopularFeatures.APPLE_CAR_PLAY],
+    };
+    expect(
+      addPopularFeature(PopularFeatures.ANDROID_AUTO, mockFiltersData)
+    ).toEqual({
+      optionalfeatures: ['Apple Car Play', 'Android Auto'],
+    });
+  });
+});
+
+describe('removePopularFeature', () => {
+  test('it should set the features to undefined', () => {
+    expect(
+      removePopularFeature(PopularFeatures.ANDROID_AUTO, undefined)
+    ).toEqual({
+      optionalfeatures: undefined,
+    });
+  });
+  test('it should set the features to undefined on a defined object', () => {
+    expect(removePopularFeature(PopularFeatures.ANDROID_AUTO, {})).toEqual({
+      removePopularFeature: undefined,
+    });
+  });
+  test('it should remove the feature if it exists', () => {
+    const mockFiltersData: FiltersData = {
+      [Filters.POPULAR_FEATURES]: [PopularFeatures.APPLE_CAR_PLAY],
+    };
+    expect(
+      removePopularFeature(PopularFeatures.APPLE_CAR_PLAY, mockFiltersData)
+    ).toEqual({
+      optionalfeatures: undefined,
+    });
+  });
+  test('it should remove the correct feature', () => {
+    const mockFiltersData: FiltersData = {
+      [Filters.POPULAR_FEATURES]: [
+        PopularFeatures.APPLE_CAR_PLAY,
+        PopularFeatures.ANDROID_AUTO,
+      ],
+    };
+    expect(
+      removePopularFeature(PopularFeatures.APPLE_CAR_PLAY, mockFiltersData)
+    ).toEqual({
+      optionalfeatures: ['Android Auto'],
+    });
+  });
+  test('it should remove the feature from a big filter', () => {
+    expect(
+      removePopularFeature(PopularFeatures.REMOTE_START, mockFiltersData1)
+    ).toEqual({
+      bodytypes: ['suv'],
+      colors: ['grey'],
+      drivetype: ['awd'],
+      makesandmodels: [{ makeSlug: 'volvo', modelSlugs: ['xc90'] }],
+      miles: { max: 100000, min: 0 },
+      page: 0,
+      price: { max: 100000, min: 0 },
+      search: 'search',
+      sort: { by: 'miles', direction: 'asc' },
+      transmission: 'auto',
+      year: { max: 2020, min: 2018 },
+      cylinders: ['8', '4'],
+      othercylinders: false,
+      optionalfeatures: ['Android Auto'],
     });
   });
 });
@@ -551,6 +674,7 @@ describe('setTransmission', () => {
       year: { max: 2020, min: 2018 },
       cylinders: ['8', '4'],
       othercylinders: false,
+      optionalfeatures: ['Android Auto', 'Remote Start'],
     });
   });
 });
@@ -624,6 +748,7 @@ describe('addAllModels', () => {
       year: { max: 2020, min: 2018 },
       cylinders: ['8', '4'],
       othercylinders: false,
+      optionalfeatures: ['Android Auto', 'Remote Start'],
     });
   });
 });
@@ -654,6 +779,7 @@ describe('removeAllModels', () => {
       year: { max: 2020, min: 2018 },
       cylinders: ['8', '4'],
       othercylinders: false,
+      optionalfeatures: ['Android Auto', 'Remote Start'],
     });
   });
   test('4', () => {
@@ -671,6 +797,7 @@ describe('removeAllModels', () => {
       year: { max: 2020, min: 2018 },
       cylinders: ['8', '4'],
       othercylinders: false,
+      optionalfeatures: ['Android Auto', 'Remote Start'],
     });
   });
   test('5', () => {
@@ -717,6 +844,7 @@ describe('addModel', () => {
       year: { max: 2020, min: 2018 },
       cylinders: ['8', '4'],
       othercylinders: false,
+      optionalfeatures: ['Android Auto', 'Remote Start'],
     });
   });
   test('3', () => {
@@ -734,6 +862,7 @@ describe('addModel', () => {
       year: { max: 2020, min: 2018 },
       cylinders: ['8', '4'],
       othercylinders: false,
+      optionalfeatures: ['Android Auto', 'Remote Start'],
     });
   });
   test('4', () => {
@@ -778,6 +907,7 @@ describe('addModel', () => {
       year: { max: 2020, min: 2018 },
       cylinders: ['8', '4'],
       othercylinders: false,
+      optionalfeatures: ['Android Auto', 'Remote Start'],
     });
   });
 });
@@ -808,6 +938,7 @@ describe('removeModel', () => {
       year: { max: 2020, min: 2018 },
       cylinders: ['8', '4'],
       othercylinders: false,
+      optionalfeatures: ['Android Auto', 'Remote Start'],
     });
   });
   test('3', () => {
@@ -830,6 +961,7 @@ describe('removeModel', () => {
       year: { max: 2020, min: 2018 },
       cylinders: ['8', '4'],
       othercylinders: false,
+      optionalfeatures: ['Android Auto', 'Remote Start'],
     });
   });
   test('4', () => {
@@ -909,6 +1041,7 @@ describe('setMiles', () => {
       year: { max: 2020, min: 2018 },
       cylinders: ['8', '4'],
       othercylinders: false,
+      optionalfeatures: ['Android Auto', 'Remote Start'],
     });
   });
 });
@@ -939,6 +1072,7 @@ describe('setOtherCylinders', () => {
       year: { max: 2020, min: 2018 },
       cylinders: ['8', '4'],
       othercylinders: true,
+      optionalfeatures: ['Android Auto', 'Remote Start'],
     });
   });
 });
@@ -969,6 +1103,7 @@ describe('setPage', () => {
       year: { max: 2020, min: 2018 },
       cylinders: ['8', '4'],
       othercylinders: false,
+      optionalfeatures: ['Android Auto', 'Remote Start'],
     });
   });
 });
@@ -999,6 +1134,7 @@ describe('setPrice', () => {
       year: { max: 2020, min: 2018 },
       cylinders: ['8', '4'],
       othercylinders: false,
+      optionalfeatures: ['Android Auto', 'Remote Start'],
     });
   });
 });
@@ -1029,6 +1165,7 @@ describe('setSearch', () => {
       year: { max: 2020, min: 2018 },
       cylinders: ['8', '4'],
       othercylinders: false,
+      optionalfeatures: ['Android Auto', 'Remote Start'],
     });
   });
 });
@@ -1067,6 +1204,7 @@ describe('setSort', () => {
       year: { max: 2020, min: 2018 },
       cylinders: ['8', '4'],
       othercylinders: false,
+      optionalfeatures: ['Android Auto', 'Remote Start'],
     });
   });
 });
@@ -1097,6 +1235,7 @@ describe('setYear', () => {
       year: { max: 2009, min: 2003 },
       cylinders: ['8', '4'],
       othercylinders: false,
+      optionalfeatures: ['Android Auto', 'Remote Start'],
     });
   });
 });

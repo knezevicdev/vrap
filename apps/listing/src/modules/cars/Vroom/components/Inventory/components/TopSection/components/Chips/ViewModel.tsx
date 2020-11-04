@@ -7,6 +7,7 @@ import {
   removeCylinder,
   removeDriveType,
   removeModel,
+  removePopularFeature,
   resetFilter,
 } from '@vroom-web/catalog-url-integration';
 
@@ -283,6 +284,31 @@ class ChipsViewModel {
     return cylindersChips;
   }
 
+  getPopularFeatureChips(filtersData: FiltersData): Chip[] {
+    const popularFeatureChips: Chip[] = [];
+    const filtersDataPopularFeatures = filtersData[Filters.POPULAR_FEATURES];
+    if (filtersDataPopularFeatures) {
+      filtersDataPopularFeatures.forEach((filtersDataPopularFeature) => {
+        const matchingPopularFeature = this.carsStore.popularFeatures.find(
+          (f) => f.filtersDataValue === filtersDataPopularFeature
+        );
+        if (matchingPopularFeature) {
+          popularFeatureChips.push({
+            display: matchingPopularFeature.display,
+            handleDelete: () => {
+              const updatedFiltersData = removePopularFeature(
+                filtersDataPopularFeature,
+                filtersData
+              );
+              this.carsStore.updateFiltersData(updatedFiltersData);
+            },
+          });
+        }
+      });
+    }
+    return popularFeatureChips;
+  }
+
   getSearchChips(filtersData: FiltersData): Chip[] {
     const searchChips: Chip[] = [];
     const filtersDataSearch = filtersData[Filters.SEARCH];
@@ -314,6 +340,7 @@ class ChipsViewModel {
       ...this.getDriveTypesChips(filtersData),
       ...this.getSearchChips(filtersData),
       ...this.getCylinderChips(filtersData),
+      ...this.getPopularFeatureChips(filtersData),
     ];
     return chips.length > 0 ? chips : undefined;
   }
