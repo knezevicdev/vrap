@@ -20,6 +20,27 @@ jobs:
         version: 18.09.3
     - run:
         command: deploy -a vroom-web/apps/appraisal/docker -n << parameters.env >>
+  checkout_build:
+    docker:
+    - image: vroom/mlp:3.0.2
+    steps:
+    - checkout
+    - setup_remote_docker:
+        version: 18.09.3
+    - run:
+        command: build -a vroom-web/apps/checkout/docker
+  checkout_deploy:
+    docker:
+    - image: vroom/mlp:3.0.2
+    parameters:
+      env:
+        type: string
+    steps:
+    - checkout
+    - setup_remote_docker:
+        version: 18.09.3
+    - run:
+        command: deploy -a vroom-web/apps/checkout/docker -n << parameters.env >>
   danger:
     docker:
     - image: node:erbium-alpine
@@ -233,6 +254,70 @@ workflows:
           tags:
             only: /^appraisal-v.*/
         name: appraisal_deploy_prod
+        requires:
+        - hold_prod
+  checkout:
+    jobs:
+    - checkout_build:
+        context: aws-non-prod
+        filters:
+          branches:
+            ignore: /.*/
+          tags:
+            only: /^checkout-v.*/
+    - hold:
+        filters:
+          branches:
+            ignore: /.*/
+          tags:
+            only: /^checkout-v.*/
+        matrix:
+          parameters:
+            env:
+            - dev
+            - qa
+            - uat
+        name: hold_<< matrix.env >>
+        requires:
+        - checkout_build
+        type: approval
+    - checkout_deploy:
+        context: aws-non-prod
+        filters:
+          branches:
+            ignore: /.*/
+          tags:
+            only: /^checkout-v.*/
+        matrix:
+          parameters:
+            env:
+            - dev
+            - qa
+            - uat
+        name: checkout_deploy_<< matrix.env >>
+        requires:
+        - hold_<< matrix.env >>
+    - hold:
+        filters:
+          branches:
+            ignore: /.*/
+          tags:
+            only: /^checkout-v.*/
+        name: hold_prod
+        requires:
+        - checkout_deploy_dev
+        - checkout_deploy_qa
+        - checkout_deploy_uat
+        type: approval
+    - checkout_deploy:
+        context: aws-non-prod
+        env: prod
+        filters:
+          branches:
+            ignore: /.*/
+          tags:
+            only: /^checkout-v.*/
+        name: checkout_deploy_prod
         requires:
         - hold_prod
   common:

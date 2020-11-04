@@ -4,8 +4,12 @@ import Store from './store';
 import View from './View';
 import ViewModel from './ViewModel';
 
-const TDAHeader: React.FC = () => {
-  const viewModel = new ViewModel(new Store());
+interface Props {
+  vroomUrl: string;
+}
+
+const TDAHeader: React.FC<Props> = ({ vroomUrl }) => {
+  const viewModel = new ViewModel(new Store(), vroomUrl);
   return <View viewModel={viewModel} />;
 };
 

@@ -27,6 +27,7 @@ module.exports = {
     NODE_ENV: process.env.NODE_ENV,
     STATIC_ASSETS_HOST_URL: process.env.STATIC_ASSETS_HOST_URL || '',
     VERSION: version,
+    VROOM_URL: process.env.VROOM_URL,
   },
   serverRuntimeConfig: {
     // Will only be available on the server side
