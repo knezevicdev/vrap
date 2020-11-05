@@ -1,5 +1,3 @@
-import { Experiment } from '@vroom-web/experiment-sdk';
-
 import BodyTypes from './components/BodyTypes';
 import Color from './components/Color';
 import EngineAndDrivetrain from './components/EngineAndDrivetrain';
@@ -8,7 +6,7 @@ import Makes from './components/Makes';
 import Miles from './components/Miles';
 import Price from './components/Price';
 import Year from './components/Year';
-import FiltersStore, { Filter, FilterDisplay } from './store';
+import FiltersStore, { FilterDisplay } from './store';
 import ViewModel from './ViewModel';
 
 import { CarsStore } from 'src/modules/cars/store';
