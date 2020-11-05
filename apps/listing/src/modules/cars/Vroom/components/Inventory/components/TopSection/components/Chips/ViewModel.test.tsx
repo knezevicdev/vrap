@@ -825,7 +825,7 @@ describe('getPopularFeatureChips', () => {
     });
     mockCarsStore.updateFiltersData.mockReset();
 
-    expect(chips[1].display).toEqual('Apple Car Play');
+    expect(chips[1].display).toEqual('Apple CarPlay');
     expect(chips[1].handleDelete).toBeDefined();
     chips[1].handleDelete();
     expect(mockCarsStore.updateFiltersData).toHaveBeenCalledWith({
@@ -840,5 +840,4 @@ describe('getPopularFeatureChips', () => {
       optionalfeatures: ['Android Auto', 'Apple Car Play'],
     });
     mockCarsStore.updateFiltersData.mockReset();
-  });
 });
