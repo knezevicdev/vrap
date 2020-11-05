@@ -840,4 +840,5 @@ describe('getPopularFeatureChips', () => {
       optionalfeatures: ['Android Auto', 'Apple Car Play'],
     });
     mockCarsStore.updateFiltersData.mockReset();
+  });
 });
