@@ -6238,9 +6238,14 @@ var HeaderNavStore = (_class = (_temp = _class2 = /*#__PURE__*/function () {
         };
       }(query);
 
+      console.log({
+        query: query,
+        picked: picked
+      });
       _this2.queryString = lib_3(picked, {
         addQueryPrefix: true
       });
+      console.log(_this2.queryString);
     };
   }
 }), _descriptor6 = _applyDecoratedDescriptor(_class.prototype, "initAuthTokenClientSide", [action], {
@@ -13490,7 +13495,8 @@ var HeaderNavViewModel = /*#__PURE__*/function () {
       // Persist query string across navigation so that vlassic attribution works.
       // This is a stopgap until a better attribution system is in place.
 
-      var queryString = this.store.queryString;
+      console.log(this.store.queryString, '#');
+      var queryString = "".concat(this.store.queryString).concat(this.store.queryString ? '&' : '?', "brand=vroom");
 
       if (!this.store.loggedIn) {
         return [{
@@ -15365,9 +15371,6 @@ var StyledDrawer$1 = styles.styled(Drawer)(function () {
 
 var View$4 = function View(_ref11) {
   var viewModel = _ref11.viewModel;
-  console.log({
-    viewModel: viewModel
-  });
   return /*#__PURE__*/React__default.createElement(ViewContainer$1, null, /*#__PURE__*/React__default.createElement(Bar$1, null, /*#__PURE__*/React__default.createElement(LogoAnchor, {
     href: viewModel.logoLink.href,
     onClick: viewModel.logoLink.handleAnalytics
@@ -15536,9 +15539,7 @@ var ViewModel$1 = function ViewModel(store, vroomUrl) {
 
   if (vroomUrl) {
     this.navLinks.forEach(function (navLink) {
-      if (navLink.linkToVroom) {
-        navLink.href = "".concat(vroomUrl).concat(navLink.href).concat(_this.TDAQueryString);
-      }
+      if (navLink.linkToVroom) navLink.href = "".concat(vroomUrl).concat(navLink.href).concat(_this.TDAQueryString);
     });
   }
 };
