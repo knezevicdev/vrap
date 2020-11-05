@@ -13482,8 +13482,9 @@ var HeaderNavViewModel = /*#__PURE__*/function () {
       var phoneNumberLinkData = this.getPhoneNumberLinkData(this.store.phoneNumber); // FIT-566
       // Persist query string across navigation so that vlassic attribution works.
       // This is a stopgap until a better attribution system is in place.
+      // retain brand query param to ensure whitelabeled pages are not cached/seen when navigating the vroom version of the app
 
-      var queryString = this.store.queryString;
+      var queryString = "".concat(this.store.queryString).concat(this.store.queryString ? '&' : '?', "brand=vroom");
 
       if (!this.store.loggedIn) {
         return [{
@@ -15358,9 +15359,6 @@ var StyledDrawer$1 = styled(Drawer)(function () {
 
 var View$4 = function View(_ref11) {
   var viewModel = _ref11.viewModel;
-  console.log({
-    viewModel: viewModel
-  });
   return /*#__PURE__*/React__default.createElement(ViewContainer$1, null, /*#__PURE__*/React__default.createElement(Bar$1, null, /*#__PURE__*/React__default.createElement(LogoAnchor, {
     href: viewModel.logoLink.href,
     onClick: viewModel.logoLink.handleAnalytics
@@ -15529,9 +15527,7 @@ var ViewModel$1 = function ViewModel(store, vroomUrl) {
 
   if (vroomUrl) {
     this.navLinks.forEach(function (navLink) {
-      if (navLink.linkToVroom) {
-        navLink.href = "".concat(vroomUrl).concat(navLink.href).concat(_this.TDAQueryString);
-      }
+      if (navLink.linkToVroom) navLink.href = "".concat(vroomUrl).concat(navLink.href).concat(_this.TDAQueryString);
     });
   }
 };

@@ -50,7 +50,7 @@ HomePage.getInitialProps = async (ctx: NextPageContext): Promise<Props> => {
   return {
     brand,
     description: brandConfig.description,
-    query: ctx.query,
+    query: { ...ctx.query, brand: brandConfig.brandParam },
     title: brandConfig.title,
   };
 };
