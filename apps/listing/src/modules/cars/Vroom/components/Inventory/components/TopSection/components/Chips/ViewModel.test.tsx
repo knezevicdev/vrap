@@ -5,10 +5,12 @@ import {
   addColor,
   addDriveType,
   addModel,
+  addPopularFeature,
   BodyType as FiltersDataBodyType,
   Color as FiltersDataColor,
   DriveType as FiltersDataDriveType,
   FiltersData,
+  PopularFeatures as FiltersDataPopularFeatures,
   setMiles,
   setPrice,
   setSearch,
@@ -31,6 +33,9 @@ import {
   DriveType,
   DriveTypeAPI,
   DriveTypeDisplay,
+  PopularFeature,
+  PopularFeatureApi,
+  PopularFeatureDisplay,
   Transmission,
   TransmissionAPI,
   TransmissionDisplay,
@@ -715,5 +720,125 @@ describe('getSearchChips', () => {
     expect(mockCarsStore.updateFiltersData).toHaveBeenLastCalledWith({
       search: undefined,
     });
+  });
+});
+
+describe('getPopularFeatureChips', () => {
+  test('1', () => {
+    const mockCarsStore = {};
+    const mockViewModel = new ViewModel(mockCarsStore as CarsStore);
+    const mockFiltersData: FiltersData = {};
+    expect(mockViewModel.getPopularFeatureChips(mockFiltersData)).toHaveLength(
+      0
+    );
+  });
+
+  test('2', () => {
+    const mockCarsStore = {
+      popularFeatures: [],
+    };
+    const mockViewModel = new ViewModel(
+      (mockCarsStore as unknown) as CarsStore
+    );
+    const mockFiltersData: FiltersData = addPopularFeature(
+      FiltersDataPopularFeatures.ANDROID_AUTO
+    );
+    expect(mockViewModel.getPopularFeatureChips(mockFiltersData)).toHaveLength(
+      0
+    );
+  });
+
+  test('3', () => {
+    const mockPopularFeatures: PopularFeature[] = [
+      {
+        api: PopularFeatureApi.ANDROID_AUTO,
+        display: PopularFeatureDisplay.ANDROID_AUTO,
+        filtersDataValue: FiltersDataPopularFeatures.ANDROID_AUTO,
+      },
+    ];
+    const mockCarsStore = {
+      popularFeatures: mockPopularFeatures,
+      updateFiltersData: jest.fn(),
+    };
+    const mockViewModel = new ViewModel(
+      (mockCarsStore as unknown) as CarsStore
+    );
+    const mockFiltersData: FiltersData = addPopularFeature(
+      FiltersDataPopularFeatures.ANDROID_AUTO
+    );
+    const chips = mockViewModel.getPopularFeatureChips(mockFiltersData);
+    expect(chips).toHaveLength(1);
+    expect(chips[0].display).toEqual('Android Auto');
+    expect(chips[0].handleDelete).toBeDefined();
+    chips[0].handleDelete();
+    expect(mockCarsStore.updateFiltersData).toHaveBeenCalledWith({
+      optionalFeatures: undefined,
+    });
+  });
+
+  test('4', () => {
+    const mockPopularFeatures: PopularFeature[] = [
+      {
+        api: PopularFeatureApi.ANDROID_AUTO,
+        display: PopularFeatureDisplay.ANDROID_AUTO,
+        filtersDataValue: FiltersDataPopularFeatures.ANDROID_AUTO,
+      },
+      {
+        api: PopularFeatureApi.APPLE_CAR_PLAY,
+        display: PopularFeatureDisplay.APPLE_CAR_PLAY,
+        filtersDataValue: FiltersDataPopularFeatures.APPLE_CAR_PLAY,
+      },
+      {
+        api: PopularFeatureApi.HEATED_SEATS,
+        display: PopularFeatureDisplay.HEATED_SEATS,
+        filtersDataValue: FiltersDataPopularFeatures.HEATED_SEATS,
+      },
+    ];
+    const mockCarsStore = {
+      popularFeatures: mockPopularFeatures,
+      updateFiltersData: jest.fn(),
+    };
+    const mockViewModel = new ViewModel(
+      (mockCarsStore as unknown) as CarsStore
+    );
+    let mockFiltersData: FiltersData = {};
+    mockFiltersData = addPopularFeature(
+      FiltersDataPopularFeatures.ANDROID_AUTO,
+      mockFiltersData
+    );
+    mockFiltersData = addPopularFeature(
+      FiltersDataPopularFeatures.APPLE_CAR_PLAY,
+      mockFiltersData
+    );
+    mockFiltersData = addPopularFeature(
+      FiltersDataPopularFeatures.HEATED_SEATS,
+      mockFiltersData
+    );
+    const chips = mockViewModel.getPopularFeatureChips(mockFiltersData);
+    expect(chips).toHaveLength(3);
+
+    expect(chips[0].display).toEqual('Android Auto');
+    expect(chips[0].handleDelete).toBeDefined();
+    chips[0].handleDelete();
+    expect(mockCarsStore.updateFiltersData).toHaveBeenCalledWith({
+      optionalfeatures: ['Apple Car Play', 'Heated Seats'],
+    });
+    mockCarsStore.updateFiltersData.mockReset();
+
+    expect(chips[1].display).toEqual('Apple Car Play');
+    expect(chips[1].handleDelete).toBeDefined();
+    chips[1].handleDelete();
+    expect(mockCarsStore.updateFiltersData).toHaveBeenCalledWith({
+      optionalfeatures: ['Android Auto', 'Heated Seats'],
+    });
+    mockCarsStore.updateFiltersData.mockReset();
+
+    expect(chips[2].display).toEqual('Heated Seats');
+    expect(chips[2].handleDelete).toBeDefined();
+    chips[2].handleDelete();
+    expect(mockCarsStore.updateFiltersData).toHaveBeenCalledWith({
+      optionalfeatures: ['Android Auto', 'Apple Car Play'],
+    });
+    mockCarsStore.updateFiltersData.mockReset();
   });
 });

@@ -34,7 +34,7 @@ const parsedDateTime = (dateTime: string): string => {
 };
 
 class InitialPriceViewModel {
-  private analyticsHandler = new AnalyticsHandler();
+  private analyticsHandler: AnalyticsHandler;
 
   readonly yourPrice: string = 'your price';
   readonly yourPriceCamel: string = 'Your Price:';
@@ -50,6 +50,7 @@ class InitialPriceViewModel {
     this.price = displayCurrency(initialPriceState.price);
     this.priceId = initialPriceState.priceId;
     this.goodUntil = parsedDateTime(initialPriceState.goodUntil);
+    this.analyticsHandler = new AnalyticsHandler();
     this.analyticsHandler.trackPriceViewed();
   }
 

@@ -38,6 +38,9 @@ class FiltersViewModel {
   showFuelAndEfficiencyFilters = (): boolean => {
     return this.carsStore.fuelTypeFilterExperiment?.assignedVariant === 1;
   };
+  showFeaturesFilter = (): boolean => {
+    return this.carsStore.featuresFilterExperiment?.assignedVariant === 1;
+  };
 }
 
 export default FiltersViewModel;

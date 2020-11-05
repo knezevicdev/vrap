@@ -13,6 +13,8 @@ export declare const addColor: (color: Color, filtersData?: FiltersData | undefi
 export declare const removeColor: (color: Color, filtersData?: FiltersData | undefined) => FiltersData;
 export declare const addDriveType: (driveType: DriveType, filtersData?: FiltersData | undefined) => FiltersData;
 export declare const removeDriveType: (driveType: DriveType, filtersData?: FiltersData | undefined) => FiltersData;
+export declare const addPopularFeature: (popularFeature: any, filtersData?: FiltersData | undefined) => FiltersData;
+export declare const removePopularFeature: (popularFeature: any, filtersData?: FiltersData | undefined) => FiltersData;
 export declare const setTestDrive: (testDrive: TestDrive, filtersData?: FiltersData | undefined) => FiltersData;
 export declare const setTransmission: (transmission: Transmission, filtersData?: FiltersData | undefined) => FiltersData;
 export declare const addAllModels: (makeSlug: string, filtersData?: FiltersData | undefined) => FiltersData;

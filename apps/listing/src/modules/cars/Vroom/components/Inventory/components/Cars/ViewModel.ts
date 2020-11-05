@@ -133,6 +133,12 @@ class CarsViewModel {
             value,
           });
           break;
+        case Filters.POPULAR_FEATURES:
+          formattedFilters.push({
+            type: 'Popular Features',
+            value,
+          });
+          break;
       }
     });
     if (!isEmpty(cylinders.value)) {

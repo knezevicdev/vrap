@@ -34,7 +34,11 @@ export interface PostInventoryRequestData {
   isTitleQAPass?: boolean;
   cylinders?: number[];
   cylindersShowOther?: boolean;
+<<<<<<< HEAD
   fuelType?: string[];
+=======
+  optionalFeatures?: string[];
+>>>>>>> 25b1c33005ba4335c6c0d9e921426770dd798cac
 }
 
 export const postInventoryResponseSchema = inventoryResponseSchema;

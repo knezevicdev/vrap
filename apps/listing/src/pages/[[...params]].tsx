@@ -118,10 +118,24 @@ const CarsPage: NextPage<Props> = ({
   }, [carsStore]);
 
   useEffect(() => {
+    experimentSDK
+      .getAndLogExperimentClientSide('snd-feature-filter')
+      .then((experiment) => {
+        carsStore.setFeaturesFilterExperiment(experiment);
+      });
+  }, [carsStore]);
+
+  useEffect(() => {
     if (carsStore.fuelTypeFilterExperiment) {
       analyticsHandler.registerExperiment(carsStore.fuelTypeFilterExperiment);
     }
   }, [carsStore.fuelTypeFilterExperiment, analyticsHandler]);
+
+  useEffect(() => {
+    if (carsStore.featuresFilterExperiment) {
+      analyticsHandler.registerExperiment(carsStore.featuresFilterExperiment);
+    }
+  }, [carsStore.featuresFilterExperiment, analyticsHandler]);
 
   const [resumeSearchExperiment, setResumeSearchExperiment] = useState<
     Experiment | undefined

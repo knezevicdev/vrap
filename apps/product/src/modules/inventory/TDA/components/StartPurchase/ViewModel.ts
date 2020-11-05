@@ -5,6 +5,7 @@ import {
 } from '@vroom-web/catalog-url-integration';
 import { Car } from '@vroom-web/inv-search-networking';
 import { SoldStatusInt } from '@vroom-web/inv-service-networking';
+import getConfig from 'next/config';
 import { stringify } from 'qs';
 import { ParsedUrlQuery } from 'querystring';
 
@@ -13,6 +14,9 @@ import { InventoryStore } from 'src/modules/inventory/store';
 import { StartPurchaseStore } from 'src/modules/inventory/Vroom/components/StartPurchase/store';
 import { Status } from 'src/networking/types';
 
+const {
+  publicRuntimeConfig: { VROOM_URL },
+} = getConfig();
 class StartPurchaseViewModel {
   private store: InventoryStore;
   private startPurchaseStore: StartPurchaseStore;
@@ -110,6 +114,8 @@ class StartPurchaseViewModel {
       utm_subsource,
       utm_site,
     });
+    const tdaQueryParams =
+      '&vit_source=texasdirectauto&vit_medium=wl&vit_dest=vroom&vit_brand=TDA';
     const vehicleServiceAvailability = this.store.isAvailable;
     //Tech Debt: SND-970 soldStatus/Inventory Service Spike
     if (
@@ -124,7 +130,9 @@ class StartPurchaseViewModel {
       window.location.href = `${modelHref}${queryStringPrefix}${attributionQueryString}`;
     } else {
       this.analyticsHandler.trackProductAdded(product);
-      const url = `/e2e/${vin}/checkoutTradeIn?${attributionQueryString}`;
+      const url = `${
+        VROOM_URL || ''
+      }/e2e/${vin}/checkoutTradeIn?${attributionQueryString}${tdaQueryParams}`;
       window.location.href = url;
     }
   }

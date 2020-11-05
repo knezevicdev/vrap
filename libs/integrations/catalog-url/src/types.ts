@@ -13,7 +13,11 @@ export enum Filters {
   YEAR = 'year',
   CYLINDERS = 'cylinders',
   OTHER_CYLINDERS = 'othercylinders',
+<<<<<<< HEAD
   FUEL_TYPE = 'fueltype',
+=======
+  POPULAR_FEATURES = 'optionalfeatures',
+>>>>>>> 25b1c33005ba4335c6c0d9e921426770dd798cac
 }
 
 export enum BodyType {
@@ -92,6 +96,7 @@ export enum Cylinder {
   EIGHT = '8',
 }
 
+<<<<<<< HEAD
 export enum FuelType {
   GASOLINE = 'gasoline',
   ELECTRIC = 'electric',
@@ -99,6 +104,16 @@ export enum FuelType {
   GAS_ELECTRIC_HYBRID = 'gaselectrichybrid',
   DIESEL = 'diesel',
   OTHER = 'other',
+=======
+export enum PopularFeatures {
+  ANDROID_AUTO = 'Android Auto',
+  APPLE_CAR_PLAY = 'Apple Car Play',
+  HEATED_SEATS = 'Heated Seats',
+  REAR_VIEW_CAMERA = 'Rear View Camera',
+  REMOTE_START = 'Remote Start',
+  SUNROOF_MOONROOF = 'Sunroof or Moonroof',
+  THIRD_ROW_SEATING = 'Third Row Seating',
+>>>>>>> 25b1c33005ba4335c6c0d9e921426770dd798cac
 }
 
 export interface FiltersData {
@@ -116,7 +131,11 @@ export interface FiltersData {
   [Filters.YEAR]?: MaxAndMin;
   [Filters.CYLINDERS]?: Cylinder[];
   [Filters.OTHER_CYLINDERS]?: boolean;
+<<<<<<< HEAD
   [Filters.FUEL_TYPE]?: FuelType[];
+=======
+  [Filters.POPULAR_FEATURES]?: PopularFeatures[];
+>>>>>>> 25b1c33005ba4335c6c0d9e921426770dd798cac
 }
 
 export interface GetUrlFromFiltersDataOptions {

@@ -15,85 +15,96 @@ interface Section {
 
 class ViewModel {
   private analyticsHandler = new AnalyticsHandler();
+  readonly vroomUrl: string = '';
+  readonly sections: Section[];
 
-  readonly sections: Section[] = [
-    {
-      title: {
-        label: 'Learning Center',
-        href: 'https://santanderconsumerusa.com/learning-center',
-        target: '_blank',
-        handleAnalytics: this.analyticsHandler.trackLinkClicked(
-          'Learning Center'
-        ),
+  constructor(vroomUrl?: string) {
+    if (vroomUrl) this.vroomUrl = vroomUrl;
+    this.sections = [
+      {
+        title: {
+          label: 'Learning Center',
+          href: 'https://santanderconsumerusa.com/learning-center',
+          target: '_blank',
+          handleAnalytics: this.analyticsHandler.trackLinkClicked(
+            'Learning Center'
+          ),
+        },
+        links: [
+          {
+            label: 'Finance Calculators',
+            href: `https://santanderconsumerusa.com/learning-center/finance-calculators`,
+            target: '_blank',
+            handleAnalytics: this.analyticsHandler.trackLinkClicked(
+              'Finance Calculators'
+            ),
+          },
+          {
+            label: 'Blog',
+            href: `https://santanderconsumerusa.com/blog`,
+            target: '_blank',
+            handleAnalytics: this.analyticsHandler.trackLinkClicked('Blog'),
+          },
+        ],
       },
-      links: [
-        {
-          label: 'Finance Calculators',
-          href: `https://santanderconsumerusa.com/learning-center/finance-calculators`,
+      {
+        title: {
+          label: 'Help & Support',
+          href: 'https://santanderconsumerusa.com/support',
           target: '_blank',
           handleAnalytics: this.analyticsHandler.trackLinkClicked(
-            'Finance Calculators'
+            'Help & Support'
           ),
         },
-        {
-          label: 'Blog',
-          href: `https://santanderconsumerusa.com/blog`,
-          target: '_blank',
-          handleAnalytics: this.analyticsHandler.trackLinkClicked('Blog'),
-        },
-      ],
-    },
-    {
-      title: {
-        label: 'Help & Support',
-        href: 'https://santanderconsumerusa.com/support',
-        target: '_blank',
-        handleAnalytics: this.analyticsHandler.trackLinkClicked(
-          'Help & Support'
-        ),
+        links: [
+          {
+            label: 'Payment Options',
+            href: `https://santanderconsumerusa.com/support/payments`,
+            target: '_blank',
+            handleAnalytics: this.analyticsHandler.trackLinkClicked(
+              'Payment Options'
+            ),
+          },
+          {
+            label: 'Contact Us',
+            href: `/contact`,
+            handleAnalytics: this.analyticsHandler.trackLinkClicked(
+              'Contact Us'
+            ),
+          },
+        ],
       },
-      links: [
-        {
-          label: 'Payment Options',
-          href: `https://santanderconsumerusa.com/support/payments`,
-          target: '_blank',
-          handleAnalytics: this.analyticsHandler.trackLinkClicked(
-            'Payment Options'
-          ),
+      {
+        title: {
+          label: 'Legal',
+          href: undefined,
+          handleAnalytics: this.analyticsHandler.trackLinkClicked('Legal'),
         },
-        {
-          label: 'Contact Us',
-          href: `/contact`,
-          handleAnalytics: this.analyticsHandler.trackLinkClicked('Contact Us'),
-        },
-      ],
-    },
-    {
-      title: {
-        label: 'Legal',
-        href: undefined,
-        handleAnalytics: this.analyticsHandler.trackLinkClicked('Legal'),
+        links: [
+          {
+            label: 'Privacy Policy',
+            href: `${this.vroomUrl}/legal/privacy-policy${this.utmParams}`,
+            target: '_blank',
+            handleAnalytics: this.analyticsHandler.trackLinkClicked(
+              'Privacy Policy'
+            ),
+          },
+          {
+            label: 'Terms of Use',
+            href: `${this.vroomUrl}/legal/terms-of-use${this.utmParams}`,
+            target: '_blank',
+            handleAnalytics: this.analyticsHandler.trackLinkClicked(
+              'Terms of Use'
+            ),
+          },
+        ],
       },
-      links: [
-        {
-          label: 'Privacy Policy',
-          href: 'https://www.vroom.com/legal/privacy-policy',
-          target: '_blank',
-          handleAnalytics: this.analyticsHandler.trackLinkClicked(
-            'Privacy Policy'
-          ),
-        },
-        {
-          label: 'Terms of Use',
-          href: 'https://www.vroom.com/legal/terms-of-use',
-          target: '_blank',
-          handleAnalytics: this.analyticsHandler.trackLinkClicked(
-            'Terms of Use'
-          ),
-        },
-      ],
-    },
-  ];
+    ];
+  }
+
+  readonly utmParams: string =
+    '?utm_source=vroom_subdomain&utm_medium=referral&utm_campaign=vroom';
+
   readonly copyrightLabel =
     '© 2020 Santander Consumer USA Inc. and its Licensors. All Rights Reserved.';
   readonly copyrightLink: Link = {

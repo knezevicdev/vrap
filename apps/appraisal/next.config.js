@@ -14,18 +14,6 @@ const config = {
   basePath,
   distDir: `.next/${shortHash}`,
   generateBuildId: () => shortHash,
-  publicRuntimeConfig: {
-    // Will be available on both server-side and client-side
-    BASE_PATH: basePath,
-    VROOM_URL: process.env.VROOM_URL,
-    GEARBOX_PRIVATE_URL: process.env.GEARBOX_PRIVATE_URL,
-    ACQUISITIONS_URL: process.env.ACQUISITIONS_URL,
-    STATIC_ASSETS_HOST_URL: process.env.STATIC_ASSETS_HOST_URL,
-  },
-  serverRuntimeConfig: {
-    // Will only be available on the server side
-    SEGMENT_WRITE_KEY: process.env.SEGMENT_WRITE_KEY,
-  },
   /* Custom webpack configuration. */
   webpack: (config) => {
     /* Enable SVG imports. */

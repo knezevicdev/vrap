@@ -3,6 +3,7 @@ import { action, IObservableArray, observable } from 'mobx';
 import BodyTypes from './components/BodyTypes';
 import Color from './components/Color';
 import EngineAndDrivetrain from './components/EngineAndDrivetrain';
+import Features from './components/Features';
 import FuelAndEfficiency from './components/FuelAndEfficiency';
 import Makes from './components/Makes';
 import Miles from './components/Miles';
@@ -18,6 +19,7 @@ export enum FilterDisplay {
   MILES = 'Miles',
   ENGINE_AND_DRIVETRAIN = 'Engine & Drivetrain',
   FUEL_AND_EFFICIENCY = 'Fuel & Efficiency',
+  POPULAR_FEATURES = 'Popular Features',
 }
 
 export interface Filter {
@@ -66,6 +68,11 @@ class FiltersStore {
     {
       display: FilterDisplay.ENGINE_AND_DRIVETRAIN,
       FilterComponent: EngineAndDrivetrain,
+      open: false,
+    },
+    {
+      display: FilterDisplay.POPULAR_FEATURES,
+      FilterComponent: Features,
       open: false,
     },
   ]);

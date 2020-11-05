@@ -6,12 +6,14 @@ module.exports = {
     '!**/*.d.ts',
     '!**/node_modules/**',
     '!**/src/modules/cars/Santander/**',
+    '!**/src/modules/cars/TDA/**',
   ],
   // setupFilesAfterEnv: ['<rootDir>/setupTests.js'],
   testPathIgnorePatterns: [
     '/node_modules/',
     '/.next/',
     '/listing/src/modules/cars/Santander/',
+    '/listing/src/modules/cars/TDA/',
   ],
   transform: {
     '^.+\\.(js|jsx|ts|tsx)$': 'babel-jest',

@@ -8,6 +8,7 @@ import {
   FuelType,
   Make,
   MaxAndMin,
+  PopularFeatures,
   SortBy,
   SortDirection,
   TestDrive,
@@ -158,6 +159,29 @@ export const removeDriveType = (
   const newDriveTypes = existingDriveTypes.filter((dt) => dt !== driveType);
   newFiltersData[Filters.DRIVE_TYPE] =
     newDriveTypes.length > 0 ? newDriveTypes : undefined;
+  return newFiltersData;
+};
+
+export const addPopularFeature = (
+  popularFeature: PopularFeatures,
+  filtersData?: FiltersData
+): FiltersData => {
+  const newFiltersData = deepCopyFiltersData(filtersData || {});
+  const newFeatures = newFiltersData[Filters.POPULAR_FEATURES] || [];
+  newFeatures.push(popularFeature);
+  newFiltersData[Filters.POPULAR_FEATURES] = newFeatures;
+  return newFiltersData;
+};
+
+export const removePopularFeature = (
+  popularFeature: PopularFeatures,
+  filtersData?: FiltersData
+): FiltersData => {
+  const newFiltersData = deepCopyFiltersData(filtersData || {});
+  const existingFeatures = newFiltersData[Filters.POPULAR_FEATURES] || [];
+  const newFeatures = existingFeatures.filter((f) => f !== popularFeature);
+  newFiltersData[Filters.POPULAR_FEATURES] =
+    newFeatures.length > 0 ? newFeatures : undefined;
   return newFiltersData;
 };
 

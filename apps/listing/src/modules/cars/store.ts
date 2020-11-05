@@ -34,6 +34,9 @@ import {
   fuelTypes,
   INVENTORY_CARDS_PER_PAGE,
   POPULAR_CAR_LIMIT,
+  PopularFeature,
+  PopularFeatureApi,
+  popularFeatures,
   Sort,
   SortAPIBy,
   SortAPIDirection,
@@ -216,6 +219,28 @@ export const getOffsetRequestData = (
   return (filtersDataPage - 1) * INVENTORY_CARDS_PER_PAGE;
 };
 
+export const getPopularFeaturesRequestData = (
+  filtersData?: FiltersData
+): PopularFeatureApi[] | undefined => {
+  if (!filtersData) {
+    return undefined;
+  }
+  const filtersDataPopularFeatures = filtersData[Filters.POPULAR_FEATURES];
+  if (!filtersDataPopularFeatures || !popularFeatures) {
+    return undefined;
+  }
+  const popularFeature: PopularFeatureApi[] = [];
+  filtersDataPopularFeatures.forEach((filtersDataPopularFeatures) => {
+    const matchingFeature = popularFeatures.find(
+      (feature) => feature.filtersDataValue === filtersDataPopularFeatures
+    );
+    if (matchingFeature && matchingFeature.api) {
+      popularFeature.push(matchingFeature.api);
+    }
+  });
+  return popularFeature;
+};
+
 export const getSortRequestData = (
   filtersData?: FiltersData,
   geoLocationSortExperiment?: Experiment
@@ -311,6 +336,7 @@ export const getPostInventoryRequestDataFromFilterData = (
   const cylinders = getCylinderRequestData(filtersData);
   const { makeSlug, modelSlug } = getMakeAndModelRequestData(filtersData);
   const offset = getOffsetRequestData(filtersData);
+  const popularFeatures = getPopularFeaturesRequestData(filtersData);
   const { sortby, sortdirection } = getSortRequestData(
     filtersData,
     geoLocationSortExperiment
@@ -338,6 +364,7 @@ export const getPostInventoryRequestDataFromFilterData = (
     cylinders,
     cylindersShowOther:
       (filtersData && filtersData[Filters.OTHER_CYLINDERS]) || undefined,
+    optionalFeatures: popularFeatures,
   };
 };
 
@@ -353,6 +380,7 @@ export class CarsStore {
   readonly driveTypes: DriveType[] = driveTypes;
   readonly cylinders: Cylinder[] = cylinders;
   readonly fuelTypes: FuelType[] = fuelTypes;
+  readonly popularFeatures: PopularFeature[] = popularFeatures;
   readonly sorts: Sort[] = sorts;
   readonly testDrives: TestDrive[] = testDrives;
   readonly transmissions: Transmission[] = transmissions;
@@ -385,6 +413,7 @@ export class CarsStore {
   @observable geoLocationSortExperiment?: Experiment;
   @observable cylinderFilterExperiment?: Experiment;
   @observable fuelTypeFilterExperiment?: Experiment;
+  @observable featuresFilterExperiment?: Experiment;
 
   constructor(initialState?: InitialCarsStoreState) {
     this.invSearchNetworker = new InvSearchNetworker(
@@ -420,6 +449,11 @@ export class CarsStore {
     fuelTypeFilterExperiment?: Experiment
   ): void => {
     this.fuelTypeFilterExperiment = fuelTypeFilterExperiment;
+  };
+  setFeaturesFilterExperiment = (
+    featuresFilterExperiment?: Experiment
+  ): void => {
+    this.featuresFilterExperiment = featuresFilterExperiment;
   };
 
   @action
