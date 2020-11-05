@@ -15,6 +15,15 @@ const ColumnBody = styled.div`
   display: flex;
   margin: 0 auto;
   padding: 20px;
+  flex-wrap: wrap;
+
+  @media (max-width: 786px) {
+    flex-wrap: wrap-reverse;
+  }
+
+  @media (max-width: 420px) {
+    padding: 0;
+  }
 `;
 
 interface Props {
