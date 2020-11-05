@@ -7,11 +7,11 @@ import SuperCenter from './SuperCenter';
 import ViewModel from './ViewModel';
 
 const Container = styled('div')(({ theme }) => ({
+  backgroundColor: theme.palette.background.paper,
   display: 'flex',
   flexDirection: 'column',
   width: '100%',
-  padding: theme.spacing(8, 8, 8, 8),
-  maxWidth: '1280px',
+  padding: theme.spacing(0, 8, 8),
   margin: '0 auto',
   fontFamily: 'Calibre',
   [theme.breakpoints.only('xs')]: {

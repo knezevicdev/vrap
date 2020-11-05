@@ -14,7 +14,7 @@ import MuiExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
 import SvgIcon from '@material-ui/core/SvgIcon';
 import { CatSDK } from '@vroom-web/cat-sdk';
-import { Link as Link$2 } from '@material-ui/core';
+import { Link as Link$2, useTheme as useTheme$1, useMediaQuery as useMediaQuery$1 } from '@material-ui/core';
 
 function _defineProperty(obj, key, value) {
   if (key in obj) {
@@ -13968,6 +13968,11 @@ var ViewModel = function ViewModel(vroomUrl) {
       href: "".concat(this.vroomUrl, "/legal/terms-of-use").concat(this.utmParams),
       target: '_blank',
       handleAnalytics: this.analyticsHandler.trackLinkClicked('Terms of Use')
+    }, {
+      label: 'Do Not Sell My Info (CA Residents)',
+      href: "https://privacyportal.onetrust.com/webform/8086730d-99f7-48ea-b3a1-0b3bb0cf163e/aa3e2126-7439-411d-a9a2-9fa0c4f8b01d",
+      target: '_blank',
+      handleAnalytics: this.analyticsHandler.trackLinkClicked('Do Not Sell My Info (CA Residents)')
     }]
   }];
 };
@@ -13980,20 +13985,29 @@ var SantanderFooter = function SantanderFooter(_ref) {
   });
 };
 
-var ViewContainer$1 = styled('div')(function () {
+var Container = styled('div')(function () {
   return {
-    background: '#F1F1F1',
     zIndex: 1
   };
 });
-var LinkContainer = styled('div')(function () {
+var MobileContainer = styled('div')(function (_ref) {
+  var theme = _ref.theme;
   return {
+    padding: theme.spacing(2, 4, 1),
+    textAlign: 'center',
+    display: 'grid',
+    gridTemplateColumns: '1fr 1fr 1fr'
+  };
+});
+var DesktopContainer = styled('div')(function (_ref2) {
+  var theme = _ref2.theme;
+  return {
+    padding: theme.spacing(2, 4),
     display: 'flex',
-    width: '100%',
-    margin: '0 auto',
-    maxWidth: '370px',
-    padding: '16px 8px',
-    justifyContent: 'space-between'
+    textAlign: 'center',
+    maxWidth: '700px',
+    justifyContent: 'space-between',
+    margin: 'auto'
   };
 });
 var CustomLink$1 = styled(Link$2)(function () {
@@ -14003,25 +14017,35 @@ var CustomLink$1 = styled(Link$2)(function () {
     color: '#767676'
   };
 });
-var Text = styled(Typography)(function () {
-  return {
-    color: '#767676',
+var Text = styled(Typography)(function (_ref3) {
+  var theme = _ref3.theme;
+  return _defineProperty$1({
+    color: theme.palette.text.primary,
     fontSize: '14px'
-  };
+  }, theme.breakpoints.only('xs'), {
+    marginBottom: theme.spacing(2)
+  });
 });
 
-var View$1 = function View(_ref) {
-  var viewModel = _ref.viewModel;
+var View$1 = function View(_ref5) {
+  var viewModel = _ref5.viewModel;
+  var theme = useTheme$1();
+  var isMobile = useMediaQuery$1(theme.breakpoints.only('xs'));
   var links = viewModel.links,
       disclaimer = viewModel.disclaimer;
-  return /*#__PURE__*/React__default.createElement(ViewContainer$1, null, /*#__PURE__*/React__default.createElement(LinkContainer, null, /*#__PURE__*/React__default.createElement(Text, null, disclaimer), links.map(function (link) {
+  var Links = links.map(function (link) {
     return /*#__PURE__*/React__default.createElement(CustomLink$1, {
       key: link.label,
       href: link.href,
       target: link.target,
       onClick: link.handleAnalytics
     }, /*#__PURE__*/React__default.createElement(Text, null, link.label));
-  })));
+  });
+  return /*#__PURE__*/React__default.createElement(Container, null, isMobile ? /*#__PURE__*/React__default.createElement(React__default.Fragment, null, /*#__PURE__*/React__default.createElement(MobileContainer, null, Links), /*#__PURE__*/React__default.createElement(Text, {
+    textAlign: "center"
+  }, disclaimer)) : /*#__PURE__*/React__default.createElement(DesktopContainer, null, /*#__PURE__*/React__default.createElement(Text, {
+    textAlign: "center"
+  }, disclaimer), Links));
 };
 
 var AnalyticsHandler$2 = /*#__PURE__*/function (_BaseAnalyticsHandler) {
@@ -14103,6 +14127,12 @@ var ViewModel$1 = function ViewModel(vroomUrl) {
     href: '/legal/terms-of-use',
     target: '_blank',
     handleAnalytics: this.analyticsHandler.trackLinkClicked('Terms of Use')
+  }, {
+    linkToVroom: false,
+    label: 'Do Not Sell My Info (CA Residents)',
+    href: "https://privacyportal.onetrust.com/webform/8086730d-99f7-48ea-b3a1-0b3bb0cf163e/aa3e2126-7439-411d-a9a2-9fa0c4f8b01d",
+    target: '_blank',
+    handleAnalytics: this.analyticsHandler.trackLinkClicked('Do Not Sell My Info (CA Residents)')
   }]);
 
   _defineProperty$1(this, "disclaimer", 'Copyright © 2020 Vroom.');
