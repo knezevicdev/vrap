@@ -6231,14 +6231,9 @@ var HeaderNavStore = (_class = (_temp = _class2 = /*#__PURE__*/function () {
         };
       }(query);
 
-      console.log({
-        query: query,
-        picked: picked
-      });
       _this2.queryString = lib_3(picked, {
         addQueryPrefix: true
       });
-      console.log(_this2.queryString);
     };
   }
 }), _descriptor6 = _applyDecoratedDescriptor(_class.prototype, "initAuthTokenClientSide", [action], {
@@ -13487,8 +13482,8 @@ var HeaderNavViewModel = /*#__PURE__*/function () {
       var phoneNumberLinkData = this.getPhoneNumberLinkData(this.store.phoneNumber); // FIT-566
       // Persist query string across navigation so that vlassic attribution works.
       // This is a stopgap until a better attribution system is in place.
+      // retain brand query param to ensure whitelabeled pages are not cached/seen when navigating the vroom version of the app
 
-      console.log(this.store.queryString, '#');
       var queryString = "".concat(this.store.queryString).concat(this.store.queryString ? '&' : '?', "brand=vroom");
 
       if (!this.store.loggedIn) {

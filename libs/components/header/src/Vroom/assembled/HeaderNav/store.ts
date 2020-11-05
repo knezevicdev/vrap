@@ -51,10 +51,8 @@ class HeaderNavStore {
       utm_subsource,
       utm_site,
     }))(query);
-    console.log({ query, picked });
 
     this.queryString = stringify(picked, { addQueryPrefix: true });
-    console.log(this.queryString);
   };
 
   @action
