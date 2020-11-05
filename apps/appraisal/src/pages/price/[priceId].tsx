@@ -44,6 +44,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   // http://localhost:3000/appraisal/price/d9b61a51f993808577a102eecbe8df0d
 
   const priceId = context.query.priceId as string;
+  console.log('fetching priceId', priceId);
   const store = await getInitialPriceStoreState(priceId);
   return { props: { store } };
 };
