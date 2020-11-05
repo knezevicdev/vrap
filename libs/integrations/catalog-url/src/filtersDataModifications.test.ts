@@ -33,11 +33,8 @@ import {
   DriveType,
   Filters,
   FiltersData,
-<<<<<<< HEAD
   FuelType,
-=======
   PopularFeatures,
->>>>>>> 25b1c33005ba4335c6c0d9e921426770dd798cac
   SortBy,
   SortDirection,
   Transmission,
@@ -87,8 +84,6 @@ describe('resetFilter', () => {
     expect(resetFilter(Filters.BODY_TYPES, mockFiltersData1)).toEqual({
       ...mockFiltersData1,
       bodytypes: undefined,
-<<<<<<< HEAD
-=======
       colors: ['grey'],
       drivetype: ['awd'],
       makesandmodels: [{ makeSlug: 'volvo', modelSlugs: ['xc90'] }],
@@ -102,15 +97,12 @@ describe('resetFilter', () => {
       cylinders: ['8', '4'],
       othercylinders: false,
       optionalfeatures: ['Android Auto', 'Remote Start'],
->>>>>>> 25b1c33005ba4335c6c0d9e921426770dd798cac
     });
   });
   test('2', () => {
     expect(resetFilter(Filters.MAKE_AND_MODELS, mockFiltersData1)).toEqual({
       ...mockFiltersData1,
       makesandmodels: undefined,
-<<<<<<< HEAD
-=======
       miles: { max: 100000, min: 0 },
       page: 0,
       price: { max: 100000, min: 0 },
@@ -121,7 +113,6 @@ describe('resetFilter', () => {
       cylinders: ['8', '4'],
       othercylinders: false,
       optionalfeatures: ['Android Auto', 'Remote Start'],
->>>>>>> 25b1c33005ba4335c6c0d9e921426770dd798cac
     });
   });
 });
@@ -134,8 +125,6 @@ describe('resetFilters', () => {
       ...mockFiltersData1,
       bodytypes: undefined,
       price: undefined,
-<<<<<<< HEAD
-=======
       search: 'search',
       sort: { by: 'miles', direction: 'asc' },
       transmission: 'auto',
@@ -143,7 +132,6 @@ describe('resetFilters', () => {
       cylinders: ['8', '4'],
       othercylinders: false,
       optionalfeatures: ['Android Auto', 'Remote Start'],
->>>>>>> 25b1c33005ba4335c6c0d9e921426770dd798cac
     });
   });
   test('2', () => {
@@ -153,13 +141,10 @@ describe('resetFilters', () => {
       ...mockFiltersData1,
       drivetype: undefined,
       transmission: undefined,
-<<<<<<< HEAD
-=======
       year: { max: 2020, min: 2018 },
       cylinders: ['8', '4'],
       othercylinders: false,
       optionalfeatures: ['Android Auto', 'Remote Start'],
->>>>>>> 25b1c33005ba4335c6c0d9e921426770dd798cac
     });
   });
 });
@@ -181,8 +166,6 @@ describe('addBodyType', () => {
     expect(addBodyType(BodyType.CONVERTIBLE, mockFiltersData1)).toEqual({
       ...mockFiltersData1,
       bodytypes: ['suv', 'convertible'],
-<<<<<<< HEAD
-=======
       colors: ['grey'],
       drivetype: ['awd'],
       makesandmodels: [{ makeSlug: 'volvo', modelSlugs: ['xc90'] }],
@@ -196,7 +179,6 @@ describe('addBodyType', () => {
       cylinders: ['8', '4'],
       othercylinders: false,
       optionalfeatures: ['Android Auto', 'Remote Start'],
->>>>>>> 25b1c33005ba4335c6c0d9e921426770dd798cac
     });
   });
   test('3', () => {
@@ -254,7 +236,6 @@ describe('removeBodyType', () => {
     expect(removeBodyType(BodyType.SUV, mockFiltersData1)).toEqual({
       ...mockFiltersData1,
       bodytypes: undefined,
-<<<<<<< HEAD
     });
   });
 });
@@ -318,7 +299,6 @@ describe('removeFuelType', () => {
     expect(removeFuelType(FuelType.ELECTRIC, mockFiltersData1)).toEqual({
       ...mockFiltersData1,
       fueltype: undefined,
-=======
       colors: ['grey'],
       drivetype: ['awd'],
       makesandmodels: [{ makeSlug: 'volvo', modelSlugs: ['xc90'] }],
@@ -332,7 +312,6 @@ describe('removeFuelType', () => {
       cylinders: ['8', '4'],
       othercylinders: false,
       optionalfeatures: ['Android Auto', 'Remote Start'],
->>>>>>> 25b1c33005ba4335c6c0d9e921426770dd798cac
     });
   });
 });
@@ -347,11 +326,8 @@ describe('addCylinder', () => {
     expect(addCylinder(Cylinder.SIX, mockFiltersData1)).toEqual({
       ...mockFiltersData1,
       cylinders: ['8', '4', '6'],
-<<<<<<< HEAD
-=======
       othercylinders: false,
       optionalfeatures: ['Android Auto', 'Remote Start'],
->>>>>>> 25b1c33005ba4335c6c0d9e921426770dd798cac
     });
   });
   test('it should add cylinders to filters which already exist but are empty', () => {
@@ -401,11 +377,8 @@ describe('removeCylinder', () => {
     expect(removeCylinder(Cylinder.EIGHT, mockFiltersData1)).toEqual({
       ...mockFiltersData1,
       cylinders: ['4'],
-<<<<<<< HEAD
-=======
       othercylinders: false,
       optionalfeatures: ['Android Auto', 'Remote Start'],
->>>>>>> 25b1c33005ba4335c6c0d9e921426770dd798cac
     });
   });
 });
@@ -420,8 +393,6 @@ describe('addColor', () => {
     expect(addColor(Color.RED, mockFiltersData1)).toEqual({
       ...mockFiltersData1,
       colors: ['grey', 'red'],
-<<<<<<< HEAD
-=======
       drivetype: ['awd'],
       makesandmodels: [{ makeSlug: 'volvo', modelSlugs: ['xc90'] }],
       miles: { max: 100000, min: 0 },
@@ -434,7 +405,6 @@ describe('addColor', () => {
       cylinders: ['8', '4'],
       othercylinders: false,
       optionalfeatures: ['Android Auto', 'Remote Start'],
->>>>>>> 25b1c33005ba4335c6c0d9e921426770dd798cac
     });
   });
   test('3', () => {
@@ -492,8 +462,6 @@ describe('removeColor', () => {
     expect(removeColor(Color.GREY, mockFiltersData1)).toEqual({
       ...mockFiltersData1,
       colors: undefined,
-<<<<<<< HEAD
-=======
       drivetype: ['awd'],
       makesandmodels: [{ makeSlug: 'volvo', modelSlugs: ['xc90'] }],
       miles: { max: 100000, min: 0 },
@@ -506,7 +474,6 @@ describe('removeColor', () => {
       cylinders: ['8', '4'],
       othercylinders: false,
       optionalfeatures: ['Android Auto', 'Remote Start'],
->>>>>>> 25b1c33005ba4335c6c0d9e921426770dd798cac
     });
   });
 });
@@ -521,8 +488,6 @@ describe('addDriveType', () => {
     expect(addDriveType(DriveType.FOUR_BY_FOUR, mockFiltersData1)).toEqual({
       ...mockFiltersData1,
       drivetype: ['awd', '4x4'],
-<<<<<<< HEAD
-=======
       makesandmodels: [{ makeSlug: 'volvo', modelSlugs: ['xc90'] }],
       miles: { max: 100000, min: 0 },
       page: 0,
@@ -534,7 +499,6 @@ describe('addDriveType', () => {
       cylinders: ['8', '4'],
       othercylinders: false,
       optionalfeatures: ['Android Auto', 'Remote Start'],
->>>>>>> 25b1c33005ba4335c6c0d9e921426770dd798cac
     });
   });
   test('3', () => {
@@ -592,8 +556,6 @@ describe('removeDriveType', () => {
     expect(removeDriveType(DriveType.AWD, mockFiltersData1)).toEqual({
       ...mockFiltersData1,
       drivetype: undefined,
-<<<<<<< HEAD
-=======
       makesandmodels: [{ makeSlug: 'volvo', modelSlugs: ['xc90'] }],
       miles: { max: 100000, min: 0 },
       page: 0,
@@ -709,7 +671,6 @@ describe('removePopularFeature', () => {
       cylinders: ['8', '4'],
       othercylinders: false,
       optionalfeatures: ['Android Auto'],
->>>>>>> 25b1c33005ba4335c6c0d9e921426770dd798cac
     });
   });
 });
@@ -737,13 +698,10 @@ describe('setTransmission', () => {
     expect(setTransmission(Transmission.MANUAL, mockFiltersData1)).toEqual({
       ...mockFiltersData1,
       transmission: 'manual',
-<<<<<<< HEAD
-=======
       year: { max: 2020, min: 2018 },
       cylinders: ['8', '4'],
       othercylinders: false,
       optionalfeatures: ['Android Auto', 'Remote Start'],
->>>>>>> 25b1c33005ba4335c6c0d9e921426770dd798cac
     });
   });
 });
@@ -806,8 +764,6 @@ describe('addAllModels', () => {
         { makeSlug: 'volvo', modelSlugs: ['xc90'] },
         { makeSlug: 'toyota' },
       ],
-<<<<<<< HEAD
-=======
       miles: { max: 100000, min: 0 },
       page: 0,
       price: { max: 100000, min: 0 },
@@ -818,7 +774,6 @@ describe('addAllModels', () => {
       cylinders: ['8', '4'],
       othercylinders: false,
       optionalfeatures: ['Android Auto', 'Remote Start'],
->>>>>>> 25b1c33005ba4335c6c0d9e921426770dd798cac
     });
   });
 });
@@ -835,9 +790,7 @@ describe('removeAllModels', () => {
     });
   });
   test('3', () => {
-<<<<<<< HEAD
     expect(removeAllModels('ford', mockFiltersData1)).toEqual(mockFiltersData1);
-=======
     expect(removeAllModels('ford', mockFiltersData1)).toEqual({
       bodytypes: ['suv'],
       colors: ['grey'],
@@ -854,14 +807,11 @@ describe('removeAllModels', () => {
       othercylinders: false,
       optionalfeatures: ['Android Auto', 'Remote Start'],
     });
->>>>>>> 25b1c33005ba4335c6c0d9e921426770dd798cac
   });
   test('4', () => {
     expect(removeAllModels('volvo', mockFiltersData1)).toEqual({
       ...mockFiltersData1,
       makesandmodels: undefined,
-<<<<<<< HEAD
-=======
       miles: { max: 100000, min: 0 },
       page: 0,
       price: { max: 100000, min: 0 },
@@ -872,7 +822,6 @@ describe('removeAllModels', () => {
       cylinders: ['8', '4'],
       othercylinders: false,
       optionalfeatures: ['Android Auto', 'Remote Start'],
->>>>>>> 25b1c33005ba4335c6c0d9e921426770dd798cac
     });
   });
   test('5', () => {
@@ -905,11 +854,9 @@ describe('addModel', () => {
     });
   });
   test('3', () => {
-<<<<<<< HEAD
     expect(addModel('volvo', 'xc90', mockFiltersData1)).toEqual(
       mockFiltersData1
     );
-=======
     expect(addModel('volvo', 'xc90', mockFiltersData1)).toEqual({
       bodytypes: ['suv'],
       colors: ['grey'],
@@ -926,14 +873,11 @@ describe('addModel', () => {
       othercylinders: false,
       optionalfeatures: ['Android Auto', 'Remote Start'],
     });
->>>>>>> 25b1c33005ba4335c6c0d9e921426770dd798cac
   });
   test('3', () => {
     expect(addModel('volvo', 'xc60', mockFiltersData1)).toEqual({
       ...mockFiltersData1,
       makesandmodels: [{ makeSlug: 'volvo', modelSlugs: ['xc90', 'xc60'] }],
-<<<<<<< HEAD
-=======
       miles: { max: 100000, min: 0 },
       page: 0,
       price: { max: 100000, min: 0 },
@@ -944,7 +888,6 @@ describe('addModel', () => {
       cylinders: ['8', '4'],
       othercylinders: false,
       optionalfeatures: ['Android Auto', 'Remote Start'],
->>>>>>> 25b1c33005ba4335c6c0d9e921426770dd798cac
     });
   });
   test('4', () => {
@@ -978,8 +921,6 @@ describe('addModel', () => {
           modelSlugs: ['300'],
         },
       ],
-<<<<<<< HEAD
-=======
       miles: { max: 100000, min: 0 },
       page: 0,
       price: { max: 100000, min: 0 },
@@ -990,7 +931,6 @@ describe('addModel', () => {
       cylinders: ['8', '4'],
       othercylinders: false,
       optionalfeatures: ['Android Auto', 'Remote Start'],
->>>>>>> 25b1c33005ba4335c6c0d9e921426770dd798cac
     });
   });
 });
@@ -1010,14 +950,6 @@ describe('removeModel', () => {
     expect(removeModel('volvo', 'xc90', mockFiltersData1)).toEqual({
       ...mockFiltersData1,
       makesandmodels: undefined,
-<<<<<<< HEAD
-    });
-  });
-  test('3', () => {
-    expect(removeModel('toyota', 'camry', mockFiltersData1)).toEqual(
-      mockFiltersData1
-    );
-=======
       miles: { max: 100000, min: 0 },
       page: 0,
       price: { max: 100000, min: 0 },
@@ -1052,7 +984,6 @@ describe('removeModel', () => {
       othercylinders: false,
       optionalfeatures: ['Android Auto', 'Remote Start'],
     });
->>>>>>> 25b1c33005ba4335c6c0d9e921426770dd798cac
   });
   test('4', () => {
     const mockFiltersData: FiltersData = {
@@ -1120,8 +1051,6 @@ describe('setMiles', () => {
     expect(setMiles({ min: 30, max: 10000 }, mockFiltersData1)).toEqual({
       ...mockFiltersData1,
       miles: { max: 10000, min: 30 },
-<<<<<<< HEAD
-=======
       page: 0,
       price: { max: 100000, min: 0 },
       search: 'search',
@@ -1162,7 +1091,6 @@ describe('setOtherCylinders', () => {
       cylinders: ['8', '4'],
       othercylinders: true,
       optionalfeatures: ['Android Auto', 'Remote Start'],
->>>>>>> 25b1c33005ba4335c6c0d9e921426770dd798cac
     });
   });
 });
@@ -1182,8 +1110,6 @@ describe('setPage', () => {
     expect(setPage(42, mockFiltersData1)).toEqual({
       ...mockFiltersData1,
       page: 42,
-<<<<<<< HEAD
-=======
       price: { max: 100000, min: 0 },
       search: 'search',
       sort: { by: 'miles', direction: 'asc' },
@@ -1192,7 +1118,6 @@ describe('setPage', () => {
       cylinders: ['8', '4'],
       othercylinders: false,
       optionalfeatures: ['Android Auto', 'Remote Start'],
->>>>>>> 25b1c33005ba4335c6c0d9e921426770dd798cac
     });
   });
 });
@@ -1212,8 +1137,6 @@ describe('setPrice', () => {
     expect(setPrice({ min: 30, max: 10000 }, mockFiltersData1)).toEqual({
       ...mockFiltersData1,
       price: { max: 10000, min: 30 },
-<<<<<<< HEAD
-=======
       search: 'search',
       sort: { by: 'miles', direction: 'asc' },
       transmission: 'auto',
@@ -1221,7 +1144,6 @@ describe('setPrice', () => {
       cylinders: ['8', '4'],
       othercylinders: false,
       optionalfeatures: ['Android Auto', 'Remote Start'],
->>>>>>> 25b1c33005ba4335c6c0d9e921426770dd798cac
     });
   });
 });
@@ -1241,15 +1163,12 @@ describe('setSearch', () => {
     expect(setSearch('something', mockFiltersData1)).toEqual({
       ...mockFiltersData1,
       search: 'something',
-<<<<<<< HEAD
-=======
       sort: { by: 'miles', direction: 'asc' },
       transmission: 'auto',
       year: { max: 2020, min: 2018 },
       cylinders: ['8', '4'],
       othercylinders: false,
       optionalfeatures: ['Android Auto', 'Remote Start'],
->>>>>>> 25b1c33005ba4335c6c0d9e921426770dd798cac
     });
   });
 });
@@ -1277,14 +1196,11 @@ describe('setSort', () => {
     ).toEqual({
       ...mockFiltersData1,
       sort: { by: 'year', direction: 'desc' },
-<<<<<<< HEAD
-=======
       transmission: 'auto',
       year: { max: 2020, min: 2018 },
       cylinders: ['8', '4'],
       othercylinders: false,
       optionalfeatures: ['Android Auto', 'Remote Start'],
->>>>>>> 25b1c33005ba4335c6c0d9e921426770dd798cac
     });
   });
 });
@@ -1304,12 +1220,9 @@ describe('setYear', () => {
     expect(setYear({ min: 2003, max: 2009 }, mockFiltersData1)).toEqual({
       ...mockFiltersData1,
       year: { max: 2009, min: 2003 },
-<<<<<<< HEAD
-=======
       cylinders: ['8', '4'],
       othercylinders: false,
       optionalfeatures: ['Android Auto', 'Remote Start'],
->>>>>>> 25b1c33005ba4335c6c0d9e921426770dd798cac
     });
   });
 });

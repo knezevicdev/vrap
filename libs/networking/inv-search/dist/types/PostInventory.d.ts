@@ -45,6 +45,7 @@ export interface PostInventoryRequestData {
     cylinders?: number[];
     cylindersShowOther?: boolean;
     fuelType?: string[];
+    optionalFeatures?: string[];
 }
 export declare const postInventoryResponseSchema: import("yup").ObjectSchema<InventoryResponse>;
 export declare type PostInventoryResponse = InventoryResponse;
