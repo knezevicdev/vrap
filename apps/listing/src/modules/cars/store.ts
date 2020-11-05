@@ -450,6 +450,8 @@ export class CarsStore {
   ): void => {
     this.fuelTypeFilterExperiment = fuelTypeFilterExperiment;
   };
+
+  @action
   setFeaturesFilterExperiment = (
     featuresFilterExperiment?: Experiment
   ): void => {
