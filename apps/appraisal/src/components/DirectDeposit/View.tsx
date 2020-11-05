@@ -10,6 +10,7 @@ const InputContainer = styled('div')(() => ({
 
 const Input = styled(TextField)(({ theme }) => ({
   width: '280px',
+  [theme.breakpoints.only('xs')]: { width: '100%' },
   '& .MuiInput-formControl': {
     marginTop: theme.spacing(1),
   },

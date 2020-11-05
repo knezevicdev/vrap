@@ -17,6 +17,18 @@ const OptionsContainer = styled.div`
   margin: 0 20px;
   padding: 30px 100px;
   box-shadow: 0px 0px 4px #e0e0e0;
+
+  @media (max-width: 786px) {
+    margin: 20px;
+    padding: 30px 60px;
+    width: 100%;
+  }
+
+  @media (max-width: 420px) {
+    margin: 0;
+    padding: 20px;
+    box-shadow: none;
+  }
 `;
 
 const StyledHero = styled(Hero.Three)`
@@ -47,6 +59,10 @@ const SubmitButton = styled(Button.Primary)`
   max-width: 180px;
   white-space: normal;
   width: 100%;
+
+  @media (max-width: 420px) {
+    max-width: 100%;
+  }
 `;
 
 export interface Props {
