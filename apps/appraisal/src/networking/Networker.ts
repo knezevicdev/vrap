@@ -42,4 +42,9 @@ export class Networker {
 
     return this.axiosInstance.post(url, data);
   }
+
+  getVerificationDetails(priceId: string): Promise<AxiosResponse<any>> {
+    const url = `${publicRuntimeConfig.ACQUISITIONS_URL}/acquisition/verification/form?f=${priceId}`;
+    return this.axiosInstance.get(url);
+  }
 }
