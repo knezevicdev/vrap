@@ -1,4 +1,4 @@
-import { Link as MULink, useTheme, useMediaQuery } from '@material-ui/core';
+import { Link as MULink, useMediaQuery, useTheme } from '@material-ui/core';
 import { styled } from '@material-ui/core/styles';
 import { Typography } from '@vroom-web/ui';
 import React from 'react';
