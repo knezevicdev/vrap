@@ -44,7 +44,16 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   // http://localhost:3000/appraisal/price/d9b61a51f993808577a102eecbe8df0d
 
   const priceId = context.query.priceId as string;
-  console.log('fetching priceId', priceId);
+  const req = context.req;
+
+  const loggerInfo = {
+    priceId,
+    userAgent: req.headers['user-agent'],
+    ipAddress: req.headers['x-forwarded-for'] || req.connection.remoteAddress,
+    url: req.url,
+  };
+  console.log(JSON.stringify(loggerInfo));
+
   const store = await getInitialPriceStoreState(priceId);
   return { props: { store } };
 };
