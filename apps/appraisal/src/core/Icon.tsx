@@ -101,6 +101,20 @@ export class Icons {
     path: `${BASE_PATH}/icons/check-mark-white.svg`,
   });
 
+  static readonly CHEVRON_UP = new Icons('CHEVRON_UP', {
+    name: 'chevron-up',
+    width: 13,
+    height: 8,
+    path: `${BASE_PATH}/icons/chevron-up.svg`,
+  });
+
+  static readonly CHEVRON_DOWN = new Icons('CHEVRON_DOWN', {
+    name: 'chevron-down',
+    width: 13,
+    height: 8,
+    path: `${BASE_PATH}/icons/chevron-down.svg`,
+  });
+
   private constructor(
     protected key: string,
     public readonly value: {

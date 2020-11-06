@@ -1,11 +1,11 @@
 import React from 'react';
 
-import { OptionsStore } from './store';
+import { useOptionsStore } from './store';
 import View from './View';
 import ViewModel from './ViewModel';
 
 const Options: React.FC = () => {
-  const store = new OptionsStore();
+  const store = useOptionsStore();
   const viewModel = new ViewModel(store);
   return <View viewModel={viewModel} />;
 };

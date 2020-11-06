@@ -1,7 +1,7 @@
 import axios, { AxiosInstance, AxiosResponse } from 'axios';
 import getConfig from 'next/config';
 
-import { Prices } from './models/Price';
+import { Prices, VerificationRespData } from './models/Price';
 
 const { publicRuntimeConfig } = getConfig();
 
@@ -43,7 +43,9 @@ export class Networker {
     return this.axiosInstance.post(url, data);
   }
 
-  getVerificationDetails(priceId: string): Promise<AxiosResponse<any>> {
+  getVerificationDetails(
+    priceId: string
+  ): Promise<AxiosResponse<VerificationRespData>> {
     const url = `${publicRuntimeConfig.ACQUISITIONS_URL}/acquisition/verification/form?f=${priceId}`;
     return this.axiosInstance.get(url);
   }

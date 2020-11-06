@@ -7,7 +7,19 @@ import styled from 'styled-components';
 
 import ToolFooter from 'src/core/ToolFooter';
 import Options from 'src/modules/options';
+import {
+  getInitialOptionsStoreState,
+  OptionsStore,
+  OptionsStoreContext,
+  OptionStoreState,
+} from 'src/modules/options/store';
 import PaymentOverview from 'src/modules/paymentoverview';
+import {
+  getInitialPaymentOverviewStoreState,
+  PaymentOverviewStore,
+  PaymentOverviewStoreContext,
+  PaymentOverviewStoreState,
+} from 'src/modules/paymentoverview/store';
 import SuccessBar from 'src/modules/successbar';
 import Page from 'src/Page';
 
@@ -28,13 +40,20 @@ const ColumnBody = styled.div`
 
 interface Props {
   brand: Brand;
-  price: string;
+  optionsInitialState: OptionStoreState;
+  paymentInitialState: PaymentOverviewStoreState;
 }
 
 const { publicRuntimeConfig } = getConfig();
 
-const EPayOptions: NextPage<Props> = ({ brand }) => {
+const EPayOptions: NextPage<Props> = ({
+  brand,
+  optionsInitialState,
+  paymentInitialState,
+}) => {
   const gearboxPrivateUrl = publicRuntimeConfig.GEARBOX_PRIVATE_URL;
+  const oStore = new OptionsStore(optionsInitialState);
+  const poStore = new PaymentOverviewStore(paymentInitialState);
 
   return (
     <ThemeProvider brand={brand}>
@@ -42,8 +61,12 @@ const EPayOptions: NextPage<Props> = ({ brand }) => {
         <SimpleHeader gearboxPrivateUrl={gearboxPrivateUrl} />
         <SuccessBar />
         <ColumnBody>
-          <Options />
-          <PaymentOverview />
+          <OptionsStoreContext.Provider value={oStore}>
+            <Options />
+          </OptionsStoreContext.Provider>
+          <PaymentOverviewStoreContext.Provider value={poStore}>
+            <PaymentOverview />
+          </PaymentOverviewStoreContext.Provider>
         </ColumnBody>
         <ToolFooter />
       </Page>
@@ -66,7 +89,11 @@ EPayOptions.getInitialProps = async (
   else if (whitelabel === Brand.TDA) brand = Brand.TDA;
 
   const priceId = query.priceId as string;
-  return { brand, price: priceId };
+  const optionsInitialState = await getInitialOptionsStoreState(priceId);
+  const paymentInitialState = await getInitialPaymentOverviewStoreState(
+    priceId
+  );
+  return { brand, optionsInitialState, paymentInitialState };
 };
 
 export default EPayOptions;
