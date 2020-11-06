@@ -6,6 +6,7 @@ import {
   removeColor,
   removeCylinder,
   removeDriveType,
+  removeFuelType,
   removeModel,
   removePopularFeature,
   resetFilter,
@@ -246,6 +247,31 @@ class ChipsViewModel {
     return driveTypesChips;
   }
 
+  getFuelTypeChips(filtersData: FiltersData): Chip[] {
+    const fuelTypeChips: Chip[] = [];
+    const filtersDataFuelType = filtersData[Filters.FUEL_TYPE];
+    if (filtersDataFuelType) {
+      filtersDataFuelType.forEach((filtersDataDriveType) => {
+        const matchingFuelType = this.carsStore.fuelTypes.find(
+          (ft) => ft.filtersDataValue === filtersDataDriveType
+        );
+        if (matchingFuelType) {
+          fuelTypeChips.push({
+            display: matchingFuelType.display,
+            handleDelete: () => {
+              const updatedFiltersData = removeFuelType(
+                filtersDataDriveType,
+                filtersData
+              );
+              this.carsStore.updateFiltersData(updatedFiltersData);
+            },
+          });
+        }
+      });
+    }
+    return fuelTypeChips;
+  }
+
   getCylinderChips(filtersData: FiltersData): Chip[] {
     const cylindersChips: Chip[] = [];
     const filtersDataCylinders = filtersData[Filters.CYLINDERS];
@@ -340,6 +366,7 @@ class ChipsViewModel {
       ...this.getDriveTypesChips(filtersData),
       ...this.getSearchChips(filtersData),
       ...this.getCylinderChips(filtersData),
+      ...this.getFuelTypeChips(filtersData),
       ...this.getPopularFeatureChips(filtersData),
     ];
     return chips.length > 0 ? chips : undefined;

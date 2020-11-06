@@ -13,6 +13,7 @@ export enum Filters {
   YEAR = 'year',
   CYLINDERS = 'cylinders',
   OTHER_CYLINDERS = 'othercylinders',
+  FUEL_TYPE = 'fueltype',
   POPULAR_FEATURES = 'optionalfeatures',
 }
 
@@ -92,6 +93,15 @@ export enum Cylinder {
   EIGHT = '8',
 }
 
+export enum FuelType {
+  GASOLINE = 'gasoline',
+  ELECTRIC = 'electric',
+  PLUG_IN_HYBRID = 'pluginhybrid',
+  GAS_ELECTRIC_HYBRID = 'gaselectrichybrid',
+  DIESEL = 'diesel',
+  OTHER = 'other',
+}
+
 export enum PopularFeatures {
   ANDROID_AUTO = 'Android Auto',
   APPLE_CAR_PLAY = 'Apple Car Play',
@@ -117,6 +127,7 @@ export interface FiltersData {
   [Filters.YEAR]?: MaxAndMin;
   [Filters.CYLINDERS]?: Cylinder[];
   [Filters.OTHER_CYLINDERS]?: boolean;
+  [Filters.FUEL_TYPE]?: FuelType[];
   [Filters.POPULAR_FEATURES]?: PopularFeatures[];
 }
 

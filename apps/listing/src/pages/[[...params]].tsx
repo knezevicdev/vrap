@@ -111,11 +111,25 @@ const CarsPage: NextPage<Props> = ({
 
   useEffect(() => {
     experimentSDK
+      .getAndLogExperimentClientSide('snd-catalog-fuel-type-filter')
+      .then((experiment) => {
+        carsStore.setFuelTypeFilterExperiment(experiment);
+      });
+  }, [carsStore]);
+
+  useEffect(() => {
+    experimentSDK
       .getAndLogExperimentClientSide('snd-feature-filter')
       .then((experiment) => {
         carsStore.setFeaturesFilterExperiment(experiment);
       });
   }, [carsStore]);
+
+  useEffect(() => {
+    if (carsStore.fuelTypeFilterExperiment) {
+      analyticsHandler.registerExperiment(carsStore.fuelTypeFilterExperiment);
+    }
+  }, [carsStore.fuelTypeFilterExperiment, analyticsHandler]);
 
   useEffect(() => {
     if (carsStore.featuresFilterExperiment) {

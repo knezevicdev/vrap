@@ -29,6 +29,9 @@ import {
   DriveType,
   DriveTypeAPI,
   driveTypes,
+  FuelType,
+  FuelTypeAPI,
+  fuelTypes,
   INVENTORY_CARDS_PER_PAGE,
   POPULAR_CAR_LIMIT,
   PopularFeature,
@@ -145,6 +148,28 @@ export const getCylinderRequestData = (
     }
   });
   return cylinder;
+};
+
+export const getFuelTypeRequestData = (
+  filtersData?: FiltersData
+): FuelTypeAPI[] | undefined => {
+  if (!filtersData) {
+    return undefined;
+  }
+  const filtersDataFuelType = filtersData[Filters.FUEL_TYPE];
+  if (!filtersDataFuelType || !fuelTypes) {
+    return undefined;
+  }
+  const fuelType: FuelTypeAPI[] = [];
+  filtersDataFuelType.forEach((filtersDataFuelType) => {
+    const matchingFuelType = fuelTypes.find(
+      (fuelType) => fuelType.filtersDataValue === filtersDataFuelType
+    );
+    if (matchingFuelType && matchingFuelType.api) {
+      fuelType.push(matchingFuelType.api);
+    }
+  });
+  return fuelType;
 };
 
 export const getMakeAndModelRequestData = (
@@ -318,6 +343,7 @@ export const getPostInventoryRequestDataFromFilterData = (
   );
   const testdriveonly = getTestDriveOnlyRequestData(filtersData);
   const transmissionid = getTransmissionRequestData(filtersData);
+  const fuelType = getFuelTypeRequestData(filtersData);
 
   return {
     bodytype,
@@ -334,6 +360,7 @@ export const getPostInventoryRequestDataFromFilterData = (
     testdriveonly,
     transmissionid,
     year: filtersData ? filtersData[Filters.YEAR] : undefined,
+    fuelType,
     cylinders,
     cylindersShowOther:
       (filtersData && filtersData[Filters.OTHER_CYLINDERS]) || undefined,
@@ -352,6 +379,7 @@ export class CarsStore {
   readonly colors: Color[] = colors;
   readonly driveTypes: DriveType[] = driveTypes;
   readonly cylinders: Cylinder[] = cylinders;
+  readonly fuelTypes: FuelType[] = fuelTypes;
   readonly popularFeatures: PopularFeature[] = popularFeatures;
   readonly sorts: Sort[] = sorts;
   readonly testDrives: TestDrive[] = testDrives;
@@ -384,6 +412,7 @@ export class CarsStore {
 
   @observable geoLocationSortExperiment?: Experiment;
   @observable cylinderFilterExperiment?: Experiment;
+  @observable fuelTypeFilterExperiment?: Experiment;
   @observable featuresFilterExperiment?: Experiment;
 
   constructor(initialState?: InitialCarsStoreState) {
@@ -413,6 +442,13 @@ export class CarsStore {
     cylinderFilterExperiment?: Experiment
   ): void => {
     this.cylinderFilterExperiment = cylinderFilterExperiment;
+  };
+
+  @action
+  setFuelTypeFilterExperiment = (
+    fuelTypeFilterExperiment?: Experiment
+  ): void => {
+    this.fuelTypeFilterExperiment = fuelTypeFilterExperiment;
   };
 
   @action

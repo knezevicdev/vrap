@@ -19,6 +19,7 @@ var jsBase64 = require('js-base64');
   Filters["YEAR"] = "year";
   Filters["CYLINDERS"] = "cylinders";
   Filters["OTHER_CYLINDERS"] = "othercylinders";
+  Filters["FUEL_TYPE"] = "fueltype";
   Filters["POPULAR_FEATURES"] = "optionalfeatures";
 })(exports.Filters || (exports.Filters = {}));
 
@@ -81,6 +82,15 @@ var jsBase64 = require('js-base64');
   Cylinder["EIGHT"] = "8";
 })(exports.Cylinder || (exports.Cylinder = {}));
 
+(function (FuelType) {
+  FuelType["GASOLINE"] = "gasoline";
+  FuelType["ELECTRIC"] = "electric";
+  FuelType["PLUG_IN_HYBRID"] = "pluginhybrid";
+  FuelType["GAS_ELECTRIC_HYBRID"] = "gaselectrichybrid";
+  FuelType["DIESEL"] = "diesel";
+  FuelType["OTHER"] = "other";
+})(exports.FuelType || (exports.FuelType = {}));
+
 (function (PopularFeatures) {
   PopularFeatures["ANDROID_AUTO"] = "Android Auto";
   PopularFeatures["APPLE_CAR_PLAY"] = "Apple Car Play";
@@ -120,6 +130,22 @@ var removeBodyType = function removeBodyType(bodyType, filtersData) {
     return bt !== bodyType;
   });
   newFiltersData[exports.Filters.BODY_TYPES] = newBodyTypes.length > 0 ? newBodyTypes : undefined;
+  return newFiltersData;
+};
+var addFuelType = function addFuelType(fuelType, filtersData) {
+  var newFiltersData = deepCopyFiltersData(filtersData || {});
+  var newFuelType = newFiltersData[exports.Filters.FUEL_TYPE] || [];
+  newFuelType.push(fuelType);
+  newFiltersData[exports.Filters.FUEL_TYPE] = newFuelType;
+  return newFiltersData;
+};
+var removeFuelType = function removeFuelType(fuelType, filtersData) {
+  var newFiltersData = deepCopyFiltersData(filtersData || {});
+  var existingFuelType = newFiltersData[exports.Filters.FUEL_TYPE] || [];
+  var newFuelType = existingFuelType.filter(function (c) {
+    return c !== fuelType;
+  });
+  newFiltersData[exports.Filters.FUEL_TYPE] = newFuelType.length > 0 ? newFuelType : undefined;
   return newFiltersData;
 };
 var addCylinder = function addCylinder(cylinder, filtersData) {
@@ -725,6 +751,7 @@ exports.addBodyType = addBodyType;
 exports.addColor = addColor;
 exports.addCylinder = addCylinder;
 exports.addDriveType = addDriveType;
+exports.addFuelType = addFuelType;
 exports.addModel = addModel;
 exports.addPopularFeature = addPopularFeature;
 exports.getFiltersDataFromUrl = getFiltersDataFromUrl;
@@ -734,6 +761,7 @@ exports.removeBodyType = removeBodyType;
 exports.removeColor = removeColor;
 exports.removeCylinder = removeCylinder;
 exports.removeDriveType = removeDriveType;
+exports.removeFuelType = removeFuelType;
 exports.removeModel = removeModel;
 exports.removePopularFeature = removePopularFeature;
 exports.resetFilter = resetFilter;

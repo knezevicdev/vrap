@@ -4,6 +4,7 @@ import BodyTypes from './components/BodyTypes';
 import Color from './components/Color';
 import EngineAndDrivetrain from './components/EngineAndDrivetrain';
 import Features from './components/Features';
+import FuelAndEfficiency from './components/FuelAndEfficiency';
 import Makes from './components/Makes';
 import Miles from './components/Miles';
 import Price from './components/Price';
@@ -17,6 +18,7 @@ export enum FilterDisplay {
   PRICE = 'Price',
   MILES = 'Miles',
   ENGINE_AND_DRIVETRAIN = 'Engine & Drivetrain',
+  FUEL_AND_EFFICIENCY = 'Fuel & Efficiency',
   POPULAR_FEATURES = 'Popular Features',
 }
 
@@ -56,6 +58,11 @@ class FiltersStore {
     {
       display: FilterDisplay.MILES,
       FilterComponent: Miles,
+      open: false,
+    },
+    {
+      display: FilterDisplay.FUEL_AND_EFFICIENCY,
+      FilterComponent: FuelAndEfficiency,
       open: false,
     },
     {

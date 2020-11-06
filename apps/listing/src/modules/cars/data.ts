@@ -3,6 +3,7 @@ import {
   Color as FiltersDataColor,
   Cylinder as FiltersDataCylinder,
   DriveType as FiltersDataDriveType,
+  FuelType as FiltersDataFuelType,
   PopularFeatures as FiltersDataPopularFeatures,
   SortBy as FiltersDataSortBy,
   SortDirection as FiltersDataSortDirection,
@@ -12,6 +13,63 @@ import {
 
 export const INVENTORY_CARDS_PER_PAGE = 24;
 export const POPULAR_CAR_LIMIT = 12;
+
+export enum FuelTypeAPI {
+  GASOLINE = 'gasoline',
+  DIESEL = 'diesel',
+  GAS_ELECTRIC_HYBRID = 'gas_electric_hybrid',
+  PLUG_IN_HYBRID = 'plug_in_hybrid',
+  ELECTRIC = 'electric',
+  OTHER = 'other',
+}
+
+export enum FuelTypeDisplay {
+  GASOLINE = 'Gasoline',
+  DIESEL = 'Diesel',
+  GAS_ELECTRIC_HYBRID = 'Gas/Electric Hybrid',
+  PLUG_IN_HYBRID = 'Plug-in Hybrid',
+  ELECTRIC = 'Electric',
+  OTHER = 'Other',
+}
+
+export interface FuelType {
+  api: FuelTypeAPI;
+  display: FuelTypeDisplay;
+  filtersDataValue: FiltersDataFuelType;
+}
+
+export const fuelTypes: FuelType[] = [
+  {
+    api: FuelTypeAPI.GASOLINE,
+    display: FuelTypeDisplay.GASOLINE,
+    filtersDataValue: FiltersDataFuelType.GASOLINE,
+  },
+  {
+    api: FuelTypeAPI.DIESEL,
+    display: FuelTypeDisplay.DIESEL,
+    filtersDataValue: FiltersDataFuelType.DIESEL,
+  },
+  {
+    api: FuelTypeAPI.GAS_ELECTRIC_HYBRID,
+    display: FuelTypeDisplay.GAS_ELECTRIC_HYBRID,
+    filtersDataValue: FiltersDataFuelType.GAS_ELECTRIC_HYBRID,
+  },
+  {
+    api: FuelTypeAPI.PLUG_IN_HYBRID,
+    display: FuelTypeDisplay.PLUG_IN_HYBRID,
+    filtersDataValue: FiltersDataFuelType.PLUG_IN_HYBRID,
+  },
+  {
+    api: FuelTypeAPI.ELECTRIC,
+    display: FuelTypeDisplay.ELECTRIC,
+    filtersDataValue: FiltersDataFuelType.ELECTRIC,
+  },
+  {
+    api: FuelTypeAPI.OTHER,
+    display: FuelTypeDisplay.OTHER,
+    filtersDataValue: FiltersDataFuelType.OTHER,
+  },
+];
 
 export enum BodyTypeAPI {
   SUV = 'SUV',

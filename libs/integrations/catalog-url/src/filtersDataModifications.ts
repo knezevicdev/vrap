@@ -5,6 +5,7 @@ import {
   DriveType,
   Filters,
   FiltersData,
+  FuelType,
   Make,
   MaxAndMin,
   PopularFeatures,
@@ -58,6 +59,29 @@ export const removeBodyType = (
   const newBodyTypes = existingBodyTypes.filter((bt) => bt !== bodyType);
   newFiltersData[Filters.BODY_TYPES] =
     newBodyTypes.length > 0 ? newBodyTypes : undefined;
+  return newFiltersData;
+};
+
+export const addFuelType = (
+  fuelType: FuelType,
+  filtersData?: FiltersData
+): FiltersData => {
+  const newFiltersData = deepCopyFiltersData(filtersData || {});
+  const newFuelType = newFiltersData[Filters.FUEL_TYPE] || [];
+  newFuelType.push(fuelType);
+  newFiltersData[Filters.FUEL_TYPE] = newFuelType;
+  return newFiltersData;
+};
+
+export const removeFuelType = (
+  fuelType: FuelType,
+  filtersData?: FiltersData
+): FiltersData => {
+  const newFiltersData = deepCopyFiltersData(filtersData || {});
+  const existingFuelType = newFiltersData[Filters.FUEL_TYPE] || [];
+  const newFuelType = existingFuelType.filter((c) => c !== fuelType);
+  newFiltersData[Filters.FUEL_TYPE] =
+    newFuelType.length > 0 ? newFuelType : undefined;
   return newFiltersData;
 };
 
