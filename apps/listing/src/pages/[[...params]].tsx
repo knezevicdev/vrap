@@ -477,6 +477,7 @@ CarsPage.getInitialProps = async (context: NextPageContext): Promise<Props> => {
       utm_keyword,
       utm_subsource,
       utm_site,
+      brand,
     },
     {
       addQueryPrefix: false,
