@@ -45,16 +45,31 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 
   const priceId = context.query.priceId as string;
   const req = context.req;
+  req['cookies'] = Object.fromEntries(
+    req.headers.cookie.split('; ').map((v) => v.split(/=(.+)/))
+  );
+  console.log(req['cookies']);
 
   const loggerInfo = {
     priceId,
     userAgent: req.headers['user-agent'],
+    fastlyClientIp: req.headers['fastly-client-ip'],
+    uuid: req.cookies['uuid'],
+    ajsAnonymousId: req.cookies['ajs_anonymous_id'],
     ipAddress: req.headers['x-forwarded-for'] || req.connection.remoteAddress,
     url: req.url,
   };
-  console.log(JSON.stringify(loggerInfo));
 
-  const store = await getInitialPriceStoreState(priceId);
+  let store = {};
+  const resp = await getInitialPriceStoreState(priceId);
+  if (resp.err) {
+    console.log(JSON.stringify(resp.err));
+    store = resp.defaultState;
+  } else {
+    console.log(JSON.stringify(loggerInfo));
+    store = resp;
+  }
+
   return { props: { store } };
 };
 

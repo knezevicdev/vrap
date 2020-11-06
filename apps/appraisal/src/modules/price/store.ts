@@ -88,7 +88,10 @@ export async function getInitialPriceStoreState(
     priceState.year = price.Year__c;
     return priceState;
   } catch (err) {
-    return defaultPriceState;
+    return {
+      err,
+      defaultState: defaultPriceState,
+    };
   }
 }
 
