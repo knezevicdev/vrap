@@ -1,4 +1,4 @@
-import { Link as MULink } from '@material-ui/core';
+import { Link as MULink, useMediaQuery, useTheme } from '@material-ui/core';
 import { styled } from '@material-ui/core/styles';
 import { Typography } from '@vroom-web/ui';
 import React from 'react';
@@ -9,18 +9,24 @@ interface Props {
   viewModel: ViewModel;
 }
 
-const ViewContainer = styled('div')(() => ({
-  background: '#F1F1F1',
+const Container = styled('div')(() => ({
   zIndex: 1,
 }));
 
-const LinkContainer = styled('div')(() => ({
+const MobileContainer = styled('div')(({ theme }) => ({
+  padding: theme.spacing(2, 4, 1),
+  textAlign: 'center',
+  display: 'grid',
+  gridTemplateColumns: '1fr 1fr 1fr',
+}));
+
+const DesktopContainer = styled('div')(({ theme }) => ({
+  padding: theme.spacing(2, 4),
   display: 'flex',
-  width: '100%',
-  margin: '0 auto',
-  maxWidth: '370px',
-  padding: '16px 8px',
+  textAlign: 'center',
+  maxWidth: '700px',
   justifyContent: 'space-between',
+  margin: 'auto',
 }));
 
 const CustomLink = styled(MULink)(() => ({
@@ -29,32 +35,46 @@ const CustomLink = styled(MULink)(() => ({
   color: '#767676',
 }));
 
-const Text = styled(Typography)(() => ({
-  color: '#767676',
+const Text = styled(Typography)(({ theme }) => ({
+  color: theme.palette.text.primary,
   fontSize: '14px',
+  [theme.breakpoints.only('xs')]: {
+    marginBottom: theme.spacing(2),
+  },
 }));
 
 const View: React.FC<Props> = ({ viewModel }) => {
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.only('xs'));
   const { links, disclaimer } = viewModel;
 
+  const Links = links.map((link) => {
+    return (
+      <CustomLink
+        key={link.label}
+        href={link.href}
+        target={link.target}
+        onClick={link.handleAnalytics}
+      >
+        <Text>{link.label}</Text>
+      </CustomLink>
+    );
+  });
+
   return (
-    <ViewContainer>
-      <LinkContainer>
-        <Text>{disclaimer}</Text>
-        {links.map((link) => {
-          return (
-            <CustomLink
-              key={link.label}
-              href={link.href}
-              target={link.target}
-              onClick={link.handleAnalytics}
-            >
-              <Text>{link.label}</Text>
-            </CustomLink>
-          );
-        })}
-      </LinkContainer>
-    </ViewContainer>
+    <Container>
+      {isMobile ? (
+        <>
+          <MobileContainer>{Links}</MobileContainer>
+          <Text textAlign="center">{disclaimer}</Text>
+        </>
+      ) : (
+        <DesktopContainer>
+          <Text textAlign="center">{disclaimer}</Text>
+          {Links}
+        </DesktopContainer>
+      )}
+    </Container>
   );
 };
 
