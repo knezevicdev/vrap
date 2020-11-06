@@ -8,7 +8,6 @@ import React, { useEffect } from 'react';
 
 import Breadcrumbs from './components/Breadcrumbs';
 import CarDetails from './components/CarDetails';
-import Favorites from './components/Favorites';
 import Features from './components/Features';
 import Gallery from './components/Gallery';
 import LegalFooter from './components/LegalFooter';
@@ -87,7 +86,6 @@ const InventoryView: React.FC<Props> = (props) => {
       {xsDown && viewModel.ready() && (
         <StickyBottom>
           {viewModel.isAvailableSoon() ? <NotifyMe /> : <StartPurchase />}
-          <Favorites />
         </StickyBottom>
       )}
     </>
