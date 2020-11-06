@@ -26,6 +26,7 @@ export {
   setTestDrive,
   setTransmission,
   setYear,
+  setFuelEfficiency,
 } from './filtersDataModifications';
 export {
   BodyType,
@@ -46,6 +47,7 @@ export type {
   MakeAndModels,
   MaxAndMin,
   Sort,
+  FuelEfficiency,
 } from './types';
 export {
   getFiltersDataFromUrl,

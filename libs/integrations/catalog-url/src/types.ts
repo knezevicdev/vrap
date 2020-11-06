@@ -15,6 +15,7 @@ export enum Filters {
   OTHER_CYLINDERS = 'othercylinders',
   FUEL_TYPE = 'fueltype',
   POPULAR_FEATURES = 'optionalfeatures',
+  FUEL_EFFICIENCY = 'combinedmpg',
 }
 
 export enum BodyType {
@@ -112,6 +113,10 @@ export enum PopularFeatures {
   THIRD_ROW_SEATING = 'Third Row Seating',
 }
 
+export interface FuelEfficiency {
+  min: number;
+}
+
 export interface FiltersData {
   [Filters.BODY_TYPES]?: BodyType[];
   [Filters.COLORS]?: Color[];
@@ -129,6 +134,7 @@ export interface FiltersData {
   [Filters.OTHER_CYLINDERS]?: boolean;
   [Filters.FUEL_TYPE]?: FuelType[];
   [Filters.POPULAR_FEATURES]?: PopularFeatures[];
+  [Filters.FUEL_EFFICIENCY]?: FuelEfficiency;
 }
 
 export interface GetUrlFromFiltersDataOptions {

@@ -14,7 +14,8 @@ export declare enum Filters {
     CYLINDERS = "cylinders",
     OTHER_CYLINDERS = "othercylinders",
     FUEL_TYPE = "fueltype",
-    POPULAR_FEATURES = "optionalfeatures"
+    POPULAR_FEATURES = "optionalfeatures",
+    FUEL_EFFICIENCY = "combinedmpg"
 }
 export declare enum BodyType {
     CONVERTIBLE = "convertible",
@@ -97,6 +98,9 @@ export declare enum PopularFeatures {
     SUNROOF_MOONROOF = "Sunroof or Moonroof",
     THIRD_ROW_SEATING = "Third Row Seating"
 }
+export interface FuelEfficiency {
+    min: number;
+}
 export interface FiltersData {
     [Filters.BODY_TYPES]?: BodyType[];
     [Filters.COLORS]?: Color[];
@@ -114,6 +118,7 @@ export interface FiltersData {
     [Filters.OTHER_CYLINDERS]?: boolean;
     [Filters.FUEL_TYPE]?: FuelType[];
     [Filters.POPULAR_FEATURES]?: PopularFeatures[];
+    [Filters.FUEL_EFFICIENCY]?: FuelEfficiency;
 }
 export interface GetUrlFromFiltersDataOptions {
     addFiltersQueryParam?: boolean;
