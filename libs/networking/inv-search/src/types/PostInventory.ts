@@ -36,6 +36,7 @@ export interface PostInventoryRequestData {
   cylindersShowOther?: boolean;
   fuelType?: string[];
   optionalFeatures?: string[];
+  combinedMpg?: { min: number };
 }
 
 export const postInventoryResponseSchema = inventoryResponseSchema;
