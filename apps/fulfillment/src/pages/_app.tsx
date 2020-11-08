@@ -1,5 +1,3 @@
-import 'mobx-react/batchingForReactDom';
-
 import { ThemeProvider } from '@vroom-web/ui';
 import { configure as configureMobx } from 'mobx';
 import App from 'next/app';
