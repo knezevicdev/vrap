@@ -78,6 +78,10 @@ class VroomDocument extends Document<Props> {
             branch.init("${publicRuntimeConfig.BRANCH_IO_KEY}");`,
             }}
           />
+          <script
+            type="text/javascript"
+            src={`${publicRuntimeConfig.BASE_PATH}/scripts/safari-fix.js`}
+          ></script>
         </Head>
         <body>
           <Main />
