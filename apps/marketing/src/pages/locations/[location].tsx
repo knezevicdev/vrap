@@ -10,11 +10,22 @@ import Page from 'src/Page';
 interface Props {
   brand: Brand;
   title: string;
+  description: string;
   carCenter?: LocationInfo;
 }
 
-const LocationPage: NextPage<Props> = ({ brand, title, carCenter }) => {
-  const head = <title>{title}</title>;
+const LocationPage: NextPage<Props> = ({
+  brand,
+  title,
+  description,
+  carCenter,
+}) => {
+  const head = (
+    <>
+      <title>{title}</title>
+      <meta name="description" content={description}></meta>
+    </>
+  );
 
   if (!carCenter) return <Error statusCode={404} />;
 
@@ -39,7 +50,8 @@ LocationPage.getInitialProps = async (ctx: NextPageContext): Promise<Props> => {
   const whitelabel = brandHeader || queryBrand;
   if (whitelabel === Brand.TDA) brand = Brand.TDA;
 
-  let title = `Sell Us Your Car Location`;
+  let title = ``;
+  let description = ``;
 
   const queryLocation = query.location;
 
@@ -48,10 +60,11 @@ LocationPage.getInitialProps = async (ctx: NextPageContext): Promise<Props> => {
   );
 
   if (carCenter) {
-    title = `${title} - ${carCenter.name}, ${carCenter.address.state}`;
+    title = `Sell Us Your Car Location - ${carCenter.name}, ${carCenter.address.state}`;
+    description = `Sell your car online or at the ${carCenter.name}, ${carCenter.address.state} location of Texas Direct Auto. We offer no haggle pricing for your trade, we'll even beat CarMax's offer!`;
   }
 
-  return { brand, title, carCenter };
+  return { brand, title, description, carCenter };
 };
 
 export default LocationPage;
