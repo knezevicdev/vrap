@@ -6,7 +6,6 @@ services:
       dockerfile: ./apps/appraisal/docker/Dockerfile
     user: 'root'
     environment:
-      - NEXT_PUBLIC_BASE_PATH=/appraisal
       - NEXT_PUBLIC_GEARBOX_PRIVATE_URL=https://gearbox-dev-int.vroomapi.com/query-private
       - NEXT_PUBLIC_DATA_DOG_RUM_APPLICATION=e7f48b42-82cb-46e2-b851-90d26c4cfac2
       - NEXT_PUBLIC_DATA_DOG_RUM_TOKEN=pub4d4bcfd1fdb025834550786951abda6b

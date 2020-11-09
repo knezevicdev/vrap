@@ -1,4 +1,4 @@
-import { action, observable, runInAction } from 'mobx';
+import { observable } from 'mobx';
 import { createContext, useContext } from 'react';
 
 import { Prices } from 'src/networking/models/Price';
@@ -58,7 +58,7 @@ export async function submitPriceResponse(priceData: PriceData): Promise<void> {
   }
 }
 
-async function getInitialPriceStoreState(
+export async function getInitialPriceStoreState(
   priceId: string
 ): Promise<PriceStoreState> {
   const networker = new Networker();
@@ -112,14 +112,8 @@ export class PriceStore {
   @observable xkeId = 0;
   @observable year = 0;
 
-  constructor(priceId?: string) {
-    if (priceId) this.init(priceId);
-  }
-
-  @action
-  async init(priceId: string): Promise<void> {
-    const initialState = await getInitialPriceStoreState(priceId);
-    runInAction(() => {
+  constructor(initialState?: PriceStoreState) {
+    if (initialState) {
       this.automatedAppraisal = initialState.automatedAppraisal;
       this.price = initialState.price;
       this.priceId = initialState.priceId;
@@ -138,7 +132,7 @@ export class PriceStore {
       this.vin = initialState.vin;
       this.xkeId = initialState.xkeId;
       this.year = initialState.year;
-    });
+    }
   }
 }
 
