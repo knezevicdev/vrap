@@ -62,6 +62,10 @@ const InitialPriceView: React.FC<Props> = ({ viewModel }) => {
         {viewModel.continuePrice}
       </StyledButton>
 
+      <StyledLegal>
+        <Body.Small>{viewModel.legalDocumentation}</Body.Small>
+      </StyledLegal>
+
       <StickyFooter id="stickyFooter">
         <StickyContent>
           <StickyDetails>
@@ -107,6 +111,12 @@ const StickyDetails = styled.div`
 
 const StickyContent = styled.div`
   padding: 5px 20px;
+`;
+
+const StyledLegal = styled.div`
+  max-width: 500px;
+  text-align: left;
+  margin: auto;
 `;
 
 const StickyFooter = styled.div`
