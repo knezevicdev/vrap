@@ -821,7 +821,7 @@ describe('getPopularFeatureChips', () => {
     expect(chips[0].handleDelete).toBeDefined();
     chips[0].handleDelete();
     expect(mockCarsStore.updateFiltersData).toHaveBeenCalledWith({
-      optionalfeatures: ['Apple Car Play', 'Heated Seats'],
+      optionalfeatures: ['Apple Carplay', 'Heated Seats'],
     });
     mockCarsStore.updateFiltersData.mockReset();
 
@@ -837,7 +837,7 @@ describe('getPopularFeatureChips', () => {
     expect(chips[2].handleDelete).toBeDefined();
     chips[2].handleDelete();
     expect(mockCarsStore.updateFiltersData).toHaveBeenCalledWith({
-      optionalfeatures: ['Android Auto', 'Apple Car Play'],
+      optionalfeatures: ['Android Auto', 'Apple Carplay'],
     });
     mockCarsStore.updateFiltersData.mockReset();
   });

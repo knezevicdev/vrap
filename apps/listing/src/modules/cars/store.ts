@@ -235,10 +235,10 @@ export const getPopularFeaturesRequestData = (
       (feature) => feature.filtersDataValue === filtersDataPopularFeatures
     );
     if (matchingFeature && matchingFeature.api) {
-      popularFeature.push(matchingFeature.api);
+      popularFeature.push(matchingFeature.api as PopularFeatureApi);
     }
   });
-  return popularFeature;
+  return popularFeature.flat();
 };
 
 export const getSortRequestData = (
