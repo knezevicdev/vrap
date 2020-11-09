@@ -2,7 +2,7 @@ import { Filters, resetFilters } from '@vroom-web/catalog-url-integration';
 
 import { CarsStore } from 'src/modules/cars/store';
 
-class EngineAndDrivetrainViewModel {
+class FuelAndEfficiencyViewModel {
   private readonly carsStore: CarsStore;
 
   readonly fuelTypeLabel: string = 'Fuel';
@@ -19,12 +19,16 @@ class EngineAndDrivetrainViewModel {
       return true;
     }
     const filtersDataFuelType = filtersData[Filters.FUEL_TYPE];
-    return !filtersDataFuelType;
+    const filtersDataFuelEfficiency = filtersData[Filters.FUEL_EFFICIENCY];
+    return !filtersDataFuelType && !filtersDataFuelEfficiency;
   };
 
   reset = (): void => {
     const filtersData = this.carsStore.filtersData;
-    const updatedFiltersData = resetFilters([Filters.FUEL_TYPE], filtersData);
+    const updatedFiltersData = resetFilters(
+      [Filters.FUEL_TYPE, Filters.FUEL_EFFICIENCY],
+      filtersData
+    );
     this.carsStore.updateFiltersData(updatedFiltersData);
   };
 
@@ -33,4 +37,4 @@ class EngineAndDrivetrainViewModel {
   };
 }
 
-export default EngineAndDrivetrainViewModel;
+export default FuelAndEfficiencyViewModel;

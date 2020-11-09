@@ -365,6 +365,7 @@ export const getPostInventoryRequestDataFromFilterData = (
     cylindersShowOther:
       (filtersData && filtersData[Filters.OTHER_CYLINDERS]) || undefined,
     optionalFeatures: popularFeatures,
+    combinedMpg: filtersData ? filtersData[Filters.FUEL_EFFICIENCY] : undefined,
   };
 };
 

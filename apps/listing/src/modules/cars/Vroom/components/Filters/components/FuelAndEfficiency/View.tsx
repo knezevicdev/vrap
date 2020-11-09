@@ -4,6 +4,7 @@ import { Typography } from '@vroom-web/ui';
 import { observer } from 'mobx-react';
 import React from 'react';
 
+import FuelEfficiency from './FuelEfficiency';
 import FuelType from './FuelType';
 import FuelAndEfficiencyViewModel from './ViewModel';
 
@@ -46,6 +47,12 @@ const FuelAndEfficiencyView: React.FC<Props> = ({ viewModel }) => {
           <FuelType />
         </>
       )}
+      <>
+        <Titles fontWeight="fontWeightMedium">
+          {viewModel.minimumFuelEfficiency}
+        </Titles>
+        <FuelEfficiency />
+      </>
       <Reset
         button
         onClick={viewModel.reset}
