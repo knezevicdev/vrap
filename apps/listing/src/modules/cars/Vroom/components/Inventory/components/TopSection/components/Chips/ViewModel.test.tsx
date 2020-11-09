@@ -33,6 +33,7 @@ import {
   DriveType,
   DriveTypeAPI,
   DriveTypeDisplay,
+  heatedSeatsApi,
   PopularFeature,
   PopularFeatureApi,
   PopularFeatureDisplay,
@@ -789,7 +790,7 @@ describe('getPopularFeatureChips', () => {
         filtersDataValue: FiltersDataPopularFeatures.APPLE_CAR_PLAY,
       },
       {
-        api: PopularFeatureApi.HEATED_SEATS,
+        api: heatedSeatsApi,
         display: PopularFeatureDisplay.HEATED_SEATS,
         filtersDataValue: FiltersDataPopularFeatures.HEATED_SEATS,
       },
@@ -816,12 +817,12 @@ describe('getPopularFeatureChips', () => {
     );
     const chips = mockViewModel.getPopularFeatureChips(mockFiltersData);
     expect(chips).toHaveLength(3);
-
+    console.log(mockFiltersData);
     expect(chips[0].display).toEqual('Android Auto');
     expect(chips[0].handleDelete).toBeDefined();
     chips[0].handleDelete();
     expect(mockCarsStore.updateFiltersData).toHaveBeenCalledWith({
-      optionalfeatures: ['Apple Carplay', 'Heated Seats'],
+      optionalfeatures: ['Apple CarPlay', 'Heated Seats'],
     });
     mockCarsStore.updateFiltersData.mockReset();
 
@@ -837,7 +838,7 @@ describe('getPopularFeatureChips', () => {
     expect(chips[2].handleDelete).toBeDefined();
     chips[2].handleDelete();
     expect(mockCarsStore.updateFiltersData).toHaveBeenCalledWith({
-      optionalfeatures: ['Android Auto', 'Apple Carplay'],
+      optionalfeatures: ['Android Auto', 'Apple CarPlay'],
     });
     mockCarsStore.updateFiltersData.mockReset();
   });
