@@ -1,3 +1,4 @@
+import getConfig from 'next/config';
 import React, { useEffect } from 'react';
 import styled from 'styled-components';
 
@@ -5,8 +6,9 @@ import InitialPrice from './components/InitialPrice';
 import NextSteps from './components/NextSteps';
 import PendingPrice from './components/PendingPrice';
 import PriceViewModel from './ViewModel';
-
-import ENVS from 'src/integrations/Envs';
+const {
+  publicRuntimeConfig: { BASE_PATH },
+} = getConfig();
 
 interface Props {
   viewModel: PriceViewModel;
@@ -36,12 +38,12 @@ const HeroContainer = styled.div`
   background-color: #f5f5f5;
   background-size: 100% 50%;
   background-repeat: no-repeat;
-  background-image: url('${ENVS.BASE_PATH}/images/offer-hero.png');
+  background-image: url('${BASE_PATH}/images/offer-hero.png');
   width: 100%;
 
   @media (max-width: 768px) {
     background-size: 100% 200px;
-    background-image: url('${ENVS.BASE_PATH}/images/offer-hero.png');
+    background-image: url('${BASE_PATH}/images/offer-hero.png');
   }
 `;
 

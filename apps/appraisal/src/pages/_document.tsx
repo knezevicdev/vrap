@@ -1,6 +1,7 @@
 import { ServerStyleSheets } from '@material-ui/core/styles';
 import { AnalyticsSnippet } from '@vroom-web/analytics-integration';
 import { Brand, UISnippet } from '@vroom-web/ui';
+import getConfig from 'next/config';
 import Document, {
   DocumentContext,
   DocumentInitialProps,
@@ -11,8 +12,13 @@ import Document, {
 } from 'next/document';
 import React from 'react';
 import { ServerStyleSheet } from 'styled-components';
-
-import ENVS from 'src/integrations/Envs';
+const {
+  publicRuntimeConfig: {
+    SEGMENT_WRITE_KEY,
+    STATIC_ASSETS_HOST_URL,
+    BRANCH_IO_KEY,
+  },
+} = getConfig();
 
 export default class MyDocument extends Document {
   static async getInitialProps(
@@ -48,26 +54,24 @@ export default class MyDocument extends Document {
   }
 
   render(): JSX.Element {
-    const segmentWriteKey = ENVS.SEGMENT_WRITE_KEY;
-
     return (
       <Html lang="en">
         <Head>
           <UISnippet
             brand={Brand.VROOM}
-            staticAssetsHostUrl={ENVS.STATIC_ASSETS_HOST_URL}
+            staticAssetsHostUrl={STATIC_ASSETS_HOST_URL}
           />
-          {segmentWriteKey && (
+          {SEGMENT_WRITE_KEY && (
             <AnalyticsSnippet
               appName="Vroom Web - Appraisal"
-              segmentWriteKey={segmentWriteKey}
+              segmentWriteKey={SEGMENT_WRITE_KEY}
             />
           )}
           <script
             defer
             dangerouslySetInnerHTML={{
               __html: `(function(b,r,a,n,c,h,_,s,d,k){if(!b[n]||!b[n]._q){for(;s<_.length;)c(h,_[s++]);d=r.createElement(a);d.async=1;d.src="https://cdn.branch.io/branch-latest.min.js";k=r.getElementsByTagName(a)[0];k.parentNode.insertBefore(d,k);b[n]=h}})(window,document,"script","branch",function(b,r){b[r]=function(){b._q.push([r,arguments])}},{_q:[],_v:1},"addListener applyCode autoAppIndex banner closeBanner closeJourney creditHistory credits data deepview deepviewCta first getCode init link logout redeem referrals removeListener sendSMS setBranchViewData setIdentity track validateCode trackCommerceEvent logEvent disableTracking".split(" "), 0);
-            branch.init("${ENVS.BRANCH_IO_KEY}");`,
+            branch.init("${BRANCH_IO_KEY}");`,
             }}
           />
         </Head>

@@ -1,10 +1,10 @@
 import { SimpleHeader } from '@vroom-web/header-components';
 import { IncomingMessage } from 'http';
 import { GetServerSideProps, NextPage } from 'next';
+import getConfig from 'next/config';
 import React from 'react';
 
 import Footer from 'src/core/Footer';
-import ENVS from 'src/integrations/Envs';
 import PriceInfo from 'src/modules/price';
 import {
   getInitialPriceStoreState,
@@ -13,13 +13,15 @@ import {
 } from 'src/modules/price/store';
 import Questions from 'src/modules/questions';
 import Page from 'src/Page';
+const {
+  publicRuntimeConfig: { GEARBOX_PRIVATE_URL },
+} = getConfig();
 
 interface Props {
   store: PriceStore;
 }
 
 const Price: NextPage<Props> = ({ store }) => {
-  const gearboxPrivateUrl = ENVS.GEARBOX_PRIVATE_URL;
   //   const router = useRouter();
   //   const priceId = router.query.priceId as string;
   //   const store = new PriceStore(priceId);
@@ -27,7 +29,7 @@ const Price: NextPage<Props> = ({ store }) => {
   return (
     <Page name="Home">
       <PriceStoreContext.Provider value={store}>
-        <SimpleHeader gearboxPrivateUrl={gearboxPrivateUrl} />
+        <SimpleHeader gearboxPrivateUrl={GEARBOX_PRIVATE_URL} />
         <PriceInfo />
         <Questions />
         <Footer />

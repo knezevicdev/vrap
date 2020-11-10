@@ -1,6 +1,8 @@
+import getConfig from 'next/config';
 import { createGlobalStyle } from 'styled-components';
-
-import ENVS from 'src/integrations/Envs';
+const {
+  publicRuntimeConfig: { BASE_PATH },
+} = getConfig();
 
 export interface ThemeProps {
   typography: {
@@ -25,26 +27,35 @@ export const theme: ThemeProps = {
 };
 
 export const GlobalStyle = createGlobalStyle`
+  html {
+    height: 100%;
+  }
+  
   body {
     margin: 0;
+    height: 100%;
+  }
+  
+  #__next {
+    height: 100%;
   }
 
   @font-face {
     font-family: Calibre;
     font-weight: normal;
-    src: url(${ENVS.BASE_PATH}/fonts/Vroom/Calibre-Regular.woff2) format('woff2');
+    src: url(${BASE_PATH}/fonts/Vroom/Calibre-Regular.woff2) format('woff2');
     font-display: swap;
   }
   @font-face {
     font-family: Calibre;
     font-weight: 600;
-    src: url(${ENVS.BASE_PATH}/fonts/Vroom/Calibre-Semibold.woff2) format('woff2');
+    src: url(${BASE_PATH}/fonts/Vroom/Calibre-Semibold.woff2) format('woff2');
     font-display: swap;
   }
   @font-face {
     font-family: Vroom Sans;
     font-weight: normal;
-    src: url(${ENVS.BASE_PATH}/fonts/Vroom/Vroom-Sans.woff2) format('woff2');
+    src: url(${BASE_PATH}/fonts/Vroom/Vroom-Sans.woff2) format('woff2');
     font-display: swap;
   }
 `;
