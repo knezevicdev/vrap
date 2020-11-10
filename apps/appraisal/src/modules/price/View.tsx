@@ -14,7 +14,8 @@ interface Props {
 
 const PriceView: React.FC<Props> = ({ viewModel }) => {
   useEffect(() => {
-    viewModel.onPageLoad(); 
+    viewModel.onPageLoad();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

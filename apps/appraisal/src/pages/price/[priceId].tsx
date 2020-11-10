@@ -36,13 +36,19 @@ const Price: NextPage<Props> = ({ store }) => {
   );
 };
 
-const parseCookies: any = (req: IncomingMessage) => {
+interface Cookie {
+  uuid: string;
+  ajs_anonymous_id: string;
+}
+
+const parseCookies = (req: IncomingMessage): Cookie => {
   if (req && req.headers && req.headers.cookie) {
     return Object.fromEntries(
       req.headers.cookie.split('; ').map((v) => v.split(/=(.+)/))
     );
   } else {
-    return {};
+    // eslint-disable-next-line @typescript-eslint/camelcase
+    return { uuid: '', ajs_anonymous_id: '' };
   }
 };
 
