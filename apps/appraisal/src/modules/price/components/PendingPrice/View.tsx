@@ -1,5 +1,5 @@
 import { observer } from 'mobx-react';
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
 
 import PendingPriceViewModel from './ViewModel';
@@ -12,6 +12,10 @@ interface Props {
 }
 
 const PendingPriceView: React.FC<Props> = ({ viewModel }) => {
+  useEffect(() => {
+    viewModel.onPageLoad(); 
+  }, []);
+
   return (
     <StyledContainer>
       <Hero.Four>{viewModel.sitTight}</Hero.Four>

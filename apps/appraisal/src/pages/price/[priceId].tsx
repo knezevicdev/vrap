@@ -36,7 +36,7 @@ const Price: NextPage<Props> = ({ store }) => {
   );
 };
 
-const parseCookies: object = (req: IncomingMessage) => {
+const parseCookies: any = (req: IncomingMessage) => {
   if (req && req.headers && req.headers.cookie) {
     return Object.fromEntries(
       req.headers.cookie.split('; ').map((v) => v.split(/=(.+)/))

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
 
 import InitialPrice from './components/InitialPrice';
@@ -13,6 +13,10 @@ interface Props {
 }
 
 const PriceView: React.FC<Props> = ({ viewModel }) => {
+  useEffect(() => {
+    viewModel.onPageLoad(); 
+  }, []);
+
   return (
     <HeroContainer>
       <PriceContainer>

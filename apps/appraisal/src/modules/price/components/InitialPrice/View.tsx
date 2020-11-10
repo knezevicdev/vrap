@@ -41,6 +41,10 @@ const InitialPriceView: React.FC<Props> = ({ viewModel }) => {
     return (): void => document.removeEventListener('scroll', handleScroll);
   }, []);
 
+  useEffect(() => {
+    viewModel.onPageLoad(); 
+  }, []);
+
   return (
     <StyledContainer>
       <Hero.Four>{viewModel.yourPrice}</Hero.Four>

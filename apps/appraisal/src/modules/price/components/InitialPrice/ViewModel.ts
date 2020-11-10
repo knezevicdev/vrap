@@ -53,7 +53,6 @@ class InitialPriceViewModel {
     this.priceId = initialPriceState.priceId;
     this.goodUntil = parsedDateTime(initialPriceState.goodUntil);
     this.analyticsHandler = new AnalyticsHandler();
-    this.analyticsHandler.trackPriceViewed();
   }
 
   onContinueClick = (): void => {
@@ -64,6 +63,10 @@ class InitialPriceViewModel {
 
     submitPriceResponse(priceData);
     this.analyticsHandler.trackContinueClick();
+  };
+
+  onPageLoad = (): void => {
+    this.analyticsHandler.trackPriceAutomated();
   };
 }
 

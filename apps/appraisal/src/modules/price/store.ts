@@ -88,7 +88,7 @@ export async function getInitialPriceStoreState(
     priceState.year = price.Year__c;
     return priceState;
   } catch (err) {
-    console.log({ err });
+    console.log(JSON.stringify(err));
     return defaultPriceState;
   }
 }
