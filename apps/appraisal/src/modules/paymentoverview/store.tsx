@@ -1,8 +1,12 @@
-import { action, observable } from 'mobx';
+import { action, observable, runInAction } from 'mobx';
 import { createContext, useContext } from 'react';
 
 import { Prices } from 'src/networking/models/Price';
 import { Networker } from 'src/networking/Networker';
+
+const defaultPaymentOverviewState: PaymentOverviewStoreState = {
+  price: 0,
+};
 
 export interface PaymentOverviewStoreState {
   price: number;
@@ -23,10 +27,7 @@ export async function getInitialPaymentOverviewStoreState(
     return optionState;
   } catch (err) {
     console.log('err', err);
-    const errorState = {
-      price: 0,
-      mailingAddress: {},
-    };
+    const errorState = defaultPaymentOverviewState;
     return errorState;
   }
 }
@@ -35,10 +36,16 @@ export class PaymentOverviewStore {
   @observable price = 0;
   @observable displayBody = true;
 
-  constructor(initialState?: PaymentOverviewStoreState) {
-    if (initialState) {
+  constructor(priceId?: string) {
+    if (priceId) this.init(priceId);
+  }
+
+  @action
+  async init(priceId: string): Promise<void> {
+    const initialState = await getInitialPaymentOverviewStoreState(priceId);
+    runInAction(() => {
       this.price = initialState.price;
-    }
+    });
   }
 
   @action

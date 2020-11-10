@@ -1,9 +1,20 @@
-import { action, observable } from 'mobx';
+import { action, observable, runInAction } from 'mobx';
 import { createContext, useContext } from 'react';
 
 import { Verification } from 'src/networking/models/Price';
 import { Networker } from 'src/networking/Networker';
 
+const defaultOptionsState: OptionStoreState = {
+  mailingAddress: {
+    // eslint-disable-next-line @typescript-eslint/camelcase
+    address_1: '',
+    // eslint-disable-next-line @typescript-eslint/camelcase
+    address_2: '',
+    city: '',
+    state: '',
+    zipcode: '',
+  },
+};
 export interface OptionStoreState {
   mailingAddress: {
     address_1: string;
@@ -28,17 +39,7 @@ export async function getInitialOptionsStoreState(
     return optionState;
   } catch (err) {
     console.log('err', err);
-    const errorState = {
-      mailingAddress: {
-        // eslint-disable-next-line @typescript-eslint/camelcase
-        address_1: '',
-        // eslint-disable-next-line @typescript-eslint/camelcase
-        address_2: '',
-        city: '',
-        state: '',
-        zipcode: '',
-      },
-    };
+    const errorState = defaultOptionsState;
     return errorState;
   }
 }
@@ -50,10 +51,16 @@ export class OptionsStore {
   @observable remainingLoan = 0;
   @observable mailingAddress = {};
 
-  constructor(initialState?: OptionStoreState) {
-    if (initialState) {
+  constructor(priceId?: string) {
+    if (priceId) this.init(priceId);
+  }
+
+  @action
+  async init(priceId: string): Promise<void> {
+    const initialState = await getInitialOptionsStoreState(priceId);
+    runInAction(() => {
       this.mailingAddress = initialState.mailingAddress;
-    }
+    });
   }
 
   @action
