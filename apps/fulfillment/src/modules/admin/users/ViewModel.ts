@@ -44,6 +44,7 @@ class UsersViewModel {
     }
   }
 
+  // TODO: use real endpoint
   get carriers(): { carrier: string; carrierCode: string }[] {
     return [
       {
@@ -57,6 +58,7 @@ class UsersViewModel {
     ];
   }
 
+  // TODO: use real endpoint
   get statuses(): { key: string; label: string }[] {
     return [
       {
