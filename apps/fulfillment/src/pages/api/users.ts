@@ -1,49 +1,23 @@
+/* eslint-disable @typescript-eslint/camelcase */
+import axios from 'axios';
 import { NextApiRequest, NextApiResponse } from 'next';
+import qs from 'qs';
 
-import { Status, User } from 'src/networking/models/User';
-
-export default function handler(
-  _req: NextApiRequest,
+export default async function handler(
+  req: NextApiRequest,
   res: NextApiResponse
-): void {
-  const result: User[] = [
-    {
-      accountId: 1219,
-      firstName: 'Kevin',
-      lastName: 'Parrott',
-      emails: {
-        personal: {
-          email: 'kevin.parrott@vroom.com',
-        },
-      },
-      company: 'Vroom',
-      status: Status.Pending,
-    },
-    {
-      accountId: 1234,
-      firstName: 'Sasha',
-      lastName: 'Kondrashov',
-      emails: {
-        personal: {
-          email: 'sasha.kondrashow@vroom.com',
-        },
-      },
-      company: 'Vroom',
-      status: Status.Rejected,
-    },
-    {
-      accountId: 1,
-      firstName: 'David',
-      lastName: 'Galdamez',
-      emails: {
-        personal: {
-          email: 'david.galdamez@vroom.com',
-        },
-      },
-      company: 'Vroom',
-      status: Status.Approved,
-    },
-  ];
+): Promise<void> {
+  const carrier = req.query.carrier as string;
+  const status = req.query.status as string;
 
-  res.status(200).json(result);
+  const SHIPPING_PORTAL_URL = 'https://shipping-portal-int.vroomapi.com/v2';
+  const url = `${SHIPPING_PORTAL_URL}/shipping/users?${qs.stringify({
+    carrier,
+    status,
+  })}`;
+
+  const response = await axios.get(url, {
+    auth: { username: 'user', password: 'password' },
+  });
+  res.status(200).json(response.data.data);
 }
