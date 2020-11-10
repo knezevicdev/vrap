@@ -9,8 +9,11 @@ class PriceViewModel {
   constructor(store: PriceStore) {
     this.automatedAppraisal = store.automatedAppraisal;
     this.analyticsHandler = new AnalyticsHandler();
-    this.analyticsHandler.trackPriceAccepted();
   }
+
+  onPageLoad = (): void => {
+    this.analyticsHandler.trackPriceViewed();
+  };
 }
 
 export default PriceViewModel;

@@ -53,7 +53,7 @@ export async function submitPriceResponse(priceData: PriceData): Promise<void> {
     const url = `/sell/verification/owner/${priceData.priceId}`;
     window.location.href = url;
   } catch (err) {
-    console.log({ err });
+    console.log(JSON.stringify(err));
     return err;
   }
 }
@@ -88,6 +88,7 @@ export async function getInitialPriceStoreState(
     priceState.year = price.Year__c;
     return priceState;
   } catch (err) {
+    console.log(JSON.stringify(err));
     return defaultPriceState;
   }
 }

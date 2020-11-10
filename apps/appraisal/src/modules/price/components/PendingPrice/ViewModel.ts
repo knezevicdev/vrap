@@ -10,8 +10,11 @@ class PendingPriceViewModel {
 
   constructor() {
     this.analyticsHandler = new AnalyticsHandler();
-    this.analyticsHandler.trackPriceViewed();
   }
+
+  onPageLoad = (): void => {
+    this.analyticsHandler.trackNoPrice();
+  };
 
   handleFindCar(): void {
     const url = `/cars`;
