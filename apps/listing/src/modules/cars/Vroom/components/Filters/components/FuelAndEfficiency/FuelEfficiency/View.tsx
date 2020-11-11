@@ -18,7 +18,10 @@ interface Props {
 
 const MilesView: React.FC<Props> = ({ viewModel }) => {
   const handleMaxAndMinInputsChange = (values?: FuelEfficiency): void => {
-    viewModel.handleSliderDone(values);
+    viewModel.handleSliderDone(
+      viewModel.updateFiltersDataFuelEfficiency,
+      values
+    );
   };
 
   return (

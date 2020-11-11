@@ -38,9 +38,17 @@ describe('Fuel And Efficiency View Model', () => {
       const disabled = viewModel.isResetButtonDisabled();
       expect(disabled).toEqual(true);
     });
-    it('should be false if the filters exist and the fule type is there', () => {
+    it('should be false if the filters exist and the fuel type is there', () => {
       carStore.filtersData = {
         [Filters.FUEL_TYPE]: [FuelType.GAS_ELECTRIC_HYBRID],
+      };
+      const disabled = viewModel.isResetButtonDisabled();
+      expect(disabled).toEqual(false);
+    });
+
+    it('should be false if the filters exist and the fuel efficiency is there', () => {
+      carStore.filtersData = {
+        [Filters.FUEL_EFFICIENCY]: { min: 10 },
       };
       const disabled = viewModel.isResetButtonDisabled();
       expect(disabled).toEqual(false);

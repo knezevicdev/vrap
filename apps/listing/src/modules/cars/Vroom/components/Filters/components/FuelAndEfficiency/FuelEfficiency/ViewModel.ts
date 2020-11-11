@@ -8,6 +8,10 @@ import {
 
 import { CarsStore } from 'src/modules/cars/store';
 
+export type UpdateFiltersDataFuelEfficiencyResponseType = (
+  value: FuelEfficiency | undefined
+) => void;
+
 class FuelEfficiencyViewModel {
   private readonly carsStore: CarsStore;
   readonly errorLabel = 'test';
@@ -31,19 +35,21 @@ class FuelEfficiencyViewModel {
     return { ...filtersDataFuelEfficiency, max: 60 };
   };
 
-  private updateFiltersDataFuelEfficiency(
+  updateFiltersDataFuelEfficiency = (
     values: FuelEfficiency | undefined
-  ): void {
+  ): void => {
     const filtersData = this.carsStore.filtersData;
     const updatedFiltersData = values?.min
       ? setFuelEfficiency({ min: values?.min }, filtersData)
-      : resetFilter(Filters.MILES, filtersData);
-    console.log(updatedFiltersData);
+      : resetFilter(Filters.FUEL_EFFICIENCY, filtersData);
     this.carsStore.updateFiltersData(updatedFiltersData);
-  }
+  };
 
-  handleSliderDone = (values: FuelEfficiency | undefined): void => {
-    this.updateFiltersDataFuelEfficiency(values);
+  handleSliderDone = (
+    updateFiltersDataFuelEfficiency: UpdateFiltersDataFuelEfficiencyResponseType,
+    values: FuelEfficiency | undefined
+  ): void => {
+    updateFiltersDataFuelEfficiency(values);
   };
 }
 
