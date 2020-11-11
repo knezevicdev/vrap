@@ -1,6 +1,6 @@
 module.exports = function (plop) {
   // app generator
-  plop.setGenerator('app', {
+  plop.setGenerator('create-app', {
     description: 'Create a new application in /apps',
     prompts: [
       {
@@ -53,7 +53,7 @@ module.exports = function (plop) {
     ],
   });
 
-  plop.setGenerator('base-page', {
+  plop.setGenerator('create-base-page', {
     description: 'Create the base page in for /app',
     prompts: [
       {
