@@ -1,30 +1,29 @@
 import { SimpleHeader } from '@vroom-web/header-components';
 import { IncomingMessage } from 'http';
 import { GetServerSideProps, NextPage } from 'next';
+import { useRouter } from 'next/router'
 import getConfig from 'next/config';
 import React from 'react';
 
 import Footer from 'src/core/Footer';
 import PriceInfo from 'src/modules/price';
-import {
-  getInitialPriceStoreState,
-  PriceStore,
-  PriceStoreContext,
-} from 'src/modules/price/store';
+import { PriceStore, PriceStoreContext, } from 'src/modules/price/store';
 import Questions from 'src/modules/questions';
 import Page from 'src/Page';
 const {
   publicRuntimeConfig: { GEARBOX_PRIVATE_URL },
 } = getConfig();
 
-interface Props {
-  store: PriceStore;
-}
+const Price: NextPage = () => {
+  // automated price
+  // http://localhost:3000/appraisal/price/e93bafe0b739241f875d1e3c35416fff
 
-const Price: NextPage<Props> = ({ store }) => {
-  //   const router = useRouter();
-  //   const priceId = router.query.priceId as string;
-  //   const store = new PriceStore(priceId);
+  // manual price
+  // http://localhost:3000/appraisal/price/d9b61a51f993808577a102eecbe8df0d
+
+  const router = useRouter();
+  const priceId = router.query.priceId as string;
+  const store = new PriceStore(priceId);
 
   return (
     <Page name="Home">
@@ -55,15 +54,7 @@ const parseCookies = (req: IncomingMessage): Cookie => {
 };
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  // automated price
-  // http://localhost:3000/appraisal/price/e93bafe0b739241f875d1e3c35416fff
-
-  // manual price
-  // http://localhost:3000/appraisal/price/d9b61a51f993808577a102eecbe8df0d
-
   const priceId = context.query.priceId as string;
-  const store = await getInitialPriceStoreState(priceId);
-
   const req = context.req;
   const cookies = parseCookies(req);
 
@@ -78,7 +69,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   };
 
   console.log(JSON.stringify(loggerInfo));
-  return { props: { store } };
+  return { props: {} };
 };
 
 export default Price;
