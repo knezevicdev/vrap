@@ -1,5 +1,5 @@
 import { Typography } from '@material-ui/core';
-import { styled, useTheme } from '@material-ui/core/styles';
+import { styled } from '@material-ui/core/styles';
 import ErrorIcon from '@material-ui/icons/Error';
 import React from 'react';
 

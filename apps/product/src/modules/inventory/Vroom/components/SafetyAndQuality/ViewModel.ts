@@ -7,6 +7,12 @@ interface Repair {
   repairs: string[];
 }
 
+interface Imperfections {
+  description: string[];
+  linkText: string;
+  quantity: number;
+}
+
 interface SafetyAndQuality {
   title: string;
   description: string;
@@ -28,6 +34,18 @@ class SafetyAndQualityModel {
   }
 
   readonly title: string = 'Safety & Quality';
+
+  getImperfections = (): Imperfections => {
+    const numberOfImperfections = this.car.defectPhotos?.length || 0;
+    return {
+      quantity: numberOfImperfections,
+      description: [
+        '<bold>Any imperfections shown</bold> in the vehicle photos ',
+        '<bold>will not be repaired</bold> and are considered normal wear and tear.',
+      ],
+      linkText: `View (${numberOfImperfections}) Imperfection Photos`,
+    };
+  };
 
   readonly repair: Repair = {
     title: 'Here’s what to expect from a Vroom vehicle:',

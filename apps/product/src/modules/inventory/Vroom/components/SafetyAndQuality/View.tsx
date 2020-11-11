@@ -1,5 +1,6 @@
 import { Box } from '@material-ui/core';
 import { styled } from '@material-ui/core/styles';
+import ErrorIcon from '@material-ui/icons/Error';
 import { Typography } from '@vroom-web/ui';
 import React from 'react';
 import reactStringReplace from 'react-string-replace';
@@ -71,15 +72,72 @@ const RecallSection = styled('div')(({ theme }) => ({
   paddingLeft: theme.spacing(2),
 }));
 
+const ViewImperfectionsButton = styled('button')(({ theme }) => ({
+  border: 'none',
+  display: 'flex',
+  margin: 0,
+  padding: 0,
+  background: 'transparent',
+  lineHeight: '23px',
+  color: '#e7131a',
+}));
+
+const StyledButtonText = styled('span')(({ theme }) => ({
+  '&:hover': {
+    borderBottom: '#e7131a solid 1px',
+    lineHeight: '23px',
+  },
+}));
+
+const Error = styled(ErrorIcon)(() => ({
+  color: '#F5A622',
+  marginRight: '10px',
+}));
+
 const SafetyAndQualityView: React.FC<Props> = ({ viewModel }) => {
-  const { title, repair, safety, quality, getRecall } = viewModel;
+  const {
+    title,
+    repair,
+    safety,
+    quality,
+    getRecall,
+    getImperfections,
+  } = viewModel;
   const recall = getRecall();
+  const imperfections = getImperfections();
+
+  console.log(viewModel);
+  const scrollToTop = (): void => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    return;
+  };
+
   return (
     <SafetyAndQualityContainer>
       <SafetyAndQualityContainerContent>
         <Header variant="h2">{title}</Header>
         <SectionContainer>
           <div>
+            {imperfections.quantity > 0 && (
+              <Box mb={2.5}>
+                <Description>
+                  {imperfections.description.map((item) =>
+                    reactStringReplace(
+                      item,
+                      /<bold>(.*)<\/bold>/,
+                      (match, i) => <strong key={i}>{match}</strong>
+                    )
+                  )}
+                </Description>
+                <ViewImperfectionsButton
+                  aria-hidden="true"
+                  onClick={scrollToTop}
+                >
+                  <Error />
+                  <StyledButtonText>{imperfections.linkText}</StyledButtonText>
+                </ViewImperfectionsButton>
+              </Box>
+            )}
             <Title fontWeight="fontWeightBold">{repair.title}</Title>
             <List>
               {repair.repairs.map((item) => (

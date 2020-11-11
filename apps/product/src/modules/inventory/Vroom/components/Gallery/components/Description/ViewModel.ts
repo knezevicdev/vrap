@@ -1,15 +1,12 @@
-import { InventoryStore } from 'src/modules/inventory/store';
+import { DescriptionProps } from '.';
 
 class DescriptionViewModel {
-  private store: InventoryStore;
-
   readonly description: string;
   readonly image: string;
 
-  constructor(inventoryStore: InventoryStore, props) {
+  constructor(props: DescriptionProps) {
     this.image = props.original;
     this.description = props.description;
-    this.store = inventoryStore;
   }
 }
 

@@ -3,20 +3,14 @@ import React from 'react';
 import View from './View';
 import ViewModel from './ViewModel';
 
-import {
-  InventoryStore,
-  InventoryStoreContext,
-} from 'src/modules/inventory/store';
+export interface DescriptionProps {
+  description: string;
+  original: string;
+}
 
-const Description: React.FC = (props) => {
-  return (
-    <InventoryStoreContext.Consumer>
-      {(store: InventoryStore): JSX.Element => {
-        const viewModel = new ViewModel(store, props);
-        return <View viewModel={viewModel} />;
-      }}
-    </InventoryStoreContext.Consumer>
-  );
+const Description: React.FC<DescriptionProps> = (props: DescriptionProps) => {
+  const viewModel = new ViewModel(props);
+  return <View viewModel={viewModel} />;
 };
 
 export default Description;

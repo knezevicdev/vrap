@@ -1,7 +1,6 @@
 import { DefectType } from '@vroom-web/inv-search-networking';
 import isEmpty from 'lodash/isEmpty';
 import getConfig from 'next/config';
-import { ReactElement } from 'react';
 
 import Description from './components/Description';
 import { GalleryStore } from './store';
