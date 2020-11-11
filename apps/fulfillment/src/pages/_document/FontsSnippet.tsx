@@ -1,7 +1,7 @@
-import getConfig from 'next/config';
+// import getConfig from 'next/config';
 import React from 'react';
 
-const { ASSET_PREFIX } = getConfig().publicRuntimeConfig;
+// const { ASSET_PREFIX } = getConfig().publicRuntimeConfig;
 
 const FontsSnippet: React.FC = () => {
   return (
@@ -14,7 +14,11 @@ const FontsSnippet: React.FC = () => {
         rel="stylesheet"
         href="https://fonts.googleapis.com/icon?family=Material+Icons"
       />
-      <style
+      <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
+      />
+      {/* <style
         dangerouslySetInnerHTML={{
           __html: `
             @font-face {
@@ -33,7 +37,7 @@ const FontsSnippet: React.FC = () => {
             }
           `,
         }}
-      />
+      /> */}
     </>
   );
 };

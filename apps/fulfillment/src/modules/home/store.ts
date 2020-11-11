@@ -1,4 +1,4 @@
-import { action, observable, runInAction } from 'mobx';
+import { makeAutoObservable, runInAction } from 'mobx';
 import { createContext } from 'react';
 
 import { Summary } from 'src/networking/models/DeliveryOrder';
@@ -26,20 +26,20 @@ export async function getInitialHomeStoreState(): Promise<HomeStoreState> {
 }
 
 export class HomeStore {
-  @observable deliveryOrderStatus: Status = Status.INITIAL;
-  @observable deliveryOrders?: Summary[];
+  deliveryOrderStatus: Status = Status.INITIAL;
+  deliveryOrders?: Summary[];
 
   private networker: Networker;
 
   constructor(initialState?: HomeStoreState) {
     this.networker = new Networker();
+    makeAutoObservable<this, 'networker'>(this, { networker: false });
     if (initialState) {
       this.deliveryOrderStatus = initialState.deliveryOrderStatus;
       this.deliveryOrders = initialState.deliveryOrders;
     }
   }
 
-  @action
   getDeliveryOrders = async (): Promise<void> => {
     try {
       const response = await this.networker.getDeliveryOrders();
