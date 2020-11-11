@@ -10,7 +10,6 @@ import { CarsStore } from 'src/modules/cars/store';
 
 class FuelEfficiencyViewModel {
   private readonly carsStore: CarsStore;
-  private readonly numberFormatter: Intl.NumberFormat;
   readonly errorLabel = 'test';
 
   readonly range: MaxAndMin = { min: 0, max: 60 };
@@ -18,10 +17,6 @@ class FuelEfficiencyViewModel {
 
   constructor(carsStore: CarsStore) {
     this.carsStore = carsStore;
-    this.numberFormatter = new Intl.NumberFormat('en-US', {
-      minimumFractionDigits: 0,
-      maximumFractionDigits: 0,
-    });
   }
 
   getMaxAndMinInputsValue = (): MaxAndMin | undefined => {
