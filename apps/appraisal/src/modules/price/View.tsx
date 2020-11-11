@@ -1,11 +1,11 @@
+import { observer } from 'mobx-react';
 import getConfig from 'next/config';
-import React, { useEffect } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 
-import InitialPrice from './components/InitialPrice';
 import NextSteps from './components/NextSteps';
-import PendingPrice from './components/PendingPrice';
 import PriceViewModel from './ViewModel';
+
 const {
   publicRuntimeConfig: { BASE_PATH },
 } = getConfig();
@@ -15,17 +15,15 @@ interface Props {
 }
 
 const PriceView: React.FC<Props> = ({ viewModel }) => {
-  useEffect(() => {
-    viewModel.onPageLoad();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  console.log(viewModel.getStatus());
+  const loading = viewModel.status === 'loading';
+  const success = viewModel.status === 'success';
+  const error = viewModel.status === 'error';
 
   return (
     <HeroContainer>
       <PriceContainer>
-        <PriceDetailContainer>
-          {viewModel.automatedAppraisal ? <InitialPrice /> : <PendingPrice />}
-        </PriceDetailContainer>
+        <PriceDetailContainer></PriceDetailContainer>
         <NextStepsContainer>
           <NextSteps />
         </NextStepsContainer>
@@ -88,4 +86,4 @@ const NextStepsContainer = styled.div`
   }
 `;
 
-export default PriceView;
+export default observer(PriceView);

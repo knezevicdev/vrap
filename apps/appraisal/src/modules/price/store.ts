@@ -61,6 +61,7 @@ export async function submitPriceResponse(priceData: PriceData): Promise<void> {
 export class PriceStore {
   private readonly networker = new Networker();
 
+  @observable status: 'loading' | 'success' | 'error' = 'loading';
   @observable price = {
     automatedAppraisal: false,
     price: 0,
@@ -89,6 +90,9 @@ export class PriceStore {
 
   @action
   getOfferDetails = (priceId: string) => {
+    this.status = 'loading';
+    console.log('set loading');
+
     this.networker
       .getOfferDetails(priceId)
       .then((response) => {
@@ -115,21 +119,15 @@ export class PriceStore {
           priceMapFromResponse.xkeId = price.offer_id;
           priceMapFromResponse.year = price.Year__c;
 
-          console.log(priceMapFromResponse);
+          console.log('set success');
+          this.status = 'success';
         }
       })
       .catch((error) => {
+        console.log('set error');
+
+        this.status = 'error';
         console.log(JSON.stringify(error));
       });
   };
 }
-
-export const PriceStoreContext = createContext(new PriceStore());
-
-export const usePriceStore = (): PriceStore => {
-  const store = useContext(PriceStoreContext);
-  if (!store) {
-    throw new Error('useStore must be used within a StoreProvider.');
-  }
-  return store;
-};

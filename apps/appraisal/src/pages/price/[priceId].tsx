@@ -2,17 +2,18 @@ import { SimpleHeader } from '@vroom-web/header-components';
 import { IncomingMessage } from 'http';
 import { GetServerSideProps, NextPage } from 'next';
 import getConfig from 'next/config';
-import { useRouter } from 'next/router';
 import React from 'react';
 
 import Footer from 'src/core/Footer';
 import PriceInfo from 'src/modules/price';
-import { PriceStore, PriceStoreContext } from 'src/modules/price/store';
+import { PriceStore } from 'src/modules/price/store';
 import Questions from 'src/modules/questions';
 import Page from 'src/Page';
 const {
   publicRuntimeConfig: { GEARBOX_PRIVATE_URL },
 } = getConfig();
+
+const store = new PriceStore();
 
 const Price: NextPage = () => {
   // automated price
@@ -23,16 +24,13 @@ const Price: NextPage = () => {
 
   // const router = useRouter();
   // const priceId = router.query.priceId as string;
-  const store = new PriceStore();
 
   return (
     <Page name="Home">
-      <PriceStoreContext.Provider value={store}>
-        <SimpleHeader gearboxPrivateUrl={GEARBOX_PRIVATE_URL} />
-        <PriceInfo />
-        <Questions />
-        <Footer />
-      </PriceStoreContext.Provider>
+      <SimpleHeader gearboxPrivateUrl={GEARBOX_PRIVATE_URL} />
+      <PriceInfo store={store} />
+      <Questions />
+      <Footer />
     </Page>
   );
 };
