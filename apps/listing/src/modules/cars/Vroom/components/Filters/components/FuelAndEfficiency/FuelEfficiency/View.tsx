@@ -1,5 +1,6 @@
 import { styled } from '@material-ui/core/styles';
 import { FuelEfficiency } from '@vroom-web/catalog-url-integration';
+import { Typography } from '@vroom-web/ui';
 import { observer } from 'mobx-react';
 import React from 'react';
 
@@ -10,6 +11,11 @@ const FuelEfficiencyContainer = styled('div')(({ theme }) => ({
   display: 'flex',
   flexDirection: 'column',
   paddingBottom: theme.spacing(2),
+}));
+
+const MPGHeader = styled(Typography)(({ theme }) => ({
+  textAlign: 'center',
+  padding: theme.spacing(1),
 }));
 
 interface Props {
@@ -26,6 +32,9 @@ const MilesView: React.FC<Props> = ({ viewModel }) => {
 
   return (
     <FuelEfficiencyContainer>
+      <MPGHeader color={viewModel.getFuelEfficiencyData().color}>
+        {viewModel.getFuelEfficiencyData().label}
+      </MPGHeader>
       <MaxAndMinInputs
         showInput={false}
         inputErrorLabel={viewModel.errorLabel}

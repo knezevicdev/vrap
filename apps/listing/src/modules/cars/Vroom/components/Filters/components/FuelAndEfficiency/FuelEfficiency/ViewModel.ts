@@ -14,14 +14,29 @@ export type UpdateFiltersDataFuelEfficiencyResponseType = (
 
 class FuelEfficiencyViewModel {
   private readonly carsStore: CarsStore;
-  readonly errorLabel = 'test';
-
+  readonly errorLabel = '';
   readonly range: MaxAndMin = { min: 0, max: 60 };
   readonly step = 10;
+  filterHeader = 'None';
 
   constructor(carsStore: CarsStore) {
     this.carsStore = carsStore;
   }
+
+  getFuelEfficiencyData = (): { label: string; color: string } => {
+    const filtersData = this.carsStore.filtersData;
+    if (!filtersData) {
+      return { label: 'None', color: 'grey.500' };
+    }
+    const filtersDataFuelEfficiency = filtersData[Filters.FUEL_EFFICIENCY];
+    if (!filtersDataFuelEfficiency) {
+      return { label: 'None', color: 'grey.500' };
+    }
+    return {
+      label: `${filtersDataFuelEfficiency.min} MPG +`,
+      color: 'text.primary',
+    };
+  };
 
   getMaxAndMinInputsValue = (): MaxAndMin | undefined => {
     const filtersData = this.carsStore.filtersData;

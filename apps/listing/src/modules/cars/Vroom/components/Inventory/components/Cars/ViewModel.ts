@@ -142,7 +142,7 @@ class CarsViewModel {
         case Filters.FUEL_EFFICIENCY:
           formattedFilters.push({
             type: 'Fuel Efficiency',
-            value: value.min,
+            value: value ? value.min : 'None',
           });
           break;
       }

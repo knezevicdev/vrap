@@ -28,6 +28,11 @@ const Titles = styled(Typography)(({ theme }) => ({
   padding: theme.spacing(1, 0),
 }));
 
+const FuelEfficiencyTitles = styled(Typography)(({ theme }) => ({
+  fontSize: '13px',
+  padding: theme.spacing(1, 0),
+}));
+
 const Value = styled(Typography)(() => ({
   fontSize: '16px',
 }));
@@ -49,9 +54,9 @@ const FuelAndEfficiencyView: React.FC<Props> = ({ viewModel }) => {
       )}
       {viewModel.showFuelEfficiencyFilter() && (
         <>
-          <Titles fontWeight="fontWeightMedium">
+          <FuelEfficiencyTitles fontWeight="fontWeightMedium">
             {viewModel.minimumFuelEfficiency}
-          </Titles>
+          </FuelEfficiencyTitles>
           <FuelEfficiency />
         </>
       )}

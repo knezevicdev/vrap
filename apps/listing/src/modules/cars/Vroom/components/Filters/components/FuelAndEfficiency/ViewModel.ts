@@ -6,7 +6,8 @@ class FuelAndEfficiencyViewModel {
   private readonly carsStore: CarsStore;
 
   readonly fuelTypeLabel: string = 'Fuel';
-  readonly minimumFuelEfficiency: string = 'Minimum Fuel Efficiency';
+  readonly minimumFuelEfficiency: string =
+    'Minimum Efficiency - Combined City/Hwy';
   readonly resetButtonLabel: string = 'Reset';
 
   constructor(carsStore: CarsStore) {
