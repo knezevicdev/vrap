@@ -1,13 +1,13 @@
 import { SimpleHeader } from '@vroom-web/header-components';
 import { IncomingMessage } from 'http';
 import { GetServerSideProps, NextPage } from 'next';
-import { useRouter } from 'next/router'
 import getConfig from 'next/config';
+import { useRouter } from 'next/router';
 import React from 'react';
 
 import Footer from 'src/core/Footer';
 import PriceInfo from 'src/modules/price';
-import { PriceStore, PriceStoreContext, } from 'src/modules/price/store';
+import { PriceStore, PriceStoreContext } from 'src/modules/price/store';
 import Questions from 'src/modules/questions';
 import Page from 'src/Page';
 const {
@@ -21,9 +21,9 @@ const Price: NextPage = () => {
   // manual price
   // http://localhost:3000/appraisal/price/d9b61a51f993808577a102eecbe8df0d
 
-  const router = useRouter();
-  const priceId = router.query.priceId as string;
-  const store = new PriceStore(priceId);
+  // const router = useRouter();
+  // const priceId = router.query.priceId as string;
+  const store = new PriceStore();
 
   return (
     <Page name="Home">
