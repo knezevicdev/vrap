@@ -1,5 +1,4 @@
 import { action, observable } from 'mobx';
-import { createContext, useContext } from 'react';
 
 import { Price } from 'src/networking/models/Price';
 import { Networker, PriceData } from 'src/networking/Networker';
@@ -84,7 +83,7 @@ export class PriceStore {
   };
 
   constructor() {
-    //TODO: Call it from somewhere else
+    //TODO: pass in price ID from query
     this.getOfferDetails('e93bafe0b739241f875d1e3c35416fff');
   }
 

@@ -4,14 +4,14 @@ import AnalyticsHandler from 'src/integrations/AnalyticsHandler';
 
 class PriceViewModel {
   private analyticsHandler: AnalyticsHandler = new AnalyticsHandler();
-  readonly status: 'loading' | 'success' | 'error';
+  readonly store: PriceStore;
 
-  constructor(store: PriceStore | undefined) {
-    this.status = store ? store.status : 'loading';
+  constructor(store: PriceStore) {
+    this.store = store;
   }
 
   getStatus = (): string => {
-    return this.status;
+    return this.store.status;
   };
 
   onPageLoad = (): void => {

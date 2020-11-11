@@ -13,8 +13,6 @@ const {
   publicRuntimeConfig: { GEARBOX_PRIVATE_URL },
 } = getConfig();
 
-const store = new PriceStore();
-
 const Price: NextPage = () => {
   // automated price
   // http://localhost:3000/appraisal/price/e93bafe0b739241f875d1e3c35416fff
@@ -24,6 +22,8 @@ const Price: NextPage = () => {
 
   // const router = useRouter();
   // const priceId = router.query.priceId as string;
+
+  const store = new PriceStore();
 
   return (
     <Page name="Home">

@@ -16,9 +16,6 @@ interface Props {
 
 const PriceView: React.FC<Props> = ({ viewModel }) => {
   console.log(viewModel.getStatus());
-  const loading = viewModel.status === 'loading';
-  const success = viewModel.status === 'success';
-  const error = viewModel.status === 'error';
 
   return (
     <HeroContainer>
