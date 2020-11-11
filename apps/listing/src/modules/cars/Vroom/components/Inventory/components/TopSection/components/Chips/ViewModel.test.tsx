@@ -817,7 +817,6 @@ describe('getPopularFeatureChips', () => {
     );
     const chips = mockViewModel.getPopularFeatureChips(mockFiltersData);
     expect(chips).toHaveLength(3);
-    console.log(mockFiltersData);
     expect(chips[0].display).toEqual('Android Auto');
     expect(chips[0].handleDelete).toBeDefined();
     chips[0].handleDelete();
