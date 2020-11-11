@@ -1,6 +1,8 @@
+import { Form, Formik } from 'formik';
 import { observer } from 'mobx-react';
 import React from 'react';
 import styled from 'styled-components';
+import * as Yup from 'yup';
 
 import CheckByMail from '../../components/CheckByMail';
 import DirectDeposit from '../../components/DirectDeposit';
@@ -69,31 +71,63 @@ export interface Props {
   viewModel: OptionsViewModel;
 }
 
+const PaymentOverviewSchema = Yup.object().shape({
+  paymentOption: Yup.string().required('Required'),
+  routingNumber: Yup.string().required('Required'),
+  bankAccountNumber: Yup.string().required('Required'),
+});
+
+interface PaymentOverviewFormValues {
+  paymentOption: string;
+  routingNumber: string;
+  bankAccountNumber: string;
+}
+
+const InitialValues: PaymentOverviewFormValues = {
+  paymentOption: 'Direct Deposit',
+  routingNumber: '',
+  bankAccountNumber: '',
+};
+
 const OptionsView: React.FC<Props> = ({ viewModel }) => {
   return (
-    <OptionsContainer>
-      <StyledHero>{viewModel.hero}</StyledHero>
-      <Line />
-      <OptionsTitle>
-        <OptionTitleIcon icon={Icons.RED_ONE} />
-        {viewModel.optionTitle}
-      </OptionsTitle>
-      <OptionsBody>{viewModel.optionQuestion}</OptionsBody>
-      <PayOptions
-        optionMeta={viewModel.getPayOptionArray()}
-        selected={viewModel.getPayOptionSelected()}
-        handleClick={viewModel.onPayOptionClick}
-      />
-      <OptionsBody>{viewModel.bankInfo}</OptionsBody>
-      {viewModel.showDirectDeposit() ? <DirectDeposit /> : <CheckByMail />}
-      <SubmitButton
-        onClick={() => {
-          return;
-        }}
-      >
-        {viewModel.submit}
-      </SubmitButton>
-    </OptionsContainer>
+    <Formik
+      initialValues={InitialValues}
+      validationSchema={PaymentOverviewSchema}
+      onSubmit={(values): void => {
+        // handleSignUp(values);
+      }}
+      validateOnMount={true}
+    >
+      {({ dirty, errors, touched, isValid, values, setFieldValue }) => {
+        console.log(values);
+        return (
+          <Form>
+            <OptionsContainer>
+              <StyledHero>{viewModel.hero}</StyledHero>
+              <Line />
+              <OptionsTitle>
+                <OptionTitleIcon icon={Icons.RED_ONE} />
+                {viewModel.optionTitle}
+              </OptionsTitle>
+              <OptionsBody>{viewModel.optionQuestion}</OptionsBody>
+              <PayOptions
+                optionMeta={viewModel.getPayOptionArray()}
+                selected={values.paymentOption}
+                // handleClick={viewModel.onPayOptionClick}
+              />
+              <OptionsBody>{viewModel.bankInfo}</OptionsBody>
+              {viewModel.showDirectDeposit() ? (
+                <DirectDeposit />
+              ) : (
+                <CheckByMail />
+              )}
+              <SubmitButton>{viewModel.submit}</SubmitButton>
+            </OptionsContainer>
+          </Form>
+        );
+      }}
+    </Formik>
   );
 };
 

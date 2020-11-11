@@ -1,3 +1,4 @@
+import { Field } from 'formik';
 import React from 'react';
 import styled from 'styled-components';
 
@@ -63,7 +64,7 @@ const Label = styled.label<{ disabled?: boolean }>`
   }
 `;
 
-const RadioButtonStyled = styled.input.attrs({ type: 'radio' })`
+const RadioButtonStyled = styled(Field).attrs({ type: 'radio' })`
   position: absolute;
   opacity: 0;
   cursor: pointer;
@@ -93,7 +94,7 @@ export const RadioButton: React.FC<RadioButtonProps> = (props) => {
         name={name}
         disabled={disabled}
         checked={checked}
-        onChange={onChange}
+        // onChange={onChange}
       />
       <CheckMark disabled={disabled} />
     </Label>

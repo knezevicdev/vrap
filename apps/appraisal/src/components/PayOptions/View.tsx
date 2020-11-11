@@ -22,8 +22,9 @@ const OptionContainer = styled.div<{ selected?: boolean }>`
 const PayOptionsView: React.FC<Props> = ({
   optionMeta,
   selected,
-  handleClick,
+  // handleClick,
 }) => {
+  console.log(optionMeta);
   return (
     <PayOptionsContainer>
       {optionMeta.map((option) => {
@@ -34,7 +35,7 @@ const PayOptionsView: React.FC<Props> = ({
               checked={checked}
               disabled={false}
               name={option}
-              onChange={handleClick}
+              // onChange={handleClick}
             >
               {option}
             </RadioButton>
