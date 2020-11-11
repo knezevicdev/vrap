@@ -90,7 +90,7 @@ export declare enum FuelType {
 }
 export declare enum PopularFeatures {
     ANDROID_AUTO = "Android Auto",
-    APPLE_CAR_PLAY = "Apple Car Play",
+    APPLE_CAR_PLAY = "Apple CarPlay",
     HEATED_SEATS = "Heated Seats",
     REAR_VIEW_CAMERA = "Rear View Camera",
     REMOTE_START = "Remote Start",

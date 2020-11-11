@@ -348,9 +348,38 @@ export const driveTypes: DriveType[] = [
   },
 ];
 
+export const heatedSeatsApi = [
+  'Heated Seat Cushion',
+  'Heated Seats',
+  'Rear Heated Seats',
+  '2nd Row Heated Seats',
+  '3rd Row Heated Seats',
+];
+
+export const rearViewCameraApi = [
+  'Rear View Camera',
+  'Rear View Mirror Camera',
+];
+
+export const sunroofMoonroofApi = [
+  'Dual Power Sun/Moonroof',
+  'Dual Sun/Moonroof',
+  'Dual-Pane Panoramic Power Sunroof',
+  'Panorama Sunroof',
+  'Power Panorama Sunroof',
+  'Power Sun/Moonroof',
+  'Sun/Moonroof',
+];
+
+export const thirdRowSeatingApi = [
+  'Third Row Removable Seats',
+  'Third Row Seating (Power)',
+  'Third Row Seating',
+];
+
 export enum PopularFeatureApi {
   ANDROID_AUTO = 'Android Auto',
-  APPLE_CAR_PLAY = 'Apple Car Play',
+  APPLE_CAR_PLAY = 'Apple Carplay',
   HEATED_SEATS = 'Heated Seats',
   REAR_VIEW_CAMERA = 'Rear View Camera',
   REMOTE_START = 'Remote Start',
@@ -369,7 +398,7 @@ export enum PopularFeatureDisplay {
 }
 
 export interface PopularFeature {
-  api?: PopularFeatureApi;
+  api?: PopularFeatureApi | string[];
   display: PopularFeatureDisplay;
   filtersDataValue: FiltersDataPopularFeatures;
 }
@@ -386,12 +415,12 @@ export const popularFeatures: PopularFeature[] = [
     filtersDataValue: FiltersDataPopularFeatures.APPLE_CAR_PLAY,
   },
   {
-    api: PopularFeatureApi.HEATED_SEATS,
+    api: heatedSeatsApi,
     display: PopularFeatureDisplay.HEATED_SEATS,
     filtersDataValue: FiltersDataPopularFeatures.HEATED_SEATS,
   },
   {
-    api: PopularFeatureApi.REAR_VIEW_CAMERA,
+    api: rearViewCameraApi,
     display: PopularFeatureDisplay.REAR_VIEW_CAMERA,
     filtersDataValue: FiltersDataPopularFeatures.REAR_VIEW_CAMERA,
   },
@@ -401,12 +430,12 @@ export const popularFeatures: PopularFeature[] = [
     filtersDataValue: FiltersDataPopularFeatures.REMOTE_START,
   },
   {
-    api: PopularFeatureApi.SUNROOF_MOONROOF,
+    api: sunroofMoonroofApi,
     display: PopularFeatureDisplay.SUNROOF_MOONROOF,
     filtersDataValue: FiltersDataPopularFeatures.SUNROOF_MOONROOF,
   },
   {
-    api: PopularFeatureApi.THIRD_ROW_SEATING,
+    api: thirdRowSeatingApi,
     display: PopularFeatureDisplay.THIRD_ROW_SEATING,
     filtersDataValue: FiltersDataPopularFeatures.THIRD_ROW_SEATING,
   },

@@ -93,7 +93,7 @@ var jsBase64 = require('js-base64');
 
 (function (PopularFeatures) {
   PopularFeatures["ANDROID_AUTO"] = "Android Auto";
-  PopularFeatures["APPLE_CAR_PLAY"] = "Apple Car Play";
+  PopularFeatures["APPLE_CAR_PLAY"] = "Apple CarPlay";
   PopularFeatures["HEATED_SEATS"] = "Heated Seats";
   PopularFeatures["REAR_VIEW_CAMERA"] = "Rear View Camera";
   PopularFeatures["REMOTE_START"] = "Remote Start";
