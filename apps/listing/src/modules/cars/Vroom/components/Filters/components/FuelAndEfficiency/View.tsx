@@ -39,7 +39,7 @@ interface Props {
 const FuelAndEfficiencyView: React.FC<Props> = ({ viewModel }) => {
   return (
     <FuelAndEfficiencyContainer>
-      {viewModel.showFuelAndEfficiencyFilters() && (
+      {viewModel.showFuelTypeFilter() && (
         <>
           <Titles fontWeight="fontWeightMedium">
             {viewModel.fuelTypeLabel}
@@ -47,12 +47,14 @@ const FuelAndEfficiencyView: React.FC<Props> = ({ viewModel }) => {
           <FuelType />
         </>
       )}
-      <>
-        <Titles fontWeight="fontWeightMedium">
-          {viewModel.minimumFuelEfficiency}
-        </Titles>
-        <FuelEfficiency />
-      </>
+      {viewModel.showFuelEfficiencyFilter() && (
+        <>
+          <Titles fontWeight="fontWeightMedium">
+            {viewModel.minimumFuelEfficiency}
+          </Titles>
+          <FuelEfficiency />
+        </>
+      )}
       <Reset
         button
         onClick={viewModel.reset}
