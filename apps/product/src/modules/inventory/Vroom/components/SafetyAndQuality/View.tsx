@@ -72,7 +72,7 @@ const RecallSection = styled('div')(({ theme }) => ({
   paddingLeft: theme.spacing(2),
 }));
 
-const ViewImperfectionsButton = styled('button')(({ theme }) => ({
+const ViewImperfectionsButton = styled('button')(() => ({
   border: 'none',
   display: 'flex',
   margin: 0,
@@ -82,7 +82,7 @@ const ViewImperfectionsButton = styled('button')(({ theme }) => ({
   color: '#e7131a',
 }));
 
-const StyledButtonText = styled('span')(({ theme }) => ({
+const StyledButtonText = styled('span')(() => ({
   '&:hover': {
     borderBottom: '#e7131a solid 1px',
     lineHeight: '23px',
@@ -102,14 +102,14 @@ const SafetyAndQualityView: React.FC<Props> = ({ viewModel }) => {
     quality,
     getRecall,
     getImperfections,
+    handleSelectDefectGallery,
   } = viewModel;
   const recall = getRecall();
   const imperfections = getImperfections();
 
-  console.log(viewModel);
-  const scrollToTop = (): void => {
+  const scrollToTop = (event: React.ChangeEvent<{}>): void => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
-    return;
+    handleSelectDefectGallery(event);
   };
 
   return (
@@ -131,7 +131,7 @@ const SafetyAndQualityView: React.FC<Props> = ({ viewModel }) => {
                 </Description>
                 <ViewImperfectionsButton
                   aria-hidden="true"
-                  onClick={scrollToTop}
+                  onClick={(e): void => scrollToTop(e)}
                 >
                   <Error />
                   <StyledButtonText>{imperfections.linkText}</StyledButtonText>

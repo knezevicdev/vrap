@@ -1,6 +1,6 @@
 import { Car } from '@vroom-web/inv-search-networking';
 
-import { InventoryStore } from 'src/modules/inventory/store';
+import { GallerySelections, InventoryStore } from 'src/modules/inventory/store';
 
 interface Repair {
   title: string;
@@ -29,8 +29,11 @@ interface Recall {
 
 class SafetyAndQualityModel {
   private car: Car;
-  constructor(store: InventoryStore) {
-    this.car = store.vehicle._source;
+  private store: InventoryStore;
+
+  constructor(inventoryStore: InventoryStore) {
+    this.store = inventoryStore;
+    this.car = inventoryStore.vehicle._source;
   }
 
   readonly title: string = 'Safety & Quality';
@@ -84,6 +87,11 @@ class SafetyAndQualityModel {
       url2:
         'https://vroom.zendesk.com/hc/en-us/articles/115005333003-What-is-a-safety-recall',
     };
+  };
+
+  handleSelectDefectGallery = (event: React.ChangeEvent<{}>): void => {
+    event.preventDefault();
+    this.store.changeSelectedGallery(GallerySelections.DEFECTS);
   };
 }
 
