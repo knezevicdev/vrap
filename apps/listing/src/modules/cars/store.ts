@@ -243,32 +243,35 @@ export const getPopularFeaturesRequestData = (
 
 export const getSortRequestData = (
   filtersData?: FiltersData,
-  geoLocationSortExperiment?: Experiment
+  sortAgedDirectionExperiment?: Experiment
 ): {
   sortby?: SortAPIBy;
   sortdirection?: SortAPIDirection;
+  sortAgedDirection?: SortAPIDirection;
 } => {
   if (!filtersData) {
-    const sortby =
-      geoLocationSortExperiment &&
-      geoLocationSortExperiment.assignedVariant === 1
-        ? SortAPIBy.GEO
-        : undefined;
+    const sortAgedDirection =
+      sortAgedDirectionExperiment &&
+      sortAgedDirectionExperiment.assignedVariant === 1
+        ? SortAPIDirection.ASCENDING
+        : SortAPIDirection.DESCENDING;
     return {
-      sortby,
+      sortby: SortAPIBy.GEO,
       sortdirection: undefined,
+      sortAgedDirection,
     };
   }
   const filtersDataSort = filtersData[Filters.SORT];
   if (!filtersDataSort) {
-    const sortby =
-      geoLocationSortExperiment &&
-      geoLocationSortExperiment.assignedVariant === 1
-        ? SortAPIBy.GEO
-        : undefined;
+    const sortAgedDirection =
+      sortAgedDirectionExperiment &&
+      sortAgedDirectionExperiment.assignedVariant === 1
+        ? SortAPIDirection.ASCENDING
+        : SortAPIDirection.DESCENDING;
     return {
-      sortby,
+      sortby: SortAPIBy.GEO,
       sortdirection: undefined,
+      sortAgedDirection,
     };
   }
   const matchingSort = sorts.find(
@@ -328,7 +331,7 @@ export const getTransmissionRequestData = (
 
 export const getPostInventoryRequestDataFromFilterData = (
   filtersData?: FiltersData,
-  geoLocationSortExperiment?: Experiment
+  sortAgedDirectionExperiment?: Experiment
 ): PostInventoryRequestData => {
   const bodytype = getBodyTypeRequestData(filtersData);
   const color = getColorRequestData(filtersData);
@@ -337,9 +340,9 @@ export const getPostInventoryRequestDataFromFilterData = (
   const { makeSlug, modelSlug } = getMakeAndModelRequestData(filtersData);
   const offset = getOffsetRequestData(filtersData);
   const popularFeatures = getPopularFeaturesRequestData(filtersData);
-  const { sortby, sortdirection } = getSortRequestData(
+  const { sortby, sortdirection, sortAgedDirection } = getSortRequestData(
     filtersData,
-    geoLocationSortExperiment
+    sortAgedDirectionExperiment
   );
   const testdriveonly = getTestDriveOnlyRequestData(filtersData);
   const transmissionid = getTransmissionRequestData(filtersData);
@@ -357,6 +360,7 @@ export const getPostInventoryRequestDataFromFilterData = (
     searchall: filtersData ? filtersData[Filters.SEARCH] : undefined,
     sortby,
     sortdirection,
+    sortAgedDirection,
     testdriveonly,
     transmissionid,
     year: filtersData ? filtersData[Filters.YEAR] : undefined,
@@ -410,7 +414,7 @@ export class CarsStore {
 
   @observable areFiltersOpen = false;
 
-  @observable geoLocationSortExperiment?: Experiment;
+  @observable sortAgedDirectionExperiment?: Experiment;
   @observable cylinderFilterExperiment?: Experiment;
   @observable fuelTypeFilterExperiment?: Experiment;
   @observable featuresFilterExperiment?: Experiment;
@@ -431,10 +435,10 @@ export class CarsStore {
   }
 
   @action
-  setGeoLocationSortExperiment = (
-    geoLocationSortExperiment?: Experiment
+  setSortAgedDirectionExperiment = (
+    sortAgedDirectionExperiment?: Experiment
   ): void => {
-    this.geoLocationSortExperiment = geoLocationSortExperiment;
+    this.sortAgedDirectionExperiment = sortAgedDirectionExperiment;
   };
 
   @action
@@ -479,7 +483,7 @@ export class CarsStore {
       this.inventoryStatus = Status.FETCHING;
       const postInventoryRequestDataFromFiltersData = getPostInventoryRequestDataFromFilterData(
         this.filtersData,
-        this.geoLocationSortExperiment
+        this.sortAgedDirectionExperiment
       );
       const inventoryRequestData: PostInventoryRequestData = {
         ...postInventoryRequestDataFromFiltersData,
