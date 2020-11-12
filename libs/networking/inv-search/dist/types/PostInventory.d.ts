@@ -31,7 +31,7 @@ export interface PostInventoryRequestData {
     };
     transmissionid?: string;
     drivetype?: string[];
-    sortAgedDirection?: string;
+    sortAgeDirection?: string;
     sortby?: string;
     sortdirection?: string;
     searchall?: string;

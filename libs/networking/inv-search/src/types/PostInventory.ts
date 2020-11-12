@@ -24,7 +24,7 @@ export interface PostInventoryRequestData {
   miles?: {} | { min: number; max: number };
   transmissionid?: string;
   drivetype?: string[];
-  sortAgedDirection?: string;
+  sortAgeDirection?: string;
   sortby?: string;
   sortdirection?: string;
   searchall?: string;

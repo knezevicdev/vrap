@@ -79,7 +79,7 @@ const CarsPage: NextPage<Props> = ({
     experimentSDK
       .getAndLogExperimentClientSide('snd-catalog-sort-direction')
       .then((experiment) => {
-        carsStore.setSortAgedDirectionExperiment(experiment);
+        carsStore.setSortAgeDirectionExperiment(experiment);
         if (experiment && experiment.assignedVariant === 1) {
           carsStore.fetchInventoryData();
         } else {
@@ -90,12 +90,10 @@ const CarsPage: NextPage<Props> = ({
 
   // Register experiments with analytics handler
   useEffect(() => {
-    if (carsStore.sortAgedDirectionExperiment) {
-      analyticsHandler.registerExperiment(
-        carsStore.sortAgedDirectionExperiment
-      );
+    if (carsStore.sortAgeDirectionExperiment) {
+      analyticsHandler.registerExperiment(carsStore.sortAgeDirectionExperiment);
     }
-  }, [carsStore.sortAgedDirectionExperiment, analyticsHandler]);
+  }, [carsStore.sortAgeDirectionExperiment, analyticsHandler]);
 
   useEffect(() => {
     experimentSDK
