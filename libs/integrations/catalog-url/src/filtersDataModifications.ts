@@ -5,6 +5,7 @@ import {
   DriveType,
   Filters,
   FiltersData,
+  FuelEfficiency,
   FuelType,
   Make,
   MaxAndMin,
@@ -295,6 +296,15 @@ export const setMiles = (
 ): FiltersData => {
   const newFiltersData = deepCopyFiltersData(filtersData || {});
   newFiltersData[Filters.MILES] = miles;
+  return newFiltersData;
+};
+
+export const setFuelEfficiency = (
+  fuelEfficiency: FuelEfficiency,
+  filtersData?: FiltersData
+): FiltersData => {
+  const newFiltersData = deepCopyFiltersData(filtersData || {});
+  newFiltersData[Filters.FUEL_EFFICIENCY] = fuelEfficiency;
   return newFiltersData;
 };
 

@@ -21,6 +21,7 @@ var jsBase64 = require('js-base64');
   Filters["OTHER_CYLINDERS"] = "othercylinders";
   Filters["FUEL_TYPE"] = "fueltype";
   Filters["POPULAR_FEATURES"] = "optionalfeatures";
+  Filters["FUEL_EFFICIENCY"] = "combinedmpg";
 })(exports.Filters || (exports.Filters = {}));
 
 (function (BodyType) {
@@ -295,6 +296,11 @@ var removeModel = function removeModel(makeSlug, modelSlug, filtersData) {
 var setMiles = function setMiles(miles, filtersData) {
   var newFiltersData = deepCopyFiltersData(filtersData || {});
   newFiltersData[exports.Filters.MILES] = miles;
+  return newFiltersData;
+};
+var setFuelEfficiency = function setFuelEfficiency(fuelEfficiency, filtersData) {
+  var newFiltersData = deepCopyFiltersData(filtersData || {});
+  newFiltersData[exports.Filters.FUEL_EFFICIENCY] = fuelEfficiency;
   return newFiltersData;
 };
 var setPage = function setPage(page, filtersData) {
@@ -772,6 +778,7 @@ exports.removeModel = removeModel;
 exports.removePopularFeature = removePopularFeature;
 exports.resetFilter = resetFilter;
 exports.resetFilters = resetFilters;
+exports.setFuelEfficiency = setFuelEfficiency;
 exports.setMiles = setMiles;
 exports.setOtherCylinders = setOtherCylinders;
 exports.setPage = setPage;

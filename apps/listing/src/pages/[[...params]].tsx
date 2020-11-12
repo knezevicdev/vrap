@@ -113,6 +113,22 @@ const CarsPage: NextPage<Props> = ({
 
   useEffect(() => {
     experimentSDK
+      .getAndLogExperimentClientSide('snd-catalog-fuel-efficiency')
+      .then((experiment) => {
+        carsStore.setFuelEfficiencyFilterExperiment(experiment);
+      });
+  }, [carsStore]);
+
+  useEffect(() => {
+    if (carsStore.fuelEfficiencyFilterExperiment) {
+      analyticsHandler.registerExperiment(
+        carsStore.fuelEfficiencyFilterExperiment
+      );
+    }
+  }, [carsStore.fuelEfficiencyFilterExperiment, analyticsHandler]);
+
+  useEffect(() => {
+    experimentSDK
       .getAndLogExperimentClientSide('snd-catalog-fuel-type-filter')
       .then((experiment) => {
         carsStore.setFuelTypeFilterExperiment(experiment);
