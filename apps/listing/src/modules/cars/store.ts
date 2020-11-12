@@ -55,10 +55,10 @@ const { publicRuntimeConfig } = getConfig();
 
 export interface InitialCarsStoreState {
   attributionQueryString: string;
-  makes: MakeBucket[] | undefined;
-  cars: Inventory | undefined;
-  popularCars: Inventory | undefined;
-  filtersData: FiltersData | undefined;
+  makes?: MakeBucket[];
+  cars?: Inventory;
+  popularCars?: Inventory;
+  filtersData?: FiltersData;
   titleQuery?: boolean;
 }
 

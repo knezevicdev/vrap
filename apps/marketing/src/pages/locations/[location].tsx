@@ -1,11 +1,12 @@
 import { Brand, ThemeProvider } from '@vroom-web/ui';
-import { NextPage, NextPageContext } from 'next';
+import { GetServerSideProps, GetServerSidePropsContext, NextPage } from 'next';
 import Error from 'next/error';
 import React from 'react';
 
 import Location from 'src/modules/location';
 import { getLocations, LocationInfo } from 'src/modules/locations/getLocations';
 import Page from 'src/Page';
+import { determineWhitelabel } from 'src/utils/utils';
 
 interface Props {
   brand: Brand;
@@ -38,22 +39,14 @@ const LocationPage: NextPage<Props> = ({
   );
 };
 
-LocationPage.getInitialProps = async (ctx: NextPageContext): Promise<Props> => {
-  const query = ctx.query;
-
-  const { req } = ctx;
-  const headerBrandKey = 'x-brand';
-  const brandHeader = req && req.headers[headerBrandKey];
-  const queryBrand = query.brand;
-
-  let brand = Brand.VROOM;
-  const whitelabel = brandHeader || queryBrand;
-  if (whitelabel === Brand.TDA) brand = Brand.TDA;
-
+export const getServerSideProps: GetServerSideProps<Props> = async (
+  ctx: GetServerSidePropsContext
+) => {
+  const brand = determineWhitelabel(ctx);
   let title = ``;
   let description = ``;
 
-  const queryLocation = query.location;
+  const queryLocation = ctx.query.location;
 
   const carCenter = getLocations().find(
     (location) => location.path === queryLocation
@@ -64,7 +57,7 @@ LocationPage.getInitialProps = async (ctx: NextPageContext): Promise<Props> => {
     description = `Sell your car online or at the ${carCenter.name}, ${carCenter.address.state} location of Texas Direct Auto. We offer no haggle pricing for your trade, we'll even beat CarMax's offer!`;
   }
 
-  return { brand, title, description, carCenter };
+  return { props: { brand, title, description, carCenter } };
 };
 
 export default LocationPage;

@@ -21,7 +21,7 @@ import {
   SoldStatus,
 } from '@vroom-web/inv-search-networking';
 import { Brand, ThemeProvider } from '@vroom-web/ui';
-import { NextPage, NextPageContext } from 'next';
+import { GetServerSideProps, GetServerSidePropsContext, NextPage } from 'next';
 import getConfig from 'next/config';
 import { stringify } from 'qs';
 import React, { useEffect, useState } from 'react';
@@ -29,7 +29,6 @@ import React, { useEffect, useState } from 'react';
 import AnalyticsHandler from 'src/integrations/AnalyticsHandler';
 import experimentSDK from 'src/integrations/experimentSDK';
 import Cars from 'src/modules/cars';
-import { BrandContext } from 'src/modules/cars/BrandContext';
 import {
   INVENTORY_CARDS_PER_PAGE,
   POPULAR_CAR_LIMIT,
@@ -42,6 +41,7 @@ import {
 } from 'src/modules/cars/store';
 import { Status } from 'src/networking/types';
 import Page from 'src/Page';
+import { determineWhitelabel } from 'src/utils/utils';
 const {
   publicRuntimeConfig: { INVSEARCH_V3_URL, NAME, VERSION },
 } = getConfig();
@@ -388,19 +388,19 @@ const CarsPage: NextPage<Props> = ({
   return (
     <ThemeProvider brand={brand}>
       <Page name="Catalog" head={head}>
-        <BrandContext.Provider value={brand}>
-          <CarsStoreContext.Provider value={carsStore}>
-            <Cars />
-          </CarsStoreContext.Provider>
-        </BrandContext.Provider>
+        <CarsStoreContext.Provider value={carsStore}>
+          <Cars brand={brand} />
+        </CarsStoreContext.Provider>
       </Page>
     </ThemeProvider>
   );
 };
 
-CarsPage.getInitialProps = async (context: NextPageContext): Promise<Props> => {
+export const getServerSideProps: GetServerSideProps<Props> = async (
+  context: GetServerSidePropsContext
+) => {
   const {
-    asPath,
+    req: { url: _url },
     query: {
       gclid,
       subid,
@@ -415,21 +415,10 @@ CarsPage.getInitialProps = async (context: NextPageContext): Promise<Props> => {
     },
   } = context;
 
-  const { req, res, query } = context;
-  const headerBrandKey = 'x-brand';
-  const santanderKey = 'santander';
-  const tdaKey = 'tda';
-  const brandHeader = req && req.headers[headerBrandKey];
-  const queryBrand = query.brand;
+  const { res, query } = context;
+  const brand = determineWhitelabel(context);
 
-  let brand = Brand.VROOM;
-  if ((brandHeader || queryBrand) == santanderKey) {
-    brand = Brand.SANTANDER;
-  } else if ((brandHeader || queryBrand) == tdaKey) {
-    brand = Brand.TDA;
-  }
-
-  const url = typeof asPath === 'string' ? (asPath as string) : '';
+  const url = typeof _url === 'string' ? (_url as string) : '';
   const filtersData = getFiltersDataFromUrl(url);
 
   const { isTitleQAPass } = query;
@@ -523,6 +512,13 @@ CarsPage.getInitialProps = async (context: NextPageContext): Promise<Props> => {
     titleQuery,
   };
 
+  // delete keys with value as undefined, as GSSP tries to serialize as JSON and errors out
+  Object.keys(initialStoreState).forEach((key) => {
+    if (initialStoreState[key as keyof InitialCarsStoreState] === undefined) {
+      delete initialStoreState[key as keyof InitialCarsStoreState];
+    }
+  });
+
   const hasInventory = cars ? cars.hits.total !== 0 : false;
 
   if (res && !hasInventory) {
@@ -530,9 +526,11 @@ CarsPage.getInitialProps = async (context: NextPageContext): Promise<Props> => {
   }
 
   return {
-    brand,
-    carsStatus,
-    initialStoreState,
+    props: {
+      brand,
+      carsStatus,
+      initialStoreState,
+    },
   };
 };
 
