@@ -42,10 +42,18 @@ const Error = styled(ErrorIcon)(() => ({
 }));
 
 const DescriptionView: React.FC<Props> = ({ viewModel }) => {
+  const scrollToSafetyAndQuality = (e: React.ChangeEvent<{}>): void => {
+    e.preventDefault();
+    const safetyAndQuality = document.getElementById(
+      'safety-and-quality-content'
+    );
+    safetyAndQuality?.scrollIntoView({ behavior: 'smooth' });
+  };
+
   return (
     <StyledContainer>
       <Image src={viewModel.image} />
-      <DescriptionToolTip>
+      <DescriptionToolTip onClick={(e): void => scrollToSafetyAndQuality(e)}>
         <Error />
         <TextFlex>
           <Typography>Imperfection: {viewModel.description}</Typography>

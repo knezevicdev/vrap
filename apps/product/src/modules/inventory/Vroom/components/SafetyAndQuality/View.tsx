@@ -113,7 +113,7 @@ const SafetyAndQualityView: React.FC<Props> = ({ viewModel }) => {
   };
 
   return (
-    <SafetyAndQualityContainer>
+    <SafetyAndQualityContainer id="safety-and-quality-content">
       <SafetyAndQualityContainerContent>
         <Header variant="h2">{title}</Header>
         <SectionContainer>
