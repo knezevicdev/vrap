@@ -88,7 +88,7 @@ export class PriceStore {
   }
 
   @action
-  getOfferDetails = (priceId: string) => {
+  getOfferDetails = (priceId: string): void => {
     this.status = 'loading';
     console.log('set loading');
 
