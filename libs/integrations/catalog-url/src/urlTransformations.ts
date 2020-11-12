@@ -6,6 +6,7 @@ import {
   isEnumArray,
   isMakeAndModels,
   isMaxAndMin,
+  isFuelEfficiency,
   isNumber,
   isObject,
   isSort,
@@ -21,6 +22,7 @@ import {
   GetUrlFromFiltersDataOptions,
   MaxAndMin,
   PopularFeatures,
+  FuelType,
   TestDrive,
   Transmission,
 } from './types';
@@ -162,6 +164,11 @@ export const getFiltersDataFromFiltersQueryParam = (
     filtersData[Filters.POPULAR_FEATURES] = parsed[Filters.POPULAR_FEATURES];
   }
 
+  const isFuelTypeArray = isEnumArray(FuelType);
+  if (isFuelTypeArray(parsed[Filters.FUEL_TYPE])) {
+    filtersData[Filters.FUEL_TYPE] = parsed[Filters.FUEL_TYPE];
+  }
+
   if (isBoolean(parsed[Filters.OTHER_CYLINDERS])) {
     filtersData[Filters.OTHER_CYLINDERS] = parsed[Filters.OTHER_CYLINDERS];
   }
@@ -172,6 +179,10 @@ export const getFiltersDataFromFiltersQueryParam = (
 
   if (isMaxAndMin(parsed[Filters.MILES])) {
     filtersData[Filters.MILES] = parsed[Filters.MILES];
+  }
+
+  if (isFuelEfficiency(parsed[Filters.FUEL_EFFICIENCY])) {
+    filtersData[Filters.FUEL_EFFICIENCY] = parsed[Filters.FUEL_EFFICIENCY];
   }
 
   if (isNumber(parsed[Filters.PAGE])) {

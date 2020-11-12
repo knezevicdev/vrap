@@ -463,6 +463,18 @@ var isMaxAndMin = function isMaxAndMin(x) {
   }
 
   return true;
+}; // eslint-disable-next-line @typescript-eslint/no-explicit-any
+
+var isFuelEfficiency = function isFuelEfficiency(x) {
+  if (!isObject(x)) {
+    return false;
+  }
+
+  if (!isNumber(x['min'])) {
+    return false;
+  }
+
+  return true;
 };
 var isSortBy = isEnum(exports.SortBy);
 var isSortDirection = isEnum(exports.SortDirection); // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -615,6 +627,12 @@ var getFiltersDataFromFiltersQueryParam = function getFiltersDataFromFiltersQuer
     filtersData[exports.Filters.POPULAR_FEATURES] = parsed[exports.Filters.POPULAR_FEATURES];
   }
 
+  var isFuelTypeArray = isEnumArray(exports.FuelType);
+
+  if (isFuelTypeArray(parsed[exports.Filters.FUEL_TYPE])) {
+    filtersData[exports.Filters.FUEL_TYPE] = parsed[exports.Filters.FUEL_TYPE];
+  }
+
   if (isBoolean(parsed[exports.Filters.OTHER_CYLINDERS])) {
     filtersData[exports.Filters.OTHER_CYLINDERS] = parsed[exports.Filters.OTHER_CYLINDERS];
   }
@@ -625,6 +643,10 @@ var getFiltersDataFromFiltersQueryParam = function getFiltersDataFromFiltersQuer
 
   if (isMaxAndMin(parsed[exports.Filters.MILES])) {
     filtersData[exports.Filters.MILES] = parsed[exports.Filters.MILES];
+  }
+
+  if (isFuelEfficiency(parsed[exports.Filters.FUEL_EFFICIENCY])) {
+    filtersData[exports.Filters.FUEL_EFFICIENCY] = parsed[exports.Filters.FUEL_EFFICIENCY];
   }
 
   if (isNumber(parsed[exports.Filters.PAGE])) {
