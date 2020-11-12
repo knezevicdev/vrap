@@ -139,6 +139,12 @@ class CarsViewModel {
             value,
           });
           break;
+        case Filters.FUEL_EFFICIENCY:
+          formattedFilters.push({
+            type: 'Fuel Efficiency',
+            value: value ? value.min : 'None',
+          });
+          break;
       }
     });
     if (!isEmpty(cylinders.value)) {

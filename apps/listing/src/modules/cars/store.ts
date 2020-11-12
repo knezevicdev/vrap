@@ -365,6 +365,7 @@ export const getPostInventoryRequestDataFromFilterData = (
     cylindersShowOther:
       (filtersData && filtersData[Filters.OTHER_CYLINDERS]) || undefined,
     optionalFeatures: popularFeatures,
+    combinedMpg: filtersData ? filtersData[Filters.FUEL_EFFICIENCY] : undefined,
   };
 };
 
@@ -414,6 +415,7 @@ export class CarsStore {
   @observable cylinderFilterExperiment?: Experiment;
   @observable fuelTypeFilterExperiment?: Experiment;
   @observable featuresFilterExperiment?: Experiment;
+  @observable fuelEfficiencyFilterExperiment?: Experiment;
 
   constructor(initialState?: InitialCarsStoreState) {
     this.invSearchNetworker = new InvSearchNetworker(
@@ -442,6 +444,13 @@ export class CarsStore {
     cylinderFilterExperiment?: Experiment
   ): void => {
     this.cylinderFilterExperiment = cylinderFilterExperiment;
+  };
+
+  @action
+  setFuelEfficiencyFilterExperiment = (
+    fuelEfficiencyFilterExperiment?: Experiment
+  ): void => {
+    this.fuelEfficiencyFilterExperiment = fuelEfficiencyFilterExperiment;
   };
 
   @action

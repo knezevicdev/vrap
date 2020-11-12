@@ -19,6 +19,7 @@ var Filters;
   Filters["OTHER_CYLINDERS"] = "othercylinders";
   Filters["FUEL_TYPE"] = "fueltype";
   Filters["POPULAR_FEATURES"] = "optionalfeatures";
+  Filters["FUEL_EFFICIENCY"] = "combinedmpg";
 })(Filters || (Filters = {}));
 
 var BodyType;
@@ -313,6 +314,11 @@ var removeModel = function removeModel(makeSlug, modelSlug, filtersData) {
 var setMiles = function setMiles(miles, filtersData) {
   var newFiltersData = deepCopyFiltersData(filtersData || {});
   newFiltersData[Filters.MILES] = miles;
+  return newFiltersData;
+};
+var setFuelEfficiency = function setFuelEfficiency(fuelEfficiency, filtersData) {
+  var newFiltersData = deepCopyFiltersData(filtersData || {});
+  newFiltersData[Filters.FUEL_EFFICIENCY] = fuelEfficiency;
   return newFiltersData;
 };
 var setPage = function setPage(page, filtersData) {
@@ -764,4 +770,4 @@ var getFiltersDataFromUrl = function getFiltersDataFromUrl(url) {
   return undefined;
 };
 
-export { BodyType, Color, Cylinder, DriveType, Filters, FuelType, PopularFeatures, SortBy, SortDirection, TestDrive, Transmission, addAllModels, addBodyType, addColor, addCylinder, addDriveType, addFuelType, addModel, addPopularFeature, getFiltersDataFromUrl, getUrlFromFiltersData, removeAllModels, removeBodyType, removeColor, removeCylinder, removeDriveType, removeFuelType, removeModel, removePopularFeature, resetFilter, resetFilters, setMiles, setOtherCylinders, setPage, setPrice, setSearch, setSort, setTestDrive, setTransmission, setYear };
+export { BodyType, Color, Cylinder, DriveType, Filters, FuelType, PopularFeatures, SortBy, SortDirection, TestDrive, Transmission, addAllModels, addBodyType, addColor, addCylinder, addDriveType, addFuelType, addModel, addPopularFeature, getFiltersDataFromUrl, getUrlFromFiltersData, removeAllModels, removeBodyType, removeColor, removeCylinder, removeDriveType, removeFuelType, removeModel, removePopularFeature, resetFilter, resetFilters, setFuelEfficiency, setMiles, setOtherCylinders, setPage, setPrice, setSearch, setSort, setTestDrive, setTransmission, setYear };

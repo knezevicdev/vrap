@@ -198,6 +198,26 @@ class ChipsViewModel {
     return milesChips;
   }
 
+  getFuelEfficiencyChips(filtersData: FiltersData): Chip[] {
+    const fuelEfficiencyChips: Chip[] = [];
+    const filtersDataFuelEfficiency = filtersData[Filters.FUEL_EFFICIENCY];
+    if (filtersDataFuelEfficiency) {
+      fuelEfficiencyChips.push({
+        display: `${this.numberFormatter.format(
+          filtersDataFuelEfficiency.min
+        )} MPG +`,
+        handleDelete: () => {
+          const updatedFiltersData = resetFilter(
+            Filters.FUEL_EFFICIENCY,
+            filtersData
+          );
+          this.carsStore.updateFiltersData(updatedFiltersData);
+        },
+      });
+    }
+    return fuelEfficiencyChips;
+  }
+
   getTransmissionChips(filtersData: FiltersData): Chip[] {
     const transmissionChips: Chip[] = [];
     const filtersDataTransmission = filtersData[Filters.TRANSMISSION];
@@ -368,6 +388,7 @@ class ChipsViewModel {
       ...this.getCylinderChips(filtersData),
       ...this.getFuelTypeChips(filtersData),
       ...this.getPopularFeatureChips(filtersData),
+      ...this.getFuelEfficiencyChips(filtersData),
     ];
     return chips.length > 0 ? chips : undefined;
   }

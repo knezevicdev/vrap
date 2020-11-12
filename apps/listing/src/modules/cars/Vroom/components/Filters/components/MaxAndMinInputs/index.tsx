@@ -8,10 +8,11 @@ import ViewModel from './ViewModel';
 export enum Variant {
   MAX_AND_MIN = 'MAX_AND_MIN',
   MAX_ONLY = 'MAX_ONLY',
+  MIN_ONLY = 'MIN_ONLY',
 }
 
 interface Props {
-  inputErrorLabel: string;
+  inputErrorLabel?: string;
   inputStartAdornment?: React.ReactNode;
   maxInputPlaceholder?: string;
   maxOnlyInputLabel?: string;
@@ -21,10 +22,11 @@ interface Props {
   step: number;
   value?: MaxAndMin;
   variant?: Variant;
+  showInput?: boolean;
 }
 
 const MaxAndMinInputs: React.FC<Props> = ({
-  inputErrorLabel,
+  inputErrorLabel = '',
   inputStartAdornment,
   maxInputPlaceholder,
   maxOnlyInputLabel,
@@ -34,6 +36,7 @@ const MaxAndMinInputs: React.FC<Props> = ({
   step,
   value,
   variant = Variant.MAX_AND_MIN,
+  showInput = true,
 }) => {
   const store = new Store({ onChange, range, value, variant });
   const viewModel = new ViewModel({
@@ -46,6 +49,7 @@ const MaxAndMinInputs: React.FC<Props> = ({
     step,
     store,
     variant,
+    showInput,
   });
   return <View viewModel={viewModel} />;
 };
