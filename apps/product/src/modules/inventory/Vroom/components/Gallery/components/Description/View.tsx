@@ -24,17 +24,23 @@ const DescriptionToolTip = styled('div')(() => ({
   bottom: '70px',
   color: '#fff',
   left: 0,
-  lineHeight: 1,
+  lineHeight: '23px',
   padding: '10px 20px',
   position: 'absolute',
   whiteSpace: 'normal',
   display: 'flex',
   textAlign: 'left',
   alignItems: 'center',
+  '&:hover': {
+    background: 'rgba(0,0,0,.5)',
+  },
 }));
 
 const TextFlex = styled('div')(({ theme }) => ({
   paddingLeft: theme.spacing(1),
+  '&:hover': {
+    textDecoration: 'underline',
+  },
 }));
 
 const Error = styled(ErrorIcon)(() => ({

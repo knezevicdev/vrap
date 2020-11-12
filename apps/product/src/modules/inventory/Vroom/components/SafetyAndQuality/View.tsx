@@ -84,7 +84,7 @@ const ViewImperfectionsButton = styled('button')(() => ({
 
 const StyledButtonText = styled('span')(() => ({
   '&:hover': {
-    borderBottom: '#e7131a solid 1px',
+    textDecoration: 'underline',
     lineHeight: '23px',
   },
 }));
