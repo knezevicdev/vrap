@@ -20,6 +20,7 @@ import {
   FiltersData,
   GetUrlFromFiltersDataOptions,
   MaxAndMin,
+  PopularFeatures,
   TestDrive,
   Transmission,
 } from './types';
@@ -154,6 +155,11 @@ export const getFiltersDataFromFiltersQueryParam = (
   const isCylinderArray = isEnumArray(Cylinder);
   if (isCylinderArray(parsed[Filters.CYLINDERS])) {
     filtersData[Filters.CYLINDERS] = parsed[Filters.CYLINDERS];
+  }
+
+  const isFeaturesArray = isEnumArray(PopularFeatures);
+  if (isFeaturesArray(parsed[Filters.POPULAR_FEATURES])) {
+    filtersData[Filters.POPULAR_FEATURES] = parsed[Filters.POPULAR_FEATURES];
   }
 
   if (isBoolean(parsed[Filters.OTHER_CYLINDERS])) {

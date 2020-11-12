@@ -621,6 +621,12 @@ var getFiltersDataFromFiltersQueryParam = function getFiltersDataFromFiltersQuer
     filtersData[Filters.CYLINDERS] = parsed[Filters.CYLINDERS];
   }
 
+  var isFeaturesArray = isEnumArray(PopularFeatures);
+
+  if (isFeaturesArray(parsed[Filters.POPULAR_FEATURES])) {
+    filtersData[Filters.POPULAR_FEATURES] = parsed[Filters.POPULAR_FEATURES];
+  }
+
   if (isBoolean(parsed[Filters.OTHER_CYLINDERS])) {
     filtersData[Filters.OTHER_CYLINDERS] = parsed[Filters.OTHER_CYLINDERS];
   }

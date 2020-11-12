@@ -603,6 +603,12 @@ var getFiltersDataFromFiltersQueryParam = function getFiltersDataFromFiltersQuer
     filtersData[exports.Filters.CYLINDERS] = parsed[exports.Filters.CYLINDERS];
   }
 
+  var isFeaturesArray = isEnumArray(exports.PopularFeatures);
+
+  if (isFeaturesArray(parsed[exports.Filters.POPULAR_FEATURES])) {
+    filtersData[exports.Filters.POPULAR_FEATURES] = parsed[exports.Filters.POPULAR_FEATURES];
+  }
+
   if (isBoolean(parsed[exports.Filters.OTHER_CYLINDERS])) {
     filtersData[exports.Filters.OTHER_CYLINDERS] = parsed[exports.Filters.OTHER_CYLINDERS];
   }
