@@ -50,6 +50,21 @@ module.exports = function (plop) {
         path: 'apps/{{name}}/tsconfig.json',
         templateFile: 'plop-templates/new-app/tsconfig.hbs',
       },
+      {
+        type: 'add',
+        path: '.circleci/src/jobs/@{{name}}.yml',
+        templateFile: 'plop-templates/new-app/jobsyml.hbs',
+      },
+      {
+        type: 'add',
+        path: '.circleci/src/workflows/@{{name}}.yml',
+        templateFile: 'plop-templates/new-app/workflowsyml.hbs',
+      },
+      {
+        type: 'add',
+        path: 'apps/{{name}}/.devcontainer/devcontainer.json',
+        templateFile: 'plop-templates/new-app/devcontainerjson.hbs',
+      },
     ],
   });
 
