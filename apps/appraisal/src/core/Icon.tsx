@@ -103,14 +103,14 @@ export class Icons {
     name: 'chevron-up',
     width: 13,
     height: 8,
-    path: `${BASE_PATH}/icons/chevron-up.svg`,
+    path: `${ENVS.BASE_PATH}/icons/chevron-up.svg`,
   });
 
   static readonly CHEVRON_DOWN = new Icons('CHEVRON_DOWN', {
     name: 'chevron-down',
     width: 13,
     height: 8,
-    path: `${BASE_PATH}/icons/chevron-down.svg`,
+    path: `${ENVS.BASE_PATH}/icons/chevron-down.svg`,
   });
 
   private constructor(
