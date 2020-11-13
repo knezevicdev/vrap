@@ -77,9 +77,9 @@ const CarsPage: NextPage<Props> = ({
   // Get the experiments from the SDK
   useEffect(() => {
     experimentSDK
-      .getAndLogExperimentClientSide('snd-catalog-sort-by-geo-location')
+      .getAndLogExperimentClientSide('snd-catalog-sort-direction')
       .then((experiment) => {
-        carsStore.setGeoLocationSortExperiment(experiment);
+        carsStore.setSortAgeDirectionExperiment(experiment);
         if (experiment && experiment.assignedVariant === 1) {
           carsStore.fetchInventoryData();
         } else {
@@ -90,10 +90,10 @@ const CarsPage: NextPage<Props> = ({
 
   // Register experiments with analytics handler
   useEffect(() => {
-    if (carsStore.geoLocationSortExperiment) {
-      analyticsHandler.registerExperiment(carsStore.geoLocationSortExperiment);
+    if (carsStore.sortAgeDirectionExperiment) {
+      analyticsHandler.registerExperiment(carsStore.sortAgeDirectionExperiment);
     }
-  }, [carsStore.geoLocationSortExperiment, analyticsHandler]);
+  }, [carsStore.sortAgeDirectionExperiment, analyticsHandler]);
 
   useEffect(() => {
     experimentSDK
