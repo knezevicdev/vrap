@@ -3,6 +3,8 @@ import {
   Color as FiltersDataColor,
   Cylinder as FiltersDataCylinder,
   DriveType as FiltersDataDriveType,
+  FuelType as FiltersDataFuelType,
+  PopularFeatures as FiltersDataPopularFeatures,
   SortBy as FiltersDataSortBy,
   SortDirection as FiltersDataSortDirection,
   TestDrive as FiltersDataTestDrive,
@@ -11,6 +13,63 @@ import {
 
 export const INVENTORY_CARDS_PER_PAGE = 24;
 export const POPULAR_CAR_LIMIT = 12;
+
+export enum FuelTypeAPI {
+  GASOLINE = 'gasoline',
+  DIESEL = 'diesel',
+  GAS_ELECTRIC_HYBRID = 'gas_electric_hybrid',
+  PLUG_IN_HYBRID = 'plug_in_hybrid',
+  ELECTRIC = 'electric',
+  OTHER = 'other',
+}
+
+export enum FuelTypeDisplay {
+  GASOLINE = 'Gasoline',
+  DIESEL = 'Diesel',
+  GAS_ELECTRIC_HYBRID = 'Gas/Electric Hybrid',
+  PLUG_IN_HYBRID = 'Plug-in Hybrid',
+  ELECTRIC = 'Electric',
+  OTHER = 'Other',
+}
+
+export interface FuelType {
+  api: FuelTypeAPI;
+  display: FuelTypeDisplay;
+  filtersDataValue: FiltersDataFuelType;
+}
+
+export const fuelTypes: FuelType[] = [
+  {
+    api: FuelTypeAPI.GASOLINE,
+    display: FuelTypeDisplay.GASOLINE,
+    filtersDataValue: FiltersDataFuelType.GASOLINE,
+  },
+  {
+    api: FuelTypeAPI.DIESEL,
+    display: FuelTypeDisplay.DIESEL,
+    filtersDataValue: FiltersDataFuelType.DIESEL,
+  },
+  {
+    api: FuelTypeAPI.GAS_ELECTRIC_HYBRID,
+    display: FuelTypeDisplay.GAS_ELECTRIC_HYBRID,
+    filtersDataValue: FiltersDataFuelType.GAS_ELECTRIC_HYBRID,
+  },
+  {
+    api: FuelTypeAPI.PLUG_IN_HYBRID,
+    display: FuelTypeDisplay.PLUG_IN_HYBRID,
+    filtersDataValue: FiltersDataFuelType.PLUG_IN_HYBRID,
+  },
+  {
+    api: FuelTypeAPI.ELECTRIC,
+    display: FuelTypeDisplay.ELECTRIC,
+    filtersDataValue: FiltersDataFuelType.ELECTRIC,
+  },
+  {
+    api: FuelTypeAPI.OTHER,
+    display: FuelTypeDisplay.OTHER,
+    filtersDataValue: FiltersDataFuelType.OTHER,
+  },
+];
 
 export enum BodyTypeAPI {
   SUV = 'SUV',
@@ -286,6 +345,99 @@ export const driveTypes: DriveType[] = [
     api: DriveTypeAPI.RWD,
     display: DriveTypeDisplay.RWD,
     filtersDataValue: FiltersDataDriveType.RWD,
+  },
+];
+
+export const heatedSeatsApi = [
+  'Heated Seat Cushion',
+  'Heated Seats',
+  'Rear Heated Seats',
+  '2nd Row Heated Seats',
+  '3rd Row Heated Seats',
+];
+
+export const rearViewCameraApi = [
+  'Rear View Camera',
+  'Rear View Mirror Camera',
+];
+
+export const sunroofMoonroofApi = [
+  'Dual Power Sun/Moonroof',
+  'Dual Sun/Moonroof',
+  'Dual-Pane Panoramic Power Sunroof',
+  'Panorama Sunroof',
+  'Power Panorama Sunroof',
+  'Power Sun/Moonroof',
+  'Sun/Moonroof',
+];
+
+export const thirdRowSeatingApi = [
+  'Third Row Removable Seats',
+  'Third Row Seating (Power)',
+  'Third Row Seating',
+];
+
+export enum PopularFeatureApi {
+  ANDROID_AUTO = 'Android Auto',
+  APPLE_CAR_PLAY = 'Apple Carplay',
+  HEATED_SEATS = 'Heated Seats',
+  REAR_VIEW_CAMERA = 'Rear View Camera',
+  REMOTE_START = 'Remote Start',
+  SUNROOF_MOONROOF = 'Sunroof or Moonroof',
+  THIRD_ROW_SEATING = 'Third Row Seating',
+}
+
+export enum PopularFeatureDisplay {
+  ANDROID_AUTO = 'Android Auto',
+  APPLE_CAR_PLAY = 'Apple CarPlay',
+  HEATED_SEATS = 'Heated Seats',
+  REAR_VIEW_CAMERA = 'Rear View Camera',
+  REMOTE_START = 'Remote Start',
+  SUNROOF_MOONROOF = 'Sunroof or Moonroof',
+  THIRD_ROW_SEATING = 'Third Row Seating',
+}
+
+export interface PopularFeature {
+  api?: PopularFeatureApi | string[];
+  display: PopularFeatureDisplay;
+  filtersDataValue: FiltersDataPopularFeatures;
+}
+
+export const popularFeatures: PopularFeature[] = [
+  {
+    api: PopularFeatureApi.ANDROID_AUTO,
+    display: PopularFeatureDisplay.ANDROID_AUTO,
+    filtersDataValue: FiltersDataPopularFeatures.ANDROID_AUTO,
+  },
+  {
+    api: PopularFeatureApi.APPLE_CAR_PLAY,
+    display: PopularFeatureDisplay.APPLE_CAR_PLAY,
+    filtersDataValue: FiltersDataPopularFeatures.APPLE_CAR_PLAY,
+  },
+  {
+    api: heatedSeatsApi,
+    display: PopularFeatureDisplay.HEATED_SEATS,
+    filtersDataValue: FiltersDataPopularFeatures.HEATED_SEATS,
+  },
+  {
+    api: rearViewCameraApi,
+    display: PopularFeatureDisplay.REAR_VIEW_CAMERA,
+    filtersDataValue: FiltersDataPopularFeatures.REAR_VIEW_CAMERA,
+  },
+  {
+    api: PopularFeatureApi.REMOTE_START,
+    display: PopularFeatureDisplay.REMOTE_START,
+    filtersDataValue: FiltersDataPopularFeatures.REMOTE_START,
+  },
+  {
+    api: sunroofMoonroofApi,
+    display: PopularFeatureDisplay.SUNROOF_MOONROOF,
+    filtersDataValue: FiltersDataPopularFeatures.SUNROOF_MOONROOF,
+  },
+  {
+    api: thirdRowSeatingApi,
+    display: PopularFeatureDisplay.THIRD_ROW_SEATING,
+    filtersDataValue: FiltersDataPopularFeatures.THIRD_ROW_SEATING,
   },
 ];
 

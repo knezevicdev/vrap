@@ -127,6 +127,24 @@ class CarsViewModel {
         case Filters.OTHER_CYLINDERS:
           cylinders.value = [...cylinders.value, 'Other'];
           break;
+        case Filters.FUEL_TYPE:
+          formattedFilters.push({
+            type: 'Fuel Type',
+            value,
+          });
+          break;
+        case Filters.POPULAR_FEATURES:
+          formattedFilters.push({
+            type: 'Popular Features',
+            value,
+          });
+          break;
+        case Filters.FUEL_EFFICIENCY:
+          formattedFilters.push({
+            type: 'Fuel Efficiency',
+            value: value ? value.min : 'None',
+          });
+          break;
       }
     });
     if (!isEmpty(cylinders.value)) {

@@ -13,6 +13,8 @@ import Document, {
 } from 'next/document';
 import React from 'react';
 
+import { determineWhitelabel } from 'src/utils/utils';
+
 const { serverRuntimeConfig, publicRuntimeConfig } = getConfig();
 
 interface Props extends DocumentInitialProps {
@@ -33,15 +35,7 @@ class VroomDocument extends Document<Props> {
       });
     ctx.renderPage = customRenderPage;
 
-    const { req, query } = ctx;
-    const headerBrandKey = 'x-brand';
-    const brandHeader = req && req.headers[headerBrandKey];
-    const queryBrand = query.brand;
-
-    let brand = Brand.VROOM;
-    const whitelabel = brandHeader || queryBrand;
-    if (whitelabel === Brand.SANTANDER) brand = Brand.SANTANDER;
-    else if (whitelabel === Brand.TDA) brand = Brand.TDA;
+    const brand = determineWhitelabel(ctx);
 
     const initialProps = await Document.getInitialProps(ctx);
 
@@ -58,10 +52,12 @@ class VroomDocument extends Document<Props> {
   }
 
   render(): JSX.Element {
-    const segmentWriteKey =
-      this.props.brand === Brand.SANTANDER
-        ? serverRuntimeConfig.SANTANDER_SEGMENT_WRITE_KEY
-        : serverRuntimeConfig.SEGMENT_WRITE_KEY;
+    let segmentWriteKey = serverRuntimeConfig.SEGMENT_WRITE_KEY;
+    if (this.props.brand === Brand.SANTANDER) {
+      segmentWriteKey = serverRuntimeConfig.SANTANDER_SEGMENT_WRITE_KEY;
+    } else if (this.props.brand === Brand.TDA) {
+      segmentWriteKey = serverRuntimeConfig.TDA_SEGMENT_WRITE_KEY;
+    }
 
     return (
       <Html lang="en">

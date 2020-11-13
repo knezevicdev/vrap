@@ -13,6 +13,8 @@ import Document, {
 } from 'next/document';
 import React from 'react';
 
+import { determineWhitelabel } from 'src/utils/utils';
+
 const { serverRuntimeConfig, publicRuntimeConfig } = getConfig();
 
 interface Props extends DocumentInitialProps {
@@ -33,20 +35,10 @@ class VroomDocument extends Document<Props> {
       });
     ctx.renderPage = customRenderPage;
 
-    const { req, query } = ctx;
-    const headerBrandKey = 'x-brand';
-    const tdaKey = 'tda';
-    const santanderKey = 'santander';
-    const brandHeader = req && req.headers[headerBrandKey];
-    const queryBrand = query.brand;
-    let brand: Brand = Brand.VROOM;
-    if ((brandHeader || queryBrand) == santanderKey) {
-      brand = Brand.SANTANDER;
-    } else if ((brandHeader || queryBrand) == tdaKey) {
-      brand = Brand.TDA;
-    }
+    const brand = determineWhitelabel(ctx);
 
     const initialProps = await Document.getInitialProps(ctx);
+
     return {
       ...initialProps,
       brand,
@@ -60,10 +52,12 @@ class VroomDocument extends Document<Props> {
   }
 
   render(): JSX.Element {
-    const segmentWriteKey =
-      this.props.brand === Brand.SANTANDER
-        ? serverRuntimeConfig.SANTANDER_SEGMENT_WRITE_KEY
-        : serverRuntimeConfig.SEGMENT_WRITE_KEY;
+    let segmentWriteKey = serverRuntimeConfig.SEGMENT_WRITE_KEY;
+    if (this.props.brand === Brand.SANTANDER) {
+      segmentWriteKey = serverRuntimeConfig.SANTANDER_SEGMENT_WRITE_KEY;
+    } else if (this.props.brand === Brand.TDA) {
+      segmentWriteKey = serverRuntimeConfig.TDA_SEGMENT_WRITE_KEY;
+    }
 
     return (
       <Html lang="en">
@@ -78,13 +72,15 @@ class VroomDocument extends Document<Props> {
               segmentWriteKey={segmentWriteKey}
             />
           )}
-          <script
-            defer
-            dangerouslySetInnerHTML={{
-              __html: `(function(b,r,a,n,c,h,_,s,d,k){if(!b[n]||!b[n]._q){for(;s<_.length;)c(h,_[s++]);d=r.createElement(a);d.async=1;d.src="https://cdn.branch.io/branch-latest.min.js";k=r.getElementsByTagName(a)[0];k.parentNode.insertBefore(d,k);b[n]=h}})(window,document,"script","branch",function(b,r){b[r]=function(){b._q.push([r,arguments])}},{_q:[],_v:1},"addListener applyCode autoAppIndex banner closeBanner closeJourney creditHistory credits data deepview deepviewCta first getCode init link logout redeem referrals removeListener sendSMS setBranchViewData setIdentity track validateCode trackCommerceEvent logEvent disableTracking".split(" "), 0);
+          {this.props.brand === Brand.VROOM && (
+            <script
+              defer
+              dangerouslySetInnerHTML={{
+                __html: `(function(b,r,a,n,c,h,_,s,d,k){if(!b[n]||!b[n]._q){for(;s<_.length;)c(h,_[s++]);d=r.createElement(a);d.async=1;d.src="https://cdn.branch.io/branch-latest.min.js";k=r.getElementsByTagName(a)[0];k.parentNode.insertBefore(d,k);b[n]=h}})(window,document,"script","branch",function(b,r){b[r]=function(){b._q.push([r,arguments])}},{_q:[],_v:1},"addListener applyCode autoAppIndex banner closeBanner closeJourney creditHistory credits data deepview deepviewCta first getCode init link logout redeem referrals removeListener sendSMS setBranchViewData setIdentity track validateCode trackCommerceEvent logEvent disableTracking".split(" "), 0);
             branch.init("${publicRuntimeConfig.BRANCH_IO_KEY}");`,
-            }}
-          />
+              }}
+            />
+          )}
         </Head>
         <body>
           <Main />

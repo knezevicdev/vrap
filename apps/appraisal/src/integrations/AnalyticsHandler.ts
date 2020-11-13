@@ -1,7 +1,13 @@
 import { AnalyticsHandler as BaseAnalyticsHandler } from '@vroom-web/analytics-integration';
 
 class AnalyticsHandler extends BaseAnalyticsHandler {
-  trackPriceAccepted(): void {
+  trackPriceViewed(): void {
+    const name = 'Price Page';
+    const category = 'sell';
+    this.page(name, category);
+  }
+
+  trackPriceAutomated(): void {
     const event = 'Automated Price';
     const category = 'sell';
     const properties = { category };
@@ -13,12 +19,6 @@ class AnalyticsHandler extends BaseAnalyticsHandler {
     const category = 'sell';
     const properties = { category };
     this.track(event, properties);
-  }
-
-  trackPriceViewed(): void {
-    const pageName = 'Price Page';
-    const category = 'sell';
-    this.page(pageName, category);
   }
 
   trackContinueClick(): void {

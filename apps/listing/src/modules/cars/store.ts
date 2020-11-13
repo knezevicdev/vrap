@@ -29,8 +29,14 @@ import {
   DriveType,
   DriveTypeAPI,
   driveTypes,
+  FuelType,
+  FuelTypeAPI,
+  fuelTypes,
   INVENTORY_CARDS_PER_PAGE,
   POPULAR_CAR_LIMIT,
+  PopularFeature,
+  PopularFeatureApi,
+  popularFeatures,
   Sort,
   SortAPIBy,
   SortAPIDirection,
@@ -49,10 +55,10 @@ const { publicRuntimeConfig } = getConfig();
 
 export interface InitialCarsStoreState {
   attributionQueryString: string;
-  makes: MakeBucket[] | undefined;
-  cars: Inventory | undefined;
-  popularCars: Inventory | undefined;
-  filtersData: FiltersData | undefined;
+  makes?: MakeBucket[];
+  cars?: Inventory;
+  popularCars?: Inventory;
+  filtersData?: FiltersData;
   titleQuery?: boolean;
 }
 
@@ -144,6 +150,28 @@ export const getCylinderRequestData = (
   return cylinder;
 };
 
+export const getFuelTypeRequestData = (
+  filtersData?: FiltersData
+): FuelTypeAPI[] | undefined => {
+  if (!filtersData) {
+    return undefined;
+  }
+  const filtersDataFuelType = filtersData[Filters.FUEL_TYPE];
+  if (!filtersDataFuelType || !fuelTypes) {
+    return undefined;
+  }
+  const fuelType: FuelTypeAPI[] = [];
+  filtersDataFuelType.forEach((filtersDataFuelType) => {
+    const matchingFuelType = fuelTypes.find(
+      (fuelType) => fuelType.filtersDataValue === filtersDataFuelType
+    );
+    if (matchingFuelType && matchingFuelType.api) {
+      fuelType.push(matchingFuelType.api);
+    }
+  });
+  return fuelType;
+};
+
 export const getMakeAndModelRequestData = (
   filtersData?: FiltersData
 ): {
@@ -189,6 +217,28 @@ export const getOffsetRequestData = (
     return undefined;
   }
   return (filtersDataPage - 1) * INVENTORY_CARDS_PER_PAGE;
+};
+
+export const getPopularFeaturesRequestData = (
+  filtersData?: FiltersData
+): PopularFeatureApi[] | undefined => {
+  if (!filtersData) {
+    return undefined;
+  }
+  const filtersDataPopularFeatures = filtersData[Filters.POPULAR_FEATURES];
+  if (!filtersDataPopularFeatures || !popularFeatures) {
+    return undefined;
+  }
+  const popularFeature: PopularFeatureApi[] = [];
+  filtersDataPopularFeatures.forEach((filtersDataPopularFeatures) => {
+    const matchingFeature = popularFeatures.find(
+      (feature) => feature.filtersDataValue === filtersDataPopularFeatures
+    );
+    if (matchingFeature && matchingFeature.api) {
+      popularFeature.push(matchingFeature.api as PopularFeatureApi);
+    }
+  });
+  return popularFeature.flat();
 };
 
 export const getSortRequestData = (
@@ -286,12 +336,14 @@ export const getPostInventoryRequestDataFromFilterData = (
   const cylinders = getCylinderRequestData(filtersData);
   const { makeSlug, modelSlug } = getMakeAndModelRequestData(filtersData);
   const offset = getOffsetRequestData(filtersData);
+  const popularFeatures = getPopularFeaturesRequestData(filtersData);
   const { sortby, sortdirection } = getSortRequestData(
     filtersData,
     geoLocationSortExperiment
   );
   const testdriveonly = getTestDriveOnlyRequestData(filtersData);
   const transmissionid = getTransmissionRequestData(filtersData);
+  const fuelType = getFuelTypeRequestData(filtersData);
 
   return {
     bodytype,
@@ -308,9 +360,12 @@ export const getPostInventoryRequestDataFromFilterData = (
     testdriveonly,
     transmissionid,
     year: filtersData ? filtersData[Filters.YEAR] : undefined,
+    fuelType,
     cylinders,
     cylindersShowOther:
       (filtersData && filtersData[Filters.OTHER_CYLINDERS]) || undefined,
+    optionalFeatures: popularFeatures,
+    combinedMpg: filtersData ? filtersData[Filters.FUEL_EFFICIENCY] : undefined,
   };
 };
 
@@ -325,6 +380,8 @@ export class CarsStore {
   readonly colors: Color[] = colors;
   readonly driveTypes: DriveType[] = driveTypes;
   readonly cylinders: Cylinder[] = cylinders;
+  readonly fuelTypes: FuelType[] = fuelTypes;
+  readonly popularFeatures: PopularFeature[] = popularFeatures;
   readonly sorts: Sort[] = sorts;
   readonly testDrives: TestDrive[] = testDrives;
   readonly transmissions: Transmission[] = transmissions;
@@ -356,6 +413,9 @@ export class CarsStore {
 
   @observable geoLocationSortExperiment?: Experiment;
   @observable cylinderFilterExperiment?: Experiment;
+  @observable fuelTypeFilterExperiment?: Experiment;
+  @observable featuresFilterExperiment?: Experiment;
+  @observable fuelEfficiencyFilterExperiment?: Experiment;
 
   constructor(initialState?: InitialCarsStoreState) {
     this.invSearchNetworker = new InvSearchNetworker(
@@ -384,6 +444,27 @@ export class CarsStore {
     cylinderFilterExperiment?: Experiment
   ): void => {
     this.cylinderFilterExperiment = cylinderFilterExperiment;
+  };
+
+  @action
+  setFuelEfficiencyFilterExperiment = (
+    fuelEfficiencyFilterExperiment?: Experiment
+  ): void => {
+    this.fuelEfficiencyFilterExperiment = fuelEfficiencyFilterExperiment;
+  };
+
+  @action
+  setFuelTypeFilterExperiment = (
+    fuelTypeFilterExperiment?: Experiment
+  ): void => {
+    this.fuelTypeFilterExperiment = fuelTypeFilterExperiment;
+  };
+
+  @action
+  setFeaturesFilterExperiment = (
+    featuresFilterExperiment?: Experiment
+  ): void => {
+    this.featuresFilterExperiment = featuresFilterExperiment;
   };
 
   @action

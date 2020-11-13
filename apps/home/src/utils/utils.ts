@@ -1,10 +1,10 @@
 import { Brand } from '@vroom-web/ui';
-import { NextPageContext } from 'next';
+import { GetServerSidePropsContext } from 'next';
 import getConfig from 'next/config';
 import { DocumentContext } from 'next/document';
 
 export const determineWhitelabel = (
-  ctx: DocumentContext | NextPageContext
+  ctx: GetServerSidePropsContext | DocumentContext
 ): Brand => {
   let brand = Brand.VROOM;
 
@@ -14,13 +14,16 @@ export const determineWhitelabel = (
 
   const whitelabel = brandHeader || queryBrand;
 
-  if (whitelabel === Brand.SANTANDER) brand = Brand.SANTANDER;
-  else if (whitelabel === Brand.TDA) brand = Brand.TDA;
+  // check header/query/cached brand val exists in enum and is valid
+  if (Object.values(Brand).includes(whitelabel as Brand))
+    brand = whitelabel as Brand;
 
   return brand;
 };
+
 export interface BrandConfig {
   segmentWriteKey?: string;
+  brandParam: string;
   title: string;
   description: string;
 }
@@ -28,6 +31,7 @@ export const returnBrandConfig = (brand: Brand): BrandConfig => {
   const { serverRuntimeConfig } = getConfig();
   let config: BrandConfig = {
     segmentWriteKey: serverRuntimeConfig.SEGMENT_WRITE_KEY,
+    brandParam: 'vroom',
     title: 'Vroom: Buy, Sell or Trade-In Used Vehicles Online',
     description:
       'Buy, sell or trade-in your car entirely online, from the comfort of your home. No haggle, no pressure. Easy online financing available. Browse thousands of high-quality cars, and have it delivered straight to you.',
@@ -35,13 +39,15 @@ export const returnBrandConfig = (brand: Brand): BrandConfig => {
   if (brand === Brand.SANTANDER) {
     config = {
       segmentWriteKey: serverRuntimeConfig.SANTANDER_SEGMENT_WRITE_KEY,
+      brandParam: 'santander',
       title: 'Santander Consumer USA: Buy Used Cars, Trucks & SUVs Online',
       description:
         'Buy a used vehicle online from anywhere in the USA. We offer high quality cars, easy car buying, & flexible financing.',
     };
   } else if (brand === Brand.TDA) {
     config = {
-      segmentWriteKey: serverRuntimeConfig.SEGMENT_WRITE_KEY,
+      segmentWriteKey: serverRuntimeConfig.TDA_SEGMENT_WRITE_KEY,
+      brandParam: 'tda',
       title: 'Texas Direct Auto: Buy, Sell or Trade-In Used Vehicles Online',
       description:
         'Buy, sell or trade-in your car entirely online, from the comfort of your home. No haggle, no pressure. Easy online financing available. Browse thousands of high-quality cars, and have it delivered straight to you.',
