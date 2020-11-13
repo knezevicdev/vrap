@@ -78,6 +78,27 @@ export class Icons {
     path: `${ENVS.BASE_PATH}/icons/car-offer.svg`,
   });
 
+  static readonly RED_ONE = new Icons('RED_ONE', {
+    name: 'red-one',
+    width: 16,
+    height: 16,
+    path: `${ENVS.BASE_PATH}/icons/red-one.svg`,
+  });
+
+  static readonly CHECK_MARK_RED = new Icons('CHECK_MARK_RED', {
+    name: 'check-mark-red',
+    width: 16,
+    height: 16,
+    path: `${ENVS.BASE_PATH}/icons/check-mark-red.svg`,
+  });
+
+  static readonly CHECK_MARK_WHITE = new Icons('CHECK_MARK_WHITE', {
+    name: 'check-mark-white',
+    width: 16,
+    height: 16,
+    path: `${ENVS.BASE_PATH}/icons/check-mark-white.svg`,
+  });
+
   private constructor(
     protected key: string,
     public readonly value: {
