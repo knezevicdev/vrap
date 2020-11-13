@@ -1,3 +1,4 @@
+import { observer } from 'mobx-react';
 import React from 'react';
 
 import View from './View';
@@ -12,4 +13,4 @@ const Price: React.FC = () => {
   return <View viewModel={viewModel} />;
 };
 
-export default Price;
+export default observer(Price);

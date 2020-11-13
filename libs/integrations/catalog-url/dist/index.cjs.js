@@ -19,6 +19,9 @@ var jsBase64 = require('js-base64');
   Filters["YEAR"] = "year";
   Filters["CYLINDERS"] = "cylinders";
   Filters["OTHER_CYLINDERS"] = "othercylinders";
+  Filters["FUEL_TYPE"] = "fueltype";
+  Filters["POPULAR_FEATURES"] = "optionalfeatures";
+  Filters["FUEL_EFFICIENCY"] = "combinedmpg";
 })(exports.Filters || (exports.Filters = {}));
 
 (function (BodyType) {
@@ -80,6 +83,25 @@ var jsBase64 = require('js-base64');
   Cylinder["EIGHT"] = "8";
 })(exports.Cylinder || (exports.Cylinder = {}));
 
+(function (FuelType) {
+  FuelType["GASOLINE"] = "gasoline";
+  FuelType["ELECTRIC"] = "electric";
+  FuelType["PLUG_IN_HYBRID"] = "pluginhybrid";
+  FuelType["GAS_ELECTRIC_HYBRID"] = "gaselectrichybrid";
+  FuelType["DIESEL"] = "diesel";
+  FuelType["OTHER"] = "other";
+})(exports.FuelType || (exports.FuelType = {}));
+
+(function (PopularFeatures) {
+  PopularFeatures["ANDROID_AUTO"] = "Android Auto";
+  PopularFeatures["APPLE_CAR_PLAY"] = "Apple CarPlay";
+  PopularFeatures["HEATED_SEATS"] = "Heated Seats";
+  PopularFeatures["REAR_VIEW_CAMERA"] = "Rear View Camera";
+  PopularFeatures["REMOTE_START"] = "Remote Start";
+  PopularFeatures["SUNROOF_MOONROOF"] = "Sunroof or Moonroof";
+  PopularFeatures["THIRD_ROW_SEATING"] = "Third Row Seating";
+})(exports.PopularFeatures || (exports.PopularFeatures = {}));
+
 var deepCopyFiltersData = function deepCopyFiltersData(filtersData) {
   return JSON.parse(JSON.stringify(filtersData));
 };
@@ -109,6 +131,22 @@ var removeBodyType = function removeBodyType(bodyType, filtersData) {
     return bt !== bodyType;
   });
   newFiltersData[exports.Filters.BODY_TYPES] = newBodyTypes.length > 0 ? newBodyTypes : undefined;
+  return newFiltersData;
+};
+var addFuelType = function addFuelType(fuelType, filtersData) {
+  var newFiltersData = deepCopyFiltersData(filtersData || {});
+  var newFuelType = newFiltersData[exports.Filters.FUEL_TYPE] || [];
+  newFuelType.push(fuelType);
+  newFiltersData[exports.Filters.FUEL_TYPE] = newFuelType;
+  return newFiltersData;
+};
+var removeFuelType = function removeFuelType(fuelType, filtersData) {
+  var newFiltersData = deepCopyFiltersData(filtersData || {});
+  var existingFuelType = newFiltersData[exports.Filters.FUEL_TYPE] || [];
+  var newFuelType = existingFuelType.filter(function (c) {
+    return c !== fuelType;
+  });
+  newFiltersData[exports.Filters.FUEL_TYPE] = newFuelType.length > 0 ? newFuelType : undefined;
   return newFiltersData;
 };
 var addCylinder = function addCylinder(cylinder, filtersData) {
@@ -162,6 +200,22 @@ var removeDriveType = function removeDriveType(driveType, filtersData) {
     return dt !== driveType;
   });
   newFiltersData[exports.Filters.DRIVE_TYPE] = newDriveTypes.length > 0 ? newDriveTypes : undefined;
+  return newFiltersData;
+};
+var addPopularFeature = function addPopularFeature(popularFeature, filtersData) {
+  var newFiltersData = deepCopyFiltersData(filtersData || {});
+  var newFeatures = newFiltersData[exports.Filters.POPULAR_FEATURES] || [];
+  newFeatures.push(popularFeature);
+  newFiltersData[exports.Filters.POPULAR_FEATURES] = newFeatures;
+  return newFiltersData;
+};
+var removePopularFeature = function removePopularFeature(popularFeature, filtersData) {
+  var newFiltersData = deepCopyFiltersData(filtersData || {});
+  var existingFeatures = newFiltersData[exports.Filters.POPULAR_FEATURES] || [];
+  var newFeatures = existingFeatures.filter(function (f) {
+    return f !== popularFeature;
+  });
+  newFiltersData[exports.Filters.POPULAR_FEATURES] = newFeatures.length > 0 ? newFeatures : undefined;
   return newFiltersData;
 };
 var setTestDrive = function setTestDrive(testDrive, filtersData) {
@@ -242,6 +296,11 @@ var removeModel = function removeModel(makeSlug, modelSlug, filtersData) {
 var setMiles = function setMiles(miles, filtersData) {
   var newFiltersData = deepCopyFiltersData(filtersData || {});
   newFiltersData[exports.Filters.MILES] = miles;
+  return newFiltersData;
+};
+var setFuelEfficiency = function setFuelEfficiency(fuelEfficiency, filtersData) {
+  var newFiltersData = deepCopyFiltersData(filtersData || {});
+  newFiltersData[exports.Filters.FUEL_EFFICIENCY] = fuelEfficiency;
   return newFiltersData;
 };
 var setPage = function setPage(page, filtersData) {
@@ -404,6 +463,18 @@ var isMaxAndMin = function isMaxAndMin(x) {
   }
 
   return true;
+}; // eslint-disable-next-line @typescript-eslint/no-explicit-any
+
+var isFuelEfficiency = function isFuelEfficiency(x) {
+  if (!isObject(x)) {
+    return false;
+  }
+
+  if (!isNumber(x['min'])) {
+    return false;
+  }
+
+  return true;
 };
 var isSortBy = isEnum(exports.SortBy);
 var isSortDirection = isEnum(exports.SortDirection); // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -550,6 +621,18 @@ var getFiltersDataFromFiltersQueryParam = function getFiltersDataFromFiltersQuer
     filtersData[exports.Filters.CYLINDERS] = parsed[exports.Filters.CYLINDERS];
   }
 
+  var isFeaturesArray = isEnumArray(exports.PopularFeatures);
+
+  if (isFeaturesArray(parsed[exports.Filters.POPULAR_FEATURES])) {
+    filtersData[exports.Filters.POPULAR_FEATURES] = parsed[exports.Filters.POPULAR_FEATURES];
+  }
+
+  var isFuelTypeArray = isEnumArray(exports.FuelType);
+
+  if (isFuelTypeArray(parsed[exports.Filters.FUEL_TYPE])) {
+    filtersData[exports.Filters.FUEL_TYPE] = parsed[exports.Filters.FUEL_TYPE];
+  }
+
   if (isBoolean(parsed[exports.Filters.OTHER_CYLINDERS])) {
     filtersData[exports.Filters.OTHER_CYLINDERS] = parsed[exports.Filters.OTHER_CYLINDERS];
   }
@@ -560,6 +643,10 @@ var getFiltersDataFromFiltersQueryParam = function getFiltersDataFromFiltersQuer
 
   if (isMaxAndMin(parsed[exports.Filters.MILES])) {
     filtersData[exports.Filters.MILES] = parsed[exports.Filters.MILES];
+  }
+
+  if (isFuelEfficiency(parsed[exports.Filters.FUEL_EFFICIENCY])) {
+    filtersData[exports.Filters.FUEL_EFFICIENCY] = parsed[exports.Filters.FUEL_EFFICIENCY];
   }
 
   if (isNumber(parsed[exports.Filters.PAGE])) {
@@ -698,7 +785,9 @@ exports.addBodyType = addBodyType;
 exports.addColor = addColor;
 exports.addCylinder = addCylinder;
 exports.addDriveType = addDriveType;
+exports.addFuelType = addFuelType;
 exports.addModel = addModel;
+exports.addPopularFeature = addPopularFeature;
 exports.getFiltersDataFromUrl = getFiltersDataFromUrl;
 exports.getUrlFromFiltersData = getUrlFromFiltersData;
 exports.removeAllModels = removeAllModels;
@@ -706,9 +795,12 @@ exports.removeBodyType = removeBodyType;
 exports.removeColor = removeColor;
 exports.removeCylinder = removeCylinder;
 exports.removeDriveType = removeDriveType;
+exports.removeFuelType = removeFuelType;
 exports.removeModel = removeModel;
+exports.removePopularFeature = removePopularFeature;
 exports.resetFilter = resetFilter;
 exports.resetFilters = resetFilters;
+exports.setFuelEfficiency = setFuelEfficiency;
 exports.setMiles = setMiles;
 exports.setOtherCylinders = setOtherCylinders;
 exports.setPage = setPage;

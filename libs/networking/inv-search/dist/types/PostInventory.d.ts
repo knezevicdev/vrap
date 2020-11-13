@@ -31,6 +31,7 @@ export interface PostInventoryRequestData {
     };
     transmissionid?: string;
     drivetype?: string[];
+    sortAgeDirection?: string;
     sortby?: string;
     sortdirection?: string;
     searchall?: string;
@@ -44,6 +45,11 @@ export interface PostInventoryRequestData {
     isTitleQAPass?: boolean;
     cylinders?: number[];
     cylindersShowOther?: boolean;
+    fuelType?: string[];
+    optionalFeatures?: string[];
+    combinedMpg?: {
+        min: number;
+    };
 }
 export declare const postInventoryResponseSchema: import("yup").ObjectSchema<InventoryResponse>;
 export declare type PostInventoryResponse = InventoryResponse;

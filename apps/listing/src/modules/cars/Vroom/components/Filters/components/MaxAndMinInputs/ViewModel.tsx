@@ -13,6 +13,7 @@ interface ConstructorProps {
   step: number;
   store: MaxAndMinInputsStore;
   variant: Variant;
+  showInput: boolean;
 }
 
 class MaxAndMinInputsViewModel {
@@ -27,6 +28,7 @@ class MaxAndMinInputsViewModel {
   readonly minInputPlaceholder: string;
   readonly step: number;
   readonly variant: Variant;
+  readonly showInput: boolean;
 
   constructor(constructorProps: ConstructorProps) {
     const {
@@ -39,6 +41,7 @@ class MaxAndMinInputsViewModel {
       step,
       store,
       variant,
+      showInput,
     } = constructorProps;
     this.inputErrorLabel = inputErrorLabel;
     this.inputStartAdornment = inputStartAdornment;
@@ -54,6 +57,7 @@ class MaxAndMinInputsViewModel {
     this.step = step;
     this.store = store;
     this.variant = variant;
+    this.showInput = showInput;
   }
 
   hasInputError = (): boolean => {
@@ -72,6 +76,9 @@ class MaxAndMinInputsViewModel {
     if (this.variant === Variant.MAX_ONLY) {
       return this.store.maxSliderValue;
     }
+    if (this.variant === Variant.MIN_ONLY) {
+      return this.store.minSliderValue;
+    }
     return [this.store.minSliderValue, this.store.maxSliderValue];
   };
 
@@ -87,6 +94,11 @@ class MaxAndMinInputsViewModel {
     if (this.variant === Variant.MAX_ONLY) {
       const max = value as number;
       this.store.setMaxSliderValue(max);
+      return;
+    }
+    if (this.variant === Variant.MIN_ONLY) {
+      const min = value as number;
+      this.store.setMinSliderValue(min);
       return;
     }
     const values = value as number[];

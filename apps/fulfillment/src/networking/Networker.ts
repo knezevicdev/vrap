@@ -1,6 +1,8 @@
 import axios, { AxiosInstance, AxiosResponse } from 'axios';
+import qs from 'qs';
 
 import { Details, Summary } from './models/DeliveryOrder';
+import { User } from './models/User';
 
 export enum Status {
   INITIAL = 'initial',
@@ -26,6 +28,17 @@ export class Networker {
 
   getDeliveryOrder(vin: string): Promise<AxiosResponse<Details>> {
     const url = `${SHIPPING_URL}/api/delivery-order/${vin}`;
+    return this.axiosInstance.get(url);
+  }
+
+  getUsers(carrier?: string, status?: string): Promise<AxiosResponse<User[]>> {
+    const url = `${SHIPPING_URL}/api/users?${qs.stringify(
+      {
+        carrier: carrier || null,
+        status: status || null,
+      },
+      { skipNulls: true }
+    )}`;
     return this.axiosInstance.get(url);
   }
 }

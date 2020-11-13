@@ -1,29 +1,27 @@
-import getConfig from 'next/config';
 import React from 'react';
-const {
-  publicRuntimeConfig: { BASE_PATH },
-} = getConfig();
+
+import ENVS from 'src/integrations/Envs';
 
 export class Icons {
   static readonly EMAIL = new Icons('Email', {
     name: 'email',
     width: 24,
     height: 24,
-    path: `${BASE_PATH}/icons/email.svg`,
+    path: `${ENVS.BASE_PATH}/icons/email.svg`,
   });
 
   static readonly FAQ = new Icons('Faq', {
     name: 'faq',
     width: 24,
     height: 24,
-    path: `${BASE_PATH}/icons/faq.svg`,
+    path: `${ENVS.BASE_PATH}/icons/faq.svg`,
   });
 
   static readonly PHONE = new Icons('Phone', {
     name: 'phone',
     width: 24,
     height: 24,
-    path: `${BASE_PATH}/icons/phone.svg`,
+    path: `${ENVS.BASE_PATH}/icons/phone.svg`,
   });
 
   static readonly VROOM = new Icons('VROOM', {
@@ -77,7 +75,7 @@ export class Icons {
     name: 'car-offer',
     width: 90,
     height: 90,
-    path: `${BASE_PATH}/icons/car-offer.svg`,
+    path: `${ENVS.BASE_PATH}/icons/car-offer.svg`,
   });
 
   static readonly RED_ONE = new Icons('RED_ONE', {
@@ -140,7 +138,7 @@ const Icon: React.FC<Props> = ({ icon, color, className }) => {
   const name = icon.value.name;
   const iconColor = icon.value.color ? icon.value.color : '#041022';
   const fill = color ? color : iconColor;
-  const file = `${BASE_PATH}/icons/icons.svg`;
+  const file = `${ENVS.BASE_PATH}/icons/icons.svg`;
   const id = `#${name}`;
   const xlinkHref = `${file}${id}`;
 

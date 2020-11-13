@@ -6,7 +6,9 @@ import {
   removeColor,
   removeCylinder,
   removeDriveType,
+  removeFuelType,
   removeModel,
+  removePopularFeature,
   resetFilter,
 } from '@vroom-web/catalog-url-integration';
 
@@ -196,6 +198,26 @@ class ChipsViewModel {
     return milesChips;
   }
 
+  getFuelEfficiencyChips(filtersData: FiltersData): Chip[] {
+    const fuelEfficiencyChips: Chip[] = [];
+    const filtersDataFuelEfficiency = filtersData[Filters.FUEL_EFFICIENCY];
+    if (filtersDataFuelEfficiency) {
+      fuelEfficiencyChips.push({
+        display: `${this.numberFormatter.format(
+          filtersDataFuelEfficiency.min
+        )} MPG +`,
+        handleDelete: () => {
+          const updatedFiltersData = resetFilter(
+            Filters.FUEL_EFFICIENCY,
+            filtersData
+          );
+          this.carsStore.updateFiltersData(updatedFiltersData);
+        },
+      });
+    }
+    return fuelEfficiencyChips;
+  }
+
   getTransmissionChips(filtersData: FiltersData): Chip[] {
     const transmissionChips: Chip[] = [];
     const filtersDataTransmission = filtersData[Filters.TRANSMISSION];
@@ -245,6 +267,31 @@ class ChipsViewModel {
     return driveTypesChips;
   }
 
+  getFuelTypeChips(filtersData: FiltersData): Chip[] {
+    const fuelTypeChips: Chip[] = [];
+    const filtersDataFuelType = filtersData[Filters.FUEL_TYPE];
+    if (filtersDataFuelType) {
+      filtersDataFuelType.forEach((filtersDataDriveType) => {
+        const matchingFuelType = this.carsStore.fuelTypes.find(
+          (ft) => ft.filtersDataValue === filtersDataDriveType
+        );
+        if (matchingFuelType) {
+          fuelTypeChips.push({
+            display: matchingFuelType.display,
+            handleDelete: () => {
+              const updatedFiltersData = removeFuelType(
+                filtersDataDriveType,
+                filtersData
+              );
+              this.carsStore.updateFiltersData(updatedFiltersData);
+            },
+          });
+        }
+      });
+    }
+    return fuelTypeChips;
+  }
+
   getCylinderChips(filtersData: FiltersData): Chip[] {
     const cylindersChips: Chip[] = [];
     const filtersDataCylinders = filtersData[Filters.CYLINDERS];
@@ -283,6 +330,31 @@ class ChipsViewModel {
     return cylindersChips;
   }
 
+  getPopularFeatureChips(filtersData: FiltersData): Chip[] {
+    const popularFeatureChips: Chip[] = [];
+    const filtersDataPopularFeatures = filtersData[Filters.POPULAR_FEATURES];
+    if (filtersDataPopularFeatures) {
+      filtersDataPopularFeatures.forEach((filtersDataPopularFeature) => {
+        const matchingPopularFeature = this.carsStore.popularFeatures.find(
+          (f) => f.filtersDataValue === filtersDataPopularFeature
+        );
+        if (matchingPopularFeature) {
+          popularFeatureChips.push({
+            display: matchingPopularFeature.display,
+            handleDelete: () => {
+              const updatedFiltersData = removePopularFeature(
+                filtersDataPopularFeature,
+                filtersData
+              );
+              this.carsStore.updateFiltersData(updatedFiltersData);
+            },
+          });
+        }
+      });
+    }
+    return popularFeatureChips;
+  }
+
   getSearchChips(filtersData: FiltersData): Chip[] {
     const searchChips: Chip[] = [];
     const filtersDataSearch = filtersData[Filters.SEARCH];
@@ -314,6 +386,9 @@ class ChipsViewModel {
       ...this.getDriveTypesChips(filtersData),
       ...this.getSearchChips(filtersData),
       ...this.getCylinderChips(filtersData),
+      ...this.getFuelTypeChips(filtersData),
+      ...this.getPopularFeatureChips(filtersData),
+      ...this.getFuelEfficiencyChips(filtersData),
     ];
     return chips.length > 0 ? chips : undefined;
   }

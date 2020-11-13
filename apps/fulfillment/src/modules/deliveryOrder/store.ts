@@ -1,4 +1,4 @@
-import { observable } from 'mobx';
+import { makeAutoObservable } from 'mobx';
 import { createContext } from 'react';
 
 import { Details } from 'src/networking/models/DeliveryOrder';
@@ -29,10 +29,11 @@ export async function getInitialDeliveryOrderStoreState(
 }
 
 export class DeliveryOrderStore {
-  @observable deliveryOrderStatus: Status = Status.INITIAL;
-  @observable deliveryOrder: Details = {} as Details;
+  deliveryOrderStatus: Status = Status.INITIAL;
+  deliveryOrder: Details = {} as Details;
 
   constructor(initialState?: DeliveryOrderStoreState) {
+    makeAutoObservable(this);
     if (initialState) {
       this.deliveryOrderStatus = initialState.deliveryOrderStatus;
       this.deliveryOrder = initialState.deliveryOrder;

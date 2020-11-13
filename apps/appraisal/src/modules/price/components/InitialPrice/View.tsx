@@ -41,6 +41,11 @@ const InitialPriceView: React.FC<Props> = ({ viewModel }) => {
     return (): void => document.removeEventListener('scroll', handleScroll);
   }, []);
 
+  useEffect(() => {
+    viewModel.onPageLoad();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return (
     <StyledContainer>
       <Hero.Four>{viewModel.yourPrice}</Hero.Four>
@@ -61,6 +66,10 @@ const InitialPriceView: React.FC<Props> = ({ viewModel }) => {
       <StyledButton id="priceDetails" onClick={viewModel.onContinueClick}>
         {viewModel.continuePrice}
       </StyledButton>
+
+      <StyledLegal>
+        <Body.Small>{viewModel.legalDocumentation}</Body.Small>
+      </StyledLegal>
 
       <StickyFooter id="stickyFooter">
         <StickyContent>
@@ -107,6 +116,12 @@ const StickyDetails = styled.div`
 
 const StickyContent = styled.div`
   padding: 5px 20px;
+`;
+
+const StyledLegal = styled.div`
+  max-width: 500px;
+  text-align: left;
+  margin: auto;
 `;
 
 const StickyFooter = styled.div`

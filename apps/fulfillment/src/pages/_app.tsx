@@ -1,6 +1,4 @@
-import 'mobx-react/batchingForReactDom';
-
-import { ThemeProvider } from '@vroom-web/ui';
+// import { ThemeProvider } from '@vroom-web/ui';
 import { configure as configureMobx } from 'mobx';
 import App from 'next/app';
 import Head from 'next/head';
@@ -18,9 +16,9 @@ class VroomApp extends App {
         <Head>
           <title>Vroom</title>
         </Head>
-        <ThemeProvider>
-          <Component {...pageProps} />
-        </ThemeProvider>
+        {/* <ThemeProvider> */}
+        <Component {...pageProps} />
+        {/* </ThemeProvider> */}
       </>
     );
   }

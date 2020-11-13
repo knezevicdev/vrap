@@ -12,6 +12,9 @@
     "apps/**",
     "libs/**"
   ],
+  "scripts": {
+    "plop": "plop"
+  },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^2.29.0",
     "@typescript-eslint/parser": "^2.29.0",
@@ -24,6 +27,7 @@
     "eslint-plugin-react-hooks": "^3.0.0",
     "eslint-plugin-simple-import-sort": "^5.0.2",
     "jest": "^25.4.0",
+    "plop": "^2.7.4",
     "prettier": "^2.0.5"
   }
 }

@@ -21,7 +21,7 @@ import {
   SoldStatus,
 } from '@vroom-web/inv-search-networking';
 import { Brand, ThemeProvider } from '@vroom-web/ui';
-import { NextPage, NextPageContext } from 'next';
+import { GetServerSideProps, GetServerSidePropsContext, NextPage } from 'next';
 import getConfig from 'next/config';
 import { stringify } from 'qs';
 import React, { useEffect, useState } from 'react';
@@ -29,7 +29,6 @@ import React, { useEffect, useState } from 'react';
 import AnalyticsHandler from 'src/integrations/AnalyticsHandler';
 import experimentSDK from 'src/integrations/experimentSDK';
 import Cars from 'src/modules/cars';
-import { BrandContext } from 'src/modules/cars/BrandContext';
 import {
   INVENTORY_CARDS_PER_PAGE,
   POPULAR_CAR_LIMIT,
@@ -42,6 +41,7 @@ import {
 } from 'src/modules/cars/store';
 import { Status } from 'src/networking/types';
 import Page from 'src/Page';
+import { determineWhitelabel } from 'src/utils/utils';
 const {
   publicRuntimeConfig: { INVSEARCH_V3_URL, NAME, VERSION },
 } = getConfig();
@@ -77,31 +77,81 @@ const CarsPage: NextPage<Props> = ({
   // Get the experiments from the SDK
   useEffect(() => {
     experimentSDK
-      .getAndLogExperimentClientSide('snd-catalog-sort-by-geo-location')
+      .getAndLogExperimentClientSide('snd-catalog-sort-direction')
       .then((experiment) => {
-        carsStore.setGeoLocationSortExperiment(experiment);
+        carsStore.setSortAgeDirectionExperiment(experiment);
         if (experiment && experiment.assignedVariant === 1) {
           carsStore.fetchInventoryData();
         } else {
           carsStore.setInventoryStatus(carsStatus);
         }
       });
+  }, [carsStore, carsStatus]);
+
+  // Register experiments with analytics handler
+  useEffect(() => {
+    if (carsStore.sortAgeDirectionExperiment) {
+      analyticsHandler.registerExperiment(carsStore.sortAgeDirectionExperiment);
+    }
+  }, [carsStore.sortAgeDirectionExperiment, analyticsHandler]);
+
+  useEffect(() => {
     experimentSDK
       .getAndLogExperimentClientSide('snd-cylinder-filters')
       .then((experiment) => {
         carsStore.setCylindersFilterExperiment(experiment);
       });
-  }, [carsStore, carsStatus]);
+  }, [carsStore]);
 
-  // Register experiments with analytics handler
   useEffect(() => {
-    if (carsStore.geoLocationSortExperiment) {
-      analyticsHandler.registerExperiment(carsStore.geoLocationSortExperiment);
-    }
     if (carsStore.cylinderFilterExperiment) {
       analyticsHandler.registerExperiment(carsStore.cylinderFilterExperiment);
     }
-  }, [carsStore, analyticsHandler]);
+  }, [carsStore.cylinderFilterExperiment, analyticsHandler]);
+
+  useEffect(() => {
+    experimentSDK
+      .getAndLogExperimentClientSide('snd-catalog-fuel-efficiency')
+      .then((experiment) => {
+        carsStore.setFuelEfficiencyFilterExperiment(experiment);
+      });
+  }, [carsStore]);
+
+  useEffect(() => {
+    if (carsStore.fuelEfficiencyFilterExperiment) {
+      analyticsHandler.registerExperiment(
+        carsStore.fuelEfficiencyFilterExperiment
+      );
+    }
+  }, [carsStore.fuelEfficiencyFilterExperiment, analyticsHandler]);
+
+  useEffect(() => {
+    experimentSDK
+      .getAndLogExperimentClientSide('snd-catalog-fuel-type-filter')
+      .then((experiment) => {
+        carsStore.setFuelTypeFilterExperiment(experiment);
+      });
+  }, [carsStore]);
+
+  useEffect(() => {
+    experimentSDK
+      .getAndLogExperimentClientSide('snd-feature-filter')
+      .then((experiment) => {
+        carsStore.setFeaturesFilterExperiment(experiment);
+      });
+  }, [carsStore]);
+
+  useEffect(() => {
+    if (carsStore.fuelTypeFilterExperiment) {
+      analyticsHandler.registerExperiment(carsStore.fuelTypeFilterExperiment);
+    }
+  }, [carsStore.fuelTypeFilterExperiment, analyticsHandler]);
+
+  useEffect(() => {
+    if (carsStore.featuresFilterExperiment) {
+      analyticsHandler.registerExperiment(carsStore.featuresFilterExperiment);
+    }
+  }, [carsStore.featuresFilterExperiment, analyticsHandler]);
 
   const [resumeSearchExperiment, setResumeSearchExperiment] = useState<
     Experiment | undefined
@@ -338,19 +388,19 @@ const CarsPage: NextPage<Props> = ({
   return (
     <ThemeProvider brand={brand}>
       <Page name="Catalog" head={head}>
-        <BrandContext.Provider value={brand}>
-          <CarsStoreContext.Provider value={carsStore}>
-            <Cars />
-          </CarsStoreContext.Provider>
-        </BrandContext.Provider>
+        <CarsStoreContext.Provider value={carsStore}>
+          <Cars brand={brand} />
+        </CarsStoreContext.Provider>
       </Page>
     </ThemeProvider>
   );
 };
 
-CarsPage.getInitialProps = async (context: NextPageContext): Promise<Props> => {
+export const getServerSideProps: GetServerSideProps<Props> = async (
+  context: GetServerSidePropsContext
+) => {
   const {
-    asPath,
+    req: { url: _url },
     query: {
       gclid,
       subid,
@@ -365,21 +415,10 @@ CarsPage.getInitialProps = async (context: NextPageContext): Promise<Props> => {
     },
   } = context;
 
-  const { req, res, query } = context;
-  const headerBrandKey = 'x-brand';
-  const santanderKey = 'santander';
-  const tdaKey = 'tda';
-  const brandHeader = req && req.headers[headerBrandKey];
-  const queryBrand = query.brand;
+  const { res, query } = context;
+  const brand = determineWhitelabel(context);
 
-  let brand = Brand.VROOM;
-  if ((brandHeader || queryBrand) == santanderKey) {
-    brand = Brand.SANTANDER;
-  } else if ((brandHeader || queryBrand) == tdaKey) {
-    brand = Brand.TDA;
-  }
-
-  const url = typeof asPath === 'string' ? (asPath as string) : '';
+  const url = typeof _url === 'string' ? (_url as string) : '';
   const filtersData = getFiltersDataFromUrl(url);
 
   const { isTitleQAPass } = query;
@@ -457,6 +496,7 @@ CarsPage.getInitialProps = async (context: NextPageContext): Promise<Props> => {
       utm_keyword,
       utm_subsource,
       utm_site,
+      brand,
     },
     {
       addQueryPrefix: false,
@@ -472,6 +512,13 @@ CarsPage.getInitialProps = async (context: NextPageContext): Promise<Props> => {
     titleQuery,
   };
 
+  // delete keys with value as undefined, as GSSP tries to serialize as JSON and errors out
+  Object.keys(initialStoreState).forEach((key) => {
+    if (initialStoreState[key as keyof InitialCarsStoreState] === undefined) {
+      delete initialStoreState[key as keyof InitialCarsStoreState];
+    }
+  });
+
   const hasInventory = cars ? cars.hits.total !== 0 : false;
 
   if (res && !hasInventory) {
@@ -479,9 +526,11 @@ CarsPage.getInitialProps = async (context: NextPageContext): Promise<Props> => {
   }
 
   return {
-    brand,
-    carsStatus,
-    initialStoreState,
+    props: {
+      brand,
+      carsStatus,
+      initialStoreState,
+    },
   };
 };
 

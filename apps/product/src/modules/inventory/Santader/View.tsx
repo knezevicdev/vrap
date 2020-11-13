@@ -2,6 +2,7 @@ import { styled } from '@material-ui/core/styles';
 import { SantanderFooter } from '@vroom-web/footer-components';
 import { SantanderHeader } from '@vroom-web/header-components';
 import { observer } from 'mobx-react';
+import getConfig from 'next/config';
 import React, { useEffect } from 'react';
 
 import Breadcrumbs from './components/Breadcrumbs';
@@ -16,6 +17,9 @@ import StartPurchase from './components/StartPurchase';
 import VehicleHeader from './components/VehicleHeader';
 import VehicleNotFound from './components/VehicleNotFound';
 import ViewModel from './ViewModel';
+const {
+  publicRuntimeConfig: { VROOM_URL },
+} = getConfig();
 
 export interface Props {
   viewModel: ViewModel;
@@ -78,7 +82,7 @@ const InventoryView: React.FC<Props> = (props) => {
         <SimilarVehicles />
         <LegalFooter />
       </InventoryViewContainer>
-      <SantanderFooter />
+      <SantanderFooter vroomUrl={VROOM_URL} />
       {viewModel.ready() && (
         <StickyBottom>
           <StartPurchase />

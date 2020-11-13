@@ -100,24 +100,26 @@ const MaxAndMinInputsView: React.FC<Props> = ({ viewModel }) => {
 
   return (
     <>
-      <ContainerForErrorAndInputs>
-        {hasInputError && (
-          <Error variant="body1" color="error.main">
-            {viewModel.inputErrorLabel}
-          </Error>
-        )}
+      {viewModel.showInput && (
+        <ContainerForErrorAndInputs>
+          {hasInputError && (
+            <Error variant="body1" color="error.main">
+              {viewModel.inputErrorLabel}
+            </Error>
+          )}
 
-        <InputsContainer>
-          {getMinInputForVariant()}
-          <Input
-            startAdornment={viewModel.inputStartAdornment}
-            error={hasInputError}
-            value={viewModel.getMaxInputValue()}
-            onChange={handleMaxInputChange}
-            placeholder={viewModel.maxInputPlaceholder}
-          />
-        </InputsContainer>
-      </ContainerForErrorAndInputs>
+          <InputsContainer>
+            {getMinInputForVariant()}
+            <Input
+              startAdornment={viewModel.inputStartAdornment}
+              error={hasInputError}
+              value={viewModel.getMaxInputValue()}
+              onChange={handleMaxInputChange}
+              placeholder={viewModel.maxInputPlaceholder}
+            />
+          </InputsContainer>
+        </ContainerForErrorAndInputs>
+      )}
       <StyledSlider
         ValueLabelComponent={SliderValueLabelView}
         valueLabelDisplay="auto"

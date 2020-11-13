@@ -48,6 +48,9 @@ class CarDetailsViewModel {
       warrantyRemaining !== 'no data' &&
       warrantyRemaining !== 'Coverage expired';
 
+    const queryParams =
+      '?vit_source=texasdirectauto&vit_medium=wl&vit_dest=vroom&vit_brand=TDA';
+
     return {
       title: 'Auto History',
       isWarrantyAvailable,
@@ -65,7 +68,7 @@ class CarDetailsViewModel {
       vroomProtect: 'Eligible for Vroom Protect',
       vroomProtectDescription: {
         text: `This vehicle is covered by <link>Vroom Protect</link>, which provides additional mechanical coverage.`,
-        href: 'https://www.vroom.com/protection',
+        href: `https://www.vroom.com/protection${queryParams}`,
       },
     };
   }

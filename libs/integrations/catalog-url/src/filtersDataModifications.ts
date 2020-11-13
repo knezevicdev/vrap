@@ -5,8 +5,11 @@ import {
   DriveType,
   Filters,
   FiltersData,
+  FuelEfficiency,
+  FuelType,
   Make,
   MaxAndMin,
+  PopularFeatures,
   SortBy,
   SortDirection,
   TestDrive,
@@ -57,6 +60,29 @@ export const removeBodyType = (
   const newBodyTypes = existingBodyTypes.filter((bt) => bt !== bodyType);
   newFiltersData[Filters.BODY_TYPES] =
     newBodyTypes.length > 0 ? newBodyTypes : undefined;
+  return newFiltersData;
+};
+
+export const addFuelType = (
+  fuelType: FuelType,
+  filtersData?: FiltersData
+): FiltersData => {
+  const newFiltersData = deepCopyFiltersData(filtersData || {});
+  const newFuelType = newFiltersData[Filters.FUEL_TYPE] || [];
+  newFuelType.push(fuelType);
+  newFiltersData[Filters.FUEL_TYPE] = newFuelType;
+  return newFiltersData;
+};
+
+export const removeFuelType = (
+  fuelType: FuelType,
+  filtersData?: FiltersData
+): FiltersData => {
+  const newFiltersData = deepCopyFiltersData(filtersData || {});
+  const existingFuelType = newFiltersData[Filters.FUEL_TYPE] || [];
+  const newFuelType = existingFuelType.filter((c) => c !== fuelType);
+  newFiltersData[Filters.FUEL_TYPE] =
+    newFuelType.length > 0 ? newFuelType : undefined;
   return newFiltersData;
 };
 
@@ -134,6 +160,29 @@ export const removeDriveType = (
   const newDriveTypes = existingDriveTypes.filter((dt) => dt !== driveType);
   newFiltersData[Filters.DRIVE_TYPE] =
     newDriveTypes.length > 0 ? newDriveTypes : undefined;
+  return newFiltersData;
+};
+
+export const addPopularFeature = (
+  popularFeature: PopularFeatures,
+  filtersData?: FiltersData
+): FiltersData => {
+  const newFiltersData = deepCopyFiltersData(filtersData || {});
+  const newFeatures = newFiltersData[Filters.POPULAR_FEATURES] || [];
+  newFeatures.push(popularFeature);
+  newFiltersData[Filters.POPULAR_FEATURES] = newFeatures;
+  return newFiltersData;
+};
+
+export const removePopularFeature = (
+  popularFeature: PopularFeatures,
+  filtersData?: FiltersData
+): FiltersData => {
+  const newFiltersData = deepCopyFiltersData(filtersData || {});
+  const existingFeatures = newFiltersData[Filters.POPULAR_FEATURES] || [];
+  const newFeatures = existingFeatures.filter((f) => f !== popularFeature);
+  newFiltersData[Filters.POPULAR_FEATURES] =
+    newFeatures.length > 0 ? newFeatures : undefined;
   return newFiltersData;
 };
 
@@ -247,6 +296,15 @@ export const setMiles = (
 ): FiltersData => {
   const newFiltersData = deepCopyFiltersData(filtersData || {});
   newFiltersData[Filters.MILES] = miles;
+  return newFiltersData;
+};
+
+export const setFuelEfficiency = (
+  fuelEfficiency: FuelEfficiency,
+  filtersData?: FiltersData
+): FiltersData => {
+  const newFiltersData = deepCopyFiltersData(filtersData || {});
+  newFiltersData[Filters.FUEL_EFFICIENCY] = fuelEfficiency;
   return newFiltersData;
 };
 

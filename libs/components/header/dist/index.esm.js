@@ -13482,8 +13482,9 @@ var HeaderNavViewModel = /*#__PURE__*/function () {
       var phoneNumberLinkData = this.getPhoneNumberLinkData(this.store.phoneNumber); // FIT-566
       // Persist query string across navigation so that vlassic attribution works.
       // This is a stopgap until a better attribution system is in place.
+      // retain brand query param to ensure whitelabeled pages are not cached/seen when navigating the vroom version of the app
 
-      var queryString = this.store.queryString;
+      var queryString = "".concat(this.store.queryString).concat(this.store.queryString ? '&' : '?', "brand=vroom");
 
       if (!this.store.loggedIn) {
         return [{
@@ -15467,7 +15468,7 @@ var AnalyticsHandler$2 = /*#__PURE__*/function (_BaseAnalyticsHandler) {
   return AnalyticsHandler;
 }(AnalyticsHandler$3);
 
-var ViewModel$1 = function ViewModel(store) {
+var ViewModel$1 = function ViewModel(store, vroomUrl) {
   var _this = this;
 
   _classCallCheck(this, ViewModel);
@@ -15476,24 +15477,31 @@ var ViewModel$1 = function ViewModel(store) {
 
   _defineProperty(this, "analyticsHandler", new AnalyticsHandler$2());
 
+  _defineProperty(this, "TDAQueryString", '?vit_source=texasdirectauto&vit_medium=wl&vit_dest=vroom&vit_brand=TDA');
+
   _defineProperty(this, "logoLink", {
+    linkToVroom: false,
     href: '/',
     handleAnalytics: this.analyticsHandler.trackLogoClicked
   });
 
   _defineProperty(this, "navLinks", [{
+    linkToVroom: false,
     href: '/cars',
     label: 'BUY',
     handleAnalytics: this.analyticsHandler.trackBuyClicked
   }, {
-    href: 'https://www.vroom.com/sell',
+    linkToVroom: true,
+    href: '/sell',
     label: 'SELL/TRADE',
     handleAnalytics: this.analyticsHandler.trackSellTradeClicked
   }, {
-    href: 'https://www.vroom.com/finance',
+    linkToVroom: true,
+    href: '/finance',
     label: 'FINANCE',
     handleAnalytics: this.analyticsHandler.trackFinanceClicked
   }, {
+    linkToVroom: false,
     href: '/contact',
     label: 'CONTACT US',
     handleAnalytics: this.analyticsHandler.trackContactUsClicked
@@ -15516,10 +15524,17 @@ var ViewModel$1 = function ViewModel(store) {
   });
 
   this.store = store;
+
+  if (vroomUrl) {
+    this.navLinks.forEach(function (navLink) {
+      if (navLink.linkToVroom) navLink.href = "".concat(vroomUrl).concat(navLink.href).concat(_this.TDAQueryString);
+    });
+  }
 };
 
-var TDAHeader = function TDAHeader() {
-  var viewModel = new ViewModel$1(new Store$1());
+var TDAHeader = function TDAHeader(_ref) {
+  var vroomUrl = _ref.vroomUrl;
+  var viewModel = new ViewModel$1(new Store$1(), vroomUrl);
   return /*#__PURE__*/React__default.createElement(View$5, {
     viewModel: viewModel
   });
