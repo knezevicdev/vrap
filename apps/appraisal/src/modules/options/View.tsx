@@ -71,7 +71,9 @@ export interface Props {
   viewModel: OptionsViewModel;
 }
 
-const isValidRouting = (n: string): boolean => {
+const isValidRouting = async (n: string): Promise<boolean> => {
+  if (!n) return false;
+
   const formulaVal =
     (3 *
       (Number(n[0]) +
