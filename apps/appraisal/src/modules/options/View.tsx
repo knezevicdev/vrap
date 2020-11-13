@@ -19,7 +19,7 @@ const OptionsContainer = styled.div`
   box-shadow: 0px 0px 4px #e0e0e0;
   height: 100%;
 
-  @media (max-width: 786px) {
+  @media (max-width: 1280px) {
     margin: 20px;
     padding: 30px 60px;
     width: 100%;

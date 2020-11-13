@@ -2,12 +2,18 @@ import { SimpleHeader } from '@vroom-web/header-components';
 import { Brand, ThemeProvider } from '@vroom-web/ui';
 import { NextPage, NextPageContext } from 'next';
 import getConfig from 'next/config';
+import { useRouter } from 'next/router';
 import React from 'react';
 import styled from 'styled-components';
 
 import ToolFooter from 'src/core/ToolFooter';
 import Options from 'src/modules/options';
+import { OptionsStore, OptionsStoreContext } from 'src/modules/options/store';
 import PaymentOverview from 'src/modules/paymentoverview';
+import {
+  PaymentOverviewStore,
+  PaymentOverviewStoreContext,
+} from 'src/modules/paymentoverview/store';
 import SuccessBar from 'src/modules/successbar';
 import Page from 'src/Page';
 
@@ -18,25 +24,36 @@ const ColumnBody = styled.div`
   flex-wrap: wrap;
   min-height: 100vh;
 
+  @media (max-width: 1280px) {
+    flex-wrap: wrap-reverse;
+    align-content: flex-end;
+    min-height: 86vh;
+  }
+
   @media (max-width: 786px) {
     flex-wrap: wrap-reverse;
-    min-height: auto;
+    min-height: 86vh;
   }
 
   @media (max-width: 420px) {
     padding: 0;
+    min-height: auto;
   }
 `;
 
 interface Props {
   brand: Brand;
-  price: string;
 }
 
 const { publicRuntimeConfig } = getConfig();
 
 const EPayOptions: NextPage<Props> = ({ brand }) => {
+  const router = useRouter();
   const gearboxPrivateUrl = publicRuntimeConfig.GEARBOX_PRIVATE_URL;
+  const priceId = router.query.priceId as string;
+
+  const oStore = new OptionsStore(priceId);
+  const poStore = new PaymentOverviewStore(priceId);
 
   return (
     <ThemeProvider brand={brand}>
@@ -44,8 +61,12 @@ const EPayOptions: NextPage<Props> = ({ brand }) => {
         <SimpleHeader gearboxPrivateUrl={gearboxPrivateUrl} />
         <SuccessBar />
         <ColumnBody>
-          <Options />
-          <PaymentOverview />
+          <OptionsStoreContext.Provider value={oStore}>
+            <Options />
+          </OptionsStoreContext.Provider>
+          <PaymentOverviewStoreContext.Provider value={poStore}>
+            <PaymentOverview />
+          </PaymentOverviewStoreContext.Provider>
         </ColumnBody>
         <ToolFooter />
       </Page>
@@ -67,8 +88,7 @@ EPayOptions.getInitialProps = async (
   if (whitelabel === Brand.SANTANDER) brand = Brand.SANTANDER;
   else if (whitelabel === Brand.TDA) brand = Brand.TDA;
 
-  const priceId = query.priceId as string;
-  return { brand, price: priceId };
+  return { brand };
 };
 
 export default EPayOptions;

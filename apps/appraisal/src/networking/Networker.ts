@@ -1,6 +1,6 @@
 import axios, { AxiosInstance, AxiosResponse } from 'axios';
 
-import { Prices } from './models/Price';
+import { Prices, VerificationRespData } from './models/Price';
 
 import ENVS from 'src/integrations/Envs';
 
@@ -39,5 +39,12 @@ export class Networker {
     };
 
     return this.axiosInstance.post(url, data);
+  }
+
+  getVerificationDetails(
+    priceId: string
+  ): Promise<AxiosResponse<VerificationRespData>> {
+    const url = `${ENVS.VROOM_URL}/api/appraisal/verification?offerId=${priceId}`;
+    return this.axiosInstance.get(url);
   }
 }
