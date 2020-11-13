@@ -89,8 +89,9 @@ class SafetyAndQualityModel {
     };
   };
 
-  handleSelectDefectGallery = (event: React.ChangeEvent<{}>): void => {
+  handleShowDefectGallery = (event: React.ChangeEvent<{}>): void => {
     event.preventDefault();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
     this.store.changeSelectedGallery(GallerySelections.DEFECTS);
   };
 }

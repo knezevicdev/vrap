@@ -102,15 +102,10 @@ const SafetyAndQualityView: React.FC<Props> = ({ viewModel }) => {
     quality,
     getRecall,
     getImperfections,
-    handleSelectDefectGallery,
+    handleShowDefectGallery,
   } = viewModel;
   const recall = getRecall();
   const imperfections = getImperfections();
-
-  const scrollToTop = (event: React.ChangeEvent<{}>): void => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-    handleSelectDefectGallery(event);
-  };
 
   return (
     <SafetyAndQualityContainer id="safety-and-quality-content">
@@ -131,7 +126,7 @@ const SafetyAndQualityView: React.FC<Props> = ({ viewModel }) => {
                 </Description>
                 <ViewImperfectionsButton
                   aria-hidden="true"
-                  onClick={(e): void => scrollToTop(e)}
+                  onClick={(e): void => handleShowDefectGallery(e)}
                 >
                   <Error />
                   <StyledButtonText>{imperfections.linkText}</StyledButtonText>
