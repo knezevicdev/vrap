@@ -17,6 +17,7 @@ const OptionsContainer = styled.div`
   margin: 0 20px;
   padding: 30px 100px;
   box-shadow: 0px 0px 4px #e0e0e0;
+  height: 100%;
 
   @media (max-width: 786px) {
     margin: 20px;

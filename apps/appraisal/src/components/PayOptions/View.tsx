@@ -11,12 +11,20 @@ export interface Props {
 
 const PayOptionsContainer = styled.div`
   display: flex;
+
+  @media (max-width: 420px) {
+    flex-direction: column;
+  }
 `;
 
 const OptionContainer = styled.div<{ selected?: boolean }>`
   width: 50%;
   padding: 20px;
   outline: ${({ selected }) => (selected ? '2px solid red' : 'none')};
+
+  @media (max-width: 420px) {
+    width: 100%;
+  }
 `;
 
 const PayOptionsView: React.FC<Props> = ({

@@ -82,21 +82,21 @@ export class Icons {
     name: 'red-one',
     width: 16,
     height: 16,
-    path: `${BASE_PATH}/icons/red-one.svg`,
+    path: `${ENVS.BASE_PATH}/icons/red-one.svg`,
   });
 
   static readonly CHECK_MARK_RED = new Icons('CHECK_MARK_RED', {
     name: 'check-mark-red',
     width: 16,
     height: 16,
-    path: `${BASE_PATH}/icons/check-mark-red.svg`,
+    path: `${ENVS.BASE_PATH}/icons/check-mark-red.svg`,
   });
 
   static readonly CHECK_MARK_WHITE = new Icons('CHECK_MARK_WHITE', {
     name: 'check-mark-white',
     width: 16,
     height: 16,
-    path: `${BASE_PATH}/icons/check-mark-white.svg`,
+    path: `${ENVS.BASE_PATH}/icons/check-mark-white.svg`,
   });
 
   private constructor(
