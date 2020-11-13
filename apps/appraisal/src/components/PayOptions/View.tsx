@@ -15,7 +15,7 @@ const PayOptionsContainer = styled.div`
 const OptionContainer = styled.div<{ selected?: boolean }>`
   width: 50%;
   padding: 20px;
-  outline: ${({ selected }) => (selected ? '2px solid red' : 'none')};
+  outline: ${({ selected }): string => (selected ? '2px solid red' : 'none')};
 `;
 
 const PayOptionsView: React.FC<Props> = ({ optionMeta, selected }) => {

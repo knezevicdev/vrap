@@ -17,13 +17,15 @@ const CheckMark = styled.span<{ disabled?: boolean }>`
   left: 0;
   height: 16px;
   width: 16px;
-  background-color: ${({ disabled }) => (disabled ? '#f5f5f5' : '#fff')};
-  border: 1px solid ${({ disabled }) => (disabled ? '#999DA3' : '#041022')};
+  background-color: ${({ disabled }): string =>
+    disabled ? '#f5f5f5' : '#fff'};
+  border: 1px solid
+    ${({ disabled }): string => (disabled ? '#999DA3' : '#041022')};
 
   border-radius: 50%;
 
   &:hover {
-    background-color: ${({ disabled }) => !disabled && '#fafafa'};
+    background-color: ${({ disabled }): string => !disabled ? '#fafafa' : ''};
   }
 
   &:after {
@@ -41,7 +43,7 @@ const Label = styled.label<{ disabled?: boolean }>`
   cursor: pointer;
   font-family: Calibre;
   font-size: 18px;
-  color: ${({ disabled }) => (disabled ? '#999DA3' : '#041022')};
+  color: ${({ disabled }): string => (disabled ? '#999DA3' : '#041022')};
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
@@ -49,7 +51,7 @@ const Label = styled.label<{ disabled?: boolean }>`
 
   &:hover {
     span {
-      background-color: ${({ disabled }) => !disabled && '#fafafa'};
+      background-color: ${({ disabled }): string => !disabled ? '#fafafa' : ''};
     }
   }
 
@@ -60,7 +62,7 @@ const Label = styled.label<{ disabled?: boolean }>`
     height: 8px;
     border: solid '#fff';
     border-radius: 50%;
-    background-color: ${({ disabled }) => disabled && '#999DA3'};
+    background-color: ${({ disabled }): string => !disabled ? '#999DA3' : ''};
   }
 `;
 
@@ -72,9 +74,10 @@ const RadioButtonStyled = styled(Field).attrs({ type: 'radio' })`
   width: 0;
 
   &:checked ~ ${CheckMark} {
-    background-color: ${({ disabled }) => (disabled ? '#f5f5f5' : '#E7131A')};
+    background-color: ${({ disabled }): string =>
+      disabled ? '#f5f5f5' : '#E7131A'};
 
-    border: ${({ disabled }) =>
+    border: ${({ disabled }): string =>
       disabled ? `1px solid #999DA3` : `1px solid #E7131A`};
   }
 
