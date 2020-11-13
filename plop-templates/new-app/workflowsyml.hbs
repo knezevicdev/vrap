@@ -1,0 +1,58 @@
+{{name}}:
+  jobs:
+  - {{name}}_build:
+      context: aws-non-prod
+      filters:
+        tags:
+          only: /^{{name}}-v.*/
+        branches:
+          ignore: /.*/
+  - hold:
+      name: hold_<< matrix.env >>
+      type: approval
+      matrix:
+        parameters:
+          env: ["dev", "qa", "uat"]
+      requires:
+        - {{name}}_build
+      filters:
+        tags:
+          only: /^{{name}}-v.*/
+        branches:
+          ignore: /.*/
+  - {{name}}_deploy:
+      name: {{name}}_deploy_<< matrix.env >>
+      context: aws-non-prod
+      matrix:
+        parameters:
+          env: ["dev", "qa", "uat"]
+      requires:
+        - hold_<< matrix.env >>
+      filters:
+        tags:
+          only: /^{{name}}-v.*/
+        branches:
+          ignore: /.*/
+  - hold:
+      name: hold_prod
+      type: approval
+      requires:
+        - {{name}}_deploy_dev
+        - {{name}}_deploy_qa
+        - {{name}}_deploy_uat
+      filters:
+        tags:
+          only: /^{{name}}-v.*/
+        branches:
+          ignore: /.*/
+  - {{name}}_deploy:
+      name: {{name}}_deploy_prod
+      context: aws-non-prod
+      env: "prod"
+      requires:
+        - hold_prod
+      filters:
+        tags:
+          only: /^{{name}}-v.*/
+        branches:
+          ignore: /.*/

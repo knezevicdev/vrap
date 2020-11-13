@@ -80,10 +80,6 @@ class VroomDocument extends Document<Props> {
               }}
             />
           )}
-          <script
-            type="text/javascript"
-            src={`${publicRuntimeConfig.BASE_PATH}/scripts/safari-fix.js`}
-          ></script>
         </Head>
         <body>
           <Main />

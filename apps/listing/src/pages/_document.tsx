@@ -13,6 +13,8 @@ import Document, {
 } from 'next/document';
 import React from 'react';
 
+import { determineWhitelabel } from 'src/utils/utils';
+
 const { serverRuntimeConfig, publicRuntimeConfig } = getConfig();
 
 interface Props extends DocumentInitialProps {
@@ -33,20 +35,10 @@ class VroomDocument extends Document<Props> {
       });
     ctx.renderPage = customRenderPage;
 
-    const { req, query } = ctx;
-    const headerBrandKey = 'x-brand';
-    const tdaKey = 'tda';
-    const santanderKey = 'santander';
-    const brandHeader = req && req.headers[headerBrandKey];
-    const queryBrand = query.brand;
-    let brand: Brand = Brand.VROOM;
-    if ((brandHeader || queryBrand) == santanderKey) {
-      brand = Brand.SANTANDER;
-    } else if ((brandHeader || queryBrand) == tdaKey) {
-      brand = Brand.TDA;
-    }
+    const brand = determineWhitelabel(ctx);
 
     const initialProps = await Document.getInitialProps(ctx);
+
     return {
       ...initialProps,
       brand,

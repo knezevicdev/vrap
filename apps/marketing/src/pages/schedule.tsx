@@ -1,5 +1,5 @@
 import { Brand, ThemeProvider } from '@vroom-web/ui';
-import { NextPage, NextPageContext } from 'next';
+import { GetServerSideProps, GetServerSidePropsContext, NextPage } from 'next';
 import { ParsedUrlQuery } from 'querystring';
 import React from 'react';
 
@@ -7,6 +7,7 @@ import Schedule from 'src/modules/schedule';
 import { BrandContext } from 'src/modules/schedule/BrandContext';
 import { QueryContext } from 'src/modules/schedule/QueryContext';
 import Page from 'src/Page';
+import { determineWhitelabel } from 'src/utils/utils';
 
 interface Props {
   brand: Brand;
@@ -27,16 +28,11 @@ const SchedulePage: NextPage<Props> = ({ brand, query }) => {
   );
 };
 
-SchedulePage.getInitialProps = async (ctx: NextPageContext): Promise<Props> => {
-  const { req, query } = ctx;
-  const headerBrandKey = 'x-brand';
-  const santanderKey = 'santander';
-  const brandHeader = req && req.headers[headerBrandKey];
-  const queryBrand = query.brand;
-  const brand =
-    (brandHeader || queryBrand) == santanderKey ? Brand.SANTANDER : Brand.VROOM;
-
-  return { brand, query };
+export const getServerSideProps: GetServerSideProps<Props> = async (
+  ctx: GetServerSidePropsContext
+) => {
+  const brand = determineWhitelabel(ctx);
+  return { props: { brand, query: ctx.query } };
 };
 
 export default SchedulePage;
