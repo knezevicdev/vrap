@@ -22,9 +22,11 @@ const ColumnBody = styled.div`
   margin: 0 auto;
   padding: 20px;
   flex-wrap: wrap;
+  min-height: 100vh;
 
   @media (max-width: 786px) {
     flex-wrap: wrap-reverse;
+    min-height: auto;
   }
 
   @media (max-width: 420px) {

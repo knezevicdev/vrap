@@ -211,3 +211,17 @@ https://medium.com/rewire-to/webpack-module-resolution-within-a-monorepo-or-how-
 When using a package across multiple apps/libs, be sure the same version is installed. Packages like react, which require the same version across packages to work will only be correctly hoisted by yarn if all packages in the monorepo can resolve to the same version. Pay attention to the semver (^) used by package.json
 
 One way to debug this is to use the `yarn why` command. For example, `yarn why react` will show what packages are using what version of react.
+
+### Generators
+
+To skip a bit of file creation and copy pasting we make use of PlopJS to generate things like apps and pages.
+
+All of our generators live in plopfile.js; its pretty self explanatory but `plop.setGenerator` is where we name the generator and detail it's prompts and actions. Each action uses a template in `/plop-templates`; you'll notice instances where the the name of the app needs to be proper cased, 'home' vs 'Home', handlebars takes care of this with it's built in string transform `properCase`, ex) `{{properCase name}}`
+
+If you need to create a new app, simply go to your terminal and use the `plop` command. This'll give you a list of generators, to create a new app select `create-app` and follow the prompts to get all your baseline files generated. Running this allows you to run your new app and hit /{{newapp}}/api/version.
+
+If you want to generate your index.tsx page for your new app, type `plop` into your terminal again and this time select `create-base-page`. After following the prompts you'll have your `Page.tsx`, `/pages/_app.tsx`, `/pages/_document.tsx`, and `/pages/index.tsx` generated. Upon running your app you'll see you can now hit /{{newapp}} and see your page is set up.
+
+*shortcuts* once you get used to how the generators are named and set up you can execute `plop create-app mynewapp` to skip the prompts and generate your app. Similarly `plop create-base-page myappname` will skip prompts and set up your page for your desired app
+
+> Plop Docs: https://github.com/plopjs/plop 

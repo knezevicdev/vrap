@@ -1,3 +1,4 @@
+import getConfig from 'next/config';
 import { stringify } from 'qs';
 import React from 'react';
 
@@ -5,6 +6,10 @@ import { VinStore } from './store';
 
 import AnalyticsHandler from 'src/integrations/AnalyticsHandler';
 import { HomeStore } from 'src/modules/home/store';
+
+const {
+  publicRuntimeConfig: { VROOM_URL },
+} = getConfig();
 
 class VinViewModel {
   private analyticsHandler: AnalyticsHandler = new AnalyticsHandler();
@@ -31,7 +36,11 @@ class VinViewModel {
     const queryString = stringify(this.homeStore.query, {
       addQueryPrefix: true,
     });
-    window.location.href = `sell/vehicleInformation/${this.vinStore.vin}${queryString}`;
+    const vitParams =
+      'vit_source=texasdirectauto&vit_medium=wl&vit_dest=vroom&vit_brand=TDA';
+    window.location.href = `${VROOM_URL || ''}/sell/vehicleInformation/${
+      this.vinStore.vin
+    }${queryString}${queryString ? '&' : '?'}${vitParams}`;
   };
 
   getInputValue = (): string => {

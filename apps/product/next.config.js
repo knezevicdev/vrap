@@ -17,6 +17,7 @@ module.exports = {
   publicRuntimeConfig: {
     // Will be available on both server-side and client-side
     BASE_PATH: basePath,
+    BRANCH_IO_KEY: process.env.BRANCH_IO_KEY,
     DATA_DOG_RUM_APPLICATION: process.env.DATA_DOG_RUM_APPLICATION,
     DATA_DOG_RUM_TOKEN: process.env.DATA_DOG_RUM_TOKEN,
     INVSEARCH_V3_URL: process.env.INVSEARCH_V3_URL,
@@ -26,12 +27,13 @@ module.exports = {
     NODE_ENV: process.env.NODE_ENV,
     STATIC_ASSETS_HOST_URL: process.env.STATIC_ASSETS_HOST_URL || '',
     VERSION: version,
-    BRANCH_IO_KEY: process.env.BRANCH_IO_KEY,
+    VROOM_URL: process.env.VROOM_URL,
   },
   serverRuntimeConfig: {
     // Will only be available on the server side
     SANTANDER_SEGMENT_WRITE_KEY: process.env.SANTANDER_SEGMENT_WRITE_KEY,
     SEGMENT_WRITE_KEY: process.env.SEGMENT_WRITE_KEY,
+    TDA_SEGMENT_WRITE_KEY: process.env.TDA_SEGMENT_WRITE_KEY,
   },
   /* Custom webpack configuration. */
   webpack: (config) => {

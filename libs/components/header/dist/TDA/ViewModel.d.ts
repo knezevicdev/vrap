@@ -1,5 +1,6 @@
 import Store from './store';
 interface Link {
+    linkToVroom: boolean;
     href?: string;
     label?: string;
     target?: string;
@@ -9,7 +10,8 @@ interface Link {
 declare class ViewModel {
     private readonly store;
     private analyticsHandler;
-    constructor(store: Store);
+    constructor(store: Store, vroomUrl?: string);
+    readonly TDAQueryString: string;
     readonly logoLink: Link;
     readonly navLinks: Link[];
     isDrawerOpen: () => boolean;

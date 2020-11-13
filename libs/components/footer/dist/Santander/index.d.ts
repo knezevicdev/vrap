@@ -1,3 +1,6 @@
 import React from 'react';
-declare const SantanderFooter: React.FC;
+interface Props {
+    vroomUrl: string;
+}
+declare const SantanderFooter: React.FC<Props>;
 export default SantanderFooter;

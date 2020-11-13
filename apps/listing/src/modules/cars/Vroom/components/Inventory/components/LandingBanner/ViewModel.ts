@@ -5,6 +5,8 @@ import { CarsStore } from 'src/modules/cars/store';
 class LandingBannerViewModel {
   private readonly carsStore: CarsStore;
   readonly jeepWranglerText: string = 'Get to Know Jeep Wrangler';
+  readonly jeepWranglerUrl: string =
+    'https://www.vroom.com/landing/jeep/wrangler';
   constructor(carsStore: CarsStore) {
     this.carsStore = carsStore;
   }
@@ -30,7 +32,7 @@ class LandingBannerViewModel {
   }
 
   handleBannerClick(): void {
-    window.open('https://www.vroom.com/landing/jeep/wrangler', '_blank');
+    window.open(this.jeepWranglerUrl, '_blank');
   }
 }
 

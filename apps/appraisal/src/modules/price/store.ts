@@ -25,15 +25,35 @@ export interface PriceStoreState {
   year: number;
 }
 
+export const defaultPriceState: PriceStoreState = {
+  active: false,
+  automatedAppraisal: false,
+  created: '',
+  goodUntil: '2020-01-01T00:00:00Z',
+  make: '',
+  miles: 0,
+  model: '',
+  newOffer: null,
+  price: 0,
+  priceId: '',
+  priceStatus: '',
+  taxCreditSavings: null,
+  trim: '',
+  userEmail: '',
+  verificationUrl: '',
+  vin: '',
+  xkeId: 0,
+  year: 0,
+};
+
 export async function submitPriceResponse(priceData: PriceData): Promise<void> {
   const networker = new Networker();
   try {
-    const response = await networker.submitPriceResponse(priceData);
-    console.log({ response });
+    await networker.submitPriceResponse(priceData);
     const url = `/sell/verification/owner/${priceData.priceId}`;
     window.location.href = url;
   } catch (err) {
-    console.log({ err });
+    console.log(JSON.stringify(err));
     return err;
   }
 }
@@ -68,26 +88,8 @@ export async function getInitialPriceStoreState(
     priceState.year = price.Year__c;
     return priceState;
   } catch (err) {
-    const errorState = {} as PriceStoreState;
-    errorState.active = false;
-    errorState.automatedAppraisal = false;
-    errorState.created = '';
-    errorState.goodUntil = '2020-01-01T00:00:00Z';
-    errorState.make = '';
-    errorState.miles = 0;
-    errorState.model = '';
-    errorState.newOffer = null;
-    errorState.price = 0;
-    errorState.priceId = '';
-    errorState.priceStatus = '';
-    errorState.taxCreditSavings = null;
-    errorState.trim = '';
-    errorState.userEmail = '';
-    errorState.verificationUrl = '';
-    errorState.vin = '';
-    errorState.xkeId = 0;
-    errorState.year = 0;
-    return errorState;
+    console.log(JSON.stringify(err));
+    return defaultPriceState;
   }
 }
 
@@ -96,6 +98,20 @@ export class PriceStore {
   @observable price = 0;
   @observable priceId = '';
   @observable goodUntil = '2020-01-01T00:00:00Z';
+  @observable active = false;
+  @observable created = '';
+  @observable make = '';
+  @observable miles = 0;
+  @observable model = '';
+  @observable newOffer: boolean | null = null;
+  @observable priceStatus = '';
+  @observable taxCreditSavings: number | null = null;
+  @observable trim = '';
+  @observable userEmail = '';
+  @observable verificationUrl: string | null = null;
+  @observable vin = '';
+  @observable xkeId = 0;
+  @observable year = 0;
 
   constructor(initialState?: PriceStoreState) {
     if (initialState) {
@@ -103,11 +119,25 @@ export class PriceStore {
       this.price = initialState.price;
       this.priceId = initialState.priceId;
       this.goodUntil = initialState.goodUntil;
+      this.active = initialState.active;
+      this.created = initialState.created;
+      this.make = initialState.make;
+      this.miles = initialState.miles;
+      this.model = initialState.model;
+      this.newOffer = initialState.newOffer;
+      this.priceStatus = initialState.priceStatus;
+      this.taxCreditSavings = initialState.taxCreditSavings;
+      this.trim = initialState.trim;
+      this.userEmail = initialState.userEmail;
+      this.verificationUrl = initialState.verificationUrl;
+      this.vin = initialState.vin;
+      this.xkeId = initialState.xkeId;
+      this.year = initialState.year;
     }
   }
 }
 
-export const PriceStoreContext = createContext<PriceStore>(new PriceStore());
+export const PriceStoreContext = createContext(new PriceStore());
 
 export const usePriceStore = (): PriceStore => {
   const store = useContext(PriceStoreContext);
