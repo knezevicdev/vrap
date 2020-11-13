@@ -139,8 +139,10 @@ const OptionsView: React.FC<Props> = ({ viewModel }) => {
       }}
       validateOnMount={true}
     >
-      {({ isValid, values }): JSX.Element => {
+      {({ isValid, values, errors }): JSX.Element => {
         const showDirectDeposit = values.paymentOption === 'Direct Deposit';
+        console.log({values});
+        console.log({errors});
         return (
           <Form>
             <OptionsContainer>
