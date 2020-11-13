@@ -1,5 +1,5 @@
 import { styled } from '@material-ui/core/styles';
-import TextField from '@material-ui/core/TextField';
+import { Field } from 'formik';
 import React from 'react';
 
 import DirectDepositViewModel from './ViewModel';
@@ -8,7 +8,7 @@ const InputContainer = styled('div')(() => ({
   paddingBottom: '20px',
 }));
 
-const Input = styled(TextField)(({ theme }) => ({
+const Input = styled(Field)(({ theme }) => ({
   width: '280px',
   [theme.breakpoints.only('xs')]: { width: '100%' },
   '& .MuiInput-formControl': {
@@ -49,14 +49,16 @@ const PayOptionsView: React.FC<Props> = ({ viewModel }) => {
     <>
       <InputContainer>
         <Input
-          id="RoutingNumber"
+          id="routingNumber"
+          name={'routingNumber'}
           label={viewModel.routingLabel}
           placeholder={viewModel.routingLabel}
         />
       </InputContainer>
       <InputContainer>
         <Input
-          id="BankAccountNumber"
+          id="bankAccountNumber"
+          name={'bankAccountNumber'}
           label={viewModel.bankAccountLabel}
           placeholder={viewModel.bankAccountLabel}
         />

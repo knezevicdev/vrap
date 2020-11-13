@@ -8,7 +8,7 @@ interface RadioButtonProps extends React.HTMLAttributes<HTMLInputElement> {
   name: string;
   disabled?: boolean;
   checked?: boolean;
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  value: string;
 }
 
 const CheckMark = styled.span<{ disabled?: boolean }>`
@@ -84,17 +84,18 @@ const RadioButtonStyled = styled(Field).attrs({ type: 'radio' })`
 `;
 
 export const RadioButton: React.FC<RadioButtonProps> = (props) => {
-  const { id, name, checked, onChange, children, disabled } = props;
+  const { id, name, value, checked, children, disabled } = props;
 
+  console.log({ name });
   return (
     <Label disabled={disabled}>
       {children}
       <RadioButtonStyled
         id={id}
-        name={name}
+        name={'paymentOption'}
         disabled={disabled}
         checked={checked}
-        // onChange={onChange}
+        value={value}
       />
       <CheckMark disabled={disabled} />
     </Label>

@@ -71,10 +71,48 @@ export interface Props {
   viewModel: OptionsViewModel;
 }
 
+const isValidRouting = (n: string): boolean => {
+  const formulaVal =
+    (3 *
+      (Number(n[0]) +
+        Number(n[5]) +
+        Number(n[8]) +
+        7 * (Number(n[3]) + Number(n[6]) + Number(n[9])) +
+        3 * (Number(n[4]) + Number(n[7]) + Number(n[10])))) %
+    10;
+  const t = parseInt(n.slice(0, 2));
+  const between = (x: number, min: number, max: number): boolean => {
+    return x >= min && x <= max;
+  };
+  if (
+    n.length === 9 &&
+    formulaVal === 0 &&
+    (between(t, 0, 12) || between(t, 21, 32) || between(t, 61, 72) || t === 80)
+  ) {
+    return true;
+  } else {
+    return false;
+  }
+};
+
 const PaymentOverviewSchema = Yup.object().shape({
   paymentOption: Yup.string().required('Required'),
-  routingNumber: Yup.string().required('Required'),
-  bankAccountNumber: Yup.string().required('Required'),
+  routingNumber: Yup.string().when('paymentOption', {
+    is: 'Direct Deposit',
+    then: Yup.string()
+      .required('Field is required')
+      .test(
+        'valid-routing-num',
+        'Please enter a valid routing number',
+        isValidRouting
+      ),
+  }),
+  bankAccountNumber: Yup.string().when('paymentOption', {
+    is: 'Direct Deposit',
+    then: Yup.string()
+      .required('Field is required')
+      .matches(/^[\w\d]{4,17}$/, 'Please enter a valid account number'),
+  }),
 });
 
 interface PaymentOverviewFormValues {
@@ -95,12 +133,13 @@ const OptionsView: React.FC<Props> = ({ viewModel }) => {
       initialValues={InitialValues}
       validationSchema={PaymentOverviewSchema}
       onSubmit={(values): void => {
-        // handleSignUp(values);
+        console.log({ values });
       }}
       validateOnMount={true}
     >
-      {({ dirty, errors, touched, isValid, values, setFieldValue }) => {
-        console.log(values);
+      {({ dirty, errors, touched, isValid, values }) => {
+        console.log({ values, errors });
+        const showDirectDeposit = values.paymentOption === 'Direct Deposit';
         return (
           <Form>
             <OptionsContainer>
@@ -117,12 +156,10 @@ const OptionsView: React.FC<Props> = ({ viewModel }) => {
                 // handleClick={viewModel.onPayOptionClick}
               />
               <OptionsBody>{viewModel.bankInfo}</OptionsBody>
-              {viewModel.showDirectDeposit() ? (
-                <DirectDeposit />
-              ) : (
-                <CheckByMail />
-              )}
-              <SubmitButton>{viewModel.submit}</SubmitButton>
+              {showDirectDeposit ? <DirectDeposit /> : <CheckByMail />}
+              <SubmitButton disabled={!isValid}>
+                {viewModel.submit}
+              </SubmitButton>
             </OptionsContainer>
           </Form>
         );
