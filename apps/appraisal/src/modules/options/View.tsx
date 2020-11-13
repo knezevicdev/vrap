@@ -134,12 +134,12 @@ const OptionsView: React.FC<Props> = ({ viewModel }) => {
     <Formik
       initialValues={InitialValues}
       validationSchema={PaymentOverviewSchema}
-      onSubmit={(values): void => {
+      onSubmit={(values: PaymentOverviewFormValues): void => {
         console.log({ values });
       }}
       validateOnMount={true}
     >
-      {({ dirty, errors, touched, isValid, values }) => {
+      {({ isValid, values }) => {
         const showDirectDeposit = values.paymentOption === 'Direct Deposit';
         return (
           <Form>
