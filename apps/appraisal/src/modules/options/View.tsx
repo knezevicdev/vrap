@@ -19,8 +19,9 @@ const OptionsContainer = styled.div`
   margin: 0 20px;
   padding: 30px 100px;
   box-shadow: 0px 0px 4px #e0e0e0;
+  height: 100%;
 
-  @media (max-width: 786px) {
+  @media (max-width: 1280px) {
     margin: 20px;
     padding: 30px 60px;
     width: 100%;
@@ -141,8 +142,8 @@ const OptionsView: React.FC<Props> = ({ viewModel }) => {
     >
       {({ isValid, values, errors }): JSX.Element => {
         const showDirectDeposit = values.paymentOption === 'Direct Deposit';
-        console.log({values});
-        console.log({errors});
+        console.log({ values });
+        console.log({ errors });
         return (
           <Form>
             <OptionsContainer>

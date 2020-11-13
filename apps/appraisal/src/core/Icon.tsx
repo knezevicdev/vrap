@@ -82,35 +82,35 @@ export class Icons {
     name: 'red-one',
     width: 16,
     height: 16,
-    path: `${BASE_PATH}/icons/red-one.svg`,
+    path: `${ENVS.BASE_PATH}/icons/red-one.svg`,
   });
 
   static readonly CHECK_MARK_RED = new Icons('CHECK_MARK_RED', {
     name: 'check-mark-red',
     width: 16,
     height: 16,
-    path: `${BASE_PATH}/icons/check-mark-red.svg`,
+    path: `${ENVS.BASE_PATH}/icons/check-mark-red.svg`,
   });
 
   static readonly CHECK_MARK_WHITE = new Icons('CHECK_MARK_WHITE', {
     name: 'check-mark-white',
     width: 16,
     height: 16,
-    path: `${BASE_PATH}/icons/check-mark-white.svg`,
+    path: `${ENVS.BASE_PATH}/icons/check-mark-white.svg`,
   });
 
   static readonly CHEVRON_UP = new Icons('CHEVRON_UP', {
     name: 'chevron-up',
     width: 13,
     height: 8,
-    path: `${BASE_PATH}/icons/chevron-up.svg`,
+    path: `${ENVS.BASE_PATH}/icons/chevron-up.svg`,
   });
 
   static readonly CHEVRON_DOWN = new Icons('CHEVRON_DOWN', {
     name: 'chevron-down',
     width: 13,
     height: 8,
-    path: `${BASE_PATH}/icons/chevron-down.svg`,
+    path: `${ENVS.BASE_PATH}/icons/chevron-down.svg`,
   });
 
   private constructor(

@@ -8,7 +8,7 @@ import ViewModel from './ViewModel';
 
 const PaymentOverview: React.FC = () => {
   const theme = useTheme();
-  const mdUp = useMediaQuery(theme.breakpoints.up('md'));
+  const mdUp = useMediaQuery(theme.breakpoints.up('lg'));
   const store = usePaymentOverviewStore();
 
   const viewModel = new ViewModel(store, mdUp);

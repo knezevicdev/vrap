@@ -44,7 +44,7 @@ export class Networker {
   getVerificationDetails(
     priceId: string
   ): Promise<AxiosResponse<VerificationRespData>> {
-    const url = `${publicRuntimeConfig.ACQUISITIONS_URL}/acquisition/verification/form?f=${priceId}`;
+    const url = `${ENVS.VROOM_URL}/api/appraisal/verification?offerId=${priceId}`;
     return this.axiosInstance.get(url);
   }
 }

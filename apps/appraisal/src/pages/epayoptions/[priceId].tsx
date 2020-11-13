@@ -22,13 +22,22 @@ const ColumnBody = styled.div`
   margin: 0 auto;
   padding: 20px;
   flex-wrap: wrap;
+  min-height: 100vh;
+
+  @media (max-width: 1280px) {
+    flex-wrap: wrap-reverse;
+    align-content: flex-end;
+    min-height: 86vh;
+  }
 
   @media (max-width: 786px) {
     flex-wrap: wrap-reverse;
+    min-height: 86vh;
   }
 
   @media (max-width: 420px) {
     padding: 0;
+    min-height: auto;
   }
 `;
 

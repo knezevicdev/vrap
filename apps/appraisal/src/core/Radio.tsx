@@ -25,7 +25,7 @@ const CheckMark = styled.span<{ disabled?: boolean }>`
   border-radius: 50%;
 
   &:hover {
-    background-color: ${({ disabled }): string => !disabled ? '#fafafa' : ''};
+    background-color: ${({ disabled }): string => (!disabled ? '#fafafa' : '')};
   }
 
   &:after {
@@ -51,7 +51,8 @@ const Label = styled.label<{ disabled?: boolean }>`
 
   &:hover {
     span {
-      background-color: ${({ disabled }): string => !disabled ? '#fafafa' : ''};
+      background-color: ${({ disabled }): string =>
+        !disabled ? '#fafafa' : ''};
     }
   }
 
@@ -62,7 +63,7 @@ const Label = styled.label<{ disabled?: boolean }>`
     height: 8px;
     border: solid '#fff';
     border-radius: 50%;
-    background-color: ${({ disabled }): string => !disabled ? '#999DA3' : ''};
+    background-color: ${({ disabled }): string => (!disabled ? '#999DA3' : '')};
   }
 `;
 

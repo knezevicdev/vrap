@@ -15,7 +15,7 @@ const PaymentOverview = styled.div`
   box-shadow: 0px 0px 4px #e0e0e0;
   padding: 30px 16px 16px;
 
-  @media (max-width: 768px) {
+  @media (max-width: 1280px) {
     width: 100%;
     margin: 20px 20px 0;
     padding: 20px;
@@ -83,10 +83,10 @@ const PaymentOverviewView: React.FC<Props> = ({ viewModel }) => {
         {!viewModel.isDesktop && (
           <OverviewExpand onClick={viewModel.toggleBody}>
             {!viewModel.getDisplayBody() && (
-              <ExpandArrowUp icon={Icons.CHEVRON_UP} />
+              <ExpandArrowDown icon={Icons.CHEVRON_DOWN} />
             )}
             {viewModel.getDisplayBody() && (
-              <ExpandArrowDown icon={Icons.CHEVRON_DOWN} />
+              <ExpandArrowUp icon={Icons.CHEVRON_UP} />
             )}
           </OverviewExpand>
         )}
