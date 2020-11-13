@@ -213,7 +213,7 @@ describe('getSortRequestData', () => {
     expect(getSortRequestData(mockFiltersData)).toEqual({
       sortby: SortAPIBy.GEO,
       sortdirection: undefined,
-      sortAgedDirection: SortDirection.DESCENDING,
+      sortAgeDirection: SortDirection.DESCENDING,
     });
   });
   test('2', () => {
@@ -298,6 +298,7 @@ describe('getPostInventoryRequestDataFromFilterData', () => {
     const mockRequestData1: PostInventoryRequestData = {
       bodytype: ['Sedan'],
       color: ['grey'],
+      combinedMpg: undefined,
       cylinders: undefined,
       cylindersShowOther: undefined,
       drivetype: undefined,
@@ -309,7 +310,7 @@ describe('getPostInventoryRequestDataFromFilterData', () => {
       optionalFeatures: undefined,
       price: undefined,
       searchall: undefined,
-      sortAgedDirection: SortAPIDirection.DESCENDING,
+      sortAgeDirection: SortAPIDirection.DESCENDING,
       sortby: SortAPIBy.GEO,
       sortdirection: undefined,
       testdriveonly: undefined,
