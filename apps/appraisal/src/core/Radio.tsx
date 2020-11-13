@@ -86,13 +86,12 @@ const RadioButtonStyled = styled(Field).attrs({ type: 'radio' })`
 export const RadioButton: React.FC<RadioButtonProps> = (props) => {
   const { id, name, value, checked, children, disabled } = props;
 
-  console.log({ name });
   return (
     <Label disabled={disabled}>
       {children}
       <RadioButtonStyled
         id={id}
-        name={'paymentOption'}
+        name={name}
         disabled={disabled}
         checked={checked}
         value={value}

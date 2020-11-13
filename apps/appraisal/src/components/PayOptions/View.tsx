@@ -19,7 +19,6 @@ const OptionContainer = styled.div<{ selected?: boolean }>`
 `;
 
 const PayOptionsView: React.FC<Props> = ({ optionMeta, selected }) => {
-  console.log(optionMeta);
   return (
     <PayOptionsContainer>
       {optionMeta.map((option) => {

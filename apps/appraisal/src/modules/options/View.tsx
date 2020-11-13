@@ -138,7 +138,6 @@ const OptionsView: React.FC<Props> = ({ viewModel }) => {
       validateOnMount={true}
     >
       {({ dirty, errors, touched, isValid, values }) => {
-        console.log({ values, errors });
         const showDirectDeposit = values.paymentOption === 'Direct Deposit';
         return (
           <Form>
@@ -153,7 +152,6 @@ const OptionsView: React.FC<Props> = ({ viewModel }) => {
               <PayOptions
                 optionMeta={viewModel.getPayOptionArray()}
                 selected={values.paymentOption}
-                // handleClick={viewModel.onPayOptionClick}
               />
               <OptionsBody>{viewModel.bankInfo}</OptionsBody>
               {showDirectDeposit ? <DirectDeposit /> : <CheckByMail />}
