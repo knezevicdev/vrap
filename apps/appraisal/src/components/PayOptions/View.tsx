@@ -6,7 +6,6 @@ import RadioButton from 'src/core/Radio';
 export interface Props {
   optionMeta: Array<string>;
   selected: string;
-  handleClick: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 const PayOptionsContainer = styled.div`
@@ -20,18 +19,14 @@ const PayOptionsContainer = styled.div`
 const OptionContainer = styled.div<{ selected?: boolean }>`
   width: 50%;
   padding: 20px;
-  outline: ${({ selected }) => (selected ? '2px solid red' : 'none')};
+  outline: ${({ selected }): string => (selected ? '2px solid red' : 'none')};
 
   @media (max-width: 420px) {
     width: 100%;
   }
 `;
 
-const PayOptionsView: React.FC<Props> = ({
-  optionMeta,
-  selected,
-  handleClick,
-}) => {
+const PayOptionsView: React.FC<Props> = ({ optionMeta, selected }) => {
   return (
     <PayOptionsContainer>
       {optionMeta.map((option) => {
@@ -41,8 +36,8 @@ const PayOptionsView: React.FC<Props> = ({
             <RadioButton
               checked={checked}
               disabled={false}
-              name={option}
-              onChange={handleClick}
+              name={'paymentOption'}
+              value={option}
             >
               {option}
             </RadioButton>

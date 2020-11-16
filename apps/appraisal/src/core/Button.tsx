@@ -98,7 +98,7 @@ export interface ButtonProps {
   id?: string;
   className?: string;
   children: string;
-  onClick: () => void;
+  onClick?: () => void;
   disabled?: boolean;
 }
 
