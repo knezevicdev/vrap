@@ -14,4 +14,3 @@ export interface ThemeTypography extends MuiThemeTypography {
 export interface Theme extends MuiTheme {
   typography: ThemeTypography;
 }
-

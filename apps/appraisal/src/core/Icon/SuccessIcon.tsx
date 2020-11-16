@@ -22,7 +22,7 @@ interface WrappedSuccessIcon {
 const WrappedSuccessIcon = styled(SuccessIcon)<WrappedSuccessIcon>`
   position: absolute;
   right: 10px;
-  top: ${({ label }) => (label ? '37px' : '15px')};
+  top: ${({ label }): string => (label ? '37px' : '15px')};
 `;
 
 export default WrappedSuccessIcon;

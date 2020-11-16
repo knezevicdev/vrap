@@ -3,10 +3,18 @@ import React from 'react';
 
 import { CoreInput, CoreInputProps } from './CoreInput';
 
+interface FormikProps {
+  field: object;
+  meta: {
+    error: string | undefined;
+    touched: boolean | undefined;
+  };
+}
+
 const FormikInput: React.FC<CoreInputProps> = (props) => {
   return (
     <Field name={props.name}>
-      {({ field, meta }: any) => {
+      {({ field, meta }: FormikProps): JSX.Element => {
         return (
           <CoreInput
             {...props}

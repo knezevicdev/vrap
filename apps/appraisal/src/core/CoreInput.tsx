@@ -3,7 +3,6 @@ import styled from 'styled-components';
 
 import ErrorIcon from './Icon/ErrorIcon';
 import SuccessIcon from './Icon/SuccessIcon';
-import { ThemeProps } from './themes/Vroom';
 
 export interface CoreInputProps
   extends React.InputHTMLAttributes<HTMLInputElement> {
@@ -15,7 +14,7 @@ export interface CoreInputProps
   touched?: boolean;
   fluid?: boolean;
   appendComponent?: React.FC | null; //Allow to inject components below the text field
-  onChange?: (e: any) => void;
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 export const CoreInput: React.FC<CoreInputProps> = (props) => {
   const {
@@ -39,11 +38,7 @@ export const CoreInput: React.FC<CoreInputProps> = (props) => {
 
   return (
     <Container className={className} fluid={fluid}>
-      {label && (
-        <Label htmlFor={name}>
-          {label}
-        </Label>
-      )}
+      {label && <Label htmlFor={name}>{label}</Label>}
       <InputContainer
         {...rest}
         value={value}
@@ -89,15 +84,15 @@ const Container = styled.div<ContainerProps>`
   flex-direction: column;
   position: relative;
   margin-bottom: 20px;
-  width: ${({ fluid }) => (fluid ? '100%' : 'min-content')};
+  width: ${({ fluid }): string => (fluid ? '100%' : 'min-content')};
 `;
 
 const InputContainer = styled(
   //Removing showError, isEmpty, theme, fluid, setFieldValue from the rest props to pass down all HTMLInput properties
-  ({ showError, theme, isEmpty, fluid, setFieldValue, ...rest }) => <input {...rest} />
+  ({ rest }) => <input {...rest} />
 )`
   height: 40px;
-  width: ${({ fluid }) => (fluid ? '100%' : 'auto')};
+  width: ${({ fluid }): string => (fluid ? '100%' : 'auto')};
   box-sizing: border-box;
   padding: 8px 10px;
   outline: none;
@@ -106,10 +101,9 @@ const InputContainer = styled(
   letter-spacing: 0.25px;
   border: solid 1px #D6D7DA;
 
-  ${(props) =>
-    props.isEmpty && `background-color: #FFF;`}
+  ${(props): string => props.isEmpty && `background-color: #FFF;`}
 
-  ${(props) => props.showError && `border-color: #F26900;`}
+  ${(props): string => props.showError && `border-color: #F26900;`}
 
   &:active {
     border-color: #1960D0;
@@ -136,7 +130,7 @@ const InputContainer = styled(
 const ErrorMessage = styled.span`
   font-family: ${(props): string => props.theme.typography.family.body};
   margin-top: 3px;
-  color: #F26900;
+  color: #f26900;
   text-transform: uppercase;
   font-weight: 600;
 `;
