@@ -4,6 +4,12 @@ import React from 'react';
 
 import DirectDepositViewModel from './ViewModel';
 
+import { Body } from 'src/core/Typography';
+
+const DirectDepositContainer = styled('div')(() => ({
+  width: '100%',
+}));
+
 const InputContainer = styled('div')(() => ({
   paddingBottom: '20px',
 }));
@@ -40,13 +46,19 @@ const Input = styled(TextField)(({ theme }) => ({
   },
 }));
 
+const DirectDepositCopy = styled(Body.Regular)(() => ({
+  display: 'flex',
+  padding: '20px 0 15px',
+}));
+
 export interface Props {
   viewModel: DirectDepositViewModel;
 }
 
-const PayOptionsView: React.FC<Props> = ({ viewModel }) => {
+const DirectDepositView: React.FC<Props> = ({ viewModel }) => {
   return (
-    <>
+    <DirectDepositContainer>
+      <DirectDepositCopy>{viewModel.bankInfo}</DirectDepositCopy>
       <InputContainer>
         <Input
           id="RoutingNumber"
@@ -61,8 +73,8 @@ const PayOptionsView: React.FC<Props> = ({ viewModel }) => {
           placeholder={viewModel.bankAccountLabel}
         />
       </InputContainer>
-    </>
+    </DirectDepositContainer>
   );
 };
 
-export default PayOptionsView;
+export default DirectDepositView;
