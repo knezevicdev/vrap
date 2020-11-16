@@ -4,11 +4,11 @@ import React from 'react';
 import styled from 'styled-components';
 import * as Yup from 'yup';
 
+import OptionsViewModel from './ViewModel';
+
 import CheckByMail from 'src/components/CheckByMail';
 import DirectDeposit from 'src/components/DirectDeposit';
 import PayOptions from 'src/components/PayOptions';
-import OptionsViewModel from './ViewModel';
-
 import { Button } from 'src/core/Button';
 import Icon, { Icons } from 'src/core/Icon';
 import { Body, Hero, Title } from 'src/core/Typography';
@@ -72,8 +72,11 @@ export interface Props {
   viewModel: OptionsViewModel;
 }
 
-const isValidRouting = async (routingNumberToTest: string): Promise<boolean> => {
-  if (!routingNumberToTest) { //all 0's is technically a valid routing number, but it's inactive
+const isValidRouting = async (
+  routingNumberToTest: string
+): Promise<boolean> => {
+  if (!routingNumberToTest) {
+    //all 0's is technically a valid routing number, but it's inactive
     return false;
   }
 
@@ -83,7 +86,7 @@ const isValidRouting = async (routingNumberToTest: string): Promise<boolean> => 
   }
 
   //gotta be 9  digits
-  let match = routing.match("^\\d{9}$");
+  const match = routing.match('^\\d{9}$');
   if (!match) {
     return false;
   }
@@ -91,19 +94,20 @@ const isValidRouting = async (routingNumberToTest: string): Promise<boolean> => 
   //The first two digits of the nine digit RTN must be in the ranges 00 through 12, 21 through 32, 61 through 72, or 80.
   //https://en.wikipedia.org/wiki/Routing_transit_number
   const firstTwo = parseInt(routing.substring(0, 2));
-  const firstTwoValid =  (0 <= firstTwo && firstTwo <= 12)
-                      || (21 <= firstTwo && firstTwo <= 32)
-                      || (61 <= firstTwo && firstTwo <= 72)
-                      || firstTwo === 80;
+  const firstTwoValid =
+    (0 <= firstTwo && firstTwo <= 12) ||
+    (21 <= firstTwo && firstTwo <= 32) ||
+    (61 <= firstTwo && firstTwo <= 72) ||
+    firstTwo === 80;
   if (!firstTwoValid) {
     return false;
   }
 
   //this is the checksum
   //http://www.siccolo.com/Articles/SQLScripts/how-to-create-sql-to-calculate-routing-check-digit.html
-  const weights = [3, 7 ,1];
+  const weights = [3, 7, 1];
   let sum = 0;
-  for (var i=0 ; i<8; i++) {
+  for (let i = 0; i < 8; i++) {
     sum += parseInt(routing[i]) * weights[i % 3];
   }
 

@@ -33,7 +33,7 @@ const base = css`
 
 const Primary = styled.button`
   ${base}
-  background: ${(props): string => (props.disabled ? '#D6D7DA' : '#e7131a')};
+  background: ${(props): string => (props.disabled ? '#D6D7DA' : '#E7131A')};
 
   &:hover {
     background: ${(props): string => (props.disabled ? '#D6D7DA' : '#FC4349')};
