@@ -4,9 +4,9 @@ import React from 'react';
 import styled from 'styled-components';
 import * as Yup from 'yup';
 
-import CheckByMail from '../../components/CheckByMail';
-import DirectDeposit from '../../components/DirectDeposit';
-import PayOptions from '../../components/PayOptions';
+import CheckByMail from 'src/components/CheckByMail';
+import DirectDeposit from 'src/components/DirectDeposit';
+import PayOptions from 'src/components/PayOptions';
 import OptionsViewModel from './ViewModel';
 
 import { Button } from 'src/core/Button';
@@ -72,30 +72,42 @@ export interface Props {
   viewModel: OptionsViewModel;
 }
 
-const isValidRouting = async (n: string): Promise<boolean> => {
-  if (!n) return false;
-
-  const formulaVal =
-    (3 *
-      (Number(n[0]) +
-        Number(n[5]) +
-        Number(n[8]) +
-        7 * (Number(n[3]) + Number(n[6]) + Number(n[9])) +
-        3 * (Number(n[4]) + Number(n[7]) + Number(n[10])))) %
-    10;
-  const t = parseInt(n.slice(0, 2));
-  const between = (x: number, min: number, max: number): boolean => {
-    return x >= min && x <= max;
-  };
-  if (
-    n.length === 9 &&
-    formulaVal === 0 &&
-    (between(t, 0, 12) || between(t, 21, 32) || between(t, 61, 72) || t === 80)
-  ) {
-    return true;
-  } else {
+const isValidRouting = async (routingNumberToTest: string): Promise<boolean> => {
+  if (!routingNumberToTest) { //all 0's is technically a valid routing number, but it's inactive
     return false;
   }
+
+  let routing = routingNumberToTest.toString();
+  while (routing.length < 9) {
+    routing = '0' + routing; //I refuse to import left-pad for this
+  }
+
+  //gotta be 9  digits
+  let match = routing.match("^\\d{9}$");
+  if (!match) {
+    return false;
+  }
+
+  //The first two digits of the nine digit RTN must be in the ranges 00 through 12, 21 through 32, 61 through 72, or 80.
+  //https://en.wikipedia.org/wiki/Routing_transit_number
+  const firstTwo = parseInt(routing.substring(0, 2));
+  const firstTwoValid =  (0 <= firstTwo && firstTwo <= 12)
+                      || (21 <= firstTwo && firstTwo <= 32)
+                      || (61 <= firstTwo && firstTwo <= 72)
+                      || firstTwo === 80;
+  if (!firstTwoValid) {
+    return false;
+  }
+
+  //this is the checksum
+  //http://www.siccolo.com/Articles/SQLScripts/how-to-create-sql-to-calculate-routing-check-digit.html
+  const weights = [3, 7 ,1];
+  let sum = 0;
+  for (var i=0 ; i<8; i++) {
+    sum += parseInt(routing[i]) * weights[i % 3];
+  }
+
+  return (10 - (sum % 10)) % 10 === parseInt(routing[8]);
 };
 
 const PaymentOverviewSchema = Yup.object().shape({
