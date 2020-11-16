@@ -1,0 +1,11 @@
+User-agent: Yandex
+Disallow: /
+
+User-agent: Baiduspider
+Disallow: /
+
+User-agent: *
+Allow: /
+
+
+Sitemap: https://www.texasdirectauto.com/sitemap.xml
