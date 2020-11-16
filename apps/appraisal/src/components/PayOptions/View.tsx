@@ -19,7 +19,9 @@ const PayOptionsContainer = styled.div`
 const OptionContainer = styled.div<{ selected?: boolean }>`
   width: 50%;
   padding: 20px;
-  outline: ${({ selected }): string => (selected ? '2px solid red' : 'none')};
+  outline: ${({ selected }): string => (selected ? '2px solid #E7131A' : 'none')};
+  box-sizing: border-box;
+  box-shadow: ${({ selected }): string => (selected  ? '0px 0px 3px rgba(0, 0, 0, 0.2)': '')};
 
   @media (max-width: 420px) {
     width: 100%;
