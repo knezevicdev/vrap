@@ -5,3 +5,9 @@ export interface MailingAddress {
   state: string;
   zipcode: string;
 }
+
+export interface PaymentOverviewFormValues {
+  paymentOption: string;
+  routingNumber: string;
+  bankAccountNumber: string;
+}

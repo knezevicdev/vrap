@@ -26,7 +26,9 @@ const PendingPriceView: React.FC<Props> = ({ viewModel }) => {
         <Body.Regular>{viewModel.takingALook}</Body.Regular>
       </StyledBody>
       <StyledBody>
-        <Body.Regular><i>{viewModel.spamFolder}</i></Body.Regular>
+        <Body.Regular>
+          <i>{viewModel.spamFolder}</i>
+        </Body.Regular>
       </StyledBody>
 
       <StyledButton onClick={viewModel.handleFindCar}>

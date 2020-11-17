@@ -1,6 +1,8 @@
 import { OptionsStore } from './store';
 
 import { MailingAddress } from 'src/interfaces.d';
+import { PaymentOverviewFormValues } from 'src/interfaces.d';
+import { submitPaymentOptions } from 'src/modules/options/store';
 
 class OptionsViewModel {
   private readonly store: OptionsStore;
@@ -8,9 +10,11 @@ class OptionsViewModel {
   readonly optionTitle: string = 'Payment Method';
   readonly optionQuestion: string = 'How would you like to get paid?';
   readonly submit: string = 'submit';
+  readonly priceId: string = '';
 
   constructor(store: OptionsStore) {
     this.store = store;
+    this.priceId = store.priceId;
   }
 
   onPayOptionClick = (
@@ -35,9 +39,7 @@ class OptionsViewModel {
     return this.store.showDD;
   };
 
-  isValidRouting = (
-    routingNumberToTest: string
-  ): boolean => {
+  isValidRouting = (routingNumberToTest: string): boolean => {
     if (!routingNumberToTest) {
       //all 0's is technically a valid routing number, but it's inactive
       return false;
@@ -75,6 +77,13 @@ class OptionsViewModel {
     }
 
     return (10 - (sum % 10)) % 10 === parseInt(routing[8]);
+  };
+
+  paymentOptionsSubmit = (
+    values: PaymentOverviewFormValues,
+    priceId: string
+  ): void => {
+    submitPaymentOptions(values, priceId);
   };
 }
 

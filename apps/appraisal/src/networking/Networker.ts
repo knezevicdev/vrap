@@ -1,8 +1,13 @@
 import axios, { AxiosInstance, AxiosResponse } from 'axios';
 
-import { Prices, VerificationRespData } from './models/Price';
+import {
+  PaymentOptionsRespData,
+  Prices,
+  VerificationRespData,
+} from './models/Price';
 
 import ENVS from 'src/integrations/Envs';
+import { PaymentOverviewFormValues } from 'src/interfaces.d';
 
 export enum Status {
   INITIAL = 'initial',
@@ -46,5 +51,29 @@ export class Networker {
   ): Promise<AxiosResponse<VerificationRespData>> {
     const url = `${ENVS.VROOM_URL}/api/appraisal/verification?offerId=${priceId}`;
     return this.axiosInstance.get(url);
+  }
+
+  submitPaymentOptions(
+    paymentData: PaymentOverviewFormValues,
+    priceId: string
+  ): Promise<AxiosResponse<PaymentOptionsRespData>> {
+    const url = `${ENVS.VROOM_URL}/api/appraisal/payment`;
+    let paymentMethod = '';
+    if (paymentData.paymentOption === 'Direct Deposit') {
+      paymentMethod = 'ACH';
+    } else if (paymentData.paymentOption === 'Check by Mail') {
+      paymentMethod = 'check';
+    }
+
+    /* eslint-disable */
+    const data = {
+      payment_method: paymentMethod,
+      sf_offer_id: priceId,
+      account_number: paymentData.bankAccountNumber,
+      routing_number: paymentData.routingNumber,
+    };
+    /* eslint-enable */
+
+    return this.axiosInstance.post(url, data);
   }
 }

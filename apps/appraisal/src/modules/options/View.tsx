@@ -12,6 +12,7 @@ import PayOptions from 'src/components/PayOptions';
 import { Button } from 'src/core/Button';
 import Icon, { Icons } from 'src/core/Icon';
 import { Body, Hero, Title } from 'src/core/Typography';
+import { PaymentOverviewFormValues } from 'src/interfaces.d';
 
 const OptionsContainer = styled.div`
   background: white;
@@ -80,12 +81,6 @@ export interface Props {
   viewModel: OptionsViewModel;
 }
 
-interface PaymentOverviewFormValues {
-  paymentOption: string;
-  routingNumber: string;
-  bankAccountNumber: string;
-}
-
 const InitialValues: PaymentOverviewFormValues = {
   paymentOption: 'Direct Deposit',
   routingNumber: '',
@@ -118,14 +113,12 @@ const OptionsView: React.FC<Props> = ({ viewModel }) => {
       initialValues={InitialValues}
       validationSchema={PaymentOverviewSchema}
       onSubmit={(values: PaymentOverviewFormValues): void => {
-        console.log({ values });
+        viewModel.paymentOptionsSubmit(values, viewModel.priceId);
       }}
       validateOnMount={true}
     >
-      {({ isValid, values, errors }): JSX.Element => {
+      {({ isValid, values }): JSX.Element => {
         const showDirectDeposit = values.paymentOption === 'Direct Deposit';
-        console.log({ values });
-        console.log({ errors });
         return (
           <Form>
             <OptionsContainer>
@@ -144,7 +137,9 @@ const OptionsView: React.FC<Props> = ({ viewModel }) => {
                 {showDirectDeposit ? (
                   <DirectDeposit />
                 ) : (
-                  <CheckByMail mailingAddress={viewModel.getMailiingAddress()} />
+                  <CheckByMail
+                    mailingAddress={viewModel.getMailiingAddress()}
+                  />
                 )}
               </OptionDisplay>
               <SubmitButton disabled={!isValid}>
