@@ -34,7 +34,7 @@ export async function getInitialPaymentOverviewStoreState(
 
 export class PaymentOverviewStore {
   @observable price = 0;
-  @observable isDesktop;
+  @observable isDesktop: boolean;
   @observable displayBody = true;
 
   constructor(priceId?: string, isDeskTop = true) {
