@@ -37,7 +37,7 @@ export const CoreInput: React.FC<CoreInputProps> = (props) => {
   const _showSuccess = value && value.length > 0 && !_showError;
 
   return (
-    <Container className={className} fluid={fluid ? 1 : 0}>
+    <Container className={className} fluid={fluid}>
       {label && <Label htmlFor={name}>{label}</Label>}
       <InputContainer
         {...rest}
