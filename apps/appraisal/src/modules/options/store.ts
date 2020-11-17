@@ -1,6 +1,7 @@
 import { action, observable, runInAction } from 'mobx';
 import { createContext, useContext } from 'react';
 
+import { PaymentOverviewFormValues } from 'src/interfaces.d';
 import { MailingAddress } from 'src/interfaces.d';
 import { Verification } from 'src/networking/models/Price';
 import { Networker } from 'src/networking/Networker';
@@ -33,9 +34,23 @@ export async function getInitialOptionsStoreState(
     };
     return optionState;
   } catch (err) {
-    console.log('err', err);
+    console.log(JSON.stringify(err));
     const errorState = defaultOptionsState;
     return errorState;
+  }
+}
+
+export async function submitPaymentOptions(
+  values: PaymentOverviewFormValues,
+  priceId: string,
+  address: MailingAddress
+): Promise<void> {
+  const networker = new Networker();
+  try {
+    await networker.submitPaymentOptions(values, priceId, address);
+  } catch (err) {
+    console.log(JSON.stringify(err));
+    return err;
   }
 }
 
@@ -45,6 +60,7 @@ export class OptionsStore {
   @observable showDD = true;
   @observable remainingLoan = 0;
   @observable mailingAddress = defaultOptionsState.mailingAddress;
+  @observable priceId = '';
 
   constructor(priceId?: string) {
     if (priceId) this.init(priceId);
@@ -55,6 +71,7 @@ export class OptionsStore {
     const initialState = await getInitialOptionsStoreState(priceId);
     runInAction(() => {
       this.mailingAddress = initialState.mailingAddress;
+      this.priceId = priceId;
     });
   }
 

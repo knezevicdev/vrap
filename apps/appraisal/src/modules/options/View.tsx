@@ -12,6 +12,7 @@ import PayOptions from 'src/components/PayOptions';
 import { Button } from 'src/core/Button';
 import Icon, { Icons } from 'src/core/Icon';
 import { Body, Hero, Title } from 'src/core/Typography';
+import { PaymentOverviewFormValues } from 'src/interfaces.d';
 
 const FormContainer = styled(Form)`
   display: flex;
@@ -88,12 +89,6 @@ export interface Props {
   viewModel: OptionsViewModel;
 }
 
-interface PaymentOverviewFormValues {
-  paymentOption: string;
-  routingNumber: string;
-  bankAccountNumber: string;
-}
-
 const InitialValues: PaymentOverviewFormValues = {
   paymentOption: 'Direct Deposit',
   routingNumber: '',
@@ -126,7 +121,7 @@ const OptionsView: React.FC<Props> = ({ viewModel }) => {
       initialValues={InitialValues}
       validationSchema={PaymentOverviewSchema}
       onSubmit={(values: PaymentOverviewFormValues): void => {
-        console.log({ values });
+        viewModel.paymentOptionsSubmit(values);
       }}
       validateOnMount={true}
     >

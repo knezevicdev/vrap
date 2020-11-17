@@ -1,6 +1,8 @@
 import { OptionsStore } from './store';
 
 import { MailingAddress } from 'src/interfaces.d';
+import { PaymentOverviewFormValues } from 'src/interfaces.d';
+import { submitPaymentOptions } from 'src/modules/options/store';
 
 class OptionsViewModel {
   private readonly store: OptionsStore;
@@ -73,6 +75,10 @@ class OptionsViewModel {
     }
 
     return (10 - (sum % 10)) % 10 === parseInt(routing[8]);
+  };
+
+  paymentOptionsSubmit = (values: PaymentOverviewFormValues): void => {
+    submitPaymentOptions(values, this.store.priceId, this.store.mailingAddress);
   };
 }
 
