@@ -67,13 +67,9 @@ export class Networker {
     priceId: string,
     address: MailingAddress
   ): Promise<AxiosResponse<PaymentOptionsRespData>> {
+    // eslint-disable-next-line @typescript-eslint/camelcase
+    const data: PaymentData = { sf_offer_id: priceId };
     const url = `http://localhost:1337/api/appraisal/payment`;
-
-    /* eslint-disable */
-    let data: PaymentData = {
-      sf_offer_id: priceId,
-		};
-    /* eslint-enable */
 
     if (paymentData.paymentOption === 'Direct Deposit') {
       data['payment_method'] = 'ach';
