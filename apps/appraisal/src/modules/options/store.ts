@@ -34,7 +34,7 @@ export async function getInitialOptionsStoreState(
     };
     return optionState;
   } catch (err) {
-    console.log('err', err);
+    console.log(JSON.stringify(err));
     const errorState = defaultOptionsState;
     return errorState;
   }

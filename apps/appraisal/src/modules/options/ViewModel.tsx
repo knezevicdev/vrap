@@ -10,11 +10,9 @@ class OptionsViewModel {
   readonly optionTitle: string = 'Payment Method';
   readonly optionQuestion: string = 'How would you like to get paid?';
   readonly submit: string = 'submit';
-  readonly priceId: string = '';
 
   constructor(store: OptionsStore) {
     this.store = store;
-    this.priceId = store.priceId;
   }
 
   onPayOptionClick = (
@@ -79,11 +77,8 @@ class OptionsViewModel {
     return (10 - (sum % 10)) % 10 === parseInt(routing[8]);
   };
 
-  paymentOptionsSubmit = (
-    values: PaymentOverviewFormValues,
-    priceId: string
-  ): void => {
-    submitPaymentOptions(values, priceId);
+  paymentOptionsSubmit = (values: PaymentOverviewFormValues): void => {
+    submitPaymentOptions(values, this.store.priceId);
   };
 }
 

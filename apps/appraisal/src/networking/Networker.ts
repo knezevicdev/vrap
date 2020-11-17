@@ -60,7 +60,7 @@ export class Networker {
     const url = `${ENVS.VROOM_URL}/api/appraisal/payment`;
     let paymentMethod = '';
     if (paymentData.paymentOption === 'Direct Deposit') {
-      paymentMethod = 'ACH';
+      paymentMethod = 'ach';
     } else if (paymentData.paymentOption === 'Check by Mail') {
       paymentMethod = 'check';
     }

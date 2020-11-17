@@ -113,7 +113,7 @@ const OptionsView: React.FC<Props> = ({ viewModel }) => {
       initialValues={InitialValues}
       validationSchema={PaymentOverviewSchema}
       onSubmit={(values: PaymentOverviewFormValues): void => {
-        viewModel.paymentOptionsSubmit(values, viewModel.priceId);
+        viewModel.paymentOptionsSubmit(values);
       }}
       validateOnMount={true}
     >
