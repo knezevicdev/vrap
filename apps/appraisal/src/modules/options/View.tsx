@@ -1,12 +1,14 @@
+import { Form, Formik } from 'formik';
 import { observer } from 'mobx-react';
 import React from 'react';
 import styled from 'styled-components';
+import * as Yup from 'yup';
 
-import CheckByMail from '../../components/CheckByMail';
-import DirectDeposit from '../../components/DirectDeposit';
-import PayOptions from '../../components/PayOptions';
 import OptionsViewModel from './ViewModel';
 
+import CheckByMail from 'src/components/CheckByMail';
+import DirectDeposit from 'src/components/DirectDeposit';
+import PayOptions from 'src/components/PayOptions';
 import { Button } from 'src/core/Button';
 import Icon, { Icons } from 'src/core/Icon';
 import { Body, Hero, Title } from 'src/core/Typography';
@@ -78,36 +80,83 @@ export interface Props {
   viewModel: OptionsViewModel;
 }
 
+interface PaymentOverviewFormValues {
+  paymentOption: string;
+  routingNumber: string;
+  bankAccountNumber: string;
+}
+
+const InitialValues: PaymentOverviewFormValues = {
+  paymentOption: 'Direct Deposit',
+  routingNumber: '',
+  bankAccountNumber: '',
+};
+
 const OptionsView: React.FC<Props> = ({ viewModel }) => {
+  const PaymentOverviewSchema = Yup.object().shape({
+    paymentOption: Yup.string().required('Required'),
+    routingNumber: Yup.string().when('paymentOption', {
+      is: 'Direct Deposit',
+      then: Yup.string()
+        .required('Field is required')
+        .test(
+          'valid-routing-num',
+          'Please enter a valid routing number',
+          viewModel.isValidRouting
+        ),
+    }),
+    bankAccountNumber: Yup.string().when('paymentOption', {
+      is: 'Direct Deposit',
+      then: Yup.string()
+        .required('Field is required')
+        .matches(/^[\w\d]{4,17}$/, 'Please enter a valid account number'),
+    }),
+  });
+
   return (
-    <OptionsContainer>
-      <StyledHero>{viewModel.hero}</StyledHero>
-      <Line />
-      <OptionsTitle>
-        <OptionTitleIcon icon={Icons.RED_ONE} />
-        {viewModel.optionTitle}
-      </OptionsTitle>
-      <OptionsBody>{viewModel.optionQuestion}</OptionsBody>
-      <PayOptions
-        optionMeta={viewModel.getPayOptionArray()}
-        selected={viewModel.getPayOptionSelected()}
-        handleClick={viewModel.onPayOptionClick}
-      />
-      <OptionDisplay>
-        {viewModel.showDirectDeposit() ? (
-          <DirectDeposit />
-        ) : (
-          <CheckByMail mailingAddress={viewModel.getMailiingAddress()} />
-        )}
-      </OptionDisplay>
-      <SubmitButton
-        onClick={() => {
-          return;
-        }}
-      >
-        {viewModel.submit}
-      </SubmitButton>
-    </OptionsContainer>
+    <Formik
+      initialValues={InitialValues}
+      validationSchema={PaymentOverviewSchema}
+      onSubmit={(values: PaymentOverviewFormValues): void => {
+        console.log({ values });
+      }}
+      validateOnMount={true}
+    >
+      {({ isValid, values, errors }): JSX.Element => {
+        const showDirectDeposit = values.paymentOption === 'Direct Deposit';
+        console.log({ values });
+        console.log({ errors });
+        return (
+          <Form>
+            <OptionsContainer>
+              <StyledHero>{viewModel.hero}</StyledHero>
+              <Line />
+              <OptionsTitle>
+                <OptionTitleIcon icon={Icons.RED_ONE} />
+                {viewModel.optionTitle}
+              </OptionsTitle>
+              <OptionsBody>{viewModel.optionQuestion}</OptionsBody>
+              <PayOptions
+                optionMeta={viewModel.getPayOptionArray()}
+                selected={values.paymentOption}
+              />
+              <OptionDisplay>
+                {showDirectDeposit ? (
+                  <DirectDeposit />
+                ) : (
+                  <CheckByMail
+                    mailingAddress={viewModel.getMailiingAddress()}
+                  />
+                )}
+              </OptionDisplay>
+              <SubmitButton disabled={!isValid}>
+                {viewModel.submit}
+              </SubmitButton>
+            </OptionsContainer>
+          </Form>
+        );
+      }}
+    </Formik>
   );
 };
 

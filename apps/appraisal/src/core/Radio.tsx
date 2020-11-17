@@ -1,5 +1,8 @@
+import { Field } from 'formik';
 import React from 'react';
 import styled from 'styled-components';
+
+import ENVS from 'src/integrations/Envs';
 
 interface RadioButtonProps extends React.HTMLAttributes<HTMLInputElement> {
   id?: string;
@@ -7,7 +10,7 @@ interface RadioButtonProps extends React.HTMLAttributes<HTMLInputElement> {
   name: string;
   disabled?: boolean;
   checked?: boolean;
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  value: string;
 }
 
 const CheckMark = styled.span<{ disabled?: boolean }>`
@@ -16,13 +19,15 @@ const CheckMark = styled.span<{ disabled?: boolean }>`
   left: 0;
   height: 16px;
   width: 16px;
-  background-color: ${({ disabled }) => (disabled ? '#f5f5f5' : '#fff')};
-  border: 1px solid ${({ disabled }) => (disabled ? '#999DA3' : '#041022')};
+  background-color: ${({ disabled }): string =>
+    disabled ? '#f5f5f5' : '#fff'};
+  border: 1px solid
+    ${({ disabled }): string => (disabled ? '#999DA3' : '#D6D7DA')};
 
   border-radius: 50%;
 
   &:hover {
-    background-color: ${({ disabled }) => !disabled && '#fafafa'};
+    background-color: ${({ disabled }): string => (!disabled ? '#fafafa' : '')};
   }
 
   &:after {
@@ -40,7 +45,8 @@ const Label = styled.label<{ disabled?: boolean }>`
   cursor: pointer;
   font-family: Calibre;
   font-size: 18px;
-  color: ${({ disabled }) => (disabled ? '#999DA3' : '#041022')};
+  font-weight: 500;
+  color: ${({ disabled }): string => (disabled ? '#999DA3' : '#041022')};
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
@@ -48,22 +54,13 @@ const Label = styled.label<{ disabled?: boolean }>`
 
   &:hover {
     span {
-      background-color: ${({ disabled }) => !disabled && '#fafafa'};
+      background-color: ${({ disabled }): string =>
+        !disabled ? '#fafafa' : ''};
     }
-  }
-
-  ${CheckMark}:after {
-    left: 1px;
-    top: 1px;
-    width: 8px;
-    height: 8px;
-    border: solid '#fff';
-    border-radius: 50%;
-    background-color: ${({ disabled }) => disabled && '#999DA3'};
   }
 `;
 
-const RadioButtonStyled = styled.input.attrs({ type: 'radio' })`
+const RadioButtonStyled = styled(Field).attrs({ type: 'radio' })`
   position: absolute;
   opacity: 0;
   cursor: pointer;
@@ -71,19 +68,15 @@ const RadioButtonStyled = styled.input.attrs({ type: 'radio' })`
   width: 0;
 
   &:checked ~ ${CheckMark} {
-    background-color: ${({ disabled }) => (disabled ? '#f5f5f5' : '#E7131A')};
-
-    border: ${({ disabled }) =>
+    background: url(${ENVS.BASE_PATH}/icons/check-mark-red.svg);
+    background-size: cover;
+    border: ${({ disabled }): string =>
       disabled ? `1px solid #999DA3` : `1px solid #E7131A`};
-  }
-
-  &:checked ~ ${CheckMark}:after {
-    display: block;
   }
 `;
 
 export const RadioButton: React.FC<RadioButtonProps> = (props) => {
-  const { id, name, checked, onChange, children, disabled } = props;
+  const { id, name, value, checked, children, disabled } = props;
 
   return (
     <Label disabled={disabled}>
@@ -93,7 +86,7 @@ export const RadioButton: React.FC<RadioButtonProps> = (props) => {
         name={name}
         disabled={disabled}
         checked={checked}
-        onChange={onChange}
+        value={value}
       />
       <CheckMark disabled={disabled} />
     </Label>
