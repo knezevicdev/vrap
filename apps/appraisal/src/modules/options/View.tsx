@@ -53,6 +53,14 @@ const OptionsBody = styled(Body.Regular)`
   padding: 15px 0;
 `;
 
+const OptionDisplay = styled.div`
+  min-width: 573px;
+
+  @media (max-width: 420px) {
+    min-width: 100%;
+  }
+`;
+
 const OptionTitleIcon = styled(Icon)`
   margin: auto 10px auto 0;
 `;
@@ -72,68 +80,6 @@ export interface Props {
   viewModel: OptionsViewModel;
 }
 
-const isValidRouting = async (
-  routingNumberToTest: string
-): Promise<boolean> => {
-  if (!routingNumberToTest) {
-    //all 0's is technically a valid routing number, but it's inactive
-    return false;
-  }
-
-  let routing = routingNumberToTest.toString();
-  while (routing.length < 9) {
-    routing = '0' + routing; //I refuse to import left-pad for this
-  }
-
-  //gotta be 9  digits
-  const match = routing.match('^\\d{9}$');
-  if (!match) {
-    return false;
-  }
-
-  //The first two digits of the nine digit RTN must be in the ranges 00 through 12, 21 through 32, 61 through 72, or 80.
-  //https://en.wikipedia.org/wiki/Routing_transit_number
-  const firstTwo = parseInt(routing.substring(0, 2));
-  const firstTwoValid =
-    (0 <= firstTwo && firstTwo <= 12) ||
-    (21 <= firstTwo && firstTwo <= 32) ||
-    (61 <= firstTwo && firstTwo <= 72) ||
-    firstTwo === 80;
-  if (!firstTwoValid) {
-    return false;
-  }
-
-  //this is the checksum
-  //http://www.siccolo.com/Articles/SQLScripts/how-to-create-sql-to-calculate-routing-check-digit.html
-  const weights = [3, 7, 1];
-  let sum = 0;
-  for (let i = 0; i < 8; i++) {
-    sum += parseInt(routing[i]) * weights[i % 3];
-  }
-
-  return (10 - (sum % 10)) % 10 === parseInt(routing[8]);
-};
-
-const PaymentOverviewSchema = Yup.object().shape({
-  paymentOption: Yup.string().required('Required'),
-  routingNumber: Yup.string().when('paymentOption', {
-    is: 'Direct Deposit',
-    then: Yup.string()
-      .required('Field is required')
-      .test(
-        'valid-routing-num',
-        'Please enter a valid routing number',
-        isValidRouting
-      ),
-  }),
-  bankAccountNumber: Yup.string().when('paymentOption', {
-    is: 'Direct Deposit',
-    then: Yup.string()
-      .required('Field is required')
-      .matches(/^[\w\d]{4,17}$/, 'Please enter a valid account number'),
-  }),
-});
-
 interface PaymentOverviewFormValues {
   paymentOption: string;
   routingNumber: string;
@@ -147,6 +93,26 @@ const InitialValues: PaymentOverviewFormValues = {
 };
 
 const OptionsView: React.FC<Props> = ({ viewModel }) => {
+  const PaymentOverviewSchema = Yup.object().shape({
+    paymentOption: Yup.string().required('Required'),
+    routingNumber: Yup.string().when('paymentOption', {
+      is: 'Direct Deposit',
+      then: Yup.string()
+        .required('Field is required')
+        .test(
+          'valid-routing-num',
+          'Please enter a valid routing number',
+          viewModel.isValidRouting
+        ),
+    }),
+    bankAccountNumber: Yup.string().when('paymentOption', {
+      is: 'Direct Deposit',
+      then: Yup.string()
+        .required('Field is required')
+        .matches(/^[\w\d]{4,17}$/, 'Please enter a valid account number'),
+    }),
+  });
+
   return (
     <Formik
       initialValues={InitialValues}
@@ -174,8 +140,13 @@ const OptionsView: React.FC<Props> = ({ viewModel }) => {
                 optionMeta={viewModel.getPayOptionArray()}
                 selected={values.paymentOption}
               />
-              <OptionsBody>{viewModel.bankInfo}</OptionsBody>
-              {showDirectDeposit ? <DirectDeposit /> : <CheckByMail />}
+              <OptionDisplay>
+                {showDirectDeposit ? (
+                  <DirectDeposit />
+                ) : (
+                  <CheckByMail mailingAddress={viewModel.getMailiingAddress()} />
+                )}
+              </OptionDisplay>
               <SubmitButton disabled={!isValid}>
                 {viewModel.submit}
               </SubmitButton>

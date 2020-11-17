@@ -89,7 +89,7 @@ const Container = styled.div<ContainerProps>`
 
 const InputContainer = styled(
   //Removing showError, isEmpty, theme, fluid, setFieldValue from the rest props to pass down all HTMLInput properties
-  ({ rest }) => <input {...rest} />
+  ({ ...rest }) => <input {...rest} />
 )`
   height: 40px;
   width: ${({ fluid }): string => (fluid ? '100%' : 'auto')};
