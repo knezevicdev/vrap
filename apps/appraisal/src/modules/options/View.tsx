@@ -51,6 +51,14 @@ const OptionsBody = styled(Body.Regular)`
   padding: 15px 0;
 `;
 
+const OptionDisplay = styled.div`
+  min-width: 573px;
+
+  @media (max-width: 420px) {
+    min-width: 100%;
+  }
+`;
+
 const OptionTitleIcon = styled(Icon)`
   margin: auto 10px auto 0;
 `;
@@ -85,8 +93,13 @@ const OptionsView: React.FC<Props> = ({ viewModel }) => {
         selected={viewModel.getPayOptionSelected()}
         handleClick={viewModel.onPayOptionClick}
       />
-      <OptionsBody>{viewModel.bankInfo}</OptionsBody>
-      {viewModel.showDirectDeposit() ? <DirectDeposit /> : <CheckByMail />}
+      <OptionDisplay>
+        {viewModel.showDirectDeposit() ? (
+          <DirectDeposit />
+        ) : (
+          <CheckByMail mailingAddress={viewModel.getMailiingAddress()} />
+        )}
+      </OptionDisplay>
       <SubmitButton
         onClick={() => {
           return;

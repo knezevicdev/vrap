@@ -1,6 +1,7 @@
 import { action, observable, runInAction } from 'mobx';
 import { createContext, useContext } from 'react';
 
+import { MailingAddress } from 'src/interfaces.d';
 import { Verification } from 'src/networking/models/Price';
 import { Networker } from 'src/networking/Networker';
 
@@ -16,13 +17,7 @@ const defaultOptionsState: OptionStoreState = {
   },
 };
 export interface OptionStoreState {
-  mailingAddress: {
-    address_1: string;
-    address_2: string;
-    city: string;
-    state: string;
-    zipcode: string;
-  };
+  mailingAddress: MailingAddress;
 }
 
 export async function getInitialOptionsStoreState(
@@ -49,7 +44,7 @@ export class OptionsStore {
   @observable payOptionArr = ['Direct Deposit', 'Check by Mail'];
   @observable showDD = true;
   @observable remainingLoan = 0;
-  @observable mailingAddress = {};
+  @observable mailingAddress = defaultOptionsState.mailingAddress;
 
   constructor(priceId?: string) {
     if (priceId) this.init(priceId);
