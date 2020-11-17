@@ -1,0 +1,4 @@
+version: '3'
+services:
+  base-networking-client:
+    command: ash -c "yarn workspace @vroom-web/base-networking-client build"
