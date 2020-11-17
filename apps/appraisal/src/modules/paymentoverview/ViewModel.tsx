@@ -12,14 +12,16 @@ class PaymentOverviewViewModel {
   readonly total: string = 'Total';
   readonly isDesktop: boolean = true;
 
-  constructor(store: PaymentOverviewStore, isDeskTop: boolean) {
+  constructor(store: PaymentOverviewStore) {
     this.store = store;
-    this.isDesktop = isDeskTop;
-    this.store.setDisplayBody(isDeskTop);
   }
 
   getCarWorthPrice = (): string => {
     return displayCurrency(this.store.price);
+  };
+
+  getIsDesktop = (): boolean => {
+    return this.store.isDesktop;
   };
 
   getDisplayBody = (): boolean => {
@@ -28,7 +30,6 @@ class PaymentOverviewViewModel {
 
   toggleBody = (): void => {
     this.store.setDisplayBody(!this.store.displayBody);
-    //this.displayBody = this.store.displayBody;
   };
 }
 

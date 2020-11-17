@@ -1,3 +1,5 @@
+import { useTheme } from '@material-ui/core/styles';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { SimpleHeader } from '@vroom-web/header-components';
 import { Brand, ThemeProvider } from '@vroom-web/ui';
 import { NextPage, NextPageContext } from 'next';
@@ -22,7 +24,7 @@ const ColumnBody = styled.div`
   margin: 0 auto;
   padding: 20px;
   flex-wrap: wrap;
-  min-height: 100vh;
+  min-height: 78vh;
 
   @media (max-width: 1280px) {
     flex-wrap: wrap-reverse;
@@ -32,7 +34,7 @@ const ColumnBody = styled.div`
 
   @media (max-width: 786px) {
     flex-wrap: wrap-reverse;
-    min-height: 86vh;
+    min-height: 81vh;
   }
 
   @media (max-width: 420px) {
@@ -51,9 +53,11 @@ const EPayOptions: NextPage<Props> = ({ brand }) => {
   const router = useRouter();
   const gearboxPrivateUrl = publicRuntimeConfig.GEARBOX_PRIVATE_URL;
   const priceId = router.query.priceId as string;
+  const theme = useTheme();
+  const mdUp = useMediaQuery(theme.breakpoints.up('lg'));
 
   const oStore = new OptionsStore(priceId);
-  const poStore = new PaymentOverviewStore(priceId);
+  const poStore = new PaymentOverviewStore(priceId, mdUp);
 
   return (
     <ThemeProvider brand={brand}>

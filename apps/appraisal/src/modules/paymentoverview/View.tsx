@@ -80,7 +80,7 @@ const PaymentOverviewView: React.FC<Props> = ({ viewModel }) => {
     <PaymentOverview>
       <OverviewHeader>
         <StyledHero>{viewModel.hero}</StyledHero>
-        {!viewModel.isDesktop && (
+        {!viewModel.getIsDesktop() && (
           <OverviewExpand onClick={viewModel.toggleBody}>
             {!viewModel.getDisplayBody() && (
               <ExpandArrowDown icon={Icons.CHEVRON_DOWN} />

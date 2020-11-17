@@ -13,17 +13,25 @@ import { Button } from 'src/core/Button';
 import Icon, { Icons } from 'src/core/Icon';
 import { Body, Hero, Title } from 'src/core/Typography';
 
+const FormContainer = styled(Form)`
+  display: flex;
+  height: 100%;
+
+  @media (max-width: 1280px) {
+    width: 100%;
+  }
+`;
+
 const OptionsContainer = styled.div`
   background: white;
   border: 1px solid #e0e0e0;
   margin: 0 20px;
   padding: 30px 100px;
   box-shadow: 0px 0px 4px #e0e0e0;
-  height: 100%;
 
   @media (max-width: 1280px) {
     margin: 20px;
-    padding: 30px 60px;
+    padding: 30px 55px;
     width: 100%;
   }
 
@@ -124,10 +132,8 @@ const OptionsView: React.FC<Props> = ({ viewModel }) => {
     >
       {({ isValid, values, errors }): JSX.Element => {
         const showDirectDeposit = values.paymentOption === 'Direct Deposit';
-        console.log({ values });
-        console.log({ errors });
         return (
-          <Form>
+          <FormContainer>
             <OptionsContainer>
               <StyledHero>{viewModel.hero}</StyledHero>
               <Line />
@@ -153,7 +159,7 @@ const OptionsView: React.FC<Props> = ({ viewModel }) => {
                 {viewModel.submit}
               </SubmitButton>
             </OptionsContainer>
-          </Form>
+          </FormContainer>
         );
       }}
     </Formik>
