@@ -42,11 +42,12 @@ export async function getInitialOptionsStoreState(
 
 export async function submitPaymentOptions(
   values: PaymentOverviewFormValues,
-  priceId: string
+  priceId: string,
+  address: MailingAddress
 ): Promise<void> {
   const networker = new Networker();
   try {
-    await networker.submitPaymentOptions(values, priceId);
+    await networker.submitPaymentOptions(values, priceId, address);
   } catch (err) {
     console.log(JSON.stringify(err));
     return err;

@@ -78,7 +78,7 @@ class OptionsViewModel {
   };
 
   paymentOptionsSubmit = (values: PaymentOverviewFormValues): void => {
-    submitPaymentOptions(values, this.store.priceId);
+    submitPaymentOptions(values, this.store.priceId, this.store.mailingAddress);
   };
 }
 

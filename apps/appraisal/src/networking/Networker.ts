@@ -7,6 +7,7 @@ import {
 } from './models/Price';
 
 import ENVS from 'src/integrations/Envs';
+import { MailingAddress } from 'src/interfaces.d';
 import { PaymentOverviewFormValues } from 'src/interfaces.d';
 
 export enum Status {
@@ -55,9 +56,11 @@ export class Networker {
 
   submitPaymentOptions(
     paymentData: PaymentOverviewFormValues,
-    priceId: string
+    priceId: string,
+    address: MailingAddress
   ): Promise<AxiosResponse<PaymentOptionsRespData>> {
     const url = `${ENVS.VROOM_URL}/api/appraisal/payment`;
+
     let paymentMethod = '';
     if (paymentData.paymentOption === 'Direct Deposit') {
       paymentMethod = 'ach';
@@ -71,6 +74,7 @@ export class Networker {
       sf_offer_id: priceId,
       account_number: paymentData.bankAccountNumber,
       routing_number: paymentData.routingNumber,
+			payment_address: address
     };
     /* eslint-enable */
 
