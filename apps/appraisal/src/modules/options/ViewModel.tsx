@@ -35,9 +35,7 @@ class OptionsViewModel {
     return this.store.showDD;
   };
 
-  isValidRouting = (
-    routingNumberToTest: string
-  ): boolean => {
+  isValidRouting = (routingNumberToTest: string): boolean => {
     if (!routingNumberToTest) {
       //all 0's is technically a valid routing number, but it's inactive
       return false;

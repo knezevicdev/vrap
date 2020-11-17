@@ -144,7 +144,9 @@ const OptionsView: React.FC<Props> = ({ viewModel }) => {
                 {showDirectDeposit ? (
                   <DirectDeposit />
                 ) : (
-                  <CheckByMail mailingAddress={viewModel.getMailiingAddress()} />
+                  <CheckByMail
+                    mailingAddress={viewModel.getMailiingAddress()}
+                  />
                 )}
               </OptionDisplay>
               <SubmitButton disabled={!isValid}>
