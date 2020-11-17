@@ -10,6 +10,7 @@
     "test": "jest"
   },
   "dependencies": {
+    "@vroom-web/base-networking-client": "^1.0.0",
     "next": "^9.5.1",
     "react": "^16.12.0",
     "react-dom": "^16.12.0"
