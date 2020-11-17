@@ -22,6 +22,14 @@ export interface PriceData {
   accepted: boolean;
 }
 
+export interface PaymentData {
+  sf_offer_id: string;
+  payment_method?: string;
+  account_number?: string;
+  routing_number?: string;
+  payment_address?: MailingAddress;
+}
+
 export class Networker {
   private readonly axiosInstance: AxiosInstance;
 
@@ -50,7 +58,7 @@ export class Networker {
   getVerificationDetails(
     priceId: string
   ): Promise<AxiosResponse<VerificationRespData>> {
-    const url = `${ENVS.VROOM_URL}/api/appraisal/verification?offerId=${priceId}`;
+    const url = `http://localhost:1337/api/appraisal/verification?offerId=${priceId}`;
     return this.axiosInstance.get(url);
   }
 
@@ -59,24 +67,22 @@ export class Networker {
     priceId: string,
     address: MailingAddress
   ): Promise<AxiosResponse<PaymentOptionsRespData>> {
-    const url = `${ENVS.VROOM_URL}/api/appraisal/payment`;
-
-    let paymentMethod = '';
-    if (paymentData.paymentOption === 'Direct Deposit') {
-      paymentMethod = 'ach';
-    } else if (paymentData.paymentOption === 'Check by Mail') {
-      paymentMethod = 'check';
-    }
+    const url = `http://localhost:1337/api/appraisal/payment`;
 
     /* eslint-disable */
-    const data = {
-      payment_method: paymentMethod,
+    let data: PaymentData = {
       sf_offer_id: priceId,
-      account_number: paymentData.bankAccountNumber,
-      routing_number: paymentData.routingNumber,
-			payment_address: address
-    };
+		};
     /* eslint-enable */
+
+    if (paymentData.paymentOption === 'Direct Deposit') {
+      data['payment_method'] = 'ach';
+      data['account_number'] = paymentData.bankAccountNumber;
+      data['routing_number'] = paymentData.routingNumber;
+    } else if (paymentData.paymentOption === 'Check by Mail') {
+      data['payment_method'] = 'check';
+      data['payment_address'] = address;
+    }
 
     return this.axiosInstance.post(url, data);
   }
