@@ -23,7 +23,6 @@ export const CoreInput: React.FC<CoreInputProps> = (props) => {
     error,
     label,
     className,
-    touched,
     value,
     disabled,
     type,
@@ -32,8 +31,8 @@ export const CoreInput: React.FC<CoreInputProps> = (props) => {
     ...rest
   } = props;
 
-  const _showError = error && touched;
-  const _isEmpty = value && value.length === 0;
+  const _isEmpty = !value ? true : false;
+  const _showError = error && !_isEmpty;
   const _showSuccess = value && value.length > 0 && !_showError;
 
   return (
@@ -43,13 +42,14 @@ export const CoreInput: React.FC<CoreInputProps> = (props) => {
         {...rest}
         value={value}
         showerror={_showError ? 1 : 0}
-        isempty={!_showError && _isEmpty}
+        isempty={!_showError && _isEmpty ? 1 : 0}
         placeholder={placeholder}
         name={name}
         id={name}
         disabled={disabled}
         type={type}
         fluid={fluid ? 1 : 0}
+        touched={value ? value.toString() : ''}
       />
       {_showError && (
         <>
