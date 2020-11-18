@@ -1,5 +1,6 @@
 import { useTheme } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
+import { IncomingMessage } from 'http';
 import { SimpleHeader } from '@vroom-web/header-components';
 import { Brand, ThemeProvider } from '@vroom-web/ui';
 import { NextPage, NextPageContext } from 'next';
@@ -78,10 +79,42 @@ const EPayOptions: NextPage<Props> = ({ brand }) => {
   );
 };
 
+interface Cookie {
+  uuid: string;
+  ajs_anonymous_id: string;
+}
+
+const parseCookies = (req: IncomingMessage): Cookie => {
+  if (req && req.headers && req.headers.cookie) {
+    return Object.fromEntries(
+      req.headers.cookie.split('; ').map((v) => v.split(/=(.+)/))
+    );
+  } else {
+    // eslint-disable-next-line @typescript-eslint/camelcase
+    return { uuid: '', ajs_anonymous_id: '' };
+  }
+};
+
 EPayOptions.getInitialProps = async (
   context: NextPageContext
 ): Promise<Props> => {
   const { req, query } = context;
+  const priceId = query.priceId as string;
+
+  if (req) {
+    const cookies = parseCookies(req);
+
+    const loggerInfo = {
+      priceId,
+      userAgent: req.headers['user-agent'],
+      fastlyClientIp: req.headers['fastly-client-ip'],
+      uuid: cookies['uuid'],
+      ajsAnonymousId: cookies['ajs_anonymous_id'],
+      ipAddress: req.headers['x-forwarded-for'] || req.connection.remoteAddress,
+      url: req.url,
+    };
+    console.log(JSON.stringify(loggerInfo));
+  }
 
   const headerBrandKey = 'x-brand';
   const brandHeader = req && req.headers[headerBrandKey];

@@ -37,44 +37,25 @@ class OptionsViewModel {
     return this.store.showDD;
   };
 
-  isValidRouting = (routingNumberToTest: string): boolean => {
-    if (!routingNumberToTest) {
-      //all 0's is technically a valid routing number, but it's inactive
+  isValidRouting = (num: string): boolean => {
+    if (!num) return false;
+
+    // Run through each digit and calculate the total.
+    let n = 0;
+    for (let i = 0; i < num.length; i += 3) {
+      n +=
+        parseInt(num.charAt(i), 10) * 3 +
+        parseInt(num.charAt(i + 1), 10) * 7 +
+        parseInt(num.charAt(i + 2), 10);
+    }
+
+    // If the resulting sum is an even multiple of ten (but not zero),
+    // the aba routing number is good.
+    if (n != 0 && n % 10 == 0) {
+      return true;
+    } else {
       return false;
     }
-
-    let routing = routingNumberToTest.toString();
-    while (routing.length < 9) {
-      routing = '0' + routing; //I refuse to import left-pad for this
-    }
-
-    //gotta be 9  digits
-    const match = routing.match('^\\d{9}$');
-    if (!match) {
-      return false;
-    }
-
-    //The first two digits of the nine digit RTN must be in the ranges 00 through 12, 21 through 32, 61 through 72, or 80.
-    //https://en.wikipedia.org/wiki/Routing_transit_number
-    const firstTwo = parseInt(routing.substring(0, 2));
-    const firstTwoValid =
-      (0 <= firstTwo && firstTwo <= 12) ||
-      (21 <= firstTwo && firstTwo <= 32) ||
-      (61 <= firstTwo && firstTwo <= 72) ||
-      firstTwo === 80;
-    if (!firstTwoValid) {
-      return false;
-    }
-
-    //this is the checksum
-    //http://www.siccolo.com/Articles/SQLScripts/how-to-create-sql-to-calculate-routing-check-digit.html
-    const weights = [3, 7, 1];
-    let sum = 0;
-    for (let i = 0; i < 8; i++) {
-      sum += parseInt(routing[i]) * weights[i % 3];
-    }
-
-    return (10 - (sum % 10)) % 10 === parseInt(routing[8]);
   };
 
   paymentOptionsSubmit = (values: PaymentOverviewFormValues): void => {

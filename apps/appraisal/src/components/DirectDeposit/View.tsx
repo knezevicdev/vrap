@@ -30,6 +30,7 @@ const DirectDepositView: React.FC<Props> = ({ viewModel }) => {
           label={viewModel.routingLabel}
           placeholder={viewModel.routingLabel}
           fluid={true}
+          maxLength={9}
         />
       </InputContainer>
       <InputContainer>
@@ -39,6 +40,7 @@ const DirectDepositView: React.FC<Props> = ({ viewModel }) => {
           label={viewModel.bankAccountLabel}
           placeholder={viewModel.bankAccountLabel}
           fluid={true}
+          maxLength={17}
         />
       </InputContainer>
     </DirectDepositContainer>

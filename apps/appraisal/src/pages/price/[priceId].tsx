@@ -62,10 +62,8 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   // no price
   // http://localhost:3000/appraisal/price/d9b61a51f993808577a102eecbe8df0d
 
-  const priceId = context.query.priceId as string;
-  const store = await getInitialPriceStoreState(priceId);
-
-  const req = context.req;
+  const { req, query } = context;
+  const priceId = query.priceId as string;
   const cookies = parseCookies(req);
 
   const loggerInfo = {
@@ -77,8 +75,9 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     ipAddress: req.headers['x-forwarded-for'] || req.connection.remoteAddress,
     url: req.url,
   };
-
   console.log(JSON.stringify(loggerInfo));
+
+  const store = await getInitialPriceStoreState(priceId);
   return { props: { store } };
 };
 
