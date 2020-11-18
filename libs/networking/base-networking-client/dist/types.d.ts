@@ -1,3 +1,4 @@
+/// <reference types="react-native" />
 import { DocumentNode } from 'graphql/language/ast';
 export interface GQLRequestVariables {
     [key: string]: any;
