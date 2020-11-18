@@ -4,7 +4,6 @@ module.exports = {
     '!**/*.d.ts',
     '!**/node_modules/**',
   ],
-  setupFiles: ['<rootDir>/src/setupTests.ts'],
   testPathIgnorePatterns: ['/node_modules/'],
   transform: {
     '^.+\\.(js|jsx|ts|tsx)$': 'ts-jest',
