@@ -37,6 +37,10 @@ const CustomTable = styled(Table)`
   @media (min-width: 600px) and (max-width: 839px) {
     margin: 0px 64px;
   }
+
+  @media (max-width: 599px) {
+    margin-left: 16px;
+  }
 `;
 
 const HeaderWrapper = styled.thead`
