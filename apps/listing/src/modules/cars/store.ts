@@ -494,6 +494,11 @@ export class CarsStore {
         this.filtersData,
         this.sortAgeDirectionExperiment
       );
+
+      const showIsAvailableSoon = postInventoryRequestDataFromFiltersData.testdriveonly
+        ? false
+        : undefined;
+
       const inventoryRequestData: PostInventoryRequestData = {
         ...postInventoryRequestDataFromFiltersData,
         // DELTA-228.
@@ -505,6 +510,10 @@ export class CarsStore {
         limit: INVENTORY_CARDS_PER_PAGE,
         source: `${publicRuntimeConfig.NAME}-${publicRuntimeConfig.VERSION}`,
         isTitleQAPass: this.isTitleQAPass,
+        // DELTA-265.
+        // It's needed on the TDA whitelabel b/c the 'isAvailableSoon' field
+        // must be false when querying Test Drivable vehicles.
+        isAvailableSoon: showIsAvailableSoon,
       };
 
       const inventoryResponse = await this.invSearchNetworker.postInventory(

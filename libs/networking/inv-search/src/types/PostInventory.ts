@@ -38,6 +38,7 @@ export interface PostInventoryRequestData {
   fuelType?: string[];
   optionalFeatures?: string[];
   combinedMpg?: { min: number };
+  isAvailableSoon?: boolean;
 }
 
 export const postInventoryResponseSchema = inventoryResponseSchema;
