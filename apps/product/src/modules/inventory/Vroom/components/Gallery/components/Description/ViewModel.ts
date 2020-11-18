@@ -15,7 +15,17 @@ class DescriptionViewModel {
     const safetyAndQuality = document.getElementById(
       'safety-and-quality-content'
     );
-    safetyAndQuality?.scrollIntoView({ behavior: 'smooth' });
+    const yOffset = -50;
+    const y =
+      (safetyAndQuality &&
+        safetyAndQuality.getBoundingClientRect().top +
+          window.pageYOffset +
+          yOffset) ||
+      0;
+
+    safetyAndQuality &&
+      y !== 0 &&
+      window.scrollTo({ top: y, behavior: 'smooth' });
   };
 }
 
