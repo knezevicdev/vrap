@@ -34,6 +34,7 @@ const DescriptionToolTip = styled('div')(() => ({
   '&:hover': {
     background: 'rgba(0,0,0,.5)',
   },
+  cursor: 'pointer',
 }));
 
 const TextFlex = styled('div')(({ theme }) => ({

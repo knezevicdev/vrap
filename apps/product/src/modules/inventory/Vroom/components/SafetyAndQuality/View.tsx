@@ -80,6 +80,7 @@ const ViewImperfectionsButton = styled('button')(() => ({
   background: 'transparent',
   lineHeight: '23px',
   color: '#e7131a',
+  cursor: 'pointer',
 }));
 
 const StyledButtonText = styled('span')(() => ({
