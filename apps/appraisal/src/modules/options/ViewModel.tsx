@@ -38,7 +38,7 @@ class OptionsViewModel {
   };
 
   isValidRouting = (num: string): boolean => {
-    if (!num) return false;
+    if (!num || num.length < 9) return false;
 
     // Run through each digit and calculate the total.
     let n = 0;
@@ -60,6 +60,8 @@ class OptionsViewModel {
 
   paymentOptionsSubmit = (values: PaymentOverviewFormValues): void => {
     submitPaymentOptions(values, this.store.priceId, this.store.mailingAddress);
+    const url = `/sell/verification-congrats`;
+    window.location.href = url;
   };
 }
 

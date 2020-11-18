@@ -3,6 +3,7 @@ import styled from 'styled-components';
 
 import ErrorIcon from './Icon/ErrorIcon';
 import SuccessIcon from './Icon/SuccessIcon';
+import { ThemeProps } from './themes/Vroom';
 
 export interface CoreInputProps
   extends React.InputHTMLAttributes<HTMLInputElement> {
@@ -74,7 +75,15 @@ interface ContainerProps {
   fluid?: boolean;
 }
 
+interface CSSProps {
+  theme: ThemeProps;
+}
+
+const bodyFamily = (props: CSSProps): string =>
+  props.theme.typography.family.body;
+
 const Label = styled.label`
+  font-family: ${bodyFamily};
   margin-bottom: 5px;
 `;
 
