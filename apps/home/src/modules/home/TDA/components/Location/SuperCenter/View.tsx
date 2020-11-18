@@ -118,10 +118,10 @@ const View: React.FC<Props> = ({ viewModel }) => {
           </TextColumn>
         </ContentContainer>
 
-        <>
-          <Description>{viewModel.paragraph1}</Description>
-          <Description>{viewModel.paragraph2}</Description>
-        </>
+        {viewModel.paragraphs &&
+          viewModel.paragraphs.map((paragraph: string, i: number) => (
+            <Description key={i}>{paragraph}</Description>
+          ))}
       </ViewContent>
     </ViewContainer>
   );

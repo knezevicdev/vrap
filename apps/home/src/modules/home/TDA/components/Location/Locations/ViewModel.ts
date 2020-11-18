@@ -16,7 +16,7 @@ export interface LocationInfo {
 }
 
 class ViewModel {
-  readonly title: string = 'Houston Sell Us Your Car Centers';
+  readonly title: string = 'Houston Sell Us Your Car® Centers';
   readonly locations: LocationInfo[] = [
     {
       locationInfo: {
