@@ -1,5 +1,5 @@
 {
-  "name": "@vroom-web/base-networking-client",
+  "name": "@vroom-web/networking",
   "version": "1.0.0",
   "license": "UNLICENSED",
   "private": true,
@@ -10,12 +10,8 @@
   ],
   "scripts": {
     "test": "jest",
-    "build": "yarn clean && yarn build:types && yarn build:lib",
-    "build:lib": "rollup -c",
-    "build:types": "tsc -p tsconfig.gen-dts.json",
-    "clean": "rimraf dist/*",
-    "lint": "eslint . --ext .js,.jsx,.ts,.tsx,.json",
-    "test-build": "rimraf dist/* && tsc"
+    "build": "rimraf dist/* && tsc",
+    "lint": "eslint . --ext .js,.jsx,.ts,.tsx,.json"
   },
   "dependencies": {
     "graphql": "^15.4.0",
@@ -39,9 +35,5 @@
     "rollup-plugin-babel": "^4.4.0",
     "ts-jest": "^25.4.0",
     "typescript": "^3.8.3"
-  },
-  "peerDependencies": {
-    "graphql": "^15.4.0",
-    "regenerator-runtime": "^0.13.5"
   }
 }

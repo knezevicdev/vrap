@@ -13,4 +13,4 @@ RUN yarn install --silent
 
 USER 1000
 
-CMD ["yarn", "workspace", "@vroom-web/base-networking-client", "test", "--watch"]
+CMD ["yarn", "workspace", "@vroom-web/networking", "test", "--watch"]

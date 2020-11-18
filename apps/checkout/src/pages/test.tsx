@@ -1,4 +1,4 @@
-import { ClientImpl } from '@vroom-web/base-networking-client';
+import { ClientImpl } from '@vroom-web/networking';
 import { GetServerSideProps, GetServerSidePropsContext, NextPage } from 'next';
 import React from 'react';
 

@@ -1,8 +1,8 @@
 {
-  "name": "Vroom Web - Base Networking Client",
+  "name": "Vroom Web - Networking",
   "dockerComposeFile": "../docker/docker-compose.yaml",
-  "service": "base-networking-client",
-  "workspaceFolder": "/www/libs/networking/base-networking-client",
+  "service": "networking",
+  "workspaceFolder": "/www/libs/networking/networking",
   // Use 'settings' to set *default* container specific settings.json values on container create.
   // You can edit these settings after create using File > Preferences > Settings > Remote.
   "settings": {
