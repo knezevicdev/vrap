@@ -49,7 +49,7 @@ export const CoreInput: React.FC<CoreInputProps> = (props) => {
         disabled={disabled}
         type={type}
         fluid={fluid ? 1 : 0}
-        touched={value.toString()}
+        touched={value ? value.toString() : ''}
       />
       {_showError && (
         <>
