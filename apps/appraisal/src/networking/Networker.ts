@@ -58,7 +58,7 @@ export class Networker {
   getVerificationDetails(
     priceId: string
   ): Promise<AxiosResponse<VerificationRespData>> {
-    const url = `http://localhost:1337/api/appraisal/verification?offerId=${priceId}`;
+    const url = `${ENVS.VROOM_URL}/api/appraisal/verification?offerId=${priceId}`;
     return this.axiosInstance.get(url);
   }
 
@@ -69,7 +69,7 @@ export class Networker {
   ): Promise<AxiosResponse<PaymentOptionsRespData>> {
     // eslint-disable-next-line @typescript-eslint/camelcase
     const data: PaymentData = { sf_offer_id: priceId };
-    const url = `http://localhost:1337/api/appraisal/payment`;
+    const url = `${ENVS.VROOM_URL}/api/appraisal/payment`;
 
     if (paymentData.paymentOption === 'Direct Deposit') {
       data['payment_method'] = 'ach';
