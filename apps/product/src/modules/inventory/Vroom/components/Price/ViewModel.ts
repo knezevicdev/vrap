@@ -13,7 +13,7 @@ class PriceViewModel {
     bullets: [
       'Pre-delivery service charges of $285.50 (MA residents only - $300.50)',
       'Delivery charge of $599',
-      'FL residents only - Electronic registration filing charge of $8.00',
+      'FL residents only - Electronic registration filing charge of $15.00',
       'Applicable taxes, title, tag and registration charges which will be calculated at the time of purchase.',
     ],
   };
