@@ -11,6 +11,7 @@ class DescriptionViewModel {
 
   scrollToSafetyAndQuality = (e: React.ChangeEvent<{}>): void => {
     e.preventDefault();
+    e.stopPropagation();
     const safetyAndQuality = document.getElementById(
       'safety-and-quality-content'
     );
