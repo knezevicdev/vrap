@@ -106,7 +106,11 @@ const ContactInfo: React.FC<Props> = ({ viewModel }) => (
     </InfoContainer>
 
     <ButtonWrapper>
-      <SuycButton variant="contained" color="primary" href={viewModel.suycLink}>
+      <SuycButton
+        variant="contained"
+        color="primary"
+        onClick={viewModel.handleClick}
+      >
         {viewModel.buttonLabel}
       </SuycButton>
     </ButtonWrapper>

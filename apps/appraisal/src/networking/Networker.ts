@@ -1,8 +1,14 @@
 import axios, { AxiosInstance, AxiosResponse } from 'axios';
 
-import { Prices } from './models/Price';
+import {
+  PaymentOptionsRespData,
+  Prices,
+  VerificationRespData,
+} from './models/Price';
 
 import ENVS from 'src/integrations/Envs';
+import { MailingAddress } from 'src/interfaces.d';
+import { PaymentOverviewFormValues } from 'src/interfaces.d';
 
 export enum Status {
   INITIAL = 'initial',
@@ -14,6 +20,14 @@ export enum Status {
 export interface PriceData {
   priceId: string;
   accepted: boolean;
+}
+
+export interface PaymentData {
+  sf_offer_id: string;
+  payment_method?: string;
+  account_number?: string;
+  routing_number?: string;
+  payment_address?: MailingAddress;
 }
 
 export class Networker {
@@ -37,6 +51,34 @@ export class Networker {
       offerId,
       accepted,
     };
+
+    return this.axiosInstance.post(url, data);
+  }
+
+  getVerificationDetails(
+    priceId: string
+  ): Promise<AxiosResponse<VerificationRespData>> {
+    const url = `${ENVS.VROOM_URL}/api/appraisal/verification?offerId=${priceId}`;
+    return this.axiosInstance.get(url);
+  }
+
+  submitPaymentOptions(
+    paymentData: PaymentOverviewFormValues,
+    priceId: string,
+    address: MailingAddress
+  ): Promise<AxiosResponse<PaymentOptionsRespData>> {
+    // eslint-disable-next-line @typescript-eslint/camelcase
+    const data: PaymentData = { sf_offer_id: priceId };
+    const url = `${ENVS.VROOM_URL}/api/appraisal/payment`;
+
+    if (paymentData.paymentOption === 'Direct Deposit') {
+      data['payment_method'] = 'ach';
+      data['account_number'] = paymentData.bankAccountNumber;
+      data['routing_number'] = paymentData.routingNumber;
+    } else if (paymentData.paymentOption === 'Check by Mail') {
+      data['payment_method'] = 'check';
+      data['payment_address'] = address;
+    }
 
     return this.axiosInstance.post(url, data);
   }

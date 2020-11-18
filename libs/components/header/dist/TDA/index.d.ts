@@ -1,3 +1,6 @@
 import React from 'react';
-declare const TDAHeader: React.FC;
+interface Props {
+    vroomUrl: string;
+}
+declare const TDAHeader: React.FC<Props>;
 export default TDAHeader;

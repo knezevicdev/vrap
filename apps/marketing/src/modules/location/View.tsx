@@ -1,6 +1,7 @@
 import { Divider } from '@material-ui/core';
 import { TDAFooter } from '@vroom-web/footer-components';
 import { TDAHeader } from '@vroom-web/header-components';
+import getConfig from 'next/config';
 import React from 'react';
 
 import ContactModule from '../locations/components/ContactModule';
@@ -9,6 +10,9 @@ import { LocationInfo } from '../locations/getLocations';
 import ContactInfo from './components/ContactInfo';
 import Hero from './components/Hero';
 
+const {
+  publicRuntimeConfig: { VROOM_URL },
+} = getConfig();
 interface Props {
   locationInfo: LocationInfo;
 }
@@ -17,7 +21,7 @@ const LocationView: React.FC<Props> = ({ locationInfo }) => {
   const { name, mapsImgUrl, googleMapsUrl } = locationInfo;
   return (
     <>
-      <TDAHeader />
+      <TDAHeader vroomUrl={VROOM_URL} />
       <Hero
         locationTitle={name}
         imgUrl={mapsImgUrl}
@@ -27,7 +31,7 @@ const LocationView: React.FC<Props> = ({ locationInfo }) => {
       <MarketingInfo />
       <Divider />
       <ContactModule />
-      <TDAFooter />
+      <TDAFooter vroomUrl={VROOM_URL} />
     </>
   );
 };

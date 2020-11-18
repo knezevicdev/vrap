@@ -1,13 +1,14 @@
 import { Brand } from '@vroom-web/ui';
-import React, { useContext } from 'react';
+import React from 'react';
 
-import { BrandContext } from './BrandContext';
 import Santander from './Santander';
 import TDA from './TDA';
 import Vroom from './Vroom';
 
-const Cars: React.FC = () => {
-  const brand = useContext(BrandContext);
+interface Props {
+  brand: Brand;
+}
+const Cars: React.FC<Props> = ({ brand }) => {
   if (brand === Brand.SANTANDER) {
     return <Santander />;
   } else if (brand === Brand.TDA) {

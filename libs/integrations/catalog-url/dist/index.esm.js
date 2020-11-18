@@ -17,6 +17,9 @@ var Filters;
   Filters["YEAR"] = "year";
   Filters["CYLINDERS"] = "cylinders";
   Filters["OTHER_CYLINDERS"] = "othercylinders";
+  Filters["FUEL_TYPE"] = "fueltype";
+  Filters["POPULAR_FEATURES"] = "optionalfeatures";
+  Filters["FUEL_EFFICIENCY"] = "combinedmpg";
 })(Filters || (Filters = {}));
 
 var BodyType;
@@ -94,6 +97,29 @@ var Cylinder;
   Cylinder["EIGHT"] = "8";
 })(Cylinder || (Cylinder = {}));
 
+var FuelType;
+
+(function (FuelType) {
+  FuelType["GASOLINE"] = "gasoline";
+  FuelType["ELECTRIC"] = "electric";
+  FuelType["PLUG_IN_HYBRID"] = "pluginhybrid";
+  FuelType["GAS_ELECTRIC_HYBRID"] = "gaselectrichybrid";
+  FuelType["DIESEL"] = "diesel";
+  FuelType["OTHER"] = "other";
+})(FuelType || (FuelType = {}));
+
+var PopularFeatures;
+
+(function (PopularFeatures) {
+  PopularFeatures["ANDROID_AUTO"] = "Android Auto";
+  PopularFeatures["APPLE_CAR_PLAY"] = "Apple CarPlay";
+  PopularFeatures["HEATED_SEATS"] = "Heated Seats";
+  PopularFeatures["REAR_VIEW_CAMERA"] = "Rear View Camera";
+  PopularFeatures["REMOTE_START"] = "Remote Start";
+  PopularFeatures["SUNROOF_MOONROOF"] = "Sunroof or Moonroof";
+  PopularFeatures["THIRD_ROW_SEATING"] = "Third Row Seating";
+})(PopularFeatures || (PopularFeatures = {}));
+
 var deepCopyFiltersData = function deepCopyFiltersData(filtersData) {
   return JSON.parse(JSON.stringify(filtersData));
 };
@@ -123,6 +149,22 @@ var removeBodyType = function removeBodyType(bodyType, filtersData) {
     return bt !== bodyType;
   });
   newFiltersData[Filters.BODY_TYPES] = newBodyTypes.length > 0 ? newBodyTypes : undefined;
+  return newFiltersData;
+};
+var addFuelType = function addFuelType(fuelType, filtersData) {
+  var newFiltersData = deepCopyFiltersData(filtersData || {});
+  var newFuelType = newFiltersData[Filters.FUEL_TYPE] || [];
+  newFuelType.push(fuelType);
+  newFiltersData[Filters.FUEL_TYPE] = newFuelType;
+  return newFiltersData;
+};
+var removeFuelType = function removeFuelType(fuelType, filtersData) {
+  var newFiltersData = deepCopyFiltersData(filtersData || {});
+  var existingFuelType = newFiltersData[Filters.FUEL_TYPE] || [];
+  var newFuelType = existingFuelType.filter(function (c) {
+    return c !== fuelType;
+  });
+  newFiltersData[Filters.FUEL_TYPE] = newFuelType.length > 0 ? newFuelType : undefined;
   return newFiltersData;
 };
 var addCylinder = function addCylinder(cylinder, filtersData) {
@@ -176,6 +218,22 @@ var removeDriveType = function removeDriveType(driveType, filtersData) {
     return dt !== driveType;
   });
   newFiltersData[Filters.DRIVE_TYPE] = newDriveTypes.length > 0 ? newDriveTypes : undefined;
+  return newFiltersData;
+};
+var addPopularFeature = function addPopularFeature(popularFeature, filtersData) {
+  var newFiltersData = deepCopyFiltersData(filtersData || {});
+  var newFeatures = newFiltersData[Filters.POPULAR_FEATURES] || [];
+  newFeatures.push(popularFeature);
+  newFiltersData[Filters.POPULAR_FEATURES] = newFeatures;
+  return newFiltersData;
+};
+var removePopularFeature = function removePopularFeature(popularFeature, filtersData) {
+  var newFiltersData = deepCopyFiltersData(filtersData || {});
+  var existingFeatures = newFiltersData[Filters.POPULAR_FEATURES] || [];
+  var newFeatures = existingFeatures.filter(function (f) {
+    return f !== popularFeature;
+  });
+  newFiltersData[Filters.POPULAR_FEATURES] = newFeatures.length > 0 ? newFeatures : undefined;
   return newFiltersData;
 };
 var setTestDrive = function setTestDrive(testDrive, filtersData) {
@@ -256,6 +314,11 @@ var removeModel = function removeModel(makeSlug, modelSlug, filtersData) {
 var setMiles = function setMiles(miles, filtersData) {
   var newFiltersData = deepCopyFiltersData(filtersData || {});
   newFiltersData[Filters.MILES] = miles;
+  return newFiltersData;
+};
+var setFuelEfficiency = function setFuelEfficiency(fuelEfficiency, filtersData) {
+  var newFiltersData = deepCopyFiltersData(filtersData || {});
+  newFiltersData[Filters.FUEL_EFFICIENCY] = fuelEfficiency;
   return newFiltersData;
 };
 var setPage = function setPage(page, filtersData) {
@@ -418,6 +481,18 @@ var isMaxAndMin = function isMaxAndMin(x) {
   }
 
   return true;
+}; // eslint-disable-next-line @typescript-eslint/no-explicit-any
+
+var isFuelEfficiency = function isFuelEfficiency(x) {
+  if (!isObject(x)) {
+    return false;
+  }
+
+  if (!isNumber(x['min'])) {
+    return false;
+  }
+
+  return true;
 };
 var isSortBy = isEnum(SortBy);
 var isSortDirection = isEnum(SortDirection); // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -564,6 +639,18 @@ var getFiltersDataFromFiltersQueryParam = function getFiltersDataFromFiltersQuer
     filtersData[Filters.CYLINDERS] = parsed[Filters.CYLINDERS];
   }
 
+  var isFeaturesArray = isEnumArray(PopularFeatures);
+
+  if (isFeaturesArray(parsed[Filters.POPULAR_FEATURES])) {
+    filtersData[Filters.POPULAR_FEATURES] = parsed[Filters.POPULAR_FEATURES];
+  }
+
+  var isFuelTypeArray = isEnumArray(FuelType);
+
+  if (isFuelTypeArray(parsed[Filters.FUEL_TYPE])) {
+    filtersData[Filters.FUEL_TYPE] = parsed[Filters.FUEL_TYPE];
+  }
+
   if (isBoolean(parsed[Filters.OTHER_CYLINDERS])) {
     filtersData[Filters.OTHER_CYLINDERS] = parsed[Filters.OTHER_CYLINDERS];
   }
@@ -574,6 +661,10 @@ var getFiltersDataFromFiltersQueryParam = function getFiltersDataFromFiltersQuer
 
   if (isMaxAndMin(parsed[Filters.MILES])) {
     filtersData[Filters.MILES] = parsed[Filters.MILES];
+  }
+
+  if (isFuelEfficiency(parsed[Filters.FUEL_EFFICIENCY])) {
+    filtersData[Filters.FUEL_EFFICIENCY] = parsed[Filters.FUEL_EFFICIENCY];
   }
 
   if (isNumber(parsed[Filters.PAGE])) {
@@ -707,4 +798,4 @@ var getFiltersDataFromUrl = function getFiltersDataFromUrl(url) {
   return undefined;
 };
 
-export { BodyType, Color, Cylinder, DriveType, Filters, SortBy, SortDirection, TestDrive, Transmission, addAllModels, addBodyType, addColor, addCylinder, addDriveType, addModel, getFiltersDataFromUrl, getUrlFromFiltersData, removeAllModels, removeBodyType, removeColor, removeCylinder, removeDriveType, removeModel, resetFilter, resetFilters, setMiles, setOtherCylinders, setPage, setPrice, setSearch, setSort, setTestDrive, setTransmission, setYear };
+export { BodyType, Color, Cylinder, DriveType, Filters, FuelType, PopularFeatures, SortBy, SortDirection, TestDrive, Transmission, addAllModels, addBodyType, addColor, addCylinder, addDriveType, addFuelType, addModel, addPopularFeature, getFiltersDataFromUrl, getUrlFromFiltersData, removeAllModels, removeBodyType, removeColor, removeCylinder, removeDriveType, removeFuelType, removeModel, removePopularFeature, resetFilter, resetFilters, setFuelEfficiency, setMiles, setOtherCylinders, setPage, setPrice, setSearch, setSort, setTestDrive, setTransmission, setYear };

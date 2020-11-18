@@ -1,10 +1,11 @@
 import { Brand, ThemeProvider } from '@vroom-web/ui';
-import { NextPage, NextPageContext } from 'next';
+import { GetServerSideProps, GetServerSidePropsContext, NextPage } from 'next';
 import React from 'react';
 
 import Contact from 'src/modules/contact';
 import { BrandContext } from 'src/modules/contact/BrandContext';
 import Page from 'src/Page';
+import { determineWhitelabel } from 'src/utils/utils';
 
 interface Props {
   brand: Brand;
@@ -31,18 +32,10 @@ const ContactPage: NextPage<Props> = ({ brand, description, title }) => {
   );
 };
 
-ContactPage.getInitialProps = async (ctx: NextPageContext): Promise<Props> => {
-  const query = ctx.query;
-
-  const { req } = ctx;
-  const headerBrandKey = 'x-brand';
-  const brandHeader = req && req.headers[headerBrandKey];
-  const queryBrand = query.brand;
-
-  let brand = Brand.VROOM;
-  const whitelabel = brandHeader || queryBrand;
-  if (whitelabel === Brand.SANTANDER) brand = Brand.SANTANDER;
-  else if (whitelabel === Brand.TDA) brand = Brand.TDA;
+export const getServerSideProps: GetServerSideProps<Props> = async (
+  ctx: GetServerSidePropsContext
+) => {
+  const brand = determineWhitelabel(ctx);
 
   const getTitle = (): string => {
     const contactUs = 'Contact Us';
@@ -55,7 +48,8 @@ ContactPage.getInitialProps = async (ctx: NextPageContext): Promise<Props> => {
   const getDescription = (): string => {
     if (brand === Brand.SANTANDER)
       return 'Call 1-888-222-4227 about your Santander Consumer USA account or call 1-855-659-0278 about purchasing a vehicle. We’re here to help.';
-    if (brand === Brand.TDA) return '';
+    if (brand === Brand.TDA)
+      return 'Texas Direct Auto is happy to help. Give us a call to speak with a representative.';
     return '';
   };
 
@@ -63,7 +57,7 @@ ContactPage.getInitialProps = async (ctx: NextPageContext): Promise<Props> => {
 
   const description = getDescription();
 
-  return { brand, description, title };
+  return { props: { brand, description, title } };
 };
 
 export default ContactPage;

@@ -12,7 +12,7 @@ import React from 'react';
 
 import { ReactComponent as LogoSvg } from './svg/logo.svg';
 import { ReactComponent as ShopSvg } from './svg/shop.svg';
-import { ReactComponent as VroomLogoSvg } from './svg/vroom-logo-gray.svg';
+import { ReactComponent as VroomLogo } from './svg/vroom-logo.svg';
 import ViewModel from './ViewModel';
 
 interface Props {
@@ -51,7 +51,10 @@ const Bottom = styled('div')(({ theme }) => ({
 
 const Logo = styled(LogoSvg)(() => ({
   maxWidth: '295px',
-  minWidth: '295px',
+  height: '23px',
+  borderLeft: '1px solid white',
+  paddingLeft: '8px',
+  marginLeft: '8px',
 }));
 
 const DesktopView = styled('div')(({ theme }) => ({
@@ -186,31 +189,28 @@ const LearningLinks = styled('a')(({ theme }) => ({
   padding: theme.spacing(1),
 }));
 
-const PoweredBy = styled('div')(({ theme }) => ({
+const LogoContainer = styled('div')(() => ({
   display: 'flex',
   alignItems: 'center',
-  [theme.breakpoints.up('md')]: { marginLeft: 'auto' },
 }));
 
-const PoweredByLabel = styled(Typography)(() => ({
-  color: '#767676',
-  fontSize: '16px',
-}));
-
-const VroomLogo = styled(VroomLogoSvg)(({ theme }) => ({
-  marginLeft: theme.spacing(1),
+const LogoLink = styled('a')(() => ({
+  height: '23px',
 }));
 
 const View: React.FC<Props> = ({ viewModel }) => {
   return (
     <ViewContainer>
       <Top>
-        <a
-          href={viewModel.logoLink.href}
-          onClick={viewModel.logoLink.handleAnalytics}
-        >
-          <Logo />
-        </a>
+        <LogoContainer>
+          <VroomLogo />
+          <LogoLink
+            href={viewModel.logoLink.href}
+            onClick={viewModel.logoLink.handleAnalytics}
+          >
+            <Logo />
+          </LogoLink>
+        </LogoContainer>
         <DesktopView>
           <ShopNowContainer
             href={viewModel.shopNow.href}
@@ -321,16 +321,16 @@ const View: React.FC<Props> = ({ viewModel }) => {
           >
             <Typography>{viewModel.backToCorporate.label}</Typography>
           </Link>
-          <PoweredBy>
+          {/* <PoweredBy>
             <PoweredByLabel>{viewModel.poweredBy}</PoweredByLabel>
             <VroomLogo />
-          </PoweredBy>
+          </PoweredBy> */}
         </DesktopView>
         <MobileView>
-          <PoweredBy>
+          {/* <PoweredBy>
             <PoweredByLabel>{viewModel.poweredBy}</PoweredByLabel>
             <VroomLogo />
-          </PoweredBy>
+          </PoweredBy> */}
           <ShopNowContainer
             href={viewModel.shopNow.href}
             onClick={viewModel.shopNow.handleAnalytics}

@@ -51,6 +51,7 @@ class HeaderNavStore {
       utm_subsource,
       utm_site,
     }))(query);
+
     this.queryString = stringify(picked, { addQueryPrefix: true });
   };
 

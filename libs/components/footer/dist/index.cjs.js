@@ -13899,12 +13899,32 @@ var AnalyticsHandler$1 = /*#__PURE__*/function (_BaseAnalyticsHandler) {
   return AnalyticsHandler;
 }(AnalyticsHandler);
 
-var ViewModel = function ViewModel() {
+var ViewModel = function ViewModel(vroomUrl) {
   _classCallCheck(this, ViewModel);
 
   _defineProperty$1(this, "analyticsHandler", new AnalyticsHandler$1());
 
-  _defineProperty$1(this, "sections", [{
+  _defineProperty$1(this, "vroomUrl", '');
+
+  _defineProperty$1(this, "sections", void 0);
+
+  _defineProperty$1(this, "utmParams", '?utm_source=vroom_subdomain&utm_medium=referral&utm_campaign=vroom');
+
+  _defineProperty$1(this, "copyrightLabel", '© 2020 Santander Consumer USA Inc. and its Licensors. All Rights Reserved.');
+
+  _defineProperty$1(this, "copyrightLink", {
+    label: 'NMLS Consumer Access ID 4239.',
+    href: 'http://www.nmlsconsumeraccess.org/EntityDetails.aspx/COMPANY/4239',
+    target: '_blank',
+    handleAnalytics: this.analyticsHandler.trackLinkClicked('NMLS Consumer Access ID 4239.')
+  });
+
+  _defineProperty$1(this, "poweredBy", 'Powered by');
+
+  _defineProperty$1(this, "disclaimer", "Vehicle marketing, inventory, sales and the car-buying transaction are performed, hosted, managed and/or coordinated by Vroom. Santander Consumer USA Inc., its subsidiaries or affiliates are not responsible for the transaction, the outcome of the transaction or any information provided therein, provided that if Santander Consumer is chosen as the lender to finance the vehicle purchase, the financing will be performed by Santander Consumer.");
+
+  if (vroomUrl) this.vroomUrl = vroomUrl;
+  this.sections = [{
     title: {
       label: 'Learning Center',
       href: 'https://santanderconsumerusa.com/learning-center',
@@ -13947,52 +13967,54 @@ var ViewModel = function ViewModel() {
     },
     links: [{
       label: 'Privacy Policy',
-      href: 'https://www.vroom.com/legal/privacy-policy',
+      href: "".concat(this.vroomUrl, "/legal/privacy-policy").concat(this.utmParams),
       target: '_blank',
       handleAnalytics: this.analyticsHandler.trackLinkClicked('Privacy Policy')
     }, {
       label: 'Terms of Use',
-      href: 'https://www.vroom.com/legal/terms-of-use',
+      href: "".concat(this.vroomUrl, "/legal/terms-of-use").concat(this.utmParams),
       target: '_blank',
       handleAnalytics: this.analyticsHandler.trackLinkClicked('Terms of Use')
+    }, {
+      label: 'Do Not Sell My Info (CA Residents)',
+      href: "https://privacyportal.onetrust.com/webform/8086730d-99f7-48ea-b3a1-0b3bb0cf163e/aa3e2126-7439-411d-a9a2-9fa0c4f8b01d",
+      target: '_blank',
+      handleAnalytics: this.analyticsHandler.trackLinkClicked('Do Not Sell My Info (CA Residents)')
     }]
-  }]);
-
-  _defineProperty$1(this, "copyrightLabel", '© 2020 Santander Consumer USA Inc. and its Licensors. All Rights Reserved.');
-
-  _defineProperty$1(this, "copyrightLink", {
-    label: 'NMLS Consumer Access ID 4239.',
-    href: 'http://www.nmlsconsumeraccess.org/EntityDetails.aspx/COMPANY/4239',
-    target: '_blank',
-    handleAnalytics: this.analyticsHandler.trackLinkClicked('NMLS Consumer Access ID 4239.')
-  });
-
-  _defineProperty$1(this, "poweredBy", 'Powered by');
-
-  _defineProperty$1(this, "disclaimer", "Vehicle marketing, inventory, sales and the car-buying transaction are performed, hosted, managed and/or coordinated by Vroom. Santander Consumer USA Inc., its subsidiaries or affiliates are not responsible for the transaction, the outcome of the transaction or any information provided therein, provided that if Santander Consumer is chosen as the lender to finance the vehicle purchase, the financing will be performed by Santander Consumer.");
+  }];
 };
 
-var SantanderFooter = function SantanderFooter() {
-  var viewModel = new ViewModel();
+var SantanderFooter = function SantanderFooter(_ref) {
+  var vroomUrl = _ref.vroomUrl;
+  var viewModel = new ViewModel(vroomUrl);
   return /*#__PURE__*/React__default.createElement(View, {
     viewModel: viewModel
   });
 };
 
-var ViewContainer$1 = styles.styled('div')(function () {
+var Container = styles.styled('div')(function () {
   return {
-    background: '#F1F1F1',
     zIndex: 1
   };
 });
-var LinkContainer = styles.styled('div')(function () {
+var MobileContainer = styles.styled('div')(function (_ref) {
+  var theme = _ref.theme;
   return {
+    padding: theme.spacing(2, 4, 1),
+    textAlign: 'center',
+    display: 'grid',
+    gridTemplateColumns: '1fr 1fr 1fr'
+  };
+});
+var DesktopContainer = styles.styled('div')(function (_ref2) {
+  var theme = _ref2.theme;
+  return {
+    padding: theme.spacing(2, 4),
     display: 'flex',
-    width: '100%',
-    margin: '0 auto',
-    maxWidth: '370px',
-    padding: '16px 8px',
-    justifyContent: 'space-between'
+    textAlign: 'center',
+    maxWidth: '700px',
+    justifyContent: 'space-between',
+    margin: 'auto'
   };
 });
 var CustomLink$1 = styles.styled(core.Link)(function () {
@@ -14002,25 +14024,35 @@ var CustomLink$1 = styles.styled(core.Link)(function () {
     color: '#767676'
   };
 });
-var Text = styles.styled(Typography)(function () {
-  return {
-    color: '#767676',
+var Text = styles.styled(Typography)(function (_ref3) {
+  var theme = _ref3.theme;
+  return _defineProperty$1({
+    color: theme.palette.text.primary,
     fontSize: '14px'
-  };
+  }, theme.breakpoints.only('xs'), {
+    marginBottom: theme.spacing(2)
+  });
 });
 
-var View$1 = function View(_ref) {
-  var viewModel = _ref.viewModel;
+var View$1 = function View(_ref5) {
+  var viewModel = _ref5.viewModel;
+  var theme = core.useTheme();
+  var isMobile = core.useMediaQuery(theme.breakpoints.only('xs'));
   var links = viewModel.links,
       disclaimer = viewModel.disclaimer;
-  return /*#__PURE__*/React__default.createElement(ViewContainer$1, null, /*#__PURE__*/React__default.createElement(LinkContainer, null, /*#__PURE__*/React__default.createElement(Text, null, disclaimer), links.map(function (link) {
+  var Links = links.map(function (link) {
     return /*#__PURE__*/React__default.createElement(CustomLink$1, {
       key: link.label,
       href: link.href,
       target: link.target,
       onClick: link.handleAnalytics
     }, /*#__PURE__*/React__default.createElement(Text, null, link.label));
-  })));
+  });
+  return /*#__PURE__*/React__default.createElement(Container, null, isMobile ? /*#__PURE__*/React__default.createElement(React__default.Fragment, null, /*#__PURE__*/React__default.createElement(MobileContainer, null, Links), /*#__PURE__*/React__default.createElement(Text, {
+    textAlign: "center"
+  }, disclaimer)) : /*#__PURE__*/React__default.createElement(DesktopContainer, null, /*#__PURE__*/React__default.createElement(Text, {
+    textAlign: "center"
+  }, disclaimer), Links));
 };
 
 var AnalyticsHandler$2 = /*#__PURE__*/function (_BaseAnalyticsHandler) {
@@ -14081,28 +14113,47 @@ var AnalyticsHandler$2 = /*#__PURE__*/function (_BaseAnalyticsHandler) {
   return AnalyticsHandler;
 }(AnalyticsHandler);
 
-var ViewModel$1 = function ViewModel() {
+var ViewModel$1 = function ViewModel(vroomUrl) {
+  var _this = this;
+
   _classCallCheck(this, ViewModel);
+
+  _defineProperty$1(this, "TDAQueryString", '?vit_source=texasdirectauto&vit_medium=wl&vit_dest=vroom&vit_brand=TDA');
 
   _defineProperty$1(this, "analyticsHandler", new AnalyticsHandler$2());
 
-  _defineProperty$1(this, "disclaimer", 'Copyright © 2020 Vroom.');
-
   _defineProperty$1(this, "links", [{
+    linkToVroom: true,
     label: 'Privacy Policy',
-    href: 'https://www.vroom.com/legal/privacy-policy',
+    href: '/legal/privacy-policy',
     target: '_blank',
     handleAnalytics: this.analyticsHandler.trackLinkClicked('Privacy Policy')
   }, {
+    linkToVroom: true,
     label: 'Terms of Use',
-    href: 'https://www.vroom.com/legal/terms-of-use',
+    href: '/legal/terms-of-use',
     target: '_blank',
     handleAnalytics: this.analyticsHandler.trackLinkClicked('Terms of Use')
+  }, {
+    linkToVroom: false,
+    label: 'Do Not Sell My Info (CA Residents)',
+    href: "https://privacyportal.onetrust.com/webform/8086730d-99f7-48ea-b3a1-0b3bb0cf163e/aa3e2126-7439-411d-a9a2-9fa0c4f8b01d",
+    target: '_blank',
+    handleAnalytics: this.analyticsHandler.trackLinkClicked('Do Not Sell My Info (CA Residents)')
   }]);
+
+  _defineProperty$1(this, "disclaimer", 'Copyright © 2020 Vroom.');
+
+  if (vroomUrl) {
+    this.links.forEach(function (link) {
+      if (link.linkToVroom) link.href = "".concat(vroomUrl).concat(link.href).concat(_this.TDAQueryString);
+    });
+  }
 };
 
-var TDAFooter = function TDAFooter() {
-  var viewModel = new ViewModel$1();
+var TDAFooter = function TDAFooter(_ref) {
+  var vroomUrl = _ref.vroomUrl;
+  var viewModel = new ViewModel$1(vroomUrl);
   return /*#__PURE__*/React__default.createElement(View$1, {
     viewModel: viewModel
   });

@@ -13489,8 +13489,9 @@ var HeaderNavViewModel = /*#__PURE__*/function () {
       var phoneNumberLinkData = this.getPhoneNumberLinkData(this.store.phoneNumber); // FIT-566
       // Persist query string across navigation so that vlassic attribution works.
       // This is a stopgap until a better attribution system is in place.
+      // retain brand query param to ensure whitelabeled pages are not cached/seen when navigating the vroom version of the app
 
-      var queryString = this.store.queryString;
+      var queryString = "".concat(this.store.queryString).concat(this.store.queryString ? '&' : '?', "brand=vroom");
 
       if (!this.store.loggedIn) {
         return [{
@@ -14597,24 +14598,29 @@ function SvgShop(props) {
 
 function _extends$9() { _extends$9 = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends$9.apply(this, arguments); }
 
-var _ref$8 = /*#__PURE__*/React.createElement("g", {
-  fill: "#767676"
-}, /*#__PURE__*/React.createElement("path", {
-  d: "M83.102 8.062c.893-.681 1.943-1.334 2.964-1.334 1.078 0 1.575.866 1.362 2.13l-1.575 8.872h5.192l1.63-9.54c.767-4.543-2.155-6.176-4.779-6.176-1.972 0-3.915.866-5.305 2.414-.709-1.818-2.283-2.414-3.773-2.414-1.815 0-3.546.738-4.964 2.314l.369-2.044H66.45l-.808 4.515h2.936L66.663 17.73h5.149l1.702-9.668c.893-.681 1.943-1.334 2.964-1.334 1.078 0 1.575.866 1.362 2.13l-1.575 8.872h5.149z"
-}), /*#__PURE__*/React.createElement("path", {
-  clipRule: "evenodd",
-  d: "M48.962 10.49c0-4.5 3.22-8.49 8.68-8.49 4.326 0 7.815 2.854 7.815 7.51 0 4.5-3.22 8.49-8.68 8.49-4.326 0-7.815-2.84-7.815-7.51zm5.134-.242c0 1.86 1.15 3.308 2.965 3.308 2 0 3.262-1.788 3.276-3.804 0-1.86-1.149-3.308-2.964-3.308-2.014 0-3.277 1.803-3.277 3.804zM31.672 10.49c0-4.5 3.22-8.49 8.68-8.49 4.326 0 7.815 2.854 7.815 7.51 0 4.5-3.22 8.49-8.68 8.49-4.326 0-7.815-2.84-7.815-7.51zm5.134-.242c0 1.86 1.15 3.308 2.965 3.308 2 0 3.276-1.788 3.276-3.804 0-1.86-1.149-3.308-2.964-3.308-2.014 0-3.277 1.803-3.277 3.804z",
-  fillRule: "evenodd"
-}), /*#__PURE__*/React.createElement("path", {
-  d: "M32.211 2L31.19 7.565h-2.1c-1.97 0-2.78.994-3.049 2.598l-1.29 7.567h-5.163L21.502 6.8h-2.936l.809-4.515h7.772l-.553 2.967C27.644 2.752 29.927 2 32.055 2zM0 6.799l.794-4.515h7.404l-.354 10.761L12.78 2.284h5.8L10.766 17.73H2.936V6.8zM101.192 2.96c0-1.696-1.312-2.928-2.896-2.928S95.4 1.264 95.4 2.96s1.312 2.928 2.896 2.928 2.896-1.232 2.896-2.928zm-.496 0c0 1.424-1.072 2.448-2.4 2.448S95.88 4.384 95.88 2.96c0-1.44 1.088-2.464 2.416-2.464s2.4 1.024 2.4 2.464zm-2.464.416l.72 1.088h.752l-.784-1.152c.416-.112.672-.432.672-.912 0-.64-.416-1.008-1.088-1.008H97.16v3.072h.672V3.376zm.72-.976c0 .224-.176.416-.48.416h-.64v-.848h.64c.304 0 .48.192.48.432z"
-}));
+var _ref$8 = /*#__PURE__*/React.createElement("path", {
+  d: "M62.327 6.547c.67-.512 1.457-1.001 2.223-1.001.808 0 1.18.65 1.021 1.597l-1.18 6.655h3.893l1.223-7.156c.574-3.407-1.617-4.631-3.585-4.631-1.479 0-2.936.65-3.978 1.81-.532-1.363-1.713-1.81-2.83-1.81-1.362 0-2.66.553-3.723 1.735l.276-1.533h-5.83l-.606 3.386h2.203l-1.437 8.199h3.862l1.276-7.251c.67-.512 1.458-1.001 2.224-1.001.808 0 1.18.65 1.02 1.597l-1.18 6.655h3.862l1.266-7.251z",
+  fill: "#fff"
+});
 
-function SvgVroomLogoGray(props) {
+var _ref2 = /*#__PURE__*/React.createElement("path", {
+  fillRule: "evenodd",
+  clipRule: "evenodd",
+  d: "M36.721 8.367c0-3.375 2.415-6.367 6.51-6.367 3.245 0 5.862 2.14 5.862 5.633 0 3.375-2.415 6.367-6.51 6.367-3.245 0-5.862-2.13-5.862-5.633zm3.851-.18c0 1.394.862 2.48 2.223 2.48 1.5 0 2.447-1.341 2.458-2.853 0-1.395-.862-2.481-2.224-2.481-1.51 0-2.457 1.352-2.457 2.853zM23.754 8.367c0-3.375 2.415-6.367 6.51-6.367 3.245 0 5.862 2.14 5.862 5.633 0 3.375-2.415 6.367-6.51 6.367-3.245 0-5.862-2.13-5.862-5.633zm3.85-.18c0 1.394.862 2.48 2.224 2.48 1.5 0 2.457-1.341 2.457-2.853 0-1.395-.861-2.481-2.223-2.481-1.51 0-2.457 1.352-2.457 2.853z",
+  fill: "#fff"
+});
+
+var _ref3 = /*#__PURE__*/React.createElement("path", {
+  d: "M24.158 2l-.766 4.174h-1.574c-1.479 0-2.085.745-2.287 1.948l-.968 5.676H14.69l1.436-8.2h-2.202l.606-3.385h5.83l-.415 2.225C20.733 2.564 22.446 2 24.04 2h.117zM0 5.599l.596-3.386h5.553l-.266 8.07 3.702-8.07h4.35L8.074 13.798H2.202v-8.2H0zM74.87 2.6c0-1.06-.82-1.83-1.81-1.83-.99 0-1.81.77-1.81 1.83s.82 1.83 1.81 1.83c.99 0 1.81-.77 1.81-1.83zm-.31 0c0 .89-.67 1.53-1.5 1.53s-1.51-.64-1.51-1.53c0-.9.68-1.54 1.51-1.54s1.5.64 1.5 1.54zm-1.54.26l.45.68h.47l-.49-.72c.26-.07.42-.27.42-.57 0-.4-.26-.63-.68-.63h-.84v1.92h.42v-.68h.25zm.45-.61c0 .14-.11.26-.3.26h-.4v-.53h.4c.19 0 .3.12.3.27z",
+  fill: "#fff"
+});
+
+function SvgVroomLogo(props) {
   return /*#__PURE__*/React.createElement("svg", _extends$9({
-    fill: "none",
-    height: 20,
-    width: 102
-  }, props), _ref$8);
+    width: 75,
+    height: 14,
+    fill: "none"
+  }, props), _ref$8, _ref2, _ref3);
 }
 
 var ViewContainer = styles.styled('div')(function () {
@@ -14658,7 +14664,10 @@ var Bottom = styles.styled('div')(function (_ref3) {
 var Logo$2 = styles.styled(SvgLogo$1)(function () {
   return {
     maxWidth: '295px',
-    minWidth: '295px'
+    height: '23px',
+    borderLeft: '1px solid white',
+    paddingLeft: '8px',
+    marginLeft: '8px'
   };
 });
 var DesktopView$1 = styles.styled('div')(function (_ref5) {
@@ -14832,34 +14841,24 @@ var LearningLinks = styles.styled('a')(function (_ref21) {
     padding: theme.spacing(1)
   };
 });
-var PoweredBy = styles.styled('div')(function (_ref22) {
-  var theme = _ref22.theme;
-  return _defineProperty({
+var LogoContainer = styles.styled('div')(function () {
+  return {
     display: 'flex',
     alignItems: 'center'
-  }, theme.breakpoints.up('md'), {
-    marginLeft: 'auto'
-  });
-});
-var PoweredByLabel = styles.styled(ui.Typography)(function () {
-  return {
-    color: '#767676',
-    fontSize: '16px'
   };
 });
-var VroomLogo = styles.styled(SvgVroomLogoGray)(function (_ref24) {
-  var theme = _ref24.theme;
+var LogoLink = styles.styled('a')(function () {
   return {
-    marginLeft: theme.spacing(1)
+    height: '23px'
   };
 });
 
-var View$2 = function View(_ref25) {
-  var viewModel = _ref25.viewModel;
-  return /*#__PURE__*/React__default.createElement(ViewContainer, null, /*#__PURE__*/React__default.createElement(Top, null, /*#__PURE__*/React__default.createElement("a", {
+var View$2 = function View(_ref22) {
+  var viewModel = _ref22.viewModel;
+  return /*#__PURE__*/React__default.createElement(ViewContainer, null, /*#__PURE__*/React__default.createElement(Top, null, /*#__PURE__*/React__default.createElement(LogoContainer, null, /*#__PURE__*/React__default.createElement(SvgVroomLogo, null), /*#__PURE__*/React__default.createElement(LogoLink, {
     href: viewModel.logoLink.href,
     onClick: viewModel.logoLink.handleAnalytics
-  }, /*#__PURE__*/React__default.createElement(Logo$2, null)), /*#__PURE__*/React__default.createElement(DesktopView$1, null, /*#__PURE__*/React__default.createElement(ShopNowContainer, {
+  }, /*#__PURE__*/React__default.createElement(Logo$2, null))), /*#__PURE__*/React__default.createElement(DesktopView$1, null, /*#__PURE__*/React__default.createElement(ShopNowContainer, {
     href: viewModel.shopNow.href,
     onClick: viewModel.shopNow.handleAnalytics
   }, /*#__PURE__*/React__default.createElement(ShopIcon, null), /*#__PURE__*/React__default.createElement(ShopLabel, null, viewModel.shopNow.label))), /*#__PURE__*/React__default.createElement(MobileView$1, null, /*#__PURE__*/React__default.createElement(MenuIcon, {
@@ -14915,7 +14914,7 @@ var View$2 = function View(_ref25) {
     onClick: viewModel.backToCorporate.handleAnalytics,
     href: viewModel.backToCorporate.href,
     target: viewModel.backToCorporate.target
-  }, /*#__PURE__*/React__default.createElement(ui.Typography, null, viewModel.backToCorporate.label)), /*#__PURE__*/React__default.createElement(PoweredBy, null, /*#__PURE__*/React__default.createElement(PoweredByLabel, null, viewModel.poweredBy), /*#__PURE__*/React__default.createElement(VroomLogo, null))), /*#__PURE__*/React__default.createElement(MobileView$1, null, /*#__PURE__*/React__default.createElement(PoweredBy, null, /*#__PURE__*/React__default.createElement(PoweredByLabel, null, viewModel.poweredBy), /*#__PURE__*/React__default.createElement(VroomLogo, null)), /*#__PURE__*/React__default.createElement(ShopNowContainer, {
+  }, /*#__PURE__*/React__default.createElement(ui.Typography, null, viewModel.backToCorporate.label))), /*#__PURE__*/React__default.createElement(MobileView$1, null, /*#__PURE__*/React__default.createElement(ShopNowContainer, {
     href: viewModel.shopNow.href,
     onClick: viewModel.shopNow.handleAnalytics
   }, /*#__PURE__*/React__default.createElement(ShopIcon, null), /*#__PURE__*/React__default.createElement(ShopLabel, null, viewModel.shopNow.label)))));
@@ -15157,13 +15156,13 @@ function _extends$a() { _extends$a = Object.assign || function (target) { for (v
 
 var _ref$9 = /*#__PURE__*/React.createElement("defs", null, /*#__PURE__*/React.createElement("style", null, ".logo_svg__cls-7{fill:#999da3}.logo_svg__cls-8{fill:#ed1c24}"));
 
-var _ref2 = /*#__PURE__*/React.createElement("path", {
+var _ref2$1 = /*#__PURE__*/React.createElement("path", {
   d: "M70.07 38.55S50 36.86 30.25 42.43 0 56.11 0 56.11l18.15.11s9.08-8 18.76-11.13a89.87 89.87 0 0117.91-3.87s-13.07 2.18-21.3 6.9-11.38 8-11.38 8h16.34s4.84-3.63 11-8.36 20.59-9.21 20.59-9.21z",
   transform: "translate(0 -4.42)",
   fill: "#352d2e"
 });
 
-var _ref3 = /*#__PURE__*/React.createElement("path", {
+var _ref3$1 = /*#__PURE__*/React.createElement("path", {
   d: "M8.23 41.22L18 12.78s4 3.75 6.66 3.63 8.22-2.06 8.22-2.06l-9.52 28.57s-4.6 3.38-8.6 2.41a13.36 13.36 0 01-6.53-4.11z",
   transform: "translate(0 -4.42)",
   fill: "#354c77"
@@ -15226,7 +15225,7 @@ function SvgLogo$2(props) {
     id: "logo_svg__Layer_1",
     "data-name": "Layer 1",
     viewBox: "0 0 504 63.16"
-  }, props), _ref$9, _ref2, _ref3, _ref4, _ref5, _ref6, _ref7, _ref8, _ref9, _ref10, _ref11, _ref12);
+  }, props), _ref$9, _ref2$1, _ref3$1, _ref4, _ref5, _ref6, _ref7, _ref8, _ref9, _ref10, _ref11, _ref12);
 }
 
 var ViewContainer$1 = styles.styled('div')(function () {
@@ -15474,7 +15473,7 @@ var AnalyticsHandler$2 = /*#__PURE__*/function (_BaseAnalyticsHandler) {
   return AnalyticsHandler;
 }(analyticsIntegration.AnalyticsHandler);
 
-var ViewModel$1 = function ViewModel(store) {
+var ViewModel$1 = function ViewModel(store, vroomUrl) {
   var _this = this;
 
   _classCallCheck(this, ViewModel);
@@ -15483,24 +15482,31 @@ var ViewModel$1 = function ViewModel(store) {
 
   _defineProperty(this, "analyticsHandler", new AnalyticsHandler$2());
 
+  _defineProperty(this, "TDAQueryString", '?vit_source=texasdirectauto&vit_medium=wl&vit_dest=vroom&vit_brand=TDA');
+
   _defineProperty(this, "logoLink", {
+    linkToVroom: false,
     href: '/',
     handleAnalytics: this.analyticsHandler.trackLogoClicked
   });
 
   _defineProperty(this, "navLinks", [{
+    linkToVroom: false,
     href: '/cars',
     label: 'BUY',
     handleAnalytics: this.analyticsHandler.trackBuyClicked
   }, {
-    href: 'https://www.vroom.com/sell',
+    linkToVroom: true,
+    href: '/sell',
     label: 'SELL/TRADE',
     handleAnalytics: this.analyticsHandler.trackSellTradeClicked
   }, {
-    href: 'https://www.vroom.com/finance',
+    linkToVroom: true,
+    href: '/finance',
     label: 'FINANCE',
     handleAnalytics: this.analyticsHandler.trackFinanceClicked
   }, {
+    linkToVroom: false,
     href: '/contact',
     label: 'CONTACT US',
     handleAnalytics: this.analyticsHandler.trackContactUsClicked
@@ -15523,10 +15529,17 @@ var ViewModel$1 = function ViewModel(store) {
   });
 
   this.store = store;
+
+  if (vroomUrl) {
+    this.navLinks.forEach(function (navLink) {
+      if (navLink.linkToVroom) navLink.href = "".concat(vroomUrl).concat(navLink.href).concat(_this.TDAQueryString);
+    });
+  }
 };
 
-var TDAHeader = function TDAHeader() {
-  var viewModel = new ViewModel$1(new Store$1());
+var TDAHeader = function TDAHeader(_ref) {
+  var vroomUrl = _ref.vroomUrl;
+  var viewModel = new ViewModel$1(new Store$1(), vroomUrl);
   return /*#__PURE__*/React__default.createElement(View$5, {
     viewModel: viewModel
   });

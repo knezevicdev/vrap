@@ -89,6 +89,8 @@ const FiltersView: React.FC<FiltersViewProps> = ({ viewModel }) => {
       </FiltersCloseContainer>
       {viewModel.getFilters().map((filter) => {
         const { display, FilterComponent, open } = filter;
+        if (display === 'Popular Features' && !viewModel.showFeaturesFilter())
+          return;
         return (
           <StyledFilter key={display}>
             <StyledListItem button onClick={handleListItemClick(filter)}>

@@ -1,4 +1,4 @@
-import { action, observable, runInAction } from 'mobx';
+import { observable } from 'mobx';
 import { createContext, useContext } from 'react';
 
 import { Prices } from 'src/networking/models/Price';
@@ -53,12 +53,12 @@ export async function submitPriceResponse(priceData: PriceData): Promise<void> {
     const url = `/sell/verification/owner/${priceData.priceId}`;
     window.location.href = url;
   } catch (err) {
-    console.log({ err });
+    console.log(JSON.stringify(err));
     return err;
   }
 }
 
-async function getInitialPriceStoreState(
+export async function getInitialPriceStoreState(
   priceId: string
 ): Promise<PriceStoreState> {
   const networker = new Networker();
@@ -88,6 +88,7 @@ async function getInitialPriceStoreState(
     priceState.year = price.Year__c;
     return priceState;
   } catch (err) {
+    console.log(JSON.stringify(err));
     return defaultPriceState;
   }
 }
@@ -112,14 +113,8 @@ export class PriceStore {
   @observable xkeId = 0;
   @observable year = 0;
 
-  constructor(priceId?: string) {
-    if (priceId) this.init(priceId);
-  }
-
-  @action
-  async init(priceId: string): Promise<void> {
-    const initialState = await getInitialPriceStoreState(priceId);
-    runInAction(() => {
+  constructor(initialState?: PriceStoreState) {
+    if (initialState) {
       this.automatedAppraisal = initialState.automatedAppraisal;
       this.price = initialState.price;
       this.priceId = initialState.priceId;
@@ -138,7 +133,7 @@ export class PriceStore {
       this.vin = initialState.vin;
       this.xkeId = initialState.xkeId;
       this.year = initialState.year;
-    });
+    }
   }
 }
 

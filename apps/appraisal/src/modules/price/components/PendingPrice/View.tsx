@@ -1,5 +1,5 @@
 import { observer } from 'mobx-react';
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
 
 import PendingPriceViewModel from './ViewModel';
@@ -12,6 +12,11 @@ interface Props {
 }
 
 const PendingPriceView: React.FC<Props> = ({ viewModel }) => {
+  useEffect(() => {
+    viewModel.onPageLoad();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return (
     <StyledContainer>
       <Hero.Four>{viewModel.sitTight}</Hero.Four>
@@ -19,6 +24,11 @@ const PendingPriceView: React.FC<Props> = ({ viewModel }) => {
 
       <StyledBody>
         <Body.Regular>{viewModel.takingALook}</Body.Regular>
+      </StyledBody>
+      <StyledBody>
+        <Body.Regular>
+          <i>{viewModel.spamFolder}</i>
+        </Body.Regular>
       </StyledBody>
 
       <StyledButton onClick={viewModel.handleFindCar}>

@@ -3,11 +3,11 @@ import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { TDAFooter } from '@vroom-web/footer-components';
 import { TDAHeader } from '@vroom-web/header-components';
 import { observer } from 'mobx-react';
+import getConfig from 'next/config';
 import React, { useEffect } from 'react';
 
 import Breadcrumbs from './components/Breadcrumbs';
 import CarDetails from './components/CarDetails';
-import Favorites from './components/Favorites';
 import Features from './components/Features';
 import Gallery from './components/Gallery';
 import LegalFooter from './components/LegalFooter';
@@ -22,6 +22,9 @@ import VehicleHeader from './components/VehicleHeader';
 import VehicleNotFound from './components/VehicleNotFound';
 import ViewModel from './ViewModel';
 
+const {
+  publicRuntimeConfig: { VROOM_URL },
+} = getConfig();
 export interface Props {
   viewModel: ViewModel;
 }
@@ -58,7 +61,7 @@ const InventoryView: React.FC<Props> = (props) => {
 
   return (
     <>
-      <TDAHeader />
+      <TDAHeader vroomUrl={VROOM_URL} />
       <InventoryViewContainer>
         {viewModel.error() && (
           <VehicleNotFound message={viewModel.noVehicleFound} />
@@ -79,11 +82,10 @@ const InventoryView: React.FC<Props> = (props) => {
         <NeedHelp />
         <LegalFooter />
       </InventoryViewContainer>
-      <TDAFooter />
+      <TDAFooter vroomUrl={VROOM_URL} />
       {xsDown && viewModel.ready() && (
         <StickyBottom>
           {viewModel.isAvailableSoon() ? <NotifyMe /> : <StartPurchase />}
-          <Favorites />
         </StickyBottom>
       )}
     </>

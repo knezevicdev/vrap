@@ -45,13 +45,14 @@ class InitialPriceViewModel {
   readonly price: string = '';
   readonly priceId: string = '';
   readonly goodUntil: string = '';
+  readonly legalDocumentation: string =
+    "This price is based on data from thousands of similar market transactions, as well as the information you provided. Vroom may modify or revoke this price if the information you provided is inaccurate or if there is a significant present or prospective change in the used vehicle market beyond Vroom's control. Other terms and restrictions apply.";
 
   constructor(initialPriceState: PriceStore) {
     this.price = displayCurrency(initialPriceState.price);
     this.priceId = initialPriceState.priceId;
     this.goodUntil = parsedDateTime(initialPriceState.goodUntil);
     this.analyticsHandler = new AnalyticsHandler();
-    this.analyticsHandler.trackPriceViewed();
   }
 
   onContinueClick = (): void => {
@@ -62,6 +63,10 @@ class InitialPriceViewModel {
 
     submitPriceResponse(priceData);
     this.analyticsHandler.trackContinueClick();
+  };
+
+  onPageLoad = (): void => {
+    this.analyticsHandler.trackPriceAutomated();
   };
 }
 

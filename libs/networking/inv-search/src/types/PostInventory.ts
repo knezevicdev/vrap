@@ -24,6 +24,7 @@ export interface PostInventoryRequestData {
   miles?: {} | { min: number; max: number };
   transmissionid?: string;
   drivetype?: string[];
+  sortAgeDirection?: string;
   sortby?: string;
   sortdirection?: string;
   searchall?: string;
@@ -34,6 +35,9 @@ export interface PostInventoryRequestData {
   isTitleQAPass?: boolean;
   cylinders?: number[];
   cylindersShowOther?: boolean;
+  fuelType?: string[];
+  optionalFeatures?: string[];
+  combinedMpg?: { min: number };
 }
 
 export const postInventoryResponseSchema = inventoryResponseSchema;
