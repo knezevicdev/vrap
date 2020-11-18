@@ -112,7 +112,10 @@ const OptionsView: React.FC<Props> = ({ viewModel }) => {
       is: 'Direct Deposit',
       then: Yup.string()
         .required('Field is required')
-        .matches(/^[a-zA-Z0-9]{4,17}$/, 'Please enter a valid account number'),
+        .matches(
+          /^[a-zA-Z0-9]{4,17}$/,
+          'Please enter a valid account number without spaces or hyphens'
+        ),
     }),
   });
 
