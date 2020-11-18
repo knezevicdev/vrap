@@ -38,7 +38,7 @@ class OptionsViewModel {
   };
 
   isValidRouting = (num: string): boolean => {
-    if (!num) return false;
+    if (!num || num.length < 9) return false;
 
     // Run through each digit and calculate the total.
     let n = 0;
