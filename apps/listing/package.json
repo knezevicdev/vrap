@@ -1,6 +1,6 @@
 {
   "name": "@vroom-web/listing",
-  "version": "1.5.0",
+  "version": "1.5.1",
   "private": true,
   "scripts": {
     "dev": "node server.js",
