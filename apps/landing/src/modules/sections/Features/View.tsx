@@ -93,6 +93,10 @@ const BodyWrapper = styled.tbody`
       box-shadow: 1px 0 0 0 #f5f5f5;
     }
   }
+
+  td {
+    padding: 6px 0px;
+  }
 `;
 
 const SectionTitle = styled(Hero.Four)`
