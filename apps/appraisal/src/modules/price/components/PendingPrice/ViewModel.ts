@@ -7,6 +7,7 @@ class PendingPriceViewModel {
   readonly findCar: string = 'find your next car';
   readonly takingALook: string =
     'Our buying specialists are taking a closer look and we will provide you a guranteed offer in one business day.';
+  readonly spamFolder: string = 'Please be sure to check your spam folder.';
 
   constructor() {
     this.analyticsHandler = new AnalyticsHandler();

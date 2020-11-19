@@ -1,68 +1,54 @@
-import { styled } from '@material-ui/core/styles';
-import TextField from '@material-ui/core/TextField';
 import React from 'react';
+import styled from 'styled-components';
 
 import DirectDepositViewModel from './ViewModel';
 
-const InputContainer = styled('div')(() => ({
-  paddingBottom: '20px',
+import FormikInput from 'src/core/FormikInput';
+import { Body } from 'src/core/Typography';
+
+const DirectDepositContainer = styled('div')(() => ({
+  width: '100%',
 }));
 
-const Input = styled(TextField)(({ theme }) => ({
-  width: '280px',
-  [theme.breakpoints.only('xs')]: { width: '100%' },
-  '& .MuiInput-formControl': {
-    marginTop: theme.spacing(1),
-  },
-  '& .MuiInputLabel-root': {
-    position: 'static',
-    transform: 'none',
-    fontSize: '14px',
-    fontWeight: theme.typography.fontWeightLight,
-    lineHeight: '14px',
-    color: theme.palette.text.primary,
-  },
-  '& input': {
-    padding: theme.spacing(1, 2),
-    border: `1px solid ${theme.palette.grey[400]}`,
-  },
-  '& .Mui-error input': {
-    borderColor: theme.palette.error.main,
-  },
-  '& .Mui-error.MuiInputLabel-root': {
-    color: theme.palette.error.main,
-  },
-  '& .MuiFormHelperText-root': {
-    display: 'none',
-  },
-  '& .MuiFormHelperText-root.Mui-error': {
-    display: 'initial',
-  },
+const DirectDepositCopy = styled(Body.Regular)(() => ({
+  display: 'flex',
+  padding: '20px 0 15px',
 }));
 
 export interface Props {
   viewModel: DirectDepositViewModel;
 }
 
-const PayOptionsView: React.FC<Props> = ({ viewModel }) => {
+const DirectDepositView: React.FC<Props> = ({ viewModel }) => {
   return (
-    <>
+    <DirectDepositContainer>
+      <DirectDepositCopy>{viewModel.bankInfo}</DirectDepositCopy>
       <InputContainer>
-        <Input
-          id="RoutingNumber"
+        <FormikInput
+          id="routingNumber"
+          name={'routingNumber'}
           label={viewModel.routingLabel}
           placeholder={viewModel.routingLabel}
+          fluid={true}
+          maxLength={9}
         />
       </InputContainer>
       <InputContainer>
-        <Input
-          id="BankAccountNumber"
+        <FormikInput
+          id="bankAccountNumber"
+          name={'bankAccountNumber'}
           label={viewModel.bankAccountLabel}
           placeholder={viewModel.bankAccountLabel}
+          fluid={true}
+          maxLength={17}
         />
       </InputContainer>
-    </>
+    </DirectDepositContainer>
   );
 };
 
-export default PayOptionsView;
+const InputContainer = styled.div`
+  width: 50%;
+`;
+
+export default DirectDepositView;

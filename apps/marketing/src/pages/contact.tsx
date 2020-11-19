@@ -35,6 +35,7 @@ const ContactPage: NextPage<Props> = ({ brand, description, title }) => {
 export const getServerSideProps: GetServerSideProps<Props> = async (
   ctx: GetServerSidePropsContext
 ) => {
+  ctx.res.setHeader('Cache-Control', '');
   const brand = determineWhitelabel(ctx);
 
   const getTitle = (): string => {
