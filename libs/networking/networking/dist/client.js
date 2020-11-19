@@ -39,6 +39,24 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var graphql_request_1 = require("graphql-request");
 var Client = /** @class */ (function () {
     function Client(options) {
+        this.interceptors = {
+            request: function requestInterceptor() {
+                return __awaiter(this, void 0, void 0, function () {
+                    return __generator(this, function (_a) {
+                        console.log('resqyest+++');
+                        return [2 /*return*/];
+                    });
+                });
+            },
+            response: function responseInterceptor(error) {
+                return __awaiter(this, void 0, void 0, function () {
+                    return __generator(this, function (_a) {
+                        console.log('response +++++', error);
+                        return [2 /*return*/, Promise.reject(error)];
+                    });
+                });
+            },
+        };
         this.graphQLClient = new graphql_request_1.GraphQLClient(options.endpoint, {
             timeout: options.timeout,
         });
@@ -61,7 +79,7 @@ var Client = /** @class */ (function () {
                             }];
                     case 3:
                         error_1 = _a.sent();
-                        console.error('This is the error', error_1);
+                        this.interceptors.response(error_1);
                         status = error_1.response && error_1.response.status
                             ? error_1.response.status
                             : undefined;

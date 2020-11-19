@@ -15,6 +15,27 @@ export interface ClientImplOptions {
 export class Client implements ClientDef {
   private readonly graphQLClient: GraphQLClient;
 
+  private responseInterceptor: unknown;
+  private errorInterceptor: unknown;
+
+  /**
+   * Allow to intercept data or error to perform others actions
+   * @param errorInterceptor function it will receive the error object
+   * @param responseInterceptor optional Function
+   */
+  // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+  addResponseInterceptor = (
+    errorInterceptor: (error: unknown) => void,
+    responseInterceptor?: (data: unknown) => void
+  ) => {
+    if (typeof errorInterceptor === 'function') {
+      this.errorInterceptor = errorInterceptor;
+    }
+    if (typeof responseInterceptor === 'function') {
+      this.responseInterceptor = responseInterceptor;
+    }
+  };
+
   constructor(options: ClientImplOptions) {
     this.graphQLClient = new GraphQLClient(options.endpoint, {
       timeout: options.timeout,
@@ -30,10 +51,19 @@ export class Client implements ClientDef {
         options.document,
         options.variables
       );
+
+      if (typeof this.responseInterceptor === 'function') {
+        await this.responseInterceptor(data);
+      }
+
       return {
         data: data as D,
       };
     } catch (error) {
+      if (typeof this.errorInterceptor === 'function') {
+        await this.errorInterceptor(error);
+      }
+
       const status: number | undefined =
         error.response && error.response.status
           ? error.response.status

@@ -225,4 +225,53 @@ describe('network behavior is handled correctly', () => {
     }
     expect(res.data.xTestHeaderDefined).toBeTruthy();
   });
+
+  test('executing interceptor error', async () => {
+    const interceptorErrorMock = jest.fn();
+    const interceptorSuccessMock = jest.fn();
+
+    const client = new Client({
+      endpoint: `${endpointBase}/401`,
+      timeout: 1000,
+    });
+
+    client.addResponseInterceptor(interceptorErrorMock, interceptorSuccessMock);
+
+    const res = await client.gqlRequest<{
+      xTestHeaderDefined: boolean;
+    }>({
+      document,
+      variables,
+    });
+
+    if (!isErrorResponse(res)) {
+      fail();
+    }
+    expect(interceptorSuccessMock).toHaveBeenCalledTimes(0);
+    expect(interceptorErrorMock).toBeCalled();
+    expect(res.status).toEqual(401);
+  });
+
+  test('executing interceptor success', async () => {
+    const interceptorErrorMock = jest.fn();
+    const interceptorSuccessMock = jest.fn();
+
+    const client = new Client({
+      endpoint: `${endpointBase}/200`,
+      timeout: 1000,
+    });
+    client.addResponseInterceptor(interceptorErrorMock, interceptorSuccessMock);
+
+    const res = await client.gqlRequest<{ version: number }>({
+      document,
+      variables,
+    });
+
+    if (!isSuccessResponse(res)) {
+      fail();
+    }
+    expect(interceptorSuccessMock).toBeCalled();
+    expect(interceptorErrorMock).toHaveBeenCalledTimes(0);
+    expect(res.data.version).toEqual(1);
+  });
 });
