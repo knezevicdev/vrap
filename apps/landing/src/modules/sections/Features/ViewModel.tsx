@@ -19,7 +19,7 @@ class FeaturesViewModel {
       },
     },
     {
-      title: <Title.Three>Sport S</Title.Three>,
+      title: <Title.Three>Sport</Title.Three>,
       dataIndex: 'sport',
       key: 'sport',
     },
