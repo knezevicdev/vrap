@@ -1,11 +1,15 @@
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-function isErrorResponse(response) {
-    return response.error !== undefined;
-}
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 exports.isErrorResponse = isErrorResponse;
-function isSuccessResponse(response) {
-    return response.data !== undefined;
-}
 exports.isSuccessResponse = isSuccessResponse;
-//# sourceMappingURL=typeguards.js.map
+
+function isErrorResponse(response) {
+  return response.error !== undefined;
+}
+
+function isSuccessResponse(response) {
+  return response.data !== undefined;
+}

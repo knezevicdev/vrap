@@ -5,10 +5,14 @@ export interface ClientImplOptions {
 }
 export declare class Client implements ClientDef {
     private readonly graphQLClient;
-    interceptors: {
-        request: () => Promise<void>;
-        response: (error: any) => Promise<never>;
-    };
+    private responseInterceptor;
+    private errorInterceptor;
     constructor(options: ClientImplOptions);
+    /**
+     * Allow to intercept data or error to perform others actions
+     * @param errorInterceptor function it will receive the error object
+     * @param responseInterceptor optional Function
+     */
+    addResponseInterceptor(errorInterceptor: (error: unknown) => void, responseInterceptor?: (data: unknown) => void): void;
     gqlRequest<D = unknown, V = GQLRequestVariables>(options: GQLRequestOptions<V>): Promise<Response<D>>;
 }

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/explicit-function-return-type */
 import { GraphQLClient } from 'graphql-request';
 
 import {
@@ -18,28 +19,27 @@ export class Client implements ClientDef {
   private responseInterceptor: unknown;
   private errorInterceptor: unknown;
 
+  constructor(options: ClientImplOptions) {
+    this.graphQLClient = new GraphQLClient(options.endpoint, {
+      timeout: options.timeout,
+    });
+  }
+
   /**
    * Allow to intercept data or error to perform others actions
    * @param errorInterceptor function it will receive the error object
    * @param responseInterceptor optional Function
    */
-  // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-  addResponseInterceptor = (
+  addResponseInterceptor(
     errorInterceptor: (error: unknown) => void,
     responseInterceptor?: (data: unknown) => void
-  ) => {
+  ) {
     if (typeof errorInterceptor === 'function') {
       this.errorInterceptor = errorInterceptor;
     }
     if (typeof responseInterceptor === 'function') {
       this.responseInterceptor = responseInterceptor;
     }
-  };
-
-  constructor(options: ClientImplOptions) {
-    this.graphQLClient = new GraphQLClient(options.endpoint, {
-      timeout: options.timeout,
-    });
   }
 
   async gqlRequest<D = unknown, V = GQLRequestVariables>(

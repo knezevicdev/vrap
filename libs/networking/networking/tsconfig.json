@@ -3,14 +3,10 @@
   "compilerOptions": {
     "baseUrl": ".",
     "declaration": true,
-    "lib": ["es2015"],
-    "module": "commonjs",
-    "moduleResolution": "node",
-    "esModuleInterop": true,
+    "emitDeclarationOnly": true,
     "noEmit": false,
     "outDir": "dist",
-    "rootDir": "src",
-    "target": "es5"
+    "rootDir": "src"
   },
   "exclude": ["node_modules", "./src/setupTests.ts", "./src/**/*.test.ts"],
   "include": ["./src/**/*.ts"]

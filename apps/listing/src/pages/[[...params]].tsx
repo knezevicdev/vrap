@@ -416,6 +416,7 @@ export const getServerSideProps: GetServerSideProps<Props> = async (
   } = context;
 
   const { res, query } = context;
+  context.res.setHeader('Cache-Control', '');
   const brand = determineWhitelabel(context);
 
   const url = typeof _url === 'string' ? (_url as string) : '';

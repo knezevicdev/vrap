@@ -1,4 +1,3 @@
-/// <reference types="react-native" />
 import { DocumentNode } from 'graphql/language/ast';
 export interface GQLRequestVariables {
     [key: string]: any;
@@ -18,8 +17,5 @@ export interface ErrorResponse {
 export declare type Response<D> = SuccessResponse<D> | ErrorResponse;
 export interface ClientDef {
     gqlRequest: <D = unknown, V = GQLRequestVariables>(options: GQLRequestOptions<V>) => Promise<Response<D>>;
-    interceptors: {
-        request: any;
-        response: any;
-    };
+    addResponseInterceptor: (errorInterceptor: <D = unknown>(error: unknown) => Promise<Response<D>>, responseInterceptor?: <D = unknown>(data: unknown) => Promise<Response<D>>) => void;
 }

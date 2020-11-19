@@ -19,10 +19,11 @@ class ViewModel {
     line1: '10 AM to 6 PM Monday-Saturday',
     line2: 'Closed Sunday',
   };
-  readonly paragraph1: string =
-    "With over $4 Billion in Sales and over 100,000 customers satisfied since 2002, we are one of the Largest Independent Dealerships in the country. Customers travel from all over the World to buy from Texas Direct Auto. We carry ALL makes and models, and our financing is second to none. More than anything, our Job is to WOW our customers. WOW you with selection, financing, quality and service. If you are not WOW'd, then we have not done our jobs - not even close. Watch this short Video to learn more.";
-  readonly paragraph2: string =
-    'Looking for a car? Call, Click or Stop by our Stafford Campus located on over 70 Acres in Southwest Houston. Looking to Sell Us Your Car? We are conveniently located in most Suburban areas of Houston.';
+  readonly paragraphs: string[] = [
+    'Texas Direct Auto is one of the largest independent auto dealerships in the country, with thousands of cars available for purchase. Vroom, a national online dealership, helps make it happen.',
+    'Browse through our extensive inventory of the most popular makes and models to find the one that’s right for you. We offer competitive rates and easy online financing. Every Texas Direct Auto vehicle is thoroughly inspected by our talented team of mechanics for safety, mechanical, and cosmetic issues. We only sell vehicles with clean titles, and with no history of accidents, as reported to CarFax at the time of sale. ',
+    'Looking to buy? Stop by our Stafford store, located on over 70 acres in Southwest Houston. Looking to Sell Us Your Car®, visit us at one of our conveniently located Centers across Houston.',
+  ];
 }
 
 export default ViewModel;

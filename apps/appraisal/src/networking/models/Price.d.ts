@@ -95,3 +95,15 @@ export interface Verification {
   final_payment: string | number | null;
   offer_price: number;
 }
+
+export interface PaymentOptionsRespData {
+  data: PaymentOption;
+}
+
+export interface PaymentOption {
+  sf_appraisal_id: string;
+  sf_offer_id: string;
+  payment_method: string;
+  account_number: string | null;
+  routing_number: string | null;
+}

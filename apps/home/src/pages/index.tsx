@@ -28,7 +28,6 @@ const HomePage: NextPage<Props> = ({ brand, description, query, title }) => {
       <meta name="description" content={description}></meta>
     </>
   );
-
   return (
     <ThemeProvider brand={brand}>
       <Page brand={brand} name="Home" head={head}>
@@ -43,6 +42,7 @@ const HomePage: NextPage<Props> = ({ brand, description, query, title }) => {
 export const getServerSideProps: GetServerSideProps<Props> = async (
   ctx: GetServerSidePropsContext
 ) => {
+  ctx.res.setHeader('Cache-Control', '');
   const brand = determineWhitelabel(ctx);
   const brandConfig = returnBrandConfig(brand);
   return {
