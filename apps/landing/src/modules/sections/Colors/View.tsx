@@ -21,8 +21,9 @@ const Items = styled.div`
     margin-left: 64px;
   }
 
-  @media (max-width: 599px) {
-    margin-left: 24px;
+  &:before {
+    content: '';
+    padding: 10px;
   }
 `;
 
