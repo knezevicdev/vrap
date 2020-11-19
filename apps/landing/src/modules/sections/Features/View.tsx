@@ -95,7 +95,7 @@ const BodyWrapper = styled.tbody`
   }
 
   td {
-    padding: 6px 0px;
+    padding: 6px 1px;
   }
 `;
 
