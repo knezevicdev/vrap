@@ -12,6 +12,7 @@ const bodyFamily = (props: CSSProps): string =>
 
 const base = css`
   border: none;
+  outline-style: solid;
   cursor: pointer;
 
   min-height: 48px !important;
