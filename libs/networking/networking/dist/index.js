@@ -4,6 +4,6 @@ function __export(m) {
 }
 Object.defineProperty(exports, "__esModule", { value: true });
 var client_1 = require("./client");
-exports.ClientImpl = client_1.ClientImpl;
+exports.Client = client_1.Client;
 __export(require("./types"));
 //# sourceMappingURL=index.js.map

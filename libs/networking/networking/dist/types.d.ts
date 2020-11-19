@@ -16,6 +16,6 @@ export interface ErrorResponse {
     status?: number;
 }
 export declare type Response<D> = SuccessResponse<D> | ErrorResponse;
-export interface Client {
+export interface ClientDef {
     gqlRequest: <D = unknown, V = GQLRequestVariables>(options: GQLRequestOptions<V>) => Promise<Response<D>>;
 }

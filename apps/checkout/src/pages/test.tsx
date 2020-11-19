@@ -1,4 +1,4 @@
-import { ClientImpl } from '@vroom-web/networking';
+import { Client } from '@vroom-web/networking';
 import { GetServerSideProps, GetServerSidePropsContext, NextPage } from 'next';
 import React from 'react';
 
@@ -9,20 +9,20 @@ interface Props {
 const TestPage: NextPage<Props> = ({ stuff }) => {
   console.log('stuff', stuff);
 
-  const [clientImpl] = React.useState(
-    new ClientImpl({
-      endpoint: 'https://gearbox-dev-int.vroomapi.com/query-public',
+  const [client] = React.useState(
+    new Client({
+      endpoint: 'https://gearbox-dev-int.vroomapi.com/query-private',
     })
   );
   React.useEffect(() => {
     const doIt = async (): Promise<void> => {
-      const res = await clientImpl.gqlRequest({
+      const res = await client.gqlRequest({
         document: `query { version }`,
       });
       console.log('res', res);
     };
     doIt();
-  }, [clientImpl]);
+  }, [client]);
   return null;
 };
 
@@ -30,10 +30,10 @@ export const getServerSideProps: GetServerSideProps<Props> = async (
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   _ctx: GetServerSidePropsContext
 ) => {
-  const clientImpl = new ClientImpl({
-    endpoint: 'https://gearbox-dev-int.vroomapi.com/query-public',
+  const client = new Client({
+    endpoint: 'https://gearbox-dev-int.vroomapi.com/query-private',
   });
-  const res = await clientImpl.gqlRequest({
+  const res = await client.gqlRequest({
     document: `query { version }`,
   });
   return {

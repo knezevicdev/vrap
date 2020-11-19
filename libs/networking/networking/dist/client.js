@@ -37,13 +37,13 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var graphql_request_1 = require("graphql-request");
-var ClientImpl = /** @class */ (function () {
-    function ClientImpl(options) {
+var Client = /** @class */ (function () {
+    function Client(options) {
         this.graphQLClient = new graphql_request_1.GraphQLClient(options.endpoint, {
             timeout: options.timeout,
         });
     }
-    ClientImpl.prototype.gqlRequest = function (options) {
+    Client.prototype.gqlRequest = function (options) {
         return __awaiter(this, void 0, void 0, function () {
             var data, error_1, status;
             return __generator(this, function (_a) {
@@ -61,6 +61,7 @@ var ClientImpl = /** @class */ (function () {
                             }];
                     case 3:
                         error_1 = _a.sent();
+                        console.error('This is the error', error_1);
                         status = error_1.response && error_1.response.status
                             ? error_1.response.status
                             : undefined;
@@ -73,7 +74,7 @@ var ClientImpl = /** @class */ (function () {
             });
         });
     };
-    return ClientImpl;
+    return Client;
 }());
-exports.ClientImpl = ClientImpl;
+exports.Client = Client;
 //# sourceMappingURL=client.js.map

@@ -1,7 +1,7 @@
 import { GraphQLClient } from 'graphql-request';
 
 import {
-  Client,
+  ClientDef,
   GQLRequestOptions,
   GQLRequestVariables,
   Response,
@@ -12,7 +12,7 @@ export interface ClientImplOptions {
   timeout?: number; // milliseconds
 }
 
-export class ClientImpl implements Client {
+export class Client implements ClientDef {
   private readonly graphQLClient: GraphQLClient;
 
   constructor(options: ClientImplOptions) {
