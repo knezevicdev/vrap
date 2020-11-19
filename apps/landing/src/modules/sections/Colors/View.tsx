@@ -22,10 +22,7 @@ const Items = styled.div`
   }
 
   @media (max-width: 599px) {
-    &:before {
-      content: '';
-      padding: 10px;
-    }
+    padding-left: 24px;
   }
 `;
 
