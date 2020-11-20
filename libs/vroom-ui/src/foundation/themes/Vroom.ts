@@ -15,23 +15,21 @@ export const getVroomTheme = (fontPath: string): ThemeProps => {
     },
     colors: {
       primary: {
-        red: '#E7131A',
+        brand: '#E7131A',
         black: '#041022',
         white: '#FFFFFF',
       },
       secondary: {
-        blue: '#1960D0',
-        green: '#308406',
-        orange: '#F26900',
-        yellow: '#FFD400',
-        red: '#FC4349',
-        pink: '#FEE8E9',
+        brand: '#1960D0',
+        success: '#308406',
+        error: '#F26900',
+        warning: '#FFD400',
       },
-      neutral: {
-        gray1: '#6C717A',
-        gray2: '#999DA3',
-        gray3: '#D6D7DA',
-        gray4: '#F5F5F5',
+      gray: {
+        one: '#6C717A',
+        two: '#999DA3',
+        three: '#D6D7DA',
+        four: '#F5F5F5',
       },
     },
   };

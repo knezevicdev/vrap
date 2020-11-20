@@ -10,15 +10,14 @@ export const Color: Story = () => {
       <Section>Primary</Section>
       <Row>
         <Box>
-          <PrimaryRed />
-          <BodyRegularSemi>Vroom red</BodyRegularSemi>
+          <PrimaryBrand />
+          <BodyRegularSemi>Brand</BodyRegularSemi>
           <BodyRegularSemi>#E7131A</BodyRegularSemi>
           <BodyRegularSemi>(AAA pass)</BodyRegularSemi>
-          <BodyRegularSemi>Primary CTA/ text link</BodyRegularSemi>
         </Box>
         <Box>
           <PrimaryBlack />
-          <BodyRegularSemi>Vroom black</BodyRegularSemi>
+          <BodyRegularSemi>Black</BodyRegularSemi>
           <BodyRegularSemi>#041022</BodyRegularSemi>
           <BodyRegularSemi>(AAA pass)</BodyRegularSemi>
           <BodyRegularSemi>Text / tab</BodyRegularSemi>
@@ -34,80 +33,56 @@ export const Color: Story = () => {
       <Section>Secondary</Section>
       <Row>
         <Box>
-          <SecondaryBlue />
-          <BodyRegularSemi>Vroom blue</BodyRegularSemi>
+          <SecondaryBrand />
+          <BodyRegularSemi>Brand</BodyRegularSemi>
           <BodyRegularSemi>#1960D0</BodyRegularSemi>
           <BodyRegularSemi>(AAA pass)</BodyRegularSemi>
-          <BodyRegularSemi>Field focus</BodyRegularSemi>
         </Box>
         <Box>
-          <SecondaryGreen />
-          <BodyRegularSemi>Green</BodyRegularSemi>
+          <SecondarySuccess />
+          <BodyRegularSemi>Success</BodyRegularSemi>
           <BodyRegularSemi>#308406</BodyRegularSemi>
           <BodyRegularSemi>(AAA pass)</BodyRegularSemi>
-          <BodyRegularSemi>Confirm / Success</BodyRegularSemi>
         </Box>
         <Box>
-          <SecondaryOrange />
-          <BodyRegularSemi>Orange</BodyRegularSemi>
+          <SecondaryError />
+          <BodyRegularSemi>Error</BodyRegularSemi>
           <BodyRegularSemi>#F26900</BodyRegularSemi>
           <BodyRegularSemi>(AA pass)</BodyRegularSemi>
-          <BodyRegularSemi>Error</BodyRegularSemi>
         </Box>
         <Box>
-          <SecondaryYellow />
-          <BodyRegularSemi>Yellow</BodyRegularSemi>
+          <SecondaryWarning />
+          <BodyRegularSemi>Warning</BodyRegularSemi>
           <BodyRegularSemi>#FFD400</BodyRegularSemi>
           <BodyRegularSemi>(AA pass)</BodyRegularSemi>
-          <BodyRegularSemi>Warning</BodyRegularSemi>
-        </Box>
-        <Box>
-          <SecondaryRed />
-          <BodyRegularSemi>Happy red</BodyRegularSemi>
-          <BodyRegularSemi>#FC4349</BodyRegularSemi>
-          <BodyRegularSemi>(AA pass)</BodyRegularSemi>
-          <BodyRegularSemi>Hover CTA button</BodyRegularSemi>
-        </Box>
-        <Box>
-          <SecondaryPink />
-          <BodyRegularSemi>Coral pink</BodyRegularSemi>
-          <BodyRegularSemi>#FEE8E9</BodyRegularSemi>
-          <BodyRegularSemi>(AA pass)</BodyRegularSemi>
-          <BodyRegularSemi>Background color</BodyRegularSemi>
         </Box>
       </Row>
       <Space />
-      <Section>Neutral</Section>
+      <Section>Gray</Section>
       <Row>
         <Box>
-          <NeutralGrayOne />
+          <GrayOne />
           <BodyRegularSemi>Gray 1</BodyRegularSemi>
           <BodyRegularSemi>#6C717A</BodyRegularSemi>
           <BodyRegularSemi>(AA pass)</BodyRegularSemi>
-          <BodyRegularSemi>Text link</BodyRegularSemi>
         </Box>
         <Box>
-          <NeutralGrayTwo />
+          <GrayTwo />
           <BodyRegularSemi>Gray 2</BodyRegularSemi>
           <BodyRegularSemi>#999DA3</BodyRegularSemi>
           <BodyRegularSemi>(AA pass)</BodyRegularSemi>
-          <BodyRegularSemi>Supportive text</BodyRegularSemi>
-          <BodyRegularSemi>Section titles</BodyRegularSemi>
         </Box>
         <Box>
-          <NeutralGrayThree />
+          <GrayThree />
           <BodyRegularSemi>Gray 3</BodyRegularSemi>
           <BodyRegularSemi>#D6D7DA</BodyRegularSemi>
           <BodyRegularSemi>(AA pass)</BodyRegularSemi>
-          <BodyRegularSemi>Form and card borders</BodyRegularSemi>
         </Box>
         <Box>
-          <NeutralGrayFour />
+          <GrayFour />
           <BodyRegularSemi>Gray 4</BodyRegularSemi>
           <BodyRegularSemi>#F5F5F5</BodyRegularSemi>
           <BodyRegularSemi>(AAA pass)</BodyRegularSemi>
-          <BodyRegularSemi>Form default</BodyRegularSemi>
-          <BodyRegularSemi>background colors</BodyRegularSemi>
         </Box>
       </Row>
     </Container>
@@ -119,7 +94,7 @@ export default {
 } as Meta;
 
 const Section = styled(Body.Regular)`
-  color: ${({ theme: { colors } }): string => colors.neutral.gray2};
+  color: ${({ theme: { colors } }): string => colors.gray.two};
   letter-spacing: 1.25px;
   text-transform: uppercase;
   font-weight: 600;
@@ -156,9 +131,9 @@ const boxBase = css`
   max-height: 200px;
 `;
 
-const PrimaryRed = styled.div`
+const PrimaryBrand = styled.div`
     ${boxBase}
-    background: ${({ theme: { colors } }): string => colors.primary.red};
+    background: ${({ theme: { colors } }): string => colors.primary.brand};
 `;
 
 const PrimaryBlack = styled.div`
@@ -174,52 +149,42 @@ const PrimaryWhite = styled.div`
     box-sizing: border-box;
 `;
 
-const SecondaryBlue = styled.div`
+const SecondaryBrand = styled.div`
     ${boxBase}
-    background: ${({ theme: { colors } }): string => colors.secondary.blue};
+    background: ${({ theme: { colors } }): string => colors.secondary.brand};
 `;
 
-const SecondaryGreen = styled.div`
+const SecondarySuccess = styled.div`
     ${boxBase}
-    background: ${({ theme: { colors } }): string => colors.secondary.green};
+    background: ${({ theme: { colors } }): string => colors.secondary.success};
 `;
 
-const SecondaryOrange = styled.div`
+const SecondaryError = styled.div`
     ${boxBase}
-    background: ${({ theme: { colors } }): string => colors.secondary.orange};
+    background: ${({ theme: { colors } }): string => colors.secondary.error};
 `;
 
-const SecondaryYellow = styled.div`
+const SecondaryWarning = styled.div`
     ${boxBase}
-    background: ${({ theme: { colors } }): string => colors.secondary.yellow};
+    background: ${({ theme: { colors } }): string => colors.secondary.warning};
 `;
 
-const SecondaryRed = styled.div`
+const GrayOne = styled.div`
     ${boxBase}
-    background: ${({ theme: { colors } }): string => colors.secondary.red};
+    background: ${({ theme: { colors } }): string => colors.gray.one};
 `;
 
-const SecondaryPink = styled.div`
+const GrayTwo = styled.div`
     ${boxBase}
-    background: ${({ theme: { colors } }): string => colors.secondary.pink};
+    background: ${({ theme: { colors } }): string => colors.gray.two};
 `;
 
-const NeutralGrayOne = styled.div`
+const GrayThree = styled.div`
     ${boxBase}
-    background: ${({ theme: { colors } }): string => colors.neutral.gray1};
+    background: ${({ theme: { colors } }): string => colors.gray.three};
 `;
 
-const NeutralGrayTwo = styled.div`
+const GrayFour = styled.div`
     ${boxBase}
-    background: ${({ theme: { colors } }): string => colors.neutral.gray2};
-`;
-
-const NeutralGrayThree = styled.div`
-    ${boxBase}
-    background: ${({ theme: { colors } }): string => colors.neutral.gray3};
-`;
-
-const NeutralGrayFour = styled.div`
-    ${boxBase}
-    background: ${({ theme: { colors } }): string => colors.neutral.gray4};
+    background: ${({ theme: { colors } }): string => colors.gray.four};
 `;

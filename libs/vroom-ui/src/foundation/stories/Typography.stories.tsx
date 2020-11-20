@@ -44,7 +44,7 @@ export default {
 } as Meta;
 
 const Section = styled(Body.Regular)`
-  color: ${({ theme: { colors } }): string => colors.neutral.gray2};
+  color: ${({ theme: { colors } }): string => colors.gray.two};
   letter-spacing: 1.25px;
   text-transform: uppercase;
   font-weight: 600;
@@ -72,5 +72,5 @@ const FineSemiBold = styled(Fine)`
 `;
 
 const CustomLink = styled(Link)`
-  color: ${({ theme: { colors } }): string => colors.primary.red};
+  color: ${({ theme: { colors } }): string => colors.primary.brand};
 `;
