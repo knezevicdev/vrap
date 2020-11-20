@@ -1,14 +1,22 @@
-import React, { useContext } from 'react';
+import React from 'react';
 
 import View from './View';
 import ViewModel from './ViewModel';
 
-import { InventoryStoreContext } from 'src/modules/inventory/store';
+import {
+  InventoryStore,
+  InventoryStoreContext,
+} from 'src/modules/inventory/store';
 
 const SafetyAndQuality: React.FC = () => {
-  const store = useContext(InventoryStoreContext);
-  const viewModel = new ViewModel(store);
-  return <View viewModel={viewModel} />;
+  return (
+    <InventoryStoreContext.Consumer>
+      {(inventoryStore: InventoryStore): JSX.Element => {
+        const viewModel = new ViewModel(inventoryStore);
+        return <View viewModel={viewModel} />;
+      }}
+    </InventoryStoreContext.Consumer>
+  );
 };
 
 export default SafetyAndQuality;
