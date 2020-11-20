@@ -29,8 +29,7 @@ describe('checkout networking client', () => {
   });
 
   it('creates a graphql client instance using the proper endpoint', () => {
-    new Client({
-      endpoint,
+    new Client(endpoint, {
       timeout: 1000,
     });
     expect(GraphQLClient).toHaveBeenCalledWith(endpoint, {
@@ -40,8 +39,7 @@ describe('checkout networking client', () => {
   });
 
   it('makes a request with the right options set', async () => {
-    const client = new Client({
-      endpoint,
+    const client = new Client(endpoint, {
       timeout: 1000,
     });
     mocked(graphQLClient.request).mockImplementationOnce(async () => ({
@@ -55,8 +53,7 @@ describe('checkout networking client', () => {
   });
 
   test('headers are set correctly', async () => {
-    const client = new Client({
-      endpoint,
+    const client = new Client(endpoint, {
       timeout: 1000,
     });
     const headers = {
