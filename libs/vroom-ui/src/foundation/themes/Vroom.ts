@@ -61,7 +61,7 @@ export const addStyleForDesktop = (injectedCss: string) => {
   `;
 };
 
-const path = ({ theme: { typography } }: { theme: ThemeProps }): string =>
+const fontPath = ({ theme: { typography } }: { theme: ThemeProps }): string =>
   typography.path;
 
 export const GlobalStyle = createGlobalStyle`
@@ -77,19 +77,19 @@ export const GlobalStyle = createGlobalStyle`
   @font-face {
     font-family: Calibre;
     font-weight: normal;
-    src: url(${path}/Calibre-Regular.woff2) format('woff2');
+    src: url(${fontPath}/Calibre-Regular.woff2) format('woff2');
     font-display: swap;
   }
   @font-face {
     font-family: Calibre;
     font-weight: 600;
-    src: url(${path}/Calibre-Semibold.woff2) format('woff2');
+    src: url(${fontPath}/Calibre-Semibold.woff2) format('woff2');
     font-display: swap;
   }
   @font-face {
     font-family: Vroom Sans;
     font-weight: normal;
-    src: url(${path}/Vroom-Sans.woff2) format('woff2');
+    src: url(${fontPath}/Vroom-Sans.woff2) format('woff2');
     font-display: swap;
   }
   
