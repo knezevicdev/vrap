@@ -1,8 +1,4 @@
-import {
-  createGlobalStyle,
-  css,
-  FlattenInterpolation,
-} from 'styled-components';
+import { createGlobalStyle, css } from 'styled-components';
 
 import { ThemeProps } from './types';
 
@@ -41,9 +37,7 @@ export const getTheme = (fontPath: string): ThemeProps => {
   };
 };
 
-export const addStyleForMobile = (
-  injectedCss: string
-): FlattenInterpolation<ThemeProps> => {
+export const addStyleForMobile = (injectedCss: string) => {
   return css`
     @media (max-width: 599px) {
       ${injectedCss}
@@ -51,9 +45,7 @@ export const addStyleForMobile = (
   `;
 };
 
-export const addStyleForTablet = (
-  injectedCss: string
-): FlattenInterpolation<ThemeProps> => {
+export const addStyleForTablet = (injectedCss: string) => {
   return css`
     @media (min-width: 600px) and (max-width: 959px) {
       ${injectedCss}
@@ -61,9 +53,7 @@ export const addStyleForTablet = (
   `;
 };
 
-export const addStyleForDesktop = (
-  injectedCss: string
-): FlattenInterpolation<ThemeProps> => {
+export const addStyleForDesktop = (injectedCss: string) => {
   return css`
     @media (min-width: 960px) {
       ${injectedCss}
@@ -87,19 +77,19 @@ export const GlobalStyle = createGlobalStyle`
   @font-face {
     font-family: Calibre;
     font-weight: normal;
-    src: url(${path}/fonts/Vroom/Calibre-Regular.woff2) format('woff2');
+    src: url(${path}/Calibre-Regular.woff2) format('woff2');
     font-display: swap;
   }
   @font-face {
     font-family: Calibre;
     font-weight: 600;
-    src: url(${path}/fonts/Vroom/Calibre-Semibold.woff2) format('woff2');
+    src: url(${path}/Calibre-Semibold.woff2) format('woff2');
     font-display: swap;
   }
   @font-face {
     font-family: Vroom Sans;
     font-weight: normal;
-    src: url(${path}/fonts/Vroom/Vroom-Sans.woff2) format('woff2');
+    src: url(${path}/Vroom-Sans.woff2) format('woff2');
     font-display: swap;
   }
   

@@ -8,7 +8,7 @@ export const parameters = {
 }
 
 function withGlobalStyles(storyFn) {
-    const theme = getTheme('/assets');
+    const theme = getTheme('/assets/fonts/Vroom');
     return (
         <ThemeProvider theme={theme}>
             <GlobalStyle/>
