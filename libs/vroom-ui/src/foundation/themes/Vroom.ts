@@ -11,7 +11,7 @@ export const getTheme = (fontPath: string): ThemeProps => {
         body: 'Calibre',
       },
       color: '#041022',
-      path: fontPath,
+      fontPath: fontPath,
     },
     colors: {
       primary: {
@@ -62,7 +62,7 @@ export const addStyleForDesktop = (injectedCss: string) => {
 };
 
 const fontPath = ({ theme: { typography } }: { theme: ThemeProps }): string =>
-  typography.path;
+  typography.fontPath;
 
 export const GlobalStyle = createGlobalStyle`
   html {

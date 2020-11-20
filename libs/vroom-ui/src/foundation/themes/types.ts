@@ -6,7 +6,7 @@ export interface ThemeProps {
       body: string;
     };
     color: string;
-    path: string;
+    fontPath: string;
   };
   colors: {
     [name: string]: {
