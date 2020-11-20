@@ -1,2 +1,2 @@
-export { ClientImpl } from './client';
+export { Client } from './client';
 export * from './types';

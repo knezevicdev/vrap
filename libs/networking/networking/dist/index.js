@@ -4,12 +4,12 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 var _exportNames = {
-  ClientImpl: true
+  Client: true
 };
-Object.defineProperty(exports, "ClientImpl", {
+Object.defineProperty(exports, "Client", {
   enumerable: true,
   get: function get() {
-    return _client.ClientImpl;
+    return _client.Client;
   }
 });
 

@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.ClientImpl = void 0;
+exports.Client = void 0;
 
 var _graphqlRequest = require("graphql-request");
 
@@ -11,11 +11,27 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
-class ClientImpl {
+class Client {
   constructor(options) {
     this.graphQLClient = new _graphqlRequest.GraphQLClient(options.endpoint, {
       timeout: options.timeout
     });
+  }
+  /**
+   * Allow to intercept data or error to perform others actions
+   * @param errorInterceptor function it will receive the error object
+   * @param responseInterceptor optional Function
+   */
+
+
+  addResponseInterceptor(errorInterceptor, responseInterceptor) {
+    if (typeof errorInterceptor === 'function') {
+      this.errorInterceptor = errorInterceptor;
+    }
+
+    if (typeof responseInterceptor === 'function') {
+      this.responseInterceptor = responseInterceptor;
+    }
   }
 
   gqlRequest(options) {
@@ -25,11 +41,20 @@ class ClientImpl {
       _this.graphQLClient.setHeaders(options.headers || undefined);
 
       try {
-        var data = yield _this.graphQLClient.request(options.document, options.variables);
+        var _data = yield _this.graphQLClient.request(options.document, options.variables);
+
+        if (typeof _this.responseInterceptor === 'function') {
+          yield _this.responseInterceptor(_data);
+        }
+
         return {
-          data: data
+          data: _data
         };
       } catch (error) {
+        if (typeof _this.errorInterceptor === 'function') {
+          yield _this.errorInterceptor(error);
+        }
+
         var status = error.response && error.response.status ? error.response.status : undefined;
         return {
           error,
@@ -41,4 +66,4 @@ class ClientImpl {
 
 }
 
-exports.ClientImpl = ClientImpl;
+exports.Client = Client;

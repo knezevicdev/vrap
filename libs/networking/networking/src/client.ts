@@ -1,10 +1,12 @@
 import { GraphQLClient } from 'graphql-request';
 
 import {
-  Client,
+  ClientDef,
   GQLRequestOptions,
   GQLRequestVariables,
   Response,
+  ResponseErrorInterceptor,
+  ResponseSuccessInterceptor,
 } from './types';
 
 export interface ClientImplOptions {
@@ -12,13 +14,33 @@ export interface ClientImplOptions {
   timeout?: number; // milliseconds
 }
 
-export class ClientImpl implements Client {
+export class Client implements ClientDef {
   private readonly graphQLClient: GraphQLClient;
+
+  private errorInterceptor?: ResponseErrorInterceptor;
+  private successInterceptor?: ResponseSuccessInterceptor;
 
   constructor(options: ClientImplOptions) {
     this.graphQLClient = new GraphQLClient(options.endpoint, {
       timeout: options.timeout,
     });
+  }
+
+  /**
+   * Allow to intercept data or error to perform others actions
+   * @param errorInterceptor function it will receive the error object
+   * @param successInterceptor optional Function
+   */
+  addResponseInterceptor(
+    errorInterceptor?: ResponseErrorInterceptor,
+    successInterceptor?: ResponseSuccessInterceptor
+  ): void {
+    if (errorInterceptor) {
+      this.errorInterceptor = errorInterceptor;
+    }
+    if (successInterceptor) {
+      this.successInterceptor = successInterceptor;
+    }
   }
 
   async gqlRequest<D = unknown, V = GQLRequestVariables>(
@@ -30,6 +52,13 @@ export class ClientImpl implements Client {
         options.document,
         options.variables
       );
+
+      if (this.successInterceptor) {
+        await this.successInterceptor({
+          data: data as D,
+        });
+      }
+
       return {
         data: data as D,
       };
@@ -38,6 +67,14 @@ export class ClientImpl implements Client {
         error.response && error.response.status
           ? error.response.status
           : undefined;
+
+      if (this.errorInterceptor) {
+        await this.errorInterceptor({
+          error,
+          status,
+        });
+      }
+
       return {
         error,
         status,

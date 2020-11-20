@@ -5,9 +5,9 @@
 import { createServer, RequestListener, Server } from 'http';
 import url from 'url';
 
-import { ClientImpl } from './client';
+import { Client } from './client';
 import { isErrorResponse, isSuccessResponse } from './typeguards';
-
+import { ErrorResponse } from './types';
 const serverSuccessPayload = {
   data: {
     version: 1,
@@ -101,11 +101,11 @@ describe('network behavior is handled correctly', () => {
 
   test('handles invalid endpoint correctly', async () => {
     const unusedPort = 1337;
-    const clientImpl = new ClientImpl({
+    const client = new Client({
       endpoint: `http://localhost:${unusedPort}`,
       timeout: 1000,
     });
-    const res = await clientImpl.gqlRequest({
+    const res = await client.gqlRequest({
       document,
       variables,
     });
@@ -116,11 +116,11 @@ describe('network behavior is handled correctly', () => {
   });
 
   test('success responses are handled correctly', async () => {
-    const clientImpl = new ClientImpl({
+    const client = new Client({
       endpoint: `${endpointBase}/200`,
       timeout: 1000,
     });
-    const res = await clientImpl.gqlRequest<{ version: number }>({
+    const res = await client.gqlRequest<{ version: number }>({
       document,
       variables,
     });
@@ -131,11 +131,11 @@ describe('network behavior is handled correctly', () => {
   });
 
   test('sneaky 200OK error responses are handled correctly', async () => {
-    const clientImpl = new ClientImpl({
+    const client = new Client({
       endpoint: `${endpointBase}/200-error`,
       timeout: 1000,
     });
-    const res = await clientImpl.gqlRequest({
+    const res = await client.gqlRequest({
       document,
       variables,
     });
@@ -146,11 +146,11 @@ describe('network behavior is handled correctly', () => {
   });
 
   test('400 responses are handled correctly', async () => {
-    const clientImpl = new ClientImpl({
+    const client = new Client({
       endpoint: `${endpointBase}/400`,
       timeout: 1000,
     });
-    const res = await clientImpl.gqlRequest({
+    const res = await client.gqlRequest({
       document,
       variables,
     });
@@ -161,11 +161,11 @@ describe('network behavior is handled correctly', () => {
   });
 
   test('401 responses are handled correctly', async () => {
-    const clientImpl = new ClientImpl({
+    const client = new Client({
       endpoint: `${endpointBase}/401`,
       timeout: 1000,
     });
-    const res = await clientImpl.gqlRequest({
+    const res = await client.gqlRequest({
       document,
       variables,
     });
@@ -176,11 +176,11 @@ describe('network behavior is handled correctly', () => {
   });
 
   test('500 responses are handled correctly', async () => {
-    const clientImpl = new ClientImpl({
+    const client = new Client({
       endpoint: `${endpointBase}/500`,
       timeout: 1000,
     });
-    const res = await clientImpl.gqlRequest({
+    const res = await client.gqlRequest({
       document,
       variables,
     });
@@ -191,11 +191,11 @@ describe('network behavior is handled correctly', () => {
   });
 
   test('long server responses trigger a timeout', async () => {
-    const clientImpl = new ClientImpl({
+    const client = new Client({
       endpoint: `${endpointBase}/timeout`,
       timeout: 1000, // lower than what the response will take.
     });
-    const res = await clientImpl.gqlRequest({
+    const res = await client.gqlRequest({
       document,
       variables,
     });
@@ -206,14 +206,14 @@ describe('network behavior is handled correctly', () => {
   });
 
   test('headers are sent correctly', async () => {
-    const clientImpl = new ClientImpl({
+    const client = new Client({
       endpoint: `${endpointBase}/headers`,
       timeout: 1000,
     });
     const headers = {
       'x-test': 'TestHeader',
     };
-    const res = await clientImpl.gqlRequest<{
+    const res = await client.gqlRequest<{
       xTestHeaderDefined: boolean;
     }>({
       document,
@@ -224,5 +224,65 @@ describe('network behavior is handled correctly', () => {
       fail();
     }
     expect(res.data.xTestHeaderDefined).toBeTruthy();
+  });
+
+  test('executing interceptor error', async () => {
+    const interceptorCallback = (error: ErrorResponse): Promise<void> => {
+      expect(error.status).toBe(401);
+      return Promise.resolve();
+    };
+
+    const interceptorErrorMock = jest.fn(interceptorCallback);
+    const interceptorSuccessMock = jest.fn();
+
+    const client = new Client({
+      endpoint: `${endpointBase}/401`,
+      timeout: 1000,
+    });
+
+    client.addResponseInterceptor(interceptorErrorMock, interceptorSuccessMock);
+
+    const res = await client.gqlRequest<{
+      xTestHeaderDefined: boolean;
+    }>({
+      document,
+      variables,
+    });
+
+    if (!isErrorResponse(res)) {
+      fail();
+    }
+
+    expect(interceptorSuccessMock).toHaveBeenCalledTimes(0);
+    expect(interceptorErrorMock).toBeCalled();
+    expect(res.status).toEqual(401);
+  });
+
+  test('executing interceptor success', async () => {
+    const interceptorCallback = (successResponse: any): Promise<void> => {
+      expect(successResponse.data.version).toBe(1);
+      return Promise.resolve();
+    };
+
+    const interceptorErrorMock = jest.fn();
+    const interceptorSuccessMock = jest.fn(interceptorCallback);
+
+    const client = new Client({
+      endpoint: `${endpointBase}/200`,
+      timeout: 1000,
+    });
+    client.addResponseInterceptor(interceptorErrorMock, interceptorSuccessMock);
+
+    const res = await client.gqlRequest<{ version: number }>({
+      document,
+      variables,
+    });
+
+    if (!isSuccessResponse(res)) {
+      fail();
+    }
+    expect(interceptorSuccessMock).toBeCalled();
+    expect(interceptorErrorMock).toHaveBeenCalledTimes(0);
+    expect(res.data.version).toEqual(1);
   });
 });
