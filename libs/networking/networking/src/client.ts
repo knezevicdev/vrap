@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/explicit-function-return-type */
 import { GraphQLClient } from 'graphql-request';
 
 import {
@@ -35,7 +34,7 @@ export class Client implements ClientDef {
   addResponseInterceptor(
     errorInterceptor?: ResponseErrorInterceptor,
     successInterceptor?: ResponseSuccessInterceptor
-  ) {
+  ): void {
     if (errorInterceptor) {
       this.errorInterceptor = errorInterceptor;
     }
