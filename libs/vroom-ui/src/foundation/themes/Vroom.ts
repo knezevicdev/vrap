@@ -2,7 +2,7 @@ import { createGlobalStyle, css } from 'styled-components';
 
 import { ThemeProps } from './types';
 
-export const getTheme = (fontPath: string): ThemeProps => {
+export const getVroomTheme = (fontPath: string): ThemeProps => {
   return {
     typography: {
       family: {

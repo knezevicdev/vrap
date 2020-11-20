@@ -1,6 +1,6 @@
 import {addDecorator} from '@storybook/react';
 import React from 'react';
-import {GlobalStyle, getTheme} from "../src/foundation/themes/Vroom";
+import {GlobalStyle, getVroomTheme} from "../src/foundation/themes/Vroom";
 import {ThemeProvider} from "styled-components";
 
 export const parameters = {
@@ -8,7 +8,7 @@ export const parameters = {
 }
 
 function withGlobalStyles(storyFn) {
-    const theme = getTheme('/assets/fonts/Vroom');
+    const theme = getVroomTheme('/assets/fonts/Vroom');
     return (
         <ThemeProvider theme={theme}>
             <GlobalStyle/>
