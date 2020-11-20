@@ -1,11 +1,8 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
 
-import {
-  addStyleForMobile,
-  addStyleForTablet,
-  ThemeProps,
-} from './themes/Vroom';
+import { ThemeProps } from './themes/types';
+import { addStyleForMobile, addStyleForTablet } from './themes/Vroom';
 
 interface Props {
   theme: ThemeProps;

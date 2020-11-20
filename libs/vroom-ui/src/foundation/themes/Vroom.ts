@@ -1,21 +1,10 @@
-import { createGlobalStyle, css } from 'styled-components';
+import {
+  createGlobalStyle,
+  css,
+  FlattenInterpolation,
+} from 'styled-components';
 
-export interface ThemeProps {
-  typography: {
-    family: {
-      heading: string;
-      title: string;
-      body: string;
-    };
-    color: string;
-    path: string;
-  };
-  colors: {
-    [name: string]: {
-      [name: string]: string;
-    };
-  };
-}
+import { ThemeProps } from './types';
 
 export const getTheme = (fontPath: string): ThemeProps => {
   return {
@@ -52,7 +41,9 @@ export const getTheme = (fontPath: string): ThemeProps => {
   };
 };
 
-export const addStyleForMobile = (injectedCss: string) => {
+export const addStyleForMobile = (
+  injectedCss: string
+): FlattenInterpolation<ThemeProps> => {
   return css`
     @media (max-width: 599px) {
       ${injectedCss}
@@ -60,7 +51,9 @@ export const addStyleForMobile = (injectedCss: string) => {
   `;
 };
 
-export const addStyleForTablet = (injectedCss: string) => {
+export const addStyleForTablet = (
+  injectedCss: string
+): FlattenInterpolation<ThemeProps> => {
   return css`
     @media (min-width: 600px) and (max-width: 959px) {
       ${injectedCss}
@@ -68,7 +61,9 @@ export const addStyleForTablet = (injectedCss: string) => {
   `;
 };
 
-export const addStyleForDesktop = (injectedCss: string) => {
+export const addStyleForDesktop = (
+  injectedCss: string
+): FlattenInterpolation<ThemeProps> => {
   return css`
     @media (min-width: 960px) {
       ${injectedCss}
