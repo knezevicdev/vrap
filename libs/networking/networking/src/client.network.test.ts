@@ -7,7 +7,7 @@ import url from 'url';
 
 import { Client } from './client';
 import { isErrorResponse, isSuccessResponse } from './typeguards';
-
+import { ErrorResponse } from './types';
 const serverSuccessPayload = {
   data: {
     version: 1,
@@ -227,7 +227,12 @@ describe('network behavior is handled correctly', () => {
   });
 
   test('executing interceptor error', async () => {
-    const interceptorErrorMock = jest.fn();
+    const interceptorCallback = (error: ErrorResponse): Promise<void> => {
+      expect(error.status).toBe(401);
+      return Promise.resolve();
+    };
+
+    const interceptorErrorMock = jest.fn(interceptorCallback);
     const interceptorSuccessMock = jest.fn();
 
     const client = new Client({
@@ -247,14 +252,20 @@ describe('network behavior is handled correctly', () => {
     if (!isErrorResponse(res)) {
       fail();
     }
+
     expect(interceptorSuccessMock).toHaveBeenCalledTimes(0);
     expect(interceptorErrorMock).toBeCalled();
     expect(res.status).toEqual(401);
   });
 
   test('executing interceptor success', async () => {
+    const interceptorCallback = (successResponse: any): Promise<void> => {
+      expect(successResponse.data.version).toBe(1);
+      return Promise.resolve();
+    };
+
     const interceptorErrorMock = jest.fn();
-    const interceptorSuccessMock = jest.fn();
+    const interceptorSuccessMock = jest.fn(interceptorCallback);
 
     const client = new Client({
       endpoint: `${endpointBase}/200`,

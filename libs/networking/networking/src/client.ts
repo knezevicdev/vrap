@@ -55,7 +55,9 @@ export class Client implements ClientDef {
       );
 
       if (this.responseInterceptor) {
-        await this.responseInterceptor(data);
+        await this.responseInterceptor({
+          data: data as D,
+        });
       }
 
       return {
