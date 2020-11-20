@@ -22,7 +22,7 @@ const Items = styled.div`
   }
 
   @media (max-width: 599px) {
-    margin-left: 24px;
+    padding-left: 24px;
   }
 `;
 

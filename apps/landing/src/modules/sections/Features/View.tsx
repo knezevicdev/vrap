@@ -37,6 +37,10 @@ const CustomTable = styled(Table)`
   @media (min-width: 600px) and (max-width: 839px) {
     margin: 0px 64px;
   }
+
+  @media (max-width: 599px) {
+    margin-left: 16px;
+  }
 `;
 
 const HeaderWrapper = styled.thead`
@@ -88,6 +92,10 @@ const BodyWrapper = styled.tbody`
     td:not(:last-child) {
       box-shadow: 1px 0 0 0 #f5f5f5;
     }
+  }
+
+  td {
+    line-height: 25px;
   }
 `;
 
