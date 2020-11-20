@@ -75,6 +75,7 @@ export const getServerSideProps: GetServerSideProps<Props> = async (
   const slugArray = slug.split('-');
   const vin = slugArray[slugArray.length - 1];
 
+  context.res.setHeader('Cache-Control', '');
   const brand = determineWhitelabel(context);
 
   const initialState = await getInitialInventoryStoreState(vin);

@@ -237,7 +237,11 @@ class CarCardViewModel {
   };
 
   showTestDrive = (): boolean => {
-    return !this.showSalePending() && this.zoneAllowsTestDrive(this.car.zone);
+    return (
+      !this.showSalePending() &&
+      !this.showAvailableSoon() &&
+      this.zoneAllowsTestDrive(this.car.zone)
+    );
   };
 
   getPhotoStyle = (): { opacity: string } => {

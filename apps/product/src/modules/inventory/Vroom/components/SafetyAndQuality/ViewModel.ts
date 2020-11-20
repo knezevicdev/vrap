@@ -1,10 +1,16 @@
 import { Car } from '@vroom-web/inv-search-networking';
 
-import { InventoryStore } from 'src/modules/inventory/store';
+import { GallerySelections, InventoryStore } from 'src/modules/inventory/store';
 
 interface Repair {
   title: string;
   repairs: string[];
+}
+
+interface Imperfections {
+  description: string[];
+  linkText: string;
+  quantity: number;
 }
 
 interface SafetyAndQuality {
@@ -23,11 +29,26 @@ interface Recall {
 
 class SafetyAndQualityModel {
   private car: Car;
-  constructor(store: InventoryStore) {
-    this.car = store.vehicle._source;
+  private store: InventoryStore;
+
+  constructor(inventoryStore: InventoryStore) {
+    this.store = inventoryStore;
+    this.car = inventoryStore.vehicle._source;
   }
 
   readonly title: string = 'Safety & Quality';
+
+  getImperfections = (): Imperfections => {
+    const numberOfImperfections = this.car.defectPhotos?.length || 0;
+    return {
+      quantity: numberOfImperfections,
+      description: [
+        '<bold>Any imperfections shown</bold> in the vehicle photos ',
+        '<bold>will not be repaired</bold> and are considered normal wear and tear.',
+      ],
+      linkText: `View (${numberOfImperfections}) Imperfection Photos`,
+    };
+  };
 
   readonly repair: Repair = {
     title: 'Here’s what to expect from a Vroom vehicle:',
@@ -66,6 +87,12 @@ class SafetyAndQualityModel {
       url2:
         'https://vroom.zendesk.com/hc/en-us/articles/115005333003-What-is-a-safety-recall',
     };
+  };
+
+  handleShowDefectGallery = (event: React.ChangeEvent<{}>): void => {
+    event.preventDefault();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    this.store.changeSelectedGallery(GallerySelections.DEFECTS);
   };
 }
 
