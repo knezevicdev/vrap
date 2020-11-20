@@ -1,7 +1,11 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
 
-import { ThemeProps } from './themes/Vroom';
+import {
+  addStyleForMobile,
+  addStyleForTablet,
+  ThemeProps,
+} from './themes/Vroom';
 
 interface Props {
   theme: ThemeProps;
@@ -42,15 +46,15 @@ const Heading1 = styled.h1`
   font-size: 62px;
   line-height: 72px;
 
-  @media (min-width: 600px) and (max-width: 959px) {
+  ${addStyleForTablet(`
     font-size: 42px;
     line-height: 64px;
-  }
+  `)}
 
-  @media (max-width: 599px) {
+  ${addStyleForMobile(`
     font-size: 36px;
     line-height: 40px;
-  }
+  `)}
 `;
 
 const Heading2 = styled.h2`
@@ -58,10 +62,10 @@ const Heading2 = styled.h2`
   font-size: 42px;
   line-height: 64px;
 
-  @media (max-width: 599px) {
+  ${addStyleForMobile(`
     font-size: 36px;
     line-height: 40px;
-  }
+  `)}
 `;
 
 const Heading3 = styled.h3`

@@ -1,4 +1,4 @@
-import { createGlobalStyle } from 'styled-components';
+import { createGlobalStyle, css } from 'styled-components';
 
 export interface ThemeProps {
   typography: {
@@ -50,6 +50,30 @@ export const getTheme = (fontPath: string): ThemeProps => {
       },
     },
   };
+};
+
+export const addStyleForMobile = (injectedCss: string) => {
+  return css`
+    @media (max-width: 599px) {
+      ${injectedCss}
+    }
+  `;
+};
+
+export const addStyleForTablet = (injectedCss: string) => {
+  return css`
+    @media (min-width: 600px) and (max-width: 959px) {
+      ${injectedCss}
+    }
+  `;
+};
+
+export const addStyleForDesktop = (injectedCss: string) => {
+  return css`
+    @media (min-width: 960px) {
+      ${injectedCss}
+    }
+  `;
 };
 
 const path = ({ theme: { typography } }: { theme: ThemeProps }): string =>
