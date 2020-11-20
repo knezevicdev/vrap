@@ -34,7 +34,7 @@ export interface ClientDef {
     options: GQLRequestOptions<V>
   ) => Promise<Response<D>>;
   addResponseInterceptor: (
-    errorInterceptor: ResponseErrorInterceptor,
+    errorInterceptor?: ResponseErrorInterceptor,
     responseInterceptor?: ResponseSuccessInterceptor
   ) => void;
 }
