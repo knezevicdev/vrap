@@ -6,6 +6,8 @@ import {
   GQLRequestOptions,
   GQLRequestVariables,
   Response,
+  ResponseErrorInterceptor,
+  ResponseSuccessInterceptor,
 } from './types';
 
 export interface ClientImplOptions {
@@ -16,8 +18,8 @@ export interface ClientImplOptions {
 export class Client implements ClientDef {
   private readonly graphQLClient: GraphQLClient;
 
-  private responseInterceptor: unknown;
-  private errorInterceptor: unknown;
+  private errorInterceptor?: ResponseErrorInterceptor;
+  private responseInterceptor?: ResponseSuccessInterceptor;
 
   constructor(options: ClientImplOptions) {
     this.graphQLClient = new GraphQLClient(options.endpoint, {
@@ -31,13 +33,13 @@ export class Client implements ClientDef {
    * @param responseInterceptor optional Function
    */
   addResponseInterceptor(
-    errorInterceptor: (error: unknown) => void,
-    responseInterceptor?: (data: unknown) => void
+    errorInterceptor?: ResponseErrorInterceptor,
+    responseInterceptor?: ResponseSuccessInterceptor
   ) {
-    if (typeof errorInterceptor === 'function') {
+    if (errorInterceptor) {
       this.errorInterceptor = errorInterceptor;
     }
-    if (typeof responseInterceptor === 'function') {
+    if (responseInterceptor) {
       this.responseInterceptor = responseInterceptor;
     }
   }
@@ -52,7 +54,7 @@ export class Client implements ClientDef {
         options.variables
       );
 
-      if (typeof this.responseInterceptor === 'function') {
+      if (this.responseInterceptor) {
         await this.responseInterceptor(data);
       }
 
@@ -60,14 +62,18 @@ export class Client implements ClientDef {
         data: data as D,
       };
     } catch (error) {
-      if (typeof this.errorInterceptor === 'function') {
-        await this.errorInterceptor(error);
-      }
-
       const status: number | undefined =
         error.response && error.response.status
           ? error.response.status
           : undefined;
+
+      if (this.errorInterceptor) {
+        await this.errorInterceptor({
+          error,
+          status,
+        });
+      }
+
       return {
         error,
         status,

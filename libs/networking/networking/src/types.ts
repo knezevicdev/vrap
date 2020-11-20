@@ -22,12 +22,19 @@ export interface ErrorResponse {
 
 export type Response<D> = SuccessResponse<D> | ErrorResponse;
 
+export type ResponseSuccessInterceptor<D = unknown> = (
+  successResponse: SuccessResponse<D>
+) => Promise<void>;
+export type ResponseErrorInterceptor = (
+  errorResponse: ErrorResponse
+) => Promise<void>;
+
 export interface ClientDef {
   gqlRequest: <D = unknown, V = GQLRequestVariables>(
     options: GQLRequestOptions<V>
   ) => Promise<Response<D>>;
   addResponseInterceptor: (
-    errorInterceptor: <D = unknown>(error: unknown) => Promise<Response<D>>,
-    responseInterceptor?: <D = unknown>(data: unknown) => Promise<Response<D>>
+    errorInterceptor: ResponseErrorInterceptor,
+    responseInterceptor?: ResponseSuccessInterceptor
   ) => void;
 }
