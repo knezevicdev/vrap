@@ -35,6 +35,6 @@ export interface ClientDef {
   ) => Promise<Response<D>>;
   addResponseInterceptor: (
     errorInterceptor?: ResponseErrorInterceptor,
-    responseInterceptor?: ResponseSuccessInterceptor
+    successInterceptor?: ResponseSuccessInterceptor
   ) => void;
 }

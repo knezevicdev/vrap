@@ -19,7 +19,7 @@ export class Client implements ClientDef {
   private readonly graphQLClient: GraphQLClient;
 
   private errorInterceptor?: ResponseErrorInterceptor;
-  private responseInterceptor?: ResponseSuccessInterceptor;
+  private successInterceptor?: ResponseSuccessInterceptor;
 
   constructor(options: ClientImplOptions) {
     this.graphQLClient = new GraphQLClient(options.endpoint, {
@@ -30,17 +30,17 @@ export class Client implements ClientDef {
   /**
    * Allow to intercept data or error to perform others actions
    * @param errorInterceptor function it will receive the error object
-   * @param responseInterceptor optional Function
+   * @param successInterceptor optional Function
    */
   addResponseInterceptor(
     errorInterceptor?: ResponseErrorInterceptor,
-    responseInterceptor?: ResponseSuccessInterceptor
+    successInterceptor?: ResponseSuccessInterceptor
   ) {
     if (errorInterceptor) {
       this.errorInterceptor = errorInterceptor;
     }
-    if (responseInterceptor) {
-      this.responseInterceptor = responseInterceptor;
+    if (successInterceptor) {
+      this.successInterceptor = successInterceptor;
     }
   }
 
@@ -54,8 +54,8 @@ export class Client implements ClientDef {
         options.variables
       );
 
-      if (this.responseInterceptor) {
-        await this.responseInterceptor({
+      if (this.successInterceptor) {
+        await this.successInterceptor({
           data: data as D,
         });
       }
