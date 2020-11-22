@@ -18,6 +18,7 @@ import FilterListIcon from '@material-ui/icons/FilterList';
 import { observer } from 'mobx-react';
 import React, { useEffect, useState } from 'react';
 
+import Autocomplete from './Autocomplete';
 import ViewModel from './ViewModel';
 
 interface Props {
@@ -28,7 +29,7 @@ const UsersView: React.FC<Props> = ({ viewModel }) => {
   const [anchorEl, setAnchorEl] = useState<
     null | (EventTarget & HTMLButtonElement)
   >(null);
-  const [carrierFilter, setCarrierFilter] = useState('');
+
   const [statusFilter, setStatusFilter] = useState('');
 
   useEffect(() => {
@@ -38,22 +39,19 @@ const UsersView: React.FC<Props> = ({ viewModel }) => {
   const handleClick = (
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ): void => setAnchorEl(event.currentTarget);
+
   const handleClose = (): void => setAnchorEl(null);
   const open = Boolean(anchorEl);
   const anchorId = open ? 'filter-popover' : undefined;
 
-  const handleCarrierFilterChange = (value: string): void => {
-    setCarrierFilter(value);
-    viewModel.getUsers(value, statusFilter);
-  };
-
   const handleStatusFilterChange = (value: string): void => {
     setStatusFilter(value);
-    viewModel.getUsers(carrierFilter, value);
+    viewModel.getUsers(value);
   };
 
   const { headers, rows } = viewModel.tableLayout;
 
+  // TODO: extract the filters to their own component / merge with autocomplete
   return (
     <Paper square>
       <Grid container alignItems="center">
@@ -76,24 +74,7 @@ const UsersView: React.FC<Props> = ({ viewModel }) => {
                   Filters
                 </Grid>
                 <Grid item xs={12}>
-                  <FormControl fullWidth>
-                    <InputLabel id="filter-carrier-label">Carrier</InputLabel>
-                    <Select
-                      labelId="filter-carrier-label"
-                      id="filter-carrier-select"
-                      value={carrierFilter}
-                      onChange={(event): void =>
-                        handleCarrierFilterChange(event.target.value as string)
-                      }
-                    >
-                      <MenuItem value={''}>--</MenuItem>
-                      {viewModel.carriers.map((i) => (
-                        <MenuItem key={i.carrierCode} value={i.carrierCode}>
-                          {i.carrier}
-                        </MenuItem>
-                      ))}
-                    </Select>
-                  </FormControl>
+                  <Autocomplete />
                 </Grid>
                 <Grid item xs={12}>
                   <FormControl fullWidth>

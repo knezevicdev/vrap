@@ -1,24 +1,23 @@
 import { makeAutoObservable, runInAction } from 'mobx';
 
 import { User } from 'src/networking/models/User';
-import { Networker, Status } from 'src/networking/Networker';
+import { getUsers, Status } from 'src/networking/Networker';
 
-export class UsersModel {
+class UsersModel {
   users: User[] = [];
   usersStatus: Status = Status.INITIAL;
 
-  private networker: Networker;
+  carrierCode?: string;
 
   constructor() {
-    this.networker = new Networker();
-    makeAutoObservable<this, 'networker'>(this, { networker: false });
+    makeAutoObservable(this);
   }
 
-  getUsers = async (carrier?: string, status?: string): Promise<void> => {
+  getUsers = async (status?: string): Promise<void> => {
     this.usersStatus = Status.FETCHING;
 
     try {
-      const response = await this.networker.getUsers(carrier, status);
+      const response = await getUsers(this.carrierCode, status);
 
       runInAction(() => {
         this.usersStatus = Status.SUCCESS;
@@ -29,6 +28,10 @@ export class UsersModel {
 
       this.usersStatus = Status.ERROR;
     }
+  };
+
+  setCarrierCode = (value: string): void => {
+    this.carrierCode = value;
   };
 }
 

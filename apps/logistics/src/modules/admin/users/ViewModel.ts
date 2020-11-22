@@ -38,24 +38,10 @@ class UsersViewModel {
     this.model = usersModel;
   }
 
-  getUsers(carrier?: string, status?: string): void {
+  getUsers(status?: string): void {
     if (this.model.usersStatus !== Status.FETCHING) {
-      this.model.getUsers(carrier, status);
+      this.model.getUsers(status);
     }
-  }
-
-  // TODO: use real endpoint
-  get carriers(): { carrier: string; carrierCode: string }[] {
-    return [
-      {
-        carrier: 'Acertus',
-        carrierCode: 'C157',
-      },
-      {
-        carrier: 'Advantage Transport LLC',
-        carrierCode: 'C187',
-      },
-    ];
   }
 
   // TODO: use real endpoint
@@ -101,12 +87,13 @@ class UsersViewModel {
         },
       ],
       rows: this.model.users.map((i) => ({
-        id: i.carrier_user_id,
+        id: i.portal_user_id,
         data: {
           [Accessor.firstName]: i.first_name,
           [Accessor.lastName]: i.last_name,
           [Accessor.email]: i.username,
-          [Accessor.carrier]: i.carrier,
+          // TODO: fix this at the api level
+          [Accessor.carrier]: i.carrier?.carrier ?? '',
           [Accessor.status]: i.status,
         },
       })),

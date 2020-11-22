@@ -10,11 +10,12 @@ export default async function handler(
   const carrier = req.query.carrier as string;
   const status = req.query.status as string;
 
-  const SHIPPING_PORTAL_URL = 'https://shipping-portal-int.vroomapi.com/v2';
-  const url = `${SHIPPING_PORTAL_URL}/shipping/users?${qs.stringify({
-    carrier,
-    status,
-  })}`;
+  const url = `${process.env.SHIPPING_PORTAL_URL}/shipping/users?${qs.stringify(
+    {
+      carrier,
+      status,
+    }
+  )}`;
 
   const response = await axios.get(url, {
     auth: { username: 'user', password: 'password' },
