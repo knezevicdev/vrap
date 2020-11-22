@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import Icon, { Icons as IconName } from '../../elements/Icon/Icon';
 
 export default {
-  title: 'DesignSystem/Elements/Icons',
+  title: 'Design System/Elements/Icons',
 } as Meta;
 
 export const Icons: Story = () => {
