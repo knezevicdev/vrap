@@ -1,14 +1,15 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 /* eslint-disable no-nested-ternary */
 
-import { Brand, ThemeProvider } from '@vroom-web/ui';
+import { ThemeProvider } from '@vroom-web/ui';
+import { Brand, determineWhitelabel } from '@vroom-web/whitelabel';
 import { GetServerSideProps, GetServerSidePropsContext, NextPage } from 'next';
 import React from 'react';
 
 import Home from 'src/modules/home';
 import { HomeStore, HomeStoreContext } from 'src/modules/home/store';
 import Page from 'src/Page';
-import { determineWhitelabel, returnBrandConfig } from 'src/utils/utils';
+import { returnBrandConfig } from 'src/utils/utils';
 
 interface Props {
   brand: Brand;

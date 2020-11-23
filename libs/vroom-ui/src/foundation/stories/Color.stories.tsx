@@ -90,7 +90,7 @@ export const Color: Story = () => {
 };
 
 export default {
-  title: 'DesignSystem/Foundation/Color',
+  title: 'Design System/Foundation/Color',
 } as Meta;
 
 const Section = styled(Body.Regular)`

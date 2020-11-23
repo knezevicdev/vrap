@@ -40,7 +40,7 @@ export const Typography: Story = () => {
 };
 
 export default {
-  title: 'DesignSystem/Foundation/Typography',
+  title: 'Design System/Foundation/Typography',
 } as Meta;
 
 const Section = styled(Body.Regular)`
