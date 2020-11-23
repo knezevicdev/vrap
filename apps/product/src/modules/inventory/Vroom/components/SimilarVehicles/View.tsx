@@ -92,7 +92,6 @@ interface Props {
 }
 
 const SimilarVehiclesView: React.FC<Props> = ({ viewModel }) => {
-  console.log(viewModel.getSimilarClusterCount());
   return (
     <SimilarVehiclesContainer>
       <SimilarVehiclesContainerContent>
