@@ -5,7 +5,6 @@ import UsersModel from '../Model';
 import View from './View';
 import ViewModel from './ViewModel';
 
-// TODO: Make table and filters siblings
 const Users: React.FC = () => (
   <UsersContext.Consumer>
     {(model: UsersModel): JSX.Element => {

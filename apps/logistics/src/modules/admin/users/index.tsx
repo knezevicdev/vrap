@@ -2,10 +2,19 @@ import React, { createContext } from 'react';
 
 import UsersModel from './Model';
 import View from './View';
+import ViewModel from './ViewModel';
 
 export const UsersContext = createContext<UsersModel>(new UsersModel());
 
-// TODO: Make table and filters siblings
-const Users: React.FC = () => <View />;
+const Users: React.FC = () => {
+  return (
+    <UsersContext.Consumer>
+      {(model: UsersModel): JSX.Element => {
+        const viewModel = new ViewModel(model);
+        return <View viewModel={viewModel} />;
+      }}
+    </UsersContext.Consumer>
+  );
+};
 
 export default Users;

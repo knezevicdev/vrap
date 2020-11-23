@@ -1,7 +1,7 @@
 import { makeAutoObservable, runInAction } from 'mobx';
 
 import { Carrier, User } from 'src/networking/models/User';
-import { getUsers, Status } from 'src/networking/Networker';
+import { getUsers, getUserStatuses, Status } from 'src/networking/Networker';
 
 class UsersModel {
   users: User[] = [];
@@ -9,6 +9,8 @@ class UsersModel {
 
   carrierFilter?: Carrier;
   statusFilter?: string;
+  statusOptions: string[] = [];
+  statusOptionsStatus: Status = Status.INITIAL;
 
   constructor() {
     makeAutoObservable(this);
@@ -31,6 +33,22 @@ class UsersModel {
       console.error(err);
 
       this.usersStatus = Status.ERROR;
+    }
+  };
+
+  // statuses to assign to / filter a user
+  getUserStatuses = async (): Promise<void> => {
+    this.statusOptionsStatus = Status.FETCHING;
+    try {
+      const response = await getUserStatuses();
+
+      runInAction(() => {
+        this.statusOptionsStatus = Status.SUCCESS;
+        this.statusOptions = response.data;
+      });
+    } catch (err) {
+      console.error(err);
+      this.statusOptionsStatus = Status.ERROR;
     }
   };
 

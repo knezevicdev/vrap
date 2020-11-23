@@ -1,12 +1,21 @@
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import Filters from './Filters';
 import Table from './Table';
+import ViewModel from './ViewModel';
 
-const UsersView: React.FC = () => {
+interface Props {
+  viewModel: ViewModel;
+}
+
+const UsersView: React.FC<Props> = ({ viewModel }) => {
+  useEffect(() => {
+    viewModel.getUserStatuses();
+  }, [viewModel]);
+
   return (
     <Paper square>
       <Grid container alignItems="center">

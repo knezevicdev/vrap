@@ -1,33 +1,25 @@
-import UserStatusModel from './Model';
-
 import UsersModel from 'src/modules/admin/users/Model';
 
 class UserStatusViewModel {
-  private model: UserStatusModel;
   private usersModel: UsersModel;
 
-  constructor(userStatusModel: UserStatusModel, usersModel: UsersModel) {
-    this.model = userStatusModel;
+  constructor(usersModel: UsersModel) {
     this.usersModel = usersModel;
   }
 
-  getUserStatuses(): void {
-    this.model.getUserStatuses();
-  }
-
   get options(): { key: string; label: string }[] {
-    return this.model.options.map((i) => ({
-      key: i,
-      label: `${i.charAt(0).toUpperCase()}${i.slice(1)}`,
-    }));
+    if (this.usersModel.statusOptions.length > 0) {
+      return this.usersModel.statusOptions.map((i) => ({
+        key: i,
+        label: `${i.charAt(0).toUpperCase()}${i.slice(1)}`,
+      }));
+    } else {
+      return [];
+    }
   }
 
-  get value(): string {
+  get storedValue(): string {
     return this.usersModel.statusFilter || '';
-  }
-
-  setValue(value: string): void {
-    this.model.setValue(value);
   }
 
   setStatusFilterAndFilter(value: string): void {
