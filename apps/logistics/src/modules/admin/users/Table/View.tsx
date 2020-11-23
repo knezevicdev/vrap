@@ -11,6 +11,7 @@ import TableRow from '@material-ui/core/TableRow';
 import { observer } from 'mobx-react';
 import React, { useEffect } from 'react';
 
+import Autocomplete from './Carrier';
 import ViewModel, { Accessor } from './ViewModel';
 
 interface Props {
@@ -18,15 +19,13 @@ interface Props {
 }
 
 const UsersView: React.FC<Props> = ({ viewModel }) => {
-  // const [value, setValue] = useState<{ [number]: string }>({}); // useState(viewModel.storedValue);
+  useEffect(() => {
+    viewModel.getUsers();
+  }, [viewModel]);
 
   const handleChange = (id: number, value: string): void => {
     viewModel.patchUser(id, value);
   };
-
-  useEffect(() => {
-    viewModel.getUsers();
-  }, [viewModel]);
 
   const { headers, rows } = viewModel.tableLayout;
 
@@ -48,7 +47,12 @@ const UsersView: React.FC<Props> = ({ viewModel }) => {
               <TableCell align="left">{row.data[Accessor.firstName]}</TableCell>
               <TableCell align="left">{row.data[Accessor.lastName]}</TableCell>
               <TableCell align="left">{row.data[Accessor.email]}</TableCell>
-              <TableCell align="left">{row.data[Accessor.carrier]}</TableCell>
+              <TableCell align="left">
+                <Autocomplete
+                  userId={row.id}
+                  carrierName={row.data[Accessor.carrier]}
+                />
+              </TableCell>
               <TableCell align="left">
                 {viewModel.statusOptions.length > 0 && (
                   <FormControl fullWidth>

@@ -90,7 +90,7 @@ class UsersViewModel {
     }
   }
 
-  patchUser(id: number, status?: string, carrierCode?: string) {
+  patchUser(id: number, status?: string, carrierCode?: string): void {
     this.model.patchUser(id, status, carrierCode);
   }
 }

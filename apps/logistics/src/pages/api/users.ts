@@ -25,13 +25,23 @@ export default async function handler(
   } else if (req.method === 'PATCH') {
     const id = req.body.id;
     const status = req.body.status;
+    const carrierCode = req.body.carrierCode;
+
+    const payload: { status?: string; carrier_code?: string } = {};
+    if (status) {
+      payload.status = status;
+    }
+    if (carrierCode) {
+      payload.carrier_code = carrierCode;
+    }
+
     const url = `${process.env.SHIPPING_PORTAL_URL}/shipping/users/${id}`;
     try {
       const body = {
         source: 'logistics portal',
         timestamp: new Date().toISOString(),
         version: '1.0',
-        payload: { status },
+        payload,
       };
       const response = await axios.patch(url, body, {
         auth: { username: 'user', password: 'password' },
