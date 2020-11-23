@@ -10,7 +10,6 @@ import {
 } from './types';
 
 export interface ClientImplOptions {
-  endpoint: string;
   timeout?: number; // milliseconds
 }
 
@@ -20,9 +19,9 @@ export class Client implements ClientDef {
   private errorInterceptor?: ResponseErrorInterceptor;
   private successInterceptor?: ResponseSuccessInterceptor;
 
-  constructor(options: ClientImplOptions) {
-    this.graphQLClient = new GraphQLClient(options.endpoint, {
-      timeout: options.timeout,
+  constructor(endpoint: string, options?: ClientImplOptions) {
+    this.graphQLClient = new GraphQLClient(endpoint, {
+      timeout: options && options.timeout,
     });
   }
 

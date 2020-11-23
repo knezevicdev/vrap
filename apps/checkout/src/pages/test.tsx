@@ -10,9 +10,7 @@ const TestPage: NextPage<Props> = ({ stuff }) => {
   console.log('stuff', stuff);
 
   const [client] = React.useState(
-    new Client({
-      endpoint: 'https://gearbox-dev-int.vroomapi.com/query-private',
-    })
+    new Client('https://gearbox-dev-int.vroomapi.com/query-private')
   );
   React.useEffect(() => {
     const doIt = async (): Promise<void> => {
@@ -30,9 +28,9 @@ export const getServerSideProps: GetServerSideProps<Props> = async (
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   _ctx: GetServerSidePropsContext
 ) => {
-  const client = new Client({
-    endpoint: 'https://gearbox-dev-int.vroomapi.com/query-private',
-  });
+  const client = new Client(
+    'https://gearbox-dev-int.vroomapi.com/query-private'
+  );
   const res = await client.gqlRequest({
     document: `query { version }`,
   });

@@ -20,10 +20,9 @@ const grayThree = (props: { theme: ThemeProps }): string =>
   props.theme.colors.gray.three;
 
 const base = css`
-  min-height: 48px !important;
-  max-height: 48px !important;
-  padding: 0 32px !important;
-
+  min-height: 48px;
+  max-height: 48px;
+  padding: 0 32px;
   border: none;
   cursor: pointer;
   width: max-content;

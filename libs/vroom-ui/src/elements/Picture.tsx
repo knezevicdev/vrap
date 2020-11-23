@@ -1,11 +1,11 @@
 import Observer from '@researchgate/react-intersection-observer';
-import clsx from 'clsx';
 import React, { HTMLAttributes } from 'react';
 import styled from 'styled-components';
 
 interface PicProps extends HTMLAttributes<HTMLPictureElement> {
   width: string;
   height: string;
+  isLoading?: boolean;
 }
 
 const Pic = styled.picture<PicProps>`
@@ -25,19 +25,23 @@ const Pic = styled.picture<PicProps>`
     }
   }
 
-  &.loading {
-    animation: shimmer 2s infinite;
-    background: linear-gradient(235deg, #eff1f3 4%, #e2e2e2 25%, #eff1f3 36%);
-    background-size: 1000px 100%;
-  }
+  ${(props): string | false | undefined =>
+    props.isLoading &&
+    `
+      animation: shimmer 2s infinite;
+      background: linear-gradient(235deg, #eff1f3 4%, #e2e2e2 25%, #eff1f3 36%);
+      background-size: 1000px 100%;
+    `}
 `;
 
 interface ImgProps extends HTMLAttributes<HTMLImageElement> {
+  loaded: boolean;
   objectFit?: string;
   objectPosition?: string;
 }
 
 const Img = styled.img<ImgProps>`
+  display: ${(props): string => (props.loaded ? 'flex' : 'none')};
   position: absolute;
   top: 0;
   left: 0;
@@ -166,16 +170,9 @@ export class Picture extends React.Component<PictureProps, PictureState> {
   }
 
   render(): React.ReactNode {
-    const {
-      alt,
-      className,
-      objectFit,
-      objectPosition,
-      onClick,
-      src,
-      width,
-    } = this.props;
+    const { alt, objectFit, objectPosition, onClick, src, width } = this.props;
 
+    const loading = this.state.intersecting && !this.state.loaded;
     const sanitizedWidth = this.onlyDigitsRegex.test(width)
       ? `${width}px`
       : width;
@@ -196,12 +193,7 @@ export class Picture extends React.Component<PictureProps, PictureState> {
         onChange={this.handleObserverChange}
       >
         <Pic
-          className={clsx(
-            {
-              loading: this.state.intersecting && !this.state.loaded,
-            },
-            className
-          )}
+          isLoading={loading}
           onClick={onClick}
           width={sanitizedWidth}
           height={sanitizedHeight}
@@ -212,6 +204,7 @@ export class Picture extends React.Component<PictureProps, PictureState> {
             objectFit={objectFit}
             objectPosition={objectPosition}
             onLoad={this.handleImageLoad}
+            loaded={this.state.loaded}
             src={this.state.intersecting ? src : undefined}
           />
         </Pic>
