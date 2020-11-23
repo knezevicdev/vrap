@@ -30,6 +30,8 @@ class SimilarVehiclesViewModel {
         soldStatus,
         vin,
         year,
+        vinClusterPrimary,
+        vinClusterSecondary,
       } = car;
       const name = `${year} ${make} ${model}`;
       const url = `/inventory/${makeSlug}-${modelSlug}-${year}-${vin}`;
@@ -47,6 +49,8 @@ class SimilarVehiclesViewModel {
         url,
         vin,
         year,
+        vinClusterPrimary,
+        vinClusterSecondary,
       };
     });
 

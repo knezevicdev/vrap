@@ -85,6 +85,8 @@ export type Car = {
   rearTrackWidth: number;
   spincarSpinUrl?: string | null;
   isAvailableToSell: boolean;
+  vinClusterPrimary: number | null;
+  vinClusterSecondary: number | null;
 };
 export const carSchema: yup.ObjectSchema<Car> = yup
   .object({
@@ -160,6 +162,8 @@ export const carSchema: yup.ObjectSchema<Car> = yup
     rearTrackWidth: yup.number().defined(),
     spincarSpinUrl: yup.string().nullable(),
     isAvailableToSell: yup.boolean().defined(),
+    vinClusterPrimary: yup.number().defined().nullable(),
+    vinClusterSecondary: yup.number().defined().nullable(),
   })
   .defined()
   .strict(true);

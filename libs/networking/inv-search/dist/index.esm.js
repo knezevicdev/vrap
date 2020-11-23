@@ -8389,7 +8389,9 @@ var carSchema = ObjectSchema({
   frontTrackWidth: NumberSchema().defined(),
   rearTrackWidth: NumberSchema().defined(),
   spincarSpinUrl: StringSchema().nullable(),
-  isAvailableToSell: boolean().defined()
+  isAvailableToSell: boolean().defined(),
+  vinClusterPrimary: NumberSchema().defined().nullable(),
+  vinClusterSecondary: NumberSchema().defined().nullable()
 }).defined().strict(true);
 var hitSchema = ObjectSchema({
   _source: carSchema

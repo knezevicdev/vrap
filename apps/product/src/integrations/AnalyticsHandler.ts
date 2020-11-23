@@ -23,6 +23,8 @@ export interface Product {
   spincarSpinUrl?: string | null;
   pendingDeal?: boolean;
   isAvailableToSell?: boolean;
+  vinClusterPrimary: number | null;
+  vinClusterSecondary: number | null;
 }
 
 class AnalyticsHandler extends BaseAnalyticsHandler {
