@@ -3,19 +3,20 @@ import { GetServerSideProps, GetServerSidePropsContext, NextPage } from 'next';
 import getConfig from 'next/config';
 import React from 'react';
 
-import { analyticsHandler } from 'src/integrations/AnalyticsHandler';
-import experimentSDK from 'src/integrations/experimentSDK';
-import Inventory from 'src/modules/inventory';
-import { BrandContext } from 'src/modules/inventory/BrandContext';
+// import { analyticsHandler } from 'src/integrations/AnalyticsHandler';
+// import experimentSDK from 'src/integrations/experimentSDK';
+// import Inventory from 'src/modules/inventory';
+// import { BrandContext } from 'src/modules/inventory/BrandContext';
 import {
   getInitialInventoryStoreState,
   InventoryStore,
   InventoryStoreContext,
   InventoryStoreState,
-} from 'src/modules/inventory/store';
-import { Status } from 'src/networking/types';
-import Page from 'src/Page';
-import { determineWhitelabel } from 'src/utils/utils';
+  Status,
+} from 'src/modules/inventory/store/store';
+// import { Status } from 'src/networking/types';
+// import Page from 'src/Page';
+// import { determineWhitelabel } from 'src/utils/utils';
 
 const { publicRuntimeConfig } = getConfig();
 
@@ -23,30 +24,30 @@ export interface Props {
   canonicalHref: string | null;
   initialState: InventoryStoreState;
   title: string;
-  brand: Brand;
+  // brand: Brand;
   vin: string;
 }
 
 const VinPage: NextPage<Props> = (props: Props) => {
-  const { canonicalHref, initialState, title, brand, vin } = props;
+  const { canonicalHref, initialState, title, vin } = props;
   const store = new InventoryStore(initialState);
 
-  React.useEffect(() => {
-    experimentSDK
-      .getAndLogExperimentClientSide('snd-pdp-vin-cluster-similar-vehicle')
-      .then((experiment) => {
-        if (!experiment) {
-          store.setSimilarStatus(initialState.similarStatus);
-          return;
-        }
-        analyticsHandler.registerExperiment(experiment);
-        if (experiment.assignedVariant === 0) {
-          store.setSimilarStatus(initialState.similarStatus);
-          return;
-        }
-        store.getSimilar(vin, true);
-      });
-  }, [initialState.similarStatus, store, vin]);
+  // React.useEffect(() => {
+  //   experimentSDK
+  //     .getAndLogExperimentClientSide('snd-pdp-vin-cluster-similar-vehicle')
+  //     .then((experiment) => {
+  //       if (!experiment) {
+  //         store.setSimilarStatus(initialState.similarStatus);
+  //         return;
+  //       }
+  //       analyticsHandler.registerExperiment(experiment);
+  //       if (experiment.assignedVariant === 0) {
+  //         store.setSimilarStatus(initialState.similarStatus);
+  //         return;
+  //       }
+  //       store.getSimilar(vin, true);
+  //     });
+  // }, [initialState.similarStatus, store, vin]);
 
   const head = (
     <>
@@ -55,14 +56,14 @@ const VinPage: NextPage<Props> = (props: Props) => {
     </>
   );
   return (
-    <ThemeProvider brand={brand}>
-      <Page brand={brand} name="Product Details" head={head}>
-        <BrandContext.Provider value={brand}>
-          <InventoryStoreContext.Provider value={store}>
-            <Inventory />
-          </InventoryStoreContext.Provider>
-        </BrandContext.Provider>
-      </Page>
+    <ThemeProvider brand={Brand.VROOM}>
+      {/* <Page brand={brand} name="Product Details" head={head}> */}
+      {/* <BrandContext.Provider value={brand}> */}
+      <InventoryStoreContext.Provider value={store}>
+        {/* <Inventory /> */}
+      </InventoryStoreContext.Provider>
+      {/* </BrandContext.Provider> */}
+      {/* </Page> */}
     </ThemeProvider>
   );
 };
@@ -76,7 +77,7 @@ export const getServerSideProps: GetServerSideProps<Props> = async (
   const vin = slugArray[slugArray.length - 1];
 
   context.res.setHeader('Cache-Control', '');
-  const brand = determineWhitelabel(context);
+  // const brand = determineWhitelabel(context);
 
   const initialState = await getInitialInventoryStoreState(vin);
   let canonicalHref: string | null = null;
@@ -120,7 +121,7 @@ export const getServerSideProps: GetServerSideProps<Props> = async (
     }
   }
 
-  return { props: { canonicalHref, initialState, title, brand, vin } };
+  return { props: { canonicalHref, initialState, title, vin } };
 };
 
 export default VinPage;
