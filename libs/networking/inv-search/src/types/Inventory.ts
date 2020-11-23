@@ -271,3 +271,16 @@ export const inventoryResponseSchema: yup.ObjectSchema<InventoryResponse> = yup
   })
   .defined()
   .strict(true);
+export type SimilarResponse = {
+  data: Data;
+  clusterCount: number;
+};
+export type SimilarInventoryResponse = {
+  data: Data;
+};
+export const similarInventoryResponseSchema: yup.ObjectSchema<SimilarInventoryResponse> = yup
+  .object({
+    data: dataSchema,
+  })
+  .defined()
+  .strict(true);

@@ -8427,8 +8427,11 @@ var dataSchema = ObjectSchema({
 var inventoryResponseSchema = ObjectSchema({
   data: dataSchema
 }).defined().strict(true);
+var similarInventoryResponseSchema = ObjectSchema({
+  data: dataSchema
+}).defined().strict(true);
 
-var getInventorySimilarResponseSchema = inventoryResponseSchema;
+var getInventorySimilarResponseSchema = similarInventoryResponseSchema;
 
 var dataSchema$1 = ObjectSchema({
   BodyType: ArraySchema(StringSchema().defined()).defined(),
@@ -8510,7 +8513,7 @@ var InvSearchNetworker = /*#__PURE__*/function () {
     key: "getInventorySimilar",
     value: function () {
       var _getInventorySimilar = asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee2(data) {
-        var url, response;
+        var url, response, count;
         return regenerator.wrap(function _callee2$(_context2) {
           while (1) {
             switch (_context2.prev = _context2.next) {
@@ -8521,13 +8524,17 @@ var InvSearchNetworker = /*#__PURE__*/function () {
 
               case 3:
                 response = _context2.sent;
-                _context2.next = 6;
+                count = response.headers['x-vcf'] ? response.headers['x-vcf'] : 0;
+                _context2.next = 7;
                 return getInventorySimilarResponseSchema.validate(response.data);
 
-              case 6:
-                return _context2.abrupt("return", response.data);
-
               case 7:
+                return _context2.abrupt("return", {
+                  data: response.data.data,
+                  clusterCount: count
+                });
+
+              case 8:
               case "end":
                 return _context2.stop();
             }

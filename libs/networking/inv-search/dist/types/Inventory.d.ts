@@ -126,3 +126,11 @@ export declare type InventoryResponse = {
     data: Data;
 };
 export declare const inventoryResponseSchema: yup.ObjectSchema<InventoryResponse>;
+export declare type SimilarResponse = {
+    data: Data;
+    clusterCount: number;
+};
+export declare type SimilarInventoryResponse = {
+    data: Data;
+};
+export declare const similarInventoryResponseSchema: yup.ObjectSchema<SimilarInventoryResponse>;

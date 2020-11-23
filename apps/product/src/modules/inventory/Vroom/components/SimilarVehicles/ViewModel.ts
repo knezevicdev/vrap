@@ -53,8 +53,8 @@ class SimilarVehiclesViewModel {
         vinClusterSecondary,
       };
     });
-
-    analyticsHandler.trackProductListViewed(products);
+    const clusterCount = this.getSimilarClusterCount();
+    analyticsHandler.trackProductListViewed(products, clusterCount);
   }
 
   loading(): boolean {
@@ -84,6 +84,10 @@ class SimilarVehiclesViewModel {
     } catch {
       return [];
     }
+  };
+
+  getSimilarClusterCount = (): number => {
+    return this.store.similarClusterCount;
   };
 
   handleClick(event: React.MouseEvent<HTMLButtonElement>): void {
