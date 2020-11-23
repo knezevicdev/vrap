@@ -20,7 +20,8 @@ import {
   PostInventoryRequestData,
   SoldStatus,
 } from '@vroom-web/inv-search-networking';
-import { Brand, ThemeProvider } from '@vroom-web/ui';
+import { ThemeProvider } from '@vroom-web/ui';
+import { Brand, determineWhitelabel } from '@vroom-web/whitelabel';
 import { GetServerSideProps, GetServerSidePropsContext, NextPage } from 'next';
 import getConfig from 'next/config';
 import { stringify } from 'qs';
@@ -41,7 +42,6 @@ import {
 } from 'src/modules/cars/store';
 import { Status } from 'src/networking/types';
 import Page from 'src/Page';
-import { determineWhitelabel } from 'src/utils/utils';
 const {
   publicRuntimeConfig: { INVSEARCH_V3_URL, NAME, VERSION },
 } = getConfig();
@@ -497,7 +497,6 @@ export const getServerSideProps: GetServerSideProps<Props> = async (
       utm_keyword,
       utm_subsource,
       utm_site,
-      brand,
     },
     {
       addQueryPrefix: false,

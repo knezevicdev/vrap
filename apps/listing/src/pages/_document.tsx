@@ -1,6 +1,7 @@
 import { ServerStyleSheets } from '@material-ui/core/styles';
 import { AnalyticsSnippet } from '@vroom-web/analytics-integration';
 import { Brand, UISnippet } from '@vroom-web/ui';
+import { determineWhitelabel } from '@vroom-web/whitelabel';
 import getConfig from 'next/config';
 import { AppType, Enhancer, RenderPage } from 'next/dist/next-server/lib/utils';
 import Document, {
@@ -12,8 +13,6 @@ import Document, {
   NextScript,
 } from 'next/document';
 import React from 'react';
-
-import { determineWhitelabel } from 'src/utils/utils';
 
 const { serverRuntimeConfig, publicRuntimeConfig } = getConfig();
 
