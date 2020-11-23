@@ -4,7 +4,7 @@ import React from 'react';
 import { Picture as PictureComponent } from '../Picture';
 
 export default {
-  title: 'DesignSystem/Elements/Picture',
+  title: 'Design System/Elements/Picture',
 } as Meta;
 
 export const Picture: Story = () => {

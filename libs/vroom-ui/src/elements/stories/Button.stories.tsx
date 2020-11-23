@@ -4,7 +4,7 @@ import React from 'react';
 import { Button } from '../Button';
 
 export default {
-  title: 'DesignSystem/Elements/Button',
+  title: 'Design System/Elements/Button',
 } as Meta;
 
 const onClick = (): void => {
