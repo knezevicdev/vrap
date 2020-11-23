@@ -15,7 +15,7 @@ import {
   Status,
 } from 'src/modules/inventory/store/store';
 // import { Status } from 'src/networking/types';
-// import Page from 'src/Page';
+import Page from 'src/modules/Page';
 // import { determineWhitelabel } from 'src/utils/utils';
 
 const { publicRuntimeConfig } = getConfig();
@@ -57,13 +57,13 @@ const VinPage: NextPage<Props> = (props: Props) => {
   );
   return (
     <ThemeProvider brand={Brand.VROOM}>
-      {/* <Page brand={brand} name="Product Details" head={head}> */}
-      {/* <BrandContext.Provider value={brand}> */}
-      <InventoryStoreContext.Provider value={store}>
-        <Inventory />
-      </InventoryStoreContext.Provider>
-      {/* </BrandContext.Provider> */}
-      {/* </Page> */}
+      <Page brand={Brand.VROOM} name="Product Details" head={head}>
+        {/* <BrandContext.Provider value={brand}> */}
+        <InventoryStoreContext.Provider value={store}>
+          <Inventory />
+        </InventoryStoreContext.Provider>
+        {/* </BrandContext.Provider> */}
+      </Page>
     </ThemeProvider>
   );
 };
