@@ -44,6 +44,11 @@ export const getCarriers = async (
   return axiosInstance.get(url);
 };
 
+export const getUserStatuses = async (): Promise<AxiosResponse<string[]>> => {
+  const url = `${SHIPPING_URL}/api/userStatus`;
+  return axiosInstance.get(url);
+};
+
 export const getTenderedShipments = async (): Promise<
   AxiosResponse<Shipment[]>
 > => axiosInstance.get(`${SHIPPING_URL}/api/shipments/tendered`);

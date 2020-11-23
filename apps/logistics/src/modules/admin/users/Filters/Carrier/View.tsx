@@ -14,14 +14,18 @@ interface Props {
 const AutocompleteView: React.FC<Props> = ({ viewModel }) => {
   const handleChange = (
     event: React.ChangeEvent<{}>,
-    value: Carrier | null
+    value: Carrier | string | null
   ): void => {
     event.preventDefault();
-    if (!value || typeof value === 'string') {
+    if (typeof value === 'string') {
       return;
     }
-    // pass value to viewModel which will then pass it to the users model to update the filters
-    viewModel.setCarrierCodeAndFilter(value.carrier_code);
+    if (value === null) {
+      viewModel.setInputValue('');
+      viewModel.setCarrierAndFilter(undefined);
+    } else {
+      viewModel.setCarrierAndFilter(value);
+    }
   };
 
   const handleInputChange = (value: string): void => {
@@ -34,9 +38,11 @@ const AutocompleteView: React.FC<Props> = ({ viewModel }) => {
       getOptionLabel={(option): string =>
         `${option.carrier_code} ${option.carrier}`
       }
+      freeSolo
       loading={viewModel.loading}
       onChange={handleChange}
       inputValue={viewModel.inputValue}
+      value={viewModel.value || null}
       renderInput={(params): JSX.Element => (
         <TextField
           {...params}

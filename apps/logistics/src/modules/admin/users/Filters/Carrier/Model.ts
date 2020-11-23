@@ -17,14 +17,12 @@ class AutocompleteModel {
   }
 
   setInputValue = (value: string): void => {
-    console.log('setInputValue', value);
     this.inputValue = value;
     this.afterSetInputValue(value);
   };
 
   private afterSetInputValue = debounce((value: string) => {
     if (value.length > 0) {
-      console.log('afterSetInputValue', value);
       this.getCarriers(value);
     } else {
       this.clearOptions();
@@ -39,7 +37,6 @@ class AutocompleteModel {
   getCarriers = async (filter: string): Promise<void> => {
     this.status = Status.FETCHING;
 
-    console.log('getCarriers', filter);
     try {
       const response = await getCarriers(filter);
 

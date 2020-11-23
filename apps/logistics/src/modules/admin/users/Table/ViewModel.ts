@@ -1,7 +1,6 @@
-import UsersModel from './Model';
+import UsersModel from '../Model';
 
 import { Status as UserStatus } from 'src/networking/models/User';
-import { Status } from 'src/networking/Networker';
 
 enum Accessor {
   firstName,
@@ -38,28 +37,8 @@ class UsersViewModel {
     this.model = usersModel;
   }
 
-  getUsers(status?: string): void {
-    if (this.model.usersStatus !== Status.FETCHING) {
-      this.model.getUsers(status);
-    }
-  }
-
-  // TODO: use real endpoint
-  get statuses(): { key: string; label: string }[] {
-    return [
-      {
-        key: 'pending',
-        label: 'Pending',
-      },
-      {
-        key: 'rejected',
-        label: 'Rejected',
-      },
-      {
-        key: 'approved',
-        label: 'Approved',
-      },
-    ];
+  getUsers(): void {
+    this.model.getUsers();
   }
 
   get tableLayout(): TableData {

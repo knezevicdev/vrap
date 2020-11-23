@@ -1,12 +1,12 @@
 import React from 'react';
 
-import { UsersContext } from '../index';
-import UsersModel from '../Model';
+import { UsersContext } from '../../index';
+import UsersModel from '../../Model';
 import Model from './Model';
 import View from './View';
 import ViewModel from './ViewModel';
 
-const Autocomplete: React.FC = () => {
+const UserStatus: React.FC = () => {
   return (
     <UsersContext.Consumer>
       {(usersModel: UsersModel): JSX.Element => {
@@ -18,4 +18,4 @@ const Autocomplete: React.FC = () => {
   );
 };
 
-export default Autocomplete;
+export default UserStatus;

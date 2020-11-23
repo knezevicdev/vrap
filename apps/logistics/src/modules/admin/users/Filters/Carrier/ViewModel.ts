@@ -1,6 +1,6 @@
-import UsersModel from '../Model';
 import AutocompleteModel from './Model';
 
+import UsersModel from 'src/modules/admin/users/Model';
 import { Carrier } from 'src/networking/models/User';
 import { Status } from 'src/networking/Networker';
 
@@ -11,6 +11,13 @@ class AutocompleteViewModel {
   constructor(autocompleteModel: AutocompleteModel, usersModel: UsersModel) {
     this.model = autocompleteModel;
     this.usersModel = usersModel;
+    if (usersModel.carrierFilter) {
+      this.model.setInputValue(usersModel.carrierFilter.carrier);
+    }
+  }
+
+  get value(): Carrier | undefined {
+    return this.usersModel.carrierFilter;
   }
 
   get inputValue(): string {
@@ -35,8 +42,8 @@ class AutocompleteViewModel {
     return [];
   }
 
-  setCarrierCodeAndFilter(carrierCode: string): void {
-    this.usersModel.setCarrierCode(carrierCode);
+  setCarrierAndFilter(carrier: Carrier | undefined): void {
+    this.usersModel.setCarrierFilter(carrier);
     this.usersModel.getUsers();
   }
 }
