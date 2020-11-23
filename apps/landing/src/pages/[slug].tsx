@@ -3,9 +3,9 @@ import { GetServerSideProps, GetServerSidePropsContext, NextPage } from 'next';
 import getConfig from 'next/config';
 import React from 'react';
 
+import Inventory from 'src/modules/inventory';
 // import { analyticsHandler } from 'src/integrations/AnalyticsHandler';
 // import experimentSDK from 'src/integrations/experimentSDK';
-// import Inventory from 'src/modules/inventory';
 // import { BrandContext } from 'src/modules/inventory/BrandContext';
 import {
   getInitialInventoryStoreState,
@@ -60,7 +60,7 @@ const VinPage: NextPage<Props> = (props: Props) => {
       {/* <Page brand={brand} name="Product Details" head={head}> */}
       {/* <BrandContext.Provider value={brand}> */}
       <InventoryStoreContext.Provider value={store}>
-        {/* <Inventory /> */}
+        <Inventory />
       </InventoryStoreContext.Provider>
       {/* </BrandContext.Provider> */}
       {/* </Page> */}

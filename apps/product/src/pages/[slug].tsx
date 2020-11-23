@@ -15,7 +15,6 @@ import {
 } from 'src/modules/inventory/store';
 import { Status } from 'src/networking/types';
 import Page from 'src/Page';
-import { determineWhitelabel } from 'src/utils/utils';
 
 const { publicRuntimeConfig } = getConfig();
 
