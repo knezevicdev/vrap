@@ -23,7 +23,8 @@
     "react-dom": "^16.12.0",
     "styled-components": "^5.2.0",
     "@vroom-web/inv-search-networking": "^1.0.0",
-    "@material-ui/core": "^4.9.4"
+    "@material-ui/core": "^4.9.4",
+    "@vroom-web/footer-components": "^1.0.3"
   },
   "devDependencies": {
     "@babel/plugin-proposal-decorators": "^7.8.3",
