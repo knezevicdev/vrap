@@ -2,7 +2,7 @@ import UsersModel from '../Model';
 
 import { Status as UserStatus } from 'src/networking/models/User';
 
-enum Accessor {
+export enum Accessor {
   firstName,
   lastName,
   email,
@@ -77,6 +77,21 @@ class UsersViewModel {
         },
       })),
     };
+  }
+
+  get statusOptions(): { key: string; label: string }[] {
+    if (this.model.statusOptions.length > 0) {
+      return this.model.statusOptions.map((i) => ({
+        key: i,
+        label: `${i.charAt(0).toUpperCase()}${i.slice(1)}`,
+      }));
+    } else {
+      return [];
+    }
+  }
+
+  patchUser(id: number, status?: string, carrierCode?: string) {
+    this.model.patchUser(id, status, carrierCode);
   }
 }
 

@@ -1,7 +1,12 @@
 import { makeAutoObservable, runInAction } from 'mobx';
 
 import { Carrier, User } from 'src/networking/models/User';
-import { getUsers, getUserStatuses, Status } from 'src/networking/Networker';
+import {
+  getUsers,
+  getUserStatuses,
+  patchUser,
+  Status,
+} from 'src/networking/Networker';
 
 class UsersModel {
   users: User[] = [];
@@ -33,6 +38,24 @@ class UsersModel {
       console.error(err);
 
       this.usersStatus = Status.ERROR;
+    }
+  };
+
+  patchUser = async (
+    id: number,
+    status?: string,
+    carrierCode?: string
+  ): Promise<void> => {
+    try {
+      const response = await patchUser(id, status, carrierCode);
+      runInAction(() => {
+        const index = this.users.findIndex(
+          (i) => i.portal_user_id === response.data.portal_user_id
+        );
+        this.users[index] = response.data;
+      });
+    } catch (err) {
+      console.error(err);
     }
   };
 

@@ -49,6 +49,15 @@ export const getUserStatuses = async (): Promise<AxiosResponse<string[]>> => {
   return axiosInstance.get(url);
 };
 
+export const patchUser = async (
+  id: number,
+  status?: string,
+  carrierCode?: string
+): Promise<AxiosResponse<User>> => {
+  const url = `${SHIPPING_URL}/api/users`;
+  return axiosInstance.patch(url, { id, status, carrierCode });
+};
+
 export const getTenderedShipments = async (): Promise<
   AxiosResponse<Shipment[]>
 > => axiosInstance.get(`${SHIPPING_URL}/api/shipments/tendered`);
