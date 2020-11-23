@@ -3,10 +3,7 @@ import { GetServerSideProps, GetServerSidePropsContext, NextPage } from 'next';
 import getConfig from 'next/config';
 import React from 'react';
 
-import Inventory from 'src/modules/inventory';
-// import { analyticsHandler } from 'src/integrations/AnalyticsHandler';
-// import experimentSDK from 'src/integrations/experimentSDK';
-// import { BrandContext } from 'src/modules/inventory/BrandContext';
+import Vehicle from 'src/modules/inventory';
 import {
   getInitialInventoryStoreState,
   InventoryStore,
@@ -14,9 +11,7 @@ import {
   InventoryStoreState,
   Status,
 } from 'src/modules/inventory/store/store';
-// import { Status } from 'src/networking/types';
 import Page from 'src/modules/Page';
-// import { determineWhitelabel } from 'src/utils/utils';
 
 const { publicRuntimeConfig } = getConfig();
 
@@ -24,30 +19,12 @@ export interface Props {
   canonicalHref: string | null;
   initialState: InventoryStoreState;
   title: string;
-  // brand: Brand;
   vin: string;
 }
 
 const VinPage: NextPage<Props> = (props: Props) => {
-  const { canonicalHref, initialState, title, vin } = props;
+  const { canonicalHref, initialState, title } = props;
   const store = new InventoryStore(initialState);
-
-  // React.useEffect(() => {
-  //   experimentSDK
-  //     .getAndLogExperimentClientSide('snd-pdp-vin-cluster-similar-vehicle')
-  //     .then((experiment) => {
-  //       if (!experiment) {
-  //         store.setSimilarStatus(initialState.similarStatus);
-  //         return;
-  //       }
-  //       analyticsHandler.registerExperiment(experiment);
-  //       if (experiment.assignedVariant === 0) {
-  //         store.setSimilarStatus(initialState.similarStatus);
-  //         return;
-  //       }
-  //       store.getSimilar(vin, true);
-  //     });
-  // }, [initialState.similarStatus, store, vin]);
 
   const head = (
     <>
@@ -57,12 +34,10 @@ const VinPage: NextPage<Props> = (props: Props) => {
   );
   return (
     <ThemeProvider brand={Brand.VROOM}>
-      <Page brand={Brand.VROOM} name="Product Details" head={head}>
-        {/* <BrandContext.Provider value={brand}> */}
+      <Page name="Product Details" head={head}>
         <InventoryStoreContext.Provider value={store}>
-          <Inventory />
+          <Vehicle />
         </InventoryStoreContext.Provider>
-        {/* </BrandContext.Provider> */}
       </Page>
     </ThemeProvider>
   );
@@ -72,14 +47,12 @@ export const getServerSideProps: GetServerSideProps<Props> = async (
   context: GetServerSidePropsContext
 ) => {
   const { res, query } = context;
-  const slug = query.slug as string;
-  const slugArray = slug.split('-');
-  const vin = slugArray[slugArray.length - 1];
+  const vin = query.slug as string;
 
   context.res.setHeader('Cache-Control', '');
-  // const brand = determineWhitelabel(context);
 
   const initialState = await getInitialInventoryStoreState(vin);
+
   let canonicalHref: string | null = null;
   let title = '';
 
@@ -97,15 +70,8 @@ export const getServerSideProps: GetServerSideProps<Props> = async (
   };
 
   if (initialState.vehicleStatus === Status.SUCCESS && initialState.vehicle) {
-    const {
-      year,
-      make,
-      makeSlug,
-      model,
-      modelSlug,
-      listingPrice,
-    } = initialState.vehicle._source;
-    canonicalHref = `https://www.vroom.com${publicRuntimeConfig.BASE_PATH}/${makeSlug}-${modelSlug}-${year}-${vin}`;
+    const { year, make, model, listingPrice } = initialState.vehicle._source;
+    canonicalHref = `https://www.vroom.com${publicRuntimeConfig.BASE_PATH}/${vin}`;
     const currencyFormatter = new Intl.NumberFormat('en-US', {
       style: 'currency',
       currency: 'USD',

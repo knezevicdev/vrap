@@ -1,7 +1,12 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { InventoryStoreContext } from './store/store';
+import ViewModel from './ViewModel';
+import View from './View';
 
-const Inventory: React.FC = () => {
-  return <div>Temporary</div>;
+const Vehicle: React.FC = () => {
+  const store = useContext(InventoryStoreContext);
+  const viewModel = new ViewModel(store);
+  return <View viewModel={viewModel} />;
 };
 
-export default Inventory;
+export default Vehicle;
