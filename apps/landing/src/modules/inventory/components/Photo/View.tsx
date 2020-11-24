@@ -12,7 +12,8 @@ const IframeContainer = styled.div`
   position: relative;
   width: 100%;
   overflow: hidden;
-  padding-top: 75%;
+  padding-top: 60.94%;
+  background-color: #000000;
 `;
 
 const Iframe = styled.iframe`
@@ -27,8 +28,8 @@ const Iframe = styled.iframe`
 `;
 
 const Image = styled.img`
-  max-width: 874px;
-  max-height: 656px;
+  max-width: 875px;
+  max-height: 533px;
   width: 100%;
 `;
 

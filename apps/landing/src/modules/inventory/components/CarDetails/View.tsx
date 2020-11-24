@@ -14,7 +14,6 @@ export interface Props {
 const CarDetailsContainer = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
   @media (max-width: 600px) {
     margin: 0 16px;
   }
@@ -46,9 +45,22 @@ const Price = styled(Title.One)`
   line-height: 40px;
 `;
 
+const Features = styled(Title.Three)`
+  line-height: 24px;
+`;
+
 const VehicleDetailsButton = styled(Button.Primary)`
   width: 100%;
-  margin: 0;
+  margin: 48px 0 0 0;
+`;
+
+const ListItem = styled.li`
+  line-height: 30px;
+`;
+
+const List = styled.ul`
+  visibility: hidden;
+  padding-left: 20px;
 `;
 
 const CarDetails: React.FC<Props> = ({ viewModel }) => {
@@ -69,6 +81,30 @@ const CarDetails: React.FC<Props> = ({ viewModel }) => {
           <Price>{price}</Price>
         </PriceSection>
       </CarDetailsSection>
+      {/* Hard Coded Data */}
+      <div>
+        <Features>Top Features (Hard Coded)</Features>
+        <List>
+          <ListItem>
+            <Body.Regular>Onboard Wifi</Body.Regular>
+          </ListItem>
+          <ListItem>
+            <Body.Regular>Backup camera</Body.Regular>
+          </ListItem>
+          <ListItem>
+            <Body.Regular>Heated seats</Body.Regular>
+          </ListItem>
+          <ListItem>
+            <Body.Regular>Backup camera</Body.Regular>
+          </ListItem>
+          <ListItem>
+            <Body.Regular>Heated seats</Body.Regular>
+          </ListItem>
+          <ListItem>
+            <Body.Regular>Onboard Wifi</Body.Regular>
+          </ListItem>
+        </List>
+      </div>
       <div>
         <VehicleDetailsButton onClick={handleClick}>
           See all vehicle details
