@@ -23,16 +23,19 @@ export interface Product {
   spincarSpinUrl?: string | null;
   pendingDeal?: boolean;
   isAvailableToSell?: boolean;
+  vinClusterPrimary?: number | null;
+  vinClusterSecondary?: number | null;
 }
 
 class AnalyticsHandler extends BaseAnalyticsHandler {
-  trackProductListViewed(products: Product[]): void {
+  trackProductListViewed(products: Product[], clusterCount?: number): void {
     const event = 'Product List Viewed';
     const category = 'Product';
     const properties = {
       category,
       products,
       nonInteraction: 1,
+      clusterCount,
     };
     this.track(event, properties);
   }

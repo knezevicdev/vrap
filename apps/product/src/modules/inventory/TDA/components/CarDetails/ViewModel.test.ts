@@ -33,7 +33,8 @@ describe('Car Details ViewModel', () => {
       vroomProtect: 'Eligible for Vroom Protect',
       vroomProtectDescription: {
         text: `This vehicle is covered by <link>Vroom Protect</link>, which provides additional mechanical coverage.`,
-        href: 'https://www.vroom.com/protection',
+        href:
+          'https://www.vroom.com/protection?vit_source=texasdirectauto&vit_medium=wl&vit_dest=vroom&vit_brand=TDA',
       },
     };
     const store = new InventoryStore();
@@ -62,7 +63,8 @@ describe('Car Details ViewModel', () => {
       vroomProtect: 'Eligible for Vroom Protect',
       vroomProtectDescription: {
         text: `This vehicle is covered by <link>Vroom Protect</link>, which provides additional mechanical coverage.`,
-        href: 'https://www.vroom.com/protection',
+        href:
+          'https://www.vroom.com/protection?vit_source=texasdirectauto&vit_medium=wl&vit_dest=vroom&vit_brand=TDA',
       },
     };
     const store = new InventoryStore();
@@ -91,7 +93,8 @@ describe('Car Details ViewModel', () => {
       vroomProtect: 'Eligible for Vroom Protect',
       vroomProtectDescription: {
         text: `This vehicle is covered by <link>Vroom Protect</link>, which provides additional mechanical coverage.`,
-        href: 'https://www.vroom.com/protection',
+        href:
+          'https://www.vroom.com/protection?vit_source=texasdirectauto&vit_medium=wl&vit_dest=vroom&vit_brand=TDA',
       },
     };
     const store = new InventoryStore();
@@ -120,7 +123,8 @@ describe('Car Details ViewModel', () => {
       vroomProtect: 'Eligible for Vroom Protect',
       vroomProtectDescription: {
         text: `This vehicle is covered by <link>Vroom Protect</link>, which provides additional mechanical coverage.`,
-        href: 'https://www.vroom.com/protection',
+        href:
+          'https://www.vroom.com/protection?vit_source=texasdirectauto&vit_medium=wl&vit_dest=vroom&vit_brand=TDA',
       },
     };
     const store = new InventoryStore();
@@ -149,7 +153,8 @@ describe('Car Details ViewModel', () => {
       vroomProtect: 'Eligible for Vroom Protect',
       vroomProtectDescription: {
         text: `This vehicle is covered by <link>Vroom Protect</link>, which provides additional mechanical coverage.`,
-        href: 'https://www.vroom.com/protection',
+        href:
+          'https://www.vroom.com/protection?vit_source=texasdirectauto&vit_medium=wl&vit_dest=vroom&vit_brand=TDA',
       },
     };
     const store = new InventoryStore();
