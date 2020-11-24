@@ -14,7 +14,7 @@ export interface Props {
 const CarDetailsContainer = styled.div`
   display: flex;
   flex-direction: column;
-  @media (max-width: 600px) {
+  @media (max-width: 768px) {
     margin: 0 16px;
   }
 `;
@@ -25,7 +25,7 @@ const CarDetailsSection = styled.div`
   border-bottom: 1px solid #d6d7da;
   padding-bottom: 16px;
   margin-bottom: 16px;
-  @media (max-width: 600px) {
+  @media (max-width: 768px) {
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
@@ -84,7 +84,7 @@ const CarDetails: React.FC<Props> = ({ viewModel }) => {
       </CarDetailsSection>
       {/* Hard Coded Data */}
       <div>
-        <Features>Top Features (Hard Coded)</Features>
+        <Features>Top Features</Features>
         <List>
           <ListItem>
             <Body.Regular>Onboard Wifi</Body.Regular>

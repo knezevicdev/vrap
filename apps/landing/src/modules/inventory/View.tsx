@@ -22,7 +22,7 @@ const VehicleContainer = styled.div`
   display: grid;
   grid-template-columns: 3fr 1fr;
   gap: 32px;
-  @media (max-width: 600px) {
+  @media (max-width: 768px) {
     width: 100%;
     margin: 0 0 32px 0;
     grid-template-columns: 1fr;
