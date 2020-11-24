@@ -46,6 +46,7 @@ const Price = styled(Title.One)`
 `;
 
 const Features = styled(Title.Three)`
+  visibility: hidden;
   line-height: 24px;
 `;
 
