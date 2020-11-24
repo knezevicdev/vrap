@@ -152,6 +152,7 @@ describe('Inventory Store', () => {
 
       const mockResponseData = {
         similarStatus: Status.SUCCESS,
+        similarClusterCount: undefined,
         similar: [
           {
             _source: {
@@ -177,6 +178,7 @@ describe('Inventory Store', () => {
     test('it should set the status to error if the call fails', async () => {
       const mockResponseData = {
         similarStatus: Status.ERROR,
+        similarClusterCount: 0,
         similar: [] as Hit[],
       };
 
