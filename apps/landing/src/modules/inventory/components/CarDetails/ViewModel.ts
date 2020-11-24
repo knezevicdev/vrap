@@ -1,5 +1,6 @@
-import { InventoryStore } from '../../store/store';
 import { Car } from '@vroom-web/inv-search-networking';
+
+import { InventoryStore } from '../../store/store';
 
 interface Details {
   ymm: string;
@@ -29,8 +30,6 @@ class CarDetailsViewModel {
     const { make, model, year, vin } = this.car;
     window.location.href = `/inventory/${make}-${model}-${year}-${vin}`;
   };
-
-  handleFavoritesClick = (): void => {};
 }
 
 export default CarDetailsViewModel;

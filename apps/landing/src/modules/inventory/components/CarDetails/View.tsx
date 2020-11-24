@@ -1,10 +1,11 @@
 import { observer } from 'mobx-react';
 import React from 'react';
+import styled from 'styled-components';
 
 import ViewModel from './ViewModel';
-import styled from 'styled-components';
-import { Body, Title } from 'src/core/Typography';
+
 import { Button } from 'src/core/Button';
+import { Body, Title } from 'src/core/Typography';
 // import { Button } from 'src/core/Button';
 
 export interface Props {
@@ -54,7 +55,7 @@ const VehicleDetailsButton = styled(Button.Primary)`
 const CarDetails: React.FC<Props> = ({ viewModel }) => {
   const { ymm, trim, miles, price } = viewModel.details();
 
-  const { handleClick, handleFavoritesClick } = viewModel;
+  const { handleClick } = viewModel;
 
   return (
     <CarDetailsContainer>
@@ -71,9 +72,6 @@ const CarDetails: React.FC<Props> = ({ viewModel }) => {
         <VehicleDetailsButton onClick={handleClick}>
           See all vehicle details
         </VehicleDetailsButton>
-        {/* <Button.Bare onClick={handleFavoritesClick}>
-          Add to favorites
-        </Button.Bare> */}
       </div>
     </CarDetailsContainer>
   );

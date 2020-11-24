@@ -1,4 +1,5 @@
 import { GetServerSideProps, GetServerSidePropsContext, NextPage } from 'next';
+import Head from 'next/head';
 import React from 'react';
 
 import Vehicle from 'src/modules/inventory';
@@ -9,7 +10,6 @@ import {
   InventoryStoreState,
   Status,
 } from 'src/modules/inventory/store/store';
-import Head from 'next/head';
 
 export interface Props {
   initialState: InventoryStoreState;

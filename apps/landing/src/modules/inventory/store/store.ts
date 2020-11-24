@@ -103,11 +103,6 @@ export class InventoryStore {
     if (initialState) {
       this.vehicle = initialState.vehicle;
       this.vehicleStatus = initialState.vehicleStatus;
-    } else {
-      getInitialInventoryStoreState('WBAJA5C37HG894941').then((response) => {
-        this.vehicle = response.vehicle;
-        this.vehicleStatus = response.vehicleStatus;
-      });
     }
   }
 }

@@ -1,9 +1,10 @@
 import React, { useContext } from 'react';
 
+import Header from '../inventory/components/Header';
 import { InventoryStoreContext } from './store/store';
 import View from './View';
 import ViewModel from './ViewModel';
-import Header from '../inventory/components/Header';
+
 import Footer from 'src/core/Footer';
 
 const Vehicle: React.FC = () => {

@@ -1,10 +1,10 @@
 import { observer } from 'mobx-react';
 import React from 'react';
+import styled from 'styled-components';
 
 import CarDetails from './components/CarDetails';
 import Photo from './components/Photo';
 import ViewModel from './ViewModel';
-import styled from 'styled-components';
 
 export interface Props {
   viewModel: ViewModel;
