@@ -14,7 +14,7 @@ class AutocompleteViewModel {
   }
 
   get value(): Carrier | undefined {
-    return this.usersModel.carrierFilter;
+    return this.model.value;
   }
 
   get carrierName(): string {

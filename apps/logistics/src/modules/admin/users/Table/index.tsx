@@ -5,7 +5,7 @@ import UsersModel from '../Model';
 import View from './View';
 import ViewModel from './ViewModel';
 
-const Users: React.FC = () => (
+const UsersTable: React.FC = () => (
   <UsersContext.Consumer>
     {(model: UsersModel): JSX.Element => {
       const viewModel = new ViewModel(model);
@@ -14,4 +14,4 @@ const Users: React.FC = () => (
   </UsersContext.Consumer>
 );
 
-export default Users;
+export default UsersTable;

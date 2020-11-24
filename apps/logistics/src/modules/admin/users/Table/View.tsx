@@ -18,7 +18,7 @@ interface Props {
   viewModel: ViewModel;
 }
 
-const UsersView: React.FC<Props> = ({ viewModel }) => {
+const UsersTableView: React.FC<Props> = ({ viewModel }) => {
   useEffect(() => {
     viewModel.getUsers();
   }, [viewModel]);
@@ -84,4 +84,4 @@ const UsersView: React.FC<Props> = ({ viewModel }) => {
   );
 };
 
-export default observer(UsersView);
+export default observer(UsersTableView);

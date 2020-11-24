@@ -1,5 +1,7 @@
+import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
 import TextField from '@material-ui/core/TextField';
+import CancelIcon from '@material-ui/icons/Cancel';
 import EditIcon from '@material-ui/icons/Edit';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import { observer } from 'mobx-react';
@@ -40,44 +42,43 @@ const AutocompleteView: React.FC<Props> = ({ viewModel }) => {
     viewModel.setInputValue(value);
   };
 
-  if (edit || !viewModel.carrierName) {
-    return (
-      <>
-        <Autocomplete
-          options={viewModel.options}
-          getOptionLabel={(option): string =>
-            `${option.carrier_code} ${option.carrier}`
-          }
-          freeSolo
-          loading={viewModel.loading}
-          onChange={handleChange}
-          inputValue={viewModel.inputValue}
-          value={viewModel.value || null}
-          renderInput={(params): JSX.Element => (
-            <TextField
-              {...params}
-              label="Carrier"
-              onChange={(event): void => handleInputChange(event.target.value)}
-              fullWidth
-            />
-          )}
-        />
+  return (
+    <Grid container alignItems="center">
+      <Grid item xs={10}>
+        {edit || !viewModel.carrierName ? (
+          <Autocomplete
+            options={viewModel.options}
+            getOptionLabel={(option): string =>
+              `${option.carrier_code} ${option.carrier}`
+            }
+            freeSolo
+            disableClearable
+            loading={viewModel.loading}
+            onChange={handleChange}
+            inputValue={viewModel.inputValue}
+            value={viewModel.value || ''}
+            renderInput={(params): JSX.Element => (
+              <TextField
+                {...params}
+                fullWidth
+                label="Carrier"
+                onChange={(event): void =>
+                  handleInputChange(event.target.value)
+                }
+              />
+            )}
+          />
+        ) : (
+          <>{viewModel.carrierName}</>
+        )}
+      </Grid>
+      <Grid item xs={2}>
         <IconButton onClick={(): void => handleClick()}>
-          <EditIcon />
+          {edit ? <CancelIcon /> : <EditIcon />}
         </IconButton>
-      </>
-    );
-  } else {
-    return (
-      <>
-        {viewModel.carrierName}
-
-        <IconButton onClick={(): void => handleClick()}>
-          <EditIcon />
-        </IconButton>
-      </>
-    );
-  }
+      </Grid>
+    </Grid>
+  );
 };
 
 export default observer(AutocompleteView);

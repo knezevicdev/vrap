@@ -4,7 +4,7 @@ import Typography from '@material-ui/core/Typography';
 import React, { useEffect } from 'react';
 
 import Filters from './Filters';
-import Table from './Table';
+import UserTable from './Table';
 import ViewModel from './ViewModel';
 
 interface Props {
@@ -26,7 +26,7 @@ const UsersView: React.FC<Props> = ({ viewModel }) => {
           <Filters />
         </Grid>
       </Grid>
-      <Table />
+      <UserTable />
     </Paper>
   );
 };

@@ -47,8 +47,8 @@ const AutocompleteView: React.FC<Props> = ({ viewModel }) => {
         <TextField
           {...params}
           label="Carrier"
-          onChange={(event): void => handleInputChange(event.target.value)}
           fullWidth
+          onChange={(event): void => handleInputChange(event.target.value)}
         />
       )}
     />
