@@ -50,7 +50,7 @@ export const getServerSideProps: GetServerSideProps<Props> = async (
     props: {
       brand,
       description: brandConfig.description,
-      query: { ...ctx.query, brand: brandConfig.brandParam },
+      query: { ...ctx.query },
       title: brandConfig.title,
     },
   };
