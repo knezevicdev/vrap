@@ -1,16 +1,27 @@
-import { InventoryStore } from './store/store';
-import { Car } from '@vroom-web/inv-search-networking';
+import { InventoryStore, Status } from './store/store';
 
 class InventoryViewModel {
-  private car: Car;
+  private store: InventoryStore;
 
   constructor(inventoryStore: InventoryStore) {
-    this.car = inventoryStore.vehicle._source;
+    this.store = inventoryStore;
   }
 
-  getCar = () => {
-    return JSON.stringify(this.car, null, 2);
-  };
+  loading(): boolean {
+    const result =
+      this.store.vehicleStatus === Status.FETCHING ||
+      this.store.vehicleStatus === Status.INITIAL;
+    return result;
+  }
+
+  ready(): boolean {
+    const result = this.store.vehicleStatus === Status.SUCCESS;
+    return result;
+  }
+
+  error(): boolean {
+    return this.store.vehicleStatus === Status.ERROR;
+  }
 }
 
 export default InventoryViewModel;

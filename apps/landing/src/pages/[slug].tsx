@@ -1,6 +1,4 @@
-import { Brand, ThemeProvider } from '@vroom-web/ui';
 import { GetServerSideProps, GetServerSidePropsContext, NextPage } from 'next';
-import getConfig from 'next/config';
 import React from 'react';
 
 import Vehicle from 'src/modules/inventory';
@@ -11,35 +9,31 @@ import {
   InventoryStoreState,
   Status,
 } from 'src/modules/inventory/store/store';
-import Page from 'src/modules/Page';
-
-const { publicRuntimeConfig } = getConfig();
+import Head from 'next/head';
 
 export interface Props {
-  canonicalHref: string | null;
   initialState: InventoryStoreState;
   title: string;
   vin: string;
 }
 
 const VinPage: NextPage<Props> = (props: Props) => {
-  const { canonicalHref, initialState, title } = props;
+  const { initialState, title } = props;
   const store = new InventoryStore(initialState);
 
   const head = (
     <>
-      <title>{title}</title>)
-      {canonicalHref && <link rel="canonical" href={canonicalHref} />}
+      <title>{title}</title>
     </>
   );
+
   return (
-    <ThemeProvider brand={Brand.VROOM}>
-      <Page name="Product Details" head={head}>
-        <InventoryStoreContext.Provider value={store}>
-          <Vehicle />
-        </InventoryStoreContext.Provider>
-      </Page>
-    </ThemeProvider>
+    <Head>
+      {head}
+      <InventoryStoreContext.Provider value={store}>
+        <Vehicle />
+      </InventoryStoreContext.Provider>
+    </Head>
   );
 };
 
@@ -53,7 +47,6 @@ export const getServerSideProps: GetServerSideProps<Props> = async (
 
   const initialState = await getInitialInventoryStoreState(vin);
 
-  let canonicalHref: string | null = null;
   let title = '';
 
   const getTitle = (
@@ -71,7 +64,7 @@ export const getServerSideProps: GetServerSideProps<Props> = async (
 
   if (initialState.vehicleStatus === Status.SUCCESS && initialState.vehicle) {
     const { year, make, model, listingPrice } = initialState.vehicle._source;
-    canonicalHref = `https://www.vroom.com${publicRuntimeConfig.BASE_PATH}/${vin}`;
+
     const currencyFormatter = new Intl.NumberFormat('en-US', {
       style: 'currency',
       currency: 'USD',
@@ -87,7 +80,7 @@ export const getServerSideProps: GetServerSideProps<Props> = async (
     }
   }
 
-  return { props: { canonicalHref, initialState, title, vin } };
+  return { props: { initialState, title, vin } };
 };
 
 export default VinPage;

@@ -1,20 +1,41 @@
 import { observer } from 'mobx-react';
-import { StandardFooter } from '@vroom-web/footer-components';
-
 import React from 'react';
 
+import CarDetails from './components/CarDetails';
+import Photo from './components/Photo';
 import ViewModel from './ViewModel';
+import styled from 'styled-components';
 
 export interface Props {
   viewModel: ViewModel;
 }
 
+const Container = styled.div`
+  display: flex;
+  background-color: #f5f5f5;
+`;
+
+const VehicleContainer = styled.div`
+  margin: 32px auto;
+  display: flex;
+  flex-wrap: wrap;
+`;
+
 const InventoryView: React.FC<Props> = ({ viewModel }) => {
   return (
-    <>
-      <pre>{viewModel.getCar()}</pre>
-      <StandardFooter />
-    </>
+    <Container>
+      {viewModel.ready() && (
+        <VehicleContainer>
+          <Photo />
+          <CarDetails />
+        </VehicleContainer>
+      )}
+      {viewModel.error() && (
+        <>
+          <h1>Vehicle Not Found</h1>
+        </>
+      )}
+    </Container>
   );
 };
 

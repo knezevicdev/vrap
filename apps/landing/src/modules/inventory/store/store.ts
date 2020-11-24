@@ -1,3 +1,5 @@
+import 'mobx-react-lite/batchingForReactDom';
+
 import {
   Hit,
   InventoryResponse,
@@ -6,7 +8,6 @@ import {
 import { observable } from 'mobx';
 import getConfig from 'next/config';
 import { createContext } from 'react';
-import 'mobx-react-lite/batchingForReactDom';
 
 export enum Status {
   INITIAL = 'initial',
@@ -96,10 +97,17 @@ export async function getInitialInventoryStoreState(
 
 export class InventoryStore {
   @observable vehicle: Hit = {} as Hit;
+  @observable vehicleStatus: Status = Status.FETCHING;
 
   constructor(initialState?: InventoryStoreState) {
     if (initialState) {
       this.vehicle = initialState.vehicle;
+      this.vehicleStatus = initialState.vehicleStatus;
+    } else {
+      getInitialInventoryStoreState('WBAJA5C37HG894941').then((response) => {
+        this.vehicle = response.vehicle;
+        this.vehicleStatus = response.vehicleStatus;
+      });
     }
   }
 }

@@ -1,12 +1,21 @@
 import React, { useContext } from 'react';
+
 import { InventoryStoreContext } from './store/store';
-import ViewModel from './ViewModel';
 import View from './View';
+import ViewModel from './ViewModel';
+import Header from '../inventory/components/Header';
+import Footer from 'src/core/Footer';
 
 const Vehicle: React.FC = () => {
   const store = useContext(InventoryStoreContext);
   const viewModel = new ViewModel(store);
-  return <View viewModel={viewModel} />;
+  return (
+    <>
+      <Header />
+      <View viewModel={viewModel} />
+      <Footer />
+    </>
+  );
 };
 
 export default Vehicle;
