@@ -27,8 +27,8 @@ class CarDetailsViewModel {
   }
 
   handleClick = (): void => {
-    const { make, model, year, vin } = this.car;
-    window.location.href = `/inventory/${make}-${model}-${year}-${vin}`;
+    const { makeSlug, modelSlug, year, vin } = this.car;
+    window.location.href = `/inventory/${makeSlug}-${modelSlug}-${year}-${vin}`;
   };
 }
 

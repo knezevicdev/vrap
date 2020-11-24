@@ -12,13 +12,22 @@ export interface Props {
 
 const Container = styled.div`
   display: flex;
+  justify-content: center;
   background-color: #f5f5f5;
 `;
 
 const VehicleContainer = styled.div`
-  margin: 32px auto;
-  display: flex;
-  flex-wrap: wrap;
+  max-width: 1440px;
+  margin: 32px 64px;
+  display: grid;
+  grid-template-columns: 3fr 1fr;
+  gap: 32px;
+  @media (max-width: 600px) {
+    width: 100%;
+    margin: 0 0 32px 0;
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
 `;
 
 const InventoryView: React.FC<Props> = ({ viewModel }) => {

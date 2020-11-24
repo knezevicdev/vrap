@@ -6,49 +6,48 @@ import ViewModel from './ViewModel';
 
 import { Button } from 'src/core/Button';
 import { Body, Title } from 'src/core/Typography';
-// import { Button } from 'src/core/Button';
 
 export interface Props {
   viewModel: ViewModel;
 }
 
 const CarDetailsContainer = styled.div`
-  margin: 0 32px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  @media (max-width: 840px) {
-    margin: 0;
+  @media (max-width: 600px) {
+    margin: 0 16px;
   }
 `;
 
 const CarDetailsSection = styled.div`
   display: flex;
   flex-direction: column;
+  border-bottom: 1px solid #d6d7da;
+  padding-bottom: 16px;
+  margin-bottom: 16px;
+  @media (max-width: 600px) {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
 `;
 
 const TrimAndMiles = styled(Body.Regular)`
+  display: block;
   font-weight: 400px;
 `;
 
-const Price = styled(Title.One)`
+const PriceSection = styled.div`
   margin-top: 8px;
+`;
+
+const Price = styled(Title.One)`
   line-height: 40px;
 `;
 
-const TopFeatures = styled(Title.Three)`
-  line-height: 24px;
-`;
-
-const Divider = styled.div`
-  display: flex;
-  min-height: 1px;
-  max-height: 1px;
-  background-color: #d6d7da;
-  margin: 16px 0px;
-`;
-
 const VehicleDetailsButton = styled(Button.Primary)`
+  width: 100%;
   margin: 0;
 `;
 
@@ -60,13 +59,15 @@ const CarDetails: React.FC<Props> = ({ viewModel }) => {
   return (
     <CarDetailsContainer>
       <CarDetailsSection>
-        <Title.Two>{ymm}</Title.Two>
-        <TrimAndMiles>
-          {trim} | {miles}
-        </TrimAndMiles>
-        <Price>{price}</Price>
-        <Divider />
-        <TopFeatures>Top features yet to come</TopFeatures>
+        <div>
+          <Title.Two>{ymm}</Title.Two>
+          <TrimAndMiles>
+            {trim} | {miles}
+          </TrimAndMiles>
+        </div>
+        <PriceSection>
+          <Price>{price}</Price>
+        </PriceSection>
       </CarDetailsSection>
       <div>
         <VehicleDetailsButton onClick={handleClick}>

@@ -28,12 +28,12 @@ const VinPage: NextPage<Props> = (props: Props) => {
   );
 
   return (
-    <Head>
-      {head}
+    <>
+      <Head>{head}</Head>
       <InventoryStoreContext.Provider value={store}>
         <Vehicle />
       </InventoryStoreContext.Provider>
-    </Head>
+    </>
   );
 };
 
