@@ -4,8 +4,8 @@ import styled from 'styled-components';
 
 import CarDetails from './components/CarDetails';
 import Photo from './components/Photo';
+import ValueProps from './components/ValueProps';
 import ViewModel from './ViewModel';
-
 export interface Props {
   viewModel: ViewModel;
 }
@@ -14,6 +14,7 @@ const Container = styled.div`
   display: flex;
   justify-content: center;
   background-color: #f5f5f5;
+  flex-direction: column;
 `;
 
 const VehicleContainer = styled.div`
@@ -44,6 +45,7 @@ const InventoryView: React.FC<Props> = ({ viewModel }) => {
           <h1>Vehicle Not Found</h1>
         </>
       )}
+      <ValueProps />
     </Container>
   );
 };

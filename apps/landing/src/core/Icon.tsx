@@ -76,6 +76,13 @@ export class Icons {
     color: '#FFFFFF',
   });
 
+  static readonly VROOM_SHIELD = new Icons('VROOM_SHIELD', {
+    name: 'vroom-shield',
+    width: 64,
+    height: 64,
+    color: '#e7131a',
+  });
+
   private constructor(
     protected key: string,
     public readonly value: {
