@@ -26,6 +26,10 @@ class CarDetailsViewModel {
     };
   }
 
+  features(): string[] {
+    return this.car.optionalFeatures.split(',').slice(0, 6);
+  }
+
   handleClick = (): void => {
     const { makeSlug, modelSlug, year, vin } = this.car;
     window.location.href = `/inventory/${makeSlug}-${modelSlug}-${year}-${vin}`;

@@ -41,11 +41,11 @@ export const getServerSideProps: GetServerSideProps<Props> = async (
   context: GetServerSidePropsContext
 ) => {
   const { res, query } = context;
-  const vin = query.slug as string;
+  const param = query.vehicle_vin;
+
+  const vin = param ? (param as string) : '';
 
   context.res.setHeader('Cache-Control', '');
-
-  const initialState = await getInitialInventoryStoreState(vin);
 
   let title = '';
 
@@ -61,6 +61,8 @@ export const getServerSideProps: GetServerSideProps<Props> = async (
   const getCarNotAvailableTitle = (): string => {
     return 'Car Not Available | Vroom';
   };
+
+  const initialState = await getInitialInventoryStoreState(vin);
 
   if (initialState.vehicleStatus === Status.SUCCESS && initialState.vehicle) {
     const { year, make, model, listingPrice } = initialState.vehicle._source;

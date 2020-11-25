@@ -14,7 +14,8 @@ export interface Props {
 const CarDetailsContainer = styled.div`
   display: flex;
   flex-direction: column;
-  @media (max-width: 600px) {
+  justify-content: space-between;
+  @media (max-width: 768px) {
     margin: 0 16px;
   }
 `;
@@ -25,7 +26,7 @@ const CarDetailsSection = styled.div`
   border-bottom: 1px solid #d6d7da;
   padding-bottom: 16px;
   margin-bottom: 16px;
-  @media (max-width: 600px) {
+  @media (max-width: 768px) {
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
@@ -50,8 +51,8 @@ const Features = styled(Title.Three)`
 `;
 
 const VehicleDetailsButton = styled(Button.Primary)`
+  margin: 0;
   width: 100%;
-  margin: 48px 0 0 0;
 `;
 
 const ListItem = styled.li`
@@ -59,57 +60,49 @@ const ListItem = styled.li`
 `;
 
 const List = styled.ul`
-  visibility: hidden;
-  padding-left: 20px;
+  padding-left: 0;
+  list-style-type: none;
+  @media (max-width: 768px) {
+    columns: 2;
+    -webkit-columns: 2;
+    -moz-columns: 2;
+  }
 `;
 
 const CarDetails: React.FC<Props> = ({ viewModel }) => {
   const { ymm, trim, miles, price } = viewModel.details();
-
+  const features = viewModel.features();
   const { handleClick } = viewModel;
 
   return (
     <CarDetailsContainer>
-      <CarDetailsSection>
+      <div>
+        <CarDetailsSection>
+          <div>
+            <Title.Two>{ymm}</Title.Two>
+            <TrimAndMiles>
+              {trim} | {miles}
+            </TrimAndMiles>
+          </div>
+          <PriceSection>
+            <Price>{price}</Price>
+          </PriceSection>
+        </CarDetailsSection>
         <div>
-          <Title.Two>{ymm}</Title.Two>
-          <TrimAndMiles>
-            {trim} | {miles}
-          </TrimAndMiles>
+          <Features>Top Features</Features>
+          <List>
+            {features.map((feature: string) => (
+              <ListItem>
+                <Body.Regular>{feature}</Body.Regular>
+              </ListItem>
+            ))}
+          </List>
         </div>
-        <PriceSection>
-          <Price>{price}</Price>
-        </PriceSection>
-      </CarDetailsSection>
-      {/* Hard Coded Data */}
-      <div>
-        <Features>Top Features (Hard Coded)</Features>
-        <List>
-          <ListItem>
-            <Body.Regular>Onboard Wifi</Body.Regular>
-          </ListItem>
-          <ListItem>
-            <Body.Regular>Backup camera</Body.Regular>
-          </ListItem>
-          <ListItem>
-            <Body.Regular>Heated seats</Body.Regular>
-          </ListItem>
-          <ListItem>
-            <Body.Regular>Backup camera</Body.Regular>
-          </ListItem>
-          <ListItem>
-            <Body.Regular>Heated seats</Body.Regular>
-          </ListItem>
-          <ListItem>
-            <Body.Regular>Onboard Wifi</Body.Regular>
-          </ListItem>
-        </List>
       </div>
-      <div>
-        <VehicleDetailsButton onClick={handleClick}>
-          See all vehicle details
-        </VehicleDetailsButton>
-      </div>
+
+      <VehicleDetailsButton onClick={handleClick}>
+        See all vehicle details
+      </VehicleDetailsButton>
     </CarDetailsContainer>
   );
 };
