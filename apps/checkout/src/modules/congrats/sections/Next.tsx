@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { ThemeProps } from 'vroom-ui/src/foundation/themes/types';
 import { addStyleForMobile } from 'vroom-ui/src/foundation/themes/Vroom';
 import { Body, Heading, Title } from 'vroom-ui/src/foundation/Typography';
 
@@ -32,10 +33,19 @@ const Next: React.FC<Props> = ({ heading, steps }): JSX.Element => {
 
 export default Next;
 
+const grayFour = (props: { theme: ThemeProps }): string =>
+  props.theme.colors.gray.four;
+
+const primaryBrand = (props: { theme: ThemeProps }): string =>
+  props.theme.colors.primary.brand;
+
+const primaryWhite = (props: { theme: ThemeProps }): string =>
+  props.theme.colors.primary.white;
+
 const Container = styled.div`
   display: flex;
   flex-direction: column;
-  background: #f5f5f5;
+  background: ${grayFour};
   align-items: center;
   padding: 80px 0;
   text-align: center;
@@ -70,11 +80,11 @@ const StepHeader = styled.div`
 
 const StepNumber = styled(Body.Small)`
   margin-top: 2px;
-  background: red;
+  background: ${primaryBrand};
   border-radius: 50%;
   width: 18px;
   height: 18px;
-  color: white;
+  color: ${primaryWhite} !important;
   display: flex;
   justify-content: center;
   align-items: center;

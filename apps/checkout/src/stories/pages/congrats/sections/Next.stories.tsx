@@ -1,5 +1,7 @@
 import React from 'react';
 import { withDesign } from 'storybook-addon-designs';
+import { ThemeProvider } from 'styled-components';
+import { getVroomTheme } from 'vroom-ui/src/foundation/themes/Vroom';
 
 import Next from '../../../../modules/congrats/sections/Next';
 
@@ -22,9 +24,14 @@ const steps = [
     description: `Get your new ride delivered to your driveway anywhere within the continental U.S.`,
   },
 ];
+const theme = getVroomTheme('/assets/fonts/Vroom');
 
 export const Success = (): JSX.Element => {
-  return <Next heading={heading} steps={steps} />;
+  return (
+    <ThemeProvider theme={theme}>
+      <Next heading={heading} steps={steps} />
+    </ThemeProvider>
+  );
 };
 
 Success.parameters = {
