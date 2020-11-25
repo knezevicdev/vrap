@@ -14,6 +14,7 @@ export interface Props {
 const CarDetailsContainer = styled.div`
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
   @media (max-width: 768px) {
     margin: 0 16px;
   }
@@ -50,8 +51,8 @@ const Features = styled(Title.Three)`
 `;
 
 const VehicleDetailsButton = styled(Button.Primary)`
+  margin: 0;
   width: 100%;
-  margin: 48px 0 0 0;
 `;
 
 const ListItem = styled.li`
@@ -59,7 +60,13 @@ const ListItem = styled.li`
 `;
 
 const List = styled.ul`
-  padding-left: 20px;
+  padding-left: 0;
+  list-style-type: none;
+  @media (max-width: 768px) {
+    columns: 2;
+    -webkit-columns: 2;
+    -moz-columns: 2;
+  }
 `;
 
 const CarDetails: React.FC<Props> = ({ viewModel }) => {
@@ -69,32 +76,33 @@ const CarDetails: React.FC<Props> = ({ viewModel }) => {
 
   return (
     <CarDetailsContainer>
-      <CarDetailsSection>
+      <div>
+        <CarDetailsSection>
+          <div>
+            <Title.Two>{ymm}</Title.Two>
+            <TrimAndMiles>
+              {trim} | {miles}
+            </TrimAndMiles>
+          </div>
+          <PriceSection>
+            <Price>{price}</Price>
+          </PriceSection>
+        </CarDetailsSection>
         <div>
-          <Title.Two>{ymm}</Title.Two>
-          <TrimAndMiles>
-            {trim} | {miles}
-          </TrimAndMiles>
+          <Features>Top Features</Features>
+          <List>
+            {features.map((feature: string) => (
+              <ListItem>
+                <Body.Regular>{feature}</Body.Regular>
+              </ListItem>
+            ))}
+          </List>
         </div>
-        <PriceSection>
-          <Price>{price}</Price>
-        </PriceSection>
-      </CarDetailsSection>
-      <div>
-        <Features>Top Features</Features>
-        <List>
-          {features.map((feature: string) => (
-            <ListItem>
-              <Body.Regular>{feature}</Body.Regular>
-            </ListItem>
-          ))}
-        </List>
       </div>
-      <div>
-        <VehicleDetailsButton onClick={handleClick}>
-          See all vehicle details
-        </VehicleDetailsButton>
-      </div>
+
+      <VehicleDetailsButton onClick={handleClick}>
+        See all vehicle details
+      </VehicleDetailsButton>
     </CarDetailsContainer>
   );
 };
