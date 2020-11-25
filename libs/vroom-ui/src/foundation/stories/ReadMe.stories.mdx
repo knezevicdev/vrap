@@ -1,5 +1,7 @@
 import { Meta } from '@storybook/addon-docs/blocks';
 import Logo from '../../../public/assets/logo.png';
+import Menu from '../../../public/assets/menu.png';
+
 
 <Meta title="Read Me" />
 
@@ -25,3 +27,48 @@ The version number is incremented based on the level of change included in the r
 * **Major** releases contain significant new features, some but minimal developer assistance is expected during the update. When updating to a new major release, you may need to run update scripts, refactor code, run additional tests, and learn new APIs.
 * **Minor** releases contain important new features. Minor releases are fully backward-compatible; no developer assistance is expected during update, but you can optionally modify your apps and libraries to begin using new APIs, features, and capabilities that were added in the release.
 * **Patch** releases are low risk, contain bug fixes and small new features. No developer assistance is expected during update.
+
+# Storybook
+### Organization
+
+To answer the question, where does this live?
+
+* **Design System** - other teams can leverage. Foundation and elements live here and a small set of reusable components.
+* **Application** - specific to the application. Most feature team UI will live here.
+
+### Structure
+
+**Design System**
+
+* Foundation - includes the theme and the **typography** component.
+* Elements - single components or atoms.
+* Components - composed of foundation and elements.
+    * **Requirements** - Is used by **more than one** application. If **only one** application move it to your specific application.
+
+**Application**
+
+This can be any application under `vroom-web/apps`
+
+* Components - composed of foundation & elements from the design system.
+    * **Requirements** - Is used by **more than one** section. If other applications are using it, move it up to the design system.
+* Page - composed of **multiple sections** like header, footer, etc.
+    * Section - composed of components and/or elements. A horizontal slice of a page.
+
+
+### Addons
+We use some useful addons that makes our lives easier and helps us collaborate with our roles.
+Check them out in individual stories or read more about it below.
+
+First make sure you can see the addons.
+
+<img src={Menu} alt="menu" />
+
+1. Click the menu at the top left.
+2. Confirm **Show addons** is checked.
+3. If enabled, you should see the addons.
+
+We currently use
+* [Essential](https://storybook.js.org/docs/react/essentials/introduction) - **docs** & **viewport** enabled only as of now.
+* [Figma](https://github.com/pocka/storybook-addon-designs) - mapping to our designs in Figma.
+* [Performance](https://github.com/atlassian-labs/storybook-addon-performance) - used for performance testing our UI.
+
