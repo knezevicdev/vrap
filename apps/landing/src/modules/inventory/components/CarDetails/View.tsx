@@ -91,8 +91,8 @@ const CarDetails: React.FC<Props> = ({ viewModel }) => {
         <div>
           <Features>Top Features</Features>
           <List>
-            {features.map((feature: string) => (
-              <ListItem>
+            {features.map((feature: string, idx: number) => (
+              <ListItem key={idx}>
                 <Body.Regular>{feature}</Body.Regular>
               </ListItem>
             ))}
