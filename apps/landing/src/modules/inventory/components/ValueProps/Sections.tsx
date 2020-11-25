@@ -87,7 +87,7 @@ export const VideoSection: FC = () => {
       <VideoTitle>Buy, sell, or trade vehicles all from your couch</VideoTitle>
       <IframeContainer>
         <StyledIframe
-          src={'https://www.youtube.com//embed/-Mx5vjqeXgY'}
+          src={'https://www.youtube.com//embed/BNN30oCCesc'}
         ></StyledIframe>
       </IframeContainer>
     </VideoContainer>
@@ -107,7 +107,7 @@ export const CertifiedSection: FC = () => {
       />
       <Description>
         All our vehicles go through a 100 point inspection and come with{' '}
-        <UnderlinedLink href={'https://www.google.com'}>
+        <UnderlinedLink href={'https://www.vroom.com/protection'}>
           Vroom’s free limited warranty
         </UnderlinedLink>
         , good for 90 days or 6,000 miles.
@@ -146,7 +146,8 @@ export const DeliveredSection: FC = () => {
 
 export const ButtonSection: FC = () => {
   const onClick = (): void => {
-    window.location.href = 'https://www.google.com';
+    window.location.href =
+      'https://vroom.zendesk.com/hc/en-us/articles/205360565-When-does-the-7-day-return-period-begin-';
   };
   return (
     <Button.Secondary onClick={onClick}>
