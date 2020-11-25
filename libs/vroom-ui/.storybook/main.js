@@ -15,7 +15,8 @@ module.exports = {
                 toolbars: false,
             }
         },
-        "storybook-addon-designs"
+        "storybook-addon-designs",
+        "storybook-addon-performance/register"
     ]
 }
 
