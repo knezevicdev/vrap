@@ -7,6 +7,9 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ): Promise<void> {
+  const username = process.env.SHIPPING_PORTAL_USERNAME || '';
+  const password = process.env.SHIPPING_PORTAL_PASSWORD || '';
+
   if (req.method === 'GET') {
     const carrier = req.query.carrier as string;
     const status = req.query.status as string;
@@ -19,7 +22,7 @@ export default async function handler(
     })}`;
 
     const response = await axios.get(url, {
-      auth: { username: 'user', password: 'password' },
+      auth: { username, password },
     });
     res.status(200).json(response.data.data);
   } else if (req.method === 'PATCH') {
@@ -44,7 +47,7 @@ export default async function handler(
         payload,
       };
       const response = await axios.patch(url, body, {
-        auth: { username: 'user', password: 'password' },
+        auth: { username, password },
       });
       res.status(200).json(response.data.data);
     } catch (err) {
