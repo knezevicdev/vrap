@@ -76,6 +76,13 @@ export class Icons {
     color: '#FFFFFF',
   });
 
+  static readonly NO_VEHICLE = new Icons('NO_VEHICLE', {
+    name: 'no-vehicle',
+    width: 64,
+    height: 64,
+    color: '#041022',
+  });
+
   private constructor(
     protected key: string,
     public readonly value: {

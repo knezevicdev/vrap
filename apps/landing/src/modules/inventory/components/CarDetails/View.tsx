@@ -46,7 +46,6 @@ const Price = styled(Title.One)`
 `;
 
 const Features = styled(Title.Three)`
-  visibility: hidden;
   line-height: 24px;
 `;
 
@@ -60,13 +59,12 @@ const ListItem = styled.li`
 `;
 
 const List = styled.ul`
-  visibility: hidden;
   padding-left: 20px;
 `;
 
 const CarDetails: React.FC<Props> = ({ viewModel }) => {
   const { ymm, trim, miles, price } = viewModel.details();
-
+  const features = viewModel.features();
   const { handleClick } = viewModel;
 
   return (
@@ -82,28 +80,14 @@ const CarDetails: React.FC<Props> = ({ viewModel }) => {
           <Price>{price}</Price>
         </PriceSection>
       </CarDetailsSection>
-      {/* Hard Coded Data */}
       <div>
         <Features>Top Features</Features>
         <List>
-          <ListItem>
-            <Body.Regular>Onboard Wifi</Body.Regular>
-          </ListItem>
-          <ListItem>
-            <Body.Regular>Backup camera</Body.Regular>
-          </ListItem>
-          <ListItem>
-            <Body.Regular>Heated seats</Body.Regular>
-          </ListItem>
-          <ListItem>
-            <Body.Regular>Backup camera</Body.Regular>
-          </ListItem>
-          <ListItem>
-            <Body.Regular>Heated seats</Body.Regular>
-          </ListItem>
-          <ListItem>
-            <Body.Regular>Onboard Wifi</Body.Regular>
-          </ListItem>
+          {features.map((feature: string) => (
+            <ListItem>
+              <Body.Regular>{feature}</Body.Regular>
+            </ListItem>
+          ))}
         </List>
       </div>
       <div>

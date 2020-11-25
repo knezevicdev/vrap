@@ -5,6 +5,9 @@ import styled from 'styled-components';
 import CarDetails from './components/CarDetails';
 import Photo from './components/Photo';
 import ViewModel from './ViewModel';
+import { Button } from 'src/core/Button';
+import { Title } from 'src/core/Typography';
+import Icon, { Icons } from 'src/core/Icon';
 
 export interface Props {
   viewModel: ViewModel;
@@ -30,6 +33,36 @@ const VehicleContainer = styled.div`
   }
 `;
 
+const ErrorContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  margin: 96px 0;
+  @media (max-width: 768px) {
+    width: 100%;
+    margin: 32px 16px;
+  }
+`;
+
+const ErrorTitle = styled(Title.One)`
+  margin-top: 8px;
+  font-size: 36px;
+  line-height: 40px;
+`;
+
+const CarsButton = styled(Button.Primary)`
+  margin-top: 32px;
+  @media (max-width: 768px) {
+    width: 100%;
+  }
+`;
+
+const NoVehicleIcon = styled(Icon)`
+  display: block;
+  margin-right: 16px;
+`;
+
 const InventoryView: React.FC<Props> = ({ viewModel }) => {
   return (
     <Container>
@@ -40,9 +73,13 @@ const InventoryView: React.FC<Props> = ({ viewModel }) => {
         </VehicleContainer>
       )}
       {viewModel.error() && (
-        <>
-          <h1>Vehicle Not Found</h1>
-        </>
+        <ErrorContainer>
+          <NoVehicleIcon icon={Icons.NO_VEHICLE} />
+          <ErrorTitle>{viewModel.errorText}</ErrorTitle>
+          <CarsButton onClick={viewModel.handleClick}>
+            {viewModel.button}
+          </CarsButton>
+        </ErrorContainer>
       )}
     </Container>
   );
