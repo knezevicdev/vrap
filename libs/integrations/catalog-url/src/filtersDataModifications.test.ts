@@ -18,6 +18,7 @@ import {
   removePopularFeature,
   resetFilter,
   resetFilters,
+  setFuelEfficiency,
   setMiles,
   setPage,
   setPrice,
@@ -581,6 +582,7 @@ describe('addPopularFeature', () => {
     expect(
       addPopularFeature(PopularFeatures.SUNROOF_MOONROOF, mockFiltersData1)
     ).toEqual({
+      fueltype: ['electric'],
       bodytypes: ['suv'],
       colors: ['grey'],
       drivetype: ['awd'],
@@ -657,6 +659,7 @@ describe('removePopularFeature', () => {
     expect(
       removePopularFeature(PopularFeatures.REMOTE_START, mockFiltersData1)
     ).toEqual({
+      fueltype: ['electric'],
       bodytypes: ['suv'],
       colors: ['grey'],
       drivetype: ['awd'],
@@ -792,6 +795,7 @@ describe('removeAllModels', () => {
   test('3', () => {
     expect(removeAllModels('ford', mockFiltersData1)).toEqual(mockFiltersData1);
     expect(removeAllModels('ford', mockFiltersData1)).toEqual({
+      fueltype: ['electric'],
       bodytypes: ['suv'],
       colors: ['grey'],
       drivetype: ['awd'],
@@ -858,6 +862,7 @@ describe('addModel', () => {
       mockFiltersData1
     );
     expect(addModel('volvo', 'xc90', mockFiltersData1)).toEqual({
+      fueltype: ['electric'],
       bodytypes: ['suv'],
       colors: ['grey'],
       drivetype: ['awd'],
@@ -964,6 +969,7 @@ describe('removeModel', () => {
   });
   test('3', () => {
     expect(removeModel('toyota', 'camry', mockFiltersData1)).toEqual({
+      fueltype: ['electric'],
       bodytypes: ['suv'],
       colors: ['grey'],
       drivetype: ['awd'],
@@ -1059,37 +1065,6 @@ describe('setMiles', () => {
       year: { max: 2020, min: 2018 },
       cylinders: ['8', '4'],
       othercylinders: false,
-      optionalfeatures: ['Android Auto', 'Remote Start'],
-    });
-  });
-});
-
-describe('setOtherCylinders', () => {
-  test('it should set the otherCylinders', () => {
-    expect(setOtherCylinders(true, undefined)).toEqual({
-      othercylinders: true,
-    });
-  });
-  test('it should set othercylinders on an empty object', () => {
-    expect(setOtherCylinders(true, {})).toEqual({
-      othercylinders: true,
-    });
-  });
-  test('it should set othercylinders on a large filter', () => {
-    expect(setOtherCylinders(true, mockFiltersData1)).toEqual({
-      bodytypes: ['suv'],
-      colors: ['grey'],
-      drivetype: ['awd'],
-      makesandmodels: [{ makeSlug: 'volvo', modelSlugs: ['xc90'] }],
-      miles: { max: 100000, min: 0 },
-      page: 0,
-      price: { max: 100000, min: 0 },
-      search: 'search',
-      sort: { by: 'miles', direction: 'asc' },
-      transmission: 'auto',
-      year: { max: 2020, min: 2018 },
-      cylinders: ['8', '4'],
-      othercylinders: true,
       optionalfeatures: ['Android Auto', 'Remote Start'],
     });
   });
@@ -1201,6 +1176,14 @@ describe('setSort', () => {
       cylinders: ['8', '4'],
       othercylinders: false,
       optionalfeatures: ['Android Auto', 'Remote Start'],
+    });
+  });
+});
+
+describe('setFuelEfficiency', () => {
+  it('should set the fuel efficiency on an undefined flters object', () => {
+    expect(setFuelEfficiency({ min: 30 }, undefined)).toEqual({
+      combinedmpg: { min: 30 },
     });
   });
 });

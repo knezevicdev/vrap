@@ -80,6 +80,12 @@ const Hero4 = styled.h4`
   line-height: 40px;
 `;
 
+const Hero5 = styled.h5`
+  ${heroBase}
+  font-size: 28px;
+  line-height: 32px;
+`;
+
 const Title1 = styled.span`
   ${titleBase}
   font-size: 28px;
@@ -134,6 +140,7 @@ export class Hero {
   static Two = Hero2;
   static Three = Hero3;
   static Four = Hero4;
+  static Five = Hero5;
 }
 
 export class Title {

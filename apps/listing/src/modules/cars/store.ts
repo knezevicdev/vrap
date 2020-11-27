@@ -55,10 +55,10 @@ const { publicRuntimeConfig } = getConfig();
 
 export interface InitialCarsStoreState {
   attributionQueryString: string;
-  makes: MakeBucket[] | undefined;
-  cars: Inventory | undefined;
-  popularCars: Inventory | undefined;
-  filtersData: FiltersData | undefined;
+  makes?: MakeBucket[];
+  cars?: Inventory;
+  popularCars?: Inventory;
+  filtersData?: FiltersData;
   titleQuery?: boolean;
 }
 
@@ -235,40 +235,43 @@ export const getPopularFeaturesRequestData = (
       (feature) => feature.filtersDataValue === filtersDataPopularFeatures
     );
     if (matchingFeature && matchingFeature.api) {
-      popularFeature.push(matchingFeature.api);
+      popularFeature.push(matchingFeature.api as PopularFeatureApi);
     }
   });
-  return popularFeature;
+  return popularFeature.flat();
 };
 
 export const getSortRequestData = (
   filtersData?: FiltersData,
-  geoLocationSortExperiment?: Experiment
+  sortAgeDirectionExperiment?: Experiment
 ): {
   sortby?: SortAPIBy;
   sortdirection?: SortAPIDirection;
+  sortAgeDirection?: SortAPIDirection;
 } => {
   if (!filtersData) {
-    const sortby =
-      geoLocationSortExperiment &&
-      geoLocationSortExperiment.assignedVariant === 1
-        ? SortAPIBy.GEO
-        : undefined;
+    const sortAgeDirection =
+      sortAgeDirectionExperiment &&
+      sortAgeDirectionExperiment.assignedVariant === 1
+        ? SortAPIDirection.ASCENDING
+        : SortAPIDirection.DESCENDING;
     return {
-      sortby,
+      sortby: SortAPIBy.GEO,
       sortdirection: undefined,
+      sortAgeDirection,
     };
   }
   const filtersDataSort = filtersData[Filters.SORT];
   if (!filtersDataSort) {
-    const sortby =
-      geoLocationSortExperiment &&
-      geoLocationSortExperiment.assignedVariant === 1
-        ? SortAPIBy.GEO
-        : undefined;
+    const sortAgeDirection =
+      sortAgeDirectionExperiment &&
+      sortAgeDirectionExperiment.assignedVariant === 1
+        ? SortAPIDirection.ASCENDING
+        : SortAPIDirection.DESCENDING;
     return {
-      sortby,
+      sortby: SortAPIBy.GEO,
       sortdirection: undefined,
+      sortAgeDirection,
     };
   }
   const matchingSort = sorts.find(
@@ -328,7 +331,7 @@ export const getTransmissionRequestData = (
 
 export const getPostInventoryRequestDataFromFilterData = (
   filtersData?: FiltersData,
-  geoLocationSortExperiment?: Experiment
+  sortAgeDirectionExperiment?: Experiment
 ): PostInventoryRequestData => {
   const bodytype = getBodyTypeRequestData(filtersData);
   const color = getColorRequestData(filtersData);
@@ -337,9 +340,9 @@ export const getPostInventoryRequestDataFromFilterData = (
   const { makeSlug, modelSlug } = getMakeAndModelRequestData(filtersData);
   const offset = getOffsetRequestData(filtersData);
   const popularFeatures = getPopularFeaturesRequestData(filtersData);
-  const { sortby, sortdirection } = getSortRequestData(
+  const { sortby, sortdirection, sortAgeDirection } = getSortRequestData(
     filtersData,
-    geoLocationSortExperiment
+    sortAgeDirectionExperiment
   );
   const testdriveonly = getTestDriveOnlyRequestData(filtersData);
   const transmissionid = getTransmissionRequestData(filtersData);
@@ -357,6 +360,7 @@ export const getPostInventoryRequestDataFromFilterData = (
     searchall: filtersData ? filtersData[Filters.SEARCH] : undefined,
     sortby,
     sortdirection,
+    sortAgeDirection,
     testdriveonly,
     transmissionid,
     year: filtersData ? filtersData[Filters.YEAR] : undefined,
@@ -365,6 +369,7 @@ export const getPostInventoryRequestDataFromFilterData = (
     cylindersShowOther:
       (filtersData && filtersData[Filters.OTHER_CYLINDERS]) || undefined,
     optionalFeatures: popularFeatures,
+    combinedMpg: filtersData ? filtersData[Filters.FUEL_EFFICIENCY] : undefined,
   };
 };
 
@@ -410,10 +415,11 @@ export class CarsStore {
 
   @observable areFiltersOpen = false;
 
-  @observable geoLocationSortExperiment?: Experiment;
+  @observable sortAgeDirectionExperiment?: Experiment;
   @observable cylinderFilterExperiment?: Experiment;
   @observable fuelTypeFilterExperiment?: Experiment;
   @observable featuresFilterExperiment?: Experiment;
+  @observable fuelEfficiencyFilterExperiment?: Experiment;
 
   constructor(initialState?: InitialCarsStoreState) {
     this.invSearchNetworker = new InvSearchNetworker(
@@ -431,10 +437,10 @@ export class CarsStore {
   }
 
   @action
-  setGeoLocationSortExperiment = (
-    geoLocationSortExperiment?: Experiment
+  setSortAgeDirectionExperiment = (
+    sortAgeDirectionExperiment?: Experiment
   ): void => {
-    this.geoLocationSortExperiment = geoLocationSortExperiment;
+    this.sortAgeDirectionExperiment = sortAgeDirectionExperiment;
   };
 
   @action
@@ -442,6 +448,13 @@ export class CarsStore {
     cylinderFilterExperiment?: Experiment
   ): void => {
     this.cylinderFilterExperiment = cylinderFilterExperiment;
+  };
+
+  @action
+  setFuelEfficiencyFilterExperiment = (
+    fuelEfficiencyFilterExperiment?: Experiment
+  ): void => {
+    this.fuelEfficiencyFilterExperiment = fuelEfficiencyFilterExperiment;
   };
 
   @action
@@ -479,7 +492,7 @@ export class CarsStore {
       this.inventoryStatus = Status.FETCHING;
       const postInventoryRequestDataFromFiltersData = getPostInventoryRequestDataFromFilterData(
         this.filtersData,
-        this.geoLocationSortExperiment
+        this.sortAgeDirectionExperiment
       );
       const inventoryRequestData: PostInventoryRequestData = {
         ...postInventoryRequestDataFromFiltersData,

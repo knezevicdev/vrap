@@ -6,14 +6,11 @@ import { Car } from '@vroom-web/inv-search-networking';
 import { SoldStatusInt } from '@vroom-web/inv-service-networking';
 import isEmpty from 'lodash.isempty';
 
-import { StartPurchaseStore } from './store';
-
 import AnalyticsHandler, { Product } from 'src/integrations/AnalyticsHandler';
 import { InventoryStore } from 'src/modules/inventory/store';
 
 class StartPurchaseViewModel {
   private inventoryStore: InventoryStore;
-  private startPurchaseStore: StartPurchaseStore;
   private analyticsHandler: AnalyticsHandler;
   private car: Car;
   readonly purchaseText: string = 'Start Purchase';
@@ -21,14 +18,10 @@ class StartPurchaseViewModel {
   readonly findNewMatch: string = 'Find A New Match';
   readonly poweredBy = 'Powered by';
 
-  constructor(
-    inventoryStore: InventoryStore,
-    startPurchaseStore: StartPurchaseStore
-  ) {
+  constructor(inventoryStore: InventoryStore) {
     this.inventoryStore = inventoryStore;
     this.analyticsHandler = new AnalyticsHandler();
     this.car = inventoryStore.vehicle._source;
-    this.startPurchaseStore = startPurchaseStore;
   }
 
   getButtonText(): string {
@@ -86,13 +79,10 @@ class StartPurchaseViewModel {
       window.location.href = modelHref;
     } else {
       this.analyticsHandler.trackProductAdded(product);
-      this.startPurchaseStore.setShowRedirectToTrue();
+      const url = `https://www.vroom.com/e2e/${vin}/checkoutTradeIn?utm_source=santander&utm_campaign=national&utm_medium=listings&vit_source=santanderconsumerusa&vit_medium=wl&vit_dest=vroom`;
+      window.location.href = url;
     }
   }
-
-  showRedirect = (): boolean => {
-    return this.startPurchaseStore.showRedirect;
-  };
 
   isAvailableSoon = (): boolean => {
     const {

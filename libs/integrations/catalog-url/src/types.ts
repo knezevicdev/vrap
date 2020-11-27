@@ -15,6 +15,7 @@ export enum Filters {
   OTHER_CYLINDERS = 'othercylinders',
   FUEL_TYPE = 'fueltype',
   POPULAR_FEATURES = 'optionalfeatures',
+  FUEL_EFFICIENCY = 'combinedmpg',
 }
 
 export enum BodyType {
@@ -104,12 +105,16 @@ export enum FuelType {
 
 export enum PopularFeatures {
   ANDROID_AUTO = 'Android Auto',
-  APPLE_CAR_PLAY = 'Apple Car Play',
+  APPLE_CAR_PLAY = 'Apple CarPlay',
   HEATED_SEATS = 'Heated Seats',
   REAR_VIEW_CAMERA = 'Rear View Camera',
   REMOTE_START = 'Remote Start',
   SUNROOF_MOONROOF = 'Sunroof or Moonroof',
   THIRD_ROW_SEATING = 'Third Row Seating',
+}
+
+export interface FuelEfficiency {
+  min: number;
 }
 
 export interface FiltersData {
@@ -129,6 +134,7 @@ export interface FiltersData {
   [Filters.OTHER_CYLINDERS]?: boolean;
   [Filters.FUEL_TYPE]?: FuelType[];
   [Filters.POPULAR_FEATURES]?: PopularFeatures[];
+  [Filters.FUEL_EFFICIENCY]?: FuelEfficiency;
 }
 
 export interface GetUrlFromFiltersDataOptions {

@@ -1,10 +1,10 @@
 import { Brand } from '@vroom-web/ui';
-import { NextPageContext } from 'next';
+import { GetServerSidePropsContext } from 'next';
 import getConfig from 'next/config';
 import { DocumentContext } from 'next/document';
 
 export const determineWhitelabel = (
-  ctx: DocumentContext | NextPageContext
+  ctx: GetServerSidePropsContext | DocumentContext
 ): Brand => {
   let brand = Brand.VROOM;
 
@@ -14,11 +14,13 @@ export const determineWhitelabel = (
 
   const whitelabel = brandHeader || queryBrand;
 
-  if (whitelabel === Brand.SANTANDER) brand = Brand.SANTANDER;
-  else if (whitelabel === Brand.TDA) brand = Brand.TDA;
+  // check header/query/cached brand val exists in enum and is valid
+  if (Object.values(Brand).includes(whitelabel as Brand))
+    brand = whitelabel as Brand;
 
   return brand;
 };
+
 export interface BrandConfig {
   segmentWriteKey?: string;
   brandParam: string;

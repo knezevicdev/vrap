@@ -1,4 +1,5 @@
 import {
+  FuelEfficiency,
   Make,
   MakeAndModels,
   MaxAndMin,
@@ -93,6 +94,17 @@ export const isMaxAndMin = (x: any): x is MaxAndMin => {
     return false;
   }
   if (!isNumber(x['max'])) {
+    return false;
+  }
+  if (!isNumber(x['min'])) {
+    return false;
+  }
+  return true;
+};
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export const isFuelEfficiency = (x: any): x is FuelEfficiency => {
+  if (!isObject(x)) {
     return false;
   }
   if (!isNumber(x['min'])) {

@@ -211,8 +211,9 @@ describe('getSortRequestData', () => {
   test('1', () => {
     const mockFiltersData: FiltersData = {};
     expect(getSortRequestData(mockFiltersData)).toEqual({
-      sortby: undefined,
+      sortby: SortAPIBy.GEO,
       sortdirection: undefined,
+      sortAgeDirection: SortDirection.DESCENDING,
     });
   });
   test('2', () => {
@@ -297,6 +298,24 @@ describe('getPostInventoryRequestDataFromFilterData', () => {
     const mockRequestData1: PostInventoryRequestData = {
       bodytype: ['Sedan'],
       color: ['grey'],
+      combinedMpg: undefined,
+      cylinders: undefined,
+      cylindersShowOther: undefined,
+      drivetype: undefined,
+      fuelType: undefined,
+      makeSlug: undefined,
+      miles: undefined,
+      modelSlug: undefined,
+      offset: undefined,
+      optionalFeatures: undefined,
+      price: undefined,
+      searchall: undefined,
+      sortAgeDirection: SortAPIDirection.DESCENDING,
+      sortby: SortAPIBy.GEO,
+      sortdirection: undefined,
+      testdriveonly: undefined,
+      transmissionid: undefined,
+      year: undefined,
     };
     expect(getPostInventoryRequestDataFromFilterData(mockFiltersData1)).toEqual(
       mockRequestData1

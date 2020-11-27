@@ -4,6 +4,7 @@ import { Typography } from '@vroom-web/ui';
 import { observer } from 'mobx-react';
 import React from 'react';
 
+import FuelEfficiency from './FuelEfficiency';
 import FuelType from './FuelType';
 import FuelAndEfficiencyViewModel from './ViewModel';
 
@@ -27,6 +28,11 @@ const Titles = styled(Typography)(({ theme }) => ({
   padding: theme.spacing(1, 0),
 }));
 
+const FuelEfficiencyTitles = styled(Typography)(({ theme }) => ({
+  fontSize: '13px',
+  padding: theme.spacing(1, 0),
+}));
+
 const Value = styled(Typography)(() => ({
   fontSize: '16px',
 }));
@@ -38,12 +44,20 @@ interface Props {
 const FuelAndEfficiencyView: React.FC<Props> = ({ viewModel }) => {
   return (
     <FuelAndEfficiencyContainer>
-      {viewModel.showFuelAndEfficiencyFilters() && (
+      {viewModel.showFuelTypeFilter() && (
         <>
           <Titles fontWeight="fontWeightMedium">
             {viewModel.fuelTypeLabel}
           </Titles>
           <FuelType />
+        </>
+      )}
+      {viewModel.showFuelEfficiencyFilter() && (
+        <>
+          <FuelEfficiencyTitles fontWeight="fontWeightMedium">
+            {viewModel.minimumFuelEfficiency}
+          </FuelEfficiencyTitles>
+          <FuelEfficiency />
         </>
       )}
       <Reset

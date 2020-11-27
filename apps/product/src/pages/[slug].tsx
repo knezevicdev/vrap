@@ -1,5 +1,5 @@
 import { Brand, ThemeProvider } from '@vroom-web/ui';
-import { NextPage, NextPageContext } from 'next';
+import { GetServerSideProps, GetServerSidePropsContext, NextPage } from 'next';
 import getConfig from 'next/config';
 import React from 'react';
 
@@ -15,11 +15,12 @@ import {
 } from 'src/modules/inventory/store';
 import { Status } from 'src/networking/types';
 import Page from 'src/Page';
+import { determineWhitelabel } from 'src/utils/utils';
 
 const { publicRuntimeConfig } = getConfig();
 
 export interface Props {
-  canonicalHref?: string;
+  canonicalHref: string | null;
   initialState: InventoryStoreState;
   title: string;
   brand: Brand;
@@ -66,25 +67,19 @@ const InventoryPage: NextPage<Props> = (props: Props) => {
   );
 };
 
-InventoryPage.getInitialProps = async (
-  context: NextPageContext
-): Promise<Props> => {
-  const { req, res, query } = context;
+export const getServerSideProps: GetServerSideProps<Props> = async (
+  context: GetServerSidePropsContext
+) => {
+  const { res, query } = context;
   const slug = query.slug as string;
   const slugArray = slug.split('-');
   const vin = slugArray[slugArray.length - 1];
 
-  const headerBrandKey = 'x-brand';
-  const brandHeader = req && req.headers[headerBrandKey];
-  const queryBrand = query.brand;
-
-  let brand = Brand.VROOM;
-  const whitelabel = brandHeader || queryBrand;
-  if (whitelabel === Brand.SANTANDER) brand = Brand.SANTANDER;
-  else if (whitelabel === Brand.TDA) brand = Brand.TDA;
+  context.res.setHeader('Cache-Control', '');
+  const brand = determineWhitelabel(context);
 
   const initialState = await getInitialInventoryStoreState(vin);
-  let canonicalHref: string | undefined;
+  let canonicalHref: string | null = null;
   let title = '';
 
   const getTitle = (
@@ -137,7 +132,7 @@ InventoryPage.getInitialProps = async (
     }
   }
 
-  return { canonicalHref, initialState, title, brand, vin };
+  return { props: { canonicalHref, initialState, title, brand, vin } };
 };
 
 export default InventoryPage;
