@@ -1,10 +1,8 @@
 import axios, { AxiosInstance, AxiosResponse } from 'axios';
-import getConfig from 'next/config';
 
 import { Prices } from './models/Price';
-const {
-  publicRuntimeConfig: { VROOM_URL },
-} = getConfig();
+
+import ENVS from 'src/integrations/Envs';
 
 export enum Status {
   INITIAL = 'initial',
@@ -27,12 +25,12 @@ export class Networker {
 
   getOfferDetails(priceId: string): Promise<AxiosResponse<Prices>> {
     const encodedPriceID = encodeURIComponent(priceId);
-    const url = `${VROOM_URL}/api/appraisal/get-offer?offerID=${encodedPriceID}`;
+    const url = `${ENVS.VROOM_URL}/api/appraisal/get-offer?offerID=${encodedPriceID}`;
     return this.axiosInstance.get(url);
   }
 
   submitPriceResponse(priceData: PriceData): Promise<AxiosResponse<Prices>> {
-    const url = `${VROOM_URL}/api/sf/offer`;
+    const url = `${ENVS.VROOM_URL}/api/sf/offer`;
     const { priceId: offerId, accepted } = priceData;
 
     const data = {

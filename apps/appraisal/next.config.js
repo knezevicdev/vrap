@@ -15,13 +15,20 @@ const config = {
   distDir: `.next/${shortHash}`,
   generateBuildId: () => shortHash,
   publicRuntimeConfig: {
-    BASE_PATH: basePath,
-    BRANCH_IO_KEY: process.env.NEXT_PUBLIC_BRANCH_IO_KEY,
-    DATA_DOG_RUM_APPLICATION: process.env.NEXT_PUBLIC_DATA_DOG_RUM_APPLICATION,
-    DATA_DOG_RUM_TOKEN: process.env.NEXT_PUBLIC_DATA_DOG_RUM_TOKEN,
-    GEARBOX_PRIVATE_URL: process.env.NEXT_PUBLIC_GEARBOX_PRIVATE_URL,
-    STATIC_ASSETS_HOST_URL: process.env.NEXT_PUBLIC_STATIC_ASSETS_HOST_URL,
-    VROOM_URL: process.env.NEXT_PUBLIC_VROOM_URL,
+    // Will be available on both server-side and client-side
+    NEXT_PUBLIC_BASE_PATH: basePath,
+    NEXT_PUBLIC_BRANCH_IO_KEY: process.env.NEXT_PUBLIC_BRANCH_IO_KEY,
+    NEXT_PUBLIC_DATA_DOG_RUM_APPLICATION:
+      process.env.NEXT_PUBLIC_DATA_DOG_RUM_APPLICATION,
+    NEXT_PUBLIC_DATA_DOG_RUM_TOKEN: process.env.NEXT_PUBLIC_DATA_DOG_RUM_TOKEN,
+    NEXT_PUBLIC_GEARBOX_PRIVATE_URL:
+      process.env.NEXT_PUBLIC_GEARBOX_PRIVATE_URL,
+    NEXT_PUBLIC_STATIC_ASSETS_HOST_URL:
+      process.env.NEXT_PUBLIC_STATIC_ASSETS_HOST_URL,
+    NEXT_PUBLIC_VROOM_URL: process.env.NEXT_PUBLIC_VROOM_URL,
+  },
+  serverRuntimeConfig: {
+    // Will only be available on the server side
     SEGMENT_WRITE_KEY: process.env.SEGMENT_WRITE_KEY,
   },
   /* Custom webpack configuration. */
