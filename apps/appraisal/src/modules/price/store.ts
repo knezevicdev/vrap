@@ -61,36 +61,15 @@ export class PriceStore {
   private readonly networker = new Networker();
 
   @observable status: 'loading' | 'success' | 'error' = 'loading';
-  @observable price = {
-    automatedAppraisal: false,
-    price: 0,
-    priceId: '',
-    goodUntil: '2020-01-01T00:00:00Z',
-    active: false,
-    created: '',
-    make: '',
-    miles: 0,
-    model: '',
-    newOffer: null,
-    priceStatus: '',
-    taxCreditSavings: null,
-    trim: '',
-    userEmail: '',
-    verificationUrl: null,
-    vin: '',
-    xkeId: 0,
-    year: 0,
-  };
+  @observable price: PriceStoreState = defaultPriceState;
 
-  constructor() {
-    //TODO: pass in price ID from query
-    this.getOfferDetails('e93bafe0b739241f875d1e3c35416fff');
+  constructor(priceId: string) {
+    this.getOfferDetails(priceId);
   }
 
   @action
   getOfferDetails = (priceId: string): void => {
     this.status = 'loading';
-    console.log('set loading');
 
     this.networker
       .getOfferDetails(priceId)
@@ -118,13 +97,11 @@ export class PriceStore {
           priceMapFromResponse.xkeId = price.offer_id;
           priceMapFromResponse.year = price.Year__c;
 
-          console.log('set success');
           this.status = 'success';
+          this.price = priceMapFromResponse;
         }
       })
       .catch((error) => {
-        console.log('set error');
-
         this.status = 'error';
         console.log(JSON.stringify(error));
       });

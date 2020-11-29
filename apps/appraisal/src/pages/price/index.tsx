@@ -1,6 +1,7 @@
 import { SimpleHeader } from '@vroom-web/header-components';
 import { IncomingMessage } from 'http';
 import { GetServerSideProps, NextPage } from 'next';
+import { useRouter } from 'next/router';
 import React from 'react';
 
 import Footer from 'src/core/Footer';
@@ -12,9 +13,9 @@ import Page from 'src/Page';
 
 const Price: NextPage = () => {
   const gearboxPrivateUrl = ENVS.GEARBOX_PRIVATE_URL;
-  const store = new PriceStore();
-  //   const router = useRouter();
-  //   const priceId = router.query.priceId as string;
+  const router = useRouter();
+  const priceId = router.query.priceId as string;
+  const store = new PriceStore(priceId);
 
   return (
     <Page name="Home">

@@ -14,6 +14,10 @@ class PriceViewModel {
     return this.store.status;
   };
 
+  getAutomated = (): boolean => {
+    return this.store.price.automatedAppraisal;
+  };
+
   onPageLoad = (): void => {
     this.analyticsHandler.trackPriceViewed();
   };
