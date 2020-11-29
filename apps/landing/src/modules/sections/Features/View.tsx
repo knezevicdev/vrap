@@ -43,6 +43,11 @@ const HeaderWrapper = styled.thead`
   tr {
     height: 36px;
 
+    th {
+      line-height: 25px;
+      padding-left: 16px;
+    }
+
     th:not(:last-child) {
       box-shadow: 1px 0 0 0 #f5f5f5;
     }
@@ -62,6 +67,11 @@ const HeaderWrapper = styled.thead`
 const BodyWrapper = styled.tbody`
   tr {
     height: 36px;
+
+    td {
+      line-height: 25px;
+      padding-left: 16px;
+    }
 
     td:first-child {
       min-width: 144px;

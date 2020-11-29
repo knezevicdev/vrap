@@ -1,4 +1,5 @@
-import { Brand, ThemeProvider } from '@vroom-web/ui';
+import { ThemeProvider } from '@vroom-web/ui';
+import { Brand, determineWhitelabel } from '@vroom-web/whitelabel';
 import { GetServerSideProps, GetServerSidePropsContext, NextPage } from 'next';
 import { ParsedUrlQuery } from 'querystring';
 import React from 'react';
@@ -7,7 +8,6 @@ import Schedule from 'src/modules/schedule';
 import { BrandContext } from 'src/modules/schedule/BrandContext';
 import { QueryContext } from 'src/modules/schedule/QueryContext';
 import Page from 'src/Page';
-import { determineWhitelabel } from 'src/utils/utils';
 
 interface Props {
   brand: Brand;

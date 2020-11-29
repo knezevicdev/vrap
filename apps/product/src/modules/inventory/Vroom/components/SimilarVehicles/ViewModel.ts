@@ -30,6 +30,8 @@ class SimilarVehiclesViewModel {
         soldStatus,
         vin,
         year,
+        vinClusterPrimary,
+        vinClusterSecondary,
       } = car;
       const name = `${year} ${make} ${model}`;
       const url = `/inventory/${makeSlug}-${modelSlug}-${year}-${vin}`;
@@ -47,10 +49,12 @@ class SimilarVehiclesViewModel {
         url,
         vin,
         year,
+        vinClusterPrimary,
+        vinClusterSecondary,
       };
     });
-
-    analyticsHandler.trackProductListViewed(products);
+    const clusterCount = this.getSimilarClusterCount();
+    analyticsHandler.trackProductListViewed(products, clusterCount);
   }
 
   loading(): boolean {
@@ -80,6 +84,10 @@ class SimilarVehiclesViewModel {
     } catch {
       return [];
     }
+  };
+
+  getSimilarClusterCount = (): number => {
+    return this.store.similarClusterCount;
   };
 
   handleClick(event: React.MouseEvent<HTMLButtonElement>): void {

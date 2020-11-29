@@ -57,5 +57,7 @@
   "height": 0,
   "hasStockPhotos": false,
   "consignmentPartnerId": "",
-  "isAvailableToSell": false
+  "isAvailableToSell": false,
+  "vinClusterPrimary": 0,
+  "vinClusterSecondary": 0
 }

@@ -76,9 +76,7 @@ class HeaderNavViewModel {
     // This is a stopgap until a better attribution system is in place.
 
     // retain brand query param to ensure whitelabeled pages are not cached/seen when navigating the vroom version of the app
-    const queryString = `${this.store.queryString}${
-      this.store.queryString ? '&' : '?'
-    }brand=vroom`;
+    const queryString = `${this.store.queryString}`;
 
     if (!this.store.loggedIn) {
       return [
