@@ -28,9 +28,10 @@ const Iframe = styled.iframe`
 `;
 
 const Image = styled.img`
-  max-width: 875px;
+  max-width: 976px;
   max-height: 533px;
   width: 100%;
+  object-fit: cover;
 `;
 
 const Photo: React.FC<Props> = ({ viewModel }) => {
