@@ -1,8 +1,11 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
 import Icon, { Icons } from '../../../../core/Icon';
 import HeaderViewModel from './ViewModel';
+
+import { Button } from 'src/core/Button';
+import { Link, Title } from 'src/core/Typography';
 
 const Container = styled.div`
   display: flex;
@@ -34,17 +37,64 @@ const Container = styled.div`
   }
 `;
 
+const VehicleContainer = styled.div`
+  @media (max-width: 768px) {
+    display: none;
+  }
+`;
+
+const YearMakeModel = styled(Title.One)`
+  padding-right: 16px;
+  border-right: 1px solid #999da3;
+  margin-right: 16px;
+  line-height: 40px;
+`;
+
+const Price = styled(Title.One)`
+  line-height: 40px;
+  margin-right: 32px;
+`;
+
+const VehicleDetailsButton = styled(Button.Primary)`
+  margin: 0;
+`;
+
 interface Props {
   viewModel: HeaderViewModel;
 }
 
 const HeaderView: React.FC<Props> = ({ viewModel }) => {
-  const { logoHref } = viewModel;
+  const { logoHref, pageThreshold, button, handleClick } = viewModel;
+  const details = viewModel.details();
+  const [showVehicleContainer, setShowVehicleContainer] = useState(false);
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      window.onscroll = (): void => {
+        const pos = window.pageYOffset;
+        pos > pageThreshold
+          ? setShowVehicleContainer(true)
+          : setShowVehicleContainer(false);
+      };
+    }
+  }, [showVehicleContainer, pageThreshold]);
+
   return (
     <Container>
-      <a href={logoHref}>
+      <Link href={logoHref}>
         <Icon icon={Icons.VROOM} />
-      </a>
+      </Link>
+      <VehicleContainer>
+        {showVehicleContainer && (
+          <>
+            <YearMakeModel>{details.ymm}</YearMakeModel>
+            <Price>{details.price}</Price>
+            <VehicleDetailsButton onClick={handleClick}>
+              {button}
+            </VehicleDetailsButton>
+          </>
+        )}
+      </VehicleContainer>
     </Container>
   );
 };

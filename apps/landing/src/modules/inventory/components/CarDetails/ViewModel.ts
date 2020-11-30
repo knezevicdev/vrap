@@ -11,6 +11,7 @@ interface Details {
 
 class CarDetailsViewModel {
   private car: Car;
+  readonly button = 'See all vehicle details';
 
   constructor(inventoryStore: InventoryStore) {
     this.car = inventoryStore.vehicle._source;

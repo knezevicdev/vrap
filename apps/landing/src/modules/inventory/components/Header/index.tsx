@@ -1,10 +1,13 @@
-import React from 'react';
+import React, { useContext } from 'react';
 
+import { InventoryStoreContext } from '../../store/store';
 import View from './View';
 import ViewModel from './ViewModel';
 
 const Header: React.FC = () => {
-  return <View viewModel={new ViewModel()} />;
+  const store = useContext(InventoryStoreContext);
+  const viewModel = new ViewModel(store);
+  return <View viewModel={viewModel} />;
 };
 
 export default Header;

@@ -72,7 +72,7 @@ const List = styled.ul`
 const CarDetails: React.FC<Props> = ({ viewModel }) => {
   const { ymm, trim, miles, price } = viewModel.details();
   const features = viewModel.features();
-  const { handleClick } = viewModel;
+  const { button, handleClick } = viewModel;
 
   return (
     <CarDetailsContainer>
@@ -101,7 +101,7 @@ const CarDetails: React.FC<Props> = ({ viewModel }) => {
       </div>
 
       <VehicleDetailsButton onClick={handleClick}>
-        See all vehicle details
+        {button}
       </VehicleDetailsButton>
     </CarDetailsContainer>
   );
