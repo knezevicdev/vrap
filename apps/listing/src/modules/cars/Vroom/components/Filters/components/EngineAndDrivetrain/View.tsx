@@ -26,7 +26,7 @@ const Reset = styled(ListItem)(({ theme }) => ({
 
 const Titles = styled(Typography)(({ theme }) => ({
   padding: theme.spacing(2, 0, 0, 0),
-  color: '#6C717A',
+  color: theme.palette.grey[700],
 }));
 
 const Value = styled(Typography)(() => ({
