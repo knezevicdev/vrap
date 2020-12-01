@@ -6,44 +6,55 @@ import { ThemeProps } from 'vroom-ui/src/foundation/themes/types';
 import { addStyleForMobile } from 'vroom-ui/src/foundation/themes/Vroom';
 import { Body, Heading, Link, Title } from 'vroom-ui/src/foundation/Typography';
 
-interface Props {}
+interface Props {
+  data: {
+    car: string;
+    email: string;
+    phoneNumber: string;
+    image: {
+      alt: string;
+      src: string;
+    };
+  };
+}
 
-const ReservedCar: React.FC<Props> = (): JSX.Element => {
-  const heading = 'your car is reserved!';
-  const car = '2018 Land Rover Range Rover Sport';
-
+const ReservedCar: React.FC<Props> = ({
+  data: {
+    car,
+    email,
+    phoneNumber,
+    image: { alt, src },
+  },
+}): JSX.Element => {
   return (
     <Container>
-      <CarHeading>{heading}</CarHeading>
+      <CarHeading>your car is reserved!</CarHeading>
       <CarPicture>
-        <Picture
-          alt="Car"
-          src="/assets/car.png"
-          width="100%"
-          aspectRatio="3:2"
-        />
+        <Picture alt={alt} src={src} width="100%" aspectRatio="3:2" />
       </CarPicture>
       <CarTitle>{car}</CarTitle>
       <Steps>
         <Step>
           <Check icon={Icons.CHECKMARK_SMALL} />
           <Body.Regular>
-            The email was sent to <Bold>ph123@gmail.com</Bold>.
+            The email was sent to <Bold>{email}</Bold>.
           </Body.Regular>
         </Step>
         <Step>
           <Check icon={Icons.CHECKMARK_SMALL} />
           <Body.Regular>
             A Vroom representative will reach out to your phone number{' '}
-            <Bold>+1 (212) 200-1000</Bold> within the next 24 hours of a
-            business day.{' '}
+            <Bold>+{phoneNumber}</Bold> within the next 24 hours of a business
+            day.{' '}
           </Body.Regular>
         </Step>
         <Step>
           <Check icon={Icons.CHECKMARK_SMALL} />
           <Body.Regular>
-            <Schedule href={'vroom.com'}>Schedule a time</Schedule> to talk with
-            the Vroom team.
+            <Schedule href="https://www.vroom.com/schedule" blank>
+              Schedule a time
+            </Schedule>{' '}
+            to talk with the Vroom team.
           </Body.Regular>
         </Step>
       </Steps>

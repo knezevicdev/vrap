@@ -7,10 +7,20 @@ import ReservedCar from '../../../../modules/congrats/sections/ReservedCar';
 
 const theme = getVroomTheme('/assets/fonts/Vroom');
 
+const data = {
+  car: '2018 Land Rover Range Rover Sport',
+  image: {
+    alt: '2018 Land Rover Range Rover Sport',
+    src: '/assets/car.png',
+  },
+  email: 'ph123@gmail.com',
+  phoneNumber: '1 (212) 200-1000',
+};
+
 export const Success = (): JSX.Element => {
   return (
     <ThemeProvider theme={theme}>
-      <ReservedCar />
+      <ReservedCar data={data} />
     </ThemeProvider>
   );
 };
