@@ -3,16 +3,9 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.AddressType = exports.ErrorType = exports.DeviceType = exports.Role = void 0;
+exports.AddressType = exports.ErrorType = exports.Role = exports.DeviceType = void 0;
 
 /** All built-in and custom scalars, mapped to their actual values */
-var Role;
-exports.Role = Role;
-
-(function (Role) {
-  Role["VroomUser"] = "VROOM_USER";
-})(Role || (exports.Role = Role = {}));
-
 var DeviceType;
 exports.DeviceType = DeviceType;
 
@@ -21,6 +14,13 @@ exports.DeviceType = DeviceType;
   DeviceType["Fcm"] = "FCM";
   DeviceType["Apns"] = "APNS";
 })(DeviceType || (exports.DeviceType = DeviceType = {}));
+
+var Role;
+exports.Role = Role;
+
+(function (Role) {
+  Role["VroomUser"] = "VROOM_USER";
+})(Role || (exports.Role = Role = {}));
 
 var ErrorType;
 exports.ErrorType = ErrorType;

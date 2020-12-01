@@ -11,41 +11,64 @@ export declare type Scalars = {
     Boolean: boolean;
     Int: number;
     Float: number;
-    Map: any;
     Time: any;
+    Map: any;
 };
-export declare type DealDeleteResult = DeleteDeal | ApiError;
-export declare type DeliveryDetails = {
-    __typename?: 'DeliveryDetails';
-    wheelerTruck: Scalars['Boolean'];
-    availableForDelivery: Scalars['Boolean'];
-    additionalDetails?: Maybe<Scalars['String']>;
-    unavailableDates?: Maybe<Array<Scalars['Time']>>;
-    alternateContact?: Maybe<PointOfContact>;
+export declare type LoanPricingStack = {
+    __typename?: 'LoanPricingStack';
+    lenderName: Scalars['String'];
+    apr: Scalars['Float'];
+    amountFinanced: Scalars['Float'];
+    buyRate: Scalars['Float'];
+    financeCharge: Scalars['Float'];
+    termMonths: Scalars['Int'];
+    downPayment: Scalars['Int'];
+    monthlyPayment: Scalars['Float'];
+    totalRebates: Scalars['Int'];
+    totalTaxes: Scalars['Float'];
+    annualMileage: Scalars['Int'];
+    offerAvailable: Scalars['Boolean'];
+    taxItems?: Maybe<Array<TaxItem>>;
 };
-export declare type AddressDto = {
-    __typename?: 'AddressDTO';
-    id: Scalars['Int'];
-    type: Scalars['String'];
-    firstName: Scalars['String'];
-    lastName: Scalars['String'];
-    streetLine1: Scalars['String'];
-    streetLine2: Scalars['String'];
-    city: Scalars['String'];
-    county: Scalars['String'];
-    state: Scalars['String'];
-    country?: Maybe<Scalars['String']>;
-    postCode: Scalars['String'];
+export declare type AutoFiResponse = {
+    __typename?: 'AutoFiResponse';
+    url: Scalars['String'];
+    loanApplicationID: Scalars['String'];
+    customerProfile: Scalars['String'];
+    loanApplicationExpires: Scalars['String'];
+    referenceID: Scalars['String'];
 };
-export declare type Check = {
-    __typename?: 'Check';
-    exists: Scalars['Boolean'];
+export declare type AmountDue = {
+    __typename?: 'AmountDue';
+    taxableAmount: Scalars['Float'];
+    cashDownPayment: Scalars['Float'];
+    inventoryTaxRate: Scalars['Float'];
+    inventoryTaxFee: Scalars['Float'];
+    salesTaxPercentage: Scalars['Float'];
+    salesTaxAmount: Scalars['Float'];
+    otherStateTaxes: Scalars['Float'];
+    totalTaxes: Scalars['Float'];
+    titleFee: Scalars['Float'];
+    duplicateTitleFee: Scalars['Float'];
+    titlingCompanyFee: Scalars['Float'];
+    licenseAndRegistrationFee: Scalars['Float'];
+    inspectionFee: Scalars['Float'];
+    totalStateFees: Scalars['Float'];
+    documentationFee: Scalars['Float'];
+    totalTaxesAndFees: Scalars['Float'];
+    shippingFee: Scalars['Float'];
+    subTotal: Scalars['Float'];
+    totalBalanceDue: Scalars['Float'];
+    tradeIn?: Maybe<AmountDueTradeIn>;
 };
-export declare type InvSearchResult = {
-    __typename?: 'InvSearchResult';
-    hits: Scalars['Int'];
-    vehicles?: Maybe<Array<InvSearchVehicleData>>;
-    counts?: Maybe<InvSearchCounters>;
+export declare type Device = {
+    __typename?: 'Device';
+    id: Scalars['String'];
+    type: DeviceType;
+};
+export declare type ShippingArray = {
+    __typename?: 'ShippingArray';
+    shippings: Array<Shipping>;
 };
 export declare type Shipping = {
     __typename?: 'Shipping';
@@ -94,12 +117,317 @@ export declare type Shipping = {
     destinationContactEmail: Scalars['String'];
     lastMileMove: Scalars['Int'];
 };
-export declare type VinData = {
-    __typename?: 'VinData';
-    colorData?: Maybe<ColorData>;
-    trimData?: Maybe<TrimData>;
-    basicData?: Maybe<BasicData>;
-    options?: Maybe<Array<Maybe<Scalars['String']>>>;
+export declare type ColorData = {
+    __typename?: 'ColorData';
+    source?: Maybe<Scalars['String']>;
+    colors?: Maybe<Array<Maybe<Scalars['String']>>>;
+};
+export declare type FavoriteVehicles = {
+    __typename?: 'FavoriteVehicles';
+    vin: Scalars['String'];
+};
+export declare type LoanPricing = {
+    __typename?: 'loanPricing';
+    apr: Scalars['Float'];
+    amountFinanced: Scalars['Float'];
+    buyRate: Scalars['Float'];
+    downPayment: Scalars['Float'];
+    monthlyPayment: Scalars['Float'];
+    termMonths: Scalars['Int'];
+};
+export declare type LoanDecision = {
+    __typename?: 'LoanDecision';
+    isAccepted: Scalars['Boolean'];
+    middleman: Scalars['String'];
+    middlemanReferenceID: Scalars['String'];
+    name: Scalars['String'];
+    state: Scalars['String'];
+    pricing: LoanPricing;
+};
+export declare type CheckSubscriptionResult = Check | ValidationError;
+export declare type BasicData = {
+    __typename?: 'BasicData';
+    source: Scalars['String'];
+    database?: Maybe<Scalars['String']>;
+    year: Scalars['Int'];
+    make: Scalars['String'];
+    model: Scalars['String'];
+};
+export declare type TaxItem = {
+    __typename?: 'TaxItem';
+    totalTax: Scalars['Float'];
+    price: Scalars['Float'];
+    name: Scalars['String'];
+};
+export declare type ServiceSalesTax = {
+    __typename?: 'ServiceSalesTax';
+    code: Scalars['String'];
+    amount: Scalars['String'];
+    description: Scalars['String'];
+    feeType: Scalars['String'];
+};
+export declare type TaxesAndFees = {
+    __typename?: 'TaxesAndFees';
+    status: Scalars['String'];
+    dmvFees?: Maybe<Array<Fee>>;
+    dmvTotal: Scalars['String'];
+    saleTax?: Maybe<Array<ServiceSalesTax>>;
+};
+export declare type Subject = {
+    __typename?: 'Subject';
+    path: Scalars['String'];
+    name?: Maybe<Scalars['String']>;
+};
+export declare type Inventory = {
+    __typename?: 'Inventory';
+    id: Scalars['String'];
+    miles?: Maybe<Scalars['Int']>;
+    ownerCount?: Maybe<Scalars['Int']>;
+    leadPhotoURL?: Maybe<Scalars['String']>;
+    pricing?: Maybe<Pricing>;
+    vehicle?: Maybe<VehicleInventory>;
+    imageURLs?: Maybe<Array<ImageUrl>>;
+    status?: Maybe<KeyDisplayPair>;
+};
+export declare type Address = {
+    __typename?: 'Address';
+    id: Scalars['ID'];
+    type: Scalars['String'];
+    firstName: Scalars['String'];
+    lastName: Scalars['String'];
+    streetLine1: Scalars['String'];
+    streetLine2: Scalars['String'];
+    city: Scalars['String'];
+    state: Scalars['String'];
+    country: Scalars['String'];
+    postcode: Scalars['String'];
+};
+export declare type LpToVin = {
+    __typename?: 'LPToVIN';
+    vehicles?: Maybe<Array<Maybe<Vehicles>>>;
+};
+export declare type DealResult = Deal | ApiError;
+export declare type DeleteDeal = {
+    __typename?: 'DeleteDeal';
+    result: Scalars['Boolean'];
+};
+export declare type Financing = {
+    __typename?: 'Financing';
+    state: Scalars['String'];
+    loanApplicationId: Scalars['String'];
+    referenceId: Scalars['String'];
+    decisions?: Maybe<Array<LoanDecision>>;
+    pricingStack?: Maybe<LoanPricingStack>;
+};
+export declare type DeliveryDetails = {
+    __typename?: 'DeliveryDetails';
+    wheelerTruck: Scalars['Boolean'];
+    availableForDelivery: Scalars['Boolean'];
+    additionalDetails?: Maybe<Scalars['String']>;
+    unavailableDates?: Maybe<Array<Scalars['Time']>>;
+    alternateContact?: Maybe<PointOfContact>;
+};
+export declare type VehicleInventory = {
+    __typename?: 'VehicleInventory';
+    vin: Scalars['String'];
+    year: Scalars['Int'];
+    make: Scalars['String'];
+    model: Scalars['String'];
+    trim: Scalars['String'];
+    fuelType?: Maybe<KeyDisplayPair>;
+    seatingCapacity: Scalars['Int'];
+    grossWeight: Scalars['Int'];
+    isElectric: Scalars['Boolean'];
+    cylinders: Scalars['Int'];
+    engineBore: Scalars['Float'];
+};
+export declare type DuplicateSubscriptionError = {
+    __typename?: 'DuplicateSubscriptionError';
+    message: Scalars['String'];
+};
+export declare type Check = {
+    __typename?: 'Check';
+    exists: Scalars['Boolean'];
+};
+export declare type DefectPhotos = {
+    __typename?: 'DefectPhotos';
+    url: Scalars['String'];
+    defectType: Scalars['String'];
+    location: Scalars['String'];
+};
+export declare type InvSearchVehicleData = {
+    __typename?: 'InvSearchVehicleData';
+    vin: Scalars['String'];
+    inventoryId: Scalars['Int'];
+    bodyType: Scalars['String'];
+    listingPrice: Scalars['Int'];
+    color: Scalars['String'];
+    year: Scalars['Int'];
+    miles: Scalars['Int'];
+    trim: Scalars['String'];
+    model: Scalars['String'];
+    make: Scalars['String'];
+    vehicleType: Scalars['String'];
+    soldStatus: Scalars['Int'];
+    warrantyRemaining: Scalars['String'];
+    warranty: Scalars['Int'];
+    cylinders: Scalars['Int'];
+    style: Scalars['String'];
+    diesel: Scalars['Int'];
+    leadFlagPhotoUrl: Scalars['String'];
+    subjectLine: Scalars['String'];
+    interiorPhotoUrlHiRes: Scalars['String'];
+    hiresPhotos?: Maybe<Array<Scalars['String']>>;
+    extColor: Scalars['String'];
+    driveType: Scalars['String'];
+    fuelType: Scalars['String'];
+    transmission: Scalars['String'];
+    doorCount: Scalars['Int'];
+    intColor: Scalars['String'];
+    optionalFeatures: Scalars['String'];
+    engine: Scalars['String'];
+    leadPhotoUrl: Scalars['String'];
+    cityMpg: Scalars['Int'];
+    highwayMpg: Scalars['Int'];
+    combinedMpg: Scalars['Int'];
+    frontTrackWidth: Scalars['Float'];
+    rearTrackWidth: Scalars['Float'];
+    wheelBase: Scalars['Float'];
+    width: Scalars['Float'];
+    length: Scalars['Float'];
+    groundClearance: Scalars['Float'];
+    height: Scalars['Float'];
+    stockLeadFlagPhotoUrl: Scalars['String'];
+    defectPhotos?: Maybe<Array<DefectPhotos>>;
+    zoneID: Scalars['Int'];
+    zone: Scalars['String'];
+    hasStockPhotos: Scalars['Boolean'];
+    partnerId: Scalars['String'];
+    geoLocation: Scalars['String'];
+    location: Scalars['String'];
+    ownerCount: Scalars['Int'];
+    isTitleQAPass: Scalars['Boolean'];
+    isAvailableToSell: Scalars['Boolean'];
+};
+export declare type DealDeleteResult = DeleteDeal | ApiError;
+export declare type CreditApplication = {
+    __typename?: 'CreditApplication';
+    offerPreferences: CreditOfferPreferences;
+};
+export declare type KeyDisplayPair = {
+    __typename?: 'KeyDisplayPair';
+    key: Scalars['String'];
+    Display: Scalars['String'];
+};
+export declare type ImageUrl = {
+    __typename?: 'ImageURL';
+    thumbnail: Scalars['String'];
+    image: Scalars['String'];
+};
+export declare type CreateDeviceResult = Device | ValidationError;
+export declare type User = {
+    __typename?: 'User';
+    username: Scalars['String'];
+    firstName: Scalars['String'];
+    middleName?: Maybe<Scalars['String']>;
+    lastName?: Maybe<Scalars['String']>;
+    consents: Consents;
+    deals?: Maybe<Array<Deal>>;
+    files?: Maybe<Array<File>>;
+    addresses?: Maybe<Array<Address>>;
+    phones?: Maybe<Array<Phone>>;
+    emails?: Maybe<Array<Email>>;
+    favoriteVehicles?: Maybe<Array<FavoriteVehicles>>;
+    appraisals?: Maybe<Array<Maybe<Appraisal>>>;
+};
+export declare type UserDealsArgs = {
+    dealStatus?: Maybe<Array<Scalars['String']>>;
+    dealID?: Maybe<Scalars['Int']>;
+};
+export declare type Appraisal = {
+    __typename?: 'Appraisal';
+    vehicle: Vehicle;
+    dsUUID?: Maybe<Scalars['String']>;
+    zipcode?: Maybe<Scalars['String']>;
+    options?: Maybe<Array<Scalars['String']>>;
+    conditionData?: Maybe<ConditionData>;
+    exteriorColor?: Maybe<Scalars['String']>;
+    otherAfterMarket?: Maybe<Scalars['String']>;
+    sfid: Scalars['String'];
+    price?: Maybe<Scalars['Float']>;
+    source: Scalars['String'];
+    offerStatus: Scalars['String'];
+    created: Scalars['Time'];
+    xkeAppraisalId: Scalars['Int'];
+    sellTiming?: Maybe<Scalars['String']>;
+    expectedOffer?: Maybe<Scalars['Int']>;
+    appraisaloffer?: Maybe<Array<Maybe<AppraisalOffer>>>;
+};
+export declare type ApiError = {
+    __typename?: 'APIError';
+    errorType: ErrorType;
+    errorTitle: Scalars['String'];
+    errorDetail: Scalars['String'];
+};
+export declare type PointOfContact = {
+    __typename?: 'PointOfContact';
+    first: Scalars['String'];
+    last: Scalars['String'];
+    phone: Scalars['String'];
+};
+export declare enum DeviceType {
+    Email = "EMAIL",
+    Fcm = "FCM",
+    Apns = "APNS"
+}
+export declare enum Role {
+    VroomUser = "VROOM_USER"
+}
+export declare type AppraisalOffer = {
+    __typename?: 'AppraisalOffer';
+    email: Scalars['String'];
+    automatedAppraisal: Scalars['Boolean'];
+    id: Scalars['String'];
+    price?: Maybe<Scalars['Float']>;
+    vehicle: Vehicle;
+    goodUntil?: Maybe<Scalars['String']>;
+    xkeOfferId: Scalars['Int'];
+    created: Scalars['Time'];
+    offerStatus: Scalars['String'];
+    offerEmail: Email;
+};
+export declare type CreditOfferPreferences = {
+    __typename?: 'CreditOfferPreferences';
+    apr: Scalars['Float'];
+    term: Scalars['Int'];
+    downPayment: Scalars['Int'];
+    annualMileage: Scalars['Int'];
+    requestedOfferType: Scalars['String'];
+};
+export declare type Pricing = {
+    __typename?: 'Pricing';
+    listPrice: Scalars['Int'];
+    msrp: Scalars['Int'];
+    blueBookValue: Scalars['Int'];
+};
+export declare type AddressDto = {
+    __typename?: 'AddressDTO';
+    id: Scalars['Int'];
+    type: Scalars['String'];
+    firstName: Scalars['String'];
+    lastName: Scalars['String'];
+    streetLine1: Scalars['String'];
+    streetLine2: Scalars['String'];
+    city: Scalars['String'];
+    county: Scalars['String'];
+    state: Scalars['String'];
+    country?: Maybe<Scalars['String']>;
+    postCode: Scalars['String'];
+};
+export declare type InvSearchCounterData = {
+    __typename?: 'InvSearchCounterData';
+    key: Scalars['String'];
+    count: Scalars['Int'];
 };
 export declare type Mutation = {
     __typename?: 'Mutation';
@@ -255,534 +583,6 @@ export declare type MutationUserUpdateProfileArgs = {
     lastName: Scalars['String'];
     phoneNumber: Scalars['String'];
 };
-export declare type FavoriteVehicles = {
-    __typename?: 'FavoriteVehicles';
-    vin: Scalars['String'];
-};
-export declare type LoanPricing = {
-    __typename?: 'loanPricing';
-    apr: Scalars['Float'];
-    amountFinanced: Scalars['Float'];
-    buyRate: Scalars['Float'];
-    downPayment: Scalars['Float'];
-    monthlyPayment: Scalars['Float'];
-    termMonths: Scalars['Int'];
-};
-export declare type DuplicateSubscriptionError = {
-    __typename?: 'DuplicateSubscriptionError';
-    message: Scalars['String'];
-};
-export declare type SubscriptionPage = {
-    __typename?: 'SubscriptionPage';
-    subscriptions?: Maybe<Array<SubjectSubscription>>;
-    nextPage?: Maybe<Scalars['Int']>;
-};
-export declare type Email = {
-    __typename?: 'Email';
-    type: Scalars['String'];
-    email: Scalars['String'];
-};
-export declare type CreditOfferPreferences = {
-    __typename?: 'CreditOfferPreferences';
-    apr: Scalars['Float'];
-    term: Scalars['Int'];
-    downPayment: Scalars['Int'];
-    annualMileage: Scalars['Int'];
-    requestedOfferType: Scalars['String'];
-};
-export declare type AdditionalProduct = {
-    __typename?: 'AdditionalProduct';
-    ID?: Maybe<Scalars['String']>;
-    selected: Scalars['Boolean'];
-    planCode: Scalars['String'];
-    name: Scalars['String'];
-    summary: Scalars['String'];
-    cost: Scalars['Float'];
-    months: Scalars['Int'];
-    miles: Scalars['Int'];
-    deductible: Scalars['Float'];
-    dealerCost: Scalars['Float'];
-    maxTerm: Scalars['Int'];
-    planSku: Scalars['String'];
-    productCode: Scalars['String'];
-    retailRate: Scalars['Float'];
-};
-export declare type Vehicle = {
-    __typename?: 'Vehicle';
-    year: Scalars['Int'];
-    make: Scalars['String'];
-    model: Scalars['String'];
-    trim?: Maybe<Scalars['String']>;
-    miles: Scalars['Int'];
-    vin: Scalars['String'];
-};
-export declare type ConditionData = {
-    __typename?: 'ConditionData';
-    keysAmount: Scalars['Int'];
-    hasAccident: Scalars['String'];
-    titleStatus: Scalars['String'];
-    interiorCondiotn: Scalars['String'];
-    seats: Scalars['String'];
-    smokedIn: Scalars['String'];
-    exteriorCondition: Scalars['String'];
-    tiresAndWheels: Scalars['String'];
-    hailDamage: Scalars['String'];
-    afterMarket?: Maybe<Array<Scalars['String']>>;
-    mechanicalCondition: Scalars['String'];
-    runnable: Scalars['String'];
-    warningLights: Scalars['String'];
-    warningLightsValues?: Maybe<Array<Scalars['String']>>;
-    otherWarning?: Maybe<Scalars['String']>;
-    floodFireDamage: Scalars['String'];
-    additionalDetails?: Maybe<Scalars['String']>;
-};
-export declare type PointOfContact = {
-    __typename?: 'PointOfContact';
-    first: Scalars['String'];
-    last: Scalars['String'];
-    phone: Scalars['String'];
-};
-export declare type Pricing = {
-    __typename?: 'Pricing';
-    listPrice: Scalars['Int'];
-    msrp: Scalars['Int'];
-    blueBookValue: Scalars['Int'];
-};
-export declare type ErrorDetail = {
-    __typename?: 'ErrorDetail';
-    message: Scalars['String'];
-    path: Scalars['String'];
-    property: Scalars['String'];
-};
-export declare type DefectPhotos = {
-    __typename?: 'DefectPhotos';
-    url: Scalars['String'];
-    defectType: Scalars['String'];
-    location: Scalars['String'];
-};
-export declare type ShippingResult = ShippingArray | ApiError;
-export declare type Vehicles = {
-    __typename?: 'Vehicles';
-    restrictedStateIndicator: Scalars['String'];
-    processingType: Scalars['String'];
-    vin: Scalars['String'];
-    modelYear: Scalars['String'];
-    make: Scalars['String'];
-    stateOfRegistration: Scalars['String'];
-    plateType: Scalars['String'];
-    inputLicensePlate: Scalars['String'];
-    vinPattern: Scalars['String'];
-};
-export declare type KeyDisplayPair = {
-    __typename?: 'KeyDisplayPair';
-    key: Scalars['String'];
-    Display: Scalars['String'];
-};
-export declare enum Role {
-    VroomUser = "VROOM_USER"
-}
-export declare type ShippingArray = {
-    __typename?: 'ShippingArray';
-    shippings: Array<Shipping>;
-};
-export declare type TaxItem = {
-    __typename?: 'TaxItem';
-    totalTax: Scalars['Float'];
-    price: Scalars['Float'];
-    name: Scalars['String'];
-};
-export declare type SignedInUser = {
-    __typename?: 'SignedInUser';
-    accountId: Scalars['Int'];
-    accessToken: Scalars['String'];
-    refreshToken: Scalars['String'];
-    idToken: Scalars['String'];
-};
-export declare type Account = {
-    __typename?: 'Account';
-    userName: Scalars['String'];
-    firstName: Scalars['String'];
-    middleName: Scalars['String'];
-    lastName: Scalars['String'];
-    phone: Scalars['String'];
-};
-export declare type File = {
-    __typename?: 'File';
-    id: Scalars['ID'];
-    type: Scalars['String'];
-    extension: Scalars['String'];
-    originalFileName: Scalars['String'];
-    downloadURL: Scalars['String'];
-    fileExtension: Scalars['String'];
-    isThumbnail: Scalars['String'];
-    fileSize: Scalars['Int'];
-};
-export declare type ColorData = {
-    __typename?: 'ColorData';
-    source?: Maybe<Scalars['String']>;
-    colors?: Maybe<Array<Maybe<Scalars['String']>>>;
-};
-export declare type AppraisalOffer = {
-    __typename?: 'AppraisalOffer';
-    email: Scalars['String'];
-    automatedAppraisal: Scalars['Boolean'];
-    id: Scalars['String'];
-    price?: Maybe<Scalars['Float']>;
-    vehicle: Vehicle;
-    goodUntil?: Maybe<Scalars['String']>;
-    xkeOfferId: Scalars['Int'];
-    created: Scalars['Time'];
-    offerStatus: Scalars['String'];
-    offerEmail: Email;
-};
-export declare type ApiError = {
-    __typename?: 'APIError';
-    errorType: ErrorType;
-    errorTitle: Scalars['String'];
-    errorDetail: Scalars['String'];
-};
-export declare type LoanDecision = {
-    __typename?: 'LoanDecision';
-    isAccepted: Scalars['Boolean'];
-    middleman: Scalars['String'];
-    middlemanReferenceID: Scalars['String'];
-    name: Scalars['String'];
-    state: Scalars['String'];
-    pricing: LoanPricing;
-};
-export declare type AutoFiResponse = {
-    __typename?: 'AutoFiResponse';
-    url: Scalars['String'];
-    loanApplicationID: Scalars['String'];
-    customerProfile: Scalars['String'];
-    loanApplicationExpires: Scalars['String'];
-    referenceID: Scalars['String'];
-};
-export declare type SubjectSubscription = {
-    __typename?: 'SubjectSubscription';
-    subject: Subject;
-    id: Scalars['String'];
-    filters: Scalars['String'];
-};
-export declare type CreateDeviceResult = Device | ValidationError;
-export declare type Subject = {
-    __typename?: 'Subject';
-    path: Scalars['String'];
-    name?: Maybe<Scalars['String']>;
-};
-export declare type CreditApplication = {
-    __typename?: 'CreditApplication';
-    offerPreferences: CreditOfferPreferences;
-};
-export declare type DealStatus = {
-    __typename?: 'DealStatus';
-    status: Scalars['String'];
-    step: Scalars['String'];
-    pastSteps?: Maybe<Array<Maybe<Scalars['String']>>>;
-    frozen: Scalars['Boolean'];
-    reason?: Maybe<Scalars['String']>;
-    errorDetail?: Maybe<Scalars['String']>;
-    interestedInTrade: Scalars['Boolean'];
-    canBeCancelled: Scalars['Boolean'];
-    plateWillBeTransferred: Scalars['Boolean'];
-    backendProdcutsStepDone: Scalars['Boolean'];
-    docUploadStepDone: Scalars['Boolean'];
-};
-export declare type ServiceSalesTax = {
-    __typename?: 'ServiceSalesTax';
-    code: Scalars['String'];
-    amount: Scalars['String'];
-    description: Scalars['String'];
-    feeType: Scalars['String'];
-};
-export declare enum DeviceType {
-    Email = "EMAIL",
-    Fcm = "FCM",
-    Apns = "APNS"
-}
-export declare type CreateSubscriptionResult = SubjectSubscription | DuplicateSubscriptionError | ValidationError;
-export declare type Phone = {
-    __typename?: 'Phone';
-    type: Scalars['String'];
-    number: Scalars['String'];
-};
-export declare type Appraisal = {
-    __typename?: 'Appraisal';
-    vehicle: Vehicle;
-    dsUUID?: Maybe<Scalars['String']>;
-    zipcode?: Maybe<Scalars['String']>;
-    options?: Maybe<Array<Scalars['String']>>;
-    conditionData?: Maybe<ConditionData>;
-    exteriorColor?: Maybe<Scalars['String']>;
-    otherAfterMarket?: Maybe<Scalars['String']>;
-    sfid: Scalars['String'];
-    price?: Maybe<Scalars['Float']>;
-    source: Scalars['String'];
-    offerStatus: Scalars['String'];
-    created: Scalars['Time'];
-    xkeAppraisalId: Scalars['Int'];
-    sellTiming?: Maybe<Scalars['String']>;
-    expectedOffer?: Maybe<Scalars['Int']>;
-    appraisaloffer?: Maybe<Array<Maybe<AppraisalOffer>>>;
-};
-export declare type DealResult = Deal | ApiError;
-export declare type Financing = {
-    __typename?: 'Financing';
-    state: Scalars['String'];
-    loanApplicationId: Scalars['String'];
-    referenceId: Scalars['String'];
-    decisions?: Maybe<Array<LoanDecision>>;
-    pricingStack?: Maybe<LoanPricingStack>;
-};
-export declare type VehicleInventory = {
-    __typename?: 'VehicleInventory';
-    vin: Scalars['String'];
-    year: Scalars['Int'];
-    make: Scalars['String'];
-    model: Scalars['String'];
-    trim: Scalars['String'];
-    fuelType?: Maybe<KeyDisplayPair>;
-    seatingCapacity: Scalars['Int'];
-    grossWeight: Scalars['Int'];
-    isElectric: Scalars['Boolean'];
-    cylinders: Scalars['Int'];
-    engineBore: Scalars['Float'];
-};
-export declare type Fee = {
-    __typename?: 'Fee';
-    amount: Scalars['String'];
-    code: Scalars['String'];
-    description: Scalars['String'];
-};
-export declare type ValidationError = {
-    __typename?: 'ValidationError';
-    type: Scalars['String'];
-    title: Scalars['String'];
-    details?: Maybe<Array<ErrorDetail>>;
-};
-export declare type ShippingAddress = {
-    __typename?: 'ShippingAddress';
-    street1: Scalars['String'];
-    street2: Scalars['String'];
-    city: Scalars['String'];
-    state: Scalars['String'];
-    zipcode: Scalars['String'];
-};
-export declare type Trims = {
-    __typename?: 'Trims';
-    Uid?: Maybe<Scalars['Int']>;
-    description: Scalars['String'];
-    long_description: Scalars['String'];
-    doors: Scalars['Int'];
-    source: Scalars['String'];
-};
-export declare type TrimData = {
-    __typename?: 'TrimData';
-    source: Scalars['String'];
-    database?: Maybe<Scalars['String']>;
-    trims?: Maybe<Array<Maybe<Trims>>>;
-};
-export declare type LpToVin = {
-    __typename?: 'LPToVIN';
-    vehicles?: Maybe<Array<Maybe<Vehicles>>>;
-};
-export declare type Inventory = {
-    __typename?: 'Inventory';
-    id: Scalars['String'];
-    miles?: Maybe<Scalars['Int']>;
-    ownerCount?: Maybe<Scalars['Int']>;
-    leadPhotoURL?: Maybe<Scalars['String']>;
-    pricing?: Maybe<Pricing>;
-    vehicle?: Maybe<VehicleInventory>;
-    imageURLs?: Maybe<Array<ImageUrl>>;
-    status?: Maybe<KeyDisplayPair>;
-};
-export declare type AmountDueTradeIn = {
-    __typename?: 'AmountDueTradeIn';
-    value: Scalars['Float'];
-    loanPayoff: Scalars['Float'];
-    netBalance: Scalars['Float'];
-    totalDownPayment: Scalars['Float'];
-};
-export declare type InvSearchVehicleData = {
-    __typename?: 'InvSearchVehicleData';
-    vin: Scalars['String'];
-    inventoryId: Scalars['Int'];
-    bodyType: Scalars['String'];
-    listingPrice: Scalars['Int'];
-    color: Scalars['String'];
-    year: Scalars['Int'];
-    miles: Scalars['Int'];
-    trim: Scalars['String'];
-    model: Scalars['String'];
-    make: Scalars['String'];
-    vehicleType: Scalars['String'];
-    soldStatus: Scalars['Int'];
-    warrantyRemaining: Scalars['String'];
-    warranty: Scalars['Int'];
-    cylinders: Scalars['Int'];
-    style: Scalars['String'];
-    diesel: Scalars['Int'];
-    leadFlagPhotoUrl: Scalars['String'];
-    subjectLine: Scalars['String'];
-    interiorPhotoUrlHiRes: Scalars['String'];
-    hiresPhotos?: Maybe<Array<Scalars['String']>>;
-    extColor: Scalars['String'];
-    driveType: Scalars['String'];
-    fuelType: Scalars['String'];
-    transmission: Scalars['String'];
-    doorCount: Scalars['Int'];
-    intColor: Scalars['String'];
-    optionalFeatures: Scalars['String'];
-    engine: Scalars['String'];
-    leadPhotoUrl: Scalars['String'];
-    cityMpg: Scalars['Int'];
-    highwayMpg: Scalars['Int'];
-    combinedMpg: Scalars['Int'];
-    frontTrackWidth: Scalars['Float'];
-    rearTrackWidth: Scalars['Float'];
-    wheelBase: Scalars['Float'];
-    width: Scalars['Float'];
-    length: Scalars['Float'];
-    groundClearance: Scalars['Float'];
-    height: Scalars['Float'];
-    stockLeadFlagPhotoUrl: Scalars['String'];
-    defectPhotos?: Maybe<Array<DefectPhotos>>;
-    zoneID: Scalars['Int'];
-    zone: Scalars['String'];
-    hasStockPhotos: Scalars['Boolean'];
-    partnerId: Scalars['String'];
-    geoLocation: Scalars['String'];
-    location: Scalars['String'];
-    ownerCount: Scalars['Int'];
-    isTitleQAPass: Scalars['Boolean'];
-    isAvailableToSell: Scalars['Boolean'];
-};
-export declare type InvSearchCounterMakeModelData = {
-    __typename?: 'InvSearchCounterMakeModelData';
-    make: Scalars['String'];
-    count: Scalars['Int'];
-    models: Array<InvSearchCounterData>;
-};
-export declare type LoanPricingStack = {
-    __typename?: 'LoanPricingStack';
-    lenderName: Scalars['String'];
-    apr: Scalars['Float'];
-    amountFinanced: Scalars['Float'];
-    buyRate: Scalars['Float'];
-    financeCharge: Scalars['Float'];
-    termMonths: Scalars['Int'];
-    downPayment: Scalars['Int'];
-    monthlyPayment: Scalars['Float'];
-    totalRebates: Scalars['Int'];
-    totalTaxes: Scalars['Float'];
-    annualMileage: Scalars['Int'];
-    offerAvailable: Scalars['Boolean'];
-    taxItems?: Maybe<Array<TaxItem>>;
-};
-export declare type DepositPayment = {
-    __typename?: 'DepositPayment';
-    NameOnCard: Scalars['String'];
-    LastFourDigits: Scalars['Int'];
-    HoldID: Scalars['String'];
-    StripeAuthChargeID: Scalars['String'];
-    HoldPlaced: Scalars['Boolean'];
-    DepositCaptured: Scalars['Boolean'];
-    ChargeAmount: Scalars['Int'];
-};
-export declare type TaxesAndFees = {
-    __typename?: 'TaxesAndFees';
-    status: Scalars['String'];
-    dmvFees?: Maybe<Array<Fee>>;
-    dmvTotal: Scalars['String'];
-    saleTax?: Maybe<Array<ServiceSalesTax>>;
-};
-export declare type DocumentMetadata = {
-    __typename?: 'DocumentMetadata';
-    fileType: Scalars['String'];
-    fileID: Scalars['String'];
-};
-export declare enum ErrorType {
-    BadRequest = "BadRequest",
-    ServerFailure = "ServerFailure",
-    DealOutOfSync = "DealOutOfSync"
-}
-export declare enum AddressType {
-    Registration = "REGISTRATION",
-    Delivery = "DELIVERY",
-    Billing = "BILLING"
-}
-export declare type ImageUrl = {
-    __typename?: 'ImageURL';
-    thumbnail: Scalars['String'];
-    image: Scalars['String'];
-};
-export declare type Address = {
-    __typename?: 'Address';
-    id: Scalars['ID'];
-    type: Scalars['String'];
-    firstName: Scalars['String'];
-    lastName: Scalars['String'];
-    streetLine1: Scalars['String'];
-    streetLine2: Scalars['String'];
-    city: Scalars['String'];
-    state: Scalars['String'];
-    country: Scalars['String'];
-    postcode: Scalars['String'];
-};
-export declare type DeleteDeal = {
-    __typename?: 'DeleteDeal';
-    result: Scalars['Boolean'];
-};
-export declare type Deal = {
-    __typename?: 'Deal';
-    dealID: Scalars['Int'];
-    accountID: Scalars['Int'];
-    versionNumber: Scalars['Int'];
-    createdAt: Scalars['Time'];
-    updatedAt: Scalars['Time'];
-    dealSummary: DealSummary;
-};
-export declare type AmountDue = {
-    __typename?: 'AmountDue';
-    taxableAmount: Scalars['Float'];
-    cashDownPayment: Scalars['Float'];
-    inventoryTaxRate: Scalars['Float'];
-    inventoryTaxFee: Scalars['Float'];
-    salesTaxPercentage: Scalars['Float'];
-    salesTaxAmount: Scalars['Float'];
-    otherStateTaxes: Scalars['Float'];
-    totalTaxes: Scalars['Float'];
-    titleFee: Scalars['Float'];
-    duplicateTitleFee: Scalars['Float'];
-    titlingCompanyFee: Scalars['Float'];
-    licenseAndRegistrationFee: Scalars['Float'];
-    inspectionFee: Scalars['Float'];
-    totalStateFees: Scalars['Float'];
-    documentationFee: Scalars['Float'];
-    totalTaxesAndFees: Scalars['Float'];
-    shippingFee: Scalars['Float'];
-    subTotal: Scalars['Float'];
-    totalBalanceDue: Scalars['Float'];
-    tradeIn?: Maybe<AmountDueTradeIn>;
-};
-export declare type Device = {
-    __typename?: 'Device';
-    id: Scalars['String'];
-    type: DeviceType;
-};
-export declare type InvSearchCounterData = {
-    __typename?: 'InvSearchCounterData';
-    key: Scalars['String'];
-    count: Scalars['Int'];
-};
-export declare type InvSearchCounters = {
-    __typename?: 'InvSearchCounters';
-    makesModels?: Maybe<Array<InvSearchCounterMakeModelData>>;
-    trans?: Maybe<Array<InvSearchCounterData>>;
-    driveTrain?: Maybe<Array<InvSearchCounterData>>;
-    bodyType?: Maybe<Array<InvSearchCounterData>>;
-};
 export declare type Query = {
     __typename?: 'Query';
     version: Scalars['Int'];
@@ -850,24 +650,24 @@ export declare type QueryLicensePlateToVinArgs = {
     state: Scalars['String'];
     source: Scalars['String'];
 };
-export declare type User = {
-    __typename?: 'User';
-    username: Scalars['String'];
-    firstName: Scalars['String'];
-    middleName?: Maybe<Scalars['String']>;
-    lastName?: Maybe<Scalars['String']>;
-    consents: Consents;
-    deals?: Maybe<Array<Deal>>;
-    files?: Maybe<Array<File>>;
-    addresses?: Maybe<Array<Address>>;
-    phones?: Maybe<Array<Phone>>;
-    emails?: Maybe<Array<Email>>;
-    favoriteVehicles?: Maybe<Array<FavoriteVehicles>>;
-    appraisals?: Maybe<Array<Maybe<Appraisal>>>;
+export declare type TrimData = {
+    __typename?: 'TrimData';
+    source: Scalars['String'];
+    database?: Maybe<Scalars['String']>;
+    trims?: Maybe<Array<Maybe<Trims>>>;
 };
-export declare type UserDealsArgs = {
-    dealStatus?: Maybe<Array<Scalars['String']>>;
-    dealID?: Maybe<Scalars['Int']>;
+export declare type ShippingAddress = {
+    __typename?: 'ShippingAddress';
+    street1: Scalars['String'];
+    street2: Scalars['String'];
+    city: Scalars['String'];
+    state: Scalars['String'];
+    zipcode: Scalars['String'];
+};
+export declare type DocumentMetadata = {
+    __typename?: 'DocumentMetadata';
+    fileType: Scalars['String'];
+    fileID: Scalars['String'];
 };
 export declare type DealSummary = {
     __typename?: 'DealSummary';
@@ -890,17 +690,217 @@ export declare type DealSummary = {
     financing?: Maybe<Financing>;
     credit?: Maybe<CreditApplication>;
 };
-export declare type CheckSubscriptionResult = Check | ValidationError;
+export declare type InvSearchCounterMakeModelData = {
+    __typename?: 'InvSearchCounterMakeModelData';
+    make: Scalars['String'];
+    count: Scalars['Int'];
+    models: Array<InvSearchCounterData>;
+};
+export declare type Account = {
+    __typename?: 'Account';
+    userName: Scalars['String'];
+    firstName: Scalars['String'];
+    middleName: Scalars['String'];
+    lastName: Scalars['String'];
+    phone: Scalars['String'];
+};
+export declare type DealStatus = {
+    __typename?: 'DealStatus';
+    status: Scalars['String'];
+    step: Scalars['String'];
+    pastSteps?: Maybe<Array<Maybe<Scalars['String']>>>;
+    frozen: Scalars['Boolean'];
+    reason?: Maybe<Scalars['String']>;
+    errorDetail?: Maybe<Scalars['String']>;
+    interestedInTrade: Scalars['Boolean'];
+    canBeCancelled: Scalars['Boolean'];
+    plateWillBeTransferred: Scalars['Boolean'];
+    backendProdcutsStepDone: Scalars['Boolean'];
+    docUploadStepDone: Scalars['Boolean'];
+};
+export declare type AmountDueTradeIn = {
+    __typename?: 'AmountDueTradeIn';
+    value: Scalars['Float'];
+    loanPayoff: Scalars['Float'];
+    netBalance: Scalars['Float'];
+    totalDownPayment: Scalars['Float'];
+};
+export declare type InvSearchResult = {
+    __typename?: 'InvSearchResult';
+    hits: Scalars['Int'];
+    vehicles?: Maybe<Array<InvSearchVehicleData>>;
+    counts?: Maybe<InvSearchCounters>;
+};
+export declare type Phone = {
+    __typename?: 'Phone';
+    type: Scalars['String'];
+    number: Scalars['String'];
+};
+export declare type File = {
+    __typename?: 'File';
+    id: Scalars['ID'];
+    type: Scalars['String'];
+    extension: Scalars['String'];
+    originalFileName: Scalars['String'];
+    downloadURL: Scalars['String'];
+    fileExtension: Scalars['String'];
+    isThumbnail: Scalars['String'];
+    fileSize: Scalars['Int'];
+};
+export declare type Vehicles = {
+    __typename?: 'Vehicles';
+    restrictedStateIndicator: Scalars['String'];
+    processingType: Scalars['String'];
+    vin: Scalars['String'];
+    modelYear: Scalars['String'];
+    make: Scalars['String'];
+    stateOfRegistration: Scalars['String'];
+    plateType: Scalars['String'];
+    inputLicensePlate: Scalars['String'];
+    vinPattern: Scalars['String'];
+};
+export declare enum ErrorType {
+    BadRequest = "BadRequest",
+    ServerFailure = "ServerFailure",
+    DealOutOfSync = "DealOutOfSync"
+}
+export declare enum AddressType {
+    Registration = "REGISTRATION",
+    Delivery = "DELIVERY",
+    Billing = "BILLING"
+}
+export declare type ValidationError = {
+    __typename?: 'ValidationError';
+    type: Scalars['String'];
+    title: Scalars['String'];
+    details?: Maybe<Array<ErrorDetail>>;
+};
+export declare type SubjectSubscription = {
+    __typename?: 'SubjectSubscription';
+    subject: Subject;
+    id: Scalars['String'];
+    filters: Scalars['String'];
+};
+export declare type Email = {
+    __typename?: 'Email';
+    type: Scalars['String'];
+    email: Scalars['String'];
+};
 export declare type Consents = {
     __typename?: 'Consents';
     emailMarketing: Scalars['String'];
     smsMarketing: Scalars['String'];
 };
-export declare type BasicData = {
-    __typename?: 'BasicData';
+export declare type Trims = {
+    __typename?: 'Trims';
+    Uid?: Maybe<Scalars['Int']>;
+    description: Scalars['String'];
+    long_description: Scalars['String'];
+    doors: Scalars['Int'];
     source: Scalars['String'];
-    database?: Maybe<Scalars['String']>;
+};
+export declare type Vehicle = {
+    __typename?: 'Vehicle';
     year: Scalars['Int'];
     make: Scalars['String'];
     model: Scalars['String'];
+    trim?: Maybe<Scalars['String']>;
+    miles: Scalars['Int'];
+    vin: Scalars['String'];
+};
+export declare type VinData = {
+    __typename?: 'VinData';
+    colorData?: Maybe<ColorData>;
+    trimData?: Maybe<TrimData>;
+    basicData?: Maybe<BasicData>;
+    options?: Maybe<Array<Maybe<Scalars['String']>>>;
+};
+export declare type ConditionData = {
+    __typename?: 'ConditionData';
+    keysAmount: Scalars['Int'];
+    hasAccident: Scalars['String'];
+    titleStatus: Scalars['String'];
+    interiorCondiotn: Scalars['String'];
+    seats: Scalars['String'];
+    smokedIn: Scalars['String'];
+    exteriorCondition: Scalars['String'];
+    tiresAndWheels: Scalars['String'];
+    hailDamage: Scalars['String'];
+    afterMarket?: Maybe<Array<Scalars['String']>>;
+    mechanicalCondition: Scalars['String'];
+    runnable: Scalars['String'];
+    warningLights: Scalars['String'];
+    warningLightsValues?: Maybe<Array<Scalars['String']>>;
+    otherWarning?: Maybe<Scalars['String']>;
+    floodFireDamage: Scalars['String'];
+    additionalDetails?: Maybe<Scalars['String']>;
+};
+export declare type Fee = {
+    __typename?: 'Fee';
+    amount: Scalars['String'];
+    code: Scalars['String'];
+    description: Scalars['String'];
+};
+export declare type InvSearchCounters = {
+    __typename?: 'InvSearchCounters';
+    makesModels?: Maybe<Array<InvSearchCounterMakeModelData>>;
+    trans?: Maybe<Array<InvSearchCounterData>>;
+    driveTrain?: Maybe<Array<InvSearchCounterData>>;
+    bodyType?: Maybe<Array<InvSearchCounterData>>;
+};
+export declare type ShippingResult = ShippingArray | ApiError;
+export declare type DepositPayment = {
+    __typename?: 'DepositPayment';
+    NameOnCard: Scalars['String'];
+    LastFourDigits: Scalars['Int'];
+    HoldID: Scalars['String'];
+    StripeAuthChargeID: Scalars['String'];
+    HoldPlaced: Scalars['Boolean'];
+    DepositCaptured: Scalars['Boolean'];
+    ChargeAmount: Scalars['Int'];
+};
+export declare type CreateSubscriptionResult = SubjectSubscription | DuplicateSubscriptionError | ValidationError;
+export declare type AdditionalProduct = {
+    __typename?: 'AdditionalProduct';
+    ID?: Maybe<Scalars['String']>;
+    selected: Scalars['Boolean'];
+    planCode: Scalars['String'];
+    name: Scalars['String'];
+    summary: Scalars['String'];
+    cost: Scalars['Float'];
+    months: Scalars['Int'];
+    miles: Scalars['Int'];
+    deductible: Scalars['Float'];
+    dealerCost: Scalars['Float'];
+    maxTerm: Scalars['Int'];
+    planSku: Scalars['String'];
+    productCode: Scalars['String'];
+    retailRate: Scalars['Float'];
+};
+export declare type ErrorDetail = {
+    __typename?: 'ErrorDetail';
+    message: Scalars['String'];
+    path: Scalars['String'];
+    property: Scalars['String'];
+};
+export declare type SubscriptionPage = {
+    __typename?: 'SubscriptionPage';
+    subscriptions?: Maybe<Array<SubjectSubscription>>;
+    nextPage?: Maybe<Scalars['Int']>;
+};
+export declare type SignedInUser = {
+    __typename?: 'SignedInUser';
+    accountId: Scalars['Int'];
+    accessToken: Scalars['String'];
+    refreshToken: Scalars['String'];
+    idToken: Scalars['String'];
+};
+export declare type Deal = {
+    __typename?: 'Deal';
+    dealID: Scalars['Int'];
+    accountID: Scalars['Int'];
+    versionNumber: Scalars['Int'];
+    createdAt: Scalars['Time'];
+    updatedAt: Scalars['Time'];
+    dealSummary: DealSummary;
 };

@@ -38,3 +38,10 @@ export interface ClientDef {
     successInterceptor?: ResponseSuccessInterceptor
   ) => void;
 }
+
+export enum Status {
+  INITIAL,
+  LOADING,
+  SUCCESS,
+  ERROR,
+}
