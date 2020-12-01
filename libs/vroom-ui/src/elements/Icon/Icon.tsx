@@ -1,4 +1,5 @@
 import React from 'react';
+import styled from 'styled-components';
 
 import file from '../../../public/assets/icons.svg';
 
@@ -29,7 +30,7 @@ const Icon: React.FC<Props> = ({ icon, fill, stroke, className }) => {
   const xlinkHref = `${file}${id}`;
 
   return (
-    <svg
+    <SVG
       className={className}
       fill={iconFill}
       stroke={iconStroke}
@@ -38,11 +39,18 @@ const Icon: React.FC<Props> = ({ icon, fill, stroke, className }) => {
       viewBox={`0 0 ${width} ${height}`}
     >
       <use xlinkHref={xlinkHref} />
-    </svg>
+    </SVG>
   );
 };
 
 export default Icon;
+
+const SVG = styled.svg<{ height: number; width: number }>`
+  min-height: ${(props): number => props.height}px;
+  max-height: ${(props): number => props.height}px;
+  min-width: ${(props): number => props.width}px;
+  max-width: ${(props): number => props.width}px;
+`;
 
 export const Icons = {
   GAS: {

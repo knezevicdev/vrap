@@ -5,26 +5,25 @@ import { getVroomTheme } from 'vroom-ui/src/foundation/themes/Vroom';
 
 import ReservedCar from '../../../../modules/congrats/sections/ReservedCar';
 
-
 const theme = getVroomTheme('/assets/fonts/Vroom');
 
 export const Success = (): JSX.Element => {
-    return (
-        <ThemeProvider theme={theme}>
-            <ReservedCar />
-        </ThemeProvider>
-    );
+  return (
+    <ThemeProvider theme={theme}>
+      <ReservedCar />
+    </ThemeProvider>
+  );
 };
 
 Success.parameters = {
-    design: {
-        type: 'figma',
-        url:
-            'https://www.figma.com/file/yhvMWzN95E1DdNLBfEr5OH/Desktop-Congrats?node-id=1%3A4',
-    },
+  design: {
+    type: 'figma',
+    url:
+      'https://www.figma.com/file/yhvMWzN95E1DdNLBfEr5OH/Desktop-Congrats?node-id=1%3A4',
+  },
 };
 
 export default {
-    title: 'Checkout/Congrats/Sections/Reserved Car',
-    decorators: [withDesign],
+  title: 'Checkout/Congrats/Sections/Reserved Car',
+  decorators: [withDesign],
 };
