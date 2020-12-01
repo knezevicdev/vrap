@@ -64,10 +64,6 @@ const List = styled.ul`
   }
 `;
 
-const Button = styled(VehicleDetailsButton)`
-  width: 100%;
-`;
-
 const CarDetails: React.FC<Props> = ({ viewModel }) => {
   const { ymm, trim, miles, price } = viewModel.details();
   const features = viewModel.features();
@@ -98,7 +94,7 @@ const CarDetails: React.FC<Props> = ({ viewModel }) => {
         </div>
       </div>
 
-      <Button />
+      <VehicleDetailsButton />
     </CarDetailsContainer>
   );
 };
