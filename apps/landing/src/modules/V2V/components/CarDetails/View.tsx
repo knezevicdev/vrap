@@ -6,6 +6,7 @@ import VehicleDetailsButton from '../VehicleDetailsButton';
 import ViewModel from './ViewModel';
 
 import { Body, Title } from 'src/core/Typography';
+import Favorites from '../Favorites';
 
 export interface Props {
   viewModel: ViewModel;
@@ -94,7 +95,10 @@ const CarDetails: React.FC<Props> = ({ viewModel }) => {
         </div>
       </div>
 
-      <VehicleDetailsButton />
+      <div>
+        <VehicleDetailsButton />
+        <Favorites />
+      </div>
     </CarDetailsContainer>
   );
 };

@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 
-import { InventoryStoreContext } from '../../store/store';
+import { InventoryStoreContext } from '../../store/inventoryStore';
 import View from './View';
 import ViewModel from './ViewModel';
 
