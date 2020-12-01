@@ -1,4 +1,4 @@
-import ListItem from '@material-ui/core/ListItem';
+import { ListItem } from '@material-ui/core';
 import { styled } from '@material-ui/core/styles';
 import { Typography } from '@vroom-web/ui';
 import { observer } from 'mobx-react';
@@ -25,8 +25,8 @@ const Reset = styled(ListItem)(({ theme }) => ({
 }));
 
 const Titles = styled(Typography)(({ theme }) => ({
-  fontSize: '16px',
-  padding: theme.spacing(1, 0),
+  padding: theme.spacing(2, 0, 0, 0),
+  color: theme.palette.grey[700],
 }));
 
 const Value = styled(Typography)(() => ({
@@ -40,19 +40,13 @@ interface Props {
 const EngineAndDrivetrainView: React.FC<Props> = ({ viewModel }) => {
   return (
     <EngineAndDrivetrainContainer>
-      <Titles fontWeight="fontWeightMedium">
-        {viewModel.transmissionFilterLabel}
-      </Titles>
+      <Titles variant="caption">{viewModel.transmissionFilterLabel}</Titles>
       <Transmissions />
-      <Titles fontWeight="fontWeightMedium">
-        {viewModel.driveTypeFilterLabel}
-      </Titles>
+      <Titles variant="caption">{viewModel.driveTypeFilterLabel}</Titles>
       <DriveTypes />
       {viewModel.showCylindersFilter() && (
         <>
-          <Titles fontWeight="fontWeightMedium">
-            {viewModel.cylindersFilterLabel}
-          </Titles>
+          <Titles variant="caption">{viewModel.cylindersFilterLabel}</Titles>
           <Cylinders />
         </>
       )}

@@ -24,12 +24,13 @@ const Reset = styled(ListItem)(({ theme }) => ({
 }));
 
 const Titles = styled(Typography)(({ theme }) => ({
-  fontSize: '16px',
-  padding: theme.spacing(1, 0),
+  padding: theme.spacing(2, 0, 0, 0),
+  color: theme.palette.grey[700],
 }));
 
 const FuelEfficiencyTitles = styled(Typography)(({ theme }) => ({
   fontSize: '13px',
+  color: theme.palette.grey[700],
   padding: theme.spacing(1, 0),
 }));
 
@@ -46,15 +47,13 @@ const FuelAndEfficiencyView: React.FC<Props> = ({ viewModel }) => {
     <FuelAndEfficiencyContainer>
       {viewModel.showFuelTypeFilter() && (
         <>
-          <Titles fontWeight="fontWeightMedium">
-            {viewModel.fuelTypeLabel}
-          </Titles>
+          <Titles variant="caption">{viewModel.fuelTypeLabel}</Titles>
           <FuelType />
         </>
       )}
       {viewModel.showFuelEfficiencyFilter() && (
         <>
-          <FuelEfficiencyTitles fontWeight="fontWeightMedium">
+          <FuelEfficiencyTitles variant="caption">
             {viewModel.minimumFuelEfficiency}
           </FuelEfficiencyTitles>
           <FuelEfficiency />

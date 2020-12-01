@@ -1,6 +1,4 @@
-import Collapse from '@material-ui/core/Collapse';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
+import { Collapse, List, ListItem } from '@material-ui/core';
 import { styled } from '@material-ui/core/styles';
 import { Typography } from '@vroom-web/ui';
 import { observer } from 'mobx-react';
