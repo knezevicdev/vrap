@@ -38,6 +38,7 @@ const Container = styled.div`
 `;
 
 const VehicleContainer = styled.div`
+  display: flex;
   @media (max-width: 768px) {
     display: none;
   }
@@ -47,11 +48,11 @@ const YearMakeModel = styled(Title.One)`
   padding-right: 16px;
   border-right: 1px solid #999da3;
   margin-right: 16px;
-  line-height: 40px;
+  line-height: 48px;
 `;
 
 const Price = styled(Title.One)`
-  line-height: 40px;
+  line-height: 48px;
   margin-right: 32px;
 `;
 
@@ -85,7 +86,9 @@ const HeaderView: React.FC<Props> = ({ viewModel }) => {
           <>
             <YearMakeModel>{details.ymm}</YearMakeModel>
             <Price>{details.price}</Price>
-            <VehicleDetailsButton />
+            <div>
+              <VehicleDetailsButton />
+            </div>
           </>
         )}
       </VehicleContainer>
