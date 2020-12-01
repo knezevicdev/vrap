@@ -1,16 +1,20 @@
 import Dialog from '@material-ui/core/Dialog';
 import IconButton from '@material-ui/core/IconButton';
-import { styled } from '@material-ui/core/styles';
-import CloseIcon from '@material-ui/icons/Close';
-import { Button, Typography } from '@vroom-web/ui';
+// import CloseIcon from '@material-ui/icons/Close';
 import { observer } from 'mobx-react';
 import React from 'react';
 
 import ViewModel from './ViewModel';
+import styled from 'styled-components';
+import { Hero, Body } from 'src/core/Typography';
+import { Button } from 'src/core/Button';
 
-const DialogTitle = styled(Typography)(({ theme }) => ({
-  padding: theme.spacing(4),
-}));
+const DialogTitle = styled(Hero.Three)`
+  padding-bottom: 8px;
+  @media (max-width: 768px) {
+    padding-bottom: 16px;
+  }
+`;
 
 const StyledIconButton = styled(IconButton)(({ theme }) => ({
   position: 'absolute',
@@ -19,21 +23,44 @@ const StyledIconButton = styled(IconButton)(({ theme }) => ({
   padding: theme.spacing(2),
 }));
 
-const DialogContent = styled('div')(({ theme }) => ({
-  display: 'flex',
-  flexDirection: 'column',
-  alignItems: 'center',
-  paddingBottom: theme.spacing(4),
-}));
+const DialogContent = styled.div`
+  padding: 96px 48px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  border-bottom: 4px solid #e7131a;
+  @media (max-width: 768px) {
+    padding: 64px 32px;
+  }
+`;
 
-const DialogBody = styled(Typography)(({ theme }) => ({
-  padding: theme.spacing(0, 8, 4, 8),
-}));
+const DialogBody = styled(Body.Regular)`
+  padding-bottom: 64px;
+  @media (max-width: 768px) {
+    padding-bottom: 56px;
+  }
+`;
 
-const DialogButton = styled(Button)(({ theme }) => ({
-  width: '50%',
-  marginBottom: theme.spacing(2),
-}));
+const CreateAccountButton = styled(Button.Primary)`
+  @media (min-width: 768px) {
+    min-width: 280px;
+  }
+  @media (max-width: 767px) {
+    width: 100%;
+  }
+  margin-bottom: 16px;
+`;
+
+const LogInButton = styled(Button.Outline)`
+  @media (min-width: 768px) {
+    min-width: 280px;
+  }
+  @media (max-width: 767px) {
+    width: 100%;
+  }
+  margin-bottom: 16px;
+`;
 
 interface Props {
   viewModel: ViewModel;
@@ -51,31 +78,19 @@ const LoggedOutView: React.FC<Props> = ({ viewModel }) => {
       open={viewModel.isOpen()}
     >
       <DialogContent>
-        <DialogTitle variant="h2" fontWeight="fontWeightMedium">
+        <DialogTitle>
           {viewModel.dialogTitle}
-          <StyledIconButton aria-label="close" onClick={handleDialogClick}>
+          {/* <StyledIconButton aria-label="close" onClick={handleDialogClick}>
             <CloseIcon />
-          </StyledIconButton>
+          </StyledIconButton> */}
         </DialogTitle>
         <DialogBody>{viewModel.dialogBody}</DialogBody>
-        <DialogButton
-          variant="contained"
-          color="primary"
-          onClick={handleDialogActions('create')}
-        >
-          <Typography variant="button" fontWeight={600}>
-            {viewModel.createAccountButton}
-          </Typography>
-        </DialogButton>
-        <DialogButton
-          variant="outlined"
-          color="primary"
-          onClick={handleDialogActions('login')}
-        >
-          <Typography variant="button" fontWeight={600}>
-            {viewModel.logInButton}
-          </Typography>
-        </DialogButton>
+        <CreateAccountButton onClick={handleDialogActions('create')}>
+          {viewModel.createAccountButton}
+        </CreateAccountButton>
+        <LogInButton onClick={handleDialogActions('login')}>
+          {viewModel.logInButton}
+        </LogInButton>
       </DialogContent>
     </Dialog>
   );
