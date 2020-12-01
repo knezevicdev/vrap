@@ -77,6 +77,16 @@ const LoggedOutView: React.FC<Props> = ({ viewModel }) => {
       fullWidth={true}
       maxWidth={'sm'}
       open={viewModel.isOpen()}
+      PaperProps={{
+        style: {
+          borderRadius: 0,
+        },
+      }}
+      BackdropProps={{
+        style: {
+          backgroundColor: 'rgba(0, 0, 0, 0.8)',
+        },
+      }}
     >
       <span onClick={handleDialogClick}>
         <CloseIcon icon={Icons.CLOSE} />
