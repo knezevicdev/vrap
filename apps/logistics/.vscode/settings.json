@@ -10,5 +10,6 @@
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "json.format.enable": false,
-  "workbench.editor.labelFormat": "short"
+  "workbench.editor.labelFormat": "short",
+  "typescript.tsdk": "/www/node_modules/typescript/lib"
 }
