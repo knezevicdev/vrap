@@ -8,9 +8,11 @@ const Container = styled.div`
   align-items: center;
   flex-direction: column;
   max-width: 864px;
-  margin: 0 auto;
-  margin-top: 96px;
-  margin-bottom: 96px;
+  margin: 96px auto;
+  @media (max-width: 768px) {
+    padding: 0 16px;
+    margin: 32px auto;
+  }
 `;
 
 const Background = styled.div`

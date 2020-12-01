@@ -65,12 +65,31 @@ const StyledIframe = styled.iframe`
   height: 100%;
 `;
 
-const Image = styled.img`
+const TestDriveImage = styled.img`
   width: 100%;
+  max-width: 640px;
 `;
 
-const TestDriveImage = styled.img`
-  max-width: 640px;
+const CertifiedImage = styled.img`
+  width: 100%;
+  max-width: 590px;
+`;
+
+const DeliveredImageContainer = styled.div`
+  width: 100%;
+  position: relative;
+  @media (max-width: 768px) {
+    margin-top: -5%;
+    margin-bottom: 62%;
+  }
+`;
+const DeliveredImage = styled.img`
+  max-width: none;
+  @media (max-width: 768px) {
+    position: absolute;
+    width: 169% !important;
+    left: 0;
+  }
 `;
 
 const UnderlinedLink = styled(Link)`
@@ -102,8 +121,8 @@ export const CertifiedSection: FC = () => {
 
         <CertifiedTitle>vroom certified</CertifiedTitle>
       </TitleContainer>
-      <Image
-        src={`${publicRuntimeConfig.BASE_PATH}/images/V2V/test-drive.png`}
+      <CertifiedImage
+        src={`${publicRuntimeConfig.BASE_PATH}/images/V2V/car-diagram.png`}
       />
       <Description>
         All our vehicles go through a 100 point inspection and come with{' '}
@@ -135,7 +154,11 @@ export const DeliveredSection: FC = () => {
   return (
     <Section>
       <Title>Delivered right to your door</Title>
-      <Image src={`${publicRuntimeConfig.BASE_PATH}/images/V2V/delivery.png`} />
+      <DeliveredImageContainer>
+        <DeliveredImage
+          src={`${publicRuntimeConfig.BASE_PATH}/images/V2V/delivery.png`}
+        />
+      </DeliveredImageContainer>
       <Description>
         Buy this vehicle and get it delivered to your driveway safely and
         contact-free.

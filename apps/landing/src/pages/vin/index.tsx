@@ -2,14 +2,14 @@ import { GetServerSideProps, GetServerSidePropsContext, NextPage } from 'next';
 import Head from 'next/head';
 import React from 'react';
 
-import Vehicle from 'src/modules/inventory';
+import Vehicle from 'src/modules/V2V';
 import {
   getInitialInventoryStoreState,
   InventoryStore,
   InventoryStoreContext,
   InventoryStoreState,
   Status,
-} from 'src/modules/inventory/store/store';
+} from 'src/modules/V2V/store/store';
 
 export interface Props {
   initialState: InventoryStoreState;
