@@ -10,8 +10,9 @@ export const config = {
   },
 };
 
-const proxy = createProxyMiddleware({
+const proxy = createProxyMiddleware('/api/gql', {
   changeOrigin: true,
+  ignorePath: true,
   target: serverRuntimeConfig.GQL_PROXY_TARGET,
 });
 
