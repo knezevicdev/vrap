@@ -1,6 +1,4 @@
-import Checkbox from '@material-ui/core/Checkbox';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import FormGroup from '@material-ui/core/FormGroup';
+import { Checkbox, FormControlLabel, FormGroup } from '@material-ui/core';
 import withStyles from '@material-ui/core/styles/withStyles';
 import { DriveType as FiltersDataDriveType } from '@vroom-web/catalog-url-integration';
 import { observer } from 'mobx-react';

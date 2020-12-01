@@ -1,5 +1,6 @@
 export declare enum Filters {
     BODY_TYPES = "bodytypes",
+    CAB_TYPE = "cabtype",
     COLORS = "colors",
     DRIVE_TYPE = "drivetype",
     MAKE_AND_MODELS = "makesandmodels",
@@ -26,6 +27,11 @@ export declare enum BodyType {
     SUV = "suv",
     TRUCK = "truck",
     WAGON = "wagon"
+}
+export declare enum CabType {
+    CREW = "crew",
+    REGULAR = "regular",
+    EXTENDED = "extended"
 }
 export declare enum Color {
     BLACK = "black",
@@ -103,6 +109,7 @@ export interface FuelEfficiency {
 }
 export interface FiltersData {
     [Filters.BODY_TYPES]?: BodyType[];
+    [Filters.CAB_TYPE]?: CabType[];
     [Filters.COLORS]?: Color[];
     [Filters.DRIVE_TYPE]?: DriveType[];
     [Filters.MAKE_AND_MODELS]?: MakeAndModels;

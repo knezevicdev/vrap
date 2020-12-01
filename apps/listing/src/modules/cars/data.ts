@@ -1,5 +1,6 @@
 import {
   BodyType as FiltersDataBodyType,
+  CabType as FiltersDataCabType,
   Color as FiltersDataColor,
   Cylinder as FiltersDataCylinder,
   DriveType as FiltersDataDriveType,
@@ -68,6 +69,42 @@ export const fuelTypes: FuelType[] = [
     api: FuelTypeAPI.OTHER,
     display: FuelTypeDisplay.OTHER,
     filtersDataValue: FiltersDataFuelType.OTHER,
+  },
+];
+
+export enum CabTypeAPI {
+  CREW = 'crew_cab',
+  REGULAR = 'regular_cab',
+  EXTENDED = 'extended_cab',
+}
+
+export enum CabTypeDisplay {
+  CREW = '4 Door Crew Cab',
+  REGULAR = '2 Door Standard Cab',
+  EXTENDED = '4 Door Extended Cab',
+}
+
+export interface CabType {
+  api: CabTypeAPI;
+  display: CabTypeDisplay;
+  filtersDataValue: FiltersDataCabType;
+}
+
+export const cabTypes: CabType[] = [
+  {
+    api: CabTypeAPI.CREW,
+    display: CabTypeDisplay.CREW,
+    filtersDataValue: FiltersDataCabType.CREW,
+  },
+  {
+    api: CabTypeAPI.REGULAR,
+    display: CabTypeDisplay.REGULAR,
+    filtersDataValue: FiltersDataCabType.REGULAR,
+  },
+  {
+    api: CabTypeAPI.EXTENDED,
+    display: CabTypeDisplay.EXTENDED,
+    filtersDataValue: FiltersDataCabType.EXTENDED,
   },
 ];
 

@@ -6,6 +6,7 @@ import { Typography } from '@vroom-web/ui';
 import { observer } from 'mobx-react';
 import React from 'react';
 
+import Truck from './Truck';
 import BodyTypesViewModel from './ViewModel';
 
 const StyledListItem = styled(ListItem)(({ theme }) => ({
@@ -46,17 +47,20 @@ const BodyTypesView: React.FC<Props> = ({ viewModel }) => {
           filtersDataValue
         );
         return (
-          <StyledListItem
-            key={display}
-            button
-            onClick={viewModel.handleListItemClick(
-              filtersDataValue,
-              isSelected
-            )}
-          >
-            <Value fontWeight={fontWeight}>{display}</Value>
-            {isSelected && <StyledCheck fontSize="small" color="secondary" />}
-          </StyledListItem>
+          <>
+            <StyledListItem
+              key={display}
+              button
+              onClick={viewModel.handleListItemClick(
+                filtersDataValue,
+                isSelected
+              )}
+            >
+              <Value fontWeight={fontWeight}>{display}</Value>
+              {isSelected && <StyledCheck fontSize="small" color="secondary" />}
+            </StyledListItem>
+            {filtersDataValue === 'truck' && isSelected ? <Truck /> : null}
+          </>
         );
       })}
       <Reset

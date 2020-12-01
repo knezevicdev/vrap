@@ -1,5 +1,6 @@
 import {
   BodyType,
+  CabType,
   Color,
   Cylinder,
   DriveType,
@@ -60,6 +61,29 @@ export const removeBodyType = (
   const newBodyTypes = existingBodyTypes.filter((bt) => bt !== bodyType);
   newFiltersData[Filters.BODY_TYPES] =
     newBodyTypes.length > 0 ? newBodyTypes : undefined;
+  return newFiltersData;
+};
+
+export const addCabType = (
+  cabType: CabType,
+  filtersData?: FiltersData
+): FiltersData => {
+  const newFiltersData = deepCopyFiltersData(filtersData || {});
+  const newCabType = newFiltersData[Filters.CAB_TYPE] || [];
+  newCabType.push(cabType);
+  newFiltersData[Filters.CAB_TYPE] = newCabType;
+  return newFiltersData;
+};
+
+export const removeCabType = (
+  cabType: CabType,
+  filtersData?: FiltersData
+): FiltersData => {
+  const newFiltersData = deepCopyFiltersData(filtersData || {});
+  const existingCabType = newFiltersData[Filters.CAB_TYPE] || [];
+  const newCabType = existingCabType.filter((c) => c !== cabType);
+  newFiltersData[Filters.CAB_TYPE] =
+    newCabType.length > 0 ? newCabType : undefined;
   return newFiltersData;
 };
 

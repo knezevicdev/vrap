@@ -1,9 +1,11 @@
-import { BodyType, Color, Cylinder, DriveType, Filters, FiltersData, FuelEfficiency, FuelType, MaxAndMin, PopularFeatures, SortBy, SortDirection, TestDrive, Transmission } from './types';
+import { BodyType, CabType, Color, Cylinder, DriveType, Filters, FiltersData, FuelEfficiency, FuelType, MaxAndMin, PopularFeatures, SortBy, SortDirection, TestDrive, Transmission } from './types';
 export declare const deepCopyFiltersData: (filtersData: FiltersData) => FiltersData;
 export declare const resetFilter: (filter: Filters, filtersData: FiltersData | undefined) => FiltersData;
 export declare const resetFilters: (filters: Filters[], filtersData: FiltersData | undefined) => FiltersData;
 export declare const addBodyType: (bodyType: BodyType, filtersData?: FiltersData | undefined) => FiltersData;
 export declare const removeBodyType: (bodyType: BodyType, filtersData?: FiltersData | undefined) => FiltersData;
+export declare const addCabType: (cabType: CabType, filtersData?: FiltersData | undefined) => FiltersData;
+export declare const removeCabType: (cabType: CabType, filtersData?: FiltersData | undefined) => FiltersData;
 export declare const addFuelType: (fuelType: FuelType, filtersData?: FiltersData | undefined) => FiltersData;
 export declare const removeFuelType: (fuelType: FuelType, filtersData?: FiltersData | undefined) => FiltersData;
 export declare const addCylinder: (cylinder: Cylinder, filtersData?: FiltersData | undefined) => FiltersData;
