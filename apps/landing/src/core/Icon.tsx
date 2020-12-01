@@ -104,6 +104,13 @@ export class Icons {
     color: '#e7131a',
   });
 
+  static readonly CLOSE = new Icons('CLOSE', {
+    name: 'close-large',
+    width: 12,
+    height: 12,
+    color: '#041022',
+  });
+
   private constructor(
     protected key: string,
     public readonly value: {

@@ -1,6 +1,4 @@
 import Dialog from '@material-ui/core/Dialog';
-import IconButton from '@material-ui/core/IconButton';
-// import CloseIcon from '@material-ui/icons/Close';
 import { observer } from 'mobx-react';
 import React from 'react';
 
@@ -8,6 +6,7 @@ import ViewModel from './ViewModel';
 import styled from 'styled-components';
 import { Hero, Body } from 'src/core/Typography';
 import { Button } from 'src/core/Button';
+import Icon, { Icons } from 'src/core/Icon';
 
 const DialogTitle = styled(Hero.Three)`
   padding-bottom: 8px;
@@ -16,12 +15,14 @@ const DialogTitle = styled(Hero.Three)`
   }
 `;
 
-const StyledIconButton = styled(IconButton)(({ theme }) => ({
-  position: 'absolute',
-  top: 0,
-  right: 0,
-  padding: theme.spacing(2),
-}));
+const CloseIcon = styled(Icon)`
+  cursor: pointer;
+  position: absolute;
+  z-index: 1000;
+  top: 0;
+  right: 0;
+  padding: 16px;
+`;
 
 const DialogContent = styled.div`
   padding: 96px 48px;
@@ -77,13 +78,11 @@ const LoggedOutView: React.FC<Props> = ({ viewModel }) => {
       maxWidth={'sm'}
       open={viewModel.isOpen()}
     >
+      <span onClick={handleDialogClick}>
+        <CloseIcon icon={Icons.CLOSE} />
+      </span>
       <DialogContent>
-        <DialogTitle>
-          {viewModel.dialogTitle}
-          {/* <StyledIconButton aria-label="close" onClick={handleDialogClick}>
-            <CloseIcon />
-          </StyledIconButton> */}
-        </DialogTitle>
+        <DialogTitle>{viewModel.dialogTitle}</DialogTitle>
         <DialogBody>{viewModel.dialogBody}</DialogBody>
         <CreateAccountButton onClick={handleDialogActions('create')}>
           {viewModel.createAccountButton}
