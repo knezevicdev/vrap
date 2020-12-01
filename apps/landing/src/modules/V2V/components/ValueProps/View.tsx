@@ -9,6 +9,7 @@ const Container = styled.div`
   flex-direction: column;
   max-width: 864px;
   margin: 96px auto;
+  overflow: hidden;
   @media (max-width: 768px) {
     padding: 0 16px;
     margin: 32px auto;
