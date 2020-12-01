@@ -23,14 +23,17 @@ const Container = styled.div`
 `;
 
 const VehicleContainer = styled.div`
-  max-width: 1440px;
-  margin: 32px auto;
+  max-width: 1312px;
+  margin: 0 auto;
   display: grid;
   grid-template-columns: 3fr 1fr;
   gap: 32px;
-  @media (max-width: 768px) {
-    width: 100%;
-    margin: 0 0 32px 0;
+  @media (min-width: 840px) {
+    padding: 32px 64px;
+  }
+
+  @media (max-width: 839px) {
+    padding: 0px 0px 32px 0px;
     grid-template-columns: 1fr;
     gap: 16px;
   }
@@ -42,7 +45,7 @@ const ErrorContainer = styled.div`
   align-items: center;
   text-align: center;
   margin: 96px 0;
-  @media (max-width: 768px) {
+  @media (max-width: 839px) {
     width: 100%;
     margin: 32px 16px;
   }
@@ -56,7 +59,7 @@ const ErrorTitle = styled(Title.One)`
 
 const CarsButton = styled(Button.Primary)`
   margin-top: 32px;
-  @media (max-width: 768px) {
+  @media (max-width: 839px) {
     width: 100%;
   }
 `;

@@ -10,7 +10,7 @@ import Icon, { Icons } from 'src/core/Icon';
 
 const DialogTitle = styled(Hero.Three)`
   padding-bottom: 8px;
-  @media (max-width: 768px) {
+  @media (max-width: 839px) {
     padding-bottom: 16px;
   }
 `;
@@ -31,20 +31,20 @@ const DialogContent = styled.div`
   align-items: center;
   text-align: center;
   border-bottom: 4px solid #e7131a;
-  @media (max-width: 768px) {
+  @media (max-width: 839px) {
     padding: 64px 32px;
   }
 `;
 
 const DialogBody = styled(Body.Regular)`
   padding-bottom: 64px;
-  @media (max-width: 768px) {
+  @media (max-width: 839px) {
     padding-bottom: 56px;
   }
 `;
 
 const CreateAccountButton = styled(Button.Primary)`
-  @media (min-width: 768px) {
+  @media (min-width: 839px) {
     min-width: 280px;
   }
   @media (max-width: 767px) {
@@ -54,7 +54,7 @@ const CreateAccountButton = styled(Button.Primary)`
 `;
 
 const LogInButton = styled(Button.Outline)`
-  @media (min-width: 768px) {
+  @media (min-width: 839px) {
     min-width: 280px;
   }
   @media (max-width: 767px) {

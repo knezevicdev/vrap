@@ -39,7 +39,7 @@ const Container = styled.div`
 
 const VehicleContainer = styled.div`
   display: flex;
-  @media (max-width: 768px) {
+  @media (max-width: 839px) {
     display: none;
   }
 `;
