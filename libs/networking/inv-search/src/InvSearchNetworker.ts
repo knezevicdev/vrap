@@ -12,6 +12,7 @@ import {
   GetInventorySimilarRequestData,
   GetInventorySimilarResponse,
   getInventorySimilarResponseSchema,
+  GetSimilarResponse,
 } from './types/GetInventorySimilar';
 import {
   GetInventorySuggestionsResponse,
@@ -54,13 +55,17 @@ export default class InvSearchNetworker implements InvSearchNetworking {
 
   async getInventorySimilar(
     data: GetInventorySimilarRequestData
-  ): Promise<GetInventorySimilarResponse> {
+  ): Promise<GetSimilarResponse> {
     const url = `${this.hostUrl}/similar?${stringify(data)}`;
     const response = await this.axiosInstance.get<GetInventorySimilarResponse>(
       url
     );
+    const count = response.headers['x-vcf'] ? response.headers['x-vcf'] : 0;
     await getInventorySimilarResponseSchema.validate(response.data);
-    return response.data as GetInventorySimilarResponse;
+    return {
+      data: response.data.data,
+      clusterCount: count,
+    } as GetSimilarResponse;
   }
 
   async getInventorySuggestions(

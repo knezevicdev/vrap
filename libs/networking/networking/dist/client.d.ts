@@ -1,10 +1,17 @@
-import { Client, GQLRequestOptions, GQLRequestVariables, Response } from './types';
+import { ClientDef, GQLRequestOptions, GQLRequestVariables, Response, ResponseErrorInterceptor, ResponseSuccessInterceptor } from './types';
 export interface ClientImplOptions {
-    endpoint: string;
     timeout?: number;
 }
-export declare class ClientImpl implements Client {
+export declare class Client implements ClientDef {
     private readonly graphQLClient;
-    constructor(options: ClientImplOptions);
+    private errorInterceptor?;
+    private successInterceptor?;
+    constructor(endpoint: string, options?: ClientImplOptions);
+    /**
+     * Allow to intercept data or error to perform others actions
+     * @param errorInterceptor function it will receive the error object
+     * @param successInterceptor optional Function
+     */
+    addResponseInterceptor(errorInterceptor?: ResponseErrorInterceptor, successInterceptor?: ResponseSuccessInterceptor): void;
     gqlRequest<D = unknown, V = GQLRequestVariables>(options: GQLRequestOptions<V>): Promise<Response<D>>;
 }

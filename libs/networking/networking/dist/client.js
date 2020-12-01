@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.ClientImpl = void 0;
+exports.Client = void 0;
 
 var _graphqlRequest = require("graphql-request");
 
@@ -11,11 +11,27 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
-class ClientImpl {
-  constructor(options) {
-    this.graphQLClient = new _graphqlRequest.GraphQLClient(options.endpoint, {
-      timeout: options.timeout
+class Client {
+  constructor(endpoint, options) {
+    this.graphQLClient = new _graphqlRequest.GraphQLClient(endpoint, {
+      timeout: options && options.timeout
     });
+  }
+  /**
+   * Allow to intercept data or error to perform others actions
+   * @param errorInterceptor function it will receive the error object
+   * @param successInterceptor optional Function
+   */
+
+
+  addResponseInterceptor(errorInterceptor, successInterceptor) {
+    if (errorInterceptor) {
+      this.errorInterceptor = errorInterceptor;
+    }
+
+    if (successInterceptor) {
+      this.successInterceptor = successInterceptor;
+    }
   }
 
   gqlRequest(options) {
@@ -26,11 +42,26 @@ class ClientImpl {
 
       try {
         var data = yield _this.graphQLClient.request(options.document, options.variables);
+
+        if (_this.successInterceptor) {
+          yield _this.successInterceptor({
+            data: data
+          });
+        }
+
         return {
           data: data
         };
       } catch (error) {
         var status = error.response && error.response.status ? error.response.status : undefined;
+
+        if (_this.errorInterceptor) {
+          yield _this.errorInterceptor({
+            error,
+            status
+          });
+        }
+
         return {
           error,
           status
@@ -41,4 +72,4 @@ class ClientImpl {
 
 }
 
-exports.ClientImpl = ClientImpl;
+exports.Client = Client;

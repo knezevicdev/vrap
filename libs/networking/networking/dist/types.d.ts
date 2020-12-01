@@ -15,6 +15,15 @@ export interface ErrorResponse {
     status?: number;
 }
 export declare type Response<D> = SuccessResponse<D> | ErrorResponse;
-export interface Client {
+export declare type ResponseSuccessInterceptor<D = unknown> = (successResponse: SuccessResponse<D>) => Promise<void>;
+export declare type ResponseErrorInterceptor = (errorResponse: ErrorResponse) => Promise<void>;
+export interface ClientDef {
     gqlRequest: <D = unknown, V = GQLRequestVariables>(options: GQLRequestOptions<V>) => Promise<Response<D>>;
+    addResponseInterceptor: (errorInterceptor?: ResponseErrorInterceptor, successInterceptor?: ResponseSuccessInterceptor) => void;
+}
+export declare enum Status {
+    INITIAL = 0,
+    LOADING = 1,
+    SUCCESS = 2,
+    ERROR = 3
 }

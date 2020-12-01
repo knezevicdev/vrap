@@ -1,6 +1,4 @@
-import Checkbox from '@material-ui/core/Checkbox';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import FormGroup from '@material-ui/core/FormGroup';
+import { Checkbox, FormControlLabel, FormGroup } from '@material-ui/core';
 import withStyles from '@material-ui/core/styles/withStyles';
 import { Cylinder as FiltersDataDriveType } from '@vroom-web/catalog-url-integration';
 import { observer } from 'mobx-react';
@@ -12,12 +10,24 @@ interface Props {
   viewModel: CylindersViewModel;
 }
 
-const Label = withStyles((theme) => ({
+const Label = withStyles(() => ({
   label: {
-    fontWeight: theme.typography.fontWeightLight,
     fontSize: '16px',
   },
+  root: {
+    justifyContent: 'space-between',
+    marginLeft: '0px',
+    '& span.Mui-checked + span': {
+      fontWeight: 600,
+    },
+  },
 }))(FormControlLabel);
+
+const FormGroupCustom = withStyles(() => ({
+  root: {
+    paddingBottom: '16px',
+  },
+}))(FormGroup);
 
 const CheckboxCustom = withStyles((theme) => ({
   root: {
@@ -47,6 +57,7 @@ const CylindersView: React.FC<Props> = ({ viewModel }) => {
     return (
       <Label
         key={display}
+        labelPlacement="start"
         control={
           <CheckboxCustom
             color="primary"
@@ -63,6 +74,7 @@ const CylindersView: React.FC<Props> = ({ viewModel }) => {
   const otherCylinders = (
     <Label
       key={viewModel.otherCylinders.key}
+      labelPlacement="start"
       control={
         <CheckboxCustom
           color="primary"
@@ -75,7 +87,7 @@ const CylindersView: React.FC<Props> = ({ viewModel }) => {
     />
   );
 
-  return <FormGroup>{[...cylinders, otherCylinders]}</FormGroup>;
+  return <FormGroupCustom>{[...cylinders, otherCylinders]}</FormGroupCustom>;
 };
 
 export default observer(CylindersView);

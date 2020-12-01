@@ -1,5 +1,5 @@
 import { GetInventoryCountResponse } from './types/GetInventoryCount';
-import { GetInventorySimilarRequestData, GetInventorySimilarResponse } from './types/GetInventorySimilar';
+import { GetInventorySimilarRequestData, GetInventorySimilarResponse, GetSimilarResponse } from './types/GetInventorySimilar';
 import { GetInventorySuggestionsResponse } from './types/GetInventorySuggestions';
 import { PostInventoryRequestData, PostInventoryResponse } from './types/PostInventory';
 export interface InvSearchNetworking {
@@ -15,7 +15,7 @@ export default class InvSearchNetworker implements InvSearchNetworking {
     private readonly hostUrl;
     constructor(hostUrl: string);
     getInventoryCount(): Promise<GetInventoryCountResponse>;
-    getInventorySimilar(data: GetInventorySimilarRequestData): Promise<GetInventorySimilarResponse>;
+    getInventorySimilar(data: GetInventorySimilarRequestData): Promise<GetSimilarResponse>;
     getInventorySuggestions(input: string): Promise<GetInventorySuggestionsResponse>;
     postInventory(data: PostInventoryRequestData): Promise<PostInventoryResponse>;
 }

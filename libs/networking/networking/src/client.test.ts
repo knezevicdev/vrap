@@ -1,7 +1,7 @@
 import { GraphQLClient } from 'graphql-request';
 import { mocked } from 'ts-jest/utils';
 
-import { ClientImpl } from './client';
+import { Client } from './client';
 
 jest.mock('graphql-request');
 
@@ -29,8 +29,7 @@ describe('checkout networking client', () => {
   });
 
   it('creates a graphql client instance using the proper endpoint', () => {
-    new ClientImpl({
-      endpoint,
+    new Client(endpoint, {
       timeout: 1000,
     });
     expect(GraphQLClient).toHaveBeenCalledWith(endpoint, {
@@ -40,14 +39,13 @@ describe('checkout networking client', () => {
   });
 
   it('makes a request with the right options set', async () => {
-    const clientImpl = new ClientImpl({
-      endpoint,
+    const client = new Client(endpoint, {
       timeout: 1000,
     });
     mocked(graphQLClient.request).mockImplementationOnce(async () => ({
       test: true,
     }));
-    await clientImpl.gqlRequest({
+    await client.gqlRequest({
       document,
       variables,
     });
@@ -55,14 +53,13 @@ describe('checkout networking client', () => {
   });
 
   test('headers are set correctly', async () => {
-    const clientImpl = new ClientImpl({
-      endpoint,
+    const client = new Client(endpoint, {
       timeout: 1000,
     });
     const headers = {
       Authorization: 'Bearer <token>',
     };
-    await clientImpl.gqlRequest({
+    await client.gqlRequest({
       document,
       variables,
       headers,

@@ -2,7 +2,7 @@ import axios, { AxiosResponse } from 'axios';
 import qs from 'qs';
 
 import { Shipment } from './models/Shipments';
-import { User } from './models/User';
+import { Carrier, User } from './models/User';
 
 export enum Status {
   INITIAL = 'initial',
@@ -16,19 +16,47 @@ const SHIPPING_URL = 'http://localhost:8080';
 
 const axiosInstance = axios.create();
 
-export class Networker {
-  getUsers(carrier?: string, status?: string): Promise<AxiosResponse<User[]>> {
-    const url = `${SHIPPING_URL}/api/users?${qs.stringify(
-      {
-        carrier: carrier || null,
-        status: status || null,
-      },
-      { skipNulls: true }
-    )}`;
+export const getUsers = async (
+  carrierCode?: string,
+  status?: string
+): Promise<AxiosResponse<User[]>> => {
+  const url = `${SHIPPING_URL}/api/users?${qs.stringify(
+    {
+      carrier: carrierCode || null,
+      status: status || null,
+    },
+    { skipNulls: true }
+  )}`;
 
-    return axiosInstance.get(url);
-  }
-}
+  return axiosInstance.get(url);
+};
+
+export const getCarriers = async (
+  filter: string
+): Promise<AxiosResponse<Carrier[]>> => {
+  const url = `${SHIPPING_URL}/api/carriers?${qs.stringify(
+    {
+      filter: filter || null,
+    },
+    { skipNulls: true }
+  )}`;
+
+  return axiosInstance.get(url);
+};
+
+export const getUserStatuses = async (): Promise<AxiosResponse<string[]>> => {
+  const url = `${SHIPPING_URL}/api/userStatus`;
+  return axiosInstance.get(url);
+};
+
+export const patchUser = async (
+  id: number,
+  status?: string,
+  carrierCode?: string
+): Promise<AxiosResponse<User>> => {
+  const url = `${SHIPPING_URL}/api/users`;
+  return axiosInstance.patch(url, { id, status, carrierCode });
+};
 
 export const getTenderedShipments = async (): Promise<
   AxiosResponse<Shipment[]>

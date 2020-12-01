@@ -46,10 +46,6 @@ class VroomDocument extends Document {
       <Html lang="en">
         <Head>
           <meta charSet="utf-8" />
-          <meta
-            name="viewport"
-            content="minimum-scale=1, initial-scale=1, width=device-width"
-          />
           <FaviconSnippet />
           <FontsSnippet />
         </Head>
