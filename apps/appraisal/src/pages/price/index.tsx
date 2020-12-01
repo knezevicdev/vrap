@@ -10,6 +10,7 @@ import PriceInfo from 'src/modules/price';
 import { PriceStore } from 'src/modules/price/store';
 import Questions from 'src/modules/questions';
 import Page from 'src/Page';
+import styled from 'styled-components';
 
 const Price: NextPage = () => {
   const gearboxPrivateUrl = ENVS.GEARBOX_PRIVATE_URL;
@@ -20,12 +21,20 @@ const Price: NextPage = () => {
   return (
     <Page name="Home">
       <SimpleHeader gearboxPrivateUrl={gearboxPrivateUrl} />
-      <PriceInfo store={store} />
-      <Questions />
+      <Contents>
+        <PriceInfo store={store} />
+        <Questions />
+      </Contents>
       <Footer />
     </Page>
   );
 };
+
+const Contents = styled.div`
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+`;
 
 interface Cookie {
   uuid: string;
