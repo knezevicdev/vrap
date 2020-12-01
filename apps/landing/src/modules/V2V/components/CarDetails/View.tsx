@@ -65,6 +65,10 @@ const List = styled.ul`
   }
 `;
 
+const ButtonSection = styled.div`
+  text-align: center;
+`;
+
 const CarDetails: React.FC<Props> = ({ viewModel }) => {
   const { ymm, trim, miles, price } = viewModel.details();
   const features = viewModel.features();
@@ -95,10 +99,10 @@ const CarDetails: React.FC<Props> = ({ viewModel }) => {
         </div>
       </div>
 
-      <div>
+      <ButtonSection>
         <VehicleDetailsButton />
         <Favorites />
-      </div>
+      </ButtonSection>
     </CarDetailsContainer>
   );
 };
