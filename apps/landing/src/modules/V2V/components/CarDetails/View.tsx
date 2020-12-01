@@ -2,9 +2,9 @@ import { observer } from 'mobx-react';
 import React from 'react';
 import styled from 'styled-components';
 
+import VehicleDetailsButton from '../VehicleDetailsButton';
 import ViewModel from './ViewModel';
 
-import { Button } from 'src/core/Button';
 import { Body, Title } from 'src/core/Typography';
 
 export interface Props {
@@ -50,11 +50,6 @@ const Features = styled(Title.Three)`
   line-height: 24px;
 `;
 
-const VehicleDetailsButton = styled(Button.Primary)`
-  margin: 0;
-  width: 100%;
-`;
-
 const ListItem = styled.li`
   line-height: 30px;
 `;
@@ -69,10 +64,13 @@ const List = styled.ul`
   }
 `;
 
+const Button = styled(VehicleDetailsButton)`
+  width: 100%;
+`;
+
 const CarDetails: React.FC<Props> = ({ viewModel }) => {
   const { ymm, trim, miles, price } = viewModel.details();
   const features = viewModel.features();
-  const { button, handleClick } = viewModel;
 
   return (
     <CarDetailsContainer>
@@ -100,9 +98,7 @@ const CarDetails: React.FC<Props> = ({ viewModel }) => {
         </div>
       </div>
 
-      <VehicleDetailsButton onClick={handleClick}>
-        {button}
-      </VehicleDetailsButton>
+      <Button />
     </CarDetailsContainer>
   );
 };

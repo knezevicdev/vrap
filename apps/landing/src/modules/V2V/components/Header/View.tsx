@@ -2,9 +2,9 @@ import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
 import Icon, { Icons } from '../../../../core/Icon';
+import VehicleDetailsButton from '../VehicleDetailsButton';
 import HeaderViewModel from './ViewModel';
 
-import { Button } from 'src/core/Button';
 import { Link, Title } from 'src/core/Typography';
 
 const Container = styled.div`
@@ -55,16 +55,12 @@ const Price = styled(Title.One)`
   margin-right: 32px;
 `;
 
-const VehicleDetailsButton = styled(Button.Primary)`
-  margin: 0;
-`;
-
 interface Props {
   viewModel: HeaderViewModel;
 }
 
 const HeaderView: React.FC<Props> = ({ viewModel }) => {
-  const { logoHref, pageThreshold, button, handleClick } = viewModel;
+  const { logoHref, pageThreshold } = viewModel;
   const details = viewModel.details();
   const [showVehicleContainer, setShowVehicleContainer] = useState(false);
 
@@ -89,9 +85,7 @@ const HeaderView: React.FC<Props> = ({ viewModel }) => {
           <>
             <YearMakeModel>{details.ymm}</YearMakeModel>
             <Price>{details.price}</Price>
-            <VehicleDetailsButton onClick={handleClick}>
-              {button}
-            </VehicleDetailsButton>
+            <VehicleDetailsButton />
           </>
         )}
       </VehicleContainer>
