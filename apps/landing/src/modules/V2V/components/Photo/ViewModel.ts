@@ -1,6 +1,6 @@
 import { Car } from '@vroom-web/inv-search-networking';
 
-import { InventoryStore } from '../../store/store';
+import { InventoryStore } from '../../store/inventoryStore';
 
 interface Image {
   url: string;

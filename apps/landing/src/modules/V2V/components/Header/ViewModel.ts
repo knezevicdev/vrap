@@ -1,6 +1,6 @@
 import { Car } from '@vroom-web/inv-search-networking';
 
-import { InventoryStore } from '../../store/store';
+import { InventoryStore } from '../../store/inventoryStore';
 
 interface Details {
   ymm: string;
@@ -15,6 +15,10 @@ class HeaderViewModel {
 
   constructor(store: InventoryStore) {
     this.car = store.vehicle._source;
+  }
+
+  hasCar(): boolean {
+    return this.car !== undefined;
   }
 
   details(): Details {
