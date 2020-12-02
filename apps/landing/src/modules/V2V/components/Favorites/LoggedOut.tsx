@@ -44,20 +44,20 @@ const DialogBody = styled(Body.Regular)`
 `;
 
 const CreateAccountButton = styled(Button.Primary)`
-  @media (min-width: 839px) {
+  @media (min-width: 840px) {
     min-width: 280px;
   }
-  @media (max-width: 767px) {
+  @media (max-width: 839px) {
     width: 100%;
   }
   margin-bottom: 16px;
 `;
 
 const LogInButton = styled(Button.Outline)`
-  @media (min-width: 839px) {
+  @media (min-width: 840px) {
     min-width: 280px;
   }
-  @media (max-width: 767px) {
+  @media (max-width: 839px) {
     width: 100%;
   }
   margin-bottom: 16px;
