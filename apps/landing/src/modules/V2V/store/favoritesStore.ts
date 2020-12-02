@@ -10,7 +10,6 @@ export class FavoritesStore {
   @observable accessToken?: string = undefined;
   @observable loading = true;
   @observable isDialogOpen = false;
-  @observable isSnackbarOpen = false;
   @observable isError = false;
 
   @action
@@ -58,11 +57,6 @@ export class FavoritesStore {
   @action
   setDialog = (): void => {
     this.isDialogOpen = !this.isDialogOpen;
-  };
-
-  @action
-  setSnackbar = (): void => {
-    this.isSnackbarOpen = !this.isSnackbarOpen;
   };
 
   @action
