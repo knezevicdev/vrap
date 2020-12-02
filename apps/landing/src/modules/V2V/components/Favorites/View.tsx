@@ -1,11 +1,12 @@
 import { observer } from 'mobx-react';
 import React, { useEffect } from 'react';
+import styled from 'styled-components';
 
 import LoggedOut from './LoggedOut';
 import ViewModel from './ViewModel';
-import styled from 'styled-components';
-import { Body } from 'src/core/Typography';
+
 import Icon, { Icons } from 'src/core/Icon';
+import { Body } from 'src/core/Typography';
 
 interface Props {
   viewModel: ViewModel;

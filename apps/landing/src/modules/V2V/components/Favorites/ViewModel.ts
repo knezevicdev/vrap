@@ -1,6 +1,6 @@
-import FavoritesNetworker from './FavoritesNetworker';
-import { InventoryStore } from '../../store/inventoryStore';
 import { FavoritesStore } from '../../store/favoritesStore';
+import { InventoryStore } from '../../store/inventoryStore';
+import FavoritesNetworker from './FavoritesNetworker';
 
 interface VinList {
   vin: string;

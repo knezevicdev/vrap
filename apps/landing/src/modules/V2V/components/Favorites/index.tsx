@@ -1,9 +1,9 @@
 import getConfig from 'next/config';
 import React, { useContext } from 'react';
 
-import FavoritesNetworker from './FavoritesNetworker';
 import { FavoritesStore } from '../../store/favoritesStore';
 import { InventoryStoreContext } from '../../store/inventoryStore';
+import FavoritesNetworker from './FavoritesNetworker';
 import View from './View';
 import ViewModel from './ViewModel';
 

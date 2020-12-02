@@ -1,12 +1,13 @@
 import Dialog from '@material-ui/core/Dialog';
 import { observer } from 'mobx-react';
 import React from 'react';
+import styled from 'styled-components';
 
 import ViewModel from './ViewModel';
-import styled from 'styled-components';
-import { Hero, Body } from 'src/core/Typography';
+
 import { Button } from 'src/core/Button';
 import Icon, { Icons } from 'src/core/Icon';
+import { Body, Hero } from 'src/core/Typography';
 
 const DialogTitle = styled(Hero.Three)`
   padding-bottom: 8px;

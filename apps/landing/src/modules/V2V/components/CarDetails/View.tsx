@@ -2,11 +2,11 @@ import { observer } from 'mobx-react';
 import React from 'react';
 import styled from 'styled-components';
 
+import Favorites from '../Favorites';
 import VehicleDetailsButton from '../VehicleDetailsButton';
 import ViewModel from './ViewModel';
 
 import { Body, Title } from 'src/core/Typography';
-import Favorites from '../Favorites';
 
 export interface Props {
   viewModel: ViewModel;
