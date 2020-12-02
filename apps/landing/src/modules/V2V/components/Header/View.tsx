@@ -62,7 +62,6 @@ interface Props {
 
 const HeaderView: React.FC<Props> = ({ viewModel }) => {
   const { logoHref, pageThreshold } = viewModel;
-  const details = viewModel.details();
   const [showVehicleContainer, setShowVehicleContainer] = useState(false);
 
   useEffect(() => {
@@ -81,17 +80,19 @@ const HeaderView: React.FC<Props> = ({ viewModel }) => {
       <Link href={logoHref}>
         <Icon icon={Icons.VROOM} />
       </Link>
-      <VehicleContainer>
-        {showVehicleContainer && (
-          <>
-            <YearMakeModel>{details.ymm}</YearMakeModel>
-            <Price>{details.price}</Price>
-            <div>
-              <VehicleDetailsButton />
-            </div>
-          </>
-        )}
-      </VehicleContainer>
+      {viewModel.hasCar() && (
+        <VehicleContainer>
+          {showVehicleContainer && (
+            <>
+              <YearMakeModel>{viewModel.details().ymm}</YearMakeModel>
+              <Price>{viewModel.details().price}</Price>
+              <div>
+                <VehicleDetailsButton />
+              </div>
+            </>
+          )}
+        </VehicleContainer>
+      )}
     </Container>
   );
 };
