@@ -1,14 +1,13 @@
 import getConfig from 'next/config';
-import React from 'react';
+import React, { useContext } from 'react';
 
 import FavoritesNetworker from './FavoritesNetworker';
 import { FavoritesStore } from '../../store/favoritesStore';
-import { InventoryStore } from '../../store/inventoryStore';
+import { InventoryStoreContext } from '../../store/inventoryStore';
 import View from './View';
 import ViewModel from './ViewModel';
 
 const { publicRuntimeConfig } = getConfig();
-
 const gearboxPrivateUrl = publicRuntimeConfig.GEARBOX_PRIVATE_URL;
 
 const Favorites: React.FC = () => {
@@ -17,7 +16,7 @@ const Favorites: React.FC = () => {
   );
 
   const favoritesStore = new FavoritesStore();
-  const inventoryStore = new InventoryStore();
+  const inventoryStore = useContext(InventoryStoreContext);
   const viewModel = new ViewModel(
     inventoryStore,
     favoritesStore,

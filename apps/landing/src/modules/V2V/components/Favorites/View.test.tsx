@@ -4,11 +4,10 @@ import { fireEvent, render, screen } from '@testing-library/react';
 import React from 'react';
 
 import FavoritesNetworker from './FavoritesNetworker';
-import { FavoritesStore } from './store';
 import View from './View';
 import ViewModel from './ViewModel';
-
-import { InventoryStore } from 'src/modules/inventory/store';
+import { InventoryStore } from '../../store/inventoryStore';
+import { FavoritesStore } from '../../store/favoritesStore';
 
 jest.mock('next/config', () => {
   return (): unknown => {

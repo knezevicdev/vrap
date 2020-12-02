@@ -1,7 +1,6 @@
 import FavoritesNetworker from './FavoritesNetworker';
-import { FavoritesStore } from './store';
-
-import { InventoryStore } from 'src/modules/inventory/store';
+import { InventoryStore } from '../../store/inventoryStore';
+import { FavoritesStore } from '../../store/favoritesStore';
 
 interface VinList {
   vin: string;
@@ -113,7 +112,7 @@ class FavoritesViewModel {
         this.favoritesStore.setFavorited();
       }
     } catch (err) {
-      console.error(JSON.stringify(err));
+      console.error(err);
     }
     this.favoritesStore.setLoading(false);
   }
