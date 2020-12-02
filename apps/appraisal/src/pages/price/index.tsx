@@ -3,6 +3,7 @@ import { IncomingMessage } from 'http';
 import { GetServerSideProps, NextPage } from 'next';
 import { useRouter } from 'next/router';
 import React from 'react';
+import styled from 'styled-components';
 
 import Footer from 'src/core/Footer';
 import ENVS from 'src/integrations/Envs';
@@ -10,7 +11,6 @@ import PriceInfo from 'src/modules/price';
 import { PriceStore } from 'src/modules/price/store';
 import Questions from 'src/modules/questions';
 import Page from 'src/Page';
-import styled from 'styled-components';
 
 const Price: NextPage = () => {
   const gearboxPrivateUrl = ENVS.GEARBOX_PRIVATE_URL;
