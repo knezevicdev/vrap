@@ -1,7 +1,7 @@
 import axios, { AxiosResponse } from 'axios';
 import qs from 'qs';
 
-import { Shipment } from './models/Shipments';
+import { Shipment, ShipmentStatus } from './models/Shipments';
 import { Carrier, User } from './models/User';
 
 export enum Status {
@@ -57,22 +57,16 @@ export const patchUser = async (
   return axiosInstance.patch(url, { id, status, carrierCode });
 };
 
-export const getTenderedShipments = async (): Promise<
-  AxiosResponse<Shipment[]>
-> => axiosInstance.get(`/api/shipments/tendered`);
-
-export const getBookedShipments = async (): Promise<
-  AxiosResponse<Shipment[]>
-> => axiosInstance.get(`/api/shipments/booked`);
-
-export const getInTransitShipments = async (): Promise<
-  AxiosResponse<Shipment[]>
-> => axiosInstance.get(`/api/shipments/in-transit`);
-
-export const getCancelledShipments = async (): Promise<
-  AxiosResponse<Shipment[]>
-> => axiosInstance.get(`/api/shipments/cancelled`);
-
-export const getDeliveredShipments = async (): Promise<
-  AxiosResponse<Shipment[]>
-> => axiosInstance.get(`/api/shipments/delivered`);
+export const getShipments = async (
+  status?: ShipmentStatus,
+  user?: string
+): Promise<AxiosResponse<Shipment[]>> => {
+  const url = `/api/shipments?${qs.stringify(
+    {
+      user: user || null,
+      status: status || null,
+    },
+    { skipNulls: true }
+  )}`;
+  return axiosInstance.get(url);
+};

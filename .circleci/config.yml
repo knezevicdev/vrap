@@ -120,27 +120,6 @@ jobs:
                 version: 18.09.3
             - run:
                 command: deploy -a vroom-web/apps/listing/docker -n << parameters.env >>
-    logistics_build:
-        docker:
-            - image: vroom/mlp:3.0.2
-        steps:
-            - checkout
-            - setup_remote_docker:
-                version: 18.09.3
-            - run:
-                command: build -a vroom-web/apps/logistics/docker
-    logistics_deploy:
-        docker:
-            - image: vroom/mlp:3.0.2
-        parameters:
-            env:
-                type: string
-        steps:
-            - checkout
-            - setup_remote_docker:
-                version: 18.09.3
-            - run:
-                command: deploy -a vroom-web/apps/logistics/docker -n << parameters.env >>
     marketing_build:
         docker:
             - image: vroom/mlp:3.0.2
@@ -194,7 +173,7 @@ jobs:
                     yarn install --silent
 
                     # Build the main app.
-                    yarn workspace @vroom-web/logistics build
+                    yarn workspace @vroom-web/home build
             - sonarcloud/scan
     static-assets_deploy:
         docker:
@@ -534,70 +513,6 @@ workflows:
                     tags:
                         only: /^listing-v.*/
                 name: listing_deploy_prod
-                requires:
-                    - hold_prod
-    logistics:
-        jobs:
-            - logistics_build:
-                context: aws-non-prod
-                filters:
-                    branches:
-                        ignore: /.*/
-                    tags:
-                        only: /^logistics-v.*/
-            - hold:
-                filters:
-                    branches:
-                        ignore: /.*/
-                    tags:
-                        only: /^logistics-v.*/
-                matrix:
-                    parameters:
-                        env:
-                            - dev
-                            - qa
-                            - uat
-                name: hold_<< matrix.env >>
-                requires:
-                    - logistics_build
-                type: approval
-            - logistics_deploy:
-                context: aws-non-prod
-                filters:
-                    branches:
-                        ignore: /.*/
-                    tags:
-                        only: /^logistics-v.*/
-                matrix:
-                    parameters:
-                        env:
-                            - dev
-                            - qa
-                            - uat
-                name: logistics_deploy_<< matrix.env >>
-                requires:
-                    - hold_<< matrix.env >>
-            - hold:
-                filters:
-                    branches:
-                        ignore: /.*/
-                    tags:
-                        only: /^logistics-v.*/
-                name: hold_prod
-                requires:
-                    - logistics_deploy_dev
-                    - logistics_deploy_qa
-                    - logistics_deploy_uat
-                type: approval
-            - logistics_deploy:
-                context: aws-non-prod
-                env: prod
-                filters:
-                    branches:
-                        ignore: /.*/
-                    tags:
-                        only: /^logistics-v.*/
-                name: logistics_deploy_prod
                 requires:
                     - hold_prod
     marketing:

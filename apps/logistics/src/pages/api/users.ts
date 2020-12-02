@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/camelcase */
 import axios from 'axios';
 import { NextApiRequest, NextApiResponse } from 'next';
 import qs from 'qs';
@@ -35,6 +34,7 @@ export default async function handler(
       payload.status = status;
     }
     if (carrierCode) {
+      /* eslint-disable-next-line @typescript-eslint/camelcase */
       payload.carrier_code = carrierCode;
     }
 
