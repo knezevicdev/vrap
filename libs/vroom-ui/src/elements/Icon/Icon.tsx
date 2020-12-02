@@ -18,6 +18,13 @@ interface Props {
   className?: string;
 }
 
+const SVG = styled.svg<{ height: number; width: number }>`
+  min-height: ${(props): number => props.height}px;
+  max-height: ${(props): number => props.height}px;
+  min-width: ${(props): number => props.width}px;
+  max-width: ${(props): number => props.width}px;
+`;
+
 const Icon: React.FC<Props> = ({ icon, fill, stroke, className }) => {
   const width = icon.width;
   const height = icon.height;
@@ -44,13 +51,6 @@ const Icon: React.FC<Props> = ({ icon, fill, stroke, className }) => {
 };
 
 export default Icon;
-
-const SVG = styled.svg<{ height: number; width: number }>`
-  min-height: ${(props): number => props.height}px;
-  max-height: ${(props): number => props.height}px;
-  min-width: ${(props): number => props.width}px;
-  max-width: ${(props): number => props.width}px;
-`;
 
 export const Icons = {
   GAS: {
