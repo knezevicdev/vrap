@@ -5,6 +5,8 @@ Object.defineProperty(exports, "__esModule", {
 });
 var _exportNames = {
   Client: true,
+  isErrorResponse: true,
+  isSuccessResponse: true,
   GQLTypes: true
 };
 Object.defineProperty(exports, "Client", {
@@ -13,9 +15,23 @@ Object.defineProperty(exports, "Client", {
     return _client.Client;
   }
 });
+Object.defineProperty(exports, "isErrorResponse", {
+  enumerable: true,
+  get: function get() {
+    return _typeguards.isErrorResponse;
+  }
+});
+Object.defineProperty(exports, "isSuccessResponse", {
+  enumerable: true,
+  get: function get() {
+    return _typeguards.isSuccessResponse;
+  }
+});
 exports.GQLTypes = void 0;
 
 var _client = require("./client");
+
+var _typeguards = require("./typeguards");
 
 var _types = require("./types");
 

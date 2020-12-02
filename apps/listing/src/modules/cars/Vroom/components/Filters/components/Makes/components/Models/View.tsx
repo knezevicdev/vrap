@@ -1,5 +1,4 @@
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
+import { Checkbox, List, ListItem } from '@material-ui/core';
 import { styled } from '@material-ui/core/styles';
 import Check from '@material-ui/icons/Check';
 import { Typography } from '@vroom-web/ui';
@@ -20,6 +19,14 @@ const StyledCheck = styled(Check)(() => ({
   marginLeft: 'auto',
 }));
 
+const CustomCheckbox = styled(Checkbox)(() => ({
+  padding: 0,
+}));
+
+const CustomListItem = styled(ListItem)(() => ({
+  justifyContent: 'space-between',
+}));
+
 interface Props {
   viewModel: ModelsViewModel;
 }
@@ -28,7 +35,7 @@ const ModelsView: React.FC<Props> = ({ viewModel }) => {
   const allModel = viewModel.getAllModel();
   return (
     <StyledList>
-      <ListItem
+      <CustomListItem
         key={allModel.display}
         button
         onClick={viewModel.handleClick(allModel.slug, allModel.isSelected)}
@@ -40,17 +47,20 @@ const ModelsView: React.FC<Props> = ({ viewModel }) => {
         >
           {allModel.display}
         </Value>
-        {allModel.isSelected && (
+        {allModel.isSelected ? (
           <StyledCheck fontSize="small" color="secondary" />
+        ) : (
+          <CustomCheckbox disabled={true} aria-hidden="true" />
         )}
-      </ListItem>
+      </CustomListItem>
       {viewModel.models.map((model) => {
         const { display, slug } = model;
         const isSelected = viewModel.isSelected(slug);
         return (
-          <ListItem
+          <CustomListItem
             key={display}
             button
+            dense
             onClick={viewModel.handleClick(slug, isSelected)}
           >
             <Value
@@ -58,8 +68,12 @@ const ModelsView: React.FC<Props> = ({ viewModel }) => {
             >
               {display}
             </Value>
-            {isSelected && <StyledCheck fontSize="small" color="secondary" />}
-          </ListItem>
+            {isSelected ? (
+              <StyledCheck fontSize="small" color="secondary" />
+            ) : (
+              <CustomCheckbox disabled={true} aria-hidden="true" />
+            )}
+          </CustomListItem>
         );
       })}
     </StyledList>

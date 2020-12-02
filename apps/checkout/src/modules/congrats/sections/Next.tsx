@@ -4,35 +4,6 @@ import { ThemeProps } from 'vroom-ui/src/foundation/themes/types';
 import { addStyleForMobile } from 'vroom-ui/src/foundation/themes/Vroom';
 import { Body, Heading, Title } from 'vroom-ui/src/foundation/Typography';
 
-interface Props {
-  heading: string;
-  steps: { number: string; title: string; description: string }[];
-}
-
-const Next: React.FC<Props> = ({ heading, steps }): JSX.Element => {
-  return (
-    <Container>
-      <Heading.Two>{heading}</Heading.Two>
-      <Steps>
-        {steps.map((step) => {
-          const { number, title, description } = step;
-          return (
-            <Step key={number}>
-              <StepHeader>
-                <StepNumber>{number}</StepNumber>
-                <Title.Three>{title}</Title.Three>
-              </StepHeader>
-              <Body.Regular>{description}</Body.Regular>
-            </Step>
-          );
-        })}
-      </Steps>
-    </Container>
-  );
-};
-
-export default Next;
-
 const grayFour = (props: { theme: ThemeProps }): string =>
   props.theme.colors.gray.four;
 
@@ -90,3 +61,32 @@ const StepNumber = styled(Body.Small)`
   align-items: center;
   margin-right: 8px;
 `;
+
+interface Props {
+  heading: string;
+  steps: { number: string; title: string; description: string }[];
+}
+
+const Next: React.FC<Props> = ({ heading, steps }): JSX.Element => {
+  return (
+    <Container>
+      <Heading.Two>{heading}</Heading.Two>
+      <Steps>
+        {steps.map((step) => {
+          const { number, title, description } = step;
+          return (
+            <Step key={number}>
+              <StepHeader>
+                <StepNumber>{number}</StepNumber>
+                <Title.Three>{title}</Title.Three>
+              </StepHeader>
+              <Body.Regular>{description}</Body.Regular>
+            </Step>
+          );
+        })}
+      </Steps>
+    </Container>
+  );
+};
+
+export default Next;

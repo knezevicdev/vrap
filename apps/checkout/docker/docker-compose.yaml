@@ -5,6 +5,8 @@ services:
       context: ../../../
       dockerfile: ./apps/checkout/docker/Dockerfile
     user: 'root'
+    environment:
+      - GQL_PROXY_TARGET=https://dev.vroom.com/gql
     command: ash -c "yarn workspace @vroom-web/checkout dev --port 8080"
     # This starts nothing but leaves the container running, useful for
     # debugging nextjs start / config operations

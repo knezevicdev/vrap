@@ -1,7 +1,9 @@
-import Checkbox from '@material-ui/core/Checkbox';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import FormGroup from '@material-ui/core/FormGroup';
-import ListItem from '@material-ui/core/ListItem';
+import {
+  Checkbox,
+  FormControlLabel,
+  FormGroup,
+  ListItem,
+} from '@material-ui/core';
 import { styled, withStyles } from '@material-ui/core/styles';
 import { PopularFeatures as FiltersDataPopularFeatures } from '@vroom-web/catalog-url-integration';
 import { Typography } from '@vroom-web/ui';
@@ -14,16 +16,25 @@ interface Props {
   viewModel: FeaturesViewModel;
 }
 
-const Label = withStyles((theme) => ({
+const Label = withStyles(() => ({
   label: {
-    fontWeight: theme.typography.fontWeightLight,
     fontSize: '16px',
+  },
+  root: {
+    justifyContent: 'space-between',
+    marginLeft: '0px',
+    '& span.Mui-checked + span': {
+      fontWeight: 600,
+    },
   },
 }))(FormControlLabel);
 
 const CheckboxCustom = withStyles((theme) => ({
   root: {
     color: theme.palette.grey['A100'],
+  },
+  checked: {
+    fontWeight: 600,
   },
 }))(Checkbox);
 
@@ -57,6 +68,7 @@ const FeaturesView: React.FC<Props> = ({ viewModel }) => {
         return (
           <Label
             key={display}
+            labelPlacement="start"
             control={
               <CheckboxCustom
                 color="primary"
