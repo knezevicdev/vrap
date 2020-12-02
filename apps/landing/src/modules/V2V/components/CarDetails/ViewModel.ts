@@ -27,8 +27,26 @@ class CarDetailsViewModel {
     };
   }
 
-  features(): string[] {
-    return this.car.optionalFeatures.split(',').slice(0, 6);
+  topFeatures(): string[] {
+    const topFeatures = [
+      'Android Auto',
+      'Apple Carplay',
+      'Heated Seats',
+      'Rear-View Camera',
+      'Remote Start',
+      'Sun/Moonroof',
+      'Third Row Seating',
+    ];
+
+    const features = this.car.optionalFeatures.split(',');
+    const intersection = features.filter((item, index) => {
+      if (topFeatures.includes(item)) {
+        features.splice(index, 1);
+        return true;
+      }
+    });
+
+    return [...intersection, ...features].slice(0, 6);
   }
 
   handleClick = (): void => {

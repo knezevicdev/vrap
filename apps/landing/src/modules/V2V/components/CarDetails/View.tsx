@@ -71,7 +71,7 @@ const ButtonSection = styled.div`
 
 const CarDetails: React.FC<Props> = ({ viewModel }) => {
   const { ymm, trim, miles, price } = viewModel.details();
-  const features = viewModel.features();
+  const topFeatures = viewModel.topFeatures();
 
   return (
     <CarDetailsContainer>
@@ -90,7 +90,7 @@ const CarDetails: React.FC<Props> = ({ viewModel }) => {
         <div>
           <Features>Top Features</Features>
           <List>
-            {features.map((feature: string, idx: number) => (
+            {topFeatures.map((feature: string, idx: number) => (
               <ListItem key={idx}>
                 <Body.Regular>{feature}</Body.Regular>
               </ListItem>
