@@ -72,8 +72,8 @@ const CustomLink = styled(Link)`
 
 interface Props {
   phone: {
+    href: string;
     label: string;
-    number: number;
   };
 }
 
@@ -98,7 +98,7 @@ const Questions: React.FC<Props> = ({ phone }): JSX.Element => {
         <Divider />
         <Action>
           <BrandIcon icon={Icons.PHONE} />
-          <CustomLink href={`tel:+${phone.number}`} blank>
+          <CustomLink href={`tel:${phone.href}`} blank>
             {phone.label}
           </CustomLink>
         </Action>
