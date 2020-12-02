@@ -14,14 +14,15 @@ const Favorites: React.FC = () => {
   const favoritesNetworker = new FavoritesNetworker(
     gearboxPrivateUrl as string
   );
-
   const favoritesStore = new FavoritesStore();
   const inventoryStore = useContext(InventoryStoreContext);
+
   const viewModel = new ViewModel(
     inventoryStore,
     favoritesStore,
     favoritesNetworker
   );
+
   return <View viewModel={viewModel} />;
 };
 

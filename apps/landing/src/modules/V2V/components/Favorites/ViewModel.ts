@@ -17,9 +17,6 @@ class FavoritesViewModel {
     'Create an account to keep track and access your saved cars anytime.';
   readonly createAccountButton: string = 'CREATE ACCOUNT';
   readonly logInButton: string = 'LOG IN';
-  readonly snackbarSuccessMessage: string = 'Your favorites have been updated';
-  readonly snackbarErrorMessage: string =
-    'There was a problem. Please try again';
 
   constructor(
     inventoryStore: InventoryStore,
@@ -74,20 +71,6 @@ class FavoritesViewModel {
     return this.favoritesStore.isDialogOpen;
   }
 
-  handleSnackbar(): void {
-    this.favoritesStore.setSnackbar();
-  }
-
-  isSnackbarOpen(): boolean {
-    return this.favoritesStore.isSnackbarOpen;
-  }
-
-  getSnarbarMessage(): string {
-    return this.favoritesStore.isError
-      ? this.snackbarErrorMessage
-      : this.snackbarSuccessMessage;
-  }
-
   handleError(): void {
     this.favoritesStore.setError();
   }
@@ -133,11 +116,9 @@ class FavoritesViewModel {
       if (found) {
         this.isError() && this.handleError();
         this.favoritesStore.setFavorited();
-        this.handleSnackbar();
       }
     } catch {
       !this.isError() && this.handleError();
-      this.handleSnackbar();
     }
   }
 
@@ -157,11 +138,9 @@ class FavoritesViewModel {
       if (!found) {
         this.isError() && this.handleError();
         this.favoritesStore.setFavorited();
-        this.handleSnackbar();
       }
     } catch {
       !this.isError() && this.handleError();
-      this.handleSnackbar();
     }
   }
 }
