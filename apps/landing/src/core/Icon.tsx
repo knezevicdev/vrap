@@ -80,13 +80,34 @@ export class Icons {
     name: 'vroom-shield',
     width: 64,
     height: 64,
-    color: '#e7131a',
+    color: '#E7131A',
   });
 
   static readonly NO_VEHICLE = new Icons('NO_VEHICLE', {
     name: 'no-vehicle',
     width: 64,
     height: 64,
+    color: '#041022',
+  });
+
+  static readonly FAVORITE_OUTLINED = new Icons('FAVORITE_OUTLINED', {
+    name: 'favourite-outlined',
+    width: 18,
+    height: 16,
+    color: '#E7131A',
+  });
+
+  static readonly FAVORITE_FILLED = new Icons('FAVORITE_FILLED', {
+    name: 'favourite-filled',
+    width: 18,
+    height: 16,
+    color: '#e7131a',
+  });
+
+  static readonly CLOSE = new Icons('CLOSE', {
+    name: 'close-large',
+    width: 12,
+    height: 12,
     color: '#041022',
   });
 

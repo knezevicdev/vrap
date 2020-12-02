@@ -7,9 +7,7 @@ import { Button } from 'src/core/Button';
 
 const VehicleDetailsButton = styled(Button.Primary)`
   margin: 0;
-  @media (max-width: 768px) {
-    width: 100%;
-  }
+  width: 100%;
 `;
 
 interface Props {

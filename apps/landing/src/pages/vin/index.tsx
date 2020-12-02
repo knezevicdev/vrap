@@ -9,7 +9,7 @@ import {
   InventoryStoreContext,
   InventoryStoreState,
   Status,
-} from 'src/modules/V2V/store/store';
+} from 'src/modules/V2V/store/inventoryStore';
 
 export interface Props {
   initialState: InventoryStoreState;

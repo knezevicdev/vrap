@@ -8,6 +8,7 @@ services:
     environment:
       - SEGMENT_WRITE_KEY=N0pxERRIw4iYCoxZREMZj1yWBIoARIz4
       - INVSEARCH_V3_URL=https://invsearch-v3-dev-int.aws.vroomapi.com:8443/v3
+      - GEARBOX_PRIVATE_URL=https://gearbox-dev-int.vroomapi.com/query-private
     command: ash -c "yarn workspace @vroom-web/landing dev --port 8080"
     # This starts nothing but leaves the container running, useful for
     # debugging nextjs start / config operations

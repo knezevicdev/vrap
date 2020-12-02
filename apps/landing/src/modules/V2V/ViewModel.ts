@@ -1,6 +1,6 @@
 import getConfig from 'next/config';
 
-import { InventoryStore, Status } from './store/store';
+import { InventoryStore, Status } from './store/inventoryStore';
 
 const { publicRuntimeConfig } = getConfig();
 

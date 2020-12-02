@@ -6,6 +6,7 @@ import VehicleDetailsButton from '../VehicleDetailsButton';
 import ViewModel from './ViewModel';
 
 import { Body, Title } from 'src/core/Typography';
+import Favorites from '../Favorites';
 
 export interface Props {
   viewModel: ViewModel;
@@ -15,7 +16,7 @@ const CarDetailsContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  @media (max-width: 768px) {
+  @media (max-width: 839px) {
     margin: 0 16px;
   }
 `;
@@ -26,7 +27,7 @@ const CarDetailsSection = styled.div`
   border-bottom: 1px solid #d6d7da;
   padding-bottom: 16px;
   margin-bottom: 16px;
-  @media (max-width: 768px) {
+  @media (max-width: 839px) {
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
@@ -57,11 +58,15 @@ const ListItem = styled.li`
 const List = styled.ul`
   padding-left: 0;
   list-style-type: none;
-  @media (max-width: 768px) {
+  @media (max-width: 839px) {
     columns: 2;
     -webkit-columns: 2;
     -moz-columns: 2;
   }
+`;
+
+const ButtonSection = styled.div`
+  text-align: center;
 `;
 
 const CarDetails: React.FC<Props> = ({ viewModel }) => {
@@ -94,7 +99,10 @@ const CarDetails: React.FC<Props> = ({ viewModel }) => {
         </div>
       </div>
 
-      <VehicleDetailsButton />
+      <ButtonSection>
+        <VehicleDetailsButton />
+        <Favorites />
+      </ButtonSection>
     </CarDetailsContainer>
   );
 };
