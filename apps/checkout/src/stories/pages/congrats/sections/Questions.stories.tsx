@@ -7,10 +7,15 @@ import Questions from '../../../../modules/congrats/sections/Questions';
 
 const theme = getVroomTheme('/assets/fonts/Vroom');
 
+const phone = {
+  number: 18555241300,
+  label: '(855) 524-1300',
+};
+
 export const Success = (): JSX.Element => {
   return (
     <ThemeProvider theme={theme}>
-      <Questions />
+      <Questions phone={phone} />
     </ThemeProvider>
   );
 };

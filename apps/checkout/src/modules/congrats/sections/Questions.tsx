@@ -2,7 +2,10 @@ import React from 'react';
 import styled from 'styled-components';
 import Icon, { Icons } from 'vroom-ui/src/elements/Icon/Icon';
 import { ThemeProps } from 'vroom-ui/src/foundation/themes/types';
-import { addStyleForMobile } from 'vroom-ui/src/foundation/themes/Vroom';
+import {
+  addStyleForMobile,
+  addStyleForTablet,
+} from 'vroom-ui/src/foundation/themes/Vroom';
 import { Heading, Link } from 'vroom-ui/src/foundation/Typography';
 
 const primaryBrand = (props: { theme: ThemeProps }): string =>
@@ -50,6 +53,10 @@ const Divider = styled.div`
   max-height: 40px;
   margin: 0 32px;
   background: ${grayThree};
+
+  ${addStyleForTablet(`
+      margin: 0 16px;
+  `)}
 `;
 
 const BrandIcon = styled(Icon)`
@@ -63,7 +70,14 @@ const CustomLink = styled(Link)`
   letter-spacing: 1.75px !important;
 `;
 
-const Questions: React.FC = (): JSX.Element => {
+interface Props {
+  phone: {
+    label: string;
+    number: number;
+  };
+}
+
+const Questions: React.FC<Props> = ({ phone }): JSX.Element => {
   return (
     <Container>
       <Heading.Three>questions?</Heading.Three>
@@ -84,8 +98,8 @@ const Questions: React.FC = (): JSX.Element => {
         <Divider />
         <Action>
           <BrandIcon icon={Icons.PHONE} />
-          <CustomLink href="tel:1-(855)-524-1300" blank>
-            (855) 524-1300
+          <CustomLink href={`tel:+${phone.number}`} blank>
+            {phone.label}
           </CustomLink>
         </Action>
       </Actions>
