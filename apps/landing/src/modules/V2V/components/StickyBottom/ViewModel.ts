@@ -1,4 +1,4 @@
-import { InventoryStore } from '../../store/inventoryStore';
+import { InventoryStore, Status } from '../../store/inventoryStore';
 
 interface Details {
   ymm: string;
@@ -13,7 +13,7 @@ class StickyBottomViewModel {
   }
 
   hasCar(): boolean {
-    return this.store.vehicle._source !== undefined;
+    return this.store.vehicleStatus === Status.SUCCESS;
   }
 
   details(): Details {
