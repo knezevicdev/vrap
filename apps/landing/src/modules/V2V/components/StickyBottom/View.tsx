@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
+import { observer } from 'mobx-react';
 
 import VehicleDetailsButton from '../VehicleDetailsButton';
 import HeaderViewModel from './ViewModel';
@@ -32,36 +33,23 @@ interface Props {
 }
 
 const StickyBottomView: React.FC<Props> = ({ viewModel }) => {
-  const { pageThreshold } = viewModel;
   const { ymm, price } = viewModel.details();
-  const [showStickyBottom, setShowStickyBottom] = useState(false);
-
-  useEffect(() => {
-    if (typeof window !== 'undefined') {
-      window.onscroll = (): void => {
-        const pos = window.pageYOffset;
-        console.log(pos);
-
-        pos > pageThreshold
-          ? setShowStickyBottom(true)
-          : setShowStickyBottom(false);
-      };
-    }
-  }, [showStickyBottom, pageThreshold]);
 
   return (
-    <Container>
-      {showStickyBottom && (
-        <StickyBottom>
-          <VehicleDetails>
-            <Title.Two>{ymm}</Title.Two>
-            <Title.Two>{price}</Title.Two>
-          </VehicleDetails>
-          <VehicleDetailsButton />
-        </StickyBottom>
+    <>
+      {viewModel.getSticky() && (
+        <Container>
+          <StickyBottom>
+            <VehicleDetails>
+              <Title.Two>{ymm}</Title.Two>
+              <Title.Two>{price}</Title.Two>
+            </VehicleDetails>
+            <VehicleDetailsButton />
+          </StickyBottom>
+        </Container>
       )}
-    </Container>
+    </>
   );
 };
 
-export default StickyBottomView;
+export default observer(StickyBottomView);

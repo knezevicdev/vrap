@@ -33,6 +33,10 @@ class InventoryViewModel {
   handleClick(): void {
     window.location.href = '/cars';
   }
+
+  setSticky(value: boolean): void {
+    this.store.setSticky(value);
+  }
 }
 
 export default InventoryViewModel;

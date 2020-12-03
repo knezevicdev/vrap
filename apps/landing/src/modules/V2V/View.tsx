@@ -1,5 +1,5 @@
 import { observer } from 'mobx-react';
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
 
 import Header from '../V2V/components/Header';
@@ -78,6 +78,15 @@ const NoVehicleIcon = styled(Icon)`
 `;
 
 const InventoryView: React.FC<Props> = ({ viewModel }) => {
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      window.onscroll = (): void => {
+        const pos = window.pageYOffset;
+        pos > 600 ? viewModel.setSticky(true) : viewModel.setSticky(false);
+      };
+    }
+  }, [viewModel]);
+
   return (
     <>
       <Header />
@@ -102,7 +111,7 @@ const InventoryView: React.FC<Props> = ({ viewModel }) => {
         <ValueProps />
       </Container>
       <Footer />
-      {viewModel.ready() && <StickyBottom />}
+      <StickyBottom />
     </>
   );
 };

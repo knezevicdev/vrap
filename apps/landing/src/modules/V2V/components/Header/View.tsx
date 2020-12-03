@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
+import { observer } from 'mobx-react';
 
 import Icon, { Icons } from '../../../../core/Icon';
 import VehicleDetailsButton from '../VehicleDetailsButton';
@@ -64,41 +65,25 @@ interface Props {
 }
 
 const HeaderView: React.FC<Props> = ({ viewModel }) => {
-  const { logoHref, pageThreshold } = viewModel;
-  const [showVehicleContainer, setShowVehicleContainer] = useState(false);
-
-  useEffect(() => {
-    if (typeof window !== 'undefined') {
-      window.onscroll = (): void => {
-        const pos = window.pageYOffset;
-        pos > pageThreshold
-          ? setShowVehicleContainer(true)
-          : setShowVehicleContainer(false);
-      };
-    }
-  }, [showVehicleContainer, pageThreshold]);
+  const { logoHref } = viewModel;
 
   return (
     <Container>
       <Link href={logoHref}>
         <Icon icon={Icons.VROOM} />
       </Link>
-      {viewModel.hasCar() && (
+      {viewModel.hasCar() && viewModel.getSticky() && (
         <VehicleContainer>
-          {showVehicleContainer && (
-            <>
-              <YearMakeModel>{viewModel.details().ymm}</YearMakeModel>
-              <Divider />
-              <Price>{viewModel.details().price}</Price>
-              <div>
-                <VehicleDetailsButton />
-              </div>
-            </>
-          )}
+          <YearMakeModel>{viewModel.details().ymm}</YearMakeModel>
+          <Divider />
+          <Price>{viewModel.details().price}</Price>
+          <div>
+            <VehicleDetailsButton />
+          </div>
         </VehicleContainer>
       )}
     </Container>
   );
 };
 
-export default HeaderView;
+export default observer(HeaderView);

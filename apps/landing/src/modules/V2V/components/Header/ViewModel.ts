@@ -1,5 +1,3 @@
-import { Car } from '@vroom-web/inv-search-networking';
-
 import { InventoryStore } from '../../store/inventoryStore';
 
 interface Details {
@@ -11,18 +9,18 @@ class HeaderViewModel {
   readonly logoHref = '/';
   readonly pageThreshold = 550;
   readonly button = 'See all vehicle details';
-  private car: Car;
+  private store: InventoryStore;
 
   constructor(store: InventoryStore) {
-    this.car = store.vehicle._source;
+    this.store = store;
   }
 
   hasCar(): boolean {
-    return this.car !== undefined;
+    return this.store.vehicle._source !== undefined;
   }
 
   details(): Details {
-    const { listingPrice, make, model, year } = this.car;
+    const { listingPrice, make, model, year } = this.store.vehicle._source;
     return {
       ymm: `${year} ${make} ${model}`,
       price: `$${listingPrice.toLocaleString('en-US')}`,
@@ -30,9 +28,11 @@ class HeaderViewModel {
   }
 
   handleClick = (): void => {
-    const { makeSlug, modelSlug, year, vin } = this.car;
+    const { makeSlug, modelSlug, year, vin } = this.store.vehicle._source;
     window.location.href = `/inventory/${makeSlug}-${modelSlug}-${year}-${vin}`;
   };
+
+  getSticky = (): boolean => this.store.showSticky;
 }
 
 export default HeaderViewModel;

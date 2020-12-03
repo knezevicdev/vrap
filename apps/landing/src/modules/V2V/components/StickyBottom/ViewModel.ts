@@ -1,5 +1,3 @@
-import { Car } from '@vroom-web/inv-search-networking';
-
 import { InventoryStore } from '../../store/inventoryStore';
 
 interface Details {
@@ -9,19 +7,21 @@ interface Details {
 
 class StickyBottomViewModel {
   readonly pageThreshold = 650;
-  private car: Car;
+  private store: InventoryStore;
 
   constructor(store: InventoryStore) {
-    this.car = store.vehicle._source;
+    this.store = store;
   }
 
   details(): Details {
-    const { listingPrice, make, model, year } = this.car;
+    const { listingPrice, make, model, year } = this.store.vehicle._source;
     return {
       ymm: `${year} ${make} ${model}`,
       price: `$${listingPrice.toLocaleString('en-US')}`,
     };
   }
+
+  getSticky = (): boolean => this.store.showSticky;
 }
 
 export default StickyBottomViewModel;
