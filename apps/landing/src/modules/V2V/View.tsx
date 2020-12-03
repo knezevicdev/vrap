@@ -54,7 +54,6 @@ const ErrorContainer = styled.div`
   text-align: center;
   margin: 96px 0;
   @media (max-width: 839px) {
-    width: 100%;
     margin: 32px 16px;
   }
 `;

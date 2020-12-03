@@ -7,7 +7,6 @@ interface Details {
 
 class HeaderViewModel {
   readonly logoHref = '/';
-  readonly pageThreshold = 550;
   readonly button = 'See all vehicle details';
   private store: InventoryStore;
 

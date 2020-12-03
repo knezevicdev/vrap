@@ -6,11 +6,14 @@ interface Details {
 }
 
 class StickyBottomViewModel {
-  readonly pageThreshold = 650;
   private store: InventoryStore;
 
   constructor(store: InventoryStore) {
     this.store = store;
+  }
+
+  hasCar(): boolean {
+    return this.store.vehicle._source !== undefined;
   }
 
   details(): Details {

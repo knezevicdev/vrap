@@ -33,16 +33,14 @@ interface Props {
 }
 
 const StickyBottomView: React.FC<Props> = ({ viewModel }) => {
-  const { ymm, price } = viewModel.details();
-
   return (
     <>
-      {viewModel.getSticky() && (
+      {viewModel.hasCar() && viewModel.getSticky() && (
         <Container>
           <StickyBottom>
             <VehicleDetails>
-              <Title.Two>{ymm}</Title.Two>
-              <Title.Two>{price}</Title.Two>
+              <Title.Two>{viewModel.details().ymm}</Title.Two>
+              <Title.Two>{viewModel.details().price}</Title.Two>
             </VehicleDetails>
             <VehicleDetailsButton />
           </StickyBottom>
