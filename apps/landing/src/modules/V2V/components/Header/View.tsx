@@ -1,6 +1,6 @@
+import { observer } from 'mobx-react';
 import React from 'react';
 import styled from 'styled-components';
-import { observer } from 'mobx-react';
 
 import Icon, { Icons } from '../../../../core/Icon';
 import VehicleDetailsButton from '../VehicleDetailsButton';
