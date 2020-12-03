@@ -306,4 +306,14 @@ export const Icons = {
     width: 10,
     height: 12,
   },
+  QUESTION: {
+    name: 'question',
+    width: 14,
+    height: 22,
+  },
+  ENVELOPE: {
+    name: 'envelope',
+    width: 24,
+    height: 14,
+  },
 };
