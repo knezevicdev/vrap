@@ -16,7 +16,7 @@ const CarDetailsContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  @media (max-width: 839px) {
+  @media (max-width: 600px) {
     margin: 0 16px;
   }
 `;
@@ -27,7 +27,7 @@ const CarDetailsSection = styled.div`
   border-bottom: 1px solid #d6d7da;
   padding-bottom: 16px;
   margin-bottom: 16px;
-  @media (max-width: 839px) {
+  @media (max-width: 600px) {
     flex-direction: row;
     align-items: center;
     justify-content: space-between;

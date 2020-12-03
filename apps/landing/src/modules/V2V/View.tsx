@@ -32,7 +32,12 @@ const VehicleContainer = styled.div`
     padding: 32px 64px;
   }
 
-  @media (max-width: 839px) {
+  @media (min-width: 600px) and (max-width: 839px) {
+    padding: 32px 16px;
+    gap: 16px;
+  }
+
+  @media (max-width: 599px) {
     padding: 0px 0px 32px 0px;
     grid-template-columns: 1fr;
     gap: 16px;
