@@ -13484,7 +13484,7 @@ var HeaderNavViewModel = /*#__PURE__*/function () {
       // This is a stopgap until a better attribution system is in place.
       // retain brand query param to ensure whitelabeled pages are not cached/seen when navigating the vroom version of the app
 
-      var queryString = "".concat(this.store.queryString).concat(this.store.queryString ? '&' : '?', "brand=vroom");
+      var queryString = "".concat(this.store.queryString);
 
       if (!this.store.loggedIn) {
         return [{
@@ -15021,6 +15021,8 @@ var ViewModel = function ViewModel(store) {
 
   _defineProperty(this, "analyticsHandler", new AnalyticsHandler$1());
 
+  _defineProperty(this, "utm_params", "?utm_source=vroom_subdomain&utm_medium=referral&utm_campaign=vroom");
+
   _defineProperty(this, "shopNow", {
     label: 'Shop now',
     href: "/cars",
@@ -15034,7 +15036,7 @@ var ViewModel = function ViewModel(store) {
 
   _defineProperty(this, "financeCalculators", {
     label: 'Finance Calculators',
-    href: 'https://santanderconsumerusa.com/learning-center/finance-calculators',
+    href: "https://santanderconsumerusa.com/learning-center/finance-calculators".concat(this.utm_params),
     target: '_blank',
     handleAnalytics: this.analyticsHandler.trackFinanceCalculator
   });
@@ -15043,17 +15045,17 @@ var ViewModel = function ViewModel(store) {
 
   _defineProperty(this, "learningCenterLinks", [{
     label: 'Overview',
-    href: 'https://santanderconsumerusa.com/learning-center',
+    href: "https://santanderconsumerusa.com/learning-center".concat(this.utm_params),
     target: '_blank',
     handleAnalytics: this.analyticsHandler.trackLearningOverview
   }, {
     label: 'Blog',
-    href: 'https://santanderconsumerusa.com/blog',
+    href: "https://santanderconsumerusa.com/blog".concat(this.utm_params),
     target: '_blank',
     handleAnalytics: this.analyticsHandler.trackLearningBlog
   }, {
     label: 'Servicemembers Civil Relief Act',
-    href: 'https://santanderconsumerusa.com/legal/servicemembers-civil-relief-act',
+    href: "https://santanderconsumerusa.com/legal/servicemembers-civil-relief-act".concat(this.utm_params),
     target: '_blank',
     handleAnalytics: this.analyticsHandler.trackLearningServicemembers
   }]);
@@ -15066,7 +15068,7 @@ var ViewModel = function ViewModel(store) {
 
   _defineProperty(this, "backToCorporate", {
     label: 'Back to Corporate Site',
-    href: 'https://santanderconsumerusa.com/',
+    href: "https://santanderconsumerusa.com".concat(this.utm_params),
     handleAnalytics: this.analyticsHandler.trackCorporateSite
   });
 

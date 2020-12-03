@@ -1,10 +1,16 @@
-import { Brand } from '@vroom-web/ui';
-import { GetServerSidePropsContext } from 'next';
-import { DocumentContext } from 'next/document';
+import { IncomingMessage } from 'http';
+import { ParsedUrlQuery } from 'querystring';
+export enum Brand {
+  VROOM = 'vroom',
+  SANTANDER = 'santander',
+  TDA = 'tda',
+}
+export interface RequestContext {
+  req?: IncomingMessage;
+  query: ParsedUrlQuery;
+}
 
-export const determineWhitelabel = (
-  ctx: GetServerSidePropsContext | DocumentContext
-): Brand => {
+export const determineWhitelabel = (ctx: RequestContext): Brand => {
   let brand = Brand.VROOM;
 
   const headerBrandKey = 'x-brand';

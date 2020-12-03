@@ -10,6 +10,7 @@ declare class ViewModel {
     private readonly store;
     private analyticsHandler;
     constructor(store: Store);
+    readonly utm_params = "?utm_source=vroom_subdomain&utm_medium=referral&utm_campaign=vroom";
     readonly shopNow: Link;
     readonly logoLink: Link;
     readonly financeCalculators: Link;

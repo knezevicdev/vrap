@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import Icon, { Icons as IconName } from '../../elements/Icon/Icon';
 
 export default {
-  title: 'DesignSystem/Elements/Icons',
+  title: 'Design System/Elements/Icons',
 } as Meta;
 
 export const Icons: Story = () => {
@@ -63,6 +63,8 @@ export const Icons: Story = () => {
       </Row>
       <Row>
         <Icon icon={IconName.HOT} />
+        <Icon icon={IconName.ENVELOPE} />
+        <Icon icon={IconName.QUESTION} />
       </Row>
     </Container>
   );
@@ -79,7 +81,10 @@ const Row = styled.div`
   margin-bottom: 16px;
   max-width: 600px;
   width: 100%;
-  justify-content: space-between;
+
+  svg:not(:last-child) {
+    margin-right: 16px;
+  }
 `;
 
 const Favorite = styled(Icon)`

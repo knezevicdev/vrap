@@ -7,17 +7,49 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ): Promise<void> {
-  const carrier = req.query.carrier as string;
-  const status = req.query.status as string;
+  if (req.method === 'GET') {
+    const carrier = req.query.carrier as string;
+    const status = req.query.status as string;
 
-  const SHIPPING_PORTAL_URL = 'https://shipping-portal-int.vroomapi.com/v2';
-  const url = `${SHIPPING_PORTAL_URL}/shipping/users?${qs.stringify({
-    carrier,
-    status,
-  })}`;
+    const url = `${
+      process.env.SHIPPING_PORTAL_URL
+    }/shipping/users?${qs.stringify({
+      carrier,
+      status,
+    })}`;
 
-  const response = await axios.get(url, {
-    auth: { username: 'user', password: 'password' },
-  });
-  res.status(200).json(response.data.data);
+    const response = await axios.get(url, {
+      auth: { username: 'user', password: 'password' },
+    });
+    res.status(200).json(response.data.data);
+  } else if (req.method === 'PATCH') {
+    const id = req.body.id;
+    const status = req.body.status;
+    const carrierCode = req.body.carrierCode;
+
+    const payload: { status?: string; carrier_code?: string } = {};
+    if (status) {
+      payload.status = status;
+    }
+    if (carrierCode) {
+      payload.carrier_code = carrierCode;
+    }
+
+    const url = `${process.env.SHIPPING_PORTAL_URL}/shipping/users/${id}`;
+    try {
+      const body = {
+        source: 'logistics portal',
+        timestamp: new Date().toISOString(),
+        version: '1.0',
+        payload,
+      };
+      const response = await axios.patch(url, body, {
+        auth: { username: 'user', password: 'password' },
+      });
+      res.status(200).json(response.data.data);
+    } catch (err) {
+      console.error(err);
+      res.status(500).send(err);
+    }
+  }
 }

@@ -1,10 +1,10 @@
-import { Brand, ThemeProvider } from '@vroom-web/ui';
+import { ThemeProvider } from '@vroom-web/ui';
+import { Brand, determineWhitelabel } from '@vroom-web/whitelabel';
 import { GetServerSideProps, GetServerSidePropsContext, NextPage } from 'next';
 import React from 'react';
 
 import Locations from 'src/modules/locations';
 import Page from 'src/Page';
-import { determineWhitelabel } from 'src/utils/utils';
 
 interface Props {
   brand: Brand;

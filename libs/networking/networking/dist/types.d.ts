@@ -21,3 +21,9 @@ export interface ClientDef {
     gqlRequest: <D = unknown, V = GQLRequestVariables>(options: GQLRequestOptions<V>) => Promise<Response<D>>;
     addResponseInterceptor: (errorInterceptor?: ResponseErrorInterceptor, successInterceptor?: ResponseSuccessInterceptor) => void;
 }
+export declare enum Status {
+    INITIAL = 0,
+    LOADING = 1,
+    SUCCESS = 2,
+    ERROR = 3
+}

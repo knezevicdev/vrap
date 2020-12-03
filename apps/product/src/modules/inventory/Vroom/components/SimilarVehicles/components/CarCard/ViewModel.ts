@@ -109,6 +109,8 @@ class CarCardViewModel {
       soldStatus,
       makeSlug,
       modelSlug,
+      vinClusterPrimary,
+      vinClusterSecondary,
     } = this.car;
     const link = `/${makeSlug}-${modelSlug}-${year}-${vin}`;
     const name = `${year} ${make} ${model}`;
@@ -127,6 +129,8 @@ class CarCardViewModel {
       url: link,
       vin,
       year,
+      vinClusterPrimary,
+      vinClusterSecondary,
     };
     this.analyticsHandler.trackSimilarClicked(product);
     Router.push(link);

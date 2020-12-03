@@ -22,6 +22,7 @@ export interface InventoryStoreState {
   vin: string;
   similarStatus: Status;
   similar: Hit[];
+  similarClusterCount: number;
   vehicleStatus: Status;
   vehicle: Hit;
   isAvailable: boolean;
@@ -42,7 +43,11 @@ export type getVehicleSimilarStateType = (
   vin: string,
   vinClusterDefaultVariant: boolean,
   invSearchNetworker: InvSearchNetworker
-) => Promise<{ similarStatus: Status; similar?: Hit[] }>;
+) => Promise<{
+  similarStatus: Status;
+  similar?: Hit[];
+  similarClusterCount?: number;
+}>;
 
 export type getInventoryAvailabilityStateType = (
   vin: string,
@@ -100,7 +105,11 @@ export async function getVehicleSimilarState(
   vin: string,
   useVinCluster: boolean,
   invSearchNetworker: InvSearchNetworker
-): Promise<{ similarStatus: Status; similar: Hit[] }> {
+): Promise<{
+  similarStatus: Status;
+  similar: Hit[];
+  similarClusterCount: number;
+}> {
   try {
     const response = await invSearchNetworker.getInventorySimilar({
       vin,
@@ -110,12 +119,14 @@ export async function getVehicleSimilarState(
     return {
       similarStatus: Status.SUCCESS,
       similar: response.data.hits.hits,
+      similarClusterCount: response.clusterCount,
     };
   } catch (error) {
     console.error(JSON.stringify(error));
     return {
       similarStatus: Status.ERROR,
       similar: [] as Hit[],
+      similarClusterCount: 0,
     };
   }
 }
@@ -173,6 +184,7 @@ export class InventoryStore {
 
   @observable similarStatus: Status = Status.FETCHING;
   @observable similar: Hit[] = [] as Hit[];
+  @observable similarClusterCount = 0;
   @observable vehicleStatus: Status = Status.FETCHING;
   @observable vehicle: Hit = {} as Hit;
   @observable isAvailable = false;
@@ -207,6 +219,7 @@ export class InventoryStore {
     runInAction(() => {
       this.similar = data.similar;
       this.similarStatus = data.similarStatus;
+      this.similarClusterCount = data.similarClusterCount;
     });
   };
 

@@ -1,4 +1,8 @@
-import { InventoryResponse, inventoryResponseSchema } from './Inventory';
+import {
+  SimilarInventoryResponse,
+  similarInventoryResponseSchema,
+  SimilarResponse,
+} from './Inventory';
 
 export interface GetInventorySimilarRequestData {
   min: number;
@@ -6,5 +10,6 @@ export interface GetInventorySimilarRequestData {
   useVinCluster: boolean;
 }
 
-export const getInventorySimilarResponseSchema = inventoryResponseSchema;
-export type GetInventorySimilarResponse = InventoryResponse;
+export const getInventorySimilarResponseSchema = similarInventoryResponseSchema;
+export type GetInventorySimilarResponse = SimilarInventoryResponse;
+export type GetSimilarResponse = SimilarResponse;

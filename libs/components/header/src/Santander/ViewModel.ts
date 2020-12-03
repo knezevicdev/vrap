@@ -17,6 +17,8 @@ class ViewModel {
     this.store = store;
   }
 
+  readonly utm_params = `?utm_source=vroom_subdomain&utm_medium=referral&utm_campaign=vroom`;
+
   readonly shopNow: Link = {
     label: 'Shop now',
     href: `/cars`,
@@ -29,8 +31,7 @@ class ViewModel {
 
   readonly financeCalculators: Link = {
     label: 'Finance Calculators',
-    href:
-      'https://santanderconsumerusa.com/learning-center/finance-calculators',
+    href: `https://santanderconsumerusa.com/learning-center/finance-calculators${this.utm_params}`,
     target: '_blank',
     handleAnalytics: this.analyticsHandler.trackFinanceCalculator,
   };
@@ -39,20 +40,19 @@ class ViewModel {
   readonly learningCenterLinks: Link[] = [
     {
       label: 'Overview',
-      href: 'https://santanderconsumerusa.com/learning-center',
+      href: `https://santanderconsumerusa.com/learning-center${this.utm_params}`,
       target: '_blank',
       handleAnalytics: this.analyticsHandler.trackLearningOverview,
     },
     {
       label: 'Blog',
-      href: 'https://santanderconsumerusa.com/blog',
+      href: `https://santanderconsumerusa.com/blog${this.utm_params}`,
       target: '_blank',
       handleAnalytics: this.analyticsHandler.trackLearningBlog,
     },
     {
       label: 'Servicemembers Civil Relief Act',
-      href:
-        'https://santanderconsumerusa.com/legal/servicemembers-civil-relief-act',
+      href: `https://santanderconsumerusa.com/legal/servicemembers-civil-relief-act${this.utm_params}`,
       target: '_blank',
       handleAnalytics: this.analyticsHandler.trackLearningServicemembers,
     },
@@ -66,7 +66,7 @@ class ViewModel {
 
   readonly backToCorporate: Link = {
     label: 'Back to Corporate Site',
-    href: 'https://santanderconsumerusa.com/',
+    href: `https://santanderconsumerusa.com${this.utm_params}`,
     handleAnalytics: this.analyticsHandler.trackCorporateSite,
   };
 
