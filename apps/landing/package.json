@@ -21,9 +21,13 @@
     "rc-table": "^7.9.10",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
-    "styled-components": "^5.2.0"
+    "styled-components": "^5.2.0",
+    "@vroom-web/inv-search-networking": "^1.0.0",
+    "axios": "^0.19.2"
   },
   "devDependencies": {
+    "@babel/plugin-proposal-class-properties": "^7.8.3",
+    "@babel/plugin-proposal-decorators": "^7.8.3",
     "@types/react": "^16.9.22",
     "@types/react-dom": "^16.9.5",
     "babel-plugin-styled-components": "^1.11.1",

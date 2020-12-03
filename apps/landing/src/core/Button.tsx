@@ -12,7 +12,6 @@ const bodyFamily = (props: CSSProps): string =>
 
 const base = css`
   border: none;
-  outline-style: solid;
   cursor: pointer;
 
   min-height: 48px !important;
@@ -30,6 +29,10 @@ const base = css`
 
   color: white;
   white-space: nowrap;
+
+  &:focus {
+    outline-style: solid;
+  }
 `;
 
 const Primary = styled.button`
