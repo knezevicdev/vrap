@@ -22,9 +22,6 @@ const Container = styled.div`
   @media (min-width: 840px) {
     min-height: 72px;
     max-height: 72px;
-  }
-
-  @media (min-width: 840px) {
     padding: 0 32px;
   }
 
@@ -33,6 +30,7 @@ const Container = styled.div`
   }
 
   @media (max-width: 599px) {
+    position: unset;
     padding: 0 16px;
   }
 `;
