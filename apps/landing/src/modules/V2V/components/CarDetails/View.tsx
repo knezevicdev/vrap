@@ -52,7 +52,8 @@ const Features = styled(Title.Three)`
 `;
 
 const ListItem = styled.li`
-  line-height: 30px;
+  line-height: 24px;
+  margin: 5px 0px;
 `;
 
 const List = styled.ul`
