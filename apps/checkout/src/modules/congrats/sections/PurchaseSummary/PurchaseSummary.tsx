@@ -139,6 +139,22 @@ const PurchaseSummary: React.FC<Props> = () => {
         }
     };
 
+    const deliveryDetails = {
+        data: {
+            dates: [
+                '04/01/2020',
+                '04/02/2020'
+            ],
+            willYouBeAvailable: 'Yes',
+            receiver: {
+                name: 'Michelle Henry',
+                phone: '(855) 523-1302'
+            },
+            truckAccess: 'Yes',
+            truckInformation: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim venia',
+        }
+    };
+
     return (
         <Container>
             <Content>
@@ -168,9 +184,9 @@ const PurchaseSummary: React.FC<Props> = () => {
                 <Space/>
                 <DeliveryAddress data={deliveryAddress.data}/>
                 <Space/>
-                <DeliveryDetails/>
+                <DeliveryDetails data={deliveryDetails.data}/>
                 <Space/>
-                <UploadedDocuments/>
+                <UploadedDocuments showInsuranceDisclaimer={true}/>
                 <Space/>
                 <ShouldKnow>
                     <BodyRegularBold>You Should Know:</BodyRegularBold> We’ve done our

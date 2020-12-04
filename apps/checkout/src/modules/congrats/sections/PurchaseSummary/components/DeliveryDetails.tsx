@@ -1,9 +1,19 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Body, Title } from 'vroom-ui/src/foundation/Typography';
+import {Body, Title} from 'vroom-ui/src/foundation/Typography';
 
 
-interface Props {
+export interface DeliveryDetailsProps {
+    data: {
+        dates: string[];
+        willYouBeAvailable: string;
+        receiver: {
+            name: string;
+            phone: string;
+        },
+        truckAccess: string;
+        truckInformation: string;
+    }
 }
 
 const Container = styled.div`
@@ -29,35 +39,33 @@ const Receiver = styled(Body.Regular)`
   margin-bottom: 8px;
 `;
 
-const DeliveryDetails: React.FC<Props> = () => {
-  return (
-    <Container>
-      <Title.One>Additional delivery details</Title.One>
-      <NotAvailable>Not available delivery dates</NotAvailable>
-      <Body.Regular>04/01/2020 - 04/03/2020</Body.Regular>
-      <Body.Regular>04/01/2020 - 04/03/2020</Body.Regular>
-      <Body.Regular>04/01/2020 - 04/03/2020</Body.Regular>
+const DeliveryDetails: React.FC<DeliveryDetailsProps> = ({data}) => {
+    const {dates, willYouBeAvailable, receiver, truckAccess, truckInformation} = data;
+    return (
+        <Container>
+            <Title.One>Additional delivery details</Title.One>
+            <NotAvailable>Not available delivery dates</NotAvailable>
+            {dates.map(date => {
+                return <Body.Regular key={date}>{date}</Body.Regular>
+            })}
 
-      <YouAvailable>Will you be available for delivery?</YouAvailable>
-      <Body.Regular>Yes</Body.Regular>
+            <YouAvailable>Will you be available for delivery?</YouAvailable>
+            <Body.Regular>{willYouBeAvailable}</Body.Regular>
 
-      <Receiver>Receiver Information</Receiver>
-      <Body.Regular>Yes</Body.Regular>
+            <Receiver>Receiver Information</Receiver>
+            <Body.Regular>{receiver.name}</Body.Regular>
+            <Body.Regular>{receiver.phone}</Body.Regular>
 
-      <Receiver>Can an 18-wheeler truck access your delivery address?</Receiver>
-      <Body.Regular>Yes</Body.Regular>
+            <Receiver>Can an 18-wheeler truck access your delivery address?</Receiver>
+            <Body.Regular>{truckAccess}</Body.Regular>
 
-      <Receiver>
-        What should we know about your street that might affect an 18-wheeler
-        truck from delivery to your address?
-      </Receiver>
-      <Body.Regular>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-        venia
-      </Body.Regular>
-    </Container>
-  );
+            <Receiver>
+                What should we know about your street that might affect an 18-wheeler
+                truck from delivery to your address?
+            </Receiver>
+            <Body.Regular>{truckInformation}</Body.Regular>
+        </Container>
+    );
 };
 
 export default DeliveryDetails;
