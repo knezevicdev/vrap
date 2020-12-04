@@ -12,6 +12,7 @@ import DeliveryAddress from "./DeliveryAddress";
 import RegistrationAddress from "./RegistrationAddress";
 import DeliveryDetails from "./DeliveryDetails";
 import UploadedDocuments from "./UploadedDocuments";
+import {addStyleForMobile} from "vroom-ui/src/foundation/themes/Vroom";
 
 interface Props {
     viewModel: ViewModel;
@@ -32,6 +33,10 @@ const Car = styled.div`
   display:flex;
   margin-bottom: 32px;
   align-items: center;
+  
+    ${addStyleForMobile(`
+        margin-bottom: 52px;
+    `)}
 `;
 
 const CarInfo = styled.div`
