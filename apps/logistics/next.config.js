@@ -15,10 +15,14 @@ const shortHash = childProcess
 // const isProd = process.env.NODE_ENV === 'production';
 // const assetPrefix = isProd ? `/fulfillment/${shortHash}` : '';
 const assetPrefix = '';
+const env = {
+  BASE_URL: process.env.BASE_URL,
+};
 
 const config = {
   assetPrefix,
   generateBuildId: () => shortHash,
+  env,
   publicRuntimeConfig: {
     ASSET_PREFIX: assetPrefix,
     NAME: name,

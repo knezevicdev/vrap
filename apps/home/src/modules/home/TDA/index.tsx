@@ -3,6 +3,7 @@ import { TDAHeader } from '@vroom-web/header-components';
 import getConfig from 'next/config';
 import React from 'react';
 
+import Banner from './components/Banner';
 import Divider from './components/Divider';
 import Hero from './components/Hero';
 import Highlights from './components/Highlights';
@@ -18,6 +19,7 @@ const TDA: React.FC = () => {
   return (
     <>
       <TDAHeader vroomUrl={VROOM_URL} />
+      <Banner />
       <Hero />
       <VehicleSearch />
       <Highlights />

@@ -1,40 +1,52 @@
 import { Tab, Tabs } from '@material-ui/core';
+import { AxiosResponse } from 'axios';
 import React, { useState } from 'react';
 
 import { viewModel } from './Table';
 
 import SimpleTable from 'src/components/SimpleTable';
 import mvvm from 'src/mvvm';
-import {
-  getBookedShipments,
-  getCancelledShipments,
-  getDeliveredShipments,
-  getInTransitShipments,
-  getTenderedShipments,
-} from 'src/networking/Networker';
+import { Shipment, ShipmentStatus } from 'src/networking/models/Shipments';
+import { getShipments } from 'src/networking/Networker';
 
 const nav = [
-  { display: 'Tendered', api: getTenderedShipments },
-  { display: 'Booked', api: getBookedShipments },
-  { display: 'In Transit', api: getInTransitShipments },
-  { display: 'Cancelled', api: getCancelledShipments },
-  { display: 'Delivered', api: getDeliveredShipments },
+  {
+    display: 'Tendered',
+    status: ShipmentStatus.Tendered,
+  },
+  {
+    display: 'Booked',
+    status: ShipmentStatus.Booked,
+  },
+  {
+    display: 'In Transit',
+    status: ShipmentStatus.InTransit,
+  },
+  {
+    display: 'Cancelled',
+    status: ShipmentStatus.Cancelled,
+  },
+  {
+    display: 'Delivered',
+    status: ShipmentStatus.Delivered,
+  },
 ];
 
 const Shipments: React.FC = () => {
-  const [api, setApi] = useState(() => getTenderedShipments);
   const [value, setValue] = useState(0);
 
   const handleNav = (
     _e: React.SyntheticEvent<EventTarget>,
     newValue: number
   ): void => {
-    setApi(() => nav[newValue].api);
     setValue(newValue);
   };
 
   const Table = mvvm({
-    model: { onload: api },
+    model: {
+      onload: (): Promise<AxiosResponse<Shipment[]>> =>
+        getShipments(nav[value].status),
+    },
     viewModel,
     View: SimpleTable,
   });

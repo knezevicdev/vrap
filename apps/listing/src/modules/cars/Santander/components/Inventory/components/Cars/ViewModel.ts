@@ -93,7 +93,7 @@ class CarsViewModel {
           break;
         case Filters.PRICE:
           formattedFilters.push({
-            type: 'Year',
+            type: 'Price',
             value,
           });
           break;
