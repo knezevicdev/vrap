@@ -10,6 +10,7 @@ import BillingAddress from "./BillingAddress";
 import FinancingInformation from "./FinancingInformation";
 import DeliveryAddress from "./DeliveryAddress";
 import RegistrationAddress from "./RegistrationAddress";
+import DeliveryDetails from "./DeliveryDetails";
 
 interface Props {
     viewModel: ViewModel;
@@ -50,6 +51,7 @@ const View: React.FC<Props> = () => {
             <FinancingInformation/>
             <RegistrationAddress/>
             <DeliveryAddress/>
+            <DeliveryDetails/>
         </Container>
     );
 };
