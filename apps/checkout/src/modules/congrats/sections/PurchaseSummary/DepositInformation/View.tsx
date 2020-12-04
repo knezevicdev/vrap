@@ -1,25 +1,25 @@
 import React from 'react';
+import styled from 'styled-components';
+import { Body, Title } from 'vroom-ui/src/foundation/Typography';
 
 import ViewModel from './ViewModel';
-import {Body, Title} from "vroom-ui/src/foundation/Typography";
-import styled from "styled-components";
 
 interface Props {
-    viewModel: ViewModel;
+  viewModel: ViewModel;
 }
 
 const Container = styled.div`
-  display:flex;
+  display: flex;
   flex-direction: column;
 `;
 
 const Row = styled.div`
-  display:flex;
+  display: flex;
   justify-content: space-between;
 `;
 
 const Section = styled.div`
-  display:flex;
+  display: flex;
   flex-direction: column;
   margin-top: 8px;
   ${Row}:not(:last-child) {
@@ -32,21 +32,21 @@ const BodyRegularBold = styled(Body.Regular)`
 `;
 
 const View: React.FC<Props> = () => {
-    return (
-        <Container>
-            <Title.One>Reservation deposit information</Title.One>
-            <Section>
-                <Row>
-                    <Body.Regular>Amount</Body.Regular>
-                    <BodyRegularBold>$500.00</BodyRegularBold>
-                </Row>
-                <Row>
-                    <Body.Regular>Credit card</Body.Regular>
-                    <BodyRegularBold>***1234</BodyRegularBold>
-                </Row>
-            </Section>
-        </Container>
-    );
+  return (
+    <Container>
+      <Title.One>Reservation deposit information</Title.One>
+      <Section>
+        <Row>
+          <Body.Regular>Amount</Body.Regular>
+          <BodyRegularBold>$500.00</BodyRegularBold>
+        </Row>
+        <Row>
+          <Body.Regular>Credit card</Body.Regular>
+          <BodyRegularBold>***1234</BodyRegularBold>
+        </Row>
+      </Section>
+    </Container>
+  );
 };
 
 export default View;
