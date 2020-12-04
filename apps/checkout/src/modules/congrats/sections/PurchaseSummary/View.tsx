@@ -19,48 +19,85 @@ interface Props {
 
 const Container = styled.div`
   display:flex;
+  justify-content: center;
+`;
+
+const Content = styled.div`
+  display:flex;
   flex-direction: column;
   max-width: 640px;
 `;
 
 const Car = styled.div`
   display:flex;
-  max-height: 104px;
+  margin-bottom: 32px;
+  align-items: center;
 `;
 
 const CarInfo = styled.div`
   display:flex;
   flex-direction: column;
+  margin-left: 16px;
+`;
+
+const Make = styled(Title.Three)`
+    line-height: 24px !important;
+`;
+
+const CarImage = styled.div`
+    min-width: 182px;
+    max-width: 182px;
 `;
 
 const BodyRegularBold = styled(Body.Regular)`
   font-weight: 600 !important;
 `;
 
+const Header = styled.div`
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    margin-top: 64px;
+    margin-bottom: 32px;
+`;
+
 const View: React.FC<Props> = () => {
     return (
         <Container>
-            <Heading.Three>Purchase summary</Heading.Three>
-            <Body.Small>Transaction placed on November 4, 2020</Body.Small>
-            <Car>
-                <Picture alt='car' src='/assets/car.png' width="182px" height="104px"/>
-                <CarInfo>
-                    <Title.Three>2018 Land Rover Range Rover Sport</Title.Three>
-                    <Body.Regular>SE</Body.Regular>
-                    <Body.Regular>20,818 miles</Body.Regular>
-                </CarInfo>
-            </Car>
-            <PurchaseDetails/>
-            <DepositInformation/>
-            <BillingAddress/>
-            <FinancingInformation/>
-            <RegistrationAddress/>
-            <DeliveryAddress/>
-            <DeliveryDetails/>
-            <UploadedDocuments/>
-            <Body.Regular><BodyRegularBold>You Should Know:</BodyRegularBold>  We’ve done our best to estimate the taxes and registration fees here but the final amounts are determined by the government. Your monthly payment might also vary slightly depending on the number of days between contract signing and the first payment date. </Body.Regular>
-            <Body.Regular>Individual products or combinations of product options may exceed the approved amount financed and could impact your lender selection or other financing terms. A Vroom specialist will help you determine what options are available to you.</Body.Regular>
-            <Body.Regular>This sale is not final until the parties have signed a Retail Purchase Agreement and a Retail Installment Sales Contract (if applicable), and complete a review and approval process.</Body.Regular>
+            <Content>
+                <Header>
+                    <Heading.Three>Purchase summary</Heading.Three>
+                    <Body.Small>Transaction placed on November 4, 2020</Body.Small>
+                </Header>
+                <Car>
+                    <CarImage>
+                        <Picture alt='car' src='' width="182px" height="104px"/>
+                    </CarImage>
+                    <CarInfo>
+                        <Make>2018 Land Rover Range Rover Sport</Make>
+                        <Body.Regular>SE</Body.Regular>
+                        <Body.Regular>20,818 miles</Body.Regular>
+                    </CarInfo>
+                </Car>
+                <PurchaseDetails/>
+                <DepositInformation/>
+                <BillingAddress/>
+                <FinancingInformation/>
+                <RegistrationAddress/>
+                <DeliveryAddress/>
+                <DeliveryDetails/>
+                <UploadedDocuments/>
+                <Body.Regular><BodyRegularBold>You Should Know:</BodyRegularBold> We’ve done our best to estimate the
+                    taxes and registration fees here but the final amounts are determined by the government. Your
+                    monthly payment might also vary slightly depending on the number of days between contract signing
+                    and the first payment date. </Body.Regular>
+                <Body.Regular>Individual products or combinations of product options may exceed the approved amount
+                    financed and could impact your lender selection or other financing terms. A Vroom specialist will
+                    help you determine what options are available to you.</Body.Regular>
+                <Body.Regular>This sale is not final until the parties have signed a Retail Purchase Agreement and a
+                    Retail Installment Sales Contract (if applicable), and complete a review and approval
+                    process.</Body.Regular>
+            </Content>
         </Container>
     );
 };
