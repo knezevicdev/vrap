@@ -1,15 +1,15 @@
-import UsersModel from './Model';
+import RegisterModel from './Model';
 
-class UsersViewModel {
-  private model: UsersModel;
+class RegisterViewModel {
+  private model: RegisterModel;
 
-  constructor(usersModel: UsersModel) {
+  constructor(usersModel: RegisterModel) {
     this.model = usersModel;
   }
 
-  getUserStatuses(): void {
-    this.model.getUserStatuses();
+  getEmail(): string {
+    return this.model.email;
   }
 }
 
-export default UsersViewModel;
+export default RegisterViewModel;

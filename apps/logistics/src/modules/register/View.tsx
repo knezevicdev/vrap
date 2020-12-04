@@ -7,7 +7,7 @@ import {
   Typography,
 } from '@material-ui/core';
 import Paper from '@material-ui/core/Paper';
-import React, { useEffect } from 'react';
+import React from 'react';
 
 import ViewModel from './ViewModel';
 
@@ -16,10 +16,6 @@ interface Props {
 }
 
 const UsersView: React.FC<Props> = ({ viewModel }) => {
-  useEffect(() => {
-    viewModel.getUserStatuses();
-  }, [viewModel]);
-
   return (
     <div>
       <Box p={4} width="40%" mx="auto">
@@ -32,6 +28,7 @@ const UsersView: React.FC<Props> = ({ viewModel }) => {
                   label="Email"
                   type="email"
                   autoComplete="email"
+                  defaultValue={viewModel.getEmail()}
                 />
               </Grid>
               <Grid item container justify="center">
