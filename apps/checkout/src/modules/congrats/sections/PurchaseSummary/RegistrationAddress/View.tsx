@@ -12,11 +12,14 @@ const Container = styled.div`
   flex-direction: column;
 `;
 
+const TitleHeader = styled(Title.One)`
+    margin-bottom: 8px;
+`;
 
 const View: React.FC<Props> = () => {
   return (
       <Container>
-        <Title.One>Registration address</Title.One>
+        <TitleHeader>Registration address</TitleHeader>
         <Body.Regular>Paul Henry</Body.Regular>
         <Body.Regular>1021 Monterey Salinas Hwy</Body.Regular>
         <Body.Regular>Salina, CA 93980</Body.Regular>

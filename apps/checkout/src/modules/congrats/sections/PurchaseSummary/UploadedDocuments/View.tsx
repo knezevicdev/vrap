@@ -17,10 +17,14 @@ const IconAndText = styled.div`
   display: flex;
 `;
 
+const TitleHeader = styled(Title.One)`
+    margin-bottom: 8px;
+`;
+
 const View: React.FC<Props> = () => {
   return (
       <Container>
-        <Title.One>Uploaded documents</Title.One>
+        <TitleHeader>Uploaded documents</TitleHeader>
         <IconAndText>
           <Icon icon={Icons.CHECKMARK_SMALL}/>
           <Body.Regular>Front of Driver’s License</Body.Regular>
