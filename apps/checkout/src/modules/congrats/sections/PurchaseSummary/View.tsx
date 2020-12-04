@@ -6,6 +6,7 @@ import {Heading, Body, Title} from 'vroom-ui/src/foundation/Typography';
 import {Picture} from "vroom-ui/src/elements/Picture";
 import PurchaseDetails from "./PurchaseDetails";
 import DepositInformation from "./DepositInformation";
+import BillingAddress from "./BillingAddress";
 
 interface Props {
     viewModel: ViewModel;
@@ -42,6 +43,7 @@ const View: React.FC<Props> = () => {
             </Car>
             <PurchaseDetails/>
             <DepositInformation/>
+            <BillingAddress/>
         </Container>
     );
 };
