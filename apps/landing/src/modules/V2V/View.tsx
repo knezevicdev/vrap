@@ -80,8 +80,12 @@ const InventoryView: React.FC<Props> = ({ viewModel }) => {
   useEffect(() => {
     if (typeof window !== 'undefined') {
       window.onscroll = (): void => {
-        const pos = window.pageYOffset;
-        pos > 600 ? viewModel.setSticky(true) : viewModel.setSticky(false);
+        const currentPosition = window.pageYOffset;
+        const maxHeight = document.body.scrollHeight;
+
+        currentPosition > maxHeight * 0.2
+          ? viewModel.setSticky(true)
+          : viewModel.setSticky(false);
       };
     }
   }, [viewModel]);
