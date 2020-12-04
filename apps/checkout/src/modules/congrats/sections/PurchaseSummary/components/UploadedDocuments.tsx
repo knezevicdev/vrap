@@ -4,9 +4,12 @@ import Icon, { Icons } from 'vroom-ui/src/elements/Icon/Icon';
 import { ThemeProps } from 'vroom-ui/src/foundation/themes/types';
 import { Body, Title } from 'vroom-ui/src/foundation/Typography';
 
-
-interface Props {
+interface UploadedDocumentsProps {
+  showInsuranceDisclaimer: boolean;
 }
+
+const primaryBrand = (props: { theme: ThemeProps }): string =>
+    props.theme.colors.primary.brand;
 
 const secondarySuccess = (props: { theme: ThemeProps }): string =>
   props.theme.colors.secondary.success;
@@ -31,7 +34,15 @@ const CheckmarkIcon = styled(Icon)`
   fill: ${secondarySuccess};
 `;
 
-const UploadedDocuments: React.FC<Props> = () => {
+const Disclaimer = styled(Body.Regular)`
+    padding: 8px;
+    margin-top: 16px;
+    border: solid 1px ${primaryBrand};
+`;
+
+const UploadedDocuments: React.FC<UploadedDocumentsProps> = ({
+  showInsuranceDisclaimer,
+}) => {
   return (
     <Container>
       <TitleHeader>Uploaded documents</TitleHeader>
@@ -43,10 +54,17 @@ const UploadedDocuments: React.FC<Props> = () => {
         <CheckmarkIcon icon={Icons.CHECKMARK_SMALL} />
         <Body.Regular>Back of Driver’s License</Body.Regular>
       </IconAndText>
-      <IconAndText>
-        <CheckmarkIcon icon={Icons.CHECKMARK_SMALL} />
-        <Body.Regular>Insurance Card</Body.Regular>
-      </IconAndText>
+      {showInsuranceDisclaimer ? (
+        <Disclaimer>
+          I don't have a car insurance available at this time. I understand that
+          the insurance will be needed to complete the transaction.
+        </Disclaimer>
+      ) : (
+        <IconAndText>
+          <CheckmarkIcon icon={Icons.CHECKMARK_SMALL} />
+          <Body.Regular>Insurance Card</Body.Regular>
+        </IconAndText>
+      )}
     </Container>
   );
 };

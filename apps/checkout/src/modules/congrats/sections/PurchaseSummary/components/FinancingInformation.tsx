@@ -3,17 +3,16 @@ import styled from 'styled-components';
 import { ThemeProps } from 'vroom-ui/src/foundation/themes/types';
 import { Body, Title } from 'vroom-ui/src/foundation/Typography';
 
-
 export interface FinancingInformationProps {
   data: {
     downPayment: number;
     bank: string;
     apr: string | number;
-    financeTerm: string| number;
-    numberOfPayments: string| number;
-    financeCharge: string| number;
+    financeTerm: string | number;
+    numberOfPayments: string | number;
+    financeCharge: string | number;
     monthlyPayment: number;
-  }
+  };
 }
 
 const grayThree = (props: { theme: ThemeProps }): string =>
@@ -58,8 +57,18 @@ const Payment = styled(Title.Two)`
   color: ${primaryBrand} !important;
 `;
 
-const FinancingInformation: React.FC<FinancingInformationProps> = ({data}) => {
-  const {downPayment, bank, apr, financeTerm, numberOfPayments, financeCharge, monthlyPayment} = data;
+const FinancingInformation: React.FC<FinancingInformationProps> = ({
+  data,
+}) => {
+  const {
+    downPayment,
+    bank,
+    apr,
+    financeTerm,
+    numberOfPayments,
+    financeCharge,
+    monthlyPayment,
+  } = data;
   return (
     <Container>
       <Title.One>Financing information</Title.One>
