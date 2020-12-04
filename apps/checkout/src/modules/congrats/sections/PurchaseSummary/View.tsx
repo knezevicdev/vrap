@@ -61,6 +61,10 @@ const Header = styled.div`
     margin-bottom: 32px;
 `;
 
+const Space = styled.div`
+    margin-top: 64px;
+`;
+
 const View: React.FC<Props> = () => {
     return (
         <Container>
@@ -80,13 +84,21 @@ const View: React.FC<Props> = () => {
                     </CarInfo>
                 </Car>
                 <PurchaseDetails/>
+                <Space/>
                 <DepositInformation/>
+                <Space/>
                 <BillingAddress/>
+                <Space/>
                 <FinancingInformation/>
+                <Space/>
                 <RegistrationAddress/>
+                <Space/>
                 <DeliveryAddress/>
+                <Space/>
                 <DeliveryDetails/>
+                <Space/>
                 <UploadedDocuments/>
+                <Space/>
                 <Body.Regular><BodyRegularBold>You Should Know:</BodyRegularBold> We’ve done our best to estimate the
                     taxes and registration fees here but the final amounts are determined by the government. Your
                     monthly payment might also vary slightly depending on the number of days between contract signing
