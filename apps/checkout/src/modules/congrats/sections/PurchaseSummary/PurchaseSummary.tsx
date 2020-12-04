@@ -74,7 +74,7 @@ const ShouldKnow = styled(Body.Regular)`
   margin-bottom: 16px;
 `;
 
-const View: React.FC<Props> = () => {
+const PurchaseSummary: React.FC<Props> = () => {
     const purchaseDetails = {
         data: {
             method: 'Finance with Vroom',
@@ -98,6 +98,26 @@ const View: React.FC<Props> = () => {
     };
 
     const billingAddress = {
+        data: {
+            address: {
+                name: 'Paul Henry',
+                address: '1021 Monterey Salinas Hwy',
+                cityStateZip: 'Salina, CA 93980'
+            }
+        }
+    };
+
+    const registrationAddress = {
+        data: {
+            address: {
+                name: 'Paul Henry',
+                address: '1021 Monterey Salinas Hwy',
+                cityStateZip: 'Salina, CA 93980'
+            }
+        }
+    };
+
+    const deliveryAddress = {
         data: {
             address: {
                 name: 'Paul Henry',
@@ -144,9 +164,9 @@ const View: React.FC<Props> = () => {
                 <Space/>
                 <FinancingInformation data={financingInformation.data}/>
                 <Space/>
-                <RegistrationAddress/>
+                <RegistrationAddress data={registrationAddress.data}/>
                 <Space/>
-                <DeliveryAddress/>
+                <DeliveryAddress data={deliveryAddress.data}/>
                 <Space/>
                 <DeliveryDetails/>
                 <Space/>
@@ -157,7 +177,7 @@ const View: React.FC<Props> = () => {
                     best to estimate the taxes and registration fees here but the final
                     amounts are determined by the government. Your monthly payment might
                     also vary slightly depending on the number of days between contract
-                    signing and the first payment date.{' '}
+                    signing and the first payment date.
                 </ShouldKnow>
                 <ShouldKnow>
                     Individual products or combinations of product options may exceed the
@@ -175,4 +195,4 @@ const View: React.FC<Props> = () => {
     );
 };
 
-export default View;
+export default PurchaseSummary;

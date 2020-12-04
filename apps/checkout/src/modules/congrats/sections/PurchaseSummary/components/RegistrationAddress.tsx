@@ -3,8 +3,16 @@ import styled from 'styled-components';
 import { Body, Title } from 'vroom-ui/src/foundation/Typography';
 
 
-interface Props {
+export interface RegistrationAddressProps {
+    data: {
+        address: {
+            name: string;
+            address: string;
+            cityStateZip: string;
+        }
+    };
 }
+
 const Container = styled.div`
   display: flex;
   flex-direction: column;
@@ -14,13 +22,15 @@ const TitleHeader = styled(Title.One)`
   margin-bottom: 8px;
 `;
 
-const RegistrationAddress: React.FC<Props> = () => {
-  return (
+const RegistrationAddress: React.FC<RegistrationAddressProps> = ({data}) => {
+    const {address: {name, address, cityStateZip}} = data;
+
+    return (
     <Container>
       <TitleHeader>Registration address</TitleHeader>
-      <Body.Regular>Paul Henry</Body.Regular>
-      <Body.Regular>1021 Monterey Salinas Hwy</Body.Regular>
-      <Body.Regular>Salina, CA 93980</Body.Regular>
+        <Body.Regular>{name}</Body.Regular>
+        <Body.Regular>{address}</Body.Regular>
+        <Body.Regular>{cityStateZip}</Body.Regular>
     </Container>
   );
 };
