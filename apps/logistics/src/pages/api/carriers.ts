@@ -15,8 +15,11 @@ export default async function handler(
     filter,
   })}`;
 
+  const username = process.env.SHIPPING_PORTAL_USERNAME || '';
+  const password = process.env.SHIPPING_PORTAL_PASSWORD || '';
+
   const response = await axios.get(url, {
-    auth: { username: 'user', password: 'password' },
+    auth: { username, password },
   });
   res.status(200).json(response.data.data);
 }

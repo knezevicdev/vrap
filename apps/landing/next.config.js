@@ -22,6 +22,8 @@ const config = {
     NODE_ENV: process.env.NODE_ENV,
     SEGMENT_WRITE_KEY: process.env.SEGMENT_WRITE_KEY,
     VERSION: version,
+    INVSEARCH_V3_URL: process.env.INVSEARCH_V3_URL,
+    GEARBOX_PRIVATE_URL: process.env.GEARBOX_PRIVATE_URL,
   },
   webpack: (config) => {
     config.module.rules.push({

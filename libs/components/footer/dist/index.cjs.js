@@ -13927,31 +13927,31 @@ var ViewModel = function ViewModel(vroomUrl) {
   this.sections = [{
     title: {
       label: 'Learning Center',
-      href: 'https://santanderconsumerusa.com/learning-center',
+      href: "https://santanderconsumerusa.com/learning-center".concat(this.utmParams),
       target: '_blank',
       handleAnalytics: this.analyticsHandler.trackLinkClicked('Learning Center')
     },
     links: [{
       label: 'Finance Calculators',
-      href: "https://santanderconsumerusa.com/learning-center/finance-calculators",
+      href: "https://santanderconsumerusa.com/learning-center/finance-calculators".concat(this.utmParams),
       target: '_blank',
       handleAnalytics: this.analyticsHandler.trackLinkClicked('Finance Calculators')
     }, {
       label: 'Blog',
-      href: "https://santanderconsumerusa.com/blog",
+      href: "https://santanderconsumerusa.com/blog".concat(this.utmParams),
       target: '_blank',
       handleAnalytics: this.analyticsHandler.trackLinkClicked('Blog')
     }]
   }, {
     title: {
       label: 'Help & Support',
-      href: 'https://santanderconsumerusa.com/support',
+      href: "https://santanderconsumerusa.com/support".concat(this.utmParams),
       target: '_blank',
       handleAnalytics: this.analyticsHandler.trackLinkClicked('Help & Support')
     },
     links: [{
       label: 'Payment Options',
-      href: "https://santanderconsumerusa.com/support/payments",
+      href: "https://santanderconsumerusa.com/support/payments".concat(this.utmParams),
       target: '_blank',
       handleAnalytics: this.analyticsHandler.trackLinkClicked('Payment Options')
     }, {

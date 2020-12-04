@@ -1,4 +1,5 @@
 import React from 'react';
+import styled from 'styled-components';
 
 import file from '../../../public/assets/icons.svg';
 
@@ -17,6 +18,13 @@ interface Props {
   className?: string;
 }
 
+const SVG = styled.svg<{ height: number; width: number }>`
+  min-height: ${(props): number => props.height}px;
+  max-height: ${(props): number => props.height}px;
+  min-width: ${(props): number => props.width}px;
+  max-width: ${(props): number => props.width}px;
+`;
+
 const Icon: React.FC<Props> = ({ icon, fill, stroke, className }) => {
   const width = icon.width;
   const height = icon.height;
@@ -29,7 +37,7 @@ const Icon: React.FC<Props> = ({ icon, fill, stroke, className }) => {
   const xlinkHref = `${file}${id}`;
 
   return (
-    <svg
+    <SVG
       className={className}
       fill={iconFill}
       stroke={iconStroke}
@@ -38,7 +46,7 @@ const Icon: React.FC<Props> = ({ icon, fill, stroke, className }) => {
       viewBox={`0 0 ${width} ${height}`}
     >
       <use xlinkHref={xlinkHref} />
-    </svg>
+    </SVG>
   );
 };
 
@@ -297,5 +305,15 @@ export const Icons = {
     name: 'hot',
     width: 10,
     height: 12,
+  },
+  QUESTION: {
+    name: 'question',
+    width: 14,
+    height: 22,
+  },
+  ENVELOPE: {
+    name: 'envelope',
+    width: 24,
+    height: 14,
   },
 };

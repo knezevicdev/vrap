@@ -17,6 +17,8 @@ class ViewModel {
   private analyticsHandler = new AnalyticsHandler();
   readonly vroomUrl: string = '';
   readonly sections: Section[];
+  readonly utmParams: string =
+    '?utm_source=vroom_subdomain&utm_medium=referral&utm_campaign=vroom';
 
   constructor(vroomUrl?: string) {
     if (vroomUrl) this.vroomUrl = vroomUrl;
@@ -24,7 +26,7 @@ class ViewModel {
       {
         title: {
           label: 'Learning Center',
-          href: 'https://santanderconsumerusa.com/learning-center',
+          href: `https://santanderconsumerusa.com/learning-center${this.utmParams}`,
           target: '_blank',
           handleAnalytics: this.analyticsHandler.trackLinkClicked(
             'Learning Center'
@@ -33,7 +35,7 @@ class ViewModel {
         links: [
           {
             label: 'Finance Calculators',
-            href: `https://santanderconsumerusa.com/learning-center/finance-calculators`,
+            href: `https://santanderconsumerusa.com/learning-center/finance-calculators${this.utmParams}`,
             target: '_blank',
             handleAnalytics: this.analyticsHandler.trackLinkClicked(
               'Finance Calculators'
@@ -41,7 +43,7 @@ class ViewModel {
           },
           {
             label: 'Blog',
-            href: `https://santanderconsumerusa.com/blog`,
+            href: `https://santanderconsumerusa.com/blog${this.utmParams}`,
             target: '_blank',
             handleAnalytics: this.analyticsHandler.trackLinkClicked('Blog'),
           },
@@ -50,7 +52,7 @@ class ViewModel {
       {
         title: {
           label: 'Help & Support',
-          href: 'https://santanderconsumerusa.com/support',
+          href: `https://santanderconsumerusa.com/support${this.utmParams}`,
           target: '_blank',
           handleAnalytics: this.analyticsHandler.trackLinkClicked(
             'Help & Support'
@@ -59,7 +61,7 @@ class ViewModel {
         links: [
           {
             label: 'Payment Options',
-            href: `https://santanderconsumerusa.com/support/payments`,
+            href: `https://santanderconsumerusa.com/support/payments${this.utmParams}`,
             target: '_blank',
             handleAnalytics: this.analyticsHandler.trackLinkClicked(
               'Payment Options'
@@ -109,9 +111,6 @@ class ViewModel {
       },
     ];
   }
-
-  readonly utmParams: string =
-    '?utm_source=vroom_subdomain&utm_medium=referral&utm_campaign=vroom';
 
   readonly copyrightLabel =
     '© 2020 Santander Consumer USA Inc. and its Licensors. All Rights Reserved.';
