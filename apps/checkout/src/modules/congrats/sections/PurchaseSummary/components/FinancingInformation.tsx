@@ -5,13 +5,13 @@ import { Body, Title } from 'vroom-ui/src/foundation/Typography';
 
 export interface FinancingInformationProps {
   data: {
-    downPayment: number;
+    downPayment: string;
     bank: string;
-    apr: string | number;
-    financeTerm: string | number;
-    numberOfPayments: string | number;
-    financeCharge: string | number;
-    monthlyPayment: number;
+    apr: string;
+    financeTerm: string;
+    numberOfPayments: string;
+    financeCharge: string;
+    monthlyPayment: string;
   };
 }
 
@@ -75,7 +75,7 @@ const FinancingInformation: React.FC<FinancingInformationProps> = ({
       <Section>
         <Row>
           <Body.Regular>Down Payment</Body.Regular>
-          <BodyRegularBold>-${downPayment}</BodyRegularBold>
+          <BodyRegularBold>{downPayment}</BodyRegularBold>
         </Row>
         <Row>
           <Body.Regular>Financing Bank</Body.Regular>
@@ -101,7 +101,7 @@ const FinancingInformation: React.FC<FinancingInformationProps> = ({
       <Divider />
       <Row>
         <Payment>Monthly payment</Payment>
-        <Payment>${monthlyPayment}</Payment>
+        <Payment>{monthlyPayment}</Payment>
       </Row>
     </Container>
   );

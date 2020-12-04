@@ -7,15 +7,15 @@ import { Body, Title } from 'vroom-ui/src/foundation/Typography';
 export interface PurchaseDetailsProps {
   data: {
     method: string;
-    sellingPrice: number;
-    taxes: number;
-    vehicleServiceContractProtection?: number;
-    gapCoverage?: number;
-    tireAndWheelCoverage?: number;
-    shippingFee?: number;
-    subtotal: number;
-    creditDownPayment: number;
-    total: number;
+    sellingPrice: string;
+    taxes: string;
+    vehicleServiceContractProtection?: string;
+    gapCoverage?: string;
+    tireAndWheelCoverage?: string;
+    shippingFee?: string;
+    subtotal: string;
+    creditDownPayment: string;
+    total: string;
   };
 }
 
@@ -99,20 +99,20 @@ const PurchaseDetails: React.FC<PurchaseDetailsProps> = ({ data }) => {
       <Header>Purchase details</Header>
       <Row>
         <Title.Three>Payment method</Title.Three>
-        <Title.Three>${method}</Title.Three>
+        <Title.Three>{method}</Title.Three>
       </Row>
       <Divider />
       <Section>
         <Row>
           <Body.Regular>Selling price</Body.Regular>
-          <BodyRegularBold>${sellingPrice}</BodyRegularBold>
+          <BodyRegularBold>{sellingPrice}</BodyRegularBold>
         </Row>
         <Row>
           <TextWithHelp>
             <Body.Regular>Taxes and fees</Body.Regular>
             <InfoIcon icon={Icons.FEEDBACK_INFO} />
           </TextWithHelp>
-          <BodyRegularBold>${taxes}</BodyRegularBold>
+          <BodyRegularBold>{taxes}</BodyRegularBold>
         </Row>
         <Row>
           <TextWithHelp>
@@ -133,7 +133,7 @@ const PurchaseDetails: React.FC<PurchaseDetailsProps> = ({ data }) => {
                 <InfoIcon icon={Icons.FEEDBACK_INFO} />
               </TextWithHelp>
               <BodyRegularBold>
-                ${vehicleServiceContractProtection}
+                {vehicleServiceContractProtection}
               </BodyRegularBold>
             </Row>
             <Details>60 mos. / 60,000 mi. / $100 ded.</Details>
@@ -146,7 +146,7 @@ const PurchaseDetails: React.FC<PurchaseDetailsProps> = ({ data }) => {
                 <Body.Regular>GAP Coverage</Body.Regular>
                 <InfoIcon icon={Icons.FEEDBACK_INFO} />
               </TextWithHelp>
-              <BodyRegularBold>${gapCoverage}</BodyRegularBold>
+              <BodyRegularBold>{gapCoverage}</BodyRegularBold>
             </Row>
             <Details>60 mos. / 60,000 mi. / $100 ded.</Details>
           </>
@@ -158,31 +158,31 @@ const PurchaseDetails: React.FC<PurchaseDetailsProps> = ({ data }) => {
                 <Body.Regular>Tire & Wheel Coverage</Body.Regular>
                 <InfoIcon icon={Icons.FEEDBACK_INFO} />
               </TextWithHelp>
-              <BodyRegularBold>${tireAndWheelCoverage}</BodyRegularBold>
+              <BodyRegularBold>{tireAndWheelCoverage}</BodyRegularBold>
             </Row>
             <Details>60 mos. / 60,000 mi. / $100 ded.</Details>
           </>
         )}
         <Row>
           <Body.Regular>Shipping Fee</Body.Regular>
-          <BodyRegularBold>${shippingFee}</BodyRegularBold>
+          <BodyRegularBold>{shippingFee}</BodyRegularBold>
         </Row>
       </Section>
       <Divider />
       <Section>
         <Row>
           <Body.Regular>Subtotal</Body.Regular>
-          <BodyRegularBold>${subtotal}</BodyRegularBold>
+          <BodyRegularBold>{subtotal}</BodyRegularBold>
         </Row>
         <Row>
           <Body.Regular>Credit down payment</Body.Regular>
-          <BodyRegularBold>-${creditDownPayment}</BodyRegularBold>
+          <BodyRegularBold>{creditDownPayment}</BodyRegularBold>
         </Row>
       </Section>
       <Divider />
       <Row>
         <Due>Total balance due</Due>
-        <Due>${total}</Due>
+        <Due>{total}</Due>
       </Row>
     </Container>
   );

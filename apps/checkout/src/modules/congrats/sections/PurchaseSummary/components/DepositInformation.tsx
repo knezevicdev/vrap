@@ -4,7 +4,7 @@ import { Body, Title } from 'vroom-ui/src/foundation/Typography';
 
 export interface DepositInformationProps {
   data: {
-    amount: number;
+    amount: string;
     creditCard: string;
   };
 }
@@ -40,11 +40,11 @@ const DepositInformation: React.FC<DepositInformationProps> = ({ data }) => {
       <Section>
         <Row>
           <Body.Regular>Amount</Body.Regular>
-          <BodyRegularBold>${amount}</BodyRegularBold>
+          <BodyRegularBold>{amount}</BodyRegularBold>
         </Row>
         <Row>
           <Body.Regular>Credit card</Body.Regular>
-          <BodyRegularBold>${creditCard}</BodyRegularBold>
+          <BodyRegularBold>{creditCard}</BodyRegularBold>
         </Row>
       </Section>
     </Container>

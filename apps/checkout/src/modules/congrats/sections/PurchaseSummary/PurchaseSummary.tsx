@@ -87,21 +87,21 @@ const PurchaseSummary: React.FC<Props> = () => {
   const purchaseDetails = {
     data: {
       method: 'Finance with Vroom',
-      sellingPrice: 28750.0,
-      taxes: 2371.87,
-      vehicleServiceContractProtection: 3244.0,
-      gapCoverage: 645.0,
-      tireAndWheelCoverage: 643.0,
-      shippingFee: 599.0,
-      subtotal: 22486.98,
-      creditDownPayment: 500.0,
-      total: 35153.98,
+      sellingPrice: '$28,750.00',
+      taxes: '$2,371.87',
+      vehicleServiceContractProtection: '$3,244.00',
+      gapCoverage: '$645.00',
+      tireAndWheelCoverage: '$643.00',
+      shippingFee: '$599.00',
+      subtotal: '$22,486.98',
+      creditDownPayment: '-$500.00',
+      total: '$35,153.98',
     },
   };
 
   const depositInformation = {
     data: {
-      amount: 500.0,
+      amount: '$500.00',
       creditCard: '***1234',
     },
   };
@@ -138,13 +138,13 @@ const PurchaseSummary: React.FC<Props> = () => {
 
   const financingInformation = {
     data: {
-      downPayment: 5000,
+      downPayment: '-$5,000',
       bank: 'Chase',
       apr: 'TBD',
       financeTerm: 'TBD',
       numberOfPayments: 'TBD',
       financeCharge: 'TBD',
-      monthlyPayment: 287,
+      monthlyPayment: '$287.00',
     },
   };
 

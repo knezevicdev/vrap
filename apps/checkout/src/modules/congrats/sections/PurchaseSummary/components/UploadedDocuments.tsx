@@ -9,7 +9,7 @@ interface UploadedDocumentsProps {
 }
 
 const primaryBrand = (props: { theme: ThemeProps }): string =>
-    props.theme.colors.primary.brand;
+  props.theme.colors.primary.brand;
 
 const secondarySuccess = (props: { theme: ThemeProps }): string =>
   props.theme.colors.secondary.success;
@@ -35,9 +35,9 @@ const CheckmarkIcon = styled(Icon)`
 `;
 
 const Disclaimer = styled(Body.Regular)`
-    padding: 8px;
-    margin-top: 16px;
-    border: solid 1px ${primaryBrand};
+  padding: 8px;
+  margin-top: 16px;
+  border: solid 1px ${primaryBrand};
 `;
 
 const UploadedDocuments: React.FC<UploadedDocumentsProps> = ({
@@ -56,8 +56,7 @@ const UploadedDocuments: React.FC<UploadedDocumentsProps> = ({
       </IconAndText>
       {showInsuranceDisclaimer ? (
         <Disclaimer>
-          I don't have a car insurance available at this time. I understand that
-          the insurance will be needed to complete the transaction.
+          {`I don't have a car insurance available at this time. I understand that the insurance will be needed to complete the transaction.`}
         </Disclaimer>
       ) : (
         <IconAndText>
