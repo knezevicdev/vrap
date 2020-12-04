@@ -2,11 +2,10 @@ import React from 'react';
 import styled from 'styled-components';
 import { Body, Title } from 'vroom-ui/src/foundation/Typography';
 
-import ViewModel from './ViewModel';
 
 interface Props {
-  viewModel: ViewModel;
 }
+
 const Container = styled.div`
   display: flex;
   flex-direction: column;
@@ -30,7 +29,7 @@ const Receiver = styled(Body.Regular)`
   margin-bottom: 8px;
 `;
 
-const View: React.FC<Props> = () => {
+const DeliveryDetails: React.FC<Props> = () => {
   return (
     <Container>
       <Title.One>Additional delivery details</Title.One>
@@ -61,4 +60,4 @@ const View: React.FC<Props> = () => {
   );
 };
 
-export default View;
+export default DeliveryDetails;

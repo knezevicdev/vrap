@@ -4,10 +4,8 @@ import Icon, { Icons } from 'vroom-ui/src/elements/Icon/Icon';
 import { ThemeProps } from 'vroom-ui/src/foundation/themes/types';
 import { Body, Title } from 'vroom-ui/src/foundation/Typography';
 
-import ViewModel from './ViewModel';
 
 interface Props {
-  viewModel: ViewModel;
 }
 
 const secondarySuccess = (props: { theme: ThemeProps }): string =>
@@ -33,7 +31,7 @@ const CheckmarkIcon = styled(Icon)`
   fill: ${secondarySuccess};
 `;
 
-const View: React.FC<Props> = () => {
+const UploadedDocuments: React.FC<Props> = () => {
   return (
     <Container>
       <TitleHeader>Uploaded documents</TitleHeader>
@@ -53,4 +51,4 @@ const View: React.FC<Props> = () => {
   );
 };
 
-export default View;
+export default UploadedDocuments;

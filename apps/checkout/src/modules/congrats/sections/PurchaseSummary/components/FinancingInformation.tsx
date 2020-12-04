@@ -3,10 +3,8 @@ import styled from 'styled-components';
 import { ThemeProps } from 'vroom-ui/src/foundation/themes/types';
 import { Body, Title } from 'vroom-ui/src/foundation/Typography';
 
-import ViewModel from './ViewModel';
 
 interface Props {
-  viewModel: ViewModel;
 }
 
 const grayThree = (props: { theme: ThemeProps }): string =>
@@ -51,7 +49,7 @@ const Payment = styled(Title.Two)`
   color: ${primaryBrand} !important;
 `;
 
-const View: React.FC<Props> = () => {
+const FinancingInformation: React.FC<Props> = () => {
   return (
     <Container>
       <Title.One>Financing information</Title.One>
@@ -90,4 +88,4 @@ const View: React.FC<Props> = () => {
   );
 };
 
-export default View;
+export default FinancingInformation;
