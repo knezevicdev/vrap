@@ -6,7 +6,7 @@ import {Body, Heading, Title} from 'vroom-ui/src/foundation/Typography';
 import PurchaseDetails, {PurchaseDetailsProps} from "./components/PurchaseDetails";
 import DepositInformation, {DepositInformationProps} from "./components/DepositInformation";
 import BillingAddress, {BillingAddressProps} from "./components/BillingAddress";
-import FinancingInformation from "./components/FinancingInformation";
+import FinancingInformation, {FinancingInformationProps} from "./components/FinancingInformation";
 import DeliveryAddress from "./components/DeliveryAddress";
 import DeliveryDetails from "./components/DeliveryDetails";
 import UploadedDocuments from "./components/UploadedDocuments";
@@ -16,6 +16,7 @@ interface Props {
     purchaseDetails: PurchaseDetailsProps,
     depositInformation: DepositInformationProps,
     billingAddress: BillingAddressProps,
+    financingInformation: FinancingInformationProps
 }
 
 const Container = styled.div`
@@ -106,6 +107,18 @@ const View: React.FC<Props> = () => {
         }
     };
 
+    const financingInformation = {
+        data: {
+            downPayment: 5000,
+            bank: 'Chase',
+            apr: 'TBD',
+            financeTerm: 'TBD',
+            numberOfPayments: 'TBD',
+            financeCharge: 'TBD',
+            monthlyPayment: 287
+        }
+    };
+
     return (
         <Container>
             <Content>
@@ -129,7 +142,7 @@ const View: React.FC<Props> = () => {
                 <Space/>
                 <BillingAddress data={billingAddress.data}/>
                 <Space/>
-                <FinancingInformation/>
+                <FinancingInformation data={financingInformation.data}/>
                 <Space/>
                 <RegistrationAddress/>
                 <Space/>

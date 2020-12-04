@@ -4,7 +4,16 @@ import { ThemeProps } from 'vroom-ui/src/foundation/themes/types';
 import { Body, Title } from 'vroom-ui/src/foundation/Typography';
 
 
-interface Props {
+export interface FinancingInformationProps {
+  data: {
+    downPayment: number;
+    bank: string;
+    apr: string | number;
+    financeTerm: string| number;
+    numberOfPayments: string| number;
+    financeCharge: string| number;
+    monthlyPayment: number;
+  }
 }
 
 const grayThree = (props: { theme: ThemeProps }): string =>
@@ -49,40 +58,41 @@ const Payment = styled(Title.Two)`
   color: ${primaryBrand} !important;
 `;
 
-const FinancingInformation: React.FC<Props> = () => {
+const FinancingInformation: React.FC<FinancingInformationProps> = ({data}) => {
+  const {downPayment, bank, apr, financeTerm, numberOfPayments, financeCharge, monthlyPayment} = data;
   return (
     <Container>
       <Title.One>Financing information</Title.One>
       <Section>
         <Row>
-          <Body.Regular>Downpayment</Body.Regular>
-          <BodyRegularBold>-$5,000.00</BodyRegularBold>
+          <Body.Regular>Down Payment</Body.Regular>
+          <BodyRegularBold>-${downPayment}</BodyRegularBold>
         </Row>
         <Row>
           <Body.Regular>Financing Bank</Body.Regular>
-          <BodyRegularBold>Chase</BodyRegularBold>
+          <BodyRegularBold>{bank}</BodyRegularBold>
         </Row>
         <Row>
           <Body.Regular>APR</Body.Regular>
-          <BodyRegularBold>TBD</BodyRegularBold>
+          <BodyRegularBold>{apr}</BodyRegularBold>
         </Row>
         <Row>
           <Body.Regular>Finance Term</Body.Regular>
-          <BodyRegularBold>TBD</BodyRegularBold>
+          <BodyRegularBold>{financeTerm}</BodyRegularBold>
         </Row>
         <Row>
           <Body.Regular>Number of payments</Body.Regular>
-          <BodyRegularBold>TBD</BodyRegularBold>
+          <BodyRegularBold>{numberOfPayments}</BodyRegularBold>
         </Row>
         <Row>
           <Body.Regular>Finance charge</Body.Regular>
-          <BodyRegularBold>TBD</BodyRegularBold>
+          <BodyRegularBold>{financeCharge}</BodyRegularBold>
         </Row>
       </Section>
       <Divider />
       <Row>
         <Payment>Monthly payment</Payment>
-        <Payment>$287.00</Payment>
+        <Payment>${monthlyPayment}</Payment>
       </Row>
     </Container>
   );
