@@ -25,7 +25,7 @@ const CarPicture = styled.div`
   min-height: 190px;
   max-width: 285px;
   max-height: 190px;
-  with: 28px;
+  width: 28px;
   height: 190px;
 
   margin-top: 24px;
