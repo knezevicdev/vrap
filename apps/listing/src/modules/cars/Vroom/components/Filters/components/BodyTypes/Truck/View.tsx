@@ -40,10 +40,7 @@ const TruckView: React.FC<Props> = ({ viewModel }) => {
   return (
     <Box display="flex">
       <CustomVerticalGradient />
-      <TruckContainer
-        id={viewModel.truckSubFilterId}
-        key={viewModel.truckSubFilterId}
-      >
+      <TruckContainer>
         <FormGroupLabel>{viewModel.cabTypeFilterLabel}</FormGroupLabel>
         <CabType />
         {/* <FormGroupLabel>{viewModel.bedLengthFilterLabel}</FormGroupLabel>

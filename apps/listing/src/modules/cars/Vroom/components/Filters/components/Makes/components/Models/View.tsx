@@ -8,7 +8,7 @@ import React from 'react';
 import ModelsViewModel from './ViewModel';
 
 const StyledList = styled(List)(() => ({
-  padding: '0',
+  padding: 0,
 }));
 
 const Value = styled(Typography)(() => ({
@@ -19,12 +19,17 @@ const StyledCheck = styled(Check)(() => ({
   marginLeft: 'auto',
 }));
 
-const CustomCheckbox = styled(Checkbox)(() => ({
+const CustomCheckbox = styled(Checkbox)(({ theme }) => ({
+  color: theme.palette.grey['A100'],
   padding: 0,
+  '&.MuiIconButton-root.Mui-disabled': {
+    color: theme.palette.grey['A100'],
+  },
 }));
 
 const CustomListItem = styled(ListItem)(() => ({
   justifyContent: 'space-between',
+  paddingRight: 0,
 }));
 
 interface Props {

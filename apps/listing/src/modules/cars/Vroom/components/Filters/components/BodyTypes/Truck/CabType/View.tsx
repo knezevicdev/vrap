@@ -15,6 +15,7 @@ const Label = withStyles(() => ({
     fontSize: '16px',
   },
   root: {
+    paddingRight: '2px',
     justifyContent: 'space-between',
     marginLeft: '0px',
     '& span.Mui-checked + span': {

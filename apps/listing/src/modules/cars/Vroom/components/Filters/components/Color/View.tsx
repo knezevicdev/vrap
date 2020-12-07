@@ -34,8 +34,12 @@ const StyledCheck = styled(Check)(() => ({
   marginLeft: 'auto',
 }));
 
-const CustomCheckbox = styled(Checkbox)(() => ({
+const CustomCheckbox = styled(Checkbox)(({ theme }) => ({
+  color: theme.palette.grey['A100'],
   paddingRight: 0,
+  '&.MuiIconButton-root.Mui-disabled': {
+    color: theme.palette.grey['A100'],
+  },
 }));
 
 const Circle = styled('div')(() => ({

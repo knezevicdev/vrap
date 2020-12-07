@@ -3,7 +3,7 @@ import { styled } from '@material-ui/core/styles';
 import Check from '@material-ui/icons/Check';
 import { Typography } from '@vroom-web/ui';
 import { observer } from 'mobx-react';
-import React from 'react';
+import React, { Fragment } from 'react';
 
 import Truck from './Truck';
 import BodyTypesViewModel from './ViewModel';
@@ -31,8 +31,12 @@ const StyledCheck = styled(Check)(() => ({
   marginLeft: 'auto',
 }));
 
-const CustomCheckbox = styled(Checkbox)(() => ({
+const CustomCheckbox = styled(Checkbox)(({ theme }) => ({
+  color: theme.palette.grey['A100'],
   paddingRight: 0,
+  '&.MuiIconButton-root.Mui-disabled': {
+    color: theme.palette.grey['A100'],
+  },
 }));
 
 const Value = styled(Typography)(() => ({
@@ -53,7 +57,7 @@ const BodyTypesView: React.FC<Props> = ({ viewModel }) => {
           filtersDataValue
         );
         return (
-          <>
+          <Fragment key={filtersDataValue}>
             <StyledListItem
               key={display}
               button
@@ -70,7 +74,7 @@ const BodyTypesView: React.FC<Props> = ({ viewModel }) => {
               )}
             </StyledListItem>
             {filtersDataValue === 'truck' && isSelected ? <Truck /> : null}
-          </>
+          </Fragment>
         );
       })}
       <Reset
