@@ -5,7 +5,6 @@ import {
 } from '@vroom-web/catalog-url-integration';
 import { Car } from '@vroom-web/inv-search-networking';
 import { SoldStatusInt } from '@vroom-web/inv-service-networking';
-import { ParsedUrlQuery } from 'querystring';
 
 import AnalyticsHandler, { Product } from 'src/integrations/AnalyticsHandler';
 import { InventoryStore } from 'src/modules/inventory/store';
@@ -156,6 +155,12 @@ class StartPurchaseViewModel {
       window.location.href = url;
     }
   }
+
+  isAvailableSoon = (): boolean => {
+    const { leadFlagPhotoUrl, hasStockPhotos } = this.store.vehicle._source;
+
+    return leadFlagPhotoUrl === '' || hasStockPhotos;
+  };
 }
 
 export default StartPurchaseViewModel;
