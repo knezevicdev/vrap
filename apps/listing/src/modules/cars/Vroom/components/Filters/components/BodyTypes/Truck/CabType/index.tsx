@@ -5,15 +5,15 @@ import ViewModel from './ViewModel';
 
 import { CarsStoreContext } from 'src/modules/cars/store';
 
-const CabinSize: React.FC = () => {
+const CabType: React.FC = () => {
   return (
     <CarsStoreContext.Consumer>
-      {(): JSX.Element => {
-        const viewModel = new ViewModel();
+      {(carStore): JSX.Element => {
+        const viewModel = new ViewModel(carStore);
         return <View viewModel={viewModel} />;
       }}
     </CarsStoreContext.Consumer>
   );
 };
 
-export default CabinSize;
+export default CabType;

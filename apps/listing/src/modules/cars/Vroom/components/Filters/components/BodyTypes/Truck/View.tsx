@@ -3,9 +3,9 @@ import { styled, withStyles } from '@material-ui/core/styles';
 import { observer } from 'mobx-react';
 import React from 'react';
 
-import BedLength from './BedLength';
-import CabinSize from './CabinSize';
-import TowingCapacity from './TowingCapacity';
+// import BedLength from './BedLength';
+import CabType from './CabType';
+// import TowingCapacity from './TowingCapacity';
 import TruckViewModel from './ViewModel';
 
 const TruckContainer = withStyles((theme) => ({
@@ -29,7 +29,7 @@ const CustomVerticalGradient = styled('div')(() => ({
   marginRight: '10px',
   width: '3px',
   background: 'linear-gradient(0deg, #999DA3, transparent)',
-  height: '545px',
+  height: '165px',
 }));
 
 interface Props {
@@ -44,12 +44,12 @@ const TruckView: React.FC<Props> = ({ viewModel }) => {
         id={viewModel.truckSubFilterId}
         key={viewModel.truckSubFilterId}
       >
-        <FormGroupLabel>{viewModel.cabinSizeFilterLabel}</FormGroupLabel>
-        <CabinSize />
-        <FormGroupLabel>{viewModel.bedLengthFilterLabel}</FormGroupLabel>
+        <FormGroupLabel>{viewModel.cabTypeFilterLabel}</FormGroupLabel>
+        <CabType />
+        {/* <FormGroupLabel>{viewModel.bedLengthFilterLabel}</FormGroupLabel>
         <BedLength />
         <FormGroupLabel>{viewModel.towingCapacityFilterLabel}</FormGroupLabel>
-        <TowingCapacity />
+        <TowingCapacity /> */}
       </TruckContainer>
     </Box>
   );

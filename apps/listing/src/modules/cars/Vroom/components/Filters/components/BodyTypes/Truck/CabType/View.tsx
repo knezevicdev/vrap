@@ -1,12 +1,13 @@
 import { Checkbox, FormControlLabel, FormGroup } from '@material-ui/core';
 import withStyles from '@material-ui/core/styles/withStyles';
+import { CabType as FiltersDataCabType } from '@vroom-web/catalog-url-integration';
 import { observer } from 'mobx-react';
 import React from 'react';
 
-import CabinSizeViewModel from './ViewModel';
+import CabTypeViewModel from './ViewModel';
 
 interface Props {
-  viewModel: CabinSizeViewModel;
+  viewModel: CabTypeViewModel;
 }
 
 const Label = withStyles(() => ({
@@ -34,12 +35,20 @@ const FormGroupCustom = withStyles(() => ({
   },
 }))(FormGroup);
 
-const CabinSizeView: React.FC<Props> = ({ viewModel }) => {
+const CabTypeView: React.FC<Props> = ({ viewModel }) => {
+  const handleCheckboxChange = (
+    event: React.ChangeEvent<HTMLInputElement>,
+    checked: boolean
+  ): void => {
+    const filtersDataValue = event.target.value as FiltersDataCabType;
+    viewModel.handleCheckboxChange(filtersDataValue, checked);
+  };
+
   return (
     <FormGroupCustom>
-      {viewModel.getCabinSizes().map((cabinSize) => {
-        // const checked = null;
-        const { display, filtersDataValue } = cabinSize;
+      {viewModel.getCabTypes().map((cabType) => {
+        const checked = viewModel.isChecked(cabType);
+        const { display, filtersDataValue } = cabType;
 
         return (
           <Label
@@ -48,8 +57,8 @@ const CabinSizeView: React.FC<Props> = ({ viewModel }) => {
             control={
               <CheckboxCustom
                 color="primary"
-                // checked={checked}
-                // onChange={handleCheckboxChange}
+                checked={checked}
+                onChange={handleCheckboxChange}
                 value={filtersDataValue}
               />
             }
@@ -61,4 +70,4 @@ const CabinSizeView: React.FC<Props> = ({ viewModel }) => {
   );
 };
 
-export default observer(CabinSizeView);
+export default observer(CabTypeView);

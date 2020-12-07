@@ -8330,6 +8330,7 @@ var getInventoryCountResponseSchema = ObjectSchema({
 var carSchema = ObjectSchema({
   vin: StringSchema().defined(),
   bodyType: StringSchema().defined(),
+  cabType: ObjectSchema().defined().nullable(),
   interiorPhotoUrl: StringSchema().defined(),
   diesel: NumberSchema().defined(),
   leadFlagPhotoUrl: StringSchema().defined(),

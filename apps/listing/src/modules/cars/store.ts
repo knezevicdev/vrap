@@ -20,7 +20,7 @@ import {
   BodyType,
   BodyTypeAPI,
   bodyTypes,
-  // CabType,
+  CabType,
   CabTypeAPI,
   cabTypes,
   Color,
@@ -359,7 +359,7 @@ export const getPostInventoryRequestDataFromFilterData = (
   sortAgeDirectionExperiment?: Experiment
 ): PostInventoryRequestData => {
   const bodytype = getBodyTypeRequestData(filtersData);
-  // const cabtype = getCabTypeRequestData(filtersData);
+  const cabtype = getCabTypeRequestData(filtersData);
   const color = getColorRequestData(filtersData);
   const cylinders = getCylinderRequestData(filtersData);
   const drivetype = getDriveTypeRequestData(filtersData);
@@ -376,7 +376,7 @@ export const getPostInventoryRequestDataFromFilterData = (
 
   return {
     bodytype,
-    // cabtype,
+    cabtype,
     color,
     drivetype,
     makeSlug,
@@ -408,7 +408,7 @@ export class CarsStore {
   readonly geoLocationSortDefaultVariant: boolean = true;
   readonly inventoryCardsPerPage: number = INVENTORY_CARDS_PER_PAGE;
   readonly bodyTypes: BodyType[] = bodyTypes;
-  // readonly cabTypes: CabType[] = cabTypes;
+  readonly cabTypes: CabType[] = cabTypes;
   readonly colors: Color[] = colors;
   readonly driveTypes: DriveType[] = driveTypes;
   readonly cylinders: Cylinder[] = cylinders;

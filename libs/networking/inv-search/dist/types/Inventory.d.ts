@@ -21,6 +21,7 @@ export declare enum SoldStatusInt {
 export declare type Car = {
     vin: string;
     bodyType: string;
+    cabType: object | null;
     interiorPhotoUrl: string;
     diesel: number;
     leadFlagPhotoUrl: string;
