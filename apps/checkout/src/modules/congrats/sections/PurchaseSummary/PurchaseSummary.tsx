@@ -43,7 +43,7 @@ interface Props {
   purchaseDetails: PurchaseDetailsProps;
   depositInformation: DepositInformationProps;
   billingAddress: BillingAddressProps;
-  financingInformation: FinancingInformationProps;
+  financingInformation?: FinancingInformationProps;
   registrationAddress: RegistrationAddressProps;
   deliveryAddress: DeliveryAddressProps;
   deliveryDetails: DeliveryDetailsProps;
@@ -142,7 +142,9 @@ const PurchaseSummary: React.FC<Props> = ({
         <Space />
         <BillingAddress data={billingAddress.data} />
         <Space />
-        <FinancingInformation data={financingInformation.data} />
+        {financingInformation && (
+          <FinancingInformation data={financingInformation.data} />
+        )}
         <Space />
         <RegistrationAddress data={registrationAddress.data} />
         <Space />
