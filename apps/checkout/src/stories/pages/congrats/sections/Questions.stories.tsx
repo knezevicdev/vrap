@@ -4,18 +4,14 @@ import { ThemeProvider } from 'styled-components';
 import { getVroomTheme } from 'vroom-ui/src/foundation/themes/Vroom';
 
 import Questions from '../../../../modules/congrats/sections/Questions';
+import { questionsViewModel } from '../ViewModels';
 
 const theme = getVroomTheme('/assets/fonts/Vroom');
-
-const phone = {
-  href: '+18555241300',
-  label: '(855) 524-1300',
-};
 
 export const Success = (): JSX.Element => {
   return (
     <ThemeProvider theme={theme}>
-      <Questions phone={phone} />
+      <Questions {...questionsViewModel} />
     </ThemeProvider>
   );
 };
