@@ -1,13 +1,16 @@
 import { observer } from 'mobx-react';
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
 
+import Header from '../V2V/components/Header';
 import CarDetails from './components/CarDetails';
 import Photo from './components/Photo';
+import StickyBottom from './components/StickyBottom';
 import ValueProps from './components/ValueProps';
 import ViewModel from './ViewModel';
 
 import { Button } from 'src/core/Button';
+import Footer from 'src/core/Footer';
 import Icon, { Icons } from 'src/core/Icon';
 import { Title } from 'src/core/Typography';
 
@@ -51,7 +54,6 @@ const ErrorContainer = styled.div`
   text-align: center;
   margin: 96px 0;
   @media (max-width: 839px) {
-    width: 100%;
     margin: 32px 16px;
   }
 `;
@@ -75,25 +77,45 @@ const NoVehicleIcon = styled(Icon)`
 `;
 
 const InventoryView: React.FC<Props> = ({ viewModel }) => {
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      window.onscroll = (): void => {
+        const currentPosition = window.pageYOffset;
+        const maxHeight = document.body.scrollHeight;
+
+        currentPosition > maxHeight * 0.2
+          ? viewModel.setSticky(true)
+          : viewModel.setSticky(false);
+      };
+    }
+  }, [viewModel]);
+
   return (
-    <Container>
-      {viewModel.ready() && (
-        <VehicleContainer>
-          <Photo />
-          <CarDetails />
-        </VehicleContainer>
-      )}
-      {viewModel.error() && (
-        <ErrorContainer>
-          <NoVehicleIcon icon={Icons.NO_VEHICLE} />
-          <ErrorTitle>{viewModel.errorText}</ErrorTitle>
-          <CarsButton onClick={viewModel.handleClick}>
-            {viewModel.button}
-          </CarsButton>
-        </ErrorContainer>
-      )}
-      <ValueProps />
-    </Container>
+    <>
+      <Header />
+      <Container>
+        {viewModel.ready() && (
+          <>
+            <VehicleContainer>
+              <Photo />
+              <CarDetails />
+            </VehicleContainer>
+          </>
+        )}
+        {viewModel.error() && (
+          <ErrorContainer>
+            <NoVehicleIcon icon={Icons.NO_VEHICLE} />
+            <ErrorTitle>{viewModel.errorText}</ErrorTitle>
+            <CarsButton onClick={viewModel.handleClick}>
+              {viewModel.button}
+            </CarsButton>
+          </ErrorContainer>
+        )}
+        <ValueProps />
+      </Container>
+      <Footer />
+      <StickyBottom />
+    </>
   );
 };
 
