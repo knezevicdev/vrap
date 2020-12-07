@@ -111,6 +111,12 @@ export class Icons {
     color: '#041022',
   });
 
+  static readonly CAR_DIAGRAM = new Icons('CAR_DIAGRAM', {
+    name: 'car-diagram',
+    width: 380,
+    height: 123,
+  });
+
   private constructor(
     protected key: string,
     public readonly value: {
