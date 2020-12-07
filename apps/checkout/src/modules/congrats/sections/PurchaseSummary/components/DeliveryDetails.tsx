@@ -5,14 +5,17 @@ import { Body, Title } from 'vroom-ui/src/foundation/Typography';
 export interface DeliveryDetailsProps {
   data: {
     dates?: string[];
-    willYouBeAvailable: boolean;
     receiver: {
       name: string;
       phone: string;
     };
-    truckAccess: string;
     truckInformation: string;
   };
+  willYouBeAvailableLabel: string;
+  truckHasAccessLabel: string;
+  showReceiverInformation: boolean;
+  showNotAvailableDates: boolean;
+  showTruckInformation: boolean;
 }
 
 const Container = styled.div`
@@ -38,26 +41,27 @@ const Receiver = styled(Body.Regular)`
   margin-bottom: 8px;
 `;
 
-const DeliveryDetails: React.FC<DeliveryDetailsProps> = ({ data }) => {
-  const {
-    dates,
-    willYouBeAvailable,
-    receiver,
-    truckAccess,
-    truckInformation,
-  } = data;
-
-  const willYouBeAvailableLabel = willYouBeAvailable ? 'Yes' : 'No';
-  const showReceiverInformation = !willYouBeAvailable;
-
+const DeliveryDetails: React.FC<DeliveryDetailsProps> = ({
+  data,
+  willYouBeAvailableLabel,
+  truckHasAccessLabel,
+  showReceiverInformation,
+  showNotAvailableDates,
+  showTruckInformation,
+}) => {
+  const { dates, receiver, truckInformation } = data;
   return (
     <Container>
       <Title.One>Additional delivery details</Title.One>
-      <NotAvailable>Not available delivery dates</NotAvailable>
-      {dates &&
-        dates.map((date) => {
-          return <Body.Regular key={date}>{date}</Body.Regular>;
-        })}
+      {showNotAvailableDates && (
+        <>
+          <NotAvailable>Not available delivery dates</NotAvailable>
+          {dates &&
+            dates.map((date) => {
+              return <Body.Regular key={date}>{date}</Body.Regular>;
+            })}
+        </>
+      )}
 
       <YouAvailable>Will you be available for delivery?</YouAvailable>
       <Body.Regular>{willYouBeAvailableLabel}</Body.Regular>
@@ -71,13 +75,17 @@ const DeliveryDetails: React.FC<DeliveryDetailsProps> = ({ data }) => {
       )}
 
       <Receiver>Can an 18-wheeler truck access your delivery address?</Receiver>
-      <Body.Regular>{truckAccess}</Body.Regular>
+      <Body.Regular>{truckHasAccessLabel}</Body.Regular>
 
-      <Receiver>
-        What should we know about your street that might affect an 18-wheeler
-        truck from delivery to your address?
-      </Receiver>
-      <Body.Regular>{truckInformation}</Body.Regular>
+      {showTruckInformation && (
+        <>
+          <Receiver>
+            What should we know about your street that might affect an
+            18-wheeler truck from delivery to your address?
+          </Receiver>
+          <Body.Regular>{truckInformation}</Body.Regular>
+        </>
+      )}
     </Container>
   );
 };

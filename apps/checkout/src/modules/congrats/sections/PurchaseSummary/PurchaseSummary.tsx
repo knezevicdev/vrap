@@ -136,21 +136,21 @@ const PurchaseSummary: React.FC<Props> = ({
             <Body.Regular>{car.miles}</Body.Regular>
           </CarInfo>
         </Car>
-        <PurchaseDetails data={purchaseDetails.data} />
+        <PurchaseDetails {...purchaseDetails} />
         <Space />
-        <DepositInformation data={depositInformation.data} />
+        <DepositInformation {...depositInformation} />
         <Space />
-        <BillingAddress data={billingAddress.data} />
+        <BillingAddress {...billingAddress} />
         <Space />
         {financingInformation && (
-          <FinancingInformation data={financingInformation.data} />
+          <FinancingInformation {...financingInformation} />
         )}
         <Space />
-        <RegistrationAddress data={registrationAddress.data} />
+        <RegistrationAddress {...registrationAddress} />
         <Space />
-        <DeliveryAddress data={deliveryAddress.data} />
+        <DeliveryAddress {...deliveryAddress} />
         <Space />
-        <DeliveryDetails data={deliveryDetails.data} />
+        <DeliveryDetails {...deliveryDetails} />
         <Space />
         <UploadedDocuments showInsuranceDisclaimer={true} />
         <Space />
