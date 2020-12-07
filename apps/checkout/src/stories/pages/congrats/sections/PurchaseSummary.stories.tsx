@@ -74,7 +74,7 @@ const financingInformation = {
 const deliveryDetails = {
   data: {
     dates: ['04/01/2020', '04/02/2020'],
-    willYouBeAvailable: 'Yes',
+    willYouBeAvailable: true,
     receiver: {
       name: 'Michelle Henry',
       phone: '(855) 523-1302',

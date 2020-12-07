@@ -4,8 +4,8 @@ import { Body, Title } from 'vroom-ui/src/foundation/Typography';
 
 export interface DeliveryDetailsProps {
   data: {
-    dates: string[];
-    willYouBeAvailable: string;
+    dates?: string[];
+    willYouBeAvailable: boolean;
     receiver: {
       name: string;
       phone: string;
@@ -46,20 +46,29 @@ const DeliveryDetails: React.FC<DeliveryDetailsProps> = ({ data }) => {
     truckAccess,
     truckInformation,
   } = data;
+
+  const willYouBeAvailableLabel = willYouBeAvailable ? 'Yes' : 'No';
+  const showReceiverInformation = !willYouBeAvailable;
+
   return (
     <Container>
       <Title.One>Additional delivery details</Title.One>
       <NotAvailable>Not available delivery dates</NotAvailable>
-      {dates.map((date) => {
-        return <Body.Regular key={date}>{date}</Body.Regular>;
-      })}
+      {dates &&
+        dates.map((date) => {
+          return <Body.Regular key={date}>{date}</Body.Regular>;
+        })}
 
       <YouAvailable>Will you be available for delivery?</YouAvailable>
-      <Body.Regular>{willYouBeAvailable}</Body.Regular>
+      <Body.Regular>{willYouBeAvailableLabel}</Body.Regular>
 
-      <Receiver>Receiver Information</Receiver>
-      <Body.Regular>{receiver.name}</Body.Regular>
-      <Body.Regular>{receiver.phone}</Body.Regular>
+      {showReceiverInformation && (
+        <>
+          <Receiver>Receiver Information</Receiver>
+          <Body.Regular>{receiver.name}</Body.Regular>
+          <Body.Regular>{receiver.phone}</Body.Regular>
+        </>
+      )}
 
       <Receiver>Can an 18-wheeler truck access your delivery address?</Receiver>
       <Body.Regular>{truckAccess}</Body.Regular>
