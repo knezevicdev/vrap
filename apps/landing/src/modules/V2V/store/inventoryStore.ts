@@ -5,7 +5,7 @@ import {
   InventoryResponse,
   InvSearchNetworker,
 } from '@vroom-web/inv-search-networking';
-import { observable } from 'mobx';
+import { action, observable } from 'mobx';
 import getConfig from 'next/config';
 import { createContext } from 'react';
 
@@ -98,6 +98,7 @@ export async function getInitialInventoryStoreState(
 export class InventoryStore {
   @observable vehicle: Hit = {} as Hit;
   @observable vehicleStatus: Status = Status.FETCHING;
+  @observable showSticky = false;
 
   constructor(initialState?: InventoryStoreState) {
     if (initialState) {
@@ -105,6 +106,11 @@ export class InventoryStore {
       this.vehicleStatus = initialState.vehicleStatus;
     }
   }
+
+  @action
+  setSticky = (value: boolean): void => {
+    this.showSticky = value;
+  };
 }
 
 export const InventoryStoreContext = createContext<InventoryStore>(

@@ -5,9 +5,7 @@ interface Details {
   price: string;
 }
 
-class HeaderViewModel {
-  readonly logoHref = '/';
-  readonly button = 'See all vehicle details';
+class StickyBottomViewModel {
   private store: InventoryStore;
 
   constructor(store: InventoryStore) {
@@ -26,12 +24,7 @@ class HeaderViewModel {
     };
   }
 
-  handleClick = (): void => {
-    const { makeSlug, modelSlug, year, vin } = this.store.vehicle._source;
-    window.location.href = `/inventory/${makeSlug}-${modelSlug}-${year}-${vin}`;
-  };
-
   getSticky = (): boolean => this.store.showSticky;
 }
 
-export default HeaderViewModel;
+export default StickyBottomViewModel;

@@ -14,16 +14,25 @@ interface Props {
 
 const Container = styled.div`
   margin-top: 16px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 const ContainerText = styled(Body.Regular)`
   color: #e7131a;
   cursor: pointer;
   letter-spacing: 1.25px;
+  text-transform: uppercase;
+  font-size: 18px;
+  font-weight: 600;
 `;
 
-const FavoriteIcon = styled(Icon)`
-  margin-right: 8px;
+const FavoriteSection = styled.span`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
 `;
 
 const FavoritesView: React.FC<Props> = (props) => {
@@ -50,14 +59,14 @@ const FavoritesView: React.FC<Props> = (props) => {
     <Container>
       <ContainerText onClick={handleClick}>
         {viewModel.isFavorited() ? (
-          <>
-            <FavoriteIcon icon={Icons.FAVORITE_FILLED} /> {viewModel.favorited}
-          </>
+          <FavoriteSection>
+            <Icon icon={Icons.FAVORITE_FILLED} /> {viewModel.favorited}
+          </FavoriteSection>
         ) : (
-          <>
-            <FavoriteIcon icon={Icons.FAVORITE_OUTLINED} />
+          <FavoriteSection>
+            <Icon icon={Icons.FAVORITE_OUTLINED} />
             {viewModel.addToFavorites}
-          </>
+          </FavoriteSection>
         )}
       </ContainerText>
       <LoggedOut viewModel={viewModel} />

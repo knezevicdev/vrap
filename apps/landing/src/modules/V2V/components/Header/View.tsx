@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import { observer } from 'mobx-react';
+import React from 'react';
 import styled from 'styled-components';
 
 import Icon, { Icons } from '../../../../core/Icon';
@@ -22,9 +23,6 @@ const Container = styled.div`
   @media (min-width: 840px) {
     min-height: 72px;
     max-height: 72px;
-  }
-
-  @media (min-width: 840px) {
     padding: 0 32px;
   }
 
@@ -33,26 +31,32 @@ const Container = styled.div`
   }
 
   @media (max-width: 599px) {
+    position: unset;
     padding: 0 16px;
   }
 `;
 
 const VehicleContainer = styled.div`
   display: flex;
+  align-items: center;
   @media (max-width: 839px) {
     display: none;
   }
 `;
 
 const YearMakeModel = styled(Title.One)`
-  padding-right: 16px;
-  border-right: 1px solid #999da3;
-  margin-right: 16px;
-  line-height: 48px;
+  line-height: 40px;
+`;
+
+const Divider = styled.div`
+  height: 32px;
+  width: 1px;
+  background-color: #999da3;
+  margin: 0px 16px;
 `;
 
 const Price = styled(Title.One)`
-  line-height: 48px;
+  line-height: 40px;
   margin-right: 32px;
 `;
 
@@ -61,40 +65,25 @@ interface Props {
 }
 
 const HeaderView: React.FC<Props> = ({ viewModel }) => {
-  const { logoHref, pageThreshold } = viewModel;
-  const [showVehicleContainer, setShowVehicleContainer] = useState(false);
-
-  useEffect(() => {
-    if (typeof window !== 'undefined') {
-      window.onscroll = (): void => {
-        const pos = window.pageYOffset;
-        pos > pageThreshold
-          ? setShowVehicleContainer(true)
-          : setShowVehicleContainer(false);
-      };
-    }
-  }, [showVehicleContainer, pageThreshold]);
+  const { logoHref } = viewModel;
 
   return (
     <Container>
       <Link href={logoHref}>
         <Icon icon={Icons.VROOM} />
       </Link>
-      {viewModel.hasCar() && (
+      {viewModel.hasCar() && viewModel.getSticky() && (
         <VehicleContainer>
-          {showVehicleContainer && (
-            <>
-              <YearMakeModel>{viewModel.details().ymm}</YearMakeModel>
-              <Price>{viewModel.details().price}</Price>
-              <div>
-                <VehicleDetailsButton />
-              </div>
-            </>
-          )}
+          <YearMakeModel>{viewModel.details().ymm}</YearMakeModel>
+          <Divider />
+          <Price>{viewModel.details().price}</Price>
+          <div>
+            <VehicleDetailsButton />
+          </div>
         </VehicleContainer>
       )}
     </Container>
   );
 };
 
-export default HeaderView;
+export default observer(HeaderView);
