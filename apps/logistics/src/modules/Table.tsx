@@ -33,13 +33,13 @@ export const viewModel = ({
       id: row.vin,
       data: {
         [Accessor.vin]: row.vin,
-        [Accessor.yearMakeModel]: row.yearMakeModel,
-        [Accessor.posted]: row.posted,
-        [Accessor.origin]: row.origin,
-        [Accessor.destination]: row.destination,
-        [Accessor.blackoutDates]: row.blackoutDates[0], // TODO: show whole array
-        [Accessor.notes]: row.notes,
-        [Accessor.pickedUp]: row.pickedUp,
+        [Accessor.yearMakeModel]: `${row.year} ${row.make} ${row.model}`, // row.yearMakeModel,
+        [Accessor.posted]: row.date_posted || '',
+        [Accessor.origin]: row.origin_address.to_string,
+        [Accessor.destination]: row.destination_address.to_string,
+        [Accessor.blackoutDates]: row.blackout_dates?.[0]?.to_string ?? '', // TODO: show whole array
+        [Accessor.notes]: row.notes || '',
+        [Accessor.pickedUp]: row.date_delivered || '', // TODO: I don't think this exists yet
       },
     })) || [],
 });
