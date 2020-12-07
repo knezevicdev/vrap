@@ -1,6 +1,7 @@
 import getConfig from 'next/config';
 
 import { InventoryStore, Status } from './store/inventoryStore';
+import AnalyticsHandler from './integrations/AnalyticsHandler';
 
 const { publicRuntimeConfig } = getConfig();
 
@@ -9,9 +10,11 @@ class InventoryViewModel {
   readonly button = 'Shop vehicles now';
   readonly errorText = 'Something went wrong.';
   readonly icon = `${publicRuntimeConfig.BASE_PATH}/icons/no-result.svg`;
+  private analyticsHandler: AnalyticsHandler;
 
   constructor(inventoryStore: InventoryStore) {
     this.store = inventoryStore;
+    this.analyticsHandler = new AnalyticsHandler();
   }
 
   loading(): boolean {
@@ -36,6 +39,10 @@ class InventoryViewModel {
 
   setSticky(value: boolean): void {
     this.store.setSticky(value);
+  }
+
+  trackLandingViewed(): void {
+    this.analyticsHandler.trackVinLandingPageViewed();
   }
 }
 

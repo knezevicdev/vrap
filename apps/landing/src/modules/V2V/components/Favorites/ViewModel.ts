@@ -1,6 +1,7 @@
 import { FavoritesStore } from '../../store/favoritesStore';
 import { InventoryStore } from '../../store/inventoryStore';
 import FavoritesNetworker from './FavoritesNetworker';
+import AnalyticsHandler from '../../integrations/AnalyticsHandler';
 
 interface VinList {
   vin: string;
@@ -10,6 +11,7 @@ class FavoritesViewModel {
   private inventoryStore: InventoryStore;
   private favoritesStore: FavoritesStore;
   private favoritesNetworker: FavoritesNetworker;
+  private analyticsHandler: AnalyticsHandler;
   readonly addToFavorites: string = 'ADD TO FAVORITES';
   readonly favorited: string = 'FAVORITED';
   readonly dialogTitle: string = 'SAVE THIS CAR TO YOUR LIST';
@@ -26,6 +28,7 @@ class FavoritesViewModel {
     this.inventoryStore = inventoryStore;
     this.favoritesStore = favoritesStore;
     this.favoritesNetworker = favoritesNetworker;
+    this.analyticsHandler = new AnalyticsHandler();
   }
 
   handleMount(): void {
@@ -36,6 +39,7 @@ class FavoritesViewModel {
   handleDialogActions(location: string): void {
     const currentUrl = window.location.pathname;
     const newUrl = `/account/${location}?redirect=${currentUrl}`;
+    location === 'create' && this.analyticsHandler.trackCreateAccountClicked();
     window.location.href = newUrl;
   }
 

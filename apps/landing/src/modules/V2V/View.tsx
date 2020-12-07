@@ -90,6 +90,10 @@ const InventoryView: React.FC<Props> = ({ viewModel }) => {
     }
   }, [viewModel]);
 
+  useEffect(() => {
+    viewModel.ready() && viewModel.trackLandingViewed();
+  }, []);
+
   return (
     <>
       <Header />

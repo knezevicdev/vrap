@@ -4,7 +4,8 @@ import View from './View';
 import ViewModel from './ViewModel';
 
 const ValueProps: React.FC = () => {
-  return <View viewModel={new ViewModel()} />;
+  const viewModel = new ViewModel();
+  return <View viewModel={viewModel} />;
 };
 
 export default ValueProps;

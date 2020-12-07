@@ -31,7 +31,7 @@ const ValuePropsView: FC<Props> = ({ viewModel }) => {
       <Container>
         {viewModel.sectionOrder.map((sectionSlug, idx) => {
           const Component = viewModel.sectionMap[sectionSlug];
-          if (Component) return <Component key={idx} />;
+          if (Component) return <Component key={idx} viewModel={viewModel} />;
         })}
       </Container>
     </Background>

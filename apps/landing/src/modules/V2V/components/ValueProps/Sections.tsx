@@ -122,7 +122,8 @@ export const VideoSection: FC = () => {
   );
 };
 
-export const CertifiedSection: FC = () => {
+export const CertifiedSection: FC = (props) => {
+  const { viewModel } = props;
   return (
     <Section>
       <TitleContainer>
@@ -134,7 +135,10 @@ export const CertifiedSection: FC = () => {
 
       <Description>
         All our vehicles go through a 100 point inspection and come with{' '}
-        <UnderlinedLink href={'https://www.vroom.com/protection'}>
+        <UnderlinedLink
+          href="https://www.vroom.com/protection"
+          onClick={(): void => viewModel.handleCertificateLinkClick()}
+        >
           Vroom’s&nbsp;free&nbsp;limited&nbsp;warranty
         </UnderlinedLink>
         , good for 90&nbsp;days or 6,000&nbsp;miles.
@@ -175,13 +179,10 @@ export const DeliveredSection: FC = () => {
   );
 };
 
-export const ButtonSection: FC = () => {
-  const onClick = (): void => {
-    window.location.href =
-      'https://vroom.zendesk.com/hc/en-us/articles/205360565-When-does-the-7-day-return-period-begin-';
-  };
+export const ButtonSection: FC = (props) => {
+  const { viewModel } = props;
   return (
-    <Button.Secondary onClick={onClick}>
+    <Button.Secondary onClick={(): void => viewModel.handleLearnMoreClick()}>
       LEARN MORE ABOUT VROOM
     </Button.Secondary>
   );
