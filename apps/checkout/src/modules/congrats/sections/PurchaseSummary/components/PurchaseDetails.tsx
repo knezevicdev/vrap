@@ -42,10 +42,6 @@ const Section = styled.div`
   }
 `;
 
-const BodyRegularBold = styled(Body.Regular)`
-  font-weight: 600 !important;
-`;
-
 const Details = styled(Body.Small)`
   font-weight: 600 !important;
   margin-top: -4px;
@@ -98,21 +94,21 @@ const PurchaseDetails: React.FC<PurchaseDetailsProps> = ({ data }) => {
       <Section>
         <Row>
           <Body.Regular>Selling price</Body.Regular>
-          <BodyRegularBold>{sellingPrice}</BodyRegularBold>
+          <Body.Regular bold>{sellingPrice}</Body.Regular>
         </Row>
         <Row>
           <Body.Regular>Taxes and fees</Body.Regular>
-          <BodyRegularBold>{taxes}</BodyRegularBold>
+          <Body.Regular bold>{taxes}</Body.Regular>
         </Row>
         <Row>
           <BrandLink blank href="https://vroom.com/protection">
             90-Day Limited Warranty
           </BrandLink>
-          <BodyRegularBold>Included</BodyRegularBold>
+          <Body.Regular bold>Included</Body.Regular>
         </Row>
         <Row>
           <Body.Regular>1-Year roadside assistance</Body.Regular>
-          <BodyRegularBold>Included</BodyRegularBold>
+          <Body.Regular bold>Included</Body.Regular>
         </Row>
         {vehicleServiceContractProtection && (
           <>
@@ -123,9 +119,9 @@ const PurchaseDetails: React.FC<PurchaseDetailsProps> = ({ data }) => {
               >
                 Vehicle Service Contract Protection
               </BrandLink>
-              <BodyRegularBold>
+              <Body.Regular bold>
                 {vehicleServiceContractProtection}
-              </BodyRegularBold>
+              </Body.Regular>
             </Row>
             <Details>60 mos. / 60,000 mi. / $100 ded.</Details>
           </>
@@ -139,7 +135,7 @@ const PurchaseDetails: React.FC<PurchaseDetailsProps> = ({ data }) => {
               >
                 GAP Coverage
               </BrandLink>
-              <BodyRegularBold>{gapCoverage}</BodyRegularBold>
+              <Body.Regular bold>{gapCoverage}</Body.Regular>
             </Row>
             <Details>60 mos. / 60,000 mi. / $100 ded.</Details>
           </>
@@ -153,25 +149,25 @@ const PurchaseDetails: React.FC<PurchaseDetailsProps> = ({ data }) => {
               >
                 Tire & Wheel Coverage
               </BrandLink>
-              <BodyRegularBold>{tireAndWheelCoverage}</BodyRegularBold>
+              <Body.Regular bold>{tireAndWheelCoverage}</Body.Regular>
             </Row>
             <Details>60 mos. / 60,000 mi. / $100 ded.</Details>
           </>
         )}
         <Row>
           <Body.Regular>Shipping Fee</Body.Regular>
-          <BodyRegularBold>{shippingFee}</BodyRegularBold>
+          <Body.Regular bold>{shippingFee}</Body.Regular>
         </Row>
       </Section>
       <Divider />
       <Section>
         <Row>
           <Body.Regular>Subtotal</Body.Regular>
-          <BodyRegularBold>{subtotal}</BodyRegularBold>
+          <Body.Regular bold>{subtotal}</Body.Regular>
         </Row>
         <Row>
           <Body.Regular>Credit down payment</Body.Regular>
-          <BodyRegularBold>{creditDownPayment}</BodyRegularBold>
+          <Body.Regular bold>{creditDownPayment}</Body.Regular>
         </Row>
       </Section>
       <Divider />

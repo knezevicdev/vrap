@@ -95,16 +95,18 @@ const Title3 = styled.span`
   line-height: 32px;
 `;
 
-const BodyRegular = styled.span`
+const BodyRegular = styled.span<{bold?: boolean}>`
   ${bodyBase}
   font-size: 18px;
   line-height: 24px;
+  ${({bold}) => bold && 'font-weight: 600;'}
 `;
 
-const BodySmall = styled.span`
+const BodySmall = styled.span<{bold?: boolean}>`
   ${bodyBase}
   font-size: 14px;
   line-height: 20px;
+  ${({bold}) => bold && 'font-weight: 600;'}
 `;
 
 export const Heading = {
@@ -125,10 +127,11 @@ export const Body = {
   Small: BodySmall,
 };
 
-export const Fine = styled.span`
+export const Fine = styled.span<{bold?: boolean}>`
   ${bodyBase}
   font-size: 10px;
   line-height: 16px;
+  ${({bold}) => bold && 'font-weight: 600;'}
 `;
 
 export interface LinkProps {

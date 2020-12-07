@@ -40,10 +40,6 @@ const Section = styled.div`
   }
 `;
 
-const BodyRegularBold = styled(Body.Regular)`
-  font-weight: 600 !important;
-`;
-
 const Divider = styled.div`
   min-height: 1px;
   max-height: 1px;
@@ -75,27 +71,27 @@ const FinancingInformation: React.FC<FinancingInformationProps> = ({
       <Section>
         <Row>
           <Body.Regular>Down Payment</Body.Regular>
-          <BodyRegularBold>{downPayment}</BodyRegularBold>
+          <Body.Regular bold>{downPayment}</Body.Regular>
         </Row>
         <Row>
           <Body.Regular>Financing Bank</Body.Regular>
-          <BodyRegularBold>{bank}</BodyRegularBold>
+          <Body.Regular bold>{bank}</Body.Regular>
         </Row>
         <Row>
           <Body.Regular>APR</Body.Regular>
-          <BodyRegularBold>{apr}</BodyRegularBold>
+          <Body.Regular bold>{apr}</Body.Regular>
         </Row>
         <Row>
           <Body.Regular>Finance Term</Body.Regular>
-          <BodyRegularBold>{financeTerm}</BodyRegularBold>
+          <Body.Regular bold>{financeTerm}</Body.Regular>
         </Row>
         <Row>
           <Body.Regular>Number of payments</Body.Regular>
-          <BodyRegularBold>{numberOfPayments}</BodyRegularBold>
+          <Body.Regular bold>{numberOfPayments}</Body.Regular>
         </Row>
         <Row>
           <Body.Regular>Finance charge</Body.Regular>
-          <BodyRegularBold>{financeCharge}</BodyRegularBold>
+          <Body.Regular bold>{financeCharge}</Body.Regular>
         </Row>
       </Section>
       <Divider />

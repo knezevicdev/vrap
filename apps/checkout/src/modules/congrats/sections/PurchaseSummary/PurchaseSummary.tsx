@@ -85,10 +85,6 @@ const CarImage = styled.div`
   max-width: 182px;
 `;
 
-const BodyRegularBold = styled(Body.Regular)`
-  font-weight: 600 !important;
-`;
-
 const Header = styled.div`
   display: flex;
   flex-direction: column;
@@ -155,11 +151,11 @@ const PurchaseSummary: React.FC<Props> = ({
         <UploadedDocuments showInsuranceDisclaimer={true} />
         <Space />
         <ShouldKnow>
-          <BodyRegularBold>You Should Know:</BodyRegularBold> We’ve done our
-          best to estimate the taxes and registration fees here but the final
-          amounts are determined by the government. Your monthly payment might
-          also vary slightly depending on the number of days between contract
-          signing and the first payment date.
+          <Body.Regular bold>You Should Know:</Body.Regular> We’ve done our best
+          to estimate the taxes and registration fees here but the final amounts
+          are determined by the government. Your monthly payment might also vary
+          slightly depending on the number of days between contract signing and
+          the first payment date.
         </ShouldKnow>
         <ShouldKnow>
           Individual products or combinations of product options may exceed the

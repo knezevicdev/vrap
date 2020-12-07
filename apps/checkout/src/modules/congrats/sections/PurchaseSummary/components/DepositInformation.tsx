@@ -28,10 +28,6 @@ const Section = styled.div`
   }
 `;
 
-const BodyRegularBold = styled(Body.Regular)`
-  font-weight: 600 !important;
-`;
-
 const DepositInformation: React.FC<DepositInformationProps> = ({ data }) => {
   const { amount, creditCard } = data;
   return (
@@ -40,11 +36,11 @@ const DepositInformation: React.FC<DepositInformationProps> = ({ data }) => {
       <Section>
         <Row>
           <Body.Regular>Amount</Body.Regular>
-          <BodyRegularBold>{amount}</BodyRegularBold>
+          <Body.Regular bold>{amount}</Body.Regular>
         </Row>
         <Row>
           <Body.Regular>Credit card</Body.Regular>
-          <BodyRegularBold>{creditCard}</BodyRegularBold>
+          <Body.Regular bold>{creditCard}</Body.Regular>
         </Row>
       </Section>
     </Container>
