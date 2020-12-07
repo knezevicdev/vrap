@@ -5,7 +5,6 @@ import {
 } from '@vroom-web/catalog-url-integration';
 import { Car } from '@vroom-web/inv-search-networking';
 import { SoldStatusInt } from '@vroom-web/inv-service-networking';
-import { stringify } from 'qs';
 import { ParsedUrlQuery } from 'querystring';
 
 import AnalyticsHandler, { Product } from 'src/integrations/AnalyticsHandler';
@@ -20,12 +19,12 @@ class StartPurchaseViewModel {
   private startPurchaseStore: StartPurchaseStore;
   private analyticsHandler: AnalyticsHandler;
   private car: Car;
-  private query: ParsedUrlQuery;
   readonly purchaseText: string = 'Start Purchase';
+  readonly availableSoon: string = 'Available Soon';
   readonly findNewMatch: string = 'Find A New Match';
+  readonly poweredBy = 'Powered by';
 
   constructor(
-    query: ParsedUrlQuery,
     inventoryStore: InventoryStore,
     startPurchaseStore: StartPurchaseStore
   ) {
@@ -33,7 +32,6 @@ class StartPurchaseViewModel {
     this.startPurchaseStore = startPurchaseStore;
     this.analyticsHandler = new AnalyticsHandler();
     this.car = inventoryStore.vehicle._source;
-    this.query = query;
   }
 
   getButtonText(): string {
@@ -124,30 +122,8 @@ class StartPurchaseViewModel {
     // Persist attributuion query params across navigation.
     // This is a stopgap so vlassic attributuion works.
     // TODO: remove query param persistence when a better attribution system is in place.
-    const {
-      gclid,
-      subid,
-      utm_source,
-      utm_medium,
-      utm_campaign,
-      utm_term,
-      utm_content,
-      utm_keyword,
-      utm_subsource,
-      utm_site,
-    } = this.query;
-    const attributionQueryString = stringify({
-      gclid,
-      subid,
-      utm_source,
-      utm_medium,
-      utm_campaign,
-      utm_term,
-      utm_content,
-      utm_keyword,
-      utm_subsource,
-      utm_site,
-    });
+    const attributionQueryString =
+      '?utm_source=santander&utm_campaign=national&utm_medium=listings&vit_source=santanderconsumerusa&vit_medium=wl&vit_dest=vroom';
     const vehicleServiceAvailability = this.store.isAvailable;
     //Tech Debt: SND-970 soldStatus/Inventory Service Spike
     if (
@@ -162,18 +138,19 @@ class StartPurchaseViewModel {
       window.location.href = `${modelHref}${queryStringPrefix}${attributionQueryString}`;
     } else {
       this.analyticsHandler.trackProductAdded(product);
+
       let url;
       if (this.startPurchaseStore.dealStatus === DealStatus.IN_PROGRESS) {
         if (this.startPurchaseStore.vin === vin) {
-          url = `${this.getResumeStepHref(
+          url = `https://www.vroom.com${this.getResumeStepHref(
             this.startPurchaseStore.step,
             this.startPurchaseStore.vin
           )}?${attributionQueryString}`;
         } else {
-          url = `/e2e/${vin}/${'dealSelectionScreen'}?${attributionQueryString}`;
+          url = `https://www.vroom.com/e2e/${vin}/${'dealSelectionScreen'}?${attributionQueryString}`;
         }
       } else {
-        url = `/e2e/${vin}/${'checkoutTradeIn'}?${attributionQueryString}`;
+        url = `https://www.vroom.com/e2e/${vin}/${'checkoutTradeIn'}?${attributionQueryString}`;
       }
 
       window.location.href = url;
