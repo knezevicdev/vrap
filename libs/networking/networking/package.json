@@ -10,7 +10,7 @@
   ],
   "scripts": {
     "test": "jest",
-    "build": "yarn clean yarn build:types && yarn build:lib",
+    "build": "yarn clean && yarn build:types && yarn build:lib",
     "clean": "rimraf dist/*",
     "generate:graphql-types": "graphql-codegen --config codegen.yml",
     "build:types": "tsc",

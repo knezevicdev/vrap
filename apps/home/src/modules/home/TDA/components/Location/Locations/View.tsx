@@ -61,7 +61,7 @@ interface Props {
 
 const View: React.FC<Props> = ({ viewModel }) => {
   return (
-    <ViewContainer>
+    <ViewContainer id={'locations-section'}>
       <ViewContent>
         <Title>{viewModel.title}</Title>
 

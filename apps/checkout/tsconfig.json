@@ -1,13 +1,15 @@
 {
   "extends": "../../tsconfig.json",
   "compilerOptions": {
-    "baseUrl": "."
+    "baseUrl": ".",
+    "useDefineForClassFields": true
   },
   "exclude": ["node_modules"],
   "include": [
     "./next-env.d.ts",
     "./types/**/*.ts",
     "./src/**/*.ts",
-    "./src/**/*.tsx"
+    "./src/**/*.tsx",
+    "./svg.d.ts"
   ]
 }

@@ -47,12 +47,10 @@ export default class VroomApp extends App {
     const { Component, pageProps } = this.props;
     return (
       <>
-        <>
-          <GlobalStyle />
-          <ThemeProvider theme={theme}>
-            <Component {...pageProps} />
-          </ThemeProvider>
-        </>
+        <GlobalStyle />
+        <ThemeProvider theme={theme}>
+          <Component {...pageProps} />
+        </ThemeProvider>
       </>
     );
   }

@@ -1,5 +1,4 @@
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
+import { Checkbox, List, ListItem } from '@material-ui/core';
 import { styled } from '@material-ui/core/styles';
 import Check from '@material-ui/icons/Check';
 import { Typography } from '@vroom-web/ui';
@@ -12,6 +11,9 @@ import BodyTypesViewModel from './ViewModel';
 const StyledListItem = styled(ListItem)(({ theme }) => ({
   padding: theme.spacing(1, 0),
   height: theme.spacing(4),
+  display: 'flex',
+  flexDirection: 'row',
+  justifyContent: 'space-between',
 }));
 
 const Reset = styled(StyledListItem)(({ theme }) => ({
@@ -27,6 +29,10 @@ const StyledList = styled(List)(({ theme }) => ({
 
 const StyledCheck = styled(Check)(() => ({
   marginLeft: 'auto',
+}));
+
+const CustomCheckbox = styled(Checkbox)(() => ({
+  paddingRight: 0,
 }));
 
 const Value = styled(Typography)(() => ({
@@ -57,7 +63,11 @@ const BodyTypesView: React.FC<Props> = ({ viewModel }) => {
               )}
             >
               <Value fontWeight={fontWeight}>{display}</Value>
-              {isSelected && <StyledCheck fontSize="small" color="secondary" />}
+              {isSelected ? (
+                <StyledCheck fontSize="small" color="secondary" />
+              ) : (
+                <CustomCheckbox disabled={true} aria-hidden="true" />
+              )}
             </StyledListItem>
             {filtersDataValue === 'truck' && isSelected ? <Truck /> : null}
           </>

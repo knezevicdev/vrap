@@ -1,5 +1,4 @@
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
+import { Checkbox, List, ListItem } from '@material-ui/core';
 import { styled } from '@material-ui/core/styles';
 import Check from '@material-ui/icons/Check';
 import { Typography } from '@vroom-web/ui';
@@ -11,6 +10,13 @@ import ColorViewModel from './ViewModel';
 const StyledListItem = styled(ListItem)(({ theme }) => ({
   padding: theme.spacing(1, 0),
   height: theme.spacing(4),
+  display: 'flex',
+  flexDirection: 'row',
+  justifyContent: 'space-between',
+}));
+
+const LabelContainer = styled('div')(() => ({
+  display: 'inline-flex',
 }));
 
 const Reset = styled(StyledListItem)(({ theme }) => ({
@@ -26,6 +32,10 @@ const StyledList = styled(List)(({ theme }) => ({
 
 const StyledCheck = styled(Check)(() => ({
   marginLeft: 'auto',
+}));
+
+const CustomCheckbox = styled(Checkbox)(() => ({
+  paddingRight: 0,
 }));
 
 const Circle = styled('div')(() => ({
@@ -63,17 +73,23 @@ const ColorView: React.FC<Props> = ({ viewModel }) => {
               isSelected
             )}
           >
-            <Circle
-              style={{
-                backgroundColor: value,
-                border: hasBorder ? 'solid 1px #041022' : 'none',
-                backgroundImage: isMetallic
-                  ? 'linear-gradient(224deg, rgba(255,255,255,0.50) 0%, rgba(0,0,0,0.50) 100%)'
-                  : 'none',
-              }}
-            />
-            <Value fontWeight={fontWeight}>{display}</Value>
-            {isSelected && <StyledCheck fontSize="small" color="secondary" />}
+            <LabelContainer>
+              <Circle
+                style={{
+                  backgroundColor: value,
+                  border: hasBorder ? 'solid 1px #041022' : 'none',
+                  backgroundImage: isMetallic
+                    ? 'linear-gradient(224deg, rgba(255,255,255,0.50) 0%, rgba(0,0,0,0.50) 100%)'
+                    : 'none',
+                }}
+              />
+              <Value fontWeight={fontWeight}>{display}</Value>
+            </LabelContainer>
+            {isSelected ? (
+              <StyledCheck fontSize="small" color="secondary" />
+            ) : (
+              <CustomCheckbox disabled={true} aria-hidden="true" />
+            )}
           </StyledListItem>
         );
       })}

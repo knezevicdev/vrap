@@ -350,10 +350,10 @@ export enum DriveTypeAPI {
 }
 
 export enum DriveTypeDisplay {
-  FOUR_BY_FOUR = '4x4',
-  AWD = 'AWD',
-  FWD = 'FWD',
-  RWD = 'RWD',
+  FOUR_BY_FOUR = '(4x4) Four-Wheel Drive',
+  AWD = '(AWD) All Wheel Drive',
+  FWD = '(FWD) Front Wheel Drive',
+  RWD = '(RWD) Rear Wheel Drive',
 }
 
 export interface DriveType {

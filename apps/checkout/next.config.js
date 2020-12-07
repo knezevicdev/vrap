@@ -17,9 +17,15 @@ const config = {
   publicRuntimeConfig: {
     // Will be available on both server-side and client-side
     BASE_PATH: basePath,
+    DATA_DOG_RUM_APPLICATION: process.env.DATA_DOG_RUM_APPLICATION,
+    DATA_DOG_RUM_TOKEN: process.env.DATA_DOG_RUM_TOKEN,
+    GQL_PROXY_URL: `${basePath}/api/gql`,
     NAME: name,
     NODE_ENV: process.env.NODE_ENV,
     VERSION: version,
+  },
+  serverRuntimeConfig: {
+    GQL_PROXY_TARGET: process.env.GQL_PROXY_TARGET,
   },
 };
 

@@ -10,10 +10,16 @@ interface Props {
   viewModel: DriveTypesViewModel;
 }
 
-const Label = withStyles((theme) => ({
+const Label = withStyles(() => ({
   label: {
-    fontWeight: theme.typography.fontWeightLight,
     fontSize: '16px',
+  },
+  root: {
+    justifyContent: 'space-between',
+    marginLeft: '0px',
+    '& span.Mui-checked + span': {
+      fontWeight: 600,
+    },
   },
 }))(FormControlLabel);
 
@@ -22,6 +28,12 @@ const CheckboxCustom = withStyles((theme) => ({
     color: theme.palette.grey['A100'],
   },
 }))(Checkbox);
+
+const FormGroupCustom = withStyles(() => ({
+  root: {
+    paddingBottom: '16px',
+  },
+}))(FormGroup);
 
 const DriveTypesView: React.FC<Props> = ({ viewModel }) => {
   const handleCheckboxChange = (
@@ -33,13 +45,14 @@ const DriveTypesView: React.FC<Props> = ({ viewModel }) => {
   };
 
   return (
-    <FormGroup>
+    <FormGroupCustom>
       {viewModel.getDriveTypes().map((driveType) => {
         const checked = viewModel.isChecked(driveType);
         const { display, filtersDataValue } = driveType;
 
         return (
           <Label
+            labelPlacement="start"
             key={display}
             control={
               <CheckboxCustom
@@ -53,7 +66,7 @@ const DriveTypesView: React.FC<Props> = ({ viewModel }) => {
           />
         );
       })}
-    </FormGroup>
+    </FormGroupCustom>
   );
 };
 

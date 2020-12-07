@@ -1,8 +1,8 @@
 import axios, { AxiosResponse } from 'axios';
 import qs from 'qs';
 
-import { Shipment } from './models/Shipments';
-import { User } from './models/User';
+import { Shipment, ShipmentStatus } from './models/Shipments';
+import { Carrier, User } from './models/User';
 
 export enum Status {
   INITIAL = 'initial',
@@ -11,41 +11,62 @@ export enum Status {
   ERROR = 'error',
 }
 
-// TODO: Replace with runtime config
-const SHIPPING_URL = 'http://localhost:8080';
+const BASE_URL = process.env.BASE_URL;
 
-const axiosInstance = axios.create();
+const axiosInstance = axios.create({ baseURL: BASE_URL });
 
-export class Networker {
-  getUsers(carrier?: string, status?: string): Promise<AxiosResponse<User[]>> {
-    const url = `${SHIPPING_URL}/api/users?${qs.stringify(
-      {
-        carrier: carrier || null,
-        status: status || null,
-      },
-      { skipNulls: true }
-    )}`;
+export const getUsers = async (
+  carrierCode?: string,
+  status?: string
+): Promise<AxiosResponse<User[]>> => {
+  const url = `/api/users?${qs.stringify(
+    {
+      carrier: carrierCode || null,
+      status: status || null,
+    },
+    { skipNulls: true }
+  )}`;
 
-    return axiosInstance.get(url);
-  }
-}
+  return axiosInstance.get(url);
+};
 
-export const getTenderedShipments = async (): Promise<
-  AxiosResponse<Shipment[]>
-> => axiosInstance.get(`${SHIPPING_URL}/api/shipments/tendered`);
+export const getCarriers = async (
+  filter: string
+): Promise<AxiosResponse<Carrier[]>> => {
+  const url = `/api/carriers?${qs.stringify(
+    {
+      filter: filter || null,
+    },
+    { skipNulls: true }
+  )}`;
 
-export const getBookedShipments = async (): Promise<
-  AxiosResponse<Shipment[]>
-> => axiosInstance.get(`${SHIPPING_URL}/api/shipments/booked`);
+  return axiosInstance.get(url);
+};
 
-export const getInTransitShipments = async (): Promise<
-  AxiosResponse<Shipment[]>
-> => axiosInstance.get(`${SHIPPING_URL}/api/shipments/in-transit`);
+export const getUserStatuses = async (): Promise<AxiosResponse<string[]>> => {
+  const url = `/api/userStatus`;
+  return axiosInstance.get(url);
+};
 
-export const getCancelledShipments = async (): Promise<
-  AxiosResponse<Shipment[]>
-> => axiosInstance.get(`${SHIPPING_URL}/api/shipments/cancelled`);
+export const patchUser = async (
+  id: number,
+  status?: string,
+  carrierCode?: string
+): Promise<AxiosResponse<User>> => {
+  const url = `/api/users`;
+  return axiosInstance.patch(url, { id, status, carrierCode });
+};
 
-export const getDeliveredShipments = async (): Promise<
-  AxiosResponse<Shipment[]>
-> => axiosInstance.get(`${SHIPPING_URL}/api/shipments/delivered`);
+export const getShipments = async (
+  status?: ShipmentStatus,
+  user?: string
+): Promise<AxiosResponse<Shipment[]>> => {
+  const url = `/api/shipments?${qs.stringify(
+    {
+      user: user || null,
+      status: status || null,
+    },
+    { skipNulls: true }
+  )}`;
+  return axiosInstance.get(url);
+};
