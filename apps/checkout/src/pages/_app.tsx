@@ -1,7 +1,14 @@
 import { datadogRum } from '@datadog/browser-rum';
+import {
+  ErrorResponse,
+  isAccessDeniedErrorResponse,
+  ResponseErrorInterceptor,
+} from '@vroom-web/networking';
 import { configure as configureMobx } from 'mobx';
 import App from 'next/app';
 import getConfig from 'next/config';
+
+import client from 'src/networking/client';
 
 configureMobx({
   enforceActions: 'observed', // don't allow state modifications outside actions
@@ -24,6 +31,16 @@ class VroomApp extends App {
         trackInteractions: true,
       });
     }
+
+    const errorInterceptor: ResponseErrorInterceptor = async (
+      errorResponse: ErrorResponse
+    ) => {
+      if (isAccessDeniedErrorResponse(errorResponse)) {
+        // TODO: open a login dialog instead of redirecting.
+        window.location.href = `/account/login?redirect=${window.location.pathname}`;
+      }
+    };
+    client.addResponseInterceptor(errorInterceptor);
   }
 }
 

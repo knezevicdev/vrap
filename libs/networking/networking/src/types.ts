@@ -20,6 +20,18 @@ export interface ErrorResponse {
   status?: number;
 }
 
+export interface AccessDeniedError extends Error {
+  response: {
+    extensions: {
+      error_code: '401';
+    };
+  };
+}
+
+export interface AccessDeniedErrorResponse extends ErrorResponse {
+  error: AccessDeniedError;
+}
+
 export type Response<D> = SuccessResponse<D> | ErrorResponse;
 
 export type ResponseSuccessInterceptor<D = unknown> = (
