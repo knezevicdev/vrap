@@ -80,6 +80,8 @@ class StartPurchaseViewModel {
         return `/e2e/${vin}/dealReview`;
       case 'DocumentUpload':
         return `/e2e/${vin}/documentUpload`;
+      case 'TradeInLoanInfo':
+        return `/e2e/${vin}/tradeInLoanInfo`;
       default:
         // If we got an unexpected step, link to the transactions page as a fallback.
         return '/my-account/transactions';
