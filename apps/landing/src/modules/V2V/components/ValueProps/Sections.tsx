@@ -51,6 +51,7 @@ const VideoTitle = styled(Title)`
   max-width: 490px !important;
   margin: 0 auto !important;
   margin-bottom: 32px !important;
+  line-height: 48px !important;
 `;
 
 const IframeContainer = styled.div`
@@ -106,7 +107,9 @@ const Bold = styled.span`
 export const VideoSection: FC = () => {
   return (
     <VideoContainer>
-      <VideoTitle>Buy, sell, or trade vehicles all from your couch</VideoTitle>
+      <VideoTitle>
+        Buy, sell, or trade vehicles all from your&nbsp;couch
+      </VideoTitle>
       <IframeContainer>
         <StyledIframe
           src={'https://www.youtube.com//embed/BNN30oCCesc'}
@@ -129,9 +132,9 @@ export const CertifiedSection: FC = () => {
       <Description>
         All our vehicles go through a 100 point inspection and come with{' '}
         <UnderlinedLink href={'https://www.vroom.com/protection'}>
-          Vroom’s free limited warranty
+          Vroom’s&nbsp;free&nbsp;limited&nbsp;warranty
         </UnderlinedLink>
-        , good for 90 days or 6,000 miles.
+        , good for 90&nbsp;days or 6,000&nbsp;miles.
       </Description>
     </Section>
   );
@@ -155,7 +158,7 @@ export const TestDriveSection: FC = () => {
 export const DeliveredSection: FC = () => {
   return (
     <Section>
-      <Title>Delivered right to your driveway</Title>
+      <Title>Delivered right to your&nbsp;driveway</Title>
       <DeliveredImageContainer>
         <DeliveredImage
           src={`${publicRuntimeConfig.BASE_PATH}/images/V2V/delivery.png`}
