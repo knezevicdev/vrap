@@ -7,8 +7,12 @@ import { Body, Heading, Title } from 'vroom-ui/src/foundation/Typography';
 import BillingAddress, {
   BillingAddressProps,
 } from './components/BillingAddress';
-import DeliveryAddress from './components/DeliveryAddress';
-import DeliveryDetails from './components/DeliveryDetails';
+import DeliveryAddress, {
+  DeliveryAddressProps,
+} from './components/DeliveryAddress';
+import DeliveryDetails, {
+  DeliveryDetailsProps,
+} from './components/DeliveryDetails';
 import DepositInformation, {
   DepositInformationProps,
 } from './components/DepositInformation';
@@ -18,14 +22,31 @@ import FinancingInformation, {
 import PurchaseDetails, {
   PurchaseDetailsProps,
 } from './components/PurchaseDetails';
-import RegistrationAddress from './components/RegistrationAddress';
+import RegistrationAddress, {
+  RegistrationAddressProps,
+} from './components/RegistrationAddress';
 import UploadedDocuments from './components/UploadedDocuments';
 
 interface Props {
+  summary: {
+    date: string;
+    car: {
+      image: {
+        src: string;
+        alt: string;
+      };
+      yearMakeAndModel: string;
+      trim: string;
+      miles: string;
+    };
+  };
   purchaseDetails: PurchaseDetailsProps;
   depositInformation: DepositInformationProps;
   billingAddress: BillingAddressProps;
   financingInformation: FinancingInformationProps;
+  registrationAddress: RegistrationAddressProps;
+  deliveryAddress: DeliveryAddressProps;
+  deliveryDetails: DeliveryDetailsProps;
 }
 
 const Container = styled.div`
@@ -83,100 +104,36 @@ const ShouldKnow = styled(Body.Regular)`
   margin-bottom: 16px;
 `;
 
-const PurchaseSummary: React.FC<Props> = () => {
-  const purchaseDetails = {
-    data: {
-      method: 'Finance with Vroom',
-      sellingPrice: '$28,750.00',
-      taxes: '$2,371.87',
-      vehicleServiceContractProtection: '$3,244.00',
-      gapCoverage: '$645.00',
-      tireAndWheelCoverage: '$643.00',
-      shippingFee: '$599.00',
-      subtotal: '$22,486.98',
-      creditDownPayment: '-$500.00',
-      total: '$35,153.98',
-    },
-  };
-
-  const depositInformation = {
-    data: {
-      amount: '$500.00',
-      creditCard: '***1234',
-    },
-  };
-
-  const billingAddress = {
-    data: {
-      address: {
-        name: 'Paul Henry',
-        address: '1021 Monterey Salinas Hwy',
-        cityStateZip: 'Salina, CA 93980',
-      },
-    },
-  };
-
-  const registrationAddress = {
-    data: {
-      address: {
-        name: 'Paul Henry',
-        address: '1021 Monterey Salinas Hwy',
-        cityStateZip: 'Salina, CA 93980',
-      },
-    },
-  };
-
-  const deliveryAddress = {
-    data: {
-      address: {
-        name: 'Paul Henry',
-        address: '1021 Monterey Salinas Hwy',
-        cityStateZip: 'Salina, CA 93980',
-      },
-    },
-  };
-
-  const financingInformation = {
-    data: {
-      downPayment: '-$5,000',
-      bank: 'Chase',
-      apr: 'TBD',
-      financeTerm: 'TBD',
-      numberOfPayments: 'TBD',
-      financeCharge: 'TBD',
-      monthlyPayment: '$287.00',
-    },
-  };
-
-  const deliveryDetails = {
-    data: {
-      dates: ['04/01/2020', '04/02/2020'],
-      willYouBeAvailable: 'Yes',
-      receiver: {
-        name: 'Michelle Henry',
-        phone: '(855) 523-1302',
-      },
-      truckAccess: 'Yes',
-      truckInformation:
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim venia',
-    },
-  };
-
+const PurchaseSummary: React.FC<Props> = ({
+  summary: { date, car },
+  purchaseDetails,
+  depositInformation,
+  billingAddress,
+  financingInformation,
+  registrationAddress,
+  deliveryAddress,
+  deliveryDetails,
+}) => {
   return (
     <Container>
       <Content>
         <Header>
           <Heading.Three>Purchase summary</Heading.Three>
-          <Body.Small>Transaction placed on November 4, 2020</Body.Small>
+          <Body.Small>Transaction placed on {date}</Body.Small>
         </Header>
         <Car>
           <CarImage>
-            <Picture alt="car" src="" width="182px" height="104px" />
+            <Picture
+              alt={car.image.alt}
+              src={car.image.src}
+              width="182px"
+              height="104px"
+            />
           </CarImage>
           <CarInfo>
-            <Make>2018 Land Rover Range Rover Sport</Make>
-            <Body.Regular>SE</Body.Regular>
-            <Body.Regular>20,818 miles</Body.Regular>
+            <Make>{car.yearMakeAndModel}</Make>
+            <Body.Regular>{car.trim}</Body.Regular>
+            <Body.Regular>{car.miles}</Body.Regular>
           </CarInfo>
         </Car>
         <PurchaseDetails data={purchaseDetails.data} />
