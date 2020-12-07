@@ -1,8 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-import Icon, { Icons } from 'vroom-ui/src/elements/Icon/Icon';
 import { ThemeProps } from 'vroom-ui/src/foundation/themes/types';
-import { Body, Title } from 'vroom-ui/src/foundation/Typography';
+import { Body, Link, Title } from 'vroom-ui/src/foundation/Typography';
 
 export interface PurchaseDetailsProps {
   data: {
@@ -53,18 +52,8 @@ const Details = styled(Body.Small)`
   margin-bottom: 8px;
 `;
 
-const TextWithHelp = styled.div`
-  display: flex;
-  align-items: center;
-`;
-
 const Header = styled(Title.One)`
   margin-bottom: 16px;
-`;
-
-const InfoIcon = styled(Icon)`
-  margin-left: 8px;
-  cursor: pointer;
 `;
 
 const Divider = styled.div`
@@ -77,6 +66,10 @@ const Divider = styled.div`
 `;
 
 const Due = styled(Title.Two)`
+  color: ${primaryBrand} !important;
+`;
+
+const BrandLink = styled(Link)`
   color: ${primaryBrand} !important;
 `;
 
@@ -108,17 +101,13 @@ const PurchaseDetails: React.FC<PurchaseDetailsProps> = ({ data }) => {
           <BodyRegularBold>{sellingPrice}</BodyRegularBold>
         </Row>
         <Row>
-          <TextWithHelp>
-            <Body.Regular>Taxes and fees</Body.Regular>
-            <InfoIcon icon={Icons.FEEDBACK_INFO} />
-          </TextWithHelp>
+          <Body.Regular>Taxes and fees</Body.Regular>
           <BodyRegularBold>{taxes}</BodyRegularBold>
         </Row>
         <Row>
-          <TextWithHelp>
-            <Body.Regular>90-Day Limited Warranty</Body.Regular>
-            <InfoIcon icon={Icons.FEEDBACK_INFO} />
-          </TextWithHelp>
+          <BrandLink blank href="https://vroom.com/protection">
+            90-Day Limited Warranty
+          </BrandLink>
           <BodyRegularBold>Included</BodyRegularBold>
         </Row>
         <Row>
@@ -128,10 +117,12 @@ const PurchaseDetails: React.FC<PurchaseDetailsProps> = ({ data }) => {
         {vehicleServiceContractProtection && (
           <>
             <Row>
-              <TextWithHelp>
-                <Body.Regular>Vehicle Service Contract Protection</Body.Regular>
-                <InfoIcon icon={Icons.FEEDBACK_INFO} />
-              </TextWithHelp>
+              <BrandLink
+                blank
+                href="https://vroom.zendesk.com/hc/en-us/articles/205444915-What-is-Vroom-Protect-"
+              >
+                Vehicle Service Contract Protection
+              </BrandLink>
               <BodyRegularBold>
                 {vehicleServiceContractProtection}
               </BodyRegularBold>
@@ -142,10 +133,12 @@ const PurchaseDetails: React.FC<PurchaseDetailsProps> = ({ data }) => {
         {gapCoverage && (
           <>
             <Row>
-              <TextWithHelp>
-                <Body.Regular>GAP Coverage</Body.Regular>
-                <InfoIcon icon={Icons.FEEDBACK_INFO} />
-              </TextWithHelp>
+              <BrandLink
+                blank
+                href="https://vroom.zendesk.com/hc/en-us/articles/204740399-What-does-GAP-protection-cover-"
+              >
+                GAP Coverage
+              </BrandLink>
               <BodyRegularBold>{gapCoverage}</BodyRegularBold>
             </Row>
             <Details>60 mos. / 60,000 mi. / $100 ded.</Details>
@@ -154,10 +147,12 @@ const PurchaseDetails: React.FC<PurchaseDetailsProps> = ({ data }) => {
         {tireAndWheelCoverage && (
           <>
             <Row>
-              <TextWithHelp>
-                <Body.Regular>Tire & Wheel Coverage</Body.Regular>
-                <InfoIcon icon={Icons.FEEDBACK_INFO} />
-              </TextWithHelp>
+              <BrandLink
+                blank
+                href="https://vroom.zendesk.com/hc/en-us/articles/360033879711-What-is-Tire-Wheel-Protection-"
+              >
+                Tire & Wheel Coverage
+              </BrandLink>
               <BodyRegularBold>{tireAndWheelCoverage}</BodyRegularBold>
             </Row>
             <Details>60 mos. / 60,000 mi. / $100 ded.</Details>
