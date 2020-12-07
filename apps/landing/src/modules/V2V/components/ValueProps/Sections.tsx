@@ -52,6 +52,9 @@ const VideoTitle = styled(Title)`
   margin: 0 auto !important;
   margin-bottom: 32px !important;
   line-height: 48px !important;
+  @media (max-width: 599px) {
+    line-height: 40px;
+  }
 `;
 
 const IframeContainer = styled.div`
