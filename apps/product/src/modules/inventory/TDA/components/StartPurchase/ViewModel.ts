@@ -5,18 +5,16 @@ import {
 } from '@vroom-web/catalog-url-integration';
 import { Car } from '@vroom-web/inv-search-networking';
 import { SoldStatusInt } from '@vroom-web/inv-service-networking';
-import getConfig from 'next/config';
 import { stringify } from 'qs';
 import { ParsedUrlQuery } from 'querystring';
 
 import AnalyticsHandler, { Product } from 'src/integrations/AnalyticsHandler';
 import { InventoryStore } from 'src/modules/inventory/store';
-import { StartPurchaseStore } from 'src/modules/inventory/Vroom/components/StartPurchase/store';
-import { Status } from 'src/networking/types';
+import {
+  DealStatus,
+  StartPurchaseStore,
+} from 'src/modules/inventory/Vroom/components/StartPurchase/store';
 
-const {
-  publicRuntimeConfig: { VROOM_URL },
-} = getConfig();
 class StartPurchaseViewModel {
   private store: InventoryStore;
   private startPurchaseStore: StartPurchaseStore;
@@ -54,6 +52,42 @@ class StartPurchaseViewModel {
     this.startPurchaseStore.initClientSide();
   }
 
+  // TODO: 'step' and all the cases in the switch should use an enum.
+  // We need to export an enum from the networking library for deals.
+  private getResumeStepHref(step: string, vin: string): string {
+    switch (step) {
+      case 'TradeIn':
+        return `/e2e/${vin}/checkoutTradeIn`;
+      case 'RegistrationAddress':
+        return `/e2e/${vin}/registration`;
+      case 'DeliveryAddress':
+        return `/e2e/${vin}/delivery-form`;
+      case 'Financing':
+        return `/e2e/${vin}/vroomFinancing`;
+      case 'PaymentType':
+        return `/e2e/${vin}/payment`;
+      case 'DepositPaymentInfo':
+        return `/e2e/${vin}/dealReview`;
+      case 'DealSummary':
+        return `/deal/${vin}/congratulations`;
+      case 'FinancingOption':
+        return `/e2e/${vin}/autofi`;
+      case 'FinancingPending':
+        return `/e2e/${vin}/autofi`;
+      case 'BackendProducts':
+        return `/e2e/${vin}/dealCoverage`;
+      case 'Review':
+        return `/e2e/${vin}/dealReview`;
+      case 'DocumentUpload':
+        return `/e2e/${vin}/documentUpload`;
+      case 'TradeInLoanInfo':
+        return `/e2e/${vin}/tradeInLoanInfo`;
+      default:
+        // If we got an unexpected step, link to the transactions page as a fallback.
+        return '/my-account/transactions';
+    }
+  }
+
   handleClick(): void {
     const {
       consignmentPartnerId: partnerId,
@@ -80,7 +114,7 @@ class StartPurchaseViewModel {
       vin,
       year,
       defectPhotos: !!defectPhotos,
-      ...(this.startPurchaseStore.inProgressDealStatus === Status.SUCCESS
+      ...(this.startPurchaseStore.dealStatus === DealStatus.PENDING
         ? {
             pendingDeal: true,
           }
@@ -114,8 +148,6 @@ class StartPurchaseViewModel {
       utm_subsource,
       utm_site,
     });
-    const tdaQueryParams =
-      '&vit_source=texasdirectauto&vit_medium=wl&vit_dest=vroom&vit_brand=TDA';
     const vehicleServiceAvailability = this.store.isAvailable;
     //Tech Debt: SND-970 soldStatus/Inventory Service Spike
     if (
@@ -130,9 +162,20 @@ class StartPurchaseViewModel {
       window.location.href = `${modelHref}${queryStringPrefix}${attributionQueryString}`;
     } else {
       this.analyticsHandler.trackProductAdded(product);
-      const url = `${
-        VROOM_URL || ''
-      }/e2e/${vin}/checkoutTradeIn?${attributionQueryString}${tdaQueryParams}`;
+      let url;
+      if (this.startPurchaseStore.dealStatus === DealStatus.IN_PROGRESS) {
+        if (this.startPurchaseStore.vin === vin) {
+          url = `${this.getResumeStepHref(
+            this.startPurchaseStore.step,
+            this.startPurchaseStore.vin
+          )}?${attributionQueryString}`;
+        } else {
+          url = `/e2e/${vin}/${'dealSelectionScreen'}?${attributionQueryString}`;
+        }
+      } else {
+        url = `/e2e/${vin}/${'checkoutTradeIn'}?${attributionQueryString}`;
+      }
+
       window.location.href = url;
     }
   }
