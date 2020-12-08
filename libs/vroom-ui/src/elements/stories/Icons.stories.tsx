@@ -65,6 +65,7 @@ export const Icons: Story = () => {
         <Icon icon={IconName.HOT} />
         <Icon icon={IconName.ENVELOPE} />
         <Icon icon={IconName.QUESTION} />
+        <Icon icon={IconName.CALENDAR} />
       </Row>
     </Container>
   );
