@@ -65,7 +65,7 @@ const StepNumber = styled(Body.Small)`
 `;
 
 const Header = styled(Heading.Three)`
-    ${addStyleForMobile(`
+  ${addStyleForMobile(`
         font-size: 30px !important;
         margin: 0px 32px !important;
     `)}

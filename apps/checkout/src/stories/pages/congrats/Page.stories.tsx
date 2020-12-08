@@ -1,12 +1,18 @@
 import React from 'react';
-import {withDesign} from 'storybook-addon-designs';
-import styled, {ThemeProvider} from "styled-components";
-import ReservedCar from "../../../modules/congrats/sections/ReservedCar";
-import {nextViewModel, purchaseSummaryViewModel, questionsViewModel, reservedCarViewModel} from "./ViewModels";
-import {getVroomTheme} from "vroom-ui/src/foundation/themes/Vroom";
-import Next from "../../../modules/congrats/sections/Next";
-import PurchaseSummary from "../../../modules/congrats/sections/PurchaseSummary/PurchaseSummary";
-import Questions from "../../../modules/congrats/sections/Questions";
+import { withDesign } from 'storybook-addon-designs';
+import styled, { ThemeProvider } from 'styled-components';
+import { getVroomTheme } from 'vroom-ui/src/foundation/themes/Vroom';
+
+import Next from '../../../modules/congrats/sections/Next';
+import PurchaseSummary from '../../../modules/congrats/sections/PurchaseSummary/PurchaseSummary';
+import Questions from '../../../modules/congrats/sections/Questions';
+import ReservedCar from '../../../modules/congrats/sections/ReservedCar';
+import {
+  nextViewModel,
+  purchaseSummaryViewModel,
+  questionsViewModel,
+  reservedCarViewModel,
+} from './ViewModels';
 
 const Page = styled.div`
   display: flex;
@@ -16,28 +22,27 @@ const Page = styled.div`
 const theme = getVroomTheme('/assets/fonts/Vroom');
 
 export const WithoutTrade = (): JSX.Element => {
-    return (
-        <ThemeProvider theme={theme}>
-        <Page>
-            <ReservedCar {...reservedCarViewModel}/>
-            <Next {...nextViewModel}/>
-            <PurchaseSummary {...purchaseSummaryViewModel}/>
-            <Questions {...questionsViewModel}/>
-        </Page>
-        </ThemeProvider>
-    );
-}
+  return (
+    <ThemeProvider theme={theme}>
+      <Page>
+        <ReservedCar {...reservedCarViewModel} />
+        <Next {...nextViewModel} />
+        <PurchaseSummary {...purchaseSummaryViewModel} />
+        <Questions {...questionsViewModel} />
+      </Page>
+    </ThemeProvider>
+  );
+};
 
 WithoutTrade.parameters = {
-    design: {
-        type: 'figma',
-        url:
-            'https://www.figma.com/file/rsB4AJNk9uq81u1ia2U0G1/EComm-Port?node-id=385%3A365',
-    },
+  design: {
+    type: 'figma',
+    url:
+      'https://www.figma.com/file/rsB4AJNk9uq81u1ia2U0G1/EComm-Port?node-id=385%3A365',
+  },
 };
 
 export default {
-    title: 'Checkout/Congrats/Without Trade',
-    decorators: [withDesign],
+  title: 'Checkout/Congrats/Without Trade',
+  decorators: [withDesign],
 };
-

@@ -53,7 +53,7 @@ const Container = styled.div`
   display: flex;
   justify-content: center;
   margin-bottom: 64px;
-    ${addStyleForMobile(`
+  ${addStyleForMobile(`
         margin: 0 16px;
    `)}
 `;
