@@ -41,6 +41,7 @@ const VehicleContainer = styled.div`
   }
 
   @media (max-width: 599px) {
+    margin: 0;
     padding: 0px 0px 32px 0px;
     grid-template-columns: 1fr;
     gap: 16px;

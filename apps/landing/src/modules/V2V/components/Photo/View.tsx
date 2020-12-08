@@ -4,6 +4,9 @@ import styled from 'styled-components';
 
 import ViewModel from './ViewModel';
 
+import Icon, { Icons } from 'src/core/Icon';
+import { Title } from 'src/core/Typography';
+
 export interface Props {
   viewModel: ViewModel;
 }
@@ -27,23 +30,67 @@ const Iframe = styled.iframe`
 const Image = styled.img`
   max-width: 874px;
   max-height: 533px;
+
   width: 100%;
   object-fit: cover;
+  background-color: #ffffff;
+`;
+
+const NoImageContainer = styled.div`
+  max-width: 874px;
+  max-height: 533px;
+  min-height: 232px;
+  width: 100%;
+  background-color: #ffffff;
+  display: grid;
+  place-items: center;
+`;
+
+const NoImageSection = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+`;
+
+const NoImageIcon = styled(Icon)`
+  @media (max-width: 840px) {
+    height: 45px;
+    width: 64px;
+  }
+`;
+
+const NoImageText = styled(Title.One)`
+  line-height: 40px;
+  color: #999da3;
+
+  @media (max-width: 840px) {
+    line-height: 24px;
+    font-size: 20px;
+  }
 `;
 
 const Photo: React.FC<Props> = ({ viewModel }) => {
   const spinCarUrl = viewModel.getSpinCarUrl();
-  const { url, alt } = viewModel.getImageUrl();
+  const { url: imageUrl, alt } = viewModel.getImageUrl();
+
+  if (!spinCarUrl) {
+    if (!imageUrl)
+      return (
+        <NoImageContainer>
+          <NoImageSection>
+            <NoImageIcon icon={Icons.NO_IMAGES} color="#d6d7da" />
+            <NoImageText>{viewModel.noImageText}</NoImageText>
+          </NoImageSection>
+        </NoImageContainer>
+      );
+    return <Image src={imageUrl} alt={alt} />;
+  }
+
   return (
-    <>
-      {!spinCarUrl ? (
-        <Image src={url} alt={alt} />
-      ) : (
-        <IframeContainer>
-          <Iframe src={spinCarUrl}></Iframe>
-        </IframeContainer>
-      )}
-    </>
+    <IframeContainer>
+      <Iframe src={spinCarUrl} />
+    </IframeContainer>
   );
 };
 
