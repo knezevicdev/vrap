@@ -52,6 +52,7 @@ interface Props {
 const Container = styled.div`
   display: flex;
   justify-content: center;
+  margin-bottom: 64px;
 `;
 
 const Content = styled.div`
