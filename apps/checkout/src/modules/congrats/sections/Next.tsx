@@ -18,27 +18,30 @@ const Container = styled.div`
   flex-direction: column;
   background: ${grayFour};
   align-items: center;
-  padding: 80px 0;
-  text-align: center;
+  padding-bottom: 64px;
+  margin-bottom: 64px;
   ${addStyleForMobile(`
-        padding: 40px 0;
+        padding-bottom: 32px;
+        margin-bottom: 32px;
     `)}
 `;
 
 const Step = styled.div`
   display: flex;
   flex-direction: column;
-  text-align: center;
+  padding: 0 16px;
 `;
 
 const Steps = styled.div`
   display: flex;
   margin-top: 36px;
+  padding: 0 16px;
   ${addStyleForMobile(`
         flex-direction: column;
-        margin-top: 24px;
+        margin-top: 32px;
+        padding: 0;
         ${Step}:not(:first-child) {
-            margin-top: 24px;
+            margin-top: 16px;
         }
     `)}
 `;
@@ -46,7 +49,6 @@ const Steps = styled.div`
 const StepHeader = styled.div`
   display: flex;
   align-items: center;
-  justify-content: center;
 `;
 
 const StepNumber = styled(Body.Small)`
@@ -62,6 +64,13 @@ const StepNumber = styled(Body.Small)`
   margin-right: 8px;
 `;
 
+const Header = styled(Heading.Three)`
+    ${addStyleForMobile(`
+        font-size: 30px !important;
+        margin: 0px 32px !important;
+    `)}
+`;
+
 interface Props {
   heading: string;
   steps: { number: string; title: string; description: string }[];
@@ -70,7 +79,7 @@ interface Props {
 const Next: React.FC<Props> = ({ heading, steps }): JSX.Element => {
   return (
     <Container>
-      <Heading.Two>{heading}</Heading.Two>
+      <Header>{heading}</Header>
       <Steps>
         {steps.map((step) => {
           const { number, title, description } = step;
