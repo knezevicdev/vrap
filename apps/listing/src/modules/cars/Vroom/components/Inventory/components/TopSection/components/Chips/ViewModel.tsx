@@ -3,6 +3,7 @@ import {
   FiltersData,
   removeAllModels,
   removeBodyType,
+  removeCabType,
   removeColor,
   removeCylinder,
   removeDriveType,
@@ -114,6 +115,31 @@ class ChipsViewModel {
       });
     }
     return bodyTypesChips;
+  }
+
+  getCabTypeChips(filtersData: FiltersData): Chip[] {
+    const cabTypeChips: Chip[] = [];
+    const filtersDataCabTypes = filtersData[Filters.CAB_TYPE];
+    if (filtersDataCabTypes) {
+      filtersDataCabTypes.forEach((filtersDataCabType) => {
+        const matchingCabType = this.carsStore.cabTypes.find(
+          (cabType) => cabType.filtersDataValue === filtersDataCabType
+        );
+        if (matchingCabType) {
+          cabTypeChips.push({
+            display: matchingCabType.display,
+            handleDelete: () => {
+              const updatedFiltersData = removeCabType(
+                filtersDataCabType,
+                filtersData
+              );
+              this.carsStore.updateFiltersData(updatedFiltersData);
+            },
+          });
+        }
+      });
+    }
+    return cabTypeChips;
   }
 
   getColorsChips(filtersData: FiltersData): Chip[] {
@@ -378,6 +404,7 @@ class ChipsViewModel {
     const chips: Chip[] = [
       ...this.getMakeAndModelsChips(filtersData),
       ...this.getBodyTypesChips(filtersData),
+      ...this.getCabTypeChips(filtersData),
       ...this.getColorsChips(filtersData),
       ...this.getYearChips(filtersData),
       ...this.getPriceChips(filtersData),
