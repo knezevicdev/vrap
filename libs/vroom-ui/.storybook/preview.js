@@ -6,6 +6,18 @@ import { withPerformance } from 'storybook-addon-performance';
 
 export const parameters = {
     actions: {argTypesRegex: "^on[A-Z].*"},
+    viewport: {
+        viewports: {
+            mobile: {
+                name: 'Mobile',
+                styles: {
+                    width: '411px',
+                    height: '100%'
+                },
+            },
+        },
+    },
+    layout: 'fullscreen'
 }
 
 function withGlobalStyles(storyFn) {

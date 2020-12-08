@@ -31,17 +31,24 @@ const Container = styled.div`
   background: ${primaryWhite};
   ${addStyleForMobile(`
         padding: 16px;
+        margin: 16px 16px 32px 16px;
    `)}
 `;
 
 const Content = styled.div`
   display: flex;
+    ${addStyleForMobile(`
+        flex-direction: column;
+   `)}
 `;
 
 const Information = styled.div`
   display: flex;
   flex-direction: column;
   margin-left: 32px;
+    ${addStyleForMobile(`
+        margin-left: 0;
+   `)}
 `;
 
 const CarPicture = styled.div`
@@ -66,8 +73,8 @@ const CarPicture = styled.div`
 
 const CarHeading = styled(Heading.Two)`
   ${addStyleForMobile(`
-        font-size: 28px;
-        line-height: 32px;
+        font-size: 36px;
+        line-height: 40px;
         text-align: center;
    `)}
 `;
@@ -90,8 +97,9 @@ const CarTitle = styled(Title.Two)`
   margin-top: 24px;
   margin-bottom: 16px;
   ${addStyleForMobile(`
-        font-size: 18px;
-        line-height: 26px;
+        font-size: 20px;
+        margin-top: 16px;
+        line-height: 24px;
         text-align: center;
    `)}
 `;
