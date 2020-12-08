@@ -30,7 +30,7 @@ const Container = styled.div`
   box-shadow: 0px 4px 24px 4px rgba(0, 0, 0, 0.1);
   background: ${primaryWhite};
   ${addStyleForMobile(`
-        padding: 16px;
+        padding: 16px 16px 32px 16px;
         margin: 16px 16px 32px 16px;
    `)}
 `;
@@ -81,7 +81,7 @@ const CarHeading = styled(Heading.Two)`
 
 const Step = styled.div`
   display: flex;
-  align-items: baseline;
+  align-items: center;
 `;
 
 const Steps = styled.div`
@@ -148,13 +148,13 @@ const ReservedCar: React.FC<Props> = ({
             <CarTitle>{car}</CarTitle>
             <Steps>
               <Step>
-                <Check icon={Icons.CHECKMARK_SMALL} />
+                <Check icon={Icons.ENVELOPE} />
                 <Body.Regular>
                   The email was sent to <Bold>{email}</Bold>.
                 </Body.Regular>
               </Step>
               <Step>
-                <Check icon={Icons.CHECKMARK_SMALL} />
+                <Check icon={Icons.PHONE} />
                 <Body.Regular>
                   A Vroom representative will reach out to your phone number{' '}
                   <Bold>+{phoneNumber}</Bold> within the next 24 hours of a
@@ -162,7 +162,7 @@ const ReservedCar: React.FC<Props> = ({
                 </Body.Regular>
               </Step>
               <Step>
-                <Check icon={Icons.CHECKMARK_SMALL} />
+                <Check icon={Icons.CALENDAR} />
                 <Body.Regular>
                   <Schedule href="https://www.vroom.com/schedule" blank>
                     Schedule a time
