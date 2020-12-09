@@ -104,7 +104,7 @@ const ShouldKnow = styled(Body.Regular)`
   margin-bottom: 16px;
 `;
 
-const PurchaseSummary: React.FC<Props> = ({
+const PurchaseSummary: React.FC<PurchaseSummaryProps> = ({
   summary: { date, car },
   purchaseDetails,
   depositInformation,
