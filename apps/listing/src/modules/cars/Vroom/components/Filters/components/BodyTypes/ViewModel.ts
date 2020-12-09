@@ -61,6 +61,10 @@ class BodyTypesViewModel {
     const updatedFiltersData = resetFilter(Filters.BODY_TYPES, filtersData);
     this.carsStore.updateFiltersData(updatedFiltersData);
   };
+
+  showTruckCabTypeFilterExperiment = (): boolean => {
+    return this.carsStore.truckCabTypeFilterExperiment?.assignedVariant === 1;
+  };
 }
 
 export default BodyTypesViewModel;
