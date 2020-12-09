@@ -1,8 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import Icon, { Icons } from 'vroom-ui/src/elements/Icon/Icon';
-import { ThemeProps } from 'vroom-ui/src/foundation/themes/types';
-import { Body, Title } from 'vroom-ui/src/foundation/Typography';
+import { Body, Icon, Icons, ThemeProps, Title } from 'vroom-ui';
 
 interface UploadedDocumentsProps {
   showInsuranceDisclaimer: boolean;

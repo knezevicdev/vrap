@@ -1,10 +1,16 @@
 import React from 'react';
 import styled from 'styled-components';
-import Icon, { Icons } from 'vroom-ui/src/elements/Icon/Icon';
-import { Picture } from 'vroom-ui/src/elements/Picture';
-import { ThemeProps } from 'vroom-ui/src/foundation/themes/types';
-import { addStyleForMobile } from 'vroom-ui/src/foundation/themes/Vroom';
-import { Body, Heading, Link, Title } from 'vroom-ui/src/foundation/Typography';
+import {
+  addStyleForMobile,
+  Body,
+  Heading,
+  Icon,
+  Icons,
+  Link,
+  Picture,
+  ThemeProps,
+  Title,
+} from 'vroom-ui';
 
 const primaryBrand = (props: { theme: ThemeProps }): string =>
   props.theme.colors.primary.brand;
