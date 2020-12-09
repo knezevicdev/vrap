@@ -1,8 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { ThemeProps } from 'vroom-ui/src/foundation/themes/types';
-import { addStyleForMobile } from 'vroom-ui/src/foundation/themes/Vroom';
-import { Body, Heading, Title } from 'vroom-ui/src/foundation/Typography';
+import { addStyleForMobile, Body, Heading, ThemeProps, Title } from 'vroom-ui';
 
 const grayFour = (props: { theme: ThemeProps }): string =>
   props.theme.colors.gray.four;

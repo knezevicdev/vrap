@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Body, Title } from 'vroom-ui/src/foundation/Typography';
+import { Body, Title } from 'vroom-ui';
 
 export interface DepositInformationProps {
   data: {

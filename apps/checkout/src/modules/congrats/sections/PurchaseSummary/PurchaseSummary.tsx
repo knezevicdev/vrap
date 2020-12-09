@@ -1,8 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Picture } from 'vroom-ui/src/elements/Picture';
-import { addStyleForMobile } from 'vroom-ui/src/foundation/themes/Vroom';
-import { Body, Heading, Title } from 'vroom-ui/src/foundation/Typography';
+import { addStyleForMobile, Body, Heading, Picture, Title } from 'vroom-ui';
 
 import BillingAddress, {
   BillingAddressProps,

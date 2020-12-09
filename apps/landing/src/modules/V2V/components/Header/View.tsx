@@ -31,7 +31,7 @@ const Container = styled.div`
   }
 
   @media (max-width: 599px) {
-    position: unset;
+    position: relative;
     padding: 0 16px;
   }
 `;
