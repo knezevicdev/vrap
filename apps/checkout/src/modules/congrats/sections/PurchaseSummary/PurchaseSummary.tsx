@@ -27,7 +27,7 @@ import RegistrationAddress, {
 } from './components/RegistrationAddress';
 import UploadedDocuments from './components/UploadedDocuments';
 
-interface Props {
+export interface PurchaseSummaryProps {
   summary: {
     date: string;
     car: {

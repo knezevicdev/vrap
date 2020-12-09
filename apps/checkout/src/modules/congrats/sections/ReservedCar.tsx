@@ -116,7 +116,7 @@ const Schedule = styled(Link)`
   color: ${primaryBrand} !important;
 `;
 
-interface Props {
+export interface ReservedCarProps {
   data: {
     car: string;
     email: string;
@@ -128,7 +128,7 @@ interface Props {
   };
 }
 
-const ReservedCar: React.FC<Props> = ({
+const ReservedCar: React.FC<ReservedCarProps> = ({
   data: {
     car,
     email,

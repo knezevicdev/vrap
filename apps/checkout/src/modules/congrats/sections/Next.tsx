@@ -71,12 +71,12 @@ const Header = styled(Heading.Three)`
     `)}
 `;
 
-interface Props {
+export interface NextProps {
   heading: string;
   steps: { number: string; title: string; description: string }[];
 }
 
-const Next: React.FC<Props> = ({ heading, steps }): JSX.Element => {
+const Next: React.FC<NextProps> = ({ heading, steps }): JSX.Element => {
   return (
     <Container>
       <Header>{heading}</Header>

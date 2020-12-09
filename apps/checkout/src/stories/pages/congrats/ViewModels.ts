@@ -1,4 +1,9 @@
-export const nextViewModel = {
+import { NextProps } from '../../../modules/congrats/sections/Next';
+import { PurchaseSummaryProps } from '../../../modules/congrats/sections/PurchaseSummary/PurchaseSummary';
+import { QuestionProps } from '../../../modules/congrats/sections/Questions';
+import { ReservedCarProps } from '../../../modules/congrats/sections/ReservedCar';
+
+export const nextViewModel: NextProps = {
   heading: 'what to expect next...',
   steps: [
     {
@@ -21,14 +26,14 @@ export const nextViewModel = {
   ],
 };
 
-export const questionsViewModel = {
+export const questionsViewModel: QuestionProps = {
   phone: {
     href: '+18555241300',
     label: '(855) 524-1300',
   },
 };
 
-export const reservedCarViewModel = {
+export const reservedCarViewModel: ReservedCarProps = {
   data: {
     car: '2018 Land Rover Range Rover Sport',
     image: {
@@ -40,7 +45,7 @@ export const reservedCarViewModel = {
   },
 };
 
-export const purchaseSummaryViewModel = {
+export const purchaseSummaryViewModel: PurchaseSummaryProps = {
   purchaseDetails: {
     data: {
       method: 'Finance with Vroom',
