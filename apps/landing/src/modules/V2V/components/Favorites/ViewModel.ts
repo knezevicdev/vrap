@@ -35,7 +35,8 @@ class FavoritesViewModel {
 
   handleDialogActions(location: string): void {
     const { pathname, search } = window.location;
-    const newUrl = `/account/${location}?redirect=${pathname}${search}`;
+    const queryParams = search.replace('?', '&');
+    const newUrl = `/account/${location}?redirect=${pathname}${queryParams}`;
     window.location.href = newUrl;
   }
 
