@@ -23,4 +23,11 @@ export {
   GlobalStyle,
 } from './foundation/themes/Vroom';
 export type { LinkProps } from './foundation/Typography';
-export { Heading, Title, Body, Fine, Link, default as Typography } from './foundation/Typography';
+export {
+  Heading,
+  Title,
+  Body,
+  Fine,
+  Link,
+  default as Typography,
+} from './foundation/Typography';
