@@ -278,4 +278,9 @@ export declare const Icons: {
         width: number;
         height: number;
     };
+    CALENDAR: {
+        name: string;
+        width: number;
+        height: number;
+    };
 };
