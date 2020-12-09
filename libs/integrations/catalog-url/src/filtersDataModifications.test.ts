@@ -1,6 +1,7 @@
 import {
   addAllModels,
   addBodyType,
+  addCabType,
   addColor,
   addCylinder,
   addDriveType,
@@ -10,12 +11,14 @@ import {
   deepCopyFiltersData,
   removeAllModels,
   removeBodyType,
+  removeCabType,
   removeColor,
   removeCylinder,
   removeDriveType,
   removeFuelType,
   removeModel,
   removePopularFeature,
+  removeTruckSubfilters,
   resetFilter,
   resetFilters,
   setFuelEfficiency,
@@ -29,6 +32,7 @@ import {
 } from './filtersDataModifications';
 import {
   BodyType,
+  CabType,
   Color,
   Cylinder,
   DriveType,
@@ -51,6 +55,46 @@ const mockFiltersData1: FiltersData = {
     {
       makeSlug: 'volvo',
       modelSlugs: ['xc90'],
+    },
+  ],
+  [Filters.MILES]: {
+    max: 100000,
+    min: 0,
+  },
+  [Filters.PAGE]: 0,
+  [Filters.PRICE]: {
+    max: 100000,
+    min: 0,
+  },
+  [Filters.SEARCH]: 'search',
+  [Filters.SORT]: {
+    by: SortBy.MILES,
+    direction: SortDirection.ASCENDING,
+  },
+  [Filters.TRANSMISSION]: Transmission.AUTO,
+  [Filters.YEAR]: {
+    max: 2020,
+    min: 2018,
+  },
+  [Filters.CYLINDERS]: [Cylinder.EIGHT, Cylinder.FOUR],
+  [Filters.OTHER_CYLINDERS]: false,
+  [Filters.POPULAR_FEATURES]: [
+    PopularFeatures.ANDROID_AUTO,
+    PopularFeatures.REMOTE_START,
+  ],
+};
+
+const mockFiltersDataTruck: FiltersData = {
+  [Filters.FUEL_TYPE]: [FuelType.ELECTRIC],
+  [Filters.OTHER_CYLINDERS]: false,
+  [Filters.BODY_TYPES]: [BodyType.TRUCK],
+  [Filters.CAB_TYPE]: [CabType.CREW],
+  [Filters.COLORS]: [Color.GREY],
+  [Filters.DRIVE_TYPE]: [DriveType.AWD],
+  [Filters.MAKE_AND_MODELS]: [
+    {
+      makeSlug: 'ford',
+      modelSlugs: ['f150'],
     },
   ],
   [Filters.MILES]: {
@@ -148,6 +192,15 @@ describe('resetFilters', () => {
       optionalfeatures: ['Android Auto', 'Remote Start'],
     });
   });
+  test('3', () => {
+    expect(
+      resetFilters([Filters.BODY_TYPES, Filters.CAB_TYPE], mockFiltersDataTruck)
+    ).toEqual({
+      ...mockFiltersDataTruck,
+      bodytypes: undefined,
+      cabtype: undefined,
+    });
+  });
 });
 
 describe('deepCopyFiltersData', () => {
@@ -202,6 +255,7 @@ describe('removeBodyType', () => {
   test('1', () => {
     expect(removeBodyType(BodyType.TRUCK, undefined)).toEqual({
       bodytypes: undefined,
+      cabtypes: undefined,
     });
   });
   test('2', () => {
@@ -237,6 +291,103 @@ describe('removeBodyType', () => {
     expect(removeBodyType(BodyType.SUV, mockFiltersData1)).toEqual({
       ...mockFiltersData1,
       bodytypes: undefined,
+    });
+  });
+  test('it removes cabtype if bodytype truck is removed', () => {
+    const mockFiltersData: FiltersData = {
+      [Filters.BODY_TYPES]: [BodyType.TRUCK, BodyType.SUV],
+      [Filters.CAB_TYPE]: [CabType.CREW],
+    };
+    expect(removeBodyType(BodyType.TRUCK, mockFiltersData)).toEqual({
+      bodytypes: ['suv'],
+      cabtype: undefined,
+    });
+  });
+});
+
+describe('addCabType', () => {
+  test('it adds cabtype when filters data is undefined', () => {
+    expect(addCabType(CabType.CREW, undefined)).toEqual({
+      cabtype: ['crew'],
+    });
+  });
+  test('it adds cabtype when filters data is empty', () => {
+    const mockFiltersData: FiltersData = {};
+    expect(addCabType(CabType.CREW, mockFiltersData)).toEqual({
+      cabtype: ['crew'],
+    });
+  });
+  test('it adds cabtype when filters data is defined', () => {
+    const newMockFiltersDataTruck = {
+      ...mockFiltersDataTruck,
+      cabtype: undefined,
+    };
+    expect(addCabType(CabType.EXTENDED, newMockFiltersDataTruck)).toEqual({
+      ...newMockFiltersDataTruck,
+      cabtype: ['extended'],
+    });
+  });
+  test('it adds cabtype value when cabtype already has value', () => {
+    expect(addCabType(CabType.EXTENDED, mockFiltersDataTruck)).toEqual({
+      ...mockFiltersDataTruck,
+      cabtype: ['crew', 'extended'],
+    });
+  });
+});
+
+describe('removeCabType', () => {
+  test('it sets cabtype to undefined when filters data is undefined', () => {
+    expect(removeCabType(CabType.CREW, undefined)).toEqual({
+      cabtypes: undefined,
+    });
+  });
+  test('it sets cabtype to undefined when filters data is empty', () => {
+    expect(removeCabType(CabType.CREW, {})).toEqual({
+      cabtype: undefined,
+    });
+  });
+  test('it only removes the specified cabtype', () => {
+    const mockFiltersData: FiltersData = {
+      [Filters.CAB_TYPE]: [CabType.CREW, CabType.EXTENDED],
+    };
+    expect(removeCabType(CabType.CREW, mockFiltersData)).toEqual({
+      cabtype: ['extended'],
+    });
+  });
+  test('it does not remove an unset cabtype', () => {
+    const mockFiltersData: FiltersData = {
+      [Filters.CAB_TYPE]: [CabType.CREW, CabType.EXTENDED],
+    };
+    expect(removeCabType(CabType.REGULAR, mockFiltersData)).toEqual({
+      cabtype: ['crew', 'extended'],
+    });
+  });
+  test('it sets cabtype to undefined when empty', () => {
+    expect(removeCabType(CabType.CREW, mockFiltersDataTruck)).toEqual({
+      ...mockFiltersDataTruck,
+      cabtype: undefined,
+    });
+  });
+});
+
+describe('removeTruckSubfilters', () => {
+  test('it sets cabtype to undefined if filters data exists', () => {
+    const mockFiltersData: FiltersData = {
+      [Filters.BODY_TYPES]: [BodyType.TRUCK, BodyType.SUV],
+      [Filters.CAB_TYPE]: [CabType.CREW],
+    };
+    expect(removeTruckSubfilters(mockFiltersData)).toEqual({
+      bodytypes: ['truck', 'suv'],
+      cabtype: undefined,
+    });
+  });
+  test('it sets cabtype to undefined if filters data does not exists', () => {
+    const mockFiltersData: FiltersData = {
+      [Filters.BODY_TYPES]: [BodyType.TRUCK, BodyType.SUV],
+    };
+    expect(removeTruckSubfilters(mockFiltersData)).toEqual({
+      bodytypes: ['truck', 'suv'],
+      cabtype: undefined,
     });
   });
 });
@@ -614,7 +765,7 @@ describe('addPopularFeature', () => {
     expect(
       addPopularFeature(PopularFeatures.ANDROID_AUTO, mockFiltersData)
     ).toEqual({
-      optionalfeatures: ['Apple Car Play', 'Android Auto'],
+      optionalfeatures: ['Apple CarPlay', 'Android Auto'],
     });
   });
 });
