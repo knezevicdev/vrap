@@ -1,19 +1,48 @@
 import React from 'react';
 import { withDesign } from 'storybook-addon-designs';
+import styled, { ThemeProvider } from 'styled-components';
+import { getVroomTheme } from 'vroom-ui/src/foundation/themes/Vroom';
 
-export default {
-  title: 'Checkout/Congrats/Success',
-  decorators: [withDesign],
+import Next from '../../../modules/congrats/sections/Next';
+import PurchaseSummary from '../../../modules/congrats/sections/PurchaseSummary/PurchaseSummary';
+import Questions from '../../../modules/congrats/sections/Questions';
+import ReservedCar from '../../../modules/congrats/sections/ReservedCar';
+import {
+  nextViewModel,
+  purchaseSummaryViewModel,
+  questionsViewModel,
+  reservedCarViewModel,
+} from './ViewModels';
+
+const Page = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
+const theme = getVroomTheme('/assets/fonts/Vroom');
+
+export const WithoutTrade = (): JSX.Element => {
+  return (
+    <ThemeProvider theme={theme}>
+      <Page>
+        <ReservedCar {...reservedCarViewModel} />
+        <Next {...nextViewModel} />
+        <PurchaseSummary {...purchaseSummaryViewModel} />
+        <Questions {...questionsViewModel} />
+      </Page>
+    </ThemeProvider>
+  );
 };
 
-export const Success = (): JSX.Element => {
-  return <div>Placeholder until all sections are done.</div>;
-};
-
-Success.parameters = {
+WithoutTrade.parameters = {
   design: {
     type: 'figma',
     url:
-      'https://www.figma.com/file/yhvMWzN95E1DdNLBfEr5OH/Desktop-Congrats?node-id=1%3A4',
+      'https://www.figma.com/file/rsB4AJNk9uq81u1ia2U0G1/EComm-Port?node-id=385%3A365',
   },
+};
+
+export default {
+  title: 'Checkout/Congrats/Without Trade',
+  decorators: [withDesign],
 };

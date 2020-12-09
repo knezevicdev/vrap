@@ -72,14 +72,14 @@ const CustomLink = styled(Link)`
   letter-spacing: 1.75px !important;
 `;
 
-interface Props {
+export interface QuestionProps {
   phone: {
     href: string;
     label: string;
   };
 }
 
-const Questions: React.FC<Props> = ({ phone }): JSX.Element => {
+const Questions: React.FC<QuestionProps> = ({ phone }): JSX.Element => {
   return (
     <Container>
       <Heading.Three>questions?</Heading.Three>
