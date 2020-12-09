@@ -58,8 +58,12 @@ class BodyTypesViewModel {
 
   reset = (): void => {
     const filtersData = this.carsStore.filtersData;
-    const updatedFiltersData = resetFilter(Filters.BODY_TYPES, filtersData);
-    this.carsStore.updateFiltersData(updatedFiltersData);
+    const updatedBodyTypeData = resetFilter(Filters.BODY_TYPES, filtersData);
+    const updatedCabTypeData = resetFilter(Filters.CAB_TYPE, filtersData);
+    this.carsStore.updateFiltersData({
+      ...updatedBodyTypeData,
+      ...updatedCabTypeData,
+    });
   };
 
   showTruckCabTypeFilterExperiment = (): boolean => {
