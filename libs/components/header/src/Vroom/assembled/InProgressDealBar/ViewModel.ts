@@ -53,8 +53,8 @@ class InProgressDealBarViewModel {
   // TODO: 'step' and all the cases in the switch should use an enum.
   // We need to export an enum from the networking library for deals.
   private getResumeStepHref(step: string, vin: string): string {
-    const urlDict: { [key: string]: string} = {
-      TradeIn : 'checkoutTradeIn',
+    const urlDict: { [key: string]: string } = {
+      TradeIn: 'checkoutTradeIn',
       RegistrationAddress: 'registration',
       DeliveryAddress: 'delivery-form',
       Financing: 'vroomFinancing',
@@ -66,8 +66,8 @@ class InProgressDealBarViewModel {
       BackendProducts: 'dealCoverage',
       Review: 'dealReview',
       DocumentUpload: 'documentUpload',
-      TradeInLoanInfo : 'tradeInLoanInfo',
-    }
+      TradeInLoanInfo: 'tradeInLoanInfo',
+    };
     const stepUrl: string | undefined = urlDict[step];
     return `/e2e/${vin}/${stepUrl ? stepUrl : `my-account/transactions`}`;
   }
