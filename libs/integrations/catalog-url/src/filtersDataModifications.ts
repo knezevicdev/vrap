@@ -41,6 +41,14 @@ export const resetFilters = (
   return newFiltersData;
 };
 
+export const removeTruckSubfilters = (
+  filtersData?: FiltersData
+): FiltersData => {
+  const newFiltersData = deepCopyFiltersData(filtersData || {});
+  newFiltersData[Filters.CAB_TYPE] = undefined;
+  return newFiltersData;
+};
+
 export const addBodyType = (
   bodyType: BodyType,
   filtersData?: FiltersData
@@ -56,6 +64,10 @@ export const removeBodyType = (
   bodyType: BodyType,
   filtersData?: FiltersData
 ): FiltersData => {
+  // CabType only applies to truck, remove all truck sub filters when deselected
+  if (bodyType === BodyType.TRUCK) {
+    filtersData = removeTruckSubfilters(filtersData);
+  }
   const newFiltersData = deepCopyFiltersData(filtersData || {});
   const existingBodyTypes = newFiltersData[Filters.BODY_TYPES] || [];
   const newBodyTypes = existingBodyTypes.filter((bt) => bt !== bodyType);

@@ -2,6 +2,7 @@ import { BodyType, CabType, Color, Cylinder, DriveType, Filters, FiltersData, Fu
 export declare const deepCopyFiltersData: (filtersData: FiltersData) => FiltersData;
 export declare const resetFilter: (filter: Filters, filtersData: FiltersData | undefined) => FiltersData;
 export declare const resetFilters: (filters: Filters[], filtersData: FiltersData | undefined) => FiltersData;
+export declare const removeTruckSubfilters: (filtersData?: FiltersData | undefined) => FiltersData;
 export declare const addBodyType: (bodyType: BodyType, filtersData?: FiltersData | undefined) => FiltersData;
 export declare const removeBodyType: (bodyType: BodyType, filtersData?: FiltersData | undefined) => FiltersData;
 export declare const addCabType: (cabType: CabType, filtersData?: FiltersData | undefined) => FiltersData;

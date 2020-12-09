@@ -144,6 +144,11 @@ var resetFilters = function resetFilters(filters, filtersData) {
   });
   return newFiltersData;
 };
+var removeTruckSubfilters = function removeTruckSubfilters(filtersData) {
+  var newFiltersData = deepCopyFiltersData(filtersData || {});
+  newFiltersData[Filters.CAB_TYPE] = undefined;
+  return newFiltersData;
+};
 var addBodyType = function addBodyType(bodyType, filtersData) {
   var newFiltersData = deepCopyFiltersData(filtersData || {});
   var newBodyTypes = newFiltersData[Filters.BODY_TYPES] || [];
@@ -152,6 +157,11 @@ var addBodyType = function addBodyType(bodyType, filtersData) {
   return newFiltersData;
 };
 var removeBodyType = function removeBodyType(bodyType, filtersData) {
+  // CabType only applies to truck, remove all truck sub filters when deselected
+  if (bodyType === BodyType.TRUCK) {
+    filtersData = removeTruckSubfilters(filtersData);
+  }
+
   var newFiltersData = deepCopyFiltersData(filtersData || {});
   var existingBodyTypes = newFiltersData[Filters.BODY_TYPES] || [];
   var newBodyTypes = existingBodyTypes.filter(function (bt) {
