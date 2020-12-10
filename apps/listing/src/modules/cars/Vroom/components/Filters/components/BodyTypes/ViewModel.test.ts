@@ -1,4 +1,4 @@
-import { BodyType, Filters } from '@vroom-web/catalog-url-integration';
+import { BodyType, CabType, Filters } from '@vroom-web/catalog-url-integration';
 
 import ViewModel from './ViewModel';
 
@@ -28,15 +28,35 @@ describe('BodyType ViewModel', () => {
     });
 
     describe('the reset button should be enabled', () => {
-      const arbitraryBodyTypeValue = {
+      const mockBodyTypeValue = {
         [Filters.BODY_TYPES]: [BodyType.CONVERTIBLE],
       };
 
       it('should be enabled body types filter has value', () => {
-        store.filtersData = arbitraryBodyTypeValue;
+        store.filtersData = mockBodyTypeValue;
         const resetDisabled = viewModel.isResetDisabled();
         expect(resetDisabled).toBe(false);
       });
+    });
+  });
+
+  describe('reset()', () => {
+    const mockFiltersData = {
+      [Filters.BODY_TYPES]: [BodyType.TRUCK],
+      [Filters.CAB_TYPE]: [CabType.CREW, CabType.EXTENDED],
+    };
+    const mockUpdateFiltersData = jest.fn(
+      (updatedBodyTypeData) => (store.filtersData = updatedBodyTypeData)
+    );
+    it('should reset cabType and bodyType filters', () => {
+      store.updateFiltersData = mockUpdateFiltersData;
+      store.filtersData = mockFiltersData;
+      const expectedState = {
+        [Filters.BODY_TYPES]: undefined,
+      };
+      viewModel.reset();
+      expect(store.filtersData).toEqual(expectedState);
+      expect(store.filtersData.cabtype).toEqual(undefined);
     });
   });
 });
