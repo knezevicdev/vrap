@@ -1,4 +1,4 @@
-import { FooterProps } from 'vroom-ui/dist/elements/Navigation/Footer/types';
+import { FooterProps } from 'vroom-ui';
 
 import { NextProps } from '../../../modules/congrats/sections/Next';
 import { PurchaseSummaryProps } from '../../../modules/congrats/sections/PurchaseSummary/PurchaseSummary';

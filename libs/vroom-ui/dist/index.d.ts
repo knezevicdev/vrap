@@ -12,3 +12,5 @@ export { addOpacityToHex } from './foundation/themes/util';
 export { addStyleForMobile, addStyleForTablet, addStyleForDesktop, getVroomTheme, GlobalStyle, } from './foundation/themes/Vroom';
 export type { LinkProps } from './foundation/Typography';
 export { Heading, Title, Body, Fine, Link, default as Typography, } from './foundation/Typography';
+export type { FooterProps } from './elements/Navigation/Footer/types';
+export { default as Footer } from './elements/Navigation/Footer/Footer';
