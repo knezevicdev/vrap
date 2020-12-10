@@ -26,6 +26,7 @@ export enum SoldStatusInt {
 export type Car = {
   vin: string;
   bodyType: string;
+  cabType: object | null;
   interiorPhotoUrl: string;
   diesel: number;
   leadFlagPhotoUrl: string;
@@ -92,6 +93,7 @@ export const carSchema: yup.ObjectSchema<Car> = yup
   .object({
     vin: yup.string().defined(),
     bodyType: yup.string().defined(),
+    cabType: yup.object().defined().nullable(),
     interiorPhotoUrl: yup.string().defined(),
     diesel: yup.number().defined(),
     leadFlagPhotoUrl: yup.string().defined(),

@@ -1,6 +1,8 @@
 export {
   addCylinder,
   removeCylinder,
+  addCabType,
+  removeCabType,
   setOtherCylinders,
   addFuelType,
   removeFuelType,
@@ -30,6 +32,7 @@ export {
 } from './filtersDataModifications';
 export {
   BodyType,
+  CabType,
   Color,
   DriveType,
   Filters,
