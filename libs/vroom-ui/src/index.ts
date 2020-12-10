@@ -31,3 +31,5 @@ export {
   Link,
   default as Typography,
 } from './foundation/Typography';
+export type { FooterProps } from './elements/Navigation/Footer/types';
+export { default as Footer } from './elements/Navigation/Footer/Footer';
