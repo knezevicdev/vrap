@@ -7,9 +7,9 @@ import {
   addStyleForTablet,
 } from '../../../../foundation/themes/Vroom';
 import { Body, Link } from '../../../../foundation/Typography';
-import {FooterProps, Section, Link as LinkType} from "../types";
+import { FooterProps, Link as LinkType, Section } from '../types';
 
-export const DesktopLinks: React.FC<FooterProps> = ({sections}) => {
+export const DesktopLinks: React.FC<FooterProps> = ({ sections }) => {
   return (
     <Links>
       {sections.map((section: Section) => {
@@ -33,15 +33,14 @@ export const DesktopLinks: React.FC<FooterProps> = ({sections}) => {
   );
 };
 
-
 const primaryBrand = (props: { theme: ThemeProps }): string =>
-    props.theme.colors.primary.brand;
+  props.theme.colors.primary.brand;
 
 const grayThree = (props: { theme: ThemeProps }): string =>
-    props.theme.colors.gray.three;
+  props.theme.colors.gray.three;
 
 const primaryWhite = (props: { theme: ThemeProps }): string =>
-    props.theme.colors.primary.white;
+  props.theme.colors.primary.white;
 
 const Links = styled.div`
   display: flex;

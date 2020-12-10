@@ -7,9 +7,9 @@ import { Body, Fine } from '../../../foundation/Typography';
 import Icon, { Icons } from '../../Icon/Icon';
 import { DesktopLinks } from './Desktop/Links';
 import { MobileLinks } from './Mobile/Links';
-import {FooterProps} from "./types";
+import { FooterProps } from './types';
 
-const Footer: React.FC<FooterProps> = ({sections}) => {
+const Footer: React.FC<FooterProps> = ({ sections }) => {
   return (
     <Container>
       <Information>
@@ -45,10 +45,10 @@ const Footer: React.FC<FooterProps> = ({sections}) => {
 };
 
 const primaryBlack = (props: { theme: ThemeProps }): string =>
-    props.theme.colors.primary.black;
+  props.theme.colors.primary.black;
 
 const primaryWhite = (props: { theme: ThemeProps }): string =>
-    props.theme.colors.primary.white;
+  props.theme.colors.primary.white;
 
 const Container = styled.div`
   display: flex;

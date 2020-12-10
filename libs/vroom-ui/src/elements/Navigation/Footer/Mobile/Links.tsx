@@ -5,9 +5,9 @@ import { ThemeProps } from '../../../../foundation/themes/types';
 import { addStyleForMobile } from '../../../../foundation/themes/Vroom';
 import { Body, Link } from '../../../../foundation/Typography';
 import Icon, { Icons } from '../../../Icon/Icon';
-import {FooterProps, Section, Link as LinkType} from "../types";
+import { FooterProps, Link as LinkType, Section } from '../types';
 
-export const MobileLinks: React.FC<FooterProps> = ( {sections} ) => {
+export const MobileLinks: React.FC<FooterProps> = ({ sections }) => {
   const [visibleSection, setVisibleSection] = useState('');
 
   const onClick = (title: string) => (): void => {
@@ -21,7 +21,11 @@ export const MobileLinks: React.FC<FooterProps> = ( {sections} ) => {
         const { title, links } = section;
         const visible = visibleSection === title;
         return (
-          <SectionContainer key={title} onClick={onClick(title)} visible={visible}>
+          <SectionContainer
+            key={title}
+            onClick={onClick(title)}
+            visible={visible}
+          >
             <TitleContainer>
               <Title bold>{title}</Title>
               <Arrow visible={visible} icon={Icons.CHEVRON_DOWN} />
@@ -44,10 +48,10 @@ export const MobileLinks: React.FC<FooterProps> = ( {sections} ) => {
 };
 
 const primaryBrand = (props: { theme: ThemeProps }): string =>
-    props.theme.colors.primary.brand;
+  props.theme.colors.primary.brand;
 
 const primaryWhite = (props: { theme: ThemeProps }): string =>
-    props.theme.colors.primary.white;
+  props.theme.colors.primary.white;
 
 const Links = styled.div`
   display: none;
@@ -66,8 +70,8 @@ const SectionContainer = styled.div<{ visible: boolean }>`
 
   ${(props): string | undefined =>
     !props.visible
-        ? `border-bottom: solid 1px ${primaryWhite(props)};`
-        : undefined};
+      ? `border-bottom: solid 1px ${primaryWhite(props)};`
+      : undefined};
 `;
 
 const TitleContainer = styled.div`
@@ -88,14 +92,14 @@ const CustomLink = styled(Link)<{ visible: boolean }>`
   }
   ${(props): string | undefined =>
     props.visible
-        ? `
+      ? `
         :last-child {
            border-bottom: solid 1px ${primaryWhite(props)};
            padding-bottom: 8px;
            width: 100%;
          }
         `
-        : undefined}
+      : undefined}
 `;
 
 const Arrow = styled(Icon)<{ visible: boolean }>`
