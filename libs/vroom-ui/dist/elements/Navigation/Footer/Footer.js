@@ -137,87 +137,10 @@ function _templateObject() {
 
 function _taggedTemplateLiteral(strings, raw) { if (!raw) { raw = strings.slice(0); } return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
 
-var primaryBlack = props => props.theme.colors.primary.black;
-
-var primaryWhite = props => props.theme.colors.primary.white;
-
-var Container = _styledComponents.default.div(_templateObject(), primaryBlack, (0, _Vroom.addStyleForMobile)("\n    flex-direction: column;\n    padding: 24px;\n  "));
-
-var Information = _styledComponents.default.div(_templateObject2(), (0, _Vroom.addStyleForMobile)("\n    order: 2;\n  "));
-
-var Apps = _styledComponents.default.div(_templateObject3());
-
-var Socials = _styledComponents.default.div(_templateObject4());
-
-var VroomIcon = (0, _styledComponents.default)(_Icon.default)(_templateObject5(), primaryWhite);
-var GoogleIcon = (0, _styledComponents.default)(_Icon.default)(_templateObject6());
-var SocialIcon = (0, _styledComponents.default)(_Icon.default)(_templateObject7(), primaryWhite);
-var SocialIconSpace = (0, _styledComponents.default)(SocialIcon)(_templateObject8());
-var Message = (0, _styledComponents.default)(_Typography.Body.Small)(_templateObject9(), primaryWhite);
-var Copyright = (0, _styledComponents.default)(_Typography.Fine)(_templateObject10(), primaryWhite);
-
-var CustomA = _styledComponents.default.a(_templateObject11());
-
-var sections = [{
-  title: 'Vroom',
-  links: [{
-    href: '/cars',
-    name: 'Buy'
-  }, {
-    href: '/sell',
-    name: 'Sell/Trade'
-  }, {
-    href: '/finance',
-    name: 'Finance'
-  }]
-}, {
-  title: 'About',
-  links: [{
-    href: '/about',
-    name: 'About Us'
-  }, {
-    href: '/protection',
-    name: 'Vroom Protection'
-  }, {
-    href: '/how-it-works',
-    name: 'How It Works'
-  }, {
-    href: '/reviews',
-    name: 'Customer Reviews'
-  }, {
-    href: 'https://ir.vroom.com/',
-    name: 'Investor Relations'
-  }]
-}, {
-  title: 'Contact',
-  links: [{
-    name: '(855) 524-1300',
-    href: 'tel:+18555241300'
-  }, {
-    href: 'https://vroom.zendesk.com/hc/en-us',
-    name: 'FAQ'
-  }, {
-    href: '/contact',
-    name: 'Contact Us'
-  }]
-}, {
-  title: 'Company',
-  links: [{
-    href: '/legal/privacy-policy',
-    name: 'Privacy Policy'
-  }, {
-    href: '/legal/terms-of-use',
-    name: 'Terms of use'
-  }, {
-    href: '/careers',
-    name: 'Careers'
-  }, {
-    href: 'https://privacyportal.onetrust.com/webform/8086730d-99f7-48ea-b3a1-0b3bb0cf163e/aa3e2126-7439-411d-a9a2-9fa0c4f8b01d',
-    name: 'Do Not Sell My Info (CA Residents)'
-  }]
-}];
-
-var Footer = () => {
+var Footer = (_ref) => {
+  var {
+    sections
+  } = _ref;
   return /*#__PURE__*/_react.default.createElement(Container, null, /*#__PURE__*/_react.default.createElement(Information, null, /*#__PURE__*/_react.default.createElement(CustomA, {
     href: "https://www.vroom.com/"
   }, /*#__PURE__*/_react.default.createElement(VroomIcon, {
@@ -250,6 +173,27 @@ var Footer = () => {
     sections: sections
   }));
 };
+
+var primaryBlack = props => props.theme.colors.primary.black;
+
+var primaryWhite = props => props.theme.colors.primary.white;
+
+var Container = _styledComponents.default.div(_templateObject(), primaryBlack, (0, _Vroom.addStyleForMobile)("\n    flex-direction: column;\n    padding: 24px;\n  "));
+
+var Information = _styledComponents.default.div(_templateObject2(), (0, _Vroom.addStyleForMobile)("\n    order: 2;\n  "));
+
+var Apps = _styledComponents.default.div(_templateObject3());
+
+var Socials = _styledComponents.default.div(_templateObject4());
+
+var VroomIcon = (0, _styledComponents.default)(_Icon.default)(_templateObject5(), primaryWhite);
+var GoogleIcon = (0, _styledComponents.default)(_Icon.default)(_templateObject6());
+var SocialIcon = (0, _styledComponents.default)(_Icon.default)(_templateObject7(), primaryWhite);
+var SocialIconSpace = (0, _styledComponents.default)(SocialIcon)(_templateObject8());
+var Message = (0, _styledComponents.default)(_Typography.Body.Small)(_templateObject9(), primaryWhite);
+var Copyright = (0, _styledComponents.default)(_Typography.Fine)(_templateObject10(), primaryWhite);
+
+var CustomA = _styledComponents.default.a(_templateObject11());
 
 var _default = Footer;
 exports.default = _default;

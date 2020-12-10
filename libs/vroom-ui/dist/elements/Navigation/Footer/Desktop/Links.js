@@ -67,20 +67,6 @@ function _templateObject() {
 
 function _taggedTemplateLiteral(strings, raw) { if (!raw) { raw = strings.slice(0); } return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
 
-var primaryBrand = props => props.theme.colors.primary.brand;
-
-var grayThree = props => props.theme.colors.gray.three;
-
-var primaryWhite = props => props.theme.colors.primary.white;
-
-var Links = _styledComponents.default.div(_templateObject(), (0, _Vroom.addStyleForMobile)("\n    display: none;\n  "));
-
-var SectionDiv = _styledComponents.default.div(_templateObject2(), (0, _Vroom.addStyleForTablet)("\n      padding-right: 32px;\n    "));
-
-var Title = (0, _styledComponents.default)(_Typography.Body.Regular)(_templateObject3(), grayThree);
-var CustomLink = (0, _styledComponents.default)(_Typography.Link)(_templateObject4(), primaryBrand);
-var LinkText = (0, _styledComponents.default)(_Typography.Body.Small)(_templateObject5(), primaryWhite);
-
 var DesktopLinks = (_ref) => {
   var {
     sections
@@ -90,7 +76,7 @@ var DesktopLinks = (_ref) => {
       title,
       links
     } = section;
-    return /*#__PURE__*/_react.default.createElement(SectionDiv, {
+    return /*#__PURE__*/_react.default.createElement(SectionContainer, {
       key: title
     }, /*#__PURE__*/_react.default.createElement(Title, {
       bold: true
@@ -108,3 +94,17 @@ var DesktopLinks = (_ref) => {
 };
 
 exports.DesktopLinks = DesktopLinks;
+
+var primaryBrand = props => props.theme.colors.primary.brand;
+
+var grayThree = props => props.theme.colors.gray.three;
+
+var primaryWhite = props => props.theme.colors.primary.white;
+
+var Links = _styledComponents.default.div(_templateObject(), (0, _Vroom.addStyleForMobile)("\n    display: none;\n  "));
+
+var SectionContainer = _styledComponents.default.div(_templateObject2(), (0, _Vroom.addStyleForTablet)("\n      padding-right: 32px;\n    "));
+
+var Title = (0, _styledComponents.default)(_Typography.Body.Regular)(_templateObject3(), grayThree);
+var CustomLink = (0, _styledComponents.default)(_Typography.Link)(_templateObject4(), primaryBrand);
+var LinkText = (0, _styledComponents.default)(_Typography.Body.Small)(_templateObject5(), primaryWhite);

@@ -103,24 +103,6 @@ function _templateObject() {
 
 function _taggedTemplateLiteral(strings, raw) { if (!raw) { raw = strings.slice(0); } return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
 
-var primaryBrand = props => props.theme.colors.primary.brand;
-
-var primaryWhite = props => props.theme.colors.primary.white;
-
-var Links = _styledComponents.default.div(_templateObject(), (0, _Vroom.addStyleForMobile)("\n    display: flex;\n    flex-direction: column;\n    order: 1;\n    margin-bottom: 16px;\n  "));
-
-var SectionDiv = _styledComponents.default.div(_templateObject2(), props => !props.visible ? "border-bottom: solid 1px ".concat(primaryWhite(props), ";") : undefined);
-
-var TitleContainer = _styledComponents.default.div(_templateObject3());
-
-var Title = (0, _styledComponents.default)(_Typography.Body.Regular)(_templateObject4(), primaryWhite);
-var CustomLink = (0, _styledComponents.default)(_Typography.Link)(_templateObject5(), primaryBrand, props => props.visible ? "\n        :last-child {\n           border-bottom: solid 1px ".concat(primaryWhite(props), ";\n           padding-bottom: 8px;\n           width: 100%;\n         }\n        ") : undefined);
-var Arrow = (0, _styledComponents.default)(_Icon.default)(_templateObject6(), props => props.visible ? '180deg' : '0deg', primaryWhite);
-
-var LinksContainer = _styledComponents.default.div(_templateObject7(), props => props.visible ? 'flex' : 'none');
-
-var LinkText = (0, _styledComponents.default)(_Typography.Body.Small)(_templateObject8(), primaryWhite);
-
 var MobileLinks = (_ref) => {
   var {
     sections
@@ -138,7 +120,7 @@ var MobileLinks = (_ref) => {
       links
     } = section;
     var visible = visibleSection === title;
-    return /*#__PURE__*/_react.default.createElement(SectionDiv, {
+    return /*#__PURE__*/_react.default.createElement(SectionContainer, {
       key: title,
       onClick: onClick(title),
       visible: visible
@@ -164,3 +146,21 @@ var MobileLinks = (_ref) => {
 };
 
 exports.MobileLinks = MobileLinks;
+
+var primaryBrand = props => props.theme.colors.primary.brand;
+
+var primaryWhite = props => props.theme.colors.primary.white;
+
+var Links = _styledComponents.default.div(_templateObject(), (0, _Vroom.addStyleForMobile)("\n    display: flex;\n    flex-direction: column;\n    order: 1;\n    margin-bottom: 16px;\n  "));
+
+var SectionContainer = _styledComponents.default.div(_templateObject2(), props => !props.visible ? "border-bottom: solid 1px ".concat(primaryWhite(props), ";") : undefined);
+
+var TitleContainer = _styledComponents.default.div(_templateObject3());
+
+var Title = (0, _styledComponents.default)(_Typography.Body.Regular)(_templateObject4(), primaryWhite);
+var CustomLink = (0, _styledComponents.default)(_Typography.Link)(_templateObject5(), primaryBrand, props => props.visible ? "\n        :last-child {\n           border-bottom: solid 1px ".concat(primaryWhite(props), ";\n           padding-bottom: 8px;\n           width: 100%;\n         }\n        ") : undefined);
+var Arrow = (0, _styledComponents.default)(_Icon.default)(_templateObject6(), props => props.visible ? '180deg' : '0deg', primaryWhite);
+
+var LinksContainer = _styledComponents.default.div(_templateObject7(), props => props.visible ? 'flex' : 'none');
+
+var LinkText = (0, _styledComponents.default)(_Typography.Body.Small)(_templateObject8(), primaryWhite);

@@ -7,15 +7,41 @@ import {
   addStyleForTablet,
 } from '../../../../foundation/themes/Vroom';
 import { Body, Link } from '../../../../foundation/Typography';
+import {FooterProps, Section, Link as LinkType} from "../types";
+
+export const DesktopLinks: React.FC<FooterProps> = ({sections}) => {
+  return (
+    <Links>
+      {sections.map((section: Section) => {
+        const { title, links } = section;
+        return (
+          <SectionContainer key={title}>
+            <Title bold>{title}</Title>
+
+            {links.map((link: LinkType) => {
+              const { href, name } = link;
+              return (
+                <CustomLink key={href} href={href}>
+                  <LinkText>{name}</LinkText>
+                </CustomLink>
+              );
+            })}
+          </SectionContainer>
+        );
+      })}
+    </Links>
+  );
+};
+
 
 const primaryBrand = (props: { theme: ThemeProps }): string =>
-  props.theme.colors.primary.brand;
+    props.theme.colors.primary.brand;
 
 const grayThree = (props: { theme: ThemeProps }): string =>
-  props.theme.colors.gray.three;
+    props.theme.colors.gray.three;
 
 const primaryWhite = (props: { theme: ThemeProps }): string =>
-  props.theme.colors.primary.white;
+    props.theme.colors.primary.white;
 
 const Links = styled.div`
   display: flex;
@@ -26,7 +52,7 @@ const Links = styled.div`
   `)}
 `;
 
-const SectionDiv = styled.div`
+const SectionContainer = styled.div`
   display: flex;
   flex-direction: column;
   width: 25%;
@@ -54,41 +80,3 @@ const LinkText = styled(Body.Small)`
   color: ${primaryWhite};
   margin-bottom: 8px;
 `;
-
-interface Link {
-  href: string;
-  name: string;
-}
-
-interface Section {
-  title: string;
-  links: Link[];
-}
-
-interface Props {
-  sections: Section[];
-}
-
-export const DesktopLinks: React.FC<Props> = ({ sections }) => {
-  return (
-    <Links>
-      {sections.map((section: Section) => {
-        const { title, links } = section;
-        return (
-          <SectionDiv key={title}>
-            <Title bold>{title}</Title>
-
-            {links.map((link: Link) => {
-              const { href, name } = link;
-              return (
-                <CustomLink key={href} href={href}>
-                  <LinkText>{name}</LinkText>
-                </CustomLink>
-              );
-            })}
-          </SectionDiv>
-        );
-      })}
-    </Links>
-  );
-};

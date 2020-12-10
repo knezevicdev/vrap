@@ -1,3 +1,4 @@
 import React from 'react';
-declare const Footer: React.FC;
+import { FooterProps } from "./types";
+declare const Footer: React.FC<FooterProps>;
 export default Footer;
