@@ -1,12 +1,15 @@
 import axios from 'axios';
-import cookie from 'cookie';
-import jwtDecode from 'jwt-decode';
 import { NextApiRequest, NextApiResponse } from 'next';
 
+import { Tokens } from 'src/networking/models/Auth';
+
 export default async (
-  _req: NextApiRequest,
+  req: NextApiRequest,
   res: NextApiResponse
 ): Promise<void> => {
+  const email = req.body.email;
+  const password = req.body.password;
+
   const url = 'https://gearbox-dev-int.vroomapi.com/query';
 
   const data = JSON.stringify({
@@ -19,9 +22,9 @@ export default async (
     }
   }`,
     variables: {
-      user: 'david.galdamez@vroom.com',
-      password: 'SomePassw0rd!',
-      source: 'Test',
+      user: email,
+      password,
+      source: 'Logistics',
     },
   });
 
@@ -33,24 +36,12 @@ export default async (
 
   try {
     const response = await axios.post(url, data, config);
-    const cookies = [
-      {
-        name: 'accessToken',
-        value: response.data.data.signin.accessToken,
-      },
-      {
-        name: 'refreshToken',
-        value: response.data.data.signin.refreshToken,
-      },
-    ].map((i) =>
-      cookie.serialize(i.name, i.value, {
-        httpOnly: true,
-        secure: true,
-        sameSite: 'strict',
-      })
-    );
-    res.setHeader('Set-Cookie', cookies);
-    res.json(jwtDecode(response.data.data.signin.accessToken));
+    const body: Tokens = {
+      accessToken: response.data.data.signin.accessToken,
+      idToken: response.data.data.signin.idToken,
+      refreshToken: response.data.data.signin.refreshToken,
+    };
+    res.json(body);
   } catch (err) {
     console.error(err);
     res.status(500).json(err);

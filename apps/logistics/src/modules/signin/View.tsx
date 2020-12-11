@@ -3,31 +3,31 @@ import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import TextField from '@material-ui/core/TextField';
-import axios from 'axios';
-import React from 'react';
+import { observer } from 'mobx-react';
+import { useRouter } from 'next/router';
+import React, { useEffect } from 'react';
 
-const SignIn: React.FC = () => {
+import ViewModel from './ViewModel';
+
+interface Props {
+  viewModel: ViewModel;
+}
+const SignIn: React.FC<Props> = ({ viewModel }) => {
+  const router = useRouter();
+
+  useEffect(() => {
+    if (viewModel.success) {
+      router.push(viewModel.previousUrl);
+    }
+  }, [router, viewModel.previousUrl, viewModel.success]);
+
   const handleSubmit = async (
     event: React.FormEvent<HTMLFormElement>
   ): Promise<void> => {
     event.preventDefault();
-    const response = await axios.get('http://localhost:8080/api/signin');
-    console.log(response);
+    viewModel.authenticate();
   };
 
-  const handleClick = async (
-    event: React.FormEvent<HTMLFormElement>
-  ): Promise<void> => {
-    event?.preventDefault();
-    try {
-      const response = await axios.get(
-        'http://localhost:8080/api/gearbox-shipments'
-      );
-      console.log(response);
-    } catch (err) {
-      console.log('fucked');
-    }
-  };
   return (
     <Grid container justify="center">
       <Grid item xs={12} sm={4}>
@@ -40,16 +40,24 @@ const SignIn: React.FC = () => {
                 </Grid>
                 <Grid item xs={12}>
                   <TextField
+                    value={viewModel.email}
+                    onChange={(e): void => viewModel.setEmail(e.target.value)}
                     label="Email"
                     variant="outlined"
+                    required
                     fullWidth
                     autoComplete="email"
                   />
                 </Grid>
                 <Grid item xs={12}>
                   <TextField
+                    value={viewModel.password}
+                    onChange={(e): void =>
+                      viewModel.setPassword(e.target.value)
+                    }
                     label="Password"
                     variant="outlined"
+                    required
                     fullWidth
                     type="password"
                     autoComplete="current-password"
@@ -58,17 +66,6 @@ const SignIn: React.FC = () => {
                 <Grid item xs={6}>
                   <Button size="small" type="submit">
                     Submit
-                  </Button>
-                </Grid>
-                <Grid item xs={6}>
-                  <Button
-                    size="small"
-                    type="button"
-                    onClick={(event): void => {
-                      handleClick(event);
-                    }}
-                  >
-                    Booked Shipments
                   </Button>
                 </Grid>
               </Grid>
@@ -80,4 +77,4 @@ const SignIn: React.FC = () => {
   );
 };
 
-export default SignIn;
+export default observer(SignIn);
