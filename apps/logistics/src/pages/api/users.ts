@@ -54,5 +54,28 @@ export default async function handler(
       console.error(err);
       res.status(500).send(err);
     }
+  } else if (req.method === 'POST') {
+    const url = `https://accountmanagement-dev-int.vroomapi.com/v2/signup`;
+    try {
+      const body = {
+        source: 'logistics portal',
+        timestamp: new Date().toISOString(),
+        version: '1.0',
+        payload: {
+          username: req.body.username,
+          password: req.body.password,
+          firstName: req.body.firstName,
+          lastName: req.body.lastName,
+          emailMarketingConsent: false,
+        },
+      };
+      const response = await axios.post(url, body, {
+        auth: { username, password },
+      });
+      res.status(200).json(response.data.data);
+    } catch (err) {
+      console.error(err);
+      res.status(500).send(err);
+    }
   }
 }
