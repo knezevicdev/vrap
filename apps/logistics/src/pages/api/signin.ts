@@ -10,8 +10,6 @@ export default async (
   const email = req.body.email;
   const password = req.body.password;
 
-  const url = 'https://gearbox-dev-int.vroomapi.com/query';
-
   const data = JSON.stringify({
     query: `mutation signin($user: String!, $password: String!, $source: String!) {
     signin(username: $user, password: $password, source: $source) {
@@ -35,7 +33,7 @@ export default async (
   };
 
   try {
-    const response = await axios.post(url, data, config);
+    const response = await axios.post(process.env.GEARBOX_URL, data, config);
     const body: Tokens = {
       accessToken: response.data.data.signin.accessToken,
       idToken: response.data.data.signin.idToken,
