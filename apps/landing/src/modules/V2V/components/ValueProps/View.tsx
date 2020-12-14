@@ -1,6 +1,7 @@
 import React, { FC } from 'react';
 import styled from 'styled-components';
 
+import { ButtonSection } from './Sections';
 import ValuePropsViewModel from './ViewModel';
 
 const Container = styled.div`
@@ -13,6 +14,7 @@ const Container = styled.div`
   @media (max-width: 768px) {
     padding: 0 16px;
     margin: 32px auto;
+    margin-bottom: 128px;
   }
 `;
 
@@ -29,9 +31,11 @@ const ValuePropsView: FC<Props> = ({ viewModel }) => {
     <Background>
       <Container>
         {viewModel.sectionOrder.map((sectionSlug, idx) => {
-          const Component = viewModel.sectionMap[sectionSlug];
+          const validSection = viewModel.sectionMap[sectionSlug];
+          const Component = validSection && validSection.component;
           if (Component) return <Component key={idx} />;
         })}
+        <ButtonSection />
       </Container>
     </Background>
   );

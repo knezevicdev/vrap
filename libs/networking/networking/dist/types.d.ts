@@ -14,6 +14,16 @@ export interface ErrorResponse {
     error: Error;
     status?: number;
 }
+export interface AccessDeniedError extends Error {
+    response: {
+        extensions: {
+            error_code: '401';
+        };
+    };
+}
+export interface AccessDeniedErrorResponse extends ErrorResponse {
+    error: AccessDeniedError;
+}
 export declare type Response<D> = SuccessResponse<D> | ErrorResponse;
 export declare type ResponseSuccessInterceptor<D = unknown> = (successResponse: SuccessResponse<D>) => Promise<void>;
 export declare type ResponseErrorInterceptor = (errorResponse: ErrorResponse) => Promise<void>;

@@ -2,11 +2,13 @@
 import {
   addAllModels,
   addBodyType,
+  addCabType,
   addColor,
   addDriveType,
   addModel,
   addPopularFeature,
   BodyType as FiltersDataBodyType,
+  CabType as FiltersDataCabType,
   Color as FiltersDataColor,
   DriveType as FiltersDataDriveType,
   FiltersData,
@@ -26,6 +28,9 @@ import {
   BodyType,
   BodyTypeAPI,
   BodyTypeDisplay,
+  CabType,
+  CabTypeAPI,
+  CabTypeDisplay,
   Color,
   ColorAPI,
   ColorDisplay,
@@ -319,6 +324,110 @@ describe('getBodyTypesChips', () => {
     chips[2].handleDelete();
     expect(mockCarsStore.updateFiltersData).toHaveBeenCalledWith({
       bodytypes: ['minivan', 'suv'],
+    });
+    mockCarsStore.updateFiltersData.mockReset();
+  });
+});
+
+describe('getCabTypeChips', () => {
+  test('1', () => {
+    const mockCarsStore = {};
+    const mockViewModel = new ViewModel(mockCarsStore as CarsStore);
+    const mockFiltersData: FiltersData = {};
+    expect(mockViewModel.getCabTypeChips(mockFiltersData)).toHaveLength(0);
+  });
+
+  test('2', () => {
+    const mockCarsStore = {
+      cabTypes: [],
+    };
+    const mockViewModel = new ViewModel(
+      (mockCarsStore as unknown) as CarsStore
+    );
+    const mockFiltersData: FiltersData = addCabType(FiltersDataCabType.CREW);
+    const receivedState = mockViewModel.getCabTypeChips(mockFiltersData);
+    expect(receivedState).toHaveLength(0);
+  });
+
+  test('3', () => {
+    const mockCabTypes: CabType[] = [
+      {
+        api: CabTypeAPI.CREW,
+        display: CabTypeDisplay.CREW,
+        filtersDataValue: FiltersDataCabType.CREW,
+      },
+    ];
+    const mockCarsStore = {
+      cabTypes: mockCabTypes,
+      updateFiltersData: jest.fn(),
+    };
+    const mockViewModel = new ViewModel(
+      (mockCarsStore as unknown) as CarsStore
+    );
+    const mockFiltersData: FiltersData = addCabType(FiltersDataCabType.CREW);
+    const chips = mockViewModel.getCabTypeChips(mockFiltersData);
+    expect(chips).toHaveLength(1);
+    expect(chips[0].display).toEqual(CabTypeDisplay.CREW);
+    expect(chips[0].handleDelete).toBeDefined();
+    chips[0].handleDelete();
+    expect(mockCarsStore.updateFiltersData).toHaveBeenCalledWith({
+      cabtype: undefined,
+    });
+  });
+
+  test('4', () => {
+    const mockCabTypes: CabType[] = [
+      {
+        api: CabTypeAPI.CREW,
+        display: CabTypeDisplay.CREW,
+        filtersDataValue: FiltersDataCabType.CREW,
+      },
+      {
+        api: CabTypeAPI.EXTENDED,
+        display: CabTypeDisplay.EXTENDED,
+        filtersDataValue: FiltersDataCabType.EXTENDED,
+      },
+      {
+        api: CabTypeAPI.REGULAR,
+        display: CabTypeDisplay.REGULAR,
+        filtersDataValue: FiltersDataCabType.REGULAR,
+      },
+    ];
+    const mockCarsStore = {
+      cabTypes: mockCabTypes,
+      updateFiltersData: jest.fn(),
+    };
+    const mockViewModel = new ViewModel(
+      (mockCarsStore as unknown) as CarsStore
+    );
+    let mockFiltersData: FiltersData = {};
+    mockFiltersData = addCabType(FiltersDataCabType.CREW, mockFiltersData);
+    mockFiltersData = addCabType(FiltersDataCabType.EXTENDED, mockFiltersData);
+    mockFiltersData = addCabType(FiltersDataCabType.REGULAR, mockFiltersData);
+    const chips = mockViewModel.getCabTypeChips(mockFiltersData);
+    expect(chips).toHaveLength(3);
+
+    expect(chips[0].display).toEqual(CabTypeDisplay.CREW);
+    expect(chips[0].handleDelete).toBeDefined();
+    chips[0].handleDelete();
+    expect(mockCarsStore.updateFiltersData).toHaveBeenCalledWith({
+      cabtype: ['extended', 'regular'],
+    });
+    mockCarsStore.updateFiltersData.mockReset();
+
+    expect(chips[1].display).toEqual(CabTypeDisplay.EXTENDED);
+    expect(chips[1].handleDelete).toBeDefined();
+    chips[1].handleDelete();
+    expect(mockCarsStore.updateFiltersData).toHaveBeenCalledWith({
+      cabtype: ['crew', 'regular'],
+    });
+    mockCarsStore.updateFiltersData.mockReset();
+
+    expect(chips[2].display).toEqual(CabTypeDisplay.REGULAR);
+    expect(chips[2].handleDelete).toBeDefined();
+    chips[2].handleDelete();
+    expect(mockCarsStore.updateFiltersData).toHaveBeenCalledWith({
+      cabtype: ['crew', 'extended'],
     });
     mockCarsStore.updateFiltersData.mockReset();
   });
@@ -629,7 +738,7 @@ describe('getDriveTypesChips', () => {
     const mockFiltersData: FiltersData = addDriveType(FiltersDataDriveType.AWD);
     const chips = mockViewModel.getDriveTypesChips(mockFiltersData);
     expect(chips).toHaveLength(1);
-    expect(chips[0].display).toEqual('AWD');
+    expect(chips[0].display).toEqual(DriveTypeDisplay.AWD);
     expect(chips[0].handleDelete).toBeDefined();
     chips[0].handleDelete();
     expect(mockCarsStore.updateFiltersData).toHaveBeenCalledWith({
@@ -672,7 +781,7 @@ describe('getDriveTypesChips', () => {
     const chips = mockViewModel.getDriveTypesChips(mockFiltersData);
     expect(chips).toHaveLength(3);
 
-    expect(chips[0].display).toEqual('AWD');
+    expect(chips[0].display).toEqual(DriveTypeDisplay.AWD);
     expect(chips[0].handleDelete).toBeDefined();
     chips[0].handleDelete();
     expect(mockCarsStore.updateFiltersData).toHaveBeenCalledWith({
@@ -680,7 +789,7 @@ describe('getDriveTypesChips', () => {
     });
     mockCarsStore.updateFiltersData.mockReset();
 
-    expect(chips[1].display).toEqual('4x4');
+    expect(chips[1].display).toEqual(DriveTypeDisplay.FOUR_BY_FOUR);
     expect(chips[1].handleDelete).toBeDefined();
     chips[1].handleDelete();
     expect(mockCarsStore.updateFiltersData).toHaveBeenCalledWith({
@@ -688,7 +797,7 @@ describe('getDriveTypesChips', () => {
     });
     mockCarsStore.updateFiltersData.mockReset();
 
-    expect(chips[2].display).toEqual('FWD');
+    expect(chips[2].display).toEqual(DriveTypeDisplay.FWD);
     expect(chips[2].handleDelete).toBeDefined();
     chips[2].handleDelete();
     expect(mockCarsStore.updateFiltersData).toHaveBeenCalledWith({
