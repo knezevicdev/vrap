@@ -1,6 +1,4 @@
-import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
-import Grid from '@material-ui/core/Grid';
+import { Card, Divider, Grid } from '@material-ui/core';
 import { styled } from '@material-ui/core/styles';
 import { Typography } from '@vroom-web/ui';
 import React from 'react';
@@ -45,28 +43,51 @@ const EvoxLogo = styled('img')(({ theme }) => ({
 }));
 
 const AvailableSoon = styled(Typography)(({ theme }) => ({
-  position: 'absolute',
-  top: 0,
-  left: 0,
-  padding: theme.spacing(0, 1),
-  background: theme.palette.grey['400'],
-  fontSize: '14px',
+  padding: theme.spacing(0, 2),
+  background: '#C4C4C4',
+  fontSize: '16px',
+  fontWeight: 600,
+  lineHeight: '24px',
+  width: '137px',
 }));
 
 const SalePending = styled(Typography)(({ theme }) => ({
-  position: 'absolute',
-  top: 0,
-  left: 0,
-  padding: theme.spacing(0, 1),
+  padding: theme.spacing(0, 2),
   background: '#ffd400',
-  fontSize: '14px',
+  fontSize: '16px',
+  fontWeight: 600,
+  lineHeight: '24px',
+  width: '120px',
 }));
 
-const Content = styled(CardContent)(() => ({
+const Content = styled('div')(() => ({
   display: 'flex',
   flexDirection: 'column',
   width: '100%',
   height: '110px',
+  padding: 0,
+}));
+
+const CarDetails = styled('div')(({ theme }) => ({
+  display: 'flex',
+  flexDirection: 'column',
+  width: '100%',
+  padding: theme.spacing(1, 2, 2),
+  flexGrow: 1,
+  justifyContent: 'flex-end',
+}));
+
+const Price = styled(Typography)(() => ({
+  fontWeight: 600,
+  fontSize: '20px',
+  lineHeight: '24px',
+}));
+
+const Title = styled(Typography)(() => ({
+  fontSize: '16px',
+  fontWeight: 600,
+  lineHeight: '24px',
+  whiteSpace: 'nowrap',
 }));
 
 const TrimAndMiles = styled('div')(() => ({
@@ -75,18 +96,20 @@ const TrimAndMiles = styled('div')(() => ({
   color: '#041022',
 }));
 
-const Divider = styled(Typography)(({ theme }) => ({
-  margin: '0 4px',
-  color: theme.palette.grey['A100'],
+const Trim = styled(Typography)(() => ({
+  fontSize: '14px',
+  fontWeight: 'normal',
+  lineHeight: '18px',
 }));
 
-const Price = styled(Typography)(() => ({
-  marginTop: 'auto',
-  fontSize: '16px',
+const Miles = styled(Typography)(() => ({
+  fontSize: '14px',
+  fontWeight: 'normal',
+  lineHeight: '18px',
 }));
 
-const Value = styled(Typography)(() => ({
-  fontSize: '16px',
+const StyledDivider = styled(Divider)(({ theme }) => ({
+  margin: theme.spacing(0, 1),
 }));
 
 const HiddenAnchor = styled('a')(() => ({
@@ -122,41 +145,23 @@ const DesktopView: React.FC<DesktopViewProps> = ({ viewModel }) => {
                 alt={viewModel.evoxLogo.alt}
               />
             )}
-            {viewModel.showAvailableSoon() && (
-              <AvailableSoon fontWeight="fontWeightMedium" lineHeight="24px">
-                {viewModel.availableSoon}
-              </AvailableSoon>
-            )}
-            {viewModel.showSalePending() && (
-              <SalePending fontWeight="fontWeightMedium" lineHeight="24px">
-                {viewModel.salePending}
-              </SalePending>
-            )}
           </Media>
           <Content>
-            <Value
-              fontWeight="fontWeightMedium"
-              lineHeight="24px"
-              whiteSpace="nowrap"
-            >
-              {title}
-            </Value>
-            <TrimAndMiles>
-              <Value
-                fontWeight="fontWeightLight"
-                lineHeight="24px"
-                whiteSpace="nowrap"
-              >
-                {trim}
-              </Value>
-              <Divider fontWeight="fontWeightLight" lineHeight="24px">
-                |
-              </Divider>
-              <Value fontWeight="fontWeightLight" lineHeight="24px">
-                {miles}
-              </Value>
-            </TrimAndMiles>
-            <Price fontWeight="fontWeightMedium">{price}</Price>
+            {viewModel.showSalePending() && (
+              <SalePending>{viewModel.salePending}</SalePending>
+            )}
+            {viewModel.showAvailableSoon() && (
+              <AvailableSoon>{viewModel.availableSoon}</AvailableSoon>
+            )}
+            <CarDetails>
+              <Title>{title}</Title>
+              <TrimAndMiles>
+                <Trim>{trim}</Trim>
+                <StyledDivider orientation="vertical" variant="middle" />
+                <Miles>{miles}</Miles>
+              </TrimAndMiles>
+              <Price>{price}</Price>
+            </CarDetails>
           </Content>
         </HiddenAnchor>
       </Container>
