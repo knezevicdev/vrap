@@ -5,8 +5,8 @@ import {
   CertifiedSection,
   DeliveredSection,
   TestDriveSection,
-  VideoSection,
 } from './Sections';
+import BuySellTrade from './BuySellTrade';
 
 class ValuePropsViewModel {
   sectionOrder: string[] = [
@@ -17,7 +17,7 @@ class ValuePropsViewModel {
     'button',
   ];
   sectionMap: { [slug: string]: FC } = {
-    video: VideoSection,
+    video: BuySellTrade,
     certified: CertifiedSection,
     delivered: DeliveredSection,
     'test-drive': TestDriveSection,

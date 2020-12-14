@@ -23,12 +23,13 @@ class FavoritesViewModel {
   constructor(
     inventoryStore: InventoryStore,
     favoritesStore: FavoritesStore,
-    favoritesNetworker: FavoritesNetworker
+    favoritesNetworker: FavoritesNetworker,
+    analyticsHandler: AnalyticsHandler
   ) {
     this.inventoryStore = inventoryStore;
     this.favoritesStore = favoritesStore;
     this.favoritesNetworker = favoritesNetworker;
-    this.analyticsHandler = new AnalyticsHandler();
+    this.analyticsHandler = analyticsHandler;
   }
 
   handleMount(): void {

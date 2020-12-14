@@ -12,9 +12,12 @@ class InventoryViewModel {
   readonly icon = `${publicRuntimeConfig.BASE_PATH}/icons/no-result.svg`;
   private analyticsHandler: AnalyticsHandler;
 
-  constructor(inventoryStore: InventoryStore) {
+  constructor(
+    inventoryStore: InventoryStore,
+    analyticsHandler: AnalyticsHandler
+  ) {
     this.store = inventoryStore;
-    this.analyticsHandler = new AnalyticsHandler();
+    this.analyticsHandler = analyticsHandler;
   }
 
   loading(): boolean {

@@ -8,9 +8,9 @@ class VehicleDetailsButtonViewModel {
   private car: Car;
   private analyticsHandler: AnalyticsHandler;
 
-  constructor(store: InventoryStore) {
+  constructor(store: InventoryStore, analyticsHandler: AnalyticsHandler) {
     this.car = store.vehicle._source;
-    this.analyticsHandler = new AnalyticsHandler();
+    this.analyticsHandler = analyticsHandler;
   }
 
   handleClick = (): void => {

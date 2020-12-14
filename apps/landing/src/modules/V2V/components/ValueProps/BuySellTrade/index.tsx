@@ -1,15 +1,15 @@
 import React, { useContext } from 'react';
 
-import { InventoryStoreContext } from '../../store/inventoryStore';
 import View from './View';
 import ViewModel from './ViewModel';
-import AnalyticsHandler from '../../integrations/AnalyticsHandler';
+import AnalyticsHandler from 'src/modules/V2V/integrations/AnalyticsHandler';
+import { InventoryStoreContext } from 'src/modules/V2V/store/inventoryStore';
 
-const VehicleDetailsButton: React.FC = () => {
+const BuySellTrade: React.FC = () => {
   const store = useContext(InventoryStoreContext);
   const analyticsHandler = new AnalyticsHandler();
   const viewModel = new ViewModel(store, analyticsHandler);
   return <View viewModel={viewModel} />;
 };
 
-export default VehicleDetailsButton;
+export default BuySellTrade;
