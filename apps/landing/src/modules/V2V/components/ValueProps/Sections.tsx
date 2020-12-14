@@ -1,5 +1,5 @@
 import getConfig from 'next/config';
-import React, { FC } from 'react';
+import React, { FC, useEffect } from 'react';
 import styled from 'styled-components';
 
 import { Button } from 'src/core/Button';
@@ -7,6 +7,12 @@ import Icon, { Icons } from 'src/core/Icon';
 import { Body, Hero, Link } from 'src/core/Typography';
 
 const { publicRuntimeConfig } = getConfig();
+
+declare global {
+  interface Window {
+    YT: any;
+  }
+}
 
 const Section = styled.div`
   width: 100%;
@@ -108,6 +114,20 @@ const Bold = styled.span`
 `;
 
 export const VideoSection: FC = () => {
+  useEffect(() => {
+    window.YT.ready(() => {
+      new window.YT.Player('buy-sell-trade-youtube-video', {
+        events: {
+          onStateChange: (event: any) => {
+            if (event.data == window.YT.PlayerState.PLAYING) {
+              // ToDo:  Call Segment tracking here
+            }
+          },
+        },
+      });
+    });
+  }, []);
+
   return (
     <VideoContainer>
       <VideoTitle>
@@ -115,7 +135,8 @@ export const VideoSection: FC = () => {
       </VideoTitle>
       <IframeContainer>
         <StyledIframe
-          src={'https://www.youtube.com//embed/BNN30oCCesc'}
+          id="buy-sell-trade-youtube-video"
+          src={'https://www.youtube.com//embed/BNN30oCCesc?enablejsapi=1'}
         ></StyledIframe>
       </IframeContainer>
     </VideoContainer>
