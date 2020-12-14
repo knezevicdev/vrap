@@ -74,27 +74,6 @@ const CarsPage: NextPage<Props> = ({
     }
   }, [carsStore, theme]);
 
-  // Get the experiments from the SDK
-  useEffect(() => {
-    experimentSDK
-      .getAndLogExperimentClientSide('snd-catalog-sort-direction')
-      .then((experiment) => {
-        carsStore.setSortAgeDirectionExperiment(experiment);
-        if (experiment && experiment.assignedVariant === 1) {
-          carsStore.fetchInventoryData();
-        } else {
-          carsStore.setInventoryStatus(carsStatus);
-        }
-      });
-  }, [carsStore, carsStatus]);
-
-  // Register experiments with analytics handler
-  useEffect(() => {
-    if (carsStore.sortAgeDirectionExperiment) {
-      analyticsHandler.registerExperiment(carsStore.sortAgeDirectionExperiment);
-    }
-  }, [carsStore.sortAgeDirectionExperiment, analyticsHandler]);
-
   useEffect(() => {
     experimentSDK
       .getAndLogExperimentClientSide('snd-cylinder-filters')
