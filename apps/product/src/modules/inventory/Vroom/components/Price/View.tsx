@@ -120,6 +120,7 @@ const PriceView: React.FC<Props> = ({ viewModel }) => {
               })}
             </Typography>
           </List>
+          <Typography>{viewModel.list.extra}</Typography>
         </Container>
       </Popover>
     </>
