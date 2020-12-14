@@ -27,7 +27,6 @@ interface Props {
 }
 
 const ValuePropsView: FC<Props> = ({ viewModel }) => {
-  console.log({ viewModel });
   return (
     <Background>
       <Container>
