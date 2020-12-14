@@ -24,7 +24,6 @@ class AnalyticsHandler extends BaseAnalyticsHandler {
     const event = 'Vin Landing Page Viewed';
     const vehicle = this.convertToDomain(car);
     const properties = { ...vehicle, category };
-    console.log(event, JSON.stringify(properties, null, 2));
     this.track(event, properties);
   }
   //Done
@@ -32,7 +31,6 @@ class AnalyticsHandler extends BaseAnalyticsHandler {
     const event = 'See Details Clicked';
     const vehicle = this.convertToDomain(car);
     const properties = { ...vehicle, category };
-    console.log(event, JSON.stringify(properties, null, 2));
     this.track(event, properties);
   }
   //Needs clarification
@@ -40,7 +38,6 @@ class AnalyticsHandler extends BaseAnalyticsHandler {
     const event = 'Favorites Clicked';
     const vehicle = this.convertToDomain(car);
     const properties = { ...vehicle, category };
-    console.log(event, JSON.stringify(properties, null, 2));
     this.track(event, properties);
   }
   //Done
@@ -49,7 +46,6 @@ class AnalyticsHandler extends BaseAnalyticsHandler {
     const vehicle = this.convertToDomain(car);
     const accountCreateType = 'Favorites';
     const properties = { ...vehicle, accountCreateType, category };
-    console.log(event, JSON.stringify(properties, null, 2));
     this.track(event, properties);
   }
   //Needs research
@@ -57,7 +53,6 @@ class AnalyticsHandler extends BaseAnalyticsHandler {
     const event = 'Buy, Sell, Trade, Video Played';
     const vehicle = this.convertToDomain(car);
     const properties = { ...vehicle, category };
-    console.log(event, JSON.stringify(properties, null, 2));
     this.track(event, properties);
   }
 
