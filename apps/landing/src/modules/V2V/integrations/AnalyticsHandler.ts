@@ -1,79 +1,105 @@
 import { AnalyticsHandler as BaseAnalyticsHandler } from '@vroom-web/analytics-integration';
+import { Car } from '@vroom-web/inv-search-networking';
 
 const category = 'Landing Page';
 
-export type ProductInventoryType = 'Consignment' | 'Vroom';
-export type ProductPhotoType = 'Illustration' | 'Stock' | 'Vroom';
+export type VehiclePhotoType = 'Illustration' | 'Stock' | 'Vroom' | '360';
 
-export interface Product {
-  imageUrl: string;
-  inventoryType: ProductInventoryType;
-  make: string;
-  model: string;
-  name: string;
-  partnerId?: string;
-  photoType?: ProductPhotoType;
-  position?: number;
-  price: number;
-  sku: number;
-  soldStatus?: number;
-  url?: string;
+export interface Vehicle {
   vin: string;
   year: number;
-  defectPhotos?: boolean;
+  sku: number;
+  price: number;
+  photoType?: VehiclePhotoType;
   hasStockPhotos?: boolean;
+  defectPhotos?: boolean;
   spincarSpinUrl?: string | null;
-  pendingDeal?: boolean;
-  isAvailableToSell?: boolean;
-  vinClusterPrimary?: number | null;
-  vinClusterSecondary?: number | null;
+  soldStatus?: number;
 }
 
 class AnalyticsHandler extends BaseAnalyticsHandler {
-  trackVinLandingPageViewed(): void {
+  trackVinLandingPageViewed(vehicle: Vehicle): void {
     const event = 'Vin Landing Page Viewed';
-    const properties = { category };
+    const properties = { ...vehicle, category };
     // this.track(event, properties);
     console.log(event, properties);
   }
 
-  trackSeeAllVehiclesClicked(): void {
+  trackSeeAllVehicleDetailsClicked(vehicle: Vehicle): void {
     const event = 'See Details Clicked';
-    const properties = { category };
+    const properties = { ...vehicle, category };
     // this.track(event, properties);
     console.log(event, properties);
   }
 
-  trackAddToFavoritesClicked(): void {
+  trackAddToFavoritesClicked(vehicle: Vehicle): void {
     const event = 'Favorites Clicked';
-    const properties = { category };
+    const properties = { ...vehicle, category };
     console.log(event, properties);
   }
 
-  trackCreateAccountClicked(): void {
+  trackCreateAccountClicked(vehicle: Vehicle): void {
     const event = 'Create Account';
     const accountCreateType = 'Favorites';
-    const properties = { accountCreateType, category };
+    const properties = { ...vehicle, accountCreateType, category };
     console.log(event, properties);
   }
 
-  trackBuySellTradeVideoPlayed(): void {
+  trackBuySellTradeVideoPlayed(vehicle: Vehicle): void {
     const event = 'Buy, Sell, Trade, Video Played';
-    const properties = { category };
+    const properties = { ...vehicle, category };
     console.log(event, properties);
   }
 
-  trackCertificationLinkClicked(): void {
+  trackCertificationLinkClicked(vehicle: Vehicle): void {
     const event = 'Certification Link Clicked';
-    const properties = { category };
+    const properties = { ...vehicle, category };
     console.log(event, properties);
   }
 
-  trackLearnMoreClicked(): void {
+  trackLearnMoreClicked(vehicle: Vehicle): void {
     const event = 'Learn More Clicked';
-    const properties = { category };
+    const properties = { ...vehicle, category };
     console.log(event, properties);
   }
+
+  convertToDomain = (car: Car): Vehicle => {
+    const {
+      vin,
+      year,
+      inventoryId: sku,
+      listingPrice: price,
+      hasStockPhotos,
+      defectPhotos,
+      spincarSpinUrl,
+      soldStatus,
+    } = car;
+    return {
+      vin,
+      year,
+      sku,
+      price,
+      photoType: getPhotoType(car),
+      hasStockPhotos,
+      defectPhotos: !!defectPhotos,
+      spincarSpinUrl,
+      soldStatus,
+    };
+  };
 }
 
 export default AnalyticsHandler;
+
+const getPhotoType = (car: Car): VehiclePhotoType => {
+  const { spincarSpinUrl, hasStockPhotos, leadFlagPhotoUrl } = car;
+  if (spincarSpinUrl) {
+    return '360';
+  }
+  if (hasStockPhotos) {
+    return 'Stock';
+  }
+  if (leadFlagPhotoUrl) {
+    return 'Vroom';
+  }
+  return 'Illustration';
+};
