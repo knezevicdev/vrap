@@ -20,7 +20,6 @@ import {
   PostInventoryRequestData,
   SoldStatus,
 } from '@vroom-web/inv-search-networking';
-import { carSchema } from '@vroom-web/inv-search-networking/dist/types/Inventory';
 import { ThemeProvider } from '@vroom-web/ui';
 import { Brand, determineWhitelabel } from '@vroom-web/whitelabel';
 import { GetServerSideProps, GetServerSidePropsContext, NextPage } from 'next';
@@ -31,17 +30,12 @@ import React, { useEffect, useState } from 'react';
 import AnalyticsHandler from 'src/integrations/AnalyticsHandler';
 import experimentSDK from 'src/integrations/experimentSDK';
 import Cars from 'src/modules/cars';
-import {
-  INVENTORY_CARDS_PER_PAGE,
-  POPULAR_CAR_LIMIT,
-} from 'src/modules/cars/data';
+import { POPULAR_CAR_LIMIT } from 'src/modules/cars/data';
 import {
   CarsStore,
   CarsStoreContext,
-  getPostInventoryRequestDataFromFilterData,
   InitialCarsStoreState,
 } from 'src/modules/cars/store';
-import { Status } from 'src/networking/types';
 import Page from 'src/Page';
 const {
   publicRuntimeConfig: { INVSEARCH_V3_URL, NAME, VERSION },
