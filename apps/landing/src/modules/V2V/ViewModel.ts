@@ -7,7 +7,7 @@ const { publicRuntimeConfig } = getConfig();
 class InventoryViewModel {
   private store: InventoryStore;
   readonly button = 'Shop vehicles now';
-  readonly errorText = 'Something went wrong.';
+  readonly errorText = 'We couldn’t find this vehicle';
   readonly icon = `${publicRuntimeConfig.BASE_PATH}/icons/no-result.svg`;
 
   constructor(inventoryStore: InventoryStore) {
