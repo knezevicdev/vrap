@@ -246,23 +246,18 @@ export const getSortRequestData = (
 ): {
   sortby?: SortAPIBy;
   sortdirection?: SortAPIDirection;
-  sortAgeDirection?: SortAPIDirection;
 } => {
   if (!filtersData) {
-    const sortAgeDirection = SortAPIDirection.ASCENDING;
     return {
       sortby: SortAPIBy.GEO,
       sortdirection: undefined,
-      sortAgeDirection,
     };
   }
   const filtersDataSort = filtersData[Filters.SORT];
   if (!filtersDataSort) {
-    const sortAgeDirection = SortAPIDirection.ASCENDING;
     return {
       sortby: SortAPIBy.GEO,
       sortdirection: undefined,
-      sortAgeDirection,
     };
   }
   const matchingSort = sorts.find(
@@ -330,9 +325,7 @@ export const getPostInventoryRequestDataFromFilterData = (
   const { makeSlug, modelSlug } = getMakeAndModelRequestData(filtersData);
   const offset = getOffsetRequestData(filtersData);
   const popularFeatures = getPopularFeaturesRequestData(filtersData);
-  const { sortby, sortdirection, sortAgeDirection } = getSortRequestData(
-    filtersData
-  );
+  const { sortby, sortdirection } = getSortRequestData(filtersData);
   const testdriveonly = getTestDriveOnlyRequestData(filtersData);
   const transmissionid = getTransmissionRequestData(filtersData);
   const fuelType = getFuelTypeRequestData(filtersData);
@@ -349,7 +342,6 @@ export const getPostInventoryRequestDataFromFilterData = (
     searchall: filtersData ? filtersData[Filters.SEARCH] : undefined,
     sortby,
     sortdirection,
-    sortAgeDirection,
     testdriveonly,
     transmissionid,
     year: filtersData ? filtersData[Filters.YEAR] : undefined,
