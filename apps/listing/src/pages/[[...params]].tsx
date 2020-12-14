@@ -50,14 +50,10 @@ const invSearchNetworker = new InvSearchNetworker(INVSEARCH_V3_URL);
 
 interface Props {
   brand: Brand;
-  // carsStatus: Status;
   initialStoreState: InitialCarsStoreState;
 }
 
-const CarsPage: NextPage<Props> = ({
-  brand,
-  initialStoreState,
-}) => {
+const CarsPage: NextPage<Props> = ({ brand, initialStoreState }) => {
   // Persist store instance across URL updates.
   const [carsStore] = useState<CarsStore>(new CarsStore(initialStoreState));
   const [analyticsHandler] = useState<AnalyticsHandler>(new AnalyticsHandler());
@@ -76,7 +72,7 @@ const CarsPage: NextPage<Props> = ({
 
   useEffect(() => {
     carsStore.fetchInventoryData();
-  }, [carsStore])
+  }, [carsStore]);
 
   useEffect(() => {
     experimentSDK
@@ -398,7 +394,7 @@ export const getServerSideProps: GetServerSideProps<Props> = async (
     },
   } = context;
 
-  const { res, query } = context;
+  const { query } = context;
   context.res.setHeader('Cache-Control', '');
   const brand = determineWhitelabel(context);
 
@@ -436,32 +432,8 @@ export const getServerSideProps: GetServerSideProps<Props> = async (
   const popularElapsed = new Date().getTime() - popularStart;
   console.log('{"POPULAR_CARS_ms":' + popularElapsed + '}');
 
-  const postInventoryRequestDataFromFiltersData = getPostInventoryRequestDataFromFilterData(
-    filtersData
-  );
-
-  const inventoryRequestData: PostInventoryRequestData = {
-    ...postInventoryRequestDataFromFiltersData,
-    // DELTA-228.
-    // fulldetails should be false.
-    // However, it's needed on the TDA whitelabel b/c the 'zone' field is how we determine
-    // whether a vehicle is test drivable.
-    // TODO: move that logic to the backend and set this back to false.
-    fulldetails: true,
-    limit: INVENTORY_CARDS_PER_PAGE,
-    source: `${NAME}-${VERSION}`,
-    isTitleQAPass: titleQuery,
-  };
-
-  const carsStart = new Date().getTime();
-
-  const carsR = await invSearchNetworker.postInventory(inventoryRequestData);
-  const carsElapsed = new Date().getTime() - carsStart;
-  console.log('{"CARS_ms":' + carsElapsed + '}');
-
   const makes = makesR.data.aggregations.make_count.buckets;
   const popularCars = popularCarsR.data;
-  const cars = carsR.data;
 
   // FIT-583
   // Persist key attribution query params across navigation.
@@ -488,7 +460,7 @@ export const getServerSideProps: GetServerSideProps<Props> = async (
   const initialStoreState = {
     attributionQueryString,
     makes,
-    cars,
+    cars: undefined,
     popularCars,
     filtersData,
     titleQuery,
@@ -500,12 +472,6 @@ export const getServerSideProps: GetServerSideProps<Props> = async (
       delete initialStoreState[key as keyof InitialCarsStoreState];
     }
   });
-
-  const hasInventory = cars ? cars.hits.total !== 0 : false;
-
-  if (res && !hasInventory) {
-    res.statusCode = 404;
-  }
 
   return {
     props: {
