@@ -202,7 +202,6 @@ class CarsViewModel {
   };
 
   isLoading = (): boolean => {
-    console.log(this.store.inventoryStatus);
     return (
       this.store.inventoryStatus === Status.FETCHING ||
       this.store.popularCarsStatus === Status.FETCHING

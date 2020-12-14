@@ -21,7 +21,6 @@ const CarCard: React.FC<CarCardProps> = ({ car, position }) => {
   const xsDown = useMediaQuery(theme.breakpoints.down('xs'));
   const xlUp = useMediaQuery(theme.breakpoints.up('xl'));
 
-  console.log(car);
   if (!car) {
     return <LoadingCard mobile={xsDown} xl={xlUp} />;
   }
