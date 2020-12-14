@@ -18,52 +18,59 @@ export interface Vehicle {
 }
 
 class AnalyticsHandler extends BaseAnalyticsHandler {
-  trackVinLandingPageViewed(vehicle: Vehicle): void {
+  trackVinLandingPageViewed(car: Car): void {
     const event = 'Vin Landing Page Viewed';
+    const vehicle = this.convertToDomain(car);
     const properties = { ...vehicle, category };
     // this.track(event, properties);
     console.log(event, properties);
   }
 
-  trackSeeAllVehicleDetailsClicked(vehicle: Vehicle): void {
+  trackSeeAllVehicleDetailsClicked(car: Car): void {
     const event = 'See Details Clicked';
+    const vehicle = this.convertToDomain(car);
     const properties = { ...vehicle, category };
     // this.track(event, properties);
     console.log(event, properties);
   }
 
-  trackAddToFavoritesClicked(vehicle: Vehicle): void {
+  trackAddToFavoritesClicked(car: Car): void {
     const event = 'Favorites Clicked';
+    const vehicle = this.convertToDomain(car);
     const properties = { ...vehicle, category };
     console.log(event, properties);
   }
 
-  trackCreateAccountClicked(vehicle: Vehicle): void {
+  trackCreateAccountClicked(car: Car): void {
     const event = 'Create Account';
+    const vehicle = this.convertToDomain(car);
     const accountCreateType = 'Favorites';
     const properties = { ...vehicle, accountCreateType, category };
     console.log(event, properties);
   }
 
-  trackBuySellTradeVideoPlayed(vehicle: Vehicle): void {
+  trackBuySellTradeVideoPlayed(car: Car): void {
     const event = 'Buy, Sell, Trade, Video Played';
+    const vehicle = this.convertToDomain(car);
     const properties = { ...vehicle, category };
     console.log(event, properties);
   }
 
-  trackCertificationLinkClicked(vehicle: Vehicle): void {
+  trackCertificationLinkClicked(car: Car): void {
     const event = 'Certification Link Clicked';
+    const vehicle = this.convertToDomain(car);
     const properties = { ...vehicle, category };
     console.log(event, properties);
   }
 
-  trackLearnMoreClicked(vehicle: Vehicle): void {
+  trackLearnMoreClicked(car: Car): void {
     const event = 'Learn More Clicked';
+    const vehicle = this.convertToDomain(car);
     const properties = { ...vehicle, category };
     console.log(event, properties);
   }
 
-  convertToDomain = (car: Car): Vehicle => {
+  private convertToDomain = (car: Car): Vehicle => {
     const {
       vin,
       year,
@@ -79,27 +86,27 @@ class AnalyticsHandler extends BaseAnalyticsHandler {
       year,
       sku,
       price,
-      photoType: getPhotoType(car),
+      photoType: this.getPhotoType(car),
       hasStockPhotos,
       defectPhotos: !!defectPhotos,
       spincarSpinUrl,
       soldStatus,
     };
   };
+
+  private getPhotoType = (car: Car): VehiclePhotoType => {
+    const { spincarSpinUrl, hasStockPhotos, leadFlagPhotoUrl } = car;
+    if (spincarSpinUrl) {
+      return '360';
+    }
+    if (hasStockPhotos) {
+      return 'Stock';
+    }
+    if (leadFlagPhotoUrl) {
+      return 'Vroom';
+    }
+    return 'Illustration';
+  };
 }
 
 export default AnalyticsHandler;
-
-const getPhotoType = (car: Car): VehiclePhotoType => {
-  const { spincarSpinUrl, hasStockPhotos, leadFlagPhotoUrl } = car;
-  if (spincarSpinUrl) {
-    return '360';
-  }
-  if (hasStockPhotos) {
-    return 'Stock';
-  }
-  if (leadFlagPhotoUrl) {
-    return 'Vroom';
-  }
-  return 'Illustration';
-};

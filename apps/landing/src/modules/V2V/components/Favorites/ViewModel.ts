@@ -37,9 +37,13 @@ class FavoritesViewModel {
   }
 
   handleDialogActions(location: string): void {
+    if (location === 'create') {
+      const car = this.inventoryStore.vehicle._source;
+      this.analyticsHandler.trackCreateAccountClicked(car);
+    }
+
     const currentUrl = window.location.pathname;
     const newUrl = `/account/${location}?redirect=${currentUrl}`;
-    location === 'create' && this.analyticsHandler.trackCreateAccountClicked();
     window.location.href = newUrl;
   }
 

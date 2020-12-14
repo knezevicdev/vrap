@@ -15,8 +15,7 @@ class VehicleDetailsButtonViewModel {
 
   handleClick = (): void => {
     const { makeSlug, modelSlug, year, vin } = this.car;
-    const vehicle = this.analyticsHandler.convertToDomain(this.car);
-    this.analyticsHandler.trackSeeAllVehicleDetailsClicked(vehicle);
+    this.analyticsHandler.trackVinLandingPageViewed(this.car);
     window.location.href = `/inventory/${makeSlug}-${modelSlug}-${year}-${vin}`;
   };
 }

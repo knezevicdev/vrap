@@ -42,10 +42,8 @@ class InventoryViewModel {
   }
 
   trackLandingViewed(): void {
-    const vehicle = this.analyticsHandler.convertToDomain(
-      this.store.vehicle._source
-    );
-    this.analyticsHandler.trackVinLandingPageViewed(vehicle);
+    const car = this.store.vehicle._source;
+    this.analyticsHandler.trackVinLandingPageViewed(car);
   }
 }
 
