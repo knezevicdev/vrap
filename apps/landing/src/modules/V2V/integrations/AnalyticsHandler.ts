@@ -19,28 +19,27 @@ export interface Vehicle {
 }
 
 class AnalyticsHandler extends BaseAnalyticsHandler {
-  //Done
   trackVinLandingPageViewed(car: Car): void {
     const event = 'Vin Landing Page Viewed';
     const vehicle = this.convertToDomain(car);
     const properties = { ...vehicle, category };
     this.track(event, properties);
   }
-  //Done
+
   trackSeeAllVehicleDetailsClicked(car: Car): void {
     const event = 'See Details Clicked';
     const vehicle = this.convertToDomain(car);
     const properties = { ...vehicle, category };
     this.track(event, properties);
   }
-  //Needs clarification
+
   trackAddToFavoritesClicked(car: Car): void {
     const event = 'Favorites Clicked';
     const vehicle = this.convertToDomain(car);
     const properties = { ...vehicle, category };
     this.track(event, properties);
   }
-  //Done
+
   trackCreateAccountClicked(car: Car): void {
     const event = 'Create Account';
     const vehicle = this.convertToDomain(car);

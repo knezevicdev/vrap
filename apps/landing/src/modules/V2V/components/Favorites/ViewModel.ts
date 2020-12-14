@@ -124,6 +124,8 @@ class FavoritesViewModel {
       if (found) {
         this.isError() && this.handleError();
         this.favoritesStore.setFavorited();
+        const car = this.inventoryStore.vehicle._source;
+        this.analyticsHandler.trackAddToFavoritesClicked(car);
       }
     } catch {
       !this.isError() && this.handleError();
