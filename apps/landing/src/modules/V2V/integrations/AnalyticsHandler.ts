@@ -3,7 +3,7 @@ import { Car } from '@vroom-web/inv-search-networking';
 
 const category = 'Landing Page';
 
-export type VehiclePhotoType = 'Illustration' | 'Stock' | 'Vroom' | '360';
+export type VehiclePhotoType = 'Illustration' | 'Stock' | 'Vroom';
 
 export interface Vehicle {
   vin: string;
@@ -11,6 +11,7 @@ export interface Vehicle {
   sku: number;
   price: number;
   photoType?: VehiclePhotoType;
+  has360?: boolean;
   hasStockPhotos?: boolean;
   defectPhotos?: boolean;
   spincarSpinUrl?: string | null;
@@ -24,6 +25,7 @@ class AnalyticsHandler extends BaseAnalyticsHandler {
     const vehicle = this.convertToDomain(car);
     const properties = { ...vehicle, category };
     console.log(event, JSON.stringify(properties, null, 2));
+    this.track(event, properties);
   }
   //Done
   trackSeeAllVehicleDetailsClicked(car: Car): void {
@@ -31,6 +33,7 @@ class AnalyticsHandler extends BaseAnalyticsHandler {
     const vehicle = this.convertToDomain(car);
     const properties = { ...vehicle, category };
     console.log(event, JSON.stringify(properties, null, 2));
+    this.track(event, properties);
   }
   //Needs clarification
   trackAddToFavoritesClicked(car: Car): void {
@@ -38,6 +41,7 @@ class AnalyticsHandler extends BaseAnalyticsHandler {
     const vehicle = this.convertToDomain(car);
     const properties = { ...vehicle, category };
     console.log(event, JSON.stringify(properties, null, 2));
+    this.track(event, properties);
   }
   //Done
   trackCreateAccountClicked(car: Car): void {
@@ -46,6 +50,7 @@ class AnalyticsHandler extends BaseAnalyticsHandler {
     const accountCreateType = 'Favorites';
     const properties = { ...vehicle, accountCreateType, category };
     console.log(event, JSON.stringify(properties, null, 2));
+    this.track(event, properties);
   }
   //Needs research
   trackBuySellTradeVideoPlayed(car: Car): void {
@@ -53,21 +58,8 @@ class AnalyticsHandler extends BaseAnalyticsHandler {
     const vehicle = this.convertToDomain(car);
     const properties = { ...vehicle, category };
     console.log(event, JSON.stringify(properties, null, 2));
+    this.track(event, properties);
   }
-
-  // trackCertificationLinkClicked(car: Car): void {
-  //   const event = 'Certification Link Clicked';
-  //   const vehicle = this.convertToDomain(car);
-  //   const properties = { ...vehicle, category };
-  //   console.log(event, JSON.stringify(properties, null, 2));
-  // }
-
-  // trackLearnMoreClicked(car: Car): void {
-  //   const event = 'Learn More Clicked';
-  //   const vehicle = this.convertToDomain(car);
-  //   const properties = { ...vehicle, category };
-  //   console.log(event, JSON.stringify(properties, null, 2));
-  // }
 
   private convertToDomain = (car: Car): Vehicle => {
     const {
@@ -86,6 +78,7 @@ class AnalyticsHandler extends BaseAnalyticsHandler {
       sku,
       price,
       photoType: this.getPhotoType(car),
+      has360: !!spincarSpinUrl,
       hasStockPhotos,
       defectPhotos: !!defectPhotos,
       spincarSpinUrl,
@@ -94,10 +87,7 @@ class AnalyticsHandler extends BaseAnalyticsHandler {
   };
 
   private getPhotoType = (car: Car): VehiclePhotoType => {
-    const { spincarSpinUrl, hasStockPhotos, leadFlagPhotoUrl } = car;
-    if (spincarSpinUrl) {
-      return '360';
-    }
+    const { hasStockPhotos, leadFlagPhotoUrl } = car;
     if (hasStockPhotos) {
       return 'Stock';
     }
