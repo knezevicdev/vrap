@@ -18,57 +18,56 @@ export interface Vehicle {
 }
 
 class AnalyticsHandler extends BaseAnalyticsHandler {
+  //Done
   trackVinLandingPageViewed(car: Car): void {
     const event = 'Vin Landing Page Viewed';
     const vehicle = this.convertToDomain(car);
     const properties = { ...vehicle, category };
-    // this.track(event, properties);
-    console.log(event, properties);
+    console.log(event, JSON.stringify(properties, null, 2));
   }
-
+  //Done
   trackSeeAllVehicleDetailsClicked(car: Car): void {
     const event = 'See Details Clicked';
     const vehicle = this.convertToDomain(car);
     const properties = { ...vehicle, category };
-    // this.track(event, properties);
-    console.log(event, properties);
+    console.log(event, JSON.stringify(properties, null, 2));
   }
-
+  //Needs clarification
   trackAddToFavoritesClicked(car: Car): void {
     const event = 'Favorites Clicked';
     const vehicle = this.convertToDomain(car);
     const properties = { ...vehicle, category };
-    console.log(event, properties);
+    console.log(event, JSON.stringify(properties, null, 2));
   }
-
+  //Done
   trackCreateAccountClicked(car: Car): void {
     const event = 'Create Account';
     const vehicle = this.convertToDomain(car);
     const accountCreateType = 'Favorites';
     const properties = { ...vehicle, accountCreateType, category };
-    console.log(event, properties);
+    console.log(event, JSON.stringify(properties, null, 2));
   }
-
+  //Needs research
   trackBuySellTradeVideoPlayed(car: Car): void {
     const event = 'Buy, Sell, Trade, Video Played';
     const vehicle = this.convertToDomain(car);
     const properties = { ...vehicle, category };
-    console.log(event, properties);
+    console.log(event, JSON.stringify(properties, null, 2));
   }
 
-  trackCertificationLinkClicked(car: Car): void {
-    const event = 'Certification Link Clicked';
-    const vehicle = this.convertToDomain(car);
-    const properties = { ...vehicle, category };
-    console.log(event, properties);
-  }
+  // trackCertificationLinkClicked(car: Car): void {
+  //   const event = 'Certification Link Clicked';
+  //   const vehicle = this.convertToDomain(car);
+  //   const properties = { ...vehicle, category };
+  //   console.log(event, JSON.stringify(properties, null, 2));
+  // }
 
-  trackLearnMoreClicked(car: Car): void {
-    const event = 'Learn More Clicked';
-    const vehicle = this.convertToDomain(car);
-    const properties = { ...vehicle, category };
-    console.log(event, properties);
-  }
+  // trackLearnMoreClicked(car: Car): void {
+  //   const event = 'Learn More Clicked';
+  //   const vehicle = this.convertToDomain(car);
+  //   const properties = { ...vehicle, category };
+  //   console.log(event, JSON.stringify(properties, null, 2));
+  // }
 
   private convertToDomain = (car: Car): Vehicle => {
     const {
