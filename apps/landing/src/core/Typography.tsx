@@ -154,7 +154,6 @@ export const Link: React.FC<LinkProps> = ({
   children,
   href,
   blank,
-  onClick,
 }) => {
   const target = (blank && '_blank') || undefined;
   return (
