@@ -1,12 +1,14 @@
 import React from 'react';
 import styled from 'styled-components';
-import Icon, { Icons } from 'vroom-ui/src/elements/Icon/Icon';
-import { ThemeProps } from 'vroom-ui/src/foundation/themes/types';
 import {
   addStyleForMobile,
   addStyleForTablet,
-} from 'vroom-ui/src/foundation/themes/Vroom';
-import { Heading, Link } from 'vroom-ui/src/foundation/Typography';
+  Heading,
+  Icon,
+  Icons,
+  Link,
+  ThemeProps,
+} from 'vroom-ui';
 
 const primaryBrand = (props: { theme: ThemeProps }): string =>
   props.theme.colors.primary.brand;
@@ -70,14 +72,14 @@ const CustomLink = styled(Link)`
   letter-spacing: 1.75px !important;
 `;
 
-interface Props {
+export interface QuestionProps {
   phone: {
     href: string;
     label: string;
   };
 }
 
-const Questions: React.FC<Props> = ({ phone }): JSX.Element => {
+const Questions: React.FC<QuestionProps> = ({ phone }): JSX.Element => {
   return (
     <Container>
       <Heading.Three>questions?</Heading.Three>

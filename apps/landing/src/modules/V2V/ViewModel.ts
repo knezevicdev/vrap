@@ -7,17 +7,20 @@ const { publicRuntimeConfig } = getConfig();
 
 class InventoryViewModel {
   private store: InventoryStore;
+  readonly valuePropOrderKey: string | null;
   readonly button = 'Shop vehicles now';
-  readonly errorText = 'Something went wrong.';
+  readonly errorText = 'We couldn’t find this vehicle';
   readonly icon = `${publicRuntimeConfig.BASE_PATH}/icons/no-result.svg`;
   private analyticsHandler: AnalyticsHandler;
 
   constructor(
     inventoryStore: InventoryStore,
-    analyticsHandler: AnalyticsHandler
+    analyticsHandler: AnalyticsHandler,
+    valuePropOrderKey: string | null
   ) {
     this.store = inventoryStore;
     this.analyticsHandler = analyticsHandler;
+    this.valuePropOrderKey = valuePropOrderKey;
   }
 
   loading(): boolean {

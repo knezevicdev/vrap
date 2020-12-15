@@ -14314,47 +14314,23 @@ var InProgressDealBarViewModel = /*#__PURE__*/function () {
   }, {
     key: "getResumeStepHref",
     value: function getResumeStepHref(step, vin) {
-      switch (step) {
-        case 'TradeIn':
-          return "/e2e/".concat(vin, "/checkoutTradeIn");
-
-        case 'RegistrationAddress':
-          return "/e2e/".concat(vin, "/registration");
-
-        case 'DeliveryAddress':
-          return "/e2e/".concat(vin, "/delivery-form");
-
-        case 'Financing':
-          return "/e2e/".concat(vin, "/vroomFinancing");
-
-        case 'PaymentType':
-          return "/e2e/".concat(vin, "/payment");
-
-        case 'DepositPaymentInfo':
-          return "/e2e/".concat(vin, "/dealReview");
-
-        case 'DealSummary':
-          return "/deal/".concat(vin, "/congratulations");
-
-        case 'FinancingOption':
-          return "/e2e/".concat(vin, "/autofi");
-
-        case 'FinancingPending':
-          return "/e2e/".concat(vin, "/autofi");
-
-        case 'BackendProducts':
-          return "/e2e/".concat(vin, "/dealCoverage");
-
-        case 'Review':
-          return "/e2e/".concat(vin, "/dealReview");
-
-        case 'DocumentUpload':
-          return "/e2e/".concat(vin, "/documentUpload");
-
-        default:
-          // If we got an unexpected step, link to the transactions page as a fallback.
-          return '/my-account/transactions';
-      }
+      var urlDict = {
+        TradeIn: 'checkoutTradeIn',
+        RegistrationAddress: 'registration',
+        DeliveryAddress: 'delivery-form',
+        Financing: 'vroomFinancing',
+        PaymentType: 'payment',
+        DepositPaymentInfo: 'dealReview',
+        DealSummary: 'congratulations',
+        FinancingOption: 'autofi',
+        FinancingPending: 'autofi',
+        BackendProducts: 'dealCoverage',
+        Review: 'dealReview',
+        DocumentUpload: 'documentUpload',
+        TradeInLoanInfo: 'tradeInLoanInfo'
+      };
+      var stepUrl = urlDict[step];
+      return "/e2e/".concat(vin, "/").concat(stepUrl ? stepUrl : "my-account/transactions");
     }
   }, {
     key: "handleButtonClick",

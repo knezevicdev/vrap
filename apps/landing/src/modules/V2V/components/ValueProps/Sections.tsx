@@ -82,7 +82,6 @@ export const CertifiedSection: FC = () => {
     <Section>
       <TitleContainer>
         <Icon icon={Icons.VROOM_SHIELD} />
-
         <CertifiedTitle>vroom certified</CertifiedTitle>
       </TitleContainer>
       <SizedIcon icon={Icons.CAR_DIAGRAM} />

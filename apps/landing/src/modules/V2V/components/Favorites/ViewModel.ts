@@ -42,9 +42,9 @@ class FavoritesViewModel {
       const car = this.inventoryStore.vehicle._source;
       this.analyticsHandler.trackCreateAccountClicked(car);
     }
-
-    const currentUrl = window.location.pathname;
-    const newUrl = `/account/${location}?redirect=${currentUrl}`;
+    const { pathname, search } = window.location;
+    const queryParams = search.replace('?', '&');
+    const newUrl = `/account/${location}?redirect=${pathname}${queryParams}`;
     window.location.href = newUrl;
   }
 

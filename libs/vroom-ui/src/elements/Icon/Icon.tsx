@@ -316,4 +316,9 @@ export const Icons = {
     width: 24,
     height: 14,
   },
+  CALENDAR: {
+    name: 'calendar',
+    width: 22,
+    height: 18,
+  },
 };

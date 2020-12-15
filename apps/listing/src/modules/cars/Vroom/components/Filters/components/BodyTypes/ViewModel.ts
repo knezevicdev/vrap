@@ -58,8 +58,16 @@ class BodyTypesViewModel {
 
   reset = (): void => {
     const filtersData = this.carsStore.filtersData;
-    const updatedFiltersData = resetFilter(Filters.BODY_TYPES, filtersData);
-    this.carsStore.updateFiltersData(updatedFiltersData);
+    const updatedCabTypeData = resetFilter(Filters.CAB_TYPE, filtersData);
+    const updatedBodyTypeData = resetFilter(
+      Filters.BODY_TYPES,
+      updatedCabTypeData
+    );
+    this.carsStore.updateFiltersData({ ...updatedBodyTypeData });
+  };
+
+  showTruckCabTypeFilterExperiment = (): boolean => {
+    return this.carsStore.truckCabTypeFilterExperiment?.assignedVariant === 1;
   };
 }
 

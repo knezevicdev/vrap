@@ -20,6 +20,9 @@ import {
   BodyType,
   BodyTypeAPI,
   bodyTypes,
+  CabType,
+  CabTypeAPI,
+  cabTypes,
   Color,
   ColorAPI,
   colors,
@@ -82,6 +85,28 @@ export const getBodyTypeRequestData = (
     }
   });
   return bodytype;
+};
+
+export const getCabTypeRequestData = (
+  filtersData?: FiltersData
+): CabTypeAPI[] | undefined => {
+  if (!filtersData) {
+    return undefined;
+  }
+  const filtersDataCabTypes = filtersData[Filters.CAB_TYPE];
+  if (!filtersDataCabTypes || !cabTypes) {
+    return undefined;
+  }
+  const cabtype: CabTypeAPI[] = [];
+  filtersDataCabTypes.forEach((filterDataCabType) => {
+    const matchingCabType = cabTypes.find(
+      (bt) => bt.filtersDataValue === filterDataCabType
+    );
+    if (matchingCabType) {
+      cabtype.push(matchingCabType.api);
+    }
+  });
+  return cabtype;
 };
 
 export const getColorRequestData = (
@@ -334,9 +359,11 @@ export const getPostInventoryRequestDataFromFilterData = (
   sortAgeDirectionExperiment?: Experiment
 ): PostInventoryRequestData => {
   const bodytype = getBodyTypeRequestData(filtersData);
+  const cabtype = getCabTypeRequestData(filtersData);
   const color = getColorRequestData(filtersData);
-  const drivetype = getDriveTypeRequestData(filtersData);
   const cylinders = getCylinderRequestData(filtersData);
+  const drivetype = getDriveTypeRequestData(filtersData);
+  const fuelType = getFuelTypeRequestData(filtersData);
   const { makeSlug, modelSlug } = getMakeAndModelRequestData(filtersData);
   const offset = getOffsetRequestData(filtersData);
   const popularFeatures = getPopularFeaturesRequestData(filtersData);
@@ -346,10 +373,10 @@ export const getPostInventoryRequestDataFromFilterData = (
   );
   const testdriveonly = getTestDriveOnlyRequestData(filtersData);
   const transmissionid = getTransmissionRequestData(filtersData);
-  const fuelType = getFuelTypeRequestData(filtersData);
 
   return {
     bodytype,
+    cabtype,
     color,
     drivetype,
     makeSlug,
@@ -381,6 +408,7 @@ export class CarsStore {
   readonly geoLocationSortDefaultVariant: boolean = true;
   readonly inventoryCardsPerPage: number = INVENTORY_CARDS_PER_PAGE;
   readonly bodyTypes: BodyType[] = bodyTypes;
+  readonly cabTypes: CabType[] = cabTypes;
   readonly colors: Color[] = colors;
   readonly driveTypes: DriveType[] = driveTypes;
   readonly cylinders: Cylinder[] = cylinders;
@@ -420,6 +448,7 @@ export class CarsStore {
   @observable fuelTypeFilterExperiment?: Experiment;
   @observable featuresFilterExperiment?: Experiment;
   @observable fuelEfficiencyFilterExperiment?: Experiment;
+  @observable truckCabTypeFilterExperiment?: Experiment;
 
   constructor(initialState?: InitialCarsStoreState) {
     this.invSearchNetworker = new InvSearchNetworker(
@@ -455,6 +484,13 @@ export class CarsStore {
     fuelEfficiencyFilterExperiment?: Experiment
   ): void => {
     this.fuelEfficiencyFilterExperiment = fuelEfficiencyFilterExperiment;
+  };
+
+  @action
+  setTruckCabTypeFilterExperiment = (
+    truckCabTypeFilterExperiment?: Experiment
+  ): void => {
+    this.truckCabTypeFilterExperiment = truckCabTypeFilterExperiment;
   };
 
   @action

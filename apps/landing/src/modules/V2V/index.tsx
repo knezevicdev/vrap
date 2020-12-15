@@ -5,10 +5,12 @@ import { InventoryStoreContext } from './store/inventoryStore';
 import View from './View';
 import ViewModel from './ViewModel';
 
-const Vehicle: React.FC = () => {
+const Vehicle: React.FC<{
+  valuePropOrderKey: string | null;
+}> = ({ valuePropOrderKey }) => {
   const store = useContext(InventoryStoreContext);
   const analyticsHandler = new AnalyticsHandler();
-  const viewModel = new ViewModel(store, analyticsHandler);
+  const viewModel = new ViewModel(store, analyticsHandler, valuePropOrderKey);
   return <View viewModel={viewModel} />;
 };
 

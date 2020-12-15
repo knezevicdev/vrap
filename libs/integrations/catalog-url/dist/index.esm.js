@@ -4,6 +4,7 @@ var Filters;
 
 (function (Filters) {
   Filters["BODY_TYPES"] = "bodytypes";
+  Filters["CAB_TYPE"] = "cabtype";
   Filters["COLORS"] = "colors";
   Filters["DRIVE_TYPE"] = "drivetype";
   Filters["MAKE_AND_MODELS"] = "makesandmodels";
@@ -34,6 +35,14 @@ var BodyType;
   BodyType["TRUCK"] = "truck";
   BodyType["WAGON"] = "wagon";
 })(BodyType || (BodyType = {}));
+
+var CabType;
+
+(function (CabType) {
+  CabType["CREW"] = "crew";
+  CabType["REGULAR"] = "regular";
+  CabType["EXTENDED"] = "extended";
+})(CabType || (CabType = {}));
 
 var Color;
 
@@ -135,6 +144,11 @@ var resetFilters = function resetFilters(filters, filtersData) {
   });
   return newFiltersData;
 };
+var removeTruckSubfilters = function removeTruckSubfilters(filtersData) {
+  var newFiltersData = deepCopyFiltersData(filtersData || {});
+  newFiltersData[Filters.CAB_TYPE] = undefined;
+  return newFiltersData;
+};
 var addBodyType = function addBodyType(bodyType, filtersData) {
   var newFiltersData = deepCopyFiltersData(filtersData || {});
   var newBodyTypes = newFiltersData[Filters.BODY_TYPES] || [];
@@ -143,12 +157,33 @@ var addBodyType = function addBodyType(bodyType, filtersData) {
   return newFiltersData;
 };
 var removeBodyType = function removeBodyType(bodyType, filtersData) {
+  // CabType only applies to truck, remove all truck sub filters when deselected
+  if (bodyType === BodyType.TRUCK) {
+    filtersData = removeTruckSubfilters(filtersData);
+  }
+
   var newFiltersData = deepCopyFiltersData(filtersData || {});
   var existingBodyTypes = newFiltersData[Filters.BODY_TYPES] || [];
   var newBodyTypes = existingBodyTypes.filter(function (bt) {
     return bt !== bodyType;
   });
   newFiltersData[Filters.BODY_TYPES] = newBodyTypes.length > 0 ? newBodyTypes : undefined;
+  return newFiltersData;
+};
+var addCabType = function addCabType(cabType, filtersData) {
+  var newFiltersData = deepCopyFiltersData(filtersData || {});
+  var newCabType = newFiltersData[Filters.CAB_TYPE] || [];
+  newCabType.push(cabType);
+  newFiltersData[Filters.CAB_TYPE] = newCabType;
+  return newFiltersData;
+};
+var removeCabType = function removeCabType(cabType, filtersData) {
+  var newFiltersData = deepCopyFiltersData(filtersData || {});
+  var existingCabType = newFiltersData[Filters.CAB_TYPE] || [];
+  var newCabType = existingCabType.filter(function (c) {
+    return c !== cabType;
+  });
+  newFiltersData[Filters.CAB_TYPE] = newCabType.length > 0 ? newCabType : undefined;
   return newFiltersData;
 };
 var addFuelType = function addFuelType(fuelType, filtersData) {
@@ -633,6 +668,12 @@ var getFiltersDataFromFiltersQueryParam = function getFiltersDataFromFiltersQuer
     filtersData[Filters.DRIVE_TYPE] = parsed[Filters.DRIVE_TYPE];
   }
 
+  var isCabTypeArray = isEnumArray(CabType);
+
+  if (isCabTypeArray(parsed[Filters.CAB_TYPE])) {
+    filtersData[Filters.CAB_TYPE] = parsed[Filters.CAB_TYPE];
+  }
+
   var isCylinderArray = isEnumArray(Cylinder);
 
   if (isCylinderArray(parsed[Filters.CYLINDERS])) {
@@ -798,4 +839,4 @@ var getFiltersDataFromUrl = function getFiltersDataFromUrl(url) {
   return undefined;
 };
 
-export { BodyType, Color, Cylinder, DriveType, Filters, FuelType, PopularFeatures, SortBy, SortDirection, TestDrive, Transmission, addAllModels, addBodyType, addColor, addCylinder, addDriveType, addFuelType, addModel, addPopularFeature, getFiltersDataFromUrl, getUrlFromFiltersData, removeAllModels, removeBodyType, removeColor, removeCylinder, removeDriveType, removeFuelType, removeModel, removePopularFeature, resetFilter, resetFilters, setFuelEfficiency, setMiles, setOtherCylinders, setPage, setPrice, setSearch, setSort, setTestDrive, setTransmission, setYear };
+export { BodyType, CabType, Color, Cylinder, DriveType, Filters, FuelType, PopularFeatures, SortBy, SortDirection, TestDrive, Transmission, addAllModels, addBodyType, addCabType, addColor, addCylinder, addDriveType, addFuelType, addModel, addPopularFeature, getFiltersDataFromUrl, getUrlFromFiltersData, removeAllModels, removeBodyType, removeCabType, removeColor, removeCylinder, removeDriveType, removeFuelType, removeModel, removePopularFeature, resetFilter, resetFilters, setFuelEfficiency, setMiles, setOtherCylinders, setPage, setPrice, setSearch, setSort, setTestDrive, setTransmission, setYear };
