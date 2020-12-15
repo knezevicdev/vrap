@@ -8,12 +8,6 @@ import { Body, Hero, Link } from 'src/core/Typography';
 
 const { publicRuntimeConfig } = getConfig();
 
-declare global {
-  interface Window {
-    YT: any;
-  }
-}
-
 const Section = styled.div`
   width: 100%;
   margin-bottom: 76px;
@@ -78,7 +72,6 @@ const DeliveredImage = styled.img`
 
 const UnderlinedLink = styled(Link)`
   color: #e7131a !important;
-  font-weight: bold !important;
 `;
 const Bold = styled.span`
   font-weight: bold !important;

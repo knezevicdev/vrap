@@ -1,7 +1,7 @@
 import { Car } from '@vroom-web/inv-search-networking';
 
-import { InventoryStore } from '../../store/inventoryStore';
 import AnalyticsHandler from '../../integrations/AnalyticsHandler';
+import { InventoryStore } from '../../store/inventoryStore';
 
 class VehicleDetailsButtonViewModel {
   readonly button = 'See all vehicle details';

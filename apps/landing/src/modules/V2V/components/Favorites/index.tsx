@@ -1,12 +1,12 @@
 import getConfig from 'next/config';
 import React, { useContext } from 'react';
 
+import AnalyticsHandler from '../../integrations/AnalyticsHandler';
 import { FavoritesStore } from '../../store/favoritesStore';
 import { InventoryStoreContext } from '../../store/inventoryStore';
 import FavoritesNetworker from './FavoritesNetworker';
 import View from './View';
 import ViewModel from './ViewModel';
-import AnalyticsHandler from '../../integrations/AnalyticsHandler';
 
 const { publicRuntimeConfig } = getConfig();
 const gearboxPrivateUrl = publicRuntimeConfig.GEARBOX_PRIVATE_URL;

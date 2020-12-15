@@ -1,12 +1,12 @@
 import { FC } from 'react';
 
+import BuySellTrade from './BuySellTrade';
 import {
   ButtonSection,
   CertifiedSection,
   DeliveredSection,
   TestDriveSection,
 } from './Sections';
-import BuySellTrade from './BuySellTrade';
 
 class ValuePropsViewModel {
   sectionOrder: string[] = [

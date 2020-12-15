@@ -1,7 +1,7 @@
+import AnalyticsHandler from '../../integrations/AnalyticsHandler';
 import { FavoritesStore } from '../../store/favoritesStore';
 import { InventoryStore } from '../../store/inventoryStore';
 import FavoritesNetworker from './FavoritesNetworker';
-import AnalyticsHandler from '../../integrations/AnalyticsHandler';
 
 interface VinList {
   vin: string;

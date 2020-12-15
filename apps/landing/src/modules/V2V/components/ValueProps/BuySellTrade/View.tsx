@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import styled from 'styled-components';
 
 import HeaderViewModel from './ViewModel';
+
 import { Hero } from 'src/core/Typography';
 
 interface Props {
@@ -63,7 +64,7 @@ const BuySellTradeView: React.FC<Props> = ({ viewModel }) => {
         },
       });
     });
-  }, []);
+  }, [viewModel]);
 
   return (
     <VideoContainer>

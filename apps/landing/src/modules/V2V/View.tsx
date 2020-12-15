@@ -92,7 +92,7 @@ const InventoryView: React.FC<Props> = ({ viewModel }) => {
 
   useEffect(() => {
     viewModel.ready() && viewModel.trackLandingViewed();
-  }, []);
+  }, [viewModel]);
 
   return (
     <>
