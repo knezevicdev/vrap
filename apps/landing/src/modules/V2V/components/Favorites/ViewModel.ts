@@ -37,6 +37,16 @@ class FavoritesViewModel {
     this.isLoggedIn() ? this.checkFavorites() : this.setLoading(false);
   }
 
+  handleFavoritesClicked(): void {
+    const car = this.inventoryStore.vehicle._source;
+    this.analyticsHandler.trackAddToFavoritesClicked(car);
+    if (this.isLoggedIn()) {
+      this.isFavorited() ? this.removeFavorite() : this.addFavorite();
+    } else {
+      this.handleDialog();
+    }
+  }
+
   handleDialogActions(location: string): void {
     this.fireSegmentEvent(location);
     const { pathname, search } = window.location;
@@ -123,7 +133,7 @@ class FavoritesViewModel {
         this.isError() && this.handleError();
         this.favoritesStore.setFavorited();
         const car = this.inventoryStore.vehicle._source;
-        this.analyticsHandler.trackAddToFavoritesClicked(car);
+        this.analyticsHandler.trackAddToFavoritesSuccess(car);
       }
     } catch {
       !this.isError() && this.handleError();

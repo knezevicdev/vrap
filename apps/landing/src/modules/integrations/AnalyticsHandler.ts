@@ -44,6 +44,13 @@ class AnalyticsHandler extends BaseAnalyticsHandler {
     this.track(event, properties);
   }
 
+  trackAddToFavoritesSuccess(car: Car): void {
+    const event = 'Favorited';
+    const vehicle = this.convertToDomain(car);
+    const properties = { ...vehicle, category };
+    this.track(event, properties);
+  }
+
   trackAccountEvents(car: Car, event: string): void {
     const vehicle = this.convertToDomain(car);
     const accountCreateType = 'Favorites';
