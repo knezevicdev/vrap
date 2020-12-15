@@ -35,6 +35,7 @@
     "@types/react": "^16.9.53",
     "@types/react-dom": "^16.9.8",
     "babel-loader": "^8.2.1",
+    "babel-plugin-inline-react-svg": "^1.1.2",
     "eslint": "^7.13.0",
     "rimraf": "^3.0.2",
     "storybook-addon-designs": "^5.4.2",
