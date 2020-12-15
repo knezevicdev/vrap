@@ -20,8 +20,6 @@ configureMobx({
 
 const { publicRuntimeConfig } = getConfig();
 
-const theme = getVroomTheme();
-
 class VroomApp extends App {
   componentDidMount(): void {
     if (publicRuntimeConfig.DATA_DOG_RUM_APPLICATION) {
@@ -50,6 +48,8 @@ class VroomApp extends App {
 
   render(): JSX.Element {
     const { Component, pageProps } = this.props;
+    const theme = getVroomTheme();
+
     return (
       <>
         <GlobalStyle />
