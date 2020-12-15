@@ -6,6 +6,7 @@ const category = 'Landing Page';
 export type VehiclePhotoType = 'Illustration' | 'Stock' | 'Vroom';
 
 export interface Vehicle {
+  name: string;
   vin: string;
   year: number;
   sku: number;
@@ -47,16 +48,17 @@ class AnalyticsHandler extends BaseAnalyticsHandler {
     const properties = { ...vehicle, accountCreateType, category };
     this.track(event, properties);
   }
-  //Needs research
-  trackBuySellTradeVideoPlayed(car: Car): void {
-    const event = 'Buy, Sell, Trade, Video Played';
+
+  trackBuySellTradeVideoEvents(car: Car, label: string, event: string): void {
     const vehicle = this.convertToDomain(car);
-    const properties = { ...vehicle, category };
+    const properties = { ...vehicle, label, category };
     this.track(event, properties);
   }
 
   private convertToDomain = (car: Car): Vehicle => {
     const {
+      make,
+      model,
       vin,
       year,
       inventoryId: sku,
@@ -67,6 +69,7 @@ class AnalyticsHandler extends BaseAnalyticsHandler {
       soldStatus,
     } = car;
     return {
+      name: `${year} ${make} ${model}`,
       vin,
       year,
       sku,

@@ -13,8 +13,21 @@ class BuySellTradeViewModel {
   }
 
   handleVideoStateChange = (event: any): void => {
+    const label = event.target.getVideoData().title;
     if (event.data == window.YT.PlayerState.PLAYING) {
-      this.analyticsHandler.trackBuySellTradeVideoPlayed(this.car);
+      this.analyticsHandler.trackBuySellTradeVideoEvents(
+        this.car,
+        label,
+        'Video Playback Started'
+      );
+    }
+
+    if (event.data == window.YT.PlayerState.PAUSED) {
+      this.analyticsHandler.trackBuySellTradeVideoEvents(
+        this.car,
+        label,
+        'Video Playback Paused'
+      );
     }
   };
 }
