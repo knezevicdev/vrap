@@ -9,6 +9,9 @@ import App from 'next/app';
 import getConfig from 'next/config';
 
 import client from 'src/networking/client';
+import {ThemeProvider} from "styled-components";
+import React from "react";
+import {getVroomTheme, GlobalStyle} from "vroom-ui";
 
 configureMobx({
   enforceActions: 'observed', // don't allow state modifications outside actions
@@ -16,6 +19,8 @@ configureMobx({
 });
 
 const { publicRuntimeConfig } = getConfig();
+
+const theme = getVroomTheme('/assets/fonts/Vroom');
 
 class VroomApp extends App {
   componentDidMount(): void {
@@ -41,6 +46,18 @@ class VroomApp extends App {
       }
     };
     client.addResponseInterceptor(errorInterceptor);
+  }
+
+  render(): JSX.Element {
+    const {Component, pageProps} = this.props;
+    return (
+        <>
+          <GlobalStyle/>
+          <ThemeProvider theme={theme}>
+            <Component {...pageProps} />
+          </ThemeProvider>
+        </>
+    );
   }
 }
 
