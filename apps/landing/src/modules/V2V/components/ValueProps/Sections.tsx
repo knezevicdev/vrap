@@ -1,10 +1,12 @@
 import getConfig from 'next/config';
-import React, { FC } from 'react';
+import React, { FC, useContext } from 'react';
 import styled from 'styled-components';
 
 import { Button } from 'src/core/Button';
 import Icon, { Icons } from 'src/core/Icon';
-import { Body, Hero, Link } from 'src/core/Typography';
+import { Body, Hero } from 'src/core/Typography';
+import AnalyticsHandler from 'src/modules/integrations/AnalyticsHandler';
+import { InventoryStoreContext } from '../../store/inventoryStore';
 
 const { publicRuntimeConfig } = getConfig();
 
@@ -70,14 +72,23 @@ const DeliveredImage = styled.img`
   }
 `;
 
-const UnderlinedLink = styled(Link)`
-  color: #e7131a !important;
+const UnderlinedLink = styled.span`
+  color: #e7131a;
+  text-decoration: underline;
+  cursor: pointer;
 `;
+
 const Bold = styled.span`
-  font-weight: bold !important;
+  font-weight: bold;
 `;
 
 export const CertifiedSection: FC = () => {
+  const store = useContext(InventoryStoreContext);
+  const handleClick = (): void => {
+    new AnalyticsHandler().trackCertifiedLinkClicked(store.vehicle._source);
+    window.location.href = 'https://www.vroom.com/protection';
+  };
+
   return (
     <Section>
       <TitleContainer>
@@ -88,7 +99,7 @@ export const CertifiedSection: FC = () => {
 
       <Description>
         All our vehicles go through a 100 point inspection and come with{' '}
-        <UnderlinedLink href={'https://www.vroom.com/protection'}>
+        <UnderlinedLink onClick={handleClick}>
           Vroom’s&nbsp;free&nbsp;limited&nbsp;warranty
         </UnderlinedLink>
         , good for 90&nbsp;days or 6,000&nbsp;miles.
@@ -130,7 +141,9 @@ export const DeliveredSection: FC = () => {
 };
 
 export const ButtonSection: FC = () => {
+  const store = useContext(InventoryStoreContext);
   const onClick = (): void => {
+    new AnalyticsHandler().trackLearnMoreClicked(store.vehicle._source);
     window.location.href =
       'https://vroom.zendesk.com/hc/en-us/articles/205360565-When-does-the-7-day-return-period-begin-';
   };

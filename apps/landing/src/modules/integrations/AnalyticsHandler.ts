@@ -64,6 +64,20 @@ class AnalyticsHandler extends BaseAnalyticsHandler {
     this.track(event, properties);
   }
 
+  trackLearnMoreClicked(car: Car): void {
+    const event = 'Learn More About Vroom Clicked';
+    const vehicle = this.convertToDomain(car);
+    const properties = { ...vehicle, category };
+    this.track(event, properties);
+  }
+
+  trackCertifiedLinkClicked(car: Car): void {
+    const event = 'Vroom’s Free Limited Warranty Link Clicked';
+    const vehicle = this.convertToDomain(car);
+    const properties = { ...vehicle, category };
+    this.track(event, properties);
+  }
+
   private convertToDomain = (car: Car): Vehicle => {
     const {
       make,
