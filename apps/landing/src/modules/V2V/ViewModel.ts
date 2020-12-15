@@ -1,6 +1,6 @@
 import getConfig from 'next/config';
 
-import AnalyticsHandler from './integrations/AnalyticsHandler';
+import AnalyticsHandler from '../integrations/AnalyticsHandler';
 import { InventoryStore, Status } from './store/inventoryStore';
 
 const { publicRuntimeConfig } = getConfig();

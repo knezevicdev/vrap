@@ -1,4 +1,4 @@
-import AnalyticsHandler from '../../integrations/AnalyticsHandler';
+import AnalyticsHandler from '../../../integrations/AnalyticsHandler';
 import { FavoritesStore } from '../../store/favoritesStore';
 import { InventoryStore } from '../../store/inventoryStore';
 import FavoritesNetworker from './FavoritesNetworker';

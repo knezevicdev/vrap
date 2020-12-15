@@ -22,8 +22,6 @@ const dev = NODE_ENV !== 'production';
 
 export default class VroomApp extends App {
   componentDidMount(): void {
-    new AnalyticsHandler().page('Landing - 2019 Jeep Wrangler');
-
     if (DATA_DOG_RUM_APPLICATION) {
       datadogRum.init({
         applicationId: DATA_DOG_RUM_APPLICATION,

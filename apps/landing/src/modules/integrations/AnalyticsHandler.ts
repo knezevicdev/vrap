@@ -20,11 +20,14 @@ export interface Vehicle {
 }
 
 class AnalyticsHandler extends BaseAnalyticsHandler {
-  trackVinLandingPageViewed(car: Car): void {
-    const event = 'Vin Landing Page Viewed';
-    const vehicle = this.convertToDomain(car);
-    const properties = { ...vehicle, category };
-    this.track(event, properties);
+  trackJeepWranglerPageViewed(): void {
+    const name = 'Landing - 2019 Jeep Wrangler';
+    this.page(name);
+  }
+
+  trackVinLandingPageViewed(): void {
+    const name = 'VIN Landing Page';
+    this.page(name, category);
   }
 
   trackSeeAllVehicleDetailsClicked(car: Car): void {

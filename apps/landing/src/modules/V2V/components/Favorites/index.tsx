@@ -1,7 +1,7 @@
 import getConfig from 'next/config';
 import React, { useContext } from 'react';
 
-import AnalyticsHandler from '../../integrations/AnalyticsHandler';
+import AnalyticsHandler from '../../../integrations/AnalyticsHandler';
 import { FavoritesStore } from '../../store/favoritesStore';
 import { InventoryStoreContext } from '../../store/inventoryStore';
 import FavoritesNetworker from './FavoritesNetworker';

@@ -3,7 +3,7 @@ import React, { useContext } from 'react';
 import View from './View';
 import ViewModel from './ViewModel';
 
-import AnalyticsHandler from 'src/modules/V2V/integrations/AnalyticsHandler';
+import AnalyticsHandler from 'src/modules/integrations/AnalyticsHandler';
 import { InventoryStoreContext } from 'src/modules/V2V/store/inventoryStore';
 
 declare global {

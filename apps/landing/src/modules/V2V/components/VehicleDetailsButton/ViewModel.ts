@@ -1,6 +1,6 @@
 import { Car } from '@vroom-web/inv-search-networking';
 
-import AnalyticsHandler from '../../integrations/AnalyticsHandler';
+import AnalyticsHandler from '../../../integrations/AnalyticsHandler';
 import { InventoryStore } from '../../store/inventoryStore';
 
 class VehicleDetailsButtonViewModel {
@@ -15,7 +15,7 @@ class VehicleDetailsButtonViewModel {
 
   handleClick = (): void => {
     const { makeSlug, modelSlug, year, vin } = this.car;
-    this.analyticsHandler.trackVinLandingPageViewed(this.car);
+    this.analyticsHandler.trackVinLandingPageViewed();
     window.location.href = `/inventory/${makeSlug}-${modelSlug}-${year}-${vin}`;
   };
 }

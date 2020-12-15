@@ -1,7 +1,9 @@
 import Head from 'next/head';
-import React, { FC } from 'react';
+import React, { FC, useEffect } from 'react';
 
 import Landing from '../../../modules';
+
+import AnalyticsHandler from 'src/modules/integrations/AnalyticsHandler';
 
 const LandingPage: FC = () => {
   const title =
@@ -9,6 +11,10 @@ const LandingPage: FC = () => {
   const description = `Learn more about the 2019 Jeep Wrangler, 
     including specifications & available trims. 
     Buy, sell or trade-in your Jeep Wrangler entirely online with Vroom.`;
+
+  useEffect(() => {
+    new AnalyticsHandler().trackJeepWranglerPageViewed();
+  }, []);
 
   return (
     <>

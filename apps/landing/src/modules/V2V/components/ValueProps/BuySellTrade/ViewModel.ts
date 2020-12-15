@@ -1,6 +1,6 @@
 import { Car } from '@vroom-web/inv-search-networking';
 
-import AnalyticsHandler from 'src/modules/V2V/integrations/AnalyticsHandler';
+import AnalyticsHandler from 'src/modules/integrations/AnalyticsHandler';
 import { InventoryStore } from 'src/modules/V2V/store/inventoryStore';
 
 class BuySellTradeViewModel {
