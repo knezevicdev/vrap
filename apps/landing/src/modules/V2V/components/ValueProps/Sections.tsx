@@ -2,11 +2,12 @@ import getConfig from 'next/config';
 import React, { FC, useContext } from 'react';
 import styled from 'styled-components';
 
+import { InventoryStoreContext } from '../../store/inventoryStore';
+
 import { Button } from 'src/core/Button';
 import Icon, { Icons } from 'src/core/Icon';
 import { Body, Hero } from 'src/core/Typography';
 import AnalyticsHandler from 'src/modules/integrations/AnalyticsHandler';
-import { InventoryStoreContext } from '../../store/inventoryStore';
 
 const { publicRuntimeConfig } = getConfig();
 

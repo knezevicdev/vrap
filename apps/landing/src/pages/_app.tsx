@@ -1,5 +1,4 @@
 import { datadogRum } from '@datadog/browser-rum';
-import { AnalyticsHandler } from '@vroom-web/analytics-integration';
 import { CatSDK } from '@vroom-web/cat-sdk';
 import App from 'next/app';
 import getConfig from 'next/config';

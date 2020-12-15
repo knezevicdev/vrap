@@ -37,7 +37,7 @@ class FavoritesViewModel {
     this.isLoggedIn() ? this.checkFavorites() : this.setLoading(false);
   }
 
-  handleFavoritesClicked(): void {
+  handleFavoritesClicked = (): void => {
     const car = this.inventoryStore.vehicle._source;
     this.analyticsHandler.trackAddToFavoritesClicked(car);
     if (this.isLoggedIn()) {
@@ -45,7 +45,7 @@ class FavoritesViewModel {
     } else {
       this.handleDialog();
     }
-  }
+  };
 
   handleDialogActions(location: string): void {
     this.fireSegmentEvent(location);

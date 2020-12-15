@@ -46,7 +46,7 @@ const FavoritesView: React.FC<Props> = ({ viewModel }) => {
 
   return (
     <Container>
-      <ContainerText onClick={() => viewModel.handleFavoritesClicked()}>
+      <ContainerText onClick={viewModel.handleFavoritesClicked}>
         {viewModel.isFavorited() ? (
           <FavoriteSection>
             <Icon icon={Icons.FAVORITE_FILLED} /> {viewModel.favorited}
