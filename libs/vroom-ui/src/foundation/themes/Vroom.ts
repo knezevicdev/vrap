@@ -75,19 +75,19 @@ export const GlobalStyle = createGlobalStyle`
   @font-face {
     font-family: Calibre;
     font-weight: normal;
-    src: url(${fontPath}/Calibre-Regular.woff2) format('woff2');
+    src: url(/assets/fonts/Vroom/Calibre-Regular.woff2) format('woff2');
     font-display: swap;
   }
   @font-face {
     font-family: Calibre;
     font-weight: 600;
-    src: url(${fontPath}/Calibre-Semibold.woff2) format('woff2');
+    src: url(/assets/fonts/Vroom/Calibre-Semibold.woff2) format('woff2');
     font-display: swap;
   }
   @font-face {
     font-family: Vroom Sans;
     font-weight: normal;
-    src: url(${fontPath}/Vroom-Sans.woff2) format('woff2');
+    src: url(/assets/fonts/Vroom/Vroom-Sans.woff2) format('woff2');
     font-display: swap;
   }
   

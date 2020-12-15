@@ -8,7 +8,7 @@ exports.GlobalStyle = exports.addStyleForDesktop = exports.addStyleForTablet = e
 var _styledComponents = require("styled-components");
 
 function _templateObject4() {
-  var data = _taggedTemplateLiteral(["\n  html {\n    height: 100%;\n  }\n  \n  body {\n    margin: 0;\n    height: 100%;\n  }\n  \n  @font-face {\n    font-family: Calibre;\n    font-weight: normal;\n    src: url(", "/Calibre-Regular.woff2) format('woff2');\n    font-display: swap;\n  }\n  @font-face {\n    font-family: Calibre;\n    font-weight: 600;\n    src: url(", "/Calibre-Semibold.woff2) format('woff2');\n    font-display: swap;\n  }\n  @font-face {\n    font-family: Vroom Sans;\n    font-weight: normal;\n    src: url(", "/Vroom-Sans.woff2) format('woff2');\n    font-display: swap;\n  }\n  \n  #__next {\n    height: 100%;\n  }\n"]);
+  var data = _taggedTemplateLiteral(["\n  html {\n    height: 100%;\n  }\n  \n  body {\n    margin: 0;\n    height: 100%;\n  }\n  \n  @font-face {\n    font-family: Calibre;\n    font-weight: normal;\n    src: url(/assets/fonts/Vroom/Calibre-Regular.woff2) format('woff2');\n    font-display: swap;\n  }\n  @font-face {\n    font-family: Calibre;\n    font-weight: 600;\n    src: url(/assets/fonts/Vroom/Calibre-Semibold.woff2) format('woff2');\n    font-display: swap;\n  }\n  @font-face {\n    font-family: Vroom Sans;\n    font-weight: normal;\n    src: url(/assets/fonts/Vroom/Vroom-Sans.woff2) format('woff2');\n    font-display: swap;\n  }\n  \n  #__next {\n    height: 100%;\n  }\n"]);
 
   _templateObject4 = function _templateObject4() {
     return data;
@@ -111,5 +111,5 @@ var fontPath = (_ref) => {
   return typography.fontPath;
 };
 
-var GlobalStyle = (0, _styledComponents.createGlobalStyle)(_templateObject4(), fontPath, fontPath, fontPath);
+var GlobalStyle = (0, _styledComponents.createGlobalStyle)(_templateObject4());
 exports.GlobalStyle = GlobalStyle;
