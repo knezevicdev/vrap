@@ -38,10 +38,7 @@ class FavoritesViewModel {
   }
 
   handleDialogActions(location: string): void {
-    if (location === 'create') {
-      const car = this.inventoryStore.vehicle._source;
-      this.analyticsHandler.trackCreateAccountClicked(car);
-    }
+    this.fireSegmentEvent(location);
     const { pathname, search } = window.location;
     const queryParams = search.replace('?', '&');
     const newUrl = `/account/${location}?redirect=${pathname}${queryParams}`;
@@ -154,6 +151,16 @@ class FavoritesViewModel {
       !this.isError() && this.handleError();
     }
   }
+
+  private fireSegmentEvent = (location: string): void => {
+    const car = this.inventoryStore.vehicle._source;
+    if (location === 'create') {
+      this.analyticsHandler.trackAccountEvents(car, 'Create Account');
+    }
+    if (location === 'login') {
+      this.analyticsHandler.trackAccountEvents(car, 'Login');
+    }
+  };
 }
 
 export default FavoritesViewModel;
