@@ -50,6 +50,7 @@ const AvailableSoon = styled(Typography)(({ theme }) => ({
   width: 'fit-content',
   position: 'relative',
   background: '#C4C4C4',
+  boxShadow: '0px 0px 6px rgba(0, 0, 0, 0.15)',
   '&:after': {
     position: 'absolute',
     right: '-6px',
@@ -72,6 +73,7 @@ const SalePending = styled(Typography)(({ theme }) => ({
   width: 'fit-content',
   position: 'relative',
   background: '#ffd400',
+  boxShadow: '0px 0px 6px rgba(0, 0, 0, 0.15)',
   '&:after': {
     position: 'absolute',
     right: '-6px',
