@@ -4,6 +4,11 @@ import AnalyticsHandler from 'src/modules/V2V/integrations/AnalyticsHandler';
 import { InventoryStore } from 'src/modules/V2V/store/inventoryStore';
 
 class BuySellTradeViewModel {
+  readonly title = `Buy, sell, or trade vehicles all from your\xa0couch`;
+  readonly video = {
+    id: 'buy-sell-trade-youtube-video',
+    url: 'https://www.youtube.com//embed/BNN30oCCesc?enablejsapi=1',
+  };
   private car: Car;
   private analyticsHandler: AnalyticsHandler;
 

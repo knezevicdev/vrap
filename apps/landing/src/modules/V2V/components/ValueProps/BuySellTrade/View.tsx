@@ -1,12 +1,12 @@
 import React, { useEffect } from 'react';
 import styled from 'styled-components';
 
-import HeaderViewModel from './ViewModel';
+import BuySellTradeViewModel from './ViewModel';
 
 import { Hero } from 'src/core/Typography';
 
 interface Props {
-  viewModel: HeaderViewModel;
+  viewModel: BuySellTradeViewModel;
 }
 
 const Section = styled.div`
@@ -56,26 +56,23 @@ const StyledIframe = styled.iframe`
 `;
 
 const BuySellTradeView: React.FC<Props> = ({ viewModel }) => {
+  const { title, video, handleVideoStateChange } = viewModel;
+
   useEffect(() => {
     window.YT.ready(() => {
-      new window.YT.Player('buy-sell-trade-youtube-video', {
+      new window.YT.Player(video.id, {
         events: {
-          onStateChange: viewModel.handleVideoStateChange,
+          onStateChange: handleVideoStateChange,
         },
       });
     });
-  }, [viewModel]);
+  }, [video, handleVideoStateChange]);
 
   return (
     <VideoContainer>
-      <VideoTitle>
-        Buy, sell, or trade vehicles all from your&nbsp;couch
-      </VideoTitle>
+      <VideoTitle>{title}</VideoTitle>
       <IframeContainer>
-        <StyledIframe
-          id="buy-sell-trade-youtube-video"
-          src={'https://www.youtube.com//embed/BNN30oCCesc?enablejsapi=1'}
-        ></StyledIframe>
+        <StyledIframe id={video.id} src={video.url}></StyledIframe>
       </IframeContainer>
     </VideoContainer>
   );
