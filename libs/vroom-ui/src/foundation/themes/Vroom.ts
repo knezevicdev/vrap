@@ -2,7 +2,7 @@ import { createGlobalStyle, css } from 'styled-components';
 
 import { ThemeProps } from './types';
 
-export const getVroomTheme = (fontPath: string): ThemeProps => {
+export const getVroomTheme = (): ThemeProps => {
   return {
     typography: {
       family: {
@@ -11,7 +11,6 @@ export const getVroomTheme = (fontPath: string): ThemeProps => {
         body: 'Calibre',
       },
       color: '#041022',
-      fontPath: fontPath,
     },
     colors: {
       primary: {
@@ -59,9 +58,6 @@ export const addStyleForDesktop = (injectedCss: string) => {
   `;
 };
 
-const fontPath = ({ theme: { typography } }: { theme: ThemeProps }): string =>
-  typography.fontPath;
-
 export const GlobalStyle = createGlobalStyle`
   html {
     height: 100%;
@@ -75,19 +71,19 @@ export const GlobalStyle = createGlobalStyle`
   @font-face {
     font-family: Calibre;
     font-weight: normal;
-    src: url(/assets/fonts/Vroom/Calibre-Regular.woff2) format('woff2');
+    src: url(assets/fonts/Vroom/Calibre-Regular.woff2) format('woff2');
     font-display: swap;
   }
   @font-face {
     font-family: Calibre;
     font-weight: 600;
-    src: url(/assets/fonts/Vroom/Calibre-Semibold.woff2) format('woff2');
+    src: url(assets/fonts/Vroom/Calibre-Semibold.woff2) format('woff2');
     font-display: swap;
   }
   @font-face {
     font-family: Vroom Sans;
     font-weight: normal;
-    src: url(/assets/fonts/Vroom/Vroom-Sans.woff2) format('woff2');
+    src: url(assets/fonts/Vroom/Vroom-Sans.woff2) format('woff2');
     font-display: swap;
   }
   
