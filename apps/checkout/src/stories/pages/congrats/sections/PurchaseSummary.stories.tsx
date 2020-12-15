@@ -6,7 +6,7 @@ import { getVroomTheme } from 'vroom-ui';
 import PurchaseSummary from '../../../../modules/congrats/sections/PurchaseSummary/PurchaseSummary';
 import { purchaseSummaryViewModel } from '../ViewModels';
 
-const theme = getVroomTheme('/assets/fonts/Vroom');
+const theme = getVroomTheme();
 
 export const Success = (): JSX.Element => {
   return (
