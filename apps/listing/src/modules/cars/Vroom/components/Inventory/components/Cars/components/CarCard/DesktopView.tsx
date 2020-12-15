@@ -44,20 +44,46 @@ const EvoxLogo = styled('img')(({ theme }) => ({
 
 const AvailableSoon = styled(Typography)(({ theme }) => ({
   padding: theme.spacing(0, 2),
-  background: '#C4C4C4',
   fontSize: '16px',
   fontWeight: 600,
   lineHeight: '24px',
-  width: '137px',
+  width: 'fit-content',
+  position: 'relative',
+  background: '#C4C4C4',
+  '&:after': {
+    position: 'absolute',
+    right: '-6px',
+    top: '0',
+    height: '24px',
+    width: '20px',
+    backgroundColor: '#C4C4C4',
+    transform: 'skewX(-23deg)',
+    color: '#C4C4C4',
+    content: 'close-quote',
+    quotes: 'none',
+  },
 }));
 
 const SalePending = styled(Typography)(({ theme }) => ({
   padding: theme.spacing(0, 2),
-  background: '#ffd400',
   fontSize: '16px',
   fontWeight: 600,
   lineHeight: '24px',
-  width: '120px',
+  width: 'fit-content',
+  position: 'relative',
+  background: '#ffd400',
+  '&:after': {
+    position: 'absolute',
+    right: '-6px',
+    top: '0',
+    height: '24px',
+    width: '20px',
+    backgroundColor: '#ffd400',
+    transform: 'skewX(-23deg)',
+    color: '#ffd400',
+    content: 'close-quote',
+    quotes: 'none',
+  },
 }));
 
 const Content = styled('div')(() => ({
