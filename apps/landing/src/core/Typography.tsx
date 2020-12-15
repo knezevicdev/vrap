@@ -140,7 +140,6 @@ export interface LinkProps {
   children: string | JSX.Element;
   href: string;
   blank?: boolean;
-  onClick?: Function;
 }
 
 const A = styled.a`
@@ -159,7 +158,7 @@ export const Link: React.FC<LinkProps> = ({
 }) => {
   const target = (blank && '_blank') || undefined;
   return (
-    <A className={className} href={href} target={target} onClick={onClick}>
+    <A className={className} href={href} target={target}>
       {children}
     </A>
   );
