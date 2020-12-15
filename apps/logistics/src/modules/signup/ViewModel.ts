@@ -38,7 +38,7 @@ class SignupViewModel {
     this.passwordConfirm = e.target.value;
   };
 
-  handleSubmit = (e: any): void => {
+  handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
     postUser(this.email, this.password, this.firstName, this.lastName);
   };
