@@ -2,11 +2,10 @@ import axios from 'axios';
 import { NextApiRequest, NextApiResponse } from 'next';
 
 export default async (
-  req: NextApiRequest,
+  _req: NextApiRequest,
   res: NextApiResponse
 ): Promise<void> => {
   const url = 'https://gearbox-dev-int.vroomapi.com/query';
-  console.log(req.cookies);
 
   const data = JSON.stringify({
     query: `query portalShipmentsQuery($user: String!, $status: String!) {

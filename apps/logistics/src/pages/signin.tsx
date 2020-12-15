@@ -8,7 +8,6 @@ import SignInModel from 'src/modules/signin/Model';
 
 const SignInPage: NextPage = () => {
   const router = useRouter();
-  console.log(router);
   const previous = (router.query.previous as string) || '/';
   const model = new SignInModel(previous);
   const head = <title>Sign In</title>;

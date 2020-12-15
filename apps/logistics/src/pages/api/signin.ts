@@ -33,7 +33,8 @@ export default async (
   };
 
   try {
-    const response = await axios.post(process.env.GEARBOX_URL, data, config);
+    const url = process.env.GEARBOX_URL ?? '';
+    const response = await axios.post(url, data, config);
     const body: Tokens = {
       accessToken: response.data.data.signin.accessToken,
       idToken: response.data.data.signin.idToken,
