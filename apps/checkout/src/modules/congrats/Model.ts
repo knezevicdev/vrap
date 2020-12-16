@@ -165,6 +165,5 @@ export default class CongratsModel {
       this.data = res.data;
       this.dataStatus = Status.SUCCESS;
     });
-    console.log('DATA', this.data);
   }
 }
