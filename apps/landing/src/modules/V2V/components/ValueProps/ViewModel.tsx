@@ -1,10 +1,10 @@
 import { FC } from 'react';
 
+import BuySellTrade from './BuySellTrade';
 import {
   CertifiedSection,
   DeliveredSection,
   TestDriveSection,
-  VideoSection,
 } from './Sections';
 
 class ValuePropsViewModel {
@@ -28,7 +28,7 @@ class ValuePropsViewModel {
   // a map for mapping components to the slugs in the order array, as well as mapping the order of the sections to passed sectionOrderKey
   sectionMap: { [slug: string]: { component: FC; order: string[] } } = {
     buyselltrade: {
-      component: VideoSection,
+      component: BuySellTrade,
       order: ['buyselltrade', 'certified', 'delivery', '7daytestdrive'],
     },
     certified: {

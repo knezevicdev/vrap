@@ -1,10 +1,13 @@
 import getConfig from 'next/config';
-import React, { FC } from 'react';
+import React, { FC, useContext } from 'react';
 import styled from 'styled-components';
+
+import { InventoryStoreContext } from '../../store/inventoryStore';
 
 import { Button } from 'src/core/Button';
 import Icon, { Icons } from 'src/core/Icon';
-import { Body, Hero, Link } from 'src/core/Typography';
+import { Body, Hero } from 'src/core/Typography';
+import AnalyticsHandler from 'src/modules/integrations/AnalyticsHandler';
 
 const { publicRuntimeConfig } = getConfig();
 
@@ -42,35 +45,6 @@ const TitleContainer = styled.div`
   margin-bottom: 32px !important;
 `;
 
-const VideoContainer = styled(Section)`
-  display: block;
-`;
-
-const VideoTitle = styled(Title)`
-  color: #041022 !important;
-  max-width: 490px !important;
-  margin: 0 auto !important;
-  margin-bottom: 32px !important;
-  line-height: 48px !important;
-  @media (max-width: 599px) {
-    line-height: 40px;
-  }
-`;
-
-const IframeContainer = styled.div`
-  position: relative;
-  padding-bottom: 56.25%;
-`;
-
-const StyledIframe = styled.iframe`
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  border: none;
-`;
-
 const TestDriveImage = styled.img`
   width: 100%;
   max-width: 640px;
@@ -99,42 +73,34 @@ const DeliveredImage = styled.img`
   }
 `;
 
-const UnderlinedLink = styled(Link)`
-  color: #e7131a !important;
-  font-weight: bold !important;
-`;
-const Bold = styled.span`
-  font-weight: bold !important;
+const UnderlinedLink = styled.span`
+  color: #e7131a;
+  text-decoration: underline;
+  cursor: pointer;
 `;
 
-export const VideoSection: FC = () => {
-  return (
-    <VideoContainer>
-      <VideoTitle>
-        Buy, sell, or trade vehicles all from your&nbsp;couch
-      </VideoTitle>
-      <IframeContainer>
-        <StyledIframe
-          src={'https://www.youtube.com//embed/BNN30oCCesc'}
-        ></StyledIframe>
-      </IframeContainer>
-    </VideoContainer>
-  );
-};
+const Bold = styled.span`
+  font-weight: bold;
+`;
 
 export const CertifiedSection: FC = () => {
+  const store = useContext(InventoryStoreContext);
+  const handleClick = (): void => {
+    new AnalyticsHandler().trackCertifiedLinkClicked(store.vehicle._source);
+    window.location.href = 'https://www.vroom.com/protection';
+  };
+
   return (
     <Section>
       <TitleContainer>
         <Icon icon={Icons.VROOM_SHIELD} />
-
         <CertifiedTitle>vroom certified</CertifiedTitle>
       </TitleContainer>
       <SizedIcon icon={Icons.CAR_DIAGRAM} />
 
       <Description>
         All our vehicles go through a 100 point inspection and come with{' '}
-        <UnderlinedLink href={'https://www.vroom.com/protection'}>
+        <UnderlinedLink onClick={handleClick}>
           Vroom’s&nbsp;free&nbsp;limited&nbsp;warranty
         </UnderlinedLink>
         , good for 90&nbsp;days or 6,000&nbsp;miles.
@@ -176,7 +142,9 @@ export const DeliveredSection: FC = () => {
 };
 
 export const ButtonSection: FC = () => {
+  const store = useContext(InventoryStoreContext);
   const onClick = (): void => {
+    new AnalyticsHandler().trackLearnMoreClicked(store.vehicle._source);
     window.location.href =
       'https://vroom.zendesk.com/hc/en-us/articles/205360565-When-does-the-7-day-return-period-begin-';
   };
