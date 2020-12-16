@@ -47,6 +47,13 @@ export default class CongratsModel {
             accountID
             dealID
             dealSummary {
+              accountInfo {
+                userName
+                firstName
+                middleName
+                lastName
+                phone
+              }
               dealStatus {
                 step
                 status
