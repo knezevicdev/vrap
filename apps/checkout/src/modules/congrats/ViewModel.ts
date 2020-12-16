@@ -80,10 +80,6 @@ export default class CongratsViewModel {
   private get additionalProducts():
     | { [service: string]: Service[] }
     | undefined {
-    console.error(
-      'this.summary.additionalProductsthis.summary.additionalProducts',
-      this.summary.additionalProducts
-    );
     return this.summary.additionalProducts;
   }
 
