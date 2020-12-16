@@ -3,8 +3,19 @@ import { FooterProps } from 'vroom-ui';
 
 import Model from './Model';
 import { NextProps } from './sections/Next';
+import { PurchaseSummaryProps } from './sections/PurchaseSummary/PurchaseSummary';
 import { QuestionProps } from './sections/Questions';
 import { ReservedCarProps } from './sections/ReservedCar';
+
+enum ServiceType {
+  Vehicle = 'VRVS',
+  TireAndWheel = 'VRTW',
+  Gap = 'VRGP',
+}
+interface Service {
+  selected: boolean;
+  cost: number;
+}
 
 export default class CongratsViewModel {
   model: Model;
@@ -23,6 +34,85 @@ export default class CongratsViewModel {
 
   private get inventory(): GQLTypes.Inventory {
     return this.summary.inventory as GQLTypes.Inventory;
+  }
+
+  private get pricing(): GQLTypes.Pricing {
+    return this.inventory.pricing as GQLTypes.Pricing;
+  }
+
+  private get financing(): GQLTypes.Financing | undefined {
+    return this.summary.financing ? this.summary.financing : undefined;
+  }
+
+  private get financingPricingStack(): GQLTypes.LoanPricingStack {
+    return (this.financing as GQLTypes.Financing)
+      .pricingStack as GQLTypes.LoanPricingStack;
+  }
+
+  private get deliveryDetails(): GQLTypes.DeliveryDetails {
+    return this.summary.deliveryDetails as GQLTypes.DeliveryDetails;
+  }
+
+  private get alternateContact(): GQLTypes.PointOfContact {
+    return this.deliveryDetails.alternateContact as GQLTypes.PointOfContact;
+  }
+
+  private get deposit(): GQLTypes.DepositPayment {
+    return this.summary.depositPaymentInfo as GQLTypes.DepositPayment;
+  }
+
+  private get billingAddress(): GQLTypes.AddressDto {
+    return this.summary.billingAddress as GQLTypes.AddressDto;
+  }
+
+  private get deliveryAddress(): GQLTypes.AddressDto {
+    return this.summary.deliveryAddress as GQLTypes.AddressDto;
+  }
+
+  private get registrationAddress(): GQLTypes.AddressDto {
+    return this.summary.registrationAddress as GQLTypes.AddressDto;
+  }
+
+  private get amountDue(): GQLTypes.AmountDue {
+    return this.summary.amountDue as GQLTypes.AmountDue;
+  }
+
+  private get additionalProducts():
+    | { [service: string]: Service[] }
+    | undefined {
+    const isObjectEmpty =
+      Object.entries(this.summary.additionalProducts).length === 0;
+    return isObjectEmpty ? undefined : this.summary.additionalProducts;
+  }
+
+  private get vehicleServiceContractProtection(): Service | undefined {
+    const service = this.additionalProducts
+      ? this.additionalProducts[ServiceType.Vehicle]
+      : undefined;
+    if (service) {
+      return service.find((service) => service.selected);
+    }
+    return undefined;
+  }
+
+  private get tireAndWheelCoverage(): Service | undefined {
+    const service = this.additionalProducts
+      ? this.additionalProducts[ServiceType.TireAndWheel]
+      : undefined;
+    if (service) {
+      return service.find((service) => service.selected);
+    }
+    return undefined;
+  }
+
+  private get gapCoverage(): Service | undefined {
+    const service = this.additionalProducts
+      ? this.additionalProducts[ServiceType.Gap]
+      : undefined;
+    if (service) {
+      return service.find((service) => service.selected);
+    }
+    return undefined;
   }
 
   private get vehicle(): GQLTypes.VehicleInventory {
@@ -91,6 +181,137 @@ export default class CongratsViewModel {
     };
   }
 
+  get purchaseSummaryProps(): PurchaseSummaryProps {
+    const { year, make, model, trim } = this.vehicle;
+    const { leadPhotoURL, miles } = this.inventory;
+    const car = `${year} ${make} ${model}`;
+    const src = leadPhotoURL ? leadPhotoURL : '';
+    const milesFormatted = `${miles ? miles.toLocaleString() : ''} miles`;
+
+    const { LastFourDigits, ChargeAmount } = this.deposit;
+
+    const hasInsuranceCard = (
+      documents: Array<GQLTypes.DocumentMetadata>
+    ): boolean => {
+      const card = documents.find(
+        (document) => document.fileType === 'insurance'
+      );
+      return !!card;
+    };
+
+    const showInsuranceDisclaimer = this.summary.documents
+      ? !hasInsuranceCard(this.summary.documents)
+      : true;
+
+    return {
+      summary: {
+        date: this.summary.dateCompleted,
+        car: {
+          image: {
+            alt: car,
+            src: src,
+          },
+          yearMakeAndModel: car,
+          trim: trim,
+          miles: milesFormatted,
+        },
+      },
+      purchaseDetails: {
+        data: {
+          method: this.summary.paymentType as string,
+          sellingPrice: `$${this.pricing.listPrice.toLocaleString()}`,
+          taxes: `$${this.amountDue.totalTaxesAndFees.toLocaleString()}`,
+          vehicleServiceContractProtection: this
+            .vehicleServiceContractProtection
+            ? `$${this.vehicleServiceContractProtection.cost.toLocaleString()}`
+            : undefined,
+          gapCoverage: this.gapCoverage
+            ? `$${this.gapCoverage.cost.toLocaleString()}`
+            : undefined,
+          tireAndWheelCoverage: this.tireAndWheelCoverage
+            ? `$${this.tireAndWheelCoverage.cost.toLocaleString()}`
+            : undefined,
+          shippingFee: `$${this.amountDue.shippingFee.toLocaleString()}`,
+          subtotal: `$${this.amountDue.subTotal.toLocaleString()}`,
+          creditDownPayment: `-$${this.amountDue.cashDownPayment.toLocaleString()}`,
+          total: `$${this.amountDue.totalBalanceDue.toLocaleString()}`,
+        },
+      },
+      depositInformation: {
+        data: {
+          amount: `${ChargeAmount}`,
+          creditCard: `***${LastFourDigits}`,
+        },
+      },
+      billingAddress: {
+        data: {
+          address: {
+            name: `${this.billingAddress.firstName} ${this.billingAddress.lastName}`,
+            address: this.billingAddress.streetLine1,
+            cityStateZip: `${this.billingAddress.city}, ${this.billingAddress.state} ${this.billingAddress.postCode}`,
+          },
+        },
+      },
+      registrationAddress: {
+        data: {
+          address: {
+            name: `${this.registrationAddress.firstName} ${this.registrationAddress.lastName}`,
+            address: this.registrationAddress.streetLine1,
+            cityStateZip: `${this.registrationAddress.city}, ${this.registrationAddress.state} ${this.registrationAddress.postCode}`,
+          },
+        },
+      },
+      deliveryAddress: {
+        data: {
+          address: {
+            name: `${this.deliveryAddress.firstName} ${this.deliveryAddress.lastName}`,
+            address: this.deliveryAddress.streetLine1,
+            cityStateZip: `${this.deliveryAddress.city}, ${this.deliveryAddress.state} ${this.deliveryAddress.postCode}`,
+          },
+        },
+      },
+      financingInformation: this.financing
+        ? {
+            data: {
+              downPayment: `-$${this.financingPricingStack.downPayment}`,
+              bank: this.financingPricingStack.lenderName,
+              apr: `${(this.financingPricingStack.apr * 100).toFixed(2)}%`,
+              financeTerm: this.financingPricingStack.buyRate.toString(),
+              numberOfPayments: this.financingPricingStack.termMonths.toString(),
+              financeCharge: `$${this.financingPricingStack.financeCharge}`,
+              monthlyPayment: `$${this.financingPricingStack.monthlyPayment}`,
+            },
+          }
+        : undefined,
+      deliveryDetails: {
+        data: {
+          dates: this.deliveryDetails.unavailableDates
+            ? this.deliveryDetails.unavailableDates
+            : undefined,
+          receiver:
+            this.deliveryDetails.availableForDelivery === false
+              ? {
+                  name: `${this.alternateContact.first} ${this.alternateContact.last}`,
+                  phone: this.alternateContact.phone,
+                }
+              : undefined,
+          truckInformation: this.deliveryDetails.additionalDetails as string,
+        },
+        willYouBeAvailableLabel: this.deliveryDetails.availableForDelivery
+          ? 'Yes'
+          : 'No',
+        truckHasAccessLabel: this.deliveryDetails.wheelerTruck ? 'Yes' : 'No',
+        showReceiverInformation:
+          this.deliveryDetails.availableForDelivery === false,
+        showNotAvailableDates:
+          this.deliveryDetails.unavailableDates !== undefined,
+        showTruckInformation: !this.deliveryDetails.wheelerTruck,
+      },
+      showInsuranceDisclaimer: showInsuranceDisclaimer,
+    };
+  }
+
+  //TODO: Inject correct number
   get questionsProps(): QuestionProps {
     return {
       phone: {
@@ -100,6 +321,7 @@ export default class CongratsViewModel {
     };
   }
 
+  //TODO: Inject correct contact number
   get footerProps(): FooterProps {
     return {
       sections: [

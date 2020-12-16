@@ -5,7 +5,7 @@ import { Body, Title } from 'vroom-ui';
 export interface DeliveryDetailsProps {
   data: {
     dates?: string[];
-    receiver: {
+    receiver?: {
       name: string;
       phone: string;
     };
@@ -63,7 +63,7 @@ const DeliveryDetails: React.FC<DeliveryDetailsProps> = ({
       <YouAvailable bold>Will you be available for delivery?</YouAvailable>
       <Body.Regular>{willYouBeAvailableLabel}</Body.Regular>
 
-      {showReceiverInformation && (
+      {showReceiverInformation && receiver && (
         <>
           <Receiver bold>Receiver Information</Receiver>
           <Body.Regular>{receiver.name}</Body.Regular>

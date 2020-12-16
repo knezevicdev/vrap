@@ -45,6 +45,7 @@ export interface PurchaseSummaryProps {
   registrationAddress: RegistrationAddressProps;
   deliveryAddress: DeliveryAddressProps;
   deliveryDetails: DeliveryDetailsProps;
+  showInsuranceDisclaimer: boolean;
 }
 
 const Container = styled.div`
@@ -111,6 +112,7 @@ const PurchaseSummary: React.FC<PurchaseSummaryProps> = ({
   registrationAddress,
   deliveryAddress,
   deliveryDetails,
+  showInsuranceDisclaimer,
 }) => {
   return (
     <Container>
@@ -150,7 +152,7 @@ const PurchaseSummary: React.FC<PurchaseSummaryProps> = ({
         <Space />
         <DeliveryDetails {...deliveryDetails} />
         <Space />
-        <UploadedDocuments showInsuranceDisclaimer={true} />
+        <UploadedDocuments showInsuranceDisclaimer={showInsuranceDisclaimer} />
         <Space />
         <ShouldKnow>
           <Body.Regular bold>You Should Know:</Body.Regular> We’ve done our best
