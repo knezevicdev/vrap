@@ -3,7 +3,6 @@ import React from 'react';
 import styled from 'styled-components';
 import { Footer } from 'vroom-ui';
 
-//import { purchaseSummaryViewModel } from '../../stories/pages/congrats/ViewModels';
 import Next from './sections/Next';
 import PurchaseSummary from './sections/PurchaseSummary/PurchaseSummary';
 import Questions from './sections/Questions';
