@@ -58,6 +58,19 @@ export const patchUser = async (
   return axiosInstance.patch(url, { id, status, carrierCode });
 };
 
+export const postUser = async (
+  username: string,
+  password: string,
+  firstName: string,
+  lastName: string
+): Promise<AxiosResponse<User>> =>
+  axiosInstance.post(`/api/users`, {
+    username,
+    password,
+    firstName,
+    lastName,
+  });
+
 export const getShipments = async (
   status?: ShipmentStatus,
   user?: string
