@@ -3,11 +3,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { Footer } from 'vroom-ui';
 
-import {
-  footerViewModel,
-  purchaseSummaryViewModel,
-  questionsViewModel,
-} from '../../stories/pages/congrats/ViewModels';
+import { purchaseSummaryViewModel } from '../../stories/pages/congrats/ViewModels';
 import Next from './sections/Next';
 import PurchaseSummary from './sections/PurchaseSummary/PurchaseSummary';
 import Questions from './sections/Questions';
@@ -36,14 +32,16 @@ const CongratsView: React.FC<Props> = ({ viewModel }) => {
 
   const reservedCarProps = viewModel.reservedCarProps;
   const nextProps = viewModel.nextProps;
+  const questionsProps = viewModel.questionsProps;
+  const { sections } = viewModel.footerProps;
 
   return (
     <Page>
       <ReservedCar {...reservedCarProps} />
       <Next {...nextProps} />
       <PurchaseSummary {...purchaseSummaryViewModel} />
-      <Questions {...questionsViewModel} />
-      <Footer sections={footerViewModel.sections} />
+      <Questions {...questionsProps} />
+      <Footer sections={sections} />
     </Page>
   );
 };
