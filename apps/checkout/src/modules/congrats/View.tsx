@@ -5,7 +5,6 @@ import { Footer } from 'vroom-ui';
 
 import {
   footerViewModel,
-  nextViewModel,
   purchaseSummaryViewModel,
   questionsViewModel,
 } from '../../stories/pages/congrats/ViewModels';
@@ -35,12 +34,13 @@ const CongratsView: React.FC<Props> = ({ viewModel }) => {
     return <p>Empty!</p>;
   }
 
-  const reservedCarProps = viewModel.getReservedCarProps();
+  const reservedCarProps = viewModel.reservedCarProps;
+  const nextProps = viewModel.nextProps;
 
   return (
     <Page>
       <ReservedCar {...reservedCarProps} />
-      <Next {...nextViewModel} />
+      <Next {...nextProps} />
       <PurchaseSummary {...purchaseSummaryViewModel} />
       <Questions {...questionsViewModel} />
       <Footer sections={footerViewModel.sections} />

@@ -1,6 +1,7 @@
 import { GQLTypes, Status } from '@vroom-web/networking';
 
 import Model from './Model';
+import { NextProps } from './sections/Next';
 import { ReservedCarProps } from './sections/ReservedCar';
 
 export default class CongratsViewModel {
@@ -44,7 +45,7 @@ export default class CongratsViewModel {
     return this.model.data.user.deals.length === 0;
   }
 
-  getReservedCarProps = (): ReservedCarProps => {
+  get reservedCarProps(): ReservedCarProps {
     const { year, make, model, trim } = this.vehicle;
     const { leadPhotoURL } = this.inventory;
     const car = `${year} ${make} ${model} ${trim}`;
@@ -61,5 +62,30 @@ export default class CongratsViewModel {
         },
       },
     };
-  };
+  }
+
+  get nextProps(): NextProps {
+    return {
+      heading: 'what to expect next...',
+      steps: [
+        {
+          number: '1',
+          title: 'Finalize Your Purchase',
+          description:
+            'A Vroom representative will call to discuss terms and finalize your purchase.',
+        },
+        {
+          number: '2',
+          title: 'Make It Official',
+          description:
+            'Vroom will overnight a contract for you to sign and return.',
+        },
+        {
+          number: '3',
+          title: 'Home Delivery',
+          description: `Get your new ride delivered to your driveway anywhere within the continental U.S.`,
+        },
+      ],
+    };
+  }
 }
