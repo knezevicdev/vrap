@@ -1,8 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Picture } from 'vroom-ui/src/elements/Picture';
-import { addStyleForMobile } from 'vroom-ui/src/foundation/themes/Vroom';
-import { Body, Heading, Title } from 'vroom-ui/src/foundation/Typography';
+import { addStyleForMobile, Body, Heading, Picture, Title } from 'vroom-ui';
 
 import BillingAddress, {
   BillingAddressProps,
@@ -27,7 +25,7 @@ import RegistrationAddress, {
 } from './components/RegistrationAddress';
 import UploadedDocuments from './components/UploadedDocuments';
 
-interface Props {
+export interface PurchaseSummaryProps {
   summary: {
     date: string;
     car: {
@@ -52,6 +50,10 @@ interface Props {
 const Container = styled.div`
   display: flex;
   justify-content: center;
+  margin-bottom: 64px;
+  ${addStyleForMobile(`
+        margin: 0 16px;
+   `)}
 `;
 
 const Content = styled.div`
@@ -100,7 +102,7 @@ const ShouldKnow = styled(Body.Regular)`
   margin-bottom: 16px;
 `;
 
-const PurchaseSummary: React.FC<Props> = ({
+const PurchaseSummary: React.FC<PurchaseSummaryProps> = ({
   summary: { date, car },
   purchaseDetails,
   depositInformation,

@@ -1,6 +1,7 @@
 import getConfig from 'next/config';
 import React, { useContext } from 'react';
 
+import AnalyticsHandler from '../../../integrations/AnalyticsHandler';
 import { FavoritesStore } from '../../store/favoritesStore';
 import { InventoryStoreContext } from '../../store/inventoryStore';
 import FavoritesNetworker from './FavoritesNetworker';
@@ -16,11 +17,13 @@ const Favorites: React.FC = () => {
   );
   const favoritesStore = new FavoritesStore();
   const inventoryStore = useContext(InventoryStoreContext);
+  const analyticsHandler = new AnalyticsHandler();
 
   const viewModel = new ViewModel(
     inventoryStore,
     favoritesStore,
-    favoritesNetworker
+    favoritesNetworker,
+    analyticsHandler
   );
 
   return <View viewModel={viewModel} />;

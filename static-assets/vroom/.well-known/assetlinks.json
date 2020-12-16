@@ -18,7 +18,7 @@
       "namespace": "android_app",
       "package_name": "com.vroom.app.android.dev",
       "sha256_cert_fingerprints":
-      ["C8:15:AE:87:B2:A5:C7:7C:CF:FD:8D:38:F1:92:F6:85:EC:B7:97:5F:06:A0:77:D0:7D:76:53:1D:6F:41:61:88"]
+      ["89:83:13:F2:1C:D2:6F:33:54:D4:F1:89:4C:C4:87:54:F1:92:9B:24:49:79:F0:51:77:6E:C7:D3:BC:E1:A4:90"]
     }
   },
   {
@@ -27,7 +27,7 @@
       "namespace": "android_app",
       "package_name": "com.vroom.app.android.qa",
       "sha256_cert_fingerprints":
-      ["C8:15:AE:87:B2:A5:C7:7C:CF:FD:8D:38:F1:92:F6:85:EC:B7:97:5F:06:A0:77:D0:7D:76:53:1D:6F:41:61:88"]
+      ["89:83:13:F2:1C:D2:6F:33:54:D4:F1:89:4C:C4:87:54:F1:92:9B:24:49:79:F0:51:77:6E:C7:D3:BC:E1:A4:90"]
     }
   },
   {
@@ -36,7 +36,7 @@
       "namespace": "android_app",
       "package_name": "com.vroom.app.android.uat",
       "sha256_cert_fingerprints":
-      ["C8:15:AE:87:B2:A5:C7:7C:CF:FD:8D:38:F1:92:F6:85:EC:B7:97:5F:06:A0:77:D0:7D:76:53:1D:6F:41:61:88"]
+      ["89:83:13:F2:1C:D2:6F:33:54:D4:F1:89:4C:C4:87:54:F1:92:9B:24:49:79:F0:51:77:6E:C7:D3:BC:E1:A4:90"]
     }
   }
 ]

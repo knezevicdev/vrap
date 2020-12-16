@@ -1,5 +1,4 @@
 import { datadogRum } from '@datadog/browser-rum';
-import { AnalyticsHandler } from '@vroom-web/analytics-integration';
 import { CatSDK } from '@vroom-web/cat-sdk';
 import App from 'next/app';
 import getConfig from 'next/config';
@@ -22,8 +21,6 @@ const dev = NODE_ENV !== 'production';
 
 export default class VroomApp extends App {
   componentDidMount(): void {
-    new AnalyticsHandler().page('Landing - 2019 Jeep Wrangler');
-
     if (DATA_DOG_RUM_APPLICATION) {
       datadogRum.init({
         applicationId: DATA_DOG_RUM_APPLICATION,

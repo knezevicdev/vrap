@@ -1,7 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { ThemeProps } from 'vroom-ui/src/foundation/themes/types';
-import { Body, Link, Title } from 'vroom-ui/src/foundation/Typography';
+import { Body, Link, ThemeProps, Title } from 'vroom-ui';
 
 export interface PurchaseDetailsProps {
   data: {

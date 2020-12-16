@@ -90,6 +90,13 @@ export class Icons {
     color: '#041022',
   });
 
+  static readonly NO_IMAGES = new Icons('NO_IMAGES', {
+    name: 'no-images',
+    width: 128,
+    height: 90,
+    color: '#D6D7DA',
+  });
+
   static readonly FAVORITE_OUTLINED = new Icons('FAVORITE_OUTLINED', {
     name: 'favourite-outlined',
     width: 18,

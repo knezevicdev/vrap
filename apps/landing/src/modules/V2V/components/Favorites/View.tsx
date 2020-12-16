@@ -35,18 +35,7 @@ const FavoriteSection = styled.span`
   gap: 8px;
 `;
 
-const FavoritesView: React.FC<Props> = (props) => {
-  const { viewModel } = props;
-  const handleClick = (): void => {
-    if (viewModel.isLoggedIn()) {
-      viewModel.isFavorited()
-        ? viewModel.removeFavorite()
-        : viewModel.addFavorite();
-    } else {
-      viewModel.handleDialog();
-    }
-  };
-
+const FavoritesView: React.FC<Props> = ({ viewModel }) => {
   useEffect(() => {
     viewModel.handleMount();
   }, [viewModel]);
@@ -57,7 +46,7 @@ const FavoritesView: React.FC<Props> = (props) => {
 
   return (
     <Container>
-      <ContainerText onClick={handleClick}>
+      <ContainerText onClick={viewModel.handleFavoritesClicked}>
         {viewModel.isFavorited() ? (
           <FavoriteSection>
             <Icon icon={Icons.FAVORITE_FILLED} /> {viewModel.favorited}

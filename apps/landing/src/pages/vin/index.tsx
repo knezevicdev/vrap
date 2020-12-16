@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/camelcase */
 import { GetServerSideProps, GetServerSidePropsContext, NextPage } from 'next';
 import Head from 'next/head';
 import React from 'react';
@@ -14,16 +15,17 @@ import {
 export interface Props {
   initialState: InventoryStoreState;
   title: string;
-  vin: string;
+  valuePropOrderKey: string | null;
 }
 
 const VinPage: NextPage<Props> = (props: Props) => {
-  const { initialState, title } = props;
+  const { initialState, title, valuePropOrderKey } = props;
   const store = new InventoryStore(initialState);
 
   const head = (
     <>
       <title>{title}</title>
+      <meta name="robots" content="noindex, nofollow"></meta>
     </>
   );
 
@@ -31,7 +33,7 @@ const VinPage: NextPage<Props> = (props: Props) => {
     <>
       <Head>{head}</Head>
       <InventoryStoreContext.Provider value={store}>
-        <Vehicle />
+        <Vehicle valuePropOrderKey={valuePropOrderKey} />
       </InventoryStoreContext.Provider>
     </>
   );
@@ -40,10 +42,16 @@ const VinPage: NextPage<Props> = (props: Props) => {
 export const getServerSideProps: GetServerSideProps<Props> = async (
   context: GetServerSidePropsContext
 ) => {
-  const { res, query } = context;
-  const param = query.vehicle_vin;
+  const {
+    res,
+    query: { vehicle_vin, vit_proposition },
+  } = context;
 
-  const vin = param ? (param as string) : '';
+  const valuePropOrderKey: string | null = vit_proposition
+    ? (vit_proposition as string)
+    : null;
+
+  const vin = vehicle_vin ? (vehicle_vin as string) : '';
 
   context.res.setHeader('Cache-Control', '');
 
@@ -82,7 +90,7 @@ export const getServerSideProps: GetServerSideProps<Props> = async (
     }
   }
 
-  return { props: { initialState, title, vin } };
+  return { props: { initialState, title, valuePropOrderKey } };
 };
 
 export default VinPage;

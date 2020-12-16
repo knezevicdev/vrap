@@ -14,6 +14,7 @@ import {
 } from './typeguards';
 import {
   BodyType,
+  CabType,
   Color,
   Cylinder,
   DriveType,
@@ -152,6 +153,11 @@ export const getFiltersDataFromFiltersQueryParam = (
   const isDriveTypeArray = isEnumArray(DriveType);
   if (isDriveTypeArray(parsed[Filters.DRIVE_TYPE])) {
     filtersData[Filters.DRIVE_TYPE] = parsed[Filters.DRIVE_TYPE];
+  }
+
+  const isCabTypeArray = isEnumArray(CabType);
+  if (isCabTypeArray(parsed[Filters.CAB_TYPE])) {
+    filtersData[Filters.CAB_TYPE] = parsed[Filters.CAB_TYPE];
   }
 
   const isCylinderArray = isEnumArray(Cylinder);

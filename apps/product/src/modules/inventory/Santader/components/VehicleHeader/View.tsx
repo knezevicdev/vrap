@@ -3,6 +3,7 @@ import { Typography } from '@vroom-web/ui';
 import { observer } from 'mobx-react';
 import React from 'react';
 
+import Price from '../Price';
 import StartPurchase from '../StartPurchase';
 import StatusBanner from '../StatusBanner';
 import ViewModel from './ViewModel';
@@ -55,17 +56,6 @@ const YearMakeModel = styled(Typography)(({ theme }) => ({
   fontFamily: 'SantanderHeadline, Arial, sans-serif',
 }));
 
-const Price = styled(Typography)(({ theme }) => ({
-  paddingBottom: '26px', // Added padding for now. Can be changed once the monthly price breakdown is added
-  fontWeight: 600,
-  fontSize: '24px',
-  [theme.breakpoints.only('xs')]: {
-    fontSize: '22px',
-    paddingBottom: '44px', // Added padding for now. Can be changed once the monthly price breakdown is added
-  },
-  fontFamily: 'SantanderHeadline, Arial, sans-serif',
-}));
-
 const Summary = styled(Typography)(({ theme }) => ({
   fontSize: '18px',
   [theme.breakpoints.only('xs')]: {
@@ -107,7 +97,7 @@ const VehicleHeaderView: React.FC<Props> = (props) => {
           </Summary>
         </LeftContent>
         <RightContent>
-          <Price>{summary.price}</Price>
+          <Price />
           <DesktopOnly>
             <Divider />
           </DesktopOnly>
