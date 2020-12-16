@@ -2779,6 +2779,11 @@
     minimatch "^3.0.4"
     strip-json-comments "^3.1.1"
 
+"@fullstory/babel-plugin-annotate-react@^2.0.1":
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/@fullstory/babel-plugin-annotate-react/-/babel-plugin-annotate-react-2.0.1.tgz#d279c31dfbf47cd3c9b9ff2491d02b01c1d93964"
+  integrity sha512-F5xsq4nixTJFKIdrrQUW5jKEv7WhzPxjbHVtvJPqqWQkgAqhUe+4MzumSJ9x1zUJaw5JzDOEYqURG6lzfmcIhw==
+
 "@googlemaps/js-api-loader@^1.4.0":
   version "1.6.0"
   resolved "https://registry.yarnpkg.com/@googlemaps/js-api-loader/-/js-api-loader-1.6.0.tgz#351c904ca31bcc7d961aa115373d5cd411ebee80"

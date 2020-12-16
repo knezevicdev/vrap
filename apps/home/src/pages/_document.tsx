@@ -24,7 +24,7 @@ interface Props extends DocumentInitialProps {
   brandConfig: any;
 }
 
-class VroomDocument extends Document<Props> {
+class HomeDocument extends Document<Props> {
   static async getInitialProps(ctx: DocumentContext): Promise<Props> {
     const materialSheets = new ServerStyleSheets();
     const originalRenderPage = ctx.renderPage;
@@ -91,7 +91,7 @@ class VroomDocument extends Document<Props> {
   }
 }
 
-export default VroomDocument;
+export default HomeDocument;
 
 // Resolution order
 //
