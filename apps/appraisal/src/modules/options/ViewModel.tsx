@@ -1,11 +1,13 @@
 import { OptionsStore } from './store';
 
+import AnalyticsHandler from 'src/integrations/AnalyticsHandler';
 import { MailingAddress } from 'src/interfaces.d';
 import { PaymentOverviewFormValues } from 'src/interfaces.d';
 import { submitPaymentOptions } from 'src/modules/options/store';
 
 class OptionsViewModel {
   private readonly store: OptionsStore;
+  private analyticsHandler: AnalyticsHandler;
   readonly hero: string = `let's set up your payment method`;
   readonly optionTitle: string = 'Payment Method';
   readonly optionQuestion: string = 'How would you like to get paid?';
@@ -13,7 +15,12 @@ class OptionsViewModel {
 
   constructor(store: OptionsStore) {
     this.store = store;
+    this.analyticsHandler = new AnalyticsHandler();
   }
+
+  onPageLoad = (): void => {
+    this.analyticsHandler.trackPaymentOptionsViewed();
+  };
 
   onPayOptionClick = (
     selectedOption: React.ChangeEvent<HTMLInputElement>
@@ -60,7 +67,11 @@ class OptionsViewModel {
 
   paymentOptionsSubmit = (values: PaymentOverviewFormValues): void => {
     submitPaymentOptions(values, this.store.priceId, this.store.mailingAddress);
+
+    const submittedType = this.store.showDD ? 'ACH' : 'Check';
     const url = `/sell/verification-congrats`;
+
+    this.analyticsHandler.trackPaymentOptionsSubmitted(submittedType);
     window.location.href = url;
   };
 }

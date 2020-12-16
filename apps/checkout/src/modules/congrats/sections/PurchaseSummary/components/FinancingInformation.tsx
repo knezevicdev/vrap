@@ -1,7 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { ThemeProps } from 'vroom-ui/src/foundation/themes/types';
-import { Body, Title } from 'vroom-ui/src/foundation/Typography';
+import { Body, ThemeProps, Title } from 'vroom-ui';
 
 export interface FinancingInformationProps {
   data: {

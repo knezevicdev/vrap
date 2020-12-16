@@ -1,6 +1,7 @@
 import axios, { AxiosResponse } from 'axios';
 import qs from 'qs';
 
+import { Tokens } from './models/Auth';
 import { Shipment, ShipmentStatus } from './models/Shipments';
 import { Carrier, User } from './models/User';
 
@@ -82,4 +83,12 @@ export const getShipments = async (
     { skipNulls: true }
   )}`;
   return axiosInstance.get(url);
+};
+
+export const postSignIn = async (
+  email: string,
+  password: string
+): Promise<AxiosResponse<Tokens>> => {
+  const url = 'api/signin';
+  return axiosInstance.post(url, { email, password });
 };

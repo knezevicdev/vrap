@@ -112,7 +112,7 @@ const InventoryView: React.FC<Props> = ({ viewModel }) => {
             </CarsButton>
           </ErrorContainer>
         )}
-        <ValueProps />
+        <ValueProps sectionOrderKey={viewModel.valuePropOrderKey} />
       </Container>
       <Footer />
       <StickyBottom />

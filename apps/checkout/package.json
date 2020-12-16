@@ -1,7 +1,7 @@
 {
   "name": "@vroom-web/checkout",
-  "version": "0.0.2",
-  "license": "UNLICENSED",
+  "version": "0.0.3",
+  "private": true,
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -23,6 +23,7 @@
     "styled-components": "^5.2.1"
   },
   "devDependencies": {
+    "@types/styled-components": "^5.1.2",
     "@babel/core": "^7.12.3",
     "@babel/preset-env": "^7.12.1",
     "@babel/preset-typescript": "^7.12.1",

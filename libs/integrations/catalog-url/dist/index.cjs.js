@@ -6,6 +6,7 @@ var jsBase64 = require('js-base64');
 
 (function (Filters) {
   Filters["BODY_TYPES"] = "bodytypes";
+  Filters["CAB_TYPE"] = "cabtype";
   Filters["COLORS"] = "colors";
   Filters["DRIVE_TYPE"] = "drivetype";
   Filters["MAKE_AND_MODELS"] = "makesandmodels";
@@ -34,6 +35,12 @@ var jsBase64 = require('js-base64');
   BodyType["TRUCK"] = "truck";
   BodyType["WAGON"] = "wagon";
 })(exports.BodyType || (exports.BodyType = {}));
+
+(function (CabType) {
+  CabType["CREW"] = "crew";
+  CabType["REGULAR"] = "regular";
+  CabType["EXTENDED"] = "extended";
+})(exports.CabType || (exports.CabType = {}));
 
 (function (Color) {
   Color["BLACK"] = "black";
@@ -117,6 +124,11 @@ var resetFilters = function resetFilters(filters, filtersData) {
   });
   return newFiltersData;
 };
+var removeTruckSubfilters = function removeTruckSubfilters(filtersData) {
+  var newFiltersData = deepCopyFiltersData(filtersData || {});
+  newFiltersData[exports.Filters.CAB_TYPE] = undefined;
+  return newFiltersData;
+};
 var addBodyType = function addBodyType(bodyType, filtersData) {
   var newFiltersData = deepCopyFiltersData(filtersData || {});
   var newBodyTypes = newFiltersData[exports.Filters.BODY_TYPES] || [];
@@ -125,12 +137,33 @@ var addBodyType = function addBodyType(bodyType, filtersData) {
   return newFiltersData;
 };
 var removeBodyType = function removeBodyType(bodyType, filtersData) {
+  // CabType only applies to truck, remove all truck sub filters when deselected
+  if (bodyType === exports.BodyType.TRUCK) {
+    filtersData = removeTruckSubfilters(filtersData);
+  }
+
   var newFiltersData = deepCopyFiltersData(filtersData || {});
   var existingBodyTypes = newFiltersData[exports.Filters.BODY_TYPES] || [];
   var newBodyTypes = existingBodyTypes.filter(function (bt) {
     return bt !== bodyType;
   });
   newFiltersData[exports.Filters.BODY_TYPES] = newBodyTypes.length > 0 ? newBodyTypes : undefined;
+  return newFiltersData;
+};
+var addCabType = function addCabType(cabType, filtersData) {
+  var newFiltersData = deepCopyFiltersData(filtersData || {});
+  var newCabType = newFiltersData[exports.Filters.CAB_TYPE] || [];
+  newCabType.push(cabType);
+  newFiltersData[exports.Filters.CAB_TYPE] = newCabType;
+  return newFiltersData;
+};
+var removeCabType = function removeCabType(cabType, filtersData) {
+  var newFiltersData = deepCopyFiltersData(filtersData || {});
+  var existingCabType = newFiltersData[exports.Filters.CAB_TYPE] || [];
+  var newCabType = existingCabType.filter(function (c) {
+    return c !== cabType;
+  });
+  newFiltersData[exports.Filters.CAB_TYPE] = newCabType.length > 0 ? newCabType : undefined;
   return newFiltersData;
 };
 var addFuelType = function addFuelType(fuelType, filtersData) {
@@ -615,6 +648,12 @@ var getFiltersDataFromFiltersQueryParam = function getFiltersDataFromFiltersQuer
     filtersData[exports.Filters.DRIVE_TYPE] = parsed[exports.Filters.DRIVE_TYPE];
   }
 
+  var isCabTypeArray = isEnumArray(exports.CabType);
+
+  if (isCabTypeArray(parsed[exports.Filters.CAB_TYPE])) {
+    filtersData[exports.Filters.CAB_TYPE] = parsed[exports.Filters.CAB_TYPE];
+  }
+
   var isCylinderArray = isEnumArray(exports.Cylinder);
 
   if (isCylinderArray(parsed[exports.Filters.CYLINDERS])) {
@@ -782,6 +821,7 @@ var getFiltersDataFromUrl = function getFiltersDataFromUrl(url) {
 
 exports.addAllModels = addAllModels;
 exports.addBodyType = addBodyType;
+exports.addCabType = addCabType;
 exports.addColor = addColor;
 exports.addCylinder = addCylinder;
 exports.addDriveType = addDriveType;
@@ -792,6 +832,7 @@ exports.getFiltersDataFromUrl = getFiltersDataFromUrl;
 exports.getUrlFromFiltersData = getUrlFromFiltersData;
 exports.removeAllModels = removeAllModels;
 exports.removeBodyType = removeBodyType;
+exports.removeCabType = removeCabType;
 exports.removeColor = removeColor;
 exports.removeCylinder = removeCylinder;
 exports.removeDriveType = removeDriveType;

@@ -6,7 +6,7 @@ class PendingPriceViewModel {
   readonly sitTight: string = 'sit tight';
   readonly findCar: string = 'find your next car';
   readonly takingALook: string =
-    'Our buying specialists are taking a closer look and we will provide you a guranteed offer in one business day.';
+    'Our buying specialists are taking a closer look and will send your price by email in one business day.';
   readonly spamFolder: string = 'Please be sure to check your spam folder.';
 
   constructor() {

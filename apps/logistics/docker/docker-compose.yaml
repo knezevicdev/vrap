@@ -9,6 +9,7 @@ services:
     environment:
       - HOST_URL=http://localhost:8080
       - SHIPPING_PORTAL_URL=https://shipping-portal-int.vroomapi.com/v2
+      - GEARBOX_URL=https://gearbox-dev-int.vroomapi.com/query
     command: ash -c "cd apps/logistics && yarn dev --port 8080"
     # This starts nothing but leaves the container running, useful for
     # debugging nextjs start / config operations

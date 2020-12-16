@@ -161,3 +161,13 @@ export const Link: React.FC<LinkProps> = ({
     </A>
   );
 };
+
+const Typography = {
+  Heading,
+  Title,
+  Body,
+  Fine,
+  Link,
+};
+
+export default Typography;

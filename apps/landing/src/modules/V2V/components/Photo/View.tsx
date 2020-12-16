@@ -38,12 +38,15 @@ const Image = styled.img`
 
 const NoImageContainer = styled.div`
   max-width: 874px;
-  max-height: 533px;
-  min-height: 232px;
+  height: 533px;
   width: 100%;
   background-color: #ffffff;
   display: grid;
   place-items: center;
+
+  @media (max-width: 600px) {
+    height: 232px;
+  }
 `;
 
 const NoImageSection = styled.div`

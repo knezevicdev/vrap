@@ -1,6 +1,6 @@
 import { Form, Formik } from 'formik';
 import { observer } from 'mobx-react';
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import * as Yup from 'yup';
 
@@ -96,6 +96,11 @@ const InitialValues: PaymentOverviewFormValues = {
 };
 
 const OptionsView: React.FC<Props> = ({ viewModel }) => {
+  useEffect(() => {
+    viewModel.onPageLoad();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   const PaymentOverviewSchema = Yup.object().shape({
     paymentOption: Yup.string().required('Required'),
     routingNumber: Yup.string().when('paymentOption', {
