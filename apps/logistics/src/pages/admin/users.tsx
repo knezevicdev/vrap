@@ -1,14 +1,16 @@
 import { NextPage } from 'next';
 import React from 'react';
 
+import Page from 'src/components/Page';
 import Users, { UsersContext } from 'src/modules/admin/users';
 import UsersModel from 'src/modules/admin/users/Model';
-import Page from 'src/Page';
 
 const UsersPage: NextPage = () => {
   const model = new UsersModel();
+  const head = <title>Admin - Users</title>;
+
   return (
-    <Page name="Admin - Users" description="Carrier Portal">
+    <Page head={head}>
       <UsersContext.Provider value={model}>
         <Users />
       </UsersContext.Provider>

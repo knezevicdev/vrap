@@ -1,667 +1,752 @@
 jobs:
-  appraisal_build:
-    docker:
-    - image: vroom/mlp:3.0.2
-    steps:
-    - checkout
-    - setup_remote_docker:
-        version: 18.09.3
-    - run:
-        command: build -a vroom-web/apps/appraisal/docker
-  appraisal_deploy:
-    docker:
-    - image: vroom/mlp:3.0.2
-    parameters:
-      env:
-        type: string
-    steps:
-    - checkout
-    - setup_remote_docker:
-        version: 18.09.3
-    - run:
-        command: deploy -a vroom-web/apps/appraisal/docker -n << parameters.env >>
-  checkout_build:
-    docker:
-    - image: vroom/mlp:3.0.2
-    steps:
-    - checkout
-    - setup_remote_docker:
-        version: 18.09.3
-    - run:
-        command: build -a vroom-web/apps/checkout/docker
-  checkout_deploy:
-    docker:
-    - image: vroom/mlp:3.0.2
-    parameters:
-      env:
-        type: string
-    steps:
-    - checkout
-    - setup_remote_docker:
-        version: 18.09.3
-    - run:
-        command: deploy -a vroom-web/apps/checkout/docker -n << parameters.env >>
-  danger:
-    docker:
-    - image: node:erbium-alpine
-    steps:
-    - checkout
-  home_build:
-    docker:
-    - image: vroom/mlp:3.0.2
-    steps:
-    - checkout
-    - setup_remote_docker:
-        version: 18.09.3
-    - run:
-        command: build -a vroom-web/apps/home/docker
-  home_deploy:
-    docker:
-    - image: vroom/mlp:3.0.2
-    parameters:
-      env:
-        type: string
-    steps:
-    - checkout
-    - setup_remote_docker:
-        version: 18.09.3
-    - run:
-        command: deploy -a vroom-web/apps/home/docker -n << parameters.env >>
-  landing_build:
-    docker:
-    - image: vroom/mlp:3.0.2
-    steps:
-    - checkout
-    - setup_remote_docker:
-        version: 18.09.3
-    - run:
-        command: build -a vroom-web/apps/landing/docker
-  landing_deploy:
-    docker:
-    - image: vroom/mlp:3.0.2
-    parameters:
-      env:
-        type: string
-    steps:
-    - checkout
-    - setup_remote_docker:
-        version: 18.09.3
-    - run:
-        command: deploy -a vroom-web/apps/landing/docker -n << parameters.env >>
-  lint_build:
-    docker:
-    - image: circleci/node:erbium
-    steps:
-    - checkout
-    - run:
-        command: |-
-          yarn install --silent
-          yarn workspaces run lint
-          yarn workspaces run build
-        name: Lint & Build
-  listing_build:
-    docker:
-    - image: vroom/mlp:3.0.2
-    steps:
-    - checkout
-    - setup_remote_docker:
-        version: 18.09.3
-    - run:
-        command: build -a vroom-web/apps/listing/docker
-  listing_deploy:
-    docker:
-    - image: vroom/mlp:3.0.2
-    parameters:
-      env:
-        type: string
-    steps:
-    - checkout
-    - setup_remote_docker:
-        version: 18.09.3
-    - run:
-        command: deploy -a vroom-web/apps/listing/docker -n << parameters.env >>
-  marketing_build:
-    docker:
-    - image: vroom/mlp:3.0.2
-    steps:
-    - checkout
-    - setup_remote_docker:
-        version: 18.09.3
-    - run:
-        command: build -a vroom-web/apps/marketing/docker
-  marketing_deploy:
-    docker:
-    - image: vroom/mlp:3.0.2
-    parameters:
-      env:
-        type: string
-    steps:
-    - checkout
-    - setup_remote_docker:
-        version: 18.09.3
-    - run:
-        command: deploy -a vroom-web/apps/marketing/docker -n << parameters.env >>
-  product_build:
-    docker:
-    - image: vroom/mlp:3.0.2
-    steps:
-    - checkout
-    - setup_remote_docker:
-        version: 18.09.3
-    - run:
-        command: build -a vroom-web/apps/product/docker
-  product_deploy:
-    docker:
-    - image: vroom/mlp:3.0.2
-    parameters:
-      env:
-        type: string
-    steps:
-    - checkout
-    - setup_remote_docker:
-        version: 18.09.3
-    - run:
-        command: deploy -a vroom-web/apps/product/docker -n << parameters.env >>
-  sonarcloud:
-    docker:
-    - image: circleci/node:erbium-browsers
-    steps:
-    - checkout
-    - run:
-        command: |-
-          # Bootstrap yarn workspaces.
-          yarn install --silent
+    appraisal_build:
+        docker:
+            - image: vroom/mlp:3.0.2
+        steps:
+            - checkout
+            - setup_remote_docker:
+                version: 18.09.3
+            - run:
+                command: build -a vroom-web/apps/appraisal/docker
+    appraisal_deploy:
+        docker:
+            - image: vroom/mlp:3.0.2
+        parameters:
+            env:
+                type: string
+        steps:
+            - checkout
+            - setup_remote_docker:
+                version: 18.09.3
+            - run:
+                command: deploy -a vroom-web/apps/appraisal/docker -n << parameters.env >>
+    checkout_build:
+        docker:
+            - image: vroom/mlp:3.0.2
+        steps:
+            - checkout
+            - setup_remote_docker:
+                version: 18.09.3
+            - run:
+                command: build -a vroom-web/apps/checkout/docker
+    checkout_deploy:
+        docker:
+            - image: vroom/mlp:3.0.2
+        parameters:
+            env:
+                type: string
+        steps:
+            - checkout
+            - setup_remote_docker:
+                version: 18.09.3
+            - run:
+                command: deploy -a vroom-web/apps/checkout/docker -n << parameters.env >>
+    danger:
+        docker:
+            - image: node:erbium-alpine
+        steps:
+            - checkout
+    home_build:
+        docker:
+            - image: vroom/mlp:3.0.2
+        steps:
+            - checkout
+            - setup_remote_docker:
+                version: 18.09.3
+            - run:
+                command: build -a vroom-web/apps/home/docker
+    home_deploy:
+        docker:
+            - image: vroom/mlp:3.0.2
+        parameters:
+            env:
+                type: string
+        steps:
+            - checkout
+            - setup_remote_docker:
+                version: 18.09.3
+            - run:
+                command: deploy -a vroom-web/apps/home/docker -n << parameters.env >>
+    landing_build:
+        docker:
+            - image: vroom/mlp:3.0.2
+        steps:
+            - checkout
+            - setup_remote_docker:
+                version: 18.09.3
+            - run:
+                command: build -a vroom-web/apps/landing/docker
+    landing_deploy:
+        docker:
+            - image: vroom/mlp:3.0.2
+        parameters:
+            env:
+                type: string
+        steps:
+            - checkout
+            - setup_remote_docker:
+                version: 18.09.3
+            - run:
+                command: deploy -a vroom-web/apps/landing/docker -n << parameters.env >>
+    lint_build:
+        docker:
+            - image: circleci/node:erbium
+        steps:
+            - checkout
+            - run:
+                command: |-
+                    yarn install --silent
+                    yarn workspaces run lint
+                    yarn workspaces run build
+                name: Lint & Build
+    listing_build:
+        docker:
+            - image: vroom/mlp:3.0.2
+        steps:
+            - checkout
+            - setup_remote_docker:
+                version: 18.09.3
+            - run:
+                command: build -a vroom-web/apps/listing/docker
+    listing_deploy:
+        docker:
+            - image: vroom/mlp:3.0.2
+        parameters:
+            env:
+                type: string
+        steps:
+            - checkout
+            - setup_remote_docker:
+                version: 18.09.3
+            - run:
+                command: deploy -a vroom-web/apps/listing/docker -n << parameters.env >>
+    logistics_build:
+        docker:
+            - image: vroom/mlp:3.0.2
+        steps:
+            - checkout
+            - setup_remote_docker:
+                version: 18.09.3
+            - run:
+                command: build -a vroom-web/apps/logistics/docker
+    logistics_deploy:
+        docker:
+            - image: vroom/mlp:3.0.2
+        parameters:
+            env:
+                type: string
+        steps:
+            - checkout
+            - setup_remote_docker:
+                version: 18.09.3
+            - run:
+                command: deploy -a vroom-web/apps/logistics/docker -n << parameters.env >>
+    marketing_build:
+        docker:
+            - image: vroom/mlp:3.0.2
+        steps:
+            - checkout
+            - setup_remote_docker:
+                version: 18.09.3
+            - run:
+                command: build -a vroom-web/apps/marketing/docker
+    marketing_deploy:
+        docker:
+            - image: vroom/mlp:3.0.2
+        parameters:
+            env:
+                type: string
+        steps:
+            - checkout
+            - setup_remote_docker:
+                version: 18.09.3
+            - run:
+                command: deploy -a vroom-web/apps/marketing/docker -n << parameters.env >>
+    product_build:
+        docker:
+            - image: vroom/mlp:3.0.2
+        steps:
+            - checkout
+            - setup_remote_docker:
+                version: 18.09.3
+            - run:
+                command: build -a vroom-web/apps/product/docker
+    product_deploy:
+        docker:
+            - image: vroom/mlp:3.0.2
+        parameters:
+            env:
+                type: string
+        steps:
+            - checkout
+            - setup_remote_docker:
+                version: 18.09.3
+            - run:
+                command: deploy -a vroom-web/apps/product/docker -n << parameters.env >>
+    sonarcloud:
+        docker:
+            - image: circleci/node:erbium-browsers
+        steps:
+            - checkout
+            - run:
+                command: |-
+                    # Bootstrap yarn workspaces.
+                    yarn install --silent
 
-          # Build the main app.
-          yarn workspace @vroom-web/home build
-    - sonarcloud/scan
-  static-assets_deploy:
-    docker:
-    - image: vroom/mlp:3.0.2
-    parameters:
-      s3BucketUrl:
-        type: string
-    steps:
-    - checkout
-    - run:
-        command: |-
-          aws s3 sync ./static-assets << parameters.s3BucketUrl >> --acl public-read --exclude '*.webp' --exclude '*.mp4'
-          aws s3 sync ./static-assets << parameters.s3BucketUrl >> --acl public-read --exclude '*' --include '*.webp' --content-type 'image/webp'
-          aws s3 sync ./static-assets << parameters.s3BucketUrl >> --acl public-read --exclude '*' --include '*.mp4' --content-type 'video/mp4'
+                    # Build the main app.
+                    yarn workspace @vroom-web/logistics build
+            - sonarcloud/scan
+    static-assets_deploy:
+        docker:
+            - image: vroom/mlp:3.0.2
+        parameters:
+            s3BucketUrl:
+                type: string
+        steps:
+            - checkout
+            - run:
+                command: |-
+                    aws s3 sync ./static-assets << parameters.s3BucketUrl >> --acl public-read --exclude '*.webp' --exclude '*.mp4'
+                    aws s3 sync ./static-assets << parameters.s3BucketUrl >> --acl public-read --exclude '*' --include '*.webp' --content-type 'image/webp'
+                    aws s3 sync ./static-assets << parameters.s3BucketUrl >> --acl public-read --exclude '*' --include '*.mp4' --content-type 'video/mp4'
 orbs:
-  sonarcloud: sonarsource/sonarcloud@1.0.1
+    sonarcloud: sonarsource/sonarcloud@1.0.1
 version: 2.1
 workflows:
-  appraisal:
-    jobs:
-    - appraisal_build:
-        context: aws-non-prod
-        filters:
-          branches:
-            ignore: /.*/
-          tags:
-            only: /^appraisal-v.*/
-    - hold:
-        filters:
-          branches:
-            ignore: /.*/
-          tags:
-            only: /^appraisal-v.*/
-        matrix:
-          parameters:
-            env:
-            - dev
-            - qa
-            - uat
-        name: hold_<< matrix.env >>
-        requires:
-        - appraisal_build
-        type: approval
-    - appraisal_deploy:
-        context: aws-non-prod
-        filters:
-          branches:
-            ignore: /.*/
-          tags:
-            only: /^appraisal-v.*/
-        matrix:
-          parameters:
-            env:
-            - dev
-            - qa
-            - uat
-        name: appraisal_deploy_<< matrix.env >>
-        requires:
-        - hold_<< matrix.env >>
-    - hold:
-        filters:
-          branches:
-            ignore: /.*/
-          tags:
-            only: /^appraisal-v.*/
-        name: hold_prod
-        requires:
-        - appraisal_deploy_dev
-        - appraisal_deploy_qa
-        - appraisal_deploy_uat
-        type: approval
-    - appraisal_deploy:
-        context: aws-non-prod
-        env: prod
-        filters:
-          branches:
-            ignore: /.*/
-          tags:
-            only: /^appraisal-v.*/
-        name: appraisal_deploy_prod
-        requires:
-        - hold_prod
-  checkout:
-    jobs:
-    - checkout_build:
-        context: aws-non-prod
-        filters:
-          branches:
-            ignore: /.*/
-          tags:
-            only: /^checkout-v.*/
-    - hold:
-        filters:
-          branches:
-            ignore: /.*/
-          tags:
-            only: /^checkout-v.*/
-        matrix:
-          parameters:
-            env:
-            - dev
-            - qa
-            - uat
-        name: hold_<< matrix.env >>
-        requires:
-        - checkout_build
-        type: approval
-    - checkout_deploy:
-        context: aws-non-prod
-        filters:
-          branches:
-            ignore: /.*/
-          tags:
-            only: /^checkout-v.*/
-        matrix:
-          parameters:
-            env:
-            - dev
-            - qa
-            - uat
-        name: checkout_deploy_<< matrix.env >>
-        requires:
-        - hold_<< matrix.env >>
-    - hold:
-        filters:
-          branches:
-            ignore: /.*/
-          tags:
-            only: /^checkout-v.*/
-        name: hold_prod
-        requires:
-        - checkout_deploy_dev
-        - checkout_deploy_qa
-        - checkout_deploy_uat
-        type: approval
-    - checkout_deploy:
-        context: aws-non-prod
-        env: prod
-        filters:
-          branches:
-            ignore: /.*/
-          tags:
-            only: /^checkout-v.*/
-        name: checkout_deploy_prod
-        requires:
-        - hold_prod
-  common:
-    jobs:
-    - lint_build
-  home:
-    jobs:
-    - home_build:
-        context: aws-non-prod
-        filters:
-          branches:
-            ignore: /.*/
-          tags:
-            only: /^home-v.*/
-    - hold:
-        filters:
-          branches:
-            ignore: /.*/
-          tags:
-            only: /^home-v.*/
-        matrix:
-          parameters:
-            env:
-            - dev
-            - qa
-            - uat
-        name: hold_<< matrix.env >>
-        requires:
-        - home_build
-        type: approval
-    - home_deploy:
-        context: aws-non-prod
-        filters:
-          branches:
-            ignore: /.*/
-          tags:
-            only: /^home-v.*/
-        matrix:
-          parameters:
-            env:
-            - dev
-            - qa
-            - uat
-        name: home_deploy_<< matrix.env >>
-        requires:
-        - hold_<< matrix.env >>
-    - hold:
-        filters:
-          branches:
-            ignore: /.*/
-          tags:
-            only: /^home-v.*/
-        name: hold_prod
-        requires:
-        - home_deploy_dev
-        - home_deploy_qa
-        - home_deploy_uat
-        type: approval
-    - home_deploy:
-        context: aws-non-prod
-        env: prod
-        filters:
-          branches:
-            ignore: /.*/
-          tags:
-            only: /^home-v.*/
-        name: home_deploy_prod
-        requires:
-        - hold_prod
-  landing:
-    jobs:
-    - landing_build:
-        context: aws-non-prod
-        filters:
-          branches:
-            ignore: /.*/
-          tags:
-            only: /^landing-v.*/
-    - hold:
-        filters:
-          branches:
-            ignore: /.*/
-          tags:
-            only: /^landing-v.*/
-        matrix:
-          parameters:
-            env:
-            - dev
-            - qa
-            - uat
-        name: hold_<< matrix.env >>
-        requires:
-        - landing_build
-        type: approval
-    - landing_deploy:
-        context: aws-non-prod
-        filters:
-          branches:
-            ignore: /.*/
-          tags:
-            only: /^landing-v.*/
-        matrix:
-          parameters:
-            env:
-            - dev
-            - qa
-            - uat
-        name: landing_deploy_<< matrix.env >>
-        requires:
-        - hold_<< matrix.env >>
-    - hold:
-        filters:
-          branches:
-            ignore: /.*/
-          tags:
-            only: /^landing-v.*/
-        name: hold_prod
-        requires:
-        - landing_deploy_dev
-        - landing_deploy_qa
-        - landing_deploy_uat
-        type: approval
-    - landing_deploy:
-        context: aws-non-prod
-        env: prod
-        filters:
-          branches:
-            ignore: /.*/
-          tags:
-            only: /^landing-v.*/
-        name: landing_deploy_prod
-        requires:
-        - hold_prod
-  listing:
-    jobs:
-    - listing_build:
-        context: aws-non-prod
-        filters:
-          branches:
-            ignore: /.*/
-          tags:
-            only: /^listing-v.*/
-    - hold:
-        filters:
-          branches:
-            ignore: /.*/
-          tags:
-            only: /^listing-v.*/
-        matrix:
-          parameters:
-            env:
-            - dev
-            - qa
-            - uat
-        name: hold_<< matrix.env >>
-        requires:
-        - listing_build
-        type: approval
-    - listing_deploy:
-        context: aws-non-prod
-        filters:
-          branches:
-            ignore: /.*/
-          tags:
-            only: /^listing-v.*/
-        matrix:
-          parameters:
-            env:
-            - dev
-            - qa
-            - uat
-        name: listing_deploy_<< matrix.env >>
-        requires:
-        - hold_<< matrix.env >>
-    - hold:
-        filters:
-          branches:
-            ignore: /.*/
-          tags:
-            only: /^listing-v.*/
-        name: hold_prod
-        requires:
-        - listing_deploy_dev
-        - listing_deploy_qa
-        - listing_deploy_uat
-        type: approval
-    - listing_deploy:
-        context: aws-non-prod
-        env: prod
-        filters:
-          branches:
-            ignore: /.*/
-          tags:
-            only: /^listing-v.*/
-        name: listing_deploy_prod
-        requires:
-        - hold_prod
-  marketing:
-    jobs:
-    - marketing_build:
-        context: aws-non-prod
-        filters:
-          branches:
-            ignore: /.*/
-          tags:
-            only: /^marketing-v.*/
-    - hold:
-        filters:
-          branches:
-            ignore: /.*/
-          tags:
-            only: /^marketing-v.*/
-        matrix:
-          parameters:
-            env:
-            - dev
-            - qa
-            - uat
-        name: hold_<< matrix.env >>
-        requires:
-        - marketing_build
-        type: approval
-    - marketing_deploy:
-        context: aws-non-prod
-        filters:
-          branches:
-            ignore: /.*/
-          tags:
-            only: /^marketing-v.*/
-        matrix:
-          parameters:
-            env:
-            - dev
-            - qa
-            - uat
-        name: marketing_deploy_<< matrix.env >>
-        requires:
-        - hold_<< matrix.env >>
-    - hold:
-        filters:
-          branches:
-            ignore: /.*/
-          tags:
-            only: /^marketing-v.*/
-        name: hold_prod
-        requires:
-        - marketing_deploy_dev
-        - marketing_deploy_qa
-        - marketing_deploy_uat
-        type: approval
-    - marketing_deploy:
-        context: aws-non-prod
-        env: prod
-        filters:
-          branches:
-            ignore: /.*/
-          tags:
-            only: /^marketing-v.*/
-        name: marketing_deploy_prod
-        requires:
-        - hold_prod
-  product:
-    jobs:
-    - product_build:
-        context: aws-non-prod
-        filters:
-          branches:
-            ignore: /.*/
-          tags:
-            only: /^product-v.*/
-    - hold:
-        filters:
-          branches:
-            ignore: /.*/
-          tags:
-            only: /^product-v.*/
-        matrix:
-          parameters:
-            env:
-            - dev
-            - qa
-            - uat
-        name: hold_<< matrix.env >>
-        requires:
-        - product_build
-        type: approval
-    - product_deploy:
-        context: aws-non-prod
-        filters:
-          branches:
-            ignore: /.*/
-          tags:
-            only: /^product-v.*/
-        matrix:
-          parameters:
-            env:
-            - dev
-            - qa
-            - uat
-        name: product_deploy_<< matrix.env >>
-        requires:
-        - hold_<< matrix.env >>
-    - hold:
-        filters:
-          branches:
-            ignore: /.*/
-          tags:
-            only: /^product-v.*/
-        name: hold_prod
-        requires:
-        - product_deploy_dev
-        - product_deploy_qa
-        - product_deploy_uat
-        type: approval
-    - product_deploy:
-        context: aws-non-prod
-        env: prod
-        filters:
-          branches:
-            ignore: /.*/
-          tags:
-            only: /^product-v.*/
-        name: product_deploy_prod
-        requires:
-        - hold_prod
-  static-assets:
-    jobs:
-    - static-assets_deploy:
-        context: aws-non-prod
-        filters:
-          branches:
-            ignore: /.*/
-          tags:
-            only: /^static-assets-v.*/
-        name: static-assets_deploy-non-prod
-        s3BucketUrl: s3://static-assets.n.vroom.systems
-    - static-assets_deploy:
-        context: aws-prod
-        filters:
-          branches:
-            ignore: /.*/
-          tags:
-            only: /^static-assets-v.*/
-        name: static-assets_deploy-prod
-        s3BucketUrl: s3://static-assets.p.vroom.systems
-  version: 2
+    appraisal:
+        jobs:
+            - appraisal_build:
+                context: aws-non-prod
+                filters:
+                    branches:
+                        ignore: /.*/
+                    tags:
+                        only: /^appraisal-v.*/
+            - hold:
+                filters:
+                    branches:
+                        ignore: /.*/
+                    tags:
+                        only: /^appraisal-v.*/
+                matrix:
+                    parameters:
+                        env:
+                            - dev
+                            - qa
+                            - uat
+                name: hold_<< matrix.env >>
+                requires:
+                    - appraisal_build
+                type: approval
+            - appraisal_deploy:
+                context: aws-non-prod
+                filters:
+                    branches:
+                        ignore: /.*/
+                    tags:
+                        only: /^appraisal-v.*/
+                matrix:
+                    parameters:
+                        env:
+                            - dev
+                            - qa
+                            - uat
+                name: appraisal_deploy_<< matrix.env >>
+                requires:
+                    - hold_<< matrix.env >>
+            - hold:
+                filters:
+                    branches:
+                        ignore: /.*/
+                    tags:
+                        only: /^appraisal-v.*/
+                name: hold_prod
+                requires:
+                    - appraisal_deploy_dev
+                    - appraisal_deploy_qa
+                    - appraisal_deploy_uat
+                type: approval
+            - appraisal_deploy:
+                context: aws-non-prod
+                env: prod
+                filters:
+                    branches:
+                        ignore: /.*/
+                    tags:
+                        only: /^appraisal-v.*/
+                name: appraisal_deploy_prod
+                requires:
+                    - hold_prod
+    checkout:
+        jobs:
+            - checkout_build:
+                context: aws-non-prod
+                filters:
+                    branches:
+                        ignore: /.*/
+                    tags:
+                        only: /^checkout-v.*/
+            - hold:
+                filters:
+                    branches:
+                        ignore: /.*/
+                    tags:
+                        only: /^checkout-v.*/
+                matrix:
+                    parameters:
+                        env:
+                            - dev
+                            - qa
+                            - uat
+                name: hold_<< matrix.env >>
+                requires:
+                    - checkout_build
+                type: approval
+            - checkout_deploy:
+                context: aws-non-prod
+                filters:
+                    branches:
+                        ignore: /.*/
+                    tags:
+                        only: /^checkout-v.*/
+                matrix:
+                    parameters:
+                        env:
+                            - dev
+                            - qa
+                            - uat
+                name: checkout_deploy_<< matrix.env >>
+                requires:
+                    - hold_<< matrix.env >>
+            - hold:
+                filters:
+                    branches:
+                        ignore: /.*/
+                    tags:
+                        only: /^checkout-v.*/
+                name: hold_prod
+                requires:
+                    - checkout_deploy_dev
+                    - checkout_deploy_qa
+                    - checkout_deploy_uat
+                type: approval
+            - checkout_deploy:
+                context: aws-non-prod
+                env: prod
+                filters:
+                    branches:
+                        ignore: /.*/
+                    tags:
+                        only: /^checkout-v.*/
+                name: checkout_deploy_prod
+                requires:
+                    - hold_prod
+    common:
+        jobs:
+            - lint_build
+    home:
+        jobs:
+            - home_build:
+                context: aws-non-prod
+                filters:
+                    branches:
+                        ignore: /.*/
+                    tags:
+                        only: /^home-v.*/
+            - hold:
+                filters:
+                    branches:
+                        ignore: /.*/
+                    tags:
+                        only: /^home-v.*/
+                matrix:
+                    parameters:
+                        env:
+                            - dev
+                            - qa
+                            - uat
+                name: hold_<< matrix.env >>
+                requires:
+                    - home_build
+                type: approval
+            - home_deploy:
+                context: aws-non-prod
+                filters:
+                    branches:
+                        ignore: /.*/
+                    tags:
+                        only: /^home-v.*/
+                matrix:
+                    parameters:
+                        env:
+                            - dev
+                            - qa
+                            - uat
+                name: home_deploy_<< matrix.env >>
+                requires:
+                    - hold_<< matrix.env >>
+            - hold:
+                filters:
+                    branches:
+                        ignore: /.*/
+                    tags:
+                        only: /^home-v.*/
+                name: hold_prod
+                requires:
+                    - home_deploy_dev
+                    - home_deploy_qa
+                    - home_deploy_uat
+                type: approval
+            - home_deploy:
+                context: aws-non-prod
+                env: prod
+                filters:
+                    branches:
+                        ignore: /.*/
+                    tags:
+                        only: /^home-v.*/
+                name: home_deploy_prod
+                requires:
+                    - hold_prod
+    landing:
+        jobs:
+            - landing_build:
+                context: aws-non-prod
+                filters:
+                    branches:
+                        ignore: /.*/
+                    tags:
+                        only: /^landing-v.*/
+            - hold:
+                filters:
+                    branches:
+                        ignore: /.*/
+                    tags:
+                        only: /^landing-v.*/
+                matrix:
+                    parameters:
+                        env:
+                            - dev
+                            - qa
+                            - uat
+                name: hold_<< matrix.env >>
+                requires:
+                    - landing_build
+                type: approval
+            - landing_deploy:
+                context: aws-non-prod
+                filters:
+                    branches:
+                        ignore: /.*/
+                    tags:
+                        only: /^landing-v.*/
+                matrix:
+                    parameters:
+                        env:
+                            - dev
+                            - qa
+                            - uat
+                name: landing_deploy_<< matrix.env >>
+                requires:
+                    - hold_<< matrix.env >>
+            - hold:
+                filters:
+                    branches:
+                        ignore: /.*/
+                    tags:
+                        only: /^landing-v.*/
+                name: hold_prod
+                requires:
+                    - landing_deploy_dev
+                    - landing_deploy_qa
+                    - landing_deploy_uat
+                type: approval
+            - landing_deploy:
+                context: aws-non-prod
+                env: prod
+                filters:
+                    branches:
+                        ignore: /.*/
+                    tags:
+                        only: /^landing-v.*/
+                name: landing_deploy_prod
+                requires:
+                    - hold_prod
+    listing:
+        jobs:
+            - listing_build:
+                context: aws-non-prod
+                filters:
+                    branches:
+                        ignore: /.*/
+                    tags:
+                        only: /^listing-v.*/
+            - hold:
+                filters:
+                    branches:
+                        ignore: /.*/
+                    tags:
+                        only: /^listing-v.*/
+                matrix:
+                    parameters:
+                        env:
+                            - dev
+                            - qa
+                            - uat
+                name: hold_<< matrix.env >>
+                requires:
+                    - listing_build
+                type: approval
+            - listing_deploy:
+                context: aws-non-prod
+                filters:
+                    branches:
+                        ignore: /.*/
+                    tags:
+                        only: /^listing-v.*/
+                matrix:
+                    parameters:
+                        env:
+                            - dev
+                            - qa
+                            - uat
+                name: listing_deploy_<< matrix.env >>
+                requires:
+                    - hold_<< matrix.env >>
+            - hold:
+                filters:
+                    branches:
+                        ignore: /.*/
+                    tags:
+                        only: /^listing-v.*/
+                name: hold_prod
+                requires:
+                    - listing_deploy_dev
+                    - listing_deploy_qa
+                    - listing_deploy_uat
+                type: approval
+            - listing_deploy:
+                context: aws-non-prod
+                env: prod
+                filters:
+                    branches:
+                        ignore: /.*/
+                    tags:
+                        only: /^listing-v.*/
+                name: listing_deploy_prod
+                requires:
+                    - hold_prod
+    logistics:
+        jobs:
+            - logistics_build:
+                context: aws-non-prod
+                filters:
+                    branches:
+                        ignore: /.*/
+                    tags:
+                        only: /^logistics-v.*/
+            - hold:
+                filters:
+                    branches:
+                        ignore: /.*/
+                    tags:
+                        only: /^logistics-v.*/
+                matrix:
+                    parameters:
+                        env:
+                            - dev
+                            - qa
+                            - uat
+                name: hold_<< matrix.env >>
+                requires:
+                    - logistics_build
+                type: approval
+            - logistics_deploy:
+                context: aws-non-prod
+                filters:
+                    branches:
+                        ignore: /.*/
+                    tags:
+                        only: /^logistics-v.*/
+                matrix:
+                    parameters:
+                        env:
+                            - dev
+                            - qa
+                            - uat
+                name: logistics_deploy_<< matrix.env >>
+                requires:
+                    - hold_<< matrix.env >>
+            - hold:
+                filters:
+                    branches:
+                        ignore: /.*/
+                    tags:
+                        only: /^logistics-v.*/
+                name: hold_prod
+                requires:
+                    - logistics_deploy_dev
+                    - logistics_deploy_qa
+                    - logistics_deploy_uat
+                type: approval
+            - logistics_deploy:
+                context: aws-non-prod
+                env: prod
+                filters:
+                    branches:
+                        ignore: /.*/
+                    tags:
+                        only: /^logistics-v.*/
+                name: logistics_deploy_prod
+                requires:
+                    - hold_prod
+    marketing:
+        jobs:
+            - marketing_build:
+                context: aws-non-prod
+                filters:
+                    branches:
+                        ignore: /.*/
+                    tags:
+                        only: /^marketing-v.*/
+            - hold:
+                filters:
+                    branches:
+                        ignore: /.*/
+                    tags:
+                        only: /^marketing-v.*/
+                matrix:
+                    parameters:
+                        env:
+                            - dev
+                            - qa
+                            - uat
+                name: hold_<< matrix.env >>
+                requires:
+                    - marketing_build
+                type: approval
+            - marketing_deploy:
+                context: aws-non-prod
+                filters:
+                    branches:
+                        ignore: /.*/
+                    tags:
+                        only: /^marketing-v.*/
+                matrix:
+                    parameters:
+                        env:
+                            - dev
+                            - qa
+                            - uat
+                name: marketing_deploy_<< matrix.env >>
+                requires:
+                    - hold_<< matrix.env >>
+            - hold:
+                filters:
+                    branches:
+                        ignore: /.*/
+                    tags:
+                        only: /^marketing-v.*/
+                name: hold_prod
+                requires:
+                    - marketing_deploy_dev
+                    - marketing_deploy_qa
+                    - marketing_deploy_uat
+                type: approval
+            - marketing_deploy:
+                context: aws-non-prod
+                env: prod
+                filters:
+                    branches:
+                        ignore: /.*/
+                    tags:
+                        only: /^marketing-v.*/
+                name: marketing_deploy_prod
+                requires:
+                    - hold_prod
+    product:
+        jobs:
+            - product_build:
+                context: aws-non-prod
+                filters:
+                    branches:
+                        ignore: /.*/
+                    tags:
+                        only: /^product-v.*/
+            - hold:
+                filters:
+                    branches:
+                        ignore: /.*/
+                    tags:
+                        only: /^product-v.*/
+                matrix:
+                    parameters:
+                        env:
+                            - dev
+                            - qa
+                            - uat
+                name: hold_<< matrix.env >>
+                requires:
+                    - product_build
+                type: approval
+            - product_deploy:
+                context: aws-non-prod
+                filters:
+                    branches:
+                        ignore: /.*/
+                    tags:
+                        only: /^product-v.*/
+                matrix:
+                    parameters:
+                        env:
+                            - dev
+                            - qa
+                            - uat
+                name: product_deploy_<< matrix.env >>
+                requires:
+                    - hold_<< matrix.env >>
+            - hold:
+                filters:
+                    branches:
+                        ignore: /.*/
+                    tags:
+                        only: /^product-v.*/
+                name: hold_prod
+                requires:
+                    - product_deploy_dev
+                    - product_deploy_qa
+                    - product_deploy_uat
+                type: approval
+            - product_deploy:
+                context: aws-non-prod
+                env: prod
+                filters:
+                    branches:
+                        ignore: /.*/
+                    tags:
+                        only: /^product-v.*/
+                name: product_deploy_prod
+                requires:
+                    - hold_prod
+    static-assets:
+        jobs:
+            - static-assets_deploy:
+                context: aws-non-prod
+                filters:
+                    branches:
+                        ignore: /.*/
+                    tags:
+                        only: /^static-assets-v.*/
+                name: static-assets_deploy-non-prod
+                s3BucketUrl: s3://static-assets.n.vroom.systems
+            - static-assets_deploy:
+                context: aws-prod
+                filters:
+                    branches:
+                        ignore: /.*/
+                    tags:
+                        only: /^static-assets-v.*/
+                name: static-assets_deploy-prod
+                s3BucketUrl: s3://static-assets.p.vroom.systems
+    version: 2
 
