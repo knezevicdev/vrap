@@ -8,7 +8,7 @@ import SignupModel from 'src/modules/signup/Model';
 const SignupPage: NextPage = () => {
   const model = new SignupModel();
   return (
-    <Page name="Sign Up">
+    <Page name="Sign Up" unprotected>
       <SignupContext.Provider value={model}>
         <Signup />
       </SignupContext.Provider>
