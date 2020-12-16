@@ -80,9 +80,11 @@ export default class CongratsViewModel {
   private get additionalProducts():
     | { [service: string]: Service[] }
     | undefined {
-    const isObjectEmpty =
-      Object.entries(this.summary.additionalProducts).length === 0;
-    return isObjectEmpty ? undefined : this.summary.additionalProducts;
+    console.error(
+      'this.summary.additionalProductsthis.summary.additionalProducts',
+      this.summary.additionalProducts
+    );
+    return this.summary.additionalProducts;
   }
 
   private get vehicleServiceContractProtection(): Service | undefined {

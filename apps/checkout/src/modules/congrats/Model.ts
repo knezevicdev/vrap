@@ -76,6 +76,9 @@ export default class CongratsModel {
                 subTotal
                 totalBalanceDue
                 cashDownPayment
+                taxableAmount
+                totalTaxesAndFees
+                shippingFee
                 tradeIn {
                   value
                   loanPayoff
@@ -117,6 +120,8 @@ export default class CongratsModel {
               }
               depositPaymentInfo {
                 HoldPlaced
+                LastFourDigits
+                ChargeAmount
               }
               registrationAddress {
                 firstName

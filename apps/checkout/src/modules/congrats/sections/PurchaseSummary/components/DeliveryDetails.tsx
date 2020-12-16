@@ -55,7 +55,11 @@ const DeliveryDetails: React.FC<DeliveryDetailsProps> = ({
           <NotAvailable bold>Not available delivery dates</NotAvailable>
           {dates &&
             dates.map((date) => {
-              return <Body.Regular key={date}>{date}</Body.Regular>;
+              return (
+                <Body.Regular key={date}>
+                  {new Date(date).toLocaleString()}
+                </Body.Regular>
+              );
             })}
         </>
       )}
