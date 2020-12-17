@@ -1,40 +1,40 @@
 import { SimpleHeader } from '@vroom-web/header-components';
 import { IncomingMessage } from 'http';
 import { GetServerSideProps, NextPage } from 'next';
+import { useRouter } from 'next/router';
 import React from 'react';
+import styled from 'styled-components';
 
 import Footer from 'src/core/Footer';
 import ENVS from 'src/integrations/Envs';
 import PriceInfo from 'src/modules/price';
-import {
-  getInitialPriceStoreState,
-  PriceStore,
-  PriceStoreContext,
-} from 'src/modules/price/store';
+import { PriceStore } from 'src/modules/price/store';
 import Questions from 'src/modules/questions';
 import Page from 'src/Page';
 
-interface Props {
-  store: PriceStore;
-}
-
-const Price: NextPage<Props> = ({ store }) => {
+const Price: NextPage = () => {
   const gearboxPrivateUrl = ENVS.GEARBOX_PRIVATE_URL;
-  //   const router = useRouter();
-  //   const priceId = router.query.priceId as string;
-  //   const store = new PriceStore(priceId);
+  const router = useRouter();
+  const priceId = router.query.priceId as string;
+  const store = new PriceStore(priceId);
 
   return (
     <Page name="Home">
-      <PriceStoreContext.Provider value={store}>
-        <SimpleHeader gearboxPrivateUrl={gearboxPrivateUrl} />
-        <PriceInfo />
+      <SimpleHeader gearboxPrivateUrl={gearboxPrivateUrl} />
+      <Contents>
+        <PriceInfo store={store} />
         <Questions />
-        <Footer />
-      </PriceStoreContext.Provider>
+      </Contents>
+      <Footer />
     </Page>
   );
 };
+
+const Contents = styled.div`
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+`;
 
 interface Cookie {
   uuid: string;
@@ -76,9 +76,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     url: req.url,
   };
   console.log(JSON.stringify(loggerInfo));
-
-  const store = await getInitialPriceStoreState(priceId);
-  return { props: { store } };
+  return { props: {} };
 };
 
 export default Price;
