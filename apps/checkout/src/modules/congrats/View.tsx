@@ -1,3 +1,4 @@
+import { SimpleHeader } from '@vroom-web/header-components';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
 import styled from 'styled-components';
@@ -37,6 +38,7 @@ const CongratsView: React.FC<Props> = ({ viewModel }) => {
 
   return (
     <Page>
+      <SimpleHeader gearboxPrivateUrl="https://gearbox-dev-int.vroomapi.com/query-private" />
       <ReservedCar {...reservedCarProps} />
       <Next {...nextProps} />
       <PurchaseSummary {...purchaseSummaryViewModel} />
