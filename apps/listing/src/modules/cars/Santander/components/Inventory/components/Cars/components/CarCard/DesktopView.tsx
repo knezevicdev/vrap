@@ -163,9 +163,9 @@ const DesktopView: React.FC<DesktopViewProps> = ({ viewModel }) => {
             {viewModel.showAvailableSoon() && (
               <AvailableSoon>{viewModel.availableSoon}</AvailableSoon>
             )}
-            {/* {viewModel.showSalePending() && ( */}
-            <SalePending>{viewModel.salePending}</SalePending>
-            {/* )} */}
+            {viewModel.showSalePending() && (
+              <SalePending>{viewModel.salePending}</SalePending>
+            )}
             <CarDetails>
               <Value fontWeight={600} lineHeight="24px" whiteSpace="nowrap">
                 {title}
