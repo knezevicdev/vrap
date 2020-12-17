@@ -6,7 +6,7 @@ import { getVroomTheme } from 'vroom-ui';
 import Questions from '../../../../modules/congrats/sections/Questions';
 import { questionsViewModel } from '../ViewModels';
 
-const theme = getVroomTheme('/assets/fonts/Vroom');
+const theme = getVroomTheme();
 
 export const Success = (): JSX.Element => {
   return (

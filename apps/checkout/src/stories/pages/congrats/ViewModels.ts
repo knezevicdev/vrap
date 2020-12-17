@@ -134,6 +134,7 @@ export const purchaseSummaryViewModel: PurchaseSummaryProps = {
       miles: '20,818 miles',
     },
   },
+  showInsuranceDisclaimer: true,
 };
 
 const sections = [

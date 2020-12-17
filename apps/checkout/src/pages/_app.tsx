@@ -7,6 +7,9 @@ import {
 import { configure as configureMobx } from 'mobx';
 import App from 'next/app';
 import getConfig from 'next/config';
+import React from 'react';
+import { ThemeProvider } from 'styled-components';
+import { getVroomTheme, GlobalStyle } from 'vroom-ui';
 
 import client from 'src/networking/client';
 
@@ -41,6 +44,20 @@ class VroomApp extends App {
       }
     };
     client.addResponseInterceptor(errorInterceptor);
+  }
+
+  render(): JSX.Element {
+    const { Component, pageProps } = this.props;
+    const theme = getVroomTheme();
+
+    return (
+      <>
+        <GlobalStyle />
+        <ThemeProvider theme={theme}>
+          <Component {...pageProps} />
+        </ThemeProvider>
+      </>
+    );
   }
 }
 
