@@ -203,7 +203,7 @@ export default class CongratsViewModel {
 
     return {
       summary: {
-        date: this.summary.dateCompleted,
+        date: new Date(this.summary.dateCompleted).toDateString(),
         car: {
           image: {
             alt: car,
