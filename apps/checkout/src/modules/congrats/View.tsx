@@ -1,4 +1,6 @@
+import { SimpleHeader } from '@vroom-web/header-components';
 import { observer } from 'mobx-react-lite';
+import getConfig from 'next/config';
 import React from 'react';
 import styled from 'styled-components';
 import { Footer } from 'vroom-ui';
@@ -17,6 +19,10 @@ const Page = styled.div`
 interface Props {
   viewModel: CongratsViewModel;
 }
+
+const {
+  publicRuntimeConfig: { GEARBOX_PRIVATE_URL },
+} = getConfig();
 
 const CongratsView: React.FC<Props> = ({ viewModel }) => {
   if (viewModel.loading) {
@@ -37,6 +43,7 @@ const CongratsView: React.FC<Props> = ({ viewModel }) => {
 
   return (
     <Page>
+      <SimpleHeader gearboxPrivateUrl={GEARBOX_PRIVATE_URL} />
       <ReservedCar {...reservedCarProps} />
       <Next {...nextProps} />
       <PurchaseSummary {...purchaseSummaryViewModel} />
