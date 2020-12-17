@@ -58,13 +58,13 @@ export const patchUser = async (
   return axiosInstance.patch(url, { id, status, carrierCode });
 };
 
-export const postUser = async (
+export const postSignUp = async (
   username: string,
   password: string,
   firstName: string,
   lastName: string
 ): Promise<AxiosResponse<User>> =>
-  axiosInstance.post(`/api/users`, {
+  axiosInstance.post(`/api/signup`, {
     username,
     password,
     firstName,
