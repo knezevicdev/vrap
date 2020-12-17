@@ -1,6 +1,4 @@
-import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
-import Grid from '@material-ui/core/Grid';
+import { Card, Grid } from '@material-ui/core';
 import { styled } from '@material-ui/core/styles';
 import { Typography } from '@vroom-web/ui';
 import React from 'react';
@@ -45,28 +43,66 @@ const EvoxLogo = styled('img')(({ theme }) => ({
 }));
 
 const AvailableSoon = styled(Typography)(({ theme }) => ({
-  position: 'absolute',
-  top: 0,
-  left: 0,
-  padding: theme.spacing(0, 1),
-  background: theme.palette.grey['400'],
-  fontSize: '14px',
+  padding: theme.spacing(0, 2),
+  fontSize: '16px',
+  fontWeight: 600,
+  lineHeight: '24px',
+  width: 'fit-content',
+  position: 'relative',
+  background: '#C4C4C4',
+  boxShadow: '0px 0px 6px rgba(0, 0, 0, 0.15)',
+  '&:after': {
+    position: 'absolute',
+    right: '-6px',
+    top: '0',
+    height: '24px',
+    width: '20px',
+    backgroundColor: '#C4C4C4',
+    transform: 'skewX(-23deg)',
+    color: '#C4C4C4',
+    content: 'close-quote',
+    quotes: 'none',
+  },
 }));
 
 const SalePending = styled(Typography)(({ theme }) => ({
-  position: 'absolute',
-  top: 0,
-  left: 0,
-  padding: theme.spacing(0, 1),
+  padding: theme.spacing(0, 2),
+  fontSize: '16px',
+  fontWeight: 600,
+  lineHeight: '24px',
+  width: 'fit-content',
+  position: 'relative',
   background: '#ffd400',
-  fontSize: '14px',
+  boxShadow: '0px 0px 6px rgba(0, 0, 0, 0.15)',
+  '&:after': {
+    position: 'absolute',
+    right: '-6px',
+    top: '0',
+    height: '24px',
+    width: '20px',
+    backgroundColor: '#ffd400',
+    transform: 'skewX(-23deg)',
+    color: '#ffd400',
+    content: 'close-quote',
+    quotes: 'none',
+  },
 }));
 
-const Content = styled(CardContent)(() => ({
+const Content = styled('div')(() => ({
   display: 'flex',
   flexDirection: 'column',
   width: '100%',
   height: '110px',
+  padding: 0,
+}));
+
+const CarDetails = styled('div')(({ theme }) => ({
+  display: 'flex',
+  flexDirection: 'column',
+  width: '100%',
+  padding: theme.spacing(1, 2, 2),
+  flexGrow: 1,
+  justifyContent: 'flex-end',
 }));
 
 const TrimAndMiles = styled('div')(() => ({
@@ -122,37 +158,35 @@ const DesktopView: React.FC<DesktopViewProps> = ({ viewModel }) => {
                 alt={viewModel.evoxLogo.alt}
               />
             )}
-            {viewModel.showAvailableSoon() && (
-              <AvailableSoon fontWeight={600} lineHeight="24px">
-                {viewModel.availableSoon}
-              </AvailableSoon>
-            )}
-            {viewModel.showSalePending() && (
-              <SalePending fontWeight={600} lineHeight="24px">
-                {viewModel.salePending}
-              </SalePending>
-            )}
           </Media>
           <Content>
-            <Value fontWeight={600} lineHeight="24px" whiteSpace="nowrap">
-              {title}
-            </Value>
-            <TrimAndMiles>
-              <Value
-                fontWeight="fontWeightLight"
-                lineHeight="24px"
-                whiteSpace="nowrap"
-              >
-                {trim}
+            {viewModel.showAvailableSoon() && (
+              <AvailableSoon>{viewModel.availableSoon}</AvailableSoon>
+            )}
+            {/* {viewModel.showSalePending() && ( */}
+            <SalePending>{viewModel.salePending}</SalePending>
+            {/* )} */}
+            <CarDetails>
+              <Value fontWeight={600} lineHeight="24px" whiteSpace="nowrap">
+                {title}
               </Value>
-              <Divider fontWeight="fontWeightLight" lineHeight="24px">
-                |
-              </Divider>
-              <Value fontWeight="fontWeightLight" lineHeight="24px">
-                {miles}
-              </Value>
-            </TrimAndMiles>
-            <Price fontWeight={600}>{price}</Price>
+              <TrimAndMiles>
+                <Value
+                  fontWeight="fontWeightLight"
+                  lineHeight="24px"
+                  whiteSpace="nowrap"
+                >
+                  {trim}
+                </Value>
+                <Divider fontWeight="fontWeightLight" lineHeight="24px">
+                  |
+                </Divider>
+                <Value fontWeight="fontWeightLight" lineHeight="24px">
+                  {miles}
+                </Value>
+              </TrimAndMiles>
+              <Price fontWeight={600}>{price}</Price>
+            </CarDetails>
           </Content>
         </HiddenAnchor>
       </Container>
