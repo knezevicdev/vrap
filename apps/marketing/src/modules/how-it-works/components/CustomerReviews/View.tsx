@@ -1,12 +1,11 @@
 import { styled } from '@material-ui/core';
 import { Typography } from '@vroom-web/ui';
+import { sampleSize } from 'lodash';
 import React from 'react';
 
 import Review from './Review';
-import ViewModel from './ViewModel';
-
 import reviews from './reviews.json';
-import { sampleSize } from 'lodash';
+import ViewModel from './ViewModel';
 
 interface Props {
   viewModel: ViewModel;

@@ -1,8 +1,8 @@
+import { styled } from '@material-ui/core';
+import { Button, Typography } from '@vroom-web/ui';
 import React from 'react';
 
 import ViewModel from './ViewModel';
-import { Button, Typography } from '@vroom-web/ui';
-import { styled } from '@material-ui/core';
 
 interface Props {
   viewModel: ViewModel;

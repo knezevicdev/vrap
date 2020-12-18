@@ -6,6 +6,7 @@ import React from 'react';
 import CustomerReviews from './components/CustomerReviews';
 import Hero from './components/Hero';
 import InventoryCTA from './components/InventoryCTA';
+import Process from './components/Process';
 
 const { publicRuntimeConfig } = getConfig();
 
@@ -16,10 +17,7 @@ const HowItWorks: React.FC = () => {
     <>
       <SimpleHeader gearboxPrivateUrl={gearboxPrivateUrl} />
       <Hero />
-      {/* 
       <Process />
-      <InventoryCta />
-      */}
       <InventoryCTA />
       <CustomerReviews />
       <StandardFooter />
