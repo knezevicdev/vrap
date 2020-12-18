@@ -6,7 +6,7 @@ interface Props {
   viewModel: ViewModel;
 }
 
-const InventoryCTAView: React.FC<Props> = ({ viewModel }) => {
+const InventoryCTAView: React.FC<Props> = () => {
   return <></>;
 };
 

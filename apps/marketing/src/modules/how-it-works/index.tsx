@@ -3,6 +3,8 @@ import { SimpleHeader } from '@vroom-web/header-components';
 import getConfig from 'next/config';
 import React from 'react';
 
+import CustomerReviews from './components/CustomerReviews';
+
 const { publicRuntimeConfig } = getConfig();
 
 const HowItWorks: React.FC = () => {
@@ -12,8 +14,8 @@ const HowItWorks: React.FC = () => {
     <>
       <SimpleHeader gearboxPrivateUrl={gearboxPrivateUrl} />
       {/* <Process />
-      <InventoryCta />
-      <CustomerReviews /> */}
+      <InventoryCta />*/}
+      <CustomerReviews />
       <StandardFooter />
     </>
   );

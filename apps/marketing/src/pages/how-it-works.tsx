@@ -1,11 +1,11 @@
 import { ThemeProvider } from '@vroom-web/ui';
 import { Brand } from '@vroom-web/whitelabel';
-import React from 'react';
+import React, { FC } from 'react';
 
-import Page from 'src/Page';
 import HowItWorks from 'src/modules/how-it-works';
+import Page from 'src/Page';
 
-const HowItWorksPage = () => {
+const HowItWorksPage: FC = () => {
   const head = (
     <>
       <title>Vroom - How Vroom Works</title>

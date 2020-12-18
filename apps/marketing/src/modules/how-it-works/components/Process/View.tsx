@@ -6,7 +6,7 @@ interface Props {
   viewModel: ViewModel;
 }
 
-const ProcessView: React.FC<Props> = ({ viewModel }) => {
+const ProcessView: React.FC<Props> = () => {
   return <></>;
 };
 
