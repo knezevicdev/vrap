@@ -29,6 +29,9 @@ const Section = styled('div')(({ theme }) => ({
 const Image = styled('img')(({ theme }) => ({
   height: '158px',
   minWidth: '236px',
+  [theme.breakpoints.down('sm')]: {
+    display: 'none',
+  },
 }));
 
 const Subsection = styled('div')(({ theme }) => ({
