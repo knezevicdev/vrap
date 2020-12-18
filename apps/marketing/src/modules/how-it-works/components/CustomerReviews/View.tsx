@@ -5,6 +5,9 @@ import React from 'react';
 import Review from './Review';
 import ViewModel from './ViewModel';
 
+import reviews from './reviews.json';
+import { sampleSize } from 'lodash';
+
 interface Props {
   viewModel: ViewModel;
 }
@@ -66,14 +69,14 @@ const ReviewsSection = styled('div')(({ theme }) => ({
 }));
 
 const CustomerReviewsView: React.FC<Props> = ({ viewModel }) => {
-  const { title, reviews } = viewModel;
+  const { title } = viewModel;
 
   return (
     <Container>
       <Content>
         <Title variant="h2">{title}</Title>
         <ReviewsSection>
-          {reviews().map((review, idx) => (
+          {sampleSize(reviews, 4).map((review, idx) => (
             <Review review={review} key={idx} />
           ))}
         </ReviewsSection>
