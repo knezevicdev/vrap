@@ -4,6 +4,7 @@ import getConfig from 'next/config';
 import React from 'react';
 
 import CustomerReviews from './components/CustomerReviews';
+import Hero from './components/Hero';
 
 const { publicRuntimeConfig } = getConfig();
 
@@ -13,8 +14,11 @@ const HowItWorks: React.FC = () => {
   return (
     <>
       <SimpleHeader gearboxPrivateUrl={gearboxPrivateUrl} />
-      {/* <Process />
-      <InventoryCta />*/}
+      <Hero />
+      {/* 
+      <Process />
+      <InventoryCta />
+      */}
       <CustomerReviews />
       <StandardFooter />
     </>
