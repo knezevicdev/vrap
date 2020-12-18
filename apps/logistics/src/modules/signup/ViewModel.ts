@@ -2,7 +2,7 @@ import { makeAutoObservable } from 'mobx';
 
 import SignupModel from './Model';
 
-import { postUser } from 'src/networking/Networker';
+import { postSignUp } from 'src/networking/Networker';
 
 class SignupViewModel {
   firstName = '';
@@ -40,7 +40,7 @@ class SignupViewModel {
 
   handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
-    postUser(this.email, this.password, this.firstName, this.lastName);
+    postSignUp(this.email, this.password, this.firstName, this.lastName);
   };
 }
 

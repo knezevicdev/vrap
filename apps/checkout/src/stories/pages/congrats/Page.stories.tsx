@@ -20,7 +20,7 @@ const Page = styled.div`
   flex-direction: column;
 `;
 
-const theme = getVroomTheme('/assets/fonts/Vroom');
+const theme = getVroomTheme();
 
 export const WithoutTrade = (): JSX.Element => {
   return (

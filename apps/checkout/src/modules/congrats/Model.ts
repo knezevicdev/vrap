@@ -47,6 +47,13 @@ export default class CongratsModel {
             accountID
             dealID
             dealSummary {
+              accountInfo {
+                userName
+                firstName
+                middleName
+                lastName
+                phone
+              }
               dealStatus {
                 step
                 status
@@ -69,6 +76,9 @@ export default class CongratsModel {
                 subTotal
                 totalBalanceDue
                 cashDownPayment
+                taxableAmount
+                totalTaxesAndFees
+                shippingFee
                 tradeIn {
                   value
                   loanPayoff
@@ -110,6 +120,8 @@ export default class CongratsModel {
               }
               depositPaymentInfo {
                 HoldPlaced
+                LastFourDigits
+                ChargeAmount
               }
               registrationAddress {
                 firstName
@@ -165,6 +177,5 @@ export default class CongratsModel {
       this.data = res.data;
       this.dataStatus = Status.SUCCESS;
     });
-    console.log('DATA', this.data);
   }
 }

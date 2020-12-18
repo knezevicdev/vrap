@@ -22,7 +22,7 @@ export default async (
     variables: {
       user: email,
       password,
-      source: 'Logistics',
+      source: 'logistics',
     },
   });
 

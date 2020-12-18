@@ -49,9 +49,10 @@ class InitialPriceViewModel {
     "This price is based on data from thousands of similar market transactions, as well as the information you provided. Vroom may modify or revoke this price if the information you provided is inaccurate or if there is a significant present or prospective change in the used vehicle market beyond Vroom's control. Other terms and restrictions apply.";
 
   constructor(initialPriceState: PriceStore) {
-    this.price = displayCurrency(initialPriceState.price);
-    this.priceId = initialPriceState.priceId;
-    this.goodUntil = parsedDateTime(initialPriceState.goodUntil);
+    const price = initialPriceState.price;
+    this.price = displayCurrency(price.price);
+    this.priceId = price.priceId;
+    this.goodUntil = parsedDateTime(price.goodUntil);
     this.analyticsHandler = new AnalyticsHandler();
   }
 
