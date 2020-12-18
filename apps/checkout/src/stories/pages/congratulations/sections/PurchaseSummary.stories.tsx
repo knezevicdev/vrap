@@ -3,7 +3,7 @@ import { withDesign } from 'storybook-addon-designs';
 import { ThemeProvider } from 'styled-components';
 import { getVroomTheme } from 'vroom-ui';
 
-import PurchaseSummary from '../../../../modules/congrats/sections/PurchaseSummary/PurchaseSummary';
+import PurchaseSummary from '../../../../modules/congratulations/sections/PurchaseSummary/PurchaseSummary';
 import { purchaseSummaryViewModel } from '../ViewModels';
 
 const theme = getVroomTheme();
@@ -25,6 +25,6 @@ Success.parameters = {
 };
 
 export default {
-  title: 'Checkout/Congrats/Sections/Purchase Summary',
+  title: 'Checkout/Congratulations/Sections/Purchase Summary',
   decorators: [withDesign],
 };

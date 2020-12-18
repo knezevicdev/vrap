@@ -1,9 +1,9 @@
 import { FooterProps } from 'vroom-ui';
 
-import { NextProps } from '../../../modules/congrats/sections/Next';
-import { PurchaseSummaryProps } from '../../../modules/congrats/sections/PurchaseSummary/PurchaseSummary';
-import { QuestionProps } from '../../../modules/congrats/sections/Questions';
-import { ReservedCarProps } from '../../../modules/congrats/sections/ReservedCar';
+import { NextProps } from '../../../modules/congratulations/sections/Next';
+import { PurchaseSummaryProps } from '../../../modules/congratulations/sections/PurchaseSummary/PurchaseSummary';
+import { QuestionProps } from '../../../modules/congratulations/sections/Questions';
+import { ReservedCarProps } from '../../../modules/congratulations/sections/ReservedCar';
 
 export const nextViewModel: NextProps = {
   heading: 'what to expect next...',
