@@ -61,6 +61,7 @@ const ReviewsSection = styled('div')(({ theme }) => ({
   },
   [theme.breakpoints.only('xs')]: {
     gridTemplateColumns: '1fr',
+    gap: '24px',
   },
 }));
 
