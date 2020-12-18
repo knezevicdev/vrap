@@ -136,16 +136,22 @@ class StartPurchaseViewModel {
     });
     const vehicleServiceAvailability = this.store.isAvailable;
     //Tech Debt: SND-970 soldStatus/Inventory Service Spike
+    const { makeSlug, modelSlug } = this.car;
+    const modelFiltersData = addModel(makeSlug, modelSlug);
+    const modelHref = getUrlFromFiltersData(modelFiltersData);
+    const queryStringPrefix = modelHref.indexOf('?') == -1 ? `?` : `&`;
+
+    // if we don't have any query params to include, don't append prefix
+    const finalQueryString = attributionQueryString
+      ? queryStringPrefix + attributionQueryString
+      : '';
+
     if (
       soldStatus === SoldStatusInt.SALE_PENDING ||
       !vehicleServiceAvailability
     ) {
       this.analyticsHandler.trackFindANewMatchClicked(product);
-      const { makeSlug, modelSlug } = this.car;
-      const modelFiltersData = addModel(makeSlug, modelSlug);
-      const modelHref = getUrlFromFiltersData(modelFiltersData);
-      const queryStringPrefix = modelHref.indexOf('?') == -1 ? `?` : `&`;
-      window.location.href = `${modelHref}${queryStringPrefix}${attributionQueryString}`;
+      window.location.href = `${modelHref}${finalQueryString}`;
     } else {
       this.analyticsHandler.trackProductAdded(product);
       let url;
@@ -154,12 +160,12 @@ class StartPurchaseViewModel {
           url = `${this.getResumeStepHref(
             this.startPurchaseStore.step,
             this.startPurchaseStore.vin
-          )}?${attributionQueryString}`;
+          )}${finalQueryString}`;
         } else {
-          url = `/e2e/${vin}/${'dealSelectionScreen'}?${attributionQueryString}`;
+          url = `/e2e/${vin}/${'dealSelectionScreen'}${finalQueryString}`;
         }
       } else {
-        url = `/e2e/${vin}/${'checkoutTradeIn'}?${attributionQueryString}`;
+        url = `/e2e/${vin}/${'checkoutTradeIn'}${finalQueryString}`;
       }
 
       window.location.href = url;

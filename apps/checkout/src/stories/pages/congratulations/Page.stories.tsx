@@ -3,12 +3,12 @@ import { withDesign } from 'storybook-addon-designs';
 import styled, { ThemeProvider } from 'styled-components';
 import { Footer, getVroomTheme, ThemeProps } from 'vroom-ui';
 
-import Error from '../../../modules/congrats/sections/Error';
-import Loading from '../../../modules/congrats/sections/Loading';
-import Next from '../../../modules/congrats/sections/Next';
-import PurchaseSummary from '../../../modules/congrats/sections/PurchaseSummary/PurchaseSummary';
-import Questions from '../../../modules/congrats/sections/Questions';
-import ReservedCar from '../../../modules/congrats/sections/ReservedCar';
+import Error from '../../../modules/congratulations/sections/Error';
+import Loading from '../../../modules/congratulations/sections/Loading';
+import Next from '../../../modules/congratulations/sections/Next';
+import PurchaseSummary from '../../../modules/congratulations/sections/PurchaseSummary/PurchaseSummary';
+import Questions from '../../../modules/congratulations/sections/Questions';
+import ReservedCar from '../../../modules/congratulations/sections/ReservedCar';
 import {
   footerViewModel,
   nextViewModel,
@@ -93,6 +93,6 @@ ErrorState.parameters = {
 };
 
 export default {
-  title: 'Checkout/Congrats/Without Trade',
+  title: 'Checkout/Congratulations/Without Trade',
   decorators: [withDesign],
 };

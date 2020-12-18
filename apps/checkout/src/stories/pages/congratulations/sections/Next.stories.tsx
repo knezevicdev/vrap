@@ -3,14 +3,15 @@ import { withDesign } from 'storybook-addon-designs';
 import { ThemeProvider } from 'styled-components';
 import { getVroomTheme } from 'vroom-ui';
 
-import Loading from '../../../../modules/congrats/sections/Loading';
+import Next from '../../../../modules/congratulations/sections/Next';
+import { nextViewModel } from '../ViewModels';
 
 const theme = getVroomTheme();
 
 export const Static = (): JSX.Element => {
   return (
     <ThemeProvider theme={theme}>
-      <Loading />
+      <Next {...nextViewModel} />
     </ThemeProvider>
   );
 };
@@ -19,11 +20,11 @@ Static.parameters = {
   design: {
     type: 'figma',
     url:
-      'https://www.figma.com/file/rsB4AJNk9uq81u1ia2U0G1/EComm-Port?node-id=952%3A0',
+      'https://www.figma.com/file/yhvMWzN95E1DdNLBfEr5OH/Desktop-Congrats?node-id=1%3A4',
   },
 };
 
 export default {
-  title: 'Checkout/Congrats/Sections/Loading',
+  title: 'Checkout/Congratulations/Sections/Next',
   decorators: [withDesign],
 };

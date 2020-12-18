@@ -6,7 +6,7 @@ import ViewModel from './ViewModel';
 
 import client from 'src/networking/client';
 
-class Congrats extends React.Component {
+class Congratulations extends React.Component {
   model = new Model(client);
   viewModel = new ViewModel(this.model);
 
@@ -19,4 +19,4 @@ class Congrats extends React.Component {
   }
 }
 
-export default Congrats;
+export default Congratulations;

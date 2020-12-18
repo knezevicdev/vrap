@@ -3,7 +3,7 @@ import { withDesign } from 'storybook-addon-designs';
 import { ThemeProvider } from 'styled-components';
 import { getVroomTheme } from 'vroom-ui';
 
-import Error from '../../../../modules/congrats/sections/Error';
+import Error from '../../../../modules/congratulations/sections/Error';
 
 const theme = getVroomTheme();
 
@@ -24,6 +24,6 @@ Static.parameters = {
 };
 
 export default {
-  title: 'Checkout/Congrats/Sections/Error',
+  title: 'Checkout/Congratulations/Sections/Error',
   decorators: [withDesign],
 };
