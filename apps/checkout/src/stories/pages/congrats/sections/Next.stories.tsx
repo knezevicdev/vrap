@@ -3,7 +3,7 @@ import { withDesign } from 'storybook-addon-designs';
 import { ThemeProvider } from 'styled-components';
 import { getVroomTheme } from 'vroom-ui';
 
-import Next from '../../../../modules/congrats/sections/Next';
+import Next from '../../../../modules/congratulations/sections/Next';
 import { nextViewModel } from '../ViewModels';
 
 const theme = getVroomTheme();
@@ -25,6 +25,6 @@ Success.parameters = {
 };
 
 export default {
-  title: 'Checkout/Congrats/Sections/Next',
+  title: 'Checkout/Congratulations/Sections/Next',
   decorators: [withDesign],
 };

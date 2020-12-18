@@ -3,7 +3,7 @@ import { withDesign } from 'storybook-addon-designs';
 import { ThemeProvider } from 'styled-components';
 import { getVroomTheme } from 'vroom-ui';
 
-import ReservedCar from '../../../../modules/congrats/sections/ReservedCar';
+import ReservedCar from '../../../../modules/congratulations/sections/ReservedCar';
 import { reservedCarViewModel } from '../ViewModels';
 
 const theme = getVroomTheme();
@@ -25,6 +25,6 @@ Success.parameters = {
 };
 
 export default {
-  title: 'Checkout/Congrats/Sections/Reserved Car',
+  title: 'Checkout/Congratulations/Sections/Reserved Car',
   decorators: [withDesign],
 };
