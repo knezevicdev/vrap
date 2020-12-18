@@ -5,6 +5,7 @@ import {
 } from '@vroom-web/catalog-url-integration';
 import { Car } from '@vroom-web/inv-search-networking';
 import { SoldStatusInt } from '@vroom-web/inv-service-networking';
+import { stringify } from 'qs';
 
 import AnalyticsHandler, { Product } from 'src/integrations/AnalyticsHandler';
 import { InventoryStore } from 'src/modules/inventory/store';
@@ -107,20 +108,34 @@ class StartPurchaseViewModel {
     // Persist attributuion query params across navigation.
     // This is a stopgap so vlassic attributuion works.
     // TODO: remove query param persistence when a better attribution system is in place.
-    const attributionQueryString =
-      '?utm_source=santander&utm_campaign=national&utm_medium=listings&vit_source=santanderconsumerusa&vit_medium=wl&vit_dest=vroom';
+    const attributionQueryString = stringify({
+      utm_source: 'santander',
+      utm_medium: 'listings',
+      utm_campaign: 'national',
+      vit_source: 'santanderconsumerusa',
+      vit_medium: 'wl',
+      vit_dest: 'vroom',
+    });
     const vehicleServiceAvailability = this.store.isAvailable;
     //Tech Debt: SND-970 soldStatus/Inventory Service Spike
+
+    const { makeSlug, modelSlug } = this.car;
+    const modelFiltersData = addModel(makeSlug, modelSlug);
+    const modelHref = getUrlFromFiltersData(modelFiltersData);
+    const queryStringPrefix = modelHref.indexOf('?') == -1 ? `?` : `&`;
+
+    // if we don't have any query params to include, don't append prefix
+    const finalQueryString = attributionQueryString
+      ? queryStringPrefix + attributionQueryString
+      : '';
+
     if (
       soldStatus === SoldStatusInt.SALE_PENDING ||
       !vehicleServiceAvailability
     ) {
       this.analyticsHandler.trackFindANewMatchClicked(product);
-      const { makeSlug, modelSlug } = this.car;
-      const modelFiltersData = addModel(makeSlug, modelSlug);
-      const modelHref = getUrlFromFiltersData(modelFiltersData);
-      const queryStringPrefix = modelHref.indexOf('?') == -1 ? `?` : `&`;
-      window.location.href = `${modelHref}${queryStringPrefix}${attributionQueryString}`;
+
+      window.location.href = `${modelHref}${finalQueryString}`;
     } else {
       this.analyticsHandler.trackProductAdded(product);
 
@@ -130,12 +145,12 @@ class StartPurchaseViewModel {
           url = `https://www.vroom.com${this.getResumeStepHref(
             this.startPurchaseStore.step,
             this.startPurchaseStore.vin
-          )}?${attributionQueryString}`;
+          )}${finalQueryString}`;
         } else {
-          url = `https://www.vroom.com/e2e/${vin}/${'dealSelectionScreen'}?${attributionQueryString}`;
+          url = `https://www.vroom.com/e2e/${vin}/${'dealSelectionScreen'}${finalQueryString}`;
         }
       } else {
-        url = `https://www.vroom.com/e2e/${vin}/${'checkoutTradeIn'}?${attributionQueryString}`;
+        url = `https://www.vroom.com/e2e/${vin}/${'checkoutTradeIn'}${finalQueryString}`;
       }
 
       window.location.href = url;
