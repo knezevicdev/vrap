@@ -30,17 +30,12 @@ import React, { useEffect, useState } from 'react';
 import AnalyticsHandler from 'src/integrations/AnalyticsHandler';
 import experimentSDK from 'src/integrations/experimentSDK';
 import Cars from 'src/modules/cars';
-import {
-  INVENTORY_CARDS_PER_PAGE,
-  POPULAR_CAR_LIMIT,
-} from 'src/modules/cars/data';
+import { POPULAR_CAR_LIMIT } from 'src/modules/cars/data';
 import {
   CarsStore,
   CarsStoreContext,
-  getPostInventoryRequestDataFromFilterData,
   InitialCarsStoreState,
 } from 'src/modules/cars/store';
-import { Status } from 'src/networking/types';
 import Page from 'src/Page';
 const {
   publicRuntimeConfig: { INVSEARCH_V3_URL, NAME, VERSION },
@@ -49,15 +44,10 @@ const invSearchNetworker = new InvSearchNetworker(INVSEARCH_V3_URL);
 
 interface Props {
   brand: Brand;
-  carsStatus: Status;
   initialStoreState: InitialCarsStoreState;
 }
 
-const CarsPage: NextPage<Props> = ({
-  brand,
-  carsStatus,
-  initialStoreState,
-}) => {
+const CarsPage: NextPage<Props> = ({ brand, initialStoreState }) => {
   // Persist store instance across URL updates.
   const [carsStore] = useState<CarsStore>(new CarsStore(initialStoreState));
   const [analyticsHandler] = useState<AnalyticsHandler>(new AnalyticsHandler());
@@ -74,26 +64,9 @@ const CarsPage: NextPage<Props> = ({
     }
   }, [carsStore, theme]);
 
-  // Get the experiments from the SDK
   useEffect(() => {
-    experimentSDK
-      .getAndLogExperimentClientSide('snd-catalog-sort-direction')
-      .then((experiment) => {
-        carsStore.setSortAgeDirectionExperiment(experiment);
-        if (experiment && experiment.assignedVariant === 1) {
-          carsStore.fetchInventoryData();
-        } else {
-          carsStore.setInventoryStatus(carsStatus);
-        }
-      });
-  }, [carsStore, carsStatus]);
-
-  // Register experiments with analytics handler
-  useEffect(() => {
-    if (carsStore.sortAgeDirectionExperiment) {
-      analyticsHandler.registerExperiment(carsStore.sortAgeDirectionExperiment);
-    }
-  }, [carsStore.sortAgeDirectionExperiment, analyticsHandler]);
+    carsStore.fetchInventoryData();
+  }, [carsStore]);
 
   useEffect(() => {
     experimentSDK
@@ -431,7 +404,7 @@ export const getServerSideProps: GetServerSideProps<Props> = async (
     },
   } = context;
 
-  const { res, query } = context;
+  const { query } = context;
   context.res.setHeader('Cache-Control', '');
   const brand = determineWhitelabel(context);
 
@@ -469,33 +442,8 @@ export const getServerSideProps: GetServerSideProps<Props> = async (
   const popularElapsed = new Date().getTime() - popularStart;
   console.log('{"POPULAR_CARS_ms":' + popularElapsed + '}');
 
-  const postInventoryRequestDataFromFiltersData = getPostInventoryRequestDataFromFilterData(
-    filtersData
-  );
-
-  const inventoryRequestData: PostInventoryRequestData = {
-    ...postInventoryRequestDataFromFiltersData,
-    // DELTA-228.
-    // fulldetails should be false.
-    // However, it's needed on the TDA whitelabel b/c the 'zone' field is how we determine
-    // whether a vehicle is test drivable.
-    // TODO: move that logic to the backend and set this back to false.
-    fulldetails: true,
-    limit: INVENTORY_CARDS_PER_PAGE,
-    source: `${NAME}-${VERSION}`,
-    isTitleQAPass: titleQuery,
-  };
-
-  const carsStart = new Date().getTime();
-
-  const carsR = await invSearchNetworker.postInventory(inventoryRequestData);
-  const carsStatus = Status.SUCCESS;
-  const carsElapsed = new Date().getTime() - carsStart;
-  console.log('{"CARS_ms":' + carsElapsed + '}');
-
   const makes = makesR.data.aggregations.make_count.buckets;
   const popularCars = popularCarsR.data;
-  const cars = carsR.data;
 
   // FIT-583
   // Persist key attribution query params across navigation.
@@ -522,7 +470,7 @@ export const getServerSideProps: GetServerSideProps<Props> = async (
   const initialStoreState = {
     attributionQueryString,
     makes,
-    cars,
+    cars: undefined,
     popularCars,
     filtersData,
     titleQuery,
@@ -535,16 +483,9 @@ export const getServerSideProps: GetServerSideProps<Props> = async (
     }
   });
 
-  const hasInventory = cars ? cars.hits.total !== 0 : false;
-
-  if (res && !hasInventory) {
-    res.statusCode = 404;
-  }
-
   return {
     props: {
       brand,
-      carsStatus,
       initialStoreState,
     },
   };
