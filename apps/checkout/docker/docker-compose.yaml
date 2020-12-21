@@ -7,9 +7,10 @@ services:
     user: 'root'
     environment:
       - DATA_DOG_RUM_APPLICATION=e7f48b42-82cb-46e2-b851-90d26c4cfac2
+      - GEARBOX_PRIVATE_URL=https://gearbox-dev-int.vroomapi.com/query-private
       - DATA_DOG_RUM_TOKEN=pub4d4bcfd1fdb025834550786951abda6b
       - GQL_PROXY_TARGET=https://dev.vroom.com/gql
-    command: ash -c "cd apps/checkout && yarn dev --port 8080"
+    command: ash -c "yarn workspace @vroom-web/checkout dev --port 8080"
     # This starts nothing but leaves the container running, useful for
     # debugging nextjs start / config operations
     # command: ash -c "tail -f /dev/null"

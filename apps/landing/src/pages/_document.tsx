@@ -52,6 +52,7 @@ export default class MyDocument extends Document {
             appName="Vroom Web - Landing"
             segmentWriteKey={SEGMENT_WRITE_KEY}
           />
+          <script src="https://www.youtube.com/iframe_api"></script>
         </Head>
         <body>
           <Main />

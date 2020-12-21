@@ -11,7 +11,6 @@ interface Details {
 
 class CarDetailsViewModel {
   private car: Car;
-  readonly button = 'See all vehicle details';
 
   constructor(inventoryStore: InventoryStore) {
     this.car = inventoryStore.vehicle._source;
@@ -48,11 +47,6 @@ class CarDetailsViewModel {
 
     return [...intersection, ...features].slice(0, 6);
   }
-
-  handleClick = (): void => {
-    const { makeSlug, modelSlug, year, vin } = this.car;
-    window.location.href = `/inventory/${makeSlug}-${modelSlug}-${year}-${vin}`;
-  };
 }
 
 export default CarDetailsViewModel;

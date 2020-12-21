@@ -1,6 +1,7 @@
 import axios, { AxiosResponse } from 'axios';
 import qs from 'qs';
 
+import { Tokens } from './models/Auth';
 import { Shipment, ShipmentStatus } from './models/Shipments';
 import { Carrier, User } from './models/User';
 
@@ -57,6 +58,19 @@ export const patchUser = async (
   return axiosInstance.patch(url, { id, status, carrierCode });
 };
 
+export const postSignUp = async (
+  username: string,
+  password: string,
+  firstName: string,
+  lastName: string
+): Promise<AxiosResponse<User>> =>
+  axiosInstance.post(`/api/signup`, {
+    username,
+    password,
+    firstName,
+    lastName,
+  });
+
 export const getShipments = async (
   status?: ShipmentStatus,
   user?: string
@@ -69,4 +83,12 @@ export const getShipments = async (
     { skipNulls: true }
   )}`;
   return axiosInstance.get(url);
+};
+
+export const postSignIn = async (
+  email: string,
+  password: string
+): Promise<AxiosResponse<Tokens>> => {
+  const url = 'api/signin';
+  return axiosInstance.post(url, { email, password });
 };

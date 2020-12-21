@@ -10,8 +10,10 @@ import { ParsedUrlQuery } from 'querystring';
 
 import AnalyticsHandler, { Product } from 'src/integrations/AnalyticsHandler';
 import { InventoryStore } from 'src/modules/inventory/store';
-import { StartPurchaseStore } from 'src/modules/inventory/Vroom/components/StartPurchase/store';
-import { Status } from 'src/networking/types';
+import {
+  DealStatus,
+  StartPurchaseStore,
+} from 'src/modules/inventory/Vroom/components/StartPurchase/store';
 
 class StartPurchaseViewModel {
   private store: InventoryStore;
@@ -50,6 +52,28 @@ class StartPurchaseViewModel {
     this.startPurchaseStore.initClientSide();
   }
 
+  // TODO: 'step' and all the cases in the switch should use an enum.
+  // We need to export an enum from the networking library for deals.
+  getResumeStepHref(step: string, vin: string): string {
+    const urlDict: { [key: string]: string } = {
+      TradeIn: 'checkoutTradeIn',
+      RegistrationAddress: 'registration',
+      DeliveryAddress: 'delivery-form',
+      Financing: 'vroomFinancing',
+      PaymentType: 'payment',
+      DepositPaymentInfo: 'dealReview',
+      DealSummary: 'congratulations',
+      FinancingOption: 'autofi',
+      FinancingPending: 'autofi',
+      BackendProducts: 'dealCoverage',
+      Review: 'dealReview',
+      DocumentUpload: 'documentUpload',
+      TradeInLoanInfo: 'tradeInLoanInfo',
+    };
+    const stepUrl: string | undefined = urlDict[step];
+    return `/e2e/${vin}/${stepUrl ? stepUrl : `my-account/transactions`}`;
+  }
+
   handleClick(): void {
     const {
       consignmentPartnerId: partnerId,
@@ -76,7 +100,7 @@ class StartPurchaseViewModel {
       vin,
       year,
       defectPhotos: !!defectPhotos,
-      ...(this.startPurchaseStore.inProgressDealStatus === Status.SUCCESS
+      ...(this.startPurchaseStore.dealStatus === DealStatus.PENDING
         ? {
             pendingDeal: true,
           }
@@ -112,19 +136,39 @@ class StartPurchaseViewModel {
     });
     const vehicleServiceAvailability = this.store.isAvailable;
     //Tech Debt: SND-970 soldStatus/Inventory Service Spike
+
+    const { makeSlug, modelSlug } = this.car;
+    const modelFiltersData = addModel(makeSlug, modelSlug);
+    const modelHref = getUrlFromFiltersData(modelFiltersData);
+    const queryStringPrefix = modelHref.indexOf('?') == -1 ? `?` : `&`;
+
+    // if we don't have any query params to include, don't append prefix
+    const finalQueryString = attributionQueryString
+      ? queryStringPrefix + attributionQueryString
+      : '';
+
     if (
       soldStatus === SoldStatusInt.SALE_PENDING ||
       !vehicleServiceAvailability
     ) {
       this.analyticsHandler.trackFindANewMatchClicked(product);
-      const { makeSlug, modelSlug } = this.car;
-      const modelFiltersData = addModel(makeSlug, modelSlug);
-      const modelHref = getUrlFromFiltersData(modelFiltersData);
-      const queryStringPrefix = modelHref.indexOf('?') == -1 ? `?` : `&`;
-      window.location.href = `${modelHref}${queryStringPrefix}${attributionQueryString}`;
+
+      window.location.href = `${modelHref}${finalQueryString}`;
     } else {
       this.analyticsHandler.trackProductAdded(product);
-      const url = `/e2e/${vin}/checkoutTradeIn?${attributionQueryString}`;
+      let url;
+      if (this.startPurchaseStore.dealStatus === DealStatus.IN_PROGRESS) {
+        if (this.startPurchaseStore.vin === vin) {
+          url = `${this.getResumeStepHref(
+            this.startPurchaseStore.step,
+            this.startPurchaseStore.vin
+          )}${finalQueryString}`;
+        } else {
+          url = `/e2e/${vin}/${'dealSelectionScreen'}${finalQueryString}`;
+        }
+      } else {
+        url = `/e2e/${vin}/${'checkoutTradeIn'}${finalQueryString}`;
+      }
       window.location.href = url;
     }
   }

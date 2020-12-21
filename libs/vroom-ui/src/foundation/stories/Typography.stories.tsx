@@ -20,13 +20,13 @@ export const Typography: Story = () => {
       <Space />
       <Section>Body</Section>
       <Body.Regular>Body Regular</Body.Regular>
-      <BodyRegularSemiBold>Body Regular Semi-bold</BodyRegularSemiBold>
+      <Body.Regular bold>Body Regular Semi-bold</Body.Regular>
       <Body.Small>Body Small</Body.Small>
-      <BodySmallSemiBold>Body Small Semi-bold</BodySmallSemiBold>
+      <Body.Small bold>Body Small Semi-bold</Body.Small>
       <Space />
       <Section>Fine</Section>
       <Fine>Fine</Fine>
-      <FineSemiBold>Fine Semi-bold</FineSemiBold>
+      <Fine bold>Fine Semi-bold</Fine>
       <Space />
       <Section>Link</Section>
       <Link href="https://www.vroom.com/" blank>
@@ -57,18 +57,6 @@ const Container = styled.div`
 
 const Space = styled.div`
   margin: 8px 0;
-`;
-
-const BodyRegularSemiBold = styled(Body.Regular)`
-  font-weight: 600;
-`;
-
-const BodySmallSemiBold = styled(Body.Small)`
-  font-weight: 600;
-`;
-
-const FineSemiBold = styled(Fine)`
-  font-weight: 600;
 `;
 
 const CustomLink = styled(Link)`

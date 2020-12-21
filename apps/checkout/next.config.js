@@ -20,6 +20,7 @@ const config = {
     DATA_DOG_RUM_APPLICATION: process.env.DATA_DOG_RUM_APPLICATION,
     DATA_DOG_RUM_TOKEN: process.env.DATA_DOG_RUM_TOKEN,
     GQL_PROXY_URL: `${basePath}/api/gql`,
+    GEARBOX_PRIVATE_URL: process.env.GEARBOX_PRIVATE_URL,
     NAME: name,
     NODE_ENV: process.env.NODE_ENV,
     VERSION: version,

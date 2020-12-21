@@ -1,7 +1,6 @@
-import { observable } from 'mobx';
-import { createContext, useContext } from 'react';
+import { action, observable } from 'mobx';
 
-import { Prices } from 'src/networking/models/Price';
+import { Price } from 'src/networking/models/Price';
 import { Networker, PriceData } from 'src/networking/Networker';
 
 export interface PriceStoreState {
@@ -58,91 +57,53 @@ export async function submitPriceResponse(priceData: PriceData): Promise<void> {
   }
 }
 
-export async function getInitialPriceStoreState(
-  priceId: string
-): Promise<PriceStoreState> {
-  const networker = new Networker();
-  try {
-    const response = await networker.getOfferDetails(priceId);
-    const prices: Prices = response.data;
-    const price = prices.data[0];
-
-    const priceState = {} as PriceStoreState;
-    priceState.active = price.active;
-    priceState.automatedAppraisal = price.automated_appraisal;
-    priceState.created = price.created;
-    priceState.goodUntil = price.Good_Until__c;
-    priceState.make = price.Make__c;
-    priceState.miles = price.miles;
-    priceState.model = price.Model__c;
-    priceState.newOffer = price.new_offer;
-    priceState.price = price.Price__c;
-    priceState.priceId = price.ID;
-    priceState.priceStatus = price.offer_status;
-    priceState.taxCreditSavings = price.tax_credit_savings;
-    priceState.trim = price.Trim__c;
-    priceState.userEmail = price.user_email;
-    priceState.verificationUrl = price.verification_url;
-    priceState.vin = price.VIN__c;
-    priceState.xkeId = price.offer_id;
-    priceState.year = price.Year__c;
-    return priceState;
-  } catch (err) {
-    console.log(JSON.stringify(err));
-    return defaultPriceState;
-  }
-}
-
 export class PriceStore {
-  @observable automatedAppraisal = false;
-  @observable price = 0;
-  @observable priceId = '';
-  @observable goodUntil = '2020-01-01T00:00:00Z';
-  @observable active = false;
-  @observable created = '';
-  @observable make = '';
-  @observable miles = 0;
-  @observable model = '';
-  @observable newOffer: boolean | null = null;
-  @observable priceStatus = '';
-  @observable taxCreditSavings: number | null = null;
-  @observable trim = '';
-  @observable userEmail = '';
-  @observable verificationUrl: string | null = null;
-  @observable vin = '';
-  @observable xkeId = 0;
-  @observable year = 0;
+  private readonly networker = new Networker();
 
-  constructor(initialState?: PriceStoreState) {
-    if (initialState) {
-      this.automatedAppraisal = initialState.automatedAppraisal;
-      this.price = initialState.price;
-      this.priceId = initialState.priceId;
-      this.goodUntil = initialState.goodUntil;
-      this.active = initialState.active;
-      this.created = initialState.created;
-      this.make = initialState.make;
-      this.miles = initialState.miles;
-      this.model = initialState.model;
-      this.newOffer = initialState.newOffer;
-      this.priceStatus = initialState.priceStatus;
-      this.taxCreditSavings = initialState.taxCreditSavings;
-      this.trim = initialState.trim;
-      this.userEmail = initialState.userEmail;
-      this.verificationUrl = initialState.verificationUrl;
-      this.vin = initialState.vin;
-      this.xkeId = initialState.xkeId;
-      this.year = initialState.year;
-    }
+  @observable status: 'loading' | 'success' | 'error' = 'loading';
+  @observable price: PriceStoreState = defaultPriceState;
+
+  constructor(priceId: string) {
+    this.getOfferDetails(priceId);
   }
+
+  @action
+  getOfferDetails = (priceId: string): void => {
+    this.status = 'loading';
+
+    this.networker
+      .getOfferDetails(priceId)
+      .then((response) => {
+        const prices: Price[] = response.data.data;
+        if (prices.length) {
+          const price = prices[0];
+          const priceMapFromResponse = {} as PriceStoreState;
+          priceMapFromResponse.active = price.active;
+          priceMapFromResponse.automatedAppraisal = price.automated_appraisal;
+          priceMapFromResponse.created = price.created;
+          priceMapFromResponse.goodUntil = price.Good_Until__c;
+          priceMapFromResponse.make = price.Make__c;
+          priceMapFromResponse.miles = price.miles;
+          priceMapFromResponse.model = price.Model__c;
+          priceMapFromResponse.newOffer = price.new_offer;
+          priceMapFromResponse.price = price.Price__c;
+          priceMapFromResponse.priceId = price.ID;
+          priceMapFromResponse.priceStatus = price.offer_status;
+          priceMapFromResponse.taxCreditSavings = price.tax_credit_savings;
+          priceMapFromResponse.trim = price.Trim__c;
+          priceMapFromResponse.userEmail = price.user_email;
+          priceMapFromResponse.verificationUrl = price.verification_url;
+          priceMapFromResponse.vin = price.VIN__c;
+          priceMapFromResponse.xkeId = price.offer_id;
+          priceMapFromResponse.year = price.Year__c;
+
+          this.status = 'success';
+          this.price = priceMapFromResponse;
+        }
+      })
+      .catch((error) => {
+        this.status = 'error';
+        console.log(JSON.stringify(error));
+      });
+  };
 }
-
-export const PriceStoreContext = createContext(new PriceStore());
-
-export const usePriceStore = (): PriceStore => {
-  const store = useContext(PriceStoreContext);
-  if (!store) {
-    throw new Error('useStore must be used within a StoreProvider.');
-  }
-  return store;
-};

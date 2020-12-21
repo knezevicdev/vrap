@@ -9,7 +9,7 @@ interface Image {
 
 class PhotoViewModel {
   private car: Car;
-  readonly iFrameNotSupported: string = 'Iframe Not Supported';
+  readonly noImageText: string = 'Images coming soon';
 
   constructor(inventoryStore: InventoryStore) {
     this.car = inventoryStore.vehicle._source;

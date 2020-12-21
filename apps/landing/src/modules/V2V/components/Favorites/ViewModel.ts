@@ -1,3 +1,4 @@
+import AnalyticsHandler from '../../../integrations/AnalyticsHandler';
 import { FavoritesStore } from '../../store/favoritesStore';
 import { InventoryStore } from '../../store/inventoryStore';
 import FavoritesNetworker from './FavoritesNetworker';
@@ -10,6 +11,7 @@ class FavoritesViewModel {
   private inventoryStore: InventoryStore;
   private favoritesStore: FavoritesStore;
   private favoritesNetworker: FavoritesNetworker;
+  private analyticsHandler: AnalyticsHandler;
   readonly addToFavorites: string = 'ADD TO FAVORITES';
   readonly favorited: string = 'FAVORITED';
   readonly dialogTitle: string = 'SAVE THIS CAR TO YOUR LIST';
@@ -21,11 +23,13 @@ class FavoritesViewModel {
   constructor(
     inventoryStore: InventoryStore,
     favoritesStore: FavoritesStore,
-    favoritesNetworker: FavoritesNetworker
+    favoritesNetworker: FavoritesNetworker,
+    analyticsHandler: AnalyticsHandler
   ) {
     this.inventoryStore = inventoryStore;
     this.favoritesStore = favoritesStore;
     this.favoritesNetworker = favoritesNetworker;
+    this.analyticsHandler = analyticsHandler;
   }
 
   handleMount(): void {
@@ -33,9 +37,21 @@ class FavoritesViewModel {
     this.isLoggedIn() ? this.checkFavorites() : this.setLoading(false);
   }
 
+  handleFavoritesClicked = (): void => {
+    const car = this.inventoryStore.vehicle._source;
+    this.analyticsHandler.trackAddToFavoritesClicked(car);
+    if (this.isLoggedIn()) {
+      this.isFavorited() ? this.removeFavorite() : this.addFavorite();
+    } else {
+      this.handleDialog();
+    }
+  };
+
   handleDialogActions(location: string): void {
-    const currentUrl = window.location.pathname;
-    const newUrl = `/account/${location}?redirect=${currentUrl}`;
+    this.fireSegmentEvent(location);
+    const { pathname, search } = window.location;
+    const queryParams = search.replace('?', '&');
+    const newUrl = `/account/${location}?redirect=${pathname}${queryParams}`;
     window.location.href = newUrl;
   }
 
@@ -116,6 +132,8 @@ class FavoritesViewModel {
       if (found) {
         this.isError() && this.handleError();
         this.favoritesStore.setFavorited();
+        const car = this.inventoryStore.vehicle._source;
+        this.analyticsHandler.trackAddToFavoritesSuccess(car);
       }
     } catch {
       !this.isError() && this.handleError();
@@ -143,6 +161,16 @@ class FavoritesViewModel {
       !this.isError() && this.handleError();
     }
   }
+
+  private fireSegmentEvent = (location: string): void => {
+    const car = this.inventoryStore.vehicle._source;
+    if (location === 'create') {
+      this.analyticsHandler.trackAccountEvents(car, 'Create Account');
+    }
+    if (location === 'login') {
+      this.analyticsHandler.trackAccountEvents(car, 'Login');
+    }
+  };
 }
 
 export default FavoritesViewModel;

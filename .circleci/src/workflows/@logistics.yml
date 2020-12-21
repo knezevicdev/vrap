@@ -1,0 +1,58 @@
+logistics:
+  jobs:
+  - logistics_build:
+      context: aws-non-prod
+      filters:
+        tags:
+          only: /^logistics-v.*/
+        branches:
+          ignore: /.*/
+  - hold:
+      name: hold_<< matrix.env >>
+      type: approval
+      matrix:
+        parameters:
+          env: ["dev", "qa", "uat"]
+      requires:
+        - logistics_build
+      filters:
+        tags:
+          only: /^logistics-v.*/
+        branches:
+          ignore: /.*/
+  - logistics_deploy:
+      name: logistics_deploy_<< matrix.env >>
+      context: aws-non-prod
+      matrix:
+        parameters:
+          env: ["dev", "qa", "uat"]
+      requires:
+        - hold_<< matrix.env >>
+      filters:
+        tags:
+          only: /^logistics-v.*/
+        branches:
+          ignore: /.*/
+  - hold:
+      name: hold_prod
+      type: approval
+      requires:
+        - logistics_deploy_dev
+        - logistics_deploy_qa
+        - logistics_deploy_uat
+      filters:
+        tags:
+          only: /^logistics-v.*/
+        branches:
+          ignore: /.*/
+  - logistics_deploy:
+      name: logistics_deploy_prod
+      context: aws-non-prod
+      env: "prod"
+      requires:
+        - hold_prod
+      filters:
+        tags:
+          only: /^logistics-v.*/
+        branches:
+          ignore: /.*/

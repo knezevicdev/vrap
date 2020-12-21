@@ -16,6 +16,7 @@ export interface PostInventoryRequestData {
     model?: string[];
     modelSlug?: string[];
     bodytype?: string[];
+    cabtype?: string[];
     color?: string[];
     year?: {} | {
         min: number;

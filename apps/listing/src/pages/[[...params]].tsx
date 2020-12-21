@@ -100,6 +100,22 @@ const CarsPage: NextPage<Props> = ({ brand, initialStoreState }) => {
 
   useEffect(() => {
     experimentSDK
+      .getAndLogExperimentClientSide('snd-catalog-truck-cab-type-sub-filter')
+      .then((experiment) => {
+        carsStore.setTruckCabTypeFilterExperiment(experiment);
+      });
+  }, [carsStore]);
+
+  useEffect(() => {
+    if (carsStore.truckCabTypeFilterExperiment) {
+      analyticsHandler.registerExperiment(
+        carsStore.truckCabTypeFilterExperiment
+      );
+    }
+  }, [carsStore.truckCabTypeFilterExperiment, analyticsHandler]);
+
+  useEffect(() => {
+    experimentSDK
       .getAndLogExperimentClientSide('snd-catalog-fuel-type-filter')
       .then((experiment) => {
         carsStore.setFuelTypeFilterExperiment(experiment);
