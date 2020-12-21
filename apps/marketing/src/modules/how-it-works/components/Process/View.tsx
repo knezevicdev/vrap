@@ -98,7 +98,7 @@ const StepLink = styled(Typography)(({ theme }) => ({
   marginTop: theme.spacing(2),
   letterSpacing: '1.75px',
   fontSize: '16px',
-  lineHeight: '16px',
+  lineHeight: '26px',
   textTransform: 'uppercase',
 }));
 

@@ -7,6 +7,7 @@ import CustomerReviews from './components/CustomerReviews';
 import Hero from './components/Hero';
 import InventoryCTA from './components/InventoryCTA';
 import Process from './components/Process';
+import ContactModule from '../locations/components/ContactModule';
 
 const { publicRuntimeConfig } = getConfig();
 
@@ -20,6 +21,7 @@ const HowItWorks: React.FC = () => {
       <Process />
       <InventoryCTA />
       <CustomerReviews />
+      <ContactModule />
       <StandardFooter />
     </>
   );
