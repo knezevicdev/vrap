@@ -18,7 +18,7 @@ interface Props {
 const Container = styled('div')(({ theme }) => ({
   display: 'flex',
   flexDirection: 'column',
-  [theme.breakpoints.down('sm')]: {
+  [theme.breakpoints.only('xs')]: {
     borderBottom: '1px solid #d6d7da',
     paddingBottom: theme.spacing(3),
   },

@@ -1,7 +1,7 @@
 import { styled } from '@material-ui/core';
 import { Typography } from '@vroom-web/ui';
 import { sampleSize } from 'lodash';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 import Review from './Review';
 import reviews from './reviews.json';
@@ -9,6 +9,13 @@ import ViewModel from './ViewModel';
 
 interface Props {
   viewModel: ViewModel;
+}
+
+interface CustomerReview {
+  name: string;
+  location: string;
+  heading: string;
+  quote: string;
 }
 
 const Container = styled('div')(({ theme }) => ({
@@ -35,20 +42,18 @@ const Content = styled('div')(({ theme }) => ({
 }));
 
 const Title = styled(Typography)(({ theme }) => ({
-  marginBottom: theme.spacing(1),
+  marginBottom: theme.spacing(4),
   textAlign: 'center',
   letterSpacing: '1px',
-  [theme.breakpoints.only('xs')]: {
-    marginBottom: theme.spacing(5),
-  },
-  [theme.breakpoints.up('md')]: {
-    marginBottom: theme.spacing(6),
-  },
   [theme.breakpoints.down('lg')]: {
     fontSize: '42px',
     lineHeight: '46px',
   },
   [theme.breakpoints.down('md')]: {
+    fontSize: '36px',
+    lineHeight: '32px',
+  },
+  [theme.breakpoints.down('xs')]: {
     fontSize: '28px',
     lineHeight: '32px',
   },
@@ -68,14 +73,22 @@ const ReviewsSection = styled('div')(({ theme }) => ({
 }));
 
 const CustomerReviewsView: React.FC<Props> = ({ viewModel }) => {
+  const [reviewsToDisplay, setReviewsToDisplay] = useState<CustomerReview[]>(
+    []
+  );
   const { title } = viewModel;
+
+  useEffect(() => {
+    const sample = sampleSize(reviews, 4);
+    setReviewsToDisplay(sample);
+  }, []);
 
   return (
     <Container>
       <Content>
         <Title variant="h2">{title}</Title>
         <ReviewsSection>
-          {sampleSize(reviews, 4).map((review, idx) => (
+          {reviewsToDisplay.map((review, idx) => (
             <Review review={review} key={idx} />
           ))}
         </ReviewsSection>

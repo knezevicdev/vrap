@@ -1,9 +1,9 @@
 import { Link, styled } from '@material-ui/core';
+import { CheckCircle } from '@material-ui/icons';
 import { Typography } from '@vroom-web/ui';
 import React from 'react';
 
 import ViewModel from './ViewModel';
-import { CheckCircle } from '@material-ui/icons';
 
 interface Props {
   viewModel: ViewModel;
@@ -21,16 +21,17 @@ const Content = styled('div')(({ theme }) => ({
   padding: theme.spacing(5),
   display: 'flex',
   flexDirection: 'column',
+  [theme.breakpoints.down('sm')]: {
+    padding: theme.spacing(5, 2, 2),
+  },
 }));
 
-const Section = styled('div')(({ theme }) => ({
-  marginBottom: theme.spacing(11),
-}));
+const Section = styled('div')(() => ({}));
 
 const Image = styled('img')(({ theme }) => ({
   height: '158px',
   minWidth: '236px',
-  [theme.breakpoints.down('sm')]: {
+  [theme.breakpoints.only('xs')]: {
     display: 'none',
   },
 }));
@@ -38,7 +39,10 @@ const Image = styled('img')(({ theme }) => ({
 const Subsection = styled('div')(({ theme }) => ({
   marginBottom: theme.spacing(3),
   display: 'flex',
-  gap: '20px',
+  gap: '35px',
+  [theme.breakpoints.down('md')]: {
+    gap: '20px',
+  },
 }));
 
 const Step = styled('div')(({ theme }) => ({
@@ -53,7 +57,12 @@ const Heading = styled(Typography)(({ theme }) => ({
     fontSize: '42px',
     lineHeight: '46px',
   },
-  [theme.breakpoints.down('sm')]: {
+  [theme.breakpoints.down('md')]: {
+    fontSize: '36px',
+    lineHeight: '32px',
+  },
+  [theme.breakpoints.down('xs')]: {
+    textAlign: 'center',
     fontSize: '28px',
     lineHeight: '32px',
   },
@@ -65,10 +74,22 @@ const SubsectionTitle = styled(Typography)(() => ({
   fontSize: '24px',
 }));
 
-const StepSection = styled('div')(({ theme }) => ({
+const StepsSection = styled('div')(({ theme }) => ({
   marginLeft: theme.spacing(3),
-  paddingLeft: theme.spacing(5),
-  borderLeft: '1px solid rgb(214, 215, 218)',
+  paddingLeft: theme.spacing(8),
+  [theme.breakpoints.down('md')]: {
+    paddingLeft: theme.spacing(5),
+  },
+  [theme.breakpoints.down('sm')]: {
+    paddingLeft: theme.spacing(2),
+  },
+  [theme.breakpoints.up('sm')]: {
+    borderLeft: '1px solid rgb(214, 215, 218)',
+  },
+  [theme.breakpoints.only('xs')]: {
+    marginLeft: theme.spacing(1),
+    paddingLeft: 0,
+  },
 }));
 
 const StepTitle = styled(Typography)(() => ({
@@ -77,14 +98,14 @@ const StepTitle = styled(Typography)(() => ({
   lineHeight: '25px',
 }));
 
-const StepTitleSection = styled(Typography)(({ theme }) => ({
+const StepTitleSection = styled('div')(({ theme }) => ({
   display: 'flex',
   alignItems: 'center',
   gap: '8px',
   marginBottom: theme.spacing(2),
 }));
 
-const StepDescriptionSection = styled(Typography)(({ theme }) => ({
+const StepDescriptionSection = styled('div')(({ theme }) => ({
   marginLeft: theme.spacing(4),
 }));
 
@@ -105,10 +126,18 @@ const StepLink = styled(Typography)(({ theme }) => ({
 const SubsectionIcon = styled('img')(({ theme }) => ({
   width: '46px',
   height: '44px',
-  marginRight: theme.spacing(2),
+  marginRight: theme.spacing(5),
+  [theme.breakpoints.down('md')]: {
+    marginRight: theme.spacing(2),
+  },
+  [theme.breakpoints.down('sm')]: {
+    width: '32px',
+    height: '32px',
+    marginRight: 0,
+  },
 }));
 
-const SubsectionTitleSection = styled(Typography)(({ theme }) => ({
+const SubsectionTitleSection = styled('div')(({ theme }) => ({
   display: 'flex',
   alignItems: 'center',
   gap: '8px',
@@ -132,7 +161,7 @@ const ProcessView: React.FC<Props> = ({ viewModel }) => {
                       {subsection.title}
                     </SubsectionTitle>
                   </SubsectionTitleSection>
-                  <StepSection>
+                  <StepsSection>
                     {subsection.steps.map((step) => (
                       <Step key={step.key}>
                         <StepTitleSection>
@@ -153,7 +182,7 @@ const ProcessView: React.FC<Props> = ({ viewModel }) => {
                         </StepDescriptionSection>
                       </Step>
                     ))}
-                  </StepSection>
+                  </StepsSection>
                 </div>
               </Subsection>
             ))}
