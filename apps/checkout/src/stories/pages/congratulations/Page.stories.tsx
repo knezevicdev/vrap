@@ -3,10 +3,10 @@ import { withDesign } from 'storybook-addon-designs';
 import styled, { ThemeProvider } from 'styled-components';
 import { Footer, getVroomTheme } from 'vroom-ui';
 
-import Next from '../../../modules/congrats/sections/Next';
-import PurchaseSummary from '../../../modules/congrats/sections/PurchaseSummary/PurchaseSummary';
-import Questions from '../../../modules/congrats/sections/Questions';
-import ReservedCar from '../../../modules/congrats/sections/ReservedCar';
+import Next from '../../../modules/congratulations/sections/Next';
+import PurchaseSummary from '../../../modules/congratulations/sections/PurchaseSummary/PurchaseSummary';
+import Questions from '../../../modules/congratulations/sections/Questions';
+import ReservedCar from '../../../modules/congratulations/sections/ReservedCar';
 import {
   footerViewModel,
   nextViewModel,
@@ -20,7 +20,7 @@ const Page = styled.div`
   flex-direction: column;
 `;
 
-const theme = getVroomTheme('/assets/fonts/Vroom');
+const theme = getVroomTheme();
 
 export const WithoutTrade = (): JSX.Element => {
   return (
@@ -45,6 +45,6 @@ WithoutTrade.parameters = {
 };
 
 export default {
-  title: 'Checkout/Congrats/Without Trade',
+  title: 'Checkout/Congratulations/Without Trade',
   decorators: [withDesign],
 };

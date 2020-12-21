@@ -26,7 +26,7 @@ class ValuePropsViewModel {
   ];
 
   // a map for mapping components to the slugs in the order array, as well as mapping the order of the sections to passed sectionOrderKey
-  sectionMap: { [slug: string]: { component: FC; order: string[] } } = {
+  sectionMap: { [slug: string]: { component?: FC; order: string[] } } = {
     buyselltrade: {
       component: BuySellTrade,
       order: ['buyselltrade', 'certified', 'delivery', '7daytestdrive'],
@@ -42,6 +42,10 @@ class ValuePropsViewModel {
     '7daytestdrive': {
       component: TestDriveSection,
       order: ['7daytestdrive', 'buyselltrade', 'certified', 'delivery'],
+    },
+    // potentially separate component map from section order map
+    'delivery-only-exp': {
+      order: ['delivery'],
     },
   };
 }

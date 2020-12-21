@@ -4,15 +4,20 @@ import {
   isAccessDeniedErrorResponse,
   ResponseErrorInterceptor,
 } from '@vroom-web/networking';
+import { Brand, ThemeProvider } from '@vroom-web/ui';
 import { configure as configureMobx } from 'mobx';
 import App from 'next/app';
 import getConfig from 'next/config';
+import React from 'react';
+import { ThemeProvider as StyledThemeProvider } from 'styled-components';
+import { getVroomTheme, GlobalStyle } from 'vroom-ui';
 
 import client from 'src/networking/client';
 
 configureMobx({
   enforceActions: 'observed', // don't allow state modifications outside actions
   useProxies: 'ifavailable',
+  isolateGlobalState: true,
 });
 
 const { publicRuntimeConfig } = getConfig();
@@ -41,6 +46,22 @@ class VroomApp extends App {
       }
     };
     client.addResponseInterceptor(errorInterceptor);
+  }
+
+  render(): JSX.Element {
+    const { Component, pageProps } = this.props;
+    const theme = getVroomTheme();
+
+    return (
+      <>
+        <GlobalStyle />
+        <ThemeProvider brand={Brand.VROOM}>
+          <StyledThemeProvider theme={theme}>
+            <Component {...pageProps} />
+          </StyledThemeProvider>
+        </ThemeProvider>
+      </>
+    );
   }
 }
 

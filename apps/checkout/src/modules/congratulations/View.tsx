@@ -1,0 +1,56 @@
+import { SimpleHeader } from '@vroom-web/header-components';
+import { observer } from 'mobx-react-lite';
+import getConfig from 'next/config';
+import React from 'react';
+import styled from 'styled-components';
+import { Footer } from 'vroom-ui';
+
+import Next from './sections/Next';
+import PurchaseSummary from './sections/PurchaseSummary/PurchaseSummary';
+import Questions from './sections/Questions';
+import ReservedCar from './sections/ReservedCar';
+import CongratsViewModel from './ViewModel';
+
+const Page = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
+interface Props {
+  viewModel: CongratsViewModel;
+}
+
+const {
+  publicRuntimeConfig: { GEARBOX_PRIVATE_URL },
+} = getConfig();
+
+const CongratsView: React.FC<Props> = ({ viewModel }) => {
+  if (viewModel.loading) {
+    return <p>Loading...</p>;
+  }
+  if (viewModel.error) {
+    return <p>Error!</p>;
+  }
+  if (viewModel.empty) {
+    return <p>Empty!</p>;
+  }
+
+  const reservedCarProps = viewModel.reservedCarProps;
+  const nextProps = viewModel.nextProps;
+  const questionsProps = viewModel.questionsProps;
+  const { sections } = viewModel.footerProps;
+  const purchaseSummaryViewModel = viewModel.purchaseSummaryProps;
+
+  return (
+    <Page>
+      <SimpleHeader gearboxPrivateUrl={GEARBOX_PRIVATE_URL} />
+      <ReservedCar {...reservedCarProps} />
+      <Next {...nextProps} />
+      <PurchaseSummary {...purchaseSummaryViewModel} />
+      <Questions {...questionsProps} />
+      <Footer sections={sections} />
+    </Page>
+  );
+};
+
+export default observer(CongratsView);

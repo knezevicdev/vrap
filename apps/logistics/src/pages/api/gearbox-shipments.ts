@@ -5,7 +5,7 @@ export default async (
   _req: NextApiRequest,
   res: NextApiResponse
 ): Promise<void> => {
-  const url = 'https://gearbox-dev-int.vroomapi.com/query';
+  const url = process.env.GEARBOX_URL ?? '';
 
   const data = JSON.stringify({
     query: `query portalShipmentsQuery($user: String!, $status: String!) {

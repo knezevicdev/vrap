@@ -3,15 +3,15 @@ import { withDesign } from 'storybook-addon-designs';
 import { ThemeProvider } from 'styled-components';
 import { getVroomTheme } from 'vroom-ui';
 
-import PurchaseSummary from '../../../../modules/congrats/sections/PurchaseSummary/PurchaseSummary';
-import { purchaseSummaryViewModel } from '../ViewModels';
+import ReservedCar from '../../../../modules/congratulations/sections/ReservedCar';
+import { reservedCarViewModel } from '../ViewModels';
 
-const theme = getVroomTheme('/assets/fonts/Vroom');
+const theme = getVroomTheme();
 
 export const Success = (): JSX.Element => {
   return (
     <ThemeProvider theme={theme}>
-      <PurchaseSummary {...purchaseSummaryViewModel} />
+      <ReservedCar {...reservedCarViewModel} />
     </ThemeProvider>
   );
 };
@@ -20,11 +20,11 @@ Success.parameters = {
   design: {
     type: 'figma',
     url:
-      'https://www.figma.com/file/rsB4AJNk9uq81u1ia2U0G1/EComm-Port?node-id=385%3A365',
+      'https://www.figma.com/file/yhvMWzN95E1DdNLBfEr5OH/Desktop-Congrats?node-id=1%3A4',
   },
 };
 
 export default {
-  title: 'Checkout/Congrats/Sections/Purchase Summary',
+  title: 'Checkout/Congratulations/Sections/Reserved Car',
   decorators: [withDesign],
 };

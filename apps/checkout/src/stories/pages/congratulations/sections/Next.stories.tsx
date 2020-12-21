@@ -3,15 +3,15 @@ import { withDesign } from 'storybook-addon-designs';
 import { ThemeProvider } from 'styled-components';
 import { getVroomTheme } from 'vroom-ui';
 
-import ReservedCar from '../../../../modules/congrats/sections/ReservedCar';
-import { reservedCarViewModel } from '../ViewModels';
+import Next from '../../../../modules/congratulations/sections/Next';
+import { nextViewModel } from '../ViewModels';
 
-const theme = getVroomTheme('/assets/fonts/Vroom');
+const theme = getVroomTheme();
 
 export const Success = (): JSX.Element => {
   return (
     <ThemeProvider theme={theme}>
-      <ReservedCar {...reservedCarViewModel} />
+      <Next {...nextViewModel} />
     </ThemeProvider>
   );
 };
@@ -25,6 +25,6 @@ Success.parameters = {
 };
 
 export default {
-  title: 'Checkout/Congrats/Sections/Reserved Car',
+  title: 'Checkout/Congratulations/Sections/Next',
   decorators: [withDesign],
 };

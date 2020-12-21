@@ -3,15 +3,15 @@ import { withDesign } from 'storybook-addon-designs';
 import { ThemeProvider } from 'styled-components';
 import { getVroomTheme } from 'vroom-ui';
 
-import Next from '../../../../modules/congrats/sections/Next';
-import { nextViewModel } from '../ViewModels';
+import Questions from '../../../../modules/congratulations/sections/Questions';
+import { questionsViewModel } from '../ViewModels';
 
-const theme = getVroomTheme('/assets/fonts/Vroom');
+const theme = getVroomTheme();
 
 export const Success = (): JSX.Element => {
   return (
     <ThemeProvider theme={theme}>
-      <Next {...nextViewModel} />
+      <Questions {...questionsViewModel} />
     </ThemeProvider>
   );
 };
@@ -25,6 +25,6 @@ Success.parameters = {
 };
 
 export default {
-  title: 'Checkout/Congrats/Sections/Next',
+  title: 'Checkout/Congratulations/Sections/Questions',
   decorators: [withDesign],
 };

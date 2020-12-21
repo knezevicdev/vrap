@@ -5,7 +5,7 @@ import { Body, Title } from 'vroom-ui';
 export interface DeliveryDetailsProps {
   data: {
     dates?: string[];
-    receiver: {
+    receiver?: {
       name: string;
       phone: string;
     };
@@ -55,7 +55,11 @@ const DeliveryDetails: React.FC<DeliveryDetailsProps> = ({
           <NotAvailable bold>Not available delivery dates</NotAvailable>
           {dates &&
             dates.map((date) => {
-              return <Body.Regular key={date}>{date}</Body.Regular>;
+              return (
+                <Body.Regular key={date}>
+                  {new Date(date).toLocaleString()}
+                </Body.Regular>
+              );
             })}
         </>
       )}
@@ -63,7 +67,7 @@ const DeliveryDetails: React.FC<DeliveryDetailsProps> = ({
       <YouAvailable bold>Will you be available for delivery?</YouAvailable>
       <Body.Regular>{willYouBeAvailableLabel}</Body.Regular>
 
-      {showReceiverInformation && (
+      {showReceiverInformation && receiver && (
         <>
           <Receiver bold>Receiver Information</Receiver>
           <Body.Regular>{receiver.name}</Body.Regular>

@@ -26,8 +26,8 @@ class CarCardViewModel {
     alt: 'Evox Images',
     src: `${publicRuntimeConfig.BASE_PATH}/components/evox-logo.png`,
   };
-  readonly availableSoon: string = 'AVAILABLE SOON';
-  readonly salePending: string = 'SALE PENDING';
+  readonly availableSoon: string = 'Available Soon';
+  readonly salePending: string = 'Sale Pending';
 
   constructor(carsStore: CarsStore, car: Car) {
     this.analyticsHandler = new AnalyticsHandler();

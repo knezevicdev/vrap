@@ -11,23 +11,35 @@ const primaryBrand = (props: { theme: ThemeProps }): string =>
 const primaryWhite = (props: { theme: ThemeProps }): string =>
   props.theme.colors.primary.white;
 
-const Container = styled.div`
+const Background = styled.div`
   display: flex;
-  flex-direction: column;
   background: ${grayFour};
-  align-items: center;
+  justify-content: center;
   padding-bottom: 64px;
   margin-bottom: 64px;
   ${addStyleForMobile(`
-        padding-bottom: 32px;
-        margin-bottom: 32px;
-    `)}
+    padding-bottom: 32px;
+    margin-bottom: 32px;
+  `)}
+`;
+
+const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  max-width: 1280px;
+  align-items: center;
 `;
 
 const Step = styled.div`
   display: flex;
   flex-direction: column;
   padding: 0 16px;
+  min-width: calc(33% - 32px);
+  max-width: calc(33% - 32px);
+  ${addStyleForMobile(`
+    min-width: calc(100% - 32px);
+    max-width: calc(100% - 32px);
+  `)}
 `;
 
 const Steps = styled.div`
@@ -35,18 +47,22 @@ const Steps = styled.div`
   margin-top: 36px;
   padding: 0 16px;
   ${addStyleForMobile(`
-        flex-direction: column;
-        margin-top: 32px;
-        padding: 0;
-        ${Step}:not(:first-child) {
-            margin-top: 16px;
-        }
-    `)}
+    flex-direction: column;
+     margin-top: 32px;
+     padding: 0;
+     ${Step}:not(:first-child) {
+        margin-top: 16px;
+     }
+  `)}
 `;
 
 const StepHeader = styled.div`
   display: flex;
   align-items: center;
+`;
+
+const Description = styled(Body.Regular)`
+  margin-left: 26px;
 `;
 
 const StepNumber = styled(Body.Small)`
@@ -64,9 +80,9 @@ const StepNumber = styled(Body.Small)`
 
 const Header = styled(Heading.Three)`
   ${addStyleForMobile(`
-        font-size: 30px !important;
-        margin: 0px 32px !important;
-    `)}
+    font-size: 30px !important;
+    margin: 0px 32px !important;
+  `)}
 `;
 
 export interface NextProps {
@@ -76,23 +92,25 @@ export interface NextProps {
 
 const Next: React.FC<NextProps> = ({ heading, steps }): JSX.Element => {
   return (
-    <Container>
-      <Header>{heading}</Header>
-      <Steps>
-        {steps.map((step) => {
-          const { number, title, description } = step;
-          return (
-            <Step key={number}>
-              <StepHeader>
-                <StepNumber>{number}</StepNumber>
-                <Title.Three>{title}</Title.Three>
-              </StepHeader>
-              <Body.Regular>{description}</Body.Regular>
-            </Step>
-          );
-        })}
-      </Steps>
-    </Container>
+    <Background>
+      <Container>
+        <Header>{heading}</Header>
+        <Steps>
+          {steps.map((step) => {
+            const { number, title, description } = step;
+            return (
+              <Step key={number}>
+                <StepHeader>
+                  <StepNumber>{number}</StepNumber>
+                  <Title.Three>{title}</Title.Three>
+                </StepHeader>
+                <Description>{description}</Description>
+              </Step>
+            );
+          })}
+        </Steps>
+      </Container>
+    </Background>
   );
 };
 
