@@ -12,6 +12,7 @@ class OptionsViewModel {
   readonly optionTitle: string = 'Payment Method';
   readonly optionQuestion: string = 'How would you like to get paid?';
   readonly submit: string = 'submit';
+  readonly submitting: string = 'submitting';
 
   constructor(store: OptionsStore) {
     this.store = store;
