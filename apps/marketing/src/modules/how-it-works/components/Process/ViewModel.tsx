@@ -11,7 +11,7 @@ class ProcessViewModel {
       subsections: [
         {
           key: 'browse',
-          icon: `${publicRuntimeConfig.BASE_PATH}/icons/browse.svg`,
+          icon: `${publicRuntimeConfig.BASE_PATH}/modules/vroom/icons/browse.svg`,
           imgSrc: `${publicRuntimeConfig.BASE_PATH}/modules/vroom/images/browse-online.jpg`,
           title: 'Browse Online',
           steps: [
@@ -63,7 +63,7 @@ class ProcessViewModel {
         },
         {
           key: 'make-it-yours',
-          icon: `${publicRuntimeConfig.BASE_PATH}/icons/make-it-yours.svg`,
+          icon: `${publicRuntimeConfig.BASE_PATH}/modules/vroom/icons/make-it-yours.svg`,
           imgSrc: `${publicRuntimeConfig.BASE_PATH}/modules/vroom/images/make-it-yours.jpg`,
           title: 'Make It Yours',
           steps: [
@@ -94,7 +94,7 @@ class ProcessViewModel {
         },
         {
           key: 'delivered',
-          icon: `${publicRuntimeConfig.BASE_PATH}/icons/get-it-delivered.svg`,
+          icon: `${publicRuntimeConfig.BASE_PATH}/modules/vroom/icons/get-it-delivered.svg`,
           imgSrc: `${publicRuntimeConfig.BASE_PATH}/modules/vroom/images/get-it-delivered.jpg`,
           title: 'Get It Delivered',
           steps: [
@@ -154,7 +154,7 @@ class ProcessViewModel {
       subsections: [
         {
           key: 'get-offer',
-          icon: `${publicRuntimeConfig.BASE_PATH}/icons/free-appraisal.svg`,
+          icon: `${publicRuntimeConfig.BASE_PATH}/modules/vroom/icons/free-appraisal.svg`,
           imgSrc: `${publicRuntimeConfig.BASE_PATH}/modules/vroom/images/get-a-free-appraisal.jpg`,
           title: 'Get Your Price',
           steps: [
@@ -178,7 +178,7 @@ class ProcessViewModel {
         },
         {
           key: 'close-deal',
-          icon: `${publicRuntimeConfig.BASE_PATH}/icons/close-the-deal.svg`,
+          icon: `${publicRuntimeConfig.BASE_PATH}/modules/vroom/icons/close-the-deal.svg`,
           imgSrc: `${publicRuntimeConfig.BASE_PATH}/modules/vroom/images/close-the-deal.jpg`,
           title: 'Close the Deal',
           steps: [
@@ -202,7 +202,7 @@ class ProcessViewModel {
         },
         {
           key: 'get-paid',
-          icon: `${publicRuntimeConfig.BASE_PATH}/icons/get-paid.svg`,
+          icon: `${publicRuntimeConfig.BASE_PATH}/modules/vroom/icons/get-paid.svg`,
           imgSrc: `${publicRuntimeConfig.BASE_PATH}/modules/vroom/images/get-paid.jpg`,
           title: 'Get Paid',
           steps: [
