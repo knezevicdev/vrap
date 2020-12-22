@@ -140,6 +140,15 @@ export default class CongratsViewModel {
     return false;
   }
 
+  private get paymentMethod(): string {
+    const method = this.summary.paymentType as string;
+    if (method === 'Financing') return 'Finance with Vroom';
+    if (method === 'Cash') return 'Pay with cash';
+    if (method === 'OSF') return 'Finance with your bank';
+
+    return '';
+  }
+
   get showLoading(): boolean {
     return this.model.dataStatus === Status.LOADING;
   }
@@ -233,7 +242,7 @@ export default class CongratsViewModel {
       },
       purchaseDetails: {
         data: {
-          method: this.summary.paymentType as string,
+          method: this.paymentMethod,
           sellingPrice: `$${this.pricing.listPrice.toLocaleString()}`,
           taxes: `$${this.amountDue.totalTaxesAndFees.toLocaleString()}`,
           vehicleServiceContractProtection: this
