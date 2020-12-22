@@ -46,7 +46,7 @@ function _templateObject3() {
 }
 
 function _templateObject2() {
-  var data = _taggedTemplateLiteral(["\n  display: flex;\n  flex-direction: column;\n  width: 25%;\n  :not(:last-child) {\n    padding-right: 64px;\n\n    ", "\n  }\n"]);
+  var data = _taggedTemplateLiteral(["\n  display: flex;\n  flex-direction: column;\n  width: 25%;\n  :not(:last-child) {\n    margin-right: 64px;\n\n    ", "\n  }\n"]);
 
   _templateObject2 = function _templateObject2() {
     return data;
@@ -103,7 +103,7 @@ var primaryWhite = props => props.theme.colors.primary.white;
 
 var Links = _styledComponents.default.div(_templateObject(), (0, _Vroom.addStyleForDesktop)("\n      display: flex;\n      margin-left: auto;\n      padding-left: 16px;\n  "));
 
-var SectionContainer = _styledComponents.default.div(_templateObject2(), (0, _Vroom.addStyleForTablet)("\n      padding-right: 32px;\n    "));
+var SectionContainer = _styledComponents.default.div(_templateObject2(), (0, _Vroom.addStyleForTablet)("\n      margin-right: 32px;\n    "));
 
 var Title = (0, _styledComponents.default)(_Typography.Body.Regular)(_templateObject3(), grayThree);
 var CustomLink = (0, _styledComponents.default)(_Typography.Link)(_templateObject4(), primaryBrand);

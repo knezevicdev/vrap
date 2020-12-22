@@ -58,10 +58,10 @@ const SectionContainer = styled.div`
   flex-direction: column;
   width: 25%;
   :not(:last-child) {
-    padding-right: 64px;
+    margin-right: 64px;
 
     ${addStyleForTablet(`
-      padding-right: 32px;
+      margin-right: 32px;
     `)}
   }
 `;
