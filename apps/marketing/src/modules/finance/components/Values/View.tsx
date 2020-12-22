@@ -3,6 +3,7 @@ import { Typography } from '@vroom-web/ui';
 import React from 'react';
 
 import ViewModel from './ViewModel';
+import { CheckCircle } from '@material-ui/icons';
 
 interface Props {
   viewModel: ViewModel;
@@ -10,38 +11,71 @@ interface Props {
 
 const Container = styled('div')(({ theme }) => ({
   backgroundColor: theme.palette.background.paper,
-  display: 'flex',
-  flexDirection: 'column',
-  alignItems: 'center',
-  padding: theme.spacing(9, 6),
+}));
+
+const Content = styled('div')(({ theme }) => ({
+  maxWidth: '1280px',
+  marginLeft: 'auto',
+  marginRight: 'auto',
+  display: 'grid',
+  gridTemplateColumns: 'repeat(3, 1fr)',
+  gap: '35px',
+  backgroundColor: theme.palette.background.paper,
+  padding: theme.spacing(12, 2),
   [theme.breakpoints.down('sm')]: {
-    padding: theme.spacing(4, 3),
+    gap: '20px',
+    padding: theme.spacing(6, 2),
+  },
+  [theme.breakpoints.down('xs')]: {
+    gridTemplateColumns: '1fr',
   },
 }));
 
 const Title = styled(Typography)(({ theme }) => ({
-  marginBottom: theme.spacing(4),
-  textAlign: 'center',
-  letterSpacing: '1px',
-  [theme.breakpoints.down('lg')]: {
-    fontSize: '42px',
-    lineHeight: '46px',
-  },
-  [theme.breakpoints.down('md')]: {
-    fontSize: '36px',
-    lineHeight: '32px',
-  },
-  [theme.breakpoints.down('xs')]: {
-    fontSize: '28px',
-    lineHeight: '32px',
+  letterSpacing: '0.25px',
+  fontSize: '24px',
+  lineHeight: '24px',
+  [theme.breakpoints.down('sm')]: {
+    fontSize: '20px',
   },
 }));
 
+const TitleSection = styled('div')(({ theme }) => ({
+  display: 'flex',
+  alignItems: 'flex-start',
+  gap: '8px',
+  marginBottom: theme.spacing(1),
+}));
+
+const DescriptionSection = styled('div')(({ theme }) => ({
+  marginLeft: theme.spacing(4),
+}));
+
+const Description = styled(Typography)(() => ({
+  letterSpacing: '0.25px',
+  fontSize: '18px',
+  lineHeight: '25px',
+}));
+
 const ValuesView: React.FC<Props> = ({ viewModel }) => {
-  const { title } = viewModel;
+  const { values } = viewModel;
   return (
     <Container>
-      <Title variant="h2">{title}</Title>
+      <Content>
+        {values.map((value) => (
+          <div key={value.key}>
+            <TitleSection>
+              <CheckCircle color="primary" />
+              <Title variant="body1" fontWeight={600}>
+                {value.title}
+              </Title>
+            </TitleSection>
+            <DescriptionSection>
+              <Description variant="body1">{value.description}</Description>
+            </DescriptionSection>
+          </div>
+        ))}
+      </Content>
     </Container>
   );
 };
