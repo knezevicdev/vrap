@@ -2,7 +2,11 @@ import React from 'react';
 import styled from 'styled-components';
 
 import { ThemeProps } from '../../../foundation/themes/types';
-import { addStyleForMobile } from '../../../foundation/themes/Vroom';
+import {
+  addStyleForDesktop,
+  addStyleForMobile,
+  addStyleForTablet,
+} from '../../../foundation/themes/Vroom';
 import { Body, Fine } from '../../../foundation/Typography';
 import Icon, { Icons } from '../../Icon/Icon';
 import { DesktopLinks } from './Desktop/Links';
@@ -54,6 +58,12 @@ const Container = styled.div`
   display: flex;
   background: ${primaryBlack};
   padding: 48px 64px 32px 64px;
+
+  ${addStyleForTablet(`
+    flex-direction: column;
+    padding: 24px;
+  `)}
+
   ${addStyleForMobile(`
     flex-direction: column;
     padding: 24px;
@@ -63,8 +73,9 @@ const Container = styled.div`
 const Information = styled.div`
   display: flex;
   flex-direction: column;
-  ${addStyleForMobile(`
-    order: 2;
+  order: 2;
+  ${addStyleForDesktop(`
+    order: 0;
   `)}
 `;
 

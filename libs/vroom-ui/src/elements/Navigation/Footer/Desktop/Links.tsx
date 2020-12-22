@@ -3,6 +3,7 @@ import styled from 'styled-components';
 
 import { ThemeProps } from '../../../../foundation/themes/types';
 import {
+  addStyleForDesktop,
   addStyleForMobile,
   addStyleForTablet,
 } from '../../../../foundation/themes/Vroom';
@@ -43,11 +44,12 @@ const primaryWhite = (props: { theme: ThemeProps }): string =>
   props.theme.colors.primary.white;
 
 const Links = styled.div`
-  display: flex;
-  margin-left: auto;
-  padding-left: 16px;
-  ${addStyleForMobile(`
-    display: none;
+  display: none;
+
+  ${addStyleForDesktop(`
+      display: flex;
+      margin-left: auto;
+      padding-left: 16px;
   `)}
 `;
 
@@ -56,7 +58,7 @@ const SectionContainer = styled.div`
   flex-direction: column;
   width: 25%;
   :not(:last-child) {
-    padding-right: 16px;
+    padding-right: 64px;
 
     ${addStyleForTablet(`
       padding-right: 32px;
