@@ -155,9 +155,11 @@ const PurchaseSummary: React.FC<PurchaseSummaryProps> = ({
         <BillingAddress {...billingAddress} />
         <Space />
         {financingInformation && (
-          <FinancingInformation {...financingInformation} />
+          <>
+            <FinancingInformation {...financingInformation} />
+            <Space />
+          </>
         )}
-        <Space />
         <RegistrationAddress {...registrationAddress} />
         <Space />
         <DeliveryAddress {...deliveryAddress} />

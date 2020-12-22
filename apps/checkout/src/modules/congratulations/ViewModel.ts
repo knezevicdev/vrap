@@ -133,6 +133,13 @@ export default class CongratsViewModel {
     return this.model.data.user.deals.length === 0;
   }
 
+  private get showNotAvailableDates(): boolean {
+    if (this.deliveryDetails.unavailableDates) {
+      return this.deliveryDetails.unavailableDates.length > 0;
+    }
+    return false;
+  }
+
   get showLoading(): boolean {
     return this.model.dataStatus === Status.LOADING;
   }
@@ -320,8 +327,7 @@ export default class CongratsViewModel {
         truckHasAccessLabel: this.deliveryDetails.wheelerTruck ? 'Yes' : 'No',
         showReceiverInformation:
           this.deliveryDetails.availableForDelivery === false,
-        showNotAvailableDates:
-          this.deliveryDetails.unavailableDates !== undefined,
+        showNotAvailableDates: this.showNotAvailableDates,
         showTruckInformation: !this.deliveryDetails.wheelerTruck,
       },
       showInsuranceDisclaimer: showInsuranceDisclaimer,
