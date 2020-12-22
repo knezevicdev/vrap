@@ -45,11 +45,6 @@ const Input = styled(TextField)(({ theme }) => ({
   },
 }));
 
-const StateSelect = styled(Input)(({ theme }) => ({
-  width: theme.spacing(20),
-  marginLeft: theme.spacing(2),
-}));
-
 const SubmitButton = styled(Button)(({ theme }) => ({
   width: '100%',
   marginTop: theme.spacing(3),
@@ -60,6 +55,24 @@ const Inputs = styled('div')(() => ({
 }));
 
 const LicensePlateView: React.FC<Props> = ({ viewModel }) => {
+  let StateSelect = styled(Input)(({ theme }) => ({
+    '& .MuiInputBase-input': {
+      color: 'black',
+    },
+    width: theme.spacing(20),
+    marginLeft: theme.spacing(2),
+  }));
+
+  if (viewModel.getSelectedState() === 'State') {
+    StateSelect = styled(Input)(({ theme }) => ({
+        '& .MuiInputBase-input': {
+          color: 'gray',
+        },
+        width: theme.spacing(20),
+        marginLeft: theme.spacing(2),
+      }));
+  }
+
   return (
     <LicensePlateContainer>
       <Inputs>
@@ -78,13 +91,16 @@ const LicensePlateView: React.FC<Props> = ({ viewModel }) => {
           id="state"
           select
           label={'State'}
-          placeholder={viewModel.licensePlateLabel}
           value={viewModel.getSelectedState()}
           onChange={viewModel.handleChange}
           InputProps={{ disableUnderline: true }}
         >
-          {viewModel.getStates().map((state) => (
-            <MenuItem key={state} value={state}>
+          {viewModel.getStates().map((state, index) => (
+            <MenuItem 
+              key={state}
+              disabled={index === 0}
+              selected={index === 0}
+              value={state}>
               {state}
             </MenuItem>
           ))}
