@@ -23,7 +23,7 @@ interface PageProps {
 
 class Page extends React.Component<PageProps> {
   render(): React.ReactNode {
-    const { children, head } = this.props;
+    const { children } = this.props;
     return (
       <>
         <Head>

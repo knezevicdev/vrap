@@ -128,8 +128,11 @@ const OptionsView: React.FC<Props> = ({ viewModel }) => {
     <Formik
       initialValues={InitialValues}
       validationSchema={PaymentOverviewSchema}
-      onSubmit={(values: PaymentOverviewFormValues, { setSubmitting }): void => {
-        setSubmitting(true); 
+      onSubmit={(
+        values: PaymentOverviewFormValues,
+        { setSubmitting }
+      ): void => {
+        setSubmitting(true);
         viewModel.paymentOptionsSubmit(values);
       }}
       validateOnMount={true}
@@ -160,11 +163,7 @@ const OptionsView: React.FC<Props> = ({ viewModel }) => {
                 )}
               </OptionDisplay>
               <SubmitButton disabled={!isValid || isSubmitting}>
-                {isSubmitting ? (
-                  viewModel.submitting
-                ) : (
-                  viewModel.submit
-                )}
+                {isSubmitting ? viewModel.submitting : viewModel.submit}
               </SubmitButton>
             </OptionsContainer>
           </FormContainer>
