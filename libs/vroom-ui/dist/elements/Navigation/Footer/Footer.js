@@ -116,7 +116,7 @@ function _templateObject3() {
 }
 
 function _templateObject2() {
-  var data = _taggedTemplateLiteral(["\n  display: flex;\n  flex-direction: column;\n  ", "\n"]);
+  var data = _taggedTemplateLiteral(["\n  display: flex;\n  flex-direction: column;\n  order: 2;\n  ", "\n"]);
 
   _templateObject2 = function _templateObject2() {
     return data;
@@ -126,7 +126,7 @@ function _templateObject2() {
 }
 
 function _templateObject() {
-  var data = _taggedTemplateLiteral(["\n  display: flex;\n  background: ", ";\n  padding: 48px 64px 32px 64px;\n  ", "\n"]);
+  var data = _taggedTemplateLiteral(["\n  display: flex;\n  background: ", ";\n  padding: 48px 64px 32px 64px;\n\n  ", "\n\n  ", "\n"]);
 
   _templateObject = function _templateObject() {
     return data;
@@ -178,9 +178,9 @@ var primaryBlack = props => props.theme.colors.primary.black;
 
 var primaryWhite = props => props.theme.colors.primary.white;
 
-var Container = _styledComponents.default.div(_templateObject(), primaryBlack, (0, _Vroom.addStyleForMobile)("\n    flex-direction: column;\n    padding: 24px;\n  "));
+var Container = _styledComponents.default.div(_templateObject(), primaryBlack, (0, _Vroom.addStyleForTablet)("\n    flex-direction: column;\n    padding: 24px;\n  "), (0, _Vroom.addStyleForMobile)("\n    flex-direction: column;\n    padding: 24px;\n  "));
 
-var Information = _styledComponents.default.div(_templateObject2(), (0, _Vroom.addStyleForMobile)("\n    order: 2;\n  "));
+var Information = _styledComponents.default.div(_templateObject2(), (0, _Vroom.addStyleForDesktop)("\n    order: 0;\n  "));
 
 var Apps = _styledComponents.default.div(_templateObject3());
 
