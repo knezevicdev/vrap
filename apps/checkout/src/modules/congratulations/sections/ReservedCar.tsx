@@ -150,7 +150,13 @@ const ReservedCar: React.FC<ReservedCarProps> = ({
         <CarHeading>your car is reserved!</CarHeading>
         <Content>
           <CarPicture>
-            <Picture alt={alt} src={src} width="100%" aspectRatio="3:2" />
+            <Picture
+              alt={alt}
+              src={src}
+              width="100%"
+              aspectRatio="3:2"
+              objectFit="contain"
+            />
           </CarPicture>
           <Information>
             <CarTitle>{car}</CarTitle>

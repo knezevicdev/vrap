@@ -12,9 +12,11 @@ enum ServiceType {
   TireAndWheel = 'VRTW',
   Gap = 'VRGP',
 }
+
 interface Service {
   selected: boolean;
   cost: number;
+  summary: string;
 }
 
 export default class CongratsViewModel {
@@ -131,6 +133,22 @@ export default class CongratsViewModel {
     return this.model.data.user.deals.length === 0;
   }
 
+  private get showNotAvailableDates(): boolean {
+    if (this.deliveryDetails.unavailableDates) {
+      return this.deliveryDetails.unavailableDates.length > 0;
+    }
+    return false;
+  }
+
+  private get paymentMethod(): string {
+    const method = this.summary.paymentType as string;
+    if (method === 'Financing') return 'Finance with Vroom';
+    if (method === 'Cash') return 'Pay with cash';
+    if (method === 'OSF') return 'Finance with your bank';
+
+    return '';
+  }
+
   get showLoading(): boolean {
     return this.model.dataStatus === Status.LOADING;
   }
@@ -224,18 +242,27 @@ export default class CongratsViewModel {
       },
       purchaseDetails: {
         data: {
-          method: this.summary.paymentType as string,
+          method: this.paymentMethod,
           sellingPrice: `$${this.pricing.listPrice.toLocaleString()}`,
           taxes: `$${this.amountDue.totalTaxesAndFees.toLocaleString()}`,
           vehicleServiceContractProtection: this
             .vehicleServiceContractProtection
-            ? `$${this.vehicleServiceContractProtection.cost.toLocaleString()}`
+            ? {
+                cost: `$${this.vehicleServiceContractProtection.cost.toLocaleString()}`,
+                summary: this.vehicleServiceContractProtection.summary,
+              }
             : undefined,
           gapCoverage: this.gapCoverage
-            ? `$${this.gapCoverage.cost.toLocaleString()}`
+            ? {
+                cost: `$${this.gapCoverage.cost.toLocaleString()}`,
+                summary: this.gapCoverage.summary,
+              }
             : undefined,
           tireAndWheelCoverage: this.tireAndWheelCoverage
-            ? `$${this.tireAndWheelCoverage.cost.toLocaleString()}`
+            ? {
+                cost: `$${this.tireAndWheelCoverage.cost.toLocaleString()}`,
+                summary: this.tireAndWheelCoverage.summary,
+              }
             : undefined,
           shippingFee: `$${this.amountDue.shippingFee.toLocaleString()}`,
           subtotal: `$${this.amountDue.subTotal.toLocaleString()}`,
@@ -309,8 +336,7 @@ export default class CongratsViewModel {
         truckHasAccessLabel: this.deliveryDetails.wheelerTruck ? 'Yes' : 'No',
         showReceiverInformation:
           this.deliveryDetails.availableForDelivery === false,
-        showNotAvailableDates:
-          this.deliveryDetails.unavailableDates !== undefined,
+        showNotAvailableDates: this.showNotAvailableDates,
         showTruckInformation: !this.deliveryDetails.wheelerTruck,
       },
       showInsuranceDisclaimer: showInsuranceDisclaimer,

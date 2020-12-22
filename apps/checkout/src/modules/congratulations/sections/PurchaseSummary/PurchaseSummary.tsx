@@ -139,6 +139,7 @@ const PurchaseSummary: React.FC<PurchaseSummaryProps> = ({
               src={car.image.src}
               width="182px"
               height="104px"
+              objectFit="contain"
             />
           </CarImage>
           <CarInfo>
@@ -154,9 +155,11 @@ const PurchaseSummary: React.FC<PurchaseSummaryProps> = ({
         <BillingAddress {...billingAddress} />
         <Space />
         {financingInformation && (
-          <FinancingInformation {...financingInformation} />
+          <>
+            <FinancingInformation {...financingInformation} />
+            <Space />
+          </>
         )}
-        <Space />
         <RegistrationAddress {...registrationAddress} />
         <Space />
         <DeliveryAddress {...deliveryAddress} />

@@ -2,14 +2,19 @@ import React from 'react';
 import styled from 'styled-components';
 import { Body, Link, ThemeProps, Title } from 'vroom-ui';
 
+interface Service {
+  cost: string;
+  summary: string;
+}
+
 export interface PurchaseDetailsProps {
   data: {
     method: string;
     sellingPrice: string;
     taxes: string;
-    vehicleServiceContractProtection?: string;
-    gapCoverage?: string;
-    tireAndWheelCoverage?: string;
+    vehicleServiceContractProtection?: Service;
+    gapCoverage?: Service;
+    tireAndWheelCoverage?: Service;
     shippingFee?: string;
     subtotal: string;
     creditDownPayment: string;
@@ -119,10 +124,10 @@ const PurchaseDetails: React.FC<PurchaseDetailsProps> = ({ data }) => {
                 Vehicle Service Contract Protection
               </BrandLink>
               <Body.Regular bold>
-                {vehicleServiceContractProtection}
+                {vehicleServiceContractProtection.cost}
               </Body.Regular>
             </Row>
-            <Details>60 mos. / 60,000 mi. / $100 ded.</Details>
+            <Details>{vehicleServiceContractProtection.summary}</Details>
           </>
         )}
         {gapCoverage && (
@@ -134,9 +139,9 @@ const PurchaseDetails: React.FC<PurchaseDetailsProps> = ({ data }) => {
               >
                 GAP Coverage
               </BrandLink>
-              <Body.Regular bold>{gapCoverage}</Body.Regular>
+              <Body.Regular bold>{gapCoverage.cost}</Body.Regular>
             </Row>
-            <Details>60 mos. / 60,000 mi. / $100 ded.</Details>
+            <Details>{gapCoverage.summary}</Details>
           </>
         )}
         {tireAndWheelCoverage && (
@@ -148,9 +153,9 @@ const PurchaseDetails: React.FC<PurchaseDetailsProps> = ({ data }) => {
               >
                 Tire & Wheel Coverage
               </BrandLink>
-              <Body.Regular bold>{tireAndWheelCoverage}</Body.Regular>
+              <Body.Regular bold>{tireAndWheelCoverage.cost}</Body.Regular>
             </Row>
-            <Details>60 mos. / 60,000 mi. / $100 ded.</Details>
+            <Details>{tireAndWheelCoverage.summary}</Details>
           </>
         )}
         <Row>
