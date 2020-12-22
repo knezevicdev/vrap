@@ -1,18 +1,22 @@
 import { ThemeProvider } from '@vroom-web/ui';
-import { Brand } from '@vroom-web/whitelabel';
-import React, { FC } from 'react';
+import { Brand, determineWhitelabel } from '@vroom-web/whitelabel';
+import { GetServerSideProps, GetServerSidePropsContext, NextPage } from 'next';
+import React from 'react';
 
 import HowItWorks from 'src/modules/how-it-works';
 import Page from 'src/Page';
 
-const HowItWorksPage: FC = () => {
+interface Props {
+  brand: Brand;
+  title: string;
+}
+
+const HowItWorksPage: NextPage<Props> = ({ brand, title }) => {
   const head = (
     <>
-      <title>Vroom - How Vroom Works</title>
+      <title>{title}</title>
     </>
   );
-
-  const brand = Brand.VROOM;
 
   return (
     <ThemeProvider brand={brand}>
@@ -21,6 +25,24 @@ const HowItWorksPage: FC = () => {
       </Page>
     </ThemeProvider>
   );
+};
+
+export const getServerSideProps: GetServerSideProps<Props> = async (
+  ctx: GetServerSidePropsContext
+) => {
+  ctx.res.setHeader('Cache-Control', '');
+  const brand = determineWhitelabel(ctx);
+
+  const getTitle = (): string => {
+    const title = 'How Vroom Works';
+    if (brand === Brand.SANTANDER) return `Santander Consumer USA - ${title}`;
+    if (brand === Brand.TDA) return `Texas Direct Auto - ${title}`;
+    return `Vroom - ${title}`;
+  };
+
+  const title = getTitle();
+
+  return { props: { brand, title } };
 };
 
 export default HowItWorksPage;
