@@ -54,25 +54,30 @@ const Inputs = styled('div')(() => ({
   display: 'flex',
 }));
 
+// TODO: There is probably a way around this but hopefully UI library will fix
+// nested Input field typical prop passing/setting className doesn't work as expected
+// https://tdalabs.atlassian.net/browse/AC-1034
+const StateSelectGray = styled(Input)(({ theme }) => ({
+  '& .MuiInputBase-input': {
+    color: 'gray',
+  },
+  width: theme.spacing(20),
+  marginLeft: theme.spacing(2),
+}));
+
+const StateSelectBlack = styled(Input)(({ theme }) => ({
+  '& .MuiInputBase-input': {
+    color: 'black',
+  },
+  width: theme.spacing(20),
+  marginLeft: theme.spacing(2),
+}));
+
 const LicensePlateView: React.FC<Props> = ({ viewModel }) => {
-  let StateSelect = styled(Input)(({ theme }) => ({
-    '& .MuiInputBase-input': {
-      color: 'black',
-    },
-    width: theme.spacing(20),
-    marginLeft: theme.spacing(2),
-  }));
-
-  if (viewModel.getSelectedState() === 'State') {
-    StateSelect = styled(Input)(({ theme }) => ({
-        '& .MuiInputBase-input': {
-          color: 'gray',
-        },
-        width: theme.spacing(20),
-        marginLeft: theme.spacing(2),
-      }));
-  }
-
+  const StateSelect =
+    viewModel.getSelectedState() === 'State'
+      ? StateSelectGray
+      : StateSelectBlack;
   return (
     <LicensePlateContainer>
       <Inputs>
@@ -96,11 +101,12 @@ const LicensePlateView: React.FC<Props> = ({ viewModel }) => {
           InputProps={{ disableUnderline: true }}
         >
           {viewModel.getStates().map((state, index) => (
-            <MenuItem 
+            <MenuItem
               key={state}
               disabled={index === 0}
               selected={index === 0}
-              value={state}>
+              value={state}
+            >
               {state}
             </MenuItem>
           ))}
