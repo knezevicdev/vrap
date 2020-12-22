@@ -1,46 +1,63 @@
 import { styled } from '@material-ui/core';
 import { Typography } from '@vroom-web/ui';
-import React from 'react';
+import _ from 'lodash';
+import React, { useEffect, useState } from 'react';
 
-import ViewModel from './ViewModel';
+import quotes from './quotes.json';
 
-interface Props {
-  viewModel: ViewModel;
+interface Quote {
+  key: number;
+  quote: string;
+  name: string;
+  date: string;
 }
 
 const Container = styled('div')(({ theme }) => ({
-  display: 'flex',
-  flexDirection: 'column',
-  alignItems: 'center',
-  padding: theme.spacing(9, 6),
+  minHeight: '150px',
+  display: 'grid',
+  placeItems: 'center',
+  padding: theme.spacing(3, 6),
   [theme.breakpoints.down('sm')]: {
-    padding: theme.spacing(4, 3),
+    padding: theme.spacing(3),
   },
 }));
 
-const Title = styled(Typography)(({ theme }) => ({
-  marginBottom: theme.spacing(4),
+const Content = styled('div')(() => ({
   textAlign: 'center',
-  letterSpacing: '1px',
-  [theme.breakpoints.down('lg')]: {
-    fontSize: '42px',
-    lineHeight: '46px',
-  },
-  [theme.breakpoints.down('md')]: {
-    fontSize: '36px',
-    lineHeight: '32px',
-  },
-  [theme.breakpoints.down('xs')]: {
-    fontSize: '28px',
-    lineHeight: '32px',
-  },
 }));
 
-const QuotesView: React.FC<Props> = ({ viewModel }) => {
-  const { title } = viewModel;
+const Quote = styled(Typography)(({ theme }) => ({
+  textAlign: 'center',
+  fontSize: '24px',
+  lineHeight: '30px',
+  fontStyle: 'italic',
+  maxWidth: '833px',
+  width: '100%',
+  marginBottom: theme.spacing(1),
+}));
+
+const QuotesView: React.FC = () => {
+  const [quote, setQuote] = useState<Quote | undefined>(_.sample(quotes));
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      const quote = _.sample(quotes);
+      setQuote(quote);
+    }, 3000);
+    return (): void => clearInterval(timer);
+  }, []);
+
   return (
     <Container>
-      <Title variant="h2">{title}</Title>
+      <Content>
+        <Quote variant="body1">{quote?.quote}</Quote>
+        <div>
+          <Typography variant="caption" fontWeight={600}>
+            {quote?.name}
+          </Typography>{' '}
+          <Typography variant="caption">{quote?.date}</Typography>
+        </div>
+      </Content>
     </Container>
   );
 };
