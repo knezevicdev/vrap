@@ -76,6 +76,7 @@ const SubTitle = styled(Typography)(({ theme }) => ({
   whiteSpace: 'pre-line',
   fontSize: '24px',
   lineHeight: '30px',
+  marginBottom: theme.spacing(4),
   [theme.breakpoints.down('sm')]: {
     fontSize: '18px',
     lineHeight: '25px',
@@ -83,7 +84,6 @@ const SubTitle = styled(Typography)(({ theme }) => ({
 }));
 
 const ShopNowButton = styled(Button)(({ theme }) => ({
-  marginTop: theme.spacing(4),
   [theme.breakpoints.only('xs')]: {
     marginBottom: theme.spacing(2),
     display: 'none',

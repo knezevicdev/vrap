@@ -9,7 +9,7 @@ class HeroViewModel {
   readonly buttonLabel = 'Apply Now';
   readonly carsLink = '/credit';
   car = {
-    src: `${publicRuntimeConfig.BASE_PATH}/modules/vroom/images/finance-car.png`,
+    src: `${publicRuntimeConfig.BASE_PATH}/modules/vroom/images/finance/finance-car.png`,
     alt: 'Finance car',
   };
 }
