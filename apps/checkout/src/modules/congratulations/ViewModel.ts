@@ -117,15 +117,11 @@ export default class CongratsViewModel {
     return this.inventory.vehicle as GQLTypes.VehicleInventory;
   }
 
-  get loading(): boolean {
-    return this.model.dataStatus === Status.LOADING;
-  }
-
-  get error(): boolean {
+  private get error(): boolean {
     return this.model.dataStatus === Status.ERROR;
   }
 
-  get empty(): boolean {
+  private get empty(): boolean {
     if (this.model.dataStatus !== Status.SUCCESS) {
       return false;
     }
@@ -133,6 +129,18 @@ export default class CongratsViewModel {
       return true;
     }
     return this.model.data.user.deals.length === 0;
+  }
+
+  get showLoading(): boolean {
+    return this.model.dataStatus === Status.LOADING;
+  }
+
+  get showError(): boolean {
+    return this.empty || this.error;
+  }
+
+  get showSuccess(): boolean {
+    return !this.empty && !this.error && !this.showLoading;
   }
 
   get reservedCarProps(): ReservedCarProps {

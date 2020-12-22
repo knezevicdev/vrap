@@ -8,7 +8,7 @@ import { questionsViewModel } from '../ViewModels';
 
 const theme = getVroomTheme();
 
-export const Success = (): JSX.Element => {
+export const Static = (): JSX.Element => {
   return (
     <ThemeProvider theme={theme}>
       <Questions {...questionsViewModel} />
@@ -16,7 +16,7 @@ export const Success = (): JSX.Element => {
   );
 };
 
-Success.parameters = {
+Static.parameters = {
   design: {
     type: 'figma',
     url:
