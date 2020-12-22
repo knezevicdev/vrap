@@ -30,7 +30,8 @@ const ContainerContent = styled('div')(({ theme }) => ({
   },
 }));
 
-const TextWrapper = styled('div')(() => ({
+const TextWrapper = styled('div')(({ theme }) => ({
+  marginRight: theme.spacing(1),
   flexBasis: '60%',
 }));
 

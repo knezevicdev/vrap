@@ -1,9 +1,9 @@
 import { styled } from '@material-ui/core';
+import { CheckCircle } from '@material-ui/icons';
 import { Typography } from '@vroom-web/ui';
 import React from 'react';
 
 import ViewModel from './ViewModel';
-import { CheckCircle } from '@material-ui/icons';
 
 interface Props {
   viewModel: ViewModel;

@@ -1,15 +1,15 @@
+import { Divider } from '@material-ui/core';
 import { StandardFooter } from '@vroom-web/footer-components';
 import { SimpleHeader } from '@vroom-web/header-components';
 import getConfig from 'next/config';
 import React from 'react';
 
 import ContactModule from '../locations/components/ContactModule';
+import FinancialSteps from './components/FinancialSteps';
 import Hero from './components/Hero';
-import { Divider } from '@material-ui/core';
+import Partners from './components/Partners';
 import Quotes from './components/Quotes';
 import Values from './components/Values';
-import Partners from './components/Partners';
-import FinancialSteps from './components/FinancialSteps';
 
 const { publicRuntimeConfig } = getConfig();
 
