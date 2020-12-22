@@ -53,9 +53,18 @@ export const purchaseSummaryViewModel: PurchaseSummaryProps = {
       method: 'Finance with Vroom',
       sellingPrice: '$28,750.00',
       taxes: '$2,371.87',
-      vehicleServiceContractProtection: '$3,244.00',
-      gapCoverage: '$645.00',
-      tireAndWheelCoverage: '$643.00',
+      vehicleServiceContractProtection: {
+        cost: '$3,244.00',
+        summary: 'API Summary...',
+      },
+      gapCoverage: {
+        cost: '$645.00',
+        summary: 'API Summary...',
+      },
+      tireAndWheelCoverage: {
+        cost: '$643.00',
+        summary: 'API Summary...',
+      },
       shippingFee: '$599.00',
       subtotal: '$22,486.98',
       creditDownPayment: '-$500.00',

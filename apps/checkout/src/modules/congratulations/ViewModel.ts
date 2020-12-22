@@ -12,9 +12,11 @@ enum ServiceType {
   TireAndWheel = 'VRTW',
   Gap = 'VRGP',
 }
+
 interface Service {
   selected: boolean;
   cost: number;
+  summary: string;
 }
 
 export default class CongratsViewModel {
@@ -229,13 +231,22 @@ export default class CongratsViewModel {
           taxes: `$${this.amountDue.totalTaxesAndFees.toLocaleString()}`,
           vehicleServiceContractProtection: this
             .vehicleServiceContractProtection
-            ? `$${this.vehicleServiceContractProtection.cost.toLocaleString()}`
+            ? {
+                cost: `$${this.vehicleServiceContractProtection.cost.toLocaleString()}`,
+                summary: this.vehicleServiceContractProtection.summary,
+              }
             : undefined,
           gapCoverage: this.gapCoverage
-            ? `$${this.gapCoverage.cost.toLocaleString()}`
+            ? {
+                cost: `$${this.gapCoverage.cost.toLocaleString()}`,
+                summary: this.gapCoverage.summary,
+              }
             : undefined,
           tireAndWheelCoverage: this.tireAndWheelCoverage
-            ? `$${this.tireAndWheelCoverage.cost.toLocaleString()}`
+            ? {
+                cost: `$${this.tireAndWheelCoverage.cost.toLocaleString()}`,
+                summary: this.tireAndWheelCoverage.summary,
+              }
             : undefined,
           shippingFee: `$${this.amountDue.shippingFee.toLocaleString()}`,
           subtotal: `$${this.amountDue.subTotal.toLocaleString()}`,
