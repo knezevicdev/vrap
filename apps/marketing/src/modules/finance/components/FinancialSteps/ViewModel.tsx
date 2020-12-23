@@ -8,12 +8,14 @@ class FinancialStepsViewModel {
     {
       key: 0,
       title: 'Find Your Ride',
-      description: `Browse thousands of high-quality, low-mileage vehicles, and find the one that's right for you. Shop now`,
+      href: '/credit',
+      description: `Browse thousands of high-quality, low-mileage vehicles, and find the one that's right for you. <link>Shop Now</link>`,
     },
     {
       key: 1,
       title: 'Get Your Financing Terms',
-      description: `Click here to apply in minutes. You will need to select a vehicle first to receive exact financing terms.`,
+      href: '/credit',
+      description: `<link>Click here</link> to apply in minutes. You will need to select a vehicle first to receive exact financing terms.`,
     },
     {
       key: 2,

@@ -1,6 +1,7 @@
-import { styled } from '@material-ui/core';
+import { Link, styled } from '@material-ui/core';
 import { Typography } from '@vroom-web/ui';
 import React from 'react';
+import reactStringReplace from 'react-string-replace';
 
 import ViewModel from './ViewModel';
 
@@ -102,8 +103,17 @@ const FinancialStepsView: React.FC<Props> = ({ viewModel }) => {
                 <StepTitle variant="body1" fontWeight={600}>
                   {step.title}
                 </StepTitle>
+
                 <StepDescription variant="body1">
-                  {step.description}
+                  {reactStringReplace(
+                    step.description,
+                    /<link>(.*)<\/link>/,
+                    (match, i) => (
+                      <Link key={i} href={step.href} target="_blank">
+                        {match}
+                      </Link>
+                    )
+                  )}
                 </StepDescription>
               </ListItem>
             ))}
