@@ -11,7 +11,6 @@ import React from 'react';
 import reactStringReplace from 'react-string-replace';
 
 import ViewModel from './ViewModel';
-import { InboxOutlined } from '@material-ui/icons';
 
 interface Props {
   viewModel: ViewModel;
@@ -103,7 +102,7 @@ const FinancialStepsView: React.FC<Props> = ({ viewModel }) => {
           <Title variant="h2">{title}</Title>
           <List>
             {steps.map((step) => (
-              <ListItem alignItems="flex-start" disableGutters>
+              <ListItem alignItems="flex-start" disableGutters key={step.key}>
                 <Icon>
                   <img src={step.icon} />
                 </Icon>

@@ -40,13 +40,15 @@ const Quote = styled(Typography)(({ theme }) => ({
 }));
 
 const QuotesView: React.FC = () => {
-  const [quote, setQuote] = useState<Quote | undefined>(_.sample(quotes));
+  const [quote, setQuote] = useState<Quote | undefined>();
 
   useEffect(() => {
+    const quote = _.sample(quotes);
+    setQuote(quote);
     const timer = setInterval(() => {
       const quote = _.sample(quotes);
       setQuote(quote);
-    }, 3000);
+    }, 4000);
     return (): void => clearInterval(timer);
   }, []);
 
