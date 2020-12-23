@@ -44,7 +44,7 @@ class OptionsViewModel {
     return this.store.showDD;
   };
 
-  isValidRouting = (num: string): boolean => {
+  isValidRouting = (num: string | null | undefined): boolean => {
     if (!num || num.length < 9) return false;
 
     // Run through each digit and calculate the total.
