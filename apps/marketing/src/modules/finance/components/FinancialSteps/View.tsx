@@ -1,9 +1,17 @@
-import { Link, styled } from '@material-ui/core';
+import {
+  Link,
+  styled,
+  List,
+  ListItem,
+  ListItemIcon,
+  ListItemText,
+} from '@material-ui/core';
 import { Typography } from '@vroom-web/ui';
 import React from 'react';
 import reactStringReplace from 'react-string-replace';
 
 import ViewModel from './ViewModel';
+import { InboxOutlined } from '@material-ui/icons';
 
 interface Props {
   viewModel: ViewModel;
@@ -71,23 +79,19 @@ const TextSection = styled('div')(({ theme }) => ({
   },
 }));
 
-const Steps = styled('ol')(({ theme }) => ({
-  paddingLeft: theme.spacing(2),
-}));
-
-const ListItem = styled('li')(({ theme }) => ({
-  marginBottom: theme.spacing(3),
-}));
-
 const StepTitle = styled(Typography)(({ theme }) => ({
   marginBottom: theme.spacing(1),
   fontSize: '20px',
-  lineHeight: '26px',
+  lineHeight: '22px',
 }));
 
 const StepDescription = styled(Typography)(() => ({
   fontSize: '18px',
   lineHeight: '25px',
+}));
+
+const Icon = styled(ListItemIcon)(() => ({
+  minWidth: '24px',
 }));
 
 const FinancialStepsView: React.FC<Props> = ({ viewModel }) => {
@@ -97,27 +101,31 @@ const FinancialStepsView: React.FC<Props> = ({ viewModel }) => {
       <Content>
         <TextSection>
           <Title variant="h2">{title}</Title>
-          <Steps>
+          <List>
             {steps.map((step) => (
-              <ListItem key={step.key}>
-                <StepTitle variant="body1" fontWeight={600}>
-                  {step.title}
-                </StepTitle>
-
-                <StepDescription variant="body1">
-                  {reactStringReplace(
-                    step.description,
-                    /<link>(.*)<\/link>/,
-                    (match, i) => (
-                      <Link key={i} href={step.href} target="_blank">
-                        {match}
-                      </Link>
-                    )
-                  )}
-                </StepDescription>
+              <ListItem alignItems="flex-start" disableGutters>
+                <Icon>
+                  <img src={step.icon} />
+                </Icon>
+                <ListItemText>
+                  <StepTitle variant="body1" fontWeight={600}>
+                    {step.title}
+                  </StepTitle>
+                  <StepDescription variant="body1">
+                    {reactStringReplace(
+                      step.description,
+                      /<link>(.*)<\/link>/,
+                      (match, i) => (
+                        <Link key={i} href={step.href} target="_blank">
+                          {match}
+                        </Link>
+                      )
+                    )}
+                  </StepDescription>
+                </ListItemText>
               </ListItem>
             ))}
-          </Steps>
+          </List>
         </TextSection>
         <Image src={stepsImage.src} alt={stepsImage.alt} />
       </Content>
