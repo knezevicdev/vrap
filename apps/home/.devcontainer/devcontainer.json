@@ -1,6 +1,6 @@
 {
   "name": "Home",
-  "dockerComposeFile": "../docker/docker-compose.yaml",
+  "dockerComposeFile": "../docker-local/docker-compose.yaml",
   "service": "home",
   "workspaceFolder": "/www/apps/home",
   // Use 'settings' to set *default* container specific settings.json values on container create.
