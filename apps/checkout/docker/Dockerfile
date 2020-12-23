@@ -24,4 +24,4 @@ EXPOSE 8080
 
 USER 1000
 
-CMD ["npm", "run", "start", "--port", "8080"]
+CMD ["./node_modules/.bin/next", "--port", "8080"]
