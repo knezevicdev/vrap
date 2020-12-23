@@ -1,5 +1,7 @@
 FROM node:erbium-alpine
 
+ARG CI_JOB_TOKEN
+
 ENV PORT=8080
 
 WORKDIR /www
