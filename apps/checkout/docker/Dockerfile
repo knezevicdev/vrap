@@ -1,27 +1,31 @@
-FROM node:erbium-alpine
+FROM node:erbium-alpine as BUILD_IMAGE
 
 ARG CI_JOB_TOKEN
 
-WORKDIR /www
-COPY .git ./.git
-COPY .vscode ./.vscode
-COPY ./apps/checkout ./apps/checkout
+RUN apk --no-cache add git
+
+RUN mkdir -p /www/apps/checkout && chown -R 1000:1000 /www/apps/checkout
 
 WORKDIR /www/apps/checkout
-RUN \
-  # Install git so editor git commands work
-  apk --no-cache add git &&\
-  npm install &&\
-  npm run build
-
-WORKDIR /www
-RUN \
-  chown -R 1000:1000 .
-
-WORKDIR /www/apps/checkout
-
-EXPOSE 8080
 
 USER 1000
 
-CMD ["./node_modules/.bin/next", "--port", "8080"]
+COPY ./apps/checkout/package.json ./apps/checkout/package-lock.json ./apps/checkout/.npmrc /www/apps/checkout/
+
+RUN npm ci
+
+COPY ./.git /www/.git
+
+COPY ./apps/checkout /www/apps/checkout/
+
+RUN npm run build
+
+RUN npm prune --production
+
+ARG PORT=8080
+
+ENV PORT=$PORT
+
+EXPOSE $PORT
+
+CMD ./node_modules/.bin/next start -p $PORT
