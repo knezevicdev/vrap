@@ -1,6 +1,6 @@
 FROM node:erbium-alpine
 
-ARG CI_JOB_TOKEN
+ENV PORT=8080
 
 WORKDIR /www
 COPY .git ./.git
@@ -20,8 +20,8 @@ RUN \
 
 WORKDIR /www/apps/checkout
 
-EXPOSE 8080
+EXPOSE $PORT
 
 USER 1000
 
-CMD ["npm", "run", "start", "--port", "8080"]
+CMD ["./node_modules/.bin/next", "start", "-p", $PORT]
