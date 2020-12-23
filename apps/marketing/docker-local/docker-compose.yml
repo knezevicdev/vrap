@@ -9,6 +9,7 @@ services:
     user: 'root'
     environment:
       - CALENDLY_URL=https://calendly.com/vroom-test/phone-call
+      - CI_JOB_TOKEN=$CI_JOB_TOKEN
       - CREATE_ZENDESK_REQUEST_URL=https://vroom.zendesk.com/api/v2/requests.json
       - GEARBOX_PRIVATE_URL=https://gearbox-dev-int.vroomapi.com/query-private
       - SANTANDER_SEGMENT_WRITE_KEY=BP2otWcD2EbECrCfUwn1RuDQAPPYa6mv

@@ -2,11 +2,14 @@ version: '3'
 services:
   home:
     build:
+      args:
+        CI_JOB_TOKEN: $CI_JOB_TOKEN
       context: ../../../
       dockerfile: ./apps/home/docker-local/Dockerfile
     user: 'root'
     environment:
       - BRANCH_IO_KEY=key_live_kcLYw3YkcZ81GfwRZ84cBcgmusnd6ysn
+      - CI_JOB_TOKEN=$CI_JOB_TOKEN
       - GEARBOX_PRIVATE_URL=https://gearbox-dev-int.vroomapi.com/query-private
       - GEARBOX_PUBLIC_URL=https://gearbox-dev-int.vroomapi.com/query-public
       - GOOGLE_MAPS_API_KEY=AIzaSyA2dKKPu1zi1mJyx_j884vtitJuLGnMNWA
