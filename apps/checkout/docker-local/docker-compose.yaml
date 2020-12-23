@@ -5,7 +5,7 @@ services:
       args:
         CI_JOB_TOKEN: $CI_JOB_TOKEN
       context: ../../../
-      dockerfile: ./apps/checkout/docker/Dockerfile
+      dockerfile: ./apps/checkout/docker-local/Dockerfile
     user: 'root'
     environment:
       - CI_JOB_TOKEN=${CI_JOB_TOKEN}
