@@ -20,7 +20,7 @@ const FinancePage: NextPage<Props> = ({ brand, title }) => {
 
   return (
     <ThemeProvider brand={brand}>
-      <Page brand={brand} name="How it Works" head={head}>
+      <Page brand={brand} name="Finance" head={head}>
         <Finance />
       </Page>
     </ThemeProvider>
