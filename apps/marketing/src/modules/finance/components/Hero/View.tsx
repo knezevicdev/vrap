@@ -84,10 +84,22 @@ const SubTitle = styled(Typography)(({ theme }) => ({
   },
 }));
 
+const ShopNow = styled('div')(({ theme }) => ({
+  [theme.breakpoints.only('xs')]: {
+    backgroundColor: theme.palette.background.paper,
+    boxShadow: 'rgba(0, 0, 0, 0.15) 0px 0px 6px',
+    zIndex: 10,
+    padding: theme.spacing(2),
+    position: 'fixed',
+    left: 0,
+    bottom: 0,
+    right: 0,
+  },
+}));
+
 const ShopNowButton = styled(Button)(({ theme }) => ({
   [theme.breakpoints.only('xs')]: {
-    marginBottom: theme.spacing(2),
-    display: 'none',
+    width: '100%',
   },
 }));
 
@@ -110,13 +122,15 @@ const HeroView: React.FC<Props> = ({ viewModel }) => {
           <TagLine>{viewModel.tagline}</TagLine>
           <Title variant="h1">{viewModel.title}</Title>
           <SubTitle>{viewModel.subtitle} </SubTitle>
-          <ShopNowButton
-            variant="contained"
-            color="primary"
-            href={viewModel.carsLink}
-          >
-            {viewModel.buttonLabel}
-          </ShopNowButton>
+          <ShopNow>
+            <ShopNowButton
+              variant="contained"
+              color="primary"
+              href={viewModel.carsLink}
+            >
+              {viewModel.buttonLabel}
+            </ShopNowButton>
+          </ShopNow>
         </TextWrapper>
         <ImageWrapper>
           <HeroImg alt={viewModel.car.alt} src={viewModel.car.src} />

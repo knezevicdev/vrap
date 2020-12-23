@@ -16,7 +16,6 @@ const Container = styled('div')(({ theme }) => ({
   minHeight: '150px',
   display: 'grid',
   placeItems: 'center',
-  padding: theme.spacing(3, 6),
   [theme.breakpoints.down('sm')]: {
     padding: theme.spacing(3),
   },
@@ -34,6 +33,10 @@ const Quote = styled(Typography)(({ theme }) => ({
   maxWidth: '833px',
   width: '100%',
   marginBottom: theme.spacing(1),
+  [theme.breakpoints.down('sm')]: {
+    fontSize: '18px',
+    lineHeight: '25px',
+  },
 }));
 
 const QuotesView: React.FC = () => {
