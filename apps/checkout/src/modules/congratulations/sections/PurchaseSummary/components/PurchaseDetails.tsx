@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Body, Link, ThemeProps, Title } from 'vroom-ui';
+import { Body, Link, ThemeProps, Title } from '@vroom-web/temp-ui-alias-for-checkout';
 
 interface Service {
   cost: string;

@@ -1,4 +1,4 @@
-import { FooterProps } from 'vroom-ui';
+import { FooterProps } from '@vroom-web/temp-ui-alias-for-checkout';
 
 import { NextProps } from '../../../modules/congratulations/sections/Next';
 import { PurchaseSummaryProps } from '../../../modules/congratulations/sections/PurchaseSummary/PurchaseSummary';

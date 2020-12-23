@@ -1,29 +1,27 @@
 FROM node:erbium-alpine
+
+ARG CI_JOB_TOKEN
+
 WORKDIR /www
-COPY . . 
+COPY .git ./.git
+COPY .vscode ./.vscode
+COPY ./apps/checkout ./apps/checkout
 
-#remove all availables apps
-RUN rm -rf apps 
-
-#copy only the current app
-COPY apps/checkout apps/checkout
-
-
+WORKDIR /www/apps/checkout
 RUN \
   # Install git so editor git commands work
   apk --no-cache add git &&\
-  #remove unnecessary dep.
-  rm -rf libs/networking/inv-search &&\
-  rm -rf libs/networking/inv-service &&\ 
-  rm -rf libs/whitelabel &&\
-  # Bootstrap yarn workspaces.
-  yarn install --silent &&\ 
-  # Build the main app.
-  yarn workspace @vroom-web/checkout build &&\ 
+  npm install &&\
+  npm run build
+
+WORKDIR /www
+RUN \
   chown -R 1000:1000 .
+
+WORKDIR /www/apps/checkout
 
 EXPOSE 8080
 
 USER 1000
 
-CMD ["yarn", "workspace", "@vroom-web/checkout", "start", "--port", "8080"]
+CMD ["npm", "run", "start", "--port", "8080"]

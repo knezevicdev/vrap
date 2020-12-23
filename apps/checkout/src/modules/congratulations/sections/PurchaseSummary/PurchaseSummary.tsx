@@ -7,7 +7,7 @@ import {
   Picture,
   ThemeProps,
   Title,
-} from 'vroom-ui';
+} from '@vroom-web/temp-ui-alias-for-checkout';
 
 import BillingAddress, {
   BillingAddressProps,

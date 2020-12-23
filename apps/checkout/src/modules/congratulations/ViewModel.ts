@@ -1,5 +1,5 @@
 import { GQLTypes, Status } from '@vroom-web/networking';
-import { FooterProps } from 'vroom-ui';
+import { FooterProps } from '@vroom-web/temp-ui-alias-for-checkout';
 
 import Model from './Model';
 import { NextProps } from './sections/Next';
