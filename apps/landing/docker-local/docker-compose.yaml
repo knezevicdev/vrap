@@ -2,14 +2,17 @@ version: '3'
 services:
   landing:
     build:
+      args:
+        CI_JOB_TOKEN: $CI_JOB_TOKEN
       context: ../../../
-      dockerfile: ./apps/landing/docker/Dockerfile
+      dockerfile: ./apps/landing/docker-local/Dockerfile
     user: 'root'
     environment:
       - SEGMENT_WRITE_KEY=N0pxERRIw4iYCoxZREMZj1yWBIoARIz4
       - INVSEARCH_V3_URL=https://invsearch-v3-dev-int.aws.vroomapi.com:8443/v3
       - GEARBOX_PRIVATE_URL=https://gearbox-dev-int.vroomapi.com/query-private
-    command: ash -c "yarn workspace @vroom-web/landing dev --port 8080"
+      - CI_JOB_TOKEN=$CI_JOB_TOKEN
+    command: ash -c "npm run dev -- --port 8080"
     # This starts nothing but leaves the container running, useful for
     # debugging nextjs start / config operations
     # command: ash -c "tail -f /dev/null"
