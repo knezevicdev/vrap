@@ -2,20 +2,18 @@ version: '3'
 services:
   product:
     build:
+      args:
+        CI_JOB_TOKEN: $CI_JOB_TOKEN
       context: ../../../
-      dockerfile: ./apps/product/docker/Dockerfile
+      dockerfile: ./apps/product/docker-local/Dockerfile
     user: 'root'
     environment:
-      - BRANCH_IO_KEY=key_live_kcLYw3YkcZ81GfwRZ84cBcgmusnd6ysn
-      - CDN_URL=
+      - CI_JOB_TOKEN=${CI_JOB_TOKEN}
+      - DATA_DOG_RUM_APPLICATION=e7f48b42-82cb-46e2-b851-90d26c4cfac2
       - GEARBOX_PRIVATE_URL=https://gearbox-dev-int.vroomapi.com/query-private
-      - INVSEARCH_V3_URL=https://invsearch-v3-dev-int.aws.vroomapi.com:8443/v3
-      - INV_SERVICE_V2_URL=https://inventory-dev-int.vroomapi.com:8443/v2
-      - SANTANDER_SEGMENT_WRITE_KEY=BP2otWcD2EbECrCfUwn1RuDQAPPYa6mv
-      - SEGMENT_WRITE_KEY=N0pxERRIw4iYCoxZREMZj1yWBIoARIz4
-      - STATIC_ASSETS_HOST_URL=https://static-assets.n.vroom.systems
-      - TDA_SEGMENT_WRITE_KEY=TbYgIIsercszeyRUCwgE2F3mOWV9QMjb
-    command: ash -c "yarn workspace @vroom-web/product dev --port 8080"
+      - DATA_DOG_RUM_TOKEN=pub4d4bcfd1fdb025834550786951abda6b
+      - GQL_PROXY_TARGET=https://dev.vroom.com/gql
+    command: ash -c "npm run dev -- --port 8080"
     # This starts nothing but leaves the container running, useful for
     # debugging nextjs start / config operations
     # command: ash -c "tail -f /dev/null"
@@ -32,8 +30,3 @@ services:
       - '/www/node_modules'
       - '/www/apps/product/.next'
       - '/www/apps/product/node_modules'
-  # Currently breaking build.  Removed to move forward.  -TL
-  # test:
-  #   context: ../../../
-  #   dockerfile: ./apps/product/docker/Dockerfile
-  #   commmand: "yarn test:cc"
