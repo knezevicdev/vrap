@@ -5,7 +5,7 @@ ARG CI_JOB_TOKEN
 WORKDIR /www
 COPY .git ./.git
 COPY .vscode ./.vscode
-COPY ./apps/product ./apps/checkout
+COPY ./apps/product ./apps/product
 
 WORKDIR /www/apps/product
 RUN \
