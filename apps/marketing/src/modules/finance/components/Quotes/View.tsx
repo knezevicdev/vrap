@@ -43,11 +43,9 @@ const QuotesView: React.FC = () => {
   const [quote, setQuote] = useState<Quote | undefined>();
 
   useEffect(() => {
-    const quote = _.sample(quotes);
-    setQuote(quote);
+    setQuote(_.sample(quotes));
     const timer = setInterval(() => {
-      const quote = _.sample(quotes);
-      setQuote(quote);
+      setQuote(_.sample(quotes));
     }, 4000);
     return (): void => clearInterval(timer);
   }, []);
