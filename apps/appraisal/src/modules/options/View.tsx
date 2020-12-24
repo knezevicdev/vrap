@@ -110,7 +110,9 @@ const OptionsView: React.FC<Props> = ({ viewModel }) => {
         .test(
           'valid-routing-num',
           'Please enter a valid routing number',
-          (value) => { return viewModel.isValidRouting(value) }
+          (value) => {
+            return viewModel.isValidRouting(value);
+          }
         ),
     }),
     bankAccountNumber: Yup.string().when('paymentOption', {
