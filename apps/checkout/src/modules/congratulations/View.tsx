@@ -1,9 +1,9 @@
 // import { SimpleHeader } from '@vroom-web/header-components';
+import { Footer, ThemeProps } from '@vroom-web/temp-ui-alias-for-checkout';
 import { observer } from 'mobx-react-lite';
 // import getConfig from 'next/config';
 import React from 'react';
 import styled from 'styled-components';
-import { Footer, ThemeProps } from '@vroom-web/temp-ui-alias-for-checkout';
 
 import Error from './sections/Error';
 import Loading from './sections/Loading';

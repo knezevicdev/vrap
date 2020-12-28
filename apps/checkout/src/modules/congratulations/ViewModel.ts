@@ -7,6 +7,8 @@ import { PurchaseSummaryProps } from './sections/PurchaseSummary/PurchaseSummary
 import { QuestionProps } from './sections/Questions';
 import { ReservedCarProps } from './sections/ReservedCar';
 
+import AnalyticsHandler from 'src/integrations/AnalyticsHandler';
+
 enum ServiceType {
   Vehicle = 'VRVS',
   TireAndWheel = 'VRTW',
@@ -21,9 +23,11 @@ interface Service {
 
 export default class CongratsViewModel {
   model: Model;
+  analyticsHandler: AnalyticsHandler;
 
   constructor(model: Model) {
     this.model = model;
+    this.analyticsHandler = new AnalyticsHandler();
   }
 
   private get summary(): GQLTypes.DealSummary {

@@ -1,5 +1,3 @@
-import React from 'react';
-import styled from 'styled-components';
 import {
   addStyleForMobile,
   Body,
@@ -11,6 +9,8 @@ import {
   ThemeProps,
   Title,
 } from '@vroom-web/temp-ui-alias-for-checkout';
+import React from 'react';
+import styled from 'styled-components';
 
 const primaryBrand = (props: { theme: ThemeProps }): string =>
   props.theme.colors.primary.brand;
@@ -125,6 +125,7 @@ const Schedule = styled(Link)`
 `;
 
 export interface ReservedCarProps {
+  analyticsHandler: AnalyticsHandler;
   data: {
     car: string;
     email: string;
@@ -180,7 +181,7 @@ const ReservedCar: React.FC<ReservedCarProps> = ({
                 <Body.Regular>
                   <Schedule href="https://www.vroom.com/schedule" blank>
                     Schedule a time
-                  </Schedule>{' '}
+                  </Schedule>
                   to talk with the Vroom team.
                 </Body.Regular>
               </Step>
