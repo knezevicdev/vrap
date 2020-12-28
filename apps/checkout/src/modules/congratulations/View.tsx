@@ -33,7 +33,6 @@ interface Props {
 const CongratsView: React.FC<Props> = ({ viewModel }) => {
   const { sections } = viewModel.footerProps;
   const questionsProps = viewModel.questionsProps;
-
   return (
     <Page>
       {/* <SimpleHeader gearboxPrivateUrl={GEARBOX_PRIVATE_URL} /> */}

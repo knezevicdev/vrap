@@ -12,6 +12,7 @@ import {
 import React from 'react';
 import styled from 'styled-components';
 
+import AnalyticsHandler from 'src/integrations/congratulations/CongratsAnalyticsHandler';
 const primaryBrand = (props: { theme: ThemeProps }): string =>
   props.theme.colors.primary.brand;
 
@@ -138,6 +139,7 @@ export interface ReservedCarProps {
 }
 
 const ReservedCar: React.FC<ReservedCarProps> = ({
+  analyticsHandler,
   data: {
     car,
     email,
@@ -145,6 +147,11 @@ const ReservedCar: React.FC<ReservedCarProps> = ({
     image: { alt, src },
   },
 }): JSX.Element => {
+  const handleScheduleTimeEvent = () => {
+    analyticsHandler.trackScheduleTime();
+    window.open('/schedule', '_blank');
+  };
+
   return (
     <Background>
       <Container>
@@ -179,10 +186,13 @@ const ReservedCar: React.FC<ReservedCarProps> = ({
               <Step>
                 <Check icon={Icons.CALENDAR} />
                 <Body.Regular>
-                  <Schedule href="https://www.vroom.com/schedule" blank>
+                  {/* <Schedule href="https://www.vroom.com/schedule" blank>
                     Schedule a time
-                  </Schedule>
-                  to talk with the Vroom team.
+                  </Schedule> */}
+                  <a href="#" onClick={handleScheduleTimeEvent}>
+                    Schedule a time
+                  </a>
+                  {' '} to talk with the Vroom team.
                 </Body.Regular>
               </Step>
             </Steps>

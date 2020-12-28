@@ -7,7 +7,7 @@ import { PurchaseSummaryProps } from './sections/PurchaseSummary/PurchaseSummary
 import { QuestionProps } from './sections/Questions';
 import { ReservedCarProps } from './sections/ReservedCar';
 
-import AnalyticsHandler from 'src/integrations/AnalyticsHandler';
+import AnalyticsHandler from 'src/integrations/congratulations/CongratsAnalyticsHandler';
 
 enum ServiceType {
   Vehicle = 'VRVS',
@@ -21,13 +21,18 @@ interface Service {
   summary: string;
 }
 
+interface AnalyticsData {
+  UUID?: string;
+  username: string;
+  vin?: string;
+}
 export default class CongratsViewModel {
   model: Model;
   analyticsHandler: AnalyticsHandler;
 
   constructor(model: Model) {
     this.model = model;
-    this.analyticsHandler = new AnalyticsHandler();
+    this.analyticsHandler = new AnalyticsHandler(this);
   }
 
   private get summary(): GQLTypes.DealSummary {
@@ -172,6 +177,7 @@ export default class CongratsViewModel {
     const src = leadPhotoURL ? leadPhotoURL : '';
 
     return {
+      analyticsHandler: this.analyticsHandler,
       data: {
         car: car,
         email: this.account.userName,
@@ -206,6 +212,14 @@ export default class CongratsViewModel {
           description: `Get your new ride delivered to your driveway anywhere within the continental U.S.`,
         },
       ],
+    };
+  }
+
+  get analyticsData(): AnalyticsData {
+    return {
+      UUID: undefined,
+      username: this.model.data.user.username,
+      vin: this.summary.inventory?.vehicle?.vin,
     };
   }
 
