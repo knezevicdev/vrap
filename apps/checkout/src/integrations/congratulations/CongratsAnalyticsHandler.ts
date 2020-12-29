@@ -1,8 +1,13 @@
+/*eslint @typescript-eslint/camelcase: [error, {properties: "never"}]*/
 import { AnalyticsHandler as BaseAnalyticsHandler } from '@vroom-web/analytics-integration';
 
 import packageJson from 'src/../package.json';
 import CongratsViewModel from 'src/modules/congratulations/ViewModel';
-
+export enum TrackContactModule {
+  helpCenter = 'Help Center Clicked',
+  contactUs = 'Contact Us Clicked',
+  phone = 'Phone Clicked',
+}
 class CongratsAnalyticsHandler extends BaseAnalyticsHandler {
   viewModel: CongratsViewModel;
 
@@ -11,20 +16,23 @@ class CongratsAnalyticsHandler extends BaseAnalyticsHandler {
     this.viewModel = viewModel;
   }
 
-  trackCongratsViewed(userId: string, UUID: string): void {
+  trackCongratsViewed(): void {
+    //const { username, UUID } = this.viewModel.analyticsData;
+
     const name = 'Congrats page visit';
-    const properties = {
+    //TODO: Fix page event to allow properties on analytics integration
+    /*const properties = {
       pageName: 'Car Reserved',
       url: window.location.href,
       title: 'Congrats page visit',
       version: 'New',
-      userId,
+      userId: username,
       UUID,
       applicationVersion: packageJson.version,
       vin: '',
     };
-    //TODO: Fix page event to allow properties on analytics integration
-    //this.page(name, properties);
+    */
+    this.page(name, 'Car Reserved');
   }
 
   trackScheduleTime(): void {
@@ -40,13 +48,66 @@ class CongratsAnalyticsHandler extends BaseAnalyticsHandler {
         UUID,
         applicationVersion: packageJson.version,
       };
-      this.track(event, properties); 
+      this.track(event, properties);
+    } catch (err) {
+      console.log('Analytic Event', err);
+    }
+  }
+
+  trackContactModule(eventName: TrackContactModule): void {
+    try {
+      const { username, UUID } = this.viewModel.analyticsData;
+
+      const properties = {
+        category: 'Ecommerce',
+        pageName: 'Congratulations',
+        section: 'contact module',
+        userId: username,
+        UUID,
+        applicationVersion: packageJson.version,
+      };
+      this.track(eventName, properties);
+    } catch (err) {
+      console.log('Analytic Event', err);
+    }
+  }
+
+  trackOrderCompleted(): void {
+    try {
+      const {
+        username,
+        UUID,
+        vin,
+        paymentMethod,
+        step,
+        orderId,
+        productId,
+        productName,
+        hasTrade,
+      } = this.viewModel.analyticsData;
+
+      const event = 'Order Completed';
+
+      const properties = {
+        category: 'Ecommerce',
+        pageName: 'Congratulations',
+        userId: username,
+        UUID,
+        applicationVersion: packageJson.version,
+        vin,
+        paymentMethod,
+        step,
+        order_id: orderId,
+        product_id: productId,
+        product_name: productName,
+        has_trade: hasTrade,
+      };
+
+      this.track(event, properties);
     } catch (err) {
       console.log('Analytic Event', err);
     }
   }
 }
-
-//export const analyticsHandler = new CongratsAnalyticsHandler();
 
 export default CongratsAnalyticsHandler;

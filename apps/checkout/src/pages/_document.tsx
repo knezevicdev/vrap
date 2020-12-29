@@ -36,17 +36,15 @@ export default class MyDocument extends Document {
 
   render(): JSX.Element {
     const {
-      publicRuntimeConfig: { SEGMENT_WRITE_KEY },
+      serverRuntimeConfig: { SEGMENT_WRITE_KEY },
     } = getConfig();
-
-    const segmentWriteKey = SEGMENT_WRITE_KEY;
     return (
       <Html lang="en">
         <Head>
-          {segmentWriteKey && (
+          {SEGMENT_WRITE_KEY && (
             <AnalyticsSnippet
               appName="Vroom Web - Checkout"
-              segmentWriteKey={segmentWriteKey}
+              segmentWriteKey={SEGMENT_WRITE_KEY}
             />
           )}
         </Head>

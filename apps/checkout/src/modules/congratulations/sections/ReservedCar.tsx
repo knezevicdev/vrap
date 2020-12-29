@@ -191,8 +191,8 @@ const ReservedCar: React.FC<ReservedCarProps> = ({
                   </Schedule> */}
                   <a href="#" onClick={handleScheduleTimeEvent}>
                     Schedule a time
-                  </a>
-                  {' '} to talk with the Vroom team.
+                  </a>{' '}
+                  to talk with the Vroom team.
                 </Body.Regular>
               </Step>
             </Steps>

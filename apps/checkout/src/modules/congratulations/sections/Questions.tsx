@@ -10,6 +10,9 @@ import {
 import React from 'react';
 import styled from 'styled-components';
 
+import AnalyticsHandler, {
+  TrackContactModule,
+} from 'src/integrations/congratulations/CongratsAnalyticsHandler';
 const primaryBrand = (props: { theme: ThemeProps }): string =>
   props.theme.colors.primary.brand;
 
@@ -71,41 +74,75 @@ const BrandIcon = styled(Icon)`
   margin-right: 8px;
 `;
 
+/*
+TODO: https://tdalabs.atlassian.net/browse/ECOMM-2947
 const CustomLink = styled(Link)`
   font-weight: 600 !important;
   text-decoration: none !important;
   letter-spacing: 1.75px !important;
 `;
-
+*/
+const CustomLink = styled.a`
+  font-weight: 600 !important;
+  text-decoration: none !important;
+  letter-spacing: 1.75px !important;
+`;
 export interface QuestionProps {
+  analyticsHandler: AnalyticsHandler;
   phone: {
     href: string;
     label: string;
   };
 }
 
-const Questions: React.FC<QuestionProps> = ({ phone }): JSX.Element => {
+const Questions: React.FC<QuestionProps> = ({
+  analyticsHandler,
+  phone,
+}): JSX.Element => {
+  const handleLinkEvents = (eventName: TrackContactModule, url: string) => {
+    analyticsHandler.trackContactModule(eventName);
+    window.open(url, '_blank');
+  };
+
   return (
     <Container>
       <Heading.Three>questions?</Heading.Three>
       <Actions>
         <Action>
           <BrandIcon icon={Icons.QUESTION} />
-          <CustomLink href="https://vroom.zendesk.com/hc/en-us" blank>
+          <CustomLink
+            onClick={() =>
+              handleLinkEvents(
+                TrackContactModule.helpCenter,
+                'https://vroom.zendesk.com/hc/en-us'
+              )
+            }
+            href="#"
+          >
             VISIT OUR HELP CENTER
           </CustomLink>
         </Action>
         <Divider />
         <Action>
           <BrandIcon icon={Icons.ENVELOPE} />
-          <CustomLink href="https://www.vroom.com/contact" blank>
+          <CustomLink
+            onClick={() =>
+              handleLinkEvents(TrackContactModule.contactUs, '/contact')
+            }
+            href="#"
+          >
             SEND A MESSAGE
           </CustomLink>
         </Action>
         <Divider />
         <Action>
           <BrandIcon icon={Icons.PHONE} />
-          <CustomLink href={`tel:${phone.href}`} blank>
+          <CustomLink
+            onClick={() =>
+              handleLinkEvents(TrackContactModule.phone, `tel:${phone.href}`)
+            }
+            href="#"
+          >
             {phone.label}
           </CustomLink>
         </Action>

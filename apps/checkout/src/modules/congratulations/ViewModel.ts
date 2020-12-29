@@ -25,6 +25,12 @@ interface AnalyticsData {
   UUID?: string;
   username: string;
   vin?: string;
+  paymentMethod?: string;
+  step?: string;
+  orderId?: number;
+  productId?: string;
+  productName?: string;
+  hasTrade: boolean;
 }
 export default class CongratsViewModel {
   model: Model;
@@ -33,6 +39,10 @@ export default class CongratsViewModel {
   constructor(model: Model) {
     this.model = model;
     this.analyticsHandler = new AnalyticsHandler(this);
+  }
+
+  private get dealId(): number {
+    return (this.model.data.user.deals as Array<GQLTypes.Deal>)[0].dealID;
   }
 
   private get summary(): GQLTypes.DealSummary {
@@ -220,6 +230,12 @@ export default class CongratsViewModel {
       UUID: undefined,
       username: this.model.data.user.username,
       vin: this.summary.inventory?.vehicle?.vin,
+      paymentMethod: this.paymentMethod,
+      step: this.summary.dealStatus.step,
+      orderId: this.dealId,
+      productId: this.summary.inventory?.id,
+      productName: this.summary.inventory?.vehicle?.vin,
+      hasTrade: this.summary.dealStatus.interestedInTrade,
     };
   }
 
@@ -364,6 +380,7 @@ export default class CongratsViewModel {
   //TODO: Inject correct number
   get questionsProps(): QuestionProps {
     return {
+      analyticsHandler: this.analyticsHandler,
       phone: {
         href: '+18555241300',
         label: '(855) 524-1300',

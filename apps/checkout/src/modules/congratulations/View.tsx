@@ -1,4 +1,5 @@
 // import { SimpleHeader } from '@vroom-web/header-components';
+import { datadogRum } from '@datadog/browser-rum';
 import { Footer, ThemeProps } from '@vroom-web/temp-ui-alias-for-checkout';
 import { observer } from 'mobx-react-lite';
 // import getConfig from 'next/config';
@@ -33,6 +34,27 @@ interface Props {
 const CongratsView: React.FC<Props> = ({ viewModel }) => {
   const { sections } = viewModel.footerProps;
   const questionsProps = viewModel.questionsProps;
+
+  React.useEffect(() => {
+    if (viewModel.showSuccess) {
+      viewModel.analyticsHandler.trackCongratsViewed();
+      viewModel.analyticsHandler.trackOrderCompleted();
+
+      const { orderId, productId } = viewModel.analyticsData;
+      console.error(
+        'completedDealcompletedDealcompletedDealcompletedDealcompletedDealcompletedDeal',
+        orderId,
+        productId
+      );
+      datadogRum.addUserAction('completedDeal', {
+        deal: {
+          dealId: orderId,
+          inventoryId: productId,
+        },
+      });
+    }
+  }, [viewModel.showSuccess]);
+
   return (
     <Page>
       {/* <SimpleHeader gearboxPrivateUrl={GEARBOX_PRIVATE_URL} /> */}
