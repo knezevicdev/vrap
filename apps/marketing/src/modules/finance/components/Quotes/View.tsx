@@ -1,7 +1,8 @@
 import { styled } from '@material-ui/core';
+import Slider from 'react-slick';
 import { Typography } from '@vroom-web/ui';
 import _ from 'lodash';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 
 import quotes from './quotes.json';
 
@@ -12,27 +13,21 @@ interface Quote {
   date: string;
 }
 
-const Container = styled('div')(({ theme }) => ({
-  minHeight: '150px',
-  display: 'grid',
-  placeItems: 'center',
-  [theme.breakpoints.down('sm')]: {
-    padding: theme.spacing(3),
-  },
-}));
-
 const Content = styled('div')(() => ({
+  display: 'flex !important',
+  minHeight: '150px',
   textAlign: 'center',
+  alignItems: 'center',
+  flexDirection: 'column',
+  justifyContent: 'center',
+  gap: '10px',
 }));
 
 const Quote = styled(Typography)(({ theme }) => ({
-  textAlign: 'center',
   fontSize: '24px',
   lineHeight: '30px',
   fontStyle: 'italic',
   maxWidth: '833px',
-  width: '100%',
-  marginBottom: theme.spacing(1),
   [theme.breakpoints.down('sm')]: {
     fontSize: '18px',
     lineHeight: '25px',
@@ -40,28 +35,39 @@ const Quote = styled(Typography)(({ theme }) => ({
 }));
 
 const QuotesView: React.FC = () => {
-  const [quote, setQuote] = useState<Quote | undefined>();
-
-  useEffect(() => {
-    setQuote(_.sample(quotes));
-    const timer = setInterval(() => {
-      setQuote(_.sample(quotes));
-    }, 4000);
-    return (): void => clearInterval(timer);
-  }, []);
+  var settings = {
+    infinite: true,
+    speed: 2000,
+    autoplay: true,
+    autoplaySpeed: 6000,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    initialSlide: 0,
+    responsive: [
+      {
+        breakpoint: 630,
+        settings: {
+          arrows: false,
+          dots: true,
+        },
+      },
+    ],
+  };
 
   return (
-    <Container>
-      <Content>
-        <Quote variant="body1">{quote?.quote}</Quote>
-        <div>
-          <Typography variant="caption" fontWeight={600}>
-            {quote?.name}
-          </Typography>{' '}
-          <Typography variant="caption">{quote?.date}</Typography>
-        </div>
-      </Content>
-    </Container>
+    <Slider {...settings}>
+      {quotes.map((quote) => (
+        <Content key={quote.key}>
+          <Quote variant="body1">{quote.quote}</Quote>
+          <div>
+            <Typography variant="caption" fontWeight={600}>
+              {quote.name}
+            </Typography>{' '}
+            <Typography variant="caption">{quote.date}</Typography>
+          </div>
+        </Content>
+      ))}
+    </Slider>
   );
 };
 
