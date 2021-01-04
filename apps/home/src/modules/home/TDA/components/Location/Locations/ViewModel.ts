@@ -134,7 +134,7 @@ class ViewModel {
         fax: '(281) 605-5764',
       },
       urlPath: 'locations/kingwood',
-      title: 'Kingwood (CLOSED)',
+      title: 'Kingwood',
       googleMapsUrl: 'https://goo.gl/maps/SBhBhUNdCBkCZH9Y7',
     },
     {
@@ -151,7 +151,7 @@ class ViewModel {
         fax: '(832) 460-3128',
       },
       urlPath: 'locations/galleria',
-      title: 'Galleria (Westheimer) (CLOSED)',
+      title: 'Galleria (Westheimer)',
       googleMapsUrl: 'https://goo.gl/maps/QNpUtKDbv1yy6qLL9',
     },
   ];
