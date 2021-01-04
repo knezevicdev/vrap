@@ -1,6 +1,6 @@
 {
   "name": "Checkout",
-  "dockerComposeFile": "../docker/docker-compose.yaml",
+  "dockerComposeFile": "../docker-local/docker-compose.yaml",
   "service": "checkout",
   "workspaceFolder": "/www/apps/checkout",
   // Use 'settings' to set *default* container specific settings.json values on container create.

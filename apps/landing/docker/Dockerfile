@@ -1,19 +1,28 @@
-FROM node:erbium-alpine
+FROM node:erbium-alpine as BUILD_IMAGE
 
-WORKDIR /www
-COPY . .
+ARG CI_JOB_TOKEN
 
-RUN \
-  # Install git so editor git commands work
-  apk --no-cache add git &&\
-  # Bootstrap yarn workspaces.
-  yarn install --silent &&\
-  # Build the main app.
-  yarn workspace @vroom-web/landing build &&\
-  chown -R 1000:1000 .
+RUN apk --no-cache add git
+RUN mkdir -p /www/apps/landing && chown -R 1000:1000 /www/apps/landing
 
-EXPOSE 8080
+WORKDIR /www/apps/landing
 
 USER 1000
 
-CMD ["yarn", "workspace", "@vroom-web/landing", "start", "--port", "8080"]
+COPY ./apps/landing/package.json ./apps/landing/package-lock.json ./apps/landing/.npmrc /www/apps/landing/
+
+RUN npm ci
+
+COPY ./.git /www/.git
+COPY ./apps/landing /www/apps/landing/
+
+RUN npm run build
+RUN npm prune --production
+
+ARG PORT=8080
+
+ENV PORT=$PORT
+
+EXPOSE $PORT
+
+CMD ./node_modules/.bin/next start -p $PORT

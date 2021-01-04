@@ -1,6 +1,6 @@
 {
   "name": "logistics",
-  "dockerComposeFile": "../docker/docker-compose.yaml",
+  "dockerComposeFile": "../docker-local/docker-compose.yaml",
   "service": "logistics",
   "workspaceFolder": "/www/apps/logistics",
   // Use 'settings' to set *default* container specific settings.json values on container create.

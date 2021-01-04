@@ -8,7 +8,7 @@ import {
   Icons,
   Link,
   ThemeProps,
-} from 'vroom-ui';
+} from '@vroom-web/temp-ui-alias-for-checkout';
 
 const primaryBrand = (props: { theme: ThemeProps }): string =>
   props.theme.colors.primary.brand;
@@ -16,11 +16,16 @@ const primaryBrand = (props: { theme: ThemeProps }): string =>
 const grayThree = (props: { theme: ThemeProps }): string =>
   props.theme.colors.gray.three;
 
+const primaryWhite = (props: { theme: ThemeProps }): string =>
+  props.theme.colors.primary.white;
+
 const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
   padding: 48px;
+  margin-bottom: auto;
+  background: ${primaryWhite};
 
   ${addStyleForMobile(`
       padding: 32px;

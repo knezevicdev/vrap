@@ -1,5 +1,5 @@
+import axios from 'axios';
 import Cookie from 'js-cookie';
-import jwtDecode from 'jwt-decode';
 import { useRouter } from 'next/router';
 import React, { createContext, useEffect, useState } from 'react';
 
@@ -12,7 +12,7 @@ export interface AuthContextInterface {
 
 export const AuthContext = createContext<AuthContextInterface>({
   idToken: {} as IdToken,
-  handleLogout: (): void => console.log('handleLogout'),
+  handleLogout: (): void => console.info('handleLogout'),
 });
 
 enum AuthStatus {
@@ -32,15 +32,16 @@ const Auth: React.FC<Props> = (props) => {
   const [idToken, setIdToken] = useState<IdToken | null>(null);
 
   useEffect(() => {
-    const idTokenCookie = Cookie.get('idToken');
+    const authDataCookie: IdToken | undefined = Cookie.getJSON('authData');
 
-    if (idTokenCookie) {
-      const decodedToken: IdToken = jwtDecode(idTokenCookie);
-      const isAuthenticated = !(new Date() > new Date(decodedToken.exp * 1000));
+    if (authDataCookie) {
+      const isAuthenticated = !(
+        new Date() > new Date(authDataCookie.exp * 1000)
+      );
 
       if (isAuthenticated) {
         setStatus(AuthStatus.valid);
-        setIdToken(decodedToken);
+        setIdToken(authDataCookie);
       } else {
         setStatus(AuthStatus.invalid);
         router.push(`/signin?previous=${window.location.pathname}`);
@@ -51,15 +52,9 @@ const Auth: React.FC<Props> = (props) => {
     }
   }, [router]);
 
-  const handleLogout = (): void => {
-    const config: Cookie.CookieAttributes = {
-      expires: 1,
-      sameSite: 'strict',
-      secure: true,
-    };
-    Cookie.remove('accessToken', config);
-    Cookie.remove('idToken', config);
-    Cookie.remove('refreshToken', config);
+  const handleLogout = async (): Promise<void> => {
+    Cookie.remove('authData');
+    await axios.get('/api/signout');
     router.push('/signin');
   };
 

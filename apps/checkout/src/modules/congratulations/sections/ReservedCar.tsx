@@ -10,7 +10,7 @@ import {
   Picture,
   ThemeProps,
   Title,
-} from 'vroom-ui';
+} from '@vroom-web/temp-ui-alias-for-checkout';
 
 const primaryBrand = (props: { theme: ThemeProps }): string =>
   props.theme.colors.primary.brand;
@@ -31,6 +31,8 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: 1082px;
+  min-height: 416px;
   padding: 48px;
   margin: 64px;
   box-shadow: 0px 4px 24px 4px rgba(0, 0, 0, 0.1);
@@ -148,7 +150,13 @@ const ReservedCar: React.FC<ReservedCarProps> = ({
         <CarHeading>your car is reserved!</CarHeading>
         <Content>
           <CarPicture>
-            <Picture alt={alt} src={src} width="100%" aspectRatio="3:2" />
+            <Picture
+              alt={alt}
+              src={src}
+              width="100%"
+              aspectRatio="3:2"
+              objectFit="contain"
+            />
           </CarPicture>
           <Information>
             <CarTitle>{car}</CarTitle>

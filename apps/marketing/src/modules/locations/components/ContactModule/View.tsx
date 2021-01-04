@@ -10,7 +10,10 @@ interface Props {
 
 const Container = styled('div')(({ theme }) => ({
   backgroundColor: theme.palette.background.paper,
-  padding: theme.spacing(4, 0, 7, 0),
+  padding: theme.spacing(4, 0, 6, 0),
+  [theme.breakpoints.up('sm')]: {
+    borderTop: 'solid 1px #d6d7da',
+  },
   [theme.breakpoints.down('sm')]: {
     padding: theme.spacing(4, 0),
   },

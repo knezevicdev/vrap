@@ -41,11 +41,6 @@ jobs:
                 version: 18.09.3
             - run:
                 command: deploy -a vroom-web/apps/checkout/docker -n << parameters.env >>
-    danger:
-        docker:
-            - image: node:erbium-alpine
-        steps:
-            - checkout
     home_build:
         docker:
             - image: vroom/mlp:3.0.2
@@ -88,17 +83,6 @@ jobs:
                 version: 18.09.3
             - run:
                 command: deploy -a vroom-web/apps/landing/docker -n << parameters.env >>
-    lint_build:
-        docker:
-            - image: circleci/node:erbium
-        steps:
-            - checkout
-            - run:
-                command: |-
-                    yarn install --silent
-                    yarn workspaces run lint
-                    yarn workspaces run build
-                name: Lint & Build
     listing_build:
         docker:
             - image: vroom/mlp:3.0.2
@@ -341,9 +325,6 @@ workflows:
                 name: checkout_deploy_prod
                 requires:
                     - hold_prod
-    common:
-        jobs:
-            - lint_build
     home:
         jobs:
             - home_build:

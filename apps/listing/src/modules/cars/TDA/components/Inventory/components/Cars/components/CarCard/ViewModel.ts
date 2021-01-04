@@ -27,9 +27,9 @@ class CarCardViewModel {
     alt: 'Evox Images',
     src: `${publicRuntimeConfig.BASE_PATH}/components/evox-logo.png`,
   };
-  readonly availableSoon: string = 'AVAILABLE SOON';
-  readonly salePending: string = 'SALE PENDING';
-  readonly testDrive: string = 'TEST DRIVE';
+  readonly availableSoon: string = 'Available Soon';
+  readonly salePending: string = 'Sale Pending';
+  readonly testDrive: string = 'Test Drive';
 
   // DELTA-228 this list of test drive zones was copied from the vroom-com codebase.
   // TODO: move this list/logic to the backend.

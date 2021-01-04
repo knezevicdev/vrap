@@ -267,36 +267,22 @@ export const getPopularFeaturesRequestData = (
 };
 
 export const getSortRequestData = (
-  filtersData?: FiltersData,
-  sortAgeDirectionExperiment?: Experiment
+  filtersData?: FiltersData
 ): {
   sortby?: SortAPIBy;
   sortdirection?: SortAPIDirection;
-  sortAgeDirection?: SortAPIDirection;
 } => {
   if (!filtersData) {
-    const sortAgeDirection =
-      sortAgeDirectionExperiment &&
-      sortAgeDirectionExperiment.assignedVariant === 1
-        ? SortAPIDirection.ASCENDING
-        : SortAPIDirection.DESCENDING;
     return {
       sortby: SortAPIBy.GEO,
       sortdirection: undefined,
-      sortAgeDirection,
     };
   }
   const filtersDataSort = filtersData[Filters.SORT];
   if (!filtersDataSort) {
-    const sortAgeDirection =
-      sortAgeDirectionExperiment &&
-      sortAgeDirectionExperiment.assignedVariant === 1
-        ? SortAPIDirection.ASCENDING
-        : SortAPIDirection.DESCENDING;
     return {
       sortby: SortAPIBy.GEO,
       sortdirection: undefined,
-      sortAgeDirection,
     };
   }
   const matchingSort = sorts.find(
@@ -355,8 +341,7 @@ export const getTransmissionRequestData = (
 };
 
 export const getPostInventoryRequestDataFromFilterData = (
-  filtersData?: FiltersData,
-  sortAgeDirectionExperiment?: Experiment
+  filtersData?: FiltersData
 ): PostInventoryRequestData => {
   const bodytype = getBodyTypeRequestData(filtersData);
   const cabtype = getCabTypeRequestData(filtersData);
@@ -367,10 +352,7 @@ export const getPostInventoryRequestDataFromFilterData = (
   const { makeSlug, modelSlug } = getMakeAndModelRequestData(filtersData);
   const offset = getOffsetRequestData(filtersData);
   const popularFeatures = getPopularFeaturesRequestData(filtersData);
-  const { sortby, sortdirection, sortAgeDirection } = getSortRequestData(
-    filtersData,
-    sortAgeDirectionExperiment
-  );
+  const { sortby, sortdirection } = getSortRequestData(filtersData);
   const testdriveonly = getTestDriveOnlyRequestData(filtersData);
   const transmissionid = getTransmissionRequestData(filtersData);
 
@@ -387,7 +369,6 @@ export const getPostInventoryRequestDataFromFilterData = (
     searchall: filtersData ? filtersData[Filters.SEARCH] : undefined,
     sortby,
     sortdirection,
-    sortAgeDirection,
     testdriveonly,
     transmissionid,
     year: filtersData ? filtersData[Filters.YEAR] : undefined,
@@ -443,7 +424,6 @@ export class CarsStore {
 
   @observable areFiltersOpen = false;
 
-  @observable sortAgeDirectionExperiment?: Experiment;
   @observable cylinderFilterExperiment?: Experiment;
   @observable fuelTypeFilterExperiment?: Experiment;
   @observable featuresFilterExperiment?: Experiment;
@@ -464,13 +444,6 @@ export class CarsStore {
       this.isTitleQAPass = initialState.titleQuery;
     }
   }
-
-  @action
-  setSortAgeDirectionExperiment = (
-    sortAgeDirectionExperiment?: Experiment
-  ): void => {
-    this.sortAgeDirectionExperiment = sortAgeDirectionExperiment;
-  };
 
   @action
   setCylindersFilterExperiment = (
@@ -527,8 +500,7 @@ export class CarsStore {
     try {
       this.inventoryStatus = Status.FETCHING;
       const postInventoryRequestDataFromFiltersData = getPostInventoryRequestDataFromFilterData(
-        this.filtersData,
-        this.sortAgeDirectionExperiment
+        this.filtersData
       );
 
       const showIsAvailableSoon = postInventoryRequestDataFromFiltersData.testdriveonly

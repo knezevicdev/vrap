@@ -1,6 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
-import { addStyleForMobile, Body, Heading, Picture, Title } from 'vroom-ui';
+import {
+  addStyleForMobile,
+  Body,
+  Heading,
+  Picture,
+  ThemeProps,
+  Title,
+} from '@vroom-web/temp-ui-alias-for-checkout';
 
 import BillingAddress, {
   BillingAddressProps,
@@ -48,10 +55,14 @@ export interface PurchaseSummaryProps {
   showInsuranceDisclaimer: boolean;
 }
 
+const primaryWhite = (props: { theme: ThemeProps }): string =>
+  props.theme.colors.primary.white;
+
 const Container = styled.div`
   display: flex;
   justify-content: center;
-  margin-bottom: 64px;
+  padding-bottom: 64px;
+  background: ${primaryWhite};
   ${addStyleForMobile(`
         margin: 0 16px;
    `)}
@@ -128,6 +139,7 @@ const PurchaseSummary: React.FC<PurchaseSummaryProps> = ({
               src={car.image.src}
               width="182px"
               height="104px"
+              objectFit="contain"
             />
           </CarImage>
           <CarInfo>
@@ -143,9 +155,11 @@ const PurchaseSummary: React.FC<PurchaseSummaryProps> = ({
         <BillingAddress {...billingAddress} />
         <Space />
         {financingInformation && (
-          <FinancingInformation {...financingInformation} />
+          <>
+            <FinancingInformation {...financingInformation} />
+            <Space />
+          </>
         )}
-        <Space />
         <RegistrationAddress {...registrationAddress} />
         <Space />
         <DeliveryAddress {...deliveryAddress} />
