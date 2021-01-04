@@ -57,7 +57,7 @@ class AutocompleteModel {
 
       runInAction(() => {
         this.status = Status.SUCCESS;
-        this.options = response.data;
+        this.options = response.data.carriers;
       });
     } catch (err) {
       console.error(err);

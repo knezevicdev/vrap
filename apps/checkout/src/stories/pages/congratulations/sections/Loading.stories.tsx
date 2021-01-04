@@ -1,7 +1,7 @@
 import React from 'react';
 import { withDesign } from 'storybook-addon-designs';
 import { ThemeProvider } from 'styled-components';
-import { getVroomTheme } from 'vroom-ui';
+import { getVroomTheme } from '@vroom-web/temp-ui-alias-for-checkout';
 
 import Loading from '../../../../modules/congratulations/sections/Loading';
 

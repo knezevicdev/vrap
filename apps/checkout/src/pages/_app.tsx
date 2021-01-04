@@ -10,7 +10,7 @@ import App from 'next/app';
 import getConfig from 'next/config';
 import React from 'react';
 import { ThemeProvider as StyledThemeProvider } from 'styled-components';
-import { getVroomTheme, GlobalStyle } from 'vroom-ui';
+import { getVroomTheme, GlobalStyle } from '@vroom-web/temp-ui-alias-for-checkout';
 
 import client from 'src/networking/client';
 

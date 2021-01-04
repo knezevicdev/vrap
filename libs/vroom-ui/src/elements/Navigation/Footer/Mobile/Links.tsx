@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 
 import { ThemeProps } from '../../../../foundation/themes/types';
-import { addStyleForMobile } from '../../../../foundation/themes/Vroom';
+import { addStyleForDesktop } from '../../../../foundation/themes/Vroom';
 import { Body, Link } from '../../../../foundation/Typography';
 import Icon, { Icons } from '../../../Icon/Icon';
 import { FooterProps, Link as LinkType, Section } from '../types';
@@ -54,12 +54,13 @@ const primaryWhite = (props: { theme: ThemeProps }): string =>
   props.theme.colors.primary.white;
 
 const Links = styled.div`
-  display: none;
-  ${addStyleForMobile(`
-    display: flex;
-    flex-direction: column;
-    order: 1;
-    margin-bottom: 16px;
+  display: flex;
+  flex-direction: column;
+  order: 1;
+  margin-bottom: 16px;
+
+  ${addStyleForDesktop(`
+     display: none;
   `)}
 `;
 

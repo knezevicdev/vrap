@@ -8,7 +8,7 @@ import {
   Icons,
   Link,
   ThemeProps,
-} from 'vroom-ui';
+} from '@vroom-web/temp-ui-alias-for-checkout';
 
 const primaryBrand = (props: { theme: ThemeProps }): string =>
   props.theme.colors.primary.brand;

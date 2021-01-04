@@ -92,7 +92,7 @@ function _templateObject2() {
 }
 
 function _templateObject() {
-  var data = _taggedTemplateLiteral(["\n  display: none;\n  ", "\n"]);
+  var data = _taggedTemplateLiteral(["\n  display: flex;\n  flex-direction: column;\n  order: 1;\n  margin-bottom: 16px;\n\n  ", "\n"]);
 
   _templateObject = function _templateObject() {
     return data;
@@ -151,7 +151,7 @@ var primaryBrand = props => props.theme.colors.primary.brand;
 
 var primaryWhite = props => props.theme.colors.primary.white;
 
-var Links = _styledComponents.default.div(_templateObject(), (0, _Vroom.addStyleForMobile)("\n    display: flex;\n    flex-direction: column;\n    order: 1;\n    margin-bottom: 16px;\n  "));
+var Links = _styledComponents.default.div(_templateObject(), (0, _Vroom.addStyleForDesktop)("\n     display: none;\n  "));
 
 var SectionContainer = _styledComponents.default.div(_templateObject2(), props => !props.visible ? "border-bottom: solid 1px ".concat(primaryWhite(props), ";") : undefined);
 

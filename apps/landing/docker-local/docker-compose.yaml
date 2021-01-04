@@ -1,16 +1,18 @@
 version: '3'
 services:
-  logistics:
+  landing:
     build:
+      args:
+        CI_JOB_TOKEN: $CI_JOB_TOKEN
       context: ../../../
-      dockerfile: ./apps/logistics/docker/Dockerfile
+      dockerfile: ./apps/landing/docker-local/Dockerfile
     user: 'root'
-    env_file: ./.env
     environment:
-      - HOST_URL=http://localhost:8080
-      - SHIPPING_PORTAL_URL=https://shipping-portal-int.vroomapi.com/v2
-      - GEARBOX_URL=https://gearbox-dev-int.vroomapi.com/query
-    command: ash -c "cd apps/logistics && yarn dev --port 8080"
+      - SEGMENT_WRITE_KEY=N0pxERRIw4iYCoxZREMZj1yWBIoARIz4
+      - INVSEARCH_V3_URL=https://invsearch-v3-dev-int.aws.vroomapi.com:8443/v3
+      - GEARBOX_PRIVATE_URL=https://gearbox-dev-int.vroomapi.com/query-private
+      - CI_JOB_TOKEN=$CI_JOB_TOKEN
+    command: ash -c "npm run dev -- --port 8080"
     # This starts nothing but leaves the container running, useful for
     # debugging nextjs start / config operations
     # command: ash -c "tail -f /dev/null"
@@ -25,5 +27,5 @@ services:
       # It also makes sure that the built artifacts are only present on the container,
       # and not copied back to the host machine.
       - '/www/node_modules'
-      - '/www/apps/logistics/.next'
-      - '/www/apps/logistics/node_modules'
+      - '/www/apps/landing/.next'
+      - '/www/apps/landing/node_modules'

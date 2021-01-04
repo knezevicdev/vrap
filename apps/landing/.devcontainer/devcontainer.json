@@ -1,6 +1,6 @@
 {
   "name": "Landing",
-  "dockerComposeFile": "../docker/docker-compose.yaml",
+  "dockerComposeFile": "../docker-local/docker-compose.yaml",
   "service": "landing",
   "workspaceFolder": "/www/apps/landing",
   // Use 'settings' to set *default* container specific settings.json values on container create.
