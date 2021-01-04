@@ -1,4 +1,5 @@
 import React from 'react';
+import { PlaidLink } from 'react-plaid-link';
 import styled from 'styled-components';
 
 import DirectDepositViewModel from './ViewModel';
@@ -43,6 +44,12 @@ const DirectDepositView: React.FC<Props> = ({ viewModel }) => {
           maxLength={17}
         />
       </InputContainer>
+      <PlaidLink
+        token="link-sandbox-98fbb9ab-6c40-4344-a0f4-0a17f1e4918a"
+        onSuccess={onSuccess}
+      >
+        Connect a bank account
+      </PlaidLink>
     </DirectDepositContainer>
   );
 };
