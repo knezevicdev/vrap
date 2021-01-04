@@ -1,5 +1,6 @@
 import { Tab, Tabs } from '@material-ui/core';
 import { AxiosResponse } from 'axios';
+import cookie from 'js-cookie';
 import React, { useState } from 'react';
 
 import { viewModel } from './Table';
@@ -44,8 +45,10 @@ const Shipments: React.FC = () => {
 
   const Table = mvvm({
     model: {
-      onload: (): Promise<AxiosResponse<Shipment[]>> =>
-        getShipments(nav[value].status),
+      onload: (): Promise<AxiosResponse<{ shipments: Shipment[] }>> => {
+        const decoded: { email: string } = cookie.getJSON('authData');
+        return getShipments(nav[value].status, decoded.email);
+      },
     },
     viewModel,
     View: SimpleTable,

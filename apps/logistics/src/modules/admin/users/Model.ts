@@ -13,7 +13,7 @@ class UsersModel {
   usersStatus: Status = Status.INITIAL;
 
   carrierFilter?: Carrier;
-  statusFilter?: string;
+  statusFilter?: string; // TODO: Switch to be based off of user group
   statusOptions: string[] = [];
   statusOptionsStatus: Status = Status.INITIAL;
 
@@ -26,13 +26,12 @@ class UsersModel {
 
     try {
       const response = await getUsers(
-        this.carrierFilter?.carrier_code ?? undefined,
-        this.statusFilter
+        this.carrierFilter?.carrier_code ?? undefined
       );
 
       runInAction(() => {
         this.usersStatus = Status.SUCCESS;
-        this.users = response.data;
+        this.users = response.data.users;
       });
     } catch (err) {
       console.error(err);
@@ -67,7 +66,7 @@ class UsersModel {
 
       runInAction(() => {
         this.statusOptionsStatus = Status.SUCCESS;
-        this.statusOptions = response.data;
+        this.statusOptions = response.data.values;
       });
     } catch (err) {
       console.error(err);

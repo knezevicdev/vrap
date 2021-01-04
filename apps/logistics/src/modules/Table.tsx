@@ -17,7 +17,7 @@ type ViewProps = TableData<Accessor>;
 
 export const viewModel = ({
   response,
-}: Model<Shipment[], {}, {}>): ViewProps => ({
+}: Model<{ shipments: Shipment[] }, {}, {}>): ViewProps => ({
   headers: [
     { display: 'VIN', accessor: Accessor.vin },
     { display: 'Year, Make, Model', accessor: Accessor.yearMakeModel },
@@ -29,7 +29,7 @@ export const viewModel = ({
     { display: 'Picked Up?', accessor: Accessor.pickedUp },
   ],
   rows:
-    response?.map((row: Shipment) => ({
+    response?.shipments.map((row: Shipment) => ({
       id: row.vin,
       data: {
         [Accessor.vin]: row.vin,

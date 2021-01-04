@@ -1,7 +1,6 @@
 import axios from 'axios';
 import { NextApiRequest, NextApiResponse } from 'next';
 
-import { Tokens } from 'src/networking/models/Auth';
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
@@ -37,13 +36,8 @@ export default async function handler(
   };
 
   try {
-    const response = await axios.post(url, data, config);
-    const body: Tokens = {
-      accessToken: response.data.data.signup.accessToken,
-      idToken: response.data.data.signup.idToken,
-      refreshToken: response.data.data.signup.refreshToken,
-    };
-    res.json(body);
+    await axios.post(url, data, config);
+    res.json({});
   } catch (err) {
     console.error(err);
     res.status(500).json(err);

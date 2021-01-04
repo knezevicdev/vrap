@@ -8,8 +8,6 @@ services:
       dockerfile: ./apps/logistics/docker-local/Dockerfile
     user: 'root'
     environment:
-      - HOST_URL=http://localhost:8080
-      - SHIPPING_PORTAL_URL=https://shipping-portal-int.vroomapi.com/v2
       - GEARBOX_URL=https://gearbox-dev-int.vroomapi.com/query
       - CI_JOB_TOKEN=$CI_JOB_TOKEN
     command: ash -c "npm run dev -- --port 8080"
