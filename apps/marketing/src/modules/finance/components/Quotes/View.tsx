@@ -1,10 +1,11 @@
 import { styled } from '@material-ui/core';
-import Slider from 'react-slick';
+import Slider, { CustomArrowProps } from 'react-slick';
 import { Typography } from '@vroom-web/ui';
 import _ from 'lodash';
 import React from 'react';
 
 import quotes from './quotes.json';
+import { ArrowForwardIos, ArrowBackIos } from '@material-ui/icons';
 
 interface Quote {
   key: number;
@@ -13,7 +14,8 @@ interface Quote {
   date: string;
 }
 
-const Content = styled('div')(() => ({
+const Content = styled('div')(({ theme }) => ({
+  padding: theme.spacing(2),
   display: 'flex !important',
   minHeight: '150px',
   textAlign: 'center',
@@ -21,6 +23,9 @@ const Content = styled('div')(() => ({
   flexDirection: 'column',
   justifyContent: 'center',
   gap: '10px',
+  [theme.breakpoints.down('sm')]: {
+    minHeight: '170px',
+  },
 }));
 
 const Quote = styled(Typography)(({ theme }) => ({
@@ -34,8 +39,42 @@ const Quote = styled(Typography)(({ theme }) => ({
   },
 }));
 
+const QuoteSlider = styled(Slider)(({ theme }) => ({
+  display: 'flex',
+  alignItems: 'center',
+  '& .slick-slide div': {
+    outline: 'none',
+  },
+  '& .slick-dots': {
+    bottom: '8px',
+  },
+  '& .slick-active button:before': {
+    color: `${theme.palette.primary.main} !important`,
+  },
+}));
+
+const ArrowIcon = ({
+  currentSlide,
+  slideCount,
+  ...props
+}: CustomArrowProps) => {
+  const { className, onClick } = props;
+  const component = className?.includes('slick-next')
+    ? ArrowForwardIos
+    : ArrowBackIos;
+  const Icon = styled(component)(({ theme }) => ({
+    fill: theme.palette.grey[600],
+    margin: theme.spacing(0, 5),
+    cursor: 'pointer',
+  }));
+  return <Icon onClick={onClick} fontSize="large" />;
+};
+
 const QuotesView: React.FC = () => {
   var settings = {
+    arrows: true,
+    prevArrow: <ArrowIcon />,
+    nextArrow: <ArrowIcon />,
     infinite: true,
     speed: 2000,
     autoplay: true,
@@ -55,7 +94,7 @@ const QuotesView: React.FC = () => {
   };
 
   return (
-    <Slider {...settings}>
+    <QuoteSlider {...settings}>
       {quotes.map((quote) => (
         <Content key={quote.key}>
           <Quote variant="body1">{quote.quote}</Quote>
@@ -67,7 +106,7 @@ const QuotesView: React.FC = () => {
           </div>
         </Content>
       ))}
-    </Slider>
+    </QuoteSlider>
   );
 };
 
