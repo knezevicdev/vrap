@@ -1,6 +1,6 @@
 class ViewModel {
   readonly bannerText: string =
-    'Our Galleria (Westheimer) and Kingwood Sell Us Your Car centers are temporarily closed. Our other locations are open for normal business hours.';
+    'Our Stafford store is currently open Mon-Sat 10am to 6pm daily. All of our Buying Centers are open in the Houston Metro Area. We can provide an online, convenient sales process and free "at home" delivery service if you live within 40 miles of the Stafford store. We are also offering curb-side pickup. Call us today at 832-225-3686. Terms and conditions apply.';
   readonly linkText: string = 'SUYC Location Details';
   readonly linkHref: string = '#locations-section';
   scrollToLocation(): void {
