@@ -1,7 +1,9 @@
 import axios from 'axios';
+import cookie from 'cookie';
+import jwtDecode from 'jwt-decode';
 import { NextApiRequest, NextApiResponse } from 'next';
 
-import { Tokens } from 'src/networking/models/Auth';
+import { IdToken } from 'src/networking/models/Auth';
 
 export default async (
   req: NextApiRequest,
@@ -10,7 +12,9 @@ export default async (
   const email = req.body.email;
   const password = req.body.password;
 
-  const data = JSON.stringify({
+  const url = process.env.GEARBOX_URL ?? '';
+
+  const gql = JSON.stringify({
     query: `mutation signin($user: String!, $password: String!, $source: String!) {
     signin(username: $user, password: $password, source: $source) {
       accountId,
@@ -33,13 +37,22 @@ export default async (
   };
 
   try {
-    const url = process.env.GEARBOX_URL ?? '';
-    const response = await axios.post(url, data, config);
-    const body: Tokens = {
-      accessToken: response.data.data.signin.accessToken,
-      idToken: response.data.data.signin.idToken,
-      refreshToken: response.data.data.signin.refreshToken,
-    };
+    const response = await axios.post(url, gql, config);
+    const body: IdToken = jwtDecode(response.data.data.signin.idToken);
+    const expires = new Date(body.exp * 1000);
+    const setCookies = ['accessToken', 'idToken', 'refreshToken'].map(
+      (name): string => {
+        const config: cookie.CookieSerializeOptions = {
+          expires,
+          sameSite: true,
+        };
+        if (process.env.NODE_ENV !== 'development') {
+          config.secure = true;
+        }
+        return cookie.serialize(name, response.data.data.signin[name], config);
+      }
+    );
+    res.setHeader('Set-Cookie', setCookies);
     res.json(body);
   } catch (err) {
     console.error(err);
