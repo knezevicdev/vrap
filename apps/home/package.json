@@ -29,6 +29,7 @@
     "axios": "^0.19.2",
     "clsx": "^1.1.0",
     "google-map-react": "^2.1.8",
+    "jest-sonar": "^0.2.11",
     "js-base64": "^2.5.2",
     "lodash.debounce": "^4.0.8",
     "lodash.isempty": "^4.4.0",
