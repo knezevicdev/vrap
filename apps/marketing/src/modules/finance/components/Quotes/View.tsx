@@ -1,11 +1,10 @@
 import { styled } from '@material-ui/core';
-import Slider, { CustomArrowProps } from 'react-slick';
+import { ArrowBackIos, ArrowForwardIos } from '@material-ui/icons';
 import { Typography } from '@vroom-web/ui';
-import _ from 'lodash';
 import React from 'react';
+import Slider, { CustomArrowProps } from 'react-slick';
 
 import quotes from './quotes.json';
-import { ArrowForwardIos, ArrowBackIos } from '@material-ui/icons';
 
 interface Quote {
   key: number;
@@ -53,11 +52,7 @@ const QuoteSlider = styled(Slider)(({ theme }) => ({
   },
 }));
 
-const ArrowIcon = ({
-  currentSlide,
-  slideCount,
-  ...props
-}: CustomArrowProps) => {
+const ArrowIcon = ({ ...props }: CustomArrowProps): JSX.Element => {
   const { className, onClick } = props;
   const component = className?.includes('slick-next')
     ? ArrowForwardIos
@@ -71,7 +66,7 @@ const ArrowIcon = ({
 };
 
 const QuotesView: React.FC = () => {
-  var settings = {
+  const settings = {
     arrows: true,
     prevArrow: <ArrowIcon />,
     nextArrow: <ArrowIcon />,
