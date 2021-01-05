@@ -6,6 +6,7 @@ import {
   Icons,
   Picture,
   ThemeProps,
+  Link,
   Title,
 } from '@vroom-web/temp-ui-alias-for-checkout';
 import React from 'react';

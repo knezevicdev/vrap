@@ -25,7 +25,6 @@ class CongratsAnalyticsHandler extends BaseAnalyticsHandler {
       pageName: 'Car Reserved',
       url: window.location.href,
       title: 'Congrats page visit',
-      version: 'New',
       userId: username,
       UUID,
       applicationVersion: packageJson.version,
