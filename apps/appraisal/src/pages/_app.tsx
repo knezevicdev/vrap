@@ -10,7 +10,7 @@ import { GlobalStyle, theme } from '../core/themes/Vroom';
 
 import ENVS from 'src/integrations/Envs';
 
-class VroomApp extends App {
+class AppraisalApp extends App {
   componentDidMount(): void {
     smoothscroll.polyfill(); // needs access to the window
     if (ENVS.DATA_DOG_RUM_APPLICATION) {
@@ -41,4 +41,4 @@ class VroomApp extends App {
   }
 }
 
-export default VroomApp;
+export default AppraisalApp;

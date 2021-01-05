@@ -34,7 +34,7 @@ const CheckByMailView: React.FC<Props> = ({ mailingAddress, viewModel }) => {
   return (
     <CBMContainer>
       <CBMMessage>{viewModel.mailingAddressMsg}</CBMMessage>
-      <CBMMailingAddress>
+      <CBMMailingAddress className="fs-mask">
         <AddressLine>{mailingAddress['address_1']}</AddressLine>
         <AddressLine>
           {mailingAddress.city} {mailingAddress.state} {mailingAddress.zipcode}

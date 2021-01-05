@@ -20,13 +20,13 @@ class SignInModel {
     try {
       const { data } = await postSignIn(email, password);
       const config: Cookie.CookieAttributes = {
-        expires: 1,
+        expires: new Date(data.exp * 1000),
         sameSite: 'strict',
-        secure: true,
       };
-      Cookie.set('accessToken', data.accessToken, config);
-      Cookie.set('idToken', data.idToken, config);
-      Cookie.set('refreshToken', data.refreshToken, config);
+      if (process.env.NODE_ENV !== 'development') {
+        config.secure = true;
+      }
+      Cookie.set('authData', data, config);
       runInAction(() => {
         this.status = Status.SUCCESS;
       });

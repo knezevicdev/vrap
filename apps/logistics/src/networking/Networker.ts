@@ -1,7 +1,6 @@
 import axios, { AxiosResponse } from 'axios';
-import qs from 'qs';
 
-import { Tokens } from './models/Auth';
+import { IdToken } from './models/Auth';
 import { Shipment, ShipmentStatus } from './models/Shipments';
 import { Carrier, User } from './models/User';
 
@@ -12,41 +11,108 @@ export enum Status {
   ERROR = 'error',
 }
 
-const BASE_URL = process.env.BASE_URL;
-
-const axiosInstance = axios.create({ baseURL: BASE_URL });
+const axiosInstance = axios.create();
 
 export const getUsers = async (
-  carrierCode?: string,
-  status?: string
-): Promise<AxiosResponse<User[]>> => {
-  const url = `/api/users?${qs.stringify(
-    {
-      carrier: carrierCode || null,
-      status: status || null,
-    },
-    { skipNulls: true }
-  )}`;
+  carrierCode?: string
+  // status?: string
+): Promise<AxiosResponse<{ users: User[] }>> => {
+  const url = '/api/gearbox';
+  const data = {
+    query: `query portalUsersQuery($carrier: String!) {
+      portalUsers(carrier: $carrier) {
+        __typename
+        ... on PortalUsersArray {
+          users {
+            portal_user_id
+            username
+            status
+            first_name
+            middle_name
+            last_name
+            phone
+            created_on
+            updated_on
+            carrier {
+              carrier_id
+              carrier
+              carrier_code
+            }
+            portal_roles {
+              portal_role_id
+              name
+            }
+          }
+        }
+        ... on APIError {
+          errorType
+          errorTitle
+          errorDetail
+        }
 
-  return axiosInstance.get(url);
+      }
+    }`,
+    variables: { carrier: carrierCode ?? '' },
+    queryKey: 'portalUsers',
+  };
+
+  return axiosInstance.post(url, data);
 };
 
 export const getCarriers = async (
   filter: string
-): Promise<AxiosResponse<Carrier[]>> => {
-  const url = `/api/carriers?${qs.stringify(
-    {
-      filter: filter || null,
-    },
-    { skipNulls: true }
-  )}`;
+): Promise<AxiosResponse<{ carriers: Carrier[] }>> => {
+  const url = '/api/gearbox';
+  const data = {
+    query: `query carriersQuery($filter: String!) {
+      carriers(filter: $filter) {
+        __typename
+        ... on CarriersArray {
+          carriers {
+            carrier_id
+            carrier_code
+            carrier
+          }
+        }
+        ... on APIError {
+          errorType
+          errorTitle
+          errorDetail
+        }
 
-  return axiosInstance.get(url);
+      }
+    }`,
+    variables: {
+      filter: filter || '',
+    },
+    queryKey: 'carriers',
+  };
+
+  return axiosInstance.post(url, data);
 };
 
-export const getUserStatuses = async (): Promise<AxiosResponse<string[]>> => {
-  const url = `/api/userStatus`;
-  return axiosInstance.get(url);
+export const getUserStatuses = async (): Promise<
+  AxiosResponse<{ values: string[] }>
+> => {
+  const url = `/api/gearbox`;
+  const data = {
+    query: `query portalUserStatusQuery {
+      portalUserStatus {
+        __typename
+        ... on StringArray {
+          values
+        }
+        ... on APIError {
+          errorType
+          errorTitle
+          errorDetail
+        }
+      }
+    }`,
+    variables: {},
+    queryKey: 'portalUserStatus',
+  };
+  return axiosInstance.post(url, data);
 };
 
 export const patchUser = async (
@@ -54,8 +120,59 @@ export const patchUser = async (
   status?: string,
   carrierCode?: string
 ): Promise<AxiosResponse<User>> => {
-  const url = `/api/users`;
-  return axiosInstance.patch(url, { id, status, carrierCode });
+  const url = `/api/gearbox`;
+
+  const variables: {
+    userId?: number;
+    status?: string;
+    carrierCode?: string;
+  } = { userId: id };
+
+  if (status) {
+    variables.status = status;
+  }
+
+  if (carrierCode) {
+    variables.carrierCode = carrierCode;
+  }
+
+  const data = {
+    query: `mutation updateUser($userId: Int!, $carrierCode: String!, $status: String!) {
+      portalUserUpdate(userId: $userId, carrierCode: $carrierCode, status: $status) {
+        __typename
+        ... on UserUpdate {
+          portalUser {
+            portal_user_id
+            username
+            status
+            first_name
+            middle_name
+            last_name
+            phone
+            created_on
+            updated_on
+            carrier {
+              carrier_id
+              carrier
+              carrier_code
+            }
+            portal_roles {
+              portal_role_id
+              name
+            }
+          }
+        }
+            ... on APIError {
+          errorType
+          errorTitle
+          errorDetail
+        }
+      }
+    }`,
+    variables,
+    queryKey: 'portalUserUpdate',
+  };
+  return axiosInstance.post(url, data);
 };
 
 export const postSignUp = async (
@@ -71,24 +188,71 @@ export const postSignUp = async (
     lastName,
   });
 
-export const getShipments = async (
-  status?: ShipmentStatus,
-  user?: string
-): Promise<AxiosResponse<Shipment[]>> => {
-  const url = `/api/shipments?${qs.stringify(
-    {
-      user: user || null,
-      status: status || null,
-    },
-    { skipNulls: true }
-  )}`;
-  return axiosInstance.get(url);
-};
-
 export const postSignIn = async (
   email: string,
   password: string
-): Promise<AxiosResponse<Tokens>> => {
-  const url = 'api/signin';
-  return axiosInstance.post(url, { email, password });
+): Promise<AxiosResponse<IdToken>> => {
+  const url = '/api/signin';
+  const data = {
+    email,
+    password,
+  };
+  return axiosInstance.post(url, data);
+};
+
+export const getShipments = async (
+  status: ShipmentStatus,
+  user: string
+): Promise<AxiosResponse<{ shipments: Shipment[] }>> => {
+  const url = '/api/gearbox';
+  const data = {
+    query: `query portalShipmentsQuery($user: String!, $status: String!) {
+      portalShipments(user: $user, status: $status) {
+        __typename
+        ... on PortalShipmentsArray {
+          shipments{
+            date_posted
+            year
+            make
+            model
+            vin
+            notes
+            estimated_arrival
+            estimated_delivery
+            date_delivered
+            date_cancelled
+            origin_address {
+              street_line_1
+              street_line_2
+              city
+              state
+              zipcode
+              to_string
+            }
+            destination_address {
+              street_line_1
+              street_line_2
+              city
+              state
+              zipcode
+              to_string
+            }
+            blackout_dates {
+              start
+              stop
+              to_string
+            }
+          }
+        }
+        ... on APIError {
+          errorType
+          errorTitle
+          errorDetail
+        }
+      }
+    }`,
+    variables: { user, status },
+    queryKey: 'portalShipments',
+  };
+  return axiosInstance.post(url, data);
 };

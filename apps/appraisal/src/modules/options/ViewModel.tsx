@@ -12,6 +12,7 @@ class OptionsViewModel {
   readonly optionTitle: string = 'Payment Method';
   readonly optionQuestion: string = 'How would you like to get paid?';
   readonly submit: string = 'submit';
+  readonly submitting: string = 'submitting';
 
   constructor(store: OptionsStore) {
     this.store = store;
@@ -44,7 +45,7 @@ class OptionsViewModel {
     return this.store.showDD;
   };
 
-  isValidRouting = (num: string): boolean => {
+  isValidRouting = (num: string | null | undefined): boolean => {
     if (!num || num.length < 9) return false;
 
     // Run through each digit and calculate the total.

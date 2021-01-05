@@ -16,6 +16,7 @@ class LicensePlateViewModel {
   readonly homeStore: HomeStore;
   readonly licensePlateStore: LicensePlateStore;
   private readonly states = [
+    'State',
     'AK',
     'AL',
     'AR',
@@ -80,6 +81,7 @@ class LicensePlateViewModel {
   onChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
     const value = event.target.value;
     this.licensePlateStore.setLicensePlate(value);
+    this.licensePlateStore.setSelectedState('State');
   };
 
   constructor(homeStore: HomeStore, licensePlateStore: LicensePlateStore) {
@@ -102,6 +104,7 @@ class LicensePlateViewModel {
   isButtonDisabled = (): boolean => {
     return (
       this.getSelectedState() === '' ||
+      this.getSelectedState() === 'State' ||
       this.getInputValue() === '' ||
       this.licensePlateStore.fetching
     );
