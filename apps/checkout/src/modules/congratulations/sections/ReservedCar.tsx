@@ -148,7 +148,6 @@ const ReservedCar: React.FC<ReservedCarProps> = ({
 }): JSX.Element => {
   const handleScheduleTimeEvent = () => {
     analyticsHandler?.trackScheduleTime();
-    window.open('/schedule', '_blank');
   };
 
   return (
