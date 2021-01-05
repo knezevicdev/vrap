@@ -1,10 +1,10 @@
 import {
   Link,
-  styled,
   List,
   ListItem,
   ListItemIcon,
   ListItemText,
+  styled,
 } from '@material-ui/core';
 import { Typography } from '@vroom-web/ui';
 import React from 'react';
