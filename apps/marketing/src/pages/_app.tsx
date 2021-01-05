@@ -1,4 +1,6 @@
 import 'mobx-react/batchingForReactDom';
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
 
 import { datadogRum } from '@datadog/browser-rum';
 import { CatSDK } from '@vroom-web/cat-sdk';
