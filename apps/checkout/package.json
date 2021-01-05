@@ -18,7 +18,7 @@
     "@vroom-web/deals-v2-networking": "^1.0.1",
     "@vroom-web/header-components": "^1.0.5",
     "@vroom-web/networking": "^0.0.2",
-    "@vroom-web/temp-ui-alias-for-checkout": "^2.0.2",
+    "@vroom-web/temp-ui-alias-for-checkout": "^2.0.3",
     "@vroom-web/ui": "^1.0.1",
     "graphql": "^15.4.0",
     "graphql-tag": "^2.11.0",

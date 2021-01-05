@@ -120,10 +120,9 @@ const Bold = styled.span`
   font-weight: 600;
 `;
 
-/*const Schedule = styled(Link)`
+const Schedule = styled(Link)`
   color: ${primaryBrand} !important;
 `;
-*/
 export interface ReservedCarProps {
   analyticsHandler?: AnalyticsHandler;
   data: {
@@ -185,13 +184,9 @@ const ReservedCar: React.FC<ReservedCarProps> = ({
               <Step>
                 <Check icon={Icons.CALENDAR} />
                 <Body.Regular>
-                  {/* TODO: https://tdalabs.atlassian.net/browse/ECOMM-2947
-                  <Schedule href="https://www.vroom.com/schedule" blank>
+                  <Schedule href="https://www.vroom.com/schedule" blank onClick={handleScheduleTimeEvent}>
                     Schedule a time
-                  </Schedule> */}
-                  <a href="#" onClick={handleScheduleTimeEvent}>
-                    Schedule a time
-                  </a>{' '}
+                  </Schedule>
                   to talk with the Vroom team.
                 </Body.Regular>
               </Step>

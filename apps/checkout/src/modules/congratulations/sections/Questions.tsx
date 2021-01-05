@@ -74,19 +74,12 @@ const BrandIcon = styled(Icon)`
   margin-right: 8px;
 `;
 
-/*
-TODO: https://tdalabs.atlassian.net/browse/ECOMM-2947
+
 const CustomLink = styled(Link)`
   font-weight: 600 !important;
   text-decoration: none !important;
   letter-spacing: 1.75px !important;
-`;
-*/
-const CustomLink = styled.a`
-  font-weight: 600 !important;
-  text-decoration: none !important;
-  letter-spacing: 1.75px !important;
-`;
+`; 
 export interface QuestionProps {
   analyticsHandler?: AnalyticsHandler;
   phone: {
