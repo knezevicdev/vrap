@@ -53,7 +53,6 @@ export default class MyDocument extends Document {
     return (
       <Html lang="en">
         <Head>
-          <title>Your Price</title>
           <UISnippet
             brand={Brand.VROOM}
             staticAssetsHostUrl={ENVS.STATIC_ASSETS_HOST_URL}
