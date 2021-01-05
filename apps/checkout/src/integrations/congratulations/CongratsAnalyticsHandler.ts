@@ -17,11 +17,11 @@ class CongratsAnalyticsHandler extends BaseAnalyticsHandler {
   }
 
   trackCongratsViewed(): void {
-    //const { username, UUID } = this.viewModel.analyticsData;
+    try {
+    const { username, UUID, vin } = this.viewModel.analyticsData;
 
     const name = 'Congrats page visit';
-    //TODO: Fix page event to allow properties on analytics integration
-    /*const properties = {
+     const properties = {
       pageName: 'Car Reserved',
       url: window.location.href,
       title: 'Congrats page visit',
@@ -29,10 +29,12 @@ class CongratsAnalyticsHandler extends BaseAnalyticsHandler {
       userId: username,
       UUID,
       applicationVersion: packageJson.version,
-      vin: '',
-    };
-    */
-    this.page(name, 'Car Reserved');
+      vin
+    }; 
+    this.page(name, 'Car Reserved', properties);
+  } catch (err) {
+    console.log('Analytic Event', err);
+  }
   }
 
   trackScheduleTime(): void {

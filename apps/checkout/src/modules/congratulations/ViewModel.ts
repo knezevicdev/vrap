@@ -230,7 +230,7 @@ export default class CongratsViewModel {
       UUID: undefined,
       username: this.model.data.user.username,
       vin: this.summary.inventory?.vehicle?.vin,
-      paymentMethod: this.paymentMethod,
+      paymentMethod: this.summary.paymentType,
       step: this.summary.dealStatus.step,
       orderId: this.dealId,
       productId: this.summary.inventory?.id,

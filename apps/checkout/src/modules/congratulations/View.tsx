@@ -41,11 +41,6 @@ const CongratsView: React.FC<Props> = ({ viewModel }) => {
       viewModel.analyticsHandler.trackOrderCompleted();
 
       const { orderId, productId } = viewModel.analyticsData;
-      console.error(
-        'completedDealcompletedDealcompletedDealcompletedDealcompletedDealcompletedDeal',
-        orderId,
-        productId
-      );
       datadogRum.addUserAction('completedDeal', {
         deal: {
           dealId: orderId,

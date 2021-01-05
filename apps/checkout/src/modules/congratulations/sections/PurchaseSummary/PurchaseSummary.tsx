@@ -34,7 +34,6 @@ import UploadedDocuments from './components/UploadedDocuments';
 
 import AnalyticsHandler from 'src/integrations/congratulations/CongratsAnalyticsHandler';
 export interface PurchaseSummaryProps {
-  analyticsHandler: AnalyticsHandler;
   summary: {
     date: string;
     car: {
@@ -117,7 +116,6 @@ const ShouldKnow = styled(Body.Regular)`
 `;
 
 const PurchaseSummary: React.FC<PurchaseSummaryProps> = ({
-  analyticsHandler,
   summary: { date, car },
   purchaseDetails,
   depositInformation,

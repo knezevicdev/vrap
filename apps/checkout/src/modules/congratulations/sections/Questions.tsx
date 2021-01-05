@@ -88,7 +88,7 @@ const CustomLink = styled.a`
   letter-spacing: 1.75px !important;
 `;
 export interface QuestionProps {
-  analyticsHandler: AnalyticsHandler;
+  analyticsHandler?: AnalyticsHandler;
   phone: {
     href: string;
     label: string;
@@ -100,7 +100,7 @@ const Questions: React.FC<QuestionProps> = ({
   phone,
 }): JSX.Element => {
   const handleLinkEvents = (eventName: TrackContactModule, url: string) => {
-    analyticsHandler.trackContactModule(eventName);
+    analyticsHandler?.trackContactModule(eventName);
     window.open(url, '_blank');
   };
 

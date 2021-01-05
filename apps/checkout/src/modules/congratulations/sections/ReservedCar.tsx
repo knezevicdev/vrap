@@ -125,7 +125,7 @@ const Bold = styled.span`
 `;
 */
 export interface ReservedCarProps {
-  analyticsHandler: AnalyticsHandler;
+  analyticsHandler?: AnalyticsHandler;
   data: {
     car: string;
     email: string;
@@ -147,7 +147,7 @@ const ReservedCar: React.FC<ReservedCarProps> = ({
   },
 }): JSX.Element => {
   const handleScheduleTimeEvent = () => {
-    analyticsHandler.trackScheduleTime();
+    analyticsHandler?.trackScheduleTime();
     window.open('/schedule', '_blank');
   };
 
