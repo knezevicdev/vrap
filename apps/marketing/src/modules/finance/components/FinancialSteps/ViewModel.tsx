@@ -8,7 +8,7 @@ class FinancialStepsViewModel {
     {
       key: 0,
       title: 'Find Your Ride',
-      href: '/credit',
+      href: '/cars',
       icon: `${publicRuntimeConfig.BASE_PATH}/modules/vroom/icons/1-active.svg`,
       description: `Browse thousands of high-quality, low-mileage vehicles, and find the one that's right for you. <link>Shop Now</link>`,
     },
