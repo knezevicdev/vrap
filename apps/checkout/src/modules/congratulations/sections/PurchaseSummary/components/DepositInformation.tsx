@@ -1,6 +1,6 @@
+import { Body, Title } from '@vroom-web/temp-ui-alias-for-checkout';
 import React from 'react';
 import styled from 'styled-components';
-import { Body, Title } from '@vroom-web/temp-ui-alias-for-checkout';
 
 export interface DepositInformationProps {
   data: {

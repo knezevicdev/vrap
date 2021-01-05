@@ -4,13 +4,16 @@ import {
   isAccessDeniedErrorResponse,
   ResponseErrorInterceptor,
 } from '@vroom-web/networking';
+import {
+  getVroomTheme,
+  GlobalStyle,
+} from '@vroom-web/temp-ui-alias-for-checkout';
 import { Brand, ThemeProvider } from '@vroom-web/ui';
 import { configure as configureMobx } from 'mobx';
 import App from 'next/app';
 import getConfig from 'next/config';
 import React from 'react';
 import { ThemeProvider as StyledThemeProvider } from 'styled-components';
-import { getVroomTheme, GlobalStyle } from '@vroom-web/temp-ui-alias-for-checkout';
 
 import client from 'src/networking/client';
 

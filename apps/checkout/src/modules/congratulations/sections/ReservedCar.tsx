@@ -1,5 +1,3 @@
-import React from 'react';
-import styled from 'styled-components';
 import {
   addStyleForMobile,
   Body,
@@ -11,6 +9,8 @@ import {
   ThemeProps,
   Title,
 } from '@vroom-web/temp-ui-alias-for-checkout';
+import React from 'react';
+import styled from 'styled-components';
 
 const primaryBrand = (props: { theme: ThemeProps }): string =>
   props.theme.colors.primary.brand;
