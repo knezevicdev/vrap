@@ -1,5 +1,5 @@
-import { SimpleHeader } from '@vroom-web/header-components';
 import { datadogRum } from '@datadog/browser-rum';
+import { SimpleHeader } from '@vroom-web/header-components';
 import { Footer, ThemeProps } from '@vroom-web/temp-ui-alias-for-checkout';
 import { observer } from 'mobx-react-lite';
 import getConfig from 'next/config';

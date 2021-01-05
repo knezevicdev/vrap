@@ -45,11 +45,6 @@ const Input = styled(TextField)(({ theme }) => ({
   },
 }));
 
-const StateSelect = styled(Input)(({ theme }) => ({
-  width: theme.spacing(20),
-  marginLeft: theme.spacing(2),
-}));
-
 const SubmitButton = styled(Button)(({ theme }) => ({
   width: '100%',
   marginTop: theme.spacing(3),
@@ -59,7 +54,30 @@ const Inputs = styled('div')(() => ({
   display: 'flex',
 }));
 
+// TODO: There is probably a way around this but hopefully UI library will fix
+// nested Input field typical prop passing/setting className doesn't work as expected
+// https://tdalabs.atlassian.net/browse/AC-1034
+const StateSelectGray = styled(Input)(({ theme }) => ({
+  '& .MuiInputBase-input': {
+    color: 'gray',
+  },
+  width: theme.spacing(20),
+  marginLeft: theme.spacing(2),
+}));
+
+const StateSelectBlack = styled(Input)(({ theme }) => ({
+  '& .MuiInputBase-input': {
+    color: 'black',
+  },
+  width: theme.spacing(20),
+  marginLeft: theme.spacing(2),
+}));
+
 const LicensePlateView: React.FC<Props> = ({ viewModel }) => {
+  const StateSelect =
+    viewModel.getSelectedState() === 'State'
+      ? StateSelectGray
+      : StateSelectBlack;
   return (
     <LicensePlateContainer>
       <Inputs>
@@ -78,13 +96,17 @@ const LicensePlateView: React.FC<Props> = ({ viewModel }) => {
           id="state"
           select
           label={'State'}
-          placeholder={viewModel.licensePlateLabel}
           value={viewModel.getSelectedState()}
           onChange={viewModel.handleChange}
           InputProps={{ disableUnderline: true }}
         >
-          {viewModel.getStates().map((state) => (
-            <MenuItem key={state} value={state}>
+          {viewModel.getStates().map((state, index) => (
+            <MenuItem
+              key={state}
+              disabled={index === 0}
+              selected={index === 0}
+              value={state}
+            >
               {state}
             </MenuItem>
           ))}

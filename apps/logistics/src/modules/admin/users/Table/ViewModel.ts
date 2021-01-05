@@ -65,17 +65,18 @@ class UsersViewModel {
           accessor: Accessor.status,
         },
       ],
-      rows: this.model.users.map((i) => ({
-        id: i.portal_user_id,
-        data: {
-          [Accessor.firstName]: i.first_name,
-          [Accessor.lastName]: i.last_name,
-          [Accessor.email]: i.username,
-          // TODO: fix this at the api level
-          [Accessor.carrier]: i.carrier?.carrier ?? '',
-          [Accessor.status]: i.status,
-        },
-      })),
+      rows: this.model.users.map((i) => {
+        return {
+          id: i.portal_user_id,
+          data: {
+            [Accessor.firstName]: i.first_name,
+            [Accessor.lastName]: i.last_name,
+            [Accessor.email]: i.username,
+            [Accessor.carrier]: i.carrier?.carrier ?? '',
+            [Accessor.status]: i.status,
+          },
+        };
+      }),
     };
   }
 

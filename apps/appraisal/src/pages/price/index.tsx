@@ -53,15 +53,6 @@ const parseCookies = (req: IncomingMessage): Cookie => {
 };
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  // automated price qa
-  // http://localhost:3000/appraisal/price/e93bafe0b739241f875d1e3c35416fff
-
-  // automated price dev
-  // http://localhost:3000/appraisal/price/cd24f8a61d797c8ef910694f252277d8
-
-  // no price
-  // http://localhost:3000/appraisal/price/d9b61a51f993808577a102eecbe8df0d
-
   const { req, query } = context;
   const priceId = query.priceId as string;
   const cookies = parseCookies(req);

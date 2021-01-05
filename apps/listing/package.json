@@ -1,6 +1,6 @@
 {
   "name": "@vroom-web/listing",
-  "version": "1.5.8-beta.1",
+  "version": "1.5.9",
   "private": true,
   "scripts": {
     "dev": "node server.js",
@@ -22,7 +22,7 @@
     "@vroom-web/catalog-url-integration": "^2.0.2",
     "@vroom-web/deals-v2-networking": "^1.0.1",
     "@vroom-web/experiment-sdk": "^2.0.1",
-    "@vroom-web/footer-components": "^1.0.5",
+    "@vroom-web/footer-components": "^1.0.8",
     "@vroom-web/header-components": "^1.0.5",
     "@vroom-web/inv-search-networking": "^1.0.3",
     "@vroom-web/inv-service-networking": "^1.0.1",

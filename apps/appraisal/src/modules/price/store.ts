@@ -97,8 +97,12 @@ export class PriceStore {
           priceMapFromResponse.xkeId = price.offer_id;
           priceMapFromResponse.year = price.Year__c;
 
-          this.status = 'success';
+          // This actually creates "separate" updates
+          // - Price updates and refreshes views
+          // - Status updates and refreshes views
+          // Just a heads up this can cause race conditions
           this.price = priceMapFromResponse;
+          this.status = 'success';
         }
       })
       .catch((error) => {

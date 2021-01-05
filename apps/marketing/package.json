@@ -1,6 +1,6 @@
 {
   "name": "@vroom-web/marketing",
-  "version": "0.3.7",
+  "version": "0.3.9",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -19,7 +19,7 @@
     "@vroom-web/analytics-integration": "^1.2.2",
     "@vroom-web/cat-sdk": "^1.0.0",
     "@vroom-web/deals-v2-networking": "^1.0.1",
-    "@vroom-web/footer-components": "^1.0.5",
+    "@vroom-web/footer-components": "^1.0.8",
     "@vroom-web/header-components": "^1.0.5",
     "@vroom-web/ui": "^1.0.1",
     "@vroom-web/whitelabel": "^1.0.1",
@@ -38,7 +38,9 @@
     "qs": "^6.9.1",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
+    "react-slick": "^0.27.13",
     "react-string-replace": "^0.4.4",
+    "slick-carousel": "^1.8.1",
     "smoothscroll-polyfill": "^0.4.4",
     "ua-parser-js": "^0.7.21"
   },
@@ -57,6 +59,7 @@
     "@types/segment-analytics": "0.0.32",
     "@types/smoothscroll-polyfill": "^0.3.1",
     "@types/ua-parser-js": "^0.7.33",
+    "@types/react-slick": "^0.23.4",
     "typescript": "^3.8.2",
     "url-loader": "^3.0.0"
   }
