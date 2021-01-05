@@ -74,12 +74,11 @@ const BrandIcon = styled(Icon)`
   margin-right: 8px;
 `;
 
-
 const CustomLink = styled(Link)`
   font-weight: 600 !important;
   text-decoration: none !important;
   letter-spacing: 1.75px !important;
-`; 
+`;
 export interface QuestionProps {
   analyticsHandler?: AnalyticsHandler;
   phone: {
@@ -92,7 +91,10 @@ const Questions: React.FC<QuestionProps> = ({
   analyticsHandler,
   phone,
 }): JSX.Element => {
-  const handleLinkEvents = (eventName: TrackContactModule, url: string) => {
+  const handleLinkEvents = (
+    eventName: TrackContactModule,
+    url: string
+  ) => () => {
     analyticsHandler?.trackContactModule(eventName);
     window.open(url, '_blank');
   };
@@ -104,12 +106,10 @@ const Questions: React.FC<QuestionProps> = ({
         <Action>
           <BrandIcon icon={Icons.QUESTION} />
           <CustomLink
-            onClick={() =>
-              handleLinkEvents(
-                TrackContactModule.helpCenter,
-                'https://vroom.zendesk.com/hc/en-us'
-              )
-            }
+            onClick={handleLinkEvents(
+              TrackContactModule.helpCenter,
+              'https://vroom.zendesk.com/hc/en-us'
+            )}
             href="#"
           >
             VISIT OUR HELP CENTER
@@ -119,9 +119,7 @@ const Questions: React.FC<QuestionProps> = ({
         <Action>
           <BrandIcon icon={Icons.ENVELOPE} />
           <CustomLink
-            onClick={() =>
-              handleLinkEvents(TrackContactModule.contactUs, '/contact')
-            }
+            onClick={handleLinkEvents(TrackContactModule.contactUs, '/contact')}
             href="#"
           >
             SEND A MESSAGE
@@ -131,9 +129,10 @@ const Questions: React.FC<QuestionProps> = ({
         <Action>
           <BrandIcon icon={Icons.PHONE} />
           <CustomLink
-            onClick={() =>
-              handleLinkEvents(TrackContactModule.phone, `tel:${phone.href}`)
-            }
+            onClick={handleLinkEvents(
+              TrackContactModule.phone,
+              `tel:${phone.href}`
+            )}
             href="#"
           >
             {phone.label}

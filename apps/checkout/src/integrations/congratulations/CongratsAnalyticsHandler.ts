@@ -18,22 +18,22 @@ class CongratsAnalyticsHandler extends BaseAnalyticsHandler {
 
   trackCongratsViewed(): void {
     try {
-    const { username, UUID, vin } = this.viewModel.analyticsData;
+      const { username, UUID, vin } = this.viewModel.analyticsData;
 
-    const name = 'Congrats page visit';
-     const properties = {
-      pageName: 'Car Reserved',
-      url: window.location.href,
-      title: 'Congrats page visit',
-      userId: username,
-      UUID,
-      applicationVersion: packageJson.version,
-      vin
-    }; 
-    this.page(name, 'Car Reserved', properties);
-  } catch (err) {
-    console.log('Analytic Event', err);
-  }
+      const name = 'Congrats page visit';
+      const properties = {
+        pageName: 'Car Reserved',
+        url: window.location.href,
+        title: 'Congrats page visit',
+        userId: username,
+        UUID,
+        applicationVersion: packageJson.version,
+        vin,
+      };
+      this.page(name, 'Car Reserved', properties);
+    } catch (err) {
+      console.log('Analytic Event', err);
+    }
   }
 
   trackScheduleTime(): void {

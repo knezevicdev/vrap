@@ -1,8 +1,8 @@
-// import { SimpleHeader } from '@vroom-web/header-components';
+import { SimpleHeader } from '@vroom-web/header-components';
 import { datadogRum } from '@datadog/browser-rum';
 import { Footer, ThemeProps } from '@vroom-web/temp-ui-alias-for-checkout';
 import { observer } from 'mobx-react-lite';
-// import getConfig from 'next/config';
+import getConfig from 'next/config';
 import React from 'react';
 import styled from 'styled-components';
 
@@ -27,9 +27,9 @@ interface Props {
   viewModel: CongratsViewModel;
 }
 
-// const {
-//   publicRuntimeConfig: { GEARBOX_PRIVATE_URL },
-// } = getConfig();
+const {
+  publicRuntimeConfig: { GEARBOX_PRIVATE_URL },
+} = getConfig();
 
 const CongratsView: React.FC<Props> = ({ viewModel }) => {
   const { sections } = viewModel.footerProps;
@@ -52,7 +52,7 @@ const CongratsView: React.FC<Props> = ({ viewModel }) => {
 
   return (
     <Page>
-      {/* <SimpleHeader gearboxPrivateUrl={GEARBOX_PRIVATE_URL} /> */}
+      <SimpleHeader gearboxPrivateUrl={GEARBOX_PRIVATE_URL} />
       {viewModel.showLoading && <Loading />}
       {viewModel.showError && <Error />}
       {viewModel.showSuccess && <Success viewModel={viewModel} />}

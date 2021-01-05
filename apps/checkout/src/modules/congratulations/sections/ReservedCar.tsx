@@ -4,9 +4,9 @@ import {
   Heading,
   Icon,
   Icons,
+  Link,
   Picture,
   ThemeProps,
-  Link,
   Title,
 } from '@vroom-web/temp-ui-alias-for-checkout';
 import React from 'react';
@@ -185,9 +185,13 @@ const ReservedCar: React.FC<ReservedCarProps> = ({
               <Step>
                 <Check icon={Icons.CALENDAR} />
                 <Body.Regular>
-                  <Schedule href="https://www.vroom.com/schedule" blank onClick={handleScheduleTimeEvent}>
+                  <Schedule
+                    href="https://www.vroom.com/schedule"
+                    blank
+                    onClick={handleScheduleTimeEvent}
+                  >
                     Schedule a time
-                  </Schedule>
+                  </Schedule>{' '}
                   to talk with the Vroom team.
                 </Body.Regular>
               </Step>
