@@ -1,4 +1,5 @@
 import { OptionsStore } from './store';
+import { DirectDepositStore } from '../directdeposit/store';
 
 import AnalyticsHandler from 'src/integrations/AnalyticsHandler';
 import { MailingAddress } from 'src/interfaces.d';
@@ -12,9 +13,11 @@ class OptionsViewModel {
   readonly optionTitle: string = 'Payment Method';
   readonly optionQuestion: string = 'How would you like to get paid?';
   readonly submit: string = 'submit';
+  readonly showSubmitButton: boolean = false;
 
-  constructor(store: OptionsStore) {
+  constructor(store: OptionsStore, ddStore: DirectDepositStore) {
     this.store = store;
+    this.showSubmitButton = !ddStore.showPlaidLink;
     this.analyticsHandler = new AnalyticsHandler();
   }
 

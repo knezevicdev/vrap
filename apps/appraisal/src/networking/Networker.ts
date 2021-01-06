@@ -4,11 +4,14 @@ import {
   PaymentOptionsRespData,
   Prices,
   VerificationRespData,
+  PlaidTokenResp
 } from './models/Price';
 
 import ENVS from 'src/integrations/Envs';
-import { MailingAddress } from 'src/interfaces.d';
-import { PaymentOverviewFormValues } from 'src/interfaces.d';
+import {
+  MailingAddress,
+  PaymentOverviewFormValues
+} from 'src/interfaces.d';
 
 export enum Status {
   INITIAL = 'initial',
@@ -82,4 +85,27 @@ export class Networker {
 
     return this.axiosInstance.post(url, data);
   }
+
+  getPlaidToken = async (
+    userId: string
+  ): Promise<AxiosResponse<{ plaidToken: PlaidTokenResp }>> => {
+    const gearboxUrl = ENVS.GEARBOX_URL + '/query';
+    const authToken = btoa('acquisitions:K%LHs92noePmf$qEHBht');
+    const data = {
+      query: `query ($userId: String!) {
+        getLinkToken(userId: $userId) {
+          LinkToken,
+          Expiration,
+          RequestId
+        }
+      }`,
+      variables: { userId }
+    };
+  
+    return this.axiosInstance.post(gearboxUrl, data, {
+      headers: {
+        'Authorization': `Basic ${authToken}`
+      }
+    });
+  };
 }
