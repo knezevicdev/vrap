@@ -74,11 +74,13 @@ export const getServerSideProps: GetServerSideProps<Props> = async (
   const slug = query.slug as string;
   const slugArray = slug.split('-');
   const vin = slugArray[slugArray.length - 1];
+  const { action } = query;
+  const actionFavorite = action === 'favorite';
 
   context.res.setHeader('Cache-Control', '');
   const brand = determineWhitelabel(context);
 
-  const initialState = await getInitialInventoryStoreState(vin);
+  const initialState = await getInitialInventoryStoreState(vin, actionFavorite);
   let canonicalHref: string | null = null;
   let title = '';
 
