@@ -1,13 +1,16 @@
 /*eslint @typescript-eslint/camelcase: [error, {properties: "never"}]*/
 import { AnalyticsHandler as BaseAnalyticsHandler } from '@vroom-web/analytics-integration';
-
-import packageJson from 'src/../package.json';
+import getConfig from 'next/config';
 import CongratsViewModel from 'src/modules/congratulations/ViewModel';
 export enum TrackContactModule {
   helpCenter = 'Help Center Clicked',
   contactUs = 'Contact Us Clicked',
   phone = 'Phone Clicked',
 }
+
+const {
+  publicRuntimeConfig: { VERSION },
+} = getConfig();
 class CongratsAnalyticsHandler extends BaseAnalyticsHandler {
   viewModel: CongratsViewModel;
 
@@ -27,7 +30,7 @@ class CongratsAnalyticsHandler extends BaseAnalyticsHandler {
         title: 'Congrats page visit',
         userId: username,
         UUID,
-        applicationVersion: packageJson.version,
+        applicationVersion: VERSION,
         vin,
       };
       this.page(name, 'Car Reserved', properties);
@@ -47,7 +50,7 @@ class CongratsAnalyticsHandler extends BaseAnalyticsHandler {
         section: 'hero',
         userId: username,
         UUID,
-        applicationVersion: packageJson.version,
+        applicationVersion: VERSION,
       };
       this.track(event, properties);
     } catch (err) {
@@ -65,7 +68,7 @@ class CongratsAnalyticsHandler extends BaseAnalyticsHandler {
         section: 'contact module',
         userId: username,
         UUID,
-        applicationVersion: packageJson.version,
+        applicationVersion: VERSION,
       };
       this.track(eventName, properties);
     } catch (err) {
@@ -94,7 +97,7 @@ class CongratsAnalyticsHandler extends BaseAnalyticsHandler {
         pageName: 'Congratulations',
         userId: username,
         UUID,
-        applicationVersion: packageJson.version,
+        applicationVersion: VERSION,
         vin,
         paymentMethod,
         step,
