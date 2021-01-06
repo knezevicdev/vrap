@@ -10,9 +10,7 @@ import {
 import React from 'react';
 import styled from 'styled-components';
 
-import AnalyticsHandler, {
-  TrackContactModule,
-} from 'src/integrations/congratulations/CongratsAnalyticsHandler';
+import { TrackContactModule } from 'src/integrations/congratulations/CongratsAnalyticsHandler';
 const primaryBrand = (props: { theme: ThemeProps }): string =>
   props.theme.colors.primary.brand;
 

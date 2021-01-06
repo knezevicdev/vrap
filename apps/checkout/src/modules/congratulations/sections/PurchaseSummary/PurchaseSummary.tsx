@@ -31,8 +31,6 @@ import RegistrationAddress, {
   RegistrationAddressProps,
 } from './components/RegistrationAddress';
 import UploadedDocuments from './components/UploadedDocuments';
-
-import AnalyticsHandler from 'src/integrations/congratulations/CongratsAnalyticsHandler';
 export interface PurchaseSummaryProps {
   summary: {
     date: string;

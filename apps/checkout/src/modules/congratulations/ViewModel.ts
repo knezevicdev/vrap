@@ -395,7 +395,7 @@ export default class CongratsViewModel {
     };
   }
 
-  trackScheduleTime = () => {
+  trackScheduleTime = (): void => {
     this.analyticsHandler.trackScheduleTime();
   };
 

@@ -12,7 +12,6 @@ import {
 import React from 'react';
 import styled from 'styled-components';
 
-import AnalyticsHandler from 'src/integrations/congratulations/CongratsAnalyticsHandler';
 const primaryBrand = (props: { theme: ThemeProps }): string =>
   props.theme.colors.primary.brand;
 
