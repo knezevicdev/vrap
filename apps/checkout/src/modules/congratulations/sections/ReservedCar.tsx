@@ -123,8 +123,8 @@ const Bold = styled.span`
 const Schedule = styled(Link)`
   color: ${primaryBrand} !important;
 `;
-
 export interface ReservedCarProps {
+  trackScheduleTime: () => void;
   data: {
     car: string;
     email: string;
@@ -137,6 +137,7 @@ export interface ReservedCarProps {
 }
 
 const ReservedCar: React.FC<ReservedCarProps> = ({
+  trackScheduleTime,
   data: {
     car,
     email,
@@ -178,7 +179,11 @@ const ReservedCar: React.FC<ReservedCarProps> = ({
               <Step>
                 <Check icon={Icons.CALENDAR} />
                 <Body.Regular>
-                  <Schedule href="https://www.vroom.com/schedule" blank>
+                  <Schedule
+                    href="https://www.vroom.com/schedule"
+                    blank
+                    onClick={trackScheduleTime}
+                  >
                     Schedule a time
                   </Schedule>{' '}
                   to talk with the Vroom team.
