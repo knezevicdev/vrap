@@ -1,3 +1,10 @@
+export enum Groups {
+  LogisticsPortal = 'LogisticsPortal',
+  LogisticsPortalAdmin = 'LogisticsPortalAdmin',
+  LogisticsPortalPending = 'LogisticsPortalPending',
+  LogisticsPortalRejected = 'LogisticsPortalRejected',
+}
+
 export interface Tokens {
   accessToken: string;
   idToken: string;
