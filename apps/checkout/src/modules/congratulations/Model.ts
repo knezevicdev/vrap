@@ -146,7 +146,10 @@ export default class CongratsModel {
                 }
                 pricingStack {
                   downPayment
+                  lenderName
                   apr
+                  buyRate
+                  termMonths
                   monthlyPayment
                   financeCharge
                 }

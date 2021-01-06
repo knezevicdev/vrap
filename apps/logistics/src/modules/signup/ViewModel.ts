@@ -42,6 +42,38 @@ class SignupViewModel {
     e.preventDefault();
     postSignUp(this.email, this.password, this.firstName, this.lastName);
   };
+
+  get disabled(): boolean {
+    if (this.firstName.length === 0) {
+      return true;
+    }
+
+    if (this.lastName.length === 0) {
+      return true;
+    }
+
+    // from https://emailregex.com/
+    const emailRegex = new RegExp(
+      /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+    );
+    if (!emailRegex.test(this.email)) {
+      return true;
+    }
+
+    const passwordRegex = new RegExp(
+      /^(?=.*?[a-z])(?=.*?[A-Z])(?=.*?[0-9])[a-zA-Z0-9]{8,}$/
+    );
+    if (
+      !(
+        passwordRegex.test(this.password) &&
+        passwordRegex.test(this.passwordConfirm) &&
+        this.password === this.passwordConfirm
+      )
+    ) {
+      return true;
+    }
+    return false;
+  }
 }
 
 export default SignupViewModel;
