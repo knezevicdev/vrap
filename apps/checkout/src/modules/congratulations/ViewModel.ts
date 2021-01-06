@@ -190,7 +190,7 @@ export default class CongratsViewModel {
     const src = leadPhotoURL ? leadPhotoURL : '';
 
     return {
-      analyticsHandler: this.analyticsHandler,
+      trackScheduleTime: this.trackScheduleTime,
       data: {
         car: car,
         email: this.account.userName,
@@ -394,6 +394,10 @@ export default class CongratsViewModel {
       showInsuranceDisclaimer: showInsuranceDisclaimer,
     };
   }
+
+  trackScheduleTime = () => {
+    this.analyticsHandler.trackScheduleTime();
+  };
 
   trackQuestions = (event: TrackContactModule) => (): void => {
     this.analyticsHandler.trackContactModule(event);

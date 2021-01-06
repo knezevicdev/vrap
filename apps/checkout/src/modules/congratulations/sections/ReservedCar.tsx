@@ -125,7 +125,7 @@ const Schedule = styled(Link)`
   color: ${primaryBrand} !important;
 `;
 export interface ReservedCarProps {
-  analyticsHandler?: AnalyticsHandler;
+  trackScheduleTime: () => void;
   data: {
     car: string;
     email: string;
@@ -138,7 +138,7 @@ export interface ReservedCarProps {
 }
 
 const ReservedCar: React.FC<ReservedCarProps> = ({
-  analyticsHandler,
+  trackScheduleTime,
   data: {
     car,
     email,
@@ -146,10 +146,6 @@ const ReservedCar: React.FC<ReservedCarProps> = ({
     image: { alt, src },
   },
 }): JSX.Element => {
-  const handleScheduleTimeEvent = () => {
-    analyticsHandler?.trackScheduleTime();
-  };
-
   return (
     <Background>
       <Container>
@@ -187,7 +183,7 @@ const ReservedCar: React.FC<ReservedCarProps> = ({
                   <Schedule
                     href="https://www.vroom.com/schedule"
                     blank
-                    onClick={handleScheduleTimeEvent}
+                    onClick={trackScheduleTime}
                   >
                     Schedule a time
                   </Schedule>{' '}
