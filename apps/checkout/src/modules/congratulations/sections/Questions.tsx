@@ -80,7 +80,7 @@ const CustomLink = styled(Link)`
   letter-spacing: 1.75px !important;
 `;
 export interface QuestionProps {
-  analyticsHandler?: AnalyticsHandler;
+  trackQuestions: (event: TrackContactModule) => () => void;
   phone: {
     href: string;
     label: string;
@@ -88,13 +88,9 @@ export interface QuestionProps {
 }
 
 const Questions: React.FC<QuestionProps> = ({
-  analyticsHandler,
+  trackQuestions,
   phone,
 }): JSX.Element => {
-  const handleLinkEvents = (eventName: TrackContactModule) => () => {
-    analyticsHandler?.trackContactModule(eventName);
-  };
-
   return (
     <Container>
       <Heading.Three>questions?</Heading.Three>
@@ -102,8 +98,9 @@ const Questions: React.FC<QuestionProps> = ({
         <Action>
           <BrandIcon icon={Icons.QUESTION} />
           <CustomLink
-            onClick={handleLinkEvents(TrackContactModule.helpCenter)}
+            onClick={trackQuestions(TrackContactModule.helpCenter)}
             href="https://vroom.zendesk.com/hc/en-us"
+            blank
           >
             VISIT OUR HELP CENTER
           </CustomLink>
@@ -112,8 +109,9 @@ const Questions: React.FC<QuestionProps> = ({
         <Action>
           <BrandIcon icon={Icons.ENVELOPE} />
           <CustomLink
-            onClick={handleLinkEvents(TrackContactModule.contactUs)}
+            onClick={trackQuestions(TrackContactModule.contactUs)}
             href="/contact"
+            blank
           >
             SEND A MESSAGE
           </CustomLink>
@@ -122,8 +120,9 @@ const Questions: React.FC<QuestionProps> = ({
         <Action>
           <BrandIcon icon={Icons.PHONE} />
           <CustomLink
-            onClick={handleLinkEvents(TrackContactModule.phone)}
+            onClick={trackQuestions(TrackContactModule.phone)}
             href="tel:${phone.href}"
+            blank
           >
             {phone.label}
           </CustomLink>

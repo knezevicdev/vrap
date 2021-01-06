@@ -8,7 +8,9 @@ import { PurchaseSummaryProps } from './sections/PurchaseSummary/PurchaseSummary
 import { QuestionProps } from './sections/Questions';
 import { ReservedCarProps } from './sections/ReservedCar';
 
-import AnalyticsHandler from 'src/integrations/congratulations/CongratsAnalyticsHandler';
+import AnalyticsHandler, {
+  TrackContactModule,
+} from 'src/integrations/congratulations/CongratsAnalyticsHandler';
 
 enum ServiceType {
   Vehicle = 'VRVS',
@@ -393,10 +395,14 @@ export default class CongratsViewModel {
     };
   }
 
+  trackQuestions = (event: TrackContactModule) => (): void => {
+    this.analyticsHandler.trackContactModule(event);
+  };
+
   //TODO: Inject correct number
   get questionsProps(): QuestionProps {
     return {
-      analyticsHandler: this.analyticsHandler,
+      trackQuestions: this.trackQuestions,
       phone: {
         href: '+18555241300',
         label: '(855) 524-1300',
