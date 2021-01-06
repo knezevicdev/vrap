@@ -309,7 +309,7 @@ export default class CongratsViewModel {
               downPayment: `-$${this.financingPricingStack.downPayment}`,
               bank: this.financingPricingStack.lenderName,
               apr: `${(this.financingPricingStack.apr * 100).toFixed(2)}%`,
-              financeTerm: this.financingPricingStack.buyRate.toString(),
+              financeTerm: `${this.financingPricingStack.termMonths} months`,
               numberOfPayments: this.financingPricingStack.termMonths.toString(),
               financeCharge: `$${this.financingPricingStack.financeCharge}`,
               monthlyPayment: `$${this.financingPricingStack.monthlyPayment}`,
