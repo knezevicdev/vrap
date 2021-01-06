@@ -1,4 +1,3 @@
-import { datadogRum } from '@datadog/browser-rum';
 import { SimpleHeader } from '@vroom-web/header-components';
 import { Footer, ThemeProps } from '@vroom-web/temp-ui-alias-for-checkout';
 import { observer } from 'mobx-react-lite';
@@ -35,20 +34,7 @@ const CongratsView: React.FC<Props> = ({ viewModel }) => {
   const { sections } = viewModel.footerProps;
   const questionsProps = viewModel.questionsProps;
 
-  React.useEffect(() => {
-    if (viewModel.showSuccess) {
-      viewModel.analyticsHandler.trackCongratsViewed();
-      viewModel.analyticsHandler.trackOrderCompleted();
-
-      const { orderId, productId } = viewModel.analyticsData;
-      datadogRum.addUserAction('completedDeal', {
-        deal: {
-          dealId: orderId,
-          inventoryId: productId,
-        },
-      });
-    }
-  }, [viewModel.showSuccess]);
+  viewModel.trackAnalytics();
 
   return (
     <Page>

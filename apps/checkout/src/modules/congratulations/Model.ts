@@ -145,8 +145,8 @@ export default class CongratsModel {
                   isAccepted
                 }
                 pricingStack {
-                  downPayment 
-                  apr  
+                  downPayment
+                  apr
                   monthlyPayment
                   financeCharge
                 }

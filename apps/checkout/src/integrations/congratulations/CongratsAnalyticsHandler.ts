@@ -1,6 +1,7 @@
 /*eslint @typescript-eslint/camelcase: [error, {properties: "never"}]*/
 import { AnalyticsHandler as BaseAnalyticsHandler } from '@vroom-web/analytics-integration';
 import getConfig from 'next/config';
+
 import CongratsViewModel from 'src/modules/congratulations/ViewModel';
 export enum TrackContactModule {
   helpCenter = 'Help Center Clicked',

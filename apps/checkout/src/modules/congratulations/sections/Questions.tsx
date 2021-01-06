@@ -91,9 +91,7 @@ const Questions: React.FC<QuestionProps> = ({
   analyticsHandler,
   phone,
 }): JSX.Element => {
-  const handleLinkEvents = (
-    eventName: TrackContactModule
-  ) => () => {
+  const handleLinkEvents = (eventName: TrackContactModule) => () => {
     analyticsHandler?.trackContactModule(eventName);
   };
 
@@ -104,9 +102,7 @@ const Questions: React.FC<QuestionProps> = ({
         <Action>
           <BrandIcon icon={Icons.QUESTION} />
           <CustomLink
-            onClick={handleLinkEvents(
-              TrackContactModule.helpCenter
-            )}
+            onClick={handleLinkEvents(TrackContactModule.helpCenter)}
             href="https://vroom.zendesk.com/hc/en-us"
           >
             VISIT OUR HELP CENTER
@@ -126,9 +122,7 @@ const Questions: React.FC<QuestionProps> = ({
         <Action>
           <BrandIcon icon={Icons.PHONE} />
           <CustomLink
-            onClick={handleLinkEvents(
-              TrackContactModule.phone
-            )}
+            onClick={handleLinkEvents(TrackContactModule.phone)}
             href="tel:${phone.href}"
           >
             {phone.label}

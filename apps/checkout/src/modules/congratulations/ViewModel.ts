@@ -1,3 +1,4 @@
+import { datadogRum } from '@datadog/browser-rum';
 import { GQLTypes, Status } from '@vroom-web/networking';
 import { FooterProps } from '@vroom-web/temp-ui-alias-for-checkout';
 
@@ -237,6 +238,21 @@ export default class CongratsViewModel {
       productName: this.summary.inventory?.vehicle?.vin,
       hasTrade: this.summary.dealStatus.interestedInTrade,
     };
+  }
+
+  trackAnalytics(): void {
+    if (this.showSuccess) {
+      this.analyticsHandler.trackCongratsViewed();
+      this.analyticsHandler.trackOrderCompleted();
+
+      const { orderId, productId } = this.analyticsData;
+      datadogRum.addUserAction('completedDeal', {
+        deal: {
+          dealId: orderId,
+          inventoryId: productId,
+        },
+      });
+    }
   }
 
   get purchaseSummaryProps(): PurchaseSummaryProps {
