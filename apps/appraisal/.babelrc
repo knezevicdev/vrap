@@ -10,12 +10,13 @@
     ]
   ],
   "plugins": [
-    ["styled-components", { "ssr": true }],
-    [
-      "@babel/plugin-proposal-decorators",
-      {
-        "legacy": true
-      }
-    ]
+    "@fullstory/babel-plugin-annotate-react",
+     ["styled-components", { "ssr": true }],
+     [
+       "@babel/plugin-proposal-decorators",
+       {
+         "legacy": true
+       }
+     ]
   ]
 }

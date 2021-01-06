@@ -18,16 +18,17 @@ const Contents = styled.div`
 
 interface PageProps {
   category?: string;
-  head?: React.ReactNode;
   name: string;
 }
 
 class Page extends React.Component<PageProps> {
   render(): React.ReactNode {
-    const { children, head } = this.props;
+    const { children } = this.props;
     return (
       <>
-        {head && <Head>{head}</Head>}
+        <Head>
+          <title>Your Price</title>
+        </Head>
         <Container>
           <Contents>{children}</Contents>
         </Container>

@@ -28,26 +28,28 @@ const DirectDepositView: React.FC<Props> = ({ viewModel }) => {
   return (
     <DirectDepositContainer>
       <DirectDepositCopy>{viewModel.bankInfo}</DirectDepositCopy>
-        <InputContainer>
-          <FormikInput
-            id="routingNumber"
-            name={'routingNumber'}
-            label={viewModel.routingLabel}
-            placeholder={viewModel.routingLabel}
-            fluid={true}
-            maxLength={9}
-          />
-        </InputContainer>
-        <InputContainer>
-          <FormikInput
-            id="bankAccountNumber"
-            name={'bankAccountNumber'}
-            label={viewModel.bankAccountLabel}
-            placeholder={viewModel.bankAccountLabel}
-            fluid={true}
-            maxLength={17}
-          />
-        </InputContainer>
+      <InputContainer>
+        <FormikInput
+          id="routingNumber"
+          name={'routingNumber'}
+          className="fs-mask"
+          label={viewModel.routingLabel}
+          placeholder={viewModel.routingLabel}
+          fluid={true}
+          maxLength={9}
+        />
+      </InputContainer>
+      <InputContainer>
+        <FormikInput
+          id="bankAccountNumber"
+          name={'bankAccountNumber'}
+          className="fs-mask"
+          label={viewModel.bankAccountLabel}
+          placeholder={viewModel.bankAccountLabel}
+          fluid={true}
+          maxLength={17}
+        />
+      </InputContainer>
     </DirectDepositContainer>
   );
 };

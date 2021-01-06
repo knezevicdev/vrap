@@ -11,7 +11,7 @@ class HeroViewModel {
   readonly buttonLabel = 'Shop Now';
   readonly carsLink = '/cars';
   car = {
-    src: `${publicRuntimeConfig.BASE_PATH}/modules/vroom/images/how-it-works-car.png`,
+    src: `${publicRuntimeConfig.BASE_PATH}/modules/vroom/images/how-it-works/how-it-works-car.png`,
     alt: 'How it works car',
   };
 }

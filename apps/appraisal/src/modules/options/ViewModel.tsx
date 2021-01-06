@@ -14,6 +14,7 @@ class OptionsViewModel {
   readonly optionQuestion: string = 'How would you like to get paid?';
   readonly submit: string = 'submit';
   readonly showSubmitButton: boolean = false;
+  readonly submitting: string = 'submitting';
 
   constructor(store: OptionsStore, ddStore: DirectDepositStore) {
     this.store = store;

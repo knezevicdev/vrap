@@ -110,7 +110,9 @@ const OptionsView: React.FC<Props> = ({ viewModel }) => {
         .test(
           'valid-routing-num',
           'Please enter a valid routing number',
-          (value) => { return viewModel.isValidRouting(value) }
+          (value) => {
+            return viewModel.isValidRouting(value);
+          }
         ),
     }),
     bankAccountNumber: Yup.string().when('paymentOption', {
@@ -128,12 +130,16 @@ const OptionsView: React.FC<Props> = ({ viewModel }) => {
     <Formik
       initialValues={InitialValues}
       validationSchema={PaymentOverviewSchema}
-      onSubmit={(values: PaymentOverviewFormValues): void => {
+      onSubmit={(
+        values: PaymentOverviewFormValues,
+        { setSubmitting }
+      ): void => {
+        setSubmitting(true);
         viewModel.paymentOptionsSubmit(values);
       }}
       validateOnMount={true}
     >
-      {({ isValid, values }): JSX.Element => {
+      {({ isValid, values, isSubmitting }): JSX.Element => {
         const showDirectDeposit = values.paymentOption === 'Direct Deposit';
         return (
           <FormContainer>
@@ -158,9 +164,10 @@ const OptionsView: React.FC<Props> = ({ viewModel }) => {
                   />
                 )}
               </OptionDisplay>
-              {viewModel.showSubmitButton && (
-                <SubmitButton disabled={!isValid}>
-                  {viewModel.submit}
+
+              {viewModel.showSubmitButton && ( 
+                <SubmitButton disabled={!isValid || isSubmitting}>
+                  {isSubmitting ? viewModel.submitting : viewModel.submit}
                 </SubmitButton>
               )}
             </OptionsContainer>
