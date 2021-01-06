@@ -10,12 +10,6 @@ const DirectDepositContainer = styled('div')(() => ({
   width: '100%',
 }));
 
-const DirectDepositCopy = styled(Body.Regular)(() => ({
-  display: 'flex',
-  padding: '20px 0 15px',
-}));
-
-
 const InputContainer = styled.div`
   width: 50%;
 `;
@@ -27,7 +21,6 @@ export interface Props {
 const DirectDepositView: React.FC<Props> = ({ viewModel }) => {
   return (
     <DirectDepositContainer>
-      <DirectDepositCopy>{viewModel.bankInfo}</DirectDepositCopy>
       <InputContainer>
         <FormikInput
           id="routingNumber"

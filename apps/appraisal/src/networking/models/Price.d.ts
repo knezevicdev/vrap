@@ -107,13 +107,3 @@ export interface PaymentOption {
   account_number: string | null;
   routing_number: string | null;
 }
-
-export interface PlaidTokenResp {
-  data: {
-    data: {
-      LinkToken: string;
-      Expiration: string;
-      RequestId: string;
-    }
-  };
-}

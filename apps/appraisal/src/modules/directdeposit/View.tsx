@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { observer } from 'mobx-react';
 
 import DirectDepositViewModel from './ViewModel';
 
@@ -17,24 +18,41 @@ const DirectDepositCopy = styled(Body.Regular)(() => ({
   padding: '20px 0 15px',
 }));
 
+const DDToggleLink = styled.span`
+  font-family: Calibre;
+  font-weight: normal;
+  letter-spacing: 0.25px;
+  color: #E7131A;
+  font-size: 18px;
+  line-height: 24px;
+  text-decoration: underline;
+`;
+
 export interface Props {
   viewModel: DirectDepositViewModel;
 }
 
 const DirectDepositView: React.FC<Props> = ({ viewModel }) => {
   let token = viewModel.getPlaidLinkToken();
-  console.log('dd module', token);
 
   return (
     <DirectDepositContainer>
       <DirectDepositCopy>{viewModel.bankInfo}</DirectDepositCopy>
       {viewModel.getShowPlaidLink() ? (
-        <PlaidButton token={token} />
+        <>
+          <PlaidButton token={token} plaidSuccess={viewModel.onPlaidSuccess} />
+          {viewModel.ddToggleOrCopy}
+          <DDToggleLink onClick={() => viewModel.togglePlaidLink()}>{viewModel.ddToggleManualCopy}</DDToggleLink>
+        </>
       ) : (
-        <DirectDeposit />
+        <>
+          <DirectDeposit />
+          {viewModel.ddToggleOrCopy}
+          <DDToggleLink onClick={() => viewModel.togglePlaidLink()}>{viewModel.ddTogglePlaidCopy}</DDToggleLink>
+        </>
       )}
     </DirectDepositContainer>
   );
 };
 
-export default DirectDepositView;
+export default observer(DirectDepositView);

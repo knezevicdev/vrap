@@ -8,17 +8,17 @@ import { submitPaymentOptions } from 'src/modules/options/store';
 
 class OptionsViewModel {
   private readonly store: OptionsStore;
+  private readonly ddStore: DirectDepositStore;
   private analyticsHandler: AnalyticsHandler;
   readonly hero: string = `let's set up your payment method`;
   readonly optionTitle: string = 'Payment Method';
   readonly optionQuestion: string = 'How would you like to get paid?';
   readonly submit: string = 'submit';
-  readonly showSubmitButton: boolean = false;
   readonly submitting: string = 'submitting';
 
   constructor(store: OptionsStore, ddStore: DirectDepositStore) {
     this.store = store;
-    this.showSubmitButton = !ddStore.showPlaidLink;
+    this.ddStore = ddStore;
     this.analyticsHandler = new AnalyticsHandler();
   }
 
@@ -46,6 +46,10 @@ class OptionsViewModel {
 
   showDirectDeposit = (): boolean => {
     return this.store.showDD;
+  };
+
+  getShowSubmitButton = (): boolean => {
+    return !this.ddStore.showPlaidLink;
   };
 
   isValidRouting = (num: string | null | undefined): boolean => {

@@ -126,6 +126,8 @@ const OptionsView: React.FC<Props> = ({ viewModel }) => {
     }),
   });
 
+  const shouldShowSubmitButton = viewModel.getShowSubmitButton();
+
   return (
     <Formik
       initialValues={InitialValues}
@@ -165,7 +167,7 @@ const OptionsView: React.FC<Props> = ({ viewModel }) => {
                 )}
               </OptionDisplay>
 
-              {viewModel.showSubmitButton && ( 
+              {shouldShowSubmitButton && (
                 <SubmitButton disabled={!isValid || isSubmitting}>
                   {isSubmitting ? viewModel.submitting : viewModel.submit}
                 </SubmitButton>

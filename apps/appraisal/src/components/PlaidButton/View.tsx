@@ -1,11 +1,14 @@
 import React, { useCallback } from 'react';
 import styled from 'styled-components';
+import { observer } from 'mobx-react';
+import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 
 import { usePlaidLink } from 'react-plaid-link';
 
 import PlaidButtonViewModel from './ViewModel';
 
 import { Button } from 'src/core/Button';
+import { PlaidData } from 'src/interfaces.d';
 
 const PlaidButtonContainer = styled('div')(() => ({
   width: '100%',
@@ -13,41 +16,54 @@ const PlaidButtonContainer = styled('div')(() => ({
 
 const PlaidButton = styled(Button.Primary)`
   margin: 15px 0 30px;
-  max-width: 180px;
   white-space: normal;
-  width: 100%;
+  width: auto;
+  display: flex;
+  padding: 13px 20px;
 
   @media (max-width: 420px) {
-    max-width: 100%;
+    width: 100%;
+    justify-content: center;
   }
 `;
 
 export interface Props {
   viewModel: PlaidButtonViewModel;
   token: string;
+  plaidSuccess (mutationInput: PlaidData): void;
 }
 
-const PlaidButtonView: React.FC<Props> = ({ viewModel, token }) => {
+const PlaidButtonView: React.FC<Props> = ({ viewModel, token, plaidSuccess }) => {
   const onSuccess = useCallback((token:string, metaData: any):void => {
-    console.log('token', token);
-    console.log('metaData', metaData);
+    const mutationInput = {
+      account: {
+        ...metaData.account
+      },
+      authenticated_user: true,
+      institution: { ...metaData.institution },
+      public_token: metaData.public_token
+    };
+
+    plaidSuccess(mutationInput);
   }, []);
 
-  console.log('plaid component', token.token);
   const config = {
-    token: token.token,
+    token,
     onSuccess
   }
+
+  const tokenIsUndefined = token.length === 0;
 
   const { open, ready, error } = usePlaidLink(config);
 
   return (
     <PlaidButtonContainer>
-      <PlaidButton onClick={() => open()} disabled={!ready}>
+      <PlaidButton onClick={() => open()} disabled={!ready && tokenIsUndefined}>
           {viewModel.buttonCopy}
+          <ArrowForwardIcon />
         </PlaidButton>
     </PlaidButtonContainer>
   );
 };
 
-export default PlaidButtonView;
+export default observer(PlaidButtonView);

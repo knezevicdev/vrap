@@ -4,13 +4,14 @@ import {
   PaymentOptionsRespData,
   Prices,
   VerificationRespData,
-  PlaidTokenResp
 } from './models/Price';
 
 import ENVS from 'src/integrations/Envs';
 import {
   MailingAddress,
-  PaymentOverviewFormValues
+  PaymentOverviewFormValues,
+  PlaidTokenResp,
+  PlaidData
 } from 'src/interfaces.d';
 
 export enum Status {
@@ -88,7 +89,7 @@ export class Networker {
 
   getPlaidToken = async (
     userId: string
-  ): Promise<AxiosResponse<{ plaidToken: PlaidTokenResp }>> => {
+  ): Promise<AxiosResponse<PlaidTokenResp>> => {
     const gearboxUrl = ENVS.GEARBOX_URL + '/query';
     const authToken = btoa('acquisitions:K%LHs92noePmf$qEHBht');
     const data = {
@@ -100,6 +101,25 @@ export class Networker {
         }
       }`,
       variables: { userId }
+    };
+  
+    return this.axiosInstance.post(gearboxUrl, data, {
+      headers: {
+        'Authorization': `Basic ${authToken}`
+      }
+    });
+  };
+
+  postPlaidPayment = async (
+    input: PlaidData
+  ): Promise<AxiosResponse<PlaidTokenResp>> => {
+    const gearboxUrl = ENVS.GEARBOX_URL + '/mutation';
+    const authToken = btoa('acquisitions:K%LHs92noePmf$qEHBht');
+    const data = {
+      query: `mutation ($input: CreateUserPaymentAccountInput) {
+        createUserPaymentAccount(input: $input)
+      }`,
+      variables: { input }
     };
   
     return this.axiosInstance.post(gearboxUrl, data, {

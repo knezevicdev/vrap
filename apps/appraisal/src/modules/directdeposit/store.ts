@@ -3,6 +3,8 @@ import { createContext, useContext } from 'react';
 
 import { Networker } from 'src/networking/Networker';
 
+import { PlaidData } from 'src/interfaces.d';
+
 const defaultDDState: DDStoreState = {
   LinkToken: '',
   Expiration: '',
@@ -27,6 +29,18 @@ export async function getInitialDDStoreState(
     console.log(JSON.stringify(err));
     const errorState = defaultDDState;
     return errorState;
+  }
+}
+
+export async function plaidSuccess(mutationInput: PlaidData): Promise<void> {
+  const networker = new Networker();
+  try {
+    await networker.postPlaidPayment(mutationInput);
+    const url = `/sell/verification-congrats`;
+    window.location.href = url;
+  } catch (err) {
+    console.log(JSON.stringify(err));
+    return err;
   }
 }
 
