@@ -1,7 +1,7 @@
 import FavoritesNetworker from './FavoritesNetworker';
-import { FavoritesStore } from './store';
+import {FavoritesStore} from './store';
 
-import { InventoryStore } from 'src/modules/inventory/store';
+import {InventoryStore} from 'src/modules/inventory/store';
 
 interface VinList {
   vin: string;
@@ -42,8 +42,7 @@ class FavoritesViewModel {
 
   handleDialogActions(location: string): void {
     const currentUrl = window.location.pathname;
-    const newUrl = `/account/${location}?redirect=${currentUrl}&action=favorite`;
-    window.location.href = newUrl;
+    window.location.href = `/account/${location}?redirect=${currentUrl}&action=favorite`;
   }
 
   handleDialog(): void {
