@@ -119,8 +119,7 @@ const Questions: React.FC<QuestionProps> = ({
           <BrandIcon icon={Icons.PHONE} />
           <CustomLink
             onClick={trackQuestions(TrackContactModule.phone)}
-            href="tel:${phone.href}"
-            blank
+            href={`tel:${phone.href}`}
           >
             {phone.label}
           </CustomLink>
