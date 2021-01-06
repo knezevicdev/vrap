@@ -35,6 +35,9 @@ class FavoritesViewModel {
   handleMount(): void {
     this.favoritesStore.initClientSide();
     this.isLoggedIn() ? this.checkFavorites() : this.setLoading(false);
+    if(this.isLoggedIn() && this.inventoryStore.actionFavorite){
+      this.addFavorite();
+    }
   }
 
   handleDialogActions(location: string): void {
