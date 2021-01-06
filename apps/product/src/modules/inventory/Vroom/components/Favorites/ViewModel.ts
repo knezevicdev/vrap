@@ -35,14 +35,14 @@ class FavoritesViewModel {
   handleMount(): void {
     this.favoritesStore.initClientSide();
     this.isLoggedIn() ? this.checkFavorites() : this.setLoading(false);
-    if(this.isLoggedIn() && this.inventoryStore.actionFavorite){
+    if (this.isLoggedIn() && this.inventoryStore.actionFavorite) {
       this.addFavorite();
     }
   }
 
   handleDialogActions(location: string): void {
     const currentUrl = window.location.pathname;
-    const newUrl = `/account/${location}?redirect=${currentUrl}`;
+    const newUrl = `/account/${location}?redirect=${currentUrl}&action=favorite`;
     window.location.href = newUrl;
   }
 
