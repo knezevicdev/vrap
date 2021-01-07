@@ -1,4 +1,4 @@
-image: gitlab.vroom.com:5050/devops/alpine
+image: node:erbium-alpine
 
 stages:
   - build
