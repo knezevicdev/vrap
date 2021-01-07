@@ -1,0 +1,12 @@
+image: gitlab.vroom.com:5050/devops/alpine
+
+stages:
+  - build
+
+build-checkout:
+  only:
+    - merge_requests
+  stage: build
+  script:
+    - cd apps/checkout
+    - npm run build
