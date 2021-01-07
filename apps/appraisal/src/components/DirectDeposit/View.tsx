@@ -4,7 +4,6 @@ import styled from 'styled-components';
 import DirectDepositViewModel from './ViewModel';
 
 import FormikInput from 'src/core/FormikInput';
-import { Body } from 'src/core/Typography';
 
 const DirectDepositContainer = styled('div')(() => ({
   width: '100%',

@@ -34,7 +34,7 @@ export interface Props {
 }
 
 const PlaidButtonView: React.FC<Props> = ({ viewModel, token, plaidSuccess }) => {
-  const onSuccess = useCallback((token:string, metaData: any):void => {
+  const onSuccess = useCallback((_token: string, metaData: any): void => {
     const mutationInput = {
       account: {
         ...metaData.account
@@ -54,7 +54,7 @@ const PlaidButtonView: React.FC<Props> = ({ viewModel, token, plaidSuccess }) =>
 
   const tokenIsUndefined = token.length === 0;
 
-  const { open, ready, error } = usePlaidLink(config);
+  const { open, ready } = usePlaidLink(config);
 
   return (
     <PlaidButtonContainer>
