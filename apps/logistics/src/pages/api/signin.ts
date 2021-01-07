@@ -38,6 +38,16 @@ export default async (
 
   try {
     const response = await axios.post(url, gql, config);
+    // TODO: handle
+    // {
+    //   errors: [
+    //     {
+    //       message: 'received failure code: 400 Bad Request body{"error":{"type":"ACCOUNT_MANAGEMENT_API_ERROR","title":"could not signin","details":[{"message":"NotAuthorizedException: Incorrect username or password."}],"correlationId":"48848"}}',
+    //       path: [Array]
+    //     }
+    //   ],
+    //   data: null
+    // }
     const body: IdToken = jwtDecode(response.data.data.signin.idToken);
     const expires = new Date(body.exp * 1000);
     const setCookies = ['accessToken', 'idToken', 'refreshToken'].map(

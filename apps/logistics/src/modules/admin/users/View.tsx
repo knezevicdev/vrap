@@ -1,5 +1,5 @@
+import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
-import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import React, { useEffect } from 'react';
 
@@ -17,17 +17,19 @@ const UsersView: React.FC<Props> = ({ viewModel }) => {
   }, [viewModel]);
 
   return (
-    <Paper square>
-      <Grid container alignItems="center">
-        <Grid item>
-          <Typography variant="h5">Users</Typography>
+    <Box p={5}>
+      <Grid container spacing={4}>
+        <Grid item xs={12}>
+          <Typography variant="body1">Admin Management</Typography>
         </Grid>
-        <Grid item>
+        <Grid item xs={3}>
           <Filters />
         </Grid>
+        <Grid item xs={9}>
+          <UserTable />
+        </Grid>
       </Grid>
-      <UserTable />
-    </Paper>
+    </Box>
   );
 };
 
