@@ -1,4 +1,4 @@
-image: node:erbium-alpine
+image: node:latest
 
 stages:
   - build
@@ -9,5 +9,5 @@ build-checkout:
   stage: build
   script:
     - cd apps/checkout
-    - npm install
+    - npm install --quiet
     - npm run build
