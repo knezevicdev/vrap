@@ -1,0 +1,13 @@
+image: node:latest
+
+stages:
+  - build
+
+build-checkout:
+  only:
+    - merge_requests
+  stage: build
+  script:
+    - cd apps/checkout
+    - npm install --quiet
+    - npm run build
