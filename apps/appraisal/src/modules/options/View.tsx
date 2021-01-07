@@ -7,7 +7,7 @@ import * as Yup from 'yup';
 import OptionsViewModel from './ViewModel';
 
 import CheckByMail from 'src/components/CheckByMail';
-import DirectDeposit from 'src/components/DirectDeposit';
+import DirectDeposit from 'src/modules/directdeposit';
 import PayOptions from 'src/components/PayOptions';
 import { Button } from 'src/core/Button';
 import Icon, { Icons } from 'src/core/Icon';
@@ -126,6 +126,8 @@ const OptionsView: React.FC<Props> = ({ viewModel }) => {
     }),
   });
 
+  const shouldShowSubmitButton = viewModel.getShowSubmitButton();
+
   return (
     <Formik
       initialValues={InitialValues}
@@ -164,9 +166,12 @@ const OptionsView: React.FC<Props> = ({ viewModel }) => {
                   />
                 )}
               </OptionDisplay>
-              <SubmitButton disabled={!isValid || isSubmitting}>
-                {isSubmitting ? viewModel.submitting : viewModel.submit}
-              </SubmitButton>
+
+              {shouldShowSubmitButton && (
+                <SubmitButton disabled={!isValid || isSubmitting}>
+                  {isSubmitting ? viewModel.submitting : viewModel.submit}
+                </SubmitButton>
+              )}
             </OptionsContainer>
           </FormContainer>
         );
