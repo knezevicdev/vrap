@@ -113,7 +113,7 @@ export class Networker {
   postPlaidPayment = async (
     input: PlaidData
   ): Promise<AxiosResponse<PlaidTokenResp>> => {
-    const gearboxUrl = ENVS.GEARBOX_URL + '/mutation';
+    const gearboxUrl = ENVS.GEARBOX_URL + '/';
     const authToken = btoa('acquisitions:K%LHs92noePmf$qEHBht');
     const data = {
       query: `mutation ($input: CreateUserPaymentAccountInput) {
