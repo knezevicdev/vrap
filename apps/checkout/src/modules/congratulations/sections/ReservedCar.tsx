@@ -124,7 +124,7 @@ const Schedule = styled(Link)`
   color: ${primaryBrand} !important;
 `;
 export interface ReservedCarProps {
-  trackScheduleTime: () => void;
+  trackScheduleTime?: () => void;
   data: {
     car: string;
     email: string;
