@@ -49,15 +49,6 @@
     "smoothscroll-polyfill": "^0.4.4"
   },
   "devDependencies": {
-    "eslint": "^6.8.0",
-    "eslint-config-prettier": "^6.11.0",
-    "eslint-config-react": "^1.1.7",
-    "eslint-plugin-prettier": "^3.1.3",
-    "eslint-plugin-react": "^7.19.0",
-    "eslint-plugin-react-hooks": "^3.0.0",
-    "eslint-plugin-simple-import-sort": "^5.0.2",
-    "@typescript-eslint/eslint-plugin": "^2.29.0",
-    "@typescript-eslint/parser": "^2.29.0",
     "@babel/plugin-proposal-class-properties": "^7.8.3",
     "@babel/plugin-proposal-decorators": "^7.8.3",
     "@svgr/webpack": "^5.2.0",
@@ -77,11 +68,21 @@
     "@types/react-image-gallery": "^0.9.3",
     "@types/segment-analytics": "^0.0.32",
     "@types/smoothscroll-polyfill": "^0.3.1",
-    "jest-sonar": "^0.2.11",
-    "sonarqube-scanner": "^2.7.0",
-    "typescript": "^3.8.2",
-    "url-loader": "^3.0.0",
+    "@typescript-eslint/eslint-plugin": "^2.29.0",
+    "@typescript-eslint/parser": "^2.29.0",
+    "eslint": "^6.8.0",
+    "eslint-config-prettier": "^6.11.0",
+    "eslint-config-react": "^1.1.7",
+    "eslint-plugin-prettier": "^3.1.3",
+    "eslint-plugin-react": "^7.19.0",
+    "eslint-plugin-react-hooks": "^3.0.0",
+    "eslint-plugin-simple-import-sort": "^5.0.2",
     "jest": "^25.4.0",
-    "prettier": "^2.0.5"
+    "jest-sonar": "^0.2.11",
+    "prettier": "^2.0.5",
+    "sonarqube-scanner": "^2.7.0",
+    "ts-jest": "^26.4.4",
+    "typescript": "^3.8.2",
+    "url-loader": "^3.0.0"
   }
 }
