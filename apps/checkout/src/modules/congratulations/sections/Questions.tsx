@@ -78,7 +78,7 @@ const CustomLink = styled(Link)`
   letter-spacing: 1.75px !important;
 `;
 export interface QuestionProps {
-  trackQuestions: (event: TrackContactModule) => () => void;
+  trackQuestions?: (event: TrackContactModule) => () => void;
   phone: {
     href: string;
     label: string;
@@ -96,7 +96,9 @@ const Questions: React.FC<QuestionProps> = ({
         <Action>
           <BrandIcon icon={Icons.QUESTION} />
           <CustomLink
-            onClick={trackQuestions(TrackContactModule.helpCenter)}
+            onClick={
+              trackQuestions && trackQuestions(TrackContactModule.helpCenter)
+            }
             href="https://vroom.zendesk.com/hc/en-us"
             blank
           >
@@ -107,7 +109,9 @@ const Questions: React.FC<QuestionProps> = ({
         <Action>
           <BrandIcon icon={Icons.ENVELOPE} />
           <CustomLink
-            onClick={trackQuestions(TrackContactModule.contactUs)}
+            onClick={
+              trackQuestions && trackQuestions(TrackContactModule.contactUs)
+            }
             href="/contact"
             blank
           >
@@ -118,7 +122,7 @@ const Questions: React.FC<QuestionProps> = ({
         <Action>
           <BrandIcon icon={Icons.PHONE} />
           <CustomLink
-            onClick={trackQuestions(TrackContactModule.phone)}
+            onClick={trackQuestions && trackQuestions(TrackContactModule.phone)}
             href={`tel:${phone.href}`}
           >
             {phone.label}
