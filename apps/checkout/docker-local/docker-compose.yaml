@@ -13,6 +13,7 @@ services:
       - GEARBOX_PRIVATE_URL=https://gearbox-dev-int.vroomapi.com/query-private
       - DATA_DOG_RUM_TOKEN=pub4d4bcfd1fdb025834550786951abda6b
       - GQL_PROXY_TARGET=https://dev.vroom.com/gql
+      - SEGMENT_WRITE_KEY=N0pxERRIw4iYCoxZREMZj1yWBIoARIz4
     command: ash -c "npm run dev -- --port 8080"
     # This starts nothing but leaves the container running, useful for
     # debugging nextjs start / config operations

@@ -1,3 +1,4 @@
+import { datadogRum } from '@datadog/browser-rum';
 import { GQLTypes, Status } from '@vroom-web/networking';
 import { FooterProps } from '@vroom-web/temp-ui-alias-for-checkout';
 
@@ -6,6 +7,10 @@ import { NextProps } from './sections/Next';
 import { PurchaseSummaryProps } from './sections/PurchaseSummary/PurchaseSummary';
 import { QuestionProps } from './sections/Questions';
 import { ReservedCarProps } from './sections/ReservedCar';
+
+import AnalyticsHandler, {
+  TrackContactModule,
+} from 'src/integrations/congratulations/CongratsAnalyticsHandler';
 
 enum ServiceType {
   Vehicle = 'VRVS',
@@ -19,11 +24,28 @@ interface Service {
   summary: string;
 }
 
+interface AnalyticsData {
+  UUID?: string;
+  username: string;
+  vin?: string;
+  paymentMethod?: string;
+  step?: string;
+  orderId?: number;
+  productId?: string;
+  productName?: string;
+  hasTrade: boolean;
+}
 export default class CongratsViewModel {
   model: Model;
+  analyticsHandler: AnalyticsHandler;
 
   constructor(model: Model) {
     this.model = model;
+    this.analyticsHandler = new AnalyticsHandler(this);
+  }
+
+  private get dealId(): number {
+    return (this.model.data.user.deals as Array<GQLTypes.Deal>)[0].dealID;
   }
 
   private get summary(): GQLTypes.DealSummary {
@@ -168,6 +190,7 @@ export default class CongratsViewModel {
     const src = leadPhotoURL ? leadPhotoURL : '';
 
     return {
+      trackScheduleTime: this.trackScheduleTime,
       data: {
         car: car,
         email: this.account.userName,
@@ -203,6 +226,35 @@ export default class CongratsViewModel {
         },
       ],
     };
+  }
+
+  get analyticsData(): AnalyticsData {
+    return {
+      UUID: undefined,
+      username: this.model.data.user.username,
+      vin: this.summary.inventory?.vehicle?.vin,
+      paymentMethod: this.summary.paymentType,
+      step: this.summary.dealStatus.step,
+      orderId: this.dealId,
+      productId: this.summary.inventory?.id,
+      productName: this.summary.inventory?.vehicle?.vin,
+      hasTrade: this.summary.dealStatus.interestedInTrade,
+    };
+  }
+
+  trackAnalytics(): void {
+    if (this.showSuccess) {
+      this.analyticsHandler.trackCongratsViewed();
+      this.analyticsHandler.trackOrderCompleted();
+
+      const { orderId, productId } = this.analyticsData;
+      datadogRum.addUserAction('completedDeal', {
+        deal: {
+          dealId: orderId,
+          inventoryId: productId,
+        },
+      });
+    }
   }
 
   get purchaseSummaryProps(): PurchaseSummaryProps {
@@ -343,9 +395,18 @@ export default class CongratsViewModel {
     };
   }
 
+  trackScheduleTime = (): void => {
+    this.analyticsHandler.trackScheduleTime();
+  };
+
+  trackQuestions = (event: TrackContactModule) => (): void => {
+    this.analyticsHandler.trackContactModule(event);
+  };
+
   //TODO: Inject correct number
   get questionsProps(): QuestionProps {
     return {
+      trackQuestions: this.trackQuestions,
       phone: {
         href: '+18555241300',
         label: '(855) 524-1300',

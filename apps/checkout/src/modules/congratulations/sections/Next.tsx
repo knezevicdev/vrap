@@ -1,6 +1,12 @@
+import {
+  addStyleForMobile,
+  Body,
+  Heading,
+  ThemeProps,
+  Title,
+} from '@vroom-web/temp-ui-alias-for-checkout';
 import React from 'react';
 import styled from 'styled-components';
-import { addStyleForMobile, Body, Heading, ThemeProps, Title } from '@vroom-web/temp-ui-alias-for-checkout';
 
 const grayFour = (props: { theme: ThemeProps }): string =>
   props.theme.colors.gray.four;

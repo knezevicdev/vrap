@@ -1,5 +1,3 @@
-import React from 'react';
-import styled from 'styled-components';
 import {
   addStyleForMobile,
   addStyleForTablet,
@@ -9,7 +7,10 @@ import {
   Link,
   ThemeProps,
 } from '@vroom-web/temp-ui-alias-for-checkout';
+import React from 'react';
+import styled from 'styled-components';
 
+import { TrackContactModule } from 'src/integrations/congratulations/CongratsAnalyticsHandler';
 const primaryBrand = (props: { theme: ThemeProps }): string =>
   props.theme.colors.primary.brand;
 
@@ -76,36 +77,50 @@ const CustomLink = styled(Link)`
   text-decoration: none !important;
   letter-spacing: 1.75px !important;
 `;
-
 export interface QuestionProps {
+  trackQuestions: (event: TrackContactModule) => () => void;
   phone: {
     href: string;
     label: string;
   };
 }
 
-const Questions: React.FC<QuestionProps> = ({ phone }): JSX.Element => {
+const Questions: React.FC<QuestionProps> = ({
+  trackQuestions,
+  phone,
+}): JSX.Element => {
   return (
     <Container>
       <Heading.Three>questions?</Heading.Three>
       <Actions>
         <Action>
           <BrandIcon icon={Icons.QUESTION} />
-          <CustomLink href="https://vroom.zendesk.com/hc/en-us" blank>
+          <CustomLink
+            onClick={trackQuestions(TrackContactModule.helpCenter)}
+            href="https://vroom.zendesk.com/hc/en-us"
+            blank
+          >
             VISIT OUR HELP CENTER
           </CustomLink>
         </Action>
         <Divider />
         <Action>
           <BrandIcon icon={Icons.ENVELOPE} />
-          <CustomLink href="https://www.vroom.com/contact" blank>
+          <CustomLink
+            onClick={trackQuestions(TrackContactModule.contactUs)}
+            href="/contact"
+            blank
+          >
             SEND A MESSAGE
           </CustomLink>
         </Action>
         <Divider />
         <Action>
           <BrandIcon icon={Icons.PHONE} />
-          <CustomLink href={`tel:${phone.href}`} blank>
+          <CustomLink
+            onClick={trackQuestions(TrackContactModule.phone)}
+            href={`tel:${phone.href}`}
+          >
             {phone.label}
           </CustomLink>
         </Action>

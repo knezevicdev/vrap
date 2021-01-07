@@ -71,7 +71,6 @@ export default class CongratsModel {
                 state
                 postCode
               }
-              paymentType
               amountDue {
                 subTotal
                 totalBalanceDue
@@ -146,6 +145,11 @@ export default class CongratsModel {
                   isAccepted
                 }
                 pricingStack {
+                  downPayment
+                  lenderName
+                  apr
+                  buyRate
+                  termMonths
                   monthlyPayment
                   financeCharge
                 }

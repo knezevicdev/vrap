@@ -1,5 +1,3 @@
-import React from 'react';
-import styled from 'styled-components';
 import {
   addStyleForMobile,
   Body,
@@ -8,6 +6,8 @@ import {
   ThemeProps,
   Title,
 } from '@vroom-web/temp-ui-alias-for-checkout';
+import React from 'react';
+import styled from 'styled-components';
 
 import BillingAddress, {
   BillingAddressProps,
@@ -31,7 +31,6 @@ import RegistrationAddress, {
   RegistrationAddressProps,
 } from './components/RegistrationAddress';
 import UploadedDocuments from './components/UploadedDocuments';
-
 export interface PurchaseSummaryProps {
   summary: {
     date: string;

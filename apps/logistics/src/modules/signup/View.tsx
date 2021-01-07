@@ -62,6 +62,7 @@ const SignupView: React.FC<Props> = ({ viewModel }) => {
                   label="Password"
                   type="password"
                   autoComplete="new-password"
+                  helperText="Use 8 or more characters with a mix of uppercase, lowercase, & numbers"
                   value={viewModel.password}
                   onChange={viewModel.changePassword}
                   fullWidth={true}
@@ -79,7 +80,12 @@ const SignupView: React.FC<Props> = ({ viewModel }) => {
                 />
               </Grid>
               <Grid item container justify="center">
-                <Button variant="contained" color="primary" type="submit">
+                <Button
+                  variant="contained"
+                  color="primary"
+                  type="submit"
+                  disabled={viewModel.disabled}
+                >
                   Sign Up
                 </Button>
               </Grid>
