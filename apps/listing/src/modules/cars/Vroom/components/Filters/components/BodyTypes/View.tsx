@@ -73,8 +73,7 @@ const BodyTypesView: React.FC<Props> = ({ viewModel }) => {
                 <CustomCheckbox disabled={true} aria-hidden="true" />
               )}
             </StyledListItem>
-            {viewModel.showTruckCabTypeFilterExperiment() &&
-              (filtersDataValue === 'truck' && isSelected ? <Truck /> : null)}
+            {filtersDataValue === 'truck' && isSelected ? <Truck /> : null}
           </Fragment>
         );
       })}

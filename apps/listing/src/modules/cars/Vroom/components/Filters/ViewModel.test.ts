@@ -29,11 +29,7 @@ describe('Filters View Model', () => {
     filtersStore = new FiltersStore();
     carStore = new CarsStore();
     viewModel = new ViewModel(carStore, filtersStore);
-    it(`should return all the filters if you're in the AB test`, () => {
-      viewModel.showFuelAndEfficiencyFilters = jest.fn(() => {
-        return true;
-      });
-
+    it(`should return all the filters`, () => {
       const filters = [
         {
           display: FilterDisplay.MAKE_AND_MODEL,
@@ -68,58 +64,6 @@ describe('Filters View Model', () => {
         {
           display: FilterDisplay.FUEL_AND_EFFICIENCY,
           FilterComponent: FuelAndEfficiency,
-          open: false,
-        },
-        {
-          display: FilterDisplay.ENGINE_AND_DRIVETRAIN,
-          FilterComponent: EngineAndDrivetrain,
-          open: false,
-        },
-        {
-          display: FilterDisplay.POPULAR_FEATURES,
-          FilterComponent: Features,
-          open: false,
-        },
-      ];
-      const getFiltersReturn = viewModel.getFilters();
-
-      expect(filters).toEqual(getFiltersReturn);
-    });
-
-    it(`should not return the F&E filter if you're not in the AB test`, () => {
-      viewModel.showFuelAndEfficiencyFilters = jest.fn(() => {
-        return false;
-      });
-
-      const filters = [
-        {
-          display: FilterDisplay.MAKE_AND_MODEL,
-          FilterComponent: Makes,
-          open: true,
-        },
-        {
-          display: FilterDisplay.BODY_TYPE,
-          FilterComponent: BodyTypes,
-          open: false,
-        },
-        {
-          display: FilterDisplay.COLOR,
-          FilterComponent: Color,
-          open: false,
-        },
-        {
-          display: FilterDisplay.YEAR,
-          FilterComponent: Year,
-          open: false,
-        },
-        {
-          display: FilterDisplay.PRICE,
-          FilterComponent: Price,
-          open: false,
-        },
-        {
-          display: FilterDisplay.MILES,
-          FilterComponent: Miles,
           open: false,
         },
         {

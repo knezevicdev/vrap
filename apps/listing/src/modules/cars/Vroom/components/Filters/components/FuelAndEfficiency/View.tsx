@@ -45,20 +45,12 @@ interface Props {
 const FuelAndEfficiencyView: React.FC<Props> = ({ viewModel }) => {
   return (
     <FuelAndEfficiencyContainer>
-      {viewModel.showFuelTypeFilter() && (
-        <>
-          <Titles variant="caption">{viewModel.fuelTypeLabel}</Titles>
-          <FuelType />
-        </>
-      )}
-      {viewModel.showFuelEfficiencyFilter() && (
-        <>
-          <FuelEfficiencyTitles variant="caption">
-            {viewModel.minimumFuelEfficiency}
-          </FuelEfficiencyTitles>
-          <FuelEfficiency />
-        </>
-      )}
+      <Titles variant="caption">{viewModel.fuelTypeLabel}</Titles>
+      <FuelType />
+      <FuelEfficiencyTitles variant="caption">
+        {viewModel.minimumFuelEfficiency}
+      </FuelEfficiencyTitles>
+      <FuelEfficiency />
       <Reset
         button
         onClick={viewModel.reset}
