@@ -6,6 +6,8 @@ stages:
 build-checkout:
   only:
     - merge_requests
+    changes:
+      - apps/checkout/**
   stage: build
   script:
     - cd apps/checkout
