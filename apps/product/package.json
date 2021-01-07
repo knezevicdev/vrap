@@ -19,7 +19,7 @@
     "@material-ui/lab": "^4.0.0-alpha.44",
     "@types/jwt-decode": "^3.1.0",
     "@vroom-web/analytics-integration": "^1.2.2",
-    "@vroom-web/cat-sdk": "^1.0.0",
+    "@vroom-web/cat-sdk": "^1.0.5",
     "@vroom-web/catalog-url-integration": "^2.0.2",
     "@vroom-web/deals-v2-networking": "^1.0.1",
     "@vroom-web/experiment-sdk": "^2.0.1",
