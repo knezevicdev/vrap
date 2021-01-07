@@ -1,4 +1,5 @@
 import UsersModel from 'src/modules/admin/users/Model';
+import { Status as UserStatus } from 'src/networking/models/User';
 
 class UserStatusViewModel {
   private usersModel: UsersModel;
@@ -22,7 +23,7 @@ class UserStatusViewModel {
     return this.usersModel.statusFilter || '';
   }
 
-  setStatusFilterAndFilter(value: string): void {
+  setStatusFilterAndFilter(value: UserStatus): void {
     this.usersModel.setStatusFilter(value);
     this.usersModel.getUsers();
   }

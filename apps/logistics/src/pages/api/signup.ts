@@ -81,17 +81,19 @@ export default async function handler(
       },
     };
 
-    await axios.post(
+    const addGroupToUserResponse = await axios.post(
       url,
       JSON.stringify(addGroupToUser.gql),
       addGroupToUser.config
     );
+    if (addGroupToUserResponse.data.errors) {
+      throw { type: 'gearbox', errors: addGroupToUserResponse.data.errors };
+    }
     res.json({});
   } catch (err) {
+    console.error('error', err);
+
     // TODO: Abstract this
-    // This is a check because gearbox will return a 200 if it works but if a
-    // downstream message has an issue we then have to inspect the return
-    // object for a errors key, hence the thrown object above
     if (err.type === 'gearbox') {
       const message: string = err.errors[0].message;
       const status = parseInt(

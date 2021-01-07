@@ -1,6 +1,10 @@
 import { makeAutoObservable, runInAction } from 'mobx';
 
-import { Carrier, User } from 'src/networking/models/User';
+import {
+  Carrier,
+  Status as UserStatus,
+  User,
+} from 'src/networking/models/User';
 import {
   getUsers,
   getUserStatuses,
@@ -13,7 +17,7 @@ class UsersModel {
   usersStatus: Status = Status.INITIAL;
 
   carrierFilter?: Carrier;
-  statusFilter?: string; // TODO: Switch to be based off of user group
+  statusFilter = UserStatus.Pending;
   statusOptions: string[] = [];
   statusOptionsStatus: Status = Status.INITIAL;
 
@@ -26,7 +30,8 @@ class UsersModel {
 
     try {
       const response = await getUsers(
-        this.carrierFilter?.carrier_code ?? undefined
+        this.carrierFilter?.carrier_code ?? '',
+        this.statusFilter
       );
 
       runInAction(() => {
@@ -46,13 +51,8 @@ class UsersModel {
     carrierCode?: string
   ): Promise<void> => {
     try {
-      const response = await patchUser(id, status, carrierCode);
-      runInAction(() => {
-        const index = this.users.findIndex(
-          (i) => i.portal_user_id === response.data.portal_user_id
-        );
-        this.users[index] = response.data;
-      });
+      await patchUser(id, status, carrierCode);
+      this.getUsers();
     } catch (err) {
       console.error(err);
     }
@@ -78,7 +78,7 @@ class UsersModel {
     this.carrierFilter = value;
   };
 
-  setStatusFilter = (value: string): void => {
+  setStatusFilter = (value: UserStatus): void => {
     this.statusFilter = value;
   };
 }

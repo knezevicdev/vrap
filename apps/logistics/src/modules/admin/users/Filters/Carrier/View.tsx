@@ -48,6 +48,7 @@ const AutocompleteView: React.FC<Props> = ({ viewModel }) => {
           {...params}
           label="Carrier"
           fullWidth
+          variant="outlined"
           onChange={(event): void => handleInputChange(event.target.value)}
         />
       )}

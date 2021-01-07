@@ -44,7 +44,7 @@ const AutocompleteView: React.FC<Props> = ({ viewModel }) => {
 
   return (
     <Grid container alignItems="center">
-      <Grid item xs={10}>
+      <Grid item xs={viewModel.carrierName ? 10 : 12}>
         {edit || !viewModel.carrierName ? (
           <Autocomplete
             options={viewModel.options}
@@ -62,6 +62,7 @@ const AutocompleteView: React.FC<Props> = ({ viewModel }) => {
                 {...params}
                 fullWidth
                 label="Carrier"
+                variant="outlined"
                 onChange={(event): void =>
                   handleInputChange(event.target.value)
                 }
@@ -72,11 +73,13 @@ const AutocompleteView: React.FC<Props> = ({ viewModel }) => {
           <>{viewModel.carrierName}</>
         )}
       </Grid>
-      <Grid item xs={2}>
-        <IconButton onClick={(): void => handleClick()}>
-          {edit ? <CancelIcon /> : <EditIcon />}
-        </IconButton>
-      </Grid>
+      {viewModel.carrierName && (
+        <Grid item xs={2}>
+          <IconButton onClick={(): void => handleClick()}>
+            {edit ? <CancelIcon /> : <EditIcon />}
+          </IconButton>
+        </Grid>
+      )}
     </Grid>
   );
 };
