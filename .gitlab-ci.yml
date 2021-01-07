@@ -9,4 +9,5 @@ build-checkout:
   stage: build
   script:
     - cd apps/checkout
+    - npm install
     - npm run build
