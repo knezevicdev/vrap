@@ -423,7 +423,6 @@ export default class CongratsViewModel {
   }
 
   trackFooterLinks = (trackingName: FooterEventTrackerEnum) => (): void => {
-    console.error("trackingName", trackingName)
     this.analyticsHandler.trackFooterLinks(trackingName);
   };
 
