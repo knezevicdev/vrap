@@ -1,6 +1,9 @@
 import { datadogRum } from '@datadog/browser-rum';
 import { GQLTypes, Status } from '@vroom-web/networking';
-import { FooterProps } from '@vroom-web/temp-ui-alias-for-checkout';
+import {
+  FooterEventTrackerEnum,
+  FooterProps,
+} from '@vroom-web/temp-ui-alias-for-checkout';
 
 import Model from './Model';
 import { NextProps } from './sections/Next';
@@ -404,8 +407,8 @@ export default class CongratsViewModel {
     this.analyticsHandler.trackScheduleTime();
   };
 
-  trackQuestions = (event: TrackContactModule) => (): void => {
-    this.analyticsHandler.trackContactModule(event);
+  trackQuestions = (eventName: TrackContactModule) => (): void => {
+    this.analyticsHandler.trackContactModule(eventName);
   };
 
   //TODO: Inject correct number
@@ -419,9 +422,14 @@ export default class CongratsViewModel {
     };
   }
 
+  trackFooterLinks = (trackingName: FooterEventTrackerEnum) => (): void => {
+    this.analyticsHandler.trackFooterLinks(trackingName);
+  };
+
   //TODO: Inject correct contact number
   get footerProps(): FooterProps {
     return {
+      trackEventHandler: this.trackFooterLinks,
       sections: [
         {
           title: 'Vroom',
@@ -429,14 +437,17 @@ export default class CongratsViewModel {
             {
               href: '/cars',
               name: 'Buy',
+              trackingName: FooterEventTrackerEnum.BUY,
             },
             {
               href: '/sell',
               name: 'Sell/Trade',
+              trackingName: FooterEventTrackerEnum.SELL_TRADE,
             },
             {
               href: '/finance',
               name: 'Finance',
+              trackingName: FooterEventTrackerEnum.FINANCE,
             },
           ],
         },
@@ -446,22 +457,27 @@ export default class CongratsViewModel {
             {
               href: '/about',
               name: 'About Us',
+              trackingName: FooterEventTrackerEnum.ABOUT_US,
             },
             {
               href: '/protection',
               name: 'Vroom Protection',
+              trackingName: FooterEventTrackerEnum.VROOM_PROTECTION,
             },
             {
               href: '/how-it-works',
               name: 'How It Works',
+              trackingName: FooterEventTrackerEnum.HOW_IT_WORKS,
             },
             {
               href: '/reviews',
               name: 'Customer Reviews',
+              trackingName: FooterEventTrackerEnum.REVIEWS,
             },
             {
               href: 'https://ir.vroom.com/',
               name: 'Investor Relations',
+              trackingName: FooterEventTrackerEnum.INVESTOR_RELATIONS,
             },
           ],
         },
@@ -471,14 +487,17 @@ export default class CongratsViewModel {
             {
               href: 'tel:+18555241300',
               name: '(855) 524-1300',
+              trackingName: FooterEventTrackerEnum.PHONE,
             },
             {
               href: 'https://vroom.zendesk.com/hc/en-us',
               name: 'FAQ',
+              trackingName: FooterEventTrackerEnum.FAQ,
             },
             {
               href: '/contact',
               name: 'Contact Us',
+              trackingName: FooterEventTrackerEnum.CONTACT_US,
             },
           ],
         },
@@ -488,19 +507,23 @@ export default class CongratsViewModel {
             {
               href: '/legal/privacy-policy',
               name: 'Privacy Policy',
+              trackingName: FooterEventTrackerEnum.PRIVACY_POLICY,
             },
             {
               href: '/legal/terms-of-use',
               name: 'Terms of use',
+              trackingName: FooterEventTrackerEnum.TERM_OF_USE,
             },
             {
               href: '/careers',
               name: 'Careers',
+              trackingName: FooterEventTrackerEnum.CAREERS,
             },
             {
               href:
                 'https://privacyportal.onetrust.com/webform/8086730d-99f7-48ea-b3a1-0b3bb0cf163e/aa3e2126-7439-411d-a9a2-9fa0c4f8b01d',
               name: 'Do Not Sell My Info (CA Residents)',
+              trackingName: FooterEventTrackerEnum.DO_NOT_SELL_INFO,
             },
           ],
         },
