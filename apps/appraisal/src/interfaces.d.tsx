@@ -31,12 +31,12 @@ export interface PlaidData {
     type: string;
   },
   authenticated_user: boolean;
-  email?: string;
+  email: string;
   institution: {
     id: string;
     name: string;
   },
   public_token: string;
-  reference_id?: string;
-  source?: string;
+  reference_id: string;
+  source: string;
 }

@@ -31,9 +31,11 @@ export interface Props {
   viewModel: PlaidButtonViewModel;
   token: string;
   plaidSuccess (mutationInput: PlaidData): void;
+  priceId: string;
+  email: string;
 }
 
-const PlaidButtonView: React.FC<Props> = ({ viewModel, token, plaidSuccess }) => {
+const PlaidButtonView: React.FC<Props> = ({ viewModel, token, plaidSuccess, priceId, email }) => {
   const onSuccess = useCallback((_token: string, metaData: any): void => {
     const mutationInput = {
       account: {
@@ -41,7 +43,10 @@ const PlaidButtonView: React.FC<Props> = ({ viewModel, token, plaidSuccess }) =>
       },
       authenticated_user: true,
       institution: { ...metaData.institution },
-      public_token: metaData.public_token
+      public_token: metaData.public_token,
+      source: 'acquisitions',
+      reference_id: priceId,
+      email
     };
 
     plaidSuccess(mutationInput);

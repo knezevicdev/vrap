@@ -5,11 +5,15 @@ import ViewModel from './ViewModel';
 
 import { useDirectDepositStore } from './store';
 
-const DirectDeposit: React.FC = () => {
+interface Props {
+  email: string;
+}
+
+const DirectDeposit: React.FC<Props> = ({ email }) => {
   const ddStore = useDirectDepositStore();
   const viewModel = new ViewModel(ddStore);
 
-  return <View viewModel={viewModel} />;
+  return <View viewModel={viewModel} email={email} />;
 };
 
 export default DirectDeposit;

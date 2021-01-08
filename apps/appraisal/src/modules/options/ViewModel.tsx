@@ -44,6 +44,10 @@ class OptionsViewModel {
     return this.store.mailingAddress;
   };
 
+  getEmail = (): string => {
+    return this.store.email;
+  };
+
   showDirectDeposit = (): boolean => {
     return this.store.showDD;
   };

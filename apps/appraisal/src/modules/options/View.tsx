@@ -159,7 +159,7 @@ const OptionsView: React.FC<Props> = ({ viewModel }) => {
               />
               <OptionDisplay>
                 {showDirectDeposit ? (
-                  <DirectDeposit />
+                  <DirectDeposit email={viewModel.getEmail()} />
                 ) : (
                   <CheckByMail
                     mailingAddress={viewModel.getMailiingAddress()}

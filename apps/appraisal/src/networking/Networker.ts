@@ -90,8 +90,8 @@ export class Networker {
   getPlaidToken = async (
     userId: string
   ): Promise<AxiosResponse<PlaidTokenResp>> => {
-    const gearboxUrl = ENVS.GEARBOX_URL + '/query';
-    const authToken = btoa('acquisitions:K%LHs92noePmf$qEHBht');
+    const gearboxUrl = ENVS.GEARBOX_URL + 'query';
+    const authToken = btoa(`acquisitions:${ENVS.APIUSERS_ACQUISITIONS_PASSWORD}`);
     const data = {
       query: `query ($userId: String!) {
         getLinkToken(userId: $userId) {
@@ -113,8 +113,8 @@ export class Networker {
   postPlaidPayment = async (
     input: PlaidData
   ): Promise<AxiosResponse<PlaidTokenResp>> => {
-    const gearboxUrl = ENVS.GEARBOX_URL + '/';
-    const authToken = btoa('acquisitions:K%LHs92noePmf$qEHBht');
+    const gearboxUrl = ENVS.GEARBOX_URL;
+    const authToken = btoa(`acquisitions:${ENVS.APIUSERS_ACQUISITIONS_PASSWORD}`);
     const data = {
       query: `mutation ($input: CreateUserPaymentAccountInput) {
         createUserPaymentAccount(input: $input)
