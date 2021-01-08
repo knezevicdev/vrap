@@ -11,6 +11,7 @@ import styled from 'styled-components';
 
 import ToolFooter from 'src/core/ToolFooter';
 import Options from 'src/modules/options';
+import { DirectDepositStore, DirectDepositStoreContext } from 'src/modules/directdeposit/store';
 import { OptionsStore, OptionsStoreContext } from 'src/modules/options/store';
 import PaymentOverview from 'src/modules/paymentoverview';
 import {
@@ -58,6 +59,7 @@ const EPayOptions: NextPage<Props> = ({ brand }) => {
   const mdUp = useMediaQuery(theme.breakpoints.up('lg'));
 
   const oStore = new OptionsStore(priceId);
+  const ddStore = new DirectDepositStore(priceId);
   const poStore = new PaymentOverviewStore(priceId, mdUp);
 
   return (
@@ -67,7 +69,9 @@ const EPayOptions: NextPage<Props> = ({ brand }) => {
         <SuccessBar />
         <ColumnBody>
           <OptionsStoreContext.Provider value={oStore}>
-            <Options />
+            <DirectDepositStoreContext.Provider value={ddStore}>
+              <Options />
+            </DirectDepositStoreContext.Provider>
           </OptionsStoreContext.Provider>
           <PaymentOverviewStoreContext.Provider value={poStore}>
             <PaymentOverview />

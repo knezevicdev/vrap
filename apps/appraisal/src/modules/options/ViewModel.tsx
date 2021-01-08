@@ -1,4 +1,5 @@
 import { OptionsStore } from './store';
+import { DirectDepositStore } from '../directdeposit/store';
 
 import AnalyticsHandler from 'src/integrations/AnalyticsHandler';
 import { MailingAddress } from 'src/interfaces.d';
@@ -7,6 +8,7 @@ import { submitPaymentOptions } from 'src/modules/options/store';
 
 class OptionsViewModel {
   private readonly store: OptionsStore;
+  private readonly ddStore: DirectDepositStore;
   private analyticsHandler: AnalyticsHandler;
   readonly hero: string = `let's set up your payment method`;
   readonly optionTitle: string = 'Payment Method';
@@ -14,8 +16,9 @@ class OptionsViewModel {
   readonly submit: string = 'submit';
   readonly submitting: string = 'submitting';
 
-  constructor(store: OptionsStore) {
+  constructor(store: OptionsStore, ddStore: DirectDepositStore) {
     this.store = store;
+    this.ddStore = ddStore;
     this.analyticsHandler = new AnalyticsHandler();
   }
 
@@ -43,6 +46,10 @@ class OptionsViewModel {
 
   showDirectDeposit = (): boolean => {
     return this.store.showDD;
+  };
+
+  getShowSubmitButton = (): boolean => {
+    return !this.ddStore.showPlaidLink;
   };
 
   isValidRouting = (num: string | null | undefined): boolean => {

@@ -41,10 +41,15 @@ interface AnalyticsData {
 export default class CongratsViewModel {
   model: Model;
   analyticsHandler: AnalyticsHandler;
+  currencyFormatter: Intl.NumberFormat;
 
   constructor(model: Model) {
     this.model = model;
     this.analyticsHandler = new AnalyticsHandler(this);
+    this.currencyFormatter = new Intl.NumberFormat('en-US', {
+      style: 'currency',
+      currency: 'USD',
+    });
   }
 
   private get dealId(): number {
@@ -298,36 +303,36 @@ export default class CongratsViewModel {
       purchaseDetails: {
         data: {
           method: this.paymentMethod,
-          sellingPrice: `$${this.pricing.listPrice.toLocaleString()}`,
-          taxes: `$${this.amountDue.totalTaxesAndFees.toLocaleString()}`,
+          sellingPrice: this.currencyFormatter.format(this.pricing.listPrice),
+          taxes: this.currencyFormatter.format(this.amountDue.totalTaxesAndFees),
           vehicleServiceContractProtection: this
             .vehicleServiceContractProtection
             ? {
-                cost: `$${this.vehicleServiceContractProtection.cost.toLocaleString()}`,
+                cost: this.currencyFormatter.format(this.vehicleServiceContractProtection.cost),
                 summary: this.vehicleServiceContractProtection.summary,
               }
             : undefined,
           gapCoverage: this.gapCoverage
             ? {
-                cost: `$${this.gapCoverage.cost.toLocaleString()}`,
+                cost: this.currencyFormatter.format(this.gapCoverage.cost),
                 summary: this.gapCoverage.summary,
               }
             : undefined,
           tireAndWheelCoverage: this.tireAndWheelCoverage
             ? {
-                cost: `$${this.tireAndWheelCoverage.cost.toLocaleString()}`,
+                cost: this.currencyFormatter.format(this.tireAndWheelCoverage.cost),
                 summary: this.tireAndWheelCoverage.summary,
               }
             : undefined,
-          shippingFee: `$${this.amountDue.shippingFee.toLocaleString()}`,
-          subtotal: `$${this.amountDue.subTotal.toLocaleString()}`,
-          creditDownPayment: `-$${this.amountDue.cashDownPayment.toLocaleString()}`,
-          total: `$${this.amountDue.totalBalanceDue.toLocaleString()}`,
+          shippingFee: this.currencyFormatter.format(this.amountDue.shippingFee),
+          subtotal: this.currencyFormatter.format(this.amountDue.subTotal),
+          creditDownPayment: this.currencyFormatter.format(this.amountDue.cashDownPayment * -1),
+          total: this.currencyFormatter.format(this.amountDue.totalBalanceDue),
         },
       },
       depositInformation: {
         data: {
-          amount: `${ChargeAmount}`,
+          amount: this.currencyFormatter.format(ChargeAmount),
           creditCard: `***${LastFourDigits}`,
         },
       },
@@ -361,13 +366,13 @@ export default class CongratsViewModel {
       financingInformation: this.financing
         ? {
             data: {
-              downPayment: `-$${this.financingPricingStack.downPayment}`,
+              downPayment: this.currencyFormatter.format(this.financingPricingStack.downPayment * -1),
               bank: this.financingPricingStack.lenderName,
               apr: `${(this.financingPricingStack.apr * 100).toFixed(2)}%`,
-              financeTerm: this.financingPricingStack.buyRate.toString(),
+              financeTerm: `${this.financingPricingStack.termMonths} months`,
               numberOfPayments: this.financingPricingStack.termMonths.toString(),
-              financeCharge: `$${this.financingPricingStack.financeCharge}`,
-              monthlyPayment: `$${this.financingPricingStack.monthlyPayment}`,
+              financeCharge: this.currencyFormatter.format(this.financingPricingStack.financeCharge),
+              monthlyPayment: this.currencyFormatter.format(this.financingPricingStack.monthlyPayment),
             },
           }
         : undefined,

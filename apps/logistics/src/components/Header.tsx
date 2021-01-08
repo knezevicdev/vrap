@@ -14,7 +14,6 @@ import { IdToken } from 'src/networking/models/Auth';
 
 const useStyles = makeStyles(() => ({
   headerWrapper: {
-    height: '95px',
     display: 'flex',
   },
   headerSection: {
