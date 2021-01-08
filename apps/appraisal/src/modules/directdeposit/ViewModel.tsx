@@ -21,6 +21,10 @@ class DirectDepositViewModel {
     return this.store.showPlaidLink;
   }
 
+  getPriceId = (): string => {
+    return this.store.priceId;
+  }
+
   togglePlaidLink = (): void => {
     this.store.togglePlaidLink();
   }

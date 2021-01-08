@@ -22,8 +22,8 @@ export async function getInitialDDStoreState(
 ): Promise<DDStoreState> {
   const networker = new Networker();
   try {
-    const response = await networker.getPlaidToken(priceId);
-    const plaidToken = response.data.data.getLinkToken;
+    const tokenResponse = await networker.getPlaidToken(priceId);
+    const plaidToken = tokenResponse.data.data.getLinkToken;
     return plaidToken;
   } catch (err) {
     console.log(JSON.stringify(err));
