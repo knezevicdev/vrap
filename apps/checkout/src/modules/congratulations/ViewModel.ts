@@ -53,6 +53,10 @@ export default class CongratsViewModel {
     return (this.model.data.user.deals as Array<GQLTypes.Deal>)[0].dealID;
   }
 
+  private get transactionPlacedDate(): string {
+    return (this.model.data.user.deals as Array<GQLTypes.Deal>)[0].createdAt;
+  }
+
   private get summary(): GQLTypes.DealSummary {
     return (this.model.data.user.deals as Array<GQLTypes.Deal>)[0].dealSummary;
   }
@@ -286,7 +290,7 @@ export default class CongratsViewModel {
 
     return {
       summary: {
-        date: new Date(this.summary.dateCompleted).toDateString(),
+        date: new Date(this.transactionPlacedDate).toDateString(),
         car: {
           image: {
             alt: car,
