@@ -1,8 +1,5 @@
 import axios from 'axios';
-import jwtDecode from 'jwt-decode';
 import { NextApiRequest, NextApiResponse } from 'next';
-
-import { AccessToken, Groups } from 'src/networking/models/Auth';
 
 export default async function handler(
   req: NextApiRequest,
@@ -11,16 +8,67 @@ export default async function handler(
   const url = process.env.GEARBOX_URL ?? '';
 
   try {
+    const portalUserCreate = {
+      gql: {
+        query: `mutation createUser($username: String!, $firstName: String!, $lastName: String!) {
+          portalUserCreate(username: $username, firstName: $firstName, lastName: $lastName) {
+            __typename
+            ... on PortalUser {
+                portal_user_id
+                username
+                status
+                first_name
+                middle_name
+                last_name
+                phone
+                created_on
+                updated_on
+                carrier {
+                  carrier_id
+                  carrier
+                  carrier_code
+                }
+                portal_roles {
+                  portal_role_id
+                  name
+                }
+              }
+                ... on APIError {
+              errorType
+              errorTitle
+              errorDetail
+            }
+          }
+        }`,
+        variables: {
+          username: req.body.username,
+          firstName: req.body.firstName,
+          lastName: req.body.lastName,
+        },
+      },
+      config: {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      },
+    };
+
+    await axios.post(
+      url,
+      JSON.stringify(portalUserCreate.gql),
+      portalUserCreate.config
+    );
+
     const signup = {
       gql: {
         query: `mutation signup($username: String!, $password: String!, $source: String!, $firstName: String!, $lastName: String!, $middleName: String, $phone: String!, $emailMarketingConsent: Boolean!, $smsMarketingConsent: Boolean!) {
-      signup(username: $username, password: $password, source: $source, firstName: $firstName, lastName: $lastName, middleName: $middleName, phone: $phone, emailMarketingConsent: $emailMarketingConsent, smsMarketingConsent: $smsMarketingConsent) {
-        accountId,
-        accessToken,
-        refreshToken,
-        idToken
-      }
-    }`,
+          signup(username: $username, password: $password, source: $source, firstName: $firstName, lastName: $lastName, middleName: $middleName, phone: $phone, emailMarketingConsent: $emailMarketingConsent, smsMarketingConsent: $smsMarketingConsent) {
+            accountId,
+            accessToken,
+            refreshToken,
+            idToken
+          }
+        }`,
         variables: {
           username: req.body.username,
           password: req.body.password,
@@ -49,46 +97,7 @@ export default async function handler(
     if (signUpResponse.data.errors) {
       throw { type: 'gearbox', errors: signUpResponse.data.errors };
     }
-    const accessToken: string = signUpResponse.data.data.signup.accessToken;
 
-    const decodedAccessToken: AccessToken = jwtDecode(accessToken);
-
-    const addGroupToUser = {
-      gql: {
-        query: `mutation addGroupToUser($username: String!, $group: String!) {
-        addGroupToUser(username: $username, group: $group) {
-          __typename
-          ... on StringArray {
-            values
-          }
-          ... on APIError {
-            errorType
-            errorTitle
-            errorDetail
-          }
-        }
-      }`,
-        variables: {
-          username: decodedAccessToken.username,
-          group: Groups.LogisticsPortalPending,
-        },
-      },
-      config: {
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${accessToken}`,
-        },
-      },
-    };
-
-    const addGroupToUserResponse = await axios.post(
-      url,
-      JSON.stringify(addGroupToUser.gql),
-      addGroupToUser.config
-    );
-    if (addGroupToUserResponse.data.errors) {
-      throw { type: 'gearbox', errors: addGroupToUserResponse.data.errors };
-    }
     res.json({});
   } catch (err) {
     console.error('error', err);
