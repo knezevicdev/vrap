@@ -1,5 +1,6 @@
 /*eslint @typescript-eslint/camelcase: [error, {properties: "never"}]*/
 import { AnalyticsHandler as BaseAnalyticsHandler } from '@vroom-web/analytics-integration';
+import { FooterEventTrackerEnum } from '@vroom-web/temp-ui-alias-for-checkout';
 import getConfig from 'next/config';
 
 import CongratsViewModel from 'src/modules/congratulations/ViewModel';
@@ -109,6 +110,24 @@ class CongratsAnalyticsHandler extends BaseAnalyticsHandler {
       };
 
       this.track(event, properties);
+    } catch (err) {
+      console.log('Analytic Event', err);
+    }
+  }
+
+  trackFooterLinks(eventName: FooterEventTrackerEnum): void {
+    try {
+      const { username, UUID } = this.viewModel.analyticsData;
+
+      const properties = {
+        category: 'Ecommerce',
+        pageName: 'Congratulations',
+        section: 'footer',
+        userId: username,
+        UUID,
+        applicationVersion: VERSION,
+      };
+      this.track(eventName, properties);
     } catch (err) {
       console.log('Analytic Event', err);
     }
