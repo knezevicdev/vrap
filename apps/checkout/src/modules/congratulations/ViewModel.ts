@@ -407,8 +407,8 @@ export default class CongratsViewModel {
     this.analyticsHandler.trackScheduleTime();
   };
 
-  trackQuestions = (event: TrackContactModule) => (): void => {
-    this.analyticsHandler.trackContactModule(event);
+  trackQuestions = (eventName: TrackContactModule) => (): void => {
+    this.analyticsHandler.trackContactModule(eventName);
   };
 
   //TODO: Inject correct number
@@ -423,6 +423,7 @@ export default class CongratsViewModel {
   }
 
   trackFooterLinks = (trackingName: FooterEventTrackerEnum) => (): void => {
+    console.error("trackingName", trackingName)
     this.analyticsHandler.trackFooterLinks(trackingName);
   };
 

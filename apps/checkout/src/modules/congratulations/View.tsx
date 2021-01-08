@@ -31,7 +31,7 @@ const {
 } = getConfig();
 
 const CongratsView: React.FC<Props> = ({ viewModel }) => {
-  const { sections } = viewModel.footerProps;
+  const { sections, trackEventHandler } = viewModel.footerProps;
   const questionsProps = viewModel.questionsProps;
 
   viewModel.trackAnalytics();
@@ -43,7 +43,7 @@ const CongratsView: React.FC<Props> = ({ viewModel }) => {
       {viewModel.showError && <Error />}
       {viewModel.showSuccess && <Success viewModel={viewModel} />}
       <Questions {...questionsProps} />
-      <Footer sections={sections} />
+      <Footer sections={sections} trackEventHandler={trackEventHandler} />
     </Page>
   );
 };
