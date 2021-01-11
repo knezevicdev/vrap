@@ -81,7 +81,7 @@ export interface QuestionProps {
   trackQuestions?: (event: TrackContactModule) => () => void;
   phone: {
     href: string;
-    label: string;
+    name: string;
   };
 }
 
@@ -125,7 +125,7 @@ const Questions: React.FC<QuestionProps> = ({
             onClick={trackQuestions && trackQuestions(TrackContactModule.phone)}
             href={`tel:${phone.href}`}
           >
-            {phone.label}
+            {phone.name}
           </CustomLink>
         </Action>
       </Actions>

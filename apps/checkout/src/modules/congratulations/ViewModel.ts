@@ -4,13 +4,13 @@ import {
   FooterEventTrackerEnum,
   FooterProps,
 } from '@vroom-web/temp-ui-alias-for-checkout';
-
+import { NavStore } from './store';
 import Model from './Model';
 import { NextProps } from './sections/Next';
 import { PurchaseSummaryProps } from './sections/PurchaseSummary/PurchaseSummary';
 import { QuestionProps } from './sections/Questions';
 import { ReservedCarProps } from './sections/ReservedCar';
-
+import { parsePhoneNumberFromString } from 'libphonenumber-js';
 import AnalyticsHandler, {
   TrackContactModule,
 } from 'src/integrations/congratulations/CongratsAnalyticsHandler';
@@ -20,13 +20,17 @@ enum ServiceType {
   TireAndWheel = 'VRTW',
   Gap = 'VRGP',
 }
-
 interface Service {
   selected: boolean;
   cost: number;
   summary: string;
 }
 
+export interface Link {
+  href: string;
+  name: string;
+  trackingName?: FooterEventTrackerEnum;
+}
 interface AnalyticsData {
   UUID?: string;
   username: string;
@@ -42,10 +46,12 @@ export default class CongratsViewModel {
   model: Model;
   analyticsHandler: AnalyticsHandler;
   currencyFormatter: Intl.NumberFormat;
+  private store: NavStore;
 
   constructor(model: Model) {
     this.model = model;
     this.analyticsHandler = new AnalyticsHandler(this);
+    this.store = new NavStore();
     this.currencyFormatter = new Intl.NumberFormat('en-US', {
       style: 'currency',
       currency: 'USD',
@@ -411,13 +417,41 @@ export default class CongratsViewModel {
     this.analyticsHandler.trackContactModule(eventName);
   };
 
-  //TODO: Inject correct number
+
+
+  private getPhoneNumberLinkData = (): Link => {
+    const defaultPhoneNumberLinkData: Link = {
+      href: 'tel:+18555241300',
+      name: '(855) 524-1300',
+    };
+
+    if (!this.store.phoneNumber) {
+      return defaultPhoneNumberLinkData;
+    }
+
+    const parsedPhoneNumber = parsePhoneNumberFromString(
+      decodeURIComponent(this.store.phoneNumber),
+      'US'
+    );
+
+    if (!parsedPhoneNumber) {
+      return defaultPhoneNumberLinkData;
+    }
+    if (!parsedPhoneNumber.isValid()) {
+      return defaultPhoneNumberLinkData;
+    }
+    const phoneNumberLinkData: Link = {
+      href: parsedPhoneNumber.getURI(),
+      name: parsedPhoneNumber.formatNational(),
+    };
+    return phoneNumberLinkData;
+  };
+
   get questionsProps(): QuestionProps {
     return {
       trackQuestions: this.trackQuestions,
       phone: {
-        href: '+18555241300',
-        label: '(855) 524-1300',
+       ...this.getPhoneNumberLinkData(),
       },
     };
   }
@@ -426,7 +460,6 @@ export default class CongratsViewModel {
     this.analyticsHandler.trackFooterLinks(trackingName);
   };
 
-  //TODO: Inject correct contact number
   get footerProps(): FooterProps {
     return {
       trackEventHandler: this.trackFooterLinks,
@@ -485,8 +518,7 @@ export default class CongratsViewModel {
           title: 'Contact',
           links: [
             {
-              href: 'tel:+18555241300',
-              name: '(855) 524-1300',
+              ...this.getPhoneNumberLinkData(),
               trackingName: FooterEventTrackerEnum.PHONE,
             },
             {
