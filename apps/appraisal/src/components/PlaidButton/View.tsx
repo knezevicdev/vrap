@@ -41,7 +41,6 @@ const PlaidButtonView: React.FC<Props> = ({ viewModel, token, plaidSuccess, pric
       account: {
         ...metaData.account
       },
-      authenticated_user: true,
       institution: { ...metaData.institution },
       public_token: metaData.public_token,
       source: 'acquisitions',
