@@ -1,4 +1,6 @@
 import { ServerStyleSheets } from '@material-ui/core/styles';
+import { AnalyticsSnippet } from '@vroom-web/analytics-integration';
+import getConfig from 'next/config';
 import Document, {
   DocumentContext,
   DocumentInitialProps,
@@ -9,7 +11,6 @@ import Document, {
 } from 'next/document';
 import React from 'react';
 import { ServerStyleSheet } from 'styled-components';
-
 export default class MyDocument extends Document {
   static async getInitialProps(
     ctx: DocumentContext
@@ -44,9 +45,19 @@ export default class MyDocument extends Document {
   }
 
   render(): JSX.Element {
+    const {
+      serverRuntimeConfig: { SEGMENT_WRITE_KEY },
+    } = getConfig();
     return (
       <Html lang="en">
-        <Head></Head>
+        <Head>
+          {SEGMENT_WRITE_KEY && (
+            <AnalyticsSnippet
+              appName="Vroom Web - Checkout"
+              segmentWriteKey={SEGMENT_WRITE_KEY}
+            />
+          )}
+        </Head>
         <body>
           <Main />
           <NextScript />

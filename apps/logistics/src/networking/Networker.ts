@@ -14,13 +14,13 @@ export enum Status {
 const axiosInstance = axios.create();
 
 export const getUsers = async (
-  carrierCode?: string
-  // status?: string
+  carrierCode: string,
+  status: string
 ): Promise<AxiosResponse<{ users: User[] }>> => {
   const url = '/api/gearbox';
   const data = {
-    query: `query portalUsersQuery($carrier: String!) {
-      portalUsers(carrier: $carrier) {
+    query: `query portalUsersQuery($carrier: String!, $status: String!) {
+      portalUsers(carrier: $carrier, status: $status) {
         __typename
         ... on PortalUsersArray {
           users {
@@ -52,7 +52,7 @@ export const getUsers = async (
 
       }
     }`,
-    variables: { carrier: carrierCode ?? '' },
+    variables: { carrier: carrierCode, status: status },
     queryKey: 'portalUsers',
   };
 
@@ -122,11 +122,9 @@ export const patchUser = async (
 ): Promise<AxiosResponse<User>> => {
   const url = `/api/gearbox`;
 
-  const variables: {
-    userId?: number;
-    status?: string;
-    carrierCode?: string;
-  } = { userId: id };
+  const variables: { userId: number; status?: string; carrierCode?: string } = {
+    userId: id,
+  };
 
   if (status) {
     variables.status = status;
@@ -137,11 +135,10 @@ export const patchUser = async (
   }
 
   const data = {
-    query: `mutation updateUser($userId: Int!, $carrierCode: String!, $status: String!) {
+    query: `mutation updateUser($userId: Int!, $carrierCode: String, $status: String) {
       portalUserUpdate(userId: $userId, carrierCode: $carrierCode, status: $status) {
         __typename
-        ... on UserUpdate {
-          portalUser {
+        ... on PortalUser {
             portal_user_id
             username
             status
@@ -161,7 +158,6 @@ export const patchUser = async (
               name
             }
           }
-        }
             ... on APIError {
           errorType
           errorTitle

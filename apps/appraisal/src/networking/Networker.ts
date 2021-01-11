@@ -7,8 +7,12 @@ import {
 } from './models/Price';
 
 import ENVS from 'src/integrations/Envs';
-import { MailingAddress } from 'src/interfaces.d';
-import { PaymentOverviewFormValues } from 'src/interfaces.d';
+import {
+  MailingAddress,
+  PaymentOverviewFormValues,
+  PlaidTokenResp,
+  PlaidData
+} from 'src/interfaces.d';
 
 export enum Status {
   INITIAL = 'initial',
@@ -82,4 +86,36 @@ export class Networker {
 
     return this.axiosInstance.post(url, data);
   }
+
+  getPlaidToken = async (
+    userId: string
+  ): Promise<AxiosResponse<PlaidTokenResp>> => {
+    const gearboxUrl = '/gql';
+    const data = {
+      query: `query ($userId: String!) {
+        getLinkToken(userId: $userId) {
+          LinkToken,
+          Expiration,
+          RequestId
+        }
+      }`,
+      variables: { userId }
+    };
+  
+    return this.axiosInstance.post(gearboxUrl, data);
+  };
+
+  postPlaidPayment = async (
+    input: PlaidData
+  ): Promise<AxiosResponse<PlaidTokenResp>> => {
+    const gearboxUrl = '/gql';
+    const data = {
+      query: `mutation ($input: CreateUserPaymentAccountInput) {
+        createUserPaymentAccount(input: $input)
+      }`,
+      variables: { input }
+    };
+  
+    return this.axiosInstance.post(gearboxUrl, data);
+  };
 }

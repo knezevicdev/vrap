@@ -1,11 +1,19 @@
+import { datadogRum } from '@datadog/browser-rum';
 import { GQLTypes, Status } from '@vroom-web/networking';
-import { FooterProps } from '@vroom-web/temp-ui-alias-for-checkout';
+import {
+  FooterEventTrackerEnum,
+  FooterProps,
+} from '@vroom-web/temp-ui-alias-for-checkout';
 
 import Model from './Model';
 import { NextProps } from './sections/Next';
 import { PurchaseSummaryProps } from './sections/PurchaseSummary/PurchaseSummary';
 import { QuestionProps } from './sections/Questions';
 import { ReservedCarProps } from './sections/ReservedCar';
+
+import AnalyticsHandler, {
+  TrackContactModule,
+} from 'src/integrations/congratulations/CongratsAnalyticsHandler';
 
 enum ServiceType {
   Vehicle = 'VRVS',
@@ -19,11 +27,37 @@ interface Service {
   summary: string;
 }
 
+interface AnalyticsData {
+  UUID?: string;
+  username: string;
+  vin?: string;
+  paymentMethod?: string;
+  step?: string;
+  orderId?: number;
+  productId?: string;
+  productName?: string;
+  hasTrade: boolean;
+}
 export default class CongratsViewModel {
   model: Model;
+  analyticsHandler: AnalyticsHandler;
+  currencyFormatter: Intl.NumberFormat;
 
   constructor(model: Model) {
     this.model = model;
+    this.analyticsHandler = new AnalyticsHandler(this);
+    this.currencyFormatter = new Intl.NumberFormat('en-US', {
+      style: 'currency',
+      currency: 'USD',
+    });
+  }
+
+  private get dealId(): number {
+    return (this.model.data.user.deals as Array<GQLTypes.Deal>)[0].dealID;
+  }
+
+  private get transactionPlacedDate(): string {
+    return (this.model.data.user.deals as Array<GQLTypes.Deal>)[0].createdAt;
   }
 
   private get summary(): GQLTypes.DealSummary {
@@ -168,6 +202,7 @@ export default class CongratsViewModel {
     const src = leadPhotoURL ? leadPhotoURL : '';
 
     return {
+      trackScheduleTime: this.trackScheduleTime,
       data: {
         car: car,
         email: this.account.userName,
@@ -205,6 +240,35 @@ export default class CongratsViewModel {
     };
   }
 
+  get analyticsData(): AnalyticsData {
+    return {
+      UUID: undefined,
+      username: this.model.data.user.username,
+      vin: this.summary.inventory?.vehicle?.vin,
+      paymentMethod: this.summary.paymentType,
+      step: this.summary.dealStatus.step,
+      orderId: this.dealId,
+      productId: this.summary.inventory?.id,
+      productName: this.summary.inventory?.vehicle?.vin,
+      hasTrade: this.summary.dealStatus.interestedInTrade,
+    };
+  }
+
+  trackAnalytics(): void {
+    if (this.showSuccess) {
+      this.analyticsHandler.trackCongratsViewed();
+      this.analyticsHandler.trackOrderCompleted();
+
+      const { orderId, productId } = this.analyticsData;
+      datadogRum.addUserAction('completedDeal', {
+        deal: {
+          dealId: orderId,
+          inventoryId: productId,
+        },
+      });
+    }
+  }
+
   get purchaseSummaryProps(): PurchaseSummaryProps {
     const { year, make, model, trim } = this.vehicle;
     const { leadPhotoURL, miles } = this.inventory;
@@ -229,7 +293,7 @@ export default class CongratsViewModel {
 
     return {
       summary: {
-        date: new Date(this.summary.dateCompleted).toDateString(),
+        date: new Date(this.transactionPlacedDate).toDateString(),
         car: {
           image: {
             alt: car,
@@ -243,36 +307,36 @@ export default class CongratsViewModel {
       purchaseDetails: {
         data: {
           method: this.paymentMethod,
-          sellingPrice: `$${this.pricing.listPrice.toLocaleString()}`,
-          taxes: `$${this.amountDue.totalTaxesAndFees.toLocaleString()}`,
+          sellingPrice: this.currencyFormatter.format(this.pricing.listPrice),
+          taxes: this.currencyFormatter.format(this.amountDue.totalTaxesAndFees),
           vehicleServiceContractProtection: this
             .vehicleServiceContractProtection
             ? {
-                cost: `$${this.vehicleServiceContractProtection.cost.toLocaleString()}`,
+                cost: this.currencyFormatter.format(this.vehicleServiceContractProtection.cost),
                 summary: this.vehicleServiceContractProtection.summary,
               }
             : undefined,
           gapCoverage: this.gapCoverage
             ? {
-                cost: `$${this.gapCoverage.cost.toLocaleString()}`,
+                cost: this.currencyFormatter.format(this.gapCoverage.cost),
                 summary: this.gapCoverage.summary,
               }
             : undefined,
           tireAndWheelCoverage: this.tireAndWheelCoverage
             ? {
-                cost: `$${this.tireAndWheelCoverage.cost.toLocaleString()}`,
+                cost: this.currencyFormatter.format(this.tireAndWheelCoverage.cost),
                 summary: this.tireAndWheelCoverage.summary,
               }
             : undefined,
-          shippingFee: `$${this.amountDue.shippingFee.toLocaleString()}`,
-          subtotal: `$${this.amountDue.subTotal.toLocaleString()}`,
-          creditDownPayment: `-$${this.amountDue.cashDownPayment.toLocaleString()}`,
-          total: `$${this.amountDue.totalBalanceDue.toLocaleString()}`,
+          shippingFee: this.currencyFormatter.format(this.amountDue.shippingFee),
+          subtotal: this.currencyFormatter.format(this.amountDue.subTotal),
+          creditDownPayment: this.currencyFormatter.format(this.amountDue.cashDownPayment * -1),
+          total: this.currencyFormatter.format(this.amountDue.totalBalanceDue),
         },
       },
       depositInformation: {
         data: {
-          amount: `${ChargeAmount}`,
+          amount: this.currencyFormatter.format(ChargeAmount),
           creditCard: `***${LastFourDigits}`,
         },
       },
@@ -306,13 +370,13 @@ export default class CongratsViewModel {
       financingInformation: this.financing
         ? {
             data: {
-              downPayment: `-$${this.financingPricingStack.downPayment}`,
+              downPayment: this.currencyFormatter.format(this.financingPricingStack.downPayment * -1),
               bank: this.financingPricingStack.lenderName,
               apr: `${(this.financingPricingStack.apr * 100).toFixed(2)}%`,
-              financeTerm: this.financingPricingStack.buyRate.toString(),
+              financeTerm: `${this.financingPricingStack.termMonths} months`,
               numberOfPayments: this.financingPricingStack.termMonths.toString(),
-              financeCharge: `$${this.financingPricingStack.financeCharge}`,
-              monthlyPayment: `$${this.financingPricingStack.monthlyPayment}`,
+              financeCharge: this.currencyFormatter.format(this.financingPricingStack.financeCharge),
+              monthlyPayment: this.currencyFormatter.format(this.financingPricingStack.monthlyPayment),
             },
           }
         : undefined,
@@ -343,9 +407,18 @@ export default class CongratsViewModel {
     };
   }
 
+  trackScheduleTime = (): void => {
+    this.analyticsHandler.trackScheduleTime();
+  };
+
+  trackQuestions = (eventName: TrackContactModule) => (): void => {
+    this.analyticsHandler.trackContactModule(eventName);
+  };
+
   //TODO: Inject correct number
   get questionsProps(): QuestionProps {
     return {
+      trackQuestions: this.trackQuestions,
       phone: {
         href: '+18555241300',
         label: '(855) 524-1300',
@@ -353,9 +426,14 @@ export default class CongratsViewModel {
     };
   }
 
+  trackFooterLinks = (trackingName: FooterEventTrackerEnum) => (): void => {
+    this.analyticsHandler.trackFooterLinks(trackingName);
+  };
+
   //TODO: Inject correct contact number
   get footerProps(): FooterProps {
     return {
+      trackEventHandler: this.trackFooterLinks,
       sections: [
         {
           title: 'Vroom',
@@ -363,14 +441,17 @@ export default class CongratsViewModel {
             {
               href: '/cars',
               name: 'Buy',
+              trackingName: FooterEventTrackerEnum.BUY,
             },
             {
               href: '/sell',
               name: 'Sell/Trade',
+              trackingName: FooterEventTrackerEnum.SELL_TRADE,
             },
             {
               href: '/finance',
               name: 'Finance',
+              trackingName: FooterEventTrackerEnum.FINANCE,
             },
           ],
         },
@@ -380,22 +461,27 @@ export default class CongratsViewModel {
             {
               href: '/about',
               name: 'About Us',
+              trackingName: FooterEventTrackerEnum.ABOUT_US,
             },
             {
               href: '/protection',
               name: 'Vroom Protection',
+              trackingName: FooterEventTrackerEnum.VROOM_PROTECTION,
             },
             {
               href: '/how-it-works',
               name: 'How It Works',
+              trackingName: FooterEventTrackerEnum.HOW_IT_WORKS,
             },
             {
               href: '/reviews',
               name: 'Customer Reviews',
+              trackingName: FooterEventTrackerEnum.REVIEWS,
             },
             {
               href: 'https://ir.vroom.com/',
               name: 'Investor Relations',
+              trackingName: FooterEventTrackerEnum.INVESTOR_RELATIONS,
             },
           ],
         },
@@ -405,14 +491,17 @@ export default class CongratsViewModel {
             {
               href: 'tel:+18555241300',
               name: '(855) 524-1300',
+              trackingName: FooterEventTrackerEnum.PHONE,
             },
             {
               href: 'https://vroom.zendesk.com/hc/en-us',
               name: 'FAQ',
+              trackingName: FooterEventTrackerEnum.FAQ,
             },
             {
               href: '/contact',
               name: 'Contact Us',
+              trackingName: FooterEventTrackerEnum.CONTACT_US,
             },
           ],
         },
@@ -422,19 +511,23 @@ export default class CongratsViewModel {
             {
               href: '/legal/privacy-policy',
               name: 'Privacy Policy',
+              trackingName: FooterEventTrackerEnum.PRIVACY_POLICY,
             },
             {
               href: '/legal/terms-of-use',
               name: 'Terms of use',
+              trackingName: FooterEventTrackerEnum.TERM_OF_USE,
             },
             {
               href: '/careers',
               name: 'Careers',
+              trackingName: FooterEventTrackerEnum.CAREERS,
             },
             {
               href:
                 'https://privacyportal.onetrust.com/webform/8086730d-99f7-48ea-b3a1-0b3bb0cf163e/aa3e2126-7439-411d-a9a2-9fa0c4f8b01d',
               name: 'Do Not Sell My Info (CA Residents)',
+              trackingName: FooterEventTrackerEnum.DO_NOT_SELL_INFO,
             },
           ],
         },

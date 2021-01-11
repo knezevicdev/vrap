@@ -16,9 +16,11 @@ const defaultOptionsState: OptionStoreState = {
     state: '',
     zipcode: '',
   },
+  email: ''
 };
 export interface OptionStoreState {
   mailingAddress: MailingAddress;
+  email: string;
 }
 
 export async function getInitialOptionsStoreState(
@@ -31,6 +33,7 @@ export async function getInitialOptionsStoreState(
 
     const optionState = {
       mailingAddress: verificationData.owner_mailing_address,
+      email: verificationData.email,
     };
     return optionState;
   } catch (err) {
@@ -61,6 +64,7 @@ export class OptionsStore {
   @observable remainingLoan = 0;
   @observable mailingAddress = defaultOptionsState.mailingAddress;
   @observable priceId = '';
+  @observable email = '';
 
   constructor(priceId?: string) {
     if (priceId) this.init(priceId);
@@ -71,6 +75,7 @@ export class OptionsStore {
     const initialState = await getInitialOptionsStoreState(priceId);
     runInAction(() => {
       this.mailingAddress = initialState.mailingAddress;
+      this.email = initialState.email;
       this.priceId = priceId;
     });
   }

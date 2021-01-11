@@ -1,11 +1,10 @@
 import FormControl from '@material-ui/core/FormControl';
-import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
+import Paper from '@material-ui/core/Paper';
 import Select from '@material-ui/core/Select';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
-import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import { observer } from 'mobx-react';
@@ -30,7 +29,7 @@ const UsersTableView: React.FC<Props> = ({ viewModel }) => {
   const { headers, rows } = viewModel.tableLayout;
 
   return (
-    <TableContainer>
+    <Paper square>
       <Table>
         <TableHead>
           <TableRow>
@@ -44,8 +43,7 @@ const UsersTableView: React.FC<Props> = ({ viewModel }) => {
         <TableBody>
           {rows.map((row) => (
             <TableRow key={row.id} hover>
-              <TableCell align="left">{row.data[Accessor.firstName]}</TableCell>
-              <TableCell align="left">{row.data[Accessor.lastName]}</TableCell>
+              <TableCell align="left">{row.data[Accessor.name]}</TableCell>
               <TableCell align="left">{row.data[Accessor.email]}</TableCell>
               <TableCell align="left">
                 <Autocomplete
@@ -55,12 +53,8 @@ const UsersTableView: React.FC<Props> = ({ viewModel }) => {
               </TableCell>
               <TableCell align="left">
                 {viewModel.statusOptions.length > 0 && (
-                  <FormControl fullWidth>
-                    <InputLabel id={`${row.id}-status-label`}>
-                      Status
-                    </InputLabel>
+                  <FormControl variant="outlined" fullWidth>
                     <Select
-                      labelId={`${row.id}-status-label`}
                       fullWidth
                       value={row.data[Accessor.status]}
                       onChange={(event): void =>
@@ -80,7 +74,7 @@ const UsersTableView: React.FC<Props> = ({ viewModel }) => {
           ))}
         </TableBody>
       </Table>
-    </TableContainer>
+    </Paper>
   );
 };
 

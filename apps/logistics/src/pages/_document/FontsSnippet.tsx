@@ -1,7 +1,4 @@
-// import getConfig from 'next/config';
 import React from 'react';
-
-// const { ASSET_PREFIX } = getConfig().publicRuntimeConfig;
 
 const FontsSnippet: React.FC = () => {
   return (

@@ -1,11 +1,14 @@
 import FormControl from '@material-ui/core/FormControl';
-import InputLabel from '@material-ui/core/InputLabel';
-import MenuItem from '@material-ui/core/MenuItem';
-import Select from '@material-ui/core/Select';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import FormLabel from '@material-ui/core/FormLabel';
+import Radio from '@material-ui/core/Radio';
+import RadioGroup from '@material-ui/core/RadioGroup';
 import { observer } from 'mobx-react';
 import React, { useState } from 'react';
 
 import ViewModel from './ViewModel';
+
+import { Status as UserStatus } from 'src/networking/models/User';
 
 interface Props {
   viewModel: ViewModel;
@@ -13,29 +16,31 @@ interface Props {
 const StatusView: React.FC<Props> = ({ viewModel }) => {
   const [value, setValue] = useState(viewModel.storedValue);
 
-  const handleChange = (value: string): void => {
+  const handleChange = (value: UserStatus): void => {
     setValue(value);
     viewModel.setStatusFilterAndFilter(value);
   };
 
   return (
-    <FormControl fullWidth>
-      <InputLabel id="filter-carrier-label">Status</InputLabel>
-      <Select
-        labelId="filter-carrier-label"
-        id="filter-carrier-select"
-        fullWidth
+    <FormControl component="fieldset">
+      <FormLabel component="legend">Status</FormLabel>
+      <RadioGroup
+        name="carrier-status"
         value={value}
-        onChange={(event): void => handleChange(event.target.value as string)}
+        onChange={(event): void =>
+          handleChange(event.target.value as UserStatus)
+        }
       >
-        <MenuItem value={''}>--</MenuItem>
         {viewModel.options.length > 0 &&
           viewModel.options.map((i) => (
-            <MenuItem key={i.key} value={i.key}>
-              {i.label}
-            </MenuItem>
+            <FormControlLabel
+              key={i.key}
+              value={i.key}
+              control={<Radio />}
+              label={i.label}
+            />
           ))}
-      </Select>
+      </RadioGroup>
     </FormControl>
   );
 };

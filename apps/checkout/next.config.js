@@ -27,6 +27,7 @@ const config = {
   },
   serverRuntimeConfig: {
     GQL_PROXY_TARGET: process.env.GQL_PROXY_TARGET,
+    SEGMENT_WRITE_KEY: process.env.SEGMENT_WRITE_KEY,
   },
 };
 
