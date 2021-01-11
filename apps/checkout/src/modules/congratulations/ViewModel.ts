@@ -4,13 +4,15 @@ import {
   FooterEventTrackerEnum,
   FooterProps,
 } from '@vroom-web/temp-ui-alias-for-checkout';
-import { FooterStore } from './store';
+import { parsePhoneNumberFromString } from 'libphonenumber-js';
+
 import Model from './Model';
 import { NextProps } from './sections/Next';
 import { PurchaseSummaryProps } from './sections/PurchaseSummary/PurchaseSummary';
 import { QuestionProps } from './sections/Questions';
 import { ReservedCarProps } from './sections/ReservedCar';
-import { parsePhoneNumberFromString } from 'libphonenumber-js';
+import { FooterStore } from './store';
+
 import AnalyticsHandler, {
   TrackContactModule,
 } from 'src/integrations/congratulations/CongratsAnalyticsHandler';
@@ -310,11 +312,15 @@ export default class CongratsViewModel {
         data: {
           method: this.paymentMethod,
           sellingPrice: this.currencyFormatter.format(this.pricing.listPrice),
-          taxes: this.currencyFormatter.format(this.amountDue.totalTaxesAndFees),
+          taxes: this.currencyFormatter.format(
+            this.amountDue.totalTaxesAndFees
+          ),
           vehicleServiceContractProtection: this
             .vehicleServiceContractProtection
             ? {
-                cost: this.currencyFormatter.format(this.vehicleServiceContractProtection.cost),
+                cost: this.currencyFormatter.format(
+                  this.vehicleServiceContractProtection.cost
+                ),
                 summary: this.vehicleServiceContractProtection.summary,
               }
             : undefined,
@@ -326,13 +332,19 @@ export default class CongratsViewModel {
             : undefined,
           tireAndWheelCoverage: this.tireAndWheelCoverage
             ? {
-                cost: this.currencyFormatter.format(this.tireAndWheelCoverage.cost),
+                cost: this.currencyFormatter.format(
+                  this.tireAndWheelCoverage.cost
+                ),
                 summary: this.tireAndWheelCoverage.summary,
               }
             : undefined,
-          shippingFee: this.currencyFormatter.format(this.amountDue.shippingFee),
+          shippingFee: this.currencyFormatter.format(
+            this.amountDue.shippingFee
+          ),
           subtotal: this.currencyFormatter.format(this.amountDue.subTotal),
-          creditDownPayment: this.currencyFormatter.format(this.amountDue.cashDownPayment * -1),
+          creditDownPayment: this.currencyFormatter.format(
+            this.amountDue.cashDownPayment * -1
+          ),
           total: this.currencyFormatter.format(this.amountDue.totalBalanceDue),
         },
       },
@@ -372,13 +384,19 @@ export default class CongratsViewModel {
       financingInformation: this.financing
         ? {
             data: {
-              downPayment: this.currencyFormatter.format(this.financingPricingStack.downPayment * -1),
+              downPayment: this.currencyFormatter.format(
+                this.financingPricingStack.downPayment * -1
+              ),
               bank: this.financingPricingStack.lenderName,
               apr: `${(this.financingPricingStack.apr * 100).toFixed(2)}%`,
               financeTerm: `${this.financingPricingStack.termMonths} months`,
               numberOfPayments: this.financingPricingStack.termMonths.toString(),
-              financeCharge: this.currencyFormatter.format(this.financingPricingStack.financeCharge),
-              monthlyPayment: this.currencyFormatter.format(this.financingPricingStack.monthlyPayment),
+              financeCharge: this.currencyFormatter.format(
+                this.financingPricingStack.financeCharge
+              ),
+              monthlyPayment: this.currencyFormatter.format(
+                this.financingPricingStack.monthlyPayment
+              ),
             },
           }
         : undefined,
@@ -417,8 +435,6 @@ export default class CongratsViewModel {
     this.analyticsHandler.trackContactModule(eventName);
   };
 
-
-
   private getPhoneNumberLinkData = (): Link => {
     const defaultPhoneNumberLinkData: Link = {
       href: 'tel:+18555241300',
@@ -451,7 +467,7 @@ export default class CongratsViewModel {
     return {
       trackQuestions: this.trackQuestions,
       phone: {
-       ...this.getPhoneNumberLinkData(),
+        ...this.getPhoneNumberLinkData(),
       },
     };
   }
