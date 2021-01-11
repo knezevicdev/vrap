@@ -44,12 +44,8 @@ const EngineAndDrivetrainView: React.FC<Props> = ({ viewModel }) => {
       <Transmissions />
       <Titles variant="caption">{viewModel.driveTypeFilterLabel}</Titles>
       <DriveTypes />
-      {viewModel.showCylindersFilter() && (
-        <>
-          <Titles variant="caption">{viewModel.cylindersFilterLabel}</Titles>
-          <Cylinders />
-        </>
-      )}
+      <Titles variant="caption">{viewModel.cylindersFilterLabel}</Titles>
+      <Cylinders />
       <Reset
         button
         onClick={viewModel.reset}

@@ -1,4 +1,4 @@
-import FiltersStore, { Filter, FilterDisplay } from './store';
+import FiltersStore, { Filter } from './store';
 
 import { CarsStore } from 'src/modules/cars/store';
 
@@ -20,29 +20,11 @@ class FiltersViewModel {
   };
 
   getFilters = (): Filter[] => {
-    // There are 2 filters that are going to be run as
-    // an A/B test both under Fuel And Efficiency
-    // This makes sure that if a user isn't in either
-    // The whole section will not appear
-    return this.filtersStore.filters.filter(
-      (filter) =>
-        this.showFuelAndEfficiencyFilters() ||
-        filter.display !== FilterDisplay.FUEL_AND_EFFICIENCY
-    );
+    return this.filtersStore.filters;
   };
 
   toggleVisibility = (filter: Filter): void => {
     this.filtersStore.toggleVisibility(filter);
-  };
-
-  showFuelAndEfficiencyFilters = (): boolean => {
-    return (
-      this.carsStore.fuelTypeFilterExperiment?.assignedVariant === 1 ||
-      this.carsStore.fuelEfficiencyFilterExperiment?.assignedVariant === 1
-    );
-  };
-  showFeaturesFilter = (): boolean => {
-    return this.carsStore.featuresFilterExperiment?.assignedVariant === 1;
   };
 }
 

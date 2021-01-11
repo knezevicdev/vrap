@@ -32,14 +32,6 @@ class FuelAndEfficiencyViewModel {
     );
     this.carsStore.updateFiltersData(updatedFiltersData);
   };
-
-  showFuelTypeFilter = (): boolean => {
-    return this.carsStore.fuelTypeFilterExperiment?.assignedVariant === 1;
-  };
-
-  showFuelEfficiencyFilter = (): boolean => {
-    return this.carsStore.fuelEfficiencyFilterExperiment?.assignedVariant === 1;
-  };
 }
 
 export default FuelAndEfficiencyViewModel;

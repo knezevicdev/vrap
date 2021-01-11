@@ -65,10 +65,6 @@ class BodyTypesViewModel {
     );
     this.carsStore.updateFiltersData({ ...updatedBodyTypeData });
   };
-
-  showTruckCabTypeFilterExperiment = (): boolean => {
-    return this.carsStore.truckCabTypeFilterExperiment?.assignedVariant === 1;
-  };
 }
 
 export default BodyTypesViewModel;
