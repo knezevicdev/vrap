@@ -46,6 +46,7 @@ export default class CongratsModel {
           deals(dealID: $dealID, dealStatus: $dealStatus) {
             accountID
             dealID
+            createdAt
             dealSummary {
               accountInfo {
                 userName
