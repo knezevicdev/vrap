@@ -147,7 +147,7 @@ export async function getInventoryAvailabilityState(
 
 export async function getInitialInventoryStoreState(
   vin: string,
-  actionFavorite?: boolean
+  actionFavorite: boolean
 ): Promise<{
   similar: Hit[];
   isAvailable: boolean;
@@ -156,7 +156,7 @@ export async function getInitialInventoryStoreState(
   vehicleStatus: Status;
   vehicle: Hit;
   similarStatus: Status;
-  actionFavorite: boolean | undefined;
+  actionFavorite: boolean;
 }> {
   const invSearchNetworker = new InvSearchNetworker(
     publicRuntimeConfig.INVSEARCH_V3_URL || ''

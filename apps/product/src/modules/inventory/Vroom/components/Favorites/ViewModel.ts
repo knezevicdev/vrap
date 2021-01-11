@@ -1,7 +1,7 @@
 import FavoritesNetworker from './FavoritesNetworker';
-import {FavoritesStore} from './store';
+import { FavoritesStore } from './store';
 
-import {InventoryStore} from 'src/modules/inventory/store';
+import { InventoryStore } from 'src/modules/inventory/store';
 
 interface VinList {
   vin: string;
