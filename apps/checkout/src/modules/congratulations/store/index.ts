@@ -1,1 +1,1 @@
-export {default as NavStore} from './store'
+export {default as FooterStore} from './store'

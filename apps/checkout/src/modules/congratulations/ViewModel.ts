@@ -4,7 +4,7 @@ import {
   FooterEventTrackerEnum,
   FooterProps,
 } from '@vroom-web/temp-ui-alias-for-checkout';
-import { NavStore } from './store';
+import { FooterStore } from './store';
 import Model from './Model';
 import { NextProps } from './sections/Next';
 import { PurchaseSummaryProps } from './sections/PurchaseSummary/PurchaseSummary';
@@ -46,12 +46,12 @@ export default class CongratsViewModel {
   model: Model;
   analyticsHandler: AnalyticsHandler;
   currencyFormatter: Intl.NumberFormat;
-  private store: NavStore;
+  private store: FooterStore;
 
   constructor(model: Model) {
     this.model = model;
     this.analyticsHandler = new AnalyticsHandler(this);
-    this.store = new NavStore();
+    this.store = new FooterStore();
     this.currencyFormatter = new Intl.NumberFormat('en-US', {
       style: 'currency',
       currency: 'USD',

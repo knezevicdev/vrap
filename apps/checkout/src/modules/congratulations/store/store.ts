@@ -3,7 +3,7 @@ import { CatData, CatSDK } from '@vroom-web/cat-sdk';
 import { action, computed, observable } from 'mobx';
 import { parse, stringify } from 'qs';
 
-class NavStore {
+class FooterStore {
   private readonly catSDK: CatSDK = new CatSDK();
 
   @observable catData: CatData | undefined;
@@ -70,4 +70,4 @@ class NavStore {
   };
 }
 
-export default NavStore;
+export default FooterStore;
