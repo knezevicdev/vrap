@@ -31,7 +31,7 @@ export const nextViewModel: NextProps = {
 export const questionsViewModel: QuestionProps = {
   phone: {
     href: '+18555241300',
-    label: '(855) 524-1300',
+    name: '(855) 524-1300',
   },
 };
 
