@@ -20,6 +20,7 @@
   - In Gitlab add your SSH key
   - Click on tokens and generate your access token. Click "api" for scope
   - Add `export=CI_JOB_TOKEN` to your environment variables
+  - Install CORS Unblock Extension
 
 - Determine which monorepo package you want to run. There are several here, so a good place to start would be one of the packages under the `/apps` folder.
 
