@@ -30,7 +30,6 @@ export interface PlaidData {
     subtype: string;
     type: string;
   },
-  authenticated_user: boolean;
   email: string;
   institution: {
     id: string;
