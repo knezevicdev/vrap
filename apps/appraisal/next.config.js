@@ -27,7 +27,6 @@ const config = {
     NEXT_PUBLIC_STATIC_ASSETS_HOST_URL:
       process.env.NEXT_PUBLIC_STATIC_ASSETS_HOST_URL,
     NEXT_PUBLIC_VROOM_URL: process.env.NEXT_PUBLIC_VROOM_URL,
-    APIUSERS_ACQUISITIONS_PASSWORD: process.env.APIUSERS_ACQUISITIONS_PASSWORD,
   },
   serverRuntimeConfig: {
     // Will only be available on the server side

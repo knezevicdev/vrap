@@ -15,7 +15,6 @@ const ENVS = {
     publicRuntimeConfig.NEXT_PUBLIC_STATIC_ASSETS_HOST_URL || '',
   BRANCH_IO_KEY: publicRuntimeConfig.NEXT_PUBLIC_BRANCH_IO_KEY || '',
   SEGMENT_WRITE_KEY: serverRuntimeConfig.SEGMENT_WRITE_KEY || '',
-  APIUSERS_ACQUISITIONS_PASSWORD: publicRuntimeConfig.APIUSERS_ACQUISITIONS_PASSWORD || '',
 };
 
 export default ENVS;
