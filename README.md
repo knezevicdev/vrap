@@ -5,7 +5,6 @@
 | Docker        | 18.09.7         |
 
 ## Getting Started
-
 - Note that this is a monorepo. (More details below.)
 
 - Install a stable version of [Docker](https://hub.docker.com/editions/community/docker-ce-desktop-mac).
@@ -18,6 +17,9 @@
   - When developing locally, use `local.vroom.com` in place of `localhost`.
   - This provides a more consistent environment from local -> deployed environment.
   - It also gets around an long-standing issue in chrome: https://bugs.chromium.org/p/chromium/issues/detail?id=67743
+  - In Gitlab add your SSH key
+  - Click on tokens and generate your access token. Click "api" for scope
+  - Add `export=CI_JOB_TOKEN` to your environment variables
 
 - Determine which monorepo package you want to run. There are several here, so a good place to start would be one of the packages under the `/apps` folder.
 
@@ -33,10 +35,13 @@
     - Saving changes to code will cause the app to hotreload.
   - Approach #2
     - Pick an app you want to run locally
-    - Install dependencies with `yarn install` 
+    - Ensure your .env is filled out correctly
+    - Install dependencies with `npm install` 
     - Find the `docker-compose.yaml` file from your app path. (E.g. `/apps/home/docker/docker-compose.yaml`)
     - Run `docker-compose -f <path-to-docker-compose.yaml> up --build`.
     - Wait for Docker to build your image and run your container.
+
+
 
 - Most projects start a web service at [http://localhost:8080](http://localhost:8080), so view the docker logs or check in your browser to see the result.
 
@@ -138,42 +143,9 @@ This monorepo is only intended to house frontend code for use on the vroom websi
 # Tooling
 
 To enable this monorepo architecture, we use these key tools
-- [Yarn Workspaces](https://classic.yarnpkg.com/en/docs/workspaces/)
 - [Docker](https://www.docker.com/)
 - [VSCode - Optional](https://code.visualstudio.com/)
 - [VSCode Remote Container Extenstion - Optional](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers)
-
-## Yarn Workspaces
-
-Yarn is a package manager, and an alternative to NPM. Yarn workspaces is yarn's monorepo feature that handles automatic linking and dependency hoisting for you.
-
-### Configuring Workspaces
-
-In the project root, you'll find a `package.json` file. Notice that there is a key in that file called `workspaces`. That key tells yarn that any folder containing a `package.json` under the `/apps` or `/libs` folders should be considered a workspace of this monorepo. You should not need to edit this key. Simply add a new folder under `/apps` or `/libs` containing a `package.json` and yarn will detect it.
-
-### Referencing a Workspace
-
-Workspaces can be referened using the `name` key defined in their `package.json` file.
-For instance, open up `/libs/ui/package.json` and notice that the `name` field is `@vroom-web/ui`.
-
-Note that this is the name you use to reference one package from another, or run targetted commands in a workspace.
-
-For instance, if you wanted to add an external dependency to the `@vroom-web/some-library` library, you could run `yarn workspace @vroom-web/some-library add external-dependency`.
-
-You could add a local dependency by running `yarn workspace @vroom-web/some-library add @vroom-web/some-other-library@^0.1.0` (Note that for local dependencies, you must include the version.)
-
-Any command defined in a `package.json`'s `scripts` key can be run the same way.
-E.g. `yarn workspace @vroom-web/some-library run start`.
-
-You can also run a command across all workspaces by doing: `yarn workspaces run build`. This examples would run the `build` script across all packages, but it works with any script name.
-
-Though it is good to be aware of these capabilities, you will not generally need to run scripts yourself. Leave that to Docker. (See below.)
-
-### Installing And Hoisting All Dependencies
-
-In the root of a yarn workspaces project, you can run `yarn install` to install dependencies for all configured workspaces. If yarn recognizes that two packages use the same dependency, it will hoist it.
-
-You do not need to run this command yourself, because Docker will take care of it. But this is the command that Docker runs to setup all the dependencies in the monorepo.
 
 ### Building Libraries
 
