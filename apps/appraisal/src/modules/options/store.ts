@@ -65,6 +65,7 @@ export class OptionsStore {
   @observable mailingAddress = defaultOptionsState.mailingAddress;
   @observable priceId = '';
   @observable email = '';
+  @observable plaidSubmitting = false;
 
   constructor(priceId?: string) {
     if (priceId) this.init(priceId);
@@ -84,6 +85,11 @@ export class OptionsStore {
   setPayOptionSelected = (value: string): void => {
     this.payOptionSelected = value;
     this.showDD = value === this.payOptionArr[0];
+  };
+
+  @action
+  setPlaidSubmitting = (value: boolean): void => {
+    this.plaidSubmitting = value;
   };
 }
 

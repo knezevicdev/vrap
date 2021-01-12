@@ -30,13 +30,15 @@ const PlaidButton = styled(Button.Primary)`
 export interface Props {
   viewModel: PlaidButtonViewModel;
   token: string;
-  plaidSuccess (mutationInput: PlaidData): void;
+  plaidSuccess (mutationInput: PlaidData, onPlaidSubmitting: any): void;
   priceId: string;
-  email: string;
 }
 
-const PlaidButtonView: React.FC<Props> = ({ viewModel, token, plaidSuccess, priceId, email }) => {
+const PlaidButtonView: React.FC<Props> = ({ viewModel, token, plaidSuccess, priceId }) => {
   const onSuccess = useCallback((_token: string, metaData: any): void => {
+    const email = viewModel.getEmail();
+    viewModel.onPlaidSubmitting(true);
+    const onPlaidSubmitting = viewModel.onPlaidSubmitting;
     const mutationInput = {
       Account: {
         Id: metaData.account.id,
@@ -55,7 +57,7 @@ const PlaidButtonView: React.FC<Props> = ({ viewModel, token, plaidSuccess, pric
       Email: email
     };
 
-    plaidSuccess(mutationInput);
+    plaidSuccess(mutationInput, onPlaidSubmitting);
   }, []);
 
   const config = {
@@ -64,12 +66,15 @@ const PlaidButtonView: React.FC<Props> = ({ viewModel, token, plaidSuccess, pric
   }
 
   const tokenIsUndefined = token.length === 0;
+  const isSubmitting = viewModel.getPlaidSubmitting();
 
   const { open, ready } = usePlaidLink(config);
 
+  const disableButton = (!ready && tokenIsUndefined) || isSubmitting;
+
   return (
     <PlaidButtonContainer>
-      <PlaidButton onClick={() => open()} disabled={!ready && tokenIsUndefined}>
+      <PlaidButton onClick={() => open()} disabled={disableButton}>
           {viewModel.buttonCopy}
           <ArrowForwardIcon />
         </PlaidButton>
