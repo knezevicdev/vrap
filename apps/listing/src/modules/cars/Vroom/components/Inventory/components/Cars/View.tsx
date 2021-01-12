@@ -6,6 +6,7 @@ import { observer } from 'mobx-react';
 import React, { useEffect } from 'react';
 
 import CarCard from './components/CarCard';
+import EmailCaptureCard from './components/EmailCaptureCard';
 import Error from './components/Error';
 import ViewModel from './ViewModel';
 
@@ -51,11 +52,16 @@ const CarsView: React.FC<Props> = ({ viewModel }) => {
           )}
           <Grid container spacing={isMobile ? 0 : 2}>
             {viewModel.cars().map((car, index) => (
-              <CarCard
-                key={index}
-                car={car}
-                position={index + viewModel.getPage()}
-              />
+              <>
+                {index === 2 && viewModel.getPage() === 1 && (
+                  <EmailCaptureCard car={car} />
+                )}
+                <CarCard
+                  key={index}
+                  car={car}
+                  position={index + viewModel.getStartingCountByPage()}
+                />
+              </>
             ))}
           </Grid>
         </>
