@@ -12,7 +12,7 @@ export interface Model<RESPONSE, PROPS, STORE> {
 
 interface MvvmProps<RESPONSE, PROPS, STORE, VIEWPROPS> {
   model?: {
-    onload?: () => Promise<AxiosResponse<RESPONSE>>;
+    onload?: (props?: PROPS) => Promise<AxiosResponse<RESPONSE>>;
     consumer?: React.Context<STORE>;
     provider?: React.Context<RESPONSE>;
   };
@@ -25,7 +25,7 @@ const mvvm = <RESPONSE, PROPS, STORE, VIEWPROPS>({
   viewModel,
   View,
 }: MvvmProps<RESPONSE, PROPS, STORE, VIEWPROPS>): React.FC<PROPS> => {
-  const MVVM: React.FC<PROPS> = (props) => {
+  const MVVM: React.FC<PROPS> = (props: PROPS) => {
     const [response, setResponse] = useState<RESPONSE>();
     const [status, setStatus] = useState(Status.INITIAL);
 
@@ -44,7 +44,7 @@ const mvvm = <RESPONSE, PROPS, STORE, VIEWPROPS>({
       };
 
       if (onload) {
-        fetch(onload);
+        fetch(() => onload(props));
       }
     }, []);
 

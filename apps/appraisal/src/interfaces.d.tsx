@@ -23,20 +23,19 @@ export interface PlaidTokenResp {
 }
 
 export interface PlaidData {
-  account: {
-    id: string;
-    mask: string;
-    name: string;
-    subtype: string;
-    type: string;
+  Account: {
+    Id: string;
+    Mask: string;
+    Name: string;
+    Subtype: string;
+    Type: string;
   },
-  authenticated_user: boolean;
-  email: string;
-  institution: {
-    id: string;
-    name: string;
+  Email: string;
+  Institution: {
+    Id: string;
+    Name: string;
   },
-  public_token: string;
-  reference_id: string;
-  source: string;
+  PublicToken: string;
+  ReferenceId: string;
+  Source: string;
 }

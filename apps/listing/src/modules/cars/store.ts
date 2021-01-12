@@ -3,7 +3,6 @@ import {
   FiltersData,
   getUrlFromFiltersData,
 } from '@vroom-web/catalog-url-integration';
-import { Experiment } from '@vroom-web/experiment-sdk';
 import {
   Inventory,
   InvSearchNetworker,
@@ -424,12 +423,6 @@ export class CarsStore {
 
   @observable areFiltersOpen = false;
 
-  @observable cylinderFilterExperiment?: Experiment;
-  @observable fuelTypeFilterExperiment?: Experiment;
-  @observable featuresFilterExperiment?: Experiment;
-  @observable fuelEfficiencyFilterExperiment?: Experiment;
-  @observable truckCabTypeFilterExperiment?: Experiment;
-
   constructor(initialState?: InitialCarsStoreState) {
     this.invSearchNetworker = new InvSearchNetworker(
       publicRuntimeConfig.INVSEARCH_V3_URL || ''
@@ -444,41 +437,6 @@ export class CarsStore {
       this.isTitleQAPass = initialState.titleQuery;
     }
   }
-
-  @action
-  setCylindersFilterExperiment = (
-    cylinderFilterExperiment?: Experiment
-  ): void => {
-    this.cylinderFilterExperiment = cylinderFilterExperiment;
-  };
-
-  @action
-  setFuelEfficiencyFilterExperiment = (
-    fuelEfficiencyFilterExperiment?: Experiment
-  ): void => {
-    this.fuelEfficiencyFilterExperiment = fuelEfficiencyFilterExperiment;
-  };
-
-  @action
-  setTruckCabTypeFilterExperiment = (
-    truckCabTypeFilterExperiment?: Experiment
-  ): void => {
-    this.truckCabTypeFilterExperiment = truckCabTypeFilterExperiment;
-  };
-
-  @action
-  setFuelTypeFilterExperiment = (
-    fuelTypeFilterExperiment?: Experiment
-  ): void => {
-    this.fuelTypeFilterExperiment = fuelTypeFilterExperiment;
-  };
-
-  @action
-  setFeaturesFilterExperiment = (
-    featuresFilterExperiment?: Experiment
-  ): void => {
-    this.featuresFilterExperiment = featuresFilterExperiment;
-  };
 
   @action
   setAreFiltersOpen = (areFiltersOpen: boolean): void => {

@@ -4,17 +4,18 @@ import BuySellTrade from './BuySellTrade';
 import {
   CertifiedSection,
   DeliveredSection,
+  RoadsideSection,
   TestDriveSection,
 } from './Sections';
 
 class ValuePropsViewModel {
   constructor(sectionOrderKey: string | null) {
-    const { sectionMap } = this;
+    const { sectionOrderMap } = this;
     if (sectionOrderKey) {
       const validMapping =
-        sectionMap[sectionOrderKey as keyof typeof sectionMap];
+        sectionOrderMap[sectionOrderKey as keyof typeof sectionOrderMap];
 
-      if (validMapping) this.sectionOrder = validMapping.order;
+      if (validMapping) this.sectionOrder = validMapping;
     }
   }
 
@@ -23,30 +24,49 @@ class ValuePropsViewModel {
     'certified',
     'delivery',
     '7daytestdrive',
+    'roadside',
   ];
 
   // a map for mapping components to the slugs in the order array, as well as mapping the order of the sections to passed sectionOrderKey
-  sectionMap: { [slug: string]: { component?: FC; order: string[] } } = {
-    buyselltrade: {
-      component: BuySellTrade,
-      order: ['buyselltrade', 'certified', 'delivery', '7daytestdrive'],
-    },
-    certified: {
-      component: CertifiedSection,
-      order: ['certified', 'buyselltrade', 'delivery', '7daytestdrive'],
-    },
-    delivery: {
-      component: DeliveredSection,
-      order: ['delivery', 'buyselltrade', 'certified', '7daytestdrive'],
-    },
-    '7daytestdrive': {
-      component: TestDriveSection,
-      order: ['7daytestdrive', 'buyselltrade', 'certified', 'delivery'],
-    },
-    // potentially separate component map from section order map
-    'delivery-only-exp': {
-      order: ['delivery'],
-    },
+  componentMap: { [slug: string]: FC } = {
+    buyselltrade: BuySellTrade,
+    certified: CertifiedSection,
+    delivery: DeliveredSection,
+    '7daytestdrive': TestDriveSection,
+    roadside: RoadsideSection,
+  };
+
+  // a map of orders, based on an order key that is passed via query param
+  sectionOrderMap: { [slug: string]: string[] } = {
+    buyselltrade: [
+      'buyselltrade',
+      'certified',
+      'delivery',
+      '7daytestdrive',
+      'roadside',
+    ],
+    certified: [
+      'certified',
+      'buyselltrade',
+      'delivery',
+      '7daytestdrive',
+      'roadside',
+    ],
+    delivery: [
+      'delivery',
+      'buyselltrade',
+      'certified',
+      '7daytestdrive',
+      'roadside',
+    ],
+    '7daytestdrive': [
+      '7daytestdrive',
+      'buyselltrade',
+      'certified',
+      'delivery',
+      'roadside',
+    ],
+    'delivery-only-exp': ['delivery'],
   };
 }
 

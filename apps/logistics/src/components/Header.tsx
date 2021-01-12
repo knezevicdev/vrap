@@ -1,38 +1,39 @@
+import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
 import Link from '@material-ui/core/Link';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
-import { makeStyles } from '@material-ui/core/styles';
+import { styled } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
-import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
+import ArrowDropDown from '@material-ui/icons/ArrowDropDown';
 import React, { useRef, useState } from 'react';
 
 import Logo from './Logo';
 
 import { IdToken } from 'src/networking/models/Auth';
+import theme from 'src/theme';
 
-const useStyles = makeStyles(() => ({
-  headerWrapper: {
-    display: 'flex',
-  },
-  headerSection: {
-    padding: '0 48px',
-    width: '100%',
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-  },
-}));
+const Section = styled(Grid)({
+  padding: theme.spacing(0, 6),
+  width: '100%',
+  display: 'flex',
+  justifyContent: 'space-between',
+  alignItems: 'center',
+});
 
 interface Props {
   idToken?: IdToken;
   handleLogout?(): void;
+  title: string;
 }
 
+const ArrowDropDownIcon = styled(ArrowDropDown)({
+  fill: theme.palette.primary.contrastText,
+});
+
 const Header: React.FC<Props> = (props) => {
-  const { idToken, handleLogout } = props;
-  const classes = useStyles();
+  const { idToken, handleLogout, title } = props;
 
   const [open, setOpen] = useState(false);
   const anchorRef = useRef(null);
@@ -46,10 +47,16 @@ const Header: React.FC<Props> = (props) => {
   };
 
   return (
-    <div className={classes.headerWrapper}>
-      <Grid container direction="row" className={classes.headerSection}>
+    <Box
+      height={theme.spacing(11)}
+      display="flex"
+      bgcolor="primary.main"
+      color="primary.contrastText"
+    >
+      <Section container direction="row">
         <Grid item>
           <Logo />
+          <Typography variant="h1">{title}</Typography>
         </Grid>
         {idToken ? (
           <Grid item>
@@ -73,13 +80,13 @@ const Header: React.FC<Props> = (props) => {
           </Grid>
         ) : (
           <Grid item>
-            <Link href="/signin" variant="h6">
+            <Link color="inherit" href="/signin">
               Sign-In
             </Link>
           </Grid>
         )}
-      </Grid>
-    </div>
+      </Section>
+    </Box>
   );
 };
 
