@@ -1,5 +1,3 @@
-import 'mobx-react-lite/batchingForReactDom';
-
 import {
   Hit,
   InventoryResponse,
