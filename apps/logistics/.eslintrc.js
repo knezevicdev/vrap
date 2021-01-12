@@ -36,27 +36,27 @@ module.exports = {
     'react-hooks/rules-of-hooks': 'error',
     'react-hooks/exhaustive-deps': 'warn',
     'no-nested-ternary': 'error',
-    'simple-import-sort/sort': [
+    'simple-import-sort/imports': [
       'error',
       {
         groups: [
-          // Default Groups
           // Side effect imports.
-          ['^\\u0000'],
+          ["^\\u0000"],
           // Packages.
           // Things that start with a letter (or digit or underscore), or `@` followed by a letter.
-          ['^@?\\w'],
+          ["^@?\\w"],
           // Absolute imports and other imports such as Vue-style `@/foo`.
-          // Anything that does not start with a dot.
-          ['^[^.]'],
+          // Anything not matched in another group.
+          ["^"],
           // Relative imports.
           // Anything that starts with a dot.
-          ['^\\.'],
+          ["^\\."],
           // Custom Groups
           ['^src/'],
         ],
       },
     ],
+    'simple-import-sort/exports': 'error',
   },
   settings: {
     react: {

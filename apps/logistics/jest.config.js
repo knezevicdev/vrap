@@ -7,9 +7,10 @@ module.exports = {
     '!**/node_modules/**',
   ],
   // setupFilesAfterEnv: ['<rootDir>/setupTests.js'],
+  preset: 'ts-jest',
   testPathIgnorePatterns: ['/node_modules/', '/.next/'],
   transform: {
-    '^.+\\.(js|jsx|ts|tsx)$': 'babel-jest',
+    // '^.+\\.(js|jsx|ts|tsx)$': 'babel-jest',
     // '^.+\\.css$': '<rootDir>/config/jest/cssTransform.js',
   },
   transformIgnorePatterns: [
@@ -20,5 +21,5 @@ module.exports = {
     '^src(.*)$': '<rootDir>/src$1',
     //   '^.+\\.module\\.(css|sass|scss)$': 'identity-obj-proxy',
   },
-  reporters: ['default', 'jest-sonar'],
+  reporters: ['default'],
 };
