@@ -3,11 +3,50 @@ image: node:latest
 stages:
   - build
 
-build-checkout:
+lint-checkout:
   only:
-    - merge_requests
+    refs:
+      - merge_requests
+    changes:
+      - apps/checkout/*
   stage: build
   script:
     - cd apps/checkout
+    - npm install --quiet
+    - npm run lint
+
+build-checkout:
+  only:
+    refs:
+      - merge_requests
+    changes:
+      - apps/checkout/*
+  stage: build
+  script:
+    - cd apps/checkout
+    - npm install --quiet
+    - npm run build
+
+lint-landing:
+  only:
+    refs:
+      - merge_requests
+    changes:
+      - apps/landing/*
+  stage: build
+  script:
+    - cd apps/landing
+    - npm install --quiet
+    - npm run lint
+  
+build-landing:
+  only:
+    refs:
+      - merge_requests
+    changes:
+      - apps/landing/*
+  stage: build
+  script:
+    - cd apps/landing
     - npm install --quiet
     - npm run build
