@@ -72,9 +72,14 @@ const PlaidButtonView: React.FC<Props> = ({ viewModel, token, plaidSuccess, pric
 
   const disableButton = (!ready && tokenIsUndefined) || isSubmitting;
 
+  const handlePlaidButtonClick = () => {
+    viewModel.onPlaidSubmitting(true);
+    open();
+  }
+
   return (
     <PlaidButtonContainer>
-      <PlaidButton onClick={() => open()} disabled={disableButton}>
+      <PlaidButton onClick={handlePlaidButtonClick} disabled={disableButton}>
           {viewModel.buttonCopy}
           <ArrowForwardIcon />
         </PlaidButton>
