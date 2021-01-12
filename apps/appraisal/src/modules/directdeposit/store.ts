@@ -36,7 +36,6 @@ export async function plaidSuccess(mutationInput: PlaidData, onPlaidSubmitting: 
   const networker = new Networker();
   try {
     await networker.postPlaidPayment(mutationInput);
-    onPlaidSubmitting(false);
     const url = `/sell/verification-congrats`;
     window.location.href = url;
   } catch (err) {
