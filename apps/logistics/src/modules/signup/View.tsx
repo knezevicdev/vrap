@@ -62,7 +62,7 @@ const SignupView: React.FC<Props> = ({ viewModel }) => {
                   label="Password"
                   type="password"
                   autoComplete="new-password"
-                  helperText="Use 8 or more characters with a mix of uppercase, lowercase, numbers, and special characters"
+                  helperText="Use 8 or more characters with a mix of uppercase, lowercase, and numbers"
                   value={viewModel.password}
                   onChange={viewModel.changePassword}
                   fullWidth={true}

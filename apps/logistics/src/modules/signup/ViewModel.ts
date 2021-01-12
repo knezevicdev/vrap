@@ -59,20 +59,11 @@ class SignupViewModel {
 
     const passwordCheck = (value: string): boolean => {
       const lenCheck = value.length >= 8;
-      const specialCharacterCheck = new RegExp(
-        /[\x21-\x2F]|[\x3A-\x40]|[\x5B-\x60]|[\x7B-\x7E]/
-      ).test(value);
       const numericCheck = new RegExp(/\d/).test(value);
       const upperCaseCheck = new RegExp(/[A-Z]/).test(value);
       const lowerCaseCheck = new RegExp(/[a-z]/).test(value);
 
-      return (
-        lenCheck &&
-        specialCharacterCheck &&
-        numericCheck &&
-        upperCaseCheck &&
-        lowerCaseCheck
-      );
+      return lenCheck && numericCheck && upperCaseCheck && lowerCaseCheck;
     };
 
     const password = passwordCheck(this.password);

@@ -84,7 +84,7 @@ describe('Signup ViewModel', () => {
         target: { value: 'iambatman@ventureindustries.com' },
       } as React.ChangeEvent<HTMLInputElement>;
       const password = {
-        target: { value: 'Password1' },
+        target: { value: 'Password' },
       } as React.ChangeEvent<HTMLInputElement>;
       const passwordConfirm = {
         target: { value: 'Password1' },
