@@ -32,13 +32,15 @@ export async function getInitialDDStoreState(
   }
 }
 
-export async function plaidSuccess(mutationInput: PlaidData): Promise<void> {
+export async function plaidSuccess(mutationInput: PlaidData, onPlaidSubmitting: any): Promise<void> {
   const networker = new Networker();
   try {
     await networker.postPlaidPayment(mutationInput);
+    onPlaidSubmitting(false);
     const url = `/sell/verification-congrats`;
     window.location.href = url;
   } catch (err) {
+    onPlaidSubmitting(false);
     console.log(JSON.stringify(err));
     return err;
   }
