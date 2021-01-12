@@ -56,11 +56,14 @@ const BorderedTabs = styled(Tabs)({
 });
 
 export const addressToStringArray = ({
+  // eslint-disable-next-line @typescript-eslint/camelcase
   street_line_1,
   city,
   state,
+  // eslint-disable-next-line @typescript-eslint/camelcase
   zip_code,
 }: Address): string[] => {
+  // eslint-disable-next-line @typescript-eslint/camelcase
   return [street_line_1, `${city}, ${state} ${zip_code}`];
 };
 

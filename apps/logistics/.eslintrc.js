@@ -31,6 +31,7 @@ module.exports = {
     },
   ],
   rules: {
+    '@typescript-eslint/no-unused-vars': 'error',
     'prettier/prettier': ['error', { singleQuote: true, trailingComma: 'es5' }],
     'react/prop-types': 'off',
     'react-hooks/rules-of-hooks': 'error',
