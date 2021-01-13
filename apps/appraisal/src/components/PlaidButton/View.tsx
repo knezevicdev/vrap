@@ -60,9 +60,14 @@ const PlaidButtonView: React.FC<Props> = ({ viewModel, token, plaidSuccess, pric
     plaidSuccess(mutationInput, onPlaidSubmitting);
   }, []);
 
+  const onExit = useCallback((): void => {
+    viewModel.onPlaidSubmitting(false);
+  }, [viewModel]);
+
   const config = {
     token,
-    onSuccess
+    onSuccess,
+    onExit
   }
 
   const tokenIsUndefined = token.length === 0;
