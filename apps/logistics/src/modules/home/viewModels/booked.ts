@@ -1,4 +1,5 @@
 import { addressToStringArray } from '..';
+import { Modals } from '../PopoverButton';
 import { Accessor, TableData } from '../Table';
 
 import { Model } from 'src/mvvm';
@@ -34,8 +35,17 @@ const bookedData = ({
           row.blackout_dates?.map((date) => date.start) || '',
         [Accessor.estimatedPickupDate]: row.estimated_pickup || '',
         [Accessor.actions]: [
-          { text: 'Picked Up', handler: (): void => undefined, primary: true },
-          { text: 'Cancel', handler: (): void => undefined },
+          {
+            text: 'Picked Up',
+            popover: Modals.pickup,
+            handler: (): void => undefined,
+            primary: true,
+          },
+          {
+            text: 'Cancel',
+            popover: Modals.cancel,
+            handler: (): void => undefined,
+          },
         ],
       },
     })) || [],

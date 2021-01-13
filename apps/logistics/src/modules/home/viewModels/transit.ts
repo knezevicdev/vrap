@@ -1,4 +1,5 @@
 import { addressToStringArray } from '..';
+import { Modals } from '../PopoverButton';
 import { Accessor, TableData } from '../Table';
 
 import { Model } from 'src/mvvm';
@@ -38,8 +39,17 @@ const transitData = ({
           row.blackout_dates?.map((date) => date.start) || '',
         [Accessor.estimatedDeliveryDate]: row.estimated_delivery || '',
         [Accessor.actions]: [
-          { text: 'Delivered', handler: (): void => undefined, primary: true },
-          { text: 'Cancel', handler: (): void => undefined },
+          {
+            text: 'Delivered',
+            popover: Modals.deliver,
+            handler: (): void => undefined,
+            primary: true,
+          },
+          {
+            text: 'Cancel',
+            popover: Modals.cancel,
+            handler: (): void => undefined,
+          },
         ],
       },
     })) || [],
