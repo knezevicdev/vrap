@@ -26,7 +26,7 @@ export class LicensePlateStore {
 
   @action
   setLicensePlate = (licensePlate: string): void => {
-    const formattedValue = licensePlate.replace(/\s/g, '');
+    const formattedValue = licensePlate.replace(/\s/g, '').toUpperCase();
     const licenseValidated =
       formattedValue.length <= 8 && /^[0-9a-zA-Z-]+$/.test(formattedValue);
 

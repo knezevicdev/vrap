@@ -1,6 +1,6 @@
 {
   "name": "@vroom-web/home",
-  "version": "1.6.9",
+  "version": "1.7.1",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -18,7 +18,7 @@
     "@material-ui/lab": "^4.0.0-alpha.44",
     "@next/bundle-analyzer": "^9.4.4",
     "@vroom-web/analytics-integration": "^1.2.2",
-    "@vroom-web/cat-sdk": "^1.0.0",
+    "@vroom-web/cat-sdk": "^1.0.5",
     "@vroom-web/catalog-url-integration": "^2.0.2",
     "@vroom-web/deals-v2-networking": "^1.0.1",
     "@vroom-web/footer-components": "^1.0.8",
@@ -72,6 +72,7 @@
     "eslint-plugin-react-hooks": "^3.0.0",
     "eslint-plugin-simple-import-sort": "^5.0.2",
     "jest": "^25.4.0",
+    "jest-sonar": "^0.2.11",
     "prettier": "^2.0.5",
     "typescript": "^3.8.2",
     "url-loader": "^3.0.0",

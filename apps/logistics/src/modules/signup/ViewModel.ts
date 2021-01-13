@@ -43,36 +43,45 @@ class SignupViewModel {
     postSignUp(this.email, this.password, this.firstName, this.lastName);
   };
 
-  get disabled(): boolean {
-    if (this.firstName.length === 0) {
-      return true;
-    }
-
-    if (this.lastName.length === 0) {
-      return true;
-    }
-
-    // from https://emailregex.com/
+  get validation(): {
+    firstName: boolean;
+    lastName: boolean;
+    email: boolean;
+    password: boolean;
+    passwordConfirm: boolean;
+  } {
+    const firstName = this.firstName.length > 0;
+    const lastName = this.lastName.length > 0;
     const emailRegex = new RegExp(
-      /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+      /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
     );
-    if (!emailRegex.test(this.email)) {
-      return true;
-    }
+    const email = emailRegex.test(this.email);
 
-    const passwordRegex = new RegExp(
-      /^(?=.*?[a-z])(?=.*?[A-Z])(?=.*?[0-9])[a-zA-Z0-9]{8,}$/
-    );
-    if (
-      !(
-        passwordRegex.test(this.password) &&
-        passwordRegex.test(this.passwordConfirm) &&
-        this.password === this.passwordConfirm
-      )
-    ) {
-      return true;
-    }
-    return false;
+    const passwordCheck = (value: string): boolean => {
+      const lenCheck = value.length >= 8;
+      const numericCheck = new RegExp(/\d/).test(value);
+      const upperCaseCheck = new RegExp(/[A-Z]/).test(value);
+      const lowerCaseCheck = new RegExp(/[a-z]/).test(value);
+
+      return lenCheck && numericCheck && upperCaseCheck && lowerCaseCheck;
+    };
+
+    const password = passwordCheck(this.password);
+    const passwordConfirm =
+      passwordCheck(this.passwordConfirm) &&
+      this.password === this.passwordConfirm;
+
+    return {
+      firstName,
+      lastName,
+      email,
+      password,
+      passwordConfirm,
+    };
+  }
+
+  get disabled(): boolean {
+    return Object.values(this.validation).includes(false);
   }
 }
 

@@ -53,10 +53,6 @@ class AutocompleteViewModel {
     }
     return [];
   }
-
-  patchUser(id: number, carrierCode: string): void {
-    this.usersModel.patchUser(id, undefined, carrierCode);
-  }
 }
 
 export default AutocompleteViewModel;

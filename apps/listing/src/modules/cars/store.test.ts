@@ -213,7 +213,6 @@ describe('getSortRequestData', () => {
     expect(getSortRequestData(mockFiltersData)).toEqual({
       sortby: SortAPIBy.GEO,
       sortdirection: undefined,
-      sortAgeDirection: SortDirection.DESCENDING,
     });
   });
   test('2', () => {
@@ -310,7 +309,6 @@ describe('getPostInventoryRequestDataFromFilterData', () => {
       optionalFeatures: undefined,
       price: undefined,
       searchall: undefined,
-      sortAgeDirection: SortAPIDirection.DESCENDING,
       sortby: SortAPIBy.GEO,
       sortdirection: undefined,
       testdriveonly: undefined,
