@@ -1,10 +1,10 @@
 import { datadogRum } from '@datadog/browser-rum';
+import { CatSDK } from '@vroom-web/cat-sdk';
 import {
   ErrorResponse,
   isAccessDeniedErrorResponse,
   ResponseErrorInterceptor,
 } from '@vroom-web/networking';
-import { CatSDK } from '@vroom-web/cat-sdk';
 import {
   getVroomTheme,
   GlobalStyle,
