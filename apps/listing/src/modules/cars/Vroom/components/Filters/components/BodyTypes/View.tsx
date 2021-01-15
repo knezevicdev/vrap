@@ -3,10 +3,13 @@ import { styled } from '@material-ui/core/styles';
 import Check from '@material-ui/icons/Check';
 import { Typography } from '@vroom-web/ui';
 import { observer } from 'mobx-react';
+import getConfig from 'next/config';
 import React, { Fragment } from 'react';
 
 import Truck from './Truck';
 import BodyTypesViewModel from './ViewModel';
+
+const { publicRuntimeConfig } = getConfig();
 
 const StyledListItem = styled(ListItem)(({ theme }) => ({
   padding: theme.spacing(1, 0),
@@ -41,6 +44,15 @@ const CustomCheckbox = styled(Checkbox)(({ theme }) => ({
 
 const Value = styled(Typography)(() => ({
   fontSize: '16px',
+  margin: 'auto',
+}));
+
+const StyledLableContainer = styled('div')(() => ({
+  display: 'inline-flex',
+}));
+
+const StyledCarImage = styled('img')(() => ({
+  marginRight: '8px',
 }));
 
 interface Props {
@@ -66,7 +78,18 @@ const BodyTypesView: React.FC<Props> = ({ viewModel }) => {
                 isSelected
               )}
             >
-              <Value fontWeight={fontWeight}>{display}</Value>
+              <StyledLableContainer>
+                <StyledCarImage
+                  width="56px"
+                  height="24px"
+                  src={`${publicRuntimeConfig.BASE_PATH}/images/${
+                    isSelected
+                      ? `${bodyType.display}-selected`
+                      : bodyType.display
+                  }.png`}
+                />
+                <Value fontWeight={fontWeight}>{display}</Value>
+              </StyledLableContainer>
               {isSelected ? (
                 <StyledCheck fontSize="small" color="secondary" />
               ) : (
