@@ -12,8 +12,8 @@ export interface Highlight {
   reviewerName: string;
 }
 export interface ContextState {
-  summary: Summary | null;
-  highlights: Highlight[] | null;
+  summary?: Summary;
+  highlights?: Highlight[];
 }
 
-export const ReviewsContext = createContext<ContextState | null>(null);
+export const ReviewsContext = createContext<Partial<ContextState>>({});

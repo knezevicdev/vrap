@@ -99,6 +99,7 @@ const ValuesView: FC<Props> = ({ viewModel }) => {
   const [value, setValue] = useState(0);
 
   const handleChange = (event: ChangeEvent<{}>, newValue: number): void => {
+    event.preventDefault();
     setValue(newValue);
   };
 
