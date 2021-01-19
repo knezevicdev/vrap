@@ -26,6 +26,7 @@ export interface InventoryStoreState {
   vehicleStatus: Status;
   vehicle: Hit;
   isAvailable: boolean;
+  actionFavorite: boolean;
 }
 
 export type getVehicleResponseType = (
@@ -145,8 +146,18 @@ export async function getInventoryAvailabilityState(
 }
 
 export async function getInitialInventoryStoreState(
-  vin: string
-): Promise<InventoryStoreState> {
+  vin: string,
+  actionFavorite: boolean
+): Promise<{
+  similar: Hit[];
+  isAvailable: boolean;
+  vin: string;
+  similarClusterCount: number;
+  vehicleStatus: Status;
+  vehicle: Hit;
+  similarStatus: Status;
+  actionFavorite: boolean;
+}> {
   const invSearchNetworker = new InvSearchNetworker(
     publicRuntimeConfig.INVSEARCH_V3_URL || ''
   );
@@ -174,6 +185,7 @@ export async function getInitialInventoryStoreState(
     ...vehicleState,
     ...vehicleSimilarState,
     isAvailable: inventoryAvailableState,
+    actionFavorite,
   };
 }
 
@@ -189,6 +201,7 @@ export class InventoryStore {
   @observable vehicle: Hit = {} as Hit;
   @observable isAvailable = false;
   @observable selectedGallery = GallerySelections.GENERAL;
+  @observable actionFavorite = false;
 
   constructor(initialState?: InventoryStoreState) {
     if (initialState) {
@@ -200,6 +213,7 @@ export class InventoryStore {
       // this.similarStatus = initialState.similarStatus;
       this.similar = initialState.similar;
       this.isAvailable = initialState.isAvailable;
+      this.actionFavorite = initialState.actionFavorite;
     }
   }
 
