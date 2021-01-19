@@ -27,6 +27,8 @@ const Reset = styled(ListItem)(({ theme }) => ({
 const Titles = styled(Typography)(({ theme }) => ({
   padding: theme.spacing(2, 0, 0, 0),
   color: theme.palette.grey[700],
+  fontFamily: 'Calibre, Arial, sans-serif',
+  fontSize: '14px',
 }));
 
 const Value = styled(Typography)(() => ({
