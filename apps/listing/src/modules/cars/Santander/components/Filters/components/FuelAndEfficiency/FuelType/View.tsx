@@ -56,7 +56,6 @@ const FuelTypesView: React.FC<Props> = ({ viewModel }) => {
             labelPlacement="start"
             control={
               <CheckboxCustom
-                color="primary"
                 checked={checked}
                 onChange={handleCheckboxChange}
                 value={filtersDataValue}

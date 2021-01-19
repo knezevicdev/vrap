@@ -59,7 +59,7 @@ const FuelAndEfficiencyView: React.FC<Props> = ({ viewModel }) => {
         onClick={viewModel.reset}
         disabled={viewModel.isResetButtonDisabled()}
       >
-        <Value fontWeight="fontWeightMedium" color="primary.main">
+        <Value fontWeight={600} color="#257FA4">
           {viewModel.resetButtonLabel}
         </Value>
       </Reset>

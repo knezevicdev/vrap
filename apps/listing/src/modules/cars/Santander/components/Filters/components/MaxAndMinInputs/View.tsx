@@ -21,7 +21,6 @@ const InputsContainer = styled('div')(() => ({
   '& .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline': {
     borderColor: '#257FA4',
   },
-
 }));
 
 const Input = styled(OutlinedInput)(({ theme }) => ({

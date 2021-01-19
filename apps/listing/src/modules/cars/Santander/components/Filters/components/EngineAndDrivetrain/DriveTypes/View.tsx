@@ -56,7 +56,6 @@ const DriveTypesView: React.FC<Props> = ({ viewModel }) => {
             key={display}
             control={
               <CheckboxCustom
-                color="primary"
                 checked={checked}
                 onChange={handleCheckboxChange}
                 value={filtersDataValue}

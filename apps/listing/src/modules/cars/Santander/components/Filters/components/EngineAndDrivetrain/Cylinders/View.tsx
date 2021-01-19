@@ -60,7 +60,6 @@ const CylindersView: React.FC<Props> = ({ viewModel }) => {
         labelPlacement="start"
         control={
           <CheckboxCustom
-            color="primary"
             checked={checked}
             onChange={handleCheckboxChange}
             value={filtersDataValue}
@@ -77,7 +76,6 @@ const CylindersView: React.FC<Props> = ({ viewModel }) => {
       labelPlacement="start"
       control={
         <CheckboxCustom
-          color="primary"
           checked={viewModel.isOtherChecked()}
           onChange={handleOtherCheckboxChange}
           value={viewModel.otherCylinders.key}

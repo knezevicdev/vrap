@@ -49,7 +49,7 @@ const Transmissions: React.FC<Props> = ({ viewModel }) => {
     >
       <Label
         labelPlacement="start"
-        control={<RadioCustom color="primary" />}
+        control={<RadioCustom />}
         label={viewModel.allOption.display}
         value={viewModel.allOption.value}
       />
@@ -60,7 +60,7 @@ const Transmissions: React.FC<Props> = ({ viewModel }) => {
             labelPlacement="start"
             key={display}
             value={filtersDataValue}
-            control={<RadioCustom color="primary" />}
+            control={<RadioCustom />}
             label={display}
           />
         );
