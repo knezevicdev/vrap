@@ -1,3 +1,4 @@
+import { observer } from 'mobx-react';
 import React from 'react';
 import styled from 'styled-components';
 
@@ -40,15 +41,17 @@ interface Props {
 }
 
 const HeaderView: React.FC<Props> = ({ viewModel }) => {
-  const { button, onClick, logoHref } = viewModel;
+  const { button, onClick, logoHref, isVariant } = viewModel;
   return (
     <Container>
       <a href={logoHref}>
         <Icon icon={Icons.VROOM} />
       </a>
-      <Button.Primary onClick={onClick}>{button}</Button.Primary>
+      {!isVariant && (
+        <Button.Primary onClick={onClick}>{button}</Button.Primary>
+      )}
     </Container>
   );
 };
 
-export default HeaderView;
+export default observer(HeaderView);
