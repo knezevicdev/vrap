@@ -18,9 +18,6 @@ const ContainerForErrorAndInputs = styled('div')(() => ({
 const InputsContainer = styled('div')(() => ({
   display: 'flex',
   justifyContent: 'space-around',
-  '& .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline': {
-    borderColor: '#257FA4',
-  },
 }));
 
 const Input = styled(OutlinedInput)(({ theme }) => ({
@@ -39,18 +36,15 @@ const Error = styled(Typography)(({ theme }) => ({
   marginBottom: theme.spacing(2),
   lineHeight: '1.4',
   textAlign: 'center',
-  fontSize: '14px',
-  color: '#CC0000',
 }));
 
 const StyledSlider = styled(UISlider)(({ theme }) => ({
   width: theme.spacing(24),
   margin: theme.spacing(2, 0, 2, 2),
-  color: '#257FA4',
 }));
 
 const Value = styled(Typography)(() => ({
-  fontSize: '14px',
+  fontSize: '16px',
   alignSelf: 'center',
 }));
 
@@ -106,20 +100,26 @@ const MaxAndMinInputsView: React.FC<Props> = ({ viewModel }) => {
 
   return (
     <>
-      <ContainerForErrorAndInputs>
-        {hasInputError && <Error>{viewModel.inputErrorLabel}</Error>}
+      {viewModel.showInput && (
+        <ContainerForErrorAndInputs>
+          {hasInputError && (
+            <Error variant="body1" color="error.main">
+              {viewModel.inputErrorLabel}
+            </Error>
+          )}
 
-        <InputsContainer>
-          {getMinInputForVariant()}
-          <Input
-            startAdornment={viewModel.inputStartAdornment}
-            error={hasInputError}
-            value={viewModel.getMaxInputValue()}
-            onChange={handleMaxInputChange}
-            placeholder={viewModel.maxInputPlaceholder}
-          />
-        </InputsContainer>
-      </ContainerForErrorAndInputs>
+          <InputsContainer>
+            {getMinInputForVariant()}
+            <Input
+              startAdornment={viewModel.inputStartAdornment}
+              error={hasInputError}
+              value={viewModel.getMaxInputValue()}
+              onChange={handleMaxInputChange}
+              placeholder={viewModel.maxInputPlaceholder}
+            />
+          </InputsContainer>
+        </ContainerForErrorAndInputs>
+      )}
       <StyledSlider
         ValueLabelComponent={SliderValueLabelView}
         valueLabelDisplay="auto"
