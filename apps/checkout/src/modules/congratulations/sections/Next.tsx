@@ -1,5 +1,6 @@
 import {
   addStyleForMobile,
+  addStyleForTablet,
   Body,
   Heading,
   ThemeProps,
@@ -22,43 +23,74 @@ const Background = styled.div`
   background: ${grayFour};
   justify-content: center;
   padding-bottom: 64px;
-  margin-bottom: 64px;
   ${addStyleForMobile(`
     padding-bottom: 32px;
-    margin-bottom: 32px;
   `)}
 `;
 
 const Container = styled.div`
   display: flex;
   flex-direction: column;
-  max-width: 1280px;
+  max-width: 1312px;
+  margin: 0 64px;
   align-items: center;
+
+  ${addStyleForTablet(`
+    width: calc(100% - 128px);
+  `)}
+
+  ${addStyleForMobile(`
+    margin: 0;
+    width: calc(100% - 32px);
+  `)}
 `;
 
 const Step = styled.div`
   display: flex;
   flex-direction: column;
-  padding: 0 16px;
-  min-width: calc(33% - 32px);
-  max-width: calc(33% - 32px);
+  min-width: 33%;
+  max-width: 33%;
+
+  ${addStyleForTablet(`
+    min-width: 100%;
+    max-width: 100%;
+  `)}
+
   ${addStyleForMobile(`
-    min-width: calc(100% - 32px);
-    max-width: calc(100% - 32px);
+    min-width: 100%;
+    max-width: 100%;
   `)}
 `;
 
 const Steps = styled.div`
   display: flex;
-  margin-top: 36px;
-  padding: 0 16px;
-  ${addStyleForMobile(`
-    flex-direction: column;
-     margin-top: 32px;
-     padding: 0;
+  justify-content: center;
+  margin-top: 32px;
+
+  ${Step}:not(:last-child) {
+    padding-right: 32px;
+  }
+
+  ${addStyleForTablet(`
+     flex-direction: column;
      ${Step}:not(:first-child) {
         margin-top: 16px;
      }
+     
+     ${Step}:not(:last-child) {
+      padding-right: 0px;
+     }
+  `)}
+
+  ${addStyleForMobile(`
+    flex-direction: column;
+    ${Step}:not(:first-child) {
+      margin-top: 16px;
+    }
+     
+    ${Step}:not(:last-child) {
+      padding-right: 0px;
+    }
   `)}
 `;
 
@@ -82,6 +114,7 @@ const StepNumber = styled(Body.Small)`
   justify-content: center;
   align-items: center;
   margin-right: 8px;
+  font-weight: 600;
 `;
 
 const Header = styled(Heading.Three)`

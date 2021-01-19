@@ -47,6 +47,14 @@ export default class CongratsModel {
             accountID
             dealID
             createdAt
+            TradeIns {
+              year
+              make
+              model
+              offerPrice
+              loanPayoff
+              makingLoanPayoff
+            }
             dealSummary {
               accountInfo {
                 userName

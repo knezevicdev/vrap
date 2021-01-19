@@ -100,7 +100,6 @@ const Questions: React.FC<QuestionProps> = ({
               trackQuestions && trackQuestions(TrackContactModule.helpCenter)
             }
             href="https://vroom.zendesk.com/hc/en-us"
-            blank
           >
             VISIT OUR HELP CENTER
           </CustomLink>
@@ -113,7 +112,6 @@ const Questions: React.FC<QuestionProps> = ({
               trackQuestions && trackQuestions(TrackContactModule.contactUs)
             }
             href="/contact"
-            blank
           >
             SEND A MESSAGE
           </CustomLink>

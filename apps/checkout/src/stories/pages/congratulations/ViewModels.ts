@@ -45,6 +45,7 @@ export const reservedCarViewModel: ReservedCarProps = {
     email: 'ph123@gmail.com',
     phoneNumber: '1 (212) 200-1000',
   },
+  hasTradeIn: true,
 };
 
 export const purchaseSummaryViewModel: PurchaseSummaryProps = {
@@ -67,7 +68,6 @@ export const purchaseSummaryViewModel: PurchaseSummaryProps = {
       },
       shippingFee: '$599.00',
       subtotal: '$22,486.98',
-      creditDownPayment: '-$500.00',
       total: '$35,153.98',
     },
   },
