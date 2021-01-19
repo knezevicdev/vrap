@@ -132,6 +132,26 @@ class CongratsAnalyticsHandler extends BaseAnalyticsHandler {
       console.log('Analytic Event', err);
     }
   }
+
+  trackWhatsMyCarWorth(plate: boolean): void {
+    try {
+      const { username, UUID } = this.viewModel.analyticsData;
+
+      const event = `What's my car worth?`;
+      const properties = {
+        category: 'Ecommerce',
+        label: plate ? 'License Plate' : 'VIN',
+        pageName: 'Congratulations',
+        section: 'hero',
+        userId: username,
+        UUID,
+        applicationVersion: VERSION,
+      };
+      this.track(event, properties);
+    } catch (err) {
+      console.log('Analytic Event', err);
+    }
+  }
 }
 
 export default CongratsAnalyticsHandler;

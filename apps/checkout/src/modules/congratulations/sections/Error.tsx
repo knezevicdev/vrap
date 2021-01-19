@@ -58,9 +58,7 @@ const Error: React.FC = (): JSX.Element => {
           <Body.Regular>
             Please try refreshing this page or checking out{' '}
           </Body.Regular>
-          <CustomLink href="https://www.vroom.com/my-account">
-            your account.
-          </CustomLink>
+          <CustomLink href="/my-account">your account.</CustomLink>
         </Message>
       </Container>
     </Background>

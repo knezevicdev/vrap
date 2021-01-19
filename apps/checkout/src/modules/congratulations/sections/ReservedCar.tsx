@@ -1,5 +1,6 @@
 import {
   addStyleForMobile,
+  addStyleForTablet,
   Body,
   Heading,
   Icon,
@@ -12,42 +13,62 @@ import {
 import React from 'react';
 import styled from 'styled-components';
 
+import Trade from '../components/Trade';
+
 const primaryBrand = (props: { theme: ThemeProps }): string =>
   props.theme.colors.primary.brand;
 
 const primaryWhite = (props: { theme: ThemeProps }): string =>
   props.theme.colors.primary.white;
 
+const grayThree = (props: { theme: ThemeProps }): string =>
+  props.theme.colors.gray.three;
+
 const grayFour = (props: { theme: ThemeProps }): string =>
   props.theme.colors.gray.four;
 
 const Background = styled.div`
   display: flex;
-  background: linear-gradient(${primaryBrand} 70%, ${grayFour} 30%);
   justify-content: center;
+  background: linear-gradient(${primaryBrand} 70%, ${grayFour} 30%);
 `;
 
-const Container = styled.div`
+const Container = styled.div<{ hasTradeIn: boolean }>`
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 1082px;
-  min-height: 416px;
-  padding: 48px;
+  padding: 48px 0;
+  width: ${(props): string => (props.hasTradeIn ? '84%' : '100%')};
+  max-width: ${(props): string => (props.hasTradeIn ? '1088px' : '1312px')};
   margin: 64px;
   box-shadow: 0px 4px 24px 4px rgba(0, 0, 0, 0.1);
   background: ${primaryWhite};
+
+  ${addStyleForTablet(`
+    flex-direction: column;
+    padding: 32px;
+    margin: 32px 0;
+    width: calc(100% - 128px);
+  `)}
+
   ${addStyleForMobile(`
-        padding: 16px 16px 32px 16px;
-        margin: 16px 16px 32px 16px;
-   `)}
+    flex-direction: column;
+    padding: 16px 16px 32px 16px;
+    margin: 16px 0 32px 0;
+    width: calc(100% - 32px);
+  `)}
 `;
 
-const Content = styled.div`
+const Content = styled.div<{ hasTradeIn: boolean }>`
   display: flex;
+  flex-direction: ${(props): string => (props.hasTradeIn ? 'row' : 'column')};
+  align-items: center;
+
+  ${addStyleForTablet(`
+    flex-direction: column;
+  `)}
+
   ${addStyleForMobile(`
-        flex-direction: column;
-   `)}
+    flex-direction: column;
+  `)}
 `;
 
 const Information = styled.div`
@@ -80,6 +101,7 @@ const CarPicture = styled.div`
 `;
 
 const CarHeading = styled(Heading.Two)`
+  text-align: center;
   ${addStyleForMobile(`
         font-size: 36px;
         line-height: 40px;
@@ -101,9 +123,15 @@ const Steps = styled.div`
   }
 `;
 
-const CarTitle = styled(Title.Two)`
+const CarTitle = styled(Title.Two)<{ hasTradeIn: boolean }>`
   margin-top: 24px;
   margin-bottom: 16px;
+  ${(props): string | false => !props.hasTradeIn && `text-align: center;`}
+  
+  ${addStyleForTablet(`
+    text-align: center;
+  `)}
+  
   ${addStyleForMobile(`
         font-size: 20px;
         margin-top: 16px;
@@ -123,8 +151,50 @@ const Bold = styled.span`
 const Schedule = styled(Link)`
   color: ${primaryBrand} !important;
 `;
+
+const Reserved = styled.div<{ hasTradeIn: boolean }>`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: ${(props): string => (props.hasTradeIn ? '100%' : '40%')};
+  margin: 0 auto;
+  ${addStyleForMobile(`
+    width: 100%;
+  `)}
+
+  ${addStyleForTablet(`
+    width: 100%;
+  `)}
+`;
+
+const Divider = styled.div`
+  background: ${grayThree};
+  min-width: 1px;
+  max-width: 1px;
+  min-height: 100%;
+  max-height: 100%;
+
+  ${addStyleForTablet(`
+    min-width: 100%;
+    max-width: 100%;
+    min-height: 1px;
+    max-height: 1px;
+    margin: 32px 0;
+  `)}
+
+  ${addStyleForMobile(`
+    min-width: 100%;
+    max-width: 100%;
+    min-height: 1px;
+    max-height: 1px;
+    margin: 32px 0;
+  `)}
+`;
+
 export interface ReservedCarProps {
   trackScheduleTime?: () => void;
+  trackLicensePlateClick?: () => void;
+  trackVinClick?: () => void;
   data: {
     car: string;
     email: string;
@@ -134,6 +204,7 @@ export interface ReservedCarProps {
       src: string;
     };
   };
+  hasTradeIn: boolean;
 }
 
 const ReservedCar: React.FC<ReservedCarProps> = ({
@@ -144,54 +215,64 @@ const ReservedCar: React.FC<ReservedCarProps> = ({
     phoneNumber,
     image: { alt, src },
   },
+  hasTradeIn,
+  trackLicensePlateClick,
+  trackVinClick,
 }): JSX.Element => {
   return (
     <Background>
-      <Container>
-        <CarHeading>your car is reserved!</CarHeading>
-        <Content>
-          <CarPicture>
-            <Picture
-              alt={alt}
-              src={src}
-              width="100%"
-              aspectRatio="3:2"
-              objectFit="contain"
+      <Container hasTradeIn={hasTradeIn}>
+        <Reserved hasTradeIn={hasTradeIn}>
+          <CarHeading>your car is reserved!</CarHeading>
+          <Content hasTradeIn={hasTradeIn}>
+            <CarPicture>
+              <Picture
+                alt={alt}
+                src={src}
+                width="100%"
+                aspectRatio="3:2"
+                objectFit="contain"
+              />
+            </CarPicture>
+            <Information>
+              <CarTitle hasTradeIn={hasTradeIn}>{car}</CarTitle>
+              <Steps>
+                <Step>
+                  <Check icon={Icons.ENVELOPE} />
+                  <Body.Regular>
+                    The email was sent to <Bold>{email}</Bold>.
+                  </Body.Regular>
+                </Step>
+                <Step>
+                  <Check icon={Icons.PHONE} />
+                  <Body.Regular>
+                    A Vroom representative will reach out to your phone number{' '}
+                    <Bold>+{phoneNumber}</Bold> within the next 24 hours of a
+                    business day.{' '}
+                  </Body.Regular>
+                </Step>
+                <Step>
+                  <Check icon={Icons.CALENDAR} />
+                  <Body.Regular>
+                    <Schedule href="/schedule" onClick={trackScheduleTime}>
+                      Schedule a time
+                    </Schedule>{' '}
+                    to talk with the Vroom team.
+                  </Body.Regular>
+                </Step>
+              </Steps>
+            </Information>
+          </Content>
+        </Reserved>
+        {!hasTradeIn && (
+          <>
+            <Divider />
+            <Trade
+              trackLicensePlateClick={trackLicensePlateClick}
+              trackVinClick={trackVinClick}
             />
-          </CarPicture>
-          <Information>
-            <CarTitle>{car}</CarTitle>
-            <Steps>
-              <Step>
-                <Check icon={Icons.ENVELOPE} />
-                <Body.Regular>
-                  The email was sent to <Bold>{email}</Bold>.
-                </Body.Regular>
-              </Step>
-              <Step>
-                <Check icon={Icons.PHONE} />
-                <Body.Regular>
-                  A Vroom representative will reach out to your phone number{' '}
-                  <Bold>+{phoneNumber}</Bold> within the next 24 hours of a
-                  business day.{' '}
-                </Body.Regular>
-              </Step>
-              <Step>
-                <Check icon={Icons.CALENDAR} />
-                <Body.Regular>
-                  <Schedule
-                    href="https://www.vroom.com/schedule"
-                    blank
-                    onClick={trackScheduleTime}
-                  >
-                    Schedule a time
-                  </Schedule>{' '}
-                  to talk with the Vroom team.
-                </Body.Regular>
-              </Step>
-            </Steps>
-          </Information>
-        </Content>
+          </>
+        )}
       </Container>
     </Background>
   );

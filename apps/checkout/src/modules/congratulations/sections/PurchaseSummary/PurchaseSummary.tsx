@@ -61,9 +61,11 @@ const Container = styled.div`
   display: flex;
   justify-content: center;
   padding-bottom: 64px;
+  padding-top: 64px;
   background: ${primaryWhite};
   ${addStyleForMobile(`
-        margin: 0 16px;
+        padding: 0 16px;
+        padding-top: 32px;
    `)}
 `;
 
@@ -149,16 +151,16 @@ const PurchaseSummary: React.FC<PurchaseSummaryProps> = ({
         </Car>
         <PurchaseDetails {...purchaseDetails} />
         <Space />
-        <DepositInformation {...depositInformation} />
-        <Space />
-        <BillingAddress {...billingAddress} />
-        <Space />
         {financingInformation && (
           <>
             <FinancingInformation {...financingInformation} />
             <Space />
           </>
         )}
+        <DepositInformation {...depositInformation} />
+        <Space />
+        <BillingAddress {...billingAddress} />
+        <Space />
         <RegistrationAddress {...registrationAddress} />
         <Space />
         <DeliveryAddress {...deliveryAddress} />
