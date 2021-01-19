@@ -52,7 +52,7 @@ const NavSection = styled('div')(({ theme }) => ({
 }));
 
 const AllReviews: FC = () => {
-  const [reviews, setReviews] = useState<Review[] | null>([]);
+  const [reviews, setReviews] = useState<Review[] | undefined>([]);
   const [min, setMin] = useState<number>(1);
   const [start, setStart] = useState<number>(0);
 

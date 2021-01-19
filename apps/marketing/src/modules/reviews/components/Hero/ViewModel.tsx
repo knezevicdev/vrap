@@ -16,13 +16,15 @@ class HeroViewModel {
     alt: 'How it works car',
   };
 
-  private summary: Summary | null;
+  private summary?: Summary;
 
-  constructor(store: ContextState) {
+  constructor(store: Partial<ContextState>) {
     this.summary = store.summary;
   }
 
-  getSummary = (): Summary | null => this.summary;
+  getSummary(): Summary | undefined {
+    return this.summary;
+  }
 }
 
 export default HeroViewModel;

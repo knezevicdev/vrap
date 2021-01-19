@@ -16,7 +16,7 @@ interface Props {
   brand: Brand;
   title: string;
   description: string;
-  reviews: ContextState | null;
+  reviews: Partial<ContextState>;
 }
 
 const ReviewsPage: NextPage<Props> = ({
