@@ -18,6 +18,10 @@ const ContainerForErrorAndInputs = styled('div')(() => ({
 const InputsContainer = styled('div')(() => ({
   display: 'flex',
   justifyContent: 'space-around',
+  '& .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline': {
+    borderColor: '#257FA4',
+  },
+
 }));
 
 const Input = styled(OutlinedInput)(({ theme }) => ({
@@ -36,15 +40,18 @@ const Error = styled(Typography)(({ theme }) => ({
   marginBottom: theme.spacing(2),
   lineHeight: '1.4',
   textAlign: 'center',
+  fontSize: '14px',
+  color: '#CC0000',
 }));
 
 const StyledSlider = styled(UISlider)(({ theme }) => ({
   width: theme.spacing(24),
   margin: theme.spacing(2, 0, 2, 2),
+  color: '#257FA4',
 }));
 
 const Value = styled(Typography)(() => ({
-  fontSize: '16px',
+  fontSize: '14px',
   alignSelf: 'center',
 }));
 
