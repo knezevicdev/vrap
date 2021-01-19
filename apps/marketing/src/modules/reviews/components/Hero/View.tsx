@@ -221,7 +221,7 @@ const HeroView: React.FC<Props> = ({ viewModel }) => {
                   readOnly
                 />
                 <ReviewCount fontWeight={600}>
-                  {summary.totalNumReviews} reviews
+                  {summary.totalNumReviews.toLocaleString()} reviews
                 </ReviewCount>
               </AverageContent>
             </AverageContainer>
