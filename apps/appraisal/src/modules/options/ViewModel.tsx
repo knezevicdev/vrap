@@ -32,6 +32,14 @@ class OptionsViewModel {
     this.store.setPayOptionSelected(selectedOption.currentTarget.name);
   };
 
+  onPlaidSubmitting = (value: boolean): void => {
+    this.store.setPlaidSubmitting(value);
+  };
+
+  getPlaidSubmitting = (): boolean => {
+    return this.store.plaidSubmitting;
+  };
+
   getPayOptionSelected = (): string => {
     return this.store.payOptionSelected;
   };

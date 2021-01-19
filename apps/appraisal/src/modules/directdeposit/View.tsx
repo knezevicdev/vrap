@@ -26,14 +26,14 @@ const DDToggleLink = styled.span`
   font-size: 18px;
   line-height: 24px;
   text-decoration: underline;
+  cursor: pointer;
 `;
 
 export interface Props {
   viewModel: DirectDepositViewModel;
-  email: string;
 }
 
-const DirectDepositView: React.FC<Props> = ({ viewModel, email }) => {
+const DirectDepositView: React.FC<Props> = ({ viewModel }) => {
   let token = viewModel.getPlaidLinkToken();
 
   return (
@@ -41,7 +41,11 @@ const DirectDepositView: React.FC<Props> = ({ viewModel, email }) => {
       <DirectDepositCopy>{viewModel.bankInfo}</DirectDepositCopy>
       {viewModel.getShowPlaidLink() ? (
         <>
-          <PlaidButton token={token} plaidSuccess={viewModel.onPlaidSuccess} priceId={viewModel.getPriceId()} email={email} />
+          <PlaidButton
+            token={token}
+            plaidSuccess={viewModel.onPlaidSuccess}
+            priceId={viewModel.getPriceId()}
+          />
           {viewModel.ddToggleOrCopy}
           <DDToggleLink onClick={() => viewModel.togglePlaidLink()}>{viewModel.ddToggleManualCopy}</DDToggleLink>
         </>

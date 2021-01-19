@@ -42,11 +42,11 @@ const Primary = styled.button`
   &:hover {
     background: ${(props): string => (props.disabled ? '#D6D7DA' : '#FC4349')};
   }
-  
+
   &:active {
     background: ${(props): string => (props.disabled ? '#D6D7DA' : '#e7131a')};
-    box-shadow: 0 0 0 ${(props): string =>
-      props.disabled ? '0px' : '4px'} #fcd6d7;
+    box-shadow: 0 0 0 ${(props): string => (props.disabled ? '0px' : '4px')}
+      #fcd6d7;
   }
 `;
 

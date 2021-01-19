@@ -49,6 +49,10 @@ const TestDriveImage = styled.img`
   width: 100%;
   max-width: 640px;
 `;
+const RoadsideImage = styled.img`
+  width: 100%;
+  max-width: 284px;
+`;
 
 const SizedIcon = styled(Icon)`
   width: 100% !important;
@@ -136,6 +140,26 @@ export const DeliveredSection: FC = () => {
       <Description>
         Buy this vehicle and get it delivered to your driveway safely and
         contact-free.
+      </Description>
+    </Section>
+  );
+};
+
+export const RoadsideSection: FC = () => {
+  const handleClick = (): void => {
+    window.location.href = 'https://www.vroom.com/protection';
+  };
+  return (
+    <Section>
+      <Title>1 Year free roadside&nbsp;assistance</Title>
+      <RoadsideImage
+        src={`${publicRuntimeConfig.BASE_PATH}/images/V2V/roadside-assistance.png`}
+      />
+      <Description>
+        All Vroom’s vehicles come with 24-hour emergency assistance which covers
+        towing, flat tires, oil, battery, lock-out,{' '}
+        <UnderlinedLink onClick={handleClick}>and&nbsp;more</UnderlinedLink>.
+        All with no deductible.
       </Description>
     </Section>
   );

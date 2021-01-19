@@ -13,7 +13,7 @@ const SignInPage: NextPage = () => {
   const head = <title>Sign In</title>;
 
   return (
-    <Page head={head} unprotected>
+    <Page name="Sign In" head={head} unprotected>
       <SignInContext.Provider value={model}>
         <SignIn />
       </SignInContext.Provider>

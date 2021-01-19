@@ -6,15 +6,16 @@ export interface Shipment {
   vin: string;
   origin_address: Address;
   destination_address: Address;
-  blackout_dates: BlackoutDate[] | null;
+  blackout_dates?: BlackoutDate[];
   notes?: string;
   estimated_arrival?: string;
   estimated_delivery?: string;
+  estimated_pickup?: string;
   date_delivered?: string;
   date_cancelled?: string;
 }
 
-interface Address {
+export interface Address {
   street_line_1: string;
   city: string;
   state: string;

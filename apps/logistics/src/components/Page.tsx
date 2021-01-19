@@ -1,49 +1,45 @@
-import { styled } from '@material-ui/core';
+import Box from '@material-ui/core/Box';
 import Head from 'next/head';
 import React from 'react';
 
 import Auth, { AuthContext, AuthContextInterface } from './Auth';
 import Header from './Header';
 
-const PageContainer = styled('div')({
-  display: 'flex',
-  flexDirection: 'column',
-  height: '100vh',
-});
-
-const Content = styled('div')({
-  flex: '1 0 auto',
-});
-
 interface Props {
   category?: string;
   head?: React.ReactNode;
-  name?: string;
+  name: string;
   unprotected?: boolean;
 }
 
-const Page: React.FC<Props> = ({ children, head, unprotected }) => {
+const Page: React.FC<Props> = ({ children, head, unprotected, name }) => {
   if (unprotected) {
     return (
-      <PageContainer>
+      <Box height="100vh" flexDirection="column">
         {head && <Head>{head}</Head>}
-        <Header />
-        <Content>{children}</Content>
-      </PageContainer>
+        <Header title={name} />
+        <Box flex="1 0 auto">{children}</Box>
+      </Box>
     );
   }
   return (
     <Auth>
-      <PageContainer>
+      <Box height="100vh" flexDirection="column">
         {head && <Head>{head}</Head>}
         <AuthContext.Consumer>
           {(context: AuthContextInterface): JSX.Element => {
             const { idToken, handleLogout } = context;
-            return <Header idToken={idToken} handleLogout={handleLogout} />;
+            return (
+              <Header
+                title={name}
+                idToken={idToken}
+                handleLogout={handleLogout}
+              />
+            );
           }}
         </AuthContext.Consumer>
-        <Content>{children}</Content>
-      </PageContainer>
+        <Box flex="1 0 auto">{children}</Box>
+      </Box>
     </Auth>
   );
 };

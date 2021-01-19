@@ -127,6 +127,7 @@ const OptionsView: React.FC<Props> = ({ viewModel }) => {
   });
 
   const shouldShowSubmitButton = viewModel.getShowSubmitButton();
+  const isPlaidSubmitting = viewModel.getPlaidSubmitting();
 
   return (
     <Formik
@@ -143,6 +144,7 @@ const OptionsView: React.FC<Props> = ({ viewModel }) => {
     >
       {({ isValid, values, isSubmitting }): JSX.Element => {
         const showDirectDeposit = values.paymentOption === 'Direct Deposit';
+        const showSubmitButton = shouldShowSubmitButton || !showDirectDeposit;
         return (
           <FormContainer>
             <OptionsContainer>
@@ -159,7 +161,7 @@ const OptionsView: React.FC<Props> = ({ viewModel }) => {
               />
               <OptionDisplay>
                 {showDirectDeposit ? (
-                  <DirectDeposit email={viewModel.getEmail()} />
+                  <DirectDeposit />
                 ) : (
                   <CheckByMail
                     mailingAddress={viewModel.getMailiingAddress()}
@@ -167,8 +169,8 @@ const OptionsView: React.FC<Props> = ({ viewModel }) => {
                 )}
               </OptionDisplay>
 
-              {shouldShowSubmitButton && (
-                <SubmitButton disabled={!isValid || isSubmitting}>
+              {showSubmitButton && (
+                <SubmitButton disabled={!isValid || isSubmitting || isPlaidSubmitting}>
                   {isSubmitting ? viewModel.submitting : viewModel.submit}
                 </SubmitButton>
               )}
