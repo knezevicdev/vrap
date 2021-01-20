@@ -64,7 +64,12 @@ const SignIn: React.FC<Props> = ({ viewModel }) => {
                   />
                 </Grid>
                 <Grid item xs={6}>
-                  <Button size="small" type="submit">
+                  <Button
+                    size="small"
+                    type="submit"
+                    variant="contained"
+                    color="primary"
+                  >
                     Submit
                   </Button>
                 </Grid>
