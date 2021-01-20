@@ -1,4 +1,5 @@
 import { addressToStringArray } from '..';
+import { Modals } from '../PopoverButton';
 import { Accessor, TableData } from '../Table';
 
 import { Model } from 'src/mvvm';
@@ -30,6 +31,7 @@ const tenderedData = ({
         ),
         [Accessor.actions]: {
           text: 'Book',
+          popover: Modals.book,
           handler: (): void => undefined,
           primary: true,
         },

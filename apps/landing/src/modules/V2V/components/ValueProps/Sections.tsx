@@ -91,7 +91,7 @@ export const CertifiedSection: FC = () => {
   const store = useContext(InventoryStoreContext);
   const handleClick = (): void => {
     new AnalyticsHandler().trackCertifiedLinkClicked(store.vehicle._source);
-    window.location.href = 'https://www.vroom.com/protection';
+    window.location.href = 'https://www.vroom.com/protection#complimentary';
   };
 
   return (
@@ -147,7 +147,7 @@ export const DeliveredSection: FC = () => {
 
 export const RoadsideSection: FC = () => {
   const handleClick = (): void => {
-    window.location.href = 'https://www.vroom.com/protection';
+    window.location.href = 'https://www.vroom.com/protection#complimentary';
   };
   return (
     <Section>

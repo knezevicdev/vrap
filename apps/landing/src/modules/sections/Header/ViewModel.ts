@@ -1,6 +1,12 @@
 import { AnalyticsHandler } from '@vroom-web/analytics-integration';
 
 class HeaderViewModel {
+  isVariant: boolean;
+
+  constructor(isVariant?: boolean) {
+    this.isVariant = isVariant || false;
+  }
+
   readonly button = `FIND YOURS`;
   readonly logoHref = '/';
   readonly analyticsHandler = new AnalyticsHandler();

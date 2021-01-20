@@ -1,9 +1,12 @@
+import { observer } from 'mobx-react';
 import React from 'react';
 import styled from 'styled-components';
 
 import { Picture } from '../../../core/Picture';
 import { Hero as TypographyHero } from '../../../core/Typography';
 import HeroViewModel from './ViewModel';
+
+import { Button } from 'src/core/Button';
 
 const Container = styled.div`
   display: flex;
@@ -21,22 +24,41 @@ const Title = styled(TypographyHero.One)`
   font-weight: 600;
 
   @media (max-width: 599px) {
-    margin: 0px 24px;
+    align-self: flex-start;
+  }
+`;
+const TitleContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+  @media (max-width: 599px) {
+    flex-direction: column;
+    margin: 0 24px;
   }
 `;
 
+const StyledButton = styled(Button.Primary)`
+  padding: 12px 72px;
+  margin: 0;
+  @media (max-width: 599px) {
+    width: 100%;
+  }
+`;
 interface Props {
   viewModel: HeroViewModel;
 }
 
 const HeroView: React.FC<Props> = ({ viewModel }) => {
-  const { picture, title } = viewModel;
+  const { picture, title, onClick, button, isVariant } = viewModel;
   return (
     <Container>
       <Picture {...picture} />
-      <Title>{title}</Title>
+      <TitleContainer>
+        <Title>{title}</Title>
+        {isVariant && <StyledButton onClick={onClick}>{button}</StyledButton>}
+      </TitleContainer>
     </Container>
   );
 };
 
-export default HeroView;
+export default observer(HeroView);

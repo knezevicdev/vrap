@@ -22,8 +22,12 @@ export interface PurchaseDetailsProps {
     tireAndWheelCoverage?: Service;
     shippingFee?: string;
     subtotal: string;
-    creditDownPayment: string;
     total: string;
+    tradeIn?: {
+      vehicle: string;
+      offerPrice: string;
+      loanBalance?: string;
+    };
   };
 }
 
@@ -88,31 +92,30 @@ const PurchaseDetails: React.FC<PurchaseDetailsProps> = ({ data }) => {
     tireAndWheelCoverage,
     shippingFee,
     subtotal,
-    creditDownPayment,
     total,
+    tradeIn,
   } = data;
 
   return (
     <Container>
       <Header>Purchase details</Header>
       <Row>
-        <Title.Three>Payment method</Title.Three>
+        <Title.Three>Payment method:</Title.Three>
         <Title.Three>{method}</Title.Three>
       </Row>
       <Divider />
+      <Row>
+        <Title.Two>Selling price</Title.Two>
+        <Title.Two>{sellingPrice}</Title.Two>
+      </Row>
+      <Divider />
       <Section>
-        <Row>
-          <Body.Regular>Selling price</Body.Regular>
-          <Body.Regular bold>{sellingPrice}</Body.Regular>
-        </Row>
         <Row>
           <Body.Regular>Taxes and fees</Body.Regular>
           <Body.Regular bold>{taxes}</Body.Regular>
         </Row>
         <Row>
-          <BrandLink blank href="https://vroom.com/protection">
-            90-Day Limited Warranty
-          </BrandLink>
+          <BrandLink href="/protection">90-Day Limited Warranty</BrandLink>
           <Body.Regular bold>Included</Body.Regular>
         </Row>
         <Row>
@@ -122,10 +125,7 @@ const PurchaseDetails: React.FC<PurchaseDetailsProps> = ({ data }) => {
         {vehicleServiceContractProtection && (
           <>
             <Row>
-              <BrandLink
-                blank
-                href="https://vroom.zendesk.com/hc/en-us/articles/205444915-What-is-Vroom-Protect-"
-              >
+              <BrandLink href="https://vroom.zendesk.com/hc/en-us/articles/205444915-What-is-Vroom-Protect-">
                 Vehicle Service Contract Protection
               </BrandLink>
               <Body.Regular bold>
@@ -138,10 +138,7 @@ const PurchaseDetails: React.FC<PurchaseDetailsProps> = ({ data }) => {
         {gapCoverage && (
           <>
             <Row>
-              <BrandLink
-                blank
-                href="https://vroom.zendesk.com/hc/en-us/articles/204740399-What-does-GAP-protection-cover-"
-              >
+              <BrandLink href="https://vroom.zendesk.com/hc/en-us/articles/204740399-What-does-GAP-protection-cover-">
                 GAP Coverage
               </BrandLink>
               <Body.Regular bold>{gapCoverage.cost}</Body.Regular>
@@ -152,10 +149,7 @@ const PurchaseDetails: React.FC<PurchaseDetailsProps> = ({ data }) => {
         {tireAndWheelCoverage && (
           <>
             <Row>
-              <BrandLink
-                blank
-                href="https://vroom.zendesk.com/hc/en-us/articles/360033879711-What-is-Tire-Wheel-Protection-"
-              >
+              <BrandLink href="https://vroom.zendesk.com/hc/en-us/articles/360033879711-What-is-Tire-Wheel-Protection-">
                 Tire & Wheel Coverage
               </BrandLink>
               <Body.Regular bold>{tireAndWheelCoverage.cost}</Body.Regular>
@@ -169,16 +163,31 @@ const PurchaseDetails: React.FC<PurchaseDetailsProps> = ({ data }) => {
         </Row>
       </Section>
       <Divider />
-      <Section>
-        <Row>
-          <Body.Regular>Subtotal</Body.Regular>
-          <Body.Regular bold>{subtotal}</Body.Regular>
-        </Row>
-        <Row>
-          <Body.Regular>Credit down payment</Body.Regular>
-          <Body.Regular bold>{creditDownPayment}</Body.Regular>
-        </Row>
-      </Section>
+      {tradeIn && (
+        <>
+          <Section>
+            <Row>
+              <Body.Regular>Trade-in vehicle</Body.Regular>
+              <Body.Regular bold>{tradeIn.vehicle}</Body.Regular>
+            </Row>
+            <Row>
+              <Body.Regular>Your est. trade-in credit</Body.Regular>
+              <Body.Regular bold>{tradeIn.offerPrice}</Body.Regular>
+            </Row>
+            {tradeIn.loanBalance && (
+              <Row>
+                <Body.Regular>Est. remaining loan balance</Body.Regular>
+                <Body.Regular bold>{tradeIn.loanBalance}</Body.Regular>
+              </Row>
+            )}
+          </Section>
+          <Divider />
+        </>
+      )}
+      <Row>
+        <Title.Two>Est. subtotal</Title.Two>
+        <Title.Two>{subtotal}</Title.Two>
+      </Row>
       <Divider />
       <Row>
         <Due>Total balance due</Due>

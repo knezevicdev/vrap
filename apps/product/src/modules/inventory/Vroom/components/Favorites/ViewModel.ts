@@ -39,8 +39,7 @@ class FavoritesViewModel {
 
   handleDialogActions(location: string): void {
     const currentUrl = window.location.pathname;
-    const newUrl = `/account/${location}?redirect=${currentUrl}`;
-    window.location.href = newUrl;
+    window.location.href = `/account/${location}?redirect=${currentUrl}&action=favorite`;
   }
 
   handleDialog(): void {
@@ -111,6 +110,8 @@ class FavoritesViewModel {
       );
       if (found !== undefined) {
         this.favoritesStore.setFavorited();
+      } else if (this.inventoryStore.actionFavorite) {
+        await this.addFavorite();
       }
     } catch (err) {
       console.error(JSON.stringify(err));

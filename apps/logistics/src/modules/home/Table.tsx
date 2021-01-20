@@ -1,6 +1,5 @@
-import { styled } from '@material-ui/core/styles';
-import Button from '@material-ui/core/Button';
 import Paper from '@material-ui/core/Paper';
+import { styled } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -9,6 +8,9 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import ArrowDropDown from '@material-ui/icons/ArrowDropDown';
 import React from 'react';
+
+import PopoverButton, { Modals } from './PopoverButton';
+
 import theme from 'src/theme';
 
 export enum Accessor {
@@ -32,6 +34,7 @@ interface Action {
   text: string;
   handler: () => void;
   primary?: boolean;
+  popover: Modals;
 }
 
 type SimpleField = string | number | boolean | Action;
@@ -72,14 +75,13 @@ const generateCell = (data: Field, key?: number): JSX.Element => {
   }
   if (typeof data === 'object') {
     return (
-      <Button
-        variant={data?.primary ? 'contained' : 'outlined'}
-        color="primary"
-        onClick={data.handler}
+      <PopoverButton
+        popover={data.popover}
+        primary={data.primary}
         key={key}
-      >
-        {data.text}
-      </Button>
+        text={data.text}
+        handler={data.handler}
+      />
     );
   }
 

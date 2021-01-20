@@ -1,4 +1,5 @@
 import { datadogRum } from '@datadog/browser-rum';
+import { CatSDK } from '@vroom-web/cat-sdk';
 import {
   ErrorResponse,
   isAccessDeniedErrorResponse,
@@ -49,6 +50,12 @@ class VroomApp extends App {
       }
     };
     client.addResponseInterceptor(errorInterceptor);
+    const dev = publicRuntimeConfig.NODE_ENV !== 'production';
+    const catSDK = new CatSDK({
+      // Point to dev for local builds.
+      serviceBasePath: dev ? 'https://dev.vroom.com' : undefined,
+    });
+    catSDK.initCatData();
   }
 
   render(): JSX.Element {
