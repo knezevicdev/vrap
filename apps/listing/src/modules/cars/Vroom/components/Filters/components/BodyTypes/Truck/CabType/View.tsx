@@ -30,9 +30,10 @@ const CheckboxCustom = withStyles((theme) => ({
   },
 }))(Checkbox);
 
-const FormGroupCustom = withStyles(() => ({
+const FormGroupCustom = withStyles((theme) => ({
   root: {
     paddingBottom: '16px',
+    paddingRight: theme.spacing(2),
   },
 }))(FormGroup);
 
