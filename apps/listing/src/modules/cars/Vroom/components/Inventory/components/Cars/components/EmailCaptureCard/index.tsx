@@ -1,31 +1,30 @@
-import { useTheme } from '@material-ui/core/styles';
-import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { Car } from '@vroom-web/inv-search-networking';
-import React, { useState } from 'react';
+import React from 'react';
 
-import DesktopView from './DesktopView';
-import LoadingCard from './Loading';
-import MobileView from './MobileView';
+import LoadingCard from '../../Loading';
+import { EmailCaptureStore } from './store';
+import View from './View';
 import EmailCaptureCardViewModel from './ViewModel';
 
 interface EmailCaptureCardProps {
   car: Car | undefined;
 }
 
-const EmailCaptureCard: React.FC<EmailCaptureCardProps> = ({ car }) => {
-  const [email, setEmail] = useState('');
-  const theme = useTheme();
-  const xsDown = useMediaQuery(theme.breakpoints.down('xs'));
-  const xlUp = useMediaQuery(theme.breakpoints.up('xl'));
+class EmailCaptureCard extends React.Component<EmailCaptureCardProps> {
+  viewModel: EmailCaptureCardViewModel;
 
-  if (!car) {
-    return <LoadingCard mobile={xsDown} xl={xlUp} />;
+  constructor(props: EmailCaptureCardProps) {
+    super(props);
+    const emailCaptureStore = new EmailCaptureStore();
+    this.viewModel = new EmailCaptureCardViewModel(emailCaptureStore);
   }
-  const viewModel = new EmailCaptureCardViewModel(email, setEmail);
-  if (xsDown) {
-    return <MobileView viewModel={viewModel} />;
-  }
-  return <DesktopView viewModel={viewModel} />;
-};
 
+  render(): React.ReactNode {
+    const car = this.props.car;
+    if (!car) {
+      return <LoadingCard />;
+    }
+    return <View viewModel={this.viewModel} />;
+  }
+}
 export default EmailCaptureCard;
