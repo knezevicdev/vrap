@@ -12,7 +12,7 @@ import BodyTypesViewModel from './ViewModel';
 const { publicRuntimeConfig } = getConfig();
 
 const StyledListItem = styled(ListItem)(({ theme }) => ({
-  padding: theme.spacing(1, 0),
+  padding: theme.spacing(1, 2),
   height: theme.spacing(4),
   display: 'flex',
   flexDirection: 'row',

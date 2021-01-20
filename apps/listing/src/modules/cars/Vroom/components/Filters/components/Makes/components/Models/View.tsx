@@ -7,8 +7,9 @@ import React from 'react';
 
 import ModelsViewModel from './ViewModel';
 
-const StyledList = styled(List)(() => ({
-  padding: 0,
+const StyledList = styled(List)(({ theme }) => ({
+  paddingTop: theme.spacing(0),
+  paddingLeft: theme.spacing(2),
 }));
 
 const Value = styled(Typography)(() => ({
@@ -27,9 +28,10 @@ const CustomCheckbox = styled(Checkbox)(({ theme }) => ({
   },
 }));
 
-const CustomListItem = styled(ListItem)(() => ({
+const CustomListItem = styled(ListItem)(({ theme }) => ({
   justifyContent: 'space-between',
-  paddingRight: 0,
+  paddingLeft: theme.spacing(2),
+  paddingRight: theme.spacing(2),
 }));
 
 interface Props {

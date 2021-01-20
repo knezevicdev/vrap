@@ -16,7 +16,7 @@ interface Props {
   viewModel: FeaturesViewModel;
 }
 
-const Label = withStyles(() => ({
+const Label = withStyles((theme) => ({
   label: {
     fontSize: '16px',
   },
@@ -26,6 +26,7 @@ const Label = withStyles(() => ({
     '& span.Mui-checked + span': {
       fontWeight: 600,
     },
+    padding: theme.spacing(0, 2),
   },
 }))(FormControlLabel);
 

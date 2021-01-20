@@ -19,7 +19,6 @@ const FiltersContainer = styled(List)(({ theme }) => ({
   minWidth: '250px',
   maxWidth: '250px',
   background: 'white',
-  padding: theme.spacing(2),
   [theme.breakpoints.up('sm')]: {
     boxShadow: '0px 0px 6px rgba(0, 0, 0, 0.15)',
   },
@@ -33,7 +32,7 @@ const StyledFilter = styled('div')(() => ({
 }));
 
 const StyledListItem = styled(ListItem)(({ theme }) => ({
-  padding: theme.spacing(2, 0),
+  padding: theme.spacing(2, 2),
   justifyContent: 'space-between',
 }));
 
@@ -53,7 +52,7 @@ const StyledFiltersIcon = styled(FiltersIcon)(() => ({
 
 const FiltersCloseContainer = styled('div')(({ theme }) => ({
   display: 'flex',
-  padding: theme.spacing(1, 0),
+  padding: theme.spacing(1, 2),
   alignItems: 'center',
   cursor: 'pointer',
 }));

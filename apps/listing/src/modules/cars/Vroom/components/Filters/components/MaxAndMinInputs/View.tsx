@@ -17,7 +17,7 @@ const ContainerForErrorAndInputs = styled('div')(() => ({
 
 const InputsContainer = styled('div')(() => ({
   display: 'flex',
-  justifyContent: 'space-around',
+  justifyContent: 'space-between',
 }));
 
 const Input = styled(OutlinedInput)(({ theme }) => ({
@@ -39,7 +39,7 @@ const Error = styled(Typography)(({ theme }) => ({
 }));
 
 const StyledSlider = styled(UISlider)(({ theme }) => ({
-  width: theme.spacing(24),
+  width: theme.spacing(23),
   margin: theme.spacing(2, 0, 2, 2),
 }));
 
