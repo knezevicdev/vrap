@@ -7,9 +7,9 @@ interface Props {
   selected: string;
 }
 
-const PayOptions: React.FC<Props> = ({ selected }) => {
+const IsPrimaryAddress: React.FC<Props> = ({ selected }) => {
   const viewModel = new ViewModel();
   return <View optionMeta={viewModel.optionMeta} selected={selected} />;
 };
 
-export default PayOptions;
+export default IsPrimaryAddress;

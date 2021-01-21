@@ -59,7 +59,6 @@ export async function submitPaymentOptions(
 
 export class OptionsStore {
   @observable payOptionSelected = 'Direct Deposit';
-  @observable payOptionArr = ['Direct Deposit', 'Check by Mail'];
   @observable showDD = true;
   @observable remainingLoan = 0;
   @observable mailingAddress = defaultOptionsState.mailingAddress;

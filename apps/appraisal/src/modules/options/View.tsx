@@ -93,6 +93,7 @@ const InitialValues: PaymentOverviewFormValues = {
   paymentOption: 'Direct Deposit',
   routingNumber: '',
   bankAccountNumber: '',
+  isPrimaryAddress: 'Yes'
 };
 
 const OptionsView: React.FC<Props> = ({ viewModel }) => {
@@ -103,6 +104,10 @@ const OptionsView: React.FC<Props> = ({ viewModel }) => {
 
   const PaymentOverviewSchema = Yup.object().shape({
     paymentOption: Yup.string().required('Required'),
+    isPrimaryAddress: Yup.string().when('paymentOption', {
+      is: 'Check by Mail',
+      then: Yup.string().required()
+    }),
     routingNumber: Yup.string().when('paymentOption', {
       is: 'Direct Deposit',
       then: Yup.string()
@@ -155,16 +160,16 @@ const OptionsView: React.FC<Props> = ({ viewModel }) => {
                 {viewModel.optionTitle}
               </OptionsTitle>
               <OptionsBody>{viewModel.optionQuestion}</OptionsBody>
-              <PayOptions
-                optionMeta={viewModel.getPayOptionArray()}
-                selected={values.paymentOption}
-              />
+
+              <PayOptions selected={values.paymentOption} />
+
               <OptionDisplay>
                 {showDirectDeposit ? (
                   <DirectDeposit />
                 ) : (
                   <CheckByMail
                     mailingAddress={viewModel.getMailiingAddress()}
+                    isPrimaryAddress={values.isPrimaryAddress}
                   />
                 )}
               </OptionDisplay>

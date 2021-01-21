@@ -44,10 +44,6 @@ class OptionsViewModel {
     return this.store.payOptionSelected;
   };
 
-  getPayOptionArray = (): Array<string> => {
-    return this.store.payOptionArr;
-  };
-
   getMailiingAddress = (): MailingAddress => {
     return this.store.mailingAddress;
   };

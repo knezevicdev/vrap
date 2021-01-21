@@ -25,7 +25,6 @@ export async function getInitialDDStoreState(
     const plaidToken = tokenResponse.data.data.getLinkToken;
     return plaidToken;
   } catch (err) {
-    console.log(JSON.stringify(err));
     const errorState = defaultDDState;
     return errorState;
   }

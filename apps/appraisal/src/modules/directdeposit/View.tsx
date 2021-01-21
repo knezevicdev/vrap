@@ -45,18 +45,20 @@ const DirectDepositView: React.FC<Props> = ({ viewModel }) => {
             plaidSuccess={viewModel.onPlaidSuccess}
             priceId={viewModel.getPriceId()}
           />
-          {viewModel.ddToggleOrCopy}
-          <DDToggleLink onClick={() => viewModel.togglePlaidLink()}>
-            {viewModel.ddToggleManualCopy}
-          </DDToggleLink>
+          <DirectDepositCopy>{viewModel.ddToggleOrCopy}&nbsp;
+            <DDToggleLink onClick={() => viewModel.togglePlaidLink()}>
+              {viewModel.ddToggleManualCopy}
+            </DDToggleLink>
+          </DirectDepositCopy>
         </>
       ) : (
         <>
           <DirectDeposit />
-          {viewModel.ddToggleOrCopy}
-          <DDToggleLink onClick={() => viewModel.togglePlaidLink()}>
-            {viewModel.ddTogglePlaidCopy}
-          </DDToggleLink>
+          <DirectDepositCopy>{viewModel.ddToggleOrCopy}&nbsp;
+            <DDToggleLink onClick={() => viewModel.togglePlaidLink()}>
+              {viewModel.ddTogglePlaidCopy}
+            </DDToggleLink>
+          </DirectDepositCopy>
         </>
       )}
     </DirectDepositContainer>
