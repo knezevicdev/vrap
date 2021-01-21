@@ -19,19 +19,19 @@ class DirectDepositViewModel {
 
   getShowPlaidLink = (): boolean => {
     return this.store.showPlaidLink;
-  }
+  };
 
   getPriceId = (): string => {
     return this.store.priceId;
-  }
+  };
 
   togglePlaidLink = (): void => {
     this.store.togglePlaidLink();
-  }
+  };
 
   onPlaidSuccess = (input: PlaidData, onPlaidSubmitting: any): void => {
     plaidSuccess(input, onPlaidSubmitting);
-  }
+  };
 }
 
 export default DirectDepositViewModel;
