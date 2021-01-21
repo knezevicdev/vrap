@@ -60,7 +60,6 @@ interface Props {
 }
 
 const BodyTypesView: React.FC<Props> = ({ viewModel }) => {
-  const resetButtonLabel = viewModel.resetButtonLabel;
   return (
     <StyledList>
       {viewModel.getBodyTypes().map((bodyType) => {
