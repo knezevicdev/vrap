@@ -18,7 +18,7 @@ export interface PlaidTokenResp {
       LinkToken: string;
       Expiration: string;
       RequestId: string;
-    }
+    };
   };
 }
 
@@ -29,13 +29,17 @@ export interface PlaidData {
     Name: string;
     Subtype: string;
     Type: string;
-  },
+  };
   Email: string;
   Institution: {
     Id: string;
     Name: string;
-  },
+  };
   PublicToken: string;
   ReferenceId: string;
   Source: string;
+}
+
+export interface AsyncStore {
+  isRequesting: boolean;
 }

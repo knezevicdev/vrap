@@ -1,13 +1,10 @@
-import { observer } from 'mobx-react';
 import React from 'react';
 import styled from 'styled-components';
 
 import PriceViewModel from './ViewModel';
 
-import InitialPrice from 'src/components/InitialPrice';
-import LoadingPrice from 'src/components/LoadingPrice';
 import NextSteps from 'src/components/NextSteps';
-import PendingPrice from 'src/components/PendingPrice';
+import PriceDetail from 'src/components/PriceDetail';
 import ENVS from 'src/integrations/Envs';
 
 interface Props {
@@ -15,27 +12,12 @@ interface Props {
 }
 
 const PriceView: React.FC<Props> = ({ viewModel }) => {
-  let priceView;
-
-  switch (viewModel.getStatus()) {
-    case 'success':
-      if (viewModel.getAutomated()) {
-        priceView = <InitialPrice store={viewModel.store} />;
-      } else {
-        priceView = <PendingPrice />;
-      }
-      break;
-    case 'error':
-      priceView = <PendingPrice />;
-      break;
-    default:
-      priceView = <LoadingPrice />;
-  }
-
   return (
     <HeroContainer>
       <PriceContainer>
-        <PriceDetailContainer>{priceView}</PriceDetailContainer>
+        <PriceDetailContainer>
+          <PriceDetail store={viewModel.store} />
+        </PriceDetailContainer>
         <NextStepsContainer>
           <NextSteps />
         </NextStepsContainer>
@@ -98,4 +80,4 @@ const NextStepsContainer = styled.div`
   }
 `;
 
-export default observer(PriceView);
+export default PriceView;
