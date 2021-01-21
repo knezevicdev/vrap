@@ -60,8 +60,13 @@ describe('EmailCaptureCard Store Tests', () => {
       };
     });
     const store = new EmailCaptureStore();
+    const analyticsErrorShownSpy = jest.spyOn(
+      store.analyticsHandler,
+      'trackEmailCaptureErrorShown'
+    );
     await store.fetchEmailCapture();
     expect(store.emailCaptureStatus).toBe(Status.ERROR);
+    expect(analyticsErrorShownSpy).toHaveBeenCalledTimes(1);
   });
 
   it('setEmail should set email as the passed in value', () => {

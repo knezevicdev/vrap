@@ -223,25 +223,35 @@ describe('EmailCaptureCard ViewModel Tests', () => {
     expect(spy).toHaveBeenCalledWith('test@vroom.com');
   });
 
-  it('onClick calls the API async function and the setEmailValidationError function with false when the email passes the regex', () => {
+  it('onClick calls the API async function, setEmailValidationError function with false, and analytics when the email passes the regex', () => {
     const store = new EmailCaptureStore();
     const viewModel = new EmailCaptureCardViewModel(store);
     const apiSpy = jest.spyOn(store, 'fetchEmailCapture');
     const validationSpy = jest.spyOn(store, 'setEmailValidationError');
+    const analyticsSubmitSpy = jest.spyOn(
+      viewModel.analyticsHandler,
+      'trackEmailCaptureSubmit'
+    );
     store.setEmail('test@vroom.com');
     viewModel.onClick();
     expect(apiSpy).toHaveBeenCalledTimes(1);
     expect(validationSpy).toHaveBeenCalledWith(false);
+    expect(analyticsSubmitSpy).toHaveBeenCalledTimes(1);
   });
 
-  it('onClick calls the setEmailValidationError function with true when the email does not pass regex', () => {
+  it('onClick calls the setEmailValidationError function with true and analytics when the email does not pass regex', () => {
     const store = new EmailCaptureStore();
     const viewModel = new EmailCaptureCardViewModel(store);
     const apiSpy = jest.spyOn(store, 'fetchEmailCapture');
     const validationSpy = jest.spyOn(store, 'setEmailValidationError');
+    const analyticsSubmitSpy = jest.spyOn(
+      viewModel.analyticsHandler,
+      'trackEmailCaptureSubmit'
+    );
     store.setEmail('te@st@vroom.com');
     viewModel.onClick();
     expect(apiSpy).not.toHaveBeenCalled();
     expect(validationSpy).toHaveBeenCalledWith(true);
+    expect(analyticsSubmitSpy).toHaveBeenCalledWith(true);
   });
 });

@@ -150,6 +150,7 @@ interface ViewProps {
 const View: React.FC<ViewProps> = ({ viewModel }) => {
   const theme = useTheme();
   const xsDown = useMediaQuery(theme.breakpoints.down('xs'));
+
   return (
     <Grid item xs={12} sm={6} md={3}>
       <Container>
