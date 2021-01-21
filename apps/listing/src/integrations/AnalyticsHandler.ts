@@ -60,7 +60,7 @@ class AnalyticsHandler extends BaseAnalyticsHandler {
   }
 
   trackEmailCaptureSubmit(isValidationError = false): void {
-    const event = 'Email Capture Sumbitted';
+    const event = 'Email Capture Submitted';
     const category = 'Catalog';
     const properties = { isValidationError, category };
     this.track(event, properties);

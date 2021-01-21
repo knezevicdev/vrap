@@ -3,6 +3,7 @@ import EmailCaptureNetworker, {
 } from './EmailCaptureNetworker';
 import { EmailCaptureStore } from './store';
 
+import { analyticsHandler } from 'src/integrations/AnalyticsHandler';
 import { Status } from 'src/networking/types';
 
 jest.mock('next/config', () => {
@@ -61,7 +62,7 @@ describe('EmailCaptureCard Store Tests', () => {
     });
     const store = new EmailCaptureStore();
     const analyticsErrorShownSpy = jest.spyOn(
-      store.analyticsHandler,
+      analyticsHandler,
       'trackEmailCaptureErrorShown'
     );
     await store.fetchEmailCapture();

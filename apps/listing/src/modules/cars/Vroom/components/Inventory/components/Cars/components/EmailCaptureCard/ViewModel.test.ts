@@ -3,6 +3,7 @@ import { PostInventoryRequestData } from '@vroom-web/inv-search-networking';
 import { EmailCaptureStore } from './store';
 import EmailCaptureCardViewModel from './ViewModel';
 
+import { analyticsHandler } from 'src/integrations/AnalyticsHandler';
 import { getPostInventoryRequestDataFromFilterData } from 'src/modules/cars/store';
 import { Status } from 'src/networking/types';
 
@@ -229,7 +230,7 @@ describe('EmailCaptureCard ViewModel Tests', () => {
     const apiSpy = jest.spyOn(store, 'fetchEmailCapture');
     const validationSpy = jest.spyOn(store, 'setEmailValidationError');
     const analyticsSubmitSpy = jest.spyOn(
-      viewModel.analyticsHandler,
+      analyticsHandler,
       'trackEmailCaptureSubmit'
     );
     store.setEmail('test@vroom.com');
@@ -245,7 +246,7 @@ describe('EmailCaptureCard ViewModel Tests', () => {
     const apiSpy = jest.spyOn(store, 'fetchEmailCapture');
     const validationSpy = jest.spyOn(store, 'setEmailValidationError');
     const analyticsSubmitSpy = jest.spyOn(
-      viewModel.analyticsHandler,
+      analyticsHandler,
       'trackEmailCaptureSubmit'
     );
     store.setEmail('te@st@vroom.com');

@@ -9,14 +9,13 @@ import EmailCaptureNetworker, {
   PostEmailCaptureRequestData,
 } from './EmailCaptureNetworker';
 
-import AnalyticsHandler from 'src/integrations/AnalyticsHandler';
+import { analyticsHandler } from 'src/integrations/AnalyticsHandler';
 import { Status } from 'src/networking/types';
 
 const { publicRuntimeConfig } = getConfig();
 
 export class EmailCaptureStore {
   private readonly emailCaptureNetworker: EmailCaptureNetworker;
-  analyticsHandler: AnalyticsHandler;
 
   @observable email: string;
   @observable emailCaptureStatus: Status = Status.INITIAL;
@@ -27,7 +26,6 @@ export class EmailCaptureStore {
       publicRuntimeConfig.HORN_SERVICE_URL || ''
     );
     this.email = '';
-    this.analyticsHandler = new AnalyticsHandler();
     if (typeof window !== 'undefined') {
       const status = window.localStorage.getItem('emailCaptureStatus');
       if (status) {
@@ -74,7 +72,7 @@ export class EmailCaptureStore {
     } catch {
       runInAction(() => {
         this.emailCaptureStatus = Status.ERROR;
-        this.analyticsHandler.trackEmailCaptureErrorShown();
+        analyticsHandler.trackEmailCaptureErrorShown();
       });
     }
   };

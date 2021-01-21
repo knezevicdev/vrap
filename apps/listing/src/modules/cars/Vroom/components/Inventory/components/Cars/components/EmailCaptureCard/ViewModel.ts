@@ -5,14 +5,13 @@ import getConfig from 'next/config';
 
 import { EmailCaptureStore } from './store';
 
-import AnalyticsHandler from 'src/integrations/AnalyticsHandler';
+import { analyticsHandler } from 'src/integrations/AnalyticsHandler';
 import { getPostInventoryRequestDataFromFilterData } from 'src/modules/cars/store';
 import { Status } from 'src/networking/types';
 
 const { publicRuntimeConfig } = getConfig();
 
 class EmailCaptureCardViewModel {
-  analyticsHandler: AnalyticsHandler;
   readonly emailCaptureStore: EmailCaptureStore;
   readonly fordImg = `${publicRuntimeConfig.BASE_PATH}/components/Ford10Percent.png`;
   readonly loaderImg = `${publicRuntimeConfig.BASE_PATH}/components/Vroom-Loading-Spinner-Red.gif`;
@@ -33,7 +32,6 @@ class EmailCaptureCardViewModel {
   readonly emailRegex: RegExp = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
 
   constructor(emailCaptureStore: EmailCaptureStore) {
-    this.analyticsHandler = new AnalyticsHandler();
     this.emailCaptureStore = emailCaptureStore;
   }
 
@@ -91,10 +89,10 @@ class EmailCaptureCardViewModel {
     if (this.emailRegex.test(this.emailCaptureStore.email)) {
       this.emailCaptureStore.fetchEmailCapture(this.getSearchParams());
       this.emailCaptureStore.setEmailValidationError(false);
-      this.analyticsHandler.trackEmailCaptureSubmit();
+      analyticsHandler.trackEmailCaptureSubmit();
     } else {
       this.emailCaptureStore.setEmailValidationError(true);
-      this.analyticsHandler.trackEmailCaptureSubmit(true);
+      analyticsHandler.trackEmailCaptureSubmit(true);
     }
   };
 }
