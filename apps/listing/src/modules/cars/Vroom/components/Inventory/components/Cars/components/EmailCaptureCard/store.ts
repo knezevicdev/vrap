@@ -35,7 +35,6 @@ export class EmailCaptureStore {
 
   getUserId = (): string | undefined => {
     const authTokenWithExpressPrefix = ClientSideCookies.get('authToken');
-    console.log(authTokenWithExpressPrefix);
     if (!authTokenWithExpressPrefix) {
       return undefined;
     }

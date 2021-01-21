@@ -106,13 +106,6 @@ const StyledButton = styled(Button)(({ theme }) => ({
   marginTop: theme.spacing(2),
 }));
 
-const LegalDescription = styled(Typography)(({ theme }) => ({
-  fontSize: '12px',
-  fontWeight: 'normal',
-  lineHeight: '14px',
-  marginTop: theme.spacing(2),
-}));
-
 const Loader = styled('img')(() => ({
   width: '100px',
   margin: 'auto',
@@ -219,7 +212,6 @@ const View: React.FC<ViewProps> = ({ viewModel }) => {
                 >
                   {viewModel.emailCaptureButtonText}
                 </StyledButton>
-                <LegalDescription>{viewModel.legalText}</LegalDescription>
               </EmailCaptureDetails>
             )}
           </Content>
