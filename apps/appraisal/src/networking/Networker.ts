@@ -10,8 +10,8 @@ import ENVS from 'src/integrations/Envs';
 import {
   MailingAddress,
   PaymentOverviewFormValues,
+  PlaidData,
   PlaidTokenResp,
-  PlaidData
 } from 'src/interfaces.d';
 
 export enum Status {
@@ -36,6 +36,7 @@ export interface PaymentData {
 
 export class Networker {
   private readonly axiosInstance: AxiosInstance;
+  private readonly gearboxUrl = ENVS.GEARBOX_URL;
 
   constructor(axiosInstance: AxiosInstance = axios.create()) {
     this.axiosInstance = axiosInstance;
@@ -47,16 +48,18 @@ export class Networker {
     return this.axiosInstance.get(url);
   }
 
-  submitPriceResponse(priceData: PriceData): Promise<AxiosResponse<Prices>> {
-    const url = `${ENVS.VROOM_URL}/api/sf/offer`;
+  submitPriceResponse(priceData: PriceData): Promise<AxiosResponse> {
     const { priceId: offerId, accepted } = priceData;
-
     const data = {
-      offerId,
-      accepted,
+      query: `mutation ($offerId: String!, $accepted: Boolean!) {
+        acceptRejectOffer(offerId: $offerId, accepted: $accepted) {
+          offerStatus
+        }
+      }`,
+      variables: { offerId, accepted },
     };
 
-    return this.axiosInstance.post(url, data);
+    return this.axiosInstance.post(this.gearboxUrl, data);
   }
 
   getVerificationDetails(
@@ -90,7 +93,6 @@ export class Networker {
   getPlaidToken = async (
     userId: string
   ): Promise<AxiosResponse<PlaidTokenResp>> => {
-    const gearboxUrl = '/gql';
     const data = {
       query: `query ($userId: String!) {
         getLinkToken(userId: $userId) {
@@ -99,23 +101,22 @@ export class Networker {
           RequestId
         }
       }`,
-      variables: { userId }
+      variables: { userId },
     };
-  
-    return this.axiosInstance.post(gearboxUrl, data);
+
+    return this.axiosInstance.post(this.gearboxUrl, data);
   };
 
   postPlaidPayment = async (
     input: PlaidData
   ): Promise<AxiosResponse<PlaidTokenResp>> => {
-    const gearboxUrl = '/gql';
     const data = {
       query: `mutation ($input: CreateUserPaymentAccountInput) {
         createUserPaymentAccount(input: $input)
       }`,
-      variables: { input }
+      variables: { input },
     };
-  
-    return this.axiosInstance.post(gearboxUrl, data);
+
+    return this.axiosInstance.post(this.gearboxUrl, data);
   };
 }

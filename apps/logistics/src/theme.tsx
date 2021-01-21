@@ -48,9 +48,6 @@ const theme = createMuiTheme({
           backgroundColor: colors.background.selected,
         },
       },
-      textColorInherit: {
-        opacity: 1,
-      },
     },
     MuiButton: {
       label: {

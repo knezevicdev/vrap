@@ -72,6 +72,10 @@ export default class CongratsViewModel {
     return (this.model.data.user.deals as Array<GQLTypes.Deal>)[0].dealSummary;
   }
 
+  private get tradeIns(): null | undefined | Array<GQLTypes.TradeIn> {
+    return (this.model.data.user.deals as Array<GQLTypes.Deal>)[0].TradeIns;
+  }
+
   private get account(): GQLTypes.Account {
     return this.summary.accountInfo as GQLTypes.Account;
   }
@@ -191,6 +195,17 @@ export default class CongratsViewModel {
     return '';
   }
 
+  private get hasTradeIn(): boolean {
+    if (this.tradeIns) {
+      return this.tradeIns.length > 0;
+    }
+    return false;
+  }
+
+  private getTradeIn(): GQLTypes.TradeIn {
+    return (this.tradeIns as Array<GQLTypes.TradeIn>)[0];
+  }
+
   get showLoading(): boolean {
     return this.model.dataStatus === Status.LOADING;
   }
@@ -211,6 +226,8 @@ export default class CongratsViewModel {
 
     return {
       trackScheduleTime: this.trackScheduleTime,
+      trackLicensePlateClick: this.trackLicensePlateClick,
+      trackVinClick: this.trackVinClick,
       data: {
         car: car,
         email: this.account.userName,
@@ -220,6 +237,7 @@ export default class CongratsViewModel {
           src: src,
         },
       },
+      hasTradeIn: this.hasTradeIn,
     };
   }
 
@@ -241,8 +259,12 @@ export default class CongratsViewModel {
         },
         {
           number: '3',
-          title: 'Home Delivery',
-          description: `Get your new ride delivered to your driveway anywhere within the continental U.S.`,
+          title: this.hasTradeIn
+            ? 'Home Delivery and Trade-In Pick Up'
+            : 'Home Delivery',
+          description: this.hasTradeIn
+            ? `Get your new ride delivered straight to you and schedule your trade-in pick up.`
+            : `Get your new ride delivered to your driveway anywhere within the continental U.S.`,
         },
       ],
     };
@@ -346,9 +368,21 @@ export default class CongratsViewModel {
             this.amountDue.shippingFee
           ),
           subtotal: this.currencyFormatter.format(this.amountDue.subTotal),
-          creditDownPayment: this.currencyFormatter.format(
-            this.amountDue.cashDownPayment * -1
-          ),
+          tradeIn: this.hasTradeIn
+            ? {
+                vehicle: `${this.getTradeIn().year} ${this.getTradeIn().make} ${
+                  this.getTradeIn().model
+                }`,
+                offerPrice: this.currencyFormatter.format(
+                  this.getTradeIn().offerPrice
+                ),
+                loanBalance: this.getTradeIn().makingLoanPayoff
+                  ? this.currencyFormatter.format(
+                      this.getTradeIn().loanPayoff as number
+                    )
+                  : undefined,
+              }
+            : undefined,
           total: this.currencyFormatter.format(this.amountDue.totalBalanceDue),
         },
       },
@@ -478,6 +512,14 @@ export default class CongratsViewModel {
 
   trackFooterLinks = (trackingName: FooterEventTrackerEnum) => (): void => {
     this.analyticsHandler.trackFooterLinks(trackingName);
+  };
+
+  trackLicensePlateClick = (): void => {
+    this.analyticsHandler.trackWhatsMyCarWorth(true);
+  };
+
+  trackVinClick = (): void => {
+    this.analyticsHandler.trackWhatsMyCarWorth(false);
   };
 
   get footerProps(): FooterProps {
