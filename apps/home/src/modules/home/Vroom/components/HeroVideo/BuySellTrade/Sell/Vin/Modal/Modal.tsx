@@ -45,6 +45,7 @@ const Close = styled.div`
 `;
 
 const ContentTitle = styled(Heading.Three)`
+  font-family: 'VroomSans';
   text-align: center;
 `;
 
@@ -85,6 +86,7 @@ const LocationInformation = styled.div`
 `;
 
 const InformationTitle = styled(Heading.Four)`
+  font-family: 'VroomSans';
   margin-bottom: 4px;
 `;
 
