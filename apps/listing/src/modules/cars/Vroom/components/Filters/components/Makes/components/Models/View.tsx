@@ -1,11 +1,12 @@
-import { Checkbox, List, ListItem } from '@material-ui/core';
+import { List, ListItem } from '@material-ui/core';
 import { styled } from '@material-ui/core/styles';
-import Check from '@material-ui/icons/Check';
 import { Typography } from '@vroom-web/ui';
 import { observer } from 'mobx-react';
 import React from 'react';
 
 import ModelsViewModel from './ViewModel';
+
+import Checkbox from 'src/ui/Checkbox';
 
 const StyledList = styled(List)(({ theme }) => ({
   paddingTop: theme.spacing(0),
@@ -14,18 +15,6 @@ const StyledList = styled(List)(({ theme }) => ({
 
 const Value = styled(Typography)(() => ({
   fontSize: '16px',
-}));
-
-const StyledCheck = styled(Check)(() => ({
-  marginLeft: 'auto',
-}));
-
-const CustomCheckbox = styled(Checkbox)(({ theme }) => ({
-  color: theme.palette.grey['A100'],
-  padding: 0,
-  '&.MuiIconButton-root.Mui-disabled': {
-    color: theme.palette.grey['A100'],
-  },
 }));
 
 const CustomListItem = styled(ListItem)(({ theme }) => ({
@@ -54,11 +43,7 @@ const ModelsView: React.FC<Props> = ({ viewModel }) => {
         >
           {allModel.display}
         </Value>
-        {allModel.isSelected ? (
-          <StyledCheck fontSize="small" color="secondary" />
-        ) : (
-          <CustomCheckbox disabled={true} aria-hidden="true" />
-        )}
+        <Checkbox aria-hidden="true" checked={allModel.isSelected} />
       </CustomListItem>
       {viewModel.models.map((model) => {
         const { display, slug } = model;
@@ -75,11 +60,7 @@ const ModelsView: React.FC<Props> = ({ viewModel }) => {
             >
               {display}
             </Value>
-            {isSelected ? (
-              <StyledCheck fontSize="small" color="secondary" />
-            ) : (
-              <CustomCheckbox disabled={true} aria-hidden="true" />
-            )}
+            <Checkbox checked={isSelected} aria-hidden="true" />
           </CustomListItem>
         );
       })}

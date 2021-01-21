@@ -1,10 +1,12 @@
-import { Checkbox, FormControlLabel, FormGroup } from '@material-ui/core';
+import { FormControlLabel, FormGroup } from '@material-ui/core';
 import withStyles from '@material-ui/core/styles/withStyles';
 import { Cylinder as FiltersDataDriveType } from '@vroom-web/catalog-url-integration';
 import { observer } from 'mobx-react';
 import React from 'react';
 
 import CylindersViewModel from './ViewModel';
+
+import Checkbox from 'src/ui/Checkbox';
 
 interface Props {
   viewModel: CylindersViewModel;
@@ -30,12 +32,6 @@ const FormGroupCustom = withStyles(() => ({
   },
 }))(FormGroup);
 
-const CheckboxCustom = withStyles((theme) => ({
-  root: {
-    color: theme.palette.grey['A100'],
-  },
-}))(Checkbox);
-
 const CylindersView: React.FC<Props> = ({ viewModel }) => {
   const handleCheckboxChange = (
     event: React.ChangeEvent<HTMLInputElement>,
@@ -60,8 +56,7 @@ const CylindersView: React.FC<Props> = ({ viewModel }) => {
         key={display}
         labelPlacement="start"
         control={
-          <CheckboxCustom
-            color="primary"
+          <Checkbox
             checked={checked}
             onChange={handleCheckboxChange}
             value={filtersDataValue}
@@ -77,8 +72,7 @@ const CylindersView: React.FC<Props> = ({ viewModel }) => {
       key={viewModel.otherCylinders.key}
       labelPlacement="start"
       control={
-        <CheckboxCustom
-          color="primary"
+        <Checkbox
           checked={viewModel.isOtherChecked()}
           onChange={handleOtherCheckboxChange}
           value={viewModel.otherCylinders.key}

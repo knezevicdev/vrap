@@ -1,10 +1,12 @@
-import { Checkbox, FormControlLabel, FormGroup } from '@material-ui/core';
+import { FormControlLabel, FormGroup } from '@material-ui/core';
 import withStyles from '@material-ui/core/styles/withStyles';
 import { FuelType as FiltersDataFuelType } from '@vroom-web/catalog-url-integration';
 import { observer } from 'mobx-react';
 import React from 'react';
 
 import FuelTypesViewModel from './ViewModel';
+
+import Checkbox from 'src/ui/Checkbox';
 
 interface Props {
   viewModel: FuelTypesViewModel;
@@ -23,12 +25,6 @@ const Label = withStyles((theme) => ({
     padding: theme.spacing(0, 2),
   },
 }))(FormControlLabel);
-
-const CheckboxCustom = withStyles((theme) => ({
-  root: {
-    color: theme.palette.grey['A100'],
-  },
-}))(Checkbox);
 
 const FormGroupCustom = withStyles((theme) => ({
   root: {
@@ -56,8 +52,7 @@ const FuelTypesView: React.FC<Props> = ({ viewModel }) => {
             key={display}
             labelPlacement="start"
             control={
-              <CheckboxCustom
-                color="primary"
+              <Checkbox
                 checked={checked}
                 onChange={handleCheckboxChange}
                 value={filtersDataValue}
