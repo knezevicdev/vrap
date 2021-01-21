@@ -1,5 +1,6 @@
 import { action, observable } from 'mobx';
 
+import { AsyncStore } from 'src/interfaces.d';
 import { Price } from 'src/networking/models/Price';
 import { Networker, PriceData } from 'src/networking/Networker';
 
@@ -45,23 +46,18 @@ export const defaultPriceState: PriceStoreState = {
   year: 0,
 };
 
-export async function submitPriceResponse(priceData: PriceData): Promise<void> {
-  const networker = new Networker();
-  try {
-    await networker.submitPriceResponse(priceData);
-    const url = `/sell/verification/owner/${priceData.priceId}`;
-    window.location.href = url;
-  } catch (err) {
-    console.log(JSON.stringify(err));
-    return err;
-  }
+export enum PriceStoreStatus {
+  Initial,
+  Error,
+  Success,
 }
 
-export class PriceStore {
+export class PriceStore implements AsyncStore {
   private readonly networker = new Networker();
 
-  @observable status: 'loading' | 'success' | 'error' = 'loading';
+  @observable isRequesting = false;
   @observable price: PriceStoreState = defaultPriceState;
+  @observable status: PriceStoreStatus = PriceStoreStatus.Initial;
 
   constructor(priceId: string) {
     this.getOfferDetails(priceId);
@@ -69,8 +65,6 @@ export class PriceStore {
 
   @action
   getOfferDetails = (priceId: string): void => {
-    this.status = 'loading';
-
     this.networker
       .getOfferDetails(priceId)
       .then((response) => {
@@ -102,12 +96,32 @@ export class PriceStore {
           // - Status updates and refreshes views
           // Just a heads up this can cause race conditions
           this.price = priceMapFromResponse;
-          this.status = 'success';
+          this.status = PriceStoreStatus.Success;
         }
       })
       .catch((error) => {
-        this.status = 'error';
+        this.status = PriceStoreStatus.Error;
+        this.isRequesting = false;
         console.log(JSON.stringify(error));
       });
+  };
+
+  @action
+  submitPriceResponse = async (): Promise<void> => {
+    const priceData: PriceData = {
+      priceId: this.price.priceId,
+      accepted: true,
+    };
+
+    this.isRequesting = true;
+
+    try {
+      await this.networker.submitPriceResponse(priceData);
+    } catch (err) {
+      this.status = PriceStoreStatus.Error;
+      this.isRequesting = false;
+      console.log(JSON.stringify(err));
+      return err;
+    }
   };
 }

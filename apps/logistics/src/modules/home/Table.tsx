@@ -1,17 +1,16 @@
-import Paper from '@material-ui/core/Paper';
-import { styled } from '@material-ui/core/styles';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableContainer from '@material-ui/core/TableContainer';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
+import {
+  Grid,
+  Paper,
+  styled,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+} from '@material-ui/core';
 import ArrowDropDown from '@material-ui/icons/ArrowDropDown';
 import React from 'react';
-
-import PopoverButton, { Modals } from './PopoverButton';
-
-import theme from 'src/theme';
 
 export enum Accessor {
   vin,
@@ -30,16 +29,6 @@ export enum Accessor {
   actions,
 }
 
-interface Action {
-  text: string;
-  handler: () => void;
-  primary?: boolean;
-  popover: Modals;
-}
-
-type SimpleField = string | number | boolean | Action;
-type Field = SimpleField | SimpleField[] | undefined;
-
 export interface TableData {
   headers: {
     display: string;
@@ -47,53 +36,29 @@ export interface TableData {
     sortBy?: boolean;
   }[];
   rows: {
-    id: string | number;
-    link?: string;
+    id: number;
     data: {
-      [accessor in Accessor]?: Field;
+      [Accessor.vin]: string;
+      [Accessor.yearMakeModel]: string;
+      [Accessor.blackoutDates]?: string;
+      [Accessor.bookedDate]?: string;
+      [Accessor.cancelledDate]?: string;
+      [Accessor.deliveredDate]?: string;
+      [Accessor.destinationAddress]?: string;
+      [Accessor.estimatedDeliveryDate]?: string;
+      [Accessor.estimatedPickupDate]?: string;
+      [Accessor.originAddress]?: string;
+      [Accessor.pickedUpDate]?: string;
+      [Accessor.postedDate]?: string;
+      [Accessor.reason]?: string;
+      [Accessor.actions]?: JSX.Element[];
     };
   }[];
 }
 
-const SlimTableCell = styled(TableCell)({
-  padding: theme.spacing(2, 4),
-});
-
-const ArrowDropDownIcon = styled(ArrowDropDown)({
+export const ArrowDropDownIcon = styled(ArrowDropDown)({
   position: 'absolute',
 });
-
-const ArrayCell = styled('div')({
-  whiteSpace: 'nowrap',
-});
-
-const generateCell = (data: Field, key?: number): JSX.Element => {
-  if (Array.isArray(data)) {
-    return (
-      <ArrayCell>{data.map((datum, i) => generateCell(datum, i))}</ArrayCell>
-    );
-  }
-  if (typeof data === 'object') {
-    return (
-      <PopoverButton
-        popover={data.popover}
-        primary={data.primary}
-        key={key}
-        text={data.text}
-        handler={data.handler}
-      />
-    );
-  }
-
-  return data ? (
-    <span key={key}>
-      {data.toString()}
-      <br />
-    </span>
-  ) : (
-    <></>
-  );
-};
 
 const SimpleTable = ({ headers, rows }: TableData): JSX.Element => (
   <Paper square>
@@ -102,9 +67,9 @@ const SimpleTable = ({ headers, rows }: TableData): JSX.Element => (
         <TableHead>
           <TableRow>
             {headers.map(({ display, accessor, sortBy }) => (
-              <SlimTableCell align="center" key={accessor}>
+              <TableCell align="left" key={accessor}>
                 {display} {sortBy && <ArrowDropDownIcon />}
-              </SlimTableCell>
+              </TableCell>
             ))}
           </TableRow>
         </TableHead>
@@ -112,8 +77,18 @@ const SimpleTable = ({ headers, rows }: TableData): JSX.Element => (
           {rows.map((row) => (
             <TableRow key={row.id} hover>
               {headers.map(({ accessor }) => (
-                <TableCell align="center" key={accessor}>
-                  {generateCell(row.data[accessor])}
+                <TableCell align="left" key={accessor}>
+                  {accessor === Accessor.actions ? (
+                    <Grid container spacing={1}>
+                      {row.data[accessor]?.map((Button: JSX.Element) => (
+                        <Grid item xs={6} key={Button.key}>
+                          {Button}
+                        </Grid>
+                      )) ?? null}
+                    </Grid>
+                  ) : (
+                    <>{row.data[accessor]}</>
+                  )}
                 </TableCell>
               ))}
             </TableRow>

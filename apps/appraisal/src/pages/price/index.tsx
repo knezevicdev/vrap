@@ -5,6 +5,7 @@ import { useRouter } from 'next/router';
 import React from 'react';
 import styled from 'styled-components';
 
+import AsyncIndicator from 'src/components/AsyncIndicator';
 import Footer from 'src/core/Footer';
 import ENVS from 'src/integrations/Envs';
 import PriceInfo from 'src/modules/price';
@@ -26,6 +27,7 @@ const Price: NextPage = () => {
         <Questions />
       </Contents>
       <Footer />
+      <AsyncIndicator store={store} />
     </Page>
   );
 };

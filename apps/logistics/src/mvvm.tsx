@@ -12,7 +12,7 @@ export interface Model<RESPONSE, PROPS, STORE> {
 
 interface MvvmProps<RESPONSE, PROPS, STORE, VIEWPROPS> {
   model?: {
-    onload?: (props?: PROPS) => Promise<AxiosResponse<RESPONSE>>;
+    onload?: (props: PROPS) => Promise<AxiosResponse<RESPONSE>>;
     consumer?: React.Context<STORE>;
     provider?: React.Context<RESPONSE>;
   };

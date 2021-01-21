@@ -1,32 +1,47 @@
 export interface Shipment {
+  shipment_id: number;
   date_posted?: string;
   year: number;
   make: string;
   model: string;
   vin: string;
+  notes?: string;
+  estimated_pickup?: string;
+  actual_pickup?: string;
+  estimated_delivery?: string;
+  date_delivered?: string;
+  date_cancelled?: string;
+  status: string;
+  booked_date: string;
+  cancel_reason: string;
+  origin: string;
   origin_address: Address;
   destination_address: Address;
   blackout_dates?: BlackoutDate[];
-  notes?: string;
-  estimated_arrival?: string;
-  estimated_delivery?: string;
-  estimated_pickup?: string;
-  date_delivered?: string;
-  date_cancelled?: string;
+  customer?: Customer;
 }
 
 export interface Address {
+  stop_id: number;
   street_line_1: string;
+  street_line_2: string;
   city: string;
   state: string;
-  zip_code: string;
+  zipcode: string;
   to_string: string;
 }
 
-interface BlackoutDate {
+export interface BlackoutDate {
   start: string;
   stop: string;
   to_string: string;
+}
+
+export interface Customer {
+  customer_id: number;
+  name: string;
+  phone: string;
+  email: string;
 }
 
 export enum ShipmentStatus {

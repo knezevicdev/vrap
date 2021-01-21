@@ -12,8 +12,9 @@ RUN \
   # Install git so editor git commands work
   apk --no-cache add git &&\
   # Bootstrap yarn workspaces.
-  npm install && \
-  # Build the main app.
-  npm run build
+  npm install
+
+# Build the main app.
+RUN npm run build
 
 CMD ["npm", "run", "start", "--port", "8080"]

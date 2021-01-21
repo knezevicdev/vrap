@@ -37,12 +37,9 @@ const InitialPriceView: React.FC<Props> = ({ viewModel }) => {
     };
 
     document.addEventListener('scroll', handleScroll);
-    // cleanup event listener
-    return (): void => document.removeEventListener('scroll', handleScroll);
-  }, []);
-
-  useEffect(() => {
     viewModel.onPageLoad();
+
+    return (): void => document.removeEventListener('scroll', handleScroll);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
