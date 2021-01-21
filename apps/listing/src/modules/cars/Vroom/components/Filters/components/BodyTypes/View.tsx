@@ -85,7 +85,7 @@ const BodyTypesView: React.FC<Props> = ({ viewModel }) => {
                   src={`${publicRuntimeConfig.BASE_PATH}/images/${
                     isSelected
                       ? `${bodyType.display.toLocaleLowerCase()}-selected`
-                      : bodyType.display
+                      : bodyType.display.toLocaleLowerCase()
                   }.png`}
                 />
                 <Value fontWeight={fontWeight}>{display}</Value>
