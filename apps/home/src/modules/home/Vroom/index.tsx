@@ -12,8 +12,8 @@ import Quotes from './components/Quotes';
 import Values from './components/Values';
 import WhoWeAre from './components/WhoWeAre';
 
-import experimentSDK from 'src/integrations/experimentSDK';
 import AnalyticsHandler from 'src/integrations/AnalyticsHandler';
+import experimentSDK from 'src/integrations/experimentSDK';
 import { HomeStore, HomeStoreContext } from 'src/modules/home/store';
 
 const { publicRuntimeConfig } = getConfig();

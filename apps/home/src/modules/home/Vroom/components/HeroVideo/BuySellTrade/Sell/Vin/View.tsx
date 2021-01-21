@@ -4,10 +4,9 @@ import { Button, Typography } from '@vroom-web/ui';
 import { observer } from 'mobx-react';
 import React from 'react';
 
-import VinDialog from './Dialog';
+import Modal from './Modal/Modal';
 import { ReactComponent as QuestionSvg } from './svg/question.svg';
 import ViewModel from './ViewModel';
-
 interface Props {
   viewModel: ViewModel;
 }
@@ -77,28 +76,33 @@ const VinView: React.FC<Props> = ({ viewModel }) => {
   );
 
   return (
-    <VinContainer>
-      <Input
-        id="vin"
-        focused={true}
-        label={label}
-        placeholder={viewModel.inputPlaceholder}
-        value={viewModel.getInputValue()}
-        onChange={viewModel.onChange}
-        error={viewModel.hasError()}
-        helperText={viewModel.errorMessage}
-        InputProps={{ disableUnderline: true, inputProps: { maxLength: 17 } }}
+    <>
+      <VinContainer>
+        <Input
+          id="vin"
+          focused={true}
+          label={label}
+          placeholder={viewModel.inputPlaceholder}
+          value={viewModel.getInputValue()}
+          onChange={viewModel.onChange}
+          error={viewModel.hasError()}
+          helperText={viewModel.errorMessage}
+          InputProps={{ disableUnderline: true, inputProps: { maxLength: 17 } }}
+        />
+        <SubmitButton
+          disabled={viewModel.isButtonDisabled()}
+          onClick={viewModel.handleButtonClick}
+          variant="contained"
+          color="secondary"
+        >
+          {viewModel.buttonLabel}
+        </SubmitButton>
+      </VinContainer>
+      <Modal
+        isOpen={viewModel.vinStore.isDialogOpen}
+        close={viewModel.vinStore.setIsDialogOpen}
       />
-      <SubmitButton
-        disabled={viewModel.isButtonDisabled()}
-        onClick={viewModel.handleButtonClick}
-        variant="contained"
-        color="secondary"
-      >
-        {viewModel.buttonLabel}
-      </SubmitButton>
-      <VinDialog store={viewModel.vinStore} />
-    </VinContainer>
+    </>
   );
 };
 
