@@ -1,4 +1,4 @@
-import { FormControlLabel, FormGroup, ListItem } from '@material-ui/core';
+import { FormControlLabel, List, ListItem } from '@material-ui/core';
 import { styled, withStyles } from '@material-ui/core/styles';
 import { PopularFeatures as FiltersDataPopularFeatures } from '@vroom-web/catalog-url-integration';
 import { Typography } from '@vroom-web/ui';
@@ -12,19 +12,31 @@ interface Props {
   viewModel: FeaturesViewModel;
 }
 
-const Label = withStyles((theme) => ({
+const Label = withStyles(() => ({
   label: {
     fontSize: '16px',
   },
   root: {
+    width: '100%',
     justifyContent: 'space-between',
     marginLeft: '0px',
     '& span.Mui-checked + span': {
       fontWeight: 600,
     },
-    padding: theme.spacing(0, 2),
   },
 }))(FormControlLabel);
+
+const StyledList = styled(List)(({ theme }) => ({
+  padding: theme.spacing(0, 0, 2, 0),
+}));
+
+const StyledListItem = styled(ListItem)(({ theme }) => ({
+  padding: theme.spacing(1, 2),
+  height: theme.spacing(4),
+  display: 'flex',
+  flexDirection: 'row',
+  justifyContent: 'space-between',
+}));
 
 const Reset = styled(ListItem)(({ theme }) => ({
   padding: theme.spacing(1, 0),
@@ -48,24 +60,26 @@ const FeaturesView: React.FC<Props> = ({ viewModel }) => {
     viewModel.handleCheckboxChange(filtersDataValue, checked);
   };
   return (
-    <FormGroup>
+    <StyledList>
       {viewModel.getPopularFeatures().map((feature) => {
         const checked = viewModel.isChecked(feature);
         const { display, filtersDataValue } = feature;
 
         return (
-          <Label
-            key={display}
-            labelPlacement="start"
-            control={
-              <Checkbox
-                checked={checked}
-                onChange={handleCheckboxChange}
-                value={filtersDataValue}
-              />
-            }
-            label={display}
-          />
+          <StyledListItem key={display} button>
+            <Label
+              key={display}
+              labelPlacement="start"
+              control={
+                <Checkbox
+                  checked={checked}
+                  onChange={handleCheckboxChange}
+                  value={filtersDataValue}
+                />
+              }
+              label={display}
+            />
+          </StyledListItem>
         );
       })}
       <Reset
@@ -77,7 +91,7 @@ const FeaturesView: React.FC<Props> = ({ viewModel }) => {
           {viewModel.resetButtonLabel}
         </Value>
       </Reset>
-    </FormGroup>
+    </StyledList>
   );
 };
 
