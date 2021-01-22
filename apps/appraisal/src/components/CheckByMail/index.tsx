@@ -8,30 +8,21 @@ import { MailingAddress } from 'src/interfaces.d';
 export type Props = {
   mailingAddress: MailingAddress;
   isPrimaryAddress: string;
-  address: string;
-  apartment: string;
-  city: string;
-  zip: string;
+  setFieldValue: (field: string, value: any) => void; 
 }
 
 const CheckByMail: React.FC<Props> = ({
   mailingAddress,
   isPrimaryAddress,
-  address,
-  apartment,
-  city,
-  zip,
+  setFieldValue 
 }) => {
   const viewModel = new ViewModel();
   return (
     <View
       mailingAddress={mailingAddress}
       isPrimaryAddress={isPrimaryAddress}
+      setFieldValue={setFieldValue} 
       viewModel={viewModel}
-      address={address}
-      apartment={apartment}
-      city={city}
-      zip={zip}
     />
   );
 };

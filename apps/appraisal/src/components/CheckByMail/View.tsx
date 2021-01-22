@@ -111,11 +111,10 @@ const CheckByMailView: React.FC<ViewProps> = ({
   mailingAddress,
   isPrimaryAddress,
   viewModel,
-  address,
-  apartment,
-  city,
-  zip,
+  setFieldValue 
 }) => {
+  const states = viewModel.getStates();
+
   return (
     <CBMContainer>
       <CBMMessage>{viewModel.mailingAddressMsg}</CBMMessage>
@@ -134,6 +133,7 @@ const CheckByMailView: React.FC<ViewProps> = ({
             <Address
               id="address"
               name={'address'}
+              type="text"
               className="fs-mask"
               placeholder={viewModel.addressLabel}
               label={viewModel.addressLabel}
@@ -141,6 +141,7 @@ const CheckByMailView: React.FC<ViewProps> = ({
             <Apartment 
               id="apartment"
               name={'apartment'}
+              type="text"
               className="fs-mask"
               placeholder={viewModel.apartmentPlaceholder}
               label={viewModel.apartmentLabel}
@@ -150,6 +151,7 @@ const CheckByMailView: React.FC<ViewProps> = ({
             <City 
               id="city"
               name={'city'}
+              type="text"
               className="fs-mask"
               placeholder={viewModel.cityLabel}
               label={viewModel.cityLabel}
@@ -161,11 +163,13 @@ const CheckByMailView: React.FC<ViewProps> = ({
                 className="fs-mask"
                 placeholder={viewModel.stateLabel}
                 label={viewModel.stateLabel}
-                fluid={true}
+                options={states}
+                onSelectCallback={(value: string, label: string) => setFieldValue('state', value) }
               />
               <Zip
                 id="zip"
                 name={'zip'}
+                type="text"
                 className="fs-mask"
                 placeholder={viewModel.zipLabel}
                 label={viewModel.zipLabel}

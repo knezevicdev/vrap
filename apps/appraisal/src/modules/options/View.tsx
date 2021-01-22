@@ -94,6 +94,11 @@ const InitialValues: PaymentOverviewFormValues = {
   routingNumber: '',
   bankAccountNumber: '',
   isPrimaryAddress: 'Yes',
+  address: '',
+  apartment: '',
+  city: '',
+  state: '',
+  zip: '',
 };
 
 const OptionsView: React.FC<Props> = ({ viewModel }) => {
@@ -119,12 +124,12 @@ const OptionsView: React.FC<Props> = ({ viewModel }) => {
     }),
     isPrimaryAddress: Yup.string().when('paymentOption', {
       is: 'Check by Mail',
-      then: Yup.string().required(),
+      then: Yup.string().required('Field is required'),
     }),
     address: Yup.string().when('isPrimaryAddress', {
       is: 'No',
       then: Yup.string()
-        .required()
+        .required('Field is required')
         .test(
           'valid-street-address',
           'Please enter a valid street address',
@@ -140,7 +145,7 @@ const OptionsView: React.FC<Props> = ({ viewModel }) => {
     city: Yup.string().when('isPrimaryAddress', {
       is: 'No',
       then: Yup.string()
-        .required()
+        .required('Field is required')
         .test(
           'valid-city',
           'Please enter a valid city',
@@ -151,12 +156,12 @@ const OptionsView: React.FC<Props> = ({ viewModel }) => {
     }),
     state: Yup.string().when('isPrimaryAddress', {
       is: 'No',
-      then: Yup.string().required(),
+      then: Yup.string().required('Field is required'),
     }),
     zip: Yup.string().when('isPrimaryAddress', {
       is: 'No',
       then: Yup.string()
-        .required()
+        .required('Field is required')
         .test(
           'valid-zip-code',
           'Please enter a valid zip code',
@@ -183,9 +188,10 @@ const OptionsView: React.FC<Props> = ({ viewModel }) => {
       }}
       validateOnMount={true}
     >
-      {({ isValid, values, isSubmitting }): JSX.Element => {
+      {({ isValid, values, isSubmitting, setFieldValue }): JSX.Element => {
         const showDirectDeposit = values.paymentOption === 'Direct Deposit';
         const showSubmitButton = shouldShowSubmitButton || !showDirectDeposit;
+
         return (
           <FormContainer>
             <OptionsContainer>
@@ -206,10 +212,7 @@ const OptionsView: React.FC<Props> = ({ viewModel }) => {
                   <CheckByMail
                     mailingAddress={viewModel.getMailiingAddress()}
                     isPrimaryAddress={values.isPrimaryAddress}
-                    address={values.address}
-                    apartment={values.apartment}
-                    city={values.city}
-                    zip={values.zip}
+                    setFieldValue={setFieldValue} 
                   />
                 )}
               </OptionDisplay>
