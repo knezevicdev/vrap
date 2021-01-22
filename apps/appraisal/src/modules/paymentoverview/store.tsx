@@ -1,6 +1,7 @@
 import { action, observable, runInAction } from 'mobx';
 import { createContext, useContext } from 'react';
 
+import { Store, StoreStatus } from 'src/interfaces.d';
 import { Prices } from 'src/networking/models/Price';
 import { Networker } from 'src/networking/Networker';
 
@@ -32,10 +33,11 @@ export async function getInitialPaymentOverviewStoreState(
   }
 }
 
-export class PaymentOverviewStore {
-  @observable price = 0;
+export class PaymentOverviewStore implements Store {
+  @observable price: number = defaultPaymentOverviewState.price;
   @observable isDesktop: boolean;
   @observable displayBody = true;
+  @observable status = StoreStatus.Initial;
 
   constructor(priceId?: string, isDeskTop = true) {
     this.isDesktop = isDeskTop;
@@ -47,6 +49,7 @@ export class PaymentOverviewStore {
   async init(priceId: string): Promise<void> {
     const initialState = await getInitialPaymentOverviewStoreState(priceId);
     runInAction(() => {
+      this.status = StoreStatus.Success;
       this.price = initialState.price;
     });
   }
