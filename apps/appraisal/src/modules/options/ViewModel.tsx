@@ -81,6 +81,34 @@ class OptionsViewModel {
     }
   };
 
+  isValidStreetAddress = (str: string) => {
+    const re = /\S+(?:\s+[0-9]*[A-z]+)/g;
+    return re.test(str);
+  }
+
+  isValidZipCode = (zipCode: number) => {
+    if (zipCode == null) {
+      return false;
+    }
+
+    const length = zipCode.toString().length;
+    const reg = /^\d+$/;
+    const numbersOnly = reg.test(zipCode);
+    if (length !== 5 || !numbersOnly) {
+      return false;
+    }
+    return true;
+  }
+
+  isValidName = (str: string) => {
+    const re = /^[a-zA-ZàâäôéèëêïîçùûüÿæœÀÂÄÔÉÈËÊÏÎŸÇÙÛÜÆŒäöüßÄÖÜẞąćęłńóśźżĄĆĘŁŃÓŚŹŻàèéìíîòóùúÀÈÉÌÍÎÒÓÙÚáéíñóúüÁÉÍÑÓÚÜ \-\']+$/;
+    if (!str || !re.test(str)) {
+      return false;
+    } else {
+      return true;
+    }
+  }
+
   paymentOptionsSubmit = (values: PaymentOverviewFormValues): void => {
     submitPaymentOptions(values, this.store.priceId, this.store.mailingAddress);
 

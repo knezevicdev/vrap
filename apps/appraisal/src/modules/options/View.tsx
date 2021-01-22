@@ -104,21 +104,9 @@ const OptionsView: React.FC<Props> = ({ viewModel }) => {
 
   const PaymentOverviewSchema = Yup.object().shape({
     paymentOption: Yup.string().required('Required'),
-    isPrimaryAddress: Yup.string().when('paymentOption', {
-      is: 'Check by Mail',
-      then: Yup.string().required(),
-    }),
     routingNumber: Yup.string().when('paymentOption', {
       is: 'Direct Deposit',
-      then: Yup.string()
-        .required('Field is required')
-        .test(
-          'valid-routing-num',
-          'Please enter a valid routing number',
-          (value) => {
-            return viewModel.isValidRouting(value);
-          }
-        ),
+      then: Yup.string().required('Field is required')
     }),
     bankAccountNumber: Yup.string().when('paymentOption', {
       is: 'Direct Deposit',
@@ -128,6 +116,54 @@ const OptionsView: React.FC<Props> = ({ viewModel }) => {
           /^[a-zA-Z0-9]{4,17}$/,
           'Please enter a valid account number without spaces or hyphens'
         ),
+    }),
+    isPrimaryAddress: Yup.string().when('paymentOption', {
+      is: 'Check by Mail',
+      then: Yup.string().required(),
+    }),
+    address: Yup.string().when('isPrimaryAddress', {
+      is: 'No',
+      then: Yup.string()
+        .required()
+        .test(
+          'valid-street-address',
+          'Please enter a valid street address',
+          (value) => {
+            return viewModel.isValidStreetAddress(value);
+          }
+        )
+    }),
+    apartment: Yup.string().when('isPrimaryAddress', {
+      is: 'No',
+      then: Yup.string(),
+    }),
+    city: Yup.string().when('isPrimaryAddress', {
+      is: 'No',
+      then: Yup.string()
+        .required()
+        .test(
+          'valid-city',
+          'Please enter a valid city',
+          (value) => {
+            return viewModel.isValidName(value);
+          }
+        )
+    }),
+    state: Yup.string().when('isPrimaryAddress', {
+      is: 'No',
+      then: Yup.string().required(),
+    }),
+    zip: Yup.string().when('isPrimaryAddress', {
+      is: 'No',
+      then: Yup.string()
+        .required()
+        .test(
+          'valid-zip-code',
+          'Please enter a valid zip code',
+          (value) => {
+            return viewModel.isValidZipCode(value);
+          }
+        )
     }),
   });
 
@@ -170,6 +206,10 @@ const OptionsView: React.FC<Props> = ({ viewModel }) => {
                   <CheckByMail
                     mailingAddress={viewModel.getMailiingAddress()}
                     isPrimaryAddress={values.isPrimaryAddress}
+                    address={values.address}
+                    apartment={values.apartment}
+                    city={values.city}
+                    zip={values.zip}
                   />
                 )}
               </OptionDisplay>

@@ -10,6 +10,7 @@ export interface Props {
 
 const PayOptionsContainer = styled.div`
   display: flex;
+  margin-bottom: 20px;
 
   @media (max-width: 420px) {
     flex-direction: column;

@@ -16,6 +16,7 @@ export interface CoreInputProps
   fluid?: boolean;
   appendComponent?: React.FC | null; //Allow to inject components below the text field
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  options?: string[];
 }
 export const CoreInput: React.FC<CoreInputProps> = (props) => {
   const {
