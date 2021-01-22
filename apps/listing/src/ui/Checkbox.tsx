@@ -13,32 +13,29 @@ const useStyles = makeStyles({
   icon: {
     width: 20,
     height: 20,
-    border: '2px solid rgba(0, 0, 0, 0.23)',
+    border: '1px solid #041022',
     backgroundColor: '#ffffff',
-    'input:hover ~ &': {
-      border: '2px solid #041022',
-    },
     'input:disabled ~ &': {
-      border: '2px solid rgba(0, 0, 0, 0.23)',
+      border: '1px solid rgba(0, 0, 0, 0.23)',
       background: 'rgba(4, 16, 34, 0.1)',
     },
   },
   checkedIcon: {
     backgroundColor: '#E7131A',
-    border: '2px solid #E7131A',
+    border: '1px solid #E7131A',
     '&:before': {
-      display: 'block',
-      width: 17,
-      height: 17,
-      backgroundImage:
-        "url(\"data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath" +
-        " fill-rule='evenodd' clip-rule='evenodd' d='M12 5c-.28 0-.53.11-.71.29L7 9.59l-2.29-2.3a1.003 " +
-        "1.003 0 00-1.42 1.42l3 3c.18.18.43.29.71.29s.53-.11.71-.29l5-5A1.003 1.003 0 0012 5z' fill='%23fff'/%3E%3C/svg%3E\")",
+      width: '24px',
+      height: '25px',
+      backgroundRepeat: 'no-repeat',
       content: '""',
+      display: 'block',
+      backgroundPosition: '2px center',
+      backgroundImage:
+        'url("data:image/svg+xml,%3Csvg%20version%3D%221.1%22%20id%3D%22Layer_1%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20xmlns%3Axlink%3D%22http%3A%2F%2Fwww.w3.org%2F1999%2Fxlink%22%20x%3D%220px%22%20y%3D%220px%22%0A%09%20viewBox%3D%220%200%2020%2016%22%20style%3D%22enable-background%3Anew%200%200%2012%209%3B%22%20xml%3Aspace%3D%22preserve%22%3E%0A%3Cstyle%20type%3D%22text%2Fcss%22%3E%0A%09.st0%7Bfill%3A%23FFFFFF%3B%7D%0A%3C%2Fstyle%3E%0A%3Cpolygon%20class%3D%22st0%22%20points%3D%2212%2C1.7%2010.2%2C0%204.2%2C5.6%201.8%2C3.4%200%2C5.1%204.2%2C9%204.2%2C9%204.2%2C9%20%22%2F%3E%0A%3C%2Fsvg%3E")',
     },
     'input:hover ~ &': {
       backgroundColor: '#d40b11',
-      border: '2px solid #d40b11',
+      border: '1px solid #d40b11',
     },
   },
 });

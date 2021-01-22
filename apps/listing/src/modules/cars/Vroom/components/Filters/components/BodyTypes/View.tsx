@@ -69,7 +69,7 @@ const BodyTypesView: React.FC<Props> = ({ viewModel }) => {
             >
               <StyledLableContainer>
                 <StyledCarImage
-                  width="56px"
+                  width="50px"
                   height="24px"
                   src={`${publicRuntimeConfig.BASE_PATH}/images/${
                     isSelected
