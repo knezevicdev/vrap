@@ -102,6 +102,7 @@ const Input = styled(TextField)(({ theme }) => ({
 }));
 
 const StyledButton = styled(Button)(({ theme }) => ({
+  width: '100%',
   minWidth: '135px',
   marginTop: theme.spacing(2),
 }));
@@ -193,26 +194,28 @@ const View: React.FC<ViewProps> = ({ viewModel }) => {
                 <Description>
                   {viewModel.emailCaptureDescriptionText}
                 </Description>
-                <Input
-                  id="email-address"
-                  focused={true}
-                  label={viewModel.inputLabel}
-                  placeholder={viewModel.inputPlaceholder}
-                  value={viewModel.getInputValue()}
-                  onChange={viewModel.onChange}
-                  error={viewModel.getIsValidationError()}
-                  helperText={viewModel.validationText}
-                  InputProps={{
-                    disableUnderline: true,
-                  }}
-                />
-                <StyledButton
-                  color="primary"
-                  variant="contained"
-                  onClick={viewModel.onClick}
-                >
-                  {viewModel.emailCaptureButtonText}
-                </StyledButton>
+                <form onSubmit={viewModel.onClick}>
+                  <Input
+                    id="email-address"
+                    focused={true}
+                    label={viewModel.inputLabel}
+                    placeholder={viewModel.inputPlaceholder}
+                    value={viewModel.getInputValue()}
+                    onChange={viewModel.onChange}
+                    error={viewModel.getIsValidationError()}
+                    helperText={viewModel.validationText}
+                    InputProps={{
+                      disableUnderline: true,
+                    }}
+                  />
+                  <StyledButton
+                    type="submit"
+                    color="primary"
+                    variant="contained"
+                  >
+                    {viewModel.emailCaptureButtonText}
+                  </StyledButton>
+                </form>
               </EmailCaptureDetails>
             )}
           </Content>
