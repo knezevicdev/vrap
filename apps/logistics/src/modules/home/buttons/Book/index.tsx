@@ -3,7 +3,7 @@ import React from 'react';
 import ShipmentsModel from '../../Model';
 import Model from './Model';
 import View from './View';
-import viewModel from './ViewModel';
+import ViewModel from './ViewModel';
 
 interface Props {
   shipmentId: number;
@@ -24,7 +24,7 @@ const Pickup: React.FC<Props> = ({
     destinationShipmentStopId,
     shipmentsModel
   );
-  return <View {...viewModel(model)} />;
+  return <View {...ViewModel(model)} />;
 };
 
 export default Pickup;

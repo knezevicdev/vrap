@@ -3,7 +3,7 @@ import React from 'react';
 import ShipmentsModel from '../../Model';
 import Model from './Model';
 import View from './View';
-import viewModel from './ViewModel';
+import ViewModel from './VviewModel';
 
 interface Props {
   shipmentId: number;
@@ -11,7 +11,7 @@ interface Props {
 }
 
 const Cancel: React.FC<Props> = ({ shipmentId, shipmentsModel }) => (
-  <View {...viewModel(new Model(shipmentId, shipmentsModel))} />
+  <View {...ViewModel(new Model(shipmentId, shipmentsModel))} />
 );
 
 export default Cancel;
