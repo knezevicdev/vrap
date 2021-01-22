@@ -32,7 +32,7 @@ export async function getInitialDDStoreState(
 
 export async function plaidSuccess(
   mutationInput: PlaidData,
-  onPlaidSubmitting: void
+  onPlaidSubmitting: (value: boolean) => void
 ): Promise<void> {
   const networker = new Networker();
   try {

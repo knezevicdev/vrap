@@ -62,7 +62,6 @@ class CheckByMailViewModel {
       { value: 'WY', label: 'WY' },
     ];
   };
-
 }
 
 export default CheckByMailViewModel;

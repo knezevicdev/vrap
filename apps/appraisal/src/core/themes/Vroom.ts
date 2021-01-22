@@ -16,20 +16,20 @@ export interface ThemeProps {
       brand: string;
       black: string;
       white: string;
-    },
+    };
     secondary: {
       brand: string;
       success: string;
       error: string;
       warning: string;
-    },
+    };
     gray: {
       one: string;
       two: string;
       three: string;
       four: string;
-    },
-  }
+    };
+  };
 }
 
 export const theme: ThemeProps = {

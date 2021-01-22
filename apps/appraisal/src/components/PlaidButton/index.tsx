@@ -6,9 +6,9 @@ import ViewModel from './ViewModel';
 
 import { PlaidData } from 'src/interfaces.d';
 
-export interface Props {
+export type Props = {
   token: string;
-  plaidSuccess(mutationInput: PlaidData, onPlaidSubmitting: void): void;
+  plaidSuccess(mutationInput: PlaidData, onPlaidSubmitting: (value: boolean) => void): void;
   priceId: string;
 }
 

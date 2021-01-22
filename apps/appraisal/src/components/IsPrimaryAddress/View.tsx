@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import RadioButton from 'src/core/Radio';
+import YesNoBox from 'src/core/YesNoBox';
 
 export interface Props {
   optionMeta: Array<string>;
@@ -17,10 +17,10 @@ const PayOptionsContainer = styled.div`
   }
 `;
 
-const OptionContainer = styled.div<{ selected?: boolean; yesNoBox?: boolean }>`
+const OptionContainer = styled.div<{ selected?: boolean }>`
   width: 25%;
-  padding: ${({ yesNoBox }): string => (yesNoBox ? '0' : '20px')};
-  height: ${({ yesNoBox }): string => (yesNoBox ? '40px' : '0')};
+  padding: 0;
+  height: 40px;
   border-left: none;
   border: 2px solid
     ${({ selected }): string => (selected ? '#E7131A' : '#d6d7da')};
@@ -40,16 +40,15 @@ const IsPrimaryAddressView: React.FC<Props> = ({ optionMeta, selected }) => {
       {optionMeta.map((option) => {
         const checked = selected === option;
         return (
-          <OptionContainer selected={checked} key={option} yesNoBox={true}>
-            <RadioButton
+          <OptionContainer selected={checked} key={option}>
+            <YesNoBox
               checked={checked}
               disabled={false}
               name={'isPrimaryAddress'}
               value={option}
-              yesNoBox={true}
             >
               {option}
-            </RadioButton>
+            </YesNoBox>
           </OptionContainer>
         );
       })}

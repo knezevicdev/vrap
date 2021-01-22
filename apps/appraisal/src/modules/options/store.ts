@@ -83,7 +83,7 @@ export class OptionsStore {
   @action
   setPayOptionSelected = (value: string): void => {
     this.payOptionSelected = value;
-    this.showDD = value === this.payOptionArr[0];
+    this.showDD = value === "Yes";
   };
 
   @action

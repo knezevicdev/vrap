@@ -4,7 +4,7 @@ import styled from 'styled-components';
 
 import DirectDepositViewModel from './ViewModel';
 
-import DirectDeposit from 'src/components/DirectDeposit';
+import DirectDepositInputs from 'src/components/DirectDepositInputs';
 import PlaidButton from 'src/components/PlaidButton';
 import { Body } from 'src/core/Typography';
 
@@ -54,7 +54,7 @@ const DirectDepositView: React.FC<Props> = ({ viewModel }) => {
         </>
       ) : (
         <>
-          <DirectDeposit />
+          <DirectDepositInputs />
           <DirectDepositCopy>
             {viewModel.ddToggleOrCopy}&nbsp;
             <DDToggleLink onClick={(): void => viewModel.togglePlaidLink()}>

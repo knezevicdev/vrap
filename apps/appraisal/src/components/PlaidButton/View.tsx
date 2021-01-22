@@ -5,9 +5,9 @@ import { usePlaidLink } from 'react-plaid-link';
 import styled from 'styled-components';
 
 import PlaidButtonViewModel from './ViewModel';
+import { Props } from './index';
 
 import { Button } from 'src/core/Button';
-import { PlaidData } from 'src/interfaces.d';
 
 const PlaidButtonContainer = styled('div')(() => ({
   width: '100%',
@@ -26,14 +26,9 @@ const PlaidButton = styled(Button.Primary)`
   }
 `;
 
-export interface Props {
-  viewModel: PlaidButtonViewModel;
-  token: string;
-  plaidSuccess(mutationInput: PlaidData, onPlaidSubmitting: void): void;
-  priceId: string;
-}
+type ViewProps = Props & { viewModel: PlaidButtonViewModel }
 
-const PlaidButtonView: React.FC<Props> = ({
+const PlaidButtonView: React.FC<ViewProps> = ({
   viewModel,
   token,
   plaidSuccess,

@@ -5,8 +5,8 @@ import CheckByMailViewModel from './ViewModel';
 
 import { Props } from 'src/components/CheckByMail';
 import IsPrimaryAddress from 'src/components/IsPrimaryAddress';
-import FormikInput from 'src/core/FormikInput';
 import Dropdown from 'src/core/Dropdown';
+import FormikInput from 'src/core/FormikInput';
 import { Body } from 'src/core/Typography';
 
 type ViewProps = Props & { viewModel: CheckByMailViewModel };
@@ -41,7 +41,7 @@ const InputContainer = styled.div`
 `;
 
 const ZipStateContainer = styled.div`
-	width: 50%;
+  width: 50%;
   display: flex;
   justify-content: space-between;
 
@@ -111,7 +111,8 @@ const CheckByMailView: React.FC<ViewProps> = ({
   mailingAddress,
   isPrimaryAddress,
   viewModel,
-  setFieldValue 
+  setFieldValue,
+  state,
 }) => {
   const states = viewModel.getStates();
 
@@ -127,7 +128,7 @@ const CheckByMailView: React.FC<ViewProps> = ({
 
       <IsPrimaryAddress selected={isPrimaryAddress} />
 
-      { isPrimaryAddress === 'No' && (
+      {isPrimaryAddress === 'No' && (
         <>
           <InputContainer>
             <Address
@@ -138,7 +139,7 @@ const CheckByMailView: React.FC<ViewProps> = ({
               placeholder={viewModel.addressLabel}
               label={viewModel.addressLabel}
             />
-            <Apartment 
+            <Apartment
               id="apartment"
               name={'apartment'}
               type="text"
@@ -148,7 +149,7 @@ const CheckByMailView: React.FC<ViewProps> = ({
             />
           </InputContainer>
           <InputContainer>
-            <City 
+            <City
               id="city"
               name={'city'}
               type="text"
@@ -159,16 +160,18 @@ const CheckByMailView: React.FC<ViewProps> = ({
             <ZipStateContainer>
               <State
                 id="state"
-                name={'state'}
                 className="fs-mask"
                 placeholder={viewModel.stateLabel}
                 label={viewModel.stateLabel}
                 options={states}
-                onSelectCallback={(value: string, label: string) => setFieldValue('state', value) }
+                onSelectCallback={(value: string): void =>
+                  setFieldValue('state', value)
+                }
+                value={state}
               />
               <Zip
-                id="zip"
-                name={'zip'}
+                id="zipcode"
+                name={'zipcode'}
                 type="text"
                 className="fs-mask"
                 placeholder={viewModel.zipLabel}

@@ -98,7 +98,7 @@ const InitialValues: PaymentOverviewFormValues = {
   apartment: '',
   city: '',
   state: '',
-  zip: '',
+  zipcode: '',
 };
 
 const OptionsView: React.FC<Props> = ({ viewModel }) => {
@@ -111,7 +111,7 @@ const OptionsView: React.FC<Props> = ({ viewModel }) => {
     paymentOption: Yup.string().required('Required'),
     routingNumber: Yup.string().when('paymentOption', {
       is: 'Direct Deposit',
-      then: Yup.string().required('Field is required')
+      then: Yup.string().required('Field is required'),
     }),
     bankAccountNumber: Yup.string().when('paymentOption', {
       is: 'Direct Deposit',
@@ -136,7 +136,7 @@ const OptionsView: React.FC<Props> = ({ viewModel }) => {
           (value) => {
             return viewModel.isValidStreetAddress(value);
           }
-        )
+        ),
     }),
     apartment: Yup.string().when('isPrimaryAddress', {
       is: 'No',
@@ -146,29 +146,21 @@ const OptionsView: React.FC<Props> = ({ viewModel }) => {
       is: 'No',
       then: Yup.string()
         .required('Field is required')
-        .test(
-          'valid-city',
-          'Please enter a valid city',
-          (value) => {
-            return viewModel.isValidName(value);
-          }
-        )
+        .test('valid-city', 'Please enter a valid city', (value) => {
+          return viewModel.isValidName(value);
+        }),
     }),
     state: Yup.string().when('isPrimaryAddress', {
       is: 'No',
       then: Yup.string().required('Field is required'),
     }),
-    zip: Yup.string().when('isPrimaryAddress', {
+    zipcode: Yup.string().when('isPrimaryAddress', {
       is: 'No',
       then: Yup.string()
         .required('Field is required')
-        .test(
-          'valid-zip-code',
-          'Please enter a valid zip code',
-          (value) => {
-            return viewModel.isValidZipCode(value);
-          }
-        )
+        .test('valid-zip-code', 'Please enter a valid zip code', (value) => {
+          return viewModel.isValidZipCode(value);
+        }),
     }),
   });
 
@@ -212,13 +204,15 @@ const OptionsView: React.FC<Props> = ({ viewModel }) => {
                   <CheckByMail
                     mailingAddress={viewModel.getMailiingAddress()}
                     isPrimaryAddress={values.isPrimaryAddress}
-                    setFieldValue={setFieldValue} 
+                    setFieldValue={setFieldValue}
+                    state={values.state}
                   />
                 )}
               </OptionDisplay>
 
               {showSubmitButton && (
                 <SubmitButton
+                  type="submit"
                   disabled={!isValid || isSubmitting || isPlaidSubmitting}
                 >
                   {isSubmitting ? viewModel.submitting : viewModel.submit}

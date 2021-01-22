@@ -4,7 +4,7 @@ import styled from 'styled-components';
 
 import ENVS from 'src/integrations/Envs';
 
-interface RadioButtonProps extends React.HTMLAttributes<HTMLInputElement> {
+interface YesNoBoxProps extends React.HTMLAttributes<HTMLInputElement> {
   id?: string;
   children?: string;
   name: string;
@@ -14,6 +14,7 @@ interface RadioButtonProps extends React.HTMLAttributes<HTMLInputElement> {
 }
 
 const CheckMark = styled.span<{ disabled?: boolean }>`
+  visibility: hidden;
   position: absolute;
   top: 3px;
   left: 0;
@@ -37,16 +38,19 @@ const CheckMark = styled.span<{ disabled?: boolean }>`
   }
 `;
 
-const Label = styled.label<{ disabled?: boolean }>`
+const Label = styled.label<{
+  disabled?: boolean;
+  checked?: boolean;
+}>`
   display: block;
   position: relative;
-  padding-left: 25px;
-  margin-bottom: 5px;
+  padding: 8px 0;
+  text-align: center;
   cursor: pointer;
   font-family: Calibre;
   font-size: 18px;
   font-weight: 500;
-  color: ${({ disabled }): string => (disabled ? '#999DA3' : '#041022')};
+  color: ${({ checked }): string => (!checked ? '#999DA3' : '#041022')};
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
@@ -60,12 +64,13 @@ const Label = styled.label<{ disabled?: boolean }>`
   }
 `;
 
-const RadioButtonStyled = styled(Field).attrs({ type: 'radio' })`
+const YesNoBoxStyled = styled(Field).attrs({ type: 'radio' })`
   position: absolute;
   opacity: 0;
   cursor: pointer;
   height: 0;
   width: 0;
+  visibility: hidden;
 
   &:checked ~ ${CheckMark} {
     background: url(${ENVS.BASE_PATH}/icons/check-mark-red.svg);
@@ -75,13 +80,13 @@ const RadioButtonStyled = styled(Field).attrs({ type: 'radio' })`
   }
 `;
 
-export const RadioButton: React.FC<RadioButtonProps> = (props) => {
+export const YesNoBox: React.FC<YesNoBoxProps> = (props) => {
   const { id, name, value, checked, children, disabled } = props;
 
   return (
-    <Label disabled={disabled}>
+    <Label disabled={disabled} checked={checked}>
       {children}
-      <RadioButtonStyled
+      <YesNoBoxStyled
         id={id}
         name={name}
         disabled={disabled}
@@ -93,8 +98,8 @@ export const RadioButton: React.FC<RadioButtonProps> = (props) => {
   );
 };
 
-RadioButton.defaultProps = {
+YesNoBox.defaultProps = {
   disabled: false,
 };
 
-export default RadioButton;
+export default YesNoBox;

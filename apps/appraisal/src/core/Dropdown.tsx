@@ -1,14 +1,13 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 
-import { ThemeProps } from './themes/Vroom';
-import { addOpacityToHex } from './themes/util';
-import { Body } from './Typography';
 import Icon, { Icons } from './Icon/Icon';
+import { addOpacityToHex } from './themes/util';
+import { ThemeProps } from './themes/Vroom';
+import { Body } from './Typography';
 
 export interface DropdownProps {
   id: string;
-  name: string;
   label: string;
   options: { value: string; label: string }[];
   onSelectCallback: (value: string, label: string) => void;
@@ -16,12 +15,12 @@ export interface DropdownProps {
   placeholder?: string;
   disabled?: boolean;
   error?: string;
+  value?: string;
 }
 
 const Dropdown = (props: DropdownProps): JSX.Element => {
   const {
     id,
-    name,
     label: dropdownLabel,
     options,
     onSelectCallback,
@@ -29,15 +28,15 @@ const Dropdown = (props: DropdownProps): JSX.Element => {
     className,
     error,
     disabled,
+    value,
   } = props;
-
   const [open, setOpen] = useState(false);
-  const [label, setLabel] = useState<string | undefined>(undefined);
+  const [label, setLabel] = useState<string | undefined>(value);
   const [labelPosition, setLabelPosition] = useState<number | undefined>(
     undefined
   );
   const actualLabel = label ? label : placeholder;
-  const isShowingPlaceholder = label === undefined;
+  const isShowingPlaceholder = label === '' || label === undefined;
   const showError = (error && error !== '') || false;
   const onValueClick = (): void => {
     setOpen(!open);
@@ -136,7 +135,7 @@ const Dropdown = (props: DropdownProps): JSX.Element => {
   };
 
   return (
-    <Container className={className}>
+    <Container id={id} className={className}>
       <Body.Small>{dropdownLabel}</Body.Small>
       <LabelContainer
         onClick={disabled ? undefined : onValueClick}
