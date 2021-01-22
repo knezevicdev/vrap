@@ -12,21 +12,10 @@ export type Props = {
   state: string;
 };
 
-const CheckByMail: React.FC<Props> = ({
-  mailingAddress,
-  isPrimaryAddress,
-  setFieldValue,
-  state,
-}) => {
+const CheckByMail: React.FC<Props> = (props) => {
   const viewModel = new ViewModel();
   return (
-    <View
-      mailingAddress={mailingAddress}
-      isPrimaryAddress={isPrimaryAddress}
-      setFieldValue={setFieldValue}
-      viewModel={viewModel}
-      state={state}
-    />
+    <View viewModel={viewModel} {...props} />
   );
 };
 

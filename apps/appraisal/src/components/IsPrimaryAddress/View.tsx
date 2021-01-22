@@ -24,7 +24,6 @@ const OptionContainer = styled.div<{ selected?: boolean }>`
   border-left: none;
   border: 2px solid
     ${({ selected }): string => (selected ? '#E7131A' : '#d6d7da')};
-  color: ${({ selected }): string => (selected ? 'blue' : 'red')};
   box-sizing: border-box;
   box-shadow: ${({ selected }): string =>
     selected ? '0px 0px 3px rgba(0, 0, 0, 0.2)' : ''};
