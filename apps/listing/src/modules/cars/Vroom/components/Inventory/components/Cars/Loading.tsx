@@ -2,6 +2,8 @@ import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Grid from '@material-ui/core/Grid';
 import { styled } from '@material-ui/core/styles';
+import { useTheme } from '@material-ui/core/styles';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
 import Skeleton from '@material-ui/lab/Skeleton';
 import React from 'react';
 
@@ -41,7 +43,10 @@ interface Props {
   xl?: boolean;
 }
 
-const LoadingCard: React.FC<Props> = ({ mobile, xl }) => {
+const LoadingCard: React.FC<Props> = () => {
+  const theme = useTheme();
+  const mobile = useMediaQuery(theme.breakpoints.down('xs'));
+  const xl = useMediaQuery(theme.breakpoints.up('xl'));
   return (
     <Grid item xs={12} sm={6} md={3}>
       {mobile ? (
