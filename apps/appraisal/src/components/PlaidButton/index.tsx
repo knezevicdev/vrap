@@ -8,7 +8,7 @@ import { PlaidData } from 'src/interfaces.d';
 
 export interface Props {
   token: string;
-  plaidSuccess(mutationInput: PlaidData, onPlaidSubmitting: any): void;
+  plaidSuccess(mutationInput: PlaidData, onPlaidSubmitting: void): void;
   priceId: string;
 }
 

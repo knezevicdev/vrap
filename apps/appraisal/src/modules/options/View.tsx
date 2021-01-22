@@ -93,7 +93,7 @@ const InitialValues: PaymentOverviewFormValues = {
   paymentOption: 'Direct Deposit',
   routingNumber: '',
   bankAccountNumber: '',
-  isPrimaryAddress: 'Yes'
+  isPrimaryAddress: 'Yes',
 };
 
 const OptionsView: React.FC<Props> = ({ viewModel }) => {
@@ -106,7 +106,7 @@ const OptionsView: React.FC<Props> = ({ viewModel }) => {
     paymentOption: Yup.string().required('Required'),
     isPrimaryAddress: Yup.string().when('paymentOption', {
       is: 'Check by Mail',
-      then: Yup.string().required()
+      then: Yup.string().required(),
     }),
     routingNumber: Yup.string().when('paymentOption', {
       is: 'Direct Deposit',

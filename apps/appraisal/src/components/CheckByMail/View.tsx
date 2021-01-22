@@ -2,8 +2,8 @@ import React from 'react';
 import styled from 'styled-components';
 
 import CheckByMailViewModel from './ViewModel';
-import IsPrimaryAddress from 'src/components/IsPrimaryAddress';
 
+import IsPrimaryAddress from 'src/components/IsPrimaryAddress';
 import { Body } from 'src/core/Typography';
 import { MailingAddress } from 'src/interfaces.d';
 
@@ -32,7 +32,11 @@ const AddressLine = styled.span`
   display: flex;
 `;
 
-const CheckByMailView: React.FC<Props> = ({ mailingAddress, isPrimaryAddress, viewModel }) => {
+const CheckByMailView: React.FC<Props> = ({
+  mailingAddress,
+  isPrimaryAddress,
+  viewModel,
+}) => {
   return (
     <CBMContainer>
       <CBMMessage>{viewModel.mailingAddressMsg}</CBMMessage>

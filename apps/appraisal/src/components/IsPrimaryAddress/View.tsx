@@ -16,11 +16,14 @@ const PayOptionsContainer = styled.div`
   }
 `;
 
-const OptionContainer = styled.div<{ selected?: boolean }>`
-  width: 50%;
-  padding: 20px;
-  outline: ${({ selected }): string =>
-    selected ? '2px solid #E7131A' : 'none'};
+const OptionContainer = styled.div<{ selected?: boolean; yesNoBox?: boolean }>`
+  width: 25%;
+  padding: ${({ yesNoBox }): string => (yesNoBox ? '0' : '20px')};
+  height: ${({ yesNoBox }): string => (yesNoBox ? '40px' : '0')};
+  border-left: none;
+  border: 2px solid
+    ${({ selected }): string => (selected ? '#E7131A' : '#d6d7da')};
+  color: ${({ selected }): string => (selected ? 'blue' : 'red')};
   box-sizing: border-box;
   box-shadow: ${({ selected }): string =>
     selected ? '0px 0px 3px rgba(0, 0, 0, 0.2)' : ''};
@@ -36,12 +39,13 @@ const IsPrimaryAddressView: React.FC<Props> = ({ optionMeta, selected }) => {
       {optionMeta.map((option) => {
         const checked = selected === option;
         return (
-          <OptionContainer selected={checked} key={option}>
+          <OptionContainer selected={checked} key={option} yesNoBox={true}>
             <RadioButton
               checked={checked}
               disabled={false}
               name={'isPrimaryAddress'}
               value={option}
+              yesNoBox={true}
             >
               {option}
             </RadioButton>

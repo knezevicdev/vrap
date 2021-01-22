@@ -97,7 +97,7 @@ const Outline = styled(Primary)`
 export interface ButtonProps {
   id?: string;
   className?: string;
-  children: any;
+  children: ReactChild | ReactChildren;
   onClick?: () => void;
   disabled?: boolean;
 }

@@ -29,7 +29,7 @@ const PlaidButton = styled(Button.Primary)`
 export interface Props {
   viewModel: PlaidButtonViewModel;
   token: string;
-  plaidSuccess(mutationInput: PlaidData, onPlaidSubmitting: any): void;
+  plaidSuccess(mutationInput: PlaidData, onPlaidSubmitting: void): void;
   priceId: string;
 }
 
@@ -39,7 +39,7 @@ const PlaidButtonView: React.FC<Props> = ({
   plaidSuccess,
   priceId,
 }) => {
-  const onSuccess = useCallback((_token: string, metaData: any): void => {
+  const onSuccess = useCallback((_token, metaData): void => {
     const email = viewModel.getEmail();
     viewModel.onPlaidSubmitting(true);
     const onPlaidSubmitting = viewModel.onPlaidSubmitting;
@@ -62,6 +62,7 @@ const PlaidButtonView: React.FC<Props> = ({
     };
 
     plaidSuccess(mutationInput, onPlaidSubmitting);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const onExit = useCallback((): void => {
@@ -81,7 +82,7 @@ const PlaidButtonView: React.FC<Props> = ({
 
   const disableButton = (!ready && tokenIsUndefined) || isSubmitting;
 
-  const handlePlaidButtonClick = () => {
+  const handlePlaidButtonClick = (): void => {
     viewModel.onPlaidSubmitting(true);
     open();
   };

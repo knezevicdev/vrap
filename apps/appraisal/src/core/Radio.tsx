@@ -13,7 +13,8 @@ interface RadioButtonProps extends React.HTMLAttributes<HTMLInputElement> {
   value: string;
 }
 
-const CheckMark = styled.span<{ disabled?: boolean }>`
+const CheckMark = styled.span<{ disabled?: boolean; yesNoBox?: boolean }>`
+  visibility: ${({ yesNoBox }): string => (yesNoBox ? `hidden` : `auto`)};
   position: absolute;
   top: 3px;
   left: 0;
@@ -37,16 +38,21 @@ const CheckMark = styled.span<{ disabled?: boolean }>`
   }
 `;
 
-const Label = styled.label<{ disabled?: boolean }>`
+const Label = styled.label<{
+  disabled?: boolean;
+  yesNoBox?: boolean;
+  checked?: boolean;
+}>`
   display: block;
   position: relative;
-  padding-left: 25px;
-  margin-bottom: 5px;
+  padding: ${({ yesNoBox }): string => (yesNoBox ? `8px 0` : `0 0 0 25px`)};
+  text-align: ${({ yesNoBox }): string => (yesNoBox ? `center` : `inherit`)};
   cursor: pointer;
   font-family: Calibre;
   font-size: 18px;
   font-weight: 500;
-  color: ${({ disabled }): string => (disabled ? '#999DA3' : '#041022')};
+  color: ${({ disabled, yesNoBox, checked }): string =>
+    disabled || (yesNoBox && !checked) ? '#999DA3' : '#041022'};
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
@@ -66,6 +72,7 @@ const RadioButtonStyled = styled(Field).attrs({ type: 'radio' })`
   cursor: pointer;
   height: 0;
   width: 0;
+  visibility: ${({ yesNoBox }): string => (yesNoBox ? `hidden` : `auto`)};
 
   &:checked ~ ${CheckMark} {
     background: url(${ENVS.BASE_PATH}/icons/check-mark-red.svg);
@@ -76,10 +83,10 @@ const RadioButtonStyled = styled(Field).attrs({ type: 'radio' })`
 `;
 
 export const RadioButton: React.FC<RadioButtonProps> = (props) => {
-  const { id, name, value, checked, children, disabled } = props;
+  const { id, name, value, checked, children, disabled, yesNoBox } = props;
 
   return (
-    <Label disabled={disabled}>
+    <Label disabled={disabled} yesNoBox={yesNoBox} checked={checked}>
       {children}
       <RadioButtonStyled
         id={id}
@@ -87,8 +94,9 @@ export const RadioButton: React.FC<RadioButtonProps> = (props) => {
         disabled={disabled}
         checked={checked}
         value={value}
+        yesNoBox={yesNoBox}
       />
-      <CheckMark disabled={disabled} />
+      <CheckMark disabled={disabled} yesNoBox={yesNoBox} />
     </Label>
   );
 };
