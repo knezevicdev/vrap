@@ -8,9 +8,12 @@ import { PlaidData } from 'src/interfaces.d';
 
 export type Props = {
   token: string;
-  plaidSuccess(mutationInput: PlaidData, onPlaidSubmitting: (value: boolean) => void): void;
+  plaidSuccess(
+    mutationInput: PlaidData,
+    onPlaidSubmitting: (value: boolean) => void
+  ): void;
   priceId: string;
-}
+};
 
 const PlaidButton: React.FC<Props> = ({ token, plaidSuccess, priceId }) => {
   const oStore = useOptionsStore();

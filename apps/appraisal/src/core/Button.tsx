@@ -1,4 +1,4 @@
-import React, { ReactChildren, ReactChild } from 'react';
+import React from 'react';
 import styled, { css } from 'styled-components';
 
 import { ThemeProps } from './themes/Vroom';
@@ -97,10 +97,10 @@ const Outline = styled(Primary)`
 export interface ButtonProps {
   id?: string;
   className?: string;
-  children: (string | JSX.Element)[] | ReactChildren | ReactChild;
+  children: React.ReactNode;
   onClick?: () => void;
   disabled?: boolean;
-  type?: "button" | "submit" | "reset" | undefined;
+  type?: 'button' | 'submit' | 'reset';
 }
 
 const PrimaryButton: React.FC<ButtonProps> = ({

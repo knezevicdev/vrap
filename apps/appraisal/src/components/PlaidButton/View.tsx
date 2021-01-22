@@ -4,8 +4,8 @@ import React, { useCallback } from 'react';
 import { usePlaidLink } from 'react-plaid-link';
 import styled from 'styled-components';
 
-import PlaidButtonViewModel from './ViewModel';
 import { Props } from './index';
+import PlaidButtonViewModel from './ViewModel';
 
 import { Button } from 'src/core/Button';
 
@@ -26,7 +26,7 @@ const PlaidButton = styled(Button.Primary)`
   }
 `;
 
-type ViewProps = Props & { viewModel: PlaidButtonViewModel }
+type ViewProps = Props & { viewModel: PlaidButtonViewModel };
 
 const PlaidButtonView: React.FC<ViewProps> = ({
   viewModel,

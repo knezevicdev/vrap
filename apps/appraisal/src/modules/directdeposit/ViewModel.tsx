@@ -29,7 +29,10 @@ class DirectDepositViewModel {
     this.store.togglePlaidLink();
   };
 
-  onPlaidSuccess = (input: PlaidData, onPlaidSubmitting: (value: boolean) => void): void => {
+  onPlaidSuccess = (
+    input: PlaidData,
+    onPlaidSubmitting: (value: boolean) => void
+  ): void => {
     plaidSuccess(input, onPlaidSubmitting);
   };
 }
