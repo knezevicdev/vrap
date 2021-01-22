@@ -240,7 +240,11 @@ class CarsViewModel {
   getPage(): number {
     const filtersData = this.store.filtersData;
     const filtersDataPage = filtersData ? filtersData[Filters.PAGE] : undefined;
-    const page = filtersDataPage ? filtersDataPage : 1;
+    return filtersDataPage ? filtersDataPage : 1;
+  }
+
+  getStartingCountByPage(): number {
+    const page = this.getPage();
     const arraysStartAtZeroFix = 1;
     return (page - 1) * this.store.inventoryCardsPerPage + arraysStartAtZeroFix;
   }
