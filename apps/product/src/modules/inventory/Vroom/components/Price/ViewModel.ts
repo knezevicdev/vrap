@@ -12,9 +12,9 @@ class PriceViewModel {
   readonly list: List = {
     header: 'Price displayed <bold>does not</bold> include:',
     bullets: [
-      'Pre-delivery service charges of $285.50 (MA residents only - $300.50)',
-      'Delivery charge of $599',
-      'FL residents only - Electronic registration filing charge of $15.00',
+      'Pre-delivery service charges of $285.50 (MA residents $385.50)',
+      'Delivery fee of $599',
+      'FL, NJ and NY residents only - Electronic registration filing charge of $15.00',
       'Applicable taxes, title, tag and registration charges which will be calculated at the time of purchase.',
     ],
     extra:
