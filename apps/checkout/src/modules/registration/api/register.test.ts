@@ -1,11 +1,6 @@
-import Axios from 'axios';
+import Axios, { AxiosResponse } from 'axios';
 
-import {
-  ErrorResponse,
-  register,
-  SignupRequest,
-  SuccessResponse,
-} from './register';
+import { register, User, SuccessResponse } from './register';
 jest.mock('axios');
 const mockedAxios = Axios as jest.Mocked<typeof Axios>;
 
@@ -20,7 +15,7 @@ jest.mock('next/config', () => {
 });
 
 describe('Register User Test', () => {
-  const mockSignupRequest: SignupRequest = {
+  const mockedUser: User = {
     username: 'mock-email',
     phone: 'mock-number',
     password: 'mock-password',
@@ -30,53 +25,45 @@ describe('Register User Test', () => {
   };
 
   describe('successful registration', () => {
-    const expectedResponse: SuccessResponse = {
-      data: {
-        accountId: 123456,
-        accessToken: 'mock-access-token',
-        refreshToken: 'mock-refresh-token',
-      },
+    const successResponse: SuccessResponse = {
+      accountId: 123456,
+      accessToken: 'mock-access-token',
+      refreshToken: 'mock-refresh-token',
+    };
+
+    const axiosResponse: AxiosResponse = {
+      data: successResponse,
+      status: 200,
+      statusText: 'OK',
+      config: {},
+      headers: {},
     };
 
     beforeEach(() => {
-      mockedAxios.post.mockResolvedValue(expectedResponse);
+      mockedAxios.post.mockResolvedValue(axiosResponse);
     });
 
     it('should register user', async () => {
-      const actualResponse = await register(mockSignupRequest);
-      expect(actualResponse).toBe(expectedResponse.data);
+      const actualResponse = await register(mockedUser);
+      expect(actualResponse).toBe(successResponse);
       expect(mockedAxios.post).toHaveBeenCalledWith(
         'some-url/api/auth/signup',
-        mockSignupRequest
+        mockedUser
       );
     });
   });
 
   describe('error during registration', () => {
-    const expectedResponse: ErrorResponse = {
-      error: {
-        type: 'mock-type',
-        title: 'mock-title',
-        details: [
-          {
-            message: 'mock-message',
-            meta: {},
-          },
-        ],
-        correlationId: 'mock-correlation-id',
-      },
-    };
-
     beforeEach(() => {
-      mockedAxios.post.mockRejectedValue(expectedResponse);
+      mockedAxios.post.mockRejectedValue(new Error('some error'));
     });
 
     it('should give an error', async () => {
-      const actualResponse = await register(mockSignupRequest);
-      expect(actualResponse).toBe(expectedResponse.error);
+      const actualResponse = await register(mockedUser);
+      expect(actualResponse).toBe(undefined);
       expect(mockedAxios.post).toHaveBeenCalledWith(
         'some-url/api/auth/signup',
-        mockSignupRequest
+        mockedUser
       );
     });
   });
