@@ -1,6 +1,5 @@
-import Box from '@material-ui/core/Box';
-import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
+import { Box, Grid, Typography } from '@material-ui/core';
+import { observer } from 'mobx-react';
 import React, { useEffect } from 'react';
 
 import Filters from './Filters';
@@ -13,7 +12,7 @@ interface Props {
 
 const UsersView: React.FC<Props> = ({ viewModel }) => {
   useEffect(() => {
-    viewModel.getUserStatuses();
+    viewModel.init();
   }, [viewModel]);
 
   return (
@@ -33,4 +32,4 @@ const UsersView: React.FC<Props> = ({ viewModel }) => {
   );
 };
 
-export default UsersView;
+export default observer(UsersView);

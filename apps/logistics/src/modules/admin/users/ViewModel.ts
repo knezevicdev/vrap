@@ -7,8 +7,10 @@ class UsersViewModel {
     this.model = usersModel;
   }
 
-  getUserStatuses(): void {
+  init(): void {
     this.model.getUserStatuses();
+    this.model.getCarriers();
+    this.model.getUsers();
   }
 }
 

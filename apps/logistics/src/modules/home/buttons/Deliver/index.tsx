@@ -3,7 +3,7 @@ import React from 'react';
 import ShipmentsModel from '../../Model';
 import Model from './Model';
 import View from './View';
-import ViewModel from './ViewModel';
+import viewModel from './ViewModel';
 
 interface Props {
   shipmentId: number;

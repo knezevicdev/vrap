@@ -60,31 +60,31 @@ export const getUsers = async (
   return axiosInstance.post(GEARBOX_URL, data);
 };
 
-export const getCarriers = async (
-  filter: string
-): Promise<AxiosResponse<{ carriers: Carrier[] }>> => {
+export const getCarriers = async (variables: {
+  filter: string;
+  portalVisible: boolean;
+}): Promise<AxiosResponse<{ carriers: Carrier[] }>> => {
   const data = {
-    query: `query carriersQuery($filter: String!) {
-      carriers(filter: $filter) {
-        __typename
-        ... on CarriersArray {
-          carriers {
-            carrier_id
-            carrier_code
-            carrier
+    query: `
+      query carriersQuery($filter: String!, $portalVisible: Boolean) {
+        carriers(filter: $filter, portalVisible: $portalVisible) {
+          __typename
+          ... on CarriersArray {
+            carriers {
+              carrier_id
+              carrier_code
+              carrier
+            }
+          }
+          ... on APIError {
+            errorType
+            errorTitle
+            errorDetail
           }
         }
-        ... on APIError {
-          errorType
-          errorTitle
-          errorDetail
-        }
-
       }
-    }`,
-    variables: {
-      filter: filter || '',
-    },
+    `,
+    variables,
     queryKey: 'carriers',
   };
 
