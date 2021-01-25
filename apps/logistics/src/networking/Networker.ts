@@ -1,4 +1,5 @@
-import axios, { AxiosResponse } from 'axios';
+import axios, { AxiosError, AxiosResponse } from 'axios';
+import Cookie from 'js-cookie';
 
 import { IdToken } from './models/Auth';
 import { Shipment, ShipmentStatus } from './models/Shipments';
@@ -14,6 +15,24 @@ export enum Status {
 }
 
 const axiosInstance = axios.create();
+
+axiosInstance.interceptors.response.use(
+  (response) => {
+    return response;
+  },
+  (err: AxiosError) => {
+    const authDataCookie: IdToken | undefined = Cookie.getJSON('authData');
+    if (err.response?.status === 401 || authDataCookie === undefined) {
+      if (err.response?.headers.location) {
+        const redirectUrl = `${err.response.headers.location}?previous=${window.location.pathname}`;
+        window.location.assign(redirectUrl);
+      } else {
+        window.history.back();
+      }
+    }
+    return Promise.reject(err);
+  }
+);
 
 export const getUsers = async (
   carrierCode: string,
@@ -287,7 +306,6 @@ export interface PatchShipment {
 export const patchShipment = async (
   variables: PatchShipment
 ): Promise<void> => {
-  console.log(variables);
   const data = {
     query: `
       mutation updateShipment(
@@ -355,7 +373,6 @@ export interface PatchShipmentStop {
 export const patchShipmentStop = async (
   variables: PatchShipmentStop
 ): Promise<void> => {
-  console.log(variables);
   const data = {
     query: `mutation updateShipmentStop($shipmentId: Int!, $shipmentStopId: Int!, $idType: String!, $stopSequence: Int, $driverOnTheWay: Time, $milesTraveled: Int, $latitude: Float, $longitude: Float, $reestimatedReason: String, $estimatedArrival: Time, $estimatedDeparture: Time, $arrival: Time, $departure: Time) {
       shipmentStopUpdate(shipmentId: $shipmentId, shipmentStopId: $shipmentStopId, idType: $idType, stopSequence: $stopSequence, driverOnTheWay: $driverOnTheWay, milesTraveled: $milesTraveled, latitude: $latitude, longitude: $longitude, reestimatedReason: $reestimatedReason, estimatedArrival: $estimatedArrival, estimatedDeparture: $estimatedDeparture, arrival: $arrival, departure: $departure) {

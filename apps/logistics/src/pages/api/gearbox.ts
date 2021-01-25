@@ -1,5 +1,10 @@
 import axios from 'axios';
+import jwtDecode from 'jwt-decode';
 import { NextApiRequest, NextApiResponse } from 'next';
+
+import { expireCookies } from './signout';
+
+import { AccessToken } from 'src/networking/models/Auth';
 
 const API_ERROR = 'APIError';
 
@@ -41,9 +46,22 @@ export default async function handler(
     if (err.type === API_ERROR) {
       res.status(500).json(err.data);
     } else if (err.type === 'gearbox') {
-      res
-        .status(parseInt(err.errors.extensions?.code, 10) ?? 500)
-        .json(err.errors);
+      const status = parseInt(err.errors.extensions?.code, 10) ?? 500;
+
+      let expired = false;
+      if (req.cookies.accessToken) {
+        const accessToken: AccessToken = jwtDecode(req.cookies.accessToken);
+        expired = new Date() > new Date(accessToken.exp * 1000);
+      } else {
+        expired = true;
+      }
+
+      if (status === 401 && expired) {
+        res = expireCookies(res);
+        res.redirect(status, '/signin');
+      } else {
+        res.status(status).json(err.errors);
+      }
     } else {
       res.status(err?.response?.status ?? 500);
       if (err.response?.statusText && err.response?.data) {

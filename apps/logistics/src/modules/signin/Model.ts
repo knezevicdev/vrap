@@ -1,6 +1,6 @@
-import Cookie from 'js-cookie';
 import { makeAutoObservable, runInAction } from 'mobx';
 
+import { setAuthDataCookie } from 'src/components/Auth';
 import { postSignIn, Status } from 'src/networking/Networker';
 
 class SignInModel {
@@ -19,14 +19,7 @@ class SignInModel {
   authenticate = async (email: string, password: string): Promise<void> => {
     try {
       const { data } = await postSignIn(email, password);
-      const config: Cookie.CookieAttributes = {
-        expires: new Date(data.exp * 1000),
-        sameSite: 'strict',
-      };
-      if (process.env.NODE_ENV !== 'development') {
-        config.secure = true;
-      }
-      Cookie.set('authData', data, config);
+      setAuthDataCookie(data);
       runInAction(() => {
         this.status = Status.SUCCESS;
       });

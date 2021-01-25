@@ -20,7 +20,6 @@ const ShipmentChanger: React.FC = () => {
     event: React.FormEvent<HTMLFormElement>
   ): Promise<void> => {
     event.preventDefault();
-    console.log(shipmentId, shipmentStatus);
     patchShipment({
       id: parseInt(shipmentId, 10),
       idType: 'shipment',
