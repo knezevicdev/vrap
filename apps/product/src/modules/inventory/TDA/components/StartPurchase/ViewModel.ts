@@ -21,19 +21,22 @@ class StartPurchaseViewModel {
   private analyticsHandler: AnalyticsHandler;
   private car: Car;
   private query: ParsedUrlQuery;
+  private vroomUrl: string;
   readonly purchaseText: string = 'Start Purchase';
   readonly findNewMatch: string = 'Find A New Match';
 
   constructor(
     query: ParsedUrlQuery,
     inventoryStore: InventoryStore,
-    startPurchaseStore: StartPurchaseStore
+    startPurchaseStore: StartPurchaseStore,
+    vroomUrl: string
   ) {
     this.store = inventoryStore;
     this.startPurchaseStore = startPurchaseStore;
     this.analyticsHandler = new AnalyticsHandler();
     this.car = inventoryStore.vehicle._source;
     this.query = query;
+    this.vroomUrl = vroomUrl;
   }
 
   getButtonText(): string {
@@ -154,21 +157,21 @@ class StartPurchaseViewModel {
       window.location.href = `${modelHref}${finalQueryString}`;
     } else {
       this.analyticsHandler.trackProductAdded(product);
-      let url;
+      let route;
       if (this.startPurchaseStore.dealStatus === DealStatus.IN_PROGRESS) {
         if (this.startPurchaseStore.vin === vin) {
-          url = `${this.getResumeStepHref(
+          route = `${this.getResumeStepHref(
             this.startPurchaseStore.step,
             this.startPurchaseStore.vin
           )}${finalQueryString}`;
         } else {
-          url = `/e2e/${vin}/${'dealSelectionScreen'}${finalQueryString}`;
+          route = `/e2e/${vin}/${'dealSelectionScreen'}${finalQueryString}`;
         }
       } else {
-        url = `/e2e/${vin}/${'checkoutTradeIn'}${finalQueryString}`;
+        route = `/e2e/${vin}/${'checkoutTradeIn'}${finalQueryString}`;
       }
 
-      window.location.href = url;
+      window.location.href = `${this.vroomUrl}${route}`;
     }
   }
 }
