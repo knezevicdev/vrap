@@ -1,6 +1,6 @@
 import Axios, { AxiosResponse } from 'axios';
 
-import { register, User, SuccessResponse } from './register';
+import { register, SuccessResponse, User } from './register';
 jest.mock('axios');
 const mockedAxios = Axios as jest.Mocked<typeof Axios>;
 
@@ -23,6 +23,7 @@ describe('Register User Test', () => {
     lastName: 'mock-lastname',
     optIn: true,
   };
+  const expectedUrl = 'some-url/api/auth/signup';
 
   describe('successful registration', () => {
     const successResponse: SuccessResponse = {
@@ -46,10 +47,7 @@ describe('Register User Test', () => {
     it('should register user', async () => {
       const actualResponse = await register(mockedUser);
       expect(actualResponse).toBe(successResponse);
-      expect(mockedAxios.post).toHaveBeenCalledWith(
-        'some-url/api/auth/signup',
-        mockedUser
-      );
+      expect(mockedAxios.post).toHaveBeenCalledWith(expectedUrl, mockedUser);
     });
   });
 
@@ -61,10 +59,7 @@ describe('Register User Test', () => {
     it('should give an error', async () => {
       const actualResponse = await register(mockedUser);
       expect(actualResponse).toBe(undefined);
-      expect(mockedAxios.post).toHaveBeenCalledWith(
-        'some-url/api/auth/signup',
-        mockedUser
-      );
+      expect(mockedAxios.post).toHaveBeenCalledWith(expectedUrl, mockedUser);
     });
   });
 });
