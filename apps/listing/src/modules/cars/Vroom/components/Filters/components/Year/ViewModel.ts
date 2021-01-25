@@ -8,10 +8,10 @@ import {
 import { CarsStore } from 'src/modules/cars/store';
 
 class YearViewModel {
-  private readonly carsStore: CarsStore;
+  readonly carsStore: CarsStore;
   readonly errorLabel: string;
   readonly resetButtonLabel: string = 'Reset';
-  readonly range: MaxAndMin = { min: 2000, max: 2020 };
+  readonly range: MaxAndMin = { min: 2000, max: new Date().getFullYear() };
   readonly step = 1;
 
   constructor(carsStore: CarsStore) {
@@ -41,8 +41,8 @@ class YearViewModel {
     if (!filtersData) {
       return true;
     }
-    const filtersDataPrice = filtersData[Filters.YEAR];
-    if (!filtersDataPrice) {
+    const filtersDataYear = filtersData[Filters.YEAR];
+    if (!filtersDataYear) {
       return true;
     }
     return false;
