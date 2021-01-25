@@ -10,12 +10,11 @@ export interface SignupRequest {
   phone: string;
   password: string;
   firstName: string;
-  middleName?: string;
   lastName: string;
   optIn: boolean;
-  optInSms: boolean;
-  userAgent: string;
-  ipAddress: string;
+  optInSms?: boolean;
+  userAgent?: string;
+  ipAddress?: string;
 }
 
 interface Data {

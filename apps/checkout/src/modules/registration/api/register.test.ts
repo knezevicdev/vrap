@@ -25,12 +25,8 @@ describe('Register User Test', () => {
     phone: 'mock-number',
     password: 'mock-password',
     firstName: 'mock-firstname',
-    middleName: '',
     lastName: 'mock-lastname',
     optIn: true,
-    optInSms: true,
-    userAgent: 'mock-user-agent',
-    ipAddress: 'mock-ip',
   };
 
   describe('successful registration', () => {
