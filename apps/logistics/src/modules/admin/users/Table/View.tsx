@@ -1,16 +1,17 @@
-import FormControl from '@material-ui/core/FormControl';
-import MenuItem from '@material-ui/core/MenuItem';
-import Paper from '@material-ui/core/Paper';
-import Select from '@material-ui/core/Select';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
+import {
+  FormControl,
+  MenuItem,
+  Paper,
+  Select,
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableRow,
+} from '@material-ui/core';
 import { observer } from 'mobx-react';
-import React, { useEffect } from 'react';
+import React from 'react';
 
-import Autocomplete from './Carrier';
 import ViewModel, { Accessor } from './ViewModel';
 
 interface Props {
@@ -18,12 +19,12 @@ interface Props {
 }
 
 const UsersTableView: React.FC<Props> = ({ viewModel }) => {
-  useEffect(() => {
-    viewModel.getUsers();
-  }, [viewModel]);
-
-  const handleChange = (id: number, value: string): void => {
-    viewModel.patchUser(id, value);
+  const handleChange = (
+    id: number,
+    status?: string,
+    carrierCode?: string
+  ): void => {
+    viewModel.patchUser(id, status, carrierCode);
   };
 
   const { headers, rows } = viewModel.tableLayout;
@@ -46,29 +47,42 @@ const UsersTableView: React.FC<Props> = ({ viewModel }) => {
               <TableCell align="left">{row.data[Accessor.name]}</TableCell>
               <TableCell align="left">{row.data[Accessor.email]}</TableCell>
               <TableCell align="left">
-                <Autocomplete
-                  userId={row.id}
-                  carrierName={row.data[Accessor.carrier]}
-                />
+                <FormControl variant="outlined" fullWidth>
+                  <Select
+                    fullWidth
+                    value={row.data[Accessor.carrier].carrier_code}
+                    onChange={(event): void =>
+                      handleChange(
+                        row.id,
+                        undefined,
+                        event.target.value as string
+                      )
+                    }
+                  >
+                    {viewModel.carrierOptions.map((i) => (
+                      <MenuItem key={i.key} value={i.key}>
+                        {i.label}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
               </TableCell>
               <TableCell align="left">
-                {viewModel.statusOptions.length > 0 && (
-                  <FormControl variant="outlined" fullWidth>
-                    <Select
-                      fullWidth
-                      value={row.data[Accessor.status]}
-                      onChange={(event): void =>
-                        handleChange(row.id, event.target.value as string)
-                      }
-                    >
-                      {viewModel.statusOptions.map((i) => (
-                        <MenuItem key={i.key} value={i.key}>
-                          {i.label}
-                        </MenuItem>
-                      ))}
-                    </Select>
-                  </FormControl>
-                )}
+                <FormControl variant="outlined" fullWidth>
+                  <Select
+                    fullWidth
+                    value={row.data[Accessor.status]}
+                    onChange={(event): void =>
+                      handleChange(row.id, event.target.value as string)
+                    }
+                  >
+                    {viewModel.statusOptions.map((i) => (
+                      <MenuItem key={i.key} value={i.key}>
+                        {i.label}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
               </TableCell>
             </TableRow>
           ))}
