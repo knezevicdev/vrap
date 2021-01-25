@@ -1,11 +1,12 @@
-import { Radio, RadioGroup } from '@material-ui/core';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import withStyles from '@material-ui/core/styles/withStyles';
+import { FormControlLabel, ListItem, RadioGroup } from '@material-ui/core';
+import { styled, withStyles } from '@material-ui/core/styles';
 import { Transmission as FiltersDataTransmission } from '@vroom-web/catalog-url-integration';
 import { observer } from 'mobx-react';
 import React from 'react';
 
 import TransmissionsViewModel from './ViewModel';
+
+import Radio from 'src/ui/Radio';
 
 interface Props {
   viewModel: TransmissionsViewModel;
@@ -16,6 +17,7 @@ const Label = withStyles(() => ({
     fontSize: '16px',
   },
   root: {
+    width: '100%',
     justifyContent: 'space-between',
     marginLeft: '0px',
     '& span.Mui-checked + span': {
@@ -24,11 +26,13 @@ const Label = withStyles(() => ({
   },
 }))(FormControlLabel);
 
-const RadioCustom = withStyles((theme) => ({
-  root: {
-    color: theme.palette.grey['A100'],
-  },
-}))(Radio);
+const StyledListItem = styled(ListItem)(({ theme }) => ({
+  padding: theme.spacing(1, 2),
+  height: theme.spacing(4),
+  display: 'flex',
+  flexDirection: 'row',
+  justifyContent: 'space-between',
+}));
 
 const RadioGroupCustom = withStyles(() => ({
   root: {
@@ -47,22 +51,25 @@ const Transmissions: React.FC<Props> = ({ viewModel }) => {
       value={viewModel.getActiveTransmission()}
       onChange={onChange}
     >
-      <Label
-        labelPlacement="start"
-        control={<RadioCustom color="primary" />}
-        label={viewModel.allOption.display}
-        value={viewModel.allOption.value}
-      />
+      <StyledListItem key={viewModel.allOption.display} button>
+        <Label
+          labelPlacement="start"
+          control={<Radio color="primary" />}
+          label={viewModel.allOption.display}
+          value={viewModel.allOption.value}
+        />
+      </StyledListItem>
       {viewModel.getTransmissions().map((transmission) => {
         const { display, filtersDataValue } = transmission;
         return (
-          <Label
-            labelPlacement="start"
-            key={display}
-            value={filtersDataValue}
-            control={<RadioCustom color="primary" />}
-            label={display}
-          />
+          <StyledListItem key={display} button>
+            <Label
+              labelPlacement="start"
+              value={filtersDataValue}
+              control={<Radio color="primary" />}
+              label={display}
+            />
+          </StyledListItem>
         );
       })}
     </RadioGroupCustom>

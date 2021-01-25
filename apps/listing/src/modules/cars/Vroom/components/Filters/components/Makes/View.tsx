@@ -7,12 +7,12 @@ import React from 'react';
 import Models from './components/Models';
 import MakesViewModel from './ViewModel';
 
-const StyledListItem = styled(ListItem)(({ theme }) => ({
-  padding: theme.spacing(1, 0),
+const StyledList = styled(List)(() => ({
+  padding: 0,
 }));
 
-const StyledList = styled(List)(({ theme }) => ({
-  padding: theme.spacing(0, 0, 2, 0),
+const StyledListItem = styled(ListItem)(({ theme }) => ({
+  padding: theme.spacing(1, 2),
 }));
 
 const Value = styled(Typography)(() => ({
