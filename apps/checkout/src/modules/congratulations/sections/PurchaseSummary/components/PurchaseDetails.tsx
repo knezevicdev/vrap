@@ -172,7 +172,7 @@ const PurchaseDetails: React.FC<PurchaseDetailsProps> = ({ data }) => {
             </Row>
             <Row>
               <Body.Regular>Your est. trade-in credit</Body.Regular>
-              <Body.Regular bold>{tradeIn.offerPrice}</Body.Regular>
+              <Body.Regular bold>({tradeIn.offerPrice})</Body.Regular>
             </Row>
             {tradeIn.loanBalance && (
               <Row>
