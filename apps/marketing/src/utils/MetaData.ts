@@ -2,7 +2,7 @@ import { PageData } from './utils';
 
 export const getMetaData = (pageData: PageData): object => {
   const vroomUrl = 'https://www.vroom.com/';
-  const santanderUrl = 'https://santanderconsumerusa.com/';
+  const santanderUrl = 'https://www.santanderconsumerusa.com/';
   const tdaUrl = 'https://www.texasdirectauto.com/';
 
   switch (pageData) {
