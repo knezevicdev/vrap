@@ -11,7 +11,6 @@ import {
 import Reviews from 'src/modules/reviews';
 import { getHighlights, getSummary } from 'src/modules/reviews/api/reviewsApi';
 import Page from 'src/Page';
-
 import { PageData, returnBrandConfig } from 'src/utils/utils';
 
 interface Props {
@@ -23,11 +22,11 @@ interface Props {
 }
 
 const ReviewsPage: NextPage<Props> = ({
-  brand, 
-  canonical, 
-  description, 
+  brand,
+  canonical,
+  description,
   reviews,
-  title, 
+  title,
 }) => {
   const head = (
     <>
@@ -59,13 +58,15 @@ export const getServerSideProps: GetServerSideProps<Props> = async (
 
   const reviews = { summary, highlights };
 
-  return { props: { 
-    brand, 
-    description: brandConfig.description,
-    title: brandConfig.title, 
-    canonical: brandConfig.canonical, 
-    reviews 
-  } };
+  return {
+    props: {
+      brand,
+      description: brandConfig.description,
+      title: brandConfig.title,
+      canonical: brandConfig.canonical,
+      reviews,
+    },
+  };
 };
 
 export default ReviewsPage;

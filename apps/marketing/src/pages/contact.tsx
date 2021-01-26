@@ -15,11 +15,11 @@ interface Props {
   canonical: string;
 }
 
-const ContactPage: NextPage<Props> = ({ 
-  brand, 
-  canonical, 
-  description, 
-  title, 
+const ContactPage: NextPage<Props> = ({
+  brand,
+  canonical,
+  description,
+  title,
 }) => {
   const head = (
     <>
@@ -47,11 +47,14 @@ export const getServerSideProps: GetServerSideProps<Props> = async (
   const brand = determineWhitelabel(ctx);
   const brandConfig = returnBrandConfig(brand, PageData.CONTACT);
 
-  return { props: { 
-    brand, description: brandConfig.description, 
-    title: brandConfig.title, 
-    canonical: brandConfig.canonical, 
-  } };
+  return {
+    props: {
+      brand,
+      description: brandConfig.description,
+      title: brandConfig.title,
+      canonical: brandConfig.canonical,
+    },
+  };
 };
 
 export default ContactPage;

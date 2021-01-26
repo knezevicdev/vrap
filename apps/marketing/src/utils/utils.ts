@@ -1,4 +1,5 @@
 import { Brand } from '@vroom-web/whitelabel';
+
 import { getMetaData } from './MetaData';
 
 export enum PageData {
@@ -15,8 +16,11 @@ export interface BrandConfig {
   canonical: string;
   description: string;
 }
-export const returnBrandConfig = (brand: Brand, pageData: PageData): BrandConfig => {
-  let {vroom, santander, tda} = getMetaData(pageData);
+export const returnBrandConfig = (
+  brand: Brand,
+  pageData: PageData
+): BrandConfig => {
+  const { vroom, santander, tda } = getMetaData(pageData);
   let config: BrandConfig = {
     brandParam: 'vroom',
     title: vroom.title,

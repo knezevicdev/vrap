@@ -5,7 +5,6 @@ import React from 'react';
 
 import Finance from 'src/modules/finance';
 import Page from 'src/Page';
-
 import { PageData, returnBrandConfig } from 'src/utils/utils';
 
 interface Props {
@@ -15,11 +14,11 @@ interface Props {
   title: string;
 }
 
-const FinancePage: NextPage<Props> = ({ 
-  brand, 
-  canonical, 
-  description, 
-  title, 
+const FinancePage: NextPage<Props> = ({
+  brand,
+  canonical,
+  description,
+  title,
 }) => {
   const head = (
     <>
@@ -45,12 +44,14 @@ export const getServerSideProps: GetServerSideProps<Props> = async (
   const brand = determineWhitelabel(ctx);
   const brandConfig = returnBrandConfig(brand, PageData.FINANCE);
 
-  return { props: { 
-    brand, 
-    description: brandConfig.description,
-    title: brandConfig.title, 
-    canonical: brandConfig.canonical, 
-  } };
+  return {
+    props: {
+      brand,
+      description: brandConfig.description,
+      title: brandConfig.title,
+      canonical: brandConfig.canonical,
+    },
+  };
 };
 
 export default FinancePage;
