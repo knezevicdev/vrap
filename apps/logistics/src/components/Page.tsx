@@ -10,9 +10,16 @@ interface Props {
   head?: React.ReactNode;
   name: string;
   unprotected?: boolean;
+  adminRequired?: boolean;
 }
 
-const Page: React.FC<Props> = ({ children, head, unprotected, name }) => {
+const Page: React.FC<Props> = ({
+  children,
+  head,
+  unprotected,
+  adminRequired,
+  name,
+}) => {
   if (unprotected) {
     return (
       <Box height="100vh" flexDirection="column">
@@ -23,7 +30,7 @@ const Page: React.FC<Props> = ({ children, head, unprotected, name }) => {
     );
   }
   return (
-    <Auth>
+    <Auth adminRequired={adminRequired}>
       <Box height="100vh" flexDirection="column">
         {head && <Head>{head}</Head>}
         <AuthContext.Consumer>
