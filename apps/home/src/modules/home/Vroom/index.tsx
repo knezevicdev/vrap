@@ -27,7 +27,7 @@ const Vroom: React.FC = () => {
 
   useEffect(() => {
     const { experiments } = homeStore;
-    const expId = 'delta-video-hero';
+    const expId = 'delta-video-hero-v2';
     const variantCalculatedExp = experimentSDK.determineVariantClientSide(
       experiments,
       expId
