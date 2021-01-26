@@ -1,4 +1,5 @@
-import { styled } from '@material-ui/core/styles';
+import { styled, useTheme } from '@material-ui/core/styles';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { Button, Typography } from '@vroom-web/ui';
 import { observer } from 'mobx-react';
 import React from 'react';
@@ -20,6 +21,10 @@ const ResumeSearch = styled(Button)(({ theme }) => ({
   marginTop: theme.spacing(2),
 }));
 
+const Browse = styled(Button)(({ theme }) => ({
+  marginTop: theme.spacing(2),
+}));
+
 const BrowseText = styled(Typography)(({ theme }) => ({
   marginTop: theme.spacing(1),
   color: theme.palette.text.primary,
@@ -33,6 +38,9 @@ interface Props {
 }
 
 const BuyView: React.FC<Props> = ({ viewModel }) => {
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.only('xs'));
+
   React.useEffect(() => {
     viewModel.handleMount();
   }, [viewModel]);
@@ -49,12 +57,27 @@ const BuyView: React.FC<Props> = ({ viewModel }) => {
           {viewModel.resumeSearchButtonLabel}
         </ResumeSearch>
       )}
-      <Autocomplete
-        buttonVariant={viewModel.showResumeSearch ? 'outlined' : 'contained'}
-      />
-      <ExternalLink underline="none" href={viewModel.link.href}>
-        <BrowseText>{viewModel.link.label}</BrowseText>
-      </ExternalLink>
+      {isMobile ? (
+        <Browse
+          fullWidth
+          onClick={viewModel.handleButtonClick}
+          variant={viewModel.showResumeSearch ? 'outlined' : 'contained'}
+          color="secondary"
+        >
+          {viewModel.mobileButtonLabel}
+        </Browse>
+      ) : (
+        <>
+          <Autocomplete
+            buttonVariant={
+              viewModel.showResumeSearch ? 'outlined' : 'contained'
+            }
+          />
+          <ExternalLink underline="none" href={viewModel.link.href}>
+            <BrowseText>{viewModel.link.label}</BrowseText>
+          </ExternalLink>
+        </>
+      )}
     </BuyContainer>
   );
 };
