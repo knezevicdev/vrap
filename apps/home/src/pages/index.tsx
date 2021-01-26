@@ -14,8 +14,10 @@ import Home from 'src/modules/home';
 import { HomeStore, HomeStoreContext } from 'src/modules/home/store';
 import Page from 'src/Page';
 import { returnBrandConfig } from 'src/utils/utils';
+
 interface Props {
   brand: Brand;
+  canonical: string;
   description: string;
   query: {};
   title: string;
@@ -24,10 +26,11 @@ interface Props {
 
 const HomePage: NextPage<Props> = ({
   brand,
+  canonical,
   description,
+  experiments,
   query,
   title,
-  experiments,
 }) => {
   const store = new HomeStore({
     query,
@@ -36,7 +39,7 @@ const HomePage: NextPage<Props> = ({
   const head = (
     <>
       <title>{title}</title>
-      <link rel="canonical" href="/" />
+      <link rel="canonical" href={canonical} />
       <meta name="description" content={description}></meta>
     </>
   );
@@ -69,6 +72,7 @@ export const getServerSideProps: GetServerSideProps<Props> = async (
       query: { ...ctx.query },
       title: brandConfig.title,
       experiments,
+      canonical: brandConfig.canonical,
     },
   };
 };
