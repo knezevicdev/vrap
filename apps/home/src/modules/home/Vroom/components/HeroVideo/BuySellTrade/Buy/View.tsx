@@ -13,14 +13,6 @@ interface Props {
   viewModel: ViewModel;
 }
 
-const BuyContainer = styled('div')(({ theme }) => ({
-  paddingTop: theme.spacing(1),
-}));
-
-const ResumeSearch = styled(Button)(({ theme }) => ({
-  marginTop: theme.spacing(2),
-}));
-
 const Browse = styled(Button)(({ theme }) => ({
   marginTop: theme.spacing(2),
 }));
@@ -46,16 +38,16 @@ const BuyView: React.FC<Props> = ({ viewModel }) => {
   }, [viewModel]);
 
   return (
-    <BuyContainer>
+    <div>
       {viewModel.showResumeSearch && (
-        <ResumeSearch
+        <Button
           fullWidth
           onClick={viewModel.handleResumeSearchButtonClick}
           variant="contained"
           color="secondary"
         >
           {viewModel.resumeSearchButtonLabel}
-        </ResumeSearch>
+        </Button>
       )}
       {isMobile ? (
         <Browse
@@ -78,7 +70,7 @@ const BuyView: React.FC<Props> = ({ viewModel }) => {
           </ExternalLink>
         </>
       )}
-    </BuyContainer>
+    </div>
   );
 };
 
