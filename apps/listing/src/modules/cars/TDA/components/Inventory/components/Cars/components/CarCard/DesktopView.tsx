@@ -19,7 +19,6 @@ const Media = styled('div')(({ theme }) => ({
   position: 'relative',
   width: '100%',
   height: '186px',
-  borderBottom: `2px solid ${theme.palette.grey[200]}`,
   [theme.breakpoints.up('xl')]: {
     height: '265px',
   },

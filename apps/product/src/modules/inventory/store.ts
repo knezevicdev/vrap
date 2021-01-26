@@ -1,3 +1,4 @@
+import { Experiment } from '@vroom-web/experiment-sdk';
 import {
   Hit,
   InventoryResponse,
@@ -201,6 +202,9 @@ export class InventoryStore {
   @observable vehicle: Hit = {} as Hit;
   @observable isAvailable = false;
   @observable selectedGallery = GallerySelections.GENERAL;
+  @observable shippingOriginsStatus: Status = Status.INITIAL;
+
+  @observable geoShippingExperiment?: Experiment;
   @observable actionFavorite = false;
 
   constructor(initialState?: InventoryStoreState) {
@@ -240,6 +244,11 @@ export class InventoryStore {
   @action
   changeSelectedGallery = (gallery: GallerySelections): void => {
     this.selectedGallery = gallery;
+  };
+
+  @action
+  setGeoShippingExperiment = (geoShippingExperiment?: Experiment): void => {
+    this.geoShippingExperiment = geoShippingExperiment;
   };
 }
 

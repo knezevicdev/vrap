@@ -483,6 +483,7 @@ export enum SortAPIBy {
   MILES = 'miles',
   YEAR = 'year',
   GEO = 'geo',
+  RANDOM = 'random',
 }
 
 export enum SortAPIDirection {

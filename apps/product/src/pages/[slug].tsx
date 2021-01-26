@@ -2,7 +2,7 @@ import { ThemeProvider } from '@vroom-web/ui';
 import { Brand, determineWhitelabel } from '@vroom-web/whitelabel';
 import { GetServerSideProps, GetServerSidePropsContext, NextPage } from 'next';
 import getConfig from 'next/config';
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import { analyticsHandler } from 'src/integrations/AnalyticsHandler';
 import experimentSDK from 'src/integrations/experimentSDK';
@@ -25,13 +25,14 @@ export interface Props {
   title: string;
   brand: Brand;
   vin: string;
+  hasTddQuery: boolean;
 }
 
 const InventoryPage: NextPage<Props> = (props: Props) => {
-  const { canonicalHref, initialState, title, brand, vin } = props;
+  const { canonicalHref, initialState, title, brand, vin, hasTddQuery } = props;
   const store = new InventoryStore(initialState);
 
-  React.useEffect(() => {
+  useEffect(() => {
     experimentSDK
       .getAndLogExperimentClientSide('snd-pdp-vin-cluster-similar-vehicle')
       .then((experiment) => {
@@ -47,6 +48,23 @@ const InventoryPage: NextPage<Props> = (props: Props) => {
         store.getSimilar(vin, true);
       });
   }, [initialState.similarStatus, store, vin]);
+
+  useEffect(() => {
+    if (hasTddQuery) {
+      console.log(hasTddQuery)
+      experimentSDK
+        .getAndLogExperimentClientSide('snd-catalog-geo-shipping-merchandising')
+        .then((experiment) => {
+          store.setGeoShippingExperiment(experiment);
+        });
+    }
+  }, [store, hasTddQuery]);
+
+  useEffect(() => {
+    if (store.geoShippingExperiment) {
+      analyticsHandler.registerExperiment(store.geoShippingExperiment);
+    }
+  }, [store.geoShippingExperiment]);
 
   const head = (
     <>
@@ -74,12 +92,12 @@ export const getServerSideProps: GetServerSideProps<Props> = async (
   const slug = query.slug as string;
   const slugArray = slug.split('-');
   const vin = slugArray[slugArray.length - 1];
-  const { action } = query;
+  const { action, tdd } = query;
+  const hasTddQuery = tdd === 'true';
   const actionFavorite = action === 'favorite';
 
   context.res.setHeader('Cache-Control', '');
   const brand = determineWhitelabel(context);
-
   const initialState = await getInitialInventoryStoreState(vin, actionFavorite);
   let canonicalHref: string | null = null;
   let title = '';
@@ -134,7 +152,9 @@ export const getServerSideProps: GetServerSideProps<Props> = async (
     }
   }
 
-  return { props: { canonicalHref, initialState, title, brand, vin } };
+  return {
+    props: { canonicalHref, initialState, title, brand, vin, hasTddQuery },
+  };
 };
 
 export default InventoryPage;

@@ -1,4 +1,4 @@
-import { Card, CardActionArea, Divider, Grid } from '@material-ui/core';
+import { Box, Card, CardActionArea, Divider, Grid } from '@material-ui/core';
 import { styled } from '@material-ui/core/styles';
 import { Typography } from '@vroom-web/ui';
 import React from 'react';
@@ -11,6 +11,7 @@ const StyledCard = styled(Card)(() => ({
   maxHeight: '127px',
   boxShadow: 'none',
   borderRadius: '0px',
+  marginBottom: '1px',
 }));
 
 const Action = styled(CardActionArea)(() => ({
@@ -88,14 +89,38 @@ const SalePending = styled(Typography)(({ theme }) => ({
   },
 }));
 
-const Content = styled('div')(() => ({
+const TenDayDelivery = styled(Typography)(({ theme }) => ({
+  padding: theme.spacing(0, 2),
+  fontSize: '16px',
+  fontWeight: 600,
+  lineHeight: '24px',
+  width: 'fit-content',
+  position: 'relative',
+  background: '#0F3A7B',
+  boxShadow: '0px 0px 6px rgba(0, 0, 0, 0.15)',
+  color: '#ffffff',
+  top: '-1px',
+  '&:after': {
+    position: 'absolute',
+    right: '-6px',
+    top: '0',
+    height: '24px',
+    width: '20px',
+    backgroundColor: '#0F3A7B',
+    transform: 'skewX(-23deg)',
+    color: '#0F3A7B',
+    content: 'close-quote',
+    quotes: 'none',
+  },
+}));
+
+const Content = styled(Box)(() => ({
   display: 'flex',
   flexDirection: 'column',
   width: '100%',
   height: '127px',
   padding: 0,
   borderRadius: '0px',
-  borderTop: 'solid 1px #D6D7DA',
 }));
 
 const CarDetails = styled('div')(({ theme }) => ({
@@ -176,12 +201,25 @@ const MobileView: React.FC<MobileViewProps> = ({ viewModel }) => {
                 />
               )}
             </Media>
-            <Content>
+            <Content
+              border={
+                viewModel.showTenDayDelivery() ? 'solid 3px #0F3A7B' : 'none'
+              }
+              borderTop={
+                viewModel.showTenDayDelivery()
+                  ? 'solid 3px #0F3A7B'
+                  : 'solid 1px #D6D7DA'
+              }
+              borderLeft="0px"
+            >
               {viewModel.showAvailableSoon() && (
                 <AvailableSoon>{viewModel.availableSoon}</AvailableSoon>
               )}
               {viewModel.showSalePending() && (
                 <SalePending>{viewModel.salePending}</SalePending>
+              )}
+              {viewModel.showTenDayDelivery() && (
+                <TenDayDelivery>{viewModel.tenDayDelivery}</TenDayDelivery>
               )}
               <CarDetails>
                 <Title>{title}</Title>

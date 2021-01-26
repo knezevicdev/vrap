@@ -25,6 +25,8 @@ export interface Product {
   isAvailableToSell?: boolean;
   vinClusterPrimary?: number | null;
   vinClusterSecondary?: number | null;
+  merchandisingBadge?: boolean;
+  merchandisingBadgeType?: string | null;
 }
 
 class AnalyticsHandler extends BaseAnalyticsHandler {

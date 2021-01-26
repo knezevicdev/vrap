@@ -77,6 +77,13 @@ class StartPurchaseViewModel {
     return `/e2e/${vin}/${stepUrl ? stepUrl : `my-account/transactions`}`;
   }
 
+  showTenDayDelivery(): boolean {
+    const result =
+      this.store.geoShippingExperiment?.assignedVariant === 1 &&
+      this.store.vehicle._source.location === 'Stafford';
+    return result || false;
+  }
+
   handleClick(): void {
     const {
       consignmentPartnerId: partnerId,
@@ -91,6 +98,14 @@ class StartPurchaseViewModel {
       soldStatus,
     } = this.car;
     const name = `${year} ${make} ${model}`;
+
+    const merchandising = {
+      merchandisingBadge: this.showTenDayDelivery(),
+      ...(this.showTenDayDelivery()
+        ? { merchandisingBadgeType: 'Ten Day Delivery' }
+        : {}),
+    };
+
     const product: Product = {
       imageUrl,
       inventoryType: partnerId ? 'Consignment' : 'Vroom',
@@ -108,6 +123,7 @@ class StartPurchaseViewModel {
             pendingDeal: true,
           }
         : {}),
+      ...merchandising,
     };
     // FIT-582
     // Persist attributuion query params across navigation.
@@ -158,6 +174,10 @@ class StartPurchaseViewModel {
 
       window.location.href = `${modelHref}${finalQueryString}`;
     } else {
+      const queryPrefix = finalQueryString ? '&' : '?';
+      const tenDayDelivery = this.showTenDayDelivery()
+        ? queryPrefix + 'tdd=true'
+        : '';
       this.analyticsHandler.trackProductAdded(product);
       let route;
       if (this.startPurchaseStore.dealStatus === DealStatus.IN_PROGRESS) {
@@ -165,12 +185,12 @@ class StartPurchaseViewModel {
           route = `${this.getResumeStepHref(
             this.startPurchaseStore.step,
             this.startPurchaseStore.vin
-          )}${finalQueryString}`;
+          )}${finalQueryString}${tenDayDelivery}`;
         } else {
-          route = `/e2e/${vin}/${'dealSelectionScreen'}${finalQueryString}`;
+          route = `/e2e/${vin}/${'dealSelectionScreen'}${finalQueryString}${tenDayDelivery}`;
         }
       } else {
-        route = `/e2e/${vin}/${'checkoutTradeIn'}${finalQueryString}`;
+        route = `/e2e/${vin}/${'checkoutTradeIn'}${finalQueryString}${tenDayDelivery}`;
       }
 
       window.location.href = `${this.vroomUrl}${route}`;
