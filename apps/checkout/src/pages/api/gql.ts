@@ -1,7 +1,7 @@
 import { createProxyMiddleware } from 'http-proxy-middleware';
 import getConfig from 'next/config';
 
-//const { serverRuntimeConfig } = getConfig();
+const { serverRuntimeConfig } = getConfig();
 
 export const config = {
   api: {
@@ -13,7 +13,7 @@ export const config = {
 const proxy = createProxyMiddleware('/api/gql', {
   changeOrigin: true,
   ignorePath: true,
-  target: 'http://localhost:9000/'//serverRuntimeConfig.GQL_PROXY_TARGET,
+  target: serverRuntimeConfig.GQL_PROXY_TARGET,
 });
 
 export default proxy;
