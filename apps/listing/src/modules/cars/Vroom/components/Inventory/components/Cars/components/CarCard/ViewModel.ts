@@ -29,6 +29,7 @@ class CarCardViewModel {
   };
   readonly availableSoon: string = 'Available Soon';
   readonly salePending: string = 'Sale Pending';
+  readonly tenDayDelivery: string = '10-Day Delivery';
 
   constructor(carsStore: CarsStore, car: Car, position: number) {
     this.analyticsHandler = new AnalyticsHandler();
@@ -60,6 +61,15 @@ class CarCardViewModel {
     return (
       !this.showAvailableSoon() &&
       this.car.soldStatus === SoldStatusInt.SALE_PENDING
+    );
+  };
+
+  showTenDayDelivery = (): boolean => {
+    return (
+      this.car.location === 'Stafford' &&
+      this.carsStore.geoShippingExperiment?.assignedVariant === 1 &&
+      !this.showSalePending() &&
+      !this.showAvailableSoon()
     );
   };
 
@@ -104,7 +114,12 @@ class CarCardViewModel {
         : '';
     const { makeSlug, modelSlug, vin, year } = this.car;
 
-    return `/inventory/${makeSlug}-${modelSlug}-${year}-${vin}${attributionQueryString}`;
+    let tddQuery = '';
+    if (this.showTenDayDelivery()) {
+      tddQuery = `${attributionQueryString ? '&' : '?'}tdd=true`;
+    }
+
+    return `/inventory/${makeSlug}-${modelSlug}-${year}-${vin}${attributionQueryString}${tddQuery}`;
   }
 
   trackProductClick = (): void => {
@@ -121,6 +136,12 @@ class CarCardViewModel {
     } = this.car;
     const name = `${year} ${make} ${model}`;
     const photoType = this.getPhotoType();
+    const merchandising = {
+      merchandisingBadge: this.showTenDayDelivery(),
+      ...(this.showTenDayDelivery()
+        ? { merchandisingBadgeType: 'Ten Day Delivery' }
+        : {}),
+    };
     const product: Product = {
       imageUrl: leadFlagPhotoUrl,
       inventoryType: consignmentPartnerId ? 'Consignment' : 'Vroom',
@@ -136,6 +157,7 @@ class CarCardViewModel {
       vin,
       year,
       position: this.position,
+      ...merchandising,
     };
     this.analyticsHandler.trackProductClicked(product);
   };

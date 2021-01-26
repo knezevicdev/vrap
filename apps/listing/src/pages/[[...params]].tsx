@@ -3,6 +3,7 @@
 /* eslint-disable no-nested-ternary */
 
 import { useTheme } from '@material-ui/core/styles';
+import { CatData, CatSDK } from '@vroom-web/cat-sdk';
 import {
   addAllModels,
   addBodyType,
@@ -65,8 +66,118 @@ const CarsPage: NextPage<Props> = ({ brand, initialStoreState }) => {
   }, [carsStore, theme]);
 
   useEffect(() => {
-    carsStore.fetchInventoryData();
+    const catDataEventListener = (catDataEvent: CustomEvent<CatData>): void => {
+      const zipCode = Array.isArray(initialStoreState.zipCode)
+        ? initialStoreState.zipCode[0]
+        : initialStoreState.zipCode;
+      const postalCode = zipCode || catDataEvent.detail.geo.postalCode;
+      if (postalCode) {
+        invSearchNetworker.getShippingOrigins(postalCode).then((response) => {
+          const shippingOrigins = response.data.origins.map(
+            (origin) => origin.name
+          );
+          const hasShippingOrigins = shippingOrigins.length > 0;
+          if (hasShippingOrigins) {
+            experimentSDK
+              .getAndLogExperimentClientSide(
+                'snd-catalog-geo-shipping-merchandising'
+              )
+              .then((experiment) => {
+                carsStore.setGeoShippingExperiment(experiment);
+              })
+              .then(() => {
+                carsStore.fetchInventoryData(shippingOrigins);
+              });
+          } else {
+            carsStore.fetchInventoryData();
+          }
+        });
+      } else {
+        carsStore.fetchInventoryData();
+      }
+    };
+    new CatSDK().observeCatData(catDataEventListener);
+  }, [carsStore, initialStoreState.zipCode]);
+
+  useEffect(() => {
+    if (carsStore.geoShippingExperiment) {
+      analyticsHandler.registerExperiment(carsStore.geoShippingExperiment);
+    }
+  }, [carsStore.geoShippingExperiment, analyticsHandler]);
+
+  useEffect(() => {
+    experimentSDK
+      .getAndLogExperimentClientSide('snd-cylinder-filters')
+      .then((experiment) => {
+        carsStore.setCylindersFilterExperiment(experiment);
+      });
   }, [carsStore]);
+
+  useEffect(() => {
+    if (carsStore.cylinderFilterExperiment) {
+      analyticsHandler.registerExperiment(carsStore.cylinderFilterExperiment);
+    }
+  }, [carsStore.cylinderFilterExperiment, analyticsHandler]);
+
+  useEffect(() => {
+    experimentSDK
+      .getAndLogExperimentClientSide('snd-catalog-fuel-efficiency')
+      .then((experiment) => {
+        carsStore.setFuelEfficiencyFilterExperiment(experiment);
+      });
+  }, [carsStore]);
+
+  useEffect(() => {
+    if (carsStore.fuelEfficiencyFilterExperiment) {
+      analyticsHandler.registerExperiment(
+        carsStore.fuelEfficiencyFilterExperiment
+      );
+    }
+  }, [carsStore.fuelEfficiencyFilterExperiment, analyticsHandler]);
+
+  useEffect(() => {
+    experimentSDK
+      .getAndLogExperimentClientSide('snd-catalog-truck-cab-type-sub-filter')
+      .then((experiment) => {
+        carsStore.setTruckCabTypeFilterExperiment(experiment);
+      });
+  }, [carsStore]);
+
+  useEffect(() => {
+    if (carsStore.truckCabTypeFilterExperiment) {
+      analyticsHandler.registerExperiment(
+        carsStore.truckCabTypeFilterExperiment
+      );
+    }
+  }, [carsStore.truckCabTypeFilterExperiment, analyticsHandler]);
+
+  useEffect(() => {
+    experimentSDK
+      .getAndLogExperimentClientSide('snd-catalog-fuel-type-filter')
+      .then((experiment) => {
+        carsStore.setFuelTypeFilterExperiment(experiment);
+      });
+  }, [carsStore]);
+
+  useEffect(() => {
+    experimentSDK
+      .getAndLogExperimentClientSide('snd-feature-filter')
+      .then((experiment) => {
+        carsStore.setFeaturesFilterExperiment(experiment);
+      });
+  }, [carsStore]);
+
+  useEffect(() => {
+    if (carsStore.fuelTypeFilterExperiment) {
+      analyticsHandler.registerExperiment(carsStore.fuelTypeFilterExperiment);
+    }
+  }, [carsStore.fuelTypeFilterExperiment, analyticsHandler]);
+
+  useEffect(() => {
+    if (carsStore.featuresFilterExperiment) {
+      analyticsHandler.registerExperiment(carsStore.featuresFilterExperiment);
+    }
+  }, [carsStore.featuresFilterExperiment, analyticsHandler]);
 
   const [resumeSearchExperiment, setResumeSearchExperiment] = useState<
     Experiment | undefined
@@ -337,7 +448,7 @@ export const getServerSideProps: GetServerSideProps<Props> = async (
   const url = typeof _url === 'string' ? (_url as string) : '';
   const filtersData = getFiltersDataFromUrl(url);
 
-  const { isTitleQAPass } = query;
+  const { isTitleQAPass, zipCode } = query;
   const titleQuery = isTitleQAPass === 'true' ? true : undefined;
 
   const makesRequestData: PostInventoryRequestData = {
@@ -400,6 +511,7 @@ export const getServerSideProps: GetServerSideProps<Props> = async (
     popularCars,
     filtersData,
     titleQuery,
+    zipCode,
   };
 
   // delete keys with value as undefined, as GSSP tries to serialize as JSON and errors out

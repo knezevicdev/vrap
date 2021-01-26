@@ -19,6 +19,8 @@ export interface Product {
   url?: string;
   vin: string;
   year: number;
+  merchandisingBadge?: boolean;
+  merchandisingBadgeType?: string;
 }
 
 interface Filter {

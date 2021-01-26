@@ -35,12 +35,17 @@ const VehicleHeaderContainerContent = styled('div')(({ theme }) => ({
   [theme.breakpoints.only('xs')]: {
     padding: theme.spacing(5, 2),
   },
+  paddingLeft: 0,
 }));
 
-const LeftContent = styled('div')(() => ({
+const LeftContent = styled('div')(({ theme }) => ({
   display: 'flex',
   flexDirection: 'column',
   flexGrow: 2,
+  paddingLeft: theme.spacing(4),
+  [theme.breakpoints.only('xs')]: {
+    paddingLeft: theme.spacing(5, 2),
+  },
 }));
 
 const RightContent = styled('div')(() => ({

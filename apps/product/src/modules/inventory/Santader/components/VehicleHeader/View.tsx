@@ -22,9 +22,9 @@ const VehicleHeaderContainer = styled('div')(({ theme }) => ({
 const VehicleHeaderContainerContent = styled('div')(({ theme }) => ({
   position: 'relative',
   display: 'flex',
+  alignItems: 'center',
   width: '100%',
   height: 'auto',
-  alignItems: 'center',
   borderLeft: `1px solid ${theme.palette.grey.A100}`,
   borderBottom: `1px solid ${theme.palette.grey.A100}`,
   borderRight: `1px solid ${theme.palette.grey.A100}`,
@@ -33,11 +33,17 @@ const VehicleHeaderContainerContent = styled('div')(({ theme }) => ({
   [theme.breakpoints.only('xs')]: {
     padding: theme.spacing(5, 2),
   },
+  paddingLeft: 0,
 }));
 
-const LeftContent = styled('div')(() => ({
+const LeftContent = styled('div')(({ theme }) => ({
   display: 'flex',
   flexDirection: 'column',
+  flexGrow: 2,
+  paddingLeft: theme.spacing(4),
+  [theme.breakpoints.only('xs')]: {
+    paddingLeft: theme.spacing(5, 2),
+  },
 }));
 
 const RightContent = styled('div')(() => ({

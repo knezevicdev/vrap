@@ -12,18 +12,32 @@ interface Props {
 const Banner = styled('div')(({ theme }) => ({
   position: 'absolute',
   top: 0,
-  left: theme.spacing(4),
-  padding: theme.spacing(1),
-  [theme.breakpoints.only('xs')]: {
-    left: theme.spacing(2),
+  padding: theme.spacing(0, 2),
+  width: 'fit-content',
+  boxShadow: '0px 0px 6px rgba(0, 0, 0, 0.15)',
+  '&:after': {
+    position: 'absolute',
+    right: '-6px',
+    top: '0',
+    height: '24px',
+    width: '20px',
+    backgroundColor: 'inherit',
+    transform: 'skewX(-23deg)',
+    color: 'inherit',
+    content: 'close-quote',
+    quotes: 'none',
   },
 }));
 
-const Label = styled(Typography)(() => ({
+const Label = styled(Typography)(({ theme }) => ({
   fontWeight: 600,
-  fontSize: '12px',
-  textTransform: 'uppercase',
+  fontSize: '16px',
+  paddingLeft: theme.spacing(2),
+  [theme.breakpoints.only('xs')]: {
+    paddingLeft: theme.spacing(5, 2),
+  },
   letterSpacing: '1.25px',
+  lineHeight: '24px',
 }));
 
 const StatusBannerView: React.FC<Props> = (props) => {

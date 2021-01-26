@@ -1,4 +1,4 @@
-import { Card, Divider, Grid } from '@material-ui/core';
+import { Box, Card, Divider, Grid } from '@material-ui/core';
 import { styled } from '@material-ui/core/styles';
 import { Typography } from '@vroom-web/ui';
 import React from 'react';
@@ -19,7 +19,6 @@ const Media = styled('div')(({ theme }) => ({
   position: 'relative',
   width: '100%',
   height: '186px',
-  borderBottom: `2px solid ${theme.palette.grey[200]}`,
   [theme.breakpoints.up('xl')]: {
     height: '265px',
   },
@@ -88,12 +87,37 @@ const SalePending = styled(Typography)(({ theme }) => ({
   },
 }));
 
-const Content = styled('div')(() => ({
+const TenDayDelivery = styled(Typography)(({ theme }) => ({
+  padding: theme.spacing(0, 2),
+  fontSize: '16px',
+  fontWeight: 600,
+  lineHeight: '24px',
+  width: 'fit-content',
+  position: 'relative',
+  background: '#0F3A7B',
+  boxShadow: '0px 0px 6px rgba(0, 0, 0, 0.15)',
+  color: '#ffffff',
+  '&:after': {
+    position: 'absolute',
+    right: '-6px',
+    top: '0',
+    height: '24px',
+    width: '20px',
+    backgroundColor: '#0F3A7B',
+    transform: 'skewX(-23deg)',
+    color: '#0F3A7B',
+    content: 'close-quote',
+    quotes: 'none',
+  },
+}));
+
+const Content = styled(Box)(() => ({
   display: 'flex',
   flexDirection: 'column',
   width: '100%',
   height: '110px',
   padding: 0,
+  borderTop: 0,
 }));
 
 const CarDetails = styled('div')(({ theme }) => ({
@@ -174,12 +198,19 @@ const DesktopView: React.FC<DesktopViewProps> = ({ viewModel }) => {
               />
             )}
           </Media>
-          <Content>
+          <Content
+            border={
+              viewModel.showTenDayDelivery() ? 'solid 3px #0F3A7B' : 'none'
+            }
+          >
             {viewModel.showSalePending() && (
               <SalePending>{viewModel.salePending}</SalePending>
             )}
             {viewModel.showAvailableSoon() && (
               <AvailableSoon>{viewModel.availableSoon}</AvailableSoon>
+            )}
+            {viewModel.showTenDayDelivery() && (
+              <TenDayDelivery>{viewModel.tenDayDelivery}</TenDayDelivery>
             )}
             <CarDetails>
               <Title>{title}</Title>
