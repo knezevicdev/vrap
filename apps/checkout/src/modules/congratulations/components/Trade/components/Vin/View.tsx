@@ -38,7 +38,7 @@ export interface VinProps {
   closeDialog: () => void;
   openDialog: () => void;
   getVin: () => string;
-  onVinInput: (value: string) => void;
+  onVinInput: (event: React.FormEvent<HTMLInputElement>) => void;
   getError: () => string | undefined;
   getIsButtonDisabled: () => boolean;
   onButtonClick: () => void;

@@ -122,8 +122,8 @@ export default class LicensePlateViewModel implements LicensePlateViewProps {
     return this.plate;
   };
 
-  onLicensePlateInput = (value: string): void => {
-    this.setPlate(value.toUpperCase());
+  onLicensePlateInput = (event: React.FormEvent<HTMLInputElement>): void => {
+    this.setPlate(event.currentTarget.value.toUpperCase());
   };
 
   onStateSelected = (value: string, label: string): void => {

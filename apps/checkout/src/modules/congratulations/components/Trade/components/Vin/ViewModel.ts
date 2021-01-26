@@ -57,7 +57,8 @@ export default class VinViewModel implements VinProps {
     return this.vin;
   };
 
-  onVinInput = (value: string): void => {
+  onVinInput = (event: React.FormEvent<HTMLInputElement>): void => {
+    const { value } = event.currentTarget;
     if (value.length < 18) {
       this.setVin(value.toUpperCase());
     }
