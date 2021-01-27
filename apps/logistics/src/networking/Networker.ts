@@ -113,7 +113,6 @@ export const getCarriers = async (variables: {
 export const getUserStatuses = async (): Promise<
   AxiosResponse<{ values: string[] }>
 > => {
-  const url = `/api/gearbox`;
   const data = {
     query: `query portalUserStatusQuery {
       portalUserStatus {
@@ -131,7 +130,7 @@ export const getUserStatuses = async (): Promise<
     variables: {},
     queryKey: 'portalUserStatus',
   };
-  return axiosInstance.post(url, data);
+  return axiosInstance.post(GEARBOX_URL, data);
 };
 
 export const patchUser = async (
@@ -139,8 +138,6 @@ export const patchUser = async (
   status?: string,
   carrierCode?: string
 ): Promise<AxiosResponse<User>> => {
-  const url = `/api/gearbox`;
-
   const variables: { userId: number; status?: string; carrierCode?: string } = {
     userId: id,
   };
@@ -187,7 +184,7 @@ export const patchUser = async (
     variables,
     queryKey: 'portalUserUpdate',
   };
-  return axiosInstance.post(url, data);
+  return axiosInstance.post(GEARBOX_URL, data);
 };
 
 export const postSignUp = async (
@@ -386,6 +383,32 @@ export const patchShipmentStop = async (
     }`,
     variables,
     queryKey: 'shipmentStopUpdate',
+  };
+  return axiosInstance.post(GEARBOX_URL, data);
+};
+
+export interface PostCreateAccountEmail {
+  emailAddress: string;
+  signupUrl: string;
+}
+export const postCreateAccountEmail = async (
+  variables: PostCreateAccountEmail
+): Promise<void> => {
+  const data = {
+    query: `
+    mutation sendAccountCreateEmail($emailAddress: String!, $signupUrl: String!) {
+      portalUserCreateAccountEmail(emailAddress: $emailAddress, signupUrl: $signupUrl) {
+        __typename
+            ... on APIError {
+          errorType
+          errorTitle
+          errorDetail
+        }
+      }
+    }
+    `,
+    variables,
+    queryKey: 'portalUserCreateAccountEmail',
   };
   return axiosInstance.post(GEARBOX_URL, data);
 };

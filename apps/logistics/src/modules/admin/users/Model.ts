@@ -10,6 +10,7 @@ import {
   getUsers,
   getUserStatuses,
   patchUser,
+  postCreateAccountEmail,
   Status,
 } from 'src/networking/Networker';
 
@@ -24,6 +25,8 @@ class UsersModel {
 
   carrierOptions: Carrier[] = [];
   carrierOptionsStatus: Status = Status.INITIAL;
+
+  createAccountStatus: Status = Status.INITIAL;
 
   constructor() {
     makeAutoObservable(this);
@@ -91,6 +94,22 @@ class UsersModel {
     } catch (err) {
       console.error(err);
       this.carrierOptionsStatus = Status.ERROR;
+    }
+  };
+
+  postCreateAccount = async (emailAddress: string): Promise<void> => {
+    this.createAccountStatus = Status.FETCHING;
+    try {
+      await postCreateAccountEmail({
+        emailAddress,
+        signupUrl: `${window.location.origin}/signup`,
+      });
+      runInAction(() => {
+        this.createAccountStatus = Status.SUCCESS;
+      });
+    } catch (err) {
+      console.error(err);
+      this.createAccountStatus = Status.ERROR;
     }
   };
 
