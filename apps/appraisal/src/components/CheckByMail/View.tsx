@@ -2,13 +2,13 @@ import React from 'react';
 import styled from 'styled-components';
 
 import CheckByMailViewModel from './ViewModel';
-import { PaymentMethodContext } from 'src/pages/paymentmethod/paymentMethodContext';
 
 import { Props } from 'src/components/CheckByMail';
 import IsPrimaryAddress from 'src/components/IsPrimaryAddress';
 import Dropdown from 'src/core/Dropdown';
 import FormikInput from 'src/core/FormikInput';
 import { Body } from 'src/core/Typography';
+import { PaymentMethodContext } from 'src/modules/options/paymentMethodContext';
 
 type ViewProps = Props & { viewModel: CheckByMailViewModel };
 
@@ -119,13 +119,14 @@ const CheckByMailView: React.FC<ViewProps> = ({
 
   return (
     <PaymentMethodContext.Consumer>
-      {({setStateDropdown}) => (
+      {({ setStateDropdown }): React.ReactNode => (
         <CBMContainer>
           <CBMMessage>{viewModel.mailingAddressMsg}</CBMMessage>
           <CBMMailingAddress className="fs-mask">
             <AddressLine>{mailingAddress['address_1']}</AddressLine>
             <AddressLine>
-              {mailingAddress.city} {mailingAddress.state} {mailingAddress.zipcode}
+              {mailingAddress.city} {mailingAddress.state}{' '}
+              {mailingAddress.zipcode}
             </AddressLine>
           </CBMMailingAddress>
 
@@ -188,7 +189,7 @@ const CheckByMailView: React.FC<ViewProps> = ({
             </>
           )}
         </CBMContainer>
-       )}
+      )}
     </PaymentMethodContext.Consumer>
   );
 };

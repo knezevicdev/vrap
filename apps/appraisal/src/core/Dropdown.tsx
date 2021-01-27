@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
 import Icon, { Icons } from './Icon/Icon';
@@ -33,8 +33,9 @@ const Dropdown = (props: DropdownProps): JSX.Element => {
     isOpenCallback,
   } = props;
   const [open, setOpen] = useState(false);
-	useEffect(() => {
+  useEffect(() => {
     if (isOpenCallback) isOpenCallback(open);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [open]);
   const [label, setLabel] = useState<string | undefined>(value);
   const [labelPosition, setLabelPosition] = useState<number | undefined>(

@@ -14,9 +14,7 @@ export type Props = {
 
 const CheckByMail: React.FC<Props> = (props) => {
   const viewModel = new ViewModel();
-  return (
-    <View viewModel={viewModel} {...props} />
-  );
+  return <View viewModel={viewModel} {...props} />;
 };
 
 export default CheckByMail;
