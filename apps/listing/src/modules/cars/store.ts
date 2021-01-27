@@ -542,12 +542,7 @@ export class CarsStore {
 
       const inventoryRequestData: PostInventoryRequestData = {
         ...postInventoryRequestDataFromFiltersData,
-        // DELTA-228.
-        // fulldetails should be false.
-        // However, it's needed on the TDA whitelabel b/c the 'zone' field is how we determine
-        // whether a vehicle is test drivable.
-        // TODO: move that logic to the backend and set this back to false.
-        fulldetails: true,
+        fulldetails: false,
         limit: INVENTORY_CARDS_PER_PAGE,
         source: `${publicRuntimeConfig.NAME}-${publicRuntimeConfig.VERSION}`,
         isTitleQAPass: this.isTitleQAPass,
