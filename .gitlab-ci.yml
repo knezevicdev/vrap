@@ -45,10 +45,10 @@ build-home:
     refs:
       - merge_requests
     changes:
-      - apps/marketing/*
+      - apps/home/*
   stage: build
   script:
-    - cd apps/marketing
+    - cd apps/home
     - npm install --quiet
     - npm run lint
     - npm run build
