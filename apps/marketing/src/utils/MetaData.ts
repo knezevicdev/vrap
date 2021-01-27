@@ -1,6 +1,9 @@
 import { PageData } from './utils';
 
-export const getMetaData = (pageData: PageData): object => {
+interface ReturnData {
+  [key: string]: {[key: string]: string}
+}
+export const getMetaData = (pageData: PageData): ReturnData => {
   const vroomUrl = 'https://www.vroom.com/';
   const santanderUrl = 'https://www.santanderconsumerusa.com/';
   const tdaUrl = 'https://www.texasdirectauto.com/';
