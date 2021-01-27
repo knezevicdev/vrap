@@ -1,6 +1,6 @@
 import UsersModel from 'src/modules/admin/users/Model';
 
-class FiltersViewModel {
+class CreateAccountViewModel {
   private usersModel: UsersModel;
 
   constructor(usersModel: UsersModel) {
@@ -12,4 +12,4 @@ class FiltersViewModel {
   }
 }
 
-export default FiltersViewModel;
+export default CreateAccountViewModel;

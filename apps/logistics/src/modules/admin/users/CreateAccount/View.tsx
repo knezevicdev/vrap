@@ -7,7 +7,7 @@ import ViewModel from './ViewModel';
 interface Props {
   viewModel: ViewModel;
 }
-const FiltersView: React.FC<Props> = ({ viewModel }) => {
+const CreateAccountView: React.FC<Props> = ({ viewModel }) => {
   const [email, setEmail] = useState('');
 
   const handleSubmit = async (
@@ -49,4 +49,4 @@ const FiltersView: React.FC<Props> = ({ viewModel }) => {
   );
 };
 
-export default observer(FiltersView);
+export default observer(CreateAccountView);
