@@ -1,7 +1,7 @@
 import { PageData } from './utils';
 
 interface ReturnData {
-  [key: string]: {[key: string]: string}
+  [key: string]: { [key: string]: string };
 }
 export const getMetaData = (pageData: PageData): ReturnData => {
   const vroomUrl = 'https://www.vroom.com/';
@@ -56,7 +56,7 @@ export const getMetaData = (pageData: PageData): ReturnData => {
           title: 'How Does Vroom Work? | Buying a Car From Vroom',
           canonical: `${vroomUrl}${PageData.HOWITWORKS}`,
           description:
-            'Buying or selling  a car on Vroom is quick and easy. Discover how Vroom works, and read reviews from satisfied customers.',
+            'Buying or selling a car on Vroom is quick and easy. Discover how Vroom works, and read reviews from satisfied customers.',
         },
         // Because this page allows the brand param, we want to point to the appropriate referrer/branded site to be attributed in the canonical
         santander: {
