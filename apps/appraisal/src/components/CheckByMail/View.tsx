@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 import CheckByMailViewModel from './ViewModel';
+import { PaymentMethodContext } from 'src/pages/paymentmethod/paymentMethodContext';
 
 import { Props } from 'src/components/CheckByMail';
 import IsPrimaryAddress from 'src/components/IsPrimaryAddress';
@@ -68,7 +69,7 @@ const Apartment = styled(FormikInput)`
 
   @media (max-width: 768px) {
     width: 100%;
-    margin-right: 0px;
+    margin-left: 0px;
     margin-bottom: 16px;
   }
 `;
@@ -91,8 +92,8 @@ const State = styled(Dropdown)`
 
   @media (max-width: 768px) {
     width: 100%;
-    margin-right: 0px;
-    margin-bottom: 16px;
+    margin-left: 0px;
+    margin-bottom: 40px;
   }
 `;
 
@@ -102,7 +103,7 @@ const Zip = styled(FormikInput)`
 
   @media (max-width: 768px) {
     width: 100%;
-    margin-right: 0px;
+    margin-left: 0px;
     margin-bottom: 16px;
   }
 `;
@@ -117,73 +118,78 @@ const CheckByMailView: React.FC<ViewProps> = ({
   const states = viewModel.getStates();
 
   return (
-    <CBMContainer>
-      <CBMMessage>{viewModel.mailingAddressMsg}</CBMMessage>
-      <CBMMailingAddress className="fs-mask">
-        <AddressLine>{mailingAddress['address_1']}</AddressLine>
-        <AddressLine>
-          {mailingAddress.city} {mailingAddress.state} {mailingAddress.zipcode}
-        </AddressLine>
-      </CBMMailingAddress>
+    <PaymentMethodContext.Consumer>
+      {({setStateDropdown}) => (
+        <CBMContainer>
+          <CBMMessage>{viewModel.mailingAddressMsg}</CBMMessage>
+          <CBMMailingAddress className="fs-mask">
+            <AddressLine>{mailingAddress['address_1']}</AddressLine>
+            <AddressLine>
+              {mailingAddress.city} {mailingAddress.state} {mailingAddress.zipcode}
+            </AddressLine>
+          </CBMMailingAddress>
 
-      <IsPrimaryAddress selected={isPrimaryAddress} />
+          <IsPrimaryAddress selected={isPrimaryAddress} />
 
-      {isPrimaryAddress === 'No' && (
-        <>
-          <InputContainer>
-            <Address
-              id="address"
-              name={'address'}
-              type="text"
-              className="fs-mask"
-              placeholder={viewModel.addressLabel}
-              label={viewModel.addressLabel}
-            />
-            <Apartment
-              id="apartment"
-              name={'apartment'}
-              type="text"
-              className="fs-mask"
-              placeholder={viewModel.apartmentPlaceholder}
-              label={viewModel.apartmentLabel}
-            />
-          </InputContainer>
-          <InputContainer>
-            <City
-              id="city"
-              name={'city'}
-              type="text"
-              className="fs-mask"
-              placeholder={viewModel.cityLabel}
-              label={viewModel.cityLabel}
-            />
-            <ZipStateContainer>
-              <State
-                id="state"
-                className="fs-mask"
-                placeholder={viewModel.stateLabel}
-                label={viewModel.stateLabel}
-                options={states}
-                onSelectCallback={(value: string): void =>
-                  setFieldValue('state', value)
-                }
-                value={state}
-              />
-              <Zip
-                id="zipcode"
-                name={'zipcode'}
-                type="text"
-                className="fs-mask"
-                placeholder={viewModel.zipLabel}
-                label={viewModel.zipLabel}
-                fluid={true}
-                maxLength={5}
-              />
-            </ZipStateContainer>
-          </InputContainer>
-        </>
-      )}
-    </CBMContainer>
+          {isPrimaryAddress === 'No' && (
+            <>
+              <InputContainer>
+                <Address
+                  id="address"
+                  name={'address'}
+                  type="text"
+                  className="fs-mask"
+                  placeholder={viewModel.addressLabel}
+                  label={viewModel.addressLabel}
+                />
+                <Apartment
+                  id="apartment"
+                  name={'apartment'}
+                  type="text"
+                  className="fs-mask"
+                  placeholder={viewModel.apartmentPlaceholder}
+                  label={viewModel.apartmentLabel}
+                />
+              </InputContainer>
+              <InputContainer>
+                <City
+                  id="city"
+                  name={'city'}
+                  type="text"
+                  className="fs-mask"
+                  placeholder={viewModel.cityLabel}
+                  label={viewModel.cityLabel}
+                />
+                <ZipStateContainer>
+                  <State
+                    id="state"
+                    className="fs-mask"
+                    placeholder={viewModel.stateLabel}
+                    label={viewModel.stateLabel}
+                    options={states}
+                    onSelectCallback={(value: string): void =>
+                      setFieldValue('state', value)
+                    }
+                    value={state}
+                    isOpenCallback={setStateDropdown}
+                  />
+                  <Zip
+                    id="zipcode"
+                    name={'zipcode'}
+                    type="text"
+                    className="fs-mask"
+                    placeholder={viewModel.zipLabel}
+                    label={viewModel.zipLabel}
+                    fluid={true}
+                    maxLength={5}
+                  />
+                </ZipStateContainer>
+              </InputContainer>
+            </>
+          )}
+        </CBMContainer>
+       )}
+    </PaymentMethodContext.Consumer>
   );
 };
 

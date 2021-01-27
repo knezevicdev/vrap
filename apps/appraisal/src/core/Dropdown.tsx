@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 
 import Icon, { Icons } from './Icon/Icon';
@@ -16,6 +16,7 @@ export interface DropdownProps {
   disabled?: boolean;
   error?: string;
   value?: string;
+  isOpenCallback?: (value: boolean) => void;
 }
 
 const Dropdown = (props: DropdownProps): JSX.Element => {
@@ -29,8 +30,12 @@ const Dropdown = (props: DropdownProps): JSX.Element => {
     error,
     disabled,
     value,
+    isOpenCallback,
   } = props;
   const [open, setOpen] = useState(false);
+	useEffect(() => {
+    if (isOpenCallback) isOpenCallback(open);
+  }, [open]);
   const [label, setLabel] = useState<string | undefined>(value);
   const [labelPosition, setLabelPosition] = useState<number | undefined>(
     undefined
@@ -298,6 +303,7 @@ const Menu = styled.div<{
       props.showError ? secondaryError(props) : grayThree(props)};
   border-top: none;
   padding-top: 8px;
+  z-index: 1;
 `;
 
 const Option = styled(Body.Regular)<{ manualHover: boolean }>`

@@ -6,7 +6,7 @@ import { IncomingMessage } from 'http';
 import { NextPage, NextPageContext } from 'next';
 import getConfig from 'next/config';
 import { useRouter } from 'next/router';
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 
 import ToolFooter from 'src/core/ToolFooter';
@@ -16,6 +16,7 @@ import {
 } from 'src/modules/directdeposit/store';
 import Options from 'src/modules/options';
 import { OptionsStore, OptionsStoreContext } from 'src/modules/options/store';
+import { PaymentMethodContext } from 'src/pages/paymentmethod/paymentMethodContext';
 import PaymentOverview from 'src/modules/paymentoverview';
 import {
   PaymentOverviewStore,
@@ -29,22 +30,22 @@ const ColumnBody = styled.div`
   margin: 0 auto;
   padding: 20px;
   flex-wrap: wrap;
-  min-height: 79vh;
+  min-height: ${props => props.stateDropdownOpen ? '115vh' : '79vh'};
 
   @media (max-width: 1280px) {
     flex-wrap: wrap-reverse;
     align-content: flex-end;
-    min-height: 86vh;
+    min-height: ${props => props.stateDropdownOpen ? '130vh' : '86vh'};
   }
 
   @media (max-width: 786px) {
     flex-wrap: wrap-reverse;
-    min-height: 81vh;
+    min-height: ${props => props.stateDropdownOpen ? '150vh' : '81vh'};
   }
 
   @media (max-width: 420px) {
     padding: 0;
-    min-height: auto;
+    min-height: ${props => props.stateDropdownOpen ? '180vh' : 'auto'};
   }
 `;
 
@@ -64,13 +65,15 @@ const EPayOptions: NextPage<Props> = ({ brand }) => {
   const oStore = new OptionsStore(priceId);
   const ddStore = new DirectDepositStore(priceId);
   const poStore = new PaymentOverviewStore(priceId, mdUp);
+  const [stateDropdownOpen, setStateDropdown] = useState(false);
 
   return (
     <ThemeProvider brand={brand}>
+			<PaymentMethodContext.Provider value={{stateDropdownOpen, setStateDropdown}}>
       <Page name="EPayOptions">
         <SimpleHeader gearboxPrivateUrl={gearboxPrivateUrl} />
         <SuccessBar />
-        <ColumnBody>
+        <ColumnBody stateDropdownOpen={stateDropdownOpen}>
           <OptionsStoreContext.Provider value={oStore}>
             <DirectDepositStoreContext.Provider value={ddStore}>
               <Options />
@@ -82,6 +85,7 @@ const EPayOptions: NextPage<Props> = ({ brand }) => {
         </ColumnBody>
         <ToolFooter />
       </Page>
+			</PaymentMethodContext.Provider>
     </ThemeProvider>
   );
 };
