@@ -1,20 +1,19 @@
 import { action, observable, runInAction } from 'mobx';
 import { createContext, useContext } from 'react';
 
-import { Networker } from 'src/networking/Networker';
-
 import { PlaidData } from 'src/interfaces.d';
+import { Networker } from 'src/networking/Networker';
 
 const defaultDDState: DDStoreState = {
   LinkToken: '',
   Expiration: '',
-  RequestId: ''
+  RequestId: '',
 };
 
 export interface DDStoreState {
-  LinkToken: string,
-  Expiration: string,
-  RequestId: string
+  LinkToken: string;
+  Expiration: string;
+  RequestId: string;
 }
 
 export async function getInitialDDStoreState(
@@ -32,7 +31,10 @@ export async function getInitialDDStoreState(
   }
 }
 
-export async function plaidSuccess(mutationInput: PlaidData, onPlaidSubmitting: any): Promise<void> {
+export async function plaidSuccess(
+  mutationInput: PlaidData,
+  onPlaidSubmitting: any
+): Promise<void> {
   const networker = new Networker();
   try {
     await networker.postPlaidPayment(mutationInput);

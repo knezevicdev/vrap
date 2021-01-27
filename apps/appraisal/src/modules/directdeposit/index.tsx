@@ -1,11 +1,10 @@
 import React from 'react';
 
+import { useDirectDepositStore } from './store';
 import View from './View';
 import ViewModel from './ViewModel';
 
-import { useDirectDepositStore } from './store';
-
-const DirectDeposit: React.FC= () => {
+const DirectDeposit: React.FC = () => {
   const ddStore = useDirectDepositStore();
   const viewModel = new ViewModel(ddStore);
 

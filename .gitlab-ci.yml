@@ -3,6 +3,19 @@ image: node:latest
 stages:
   - build
 
+build-appraisal:
+  only:
+    refs:
+      - merge_requests
+    changes:
+      - apps/appraisal/*
+  stage: build
+  script:
+    - cd apps/appraisal
+    - npm install --quiet
+    - npm run lint
+    - npm run build
+
 lint-checkout:
   only:
     refs:
@@ -27,18 +40,19 @@ build-checkout:
     - npm install --quiet
     - npm run build
 
-lint-landing:
+build-home:
   only:
     refs:
       - merge_requests
     changes:
-      - apps/landing/*
+      - apps/marketing/*
   stage: build
   script:
-    - cd apps/landing
+    - cd apps/marketing
     - npm install --quiet
     - npm run lint
-  
+    - npm run build
+
 build-landing:
   only:
     refs:
@@ -49,4 +63,68 @@ build-landing:
   script:
     - cd apps/landing
     - npm install --quiet
+    - npm run lint
     - npm run build
+
+build-listing:
+  only:
+    refs:
+      - merge_requests
+    changes:
+      - apps/listing/*
+  stage: build
+  script:
+    - cd apps/listing
+    - npm install --quiet
+    - npm run lint
+    - npm run build
+
+test-listing:
+  only:
+    refs:
+      - merge_requests
+    changes:
+      - apps/listing/*
+  stage: build
+  script:
+    - cd apps/listing
+    - npm install --quiet
+    - npm run test:ci
+
+build-marketing:
+  only:
+    refs:
+      - merge_requests
+    changes:
+      - apps/marketing/*
+  stage: build
+  script:
+    - cd apps/marketing
+    - npm install --quiet
+    - npm run lint
+    - npm run build
+
+build-product:
+  only:
+    refs:
+      - merge_requests
+    changes:
+      - apps/product/*
+  stage: build
+  script:
+    - cd apps/product
+    - npm install --quiet
+    - npm run lint
+    - npm run build
+
+test-product:
+  only:
+    refs:
+      - merge_requests
+    changes:
+      - apps/product/*
+  stage: build
+  script:
+    - cd apps/product
+    - npm install --quiet
+    - npm run test:ci

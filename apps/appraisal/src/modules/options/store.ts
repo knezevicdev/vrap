@@ -16,7 +16,7 @@ const defaultOptionsState: OptionStoreState = {
     state: '',
     zipcode: '',
   },
-  email: ''
+  email: '',
 };
 export interface OptionStoreState {
   mailingAddress: MailingAddress;
