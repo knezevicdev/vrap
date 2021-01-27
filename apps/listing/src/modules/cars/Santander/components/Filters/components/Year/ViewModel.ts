@@ -38,14 +38,11 @@ class YearViewModel {
 
   isResetButtonDisabled = (): boolean => {
     const filtersData = this.carsStore.filtersData;
-    if (!filtersData) {
+    if (!filtersData || !filtersData[Filters.YEAR]) {
       return true;
+    } else {
+      return false;
     }
-    const filtersDataYear = filtersData[Filters.YEAR];
-    if (!filtersDataYear) {
-      return true;
-    }
-    return false;
   };
 
   handleResetClick(): void {
