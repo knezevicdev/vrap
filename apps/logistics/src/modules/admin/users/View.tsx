@@ -1,7 +1,8 @@
-import { Box, Grid, Typography } from '@material-ui/core';
+import { Box, Divider, Grid, Typography } from '@material-ui/core';
 import { observer } from 'mobx-react';
 import React, { useEffect } from 'react';
 
+import CreateAccount from './CreateAccount';
 import Filters from './Filters';
 import UserTable from './Table';
 import ViewModel from './ViewModel';
@@ -25,7 +26,17 @@ const UsersView: React.FC<Props> = ({ viewModel }) => {
           <Filters />
         </Grid>
         <Grid item xs={9}>
-          <UserTable />
+          <Grid container spacing={4}>
+            <Grid item xs={12}>
+              <CreateAccount />
+            </Grid>
+            <Grid item xs={12}>
+              <Divider />
+            </Grid>
+            <Grid item xs={12}>
+              <UserTable />
+            </Grid>
+          </Grid>
         </Grid>
       </Grid>
     </Box>
