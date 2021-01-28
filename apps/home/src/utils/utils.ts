@@ -5,6 +5,7 @@ export interface BrandConfig {
   segmentWriteKey?: string;
   brandParam: string;
   title: string;
+  canonical: string;
   description: string;
 }
 export const returnBrandConfig = (brand: Brand): BrandConfig => {
@@ -13,14 +14,16 @@ export const returnBrandConfig = (brand: Brand): BrandConfig => {
     segmentWriteKey: serverRuntimeConfig.SEGMENT_WRITE_KEY,
     brandParam: 'vroom',
     title: 'Vroom: Buy, Sell or Trade-In Used Vehicles Online',
+    canonical: 'https://www.vroom.com/',
     description:
-      'Buy, sell or trade-in your car entirely online, from the comfort of your home. No haggle, no pressure. Easy online financing available. Browse thousands of high-quality cars, and have it delivered straight to you.',
+      'Buy, sell or trade-in your car entirely online. No haggle, no pressure. Easy online financing available. Cars delivered straight to you.',
   };
   if (brand === Brand.SANTANDER) {
     config = {
       segmentWriteKey: serverRuntimeConfig.SANTANDER_SEGMENT_WRITE_KEY,
       brandParam: 'santander',
       title: 'Santander Consumer USA: Buy Used Cars, Trucks & SUVs Online',
+      canonical: 'https://santanderconsumerusa.com/',
       description:
         'Buy a used vehicle online from anywhere in the USA. We offer high quality cars, easy car buying, & flexible financing.',
     };
@@ -29,6 +32,7 @@ export const returnBrandConfig = (brand: Brand): BrandConfig => {
       segmentWriteKey: serverRuntimeConfig.TDA_SEGMENT_WRITE_KEY,
       brandParam: 'tda',
       title: 'Texas Direct Auto: Buy, Sell or Trade-In Used Vehicles Online',
+      canonical: 'https://www.texasdirectauto.com/',
       description:
         'Buy, sell or trade-in your car entirely online, from the comfort of your home. No haggle, no pressure. Easy online financing available. Browse thousands of high-quality cars, and have it delivered straight to you.',
     };

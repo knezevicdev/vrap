@@ -5,16 +5,26 @@ import React from 'react';
 
 import Finance from 'src/modules/finance';
 import Page from 'src/Page';
+import { PageData, returnBrandConfig } from 'src/utils/utils';
 
 interface Props {
   brand: Brand;
+  canonical: string;
+  description: string;
   title: string;
 }
 
-const FinancePage: NextPage<Props> = ({ brand, title }) => {
+const FinancePage: NextPage<Props> = ({
+  brand,
+  canonical,
+  description,
+  title,
+}) => {
   const head = (
     <>
       <title>{title}</title>
+      <link rel="canonical" href={canonical} />
+      <meta name="description" content={description}></meta>
     </>
   );
 
@@ -32,9 +42,16 @@ export const getServerSideProps: GetServerSideProps<Props> = async (
 ) => {
   ctx.res.setHeader('Cache-Control', '');
   const brand = determineWhitelabel(ctx);
-  const title = 'Finance';
+  const brandConfig = returnBrandConfig(brand, PageData.FINANCE);
 
-  return { props: { brand, title } };
+  return {
+    props: {
+      brand,
+      description: brandConfig.description,
+      title: brandConfig.title,
+      canonical: brandConfig.canonical,
+    },
+  };
 };
 
 export default FinancePage;
