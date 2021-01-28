@@ -8,8 +8,8 @@ import styled from 'styled-components';
 
 import CustomCheckbox from '../../common/CustomCheckbox';
 import CustomInput from '../../common/CustomInput';
-import LegalCopy from './LegalCopy';
 import { FormValues } from '../types';
+import LegalCopy from './LegalCopy';
 import PasswordStrength from './PasswordStrength';
 
 const StyledButton = styled(Button.Primary)`

@@ -1,7 +1,8 @@
-import React, { useState, useEffect, FC } from 'react';
 import { LinearProgress } from '@material-ui/core';
-import { passwordValidity } from '../validationSchema';
+import React, { FC, useEffect, useState } from 'react';
 import styled from 'styled-components';
+
+import { passwordValidity } from '../validationSchema';
 
 interface Props {
   passwordInput: string;
@@ -17,7 +18,7 @@ const strength: { [key: number]: string } = {
 
 const ProgressBar = styled(LinearProgress)`
   .MuiLinearProgress-barColorPrimary {
-    background-color: ${(props) => {
+    background-color: ${(props): string => {
       const value = props.value || 0;
       return strength[value];
     }};

@@ -1,4 +1,5 @@
 import * as Yup from 'yup';
+
 import { Validity } from './types';
 
 const errorMessages = {
@@ -41,6 +42,26 @@ const phoneValidation = Yup.string()
   .min(14, errorMessages.phone)
   .max(14, errorMessages.phone);
 
+export const passwordValidity = (password: string): Validity => {
+  return {
+    isAtLength: password.length >= 8,
+    hasLowercase: regex.lowercase.test(password),
+    hasUppercase: regex.uppercase.test(password),
+    hasNumbers: regex.numbers.test(password),
+  };
+};
+
+const getErrorMessage = (validity: Validity): string => {
+  const { isAtLength, hasLowercase, hasUppercase, hasNumbers } = validity;
+  const length = isAtLength ? '' : '8 characters';
+  const lower = hasLowercase ? '' : 'lowercase';
+  const upper = hasUppercase ? '' : 'uppercase';
+  const number = hasNumbers ? '' : 'numbers';
+  return new Yup.ValidationError(
+    `Needs ${[length, lower, upper, number].filter((i) => i).join(', ')}`
+  ).message;
+};
+
 const passwordValidation = Yup.string()
   .required(errorMessages.password)
   .test({
@@ -68,23 +89,3 @@ export const ValidationSchema = Yup.object({
   password: passwordValidation,
   optIn: optInValidation,
 });
-
-export const passwordValidity = (password: string): Validity => {
-  return {
-    isAtLength: password.length >= 8,
-    hasLowercase: regex.lowercase.test(password),
-    hasUppercase: regex.uppercase.test(password),
-    hasNumbers: regex.numbers.test(password),
-  };
-};
-
-const getErrorMessage = (validity: Validity): string => {
-  const { isAtLength, hasLowercase, hasUppercase, hasNumbers } = validity;
-  const length = isAtLength ? '' : '8 characters';
-  const lower = hasLowercase ? '' : 'lowercase';
-  const upper = hasUppercase ? '' : 'uppercase';
-  const number = hasNumbers ? '' : 'numbers';
-  return new Yup.ValidationError(
-    `Needs ${[length, lower, upper, number].filter((i) => i).join(', ')}`
-  ).message;
-};
