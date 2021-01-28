@@ -34,14 +34,10 @@ export async function getInitialPaymentOverviewStoreState(
 }
 
 export class PaymentOverviewStore implements Store {
-  @observable price: number = defaultPaymentOverviewState.price;
-  @observable isDesktop: boolean;
-  @observable displayBody = true;
+  @observable price = 0;
   @observable status = StoreStatus.Initial;
 
-  constructor(priceId?: string, isDeskTop = true) {
-    this.isDesktop = isDeskTop;
-    this.displayBody = isDeskTop;
+  constructor(priceId?: string) {
     if (priceId) this.init(priceId);
   }
 
@@ -53,11 +49,6 @@ export class PaymentOverviewStore implements Store {
       this.price = initialState.price;
     });
   }
-
-  @action
-  setDisplayBody = (display: boolean): void => {
-    this.displayBody = display;
-  };
 }
 
 export const PaymentOverviewStoreContext = createContext<PaymentOverviewStore>(

@@ -1,5 +1,3 @@
-import { retrieveInitialDocumentResourceTiming } from '@datadog/browser-rum/cjs/browser/performanceCollection';
-
 import { OptionsStore } from '../options/store';
 import { PaymentOverviewStore } from './store';
 
@@ -25,14 +23,6 @@ class PaymentOverviewViewModel {
   get carWorthPrice(): string {
     if (!this.isInitialized) return this.pricePlaceholder;
     return displayCurrency(this.poStore.price);
-  }
-
-  get isDesktop(): boolean {
-    return this.poStore.isDesktop;
-  }
-
-  get displayBody(): boolean {
-    return this.poStore.displayBody;
   }
 
   get hasPoq(): boolean {
@@ -74,10 +64,6 @@ class PaymentOverviewViewModel {
       this.poStore.status != StoreStatus.Initial
     );
   }
-
-  toggleBody = (): void => {
-    this.poStore.setDisplayBody(!this.poStore.displayBody);
-  };
 }
 
 export default PaymentOverviewViewModel;
