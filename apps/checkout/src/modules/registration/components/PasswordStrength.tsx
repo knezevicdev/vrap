@@ -8,18 +8,12 @@ interface Props {
   passwordInput: string;
 }
 
-const strength: { [key: number]: string } = {
-  0: '#d6d7da',
-  25: '#fc4349',
-  50: '#ffd400',
-  75: '#f26900',
-  100: '#308406',
-};
+const strength = ['#d6d7da', '#fc4349', '#ffd400', '#f26900', '#308406'];
 
 const ProgressBar = styled(LinearProgress)`
   .MuiLinearProgress-barColorPrimary {
     background-color: ${(props): string => {
-      const value = props.value || 0;
+      const value = props.value ? props.value / 25 : 0;
       return strength[value];
     }};
   }

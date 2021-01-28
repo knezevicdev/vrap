@@ -53,13 +53,13 @@ export const passwordValidity = (password: string): Validity => {
 
 const getErrorMessage = (validity: Validity): string => {
   const { isAtLength, hasLowercase, hasUppercase, hasNumbers } = validity;
-  const length = isAtLength ? '' : '8 characters';
-  const lower = hasLowercase ? '' : 'lowercase';
-  const upper = hasUppercase ? '' : 'uppercase';
-  const number = hasNumbers ? '' : 'numbers';
-  return new Yup.ValidationError(
-    `Needs ${[length, lower, upper, number].filter((i) => i).join(', ')}`
-  ).message;
+  const validationErrors = [];
+  if (!isAtLength) validationErrors.push('8 characters');
+  if (!hasLowercase) validationErrors.push('lowercase');
+  if (!hasUppercase) validationErrors.push('uppercase');
+  if (!hasNumbers) validationErrors.push('numbers');
+  return new Yup.ValidationError(`Needs ${validationErrors.join(', ')}`)
+    .message;
 };
 
 const passwordValidation = Yup.string()
