@@ -4,7 +4,7 @@ import {
 import { Form, FormikProps } from 'formik';
 import React, { FC } from 'react';
 import styled from 'styled-components';
-import LoginInput from './loginInput';
+import LoginInput from './LoginInput';
 import { FormValues } from './types';
 
 const StyledButton = styled(Button.Primary)`
