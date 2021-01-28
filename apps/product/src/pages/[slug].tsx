@@ -51,7 +51,6 @@ const InventoryPage: NextPage<Props> = (props: Props) => {
 
   useEffect(() => {
     if (hasTddQuery) {
-      console.log(hasTddQuery)
       experimentSDK
         .getAndLogExperimentClientSide('snd-catalog-geo-shipping-merchandising')
         .then((experiment) => {

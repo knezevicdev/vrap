@@ -1,6 +1,6 @@
 import { action, observable } from 'mobx';
 
-import { AsyncStore } from 'src/interfaces.d';
+import { AsyncStatus, AsyncStore, Store, StoreStatus } from 'src/interfaces.d';
 import { Price } from 'src/networking/models/Price';
 import { Networker, PriceData } from 'src/networking/Networker';
 
@@ -46,18 +46,12 @@ export const defaultPriceState: PriceStoreState = {
   year: 0,
 };
 
-export enum PriceStoreStatus {
-  Initial,
-  Error,
-  Success,
-}
-
-export class PriceStore implements AsyncStore {
+export class PriceStore implements Store, AsyncStore {
   private readonly networker = new Networker();
 
-  @observable isRequesting = false;
-  @observable price: PriceStoreState = defaultPriceState;
-  @observable status: PriceStoreStatus = PriceStoreStatus.Initial;
+  @observable price = defaultPriceState;
+  @observable status = StoreStatus.Initial;
+  @observable asyncStatus = AsyncStatus.Idle;
 
   constructor(priceId: string) {
     this.getOfferDetails(priceId);
@@ -96,12 +90,12 @@ export class PriceStore implements AsyncStore {
           // - Status updates and refreshes views
           // Just a heads up this can cause race conditions
           this.price = priceMapFromResponse;
-          this.status = PriceStoreStatus.Success;
+          this.status = StoreStatus.Success;
         }
       })
       .catch((error) => {
-        this.status = PriceStoreStatus.Error;
-        this.isRequesting = false;
+        this.status = StoreStatus.Error;
+        this.asyncStatus = AsyncStatus.Idle;
         console.log(JSON.stringify(error));
       });
   };
@@ -113,13 +107,13 @@ export class PriceStore implements AsyncStore {
       accepted: true,
     };
 
-    this.isRequesting = true;
+    this.asyncStatus = AsyncStatus.Fetching;
 
     try {
       await this.networker.submitPriceResponse(priceData);
     } catch (err) {
-      this.status = PriceStoreStatus.Error;
-      this.isRequesting = false;
+      this.status = StoreStatus.Error;
+      this.asyncStatus = AsyncStatus.Idle;
       console.log(JSON.stringify(err));
       return err;
     }

@@ -10,8 +10,11 @@ import React from 'react';
 import styled from 'styled-components';
 
 import ToolFooter from 'src/core/ToolFooter';
+import {
+  DirectDepositStore,
+  DirectDepositStoreContext,
+} from 'src/modules/directdeposit/store';
 import Options from 'src/modules/options';
-import { DirectDepositStore, DirectDepositStoreContext } from 'src/modules/directdeposit/store';
 import { OptionsStore, OptionsStoreContext } from 'src/modules/options/store';
 import PaymentOverview from 'src/modules/paymentoverview';
 import {
@@ -72,10 +75,10 @@ const EPayOptions: NextPage<Props> = ({ brand }) => {
             <DirectDepositStoreContext.Provider value={ddStore}>
               <Options />
             </DirectDepositStoreContext.Provider>
+            <PaymentOverviewStoreContext.Provider value={poStore}>
+              <PaymentOverview />
+            </PaymentOverviewStoreContext.Provider>
           </OptionsStoreContext.Provider>
-          <PaymentOverviewStoreContext.Provider value={poStore}>
-            <PaymentOverview />
-          </PaymentOverviewStoreContext.Provider>
         </ColumnBody>
         <ToolFooter />
       </Page>

@@ -1,13 +1,12 @@
+import { observer } from 'mobx-react';
 import React from 'react';
 import styled from 'styled-components';
-import { observer } from 'mobx-react';
 
 import DirectDepositViewModel from './ViewModel';
 
-import { Body } from 'src/core/Typography';
-
 import DirectDeposit from 'src/components/DirectDeposit';
 import PlaidButton from 'src/components/PlaidButton';
+import { Body } from 'src/core/Typography';
 
 const DirectDepositContainer = styled('div')(() => ({
   width: '100%',
@@ -22,7 +21,7 @@ const DDToggleLink = styled.span`
   font-family: Calibre;
   font-weight: normal;
   letter-spacing: 0.25px;
-  color: #E7131A;
+  color: #e7131a;
   font-size: 18px;
   line-height: 24px;
   text-decoration: underline;
@@ -34,7 +33,7 @@ export interface Props {
 }
 
 const DirectDepositView: React.FC<Props> = ({ viewModel }) => {
-  let token = viewModel.getPlaidLinkToken();
+  const token = viewModel.getPlaidLinkToken();
 
   return (
     <DirectDepositContainer>
@@ -47,13 +46,17 @@ const DirectDepositView: React.FC<Props> = ({ viewModel }) => {
             priceId={viewModel.getPriceId()}
           />
           {viewModel.ddToggleOrCopy}
-          <DDToggleLink onClick={() => viewModel.togglePlaidLink()}>{viewModel.ddToggleManualCopy}</DDToggleLink>
+          <DDToggleLink onClick={() => viewModel.togglePlaidLink()}>
+            {viewModel.ddToggleManualCopy}
+          </DDToggleLink>
         </>
       ) : (
         <>
           <DirectDeposit />
           {viewModel.ddToggleOrCopy}
-          <DDToggleLink onClick={() => viewModel.togglePlaidLink()}>{viewModel.ddTogglePlaidCopy}</DDToggleLink>
+          <DDToggleLink onClick={() => viewModel.togglePlaidLink()}>
+            {viewModel.ddTogglePlaidCopy}
+          </DDToggleLink>
         </>
       )}
     </DirectDepositContainer>

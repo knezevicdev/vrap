@@ -1,5 +1,5 @@
-import { OptionsStore } from './store';
 import { DirectDepositStore } from '../directdeposit/store';
+import { OptionsStore } from './store';
 
 import AnalyticsHandler from 'src/integrations/AnalyticsHandler';
 import { MailingAddress } from 'src/interfaces.d';

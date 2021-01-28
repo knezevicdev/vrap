@@ -1,9 +1,13 @@
 import { action, observable, runInAction } from 'mobx';
 import { createContext, useContext } from 'react';
 
-import { PaymentOverviewFormValues } from 'src/interfaces.d';
+import {
+  PaymentOverviewFormValues,
+  Store,
+  StoreStatus,
+} from 'src/interfaces.d';
 import { MailingAddress } from 'src/interfaces.d';
-import { Verification } from 'src/networking/models/Price';
+import { Poq, Verification } from 'src/networking/models/Price';
 import { Networker } from 'src/networking/Networker';
 
 const defaultOptionsState: OptionStoreState = {
@@ -16,11 +20,23 @@ const defaultOptionsState: OptionStoreState = {
     state: '',
     zipcode: '',
   },
-  email: ''
+  email: '',
+  currentPayments: false,
+  poq: {
+    // eslint-disable-next-line @typescript-eslint/camelcase
+    account_number: '',
+    // eslint-disable-next-line @typescript-eslint/camelcase
+    final_payment: 0,
+    // eslint-disable-next-line @typescript-eslint/camelcase
+    final_payoff: 0,
+  },
 };
+
 export interface OptionStoreState {
   mailingAddress: MailingAddress;
   email: string;
+  currentPayments: boolean;
+  poq: Poq;
 }
 
 export async function getInitialOptionsStoreState(
@@ -34,12 +50,14 @@ export async function getInitialOptionsStoreState(
     const optionState = {
       mailingAddress: verificationData.owner_mailing_address,
       email: verificationData.email,
+      currentPayments: verificationData.current_payments,
+      poq: verificationData.poq,
     };
+
     return optionState;
   } catch (err) {
     console.log(JSON.stringify(err));
-    const errorState = defaultOptionsState;
-    return errorState;
+    return defaultOptionsState;
   }
 }
 
@@ -49,6 +67,7 @@ export async function submitPaymentOptions(
   address: MailingAddress
 ): Promise<void> {
   const networker = new Networker();
+
   try {
     await networker.submitPaymentOptions(values, priceId, address);
   } catch (err) {
@@ -57,26 +76,31 @@ export async function submitPaymentOptions(
   }
 }
 
-export class OptionsStore {
+export class OptionsStore implements Store {
   @observable payOptionSelected = 'Direct Deposit';
   @observable payOptionArr = ['Direct Deposit', 'Check by Mail'];
   @observable showDD = true;
-  @observable remainingLoan = 0;
   @observable mailingAddress = defaultOptionsState.mailingAddress;
   @observable priceId = '';
   @observable email = '';
   @observable plaidSubmitting = false;
+  @observable currentPayments = defaultOptionsState.currentPayments;
+  @observable poq = defaultOptionsState.poq;
+  @observable status = StoreStatus.Initial;
 
   constructor(priceId?: string) {
     if (priceId) this.init(priceId);
   }
 
-  @action
   async init(priceId: string): Promise<void> {
     const initialState = await getInitialOptionsStoreState(priceId);
+
     runInAction(() => {
+      this.status = StoreStatus.Success;
       this.mailingAddress = initialState.mailingAddress;
       this.email = initialState.email;
+      this.currentPayments = initialState.currentPayments;
+      this.poq = initialState.poq;
       this.priceId = priceId;
     });
   }

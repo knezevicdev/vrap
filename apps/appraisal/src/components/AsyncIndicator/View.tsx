@@ -10,7 +10,7 @@ interface Props {
 }
 
 const AsyncIndicator: React.FC<Props> = ({ viewModel }) => {
-  if (!viewModel.isRequesting) return null;
+  if (!viewModel.isFetching) return null;
 
   return <Loading />;
 };

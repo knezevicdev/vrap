@@ -91,14 +91,12 @@ export default class LicensePlateViewModel implements LicensePlateViewProps {
           this.model.data.licensePlateToVin &&
           this.model.data.licensePlateToVin.vehicles
         ) {
-          const vehicles = this.model.data.licensePlateToVin.vehicles as Array<
-            Vehicles
-          >;
+          const vehicles = this.model.data.licensePlateToVin
+            .vehicles as Array<Vehicles>;
 
           if (vehicles.length == 1) {
-            const vin = (this.model.data.licensePlateToVin.vehicles as Array<
-              Vehicles
-            >)[0].vin;
+            const vin = (this.model.data.licensePlateToVin
+              .vehicles as Array<Vehicles>)[0].vin;
             console.log(this.trackLicensePlateClick);
             this.trackLicensePlateClick && this.trackLicensePlateClick();
             window.location.href = `/sell/vehicleInformation/${vin}`;

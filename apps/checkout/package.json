@@ -22,13 +22,14 @@
     "@vroom-web/deals-v2-networking": "^1.0.1",
     "@vroom-web/header-components": "^2.0.0",
     "@vroom-web/networking": "^0.0.3",
-    "@vroom-web/temp-ui-alias-for-checkout": "^2.2.0",
+    "@vroom-web/temp-ui-alias-for-checkout": "^2.2.1",
     "@vroom-web/ui": "^1.0.1",
     "axios": "^0.21.1",
+    "formik": "^2.2.6",
     "graphql": "^15.4.0",
     "graphql-tag": "^2.11.0",
     "http-proxy-middleware": "^1.0.6",
-    "libphonenumber-js": "^1.9.7",
+    "libphonenumber-js": "^1.9.8",
     "mobx": "^6.0.4",
     "mobx-react": "^7.0.5",
     "mobx-react-lite": "^3.1.6",
@@ -36,7 +37,8 @@
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-modal": "^3.12.1",
-    "styled-components": "^5.1.1"
+    "styled-components": "^5.1.1",
+    "yup": "^0.32.8"
   },
   "devDependencies": {
     "@babel/core": "^7.12.3",
