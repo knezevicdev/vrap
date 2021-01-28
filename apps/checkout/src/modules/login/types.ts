@@ -10,3 +10,14 @@ export interface FormProps {
     username: string;
     password: string;
   }
+
+  export interface ForgotPassword {
+    href: string,
+    text: string
+  }
+
+  export interface LoginProps {
+    isValid: boolean,
+    forgotPassword: ForgotPassword;
+    dirty: boolean
+  }

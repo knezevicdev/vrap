@@ -1,11 +1,13 @@
 import {
     Button,
+    Link,
+    ThemeProps
   } from '@vroom-web/temp-ui-alias-for-checkout';
-import { Form, FormikProps } from 'formik';
+import { Form } from 'formik';
 import React, { FC } from 'react';
 import styled from 'styled-components';
-import LoginInput from './LoginInput';
-import { FormValues } from './types';
+import CustomInput from '../../common/CustomInput';
+import { LoginProps } from '../types';
 
 const StyledButton = styled(Button.Primary)`
   width: 100%;
@@ -22,24 +24,35 @@ const StyledForm = styled(Form)`
   gap: 16px;
 `;
 
-const LoginForm: FC<FormikProps<FormValues>> = (props) => {
-    const { isValid, dirty } = props;
+const primaryBrand = (props: { theme: ThemeProps }): string =>
+props.theme.colors.primary.brand;
+
+const ForgotPasswordLink = styled(Link)`
+font-size: inherit;
+text-decoration: underline;
+:hover {
+  color: ${primaryBrand};
+}
+`;
+
+const LoginForm: FC<LoginProps> = (props) => {
+    const { isValid, dirty, forgotPassword } = props;
     return (
       <Container>
         <StyledForm>
-          <LoginInput
+          <CustomInput
             label="Email address"
             name="username"
             type="email"
             placeholder="example@example.com"
           />
-          <LoginInput
+          <CustomInput
             label="Password"
             name="password"
             type="password"
             placeholder="Password (min 8 characters)"
           />
-          {/* link for forget password */}
+          <ForgotPasswordLink href={forgotPassword.href}>{forgotPassword.text}</ForgotPasswordLink>
           <StyledButton type="submit" disabled={!(isValid && dirty)}>
             LOG IN
           </StyledButton>

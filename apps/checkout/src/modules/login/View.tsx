@@ -8,7 +8,7 @@ import {
   import React, { ReactElement } from 'react';
   import styled from 'styled-components';
   
-  import LoginForm from './LoginForm';
+  import LoginForm from './components/LoginForm';
   import { FormValues } from './types';
   import { ValidationSchema } from './validationSchema';
   import LoginViewModel from './ViewModel';
@@ -38,14 +38,7 @@ import {
     color: ${primaryBrand};
     text-decoration: none;
   `;
-  
-  const ForgotPasswordLink = styled(Link)`
-  font-size: inherit;
-  text-decoration: underline;
-  :hover {
-    color: ${primaryBrand};
-  }
-  `;
+
   const LoginView: React.FC<Props> = ({ viewModel }) => {
     const { initValues, title, handleSubmit, register, forgotPassword } = viewModel;
     return (
@@ -57,10 +50,9 @@ import {
           onSubmit={handleSubmit}
         >
           {(props: FormikProps<FormValues>): ReactElement => (
-            <LoginForm {...props} />
+            <LoginForm {...props} forgotPassword={forgotPassword}/>
           )}
         </Formik>
-        <ForgotPasswordLink href={forgotPassword.href}>{forgotPassword.text}</ForgotPasswordLink>
         <LoginText>
           {register.initialText}{' '}
           <CustomLink href={register.href}>{register.text}</CustomLink>
