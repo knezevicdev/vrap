@@ -75,10 +75,10 @@ const EPayOptions: NextPage<Props> = ({ brand }) => {
             <DirectDepositStoreContext.Provider value={ddStore}>
               <Options />
             </DirectDepositStoreContext.Provider>
+            <PaymentOverviewStoreContext.Provider value={poStore}>
+              <PaymentOverview />
+            </PaymentOverviewStoreContext.Provider>
           </OptionsStoreContext.Provider>
-          <PaymentOverviewStoreContext.Provider value={poStore}>
-            <PaymentOverview />
-          </PaymentOverviewStoreContext.Provider>
         </ColumnBody>
         <ToolFooter />
       </Page>

@@ -1,10 +1,10 @@
-import { AsyncStore } from 'src/interfaces.d';
+import { AsyncStatus, AsyncStore } from 'src/interfaces.d';
 
 class AsyncIndicatorViewModel {
   constructor(private store: AsyncStore) {}
 
-  get isRequesting(): boolean {
-    return this.store.isRequesting;
+  get isFetching(): boolean {
+    return this.store.asyncStatus === AsyncStatus.Fetching;
   }
 }
 

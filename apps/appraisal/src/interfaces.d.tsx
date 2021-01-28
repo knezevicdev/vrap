@@ -40,6 +40,21 @@ export interface PlaidData {
   Source: string;
 }
 
+export enum AsyncStatus {
+  Idle,
+  Fetching,
+}
+
 export interface AsyncStore {
-  isRequesting: boolean;
+  asyncStatus: AsyncStatus;
+}
+
+export enum StoreStatus {
+  Initial,
+  Error,
+  Success,
+}
+
+export interface Store {
+  status: StoreStatus;
 }

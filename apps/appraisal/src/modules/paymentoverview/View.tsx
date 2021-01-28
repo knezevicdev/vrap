@@ -80,34 +80,34 @@ const PaymentOverviewView: React.FC<Props> = ({ viewModel }) => {
     <PaymentOverview>
       <OverviewHeader>
         <StyledHero>{viewModel.hero}</StyledHero>
-        {!viewModel.getIsDesktop() && (
+        {!viewModel.isDesktop && (
           <OverviewExpand onClick={viewModel.toggleBody}>
-            {!viewModel.getDisplayBody() && (
+            {!viewModel.displayBody && (
               <ExpandArrowDown icon={Icons.CHEVRON_DOWN} />
             )}
-            {viewModel.getDisplayBody() && (
-              <ExpandArrowUp icon={Icons.CHEVRON_UP} />
-            )}
+            {viewModel.displayBody && <ExpandArrowUp icon={Icons.CHEVRON_UP} />}
           </OverviewExpand>
         )}
       </OverviewHeader>
-      {viewModel.getDisplayBody() && (
+      {viewModel.displayBody && (
         <OverviewBody>
           <Line />
           <OverviewRow>
             <PaymentOverviewBody>{viewModel.carWorth}</PaymentOverviewBody>
             <PaymentOverviewPrice>
-              {viewModel.getCarWorthPrice()}
+              {viewModel.carWorthPrice}
             </PaymentOverviewPrice>
           </OverviewRow>
           <OverviewRow>
             <PaymentOverviewBody>{viewModel.remainingLoan}</PaymentOverviewBody>
-            <PaymentOverviewPrice>$0</PaymentOverviewPrice>
+            <PaymentOverviewPrice>
+              {viewModel.remainingLoanBalance}
+            </PaymentOverviewPrice>
           </OverviewRow>
           <Line />
           <OverviewRow>
             <TotalBody>{viewModel.total}</TotalBody>
-            <TotalPrice>{viewModel.getCarWorthPrice()}</TotalPrice>
+            <TotalPrice>{viewModel.totalPrice}</TotalPrice>
           </OverviewRow>
         </OverviewBody>
       )}

@@ -1,7 +1,7 @@
 import { action, observable, runInAction } from 'mobx';
 import { createContext, useContext } from 'react';
 
-import { PlaidData } from 'src/interfaces.d';
+import { PlaidData, Store, StoreStatus } from 'src/interfaces.d';
 import { Networker } from 'src/networking/Networker';
 
 const defaultDDState: DDStoreState = {
@@ -47,12 +47,13 @@ export async function plaidSuccess(
   }
 }
 
-export class DirectDepositStore {
+export class DirectDepositStore implements Store {
   @observable linkToken = defaultDDState.LinkToken;
   @observable expiration = defaultDDState.Expiration;
   @observable requestId = defaultDDState.RequestId;
   @observable priceId = '';
   @observable showPlaidLink = true;
+  @observable status = StoreStatus.Initial;
 
   constructor(priceId?: string) {
     if (priceId) {

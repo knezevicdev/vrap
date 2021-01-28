@@ -1,7 +1,3 @@
-export interface Prices {
-  data: Price[];
-}
-
 export interface Price {
   automated_appraisal: boolean;
   ID: string;
@@ -23,8 +19,14 @@ export interface Price {
   tax_credit_savings: number | null;
 }
 
-export interface VerificationRespData {
-  data: Verification;
+export interface Prices {
+  data: Price[];
+}
+
+export interface Poq {
+  account_number: string;
+  final_payment: number;
+  final_payoff: number;
 }
 
 export interface Verification {
@@ -71,7 +73,7 @@ export interface Verification {
   pickup_contact_last_name: string;
   pickup_contact_phone_number: string;
   pickup_contact_email: string;
-  current_payments: boolean | null;
+  current_payments: boolean;
   lien_financial_institution_name: string;
   financial_institution_phone: string;
   lien_account_number: string;
@@ -90,10 +92,12 @@ export interface Verification {
   email: string;
   offer_id: string;
   last_four_ssn: string | null;
-  //final_payoff and final_payment are yet to be populated so it could be either strig or number
-  final_payoff: string | number | null;
-  final_payment: string | number | null;
   offer_price: number;
+  poq: Poq;
+}
+
+export interface VerificationRespData {
+  data: Verification;
 }
 
 export interface PaymentOptionsRespData {
