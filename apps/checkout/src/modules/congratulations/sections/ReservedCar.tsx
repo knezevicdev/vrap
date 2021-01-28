@@ -127,7 +127,6 @@ const CarTitle = styled(Title.Two)<{ hasTradeIn: boolean }>`
   margin-top: 24px;
   margin-bottom: 16px;
   ${(props): string | false => !props.hasTradeIn && `text-align: center;`}
-  
   ${addStyleForTablet(`
     text-align: center;
   `)}
