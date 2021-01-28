@@ -39,8 +39,15 @@ import {
     text-decoration: none;
   `;
   
+  const ForgotPasswordLink = styled(Link)`
+  font-size: inherit;
+  text-decoration: underline;
+  :hover {
+    color: ${primaryBrand};
+  }
+  `;
   const LoginView: React.FC<Props> = ({ viewModel }) => {
-    const { initValues, title, handleSubmit, register } = viewModel;
+    const { initValues, title, handleSubmit, register, forgotPassword } = viewModel;
     return (
       <Container>
         <Title>{title}</Title>
@@ -53,6 +60,7 @@ import {
             <LoginForm {...props} />
           )}
         </Formik>
+        <ForgotPasswordLink href={forgotPassword.href}>{forgotPassword.text}</ForgotPasswordLink>
         <LoginText>
           {register.initialText}{' '}
           <CustomLink href={register.href}>{register.text}</CustomLink>

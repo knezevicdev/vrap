@@ -13,6 +13,11 @@ class LoginViewModel {
     href: '/account/register',
   };
 
+  readonly forgotPassword = {
+    text: 'Forgot Password?',
+    href: '/forgot-password',
+  };
+
   handleSubmit = (values: FormValues): void => {
     alert(JSON.stringify(values, null, 2));
   };
