@@ -1,7 +1,6 @@
 import { action, observable, runInAction } from 'mobx';
 import { createContext, useContext } from 'react';
 
-import InitialPrice from 'src/components/InitialPrice';
 import {
   PaymentOverviewFormValues,
   Store,

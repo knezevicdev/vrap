@@ -1,5 +1,3 @@
-import { retrieveInitialDocumentResourceTiming } from '@datadog/browser-rum/cjs/browser/performanceCollection';
-
 import { OptionsStore } from '../options/store';
 import { PaymentOverviewStore } from './store';
 

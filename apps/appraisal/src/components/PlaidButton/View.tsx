@@ -1,9 +1,8 @@
-import React, { useCallback } from 'react';
-import styled from 'styled-components';
-import { observer } from 'mobx-react';
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
-
+import { observer } from 'mobx-react';
+import React, { useCallback } from 'react';
 import { usePlaidLink } from 'react-plaid-link';
+import styled from 'styled-components';
 
 import PlaidButtonViewModel from './ViewModel';
 
@@ -30,11 +29,16 @@ const PlaidButton = styled(Button.Primary)`
 export interface Props {
   viewModel: PlaidButtonViewModel;
   token: string;
-  plaidSuccess (mutationInput: PlaidData, onPlaidSubmitting: any): void;
+  plaidSuccess(mutationInput: PlaidData, onPlaidSubmitting: any): void;
   priceId: string;
 }
 
-const PlaidButtonView: React.FC<Props> = ({ viewModel, token, plaidSuccess, priceId }) => {
+const PlaidButtonView: React.FC<Props> = ({
+  viewModel,
+  token,
+  plaidSuccess,
+  priceId,
+}) => {
   const onSuccess = useCallback((_token: string, metaData: any): void => {
     const email = viewModel.getEmail();
     viewModel.onPlaidSubmitting(true);
@@ -47,14 +51,14 @@ const PlaidButtonView: React.FC<Props> = ({ viewModel, token, plaidSuccess, pric
         Subtype: metaData.account.subtype,
         Mask: metaData.account.mask,
       },
-      Institution: { 
+      Institution: {
         Id: metaData.institution.institution_id,
-        Name: metaData.institution.name
+        Name: metaData.institution.name,
       },
       PublicToken: metaData.public_token,
       Source: 'acquisitions',
       ReferenceId: priceId,
-      Email: email
+      Email: email,
     };
 
     plaidSuccess(mutationInput, onPlaidSubmitting);
@@ -67,8 +71,8 @@ const PlaidButtonView: React.FC<Props> = ({ viewModel, token, plaidSuccess, pric
   const config = {
     token,
     onSuccess,
-    onExit
-  }
+    onExit,
+  };
 
   const tokenIsUndefined = token.length === 0;
   const isSubmitting = viewModel.getPlaidSubmitting();
@@ -80,14 +84,14 @@ const PlaidButtonView: React.FC<Props> = ({ viewModel, token, plaidSuccess, pric
   const handlePlaidButtonClick = () => {
     viewModel.onPlaidSubmitting(true);
     open();
-  }
+  };
 
   return (
     <PlaidButtonContainer>
       <PlaidButton onClick={handlePlaidButtonClick} disabled={disableButton}>
-          {viewModel.buttonCopy}
-          <ArrowForwardIcon />
-        </PlaidButton>
+        {viewModel.buttonCopy}
+        <ArrowForwardIcon />
+      </PlaidButton>
     </PlaidButtonContainer>
   );
 };
