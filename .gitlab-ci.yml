@@ -1,4 +1,4 @@
-image: node:latest
+image: node:erbium
 
 stages:
   - build
@@ -38,7 +38,7 @@ lint-landing:
     - cd apps/landing
     - npm install --quiet
     - npm run lint
-  
+
 build-landing:
   only:
     refs:
@@ -48,5 +48,29 @@ build-landing:
   stage: build
   script:
     - cd apps/landing
+    - npm install --quiet
+    - npm run build
+
+lint-logistics:
+  only:
+    refs:
+      - merge_requests
+    changes:
+      - apps/logistics/*
+  stage: build
+  script:
+    - cd apps/logistics
+    - npm install --quiet
+    - npm run lint
+
+build-logistics:
+  only:
+    refs:
+      - merge_requests
+    changes:
+      - apps/logistics/*
+  stage: build
+  script:
+    - cd apps/logistics
     - npm install --quiet
     - npm run build

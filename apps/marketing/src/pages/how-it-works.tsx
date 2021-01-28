@@ -5,16 +5,26 @@ import React from 'react';
 
 import HowItWorks from 'src/modules/how-it-works';
 import Page from 'src/Page';
+import { PageData, returnBrandConfig } from 'src/utils/utils';
 
 interface Props {
   brand: Brand;
+  canonical: string;
+  description: string;
   title: string;
 }
 
-const HowItWorksPage: NextPage<Props> = ({ brand, title }) => {
+const HowItWorksPage: NextPage<Props> = ({
+  brand,
+  canonical,
+  description,
+  title,
+}) => {
   const head = (
     <>
       <title>{title}</title>
+      <link rel="canonical" href={canonical} />
+      <meta name="description" content={description}></meta>
     </>
   );
 
@@ -32,17 +42,16 @@ export const getServerSideProps: GetServerSideProps<Props> = async (
 ) => {
   ctx.res.setHeader('Cache-Control', '');
   const brand = determineWhitelabel(ctx);
+  const brandConfig = returnBrandConfig(brand, PageData.HOWITWORKS);
 
-  const getTitle = (): string => {
-    const title = 'How Vroom Works';
-    if (brand === Brand.SANTANDER) return `Santander Consumer USA - ${title}`;
-    if (brand === Brand.TDA) return `Texas Direct Auto - ${title}`;
-    return `Vroom - ${title}`;
+  return {
+    props: {
+      brand,
+      description: brandConfig.description,
+      title: brandConfig.title,
+      canonical: brandConfig.canonical,
+    },
   };
-
-  const title = getTitle();
-
-  return { props: { brand, title } };
 };
 
 export default HowItWorksPage;
