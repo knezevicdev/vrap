@@ -1,9 +1,10 @@
-import { PriceStore, PriceStoreStatus } from 'src/modules/price/store';
+import { StoreStatus } from 'src/interfaces.d';
+import { PriceStore } from 'src/modules/price/store';
 
 class PriceDetailViewModel {
   constructor(public store: PriceStore) {}
 
-  get status(): PriceStoreStatus {
+  get status(): StoreStatus {
     return this.store.status;
   }
 
