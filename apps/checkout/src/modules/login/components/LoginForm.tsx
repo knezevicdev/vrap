@@ -30,6 +30,7 @@ props.theme.colors.primary.brand;
 const ForgotPasswordLink = styled(Link)`
 font-size: inherit;
 text-decoration: underline;
+width: fit-content;
 :hover {
   color: ${primaryBrand};
 }
