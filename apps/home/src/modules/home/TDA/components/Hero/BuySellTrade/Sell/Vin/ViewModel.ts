@@ -36,8 +36,9 @@ class VinViewModel {
     const queryString = stringify(this.homeStore.query, {
       addQueryPrefix: true,
     });
-    const vitParams =
-      '?vit_source=texasdirectauto&vit_medium=wl&vit_dest=vroom&vit_brand=TDA&dealership=Texas%20Direct%20Auto';
+    const vitParams = `vit_source=texasdirectauto&vit_medium=wl&vit_dest=vroom&vit_brand=TDA&dealership=${encodeURIComponent(
+      'Texas Direct Auto'
+    )}`;
     window.location.href = `${VROOM_URL || ''}/sell/vehicleInformation/${
       this.vinStore.vin
     }${queryString}${queryString ? '&' : '?'}${vitParams}`;
