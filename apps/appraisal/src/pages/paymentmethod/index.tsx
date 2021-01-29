@@ -1,5 +1,3 @@
-import { useTheme } from '@material-ui/core/styles';
-import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { SimpleHeader } from '@vroom-web/header-components';
 import { Brand, ThemeProvider } from '@vroom-web/ui';
 import { IncomingMessage } from 'http';
@@ -58,12 +56,10 @@ const EPayOptions: NextPage<Props> = ({ brand }) => {
   const router = useRouter();
   const gearboxPrivateUrl = publicRuntimeConfig.GEARBOX_PRIVATE_URL;
   const priceId = router.query.priceId as string;
-  const theme = useTheme();
-  const mdUp = useMediaQuery(theme.breakpoints.up('lg'));
 
   const oStore = new OptionsStore(priceId);
   const ddStore = new DirectDepositStore(priceId);
-  const poStore = new PaymentOverviewStore(priceId, mdUp);
+  const poStore = new PaymentOverviewStore(priceId);
 
   return (
     <ThemeProvider brand={brand}>

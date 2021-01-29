@@ -25,14 +25,6 @@ class PaymentOverviewViewModel {
     return displayCurrency(this.poStore.price);
   }
 
-  get isDesktop(): boolean {
-    return this.poStore.isDesktop;
-  }
-
-  get displayBody(): boolean {
-    return this.poStore.displayBody;
-  }
-
   get hasPoq(): boolean {
     // empty string account_number means there is no poq
     return this.oStore.poq.account_number != '';
@@ -72,10 +64,6 @@ class PaymentOverviewViewModel {
       this.poStore.status != StoreStatus.Initial
     );
   }
-
-  toggleBody = (): void => {
-    this.poStore.setDisplayBody(!this.poStore.displayBody);
-  };
 }
 
 export default PaymentOverviewViewModel;
