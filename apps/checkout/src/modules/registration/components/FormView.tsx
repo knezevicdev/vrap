@@ -8,7 +8,9 @@ import styled from 'styled-components';
 
 import CustomCheckbox from '../../common/CustomCheckbox';
 import CustomInput from '../../common/CustomInput';
+import { FormValues } from '../types';
 import LegalCopy from './LegalCopy';
+import PasswordStrength from './PasswordStrength';
 
 const StyledButton = styled(Button.Primary)`
   width: 100%;
@@ -39,10 +41,12 @@ interface Props {
   dirty: boolean;
   handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   handlePhone: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  values: FormValues;
 }
 
 const FormView: FC<Props> = (props) => {
-  const { isValid, dirty, handleChange, handlePhone } = props;
+  const { isValid, dirty, handleChange, handlePhone, values } = props;
+
   return (
     <Container>
       <StyledForm>
@@ -79,6 +83,7 @@ const FormView: FC<Props> = (props) => {
           type="password"
           placeholder="Password (min 8 characters)"
         />
+        <PasswordStrength passwordInput={values.password} />
         <LegalCopy />
         <CustomCheckbox
           label="I want to receive communications about Vroom news and offers."
