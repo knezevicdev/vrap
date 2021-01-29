@@ -13,6 +13,7 @@ export interface LocationInfo {
   title: string;
   urlPath: string;
   googleMapsUrl: string;
+  closed: boolean;
 }
 
 class ViewModel {
@@ -34,6 +35,7 @@ class ViewModel {
       urlPath: 'locations/stafford',
       title: 'Stafford',
       googleMapsUrl: 'https://goo.gl/maps/KUwJwFhbxi2tF8NP8',
+      closed: false,
     },
     {
       locationInfo: {
@@ -51,6 +53,7 @@ class ViewModel {
       urlPath: 'locations/clear-lake',
       title: 'Clear Lake (League City)',
       googleMapsUrl: 'https://goo.gl/maps/y8rvyunyoPWBqkMn7',
+      closed: false,
     },
     {
       locationInfo: {
@@ -68,6 +71,7 @@ class ViewModel {
       urlPath: 'locations/woodlands',
       title: 'The Woodlands',
       googleMapsUrl: 'https://goo.gl/maps/uCkWMp49FBMrjZSFA',
+      closed: true,
     },
     {
       locationInfo: {
@@ -85,6 +89,7 @@ class ViewModel {
       urlPath: 'locations/memorial',
       title: 'Memorial',
       googleMapsUrl: 'https://goo.gl/maps/Yek1r2zTcJvnZtJZ9',
+      closed: false,
     },
     {
       locationInfo: {
@@ -102,6 +107,7 @@ class ViewModel {
       urlPath: 'locations/katy',
       title: 'Katy',
       googleMapsUrl: 'https://goo.gl/maps/VeRiY68MWa24Qx5n7',
+      closed: false,
     },
     {
       locationInfo: {
@@ -119,6 +125,7 @@ class ViewModel {
       urlPath: 'locations/cypress',
       title: 'Cypress',
       googleMapsUrl: 'https://goo.gl/maps/rVHXyavJk4v2Qi5v7',
+      closed: false,
     },
     {
       locationInfo: {
@@ -136,6 +143,7 @@ class ViewModel {
       urlPath: 'locations/kingwood',
       title: 'Kingwood',
       googleMapsUrl: 'https://goo.gl/maps/SBhBhUNdCBkCZH9Y7',
+      closed: true,
     },
     {
       locationInfo: {
@@ -153,6 +161,7 @@ class ViewModel {
       urlPath: 'locations/galleria',
       title: 'Galleria (Westheimer)',
       googleMapsUrl: 'https://goo.gl/maps/QNpUtKDbv1yy6qLL9',
+      closed: false,
     },
   ];
 }

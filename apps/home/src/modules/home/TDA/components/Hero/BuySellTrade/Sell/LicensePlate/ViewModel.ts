@@ -128,9 +128,7 @@ class LicensePlateViewModel {
       const queryString = stringify(this.homeStore.query, {
         addQueryPrefix: true,
       });
-      const vitParams = `vit_source=texasdirectauto&vit_medium=wl&vit_dest=vroom&vit_brand=TDA&dealership=${encodeURIComponent(
-        'Texas Direct Auto'
-      )}`;
+      const vitParams = `vit_source=texasdirectauto&vit_medium=wl&vit_dest=vroom&vit_brand=TDA`;
       window.location.href = `${
         VROOM_URL || ''
       }/sell/vehicleInformation/${vin}${queryString}${
