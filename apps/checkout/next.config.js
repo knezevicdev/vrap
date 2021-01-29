@@ -30,6 +30,14 @@ const config = {
     GQL_PROXY_TARGET: process.env.GQL_PROXY_TARGET,
     SEGMENT_WRITE_KEY: process.env.SEGMENT_WRITE_KEY,
   },
+  webpack: (config) => {
+    config.module.rules.push({
+      test: /\.(graphql|gql)$/,
+      exclude: /node_modules/,
+      loader: 'graphql-tag/loader',
+    });
+    return config;
+  },
 };
 
 module.exports = config;
