@@ -7,11 +7,7 @@ const errorMessages = {
   firstName: 'Please enter a valid first name',
   lastName: 'Please enter a valid last name',
   phone: 'Please enter a valid phone number',
-  password: 'Needs 8 characters, uppercase, numbers',
-  passwordSize: 'Needs 8 characters',
-  lowercase: 'Needs lowercase',
-  uppercase: 'Needs uppercase',
-  number: 'Needs numbers',
+  password: 'Please enter a valid password',
 };
 
 const regex = {
