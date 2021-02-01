@@ -1,7 +1,6 @@
 import { action, observable, runInAction } from 'mobx';
 import { createContext, useContext } from 'react';
 
-import { PlaidData } from 'src/interfaces.d';
 import { AsyncStatus, PlaidData, Store, StoreStatus } from 'src/interfaces.d';
 import { Networker } from 'src/networking/Networker';
 

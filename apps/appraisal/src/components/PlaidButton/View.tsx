@@ -4,10 +4,10 @@ import React, { useCallback } from 'react';
 import { usePlaidLink } from 'react-plaid-link';
 import styled from 'styled-components';
 
-import { Props } from './index';
 import PlaidButtonViewModel from './ViewModel';
 
 import { Button } from 'src/core/Button';
+import { PlaidData } from 'src/interfaces.d';
 
 const PlaidButtonContainer = styled('div')(() => ({
   width: '100%',
