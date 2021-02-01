@@ -14,3 +14,10 @@ export interface FormValues {
   password: string;
   optIn: boolean;
 }
+
+export interface Validity {
+  isAtLength: boolean;
+  hasLowercase: boolean;
+  hasUppercase: boolean;
+  hasNumbers: boolean;
+}
