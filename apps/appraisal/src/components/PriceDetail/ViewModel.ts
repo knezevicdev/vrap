@@ -5,7 +5,7 @@ class PriceDetailViewModel {
   constructor(public store: PriceStore) {}
 
   get status(): StoreStatus {
-    return this.store.status;
+    return this.store.storeStatus;
   }
 
   get automated(): boolean {

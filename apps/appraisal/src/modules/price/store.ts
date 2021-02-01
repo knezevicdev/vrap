@@ -1,6 +1,6 @@
 import { action, observable } from 'mobx';
 
-import { AsyncStatus, AsyncStore, Store, StoreStatus } from 'src/interfaces.d';
+import { AsyncStatus, Store, StoreStatus } from 'src/interfaces.d';
 import { Price } from 'src/networking/models/Price';
 import { Networker, PriceData } from 'src/networking/Networker';
 
@@ -46,11 +46,11 @@ export const defaultPriceState: PriceStoreState = {
   year: 0,
 };
 
-export class PriceStore implements Store, AsyncStore {
+export class PriceStore implements Store {
   private readonly networker = new Networker();
 
   @observable price = defaultPriceState;
-  @observable status = StoreStatus.Initial;
+  @observable storeStatus = StoreStatus.Initial;
   @observable asyncStatus = AsyncStatus.Idle;
 
   constructor(priceId: string) {
@@ -90,11 +90,11 @@ export class PriceStore implements Store, AsyncStore {
           // - Status updates and refreshes views
           // Just a heads up this can cause race conditions
           this.price = priceMapFromResponse;
-          this.status = StoreStatus.Success;
+          this.storeStatus = StoreStatus.Success;
         }
       })
       .catch((error) => {
-        this.status = StoreStatus.Error;
+        this.storeStatus = StoreStatus.Error;
         this.asyncStatus = AsyncStatus.Idle;
         console.log(JSON.stringify(error));
       });
@@ -112,8 +112,6 @@ export class PriceStore implements Store, AsyncStore {
     try {
       await this.networker.submitPriceResponse(priceData);
     } catch (err) {
-      this.status = StoreStatus.Error;
-      this.asyncStatus = AsyncStatus.Idle;
       console.log(JSON.stringify(err));
       return err;
     }

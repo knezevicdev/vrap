@@ -45,10 +45,6 @@ export enum AsyncStatus {
   Fetching,
 }
 
-export interface AsyncStore {
-  asyncStatus: AsyncStatus;
-}
-
 export enum StoreStatus {
   Initial,
   Error,
@@ -56,5 +52,6 @@ export enum StoreStatus {
 }
 
 export interface Store {
-  status: StoreStatus;
+  asyncStatus: AsyncStatus;
+  storeStatus: StoreStatus;
 }
