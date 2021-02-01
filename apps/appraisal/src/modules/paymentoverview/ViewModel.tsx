@@ -60,8 +60,8 @@ class PaymentOverviewViewModel {
 
   get isInitialized(): boolean {
     return (
-      this.oStore.status != StoreStatus.Initial &&
-      this.poStore.status != StoreStatus.Initial
+      this.oStore.storeStatus != StoreStatus.Initial &&
+      this.poStore.storeStatus != StoreStatus.Initial
     );
   }
 }
