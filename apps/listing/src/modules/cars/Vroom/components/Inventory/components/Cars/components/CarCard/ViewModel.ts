@@ -2,7 +2,8 @@
 import { Car, SoldStatusInt } from '@vroom-web/inv-search-networking';
 import getConfig from 'next/config';
 
-import AnalyticsHandler, {
+import {
+  analyticsHandler,
   Product,
   ProductPhotoType,
 } from 'src/integrations/AnalyticsHandler';
@@ -19,7 +20,6 @@ interface Summary {
 }
 
 class CarCardViewModel {
-  private analyticsHandler: AnalyticsHandler;
   private readonly carsStore: CarsStore;
   private readonly car: Car;
   private readonly position: number;
@@ -32,7 +32,6 @@ class CarCardViewModel {
   readonly tenDayDelivery: string = '10-Day Delivery';
 
   constructor(carsStore: CarsStore, car: Car, position: number) {
-    this.analyticsHandler = new AnalyticsHandler();
     this.carsStore = carsStore;
     this.car = car;
     this.position = position;
@@ -159,7 +158,7 @@ class CarCardViewModel {
       position: this.position,
       ...merchandising,
     };
-    this.analyticsHandler.trackProductClicked(product);
+    analyticsHandler.trackProductClicked(product);
   };
 }
 
