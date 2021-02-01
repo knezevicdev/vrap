@@ -18,7 +18,7 @@ interface Props {
 }
 
 const LocationView: React.FC<Props> = ({ locationInfo }) => {
-  const { name, mapsImgUrl, googleMapsUrl } = locationInfo;
+  const { name, mapsImgUrl, googleMapsUrl, closed } = locationInfo;
   return (
     <>
       <TDAHeader vroomUrl={VROOM_URL} />
@@ -26,6 +26,7 @@ const LocationView: React.FC<Props> = ({ locationInfo }) => {
         locationTitle={name}
         imgUrl={mapsImgUrl}
         googleMapsUrl={googleMapsUrl}
+        closed={closed}
       />
       <ContactInfo locationInfo={locationInfo} />
       <MarketingInfo />

@@ -5,7 +5,6 @@ import {
 } from '@vroom-web/networking';
 import { makeAutoObservable, runInAction } from 'mobx';
 import { getCongratsData  } from "src/networking";
-
 interface Data {
   user: GQLTypes.User;
 }
@@ -22,8 +21,8 @@ export default class CongratsModel {
     this.dataStatus = Status.LOADING;
   
     const response = await getCongratsData(dealID, ['Pending']);
-
-    if (isErrorResponse(response)) {
+ 
+    if (isErrorResponse(response)) { 
       runInAction(() => {
         this.dataStatus = Status.ERROR;
       });

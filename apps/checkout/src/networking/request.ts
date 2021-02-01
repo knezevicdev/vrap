@@ -1,11 +1,10 @@
 import client  from "./client";
 import { getTestDeal } from "./util/getTestDeal";
-
+import GET_USER_DEAL from 'src/graphql/queries/getUserDeal.graphql';
 import { 
     Response,
     GQLTypes, 
   } from '@vroom-web/networking';
-  import gql from 'graphql-tag';
   interface Data {
     user: GQLTypes.User;
   }
@@ -16,157 +15,13 @@ export const getCongratsData = async(inDealID?: number, inDealStatus?: string[])
   //switch between the real deal and dealStatus or mock deal if exist
   const { dealID, dealStatus } = getTestDeal(inDealID, inDealStatus)
     
-    const res = await client.gqlRequest<Data, GQLTypes.UserDealsArgs>({
-        document: gql`
-           query($dealID: Int, $dealStatus: [String!]) {
-        user {
-          username
-          firstName
-          lastName
-          phones {
-            number
-          }
-          appraisals {
-            vehicle {
-              year
-              make
-              model
-            }
-            appraisaloffer {
-              price
-            }
-          }
-          deals(dealID: $dealID, dealStatus: $dealStatus) {
-            accountID
-            dealID
-            createdAt
-            TradeIns {
-              year
-              make
-              model
-              offerPrice
-              loanPayoff
-              makingLoanPayoff
-            }
-            dealSummary {
-              accountInfo {
-                userName
-                firstName
-                middleName
-                lastName
-                phone
-              }
-              dealStatus {
-                step
-                status
-                interestedInTrade
-                canBeCancelled
-                pastSteps
-              }
-              paymentType
-              deliveryAddress {
-                firstName
-                lastName
-                streetLine1
-                streetLine2
-                city
-                state
-                postCode
-              }
-              amountDue {
-                subTotal
-                totalBalanceDue
-                cashDownPayment
-                taxableAmount
-                totalTaxesAndFees
-                shippingFee
-                tradeIn {
-                  value
-                  loanPayoff
-                  netBalance
-                  totalDownPayment
-                }
-              }
-              dateCompleted
-              deliveryDetails {
-                wheelerTruck
-                availableForDelivery
-                additionalDetails
-                unavailableDates
-                alternateContact {
-                  first
-                  last
-                  phone
-                }
-                wheelerTruck
-              }
-              documents {
-                fileType
-                fileID
-              }
-              inventory {
-                id
-                miles
-                leadPhotoURL
-                pricing {
-                  listPrice
-                }
-                vehicle {
-                  vin
-                  year
-                  make
-                  model
-                  trim
-                }
-              }
-              depositPaymentInfo {
-                HoldPlaced
-                LastFourDigits
-                ChargeAmount
-              }
-              registrationAddress {
-                firstName
-                lastName
-                streetLine1
-                streetLine2
-                city
-                state
-                postCode
-              }
-              billingAddress {
-                firstName
-                lastName
-                streetLine1
-                streetLine2
-                city
-                state
-                postCode
-              }
-              financing {
-                decisions {
-                  isAccepted
-                }
-                pricingStack {
-                  downPayment
-                  lenderName
-                  apr
-                  buyRate
-                  termMonths
-                  monthlyPayment
-                  financeCharge
-                }
-              }
-              additionalProducts
-            }
-          }
-        }
-      }
-        `,
-        variables: {
-          dealID,
-          dealStatus,
-        },
-      });
+  const res = await client.gqlRequest<Data, GQLTypes.UserDealsArgs>({
+    document: GET_USER_DEAL,
+    variables: {
+      dealID,
+      dealStatus,
+    },
+  });
     
       return res; 
 }

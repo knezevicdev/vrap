@@ -1,7 +1,7 @@
 import React from 'react';
 
-import { useOptionsStore } from './store';
 import { useDirectDepositStore } from '../directdeposit/store';
+import { useOptionsStore } from './store';
 import View from './View';
 import ViewModel from './ViewModel';
 

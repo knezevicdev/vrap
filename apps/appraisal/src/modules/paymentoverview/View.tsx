@@ -1,5 +1,7 @@
+import { useTheme } from '@material-ui/core/styles';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { observer } from 'mobx-react';
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 
 import PaymentOverviewViewModel from './ViewModel';
@@ -76,20 +78,27 @@ export interface Props {
 }
 
 const PaymentOverviewView: React.FC<Props> = ({ viewModel }) => {
+  const theme = useTheme();
+  const isDesktop = useMediaQuery(theme.breakpoints.up('lg'), { noSsr: true });
+  const [isExpanded, setIsExpanded] = useState<boolean>(isDesktop);
+
+  const handleToggle = (): void => setIsExpanded((isExpanded) => !isExpanded);
+
   return (
     <PaymentOverview>
       <OverviewHeader>
         <StyledHero>{viewModel.hero}</StyledHero>
-        {!viewModel.isDesktop && (
-          <OverviewExpand onClick={viewModel.toggleBody}>
-            {!viewModel.displayBody && (
+        {!isDesktop && (
+          <OverviewExpand onClick={handleToggle}>
+            {isExpanded ? (
+              <ExpandArrowUp icon={Icons.CHEVRON_UP} />
+            ) : (
               <ExpandArrowDown icon={Icons.CHEVRON_DOWN} />
             )}
-            {viewModel.displayBody && <ExpandArrowUp icon={Icons.CHEVRON_UP} />}
           </OverviewExpand>
         )}
       </OverviewHeader>
-      {viewModel.displayBody && (
+      {(isDesktop || isExpanded) && (
         <OverviewBody>
           <Line />
           <OverviewRow>
