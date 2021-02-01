@@ -8,7 +8,7 @@
     "start": "next start",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx,.json --fix",
     "test": "jest",
-    "dev:mock": "MOCK_SERVER_URL=http://localhost:9559 next dev",
+    "dev:mock": "mockServer=true next dev",
     "storybook": "start-storybook -p 1337 -s public",
     "build:storybook": "build-storybook -s public",
     "chromatic": "npx chromatic --project-token=04wv53wmrvq2 --exit-zero-on-changes"

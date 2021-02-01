@@ -15,11 +15,6 @@ const endPointSelector = () => {
   if(process.env.NODE_ENV === 'production'){
     return 'gql'
   }
-
-  if(process.env.MOCK_SERVER_URL){
-    return process.env.MOCK_SERVER_URL
-  }
-
   return `${basePath}/api/gql`
 }
 
@@ -33,6 +28,7 @@ const config = {
     DATA_DOG_RUM_APPLICATION: process.env.DATA_DOG_RUM_APPLICATION,
     DATA_DOG_RUM_TOKEN: process.env.DATA_DOG_RUM_TOKEN,
     GQL_PROXY_URL: endPointSelector(),
+    mockServer: process.env.mockServer,
     GEARBOX_PRIVATE_URL: process.env.GEARBOX_PRIVATE_URL,
     NAME: name,
     NODE_ENV: process.env.NODE_ENV,
