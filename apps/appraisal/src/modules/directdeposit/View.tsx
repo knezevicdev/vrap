@@ -3,6 +3,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 import DirectDepositViewModel from './ViewModel';
+
 import DirectDeposit from 'src/components/DirectDeposit';
 import PlaidButton from 'src/components/PlaidButton';
 import { Body } from 'src/core/Typography';

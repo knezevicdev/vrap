@@ -67,7 +67,7 @@ const EPayOptions: NextPage<Props> = ({ brand }) => {
 
   const oStore = new OptionsStore(priceId);
   const ddStore = new DirectDepositStore(priceId);
-  const poStore = new PaymentOverviewStore(priceId, mdUp);
+  const poStore = new PaymentOverviewStore(priceId);
   const [stateDropdownOpen, setStateDropdown] = useState(false);
 
   return (
