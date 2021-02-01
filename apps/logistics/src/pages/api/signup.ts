@@ -61,14 +61,16 @@ export default async function handler(
 
     const signup = {
       gql: {
-        query: `mutation signup($username: String!, $password: String!, $source: String!, $firstName: String!, $lastName: String!, $middleName: String, $phone: String!, $emailMarketingConsent: Boolean!, $smsMarketingConsent: Boolean!) {
-          signup(username: $username, password: $password, source: $source, firstName: $firstName, lastName: $lastName, middleName: $middleName, phone: $phone, emailMarketingConsent: $emailMarketingConsent, smsMarketingConsent: $smsMarketingConsent) {
-            accountId,
-            accessToken,
-            refreshToken,
-            idToken
+        query: `
+          mutation signup($username: String!, $password: String!, $source: String!, $firstName: String!, $lastName: String!, $middleName: String, $phone: String!, $emailMarketingConsent: Boolean!, $smsMarketingConsent: Boolean!, $sendWelcomeEmail: Boolean!) {
+            signup(username: $username, password: $password, source: $source, firstName: $firstName, lastName: $lastName, middleName: $middleName, phone: $phone, emailMarketingConsent: $emailMarketingConsent, smsMarketingConsent: $smsMarketingConsent, sendWelcomeEmail: $sendWelcomeEmail) {
+              accountId,
+              accessToken,
+              refreshToken,
+              idToken
+            }
           }
-        }`,
+        `,
         variables: {
           username: req.body.username,
           password: req.body.password,
@@ -79,6 +81,7 @@ export default async function handler(
           phone: '',
           emailMarketingConsent: false,
           smsMarketingConsent: false,
+          sendWelcomeEmail: false,
         },
       },
       config: {

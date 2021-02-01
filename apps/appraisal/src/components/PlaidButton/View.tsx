@@ -26,15 +26,20 @@ const PlaidButton = styled(Button.Primary)`
   }
 `;
 
-type ViewProps = Props & { viewModel: PlaidButtonViewModel };
+export interface Props {
+  viewModel: PlaidButtonViewModel;
+  token: string;
+  plaidSuccess(mutationInput: PlaidData, onPlaidSubmitting: any): void;
+  priceId: string;
+}
 
-const PlaidButtonView: React.FC<ViewProps> = ({
+const PlaidButtonView: React.FC<Props> = ({
   viewModel,
   token,
   plaidSuccess,
   priceId,
 }) => {
-  const onSuccess = useCallback((_token, metaData): void => {
+  const onSuccess = useCallback((_token: string, metaData: any): void => {
     const email = viewModel.getEmail();
     viewModel.onPlaidSubmitting(true);
     const onPlaidSubmitting = viewModel.onPlaidSubmitting;

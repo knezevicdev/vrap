@@ -10,7 +10,7 @@ const UsersPage: NextPage = () => {
   const head = <title>Admin - Users</title>;
 
   return (
-    <Page name="User Management" head={head}>
+    <Page name="User Management" head={head} adminRequired>
       <UsersContext.Provider value={model}>
         <Users />
       </UsersContext.Provider>

@@ -8,6 +8,13 @@ import CabType from './CabType';
 // import TowingCapacity from './TowingCapacity';
 import TruckViewModel from './ViewModel';
 
+const GroupContainer = withStyles((theme) => ({
+  root: {
+    display: 'flex',
+    paddingLeft: theme.spacing(2),
+  },
+}))(Box);
+
 const TruckContainer = withStyles((theme) => ({
   root: {
     display: 'flex',
@@ -38,7 +45,7 @@ interface Props {
 
 const TruckView: React.FC<Props> = ({ viewModel }) => {
   return (
-    <Box display="flex">
+    <GroupContainer>
       <CustomVerticalGradient />
       <TruckContainer>
         <FormGroupLabel>{viewModel.cabTypeFilterLabel}</FormGroupLabel>
@@ -48,7 +55,7 @@ const TruckView: React.FC<Props> = ({ viewModel }) => {
         <FormGroupLabel>{viewModel.towingCapacityFilterLabel}</FormGroupLabel>
         <TowingCapacity /> */}
       </TruckContainer>
-    </Box>
+    </GroupContainer>
   );
 };
 

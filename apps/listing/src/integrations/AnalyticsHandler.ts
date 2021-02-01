@@ -19,6 +19,8 @@ export interface Product {
   url?: string;
   vin: string;
   year: number;
+  merchandisingBadge?: boolean;
+  merchandisingBadgeType?: string;
 }
 
 interface Filter {
@@ -56,6 +58,20 @@ class AnalyticsHandler extends BaseAnalyticsHandler {
       filters,
       sort,
     };
+    this.track(event, properties);
+  }
+
+  trackEmailCaptureSubmit(isValidationError = false): void {
+    const event = 'Email Capture Submitted';
+    const category = 'Catalog';
+    const properties = { isValidationError, category };
+    this.track(event, properties);
+  }
+
+  trackEmailCaptureErrorShown(): void {
+    const event = 'Email Capture Error Shown';
+    const category = 'Catalog';
+    const properties = { category };
     this.track(event, properties);
   }
 

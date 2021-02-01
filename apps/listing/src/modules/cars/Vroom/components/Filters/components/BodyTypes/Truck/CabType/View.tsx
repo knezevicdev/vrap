@@ -1,10 +1,12 @@
-import { Checkbox, FormControlLabel, FormGroup } from '@material-ui/core';
-import withStyles from '@material-ui/core/styles/withStyles';
+import { FormControlLabel, List, ListItem } from '@material-ui/core';
+import { styled, withStyles } from '@material-ui/core/styles';
 import { CabType as FiltersDataCabType } from '@vroom-web/catalog-url-integration';
 import { observer } from 'mobx-react';
 import React from 'react';
 
 import CabTypeViewModel from './ViewModel';
+
+import Checkbox from 'src/ui/Checkbox';
 
 interface Props {
   viewModel: CabTypeViewModel;
@@ -15,7 +17,7 @@ const Label = withStyles(() => ({
     fontSize: '16px',
   },
   root: {
-    paddingRight: '2px',
+    width: '100%',
     justifyContent: 'space-between',
     marginLeft: '0px',
     '& span.Mui-checked + span': {
@@ -24,17 +26,17 @@ const Label = withStyles(() => ({
   },
 }))(FormControlLabel);
 
-const CheckboxCustom = withStyles((theme) => ({
-  root: {
-    color: theme.palette.grey['A100'],
-  },
-}))(Checkbox);
+const StyledList = styled(List)(({ theme }) => ({
+  padding: theme.spacing(0, 0, 2, 0),
+}));
 
-const FormGroupCustom = withStyles(() => ({
-  root: {
-    paddingBottom: '16px',
-  },
-}))(FormGroup);
+const StyledListItem = styled(ListItem)(({ theme }) => ({
+  padding: theme.spacing(1, 2),
+  height: theme.spacing(4),
+  display: 'flex',
+  flexDirection: 'row',
+  justifyContent: 'space-between',
+}));
 
 const CabTypeView: React.FC<Props> = ({ viewModel }) => {
   const handleCheckboxChange = (
@@ -46,28 +48,28 @@ const CabTypeView: React.FC<Props> = ({ viewModel }) => {
   };
 
   return (
-    <FormGroupCustom>
+    <StyledList>
       {viewModel.getCabTypes().map((cabType) => {
         const checked = viewModel.isChecked(cabType);
         const { display, filtersDataValue } = cabType;
-
         return (
-          <Label
-            key={display}
-            labelPlacement="start"
-            control={
-              <CheckboxCustom
-                color="primary"
-                checked={checked}
-                onChange={handleCheckboxChange}
-                value={filtersDataValue}
-              />
-            }
-            label={display}
-          />
+          <StyledListItem key={display} button>
+            <Label
+              key={display}
+              labelPlacement="start"
+              control={
+                <Checkbox
+                  checked={checked}
+                  onChange={handleCheckboxChange}
+                  value={filtersDataValue}
+                />
+              }
+              label={display}
+            />
+          </StyledListItem>
         );
       })}
-    </FormGroupCustom>
+    </StyledList>
   );
 };
 

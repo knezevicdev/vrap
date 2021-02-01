@@ -1,5 +1,7 @@
+import { useTheme } from '@material-ui/core/styles';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { observer } from 'mobx-react';
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 
 import PaymentOverviewViewModel from './ViewModel';
@@ -76,38 +78,45 @@ export interface Props {
 }
 
 const PaymentOverviewView: React.FC<Props> = ({ viewModel }) => {
+  const theme = useTheme();
+  const isDesktop = useMediaQuery(theme.breakpoints.up('lg'), { noSsr: true });
+  const [isExpanded, setIsExpanded] = useState<boolean>(isDesktop);
+
+  const handleToggle = (): void => setIsExpanded((isExpanded) => !isExpanded);
+
   return (
     <PaymentOverview>
       <OverviewHeader>
         <StyledHero>{viewModel.hero}</StyledHero>
-        {!viewModel.getIsDesktop() && (
-          <OverviewExpand onClick={viewModel.toggleBody}>
-            {!viewModel.getDisplayBody() && (
-              <ExpandArrowDown icon={Icons.CHEVRON_DOWN} />
-            )}
-            {viewModel.getDisplayBody() && (
+        {!isDesktop && (
+          <OverviewExpand onClick={handleToggle}>
+            {isExpanded ? (
               <ExpandArrowUp icon={Icons.CHEVRON_UP} />
+            ) : (
+              <ExpandArrowDown icon={Icons.CHEVRON_DOWN} />
             )}
           </OverviewExpand>
         )}
       </OverviewHeader>
-      {viewModel.getDisplayBody() && (
+      {(isDesktop || isExpanded) && (
         <OverviewBody>
           <Line />
           <OverviewRow>
             <PaymentOverviewBody>{viewModel.carWorth}</PaymentOverviewBody>
             <PaymentOverviewPrice>
-              {viewModel.getCarWorthPrice()}
+              {viewModel.carWorthPrice}
             </PaymentOverviewPrice>
           </OverviewRow>
           <OverviewRow>
             <PaymentOverviewBody>{viewModel.remainingLoan}</PaymentOverviewBody>
-            <PaymentOverviewPrice>$0</PaymentOverviewPrice>
+            <PaymentOverviewPrice>
+              {viewModel.remainingLoanBalance}
+            </PaymentOverviewPrice>
           </OverviewRow>
           <Line />
           <OverviewRow>
             <TotalBody>{viewModel.total}</TotalBody>
-            <TotalPrice>{viewModel.getCarWorthPrice()}</TotalPrice>
+            <TotalPrice>{viewModel.totalPrice}</TotalPrice>
           </OverviewRow>
         </OverviewBody>
       )}

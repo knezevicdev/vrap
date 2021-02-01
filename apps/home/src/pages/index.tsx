@@ -2,10 +2,12 @@
 /* eslint-disable no-nested-ternary */
 
 import { Experiment } from '@vroom-web/experiment-sdk';
+import { getVroomTheme } from '@vroom-web/temp-ui-alias-for-checkout';
 import { ThemeProvider } from '@vroom-web/ui';
 import { Brand, determineWhitelabel } from '@vroom-web/whitelabel';
 import { GetServerSideProps, GetServerSidePropsContext, NextPage } from 'next';
 import React from 'react';
+import { ThemeProvider as StyledThemeProvider } from 'styled-components';
 
 import experimentSDK from 'src/integrations/experimentSDK';
 import Home from 'src/modules/home';
@@ -15,6 +17,7 @@ import { returnBrandConfig } from 'src/utils/utils';
 
 interface Props {
   brand: Brand;
+  canonical: string;
   description: string;
   query: {};
   title: string;
@@ -23,10 +26,11 @@ interface Props {
 
 const HomePage: NextPage<Props> = ({
   brand,
+  canonical,
   description,
+  experiments,
   query,
   title,
-  experiments,
 }) => {
   const store = new HomeStore({
     query,
@@ -35,17 +39,20 @@ const HomePage: NextPage<Props> = ({
   const head = (
     <>
       <title>{title}</title>
-      <link rel="canonical" href="/" />
+      <link rel="canonical" href={canonical} />
       <meta name="description" content={description}></meta>
     </>
   );
+
   return (
     <ThemeProvider brand={brand}>
-      <Page brand={brand} name="Home" head={head}>
-        <HomeStoreContext.Provider value={store}>
-          <Home brand={brand} />
-        </HomeStoreContext.Provider>
-      </Page>
+      <StyledThemeProvider theme={getVroomTheme()}>
+        <Page brand={brand} name="Home" head={head}>
+          <HomeStoreContext.Provider value={store}>
+            <Home brand={brand} />
+          </HomeStoreContext.Provider>
+        </Page>
+      </StyledThemeProvider>
     </ThemeProvider>
   );
 };
@@ -65,6 +72,7 @@ export const getServerSideProps: GetServerSideProps<Props> = async (
       query: { ...ctx.query },
       title: brandConfig.title,
       experiments,
+      canonical: brandConfig.canonical,
     },
   };
 };

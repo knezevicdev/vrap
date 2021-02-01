@@ -1,8 +1,8 @@
-import Box from '@material-ui/core/Box';
-import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
+import { Box, Divider, Grid, Typography } from '@material-ui/core';
+import { observer } from 'mobx-react';
 import React, { useEffect } from 'react';
 
+import CreateAccount from './CreateAccount';
 import Filters from './Filters';
 import UserTable from './Table';
 import ViewModel from './ViewModel';
@@ -13,7 +13,7 @@ interface Props {
 
 const UsersView: React.FC<Props> = ({ viewModel }) => {
   useEffect(() => {
-    viewModel.getUserStatuses();
+    viewModel.init();
   }, [viewModel]);
 
   return (
@@ -26,11 +26,21 @@ const UsersView: React.FC<Props> = ({ viewModel }) => {
           <Filters />
         </Grid>
         <Grid item xs={9}>
-          <UserTable />
+          <Grid container spacing={4}>
+            <Grid item xs={12}>
+              <CreateAccount />
+            </Grid>
+            <Grid item xs={12}>
+              <Divider />
+            </Grid>
+            <Grid item xs={12}>
+              <UserTable />
+            </Grid>
+          </Grid>
         </Grid>
       </Grid>
     </Box>
   );
 };
 
-export default UsersView;
+export default observer(UsersView);

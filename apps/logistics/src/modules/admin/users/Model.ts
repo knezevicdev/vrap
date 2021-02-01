@@ -6,9 +6,11 @@ import {
   User,
 } from 'src/networking/models/User';
 import {
+  getCarriers,
   getUsers,
   getUserStatuses,
   patchUser,
+  postCreateAccountEmail,
   Status,
 } from 'src/networking/Networker';
 
@@ -16,10 +18,15 @@ class UsersModel {
   users: User[] = [];
   usersStatus: Status = Status.INITIAL;
 
-  carrierFilter?: Carrier;
+  carrierFilter = '';
   statusFilter = UserStatus.Pending;
   statusOptions: string[] = [];
   statusOptionsStatus: Status = Status.INITIAL;
+
+  carrierOptions: Carrier[] = [];
+  carrierOptionsStatus: Status = Status.INITIAL;
+
+  createAccountStatus: Status = Status.INITIAL;
 
   constructor() {
     makeAutoObservable(this);
@@ -30,7 +37,7 @@ class UsersModel {
 
     try {
       const response = await getUsers(
-        this.carrierFilter?.carrier_code ?? '',
+        this.carrierFilter || '',
         this.statusFilter
       );
 
@@ -52,7 +59,9 @@ class UsersModel {
   ): Promise<void> => {
     try {
       await patchUser(id, status, carrierCode);
-      this.getUsers();
+      runInAction(() => {
+        this.getUsers();
+      });
     } catch (err) {
       console.error(err);
     }
@@ -74,7 +83,37 @@ class UsersModel {
     }
   };
 
-  setCarrierFilter = (value: Carrier | undefined): void => {
+  getCarriers = async (): Promise<void> => {
+    this.carrierOptionsStatus = Status.FETCHING;
+    try {
+      const response = await getCarriers({ filter: '', portalVisible: true });
+      runInAction(() => {
+        this.carrierOptionsStatus = Status.SUCCESS;
+        this.carrierOptions = response.data.carriers;
+      });
+    } catch (err) {
+      console.error(err);
+      this.carrierOptionsStatus = Status.ERROR;
+    }
+  };
+
+  postCreateAccount = async (emailAddress: string): Promise<void> => {
+    this.createAccountStatus = Status.FETCHING;
+    try {
+      await postCreateAccountEmail({
+        emailAddress,
+        signupUrl: `${window.location.origin}/signup`,
+      });
+      runInAction(() => {
+        this.createAccountStatus = Status.SUCCESS;
+      });
+    } catch (err) {
+      console.error(err);
+      this.createAccountStatus = Status.ERROR;
+    }
+  };
+
+  setCarrierFilter = (value: string): void => {
     this.carrierFilter = value;
   };
 

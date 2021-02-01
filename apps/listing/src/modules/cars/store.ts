@@ -3,6 +3,7 @@ import {
   FiltersData,
   getUrlFromFiltersData,
 } from '@vroom-web/catalog-url-integration';
+import { Experiment } from '@vroom-web/experiment-sdk';
 import {
   Inventory,
   InvSearchNetworker,
@@ -62,6 +63,7 @@ export interface InitialCarsStoreState {
   popularCars?: Inventory;
   filtersData?: FiltersData;
   titleQuery?: boolean;
+  zipCode?: string | string[];
 }
 
 export const getBodyTypeRequestData = (
@@ -266,21 +268,26 @@ export const getPopularFeaturesRequestData = (
 };
 
 export const getSortRequestData = (
-  filtersData?: FiltersData
+  filtersData?: FiltersData,
+  geoShippingExperimentAssignedVariant?: 0 | 1
 ): {
   sortby?: SortAPIBy;
   sortdirection?: SortAPIDirection;
 } => {
+  const sortByGeoOrRandom =
+    geoShippingExperimentAssignedVariant === 1
+      ? SortAPIBy.RANDOM
+      : SortAPIBy.GEO;
   if (!filtersData) {
     return {
-      sortby: SortAPIBy.GEO,
+      sortby: sortByGeoOrRandom,
       sortdirection: undefined,
     };
   }
   const filtersDataSort = filtersData[Filters.SORT];
   if (!filtersDataSort) {
     return {
-      sortby: SortAPIBy.GEO,
+      sortby: sortByGeoOrRandom,
       sortdirection: undefined,
     };
   }
@@ -340,8 +347,12 @@ export const getTransmissionRequestData = (
 };
 
 export const getPostInventoryRequestDataFromFilterData = (
-  filtersData?: FiltersData
+  filtersData?: FiltersData,
+  geoShippingExperiment?: Experiment,
+  shippingOrigins?: string[]
 ): PostInventoryRequestData => {
+  const geoShippingExperimentAssignedVariant =
+    geoShippingExperiment?.assignedVariant;
   const bodytype = getBodyTypeRequestData(filtersData);
   const cabtype = getCabTypeRequestData(filtersData);
   const color = getColorRequestData(filtersData);
@@ -351,7 +362,10 @@ export const getPostInventoryRequestDataFromFilterData = (
   const { makeSlug, modelSlug } = getMakeAndModelRequestData(filtersData);
   const offset = getOffsetRequestData(filtersData);
   const popularFeatures = getPopularFeaturesRequestData(filtersData);
-  const { sortby, sortdirection } = getSortRequestData(filtersData);
+  const { sortby, sortdirection } = getSortRequestData(
+    filtersData,
+    geoShippingExperimentAssignedVariant
+  );
   const testdriveonly = getTestDriveOnlyRequestData(filtersData);
   const transmissionid = getTransmissionRequestData(filtersData);
 
@@ -377,12 +391,16 @@ export const getPostInventoryRequestDataFromFilterData = (
       (filtersData && filtersData[Filters.OTHER_CYLINDERS]) || undefined,
     optionalFeatures: popularFeatures,
     combinedMpg: filtersData ? filtersData[Filters.FUEL_EFFICIENCY] : undefined,
+    ...(geoShippingExperimentAssignedVariant === 1 && {
+      locationBoost: shippingOrigins,
+    }),
   };
 };
 
 export class CarsStore {
   private readonly invSearchNetworker: InvSearchNetworker;
   private readonly isTitleQAPass?: boolean;
+  private readonly zipCode?: string | string[];
 
   readonly attributionQueryString: string = '';
   readonly geoLocationSortDefaultVariant: boolean = true;
@@ -421,7 +439,17 @@ export class CarsStore {
     return false;
   }
 
+  @observable shippingOrigins?: string[];
+  @observable shippingOriginsStatus: Status = Status.INITIAL;
+
   @observable areFiltersOpen = false;
+
+  @observable cylinderFilterExperiment?: Experiment;
+  @observable fuelTypeFilterExperiment?: Experiment;
+  @observable featuresFilterExperiment?: Experiment;
+  @observable fuelEfficiencyFilterExperiment?: Experiment;
+  @observable truckCabTypeFilterExperiment?: Experiment;
+  @observable geoShippingExperiment?: Experiment;
 
   constructor(initialState?: InitialCarsStoreState) {
     this.invSearchNetworker = new InvSearchNetworker(
@@ -435,8 +463,53 @@ export class CarsStore {
       this.popularCarsData = initialState.popularCars;
       this.filtersData = initialState.filtersData;
       this.isTitleQAPass = initialState.titleQuery;
+      this.zipCode = initialState.zipCode;
     }
   }
+
+  @action
+  setCylindersFilterExperiment = (
+    cylinderFilterExperiment?: Experiment
+  ): void => {
+    this.cylinderFilterExperiment = cylinderFilterExperiment;
+  };
+
+  @action
+  setFuelEfficiencyFilterExperiment = (
+    fuelEfficiencyFilterExperiment?: Experiment
+  ): void => {
+    this.fuelEfficiencyFilterExperiment = fuelEfficiencyFilterExperiment;
+  };
+
+  @action
+  setTruckCabTypeFilterExperiment = (
+    truckCabTypeFilterExperiment?: Experiment
+  ): void => {
+    this.truckCabTypeFilterExperiment = truckCabTypeFilterExperiment;
+  };
+
+  @action
+  setFuelTypeFilterExperiment = (
+    fuelTypeFilterExperiment?: Experiment
+  ): void => {
+    this.fuelTypeFilterExperiment = fuelTypeFilterExperiment;
+  };
+
+  @action
+  setFeaturesFilterExperiment = (
+    featuresFilterExperiment?: Experiment
+  ): void => {
+    this.featuresFilterExperiment = featuresFilterExperiment;
+  };
+
+  @action
+  setGeoShippingExperiment = (geoShippingExperiment?: Experiment): void => {
+    if (this.zipCode && geoShippingExperiment) {
+      geoShippingExperiment.assignedVariant = 1;
+      this.geoShippingExperiment = geoShippingExperiment;
+    }
+    this.geoShippingExperiment = geoShippingExperiment;
+  };
 
   @action
   setAreFiltersOpen = (areFiltersOpen: boolean): void => {
@@ -454,11 +527,13 @@ export class CarsStore {
   };
 
   @action
-  fetchInventoryData = async (): Promise<void> => {
+  fetchInventoryData = async (shippingOrigins?: string[]): Promise<void> => {
     try {
       this.inventoryStatus = Status.FETCHING;
       const postInventoryRequestDataFromFiltersData = getPostInventoryRequestDataFromFilterData(
-        this.filtersData
+        this.filtersData,
+        this.geoShippingExperiment,
+        shippingOrigins
       );
 
       const showIsAvailableSoon = postInventoryRequestDataFromFiltersData.testdriveonly
@@ -467,12 +542,7 @@ export class CarsStore {
 
       const inventoryRequestData: PostInventoryRequestData = {
         ...postInventoryRequestDataFromFiltersData,
-        // DELTA-228.
-        // fulldetails should be false.
-        // However, it's needed on the TDA whitelabel b/c the 'zone' field is how we determine
-        // whether a vehicle is test drivable.
-        // TODO: move that logic to the backend and set this back to false.
-        fulldetails: true,
+        fulldetails: false,
         limit: INVENTORY_CARDS_PER_PAGE,
         source: `${publicRuntimeConfig.NAME}-${publicRuntimeConfig.VERSION}`,
         isTitleQAPass: this.isTitleQAPass,

@@ -3,7 +3,7 @@ import React from 'react';
 import ShipmentsModel from '../../Model';
 import Model from './Model';
 import View from './View';
-import viewModel from './VviewModel';
+import ViewModel from './ViewModel';
 
 interface Props {
   shipmentId: number;
@@ -16,7 +16,7 @@ const Deliver: React.FC<Props> = ({
   shipmentStopId,
   shipmentsModel,
 }) => (
-  <View {...viewModel(new Model(shipmentId, shipmentStopId, shipmentsModel))} />
+  <View {...ViewModel(new Model(shipmentId, shipmentStopId, shipmentsModel))} />
 );
 
 export default Deliver;

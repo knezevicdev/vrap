@@ -1,5 +1,10 @@
 import { Filters } from '@vroom-web/catalog-url-integration';
-import { Car, Hit, Inventory } from '@vroom-web/inv-search-networking';
+import {
+  Car,
+  Hit,
+  Inventory,
+  SoldStatusInt,
+} from '@vroom-web/inv-search-networking';
 import isEmpty from 'lodash.isempty';
 import { reaction } from 'mobx';
 
@@ -16,6 +21,26 @@ class CarsViewModel {
     this.store = store;
     this.analyticsHandler = new AnalyticsHandler();
   }
+
+  showAvailableSoon = (car: Car): boolean => {
+    return car.leadFlagPhotoUrl === '' || car.hasStockPhotos;
+  };
+
+  showSalePending = (car: Car): boolean => {
+    return (
+      !this.showAvailableSoon(car) &&
+      car.soldStatus === SoldStatusInt.SALE_PENDING
+    );
+  };
+
+  showTenDayDelivery = (car: Car): boolean => {
+    return (
+      car.location === 'Stafford' &&
+      this.store.geoShippingExperiment?.assignedVariant === 1 &&
+      !this.showSalePending(car) &&
+      !this.showAvailableSoon(car)
+    );
+  };
 
   private trackProductList(): void {
     if (!this.store.inventoryData) {
@@ -39,6 +64,12 @@ class CarsViewModel {
         vin,
         year,
       } = car;
+      const merchandising = {
+        merchandisingBadge: this.showTenDayDelivery(car),
+        ...(this.showTenDayDelivery(car)
+          ? { merchandisingBadgeType: 'Ten Day Delivery' }
+          : {}),
+      };
       const name = `${year} ${make} ${model}`;
       const url = `/inventory/${makeSlug}-${modelSlug}-${year}-${vin}`;
       return {
@@ -55,6 +86,7 @@ class CarsViewModel {
         url,
         vin,
         year,
+        ...merchandising,
       };
     });
 
@@ -240,7 +272,11 @@ class CarsViewModel {
   getPage(): number {
     const filtersData = this.store.filtersData;
     const filtersDataPage = filtersData ? filtersData[Filters.PAGE] : undefined;
-    const page = filtersDataPage ? filtersDataPage : 1;
+    return filtersDataPage ? filtersDataPage : 1;
+  }
+
+  getStartingCountByPage(): number {
+    const page = this.getPage();
     const arraysStartAtZeroFix = 1;
     return (page - 1) * this.store.inventoryCardsPerPage + arraysStartAtZeroFix;
   }

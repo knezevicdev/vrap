@@ -12,6 +12,7 @@ import Quotes from './components/Quotes';
 import Values from './components/Values';
 import WhoWeAre from './components/WhoWeAre';
 
+import AnalyticsHandler from 'src/integrations/AnalyticsHandler';
 import experimentSDK from 'src/integrations/experimentSDK';
 import { HomeStore, HomeStoreContext } from 'src/modules/home/store';
 
@@ -22,15 +23,19 @@ const Vroom: React.FC = () => {
 
   const homeStore = useContext<HomeStore>(HomeStoreContext);
   const [showHeroVideo, setShowHeroVideo] = useState<boolean>(false);
+  const [analyticsHandler] = useState<AnalyticsHandler>(new AnalyticsHandler());
 
   useEffect(() => {
     const { experiments } = homeStore;
-    const expId = 'delta-video-hero';
+    const expId = 'delta-video-hero-v3';
     const variantCalculatedExp = experimentSDK.determineVariantClientSide(
       experiments,
       expId
     );
-    if (variantCalculatedExp?.assignedVariant === 1) setShowHeroVideo(true);
+    if (variantCalculatedExp) {
+      analyticsHandler.registerExperiment(variantCalculatedExp);
+      if (variantCalculatedExp.assignedVariant === 1) setShowHeroVideo(true);
+    }
   }, []);
 
   return (

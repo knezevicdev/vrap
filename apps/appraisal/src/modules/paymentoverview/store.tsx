@@ -1,6 +1,7 @@
 import { action, observable, runInAction } from 'mobx';
 import { createContext, useContext } from 'react';
 
+import { AsyncStatus, Store, StoreStatus } from 'src/interfaces.d';
 import { Prices } from 'src/networking/models/Price';
 import { Networker } from 'src/networking/Networker';
 
@@ -32,14 +33,12 @@ export async function getInitialPaymentOverviewStoreState(
   }
 }
 
-export class PaymentOverviewStore {
+export class PaymentOverviewStore implements Store {
   @observable price = 0;
-  @observable isDesktop: boolean;
-  @observable displayBody = true;
+  @observable storeStatus = StoreStatus.Initial;
+  @observable asyncStatus = AsyncStatus.Idle;
 
-  constructor(priceId?: string, isDeskTop = true) {
-    this.isDesktop = isDeskTop;
-    this.displayBody = isDeskTop;
+  constructor(priceId?: string) {
     if (priceId) this.init(priceId);
   }
 
@@ -47,14 +46,10 @@ export class PaymentOverviewStore {
   async init(priceId: string): Promise<void> {
     const initialState = await getInitialPaymentOverviewStoreState(priceId);
     runInAction(() => {
+      this.storeStatus = StoreStatus.Success;
       this.price = initialState.price;
     });
   }
-
-  @action
-  setDisplayBody = (display: boolean): void => {
-    this.displayBody = display;
-  };
 }
 
 export const PaymentOverviewStoreContext = createContext<PaymentOverviewStore>(

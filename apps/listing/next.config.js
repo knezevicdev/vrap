@@ -21,6 +21,7 @@ module.exports = {
     DATA_DOG_RUM_APPLICATION: process.env.DATA_DOG_RUM_APPLICATION,
     DATA_DOG_RUM_TOKEN: process.env.DATA_DOG_RUM_TOKEN,
     INVSEARCH_V3_URL: process.env.INVSEARCH_V3_URL,
+    HORN_SERVICE_URL: process.env.HORN_SERVICE_URL,
     GEARBOX_PRIVATE_URL: process.env.GEARBOX_PRIVATE_URL,
     NAME: name,
     NODE_ENV: process.env.NODE_ENV,

@@ -1,4 +1,5 @@
-import axios, { AxiosResponse } from 'axios';
+import axios, { AxiosError, AxiosResponse } from 'axios';
+import Cookie from 'js-cookie';
 
 import { IdToken } from './models/Auth';
 import { Shipment, ShipmentStatus } from './models/Shipments';
@@ -14,6 +15,24 @@ export enum Status {
 }
 
 const axiosInstance = axios.create();
+
+axiosInstance.interceptors.response.use(
+  (response) => {
+    return response;
+  },
+  (err: AxiosError) => {
+    const authDataCookie: IdToken | undefined = Cookie.getJSON('authData');
+    if (err.response?.status === 401 || authDataCookie === undefined) {
+      if (err.response?.headers.location) {
+        const redirectUrl = `${err.response.headers.location}?previous=${window.location.pathname}`;
+        window.location.assign(redirectUrl);
+      } else {
+        window.history.back();
+      }
+    }
+    return Promise.reject(err);
+  }
+);
 
 export const getUsers = async (
   carrierCode: string,
@@ -60,31 +79,31 @@ export const getUsers = async (
   return axiosInstance.post(GEARBOX_URL, data);
 };
 
-export const getCarriers = async (
-  filter: string
-): Promise<AxiosResponse<{ carriers: Carrier[] }>> => {
+export const getCarriers = async (variables: {
+  filter: string;
+  portalVisible: boolean;
+}): Promise<AxiosResponse<{ carriers: Carrier[] }>> => {
   const data = {
-    query: `query carriersQuery($filter: String!) {
-      carriers(filter: $filter) {
-        __typename
-        ... on CarriersArray {
-          carriers {
-            carrier_id
-            carrier_code
-            carrier
+    query: `
+      query carriersQuery($filter: String!, $portalVisible: Boolean) {
+        carriers(filter: $filter, portalVisible: $portalVisible) {
+          __typename
+          ... on CarriersArray {
+            carriers {
+              carrier_id
+              carrier_code
+              carrier
+            }
+          }
+          ... on APIError {
+            errorType
+            errorTitle
+            errorDetail
           }
         }
-        ... on APIError {
-          errorType
-          errorTitle
-          errorDetail
-        }
-
       }
-    }`,
-    variables: {
-      filter: filter || '',
-    },
+    `,
+    variables,
     queryKey: 'carriers',
   };
 
@@ -94,7 +113,6 @@ export const getCarriers = async (
 export const getUserStatuses = async (): Promise<
   AxiosResponse<{ values: string[] }>
 > => {
-  const url = `/api/gearbox`;
   const data = {
     query: `query portalUserStatusQuery {
       portalUserStatus {
@@ -112,7 +130,7 @@ export const getUserStatuses = async (): Promise<
     variables: {},
     queryKey: 'portalUserStatus',
   };
-  return axiosInstance.post(url, data);
+  return axiosInstance.post(GEARBOX_URL, data);
 };
 
 export const patchUser = async (
@@ -120,8 +138,6 @@ export const patchUser = async (
   status?: string,
   carrierCode?: string
 ): Promise<AxiosResponse<User>> => {
-  const url = `/api/gearbox`;
-
   const variables: { userId: number; status?: string; carrierCode?: string } = {
     userId: id,
   };
@@ -168,7 +184,7 @@ export const patchUser = async (
     variables,
     queryKey: 'portalUserUpdate',
   };
-  return axiosInstance.post(url, data);
+  return axiosInstance.post(GEARBOX_URL, data);
 };
 
 export const postSignUp = async (
@@ -287,7 +303,6 @@ export interface PatchShipment {
 export const patchShipment = async (
   variables: PatchShipment
 ): Promise<void> => {
-  console.log(variables);
   const data = {
     query: `
       mutation updateShipment(
@@ -355,7 +370,6 @@ export interface PatchShipmentStop {
 export const patchShipmentStop = async (
   variables: PatchShipmentStop
 ): Promise<void> => {
-  console.log(variables);
   const data = {
     query: `mutation updateShipmentStop($shipmentId: Int!, $shipmentStopId: Int!, $idType: String!, $stopSequence: Int, $driverOnTheWay: Time, $milesTraveled: Int, $latitude: Float, $longitude: Float, $reestimatedReason: String, $estimatedArrival: Time, $estimatedDeparture: Time, $arrival: Time, $departure: Time) {
       shipmentStopUpdate(shipmentId: $shipmentId, shipmentStopId: $shipmentStopId, idType: $idType, stopSequence: $stopSequence, driverOnTheWay: $driverOnTheWay, milesTraveled: $milesTraveled, latitude: $latitude, longitude: $longitude, reestimatedReason: $reestimatedReason, estimatedArrival: $estimatedArrival, estimatedDeparture: $estimatedDeparture, arrival: $arrival, departure: $departure) {
@@ -369,6 +383,32 @@ export const patchShipmentStop = async (
     }`,
     variables,
     queryKey: 'shipmentStopUpdate',
+  };
+  return axiosInstance.post(GEARBOX_URL, data);
+};
+
+export interface PostCreateAccountEmail {
+  emailAddress: string;
+  signupUrl: string;
+}
+export const postCreateAccountEmail = async (
+  variables: PostCreateAccountEmail
+): Promise<void> => {
+  const data = {
+    query: `
+    mutation sendAccountCreateEmail($emailAddress: String!, $signupUrl: String!) {
+      portalUserCreateAccountEmail(emailAddress: $emailAddress, signupUrl: $signupUrl) {
+        __typename
+            ... on APIError {
+          errorType
+          errorTitle
+          errorDetail
+        }
+      }
+    }
+    `,
+    variables,
+    queryKey: 'portalUserCreateAccountEmail',
   };
   return axiosInstance.post(GEARBOX_URL, data);
 };

@@ -3,8 +3,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 import DirectDepositViewModel from './ViewModel';
-
-import DirectDepositInputs from 'src/components/DirectDepositInputs';
+import DirectDeposit from 'src/components/DirectDeposit';
 import PlaidButton from 'src/components/PlaidButton';
 import { Body } from 'src/core/Typography';
 
@@ -45,18 +44,16 @@ const DirectDepositView: React.FC<Props> = ({ viewModel }) => {
             plaidSuccess={viewModel.onPlaidSuccess}
             priceId={viewModel.getPriceId()}
           />
-          <DirectDepositCopy>
-            {viewModel.ddToggleOrCopy}&nbsp;
-            <DDToggleLink onClick={(): void => viewModel.togglePlaidLink()}>
-              {viewModel.ddToggleManualCopy}
-            </DDToggleLink>
-          </DirectDepositCopy>
+          {viewModel.ddToggleOrCopy}
+          <DDToggleLink onClick={(): void => viewModel.togglePlaidLink()}>
+            {viewModel.ddToggleManualCopy}
+          </DDToggleLink>
         </>
       ) : (
         <>
-          <DirectDepositInputs />
+          <DirectDeposit />
           <DirectDepositCopy>
-            {viewModel.ddToggleOrCopy}&nbsp;
+            {viewModel.ddToggleOrCopy}
             <DDToggleLink onClick={(): void => viewModel.togglePlaidLink()}>
               {viewModel.ddTogglePlaidCopy}
             </DDToggleLink>

@@ -24,14 +24,14 @@ const Reset = styled(ListItem)(({ theme }) => ({
 }));
 
 const Titles = styled(Typography)(({ theme }) => ({
-  padding: theme.spacing(2, 0, 0, 0),
   color: theme.palette.grey[700],
+  padding: theme.spacing(2),
 }));
 
 const FuelEfficiencyTitles = styled(Typography)(({ theme }) => ({
   fontSize: '13px',
   color: theme.palette.grey[700],
-  padding: theme.spacing(1, 0),
+  padding: theme.spacing(1, 2),
 }));
 
 const Value = styled(Typography)(() => ({

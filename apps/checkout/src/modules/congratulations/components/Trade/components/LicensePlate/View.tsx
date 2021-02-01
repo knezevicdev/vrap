@@ -29,7 +29,7 @@ export interface LicensePlateViewProps {
   getStates: () => { value: string; label: string }[];
   getPlate: () => string;
   state: undefined | { value: string; label: string };
-  onLicensePlateInput: (value: string) => void;
+  onLicensePlateInput: (event: React.FormEvent<HTMLInputElement>) => void;
   onStateSelected: (value: string, label: string) => void;
   getErrorForLicensePlate: () => string | undefined;
   getIsButtonDisabled: () => boolean;

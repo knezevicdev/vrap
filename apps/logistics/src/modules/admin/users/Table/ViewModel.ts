@@ -1,6 +1,6 @@
 import UsersModel from '../Model';
 
-import { Status as UserStatus } from 'src/networking/models/User';
+import { Carrier, Status as UserStatus } from 'src/networking/models/User';
 
 export enum Accessor {
   name,
@@ -9,34 +9,26 @@ export enum Accessor {
   status,
 }
 
-interface Data {
-  [Accessor.name]: string;
-  [Accessor.email]: string;
-  [Accessor.carrier]: string;
-  [Accessor.status]: UserStatus;
-}
-
-interface TableDataRow {
-  id: number;
-  data: Data;
-}
-
 interface TableData {
   headers: {
     display: string;
     accessor: Accessor;
   }[];
-  rows: TableDataRow[];
+  rows: {
+    id: number;
+    data: {
+      [Accessor.name]: string;
+      [Accessor.email]: string;
+      [Accessor.carrier]: Carrier;
+      [Accessor.status]: UserStatus;
+    };
+  }[];
 }
 
 class UsersViewModel {
   private model: UsersModel;
   constructor(usersModel: UsersModel) {
     this.model = usersModel;
-  }
-
-  getUsers(): void {
-    this.model.getUsers();
   }
 
   get tableLayout(): TableData {
@@ -60,17 +52,35 @@ class UsersViewModel {
         },
       ],
       rows: this.model.users.map((i) => {
+        const carrier = i.carrier || {
+          // eslint-disable-next-line @typescript-eslint/camelcase
+          carrier_id: -1,
+          carrier: '',
+          // eslint-disable-next-line @typescript-eslint/camelcase
+          carrier_code: '',
+        };
         return {
           id: i.portal_user_id,
           data: {
             [Accessor.name]: `${i.first_name} ${i.last_name}`,
             [Accessor.email]: i.username,
-            [Accessor.carrier]: i.carrier?.carrier ?? '',
+            [Accessor.carrier]: carrier,
             [Accessor.status]: i.status,
           },
         };
       }),
     };
+  }
+
+  get carrierOptions(): { key: string; label: string }[] {
+    if (this.model.carrierOptions.length > 0) {
+      return this.model.carrierOptions.map((i) => ({
+        key: i.carrier_code,
+        label: i.carrier,
+      }));
+    } else {
+      return [];
+    }
   }
 
   get statusOptions(): { key: string; label: string }[] {
@@ -84,8 +94,8 @@ class UsersViewModel {
     }
   }
 
-  patchUser(id: number, status?: string): void {
-    this.model.patchUser(id, status);
+  patchUser(id: number, status?: string, carrierCode?: string): void {
+    this.model.patchUser(id, status, carrierCode);
   }
 }
 

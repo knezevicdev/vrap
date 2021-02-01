@@ -11,6 +11,8 @@ const FuelEfficiencyContainer = styled('div')(({ theme }) => ({
   display: 'flex',
   flexDirection: 'column',
   paddingBottom: theme.spacing(2),
+  paddingLeft: theme.spacing(2),
+  paddingRight: theme.spacing(2),
 }));
 
 const MPGHeader = styled(Typography)(({ theme }) => ({

@@ -12,14 +12,17 @@ import { StartPurchaseStore } from 'src/modules/inventory/Vroom/components/Start
 
 const { publicRuntimeConfig } = getConfig();
 
-const gearboxPrivateUrl = publicRuntimeConfig.GEARBOX_PRIVATE_URL;
+const {
+  GEARBOX_PRIVATE_URL: gearboxPrivateUrl,
+  VROOM_URL: vroomUrl,
+} = publicRuntimeConfig;
 
 const StartPurchase: React.FC = () => {
   return (
     <InventoryStoreContext.Consumer>
       {(store: InventoryStore): JSX.Element => {
         const startPurchaseStore = new StartPurchaseStore(gearboxPrivateUrl);
-        const viewModel = new ViewModel(store, startPurchaseStore);
+        const viewModel = new ViewModel(store, startPurchaseStore, vroomUrl);
         return <View viewModel={viewModel} />;
       }}
     </InventoryStoreContext.Consumer>

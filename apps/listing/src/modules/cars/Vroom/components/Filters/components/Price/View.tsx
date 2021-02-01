@@ -12,7 +12,7 @@ import PriceViewModel from './ViewModel';
 const Container = styled('div')(({ theme }) => ({
   display: 'flex',
   flexDirection: 'column',
-  paddingBottom: theme.spacing(2),
+  padding: theme.spacing(1, 2),
 }));
 
 const Reset = styled(ListItem)(({ theme }) => ({

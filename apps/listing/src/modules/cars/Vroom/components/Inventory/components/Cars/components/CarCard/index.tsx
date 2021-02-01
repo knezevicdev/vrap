@@ -3,8 +3,8 @@ import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { Car } from '@vroom-web/inv-search-networking';
 import React, { useContext } from 'react';
 
+import LoadingCard from '../../Loading';
 import DesktopView from './DesktopView';
-import LoadingCard from './Loading';
 import MobileView from './MobileView';
 import CarCardViewModel from './ViewModel';
 
@@ -19,10 +19,9 @@ const CarCard: React.FC<CarCardProps> = ({ car, position }) => {
   const carsStore = useContext(CarsStoreContext);
   const theme = useTheme();
   const xsDown = useMediaQuery(theme.breakpoints.down('xs'));
-  const xlUp = useMediaQuery(theme.breakpoints.up('xl'));
 
   if (!car) {
-    return <LoadingCard mobile={xsDown} xl={xlUp} />;
+    return <LoadingCard />;
   }
   const viewModel = new CarCardViewModel(carsStore, car, position);
   if (xsDown) {
