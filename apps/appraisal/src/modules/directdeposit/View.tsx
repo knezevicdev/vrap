@@ -46,17 +46,19 @@ const DirectDepositView: React.FC<Props> = ({ viewModel }) => {
             priceId={viewModel.getPriceId()}
           />
           {viewModel.ddToggleOrCopy}
-          <DDToggleLink onClick={() => viewModel.togglePlaidLink()}>
+          <DDToggleLink onClick={(): void => viewModel.togglePlaidLink()}>
             {viewModel.ddToggleManualCopy}
           </DDToggleLink>
         </>
       ) : (
         <>
           <DirectDeposit />
-          {viewModel.ddToggleOrCopy}
-          <DDToggleLink onClick={() => viewModel.togglePlaidLink()}>
-            {viewModel.ddTogglePlaidCopy}
-          </DDToggleLink>
+          <DirectDepositCopy>
+            {viewModel.ddToggleOrCopy}
+            <DDToggleLink onClick={(): void => viewModel.togglePlaidLink()}>
+              {viewModel.ddTogglePlaidCopy}
+            </DDToggleLink>
+          </DirectDepositCopy>
         </>
       )}
     </DirectDepositContainer>

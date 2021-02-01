@@ -62,6 +62,7 @@ const PlaidButtonView: React.FC<Props> = ({
     };
 
     plaidSuccess(mutationInput, onPlaidSubmitting);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const onExit = useCallback((): void => {
@@ -81,7 +82,7 @@ const PlaidButtonView: React.FC<Props> = ({
 
   const disableButton = (!ready && tokenIsUndefined) || isSubmitting;
 
-  const handlePlaidButtonClick = () => {
+  const handlePlaidButtonClick = (): void => {
     viewModel.onPlaidSubmitting(true);
     open();
   };

@@ -4,7 +4,7 @@ import { IncomingMessage } from 'http';
 import { NextPage, NextPageContext } from 'next';
 import getConfig from 'next/config';
 import { useRouter } from 'next/router';
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 
 import ToolFooter from 'src/core/ToolFooter';
@@ -13,6 +13,10 @@ import {
   DirectDepositStoreContext,
 } from 'src/modules/directdeposit/store';
 import Options from 'src/modules/options';
+import {
+  PaymentMethodContext,
+  PaymentMethodContextType,
+} from 'src/modules/options/paymentMethodContext';
 import { OptionsStore, OptionsStoreContext } from 'src/modules/options/store';
 import PaymentOverview from 'src/modules/paymentoverview';
 import {
@@ -27,22 +31,26 @@ const ColumnBody = styled.div`
   margin: 0 auto;
   padding: 20px;
   flex-wrap: wrap;
-  min-height: 78vh;
+  min-height: ${(props: Partial<PaymentMethodContextType>): string =>
+    props.stateDropdownOpen ? '115vh' : '79vh'};
 
   @media (max-width: 1280px) {
     flex-wrap: wrap-reverse;
     align-content: flex-end;
-    min-height: 86vh;
+    min-height: ${(props: Partial<PaymentMethodContextType>): string =>
+      props.stateDropdownOpen ? '130vh' : '86vh'};
   }
 
   @media (max-width: 786px) {
     flex-wrap: wrap-reverse;
-    min-height: 81vh;
+    min-height: ${(props: Partial<PaymentMethodContextType>): string =>
+      props.stateDropdownOpen ? '150vh' : '81vh'};
   }
 
   @media (max-width: 420px) {
     padding: 0;
-    min-height: auto;
+    min-height: ${(props: Partial<PaymentMethodContextType>): string =>
+      props.stateDropdownOpen ? '180vh' : 'auto'};
   }
 `;
 
@@ -60,24 +68,29 @@ const EPayOptions: NextPage<Props> = ({ brand }) => {
   const oStore = new OptionsStore(priceId);
   const ddStore = new DirectDepositStore(priceId);
   const poStore = new PaymentOverviewStore(priceId);
+  const [stateDropdownOpen, setStateDropdown] = useState(false);
 
   return (
     <ThemeProvider brand={brand}>
-      <Page name="EPayOptions">
-        <SimpleHeader gearboxPrivateUrl={gearboxPrivateUrl} />
-        <SuccessBar />
-        <ColumnBody>
-          <OptionsStoreContext.Provider value={oStore}>
-            <DirectDepositStoreContext.Provider value={ddStore}>
-              <Options />
-            </DirectDepositStoreContext.Provider>
+      <PaymentMethodContext.Provider
+        value={{ stateDropdownOpen, setStateDropdown }}
+      >
+        <Page name="EPayOptions">
+          <SimpleHeader gearboxPrivateUrl={gearboxPrivateUrl} />
+          <SuccessBar />
+          <ColumnBody stateDropdownOpen={stateDropdownOpen}>
+            <OptionsStoreContext.Provider value={oStore}>
+              <DirectDepositStoreContext.Provider value={ddStore}>
+                <Options />
+              </DirectDepositStoreContext.Provider>
+            </OptionsStoreContext.Provider>
             <PaymentOverviewStoreContext.Provider value={poStore}>
               <PaymentOverview />
             </PaymentOverviewStoreContext.Provider>
-          </OptionsStoreContext.Provider>
-        </ColumnBody>
-        <ToolFooter />
-      </Page>
+          </ColumnBody>
+          <ToolFooter />
+        </Page>
+      </PaymentMethodContext.Provider>
     </ThemeProvider>
   );
 };

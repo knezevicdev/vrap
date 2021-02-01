@@ -10,6 +10,12 @@ export interface PaymentOverviewFormValues {
   paymentOption: string;
   routingNumber: string;
   bankAccountNumber: string;
+  isPrimaryAddress: string;
+  address: string;
+  apartment: string;
+  city: string;
+  state: string;
+  zipcode: string;
 }
 
 export interface PlaidTokenResp {

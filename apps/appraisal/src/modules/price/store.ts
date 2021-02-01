@@ -4,6 +4,8 @@ import { AsyncStatus, Store, StoreStatus } from 'src/interfaces.d';
 import { Price } from 'src/networking/models/Price';
 import { Networker, PriceData } from 'src/networking/Networker';
 
+type Nullable<T> = T | null;
+
 export interface PriceStoreState {
   active: boolean;
   automatedAppraisal: boolean;
@@ -12,14 +14,14 @@ export interface PriceStoreState {
   make: string;
   miles: number;
   model: string;
-  newOffer: boolean | null;
+  newOffer: Nullable<boolean>;
   price: number;
   priceId: string;
   priceStatus: string;
-  taxCreditSavings: number | null;
+  taxCreditSavings: Nullable<number>;
   trim: string;
   userEmail: string;
-  verificationUrl: string | null;
+  verificationUrl: Nullable<string>;
   vin: string;
   xkeId: number;
   year: number;

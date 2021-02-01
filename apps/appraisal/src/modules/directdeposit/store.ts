@@ -25,7 +25,6 @@ export async function getInitialDDStoreState(
     const plaidToken = tokenResponse.data.data.getLinkToken;
     return plaidToken;
   } catch (err) {
-    console.log(JSON.stringify(err));
     const errorState = defaultDDState;
     return errorState;
   }
@@ -33,7 +32,7 @@ export async function getInitialDDStoreState(
 
 export async function plaidSuccess(
   mutationInput: PlaidData,
-  onPlaidSubmitting: any
+  onPlaidSubmitting: (value: boolean) => void
 ): Promise<void> {
   const networker = new Networker();
   try {

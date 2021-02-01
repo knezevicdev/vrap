@@ -97,9 +97,10 @@ const Outline = styled(Primary)`
 export interface ButtonProps {
   id?: string;
   className?: string;
-  children: any;
+  children: React.ReactNode;
   onClick?: () => void;
   disabled?: boolean;
+  type?: 'button' | 'submit' | 'reset';
 }
 
 const PrimaryButton: React.FC<ButtonProps> = ({
@@ -108,6 +109,7 @@ const PrimaryButton: React.FC<ButtonProps> = ({
   children,
   onClick,
   disabled,
+  type,
 }) => {
   return (
     <Primary
@@ -115,6 +117,7 @@ const PrimaryButton: React.FC<ButtonProps> = ({
       className={className}
       disabled={disabled}
       onClick={onClick}
+      type={type}
     >
       {children}
     </Primary>
