@@ -72,7 +72,7 @@ export function getLocations(): LocationInfo[] {
     },
     {
       name: 'The Woodlands',
-      closed: true,
+      closed: false,
       path: 'woodlands',
       href: '/marketing/locations/woodlands',
       address: {
