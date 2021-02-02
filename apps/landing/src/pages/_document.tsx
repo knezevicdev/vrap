@@ -15,7 +15,7 @@ const {
   publicRuntimeConfig: { SEGMENT_WRITE_KEY },
 } = getConfig();
 
-export default class MyDocument extends Document {
+export default class LandingDocument extends Document {
   static async getInitialProps(
     ctx: DocumentContext
   ): Promise<DocumentInitialProps> {
