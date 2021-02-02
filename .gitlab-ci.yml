@@ -8,7 +8,7 @@ build-appraisal:
     refs:
       - merge_requests
     changes:
-      - apps/appraisal/*
+      - apps/appraisal/**/*
   stage: build
   script:
     - cd apps/appraisal
@@ -21,7 +21,7 @@ lint-checkout:
     refs:
       - merge_requests
     changes:
-      - apps/checkout/*
+      - apps/checkout/**/*
   stage: build
   script:
     - cd apps/checkout
@@ -33,7 +33,7 @@ build-checkout:
     refs:
       - merge_requests
     changes:
-      - apps/checkout/*
+      - apps/checkout/**/*
   stage: build
   script:
     - cd apps/checkout
@@ -45,7 +45,7 @@ build-home:
     refs:
       - merge_requests
     changes:
-      - apps/home/*
+      - apps/home/**/*
   stage: build
   script:
     - cd apps/home
@@ -58,7 +58,7 @@ build-landing:
     refs:
       - merge_requests
     changes:
-      - apps/landing/*
+      - apps/landing/**/*
   stage: build
   script:
     - cd apps/landing
@@ -71,7 +71,7 @@ build-listing:
     refs:
       - merge_requests
     changes:
-      - apps/listing/*
+      - apps/listing/**/*
   stage: build
   script:
     - cd apps/listing
@@ -84,7 +84,7 @@ test-listing:
     refs:
       - merge_requests
     changes:
-      - apps/listing/*
+      - apps/listing/**/*
   stage: build
   script:
     - cd apps/listing
@@ -96,7 +96,7 @@ lint-logistics:
     refs:
       - merge_requests
     changes:
-      - apps/logistics/*
+      - apps/logistics/**/*
   stage: build
   script:
     - cd apps/logistics
@@ -108,19 +108,19 @@ build-logistics:
     refs:
       - merge_requests
     changes:
-      - apps/logistics/*
+      - apps/logistics/**/*
   stage: build
   script:
     - cd apps/logistics
     - npm install --quiet
     - npm run build
-    
+
 build-marketing:
   only:
     refs:
       - merge_requests
     changes:
-      - apps/marketing/*
+      - apps/marketing/**/*
   stage: build
   script:
     - cd apps/marketing
@@ -133,7 +133,7 @@ build-product:
     refs:
       - merge_requests
     changes:
-      - apps/product/*
+      - apps/product/**/*
   stage: build
   script:
     - cd apps/product
@@ -146,7 +146,7 @@ test-product:
     refs:
       - merge_requests
     changes:
-      - apps/product/*
+      - apps/product/**/*
   stage: build
   script:
     - cd apps/product
