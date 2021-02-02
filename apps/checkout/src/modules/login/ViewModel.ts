@@ -4,7 +4,7 @@ class LoginViewModel {
   readonly title: string = 'welcome back';
   readonly initValues: FormValues = {
     username: '',
-    password: ''
+    password: '',
   };
 
   readonly register = {
