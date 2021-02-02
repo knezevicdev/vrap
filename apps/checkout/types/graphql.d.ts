@@ -5,5 +5,4 @@ declare module '*.graphql' {
   export { schema };
 
   export default defaultDocument;
-    
-  }
+}

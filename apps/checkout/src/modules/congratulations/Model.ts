@@ -4,6 +4,7 @@ import {
   Status,
 } from '@vroom-web/networking';
 import { makeAutoObservable, runInAction } from 'mobx';
+
 import { getCongratsData  } from "src/networking";
 interface Data {
   user: GQLTypes.User;
