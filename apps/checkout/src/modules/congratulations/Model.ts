@@ -5,6 +5,7 @@ import {
   Status,
 } from '@vroom-web/networking';
 import { makeAutoObservable, runInAction } from 'mobx';
+
 import GET_USER_DEAL from '../../graphql/queries/getUserDeal.graphql';
 interface Data {
   user: GQLTypes.User;
