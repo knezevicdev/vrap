@@ -71,7 +71,7 @@ class ViewModel {
       urlPath: 'locations/woodlands',
       title: 'The Woodlands',
       googleMapsUrl: 'https://goo.gl/maps/uCkWMp49FBMrjZSFA',
-      closed: true,
+      closed: false,
     },
     {
       locationInfo: {
