@@ -4,6 +4,7 @@ import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import TextField from '@material-ui/core/TextField';
 import { observer } from 'mobx-react';
+import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React, { useEffect } from 'react';
 
@@ -34,36 +35,47 @@ const SignIn: React.FC<Props> = ({ viewModel }) => {
         <Paper variant="outlined" square>
           <Box p={2}>
             <form onSubmit={handleSubmit}>
-              <Grid container spacing={2}>
-                <Grid item xs={12}>
-                  Sign In
+              <Box pb={2}>
+                <Grid container spacing={2}>
+                  <Grid item xs={12}>
+                    Sign In
+                  </Grid>
+                  <Grid item xs={12}>
+                    <TextField
+                      value={viewModel.email}
+                      onChange={(e): void => viewModel.setEmail(e.target.value)}
+                      label="Email"
+                      variant="outlined"
+                      required
+                      fullWidth
+                      autoComplete="email"
+                    />
+                  </Grid>
+                  <Grid item xs={12}>
+                    <TextField
+                      value={viewModel.password}
+                      onChange={(e): void =>
+                        viewModel.setPassword(e.target.value)
+                      }
+                      label="Password"
+                      variant="outlined"
+                      required
+                      fullWidth
+                      type="password"
+                      autoComplete="current-password"
+                    />
+                  </Grid>
                 </Grid>
-                <Grid item xs={12}>
-                  <TextField
-                    value={viewModel.email}
-                    onChange={(e): void => viewModel.setEmail(e.target.value)}
-                    label="Email"
-                    variant="outlined"
-                    required
-                    fullWidth
-                    autoComplete="email"
-                  />
+              </Box>
+              <Grid container justify="space-between">
+                <Grid item>
+                  <Link href="/forgot" passHref>
+                    <Button variant="contained" color="primary">
+                      Forgot Password
+                    </Button>
+                  </Link>
                 </Grid>
-                <Grid item xs={12}>
-                  <TextField
-                    value={viewModel.password}
-                    onChange={(e): void =>
-                      viewModel.setPassword(e.target.value)
-                    }
-                    label="Password"
-                    variant="outlined"
-                    required
-                    fullWidth
-                    type="password"
-                    autoComplete="current-password"
-                  />
-                </Grid>
-                <Grid item xs={6}>
+                <Grid item>
                   <Button
                     size="small"
                     type="submit"

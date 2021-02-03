@@ -7,6 +7,13 @@ import { expireCookies } from './signout';
 import { AccessToken } from 'src/networking/models/Auth';
 
 const API_ERROR = 'APIError';
+interface GearboxError {
+  message: string;
+  path: string[];
+  extensions: {
+    code: string;
+  };
+}
 
 export default async function handler(
   req: NextApiRequest,
@@ -31,10 +38,20 @@ export default async function handler(
     const response = await axios.post(url, gql, config);
 
     if (response.data.errors) {
-      throw {
-        type: 'gearbox',
-        errors: response.data.errors[0],
-      };
+      if (
+        response.data.errors.extensions?.error_code &&
+        parseInt(response.data.errors.extensions.error_code, 10) === 401
+      ) {
+        throw {
+          type: 'unauthorized',
+          errors: response.data.errors[0],
+        };
+      } else {
+        throw {
+          type: 'gearbox',
+          errors: response.data.errors[0],
+        };
+      }
     }
 
     if (response.data.data[queryKey]?.['__typename'] === API_ERROR) {
@@ -45,9 +62,7 @@ export default async function handler(
   } catch (err) {
     if (err.type === API_ERROR) {
       res.status(500).json(err.data);
-    } else if (err.type === 'gearbox') {
-      const status = parseInt(err.errors.extensions?.code, 10) ?? 500;
-
+    } else if (err.type === 'unauthorized') {
       let expired = false;
       if (req.cookies.accessToken) {
         const accessToken: AccessToken = jwtDecode(req.cookies.accessToken);
@@ -56,12 +71,19 @@ export default async function handler(
         expired = true;
       }
 
-      if (status === 401 && expired) {
+      if (expired) {
         res = expireCookies(res);
-        res.redirect(status, '/signin');
+        res.redirect(401, '/signin');
       } else {
-        res.status(status).json(err.errors);
+        res.status(401).json(err.errors);
       }
+    } else if (err.type === 'gearbox') {
+      const gearboxErr: { type: string; errors: GearboxError } = err;
+      const status = gearboxErr.errors.extensions?.code
+        ? parseInt(gearboxErr.errors.extensions.code, 10)
+        : 500;
+
+      res.status(status).json(gearboxErr.errors);
     } else {
       res.status(err?.response?.status ?? 500);
       if (err.response?.statusText && err.response?.data) {
