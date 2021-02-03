@@ -18,9 +18,10 @@ class ShipmentsViewModel {
     this.model = shipmentsModel;
   }
 
-  datefmt(date: string | undefined): string {
+  private datefmt(date: string | undefined): string {
     return date ? dayjs(date).format('YYYY-MM-DD') : '';
   }
+
   setSelectedStatus(tabValue: number): void {
     this.model.setSelectedStatus(this.tabs[tabValue].status);
   }
@@ -34,29 +35,33 @@ class ShipmentsViewModel {
     status: ShipmentStatus;
     tableData: TableData;
   }[] {
+    const displayCount = (value: string): string => {
+      const found = this.model.counts.find((j) => j.status === value);
+      return `${value} (${found ? found.count : 0})`;
+    };
     return [
       {
-        display: 'Tendered',
-        status: ShipmentStatus.Tendered,
-        tableData: this.tendered,
+        display: displayCount('Posted'),
+        status: ShipmentStatus.Posted,
+        tableData: this.posted,
       },
       {
-        display: 'Booked',
+        display: displayCount('Booked'),
         status: ShipmentStatus.Booked,
         tableData: this.booked,
       },
       {
-        display: 'In Transit',
+        display: displayCount('In Transit'),
         status: ShipmentStatus.InTransit,
         tableData: this.inTransit,
       },
       {
-        display: 'Cancelled',
+        display: displayCount('Cancelled'),
         status: ShipmentStatus.Cancelled,
         tableData: this.cancelled,
       },
       {
-        display: 'Delivered',
+        display: displayCount('Delivered'),
         status: ShipmentStatus.Delivered,
         tableData: this.delivered,
       },
@@ -67,7 +72,7 @@ class ShipmentsViewModel {
     return this.model.status === Status.FETCHING;
   }
 
-  get tendered(): TableData {
+  get posted(): TableData {
     return {
       headers: [
         { display: 'VIN', accessor: Accessor.vin },
