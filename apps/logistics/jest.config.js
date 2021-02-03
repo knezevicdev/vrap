@@ -12,6 +12,7 @@ module.exports = {
   transform: {
     // '^.+\\.(js|jsx|ts|tsx)$': 'babel-jest',
     // '^.+\\.css$': '<rootDir>/config/jest/cssTransform.js',
+    '^.+\\.(ts|tsx)$': 'ts-jest',
   },
   transformIgnorePatterns: [
     '/node_modules/',
@@ -22,4 +23,9 @@ module.exports = {
     //   '^.+\\.module\\.(css|sass|scss)$': 'identity-obj-proxy',
   },
   reporters: ['default'],
+  globals: {
+    'ts-jest': {
+      tsconfig: 'tsconfig.test.json',
+    },
+  },
 };

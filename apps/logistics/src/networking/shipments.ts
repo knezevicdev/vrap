@@ -1,12 +1,12 @@
 import { AxiosResponse } from 'axios';
 
-import { Shipment, ShipmentStatus } from './models/Shipments';
+import { Counts, Shipment, ShipmentStatus } from './models/Shipments';
 import { axiosInstance, GEARBOX_URL } from './Networker';
 
 export const getShipments = async (
   status: ShipmentStatus,
   user: string
-): Promise<AxiosResponse<{ shipments: Shipment[] }>> => {
+): Promise<AxiosResponse<{ shipments: Shipment[]; counts: Counts[] }>> => {
   const data = {
     query: `
       query portalShipmentsQuery($user: String!, $status: String!) {
@@ -59,6 +59,10 @@ export const getShipments = async (
                 phone
                 email
               }
+            }
+            counts {
+              status
+              count
             }
           }
           ... on APIError {

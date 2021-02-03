@@ -87,6 +87,7 @@ const Auth: React.FC<Props> = (props) => {
   useEffect(() => {
     if (adminRequired) {
       if (idToken) {
+        console.log('idToken', idToken);
         const isAdmin = idToken['cognito:groups'].includes(
           Groups.LogisticsPortalAdmin
         );
