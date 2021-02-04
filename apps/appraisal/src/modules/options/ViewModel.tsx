@@ -44,10 +44,6 @@ class OptionsViewModel {
     return this.store.payOptionSelected;
   };
 
-  getPayOptionArray = (): Array<string> => {
-    return this.store.payOptionArr;
-  };
-
   getMailiingAddress = (): MailingAddress => {
     return this.store.mailingAddress;
   };
@@ -85,8 +81,53 @@ class OptionsViewModel {
     }
   };
 
+  isValidStreetAddress = (str: string | null | undefined): boolean => {
+    const re = /\S+(?:\s+[0-9]*[A-z]+)/g;
+    const val = str || '';
+    return re.test(val);
+  };
+
+  isValidZipCode = (zipCode: string | null | undefined): boolean => {
+    if (zipCode == null) {
+      return false;
+    }
+
+    const length = zipCode.length;
+    const reg = /^\d+$/;
+    const numbersOnly = reg.test(zipCode);
+    if (length !== 5 || !numbersOnly) {
+      return false;
+    }
+    return true;
+  };
+
+  isValidName = (str: string | null | undefined): boolean => {
+    const re = /^[a-zA-ZàâäôéèëêïîçùûüÿæœÀÂÄÔÉÈËÊÏÎŸÇÙÛÜÆŒäöüßÄÖÜẞąćęłńóśźżĄĆĘŁŃÓŚŹŻàèéìíîòóùúÀÈÉÌÍÎÒÓÙÚáéíñóúüÁÉÍÑÓÚÜ \-']+$/;
+    if (!str || !re.test(str)) {
+      return false;
+    } else {
+      return true;
+    }
+  };
+
   paymentOptionsSubmit = (values: PaymentOverviewFormValues): void => {
-    submitPaymentOptions(values, this.store.priceId, this.store.mailingAddress);
+    const calcMailingAddress = (): MailingAddress => {
+      if (values.isPrimaryAddress === 'No') {
+        return {
+          // eslint-disable-next-line @typescript-eslint/camelcase
+          address_1: values.address,
+          // eslint-disable-next-line @typescript-eslint/camelcase
+          address_2: values.apartment,
+          city: values.city,
+          state: values.state,
+          zipcode: values.zipcode,
+        };
+      }
+      return this.store.mailingAddress;
+    };
+
+    const mailingAddress = calcMailingAddress();
+    submitPaymentOptions(values, this.store.priceId, mailingAddress);
 
     const submittedType = this.store.showDD ? 'ACH' : 'Check';
     const url = `/sell/verification-congrats`;

@@ -5,7 +5,7 @@ import { PlaidData } from 'src/interfaces.d';
 class DirectDepositViewModel {
   private readonly store: DirectDepositStore;
   readonly bankInfo: string = 'Please provide your bank information.';
-  readonly ddToggleOrCopy: string = 'Or, ';
+  readonly ddToggleOrCopy: string = 'Or,';
   readonly ddToggleManualCopy: string = 'enter bank information manually';
   readonly ddTogglePlaidCopy: string = 'link bank account';
 
@@ -29,7 +29,10 @@ class DirectDepositViewModel {
     this.store.togglePlaidLink();
   };
 
-  onPlaidSuccess = (input: PlaidData, onPlaidSubmitting: any): void => {
+  onPlaidSuccess = (
+    input: PlaidData,
+    onPlaidSubmitting: (value: boolean) => void
+  ): void => {
     plaidSuccess(input, onPlaidSubmitting);
   };
 }

@@ -1,12 +1,17 @@
 import { makeAutoObservable, runInAction } from 'mobx';
 
-import { Shipment, ShipmentStatus } from 'src/networking/models/Shipments';
+import {
+  Counts,
+  Shipment,
+  ShipmentStatus,
+} from 'src/networking/models/Shipments';
 import { getShipments, Status } from 'src/networking/Networker';
 
 class ShipmentsModel {
   email: string;
 
-  selectedStatus = ShipmentStatus.Tendered;
+  counts: Counts[] = [];
+  selectedStatus = ShipmentStatus.Posted;
   shipments: Shipment[] = [];
   status: Status = Status.INITIAL;
 
@@ -26,6 +31,7 @@ class ShipmentsModel {
       const response = await getShipments(this.selectedStatus, this.email);
       runInAction(() => {
         this.shipments = response.data.shipments;
+        this.counts = response.data.counts;
         this.status = Status.SUCCESS;
       });
     } catch (err) {

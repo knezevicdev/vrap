@@ -10,6 +10,14 @@ const shortHash = childProcess
 
 const basePath = '/checkout';
 
+const endPointSelector = () => {
+  
+  if(process.env.NODE_ENV === 'production'){
+    return 'gql'
+  }
+  return `${basePath}/api/gql`
+}
+
 const config = {
   basePath,
   distDir: `.next/${shortHash}`,
@@ -19,8 +27,8 @@ const config = {
     BASE_PATH: basePath,
     DATA_DOG_RUM_APPLICATION: process.env.DATA_DOG_RUM_APPLICATION,
     DATA_DOG_RUM_TOKEN: process.env.DATA_DOG_RUM_TOKEN,
-    GQL_PROXY_URL:
-      process.env.NODE_ENV === 'development' ? `${basePath}/api/gql` : '/gql',
+    GQL_PROXY_URL: endPointSelector(),
+    mockServer: process.env.mockServer,
     GEARBOX_PRIVATE_URL: process.env.GEARBOX_PRIVATE_URL,
     NAME: name,
     NODE_ENV: process.env.NODE_ENV,

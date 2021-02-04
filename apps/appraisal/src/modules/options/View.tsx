@@ -93,6 +93,12 @@ const InitialValues: PaymentOverviewFormValues = {
   paymentOption: 'Direct Deposit',
   routingNumber: '',
   bankAccountNumber: '',
+  isPrimaryAddress: 'Yes',
+  address: '',
+  apartment: '',
+  city: '',
+  state: '',
+  zipcode: '',
 };
 
 const OptionsView: React.FC<Props> = ({ viewModel }) => {
@@ -105,15 +111,7 @@ const OptionsView: React.FC<Props> = ({ viewModel }) => {
     paymentOption: Yup.string().required('Required'),
     routingNumber: Yup.string().when('paymentOption', {
       is: 'Direct Deposit',
-      then: Yup.string()
-        .required('Field is required')
-        .test(
-          'valid-routing-num',
-          'Please enter a valid routing number',
-          (value) => {
-            return viewModel.isValidRouting(value);
-          }
-        ),
+      then: Yup.string().required('Field is required'),
     }),
     bankAccountNumber: Yup.string().when('paymentOption', {
       is: 'Direct Deposit',
@@ -123,6 +121,46 @@ const OptionsView: React.FC<Props> = ({ viewModel }) => {
           /^[a-zA-Z0-9]{4,17}$/,
           'Please enter a valid account number without spaces or hyphens'
         ),
+    }),
+    isPrimaryAddress: Yup.string().when('paymentOption', {
+      is: 'Check by Mail',
+      then: Yup.string().required('Field is required'),
+    }),
+    address: Yup.string().when('isPrimaryAddress', {
+      is: 'No',
+      then: Yup.string()
+        .required('Field is required')
+        .test(
+          'valid-street-address',
+          'Please enter a valid street address',
+          (value) => {
+            return viewModel.isValidStreetAddress(value);
+          }
+        ),
+    }),
+    apartment: Yup.string().when('isPrimaryAddress', {
+      is: 'No',
+      then: Yup.string(),
+    }),
+    city: Yup.string().when('isPrimaryAddress', {
+      is: 'No',
+      then: Yup.string()
+        .required('Field is required')
+        .test('valid-city', 'Please enter a valid city', (value) => {
+          return viewModel.isValidName(value);
+        }),
+    }),
+    state: Yup.string().when('isPrimaryAddress', {
+      is: 'No',
+      then: Yup.string().required('Field is required'),
+    }),
+    zipcode: Yup.string().when('isPrimaryAddress', {
+      is: 'No',
+      then: Yup.string()
+        .required('Field is required')
+        .test('valid-zip-code', 'Please enter a valid zip code', (value) => {
+          return viewModel.isValidZipCode(value);
+        }),
     }),
   });
 
@@ -142,9 +180,10 @@ const OptionsView: React.FC<Props> = ({ viewModel }) => {
       }}
       validateOnMount={true}
     >
-      {({ isValid, values, isSubmitting }): JSX.Element => {
+      {({ isValid, values, isSubmitting, setFieldValue }): JSX.Element => {
         const showDirectDeposit = values.paymentOption === 'Direct Deposit';
         const showSubmitButton = shouldShowSubmitButton || !showDirectDeposit;
+
         return (
           <FormContainer>
             <OptionsContainer>
@@ -155,22 +194,25 @@ const OptionsView: React.FC<Props> = ({ viewModel }) => {
                 {viewModel.optionTitle}
               </OptionsTitle>
               <OptionsBody>{viewModel.optionQuestion}</OptionsBody>
-              <PayOptions
-                optionMeta={viewModel.getPayOptionArray()}
-                selected={values.paymentOption}
-              />
+
+              <PayOptions selected={values.paymentOption} />
+
               <OptionDisplay>
                 {showDirectDeposit ? (
                   <DirectDeposit />
                 ) : (
                   <CheckByMail
                     mailingAddress={viewModel.getMailiingAddress()}
+                    isPrimaryAddress={values.isPrimaryAddress}
+                    setFieldValue={setFieldValue}
+                    state={values.state}
                   />
                 )}
               </OptionDisplay>
 
               {showSubmitButton && (
                 <SubmitButton
+                  type="submit"
                   disabled={!isValid || isSubmitting || isPlaidSubmitting}
                 >
                   {isSubmitting ? viewModel.submitting : viewModel.submit}

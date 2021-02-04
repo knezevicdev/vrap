@@ -3,11 +3,8 @@ import React from 'react';
 import Model from './Model';
 import View from './View';
 import ViewModel from './ViewModel';
-
-import client from 'src/networking/client';
-
 class Congratulations extends React.Component {
-  model = new Model(client);
+  model = new Model();
   viewModel = new ViewModel(this.model);
 
   componentDidMount(): void {

@@ -1,7 +1,7 @@
 import { action, observable, runInAction } from 'mobx';
 import { createContext, useContext } from 'react';
 
-import { PlaidData, Store, StoreStatus } from 'src/interfaces.d';
+import { AsyncStatus, PlaidData, Store, StoreStatus } from 'src/interfaces.d';
 import { Networker } from 'src/networking/Networker';
 
 const defaultDDState: DDStoreState = {
@@ -25,7 +25,6 @@ export async function getInitialDDStoreState(
     const plaidToken = tokenResponse.data.data.getLinkToken;
     return plaidToken;
   } catch (err) {
-    console.log(JSON.stringify(err));
     const errorState = defaultDDState;
     return errorState;
   }
@@ -33,7 +32,7 @@ export async function getInitialDDStoreState(
 
 export async function plaidSuccess(
   mutationInput: PlaidData,
-  onPlaidSubmitting: any
+  onPlaidSubmitting: (value: boolean) => void
 ): Promise<void> {
   const networker = new Networker();
   try {
@@ -53,7 +52,8 @@ export class DirectDepositStore implements Store {
   @observable requestId = defaultDDState.RequestId;
   @observable priceId = '';
   @observable showPlaidLink = true;
-  @observable status = StoreStatus.Initial;
+  @observable storeStatus = StoreStatus.Initial;
+  @observable asyncStatus = AsyncStatus.Idle;
 
   constructor(priceId?: string) {
     if (priceId) {

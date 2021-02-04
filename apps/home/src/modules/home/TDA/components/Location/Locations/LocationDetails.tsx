@@ -50,7 +50,7 @@ const AddressLink = styled('a')(() => ({
 }));
 
 const LocationDetails: FC<LocationDetailsProps> = ({
-  location: { locationInfo, phone, title, urlPath, googleMapsUrl },
+  location: { locationInfo, phone, title, urlPath, googleMapsUrl, closed },
 }) => {
   return (
     <Container>
@@ -58,7 +58,10 @@ const LocationDetails: FC<LocationDetailsProps> = ({
         <Map coords={locationInfo.coords} />
       </MapContainer>
       <TextColumn>
-        <SubtitleLink href={urlPath}>{title}</SubtitleLink>
+        <SubtitleLink href={urlPath}>
+          {title}
+          {closed ? '(Closed)' : ''}
+        </SubtitleLink>
         <Description>
           <AddressLink href={googleMapsUrl} target="_blank">
             {locationInfo.address}

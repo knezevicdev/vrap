@@ -2,6 +2,7 @@ import { action, observable, runInAction } from 'mobx';
 import { createContext, useContext } from 'react';
 
 import {
+  AsyncStatus,
   PaymentOverviewFormValues,
   Store,
   StoreStatus,
@@ -78,7 +79,6 @@ export async function submitPaymentOptions(
 
 export class OptionsStore implements Store {
   @observable payOptionSelected = 'Direct Deposit';
-  @observable payOptionArr = ['Direct Deposit', 'Check by Mail'];
   @observable showDD = true;
   @observable mailingAddress = defaultOptionsState.mailingAddress;
   @observable priceId = '';
@@ -86,7 +86,8 @@ export class OptionsStore implements Store {
   @observable plaidSubmitting = false;
   @observable currentPayments = defaultOptionsState.currentPayments;
   @observable poq = defaultOptionsState.poq;
-  @observable status = StoreStatus.Initial;
+  @observable storeStatus = StoreStatus.Initial;
+  @observable asyncStatus = AsyncStatus.Idle;
 
   constructor(priceId?: string) {
     if (priceId) this.init(priceId);
@@ -96,7 +97,7 @@ export class OptionsStore implements Store {
     const initialState = await getInitialOptionsStoreState(priceId);
 
     runInAction(() => {
-      this.status = StoreStatus.Success;
+      this.storeStatus = StoreStatus.Success;
       this.mailingAddress = initialState.mailingAddress;
       this.email = initialState.email;
       this.currentPayments = initialState.currentPayments;
@@ -108,7 +109,7 @@ export class OptionsStore implements Store {
   @action
   setPayOptionSelected = (value: string): void => {
     this.payOptionSelected = value;
-    this.showDD = value === this.payOptionArr[0];
+    this.showDD = value === 'Yes';
   };
 
   @action

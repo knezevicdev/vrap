@@ -100,6 +100,9 @@ const ContactInfo: React.FC<Props> = ({ viewModel }) => (
       </ContainerItem>
       <ContainerItem>
         <ItemHeader variant="h2">Hours of Operation</ItemHeader>
+        {viewModel.locationInfo.closed && (
+          <ItemHeader variant="h2">(currently closed)</ItemHeader>
+        )}
         <TextLine>{viewModel.locationInfo.businessHours.days}</TextLine>
         <TextLine>{viewModel.locationInfo.businessHours.hours}</TextLine>
       </ContainerItem>
