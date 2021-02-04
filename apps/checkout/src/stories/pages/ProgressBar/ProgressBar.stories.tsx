@@ -16,7 +16,7 @@ export const progressBar: React.FC = (props: any) => {
 };
 
 export default {
-  title: 'Progress Bar',
+  title: 'Checkout/ProgressBar',
   component: progressBar,
   argTypes: {
     steps: {
