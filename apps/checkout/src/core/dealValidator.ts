@@ -36,16 +36,15 @@ export enum DealStepsEnum {
     DEAL_SUMMARY = "DealSummary"
 }
  
-type StepMappingData = {
+type StepPagesMappingData = {
      [key: string]: string
 }
  
 const { publicRuntimeConfig: {BASE_PATH} } = getConfig();
-
-console.log("basePath", BASE_PATH)
+ 
 const buildUrl = (vin: string, to: string) => (`${BASE_PATH}/${vin}/${to}`);
 
-export const stepMapping = (vin: string) => ({
+export const stepPagesMapping = (vin: string) => ({
     [DealStepsEnum.TRADE]: buildUrl(vin, 'tradeIn'),
     [DealStepsEnum.REGISTRATION]: buildUrl(vin, 'registration'),
     [DealStepsEnum.DELIVERY]: buildUrl(vin, 'testPage'),
@@ -58,16 +57,14 @@ export const stepMapping = (vin: string) => ({
     [DealStepsEnum.DEPOSIT]: buildUrl(vin, 'testPage'),
     [DealStepsEnum.DOCUMENT_UPLOAD]: buildUrl(vin, 'testPage'),
     [DealStepsEnum.DEAL_SUMMARY]: `congratulations`,
-} as StepMappingData)
+} as StepPagesMappingData)
 
-const getCurrentPageName = (router: Router): string | undefined => last(router.pathname && router.pathname.split('/'))
 /**
  * Initial Deal validations 
  * @param AppContext 
  */
 export const initDealValidator = async({router, ctx}: AppContext ) => {
-  console.log(router)
-     
+
     const vin = get(router, 'query.vin');
      let response = await getPurchaseValidator(vin);  //test vin: JTDKARFU6K3085481
        
@@ -87,7 +84,7 @@ export const initDealValidator = async({router, ctx}: AppContext ) => {
         //If the deal in progress captured the deposit send the user to myAccount
         if(hasInProgressDeal && isDepositCaptured){
             if(ctx.res){ 
-                ctx.res.writeHead(302, {Location: `${BASE_PATH}/my-account/transactions/`})
+                ctx.res.writeHead(302, {Location: `/my-account/transactions/`})
                 ctx.res.end();
             }
             return;
@@ -98,7 +95,7 @@ export const initDealValidator = async({router, ctx}: AppContext ) => {
             const currentStep = hasInProgressDeal.dealSummary.dealStatus.step;
             //Send the user to the current Step
             const currentUrl = `${BASE_PATH}${router.asPath}`;
-            const currentStepUrl = stepMapping(vin)[currentStep]
+            const currentStepUrl = stepPagesMapping(vin)[currentStep]
             //make sure only to redirect if the current step and current url are different
             if(ctx.res && currentStepUrl != currentUrl && vin){
                 ctx.res.writeHead(302, {Location: currentStepUrl})
