@@ -15,9 +15,9 @@ import App from 'next/app';
 import getConfig from 'next/config';
 import React from 'react';
 import { ThemeProvider as StyledThemeProvider } from 'styled-components';
-
 import client from 'src/networking/client';
-
+import {initDealValidator} from "src/core";
+import { getPurchaseValidator  } from "src/networking";
 configureMobx({
   enforceActions: 'observed', // don't allow state modifications outside actions
   useProxies: 'ifavailable',
@@ -27,7 +27,14 @@ configureMobx({
 const { publicRuntimeConfig } = getConfig();
 
 class VroomApp extends App {
+  
+  /**
+   * App SSR initial
+   */
+  static getInitialProps = initDealValidator;
+
   componentDidMount(): void {
+
     if (publicRuntimeConfig.DATA_DOG_RUM_APPLICATION) {
       datadogRum.init({
         applicationId: publicRuntimeConfig.DATA_DOG_RUM_APPLICATION,
@@ -40,13 +47,14 @@ class VroomApp extends App {
         trackInteractions: true,
       });
     }
+    //getPurchaseValidator(["JTDKARFU6K3085481"]);
 
     const errorInterceptor: ResponseErrorInterceptor = async (
       errorResponse: ErrorResponse
     ) => {
       if (isAccessDeniedErrorResponse(errorResponse)) {
         // TODO: open a login dialog instead of redirecting.
-        window.location.href = `/account/login?redirect=${window.location.pathname}`;
+       // window.location.href = `/account/login?redirect=${window.location.pathname}`;
       }
     };
     client.addResponseInterceptor(errorInterceptor);
@@ -66,8 +74,8 @@ class VroomApp extends App {
       <>
         <GlobalStyle />
         <ThemeProvider brand={Brand.VROOM}>
-          <StyledThemeProvider theme={theme}>
-            <Component {...pageProps} />
+          <StyledThemeProvider theme={theme}> 
+            <Component {...pageProps} /> 
           </StyledThemeProvider>
         </ThemeProvider>
       </>

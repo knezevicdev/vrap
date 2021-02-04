@@ -57,7 +57,7 @@
     "@types/styled-components": "^5.1.2",
     "@typescript-eslint/eslint-plugin": "^2.29.0",
     "@typescript-eslint/parser": "^2.29.0",
-    "@vroom-web/graphql-mock-server": "^1.0.0",
+    "@vroom-web/graphql-mock-server": "^1.1.1",
     "babel-jest": "^26.6.3",
     "babel-plugin-styled-components": "^1.11.1",
     "eslint": "^6.8.0",
