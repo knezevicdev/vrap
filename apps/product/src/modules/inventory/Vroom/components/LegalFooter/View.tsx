@@ -26,8 +26,9 @@ interface Props {
 const LegalFooterView: React.FC<Props> = ({ viewModel }) => {
   return (
     <Container>
-      <StyledTypography>{viewModel.legalText[0]}</StyledTypography>
-      <StyledTypography>{viewModel.legalText[1]}</StyledTypography>
+      {viewModel.getLegalText().map((item: string) => {
+        return <StyledTypography key={item}>{item}</StyledTypography>;
+      })}
     </Container>
   );
 };

@@ -7,8 +7,10 @@ import {
   MakeCount,
 } from '@vroom-web/inv-search-networking';
 import { InvServiceNetworker } from '@vroom-web/inv-service-networking';
+import { TaxiServiceNetworker } from '@vroom-web/taxi-service-networking';
 
 import {
+  fetchDeliveryFeeState,
   getInventoryAvailabilityState,
   getVehicleResponse,
   getVehicleSimilarState,
@@ -227,6 +229,47 @@ describe('Inventory Store', () => {
         invServiceNetworkerMock.getInventoryAvailability
       ).toHaveBeenCalledTimes(1);
       expect(response).toEqual(false);
+    });
+  });
+
+  describe('fetchDeliveryFeeState()', () => {
+    const taxiServiceNetworkerMock = new TaxiServiceNetworker(BASE_URL);
+    const deliveryFeeDefault = 299;
+    it('it should return the response fee if the API call is successful', async () => {
+      taxiServiceNetworkerMock.getShippingFee = jest
+        .fn()
+        .mockResolvedValue({ data: { fee: 499 } });
+
+      const response = await fetchDeliveryFeeState(
+        taxiServiceNetworkerMock,
+        deliveryFeeDefault
+      );
+      expect(taxiServiceNetworkerMock.getShippingFee).toHaveBeenCalledTimes(1);
+      expect(response).toBe(499);
+    });
+    it('it should return the default fee if the API call is successful but no fee is in the response', async () => {
+      taxiServiceNetworkerMock.getShippingFee = jest
+        .fn()
+        .mockResolvedValue({ data: { fee: undefined } });
+
+      const response = await fetchDeliveryFeeState(
+        taxiServiceNetworkerMock,
+        deliveryFeeDefault
+      );
+      expect(taxiServiceNetworkerMock.getShippingFee).toHaveBeenCalledTimes(1);
+      expect(response).toBe(299);
+    });
+    it('it should return the default fee if the API call fails', async () => {
+      taxiServiceNetworkerMock.getShippingFee = jest
+        .fn()
+        .mockRejectedValue(new Error('test'));
+
+      const response = await fetchDeliveryFeeState(
+        taxiServiceNetworkerMock,
+        deliveryFeeDefault
+      );
+      expect(taxiServiceNetworkerMock.getShippingFee).toHaveBeenCalledTimes(1);
+      expect(response).toBe(299);
     });
   });
 });

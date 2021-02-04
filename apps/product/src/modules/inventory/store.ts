@@ -5,6 +5,7 @@ import {
   InvSearchNetworker,
 } from '@vroom-web/inv-search-networking';
 import { InvServiceNetworker } from '@vroom-web/inv-service-networking';
+import { TaxiServiceNetworker } from '@vroom-web/taxi-service-networking';
 import { action, observable, runInAction } from 'mobx';
 import getConfig from 'next/config';
 import { createContext } from 'react';
@@ -12,6 +13,8 @@ import { createContext } from 'react';
 import { Status } from 'src/networking/types';
 
 const { publicRuntimeConfig } = getConfig();
+
+const deliveryFeeDefault = 699;
 
 export enum GallerySelections {
   GENERAL = 'General Photos',
@@ -27,6 +30,7 @@ export interface InventoryStoreState {
   vehicleStatus: Status;
   vehicle: Hit;
   isAvailable: boolean;
+  deliveryFee: number;
   actionFavorite: boolean;
 }
 
@@ -146,12 +150,26 @@ export async function getInventoryAvailabilityState(
   }
 }
 
+export async function fetchDeliveryFeeState(
+  taxiServiceNetworker: TaxiServiceNetworker,
+  deliveryFeeDefault: number
+): Promise<number> {
+  try {
+    const response = await taxiServiceNetworker.getShippingFee();
+    return response.data.fee || deliveryFeeDefault;
+  } catch (error) {
+    console.error(JSON.stringify(error));
+    return deliveryFeeDefault;
+  }
+}
+
 export async function getInitialInventoryStoreState(
   vin: string,
   actionFavorite: boolean
 ): Promise<{
   similar: Hit[];
   isAvailable: boolean;
+  deliveryFee: number;
   vin: string;
   similarClusterCount: number;
   vehicleStatus: Status;
@@ -165,6 +183,10 @@ export async function getInitialInventoryStoreState(
 
   const invServiceNetworker = new InvServiceNetworker(
     publicRuntimeConfig.INV_SERVICE_V2_URL || ''
+  );
+
+  const taxiServiceNetworker = new TaxiServiceNetworker(
+    publicRuntimeConfig.TAXI_SERVICE_URL || ''
   );
 
   const vehicleState = await getVehicleState(
@@ -181,11 +203,17 @@ export async function getInitialInventoryStoreState(
     vin,
     invServiceNetworker
   );
+  const deliveryFeeState = await fetchDeliveryFeeState(
+    taxiServiceNetworker,
+    deliveryFeeDefault
+  );
+
   return {
     vin,
     ...vehicleState,
     ...vehicleSimilarState,
     isAvailable: inventoryAvailableState,
+    deliveryFee: deliveryFeeState,
     actionFavorite,
   };
 }
@@ -195,6 +223,7 @@ export class InventoryStore {
     publicRuntimeConfig.INVSEARCH_V3_URL || ''
   );
 
+  @observable deliveryFee = deliveryFeeDefault;
   @observable similarStatus: Status = Status.FETCHING;
   @observable similar: Hit[] = [] as Hit[];
   @observable similarClusterCount = 0;
@@ -217,6 +246,7 @@ export class InventoryStore {
       // this.similarStatus = initialState.similarStatus;
       this.similar = initialState.similar;
       this.isAvailable = initialState.isAvailable;
+      this.deliveryFee = initialState.deliveryFee;
       this.actionFavorite = initialState.actionFavorite;
     }
   }

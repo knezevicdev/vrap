@@ -26,6 +26,7 @@ module.exports = {
     NAME: name,
     NODE_ENV: process.env.NODE_ENV,
     STATIC_ASSETS_HOST_URL: process.env.STATIC_ASSETS_HOST_URL || '',
+    TAXI_SERVICE_URL: process.env.TAXI_SERVICE_URL,
     VERSION: version,
     VROOM_URL: process.env.VROOM_URL,
   },
