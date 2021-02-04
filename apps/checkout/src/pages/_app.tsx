@@ -16,7 +16,8 @@ import getConfig from 'next/config';
 import React from 'react';
 import { ThemeProvider as StyledThemeProvider } from 'styled-components';
 import client from 'src/networking/client';
-import {initDealValidator} from "src/core";
+import {initDealValidator, DealValidatorProps} from "src/core";
+
 configureMobx({
   enforceActions: 'observed', // don't allow state modifications outside actions
   useProxies: 'ifavailable',
@@ -25,7 +26,8 @@ configureMobx({
 
 const { publicRuntimeConfig } = getConfig();
 
-class VroomApp extends App {
+
+class VroomApp extends App<DealValidatorProps> {
   
   /**
    * App SSR initial
@@ -73,6 +75,7 @@ class VroomApp extends App {
         <GlobalStyle />
         <ThemeProvider brand={Brand.VROOM}>
           <StyledThemeProvider theme={theme}> 
+          {this.props.isAuthenticated ? "YES" : "NO"}
             <Component {...pageProps} /> 
           </StyledThemeProvider>
         </ThemeProvider>

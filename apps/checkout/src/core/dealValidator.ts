@@ -1,17 +1,16 @@
-import { AppContext } from 'next/app'
+import { AppContext, AppInitialProps } from 'next/app'
 import { getPurchaseValidator, DealValidatorData } from "src/networking";
 import get from "lodash/get"; 
-import last from "lodash/last";
 import head from "lodash/head";
 import { Response, isErrorResponse } from '@vroom-web/networking';
-import getConfig from "next/config";
-import { Router } from 'next/router';
+import getConfig from "next/config"; 
+import App from 'next/app'
 
-interface DealValidatorProps {
+export interface DealValidatorProps extends AppInitialProps {
     isAuthenticated: boolean,
     isVehicleSold: boolean,
     hasPendingDeal: boolean,
-    hasInprogressDeal: boolean,
+    hasInProgressDeal: boolean,
     isDepositCaptured: boolean
 }
 
@@ -63,12 +62,14 @@ export const stepPagesMapping = (vin: string) => ({
  * Initial Deal validations 
  * @param AppContext 
  */
-export const initDealValidator = async({router, ctx}: AppContext ) => {
-
+export const initDealValidator = async(appContext: AppContext ): Promise<DealValidatorProps>=> {
+    const {router, ctx} = appContext
     const vin = get(router, 'query.vin');
-     let response = await getPurchaseValidator(vin);  //test vin: JTDKARFU6K3085481
+     let response = await getPurchaseValidator([vin]);  //test vin: JTDKARFU6K3085481
        
      const isAuth = isAuthenticated(response);
+
+     const appProps = await App.getInitialProps(appContext);
 
      if (!isErrorResponse(response)) { 
         
@@ -79,15 +80,14 @@ export const initDealValidator = async({router, ctx}: AppContext ) => {
         const hasPendingDeal = !!response.data.user.deals?.find(f => f.dealSummary.dealStatus.status === DealStatusEnum.PENDING)
         const hasInProgressDeal = response.data.user.deals?.find(f => f.dealSummary.dealStatus.status === DealStatusEnum.IN_PROGRESS)
         
-        const isDepositCaptured = hasInProgressDeal?.dealSummary.depositPaymentInfo?.DepositCaptured
+        const isDepositCaptured = !!hasInProgressDeal?.dealSummary.depositPaymentInfo?.DepositCaptured
 
         //If the deal in progress captured the deposit send the user to myAccount
         if(hasInProgressDeal && isDepositCaptured){
             if(ctx.res){ 
                 ctx.res.writeHead(302, {Location: `/my-account/transactions/`})
                 ctx.res.end();
-            }
-            return;
+            } 
         }
 
         //Id the user has a eal in progress send the user the last step in progress
@@ -103,10 +103,10 @@ export const initDealValidator = async({router, ctx}: AppContext ) => {
             }
         }
 
-        return { isAuthenticated: isAuth, isVehicleSold, hasPendingDeal,  hasInProgressDeal: !!hasInProgressDeal, isDepositCaptured }
+        return { ...appProps, isAuthenticated: isAuth, isVehicleSold, hasPendingDeal,  hasInProgressDeal: !!hasInProgressDeal, isDepositCaptured }
      }
  
-    return { isAuthenticated: isAuth, isVehicleSold: false, hasPendingDeal: false, hasInProgressDeal: false  }
+    return { ...appProps, isAuthenticated: isAuth, isVehicleSold: false, hasPendingDeal: false, hasInProgressDeal: false, isDepositCaptured: false  }
   }
 
   /**
@@ -114,12 +114,12 @@ export const initDealValidator = async({router, ctx}: AppContext ) => {
    * @param response 
    */
   export const isAuthenticated = (response: Response<DealValidatorData>) => {
-      
-    const errorCode = get(response, 'error.response.extensions.error_code');
-    if(errorCode && errorCode === 401){
+    
+    const errorCode = get(response, 'error.response.extensions.error_code'); 
+    if(errorCode && errorCode === "401"){
         //Not Authorized
         return false;
     }
-
+ 
     return true;
   }
