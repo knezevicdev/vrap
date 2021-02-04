@@ -78,7 +78,6 @@ export async function submitPaymentOptions(
 }
 
 export class OptionsStore implements Store {
-  @observable payOptionSelected = 'Direct Deposit';
   @observable showDD = true;
   @observable mailingAddress = defaultOptionsState.mailingAddress;
   @observable priceId = '';
@@ -108,8 +107,7 @@ export class OptionsStore implements Store {
 
   @action
   setPayOptionSelected = (value: string): void => {
-    this.payOptionSelected = value;
-    this.showDD = value === 'Yes';
+    this.showDD = value === 'Direct Deposit';
   };
 
   @action

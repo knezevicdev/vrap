@@ -40,10 +40,6 @@ class OptionsViewModel {
     return this.store.plaidSubmitting;
   };
 
-  getPayOptionSelected = (): string => {
-    return this.store.payOptionSelected;
-  };
-
   getMailiingAddress = (): MailingAddress => {
     return this.store.mailingAddress;
   };
