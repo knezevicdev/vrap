@@ -55,7 +55,7 @@ export const stepPagesMapping = (vin: string) => ({
     [DealStepsEnum.PRODUCTS]: buildUrl(vin, 'testPage'),
     [DealStepsEnum.DEPOSIT]: buildUrl(vin, 'testPage'),
     [DealStepsEnum.DOCUMENT_UPLOAD]: buildUrl(vin, 'testPage'),
-    [DealStepsEnum.DEAL_SUMMARY]: `congratulations`,
+    [DealStepsEnum.DEAL_SUMMARY]: `${BASE_PATH}/congratulations`,
 } as StepPagesMappingData)
 
 /**
