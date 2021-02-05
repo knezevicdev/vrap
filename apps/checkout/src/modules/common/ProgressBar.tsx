@@ -1,26 +1,25 @@
+import {
+  addStyleForMobile,
+  ThemeProps,
+} from '@vroom-web/temp-ui-alias-for-checkout';
 import React from 'react';
 import styled from 'styled-components';
-import {
-    addStyleForMobile,
-    ThemeProps,
-  } from '@vroom-web/temp-ui-alias-for-checkout';
 
 interface ProgressBar {
   steps: string[];
   activeStep: number;
 }
 
-
 const primaryBrand = (props: { theme: ThemeProps }): string =>
   props.theme.colors.primary.brand;
 
-  const grayTwo = (props: { theme: ThemeProps }): string =>
+const grayTwo = (props: { theme: ThemeProps }): string =>
   props.theme.colors.gray.two;
 
-  const primaryBlack = (props: { theme: ThemeProps }): string =>
+const primaryBlack = (props: { theme: ThemeProps }): string =>
   props.theme.colors.primary.black;
 
-  const primaryWhite = (props: { theme: ThemeProps }): string =>
+const primaryWhite = (props: { theme: ThemeProps }): string =>
   props.theme.colors.primary.white;
 
 const ProgressBarWrapper = styled.ul`
@@ -38,8 +37,7 @@ const Step = styled.li<{ active: boolean }>`
   align-items: center;
 
   &:after {
-    background-color: ${({ active }) =>
-      active && primaryBrand};
+    background-color: ${({ active }) => active && primaryBrand};
   }
 
   &:last-child {
@@ -62,8 +60,7 @@ const Step = styled.li<{ active: boolean }>`
     height: 2px;
     position: absolute;
     top: 9px;
-    background-color: ${({ active }) =>
-      active ? primaryBrand : grayTwo};
+    background-color: ${({ active }) => (active ? primaryBrand : grayTwo)};
     z-index: 0;
     transform: translateX(-50%);
   }
@@ -80,8 +77,7 @@ const LowerText = styled.span<{ active: boolean }>`
   font-size: 10px;
   `)}
 
-  color: ${({ active }) =>
-    active ? primaryBlack : grayTwo};
+  color: ${({ active }) => (active ? primaryBlack : grayTwo)};
 `;
 
 const Dot = styled.span<{ active: boolean }>`
@@ -91,8 +87,7 @@ const Dot = styled.span<{ active: boolean }>`
   position: relative;
   z-index: 1;
   display: inline-block;
-  background-color: ${({ active }) =>
-    active ? primaryBrand : grayTwo};
+  background-color: ${({ active }) => (active ? primaryBrand : grayTwo)};
   border: 4px solid ${primaryWhite};
 `;
 

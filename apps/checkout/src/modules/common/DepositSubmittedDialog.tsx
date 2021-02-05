@@ -10,7 +10,7 @@ import {
 import React from 'react';
 import styled from 'styled-components';
 
-interface PendingDealDialog {
+interface DepositSubmittedDialog {
   close: () => void;
 }
 
@@ -89,7 +89,9 @@ const Close = styled.div`
   cursor: pointer;
 `;
 
-export const PendingDealDialog: React.FC<PendingDealDialog> = ({ close }) => {
+export const DepositSubmittedDialog: React.FC<DepositSubmittedDialog> = ({
+  close,
+}) => {
   return (
     <Container>
       <Close onClick={close}>
@@ -98,8 +100,9 @@ export const PendingDealDialog: React.FC<PendingDealDialog> = ({ close }) => {
       <DialogTitle>pending purchase</DialogTitle>
       <Line />
       <Content>
-        You are currently in the process of purchasing another vehicle. Once
-        that purchase is complete, you’ll be able to make another purchase.
+        You have placed deposit for another vehicle. Once that purchase is
+        complete, you’ll be able to make another purchase. For further
+        assistance give us a call at (855) 524-1300
       </Content>
       <IconContainer>
         <Car src="assets/icons/car-reserve.svg" />
@@ -109,4 +112,4 @@ export const PendingDealDialog: React.FC<PendingDealDialog> = ({ close }) => {
   );
 };
 
-export default PendingDealDialog;
+export default DepositSubmittedDialog;
