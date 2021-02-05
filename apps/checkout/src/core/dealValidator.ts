@@ -65,8 +65,10 @@ export const stepPagesMapping = (vin: string) => ({
 export const initDealValidator = async(appContext: AppContext ): Promise<DealValidatorProps>=> {
     const {router, ctx} = appContext
     const vin = get(router, 'query.vin');
-     let response = await getPurchaseValidator([vin]);  //test vin: JTDKARFU6K3085481
-       
+    const headers = ctx.req ? { cookie: ctx.req.headers.cookie } : undefined
+
+     let response = await getPurchaseValidator([vin], headers);
+        
      const isAuth = isAuthenticated(response);
 
      const appProps = await App.getInitialProps(appContext);
