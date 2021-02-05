@@ -1,1 +1,1 @@
-export * from "./dealValidator";
+export * from './dealValidator';

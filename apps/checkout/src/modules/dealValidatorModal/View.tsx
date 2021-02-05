@@ -1,9 +1,11 @@
-
-import { ThemeProps, addStyleForMobile } from '@vroom-web/temp-ui-alias-for-checkout';
-import { observer } from 'mobx-react-lite'; 
+import {
+  addStyleForMobile,
+  ThemeProps,
+} from '@vroom-web/temp-ui-alias-for-checkout';
+import { observer } from 'mobx-react-lite';
 import React from 'react';
-import styled from 'styled-components';
 import Modal from 'react-modal';
+import styled from 'styled-components';
 
 import DealValidatorModalViewModel from './ViewModel';
 
@@ -13,6 +15,7 @@ const primaryWhite = (props: { theme: ThemeProps }): string =>
 const primaryBrand = (props: { theme: ThemeProps }): string =>
   props.theme.colors.primary.brand;
 
+Modal.setAppElement('#__next');
 
 const CustomModal = styled(Modal)`
   display: flex;
@@ -31,33 +34,38 @@ const CustomModal = styled(Modal)`
 
 interface Props {
   viewModel: DealValidatorModalViewModel;
-} 
+}
 
-const CongratsView: React.FC<Props> = ({ viewModel }) => { 
+const DealValidatorModalView: React.FC<Props> = ({ viewModel }) => {
+  const onAfterOpen = (): void => {
+    document.body.style.overflow = 'hidden';
+  };
 
-  const { isModalOpen } = viewModel;
- 
-  return ( 
-       <CustomModal
-          isOpen={isModalOpen} 
-          contentLabel="Example Modal"
-          style={{
-            overlay: {
-              backgroundColor: 'rgba(4, 16, 32, 0.7)',
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-              padding: '16px',
-              zIndex: 1101, // Header is 1100
-            },
-          }}
-        >
+  const onAfterClose = (): void => {
+    document.body.style.overflow = 'unset';
+  };
+  const { isModalOpen, ModalContent } = viewModel;
 
-          <h2>Hello</h2> 
-          <div>I am a modal</div>
-          
-        </CustomModal> 
+  return (
+    <CustomModal
+      isOpen={isModalOpen}
+      contentLabel="Example Modal"
+      style={{
+        overlay: {
+          backgroundColor: 'rgba(4, 16, 32, 0.7)',
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          padding: '16px',
+          zIndex: 1101, // Header is 1100
+        },
+      }}
+      onAfterOpen={onAfterOpen}
+      onAfterClose={onAfterClose}
+    >
+      <ModalContent />
+    </CustomModal>
   );
 };
 
-export default observer(CongratsView);
+export default observer(DealValidatorModalView);

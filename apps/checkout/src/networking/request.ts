@@ -1,22 +1,21 @@
-import client  from "./client";
-import { getTestDeal } from "./util/getTestDeal";
+import { GQLTypes, Response } from '@vroom-web/networking';
+
+import client from './client';
+import { getTestDeal } from './util/getTestDeal';
+
+import DEAL_VALIDATOR from 'src/graphql/queries/dealValidator.graphql';
 import GET_USER_DEAL from 'src/graphql/queries/getUserDeal.graphql';
-import DEAL_VALIDATOR from "src/graphql/queries/dealValidator.graphql";
+interface Data {
+  user: GQLTypes.User;
+}
 
-import { 
-    Response,
-    GQLTypes, 
-  } from '@vroom-web/networking';
-  interface Data {
-    user: GQLTypes.User;
-  }
-
-  
-export const getCongratsData = async(inDealID?: number, inDealStatus?: string[]): Promise<Response<Data>> => {
- 
+export const getCongratsData = async (
+  inDealID?: number,
+  inDealStatus?: string[]
+): Promise<Response<Data>> => {
   //switch between the real deal and dealStatus or mock deal if exist
-  const { dealID, dealStatus } = getTestDeal(inDealID, inDealStatus)
-    
+  const { dealID, dealStatus } = getTestDeal(inDealID, inDealStatus);
+
   const res = await client.gqlRequest<Data, GQLTypes.UserDealsArgs>({
     document: GET_USER_DEAL,
     variables: {
@@ -24,29 +23,36 @@ export const getCongratsData = async(inDealID?: number, inDealStatus?: string[])
       dealStatus,
     },
   });
-    
-      return res; 
-}
+
+  return res;
+};
 
 export interface DealValidatorData {
   user: GQLTypes.User;
-  invSearch: GQLTypes.InvSearchResult
+  invSearch: GQLTypes.InvSearchResult;
 }
 
-export const getPurchaseValidator = async(vin: string[], headers?: Record<string, string> | undefined, inDealID?: number, inDealStatus?: string[]): Promise<Response<DealValidatorData>> => {
- 
-  const { dealID, dealStatus } = getTestDeal(inDealID, inDealStatus)
-    
-  const res = await client.gqlRequest<DealValidatorData, GQLTypes.UserDealsArgs | GQLTypes.QueryInvSearchArgs>({
+export const getPurchaseValidator = async (
+  vin: string[],
+  headers?: Record<string, string> | undefined,
+  inDealID?: number,
+  inDealStatus?: string[]
+): Promise<Response<DealValidatorData>> => {
+  const { dealID, dealStatus } = getTestDeal(inDealID, inDealStatus);
+
+  const res = await client.gqlRequest<
+    DealValidatorData,
+    GQLTypes.UserDealsArgs | GQLTypes.QueryInvSearchArgs
+  >({
     document: DEAL_VALIDATOR,
     variables: {
       dealID,
       dealStatus,
       vin,
-      source: "vroom-web | Checkout"
+      source: 'vroom-web | Checkout',
     },
-    headers
+    headers,
   });
-    
-  return res; 
-}
+
+  return res;
+};

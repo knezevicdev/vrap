@@ -1,19 +1,19 @@
+import get from 'lodash/get';
 import { GetServerSideProps, NextPage } from 'next';
-import Link from 'next/link'
 import Head from 'next/head';
+import Link from 'next/link';
+import Router from 'next/router';
 import React from 'react';
-import Router from "next/router";
-import get from "lodash/get";
 
 interface Props {
   title: string;
 }
 
 const stepNavigator = (to: string) => {
-  const {router} = Router;
+  const { router } = Router;
   const vin = get(router, 'query.vin');
-  Router.push(`/${vin}/${to}`)
-}
+  Router.push(`/${vin}/${to}`);
+};
 
 const CheckoutTradeIn: NextPage<Props> = ({ title }) => {
   return (
@@ -23,7 +23,7 @@ const CheckoutTradeIn: NextPage<Props> = ({ title }) => {
       </Head>
       This is the CheckoutTradeIn page test
       <p>
-      <button onClick={()=> stepNavigator("registration")}>Next</button>
+        <button onClick={() => stepNavigator('registration')}>Next</button>
       </p>
     </>
   );

@@ -15,9 +15,10 @@ import App from 'next/app';
 import getConfig from 'next/config';
 import React from 'react';
 import { ThemeProvider as StyledThemeProvider } from 'styled-components';
+
+import { DealValidatorProps, initDealValidator } from 'src/core';
+import DealValidatorModal from 'src/modules/dealValidatorModal';
 import client from 'src/networking/client';
-import {initDealValidator, DealValidatorProps} from "src/core";
-import DealValidatorModal from "src/modules/dealValidatorModal";
 
 configureMobx({
   enforceActions: 'observed', // don't allow state modifications outside actions
@@ -27,16 +28,13 @@ configureMobx({
 
 const { publicRuntimeConfig } = getConfig();
 
-
 class VroomApp extends App<DealValidatorProps> {
-  
   /**
    * App SSR initial
    */
   static getInitialProps = initDealValidator;
 
   componentDidMount(): void {
-
     if (publicRuntimeConfig.DATA_DOG_RUM_APPLICATION) {
       datadogRum.init({
         applicationId: publicRuntimeConfig.DATA_DOG_RUM_APPLICATION,
@@ -55,7 +53,7 @@ class VroomApp extends App<DealValidatorProps> {
     ) => {
       if (isAccessDeniedErrorResponse(errorResponse)) {
         // TODO: open a login dialog instead of redirecting.
-       // window.location.href = `/account/login?redirect=${window.location.pathname}`;
+        // window.location.href = `/account/login?redirect=${window.location.pathname}`;
       }
     };
     client.addResponseInterceptor(errorInterceptor);
@@ -73,16 +71,16 @@ class VroomApp extends App<DealValidatorProps> {
 
     return (
       <>
-        <GlobalStyle />
+        <GlobalStyle baseUrl={publicRuntimeConfig.BASE_PATH} />
         <ThemeProvider brand={Brand.VROOM}>
-          <StyledThemeProvider theme={theme}> 
-          <DealValidatorModal {...pageProps} />
-          <p> authendicated: {this.props.isAuthenticated ? "YES" : "NO"} </p>
-          <p> in-progress{this.props.hasInProgressDeal ? "YES" : "NO"}</p>
-          <p> is sold {this.props.isVehicleSold ? "YES" : "NO"}</p>
-          <p> pending deal {this.props.hasPendingDeal ? "YES" : "NO"}</p>
-          <p> deposit {this.props.isDepositCaptured ? "YES" : "NO"}</p>
-            <Component {...pageProps} /> 
+          <StyledThemeProvider theme={theme}>
+            <p> authendicated: {this.props.isAuthenticated ? 'YES' : 'NO'} </p>
+            <p> in-progress{this.props.hasInProgressDeal ? 'YES' : 'NO'}</p>
+            <p> is sold {this.props.isVehicleSold ? 'YES' : 'NO'}</p>
+            <p> pending deal {this.props.hasPendingDeal ? 'YES' : 'NO'}</p>
+            <p> deposit {this.props.isDepositCaptured ? 'YES' : 'NO'}</p>
+            <DealValidatorModal {...pageProps} />
+            <Component {...pageProps} />
           </StyledThemeProvider>
         </ThemeProvider>
       </>

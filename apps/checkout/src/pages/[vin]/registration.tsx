@@ -1,7 +1,6 @@
 import { GetServerSideProps, NextPage } from 'next';
 import Head from 'next/head';
 import React from 'react';
- 
 
 interface Props {
   title: string;
