@@ -13,7 +13,7 @@ const basePath = '/checkout';
 const endPointSelector = () => {
   
   if(process.env.NODE_ENV === 'production'){
-    return 'gql'
+    return '/gql'
   }
   return `${basePath}/api/gql`
 }
