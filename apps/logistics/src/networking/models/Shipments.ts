@@ -44,8 +44,13 @@ export interface Customer {
   email: string;
 }
 
+export interface Counts {
+  status: string;
+  count: number;
+}
+
 export enum ShipmentStatus {
-  Tendered = 'posted',
+  Posted = 'posted',
   Booked = 'booked',
   InTransit = 'in transit',
   Cancelled = 'cancelled',

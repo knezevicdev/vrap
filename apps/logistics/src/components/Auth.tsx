@@ -1,10 +1,10 @@
 import { Box, CircularProgress } from '@material-ui/core';
-import axios from 'axios';
 import Cookie from 'js-cookie';
 import { useRouter } from 'next/router';
 import React, { createContext, useEffect, useState } from 'react';
 
 import { Groups, IdToken } from 'src/networking/models/Auth';
+import { getSignOut } from 'src/networking/Networker';
 
 export const setAuthDataCookie = (data: IdToken): void => {
   const config: Cookie.CookieAttributes = {
@@ -59,6 +59,15 @@ const Auth: React.FC<Props> = (props) => {
   useEffect(() => {
     const authDataCookie: IdToken | undefined = Cookie.getJSON('authData');
 
+    const invalid = (): void => {
+      setStatus(AuthStatus.invalid);
+      const url =
+        window.location.pathname === '/signin'
+          ? '/signin'
+          : `/signin?previous=${window.location.pathname}`;
+      router.push(url);
+    };
+
     if (authDataCookie) {
       const isAuthenticated = !(
         new Date() > new Date(authDataCookie.exp * 1000)
@@ -68,18 +77,17 @@ const Auth: React.FC<Props> = (props) => {
         setStatus(AuthStatus.valid);
         setIdToken(authDataCookie);
       } else {
-        setStatus(AuthStatus.invalid);
-        router.push(`/signin?previous=${window.location.pathname}`);
+        invalid();
       }
     } else {
-      setStatus(AuthStatus.invalid);
-      router.push(`/signin?previous=${window.location.pathname}`);
+      invalid();
     }
   }, [router]);
 
   useEffect(() => {
     if (adminRequired) {
       if (idToken) {
+        console.log('idToken', idToken);
         const isAdmin = idToken['cognito:groups'].includes(
           Groups.LogisticsPortalAdmin
         );
@@ -94,7 +102,7 @@ const Auth: React.FC<Props> = (props) => {
 
   const handleLogout = async (): Promise<void> => {
     Cookie.remove('authData');
-    await axios.get('/api/signout');
+    await getSignOut();
     router.push('/signin');
   };
 

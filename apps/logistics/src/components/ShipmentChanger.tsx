@@ -15,7 +15,7 @@ import { patchShipment } from 'src/networking/Networker';
 
 const ShipmentChanger: React.FC = () => {
   const [shipmentId, setShipmentId] = useState('472');
-  const [shipmentStatus, setShipmentStatus] = useState(ShipmentStatus.Tendered);
+  const [shipmentStatus, setShipmentStatus] = useState(ShipmentStatus.Posted);
   const handleSubmit = async (
     event: React.FormEvent<HTMLFormElement>
   ): Promise<void> => {
@@ -43,9 +43,9 @@ const ShipmentChanger: React.FC = () => {
             }
           >
             <FormControlLabel
-              value={ShipmentStatus.Tendered}
+              value={ShipmentStatus.Posted}
               control={<Radio />}
-              label="Tendered"
+              label="Posted"
             />
             <FormControlLabel
               value={ShipmentStatus.Booked}
