@@ -27,7 +27,7 @@ class OptionsViewModel {
   };
 
   onPayOptionClick = (
-    selectedOption: React.ChangeEvent<HTMLInputElement>
+    selectedOption: React.MouseEvent<HTMLInputElement, MouseEvent>
   ): void => {
     this.store.setPayOptionSelected(selectedOption.currentTarget.name);
   };
@@ -125,10 +125,10 @@ class OptionsViewModel {
     const mailingAddress = calcMailingAddress();
     submitPaymentOptions(values, this.store.priceId, mailingAddress);
 
-    const submittedType = this.store.showDD ? 'ACH' : 'Check';
-    const url = `/sell/verification-congrats`;
-
+    const submittedType = this.store.showDD ? 'Manual ACH' : 'Check';
     this.analyticsHandler.trackPaymentOptionsSubmitted(submittedType);
+
+    const url = `/sell/verification-congrats`;
     window.location.href = url;
   };
 }

@@ -6,7 +6,9 @@ import RadioButton from 'src/core/Radio';
 export interface Props {
   optionMeta: Array<string>;
   selected: string;
-  onPayOptionClick: (value: React.ChangeEvent<HTMLInputElement>) => void;
+  onPayOptionClick: (
+    value: React.MouseEvent<HTMLInputElement, MouseEvent>
+  ) => void;
 }
 
 const PayOptionsContainer = styled.div`
@@ -31,7 +33,11 @@ const OptionContainer = styled.div<{ selected?: boolean }>`
   }
 `;
 
-const PayOptionsView: React.FC<Props> = ({ optionMeta, selected, onPayOptionClick }) => {
+const PayOptionsView: React.FC<Props> = ({
+  optionMeta,
+  selected,
+  onPayOptionClick,
+}) => {
   return (
     <PayOptionsContainer>
       {optionMeta.map((option) => {

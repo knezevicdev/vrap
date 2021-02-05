@@ -11,7 +11,7 @@ interface RadioButtonProps extends React.HTMLAttributes<HTMLInputElement> {
   disabled?: boolean;
   checked?: boolean;
   value: string;
-  onClick?: (value: string) => void;
+  onClick?: (value: React.MouseEvent<HTMLInputElement, MouseEvent>) => void;
 }
 
 const CheckMark = styled.span<{ disabled?: boolean }>`

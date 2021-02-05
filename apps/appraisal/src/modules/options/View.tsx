@@ -195,7 +195,10 @@ const OptionsView: React.FC<Props> = ({ viewModel }) => {
               </OptionsTitle>
               <OptionsBody>{viewModel.optionQuestion}</OptionsBody>
 
-              <PayOptions selected={values.paymentOption} onPayOptionClick={viewModel.onPayOptionClick} />
+              <PayOptions
+                selected={values.paymentOption}
+                onPayOptionClick={viewModel.onPayOptionClick}
+              />
 
               <OptionDisplay>
                 {showDirectDeposit ? (
