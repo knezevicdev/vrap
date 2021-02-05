@@ -17,6 +17,7 @@ import React from 'react';
 import { ThemeProvider as StyledThemeProvider } from 'styled-components';
 import client from 'src/networking/client';
 import {initDealValidator, DealValidatorProps} from "src/core";
+import DealValidatorModal from "src/modules/dealValidatorModal";
 
 configureMobx({
   enforceActions: 'observed', // don't allow state modifications outside actions
@@ -75,7 +76,12 @@ class VroomApp extends App<DealValidatorProps> {
         <GlobalStyle />
         <ThemeProvider brand={Brand.VROOM}>
           <StyledThemeProvider theme={theme}> 
-          {this.props.isAuthenticated ? "YES" : "NO"}
+          <DealValidatorModal {...pageProps} />
+          <p> authendicated: {this.props.isAuthenticated ? "YES" : "NO"} </p>
+          <p> in-progress{this.props.hasInProgressDeal ? "YES" : "NO"}</p>
+          <p> is sold {this.props.isVehicleSold ? "YES" : "NO"}</p>
+          <p> pending deal {this.props.hasPendingDeal ? "YES" : "NO"}</p>
+          <p> deposit {this.props.isDepositCaptured ? "YES" : "NO"}</p>
             <Component {...pageProps} /> 
           </StyledThemeProvider>
         </ThemeProvider>

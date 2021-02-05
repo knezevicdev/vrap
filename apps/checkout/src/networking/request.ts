@@ -33,11 +33,7 @@ export interface DealValidatorData {
   invSearch: GQLTypes.InvSearchResult
 }
 
-export interface PurchaseValidatorHeaders {
-  cookie: string | undefined;
-}
-
-export const getPurchaseValidator = async(vin: string[], headers?: PurchaseValidatorHeaders, inDealID?: number, inDealStatus?: string[]): Promise<Response<DealValidatorData>> => {
+export const getPurchaseValidator = async(vin: string[], headers?: Record<string, string> | undefined, inDealID?: number, inDealStatus?: string[]): Promise<Response<DealValidatorData>> => {
  
   const { dealID, dealStatus } = getTestDeal(inDealID, inDealStatus)
     
@@ -47,7 +43,7 @@ export const getPurchaseValidator = async(vin: string[], headers?: PurchaseValid
       dealID,
       dealStatus,
       vin,
-      source: "vroom-web"
+      source: "vroom-web | Checkout"
     },
     headers
   });

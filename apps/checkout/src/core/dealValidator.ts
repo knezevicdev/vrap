@@ -65,11 +65,10 @@ export const stepPagesMapping = (vin: string) => ({
 export const initDealValidator = async(appContext: AppContext ): Promise<DealValidatorProps>=> {
     const {router, ctx} = appContext
     const vin = get(router, 'query.vin');
-    const headers = ctx.req ? { cookie: ctx.req.headers.cookie } : undefined
+    const headers: Record<string, string> | undefined = ctx.req ? { cookie: ctx.req.headers.cookie || '' } : undefined
 
-     let response = await getPurchaseValidator([vin], headers);
-        
-     const isAuth = isAuthenticated(response);
+     let response = await getPurchaseValidator([vin], headers); 
+     let isAuth = isAuthenticated(response);
 
      const appProps = await App.getInitialProps(appContext);
 
@@ -84,28 +83,10 @@ export const initDealValidator = async(appContext: AppContext ): Promise<DealVal
         //don't show the modal if the deposit is captured and the page is uploadDocument.
         const isDepositCaptured = !!hasInProgressDeal?.dealSummary.depositPaymentInfo?.DepositCaptured
 
-        //If the deal in progress captured the deposit send the user to myAccount
-        if(hasInProgressDeal && isDepositCaptured){
-            if(ctx.res){ 
-                ctx.res.writeHead(302, {Location: `/my-account/transactions/`})
-                ctx.res.end();
-            } 
-        }
-
-        //If the user has a deal in progress send the user the last step in progress
-        if(hasInProgressDeal){
-            const currentStep = hasInProgressDeal.dealSummary.dealStatus.step;
-            //Send the user to the current Step
-            const currentUrl = `${BASE_PATH}${router.asPath}`;
-            const currentStepUrl = stepPagesMapping(vin)[currentStep]
-            //make sure only to redirect if the current step and current url are different
-            if(ctx.res && currentStepUrl != currentUrl && vin){
-                ctx.res.writeHead(302, {Location: currentStepUrl})
-                ctx.res.end();
-            }
-        }
-
         return { ...appProps, isAuthenticated: isAuth, isVehicleSold, hasPendingDeal,  hasInProgressDeal: !!hasInProgressDeal, isDepositCaptured }
+     }else{
+         //Is there some error related with the graphQL update auth flag
+        isAuth = false;
      }
  
     return { ...appProps, isAuthenticated: isAuth, isVehicleSold: false, hasPendingDeal: false, hasInProgressDeal: false, isDepositCaptured: false  }
@@ -116,9 +97,9 @@ export const initDealValidator = async(appContext: AppContext ): Promise<DealVal
    * @param response 
    */
   export const isAuthenticated = (response: Response<DealValidatorData>) => {
-    
+    console.log(JSON.stringify(response))
     const errorCode = get(response, 'error.response.extensions.error_code'); 
-    if(errorCode && errorCode === "401"){
+    if(errorCode && errorCode === '401'){
         //Not Authorized
         return false;
     }
