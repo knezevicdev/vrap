@@ -81,7 +81,7 @@ export const initDealValidator = async(appContext: AppContext ): Promise<DealVal
         //does it has pending deal
         const hasPendingDeal = !!response.data.user.deals?.find(f => f.dealSummary.dealStatus.status === DealStatusEnum.PENDING)
         const hasInProgressDeal = response.data.user.deals?.find(f => f.dealSummary.dealStatus.status === DealStatusEnum.IN_PROGRESS)
-        
+        //don't show the modal if the deposit is captured and the page is uploadDocument.
         const isDepositCaptured = !!hasInProgressDeal?.dealSummary.depositPaymentInfo?.DepositCaptured
 
         //If the deal in progress captured the deposit send the user to myAccount
@@ -92,7 +92,7 @@ export const initDealValidator = async(appContext: AppContext ): Promise<DealVal
             } 
         }
 
-        //Id the user has a eal in progress send the user the last step in progress
+        //If the user has a deal in progress send the user the last step in progress
         if(hasInProgressDeal){
             const currentStep = hasInProgressDeal.dealSummary.dealStatus.step;
             //Send the user to the current Step
