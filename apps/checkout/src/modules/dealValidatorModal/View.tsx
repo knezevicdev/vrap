@@ -44,12 +44,13 @@ const DealValidatorModalView: React.FC<Props> = ({ viewModel }) => {
   const onAfterClose = (): void => {
     document.body.style.overflow = 'unset';
   };
-  const { isModalOpen, ModalContent } = viewModel;
-
+  const { isModalOpen, ModalContent, onClose } = viewModel;
+  const { component, contentLabel } = ModalContent;
   return (
     <CustomModal
       isOpen={isModalOpen}
-      contentLabel="Example Modal"
+      contentLabel={contentLabel}
+      onRequestClose={onClose}
       style={{
         overlay: {
           backgroundColor: 'rgba(4, 16, 32, 0.7)',
@@ -63,7 +64,7 @@ const DealValidatorModalView: React.FC<Props> = ({ viewModel }) => {
       onAfterOpen={onAfterOpen}
       onAfterClose={onAfterClose}
     >
-      <ModalContent />
+      {component && React.createElement(component)}
     </CustomModal>
   );
 };

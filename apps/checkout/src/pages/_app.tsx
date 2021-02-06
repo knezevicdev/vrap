@@ -79,7 +79,7 @@ class VroomApp extends App<DealValidatorProps> {
             <p> is sold {this.props.isVehicleSold ? 'YES' : 'NO'}</p>
             <p> pending deal {this.props.hasPendingDeal ? 'YES' : 'NO'}</p>
             <p> deposit {this.props.isDepositCaptured ? 'YES' : 'NO'}</p>
-            <DealValidatorModal {...pageProps} />
+            <DealValidatorModal {...this.props} />
             <Component {...pageProps} />
           </StyledThemeProvider>
         </ThemeProvider>

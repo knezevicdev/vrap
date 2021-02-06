@@ -44,9 +44,26 @@ const {
   publicRuntimeConfig: { BASE_PATH },
 } = getConfig();
 
-const buildUrl = (vin: string, to: string) => `${BASE_PATH}/${vin}/${to}`;
+const buildUrl = (vin: string, to: string): string =>
+  `${BASE_PATH}/${vin}/${to}`;
 
-export const stepPagesMapping = (vin: string) =>
+/**
+ * Validate Authorization
+ * @param response
+ */
+export const isAuthenticated = (
+  response: Response<DealValidatorData>
+): boolean => {
+  const errorCode = get(response, 'error.response.extensions.error_code');
+  if (errorCode && errorCode === '401') {
+    //Not Authorized
+    return false;
+  }
+
+  return true;
+};
+
+export const stepPagesMapping = (vin: string): StepPagesMappingData =>
   ({
     [DealStepsEnum.TRADE]: buildUrl(vin, 'tradeIn'),
     [DealStepsEnum.REGISTRATION]: buildUrl(vin, 'registration'),
@@ -117,19 +134,4 @@ export const initDealValidator = async (
     hasInProgressDeal: false,
     isDepositCaptured: false,
   };
-};
-
-/**
- * Validate Authorization
- * @param response
- */
-export const isAuthenticated = (response: Response<DealValidatorData>) => {
-  console.log(JSON.stringify(response));
-  const errorCode = get(response, 'error.response.extensions.error_code');
-  if (errorCode && errorCode === '401') {
-    //Not Authorized
-    return false;
-  }
-
-  return true;
 };
