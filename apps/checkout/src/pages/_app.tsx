@@ -68,7 +68,6 @@ class VroomApp extends App<DealValidatorProps> {
   render(): JSX.Element {
     const { Component, pageProps } = this.props;
     const theme = getVroomTheme();
-
     return (
       <>
         <GlobalStyle baseUrl={publicRuntimeConfig.BASE_PATH} />

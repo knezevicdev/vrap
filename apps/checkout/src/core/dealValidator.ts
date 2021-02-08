@@ -17,8 +17,8 @@ export interface DealValidatorProps extends AppInitialProps {
 
 export enum DealStatusEnum {
   IN_PROGRESS = 'In-Progress',
-  PENDING = 'In-Progress',
-  CANCEL = 'cancel',
+  PENDING = 'Pending',
+  CANCEL = 'Cancel',
 }
 
 export enum DealStepsEnum {
@@ -105,23 +105,24 @@ export const initDealValidator = async (
       head(response.data.invSearch.vehicles)?.soldStatus !== 0;
 
     //does it has pending deal
-    const hasPendingDeal = !!response.data.user.deals?.find(
+    const hasPendingDeal = response.data.user.deals?.find(
       (f) => f.dealSummary.dealStatus.status === DealStatusEnum.PENDING
     );
     const hasInProgressDeal = response.data.user.deals?.find(
       (f) => f.dealSummary.dealStatus.status === DealStatusEnum.IN_PROGRESS
     );
     //don't show the modal if the deposit is captured and the page is uploadDocument.
-    const isDepositCaptured = !!hasInProgressDeal?.dealSummary
+    const isDepositCapturedPending = !!hasPendingDeal?.dealSummary
       .depositPaymentInfo?.DepositCaptured;
-
+    const isDepositCapturedInProgress = !!hasInProgressDeal?.dealSummary
+      .depositPaymentInfo?.DepositCaptured;
     return {
       ...appProps,
       isAuthenticated: isAuth,
       isVehicleSold,
-      hasPendingDeal,
+      hasPendingDeal: !!hasPendingDeal,
       hasInProgressDeal: !!hasInProgressDeal,
-      isDepositCaptured,
+      isDepositCaptured: isDepositCapturedPending ||  isDepositCapturedInProgress,
     };
   } else {
     //Is there some error related with the graphQL update auth flag

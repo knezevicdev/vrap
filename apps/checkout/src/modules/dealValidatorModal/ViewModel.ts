@@ -81,7 +81,7 @@ export default class DealValidatorModalViewModel {
       this.openModal = true;
       this.modalContent = modalContentMap(ModalContentMapEnum.VEHICLE_SOLD);
     }
-    if (this.initialData.hasPendingDeal && this.initialData.isDepositCaptured) {
+    if (this.initialData.isDepositCaptured) {
       this.openModal = true;
       this.modalContent = modalContentMap(ModalContentMapEnum.PENDING_PURCHASE);
     }

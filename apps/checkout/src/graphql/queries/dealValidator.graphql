@@ -24,6 +24,7 @@ query DEAL_VALIDATOR($dealID: Int, $dealStatus: [String!], $source: String!, $vi
           },
           depositPaymentInfo {
             HoldPlaced
+            DepositCaptured
           }
       }
   }

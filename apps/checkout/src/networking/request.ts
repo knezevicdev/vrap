@@ -39,7 +39,6 @@ export const getPurchaseValidator = async (
   inDealStatus?: string[]
 ): Promise<Response<DealValidatorData>> => {
   const { dealID, dealStatus } = getTestDeal(inDealID, inDealStatus);
-  console.log("dealIDdealIDdealIDdealID", dealID)
   const res = await client.gqlRequest<
     DealValidatorData,
     GQLTypes.UserDealsArgs | GQLTypes.QueryInvSearchArgs
