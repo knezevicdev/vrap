@@ -4,7 +4,7 @@ import head from 'lodash/head';
 import { AppContext, AppInitialProps } from 'next/app';
 import App from 'next/app';
 import getConfig from 'next/config';
-
+import {getTestDealSSR} from "src/networking/util/getTestDeal"
 import { DealValidatorData, getPurchaseValidator } from 'src/networking';
 
 export interface DealValidatorProps extends AppInitialProps {
@@ -88,11 +88,13 @@ export const initDealValidator = async (
 ): Promise<DealValidatorProps> => {
   const { router, ctx } = appContext;
   const vin = get(router, 'query.vin');
+  
   const headers: Record<string, string> | undefined = ctx.req
     ? { cookie: ctx.req.headers.cookie || '' }
     : undefined;
-
-  const response = await getPurchaseValidator([vin], headers);
+  
+  const { dealID } = getTestDealSSR(router); //select test Deal ID from the parameters.
+  const response = await getPurchaseValidator([vin], headers, dealID);
   let isAuth = isAuthenticated(response);
 
   const appProps = await App.getInitialProps(appContext);
