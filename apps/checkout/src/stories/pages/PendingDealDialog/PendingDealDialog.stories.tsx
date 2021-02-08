@@ -3,7 +3,9 @@ import React from 'react';
 import PendingDealDialog from '../../../modules/common/PendingDealDialog';
 
 export const Default = (): JSX.Element => {
-  return <PendingDealDialog />;
+  return <PendingDealDialog message={`You have placed deposit for another vehicle. Once that purchase is
+  complete, you’ll be able to make another purchase. For further
+  assistance give us a call at (855) 524-1300`}/>;
 };
 
 export default {

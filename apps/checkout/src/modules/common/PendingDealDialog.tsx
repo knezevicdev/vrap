@@ -12,6 +12,7 @@ import styled from 'styled-components';
 
 interface PendingDealDialog {
   close: () => void;
+  message: string;
 }
 
 const primaryWhite = (props: { theme: ThemeProps }): string =>
@@ -89,7 +90,7 @@ const Close = styled.div`
   cursor: pointer;
 `;
 
-export const PendingDealDialog: React.FC<PendingDealDialog> = ({ close }) => {
+export const PendingDealDialog: React.FC<PendingDealDialog> = ({ close, message }) => {
   return (
     <Container>
       <Close onClick={close}>
@@ -98,8 +99,7 @@ export const PendingDealDialog: React.FC<PendingDealDialog> = ({ close }) => {
       <DialogTitle>pending purchase</DialogTitle>
       <Line />
       <Content>
-        You are currently in the process of purchasing another vehicle. Once
-        that purchase is complete, you’ll be able to make another purchase.
+        {message}
       </Content>
       <IconContainer>
         <Car src="assets/icons/car-reserve.svg" />
