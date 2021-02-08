@@ -238,7 +238,7 @@ describe('Inventory Store', () => {
     it('it should return the response fee if the API call is successful', async () => {
       taxiServiceNetworkerMock.getShippingFee = jest
         .fn()
-        .mockResolvedValue({ data: { fee: 499 } });
+        .mockResolvedValue({ data: { taxiGetShippingFee: { fee: 499 } } });
 
       const response = await fetchDeliveryFeeState(
         taxiServiceNetworkerMock,
@@ -248,9 +248,9 @@ describe('Inventory Store', () => {
       expect(response).toBe(499);
     });
     it('it should return the default fee if the API call is successful but no fee is in the response', async () => {
-      taxiServiceNetworkerMock.getShippingFee = jest
-        .fn()
-        .mockResolvedValue({ data: { fee: undefined } });
+      taxiServiceNetworkerMock.getShippingFee = jest.fn().mockResolvedValue({
+        data: { taxiGetShippingFee: { fee: undefined } },
+      });
 
       const response = await fetchDeliveryFeeState(
         taxiServiceNetworkerMock,

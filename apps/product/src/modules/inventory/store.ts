@@ -156,7 +156,7 @@ export async function fetchDeliveryFeeState(
 ): Promise<number> {
   try {
     const response = await taxiServiceNetworker.getShippingFee();
-    return response.data.fee || deliveryFeeDefault;
+    return response.data.taxiGetShippingFee.fee || deliveryFeeDefault;
   } catch (error) {
     console.error(JSON.stringify(error));
     return deliveryFeeDefault;
@@ -186,7 +186,7 @@ export async function getInitialInventoryStoreState(
   );
 
   const taxiServiceNetworker = new TaxiServiceNetworker(
-    publicRuntimeConfig.TAXI_SERVICE_URL || ''
+    publicRuntimeConfig.GEARBOX_URL || ''
   );
 
   const vehicleState = await getVehicleState(
