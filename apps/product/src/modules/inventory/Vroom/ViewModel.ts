@@ -84,6 +84,10 @@ class InventoryViewModel {
     const { leadFlagPhotoUrl, hasStockPhotos } = this.store.vehicle._source;
     return leadFlagPhotoUrl === '' || hasStockPhotos;
   };
+
+  getGoBiasExperimentAssignedExperiment(): boolean {
+    return this.store.goBiasExperiment?.assignedVariant === 1;
+  }
 }
 
 export default InventoryViewModel;

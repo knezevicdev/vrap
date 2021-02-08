@@ -64,6 +64,9 @@ const InventoryView: React.FC<Props> = (props) => {
     <>
       <SimpleHeader gearboxPrivateUrl={gearboxPrivateUrl} />
       <InventoryViewContainer>
+        {viewModel.getGoBiasExperimentAssignedExperiment() && (
+          <span id="go-bias"></span>
+        )}
         {viewModel.error() && (
           <VehicleNotFound message={viewModel.noVehicleFound} />
         )}

@@ -329,7 +329,7 @@ export const getTestDriveOnlyRequestData = (
 
 export const getTransmissionRequestData = (
   filtersData?: FiltersData
-): TransmissionAPI | undefined => {
+): TransmissionAPI[] | undefined => {
   if (!filtersData) {
     return undefined;
   }
@@ -343,7 +343,7 @@ export const getTransmissionRequestData = (
   if (!matchingTransmission) {
     return undefined;
   }
-  return matchingTransmission.api;
+  return [matchingTransmission.api];
 };
 
 export const getPostInventoryRequestDataFromFilterData = (
@@ -367,7 +367,7 @@ export const getPostInventoryRequestDataFromFilterData = (
     geoShippingExperimentAssignedVariant
   );
   const testdriveonly = getTestDriveOnlyRequestData(filtersData);
-  const transmissionid = getTransmissionRequestData(filtersData);
+  const transmissionDetail = getTransmissionRequestData(filtersData);
 
   return {
     bodytype,
@@ -383,7 +383,7 @@ export const getPostInventoryRequestDataFromFilterData = (
     sortby,
     sortdirection,
     testdriveonly,
-    transmissionid,
+    transmissionDetail,
     year: filtersData ? filtersData[Filters.YEAR] : undefined,
     fuelType,
     cylinders,
@@ -444,12 +444,8 @@ export class CarsStore {
 
   @observable areFiltersOpen = false;
 
-  @observable cylinderFilterExperiment?: Experiment;
-  @observable fuelTypeFilterExperiment?: Experiment;
-  @observable featuresFilterExperiment?: Experiment;
-  @observable fuelEfficiencyFilterExperiment?: Experiment;
-  @observable truckCabTypeFilterExperiment?: Experiment;
   @observable geoShippingExperiment?: Experiment;
+  @observable goBiasExperiment?: Experiment;
 
   constructor(initialState?: InitialCarsStoreState) {
     this.invSearchNetworker = new InvSearchNetworker(
@@ -468,47 +464,17 @@ export class CarsStore {
   }
 
   @action
-  setCylindersFilterExperiment = (
-    cylinderFilterExperiment?: Experiment
-  ): void => {
-    this.cylinderFilterExperiment = cylinderFilterExperiment;
-  };
-
-  @action
-  setFuelEfficiencyFilterExperiment = (
-    fuelEfficiencyFilterExperiment?: Experiment
-  ): void => {
-    this.fuelEfficiencyFilterExperiment = fuelEfficiencyFilterExperiment;
-  };
-
-  @action
-  setTruckCabTypeFilterExperiment = (
-    truckCabTypeFilterExperiment?: Experiment
-  ): void => {
-    this.truckCabTypeFilterExperiment = truckCabTypeFilterExperiment;
-  };
-
-  @action
-  setFuelTypeFilterExperiment = (
-    fuelTypeFilterExperiment?: Experiment
-  ): void => {
-    this.fuelTypeFilterExperiment = fuelTypeFilterExperiment;
-  };
-
-  @action
-  setFeaturesFilterExperiment = (
-    featuresFilterExperiment?: Experiment
-  ): void => {
-    this.featuresFilterExperiment = featuresFilterExperiment;
-  };
-
-  @action
   setGeoShippingExperiment = (geoShippingExperiment?: Experiment): void => {
     if (this.zipCode && geoShippingExperiment) {
       geoShippingExperiment.assignedVariant = 1;
       this.geoShippingExperiment = geoShippingExperiment;
     }
     this.geoShippingExperiment = geoShippingExperiment;
+  };
+
+  @action
+  setGoBiasExperiment = (goBiasExperiment?: Experiment): void => {
+    this.goBiasExperiment = goBiasExperiment;
   };
 
   @action
