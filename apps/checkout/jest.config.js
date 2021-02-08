@@ -14,6 +14,7 @@ module.exports = {
   },
   testPathIgnorePatterns: ['/node_modules/'],
   transform: {
+    "\\.(gql|graphql)$": "jest-transform-graphql",
     '^.+\\.(js|jsx|ts|tsx)$': 'ts-jest',
   },
   transformIgnorePatterns: ['/node_modules/'],

@@ -1,5 +1,6 @@
 import { buildUrl} from "./dealValidator";
 
+jest.mock('next/config', () => () => ({ publicRuntimeConfig: { BASE_PATH: "checkout" } }));
 
 describe('Deal Validator', ()=> {
 
