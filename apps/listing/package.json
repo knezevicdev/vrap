@@ -24,7 +24,7 @@
     "@vroom-web/experiment-sdk": "^2.0.1",
     "@vroom-web/footer-components": "^1.0.9",
     "@vroom-web/header-components": "^1.0.5",
-    "@vroom-web/inv-search-networking": "^1.1.1",
+    "@vroom-web/inv-search-networking": "^1.2.0",
     "@vroom-web/inv-service-networking": "^1.0.1",
     "@vroom-web/ui": "^1.0.1",
     "@vroom-web/whitelabel": "^1.0.1",
