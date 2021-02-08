@@ -90,7 +90,10 @@ const Close = styled.div`
   cursor: pointer;
 `;
 
-export const PendingDealDialog: React.FC<PendingDealDialog> = ({ close, message }) => {
+export const PendingDealDialog: React.FC<PendingDealDialog> = ({
+  close,
+  message,
+}) => {
   return (
     <Container>
       <Close onClick={close}>
@@ -98,9 +101,7 @@ export const PendingDealDialog: React.FC<PendingDealDialog> = ({ close, message 
       </Close>
       <DialogTitle>pending purchase</DialogTitle>
       <Line />
-      <Content>
-        {message}
-      </Content>
+      <Content>{message}</Content>
       <IconContainer>
         <Car src="assets/icons/car-reserve.svg" />
       </IconContainer>
