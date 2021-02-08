@@ -408,19 +408,32 @@ export const getServerSideProps: GetServerSideProps<Props> = async (
   };
 
   const makesStart = new Date().getTime();
-  const makesR = await invSearchNetworker.postInventory(makesRequestData);
+
+  let makes;
+  try {
+    const makesR = await invSearchNetworker.postInventory(makesRequestData);
+    makes = makesR.data.aggregations.make_count.buckets;
+  } catch {
+    makes = undefined;
+  }
+
   const makesElapsed = new Date().getTime() - makesStart;
   console.log('{"MAKES_AND_MODELS_FILTERS_ms":' + makesElapsed + '}');
 
   const popularStart = new Date().getTime();
-  const popularCarsR = await invSearchNetworker.postInventory(
-    popularCarsRequestData
-  );
+
+  let popularCars;
+  try {
+    const popularCarsR = await invSearchNetworker.postInventory(
+      popularCarsRequestData
+    );
+    popularCars = popularCarsR.data;
+  } catch {
+    popularCars = undefined;
+  }
+
   const popularElapsed = new Date().getTime() - popularStart;
   console.log('{"POPULAR_CARS_ms":' + popularElapsed + '}');
-
-  const makes = makesR.data.aggregations.make_count.buckets;
-  const popularCars = popularCarsR.data;
 
   // FIT-583
   // Persist key attribution query params across navigation.
