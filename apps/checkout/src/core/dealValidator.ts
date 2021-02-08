@@ -49,7 +49,7 @@ const {
  * @param vin 
  * @param to 
  */
-const buildUrl = (vin: string, to: string): string =>
+export const buildUrl = (vin: string, to: string): string =>
   `${BASE_PATH}/${vin}/${to}`;
 
 /**
@@ -119,7 +119,7 @@ export const initDealValidator = async (
 
   const response = await getPurchaseValidator([vin], headers, dealID);
   
-  //Validate Authorization
+  //Check Authorization
   let isAuth = isAuthenticated(response);
 
   const appProps = await App.getInitialProps(appContext);
