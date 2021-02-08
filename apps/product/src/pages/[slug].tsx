@@ -50,8 +50,19 @@ const InventoryPage: NextPage<Props> = (props: Props) => {
   }, [initialState.similarStatus, store, vin]);
 
   useEffect(() => {
+    experimentSDK
+      .getAndLogExperimentClientSide('snd-go-bias')
+      .then((experiment) => store.setGoBiasExperiment(experiment));
+  }, [store]);
+
+  useEffect(() => {
+    if (store.goBiasExperiment) {
+      analyticsHandler.registerExperiment(store.goBiasExperiment);
+    }
+  }, [store.goBiasExperiment]);
+
+  useEffect(() => {
     if (hasTddQuery) {
-      console.log(hasTddQuery)
       experimentSDK
         .getAndLogExperimentClientSide('snd-catalog-geo-shipping-merchandising')
         .then((experiment) => {
