@@ -6,7 +6,7 @@ import App from 'next/app';
 import getConfig from 'next/config';
 import {getTestDealSSR} from "src/networking/util/getTestDeal"
 import { DealValidatorData, getPurchaseValidator } from 'src/networking';
-
+import {Router} from 'next/router';
 export interface DealValidatorProps extends AppInitialProps {
   isAuthenticated: boolean;
   isVehicleSold: boolean;
@@ -44,6 +44,11 @@ const {
   publicRuntimeConfig: { BASE_PATH },
 } = getConfig();
 
+/**
+ * Checkout url conformed by checkout/[vin]/page
+ * @param vin 
+ * @param to 
+ */
 const buildUrl = (vin: string, to: string): string =>
   `${BASE_PATH}/${vin}/${to}`;
 
@@ -62,6 +67,23 @@ export const isAuthenticated = (
 
   return true;
 };
+
+/**
+ * Rules should not be applied to pages like upload documents and congratulations
+ * @param router 
+ */
+const excludePage = (router: Router): Boolean => {
+  
+  const excludeListOfPages = ["congratulations", "uploadDocument"]
+
+  for(let page of excludeListOfPages){ 
+    if(router.route.indexOf(page) > -1){
+      return true;
+    }
+  }
+
+  return false
+}
 
 export const stepPagesMapping = (vin: string): StepPagesMappingData =>
   ({
@@ -93,14 +115,30 @@ export const initDealValidator = async (
     ? { cookie: ctx.req.headers.cookie || '' }
     : undefined;
   
-  const { dealID } = getTestDealSSR(router); //select test Deal ID from the parameters.
+  const { dealID } = getTestDealSSR(router); //select Test Deal ID from the parameters on dev.
+
   const response = await getPurchaseValidator([vin], headers, dealID);
+  
+  //Validate Authorization
   let isAuth = isAuthenticated(response);
 
   const appProps = await App.getInitialProps(appContext);
 
+  //Don't apply any rule if the current path is on the excluded list
+  if(excludePage(router)){
+    return {
+      ...appProps,
+      isAuthenticated: isAuth,
+      isVehicleSold: false,
+      hasPendingDeal: false,
+      hasInProgressDeal: false,
+      isDepositCaptured: false,
+    };
+  } 
+
   if (!isErrorResponse(response)) {
-    //Vehicle sold
+    
+    //Check if the Vehicle has being sold
     const isVehicleSold =
       head(response.data.invSearch.vehicles)?.soldStatus !== 0;
 
