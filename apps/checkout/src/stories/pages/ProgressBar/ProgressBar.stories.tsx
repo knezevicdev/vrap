@@ -8,7 +8,7 @@ const muckSteps = [
   'Payment details',
   'Finalize purchase',
   'Deposit',
-  'Additionla docs'
+  'Additionla docs',
 ];
 
 export const progressBar: React.FC = (props: any) => {
