@@ -329,7 +329,7 @@ export const getTestDriveOnlyRequestData = (
 
 export const getTransmissionRequestData = (
   filtersData?: FiltersData
-): TransmissionAPI | undefined => {
+): TransmissionAPI[] | undefined => {
   if (!filtersData) {
     return undefined;
   }
@@ -343,7 +343,7 @@ export const getTransmissionRequestData = (
   if (!matchingTransmission) {
     return undefined;
   }
-  return matchingTransmission.api;
+  return [matchingTransmission.api];
 };
 
 export const getPostInventoryRequestDataFromFilterData = (
@@ -367,7 +367,7 @@ export const getPostInventoryRequestDataFromFilterData = (
     geoShippingExperimentAssignedVariant
   );
   const testdriveonly = getTestDriveOnlyRequestData(filtersData);
-  const transmissionid = getTransmissionRequestData(filtersData);
+  const transmissionDetail = getTransmissionRequestData(filtersData);
 
   return {
     bodytype,
@@ -383,7 +383,7 @@ export const getPostInventoryRequestDataFromFilterData = (
     sortby,
     sortdirection,
     testdriveonly,
-    transmissionid,
+    transmissionDetail,
     year: filtersData ? filtersData[Filters.YEAR] : undefined,
     fuelType,
     cylinders,

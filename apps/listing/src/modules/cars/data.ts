@@ -560,8 +560,8 @@ export const testDrives: TestDrive[] = [
 ];
 
 export enum TransmissionAPI {
-  AUTO = '0',
-  MANUAL = '1',
+  AUTO = 'automatic',
+  MANUAL = 'manual',
 }
 
 export enum TransmissionDisplay {
