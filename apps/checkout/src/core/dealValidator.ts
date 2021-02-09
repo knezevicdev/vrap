@@ -96,7 +96,7 @@ export const stepPagesMapping = (vin: string): StepPagesMappingData =>
  */
 export const initDealValidator = async (
   appContext: AppContext
-): Promise<DealValidatorProps> => { 
+): Promise<DealValidatorProps> => {
   const { router, ctx } = appContext;
   const vin = get(router, 'query.vin');
 
@@ -109,12 +109,12 @@ export const initDealValidator = async (
   const response = await getDealValidator(vin, headers, dealID);
 
   const isErrorResponded = isErrorResponse(response);
- 
+
   //Check Authorization
   let isAuth = !(
     isErrorResponded && isAccessDeniedErrorResponse(response as ErrorResponse)
   );
- 
+
   const appProps = await App.getInitialProps(appContext);
 
   //Don't apply any rule if the current path is on the excluded list
@@ -129,7 +129,6 @@ export const initDealValidator = async (
     };
   }
 
-
   if (isSuccessResponse(response)) {
     //Check if the Vehicle has being sold
     const isVehicleSold =
@@ -142,7 +141,7 @@ export const initDealValidator = async (
     const hasInProgressDeal = response.data.user.deals?.find(
       (f) => f.dealSummary.dealStatus.status === DealStatusEnum.IN_PROGRESS
     );
-    //don't show the modal if the deposit is captured and the page is uploadDocument.
+
     const isDepositCapturedPending = !!hasPendingDeal?.dealSummary
       .depositPaymentInfo?.DepositCaptured;
     const isDepositCapturedInProgress = !!hasInProgressDeal?.dealSummary

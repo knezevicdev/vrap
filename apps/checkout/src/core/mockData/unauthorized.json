@@ -1,11 +1,9 @@
 {
-    "error": {
+  "error": {
     "errors": [
       {
         "message": "access denied",
-        "path": [
-          "user"
-        ],
+        "path": ["user"],
         "extensions": {
           "code": "401"
         }
