@@ -1,8 +1,10 @@
-import DealValidatorModel from "./Model";
+import { Status } from '@vroom-web/networking';
+
+import DealValidatorModel from './Model';
+
 import PurchasePending from 'src/modules/dealValidatorModal/samples/PendingPurchase';
 import VehicleSold from 'src/modules/dealValidatorModal/samples/VehicleSold';
 import Login from 'src/modules/login';
-import { Status } from "@vroom-web/networking";
 
 export enum ModalContentMapEnum {
   PENDING_PURCHASE,
@@ -65,33 +67,39 @@ export default class DealValidatorModalViewModel {
   openModal = false;
 
   constructor(model: DealValidatorModel) {
-   
     this.model = model;
     this.modalContent = null;
-  
   }
 
-  private getModal(): void { 
-
-    if (this.model.dataStatus === Status.SUCCESS && !this.model.data.isAuthenticated) {
+  private getModal(): void {
+    if (
+      this.model.dataStatus === Status.SUCCESS &&
+      !this.model.data.isAuthenticated
+    ) {
       this.openModal = true;
       this.modalContent = modalContentMap(ModalContentMapEnum.LOGIN);
-    } else if (this.model.dataStatus === Status.SUCCESS && this.model.data.isVehicleSold) {
+    } else if (
+      this.model.dataStatus === Status.SUCCESS &&
+      this.model.data.isVehicleSold
+    ) {
       this.openModal = true;
       this.modalContent = modalContentMap(ModalContentMapEnum.VEHICLE_SOLD);
-    } else if (this.model.dataStatus === Status.SUCCESS && this.model.data.isDepositCaptured) {
+    } else if (
+      this.model.dataStatus === Status.SUCCESS &&
+      this.model.data.isDepositCaptured
+    ) {
       this.openModal = true;
       this.modalContent = modalContentMap(ModalContentMapEnum.PENDING_PURCHASE);
     }
   }
 
   get isModalOpen(): boolean {
-    this.getModal()
+    this.getModal();
     return this.model.dataStatus === Status.SUCCESS && this.openModal;
   }
 
-  get ModalContent(): ModalContentSelected | null { 
-    return this.model.dataStatus === Status.SUCCESS  ? this.modalContent : null;
+  get ModalContent(): ModalContentSelected | null {
+    return this.model.dataStatus === Status.SUCCESS ? this.modalContent : null;
   }
 
   onClose = (): void => {

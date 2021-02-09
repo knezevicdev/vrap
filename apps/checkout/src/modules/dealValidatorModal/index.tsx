@@ -1,8 +1,8 @@
 import React from 'react';
 
+import Model from './Model';
 import View from './View';
 import ViewModel from './ViewModel';
-import Model from './Model';
 class DealValidator extends React.Component {
   model = new Model();
   viewModel = new ViewModel(this.model);
@@ -15,5 +15,5 @@ class DealValidator extends React.Component {
     return <View viewModel={this.viewModel} />;
   }
 }
- 
+
 export default DealValidator;

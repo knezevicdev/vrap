@@ -5,7 +5,7 @@ import {
   isSuccessResponse,
 } from '@vroom-web/networking';
 import get from 'lodash/get';
-import head from 'lodash/head';  
+import head from 'lodash/head';
 import getConfig from 'next/config';
 import RouterNext, { Router } from 'next/router';
 
@@ -93,10 +93,9 @@ export const stepPagesMapping = (vin: string): StepPagesMappingData =>
  * @param AppContext
  */
 export const initDealValidator = async (): Promise<DealValidatorProps> => {
-  
   const { router } = RouterNext;
 
-  const vin = get(router, 'query.vin'); 
+  const vin = get(router, 'query.vin');
 
   const { dealID } = getTestDeal(); //select Test Deal ID from the parameters on dev.
 
@@ -108,10 +107,10 @@ export const initDealValidator = async (): Promise<DealValidatorProps> => {
   let isAuth = !(
     isErrorResponded && isAccessDeniedErrorResponse(response as ErrorResponse)
   );
-  
+
   //Don't apply any rule if the current path is on the excluded list
   if (excludePage(router)) {
-    return { 
+    return {
       isAuthenticated: isAuth,
       isVehicleSold: false,
       hasPendingDeal: false,
@@ -132,10 +131,10 @@ export const initDealValidator = async (): Promise<DealValidatorProps> => {
     const hasInProgressDeal = response.data.user.deals?.find(
       (f) => f.dealSummary.dealStatus.status === DealStatusEnum.IN_PROGRESS
     );
- 
+
     const isDepositCapturedInProgress = !!hasInProgressDeal?.dealSummary
       .depositPaymentInfo?.DepositCaptured;
-    return { 
+    return {
       isAuthenticated: isAuth,
       isVehicleSold,
       hasPendingDeal: !!hasPendingDeal,
@@ -147,7 +146,7 @@ export const initDealValidator = async (): Promise<DealValidatorProps> => {
     isAuth = false;
   }
 
-  return { 
+  return {
     isAuthenticated: isAuth,
     isVehicleSold: false,
     hasPendingDeal: false,

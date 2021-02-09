@@ -48,7 +48,7 @@ export const getDealValidator = async (
       dealStatus,
       vin: vin ? [vin] : undefined,
       source: 'vroom-web | Checkout',
-    }
+    },
   });
 
   return res;

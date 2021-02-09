@@ -28,7 +28,6 @@ configureMobx({
 const { publicRuntimeConfig } = getConfig();
 
 class VroomApp extends App {
- 
   componentDidMount(): void {
     if (publicRuntimeConfig.DATA_DOG_RUM_APPLICATION) {
       datadogRum.init({
