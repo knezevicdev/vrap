@@ -143,7 +143,7 @@ class ViewModel {
       urlPath: 'locations/kingwood',
       title: 'Kingwood',
       googleMapsUrl: 'https://goo.gl/maps/SBhBhUNdCBkCZH9Y7',
-      closed: true,
+      closed: false,
     },
     {
       locationInfo: {
