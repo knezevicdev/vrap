@@ -102,7 +102,7 @@ export const VehicleSoldDialog: React.FC<VehicleSoldDialog> = ({
       <DialogTitle>oh no!</DialogTitle>
       <Line />
       <Content>
-        <Body.Regular bold>{carName}</Body.Regular> is no longer available.Don’t
+        <Body.Regular bold>{carName}</Body.Regular> is no longer available. Don’t
         worry. We have thousands of low-mileage, high-quality vehicles for you
         to choose from.
       </Content>
