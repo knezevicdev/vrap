@@ -1,3 +1,6 @@
+import { Car } from '@vroom-web/inv-search-networking';
+
+import AnalyticsHandler, { Product } from 'src/integrations/AnalyticsHandler';
 import { InventoryStore } from 'src/modules/inventory/store';
 
 interface List {
@@ -7,6 +10,8 @@ interface List {
 }
 
 class PriceViewModel {
+  private analyticsHandler: AnalyticsHandler;
+  private readonly car: Car;
   readonly price: string;
   readonly title: string = 'Pricing';
   readonly list: List = {
@@ -22,6 +27,32 @@ class PriceViewModel {
   };
   constructor(store: InventoryStore) {
     this.price = store.vehicle._source.listingPrice.toLocaleString('en-US');
+    this.analyticsHandler = new AnalyticsHandler();
+    this.car = store.vehicle._source;
+  }
+
+  trackToolTipClick(): void {
+    const {
+      inventoryId: sku,
+      make,
+      model,
+      year,
+      vin,
+      listingPrice: price,
+      consignmentPartnerId: partnerId,
+    } = this.car;
+    const name = `${year} ${make} ${model}`;
+    const product: Product = {
+      inventoryType: partnerId ? 'Consignment' : 'Vroom',
+      make,
+      model,
+      year,
+      vin,
+      price,
+      sku,
+      name,
+    };
+    this.analyticsHandler.trackToolTipClicked(product);
   }
 }
 

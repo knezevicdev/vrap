@@ -4,7 +4,7 @@ export type ProductInventoryType = 'Consignment' | 'Vroom';
 export type ProductPhotoType = 'Illustration' | 'Stock' | 'Vroom';
 
 export interface Product {
-  imageUrl: string;
+  imageUrl?: string;
   inventoryType: ProductInventoryType;
   make: string;
   model: string;
@@ -95,6 +95,13 @@ class AnalyticsHandler extends BaseAnalyticsHandler {
     const event = `${selection} Image List Viewed`;
     const category = 'Product';
     const properties = { product, category };
+    this.track(event, properties);
+  }
+
+  trackToolTipClicked(product: Product): void {
+    const event = `Tool Tip Clicked`;
+    const category = 'Product';
+    const properties = { ...product, category };
     this.track(event, properties);
   }
 }
