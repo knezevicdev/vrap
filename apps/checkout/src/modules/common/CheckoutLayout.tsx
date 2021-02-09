@@ -1,11 +1,11 @@
-import { GQLTypes } from '@vroom-web/networking';
 import { ThemeProps } from '@vroom-web/temp-ui-alias-for-checkout';
-import React, { FC } from 'react';
+import React, { FC, useContext } from 'react';
 import styled from 'styled-components';
 
 import Footer from './Footer';
 import Header from './Header';
 import { ProgressBar } from './ProgressBar';
+import { DealContext } from '../store/DealStore';
 
 const grayFour = (props: { theme: ThemeProps }): string =>
   props.theme.colors.gray.four;
@@ -72,18 +72,16 @@ const DealSummary = styled.div`
   padding: 32px 96px 40px;
   grid-column: span 4;
 
+  position: sticky;
+  top: 16px;
+
   @media (max-width: 1023px) {
     display: none;
   }
 `;
 
-interface Props {
-  steps: string[];
-  activeStep: number;
-  deal?: GQLTypes.Deal;
-}
-
-const CheckoutLayout: FC<Props> = ({ steps, activeStep, deal, children }) => {
+const CheckoutLayout: FC = ({ children }) => {
+  const { steps, activeStep, deal } = useContext(DealContext);
   return (
     <Container>
       <Header />
