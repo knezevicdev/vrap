@@ -141,9 +141,7 @@ export const initDealValidator = async (
     const hasInProgressDeal = response.data.user.deals?.find(
       (f) => f.dealSummary.dealStatus.status === DealStatusEnum.IN_PROGRESS
     );
-
-    const isDepositCapturedPending = !!hasPendingDeal?.dealSummary
-      .depositPaymentInfo?.DepositCaptured;
+ 
     const isDepositCapturedInProgress = !!hasInProgressDeal?.dealSummary
       .depositPaymentInfo?.DepositCaptured;
     return {
@@ -152,8 +150,7 @@ export const initDealValidator = async (
       isVehicleSold,
       hasPendingDeal: !!hasPendingDeal,
       hasInProgressDeal: !!hasInProgressDeal,
-      isDepositCaptured:
-        isDepositCapturedPending || isDepositCapturedInProgress,
+      isDepositCaptured: !!hasPendingDeal || isDepositCapturedInProgress,
     };
   } else {
     //Is there some error related with the graphQL update auth flag
