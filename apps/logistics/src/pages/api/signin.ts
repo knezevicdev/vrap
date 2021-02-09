@@ -3,7 +3,7 @@ import cookie from 'cookie';
 import jwtDecode from 'jwt-decode';
 import { NextApiRequest, NextApiResponse } from 'next';
 
-import { IdToken } from 'src/networking/models/Auth';
+import { Groups, IdToken } from 'src/networking/models/Auth';
 
 export default async (
   req: NextApiRequest,
@@ -38,32 +38,33 @@ export default async (
 
   try {
     const response = await axios.post(url, gql, config);
-    // TODO: handle
-    // {
-    //   errors: [
-    //     {
-    //       message: 'received failure code: 400 Bad Request body{"error":{"type":"ACCOUNT_MANAGEMENT_API_ERROR","title":"could not signin","details":[{"message":"NotAuthorizedException: Incorrect username or password."}],"correlationId":"48848"}}',
-    //       path: [Array]
-    //     }
-    //   ],
-    //   data: null
-    // }
     const body: IdToken = jwtDecode(response.data.data.signin.idToken);
-    const expires = new Date(body.exp * 1000);
-    const setCookies = ['accessToken', 'idToken', 'refreshToken'].map(
-      (name): string => {
-        const config: cookie.CookieSerializeOptions = {
-          expires,
-          sameSite: true,
-        };
-        if (process.env.NODE_ENV !== 'development') {
-          config.secure = true;
+    if (
+      body['cognito:groups'] &&
+      body['cognito:groups'].includes(Groups.LogisticsPortal)
+    ) {
+      const expires = new Date(body.exp * 1000);
+      const setCookies = ['accessToken', 'idToken', 'refreshToken'].map(
+        (name): string => {
+          const config: cookie.CookieSerializeOptions = {
+            expires,
+            sameSite: true,
+          };
+          if (process.env.NODE_ENV !== 'development') {
+            config.secure = true;
+          }
+          return cookie.serialize(
+            name,
+            response.data.data.signin[name],
+            config
+          );
         }
-        return cookie.serialize(name, response.data.data.signin[name], config);
-      }
-    );
-    res.setHeader('Set-Cookie', setCookies);
-    res.json(body);
+      );
+      res.setHeader('Set-Cookie', setCookies);
+      res.json(body);
+    } else {
+      res.redirect(401, '/signin');
+    }
   } catch (err) {
     console.error(err);
     res.status(500).json(err);

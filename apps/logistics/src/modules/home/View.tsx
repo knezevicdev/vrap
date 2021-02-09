@@ -1,4 +1,4 @@
-import { Box, styled, Tab, Tabs, Typography } from '@material-ui/core';
+import { Box, styled, Tab, Tabs } from '@material-ui/core';
 import { observer } from 'mobx-react';
 import React, { useEffect, useState } from 'react';
 
@@ -33,9 +33,8 @@ const Shipments: React.FC<Props> = ({ viewModel }) => {
   const { headers, rows } = viewModel.tabs[value].tableData;
 
   return (
-    <Box m={12}>
+    <Box mx={6} my={4}>
       {/* <ShipmentChanger /> */}
-      <Typography variant="h1">Header for everything</Typography>
       <BorderedTabs
         value={value}
         onChange={handleNav}

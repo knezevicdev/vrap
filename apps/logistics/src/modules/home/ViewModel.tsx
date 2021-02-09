@@ -1,3 +1,4 @@
+import { Grid } from '@material-ui/core';
 import dayjs from 'dayjs';
 import React from 'react';
 
@@ -8,7 +9,11 @@ import PickupButton from './buttons/Pickup';
 import ShipmentsModel from './Model';
 import { Accessor, TableData } from './Table';
 
-import { ShipmentStatus } from 'src/networking/models/Shipments';
+import {
+  Address,
+  BlackoutDate,
+  ShipmentStatus,
+} from 'src/networking/models/Shipments';
 import { Status } from 'src/networking/Networker';
 
 class ShipmentsViewModel {
@@ -18,9 +23,52 @@ class ShipmentsViewModel {
     this.model = shipmentsModel;
   }
 
-  datefmt(date: string | undefined): string {
+  private datefmt(date?: string): string {
     return date ? dayjs(date).format('YYYY-MM-DD') : '';
   }
+
+  private blackoutdatesfmt(dates?: BlackoutDate[]): JSX.Element[] {
+    return dates
+      ? dates.map((date) => (
+          <>
+            {this.datefmt(date.start)} - {this.datefmt(date.stop)} <br />
+          </>
+        ))
+      : [];
+  }
+
+  private actionfmt(actions: JSX.Element[]): JSX.Element {
+    return (
+      <Grid container spacing={1}>
+        {actions.map((Button: JSX.Element) => (
+          <Grid item xs={6} key={Button.key}>
+            {Button}
+          </Grid>
+        )) ?? null}
+      </Grid>
+    );
+  }
+
+  /* eslint-disable @typescript-eslint/camelcase */
+  private addressfmt({
+    street_line_1,
+    street_line_2,
+    city,
+    state,
+    zipcode,
+  }: Address): JSX.Element {
+    return (
+      <>
+        {street_line_1}
+        <br />
+        {street_line_2}
+        {street_line_2 && <br />}
+        {city}, {state} {zipcode}
+      </>
+    );
+  }
+  /* eslint-enable @typescript-eslint/camelcase */
+
   setSelectedStatus(tabValue: number): void {
     this.model.setSelectedStatus(this.tabs[tabValue].status);
   }
@@ -34,29 +82,33 @@ class ShipmentsViewModel {
     status: ShipmentStatus;
     tableData: TableData;
   }[] {
+    const displayCount = (value: string): string => {
+      const found = this.model.counts.find((j) => j.status === value);
+      return `${value} (${found ? found.count : 0})`;
+    };
     return [
       {
-        display: 'Tendered',
-        status: ShipmentStatus.Tendered,
-        tableData: this.tendered,
+        display: displayCount('Posted'),
+        status: ShipmentStatus.Posted,
+        tableData: this.posted,
       },
       {
-        display: 'Booked',
+        display: displayCount('Booked'),
         status: ShipmentStatus.Booked,
         tableData: this.booked,
       },
       {
-        display: 'In Transit',
+        display: displayCount('In Transit'),
         status: ShipmentStatus.InTransit,
         tableData: this.inTransit,
       },
       {
-        display: 'Cancelled',
+        display: displayCount('Cancelled'),
         status: ShipmentStatus.Cancelled,
         tableData: this.cancelled,
       },
       {
-        display: 'Delivered',
+        display: displayCount('Delivered'),
         status: ShipmentStatus.Delivered,
         tableData: this.delivered,
       },
@@ -67,7 +119,7 @@ class ShipmentsViewModel {
     return this.model.status === Status.FETCHING;
   }
 
-  get tendered(): TableData {
+  get posted(): TableData {
     return {
       headers: [
         { display: 'VIN', accessor: Accessor.vin },
@@ -84,9 +136,11 @@ class ShipmentsViewModel {
             [Accessor.vin]: row.vin,
             [Accessor.yearMakeModel]: `${row.year} ${row.make} ${row.model}`,
             [Accessor.postedDate]: this.datefmt(row.date_posted),
-            [Accessor.originAddress]: row.origin_address.to_string,
-            [Accessor.destinationAddress]: row.destination_address.to_string,
-            [Accessor.actions]: [
+            [Accessor.originAddress]: this.addressfmt(row.origin_address),
+            [Accessor.destinationAddress]: this.addressfmt(
+              row.destination_address
+            ),
+            [Accessor.actions]: this.actionfmt([
               <BookButton
                 key="book"
                 shipmentId={row.shipment_id}
@@ -94,8 +148,16 @@ class ShipmentsViewModel {
                 destinationShipmentStopId={row.destination_address.stop_id}
                 shipmentsModel={this.model}
               />,
-            ],
+            ]),
           },
+          details: [
+            {
+              title: 'Blackout Dates',
+              content: this.blackoutdatesfmt(row.blackout_dates),
+            },
+            { title: 'Destination Phone Number', content: row.customer?.phone },
+            { title: 'Notes', content: row.notes },
+          ],
         })) || [],
     };
   }
@@ -118,12 +180,13 @@ class ShipmentsViewModel {
           [Accessor.vin]: row.vin,
           [Accessor.yearMakeModel]: `${row.year} ${row.make} ${row.model}`,
           [Accessor.bookedDate]: this.datefmt(row.booked_date),
-          [Accessor.originAddress]: row.origin_address.to_string,
-          [Accessor.destinationAddress]: row.destination_address.to_string,
-          [Accessor.blackoutDates]:
-            row.blackout_dates?.map((date) => date.to_string).join(', ') || '',
+          [Accessor.originAddress]: this.addressfmt(row.origin_address),
+          [Accessor.destinationAddress]: this.addressfmt(
+            row.destination_address
+          ),
+          [Accessor.blackoutDates]: this.blackoutdatesfmt(row.blackout_dates),
           [Accessor.estimatedPickupDate]: this.datefmt(row.estimated_pickup),
-          [Accessor.actions]: [
+          [Accessor.actions]: this.actionfmt([
             <PickupButton
               key="pickup"
               shipmentId={row.shipment_id}
@@ -135,8 +198,18 @@ class ShipmentsViewModel {
               shipmentId={row.shipment_id}
               shipmentsModel={this.model}
             />,
-          ],
+          ]),
         },
+        details: [
+          {
+            title: 'Origin Address',
+            content: this.addressfmt(row.origin_address),
+          },
+          { title: 'Origin Contact', content: row.customer?.name },
+          { title: 'Origin Phone Number', content: row.customer?.phone },
+          { title: 'Posted Date', content: this.datefmt(row.date_posted) },
+          { title: 'Notes', content: row.notes },
+        ],
       })),
     };
   }
@@ -167,14 +240,15 @@ class ShipmentsViewModel {
             [Accessor.vin]: row.vin,
             [Accessor.yearMakeModel]: `${row.year} ${row.make} ${row.model}`,
             [Accessor.pickedUpDate]: this.datefmt(row.actual_pickup),
-            [Accessor.originAddress]: row.origin_address.to_string,
-            [Accessor.destinationAddress]: row.destination_address.to_string,
-            [Accessor.blackoutDates]:
-              row.blackout_dates?.map((date) => date.start).join(', ') || '',
+            [Accessor.originAddress]: this.addressfmt(row.origin_address),
+            [Accessor.destinationAddress]: this.addressfmt(
+              row.destination_address
+            ),
+            [Accessor.blackoutDates]: this.blackoutdatesfmt(row.blackout_dates),
             [Accessor.estimatedDeliveryDate]: this.datefmt(
               row.estimated_delivery
             ),
-            [Accessor.actions]: [
+            [Accessor.actions]: this.actionfmt([
               <DeliverButton
                 key="deliver"
                 shipmentId={row.shipment_id}
@@ -186,8 +260,18 @@ class ShipmentsViewModel {
                 shipmentId={row.shipment_id}
                 shipmentsModel={this.model}
               />,
-            ],
+            ]),
           },
+          details: [
+            {
+              title: 'Destination Address',
+              content: this.addressfmt(row.origin_address),
+            },
+            { title: 'Destination Contact', content: row.customer?.name },
+            { title: 'Destination Phone Number', content: row.customer?.phone },
+            { title: 'Posted Date', content: this.datefmt(row.date_posted) },
+            { title: 'Notes', content: row.notes },
+          ],
         })) || [],
     };
   }
@@ -216,10 +300,11 @@ class ShipmentsViewModel {
             [Accessor.yearMakeModel]: `${row.year} ${row.make} ${row.model}`,
             [Accessor.cancelledDate]: this.datefmt(row.date_cancelled),
             [Accessor.postedDate]: this.datefmt(row.date_posted),
-            [Accessor.originAddress]: row.origin_address.to_string,
-            [Accessor.destinationAddress]: row.destination_address.to_string,
-            [Accessor.blackoutDates]:
-              row.blackout_dates?.map((date) => date.start).join(', ') || '',
+            [Accessor.originAddress]: this.addressfmt(row.origin_address),
+            [Accessor.destinationAddress]: this.addressfmt(
+              row.destination_address
+            ),
+            [Accessor.blackoutDates]: this.blackoutdatesfmt(row.blackout_dates),
             [Accessor.reason]: row.cancel_reason || '',
           },
         })) || [],
@@ -255,11 +340,11 @@ class ShipmentsViewModel {
             [Accessor.estimatedDeliveryDate]: this.datefmt(
               row.estimated_delivery
             ),
-            [Accessor.originAddress]: row.origin_address.to_string,
-            [Accessor.destinationAddress]: row.destination_address.to_string,
-            [Accessor.blackoutDates]:
-              row.blackout_dates?.map((date) => date.to_string).join(', ') ||
-              '',
+            [Accessor.originAddress]: this.addressfmt(row.origin_address),
+            [Accessor.destinationAddress]: this.addressfmt(
+              row.destination_address
+            ),
+            [Accessor.blackoutDates]: this.blackoutdatesfmt(row.blackout_dates),
           },
         })) || [],
     };

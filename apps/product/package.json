@@ -1,6 +1,6 @@
 {
   "name": "@vroom-web/product",
-  "version": "1.4.3",
+  "version": "1.5.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -27,7 +27,7 @@
     "@vroom-web/experiment-sdk": "^2.0.1",
     "@vroom-web/footer-components": "^1.0.9",
     "@vroom-web/header-components": "^1.0.5",
-    "@vroom-web/inv-search-networking": "^1.1.0",
+    "@vroom-web/inv-search-networking": "^1.2.0",
     "@vroom-web/inv-service-networking": "^1.2.1",
     "@vroom-web/taxi-service-networking": "^1.0.5",
     "@vroom-web/ui": "^1.0.1",
