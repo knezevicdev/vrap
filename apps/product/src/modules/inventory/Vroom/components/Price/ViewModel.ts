@@ -1,6 +1,6 @@
 import { Car } from '@vroom-web/inv-search-networking';
 
-import AnalyticsHandler, { Product } from 'src/integrations/AnalyticsHandler';
+import { analyticsHandler, Product } from 'src/integrations/AnalyticsHandler';
 import { InventoryStore } from 'src/modules/inventory/store';
 
 interface List {
@@ -9,8 +9,7 @@ interface List {
 }
 
 class PriceViewModel {
-  private inventoryStore: InventoryStore;
-  private analyticsHandler: AnalyticsHandler;
+  private deliveryFee: number;
   private readonly car: Car;
   readonly price: string;
   readonly title: string = 'Pricing';
@@ -21,18 +20,17 @@ class PriceViewModel {
   };
 
   constructor(inventoryStore: InventoryStore) {
-    this.inventoryStore = inventoryStore;
+    this.deliveryFee = inventoryStore.deliveryFee;
     this.price = inventoryStore.vehicle._source.listingPrice.toLocaleString(
       'en-US'
     );
-    this.analyticsHandler = new AnalyticsHandler();
     this.car = inventoryStore.vehicle._source;
   }
 
   getListBullets(): string[] {
     return [
       'Pre-delivery service charges of $285.50 (MA residents $385.50)',
-      `Delivery fee of $${this.inventoryStore.deliveryFee}`,
+      `Delivery fee of $${this.deliveryFee}`,
       'FL, NJ and NY residents only - Electronic registration filing charge of $15.00',
       'Applicable taxes, title, tag and registration charges which will be calculated at the time of purchase.',
     ];
@@ -59,7 +57,7 @@ class PriceViewModel {
       sku,
       name,
     };
-    this.analyticsHandler.trackToolTipClicked(product);
+    analyticsHandler.trackToolTipClicked(product);
   }
 }
 
