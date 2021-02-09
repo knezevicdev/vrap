@@ -12,6 +12,10 @@ const Content = styled.div`
   flex-direction: column;
 `;
 
+const Title = styled(Heading.Four)`
+  white-space: nowrap;
+`;
+
 const DealSummary = ({
   vehicle,
   deal,
@@ -19,7 +23,7 @@ const DealSummary = ({
 }: DealSummaryProps): JSX.Element => {
   return (
     <Content>
-      <Heading.Four>Purchase summary</Heading.Four>
+      <Title>Purchase summary</Title>
       <VehicleDetails {...vehicle} />
       <DealDetails deal={deal} trades={trades} />
     </Content>
