@@ -1,0 +1,228 @@
+{
+  "accountID": 556,
+  "dealID": 1,
+  "createdAt": "2020-09-09T16:41:03Z",
+  "TradeIns": [
+    {
+      "year": 2019,
+      "make": "Mazda",
+      "model": "CX-5",
+      "offerPrice": 19350.43155886233,
+      "loanPayoff": 17011.596130393445,
+      "makingLoanPayoff": true
+    }
+  ],
+  "dealSummary": {
+    "accountInfo": {
+      "userName": "Mathilde_Renner@yahoo.com",
+      "firstName": "Seth",
+      "middleName": "Marcos",
+      "lastName": "Wyman",
+      "phone": "895-458-0774"
+    },
+    "dealStatus": {
+      "step": "DocumentUpload",
+      "status": "In-Progress",
+      "interestedInTrade": true,
+      "canBeCancelled": false,
+      "pastSteps": [
+        "RegistrationAddress",
+        "DeliveryAddress",
+        "PaymentType",
+        "BackendProducts",
+        "DepositPaymentInfo"
+      ]
+    },
+    "paymentType": "Cash",
+    "deliveryAddress": {
+      "firstName": "Saul",
+      "lastName": "Wiza",
+      "streetLine1": "722 Neha Forks Suite 359",
+      "streetLine2": "Apt. 928",
+      "city": "North Fredrick",
+      "state": "LA",
+      "postCode": "54766"
+    },
+    "amountDue": {
+      "subTotal": 31303.586046651006,
+      "totalBalanceDue": 48255.08162330091,
+      "cashDownPayment": 33165.28428296745,
+      "taxableAmount": 30830.13297009468,
+      "totalTaxesAndFees": 32329.102828606963,
+      "shippingFee": 44580.589988708496,
+      "tradeIn": {
+        "value": 6287.480316357687,
+        "loanPayoff": 5773.54775601998,
+        "netBalance": 9575.548145221546,
+        "totalDownPayment": 2693.1565378326923
+      }
+    },
+    "dateCompleted": null,
+    "deliveryDetails": {
+      "wheelerTruck": false,
+      "availableForDelivery": false,
+      "additionalDetails": null,
+      "unavailableDates": null,
+      "alternateContact": {
+        "first": "Tyree",
+        "last": "Gerlach",
+        "phone": "933-534-8130"
+      }
+    },
+    "documents": [
+      {
+        "fileType": "drivers-license-back",
+        "fileID": "996a4d61-8056-41ca-b359-49c5a94476c2"
+      },
+      {
+        "fileType": "drivers-license-front",
+        "fileID": "f3173f46-2107-49e7-9a94-b72cfe6cb402"
+      },
+      {
+        "fileType": "insurance",
+        "fileID": "146a8d57-47f4-424e-9656-2b93284a85a1"
+      }
+    ],
+    "inventory": {
+      "id": "628",
+      "miles": 66158,
+      "leadPhotoURL": "https://source.unsplash.com/random/800x600/?automovil",
+      "pricing": {
+        "listPrice": 6652
+      },
+      "vehicle": {
+        "vin": "4S4BSAFC1J3359282",
+        "year": 2018,
+        "make": "Subaru",
+        "model": "Outback",
+        "trim": "2.5i Premium"
+      }
+    },
+    "depositPaymentInfo": {
+      "HoldPlaced": true,
+      "LastFourDigits": 4419,
+      "ChargeAmount": 246
+    },
+    "registrationAddress": {
+      "firstName": "Seth",
+      "lastName": "Wyman",
+      "streetLine1": "419 Kayleigh Valleys Apt. 018",
+      "streetLine2": "Apt. 839",
+      "city": "Lake Estellaville",
+      "state": "Clovis Unions",
+      "postCode": "88438"
+    },
+    "billingAddress": {
+      "firstName": "Seth",
+      "lastName": "Wyman",
+      "streetLine1": "676 Ryan Knoll",
+      "streetLine2": "Suite 634",
+      "city": "North Rickie",
+      "state": "Bechtelar Centers",
+      "postCode": "52115-6879"
+    },
+    "financing": null,
+    "additionalProducts": {
+      "VRTW": [
+        {
+          "id": "1d947f83-2998-4cce-9fc4-dec7d2bf069c",
+          "selected": true,
+          "planCode": "TW",
+          "name": "Tire and Wheel",
+          "summary": "24 months",
+          "cost": 414,
+          "months": 24,
+          "miles": 0,
+          "deductible": 0,
+          "dealerCost": 40,
+          "maxTerm": 24,
+          "planSku": 174128,
+          "productCode": "VRTW",
+          "retailRate": 290
+        },
+        {
+          "id": "40d57597-16e7-4b07-bd02-ed445b659177",
+          "selected": false,
+          "planCode": "TW",
+          "name": "Tire and Wheel",
+          "summary": "36 months",
+          "cost": 452,
+          "months": 36,
+          "miles": 0,
+          "deductible": 0,
+          "dealerCost": 78,
+          "maxTerm": 36,
+          "planSku": 174129,
+          "productCode": "VRTW",
+          "retailRate": 328
+        },
+        {
+          "id": "ceed0a8e-4742-4b0f-8d91-c312811fb32f",
+          "selected": false,
+          "planCode": "TW",
+          "name": "Tire and Wheel",
+          "summary": "48 months",
+          "cost": 456,
+          "months": 48,
+          "miles": 0,
+          "deductible": 0,
+          "dealerCost": 82,
+          "maxTerm": 48,
+          "planSku": 174130,
+          "productCode": "VRTW",
+          "retailRate": 332
+        }
+      ],
+      "VRVS": [
+        {
+          "id": "15932de2-222a-4ab2-a297-86558c06c780",
+          "selected": true,
+          "planCode": "VSCPLAT",
+          "name": "Vehicle Service Contract (VSC)",
+          "summary": "24 months / 24000 miles / 100 deductible",
+          "cost": 1447,
+          "months": 24,
+          "miles": 24000,
+          "deductible": 100,
+          "dealerCost": 597,
+          "maxTerm": 24,
+          "planSku": 174155,
+          "productCode": "VRVS",
+          "retailRate": 1347
+        },
+        {
+          "id": "ebc0a014-9f34-42b1-9091-33445b836b69",
+          "selected": false,
+          "planCode": "VSCPLAT",
+          "name": "Vehicle Service Contract (VSC)",
+          "summary": "36 months / 36000 miles / 100 deductible",
+          "cost": 1613,
+          "months": 36,
+          "miles": 36000,
+          "deductible": 100,
+          "dealerCost": 763,
+          "maxTerm": 36,
+          "planSku": 174156,
+          "productCode": "VRVS",
+          "retailRate": 1513
+        },
+        {
+          "id": "4ec7db13-62e1-4ead-a6fc-7624b3180e31",
+          "selected": false,
+          "planCode": "VSCPLAT",
+          "name": "Vehicle Service Contract (VSC)",
+          "summary": "48 months / 48000 miles / 100 deductible",
+          "cost": 1804,
+          "months": 48,
+          "miles": 48000,
+          "deductible": 100,
+          "dealerCost": 954,
+          "maxTerm": 48,
+          "planSku": 174157,
+          "productCode": "VRVS",
+          "retailRate": 1704
+        }
+      ]
+    }
+  }
+}
