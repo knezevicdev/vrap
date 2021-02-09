@@ -67,6 +67,7 @@ const PriceView: React.FC<Props> = ({ viewModel }) => {
   const open = Boolean(anchorEl);
   const handleClick = (event: React.MouseEvent<HTMLElement>): void => {
     setAnchorEl(event.currentTarget);
+    viewModel.trackToolTipClick();
   };
   const handleClose = (): void => {
     setAnchorEl(null);
