@@ -76,12 +76,10 @@ export default class DealValidatorModalViewModel {
     if (!this.initialData.isAuthenticated) {
       this.openModal = true;
       this.modalContent = modalContentMap(ModalContentMapEnum.LOGIN);
-    }
-    if (this.initialData.isVehicleSold) {
+    } else if (this.initialData.isVehicleSold) {
       this.openModal = true;
       this.modalContent = modalContentMap(ModalContentMapEnum.VEHICLE_SOLD);
-    }
-    if (this.initialData.isDepositCaptured) {
+    } else if (this.initialData.isDepositCaptured) {
       this.openModal = true;
       this.modalContent = modalContentMap(ModalContentMapEnum.PENDING_PURCHASE);
     }
