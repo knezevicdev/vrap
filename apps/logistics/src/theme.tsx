@@ -3,6 +3,7 @@ import createMuiTheme from '@material-ui/core/styles/createMuiTheme';
 const colors = {
   text: {
     main: '#212121',
+    secondary: '#757575',
     contrast: '#FFF',
   },
   background: { main: '#F3F4F6', content: '#FFFFFF', selected: '#E4EBF5' },
