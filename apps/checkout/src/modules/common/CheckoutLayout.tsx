@@ -2,10 +2,11 @@ import { ThemeProps } from '@vroom-web/temp-ui-alias-for-checkout';
 import React, { FC, useContext } from 'react';
 import styled from 'styled-components';
 
+import DealSummary from '../deals/sections/DealSummary/index';
+import { DealContext } from '../store/DealStore';
 import Footer from './Footer';
 import Header from './Header';
 import { ProgressBar } from './ProgressBar';
-import { DealContext } from '../store/DealStore';
 
 const grayFour = (props: { theme: ThemeProps }): string =>
   props.theme.colors.gray.four;
@@ -64,16 +65,16 @@ const DealContent = styled.div`
   }
 `;
 
-const DealSummary = styled.div`
+const DealSummarySection = styled.div`
   background-color: ${primaryWhite};
   border: 1px solid #e0e0e0;
   box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.08);
 
-  padding: 32px 96px 40px;
+  padding: 24px 24px 40px 24px;
   grid-column: span 4;
 
   position: sticky;
-  top: 16px;
+  top: 0;
 
   @media (max-width: 1023px) {
     display: none;
@@ -91,8 +92,9 @@ const CheckoutLayout: FC = ({ children }) => {
         </TrackerSection>
         <CheckoutSection>
           <DealContent>{children}</DealContent>
-          {/* Deal Summary will come here once code merged */}
-          <DealSummary></DealSummary>
+          <DealSummarySection>
+            {deal && <DealSummary deal={deal} />}
+          </DealSummarySection>
         </CheckoutSection>
       </Section>
       <Footer />

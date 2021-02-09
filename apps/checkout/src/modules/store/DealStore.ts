@@ -1,19 +1,23 @@
-import { createContext } from 'react';
-import { observable, makeObservable } from 'mobx';
 import { GQLTypes } from '@vroom-web/networking';
+import { createContext } from 'react';
 
-export class DealStore {
-  steps: string[] = [];
-  activeStep: number = 2;
-  deal: GQLTypes.Deal = {} as GQLTypes.Deal;
+const steps = [
+  'Trade-In Info',
+  'Your Info',
+  'Payment Details',
+  'Finalize Purchase',
+  'Deposit',
+  'Additional Docs',
+];
+const activeStep = -1;
 
-  constructor() {
-    makeObservable(this, {
-      steps: observable,
-      activeStep: observable,
-      deal: observable,
-    });
-  }
+interface DealState {
+  steps: string[];
+  activeStep: number;
+  deal?: GQLTypes.Deal;
 }
 
-export const DealContext = createContext(new DealStore());
+export const DealContext = createContext<DealState>({
+  steps,
+  activeStep,
+});
