@@ -1,9 +1,8 @@
-import { makeAutoObservable } from 'mobx';
-
-import { DealValidatorProps } from 'src/core/dealValidator';
+import DealValidatorModel from "./Model";
 import PurchasePending from 'src/modules/dealValidatorModal/samples/PendingPurchase';
 import VehicleSold from 'src/modules/dealValidatorModal/samples/VehicleSold';
 import Login from 'src/modules/login';
+import { Status } from "@vroom-web/networking";
 
 export enum ModalContentMapEnum {
   PENDING_PURCHASE,
@@ -61,36 +60,38 @@ const modalContentMap = (
   return contents[viewSelection];
 };
 export default class DealValidatorModalViewModel {
-  initialData: DealValidatorProps;
-  modalContent: ModalContentSelected;
+  model: DealValidatorModel;
+  modalContent: ModalContentSelected | null;
   openModal = false;
 
-  constructor(initialProps: DealValidatorProps) {
-    makeAutoObservable(this);
-    this.initialData = initialProps;
-    this.modalContent = modalContentMap(ModalContentMapEnum.LOGIN); //Default View Selected
-    this.init();
+  constructor(model: DealValidatorModel) {
+   
+    this.model = model;
+    this.modalContent = null;
+  
   }
 
-  private init(): void {
-    if (!this.initialData.isAuthenticated) {
+  private getModal(): void { 
+
+    if (this.model.dataStatus === Status.SUCCESS && !this.model.data.isAuthenticated) {
       this.openModal = true;
       this.modalContent = modalContentMap(ModalContentMapEnum.LOGIN);
-    } else if (this.initialData.isVehicleSold) {
+    } else if (this.model.dataStatus === Status.SUCCESS && this.model.data.isVehicleSold) {
       this.openModal = true;
       this.modalContent = modalContentMap(ModalContentMapEnum.VEHICLE_SOLD);
-    } else if (this.initialData.isDepositCaptured) {
+    } else if (this.model.dataStatus === Status.SUCCESS && this.model.data.isDepositCaptured) {
       this.openModal = true;
       this.modalContent = modalContentMap(ModalContentMapEnum.PENDING_PURCHASE);
     }
   }
 
   get isModalOpen(): boolean {
-    return this.openModal;
+    this.getModal()
+    return this.model.dataStatus === Status.SUCCESS && this.openModal;
   }
 
-  get ModalContent(): ModalContentSelected {
-    return this.modalContent;
+  get ModalContent(): ModalContentSelected | null { 
+    return this.model.dataStatus === Status.SUCCESS  ? this.modalContent : null;
   }
 
   onClose = (): void => {

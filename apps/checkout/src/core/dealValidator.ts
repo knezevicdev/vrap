@@ -5,15 +5,13 @@ import {
   isSuccessResponse,
 } from '@vroom-web/networking';
 import get from 'lodash/get';
-import head from 'lodash/head';
-import { AppContext, AppInitialProps } from 'next/app';
-import App from 'next/app';
+import head from 'lodash/head';  
 import getConfig from 'next/config';
-import { Router } from 'next/router';
+import RouterNext, { Router } from 'next/router';
 
 import { getDealValidator } from 'src/networking';
-import { getTestDealSSR } from 'src/networking/util/getTestDeal';
-export interface DealValidatorProps extends AppInitialProps {
+import { getTestDeal } from 'src/networking/util/getTestDeal';
+export interface DealValidatorProps {
   isAuthenticated: boolean;
   isVehicleSold: boolean;
   hasPendingDeal: boolean;
@@ -62,11 +60,11 @@ export const buildUrl = (vin: string, to: string): string =>
  * Rules should not be applied to pages like upload documents and congratulations
  * @param router
  */
-export const excludePage = (router: Router): boolean => {
+export const excludePage = (router: Router | null): boolean => {
   const excludeListOfPages = ['congratulations', 'documentUpload'];
 
   for (const page of excludeListOfPages) {
-    if (router.route.indexOf(page) > -1) {
+    if (router && router.route.indexOf(page) > -1) {
       return true;
     }
   }
@@ -94,19 +92,15 @@ export const stepPagesMapping = (vin: string): StepPagesMappingData =>
  * Initial Deal validations
  * @param AppContext
  */
-export const initDealValidator = async (
-  appContext: AppContext
-): Promise<DealValidatorProps> => {
-  const { router, ctx } = appContext;
-  const vin = get(router, 'query.vin');
+export const initDealValidator = async (): Promise<DealValidatorProps> => {
+  
+  const { router } = RouterNext;
 
-  const headers: Record<string, string> | undefined = ctx.req
-    ? { cookie: ctx.req.headers.cookie || '' }
-    : undefined;
+  const vin = get(router, 'query.vin'); 
 
-  const { dealID } = getTestDealSSR(router); //select Test Deal ID from the parameters on dev.
+  const { dealID } = getTestDeal(); //select Test Deal ID from the parameters on dev.
 
-  const response = await getDealValidator(vin, headers, dealID);
+  const response = await getDealValidator(vin, dealID);
 
   const isErrorResponded = isErrorResponse(response);
 
@@ -114,13 +108,10 @@ export const initDealValidator = async (
   let isAuth = !(
     isErrorResponded && isAccessDeniedErrorResponse(response as ErrorResponse)
   );
-
-  const appProps = await App.getInitialProps(appContext);
-
+  
   //Don't apply any rule if the current path is on the excluded list
   if (excludePage(router)) {
-    return {
-      ...appProps,
+    return { 
       isAuthenticated: isAuth,
       isVehicleSold: false,
       hasPendingDeal: false,
@@ -144,8 +135,7 @@ export const initDealValidator = async (
  
     const isDepositCapturedInProgress = !!hasInProgressDeal?.dealSummary
       .depositPaymentInfo?.DepositCaptured;
-    return {
-      ...appProps,
+    return { 
       isAuthenticated: isAuth,
       isVehicleSold,
       hasPendingDeal: !!hasPendingDeal,
@@ -157,8 +147,7 @@ export const initDealValidator = async (
     isAuth = false;
   }
 
-  return {
-    ...appProps,
+  return { 
     isAuthenticated: isAuth,
     isVehicleSold: false,
     hasPendingDeal: false,

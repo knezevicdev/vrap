@@ -16,7 +16,6 @@ import getConfig from 'next/config';
 import React from 'react';
 import { ThemeProvider as StyledThemeProvider } from 'styled-components';
 
-import { DealValidatorProps, initDealValidator } from 'src/core';
 import DealValidatorModal from 'src/modules/dealValidatorModal';
 import client from 'src/networking/client';
 
@@ -28,12 +27,8 @@ configureMobx({
 
 const { publicRuntimeConfig } = getConfig();
 
-class VroomApp extends App<DealValidatorProps> {
-  /**
-   * App SSR initial
-   */
-  static getInitialProps = initDealValidator;
-
+class VroomApp extends App {
+ 
   componentDidMount(): void {
     if (publicRuntimeConfig.DATA_DOG_RUM_APPLICATION) {
       datadogRum.init({
@@ -73,7 +68,7 @@ class VroomApp extends App<DealValidatorProps> {
         <GlobalStyle baseUrl={publicRuntimeConfig.BASE_PATH} />
         <ThemeProvider brand={Brand.VROOM}>
           <StyledThemeProvider theme={theme}>
-            <DealValidatorModal {...this.props} />
+            <DealValidatorModal />
             <Component {...pageProps} />
           </StyledThemeProvider>
         </ThemeProvider>

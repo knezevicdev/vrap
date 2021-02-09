@@ -44,8 +44,9 @@ const DealValidatorModalView: React.FC<Props> = ({ viewModel }) => {
   const onAfterClose = (): void => {
     document.body.style.overflow = 'unset';
   };
+  
   const { isModalOpen, ModalContent, onClose } = viewModel;
-  const { component, contentLabel } = ModalContent;
+  const { component, contentLabel } = ModalContent || {} ;
   return (
     <CustomModal
       isOpen={isModalOpen}

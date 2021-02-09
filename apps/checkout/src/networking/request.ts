@@ -34,7 +34,6 @@ export interface DealValidatorData {
 
 export const getDealValidator = async (
   vin: string | undefined,
-  headers?: Record<string, string> | undefined,
   inDealID?: number,
   inDealStatus?: string[]
 ): Promise<Response<DealValidatorData>> => {
@@ -49,8 +48,7 @@ export const getDealValidator = async (
       dealStatus,
       vin: vin ? [vin] : undefined,
       source: 'vroom-web | Checkout',
-    },
-    headers,
+    }
   });
 
   return res;

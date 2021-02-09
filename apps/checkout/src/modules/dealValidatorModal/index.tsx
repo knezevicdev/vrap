@@ -2,19 +2,18 @@ import React from 'react';
 
 import View from './View';
 import ViewModel from './ViewModel';
+import Model from './Model';
+class DealValidator extends React.Component {
+  model = new Model();
+  viewModel = new ViewModel(this.model);
 
-import { DealValidatorProps } from 'src/core/dealValidator';
-class Congratulations extends React.Component {
-  viewModel: ViewModel;
-
-  constructor(props: DealValidatorProps) {
-    super(props);
-    this.viewModel = new ViewModel(props);
+  componentDidMount(): void {
+    this.model.getData();
   }
 
   render(): React.ReactNode {
     return <View viewModel={this.viewModel} />;
   }
 }
-
-export default Congratulations;
+ 
+export default DealValidator;
