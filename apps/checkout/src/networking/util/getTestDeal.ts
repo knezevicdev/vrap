@@ -1,5 +1,5 @@
 import getConfig from 'next/config';
-import NextJSRouter, {Router} from 'next/router';
+import NextJSRouter, { Router } from 'next/router';
 
 const { publicRuntimeConfig } = getConfig();
 
@@ -39,13 +39,10 @@ export const getTestDeal = (
 
 /**
  * To work with the mockServer on SSR
- * @param router 
+ * @param router
  */
 
-export const getTestDealSSR = (
-  router: Router
-): TestParameters => { 
-
+export const getTestDealSSR = (router: Router): TestParameters => {
   if (publicRuntimeConfig.mockServer && router && router.query) {
     const { testDealId, testDealStatus } = router.query;
 
@@ -57,6 +54,6 @@ export const getTestDealSSR = (
 
   return {
     dealID: undefined,
-    dealStatus: undefined
+    dealStatus: undefined,
   };
-}
+};

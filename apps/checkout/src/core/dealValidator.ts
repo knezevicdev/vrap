@@ -1,12 +1,18 @@
-import { isErrorResponse, Response } from '@vroom-web/networking';
+import {
+  ErrorResponse,
+  isAccessDeniedErrorResponse,
+  isErrorResponse,
+  isSuccessResponse,
+} from '@vroom-web/networking';
 import get from 'lodash/get';
 import head from 'lodash/head';
 import { AppContext, AppInitialProps } from 'next/app';
 import App from 'next/app';
 import getConfig from 'next/config';
-import {getTestDealSSR} from "src/networking/util/getTestDeal"
-import { DealValidatorData, getPurchaseValidator } from 'src/networking';
-import {Router} from 'next/router';
+import { Router } from 'next/router';
+
+import { getDealValidator } from 'src/networking';
+import { getTestDealSSR } from 'src/networking/util/getTestDeal';
 export interface DealValidatorProps extends AppInitialProps {
   isAuthenticated: boolean;
   isVehicleSold: boolean;
@@ -46,44 +52,27 @@ const {
 
 /**
  * Checkout url conformed by checkout/[vin]/page
- * @param vin 
- * @param to 
+ * @param vin
+ * @param to
  */
 export const buildUrl = (vin: string, to: string): string =>
   `${BASE_PATH}/${vin}/${to}`;
 
 /**
- * Validate Authorization
- * @param response
- */
-export const isAuthenticated = (
-  response: Response<DealValidatorData>
-): boolean => {
-  const errorCode = get(response, 'error.response.extensions.error_code');
-  if (errorCode && errorCode === '401') {
-    //Not Authorized
-    return false;
-  }
-
-  return true;
-};
-
-/**
  * Rules should not be applied to pages like upload documents and congratulations
- * @param router 
+ * @param router
  */
-const excludePage = (router: Router): Boolean => {
-  
-  const excludeListOfPages = ["congratulations", "uploadDocument"]
+export const excludePage = (router: Router): boolean => {
+  const excludeListOfPages = ['congratulations', 'documentUpload'];
 
-  for(let page of excludeListOfPages){ 
-    if(router.route.indexOf(page) > -1){
+  for (const page of excludeListOfPages) {
+    if (router.route.indexOf(page) > -1) {
       return true;
     }
   }
 
-  return false
-}
+  return false;
+};
 
 export const stepPagesMapping = (vin: string): StepPagesMappingData =>
   ({
@@ -107,25 +96,29 @@ export const stepPagesMapping = (vin: string): StepPagesMappingData =>
  */
 export const initDealValidator = async (
   appContext: AppContext
-): Promise<DealValidatorProps> => {
+): Promise<DealValidatorProps> => { 
   const { router, ctx } = appContext;
   const vin = get(router, 'query.vin');
-  
+
   const headers: Record<string, string> | undefined = ctx.req
     ? { cookie: ctx.req.headers.cookie || '' }
     : undefined;
-  
+
   const { dealID } = getTestDealSSR(router); //select Test Deal ID from the parameters on dev.
 
-  const response = await getPurchaseValidator([vin], headers, dealID);
-  
-  //Check Authorization
-  let isAuth = isAuthenticated(response);
+  const response = await getDealValidator(vin, headers, dealID);
 
+  const isErrorResponded = isErrorResponse(response);
+ 
+  //Check Authorization
+  let isAuth = !(
+    isErrorResponded && isAccessDeniedErrorResponse(response as ErrorResponse)
+  );
+ 
   const appProps = await App.getInitialProps(appContext);
 
   //Don't apply any rule if the current path is on the excluded list
-  if(excludePage(router)){
+  if (excludePage(router)) {
     return {
       ...appProps,
       isAuthenticated: isAuth,
@@ -134,10 +127,10 @@ export const initDealValidator = async (
       hasInProgressDeal: false,
       isDepositCaptured: false,
     };
-  } 
+  }
 
-  if (!isErrorResponse(response)) {
-    
+
+  if (isSuccessResponse(response)) {
     //Check if the Vehicle has being sold
     const isVehicleSold =
       head(response.data.invSearch.vehicles)?.soldStatus !== 0;
@@ -160,7 +153,8 @@ export const initDealValidator = async (
       isVehicleSold,
       hasPendingDeal: !!hasPendingDeal,
       hasInProgressDeal: !!hasInProgressDeal,
-      isDepositCaptured: isDepositCapturedPending ||  isDepositCapturedInProgress,
+      isDepositCaptured:
+        isDepositCapturedPending || isDepositCapturedInProgress,
     };
   } else {
     //Is there some error related with the graphQL update auth flag

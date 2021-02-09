@@ -32,8 +32,8 @@ export interface DealValidatorData {
   invSearch: GQLTypes.InvSearchResult;
 }
 
-export const getPurchaseValidator = async (
-  vin: string[],
+export const getDealValidator = async (
+  vin: string | undefined,
   headers?: Record<string, string> | undefined,
   inDealID?: number,
   inDealStatus?: string[]
@@ -47,7 +47,7 @@ export const getPurchaseValidator = async (
     variables: {
       dealID,
       dealStatus,
-      vin,
+      vin: vin ? [vin] : undefined,
       source: 'vroom-web | Checkout',
     },
     headers,
