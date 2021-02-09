@@ -39,10 +39,10 @@ const CheckoutSection = styled.div`
   grid-template-columns: repeat(12, 1fr);
   align-items: flex-start;
   gap: 32px;
-  padding: 0 16px 24px 16px;
+  margin: 0 16px 24px 16px;
 
-  @media (max-width: 800px) {
-    padding: 0 0 24px 0;
+  @media (max-width: 600px) {
+    margin: 0 0 24px 0;
   }
 `;
 
