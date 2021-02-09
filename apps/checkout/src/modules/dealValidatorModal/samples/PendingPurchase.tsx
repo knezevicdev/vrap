@@ -1,7 +1,13 @@
 import React from 'react';
+import styled from "styled-components";
+
+const Container = styled.div`
+  min-height: 350px;
+  min-width: 200px;
+`
 
 const PendingPurchase: React.FC = (): JSX.Element => {
-  return <div>Pending Purchase View</div>;
+  return <Container>Pending Purchase View</Container>;
 };
 
 export default PendingPurchase;

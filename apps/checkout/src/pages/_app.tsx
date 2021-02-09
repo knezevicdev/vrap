@@ -73,12 +73,6 @@ class VroomApp extends App<DealValidatorProps> {
         <GlobalStyle baseUrl={publicRuntimeConfig.BASE_PATH} />
         <ThemeProvider brand={Brand.VROOM}>
           <StyledThemeProvider theme={theme}>
-            {/* Testing Responses */}
-            <p> authendicated: {this.props.isAuthenticated ? 'YES' : 'NO'} </p>
-            <p> in-progress{this.props.hasInProgressDeal ? 'YES' : 'NO'}</p>
-            <p> is sold {this.props.isVehicleSold ? 'YES' : 'NO'}</p>
-            <p> pending deal {this.props.hasPendingDeal ? 'YES' : 'NO'}</p>
-            <p> deposit {this.props.isDepositCaptured ? 'YES' : 'NO'}</p>
             <DealValidatorModal {...this.props} />
             <Component {...pageProps} />
           </StyledThemeProvider>

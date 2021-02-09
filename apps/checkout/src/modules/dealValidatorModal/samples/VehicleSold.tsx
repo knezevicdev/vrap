@@ -1,7 +1,12 @@
 import React from 'react';
+import styled from "styled-components";
 
+const Container = styled.div`
+  min-height: 350px;
+  min-width: 200px;
+`
 const VehicleSold: React.FC = (): JSX.Element => {
-  return <div>Vehicle Sold View</div>;
+  return <Container>Vehicle Sold View</Container>;
 };
 
 export default VehicleSold;
