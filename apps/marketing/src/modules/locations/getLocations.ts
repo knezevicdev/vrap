@@ -167,7 +167,7 @@ export function getLocations(): LocationInfo[] {
     },
     {
       name: 'Kingwood',
-      closed: true,
+      closed: false,
       path: 'kingwood',
       href: '/marketing/locations/kingwood',
       address: {
