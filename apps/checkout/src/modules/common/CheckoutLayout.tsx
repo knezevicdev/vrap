@@ -41,6 +41,9 @@ const CheckoutSection = styled.div`
   gap: 32px;
   margin: 0 16px 24px 16px;
 
+  @media (max-width: 1280px) {
+    gap: 16px;
+  }
   @media (max-width: 600px) {
     margin: 0 0 24px 0;
   }
