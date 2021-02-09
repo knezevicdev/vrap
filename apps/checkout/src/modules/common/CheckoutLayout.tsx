@@ -70,7 +70,6 @@ const DealSummarySection = styled.div`
   border: 1px solid #e0e0e0;
   box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.08);
 
-  padding: 24px 24px 40px 24px;
   grid-column: span 4;
 
   position: sticky;
@@ -83,6 +82,7 @@ const DealSummarySection = styled.div`
 
 const CheckoutLayout: FC = ({ children }) => {
   const { steps, activeStep, deal } = useContext(DealContext);
+
   return (
     <Container>
       <Header />
@@ -94,6 +94,7 @@ const CheckoutLayout: FC = ({ children }) => {
           <DealContent>{children}</DealContent>
           <DealSummarySection>
             {deal && <DealSummary deal={deal} />}
+            {/* {<SelectedCar {...vehicle} />} */}
           </DealSummarySection>
         </CheckoutSection>
       </Section>

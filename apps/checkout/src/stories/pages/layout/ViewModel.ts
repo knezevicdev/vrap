@@ -62,9 +62,9 @@ const deal = {
       vehicle: {
         vin: '4S4BSAFC1J3359282',
         year: 2018,
-        make: 'Subaru',
-        model: 'Outback',
-        trim: '2.5i Premium',
+        make: 'Chrysler',
+        model: 'Pacifica Hybrid',
+        trim: 'Limited',
       },
     },
     depositPaymentInfo: {

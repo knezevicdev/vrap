@@ -7,14 +7,20 @@ import { buildPrice } from './buildPrice';
 
 const Container = styled.div`
   margin-top: 16px;
-  display: flex;
-  align-items: center;
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 16px;
 `;
 
 const CarInfo = styled.div`
-  margin-left: 16px;
   display: grid;
   flex-direction: column;
+`;
+
+const Title = styled(Body.Regular)`
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 `;
 
 const VehicleDetails = (vehicle: VehicleProps): JSX.Element => {
@@ -31,13 +37,13 @@ const VehicleDetails = (vehicle: VehicleProps): JSX.Element => {
       <Picture
         alt={`${make} ${model}`}
         src={leadPhotoURL || ''}
-        width="110px"
-        height="80px"
-        objectFit="contain"
+        width="100%"
+        height="88px"
+        objectFit="cover"
       />
 
       <CarInfo>
-        <Body.Regular bold>{`${year} ${make} ${model}`}</Body.Regular>
+        <Title bold>{`${year} ${make} ${model}`}</Title>
         <Body.Small>{trim}</Body.Small>
         <Body.Small>
           {miles ? `${miles.toLocaleString()} miles` : `-`}

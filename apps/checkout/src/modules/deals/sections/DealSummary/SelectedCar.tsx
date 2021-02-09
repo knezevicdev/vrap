@@ -12,12 +12,6 @@ import { VehicleProps } from './types';
 const grayThree = (props: { theme: ThemeProps }): string =>
   props.theme.colors.gray.three;
 
-const Container = styled.div`
-  box-shadow: 0 0 4px 0 #00000014;
-  display: inline-flex;
-  flex-direction: column;
-`;
-
 const CarInfo = styled.div`
   margin: 16px;
   display: grid;
@@ -39,13 +33,13 @@ const SelectedCar = (props: VehicleProps): JSX.Element => {
   } = props;
 
   return (
-    <Container>
+    <>
       <Picture
         alt={`${make} ${model}`}
         src={leadPhotoURL || ''}
-        width="410px"
+        width="100%"
         height="310px"
-        objectFit="contain"
+        objectFit="cover"
       />
 
       <CarInfo>
@@ -56,7 +50,7 @@ const SelectedCar = (props: VehicleProps): JSX.Element => {
         </Body.Regular>
         <Title.Two>{listingPrice}</Title.Two>
       </CarInfo>
-    </Container>
+    </>
   );
 };
 

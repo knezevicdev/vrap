@@ -7,6 +7,7 @@ import VehicleDetails from './components/VehicleDetails';
 import { DealSummaryProps } from './types';
 
 const Content = styled.div`
+  padding: 24px 24px 40px 24px;
   display: flex;
   flex-direction: column;
 `;
