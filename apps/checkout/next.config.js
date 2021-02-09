@@ -10,13 +10,6 @@ const shortHash = childProcess
 
 const basePath = '/checkout';
 
-const clientPointSelector = () => {
-  if (process.env.NODE_ENV === 'production') {
-    return '/gql';
-  }
-  return `${basePath}/api/gql`;
-};
-
 const config = {
   basePath,
   distDir: `.next/${shortHash}`,
