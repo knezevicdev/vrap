@@ -1,9 +1,7 @@
 import { ErrorResponse, Response } from '@vroom-web/networking';
-import { AppContext } from 'next/app';
 import { Router } from 'next/router';
 
 import { buildUrl, excludePage, initDealValidator } from './dealValidator';
-import appContext from './mockData/appContext.json';
 import Deals from './mockData/deals.json';
 import Unauthorized from './mockData/unauthorized.json';
 
@@ -48,9 +46,7 @@ describe('Deal Validator', () => {
       >;
       spy.mockReturnValue(fn);
 
-      const response = await initDealValidator(
-        (appContext as unknown) as AppContext
-      );
+      const response = await initDealValidator();
 
       expect(response.isAuthenticated).toBeTruthy();
       expect(response.isVehicleSold).toBeFalsy();
@@ -67,9 +63,7 @@ describe('Deal Validator', () => {
       >;
       spy.mockReturnValue(fn);
 
-      const response = await initDealValidator(
-        (appContext as unknown) as AppContext
-      );
+      const response = await initDealValidator();
 
       expect(response.isVehicleSold).toBeTruthy();
     });
@@ -82,9 +76,7 @@ describe('Deal Validator', () => {
       >;
       spy.mockReturnValue(fn);
 
-      const response = await initDealValidator(
-        (appContext as unknown) as AppContext
-      );
+      const response = await initDealValidator();
 
       expect(response.hasInProgressDeal).toBeTruthy();
       expect(response.isDepositCaptured).toBeTruthy();
@@ -99,9 +91,7 @@ describe('Deal Validator', () => {
       >;
       spy.mockReturnValue(fn);
 
-      const response = await initDealValidator(
-        (appContext as unknown) as AppContext
-      );
+      const response = await initDealValidator();
 
       expect(response.isDepositCaptured).toBeTruthy();
       expect(response.hasPendingDeal).toBeTruthy();
@@ -116,9 +106,7 @@ describe('Deal Validator', () => {
       ) as unknown) as Promise<ErrorResponse>;
       spy.mockReturnValue(fn);
 
-      const response = await initDealValidator(
-        (appContext as unknown) as AppContext
-      );
+      const response = await initDealValidator();
 
       expect(response.isAuthenticated).toBeFalsy();
     });
