@@ -43,7 +43,7 @@ const primaryWhite = (props: { theme: ThemeProps }): string =>
 const Container = styled.div`
   display: flex;
   background: ${primaryBlack};
-  padding: 10px;
+  padding: 0 10px;
   height: 72px;
   align-items: center;
   justify-content: center;
