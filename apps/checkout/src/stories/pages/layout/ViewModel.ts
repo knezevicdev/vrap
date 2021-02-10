@@ -15,9 +15,9 @@ const deal = {
   createdAt: '2020-09-09T16:41:03Z',
   TradeIns: [
     {
-      year: 2019,
-      make: 'Mazda',
-      model: 'CX-5',
+      year: 2015,
+      make: 'Chrysler',
+      model: 'Pacifica Hybrid',
       offerPrice: 16856.742447428405,
       loanPayoff: 10006.815813388675,
       makingLoanPayoff: true,
