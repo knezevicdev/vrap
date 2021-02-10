@@ -7,8 +7,8 @@ import {
 import get from 'lodash/get';
 import head from 'lodash/head';
 import getConfig from 'next/config';
-import RouterNext, { Router } from 'next/router';
-
+import { Router, SingletonRouter } from 'next/router';
+import SpecialPageRules from "./data/specialPageRules.json";
 import { getDealValidator } from 'src/networking';
 import { getTestDeal } from 'src/networking/util/getTestDeal';
 export interface DealValidatorProps {
@@ -56,20 +56,25 @@ const {
 export const buildUrl = (vin: string, to: string): string =>
   `${BASE_PATH}/${vin}/${to}`;
 
+interface Rules {
+  vehicleSold: boolean;
+  depositCaptured: boolean;
+  pendingDeal: boolean;
+  inProgressDeal: boolean;
+}
 /**
  * Rules should not be applied to pages like upload documents and congratulations
  * @param router
  */
-export const excludePage = (router: Router | null): boolean => {
-  const excludeListOfPages = ['congratulations', 'documentUpload'];
+export const excludePage = (router: Router | null): Rules | null => {
+  const excludeListOfPages = SpecialPageRules;
 
   for (const page of excludeListOfPages) {
-    if (router && router.route.indexOf(page) > -1) {
-      return true;
+    if (router && router.route.indexOf(page.path) > -1) {
+      return page.rules;
     }
   }
-
-  return false;
+  return null;
 };
 
 export const stepPagesMapping = (vin: string): StepPagesMappingData =>
@@ -84,7 +89,7 @@ export const stepPagesMapping = (vin: string): StepPagesMappingData =>
     [DealStepsEnum.FINANCING_DECLINED]: buildUrl(vin, 'testPage'),
     [DealStepsEnum.PRODUCTS]: buildUrl(vin, 'testPage'),
     [DealStepsEnum.DEPOSIT]: buildUrl(vin, 'testPage'),
-    [DealStepsEnum.DOCUMENT_UPLOAD]: buildUrl(vin, 'testPage'),
+    [DealStepsEnum.DOCUMENT_UPLOAD]: buildUrl(vin, 'documentUpload'),
     [DealStepsEnum.DEAL_SUMMARY]: `${BASE_PATH}/congratulations`,
   } as StepPagesMappingData);
 
@@ -92,8 +97,10 @@ export const stepPagesMapping = (vin: string): StepPagesMappingData =>
  * Initial Deal validations
  * @param AppContext
  */
-export const initDealValidator = async (): Promise<DealValidatorProps> => {
-  const { router } = RouterNext;
+export const initDealValidator = async (
+  Router: SingletonRouter
+): Promise<DealValidatorProps> => {
+  const { router } = Router;
 
   const vin = get(router, 'query.vin');
 
@@ -108,18 +115,9 @@ export const initDealValidator = async (): Promise<DealValidatorProps> => {
     isErrorResponded && isAccessDeniedErrorResponse(response as ErrorResponse)
   );
 
-  //Don't apply any rule if the current path is on the excluded list
-  if (excludePage(router)) {
-    return {
-      isAuthenticated: isAuth,
-      isVehicleSold: false,
-      hasPendingDeal: false,
-      hasInProgressDeal: false,
-      isDepositCaptured: false,
-    };
-  }
-
   if (isSuccessResponse(response)) {
+    const excludedRules = excludePage(router);
+
     //Check if the Vehicle has being sold
     const isVehicleSold =
       head(response.data.invSearch.vehicles)?.soldStatus !== 0;
@@ -134,12 +132,21 @@ export const initDealValidator = async (): Promise<DealValidatorProps> => {
 
     const isDepositCapturedInProgress = !!hasInProgressDeal?.dealSummary
       .depositPaymentInfo?.DepositCaptured;
+
     return {
       isAuthenticated: isAuth,
-      isVehicleSold,
-      hasPendingDeal: !!hasPendingDeal,
-      hasInProgressDeal: !!hasInProgressDeal,
-      isDepositCaptured: !!hasPendingDeal || isDepositCapturedInProgress,
+      isVehicleSold: excludedRules
+        ? excludedRules.vehicleSold && isVehicleSold
+        : isVehicleSold,
+      hasPendingDeal: excludedRules
+        ? excludedRules.pendingDeal && !!hasPendingDeal
+        : !!hasPendingDeal,
+      hasInProgressDeal: excludedRules
+        ? excludedRules.inProgressDeal && !!hasInProgressDeal
+        : !!hasInProgressDeal,
+      isDepositCaptured: excludedRules
+        ? excludedRules.depositCaptured && isDepositCapturedInProgress
+        : isDepositCapturedInProgress,
     };
   } else {
     //Is there some error related with the graphQL update auth flag

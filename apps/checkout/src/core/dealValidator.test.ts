@@ -1,5 +1,5 @@
 import { ErrorResponse, Response } from '@vroom-web/networking';
-import { Router } from 'next/router';
+import RouterNext, { Router, SingletonRouter } from 'next/router';
 
 import { buildUrl, excludePage, initDealValidator } from './dealValidator';
 import Deals from './mockData/deals.json';
@@ -46,7 +46,7 @@ describe('Deal Validator', () => {
       >;
       spy.mockReturnValue(fn);
 
-      const response = await initDealValidator();
+      const response = await initDealValidator(RouterNext);
 
       expect(response.isAuthenticated).toBeTruthy();
       expect(response.isVehicleSold).toBeFalsy();
@@ -63,7 +63,7 @@ describe('Deal Validator', () => {
       >;
       spy.mockReturnValue(fn);
 
-      const response = await initDealValidator();
+      const response = await initDealValidator(RouterNext);
 
       expect(response.isVehicleSold).toBeTruthy();
     });
@@ -76,7 +76,7 @@ describe('Deal Validator', () => {
       >;
       spy.mockReturnValue(fn);
 
-      const response = await initDealValidator();
+      const response = await initDealValidator(RouterNext);
 
       expect(response.hasInProgressDeal).toBeTruthy();
       expect(response.isDepositCaptured).toBeTruthy();
@@ -91,9 +91,9 @@ describe('Deal Validator', () => {
       >;
       spy.mockReturnValue(fn);
 
-      const response = await initDealValidator();
+      const response = await initDealValidator(RouterNext);
 
-      expect(response.isDepositCaptured).toBeTruthy();
+      expect(response.isDepositCaptured).toBeFalsy();
       expect(response.hasPendingDeal).toBeTruthy();
       expect(response.hasInProgressDeal).toBeFalsy();
     });
@@ -106,9 +106,62 @@ describe('Deal Validator', () => {
       ) as unknown) as Promise<ErrorResponse>;
       spy.mockReturnValue(fn);
 
-      const response = await initDealValidator();
+      const response = await initDealValidator(RouterNext);
 
       expect(response.isAuthenticated).toBeFalsy();
     });
+  });
+
+  it('Exclude documentUpload Page all the rules except check pending deal Modal', async () => {
+    const RouterNext = ({
+      router: {
+        route: '/documentUpload',
+        pathname: '/documentUpload',
+        basePath: '/checkout',
+      },
+    } as unknown) as SingletonRouter;
+
+    //Mock API GraphQL Call
+    const spy = jest.spyOn(Request, 'getDealValidator');
+    //Using deal status Pending Deal
+    const fn = (Promise.resolve(Deals[4]) as unknown) as Promise<
+      Response<Request.DealValidatorData>
+    >;
+    spy.mockReturnValue(fn);
+
+    const response = await initDealValidator(RouterNext);
+
+    //Apply only this rule.
+    expect(response.hasPendingDeal).toBeTruthy();
+
+    expect(response.isDepositCaptured).toBeFalsy();
+    expect(response.hasInProgressDeal).toBeFalsy();
+    expect(response.hasInProgressDeal).toBeFalsy();
+  });
+
+  it('Exclude Congratulation Page for all the rules', async () => {
+    const RouterNext = ({
+      router: {
+        route: '/congratulations',
+        pathname: '/congratulations',
+        basePath: '/checkout',
+      },
+    } as unknown) as SingletonRouter;
+
+    //Mock API GraphQL Call
+    const spy = jest.spyOn(Request, 'getDealValidator');
+    //Using deal status Pending Deal
+    const fn = (Promise.resolve(Deals[4]) as unknown) as Promise<
+      Response<Request.DealValidatorData>
+    >;
+    spy.mockReturnValue(fn);
+
+    const response = await initDealValidator(RouterNext);
+
+    //Apply only this rule.
+    expect(response.hasPendingDeal).toBeFalsy();
+    expect(response.isDepositCaptured).toBeFalsy();
+    expect(response.hasInProgressDeal).toBeFalsy();
+    expect(response.hasInProgressDeal).toBeFalsy();
   });
 });
