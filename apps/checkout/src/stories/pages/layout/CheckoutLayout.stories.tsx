@@ -12,7 +12,7 @@ export const Default = (): JSX.Element => {
       <CheckoutLayout>
         <Heading.Four>Test Data</Heading.Four>
         <hr />
-        {[...Array(3)].map((i: number) => (
+        {[...Array(23)].map((i: number) => (
           <div key={i}>
             <Body.Regular>{fakeData}</Body.Regular>
             <hr />

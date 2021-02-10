@@ -4,8 +4,6 @@ import styled from 'styled-components';
 
 import DealSummary from '../deals/sections/DealSummary/index';
 import { DealContext } from '../store/DealStore';
-import Footer from './Footer';
-import Header from './Header';
 import { ProgressBar } from './ProgressBar';
 
 const grayFour = (props: { theme: ThemeProps }): string =>
@@ -19,6 +17,20 @@ const Container = styled.div`
   display: flex;
   min-height: 100vh;
   flex-direction: column;
+`;
+
+const Footer = styled.footer`
+  height: 72px;
+  background-color: rgb(4, 16, 34);
+`;
+
+const Header = styled.header`
+  height: 72px;
+  background-color: #fff;
+  box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.15);
+  position: sticky;
+  top: 0;
+  z-index: 1;
 `;
 
 const Section = styled.section`
@@ -76,7 +88,7 @@ const DealSummarySection = styled.div`
   grid-column: span 4;
 
   position: sticky;
-  top: 0;
+  top: 72px;
 
   @media (max-width: 1023px) {
     display: none;

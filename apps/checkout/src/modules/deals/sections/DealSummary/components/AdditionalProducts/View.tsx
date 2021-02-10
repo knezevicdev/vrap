@@ -4,9 +4,9 @@ import styled from 'styled-components';
 
 import { buildPrice } from '../buildPrice';
 import ToolTipLink from '../ToolTipLink';
+import ViewModel from './ViewModel';
 
 import CustomToolTip from 'src/modules/common/ToolTip';
-import ViewModel from './ViewModel';
 
 const ToolTipContainer = styled.div`
   display: flex;
