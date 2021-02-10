@@ -52,12 +52,10 @@ const Container = styled.div`
 const Information = styled.div`
   display: flex;
   flex-direction: column;
-  order: 2;
 `;
 
 const Copyright = styled(Typography.Fine)`
   color: ${primaryWhite};
-  
   text-align: center;
   padding-top: 8px;
 `;
