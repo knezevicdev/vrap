@@ -1,13 +1,13 @@
 import { ThemeProps } from '@vroom-web/temp-ui-alias-for-checkout';
+import { observer } from 'mobx-react-lite';
 import React, { FC, useContext } from 'react';
 import styled from 'styled-components';
 
 import DealSummary from '../deals/sections/DealSummary/index';
+import SelectedCar from '../deals/sections/DealSummary/SelectedCar';
+import Header from '../header';
 import { DealContext } from '../store/DealStore';
 import { ProgressBar } from './ProgressBar';
-import { observer } from 'mobx-react-lite';
-import Header from '../header';
-import SelectedCar from '../deals/sections/DealSummary/SelectedCar';
 
 const grayFour = (props: { theme: ThemeProps }): string =>
   props.theme.colors.gray.four;
@@ -86,7 +86,7 @@ const DealSummarySection = styled.div<{ showDropdown?: boolean }>`
   top: 72px;
 
   @media (max-width: 1023px) {
-    ${(props) =>
+    ${(props): string =>
       props.showDropdown
         ? `
         position: absolute;

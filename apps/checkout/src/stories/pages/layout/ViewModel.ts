@@ -1,4 +1,5 @@
 import { GQLTypes } from '@vroom-web/networking';
+
 import { VehicleProps } from 'src/modules/deals/sections/DealSummary/types';
 
 export const mockVehicle: VehicleProps = {

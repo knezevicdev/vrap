@@ -1,14 +1,14 @@
+import {
+  Body,
+  Icon,
+  Icons,
+  Link,
+  ThemeProps,
+} from '@vroom-web/temp-ui-alias-for-checkout';
 import React from 'react';
 import styled from 'styled-components';
 
 import HeaderViewModel from './ViewModel';
-import {
-  Icon,
-  Icons,
-  ThemeProps,
-  Body,
-  Link,
-} from '@vroom-web/temp-ui-alias-for-checkout';
 
 const primaryWhite = (props: { theme: ThemeProps }): string =>
   props.theme.colors.primary.white;

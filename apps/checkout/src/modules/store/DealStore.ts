@@ -1,6 +1,7 @@
 import { GQLTypes } from '@vroom-web/networking';
-import { createContext } from 'react';
 import { makeAutoObservable } from 'mobx';
+import { createContext } from 'react';
+
 import { VehicleProps } from '../deals/sections/DealSummary/types';
 
 export class DealStore {
@@ -12,10 +13,10 @@ export class DealStore {
     'Deposit',
     'Additional Docs',
   ];
-  activeStep: number = -1;
+  activeStep = -1;
   deal?: GQLTypes.Deal;
   vehicle?: VehicleProps;
-  showDropdown: boolean = false;
+  showDropdown = false;
 
   constructor(
     activeStep: number,
