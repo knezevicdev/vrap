@@ -7,8 +7,8 @@ import {
 import React from 'react';
 import styled from 'styled-components';
 
-import { VehicleProps } from './types';
 import { buildPrice } from './components/buildPrice';
+import { VehicleProps } from './types';
 
 const grayThree = (props: { theme: ThemeProps }): string =>
   props.theme.colors.gray.three;

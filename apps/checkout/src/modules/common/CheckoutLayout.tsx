@@ -5,6 +5,7 @@ import styled from 'styled-components';
 
 import DealSummary from '../deals/sections/DealSummary/index';
 import SelectedCar from '../deals/sections/DealSummary/SelectedCar';
+import Footer from '../footer';
 import Header from '../header';
 import { DealContext } from '../store/DealStore';
 import { ProgressBar } from './ProgressBar';
@@ -21,13 +22,6 @@ const Container = styled.div`
   min-height: 100vh;
   flex-direction: column;
 `;
-
-// ******* Footer Placeholder *******
-const Footer = styled.footer`
-  height: 72px;
-  background-color: rgb(4, 16, 34);
-`;
-// **********************************
 
 const Section = styled.section`
   max-width: 1280px;

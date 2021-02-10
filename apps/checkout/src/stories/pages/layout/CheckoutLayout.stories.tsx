@@ -3,7 +3,7 @@ import React from 'react';
 
 import { dealState } from './ViewModel';
 
-import DealLayoutWrapper from 'src/modules/common/DealLayoutWrapper';
+import CheckoutLayout from 'src/modules/common/CheckoutLayout';
 import { DealContext, DealStore } from 'src/modules/store/DealStore';
 
 const store = new DealStore(dealState);
@@ -12,11 +12,11 @@ const height = 500;
 export const ShowCarCard = (): JSX.Element => {
   return (
     <DealContext.Provider value={store}>
-      <DealLayoutWrapper showCarCard={true}>
+      <CheckoutLayout showCarCard={true}>
         <div style={{ height: `${height}px` }}>
           <Heading.Four>{`Demo ${height}px`}</Heading.Four>
         </div>
-      </DealLayoutWrapper>
+      </CheckoutLayout>
     </DealContext.Provider>
   );
 };
@@ -24,11 +24,11 @@ export const ShowCarCard = (): JSX.Element => {
 export const ShowDealSummary = (): JSX.Element => {
   return (
     <DealContext.Provider value={store}>
-      <DealLayoutWrapper showCarCard={false}>
+      <CheckoutLayout showCarCard={false}>
         <div style={{ height: `${height}px` }}>
           <Heading.Four>{`Demo ${height}px`}</Heading.Four>
         </div>
-      </DealLayoutWrapper>
+      </CheckoutLayout>
     </DealContext.Provider>
   );
 };
