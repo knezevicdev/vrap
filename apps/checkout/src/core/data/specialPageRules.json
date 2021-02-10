@@ -1,0 +1,20 @@
+[
+  {
+    "path": "congratulations",
+    "rules": {
+      "vehicleSold": false,
+      "depositCaptured": false,
+      "pendingDeal": false,
+      "inProgressDeal": false
+    }
+  },
+  {
+    "path": "documentUpload",
+    "rules": {
+      "vehicleSold": false,
+      "depositCaptured": false,
+      "pendingDeal": true,
+      "inProgressDeal": false
+    }
+  }
+]
