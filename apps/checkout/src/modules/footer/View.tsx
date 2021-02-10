@@ -13,17 +13,20 @@ interface Props {
   viewModel: FooterViewModel;
 }
 
-const Footer: React.FC<Props> = () => {
+const Footer: React.FC<Props> = ({viewModel}) => {
+  const { links, trackLink} = viewModel;
   return (
     <Container>
       <Information>
          <LinksContainer>
-           <Link href={"/legal/privacy-policy"} ><LinkText bold>PRIVACY</LinkText></Link>
-           <Link href={"/legal/terms-of-use"} ><LinkText bold>TERMS</LinkText></Link>
-           <Link href={"/contact"} ><LinkText bold>CONTACT</LinkText></Link>
+         {links.map(link => (
+            <Link key={link.id} href={link.href} onClick={()=>trackLink(link.text)}>
+              <LinkText bold>{link.text.toUpperCase()}</LinkText>
+              </Link>
+         ))} 
          </LinksContainer> 
         <Copyright>
-          ©{new Date().getFullYear()} VROOM. ALL RIGHTS RESERVED.
+        {viewModel.copyRight}
         </Copyright>
       </Information>
     </Container>

@@ -1,19 +1,33 @@
+import AnalyticsHandler from "src/integrations/footer/FooterAnalyticsHandler";
+export interface FooterData {
+    id: string,
+    text: string,
+    href: string
+}
+export default class FooterViewModel {
+  analyticsHandler: AnalyticsHandler;
 
-class FooterViewModel {
-  readonly title: string = 'welcome back';
- 
+  constructor(){ 
+    this.analyticsHandler = new AnalyticsHandler();
+  }
 
-  readonly register = {
-    initialText: `Don't have a Vroom account?`,
-    text: 'Join',
-    href: '/account/register',
-  };
+  readonly copyRight: string = `©${new Date().getFullYear()} VROOM. ALL RIGHTS RESERVED.`;
+  readonly links = [
+    {
+    id: 'privacy',
+    text: 'Privacy',
+    href: '/legal/privacy-policy',
+  },{
+    id: 'terms',
+    text: 'Terms',
+    href: '/legal/terms-of-use',
+  },{
+    id: 'contact',
+    text: 'Contact',
+    href: '/contact',
+  },
+] as FooterData[]; 
 
-  readonly forgotPassword = {
-    text: 'Forgot Password?',
-    href: '/forgot-password',
-  };
+trackLink = (eventName: string) => this.analyticsHandler.trackFooterLinks(eventName); 
  
 }
-
-export default FooterViewModel;
