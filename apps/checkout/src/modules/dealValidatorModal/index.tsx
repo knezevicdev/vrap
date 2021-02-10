@@ -12,7 +12,12 @@ class DealValidator extends React.Component {
   }
 
   render(): React.ReactNode {
-    return <View viewModel={this.viewModel} />;
+    return (
+      <>
+        <View viewModel={this.viewModel} />
+        {this.props.children}
+      </>
+    );
   }
 }
 
