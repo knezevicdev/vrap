@@ -30,6 +30,7 @@ const Container = styled.div`
   z-index: 3;
 
   @media (max-width: 600px) {
+    height: 56px;
     padding: 0 24px;
   }
 `;
