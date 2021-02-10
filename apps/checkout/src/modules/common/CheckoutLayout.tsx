@@ -22,11 +22,12 @@ const Container = styled.div`
   flex-direction: column;
 `;
 
-// Footer Placeholder
+// ******* Footer Placeholder *******
 const Footer = styled.footer`
   height: 72px;
   background-color: rgb(4, 16, 34);
 `;
+// **********************************
 
 const Section = styled.section`
   max-width: 1280px;

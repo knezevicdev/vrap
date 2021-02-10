@@ -8,6 +8,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 import { VehicleProps } from './types';
+import { buildPrice } from './components/buildPrice';
 
 const grayThree = (props: { theme: ThemeProps }): string =>
   props.theme.colors.gray.three;
@@ -48,7 +49,7 @@ const SelectedCar = (props: VehicleProps): JSX.Element => {
           {trim} <Divider>|</Divider> {miles ? miles.toLocaleString() : `-`}{' '}
           miles
         </Body.Regular>
-        <Title.Two>{listingPrice}</Title.Two>
+        <Title.Two>{buildPrice(listingPrice)}</Title.Two>
       </CarInfo>
     </>
   );

@@ -14,7 +14,7 @@ export const ShowCarCard = (): JSX.Element => {
     <DealContext.Provider value={store}>
       <CheckoutLayout showCarCard={true}>
         <div style={{ height: `${height}px` }}>
-          <Heading.Four>{`Div of ${height}px height`}</Heading.Four>
+          <Heading.Four>{`Demo ${height}px`}</Heading.Four>
         </div>
       </CheckoutLayout>
     </DealContext.Provider>
@@ -26,7 +26,7 @@ export const ShowDealSummary = (): JSX.Element => {
     <DealContext.Provider value={store}>
       <CheckoutLayout showCarCard={false}>
         <div style={{ height: `${height}px` }}>
-          <Heading.Four>{`Div of ${height}px height`}</Heading.Four>
+          <Heading.Four>{`Demo ${height}px`}</Heading.Four>
         </div>
       </CheckoutLayout>
     </DealContext.Provider>

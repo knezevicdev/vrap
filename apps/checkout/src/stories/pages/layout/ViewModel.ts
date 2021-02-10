@@ -7,7 +7,7 @@ export const mockVehicle: VehicleProps = {
   listingPrice: 10804,
   trim: 'Limited',
   miles: 67908,
-  leadPhotoURL: 'https://source.unsplash.com/random/800x600/?automobile',
+  leadPhotoURL: 'https://source.unsplash.com/random/800x600/?car',
 };
 
 export const mockDeal = {
@@ -56,7 +56,7 @@ export const mockDeal = {
     inventory: {
       id: '362',
       miles: 67908,
-      leadPhotoURL: 'https://source.unsplash.com/random/800x600/?automobile',
+      leadPhotoURL: 'https://source.unsplash.com/random/800x600/?car',
       pricing: {
         listPrice: 10804,
       },
