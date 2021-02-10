@@ -2,9 +2,9 @@ import { Status } from '@vroom-web/networking';
 
 import DealValidatorModel from './Model';
 
+import DepositCaptured from 'src/modules/dealValidatorModal/samples/DepositCaptured';
 import PurchasePending from 'src/modules/dealValidatorModal/samples/PendingPurchase';
 import VehicleSold from 'src/modules/dealValidatorModal/samples/VehicleSold';
-import DepositCaptured from 'src/modules/dealValidatorModal/samples/DepositCaptured';
 import Login from 'src/modules/login';
 
 export enum ModalContentMapEnum {
@@ -41,7 +41,7 @@ export const modalContentMap = (
       onRequestClose: false,
       closeIconEnabled: false,
       contentLabel: 'Deposit Captured',
-      component: DepositCaptured
+      component: DepositCaptured,
     },
     [ModalContentMapEnum.PENDING_PURCHASE]: {
       height: 300,
@@ -100,7 +100,7 @@ export default class DealValidatorModalViewModel {
     ) {
       this.openModal = true;
       this.modalContent = modalContentMap(ModalContentMapEnum.DEPOSIT_CAPTURED);
-    }else if (
+    } else if (
       this.model.dataStatus === Status.SUCCESS &&
       this.model.data.hasPendingDeal
     ) {

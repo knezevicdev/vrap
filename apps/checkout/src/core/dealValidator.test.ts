@@ -10,7 +10,7 @@ import * as Request from 'src/networking/request';
 jest.mock('next/config', () => (): unknown => ({
   publicRuntimeConfig: { BASE_PATH: '/checkout' },
 }));
- 
+
 describe('Deal Validator', () => {
   it('Build Checkout URL ', () => {
     const url = buildUrl('JTDKARFU6K3085481', 'registration');
@@ -111,64 +111,57 @@ describe('Deal Validator', () => {
       expect(response.isAuthenticated).toBeFalsy();
     });
   });
-  
-    it('Exclude documentUpload Page all the rules except check pending deal Modal', async () => {
- 
-      
-      const RouterNext = ({
-        router: {
-          route: '/documentUpload',
-          pathname: '/documentUpload',
-          basePath: '/checkout',
-        }
+
+  it('Exclude documentUpload Page all the rules except check pending deal Modal', async () => {
+    const RouterNext = ({
+      router: {
+        route: '/documentUpload',
+        pathname: '/documentUpload',
+        basePath: '/checkout',
+      },
     } as unknown) as SingletonRouter;
- 
 
-      //Mock API GraphQL Call
-      const spy = jest.spyOn(Request, 'getDealValidator');
-      //Using deal status Pending Deal
-      const fn = (Promise.resolve(Deals[4]) as unknown) as Promise<
-        Response<Request.DealValidatorData>
-      >;
-      spy.mockReturnValue(fn);
+    //Mock API GraphQL Call
+    const spy = jest.spyOn(Request, 'getDealValidator');
+    //Using deal status Pending Deal
+    const fn = (Promise.resolve(Deals[4]) as unknown) as Promise<
+      Response<Request.DealValidatorData>
+    >;
+    spy.mockReturnValue(fn);
 
-      const response = await initDealValidator(RouterNext);
+    const response = await initDealValidator(RouterNext);
 
-      //Apply only this rule.
-      expect(response.hasPendingDeal).toBeTruthy();
+    //Apply only this rule.
+    expect(response.hasPendingDeal).toBeTruthy();
 
-      expect(response.isDepositCaptured).toBeFalsy();
-      expect(response.hasInProgressDeal).toBeFalsy();
-      expect(response.hasInProgressDeal).toBeFalsy();
-    });
+    expect(response.isDepositCaptured).toBeFalsy();
+    expect(response.hasInProgressDeal).toBeFalsy();
+    expect(response.hasInProgressDeal).toBeFalsy();
+  });
 
-    it('Exclude Congratulation Page for all the rules', async () => {
- 
-      
-      const RouterNext = ({
-        router: {
-          route: '/congratulations',
-          pathname: '/congratulations',
-          basePath: '/checkout',
-        }
+  it('Exclude Congratulation Page for all the rules', async () => {
+    const RouterNext = ({
+      router: {
+        route: '/congratulations',
+        pathname: '/congratulations',
+        basePath: '/checkout',
+      },
     } as unknown) as SingletonRouter;
- 
 
-      //Mock API GraphQL Call
-      const spy = jest.spyOn(Request, 'getDealValidator');
-      //Using deal status Pending Deal
-      const fn = (Promise.resolve(Deals[4]) as unknown) as Promise<
-        Response<Request.DealValidatorData>
-      >;
-      spy.mockReturnValue(fn);
+    //Mock API GraphQL Call
+    const spy = jest.spyOn(Request, 'getDealValidator');
+    //Using deal status Pending Deal
+    const fn = (Promise.resolve(Deals[4]) as unknown) as Promise<
+      Response<Request.DealValidatorData>
+    >;
+    spy.mockReturnValue(fn);
 
-      const response = await initDealValidator(RouterNext);
+    const response = await initDealValidator(RouterNext);
 
-      //Apply only this rule.
-      expect(response.hasPendingDeal).toBeFalsy();
-      expect(response.isDepositCaptured).toBeFalsy();
-      expect(response.hasInProgressDeal).toBeFalsy();
-      expect(response.hasInProgressDeal).toBeFalsy();
-    });
- 
+    //Apply only this rule.
+    expect(response.hasPendingDeal).toBeFalsy();
+    expect(response.isDepositCaptured).toBeFalsy();
+    expect(response.hasInProgressDeal).toBeFalsy();
+    expect(response.hasInProgressDeal).toBeFalsy();
+  });
 });

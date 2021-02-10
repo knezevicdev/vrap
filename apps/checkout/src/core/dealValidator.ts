@@ -8,7 +8,7 @@ import get from 'lodash/get';
 import head from 'lodash/head';
 import getConfig from 'next/config';
 import { Router, SingletonRouter } from 'next/router';
-
+import SpecialPageRules from "./data/specialPageRules.json";
 import { getDealValidator } from 'src/networking';
 import { getTestDeal } from 'src/networking/util/getTestDeal';
 export interface DealValidatorProps {
@@ -57,42 +57,23 @@ export const buildUrl = (vin: string, to: string): string =>
   `${BASE_PATH}/${vin}/${to}`;
 
 interface Rules {
-  vehicleSold: Boolean,
-  depositCaptured: Boolean,
-  pendingDeal: Boolean,
-  inProgressDeal: Boolean
+  vehicleSold: boolean;
+  depositCaptured: boolean;
+  pendingDeal: boolean;
+  inProgressDeal: boolean;
 }
 /**
  * Rules should not be applied to pages like upload documents and congratulations
  * @param router
  */
 export const excludePage = (router: Router | null): Rules | null => {
-
-  const excludeListOfPages = [ { 
-  path:'congratulations',
-  rules: {
-    vehicleSold: false,
-    depositCaptured: false,
-    pendingDeal: false,
-    inProgressDeal: false
-  }
- },
-  { 
-    path:'documentUpload',
-    rules: {
-      vehicleSold: false,
-      depositCaptured: false,
-      pendingDeal: true, //only apply this rule
-      inProgressDeal: false
-    } 
-  }
-  ];
+  const excludeListOfPages = SpecialPageRules;
 
   for (const page of excludeListOfPages) {
     if (router && router.route.indexOf(page.path) > -1) {
       return page.rules;
     }
-  } 
+  }
   return null;
 };
 
@@ -108,7 +89,7 @@ export const stepPagesMapping = (vin: string): StepPagesMappingData =>
     [DealStepsEnum.FINANCING_DECLINED]: buildUrl(vin, 'testPage'),
     [DealStepsEnum.PRODUCTS]: buildUrl(vin, 'testPage'),
     [DealStepsEnum.DEPOSIT]: buildUrl(vin, 'testPage'),
-    [DealStepsEnum.DOCUMENT_UPLOAD]: buildUrl(vin, 'testPage'),
+    [DealStepsEnum.DOCUMENT_UPLOAD]: buildUrl(vin, 'documentUpload'),
     [DealStepsEnum.DEAL_SUMMARY]: `${BASE_PATH}/congratulations`,
   } as StepPagesMappingData);
 
@@ -116,7 +97,9 @@ export const stepPagesMapping = (vin: string): StepPagesMappingData =>
  * Initial Deal validations
  * @param AppContext
  */
-export const initDealValidator = async (Router: SingletonRouter): Promise<DealValidatorProps> => {
+export const initDealValidator = async (
+  Router: SingletonRouter
+): Promise<DealValidatorProps> => {
   const { router } = Router;
 
   const vin = get(router, 'query.vin');
@@ -133,11 +116,10 @@ export const initDealValidator = async (Router: SingletonRouter): Promise<DealVa
   );
 
   if (isSuccessResponse(response)) {
-
     const excludedRules = excludePage(router);
-     
+
     //Check if the Vehicle has being sold
-    const isVehicleSold = 
+    const isVehicleSold =
       head(response.data.invSearch.vehicles)?.soldStatus !== 0;
 
     //does it has pending deal
@@ -153,12 +135,19 @@ export const initDealValidator = async (Router: SingletonRouter): Promise<DealVa
 
     return {
       isAuthenticated: isAuth,
-      isVehicleSold: excludedRules ? excludedRules.vehicleSold && isVehicleSold : isVehicleSold,
-      hasPendingDeal: excludedRules ? excludedRules.pendingDeal && !!hasPendingDeal : !!hasPendingDeal,
-      hasInProgressDeal: excludedRules ? excludedRules.inProgressDeal && !!hasInProgressDeal : !!hasInProgressDeal,
-      isDepositCaptured: excludedRules ? excludedRules.depositCaptured && isDepositCapturedInProgress : isDepositCapturedInProgress,
+      isVehicleSold: excludedRules
+        ? excludedRules.vehicleSold && isVehicleSold
+        : isVehicleSold,
+      hasPendingDeal: excludedRules
+        ? excludedRules.pendingDeal && !!hasPendingDeal
+        : !!hasPendingDeal,
+      hasInProgressDeal: excludedRules
+        ? excludedRules.inProgressDeal && !!hasInProgressDeal
+        : !!hasInProgressDeal,
+      isDepositCaptured: excludedRules
+        ? excludedRules.depositCaptured && isDepositCapturedInProgress
+        : isDepositCapturedInProgress,
     };
-
   } else {
     //Is there some error related with the graphQL update auth flag
     isAuth = false;

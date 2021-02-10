@@ -1,6 +1,7 @@
 import { Status } from '@vroom-web/networking';
-import { observable, makeObservable, runInAction, action } from 'mobx';
+import { action, makeObservable, observable, runInAction } from 'mobx';
 import Router from 'next/router';
+
 import { DealValidatorProps, initDealValidator } from 'src/core';
 
 export default class DealValidatorModel {
@@ -11,8 +12,8 @@ export default class DealValidatorModel {
     makeObservable(this, {
       dataStatus: observable,
       data: observable,
-      getData: action
-  })
+      getData: action,
+    });
   }
 
   async getData(): Promise<void> {
