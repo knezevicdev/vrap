@@ -15,8 +15,8 @@ const StyledContainer = styled('div')(() => ({
 }));
 
 const Image = styled('img')(() => ({
-  height: '100%',
-  width: '100%',
+  maxHeight: '60vh',
+  width: 'auto',
 }));
 
 const DescriptionToolTip = styled('div')(() => ({
@@ -53,7 +53,7 @@ const DescriptionView: React.FC<Props> = ({ viewModel }) => {
 
   return (
     <StyledContainer>
-      <Image src={image} />
+      <Image className={'image-gallery-image'} src={image} />
       <DescriptionToolTip onClick={(e): void => scrollToSafetyAndQuality(e)}>
         <Error />
         <TextFlex>
