@@ -62,7 +62,7 @@ const Copyright = styled(Typography.Fine)`
   color: ${primaryWhite};
   letter-spacing: 1.25px;
   text-align: center;
-  padding-top: 10px;
+  padding-top: 5px;
 `;
 
 const LinkText = styled(Typography.Body.Small)`
