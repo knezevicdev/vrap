@@ -4,6 +4,13 @@ import { createContext } from 'react';
 
 import { VehicleProps } from '../deals/sections/DealSummary/types';
 
+export interface DealState {
+  activeStep: number;
+  showDropdown: boolean;
+  deal: GQLTypes.Deal;
+  vehicle: VehicleProps;
+}
+
 export class DealStore {
   steps: string[] = [
     'Trade-In Info',
@@ -13,22 +20,19 @@ export class DealStore {
     'Deposit',
     'Additional Docs',
   ];
-  activeStep = -1;
-  deal?: GQLTypes.Deal;
-  vehicle?: VehicleProps;
-  showDropdown = false;
+  activeStep: number = -1;
+  deal: GQLTypes.Deal = {} as GQLTypes.Deal;
+  vehicle: VehicleProps = {} as VehicleProps;
+  showDropdown: boolean = false;
 
-  constructor(
-    activeStep: number,
-    showDropdown: boolean,
-    deal?: GQLTypes.Deal,
-    vehicle?: VehicleProps
-  ) {
+  constructor(dealState?: DealState) {
     makeAutoObservable(this);
-    this.activeStep = activeStep;
-    this.showDropdown = showDropdown;
-    this.deal = deal;
-    this.vehicle = vehicle;
+    if (dealState) {
+      this.activeStep = dealState.activeStep;
+      this.showDropdown = dealState.showDropdown;
+      this.deal = dealState.deal;
+      this.vehicle = dealState.vehicle;
+    }
   }
 
   toggleDropdown = (): void => {
@@ -36,4 +40,4 @@ export class DealStore {
   };
 }
 
-export const DealContext = createContext(new DealStore(-1, false));
+export const DealContext = createContext(new DealStore());

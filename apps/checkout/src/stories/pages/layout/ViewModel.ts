@@ -1,8 +1,9 @@
 import { GQLTypes } from '@vroom-web/networking';
 
 import { VehicleProps } from 'src/modules/deals/sections/DealSummary/types';
+import { DealState } from 'src/modules/store/DealStore';
 
-export const mockVehicle: VehicleProps = {
+const mockVehicle: VehicleProps = {
   vehicle: { year: 2018, make: 'Chrysler', model: 'Pacifica Hybrid' },
   listingPrice: 10804,
   trim: 'Limited',
@@ -10,7 +11,7 @@ export const mockVehicle: VehicleProps = {
   leadPhotoURL: 'https://source.unsplash.com/random/800x600/?car',
 };
 
-export const mockDeal = {
+const mockDeal = {
   accountID: 9586,
   dealID: 1,
   createdAt: '2020-09-09T16:41:03Z',
@@ -124,3 +125,10 @@ export const mockDeal = {
     },
   },
 } as GQLTypes.Deal;
+
+export const dealState: DealState = {
+  activeStep: 4,
+  showDropdown: false,
+  deal: mockDeal,
+  vehicle: mockVehicle,
+};

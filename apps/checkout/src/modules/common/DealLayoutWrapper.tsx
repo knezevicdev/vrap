@@ -119,8 +119,8 @@ const CheckoutLayout: FC<Props> = ({ showCarCard, children }) => {
         <CheckoutSection>
           <DealContent>{children}</DealContent>
           <DealSummarySection showDropdown={showDropdown}>
-            {!showCarCard && deal && <DealSummary deal={deal} />}
-            {showCarCard && vehicle && <SelectedCar {...vehicle} />}
+            {!showCarCard && <DealSummary deal={deal} />}
+            {showCarCard && <SelectedCar {...vehicle} />}
           </DealSummarySection>
         </CheckoutSection>
       </Section>
