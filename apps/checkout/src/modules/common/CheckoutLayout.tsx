@@ -6,6 +6,7 @@ import DealSummary from '../deals/sections/DealSummary/index';
 import { DealContext } from '../store/DealStore';
 import { ProgressBar } from './ProgressBar';
 import { observer } from 'mobx-react-lite';
+import Header from '../header';
 
 const grayFour = (props: { theme: ThemeProps }): string =>
   props.theme.colors.gray.four;
@@ -24,15 +25,6 @@ const Container = styled.div`
 const Footer = styled.footer`
   height: 72px;
   background-color: rgb(4, 16, 34);
-`;
-// Header Placeholder
-const Header = styled.header`
-  height: 72px;
-  background-color: #fff;
-  box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.15);
-  position: sticky;
-  top: 0;
-  z-index: 3;
 `;
 
 const Section = styled.section`

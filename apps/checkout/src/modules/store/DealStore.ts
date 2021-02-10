@@ -1,6 +1,6 @@
 import { GQLTypes } from '@vroom-web/networking';
 import { createContext } from 'react';
-import { makeObservable, observable, action, makeAutoObservable } from 'mobx';
+import { makeAutoObservable } from 'mobx';
 
 export class DealStore {
   steps: string[] = [
@@ -22,7 +22,7 @@ export class DealStore {
     this.deal = deal;
   }
 
-  handleClick = (): void => {
+  toggleDropdown = (): void => {
     this.showDropdown = !this.showDropdown;
   };
 }
