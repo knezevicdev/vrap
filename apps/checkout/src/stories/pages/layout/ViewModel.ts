@@ -76,7 +76,7 @@ const deal = {
       pricingStack: {
         downPayment: 14300,
         lenderName: 'Vroom Financial Services',
-        apr: 2,
+        apr: 0.02,
         termMonths: 36,
         financeCharge: 443.23,
         monthlyPayment: 397.16,
@@ -133,4 +133,4 @@ export const fakeData = `
       sapien convallis et. Curabitur felis arcu, dictum eget diam sodales,
       viverra scelerisque eros.`;
 
-export const testProps = { steps: steps, activeStep: 4, deal: deal };
+export const testProps = { steps, activeStep: 4, deal, showDropdown: true };

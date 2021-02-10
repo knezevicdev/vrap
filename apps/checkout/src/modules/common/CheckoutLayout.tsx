@@ -81,7 +81,7 @@ const DealContent = styled.div`
   }
 `;
 
-const DealSummarySection = styled.div`
+const DealSummarySection = styled.div<{ showDropdown?: boolean }>`
   background-color: ${primaryWhite};
   border: 1px solid #e0e0e0;
   box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.08);
@@ -92,12 +92,29 @@ const DealSummarySection = styled.div`
   top: 72px;
 
   @media (max-width: 1023px) {
-    display: none;
-  }
+    ${(props) =>
+      props.showDropdown
+        ? `position: absolute;
+           z-index: 2;
+           left: 0;
+           right: 0;
+           &:before {
+            z-index: 2;
+            content: " ";
+            position: absolute;
+            bottom: 100%;  
+            right: 10%;
+            margin-left: -5px;
+            border-width: 10px;
+            border-style: solid;
+            border-color: transparent transparent white transparent;
+          }
+           `
+        : `display: none;`}
 `;
 
 const CheckoutLayout: FC = ({ children }) => {
-  const { steps, activeStep, deal } = useContext(DealContext);
+  const { steps, activeStep, deal, showDropdown } = useContext(DealContext);
 
   return (
     <Container>
@@ -108,7 +125,7 @@ const CheckoutLayout: FC = ({ children }) => {
         </TrackerSection>
         <CheckoutSection>
           <DealContent>{children}</DealContent>
-          <DealSummarySection>
+          <DealSummarySection showDropdown={showDropdown}>
             {deal && <DealSummary deal={deal} />}
             {/* {<SelectedCar {...vehicle} />} */}
           </DealSummarySection>

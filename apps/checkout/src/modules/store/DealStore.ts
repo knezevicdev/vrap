@@ -10,14 +10,17 @@ const steps = [
   'Additional Docs',
 ];
 const activeStep = -1;
+const showDropdown = false;
 
 interface DealState {
   steps: string[];
   activeStep: number;
   deal?: GQLTypes.Deal;
+  showDropdown: boolean;
 }
 
 export const DealContext = createContext<DealState>({
   steps,
   activeStep,
+  showDropdown,
 });

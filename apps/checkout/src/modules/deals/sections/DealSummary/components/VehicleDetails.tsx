@@ -10,6 +10,7 @@ const Container = styled.div`
   display: grid;
   grid-template-columns: 1fr 2fr;
   gap: 16px;
+  max-width: 450px;
 `;
 
 const CarInfo = styled.div`
