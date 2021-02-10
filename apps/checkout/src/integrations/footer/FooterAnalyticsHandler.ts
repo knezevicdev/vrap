@@ -5,15 +5,12 @@ const {
   publicRuntimeConfig: { VERSION },
 } = getConfig();
 class FooterAnalyticsHandler extends BaseAnalyticsHandler {
-  
-
   trackFooterLinks(eventName: string): void {
-    try { 
-
+    try {
       const properties = {
         action: 'Clicked CTA',
         category: 'Tool Footer',
-        version: 'New',    
+        version: 'New',
         applicationVersion: VERSION,
       };
       this.track(eventName, properties);
@@ -21,7 +18,6 @@ class FooterAnalyticsHandler extends BaseAnalyticsHandler {
       console.log('Analytic Event', err);
     }
   }
- 
 }
 
 export default FooterAnalyticsHandler;

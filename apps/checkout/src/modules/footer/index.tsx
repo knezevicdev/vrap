@@ -1,11 +1,12 @@
 import React, { FC } from 'react';
+
+import View from './View';
 import ViewModel from './ViewModel';
-import View from "./View";
 
 const Footer: FC = () => {
   const viewModel = new ViewModel();
 
-  return <View viewModel={viewModel}/>;
+  return <View viewModel={viewModel} />;
 };
 
 export default Footer;

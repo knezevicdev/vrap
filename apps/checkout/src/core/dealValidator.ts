@@ -8,7 +8,9 @@ import get from 'lodash/get';
 import head from 'lodash/head';
 import getConfig from 'next/config';
 import { Router, SingletonRouter } from 'next/router';
-import SpecialPageRules from "./data/specialPageRules.json";
+
+import SpecialPageRules from './data/specialPageRules.json';
+
 import { getDealValidator } from 'src/networking';
 import { getTestDeal } from 'src/networking/util/getTestDeal';
 export interface DealValidatorProps {
