@@ -39,7 +39,7 @@ const SelectedCar = (props: VehicleProps): JSX.Element => {
         alt={`${make} ${model}`}
         src={leadPhotoURL || ''}
         width="100%"
-        height="310px"
+        height="260px"
         objectFit="cover"
       />
 

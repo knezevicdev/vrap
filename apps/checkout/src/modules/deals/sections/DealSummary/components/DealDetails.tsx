@@ -172,7 +172,7 @@ const DealDetails = ({ deal, trades }: Props): JSX.Element => {
 
   const SubTotal = (): JSX.Element => (
     <Row>
-      <Title.Three>Est. subtotal</Title.Three>
+      <Title.Three>Est. Subtotal</Title.Three>
       <Title.Three>{buildPrice(subtotal)}</Title.Three>
     </Row>
   );
