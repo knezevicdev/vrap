@@ -19,11 +19,12 @@ const Container = styled.div`
   flex-direction: column;
 `;
 
+// Footer Placeholder
 const Footer = styled.footer`
   height: 72px;
   background-color: rgb(4, 16, 34);
 `;
-
+// Header Placeholder
 const Header = styled.header`
   height: 72px;
   background-color: #fff;
