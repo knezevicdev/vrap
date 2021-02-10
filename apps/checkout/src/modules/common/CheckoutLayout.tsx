@@ -7,6 +7,7 @@ import { DealContext } from '../store/DealStore';
 import { ProgressBar } from './ProgressBar';
 import { observer } from 'mobx-react-lite';
 import Header from '../header';
+import SelectedCar from '../deals/sections/DealSummary/SelectedCar';
 
 const grayFour = (props: { theme: ThemeProps }): string =>
   props.theme.colors.gray.four;
@@ -98,8 +99,14 @@ const DealSummarySection = styled.div<{ showDropdown?: boolean }>`
         `}
 `;
 
-const CheckoutLayout: FC = ({ children }) => {
-  const { steps, activeStep, deal, showDropdown } = useContext(DealContext);
+interface Props {
+  showCarCard: boolean;
+}
+
+const CheckoutLayout: FC<Props> = ({ showCarCard, children }) => {
+  const { steps, activeStep, deal, vehicle, showDropdown } = useContext(
+    DealContext
+  );
 
   return (
     <Container>
@@ -111,8 +118,8 @@ const CheckoutLayout: FC = ({ children }) => {
         <CheckoutSection>
           <DealContent>{children}</DealContent>
           <DealSummarySection showDropdown={showDropdown}>
-            {deal && <DealSummary deal={deal} />}
-            {/* {<SelectedCar {...vehicle} />} */}
+            {!showCarCard && deal && <DealSummary deal={deal} />}
+            {showCarCard && vehicle && <SelectedCar {...vehicle} />}
           </DealSummarySection>
         </CheckoutSection>
       </Section>

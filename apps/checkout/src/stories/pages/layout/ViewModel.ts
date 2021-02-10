@@ -1,15 +1,15 @@
 import { GQLTypes } from '@vroom-web/networking';
+import { VehicleProps } from 'src/modules/deals/sections/DealSummary/types';
 
-const steps = [
-  'Trade-In Info',
-  'Your Info',
-  'Payment Details',
-  'Finalize Purchase',
-  'Deposit',
-  'Additional Docs',
-];
+export const mockVehicle: VehicleProps = {
+  vehicle: { year: 2018, make: 'Chrysler', model: 'Pacifica Hybrid' },
+  listingPrice: 10804,
+  trim: 'Limited',
+  miles: 67908,
+  leadPhotoURL: 'https://source.unsplash.com/random/800x600/?automobile',
+};
 
-export const deal = {
+export const mockDeal = {
   accountID: 9586,
   dealID: 1,
   createdAt: '2020-09-09T16:41:03Z',
@@ -55,7 +55,7 @@ export const deal = {
     inventory: {
       id: '362',
       miles: 67908,
-      leadPhotoURL: 'https://source.unsplash.com/random/800x600/?automovil',
+      leadPhotoURL: 'https://source.unsplash.com/random/800x600/?automobile',
       pricing: {
         listPrice: 10804,
       },
@@ -123,5 +123,3 @@ export const deal = {
     },
   },
 } as GQLTypes.Deal;
-
-export const testProps = { steps, activeStep: 4, deal, showDropdown: true };
