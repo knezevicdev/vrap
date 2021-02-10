@@ -1,5 +1,5 @@
 import { Status } from '@vroom-web/networking';
-import { makeAutoObservable, runInAction } from 'mobx';
+import { observable, makeObservable, runInAction, action } from 'mobx';
 
 import { DealValidatorProps, initDealValidator } from 'src/core';
 
@@ -8,7 +8,11 @@ export default class DealValidatorModel {
   dataStatus: Status = Status.LOADING;
 
   constructor() {
-    makeAutoObservable(this);
+    makeObservable(this, {
+      dataStatus: observable,
+      data: observable,
+      getData: action
+  })
   }
 
   async getData(): Promise<void> {

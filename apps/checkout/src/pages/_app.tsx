@@ -67,9 +67,8 @@ class VroomApp extends App {
         <GlobalStyle baseUrl={publicRuntimeConfig.BASE_PATH} />
         <ThemeProvider brand={Brand.VROOM}>
           <StyledThemeProvider theme={theme}>
-            <DealValidatorModal>
-              <Component {...pageProps} />
-            </DealValidatorModal>
+            <DealValidatorModal />
+            <Component {...pageProps} />
           </StyledThemeProvider>
         </ThemeProvider>
       </>
