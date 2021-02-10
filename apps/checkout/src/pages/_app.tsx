@@ -16,6 +16,7 @@ import getConfig from 'next/config';
 import React from 'react';
 import { ThemeProvider as StyledThemeProvider } from 'styled-components';
 
+import DealValidatorModal from 'src/modules/dealValidatorModal';
 import client from 'src/networking/client';
 
 configureMobx({
@@ -46,7 +47,7 @@ class VroomApp extends App {
     ) => {
       if (isAccessDeniedErrorResponse(errorResponse)) {
         // TODO: open a login dialog instead of redirecting.
-        window.location.href = `/account/login?redirect=${window.location.pathname}`;
+        // window.location.href = `/account/login?redirect=${window.location.pathname}`;
       }
     };
     client.addResponseInterceptor(errorInterceptor);
@@ -61,12 +62,12 @@ class VroomApp extends App {
   render(): JSX.Element {
     const { Component, pageProps } = this.props;
     const theme = getVroomTheme();
-
     return (
       <>
-        <GlobalStyle />
+        <GlobalStyle baseUrl={publicRuntimeConfig.BASE_PATH} />
         <ThemeProvider brand={Brand.VROOM}>
           <StyledThemeProvider theme={theme}>
+            <DealValidatorModal />
             <Component {...pageProps} />
           </StyledThemeProvider>
         </ThemeProvider>
