@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import DealSummary from '../deals/sections/DealSummary/index';
 import { DealContext } from '../store/DealStore';
 import { ProgressBar } from './ProgressBar';
+import { observer } from 'mobx-react-lite';
 
 const grayFour = (props: { theme: ThemeProps }): string =>
   props.theme.colors.gray.four;
@@ -31,7 +32,7 @@ const Header = styled.header`
   box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.15);
   position: sticky;
   top: 0;
-  z-index: 1;
+  z-index: 3;
 `;
 
 const Section = styled.section`
@@ -94,23 +95,15 @@ const DealSummarySection = styled.div<{ showDropdown?: boolean }>`
   @media (max-width: 1023px) {
     ${(props) =>
       props.showDropdown
-        ? `position: absolute;
-           z-index: 2;
-           left: 0;
-           right: 0;
-           &:before {
-            z-index: 2;
-            content: " ";
-            position: absolute;
-            bottom: 100%;  
-            right: 10%;
-            margin-left: -5px;
-            border-width: 10px;
-            border-style: solid;
-            border-color: transparent transparent white transparent;
-          }
-           `
-        : `display: none;`}
+        ? `
+        position: absolute;
+        z-index: 2;
+        left: 0;
+        right: 0;
+        `
+        : `
+        display: none;
+        `}
 `;
 
 const CheckoutLayout: FC = ({ children }) => {
@@ -136,4 +129,4 @@ const CheckoutLayout: FC = ({ children }) => {
   );
 };
 
-export default CheckoutLayout;
+export default observer(CheckoutLayout);

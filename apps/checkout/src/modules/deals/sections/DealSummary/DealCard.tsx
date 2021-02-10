@@ -16,11 +16,7 @@ const Title = styled(Heading.Four)`
   white-space: nowrap;
 `;
 
-const DealSummary = ({
-  vehicle,
-  deal,
-  trades,
-}: DealSummaryProps): JSX.Element => {
+const DealCard = ({ vehicle, deal, trades }: DealSummaryProps): JSX.Element => {
   return (
     <Content>
       <Title>Purchase summary</Title>
@@ -30,4 +26,4 @@ const DealSummary = ({
   );
 };
 
-export default DealSummary;
+export default DealCard;

@@ -9,7 +9,7 @@ const steps = [
   'Additional Docs',
 ];
 
-const deal = {
+export const deal = {
   accountID: 9586,
   dealID: 1,
   createdAt: '2020-09-09T16:41:03Z',
