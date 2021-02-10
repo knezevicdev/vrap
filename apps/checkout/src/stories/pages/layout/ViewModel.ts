@@ -124,13 +124,4 @@ export const deal = {
   },
 } as GQLTypes.Deal;
 
-export const fakeData = `
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus id
-      hendrerit ligula. Morbi sit amet sagittis massa. Morbi in mollis lectus,
-      eleifend mattis tellus. Aliquam erat volutpat. Etiam id magna et nunc
-      consectetur tincidunt. Morbi rutrum felis sit amet magna rutrum egestas.
-      Sed dictum dignissim posuere. Sed tempus posuere lectus, at placerat
-      sapien convallis et. Curabitur felis arcu, dictum eget diam sodales,
-      viverra scelerisque eros.`;
-
 export const testProps = { steps, activeStep: 4, deal, showDropdown: true };

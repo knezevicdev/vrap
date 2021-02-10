@@ -1,24 +1,20 @@
-import { Body, Heading } from '@vroom-web/temp-ui-alias-for-checkout';
+import { Heading } from '@vroom-web/temp-ui-alias-for-checkout';
 import React from 'react';
 
-import { fakeData, deal } from './ViewModel';
+import { deal } from './ViewModel';
 
 import CheckoutLayout from 'src/modules/common/CheckoutLayout';
 import { DealContext, DealStore } from 'src/modules/store/DealStore';
 
 export const Default = (): JSX.Element => {
   const store = new DealStore(4, false, deal);
+  const height = 500;
   return (
     <DealContext.Provider value={store}>
       <CheckoutLayout>
-        <Heading.Four>Test Data</Heading.Four>
-        <hr />
-        {[...Array(23)].map((i: number) => (
-          <div key={i}>
-            <Body.Regular>{fakeData}</Body.Regular>
-            <hr />
-          </div>
-        ))}
+        <div style={{ height: `${height}px` }}>
+          <Heading.Four>{`Div of ${height}px height`}</Heading.Four>
+        </div>
       </CheckoutLayout>
     </DealContext.Provider>
   );
