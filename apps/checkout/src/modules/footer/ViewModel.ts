@@ -11,7 +11,7 @@ export default class FooterViewModel {
     this.analyticsHandler = new AnalyticsHandler();
   }
 
-  readonly copyRight: string = `©${new Date().getFullYear()} VROOM. ALL RIGHTS RESERVED.`;
+  readonly copyRight: string = `© ${new Date().getFullYear()} VROOM. ALL RIGHTS RESERVED`;
   readonly links = [
     {
       id: 'privacy',

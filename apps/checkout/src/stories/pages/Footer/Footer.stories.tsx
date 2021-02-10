@@ -21,7 +21,7 @@ const links = [
   },
 ];
 
-const copyRight = `©${new Date().getFullYear()} VROOM. ALL RIGHTS RESERVED.`;
+const copyRight = `© ${new Date().getFullYear()} VROOM. ALL RIGHTS RESERVED`;
 
 export const Default = (): JSX.Element => {
   const viewModel = {

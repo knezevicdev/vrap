@@ -1,5 +1,4 @@
 import {
-  addStyleForDesktop,
   Link,
   ThemeProps,
   Typography,
@@ -54,22 +53,20 @@ const Information = styled.div`
   display: flex;
   flex-direction: column;
   order: 2;
-  ${addStyleForDesktop(`
-    order: 0;
-  `)}
 `;
 
 const Copyright = styled(Typography.Fine)`
   color: ${primaryWhite};
-  letter-spacing: 1.25px;
+  
   text-align: center;
-  padding-top: 5px;
+  padding-top: 8px;
 `;
 
 const LinkText = styled(Typography.Body.Small)`
   color: ${primaryWhite};
   margin-bottom: 8px;
-  padding: 0px 20px 0px 20px;
+  padding: 0px 12px 0px 12px;
+  letter-spacing: 1.25px;
 `;
 
 const LinksContainer = styled.div`
