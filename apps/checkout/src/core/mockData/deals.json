@@ -147,5 +147,40 @@
         ]
       }
     }
+  },
+  {
+    "data": {
+      "invSearch": {
+        "vehicles": [
+          {
+            "soldStatus": 0
+          }
+        ]
+      },
+      "user": {
+        "deals": [
+          {
+            "accountID": 49016,
+            "dealID": 10011,
+            "dealSummary": {
+              "dealStatus": {
+                "step": "RegistrationAddress",
+                "status": "Pending"
+              },
+              "inventory": {
+                "vehicle": {
+                  "vin": "5NMS53AA6KH042940",
+                  "year": 2019,
+                  "make": "Hyundai",
+                  "model": "Santa Fe",
+                  "trim": ""
+                }
+              },
+              "depositPaymentInfo": null
+            }
+          }
+        ]
+      }
+    }
   }
 ]
