@@ -14,6 +14,8 @@ const primaryWhite = (props: { theme: ThemeProps }): string =>
   props.theme.colors.primary.white;
 const primaryBlack = (props: { theme: ThemeProps }): string =>
   props.theme.colors.primary.black;
+const brandRed = (props: { theme: ThemeProps }): string =>
+  props.theme.colors.primary.brand;
 
 const Container = styled.div`
   display: flex;
@@ -43,6 +45,9 @@ const StyledText = styled(Body.Small)`
 `;
 
 const PhoneNumber = styled(Body.Small)`
+  :hover {
+    color: ${brandRed};
+  }
   @media (max-width: 1023px) {
     display: none;
   }
