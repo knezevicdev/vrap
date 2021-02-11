@@ -36,7 +36,6 @@ const Container = styled.div`
   background: ${primaryWhite};
   z-index: 1;
   position: relative;
-  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.08);
   width: 580px;
   height: 433px;
   ${addStyleForMobile(`
