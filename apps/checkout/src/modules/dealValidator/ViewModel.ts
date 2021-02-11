@@ -1,5 +1,4 @@
 import { Status } from '@vroom-web/networking';
-import { makeObservable, observable } from 'mobx';
 
 import { PendingDealDepositCaptured, VehicleSold } from './content';
 import DealValidatorModel from './Model';
@@ -65,11 +64,6 @@ export default class DealValidatorModalViewModel {
   constructor(model: DealValidatorModel) {
     this.model = model;
     this.modalContent = null;
-
-    makeObservable(this, {
-      modalContent: observable,
-      openModal: observable,
-    });
   }
 
   getModal(): void {

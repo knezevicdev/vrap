@@ -2,7 +2,7 @@ import { Status } from '@vroom-web/networking';
 import { action, makeObservable, observable, runInAction } from 'mobx';
 import Router from 'next/router';
 
-import { DealValidatorProps, initDealValidator } from 'src/core';
+import { DealValidatorProps, initDealValidator } from './services';
 
 export default class DealValidatorModel {
   data: DealValidatorProps = {} as DealValidatorProps;
