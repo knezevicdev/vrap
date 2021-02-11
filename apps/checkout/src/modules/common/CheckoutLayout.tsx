@@ -16,6 +16,15 @@ const grayFour = (props: { theme: ThemeProps }): string =>
 const primaryWhite = (props: { theme: ThemeProps }): string =>
   props.theme.colors.primary.white;
 
+const steps: string[] = [
+  'Trade-In Info',
+  'Your Info',
+  'Payment Details',
+  'Finalize Purchase',
+  'Deposit',
+  'Additional Docs',
+];
+
 const Container = styled.div`
   background-color: ${grayFour};
   display: flex;
@@ -101,9 +110,7 @@ interface Props {
 }
 
 const CheckoutLayout: FC<Props> = ({ showCarCard, children }) => {
-  const { steps, activeStep, deal, vehicle, showDropdown } = useContext(
-    DealContext
-  );
+  const { activeStep, deal, vehicle, showDropdown } = useContext(DealContext);
 
   return (
     <Container>

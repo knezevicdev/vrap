@@ -4,10 +4,10 @@ import { VehicleProps } from 'src/modules/deals/sections/DealSummary/types';
 import { DealState } from 'src/modules/store/DealStore';
 
 const mockVehicle: VehicleProps = {
-  vehicle: { year: 2018, make: 'Chrysler', model: 'Pacifica Hybrid' },
-  listingPrice: 10804,
-  trim: 'Limited',
-  miles: 67908,
+  vehicle: { year: 2018, make: 'Jeep', model: 'Wrangler JK Unlimited' },
+  listingPrice: 30980,
+  trim: 'Sport',
+  miles: 27849,
   leadPhotoURL: 'https://source.unsplash.com/random/800x600/?jeep',
 };
 
@@ -56,17 +56,17 @@ const mockDeal = {
     },
     inventory: {
       id: '362',
-      miles: 67908,
+      miles: 27849,
       leadPhotoURL: 'https://source.unsplash.com/random/800x600/?jeep',
       pricing: {
-        listPrice: 10804,
+        listPrice: 30980,
       },
       vehicle: {
         vin: '4S4BSAFC1J3359282',
         year: 2018,
-        make: 'Chrysler',
-        model: 'Pacifica Hybrid',
-        trim: 'Limited',
+        make: 'Jeep',
+        model: 'Wrangler JK Unlimited',
+        trim: 'Sport',
       },
     },
     depositPaymentInfo: {
