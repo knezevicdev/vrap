@@ -62,8 +62,7 @@ const CheckoutSection = styled.div`
 
 const DealContent = styled.div`
   background-color: ${primaryWhite};
-  border: 1px solid #e0e0e0;
-  box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.08);
+  box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.15);
 
   padding: 32px 96px 40px;
   grid-column: span 8;
@@ -81,8 +80,7 @@ const DealContent = styled.div`
 
 const DealSummarySection = styled.div<{ showDropdown?: boolean }>`
   background-color: ${primaryWhite};
-  border: 1px solid #e0e0e0;
-  box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.08);
+  box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.15);
 
   grid-column: span 4;
 
