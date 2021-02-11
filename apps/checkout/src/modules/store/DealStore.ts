@@ -12,10 +12,10 @@ export interface DealState {
 }
 
 export class DealStore {
-  activeStep: number = -1;
+  activeStep = -1;
   deal: GQLTypes.Deal = {} as GQLTypes.Deal;
   vehicle: VehicleProps = {} as VehicleProps;
-  showDropdown: boolean = false;
+  showDropdown = false;
 
   constructor(dealState?: DealState) {
     makeAutoObservable(this);
