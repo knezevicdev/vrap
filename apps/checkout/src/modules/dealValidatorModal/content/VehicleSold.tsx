@@ -18,7 +18,6 @@ interface VehicleSoldDialog {
   carName: string;
   title: string;
   contentMsg: string;
-  onClose: () => void;
   dialogAction: (dialogType: DialogTypeEnum) => void;
 }
 
@@ -27,6 +26,9 @@ const primaryWhite = (props: { theme: ThemeProps }): string =>
 
 const grayThree = (props: { theme: ThemeProps }): string =>
   props.theme.colors.gray.three;
+
+const grayTwo = (props: { theme: ThemeProps }): string =>
+  props.theme.colors.gray.two;
 
 const Container = styled.div`
   display: flex;
@@ -63,8 +65,9 @@ const Content = styled(Body.Regular)`
 `;
 
 const Line = styled.hr`
-  border-color: ${grayThree};
-  margin-bottom: 20px;
+  background-color: ${grayThree};
+  height: 1px;
+  margin: 25px 0 25px 0px;
   width: 480px;
   align-self: center;
   ${addStyleForMobile(`
@@ -90,19 +93,23 @@ const StyledButton = styled(Button.Primary)`
   margin: 0px 50px 20px;
   `)}
 `;
-const Close = styled.div`
+const Close = styled.a`
   position: absolute;
   top: 20px;
   right: 20px;
   cursor: pointer;
 `;
+
+const CloseIcon = styled(Icon)`
+  fill: ${grayTwo};
+`;
+
 const {
   publicRuntimeConfig: { BASE_PATH },
 } = getConfig();
 
 export const VehicleSold: React.FC<VehicleSoldDialog> = ({
   carName,
-  onClose,
   dialogAction,
   title,
   contentMsg,
@@ -110,8 +117,8 @@ export const VehicleSold: React.FC<VehicleSoldDialog> = ({
 }) => {
   return (
     <Container>
-      <Close onClick={onClose}>
-        <Icon icon={Icons.CLOSE_LARGE} />
+      <Close onClick={(): void => dialogAction(dialogType)}>
+        <CloseIcon icon={Icons.CLOSE_LARGE} />
       </Close>
       <DialogTitle>{title}</DialogTitle>
       <Line />

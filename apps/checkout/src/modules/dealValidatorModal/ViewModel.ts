@@ -1,4 +1,5 @@
 import { Status } from '@vroom-web/networking';
+import { makeObservable, observable } from 'mobx';
 
 import { PendingDealDepositCaptured, VehicleSold } from './content';
 import DealValidatorModel from './Model';
@@ -64,6 +65,11 @@ export default class DealValidatorModalViewModel {
   constructor(model: DealValidatorModel) {
     this.model = model;
     this.modalContent = null;
+
+    makeObservable(this, {
+      modalContent: observable,
+      openModal: observable,
+    });
   }
 
   getModal(): void {
@@ -111,14 +117,10 @@ export default class DealValidatorModalViewModel {
     return '';
   }
 
-  onClose = (): void => {
-    this.openModal = false;
-  };
-  dialogAction = (dialogType: DialogTypeEnum): void => {
+  dialogAction = (dialogType?: DialogTypeEnum): void => {
     //Use DialogType to perform different actions depending of the modal
     //currently each modal send the user to my account.
-    if (dialogType) {
-      location.href = '/my-account/transactions';
-    }
+    location.href = '/my-account/transactions';
+    console.log('dialogType', dialogType); //Track Analytic
   };
 }
