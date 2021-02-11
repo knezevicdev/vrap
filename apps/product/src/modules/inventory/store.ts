@@ -5,6 +5,8 @@ import {
   InvSearchNetworker,
 } from '@vroom-web/inv-search-networking';
 import { InvServiceNetworker } from '@vroom-web/inv-service-networking';
+import { Client, GQLTypes, isSuccessResponse } from '@vroom-web/networking';
+import gql from 'graphql-tag';
 import { action, observable, runInAction } from 'mobx';
 import getConfig from 'next/config';
 import { createContext } from 'react';
@@ -12,6 +14,8 @@ import { createContext } from 'react';
 import { Status } from 'src/networking/types';
 
 const { publicRuntimeConfig } = getConfig();
+
+const deliveryFeeDefault = 599;
 
 export enum GallerySelections {
   GENERAL = 'General Photos',
@@ -27,6 +31,7 @@ export interface InventoryStoreState {
   vehicleStatus: Status;
   vehicle: Hit;
   isAvailable: boolean;
+  deliveryFee: number;
   actionFavorite: boolean;
 }
 
@@ -146,12 +151,38 @@ export async function getInventoryAvailabilityState(
   }
 }
 
+interface DeliveryFeeData {
+  taxiGetShippingFee: GQLTypes.ShippingFee;
+}
+
+export async function fetchDeliveryFeeState(
+  gearboxClient: Client,
+  deliveryFeeDefault: number
+): Promise<number> {
+  const response = await gearboxClient.gqlRequest<DeliveryFeeData>({
+    document: gql`
+      {
+        taxiGetShippingFee {
+          fee
+        }
+      }
+    `,
+  });
+  if (isSuccessResponse(response)) {
+    return response.data.taxiGetShippingFee.fee || deliveryFeeDefault;
+  } else {
+    console.error(JSON.stringify(response.error));
+    return deliveryFeeDefault;
+  }
+}
+
 export async function getInitialInventoryStoreState(
   vin: string,
   actionFavorite: boolean
 ): Promise<{
   similar: Hit[];
   isAvailable: boolean;
+  deliveryFee: number;
   vin: string;
   similarClusterCount: number;
   vehicleStatus: Status;
@@ -167,6 +198,10 @@ export async function getInitialInventoryStoreState(
     publicRuntimeConfig.INV_SERVICE_V2_URL || ''
   );
 
+  const gearboxClient = new Client(publicRuntimeConfig.GEARBOX_URL, {
+    timeout: 4000,
+  });
+
   const vehicleState = await getVehicleState(
     vin,
     getVehicleResponse,
@@ -181,11 +216,17 @@ export async function getInitialInventoryStoreState(
     vin,
     invServiceNetworker
   );
+  const deliveryFeeState = await fetchDeliveryFeeState(
+    gearboxClient,
+    deliveryFeeDefault
+  );
+
   return {
     vin,
     ...vehicleState,
     ...vehicleSimilarState,
     isAvailable: inventoryAvailableState,
+    deliveryFee: deliveryFeeState,
     actionFavorite,
   };
 }
@@ -195,6 +236,7 @@ export class InventoryStore {
     publicRuntimeConfig.INVSEARCH_V3_URL || ''
   );
 
+  @observable deliveryFee = deliveryFeeDefault;
   @observable similarStatus: Status = Status.FETCHING;
   @observable similar: Hit[] = [] as Hit[];
   @observable similarClusterCount = 0;
@@ -218,6 +260,7 @@ export class InventoryStore {
       // this.similarStatus = initialState.similarStatus;
       this.similar = initialState.similar;
       this.isAvailable = initialState.isAvailable;
+      this.deliveryFee = initialState.deliveryFee;
       this.actionFavorite = initialState.actionFavorite;
     }
   }

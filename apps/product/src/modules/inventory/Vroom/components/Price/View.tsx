@@ -62,7 +62,7 @@ interface Props {
 
 const PriceView: React.FC<Props> = ({ viewModel }) => {
   //Rather than create a store for tracking a single piece of state,
-  //I thought this would be an approprite time to use local state diretly
+  //I thought this would be an appropriate time to use local state directly
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
   const open = Boolean(anchorEl);
   const handleClick = (event: React.MouseEvent<HTMLElement>): void => {
@@ -72,6 +72,7 @@ const PriceView: React.FC<Props> = ({ viewModel }) => {
   const handleClose = (): void => {
     setAnchorEl(null);
   };
+
   return (
     <>
       <PriceContainer
@@ -116,7 +117,7 @@ const PriceView: React.FC<Props> = ({ viewModel }) => {
           </Typography>
           <List>
             <Typography>
-              {viewModel.list.bullets.map((item: string) => {
+              {viewModel.getListBullets().map((item: string) => {
                 return <ListItem key={item}>{item}</ListItem>;
               })}
             </Typography>
