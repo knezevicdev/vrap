@@ -1,8 +1,9 @@
 import { Response } from '@vroom-web/networking';
 
-import Deals from '../../core/mockData/deals.json';
 import Model from './Model';
-import ViewModel, { modalContentMap, ModalContentMapEnum } from './ViewModel';
+import Deals from './services/mockData/deals.json';
+import { DialogTypeEnum } from './types';
+import ViewModel, { dialogInnerContent } from './ViewModel';
 
 import * as Request from 'src/networking/request';
 
@@ -25,7 +26,7 @@ describe('Deal Validator', () => {
     viewModel.getModal();
 
     //Selecting Pending Modal
-    const selectModal = modalContentMap(ModalContentMapEnum.PENDING_PURCHASE);
+    const selectModal = dialogInnerContent(DialogTypeEnum.PENDING_PURCHASE);
     expect(viewModel.modalContent?.component).toBe(selectModal.component);
   });
 
@@ -44,7 +45,7 @@ describe('Deal Validator', () => {
     viewModel.getModal();
 
     //Selecting Pending Modal
-    const selectModal = modalContentMap(ModalContentMapEnum.VEHICLE_SOLD);
+    const selectModal = dialogInnerContent(DialogTypeEnum.VEHICLE_SOLD);
     expect(viewModel.modalContent?.component).toBe(selectModal.component);
   });
 
@@ -63,7 +64,7 @@ describe('Deal Validator', () => {
     viewModel.getModal();
 
     //Selecting Pending Modal
-    const selectModal = modalContentMap(ModalContentMapEnum.DEPOSIT_CAPTURED);
+    const selectModal = dialogInnerContent(DialogTypeEnum.DEPOSIT_CAPTURED);
     expect(viewModel.modalContent?.component).toBe(selectModal.component);
   });
 });
