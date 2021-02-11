@@ -11,6 +11,7 @@ import { setConfig } from 'next/config';
 setConfig({
   publicRuntimeConfig: {
     VERSION: '',
+    BASE_PATH: ''
   },
 });
 
