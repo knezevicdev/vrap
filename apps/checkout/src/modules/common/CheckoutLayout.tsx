@@ -7,7 +7,7 @@ import DealSummary from '../deals/sections/DealSummary/index';
 import SelectedCar from '../deals/sections/DealSummary/SelectedCar';
 import Footer from '../footer';
 import Header from '../header';
-import { DealContext, DealState } from '../store/DealStore';
+import { DealContext, DealStore } from '../store/DealStore';
 import { ProgressBar } from './ProgressBar';
 
 const grayFour = (props: { theme: ThemeProps }): string =>
@@ -110,7 +110,7 @@ interface Props {
 }
 
 const CheckoutLayout: FC<Props> = ({ showCarCard, children }) => {
-  const { activeStep, deal, vehicle, showDropdown } = useContext<DealState>(
+  const { activeStep, deal, vehicle, showDropdown } = useContext<DealStore>(
     DealContext
   );
 
