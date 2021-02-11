@@ -32,4 +32,4 @@ export class DealStore {
   };
 }
 
-export const DealContext = createContext(new DealStore());
+export const DealContext = createContext<DealState>(new DealStore());
