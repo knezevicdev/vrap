@@ -81,11 +81,13 @@ const DealSummarySection = styled.div<{ showDropdown?: boolean }>`
   top: 72px;
 
   @media (max-width: 1023px) {
+    
     ${(props): string =>
       props.showDropdown
         ? `
         position: absolute;
         z-index: 2;
+        top: 56px;
         left: 0;
         right: 0;
         `
