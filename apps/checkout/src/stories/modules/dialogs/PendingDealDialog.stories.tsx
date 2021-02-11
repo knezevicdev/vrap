@@ -1,17 +1,27 @@
 import React from 'react';
+import {dialogInnerContent} from "src/modules/dealValidatorModal/ViewModel";
+import {DialogTypeEnum} from "src/modules/dealValidatorModal/types";
 
-import PendingDealDialog from '../../../modules/dealValidatorModal/content/PendingDeal';
+import VehicleSoldDialog from 'src/modules/dealValidatorModal/content/VehicleSold';
 
 export const Default = (): JSX.Element => {
-  return (
-    <PendingDealDialog
-      message={`You have placed deposit for another vehicle. Once that purchase is
-  complete, you’ll be able to make another purchase. For further
-  assistance give us a call at (855) 524-1300`}
-    />
-  );
+
+  const [year, make, model ] = ["2007", "kia", "Optima"];
+
+  const carName= `${year} ${make} ${model}`;
+
+  const dialogAction = (dialogType: DialogTypeEnum) => {
+    console.log("dialogType", dialogType)
+  }
+  const { title, contentMsg } = dialogInnerContent(DialogTypeEnum.PENDING_PURCHASE);
+
+  return <VehicleSoldDialog  carName={carName}
+  dialogAction={dialogAction}
+  title= {title ?? ""}
+  contentMsg = {contentMsg ?? ""}
+  dialogType = {DialogTypeEnum.PENDING_PURCHASE}/>;
 };
 
 export default {
-  title: 'Checkout/Dialogs/PendingDeal',
+  title: 'Checkout/Dialogs/Pending Deal',
 };

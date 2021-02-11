@@ -15,7 +15,7 @@ import Login from 'src/modules/login';
  * Dynamically inject the content for the dialogs
  * @param viewSelection
  */
-export const modalContentMap = (
+export const dialogInnerContent = (
   viewSelection: DialogTypeEnum
 ): ModalContentSelected => {
   const contents = {
@@ -78,25 +78,25 @@ export default class DealValidatorModalViewModel {
       !this.model.data.isAuthenticated
     ) {
       this.openModal = true;
-      this.modalContent = modalContentMap(DialogTypeEnum.LOGIN);
+      this.modalContent = dialogInnerContent(DialogTypeEnum.LOGIN);
     } else if (
       this.model.dataStatus === Status.SUCCESS &&
       this.model.data.isVehicleSold
     ) {
       this.openModal = true;
-      this.modalContent = modalContentMap(DialogTypeEnum.VEHICLE_SOLD);
+      this.modalContent = dialogInnerContent(DialogTypeEnum.VEHICLE_SOLD);
     } else if (
       this.model.dataStatus === Status.SUCCESS &&
       this.model.data.isDepositCaptured
     ) {
       this.openModal = true;
-      this.modalContent = modalContentMap(DialogTypeEnum.DEPOSIT_CAPTURED);
+      this.modalContent = dialogInnerContent(DialogTypeEnum.DEPOSIT_CAPTURED);
     } else if (
       this.model.dataStatus === Status.SUCCESS &&
       this.model.data.hasPendingDeal
     ) {
       this.openModal = true;
-      this.modalContent = modalContentMap(DialogTypeEnum.PENDING_PURCHASE);
+      this.modalContent = dialogInnerContent(DialogTypeEnum.PENDING_PURCHASE);
     }
   }
 
