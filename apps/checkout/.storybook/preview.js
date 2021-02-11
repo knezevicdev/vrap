@@ -6,6 +6,14 @@ import {
 } from '@vroom-web/temp-ui-alias-for-checkout';
 import {ThemeProvider} from "styled-components";
 import { withPerformance } from 'storybook-addon-performance';
+import { setConfig } from 'next/config';
+
+setConfig({
+  publicRuntimeConfig: {
+    VERSION: '',
+    BASE_PATH: ''
+  },
+});
 
 export const parameters = {
     actions: {argTypesRegex: "^on[A-Z].*"},

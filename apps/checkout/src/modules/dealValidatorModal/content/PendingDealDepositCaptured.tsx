@@ -7,12 +7,18 @@ import {
   Icons,
   ThemeProps,
 } from '@vroom-web/temp-ui-alias-for-checkout';
+import getConfig from 'next/config';
 import React from 'react';
 import styled from 'styled-components';
 
-interface VehicleSoldDialog {
-  close: () => void;
-  carName: string;
+import { DialogTypeEnum } from '../types';
+
+interface PendingDealDepositCapturedDialog {
+  dialogType: DialogTypeEnum;
+  dialogAction: (dialogType: DialogTypeEnum) => void;
+  title: string;
+  contentMsg: string;
+  onClose: () => void;
 }
 
 const primaryWhite = (props: { theme: ThemeProps }): string =>
@@ -31,18 +37,18 @@ const Container = styled.div`
   width: 580px;
   height: 433px;
   ${addStyleForMobile(`
-    height: 100%;
-      width: 100%;
-  `)}
+  height: 100%;
+    width: 100%;
+`)}
 `;
 
 const DialogTitle = styled(Heading.Three)`
   padding: 25px 141px 0px;
   text-align: center;
   ${addStyleForMobile(`
-    padding: 25px 0px 0px 0px;
-    font-size: 24px;
-  `)}
+  padding: 25px 0px 0px 0px;
+  font-size: 24px;
+`)}
 `;
 
 const Content = styled(Body.Regular)`
@@ -51,8 +57,8 @@ const Content = styled(Body.Regular)`
   height: 78px;
   text-align: center;
   ${addStyleForMobile(`
-    width: 300px;
-  `)}
+  width: 300px;
+`)}
 `;
 
 const Line = styled.hr`
@@ -61,8 +67,8 @@ const Line = styled.hr`
   width: 480px;
   align-self: center;
   ${addStyleForMobile(`
-    width: 300px;
-  `)}
+  width: 300px;
+`)}
 `;
 
 const IconContainer = styled.div`
@@ -71,17 +77,17 @@ const IconContainer = styled.div`
 `;
 
 const Car = styled.img`
-  width="80px"
-  height="80px"
-  `;
+  width: 80px;
+  height: 80px;
+`;
 
 const StyledButton = styled(Button.Primary)`
   margin: 0px 100px;
   width: 380px;
   ${addStyleForMobile(`
-  width: 300px;
-  margin: 0px 50px 20px;
-  `)}
+width: 300px;
+margin: 0px 50px 20px;
+`)}
 `;
 const Close = styled.div`
   position: absolute;
@@ -89,29 +95,33 @@ const Close = styled.div`
   right: 20px;
   cursor: pointer;
 `;
+const {
+  publicRuntimeConfig: { BASE_PATH },
+} = getConfig();
 
-export const VehicleSoldDialog: React.FC<VehicleSoldDialog> = ({
-  close,
-  carName,
+export const PendingDealDepositCaptured: React.FC<PendingDealDepositCapturedDialog> = ({
+  dialogType,
+  title,
+  contentMsg,
+  dialogAction,
+  onClose,
 }) => {
   return (
     <Container>
-      <Close onClick={close}>
+      <Close onClick={onClose}>
         <Icon icon={Icons.CLOSE_LARGE} />
       </Close>
-      <DialogTitle>oh no!</DialogTitle>
+      <DialogTitle>{title}</DialogTitle>
       <Line />
-      <Content>
-        <Body.Regular bold>{carName}</Body.Regular> is no longer available.
-        Don’t worry. We have thousands of low-mileage, high-quality vehicles for
-        you to choose from.
-      </Content>
+      <Content>{contentMsg}</Content>
       <IconContainer>
-        <Car src="assets/icons/Car-search.svg" />
+        <Car src={`${BASE_PATH}/assets/icons/car-reserve.svg`} />
       </IconContainer>
-      <StyledButton onClick={close}>OK</StyledButton>
+      <StyledButton onClick={(): void => dialogAction(dialogType)}>
+        OK
+      </StyledButton>
     </Container>
   );
 };
 
-export default VehicleSoldDialog;
+export default PendingDealDepositCaptured;

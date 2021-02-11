@@ -1,70 +1,55 @@
 import { Status } from '@vroom-web/networking';
 
+import { PendingDealDepositCaptured, VehicleSold } from './content';
 import DealValidatorModel from './Model';
+import {
+  DialogTypeEnum,
+  ModalContentList,
+  ModalContentSelected,
+} from './types';
 
-import DepositCaptured from 'src/modules/dealValidatorModal/samples/DepositCaptured';
-import PurchasePending from 'src/modules/dealValidatorModal/samples/PendingPurchase';
-import VehicleSold from 'src/modules/dealValidatorModal/samples/VehicleSold';
 import Login from 'src/modules/login';
 
-export enum ModalContentMapEnum {
-  DEPOSIT_CAPTURED,
-  PENDING_PURCHASE,
-  VEHICLE_SOLD,
-  LOGIN,
-}
-
-export type ModalContentList = {
-  [key in ModalContentMapEnum]: ModalContentSelected;
-};
-
-export type ModalContentSelected = {
-  height?: number;
-  width?: number;
-  onRequestClose: boolean;
-  closeIconEnabled: boolean;
-  contentLabel: string;
-  component: () => JSX.Element;
-};
-
 /**
- * Handle the content view to render on validation Modal
+ * Dynamically inject the content for the dialogs
  * @param viewSelection
  */
 export const modalContentMap = (
-  viewSelection: ModalContentMapEnum
+  viewSelection: DialogTypeEnum
 ): ModalContentSelected => {
   const contents = {
-    [ModalContentMapEnum.DEPOSIT_CAPTURED]: {
-      height: 300,
-      width: 300,
+    [DialogTypeEnum.DEPOSIT_CAPTURED]: {
       onRequestClose: false,
       closeIconEnabled: false,
-      contentLabel: 'Deposit Captured',
-      component: DepositCaptured,
+      component: PendingDealDepositCaptured,
+      dialogType: DialogTypeEnum.DEPOSIT_CAPTURED,
+      title: 'pending purchase',
+      contentMsg: `You have placed deposit for another vehicle. Once that purchase is
+      complete, you’ll be able to make another purchase. For further
+      assistance give us a call at (855) 524-1300.`,
     },
-    [ModalContentMapEnum.PENDING_PURCHASE]: {
-      height: 300,
-      width: 300,
+    [DialogTypeEnum.PENDING_PURCHASE]: {
       onRequestClose: false,
       closeIconEnabled: false,
-      contentLabel: 'pending Purchase',
-      component: PurchasePending,
+      dialogType: DialogTypeEnum.PENDING_PURCHASE,
+      component: PendingDealDepositCaptured,
+      title: `pending purchase`,
+      contentMsg: `You are currently in the process of purchasing another vehicle. Once that purchase is complete, you'll be able to make another purchase.`,
     },
-    [ModalContentMapEnum.VEHICLE_SOLD]: {
-      height: 300,
-      width: 300,
+    [DialogTypeEnum.VEHICLE_SOLD]: {
       onRequestClose: false,
       closeIconEnabled: false,
-      contentLabel: 'Vehicle Sold',
+      dialogType: DialogTypeEnum.VEHICLE_SOLD,
       component: VehicleSold,
+      title: 'oh no!',
+      contentMsg: `is no longer available.
+      Don’t worry. We have thousands of low-mileage, high-quality vehicles for
+      you to choose from.`,
     },
-    [ModalContentMapEnum.LOGIN]: {
-      height: 300,
-      width: 300,
+    [DialogTypeEnum.LOGIN]: {
+      dialogType: DialogTypeEnum.LOGIN,
       onRequestClose: false,
       closeIconEnabled: false,
-      contentLabel: 'Login',
       component: Login,
     },
   } as ModalContentList;
@@ -87,25 +72,25 @@ export default class DealValidatorModalViewModel {
       !this.model.data.isAuthenticated
     ) {
       this.openModal = true;
-      this.modalContent = modalContentMap(ModalContentMapEnum.LOGIN);
+      this.modalContent = modalContentMap(DialogTypeEnum.LOGIN);
     } else if (
       this.model.dataStatus === Status.SUCCESS &&
       this.model.data.isVehicleSold
     ) {
       this.openModal = true;
-      this.modalContent = modalContentMap(ModalContentMapEnum.VEHICLE_SOLD);
+      this.modalContent = modalContentMap(DialogTypeEnum.VEHICLE_SOLD);
     } else if (
       this.model.dataStatus === Status.SUCCESS &&
       this.model.data.isDepositCaptured
     ) {
       this.openModal = true;
-      this.modalContent = modalContentMap(ModalContentMapEnum.DEPOSIT_CAPTURED);
+      this.modalContent = modalContentMap(DialogTypeEnum.DEPOSIT_CAPTURED);
     } else if (
       this.model.dataStatus === Status.SUCCESS &&
       this.model.data.hasPendingDeal
     ) {
       this.openModal = true;
-      this.modalContent = modalContentMap(ModalContentMapEnum.PENDING_PURCHASE);
+      this.modalContent = modalContentMap(DialogTypeEnum.PENDING_PURCHASE);
     }
   }
 
@@ -118,7 +103,22 @@ export default class DealValidatorModalViewModel {
     return this.model.dataStatus === Status.SUCCESS ? this.modalContent : null;
   }
 
+  get carName(): string {
+    if (this.model.dataStatus === Status.SUCCESS) {
+      const { year, make, model } = this.model.data.vehicleInfo || {};
+      return `${year} ${make} ${model}`;
+    }
+    return '';
+  }
+
   onClose = (): void => {
     this.openModal = false;
+  };
+  dialogAction = (dialogType: DialogTypeEnum): void => {
+    //Use DialogType to perform different actions depending of the modal
+    //currently each modal send the user to my account.
+    if (dialogType) {
+      location.href = '/my-account/transactions';
+    }
   };
 }

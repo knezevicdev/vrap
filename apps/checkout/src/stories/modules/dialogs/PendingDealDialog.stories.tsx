@@ -1,6 +1,6 @@
 import React from 'react';
 
-import PendingDealDialog from '../../../modules/common/PendingDealDialog';
+import PendingDealDialog from '../../../modules/dealValidatorModal/content/PendingDeal';
 
 export const Default = (): JSX.Element => {
   return (
@@ -13,5 +13,5 @@ export const Default = (): JSX.Element => {
 };
 
 export default {
-  title: 'Checkout/PendingDealDialog',
+  title: 'Checkout/Dialogs/PendingDeal',
 };

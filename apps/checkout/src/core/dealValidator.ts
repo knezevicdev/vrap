@@ -1,5 +1,6 @@
 import {
   ErrorResponse,
+  GQLTypes,
   isAccessDeniedErrorResponse,
   isErrorResponse,
   isSuccessResponse,
@@ -19,6 +20,7 @@ export interface DealValidatorProps {
   hasPendingDeal: boolean;
   hasInProgressDeal: boolean;
   isDepositCaptured: boolean;
+  vehicleInfo?: GQLTypes.VehicleInventory | null;
 }
 
 export enum DealStatusEnum {
@@ -135,6 +137,10 @@ export const initDealValidator = async (
     const isDepositCapturedInProgress = !!hasInProgressDeal?.dealSummary
       .depositPaymentInfo?.DepositCaptured;
 
+    const firstDeal = head(response.data.user.deals);
+
+    const vehicleInfo = firstDeal && firstDeal.dealSummary.inventory?.vehicle;
+
     return {
       isAuthenticated: isAuth,
       isVehicleSold: excludedRules
@@ -149,6 +155,7 @@ export const initDealValidator = async (
       isDepositCaptured: excludedRules
         ? excludedRules.depositCaptured && isDepositCapturedInProgress
         : isDepositCapturedInProgress,
+      vehicleInfo,
     };
   } else {
     //Is there some error related with the graphQL update auth flag

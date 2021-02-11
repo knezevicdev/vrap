@@ -22,8 +22,6 @@ const CustomModal = styled(Modal)`
   position: relative;
   flex-direction: column;
   background: ${primaryWhite};
-  max-width: 379px;
-  max-height: 460px;
   border-bottom: solid 4px ${primaryBrand};
   outline: none;
 
@@ -45,12 +43,18 @@ const DealValidatorModalView: React.FC<Props> = ({ viewModel }) => {
     document.body.style.overflow = 'unset';
   };
 
-  const { isModalOpen, ModalContent, onClose } = viewModel;
-  const { component, contentLabel } = ModalContent || {};
+  const {
+    isModalOpen,
+    ModalContent,
+    onClose,
+    dialogAction,
+    carName,
+  } = viewModel;
+  const { component, title, contentMsg, dialogType } = ModalContent || {};
   return (
     <CustomModal
       isOpen={isModalOpen}
-      contentLabel={contentLabel}
+      contentLabel={title}
       onRequestClose={onClose}
       style={{
         overlay: {
@@ -65,7 +69,16 @@ const DealValidatorModalView: React.FC<Props> = ({ viewModel }) => {
       onAfterOpen={onAfterOpen}
       onAfterClose={onAfterClose}
     >
-      {component && React.createElement(component)}
+      {component &&
+        React.createElement(component, {
+          viewModel,
+          title,
+          contentMsg,
+          onClose,
+          dialogAction,
+          carName,
+          dialogType,
+        })}
     </CustomModal>
   );
 };
