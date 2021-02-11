@@ -36,7 +36,7 @@ const Container = styled.div`
   z-index: 1;
   position: relative;
   width: 580px;
-  height: 433px;
+  height: 432px;
   ${addStyleForMobile(`
     height: 100%;
     width: 100%;
@@ -44,7 +44,7 @@ const Container = styled.div`
 `;
 
 const DialogTitle = styled(Heading.Three)`
-  padding: 25px 141px 0px;
+  padding: 24px 138px 0px;
   text-align: center;
   ${addStyleForMobile(`
     padding: 25px 0px 0px 0px;
@@ -53,7 +53,7 @@ const DialogTitle = styled(Heading.Three)`
 `;
 
 const Content = styled(Body.Regular)`
-  margin: 5px 50px;
+  margin: 8px 56px;
   width: 480px;
   height: 78px;
   text-align: center;
@@ -65,7 +65,7 @@ const Content = styled(Body.Regular)`
 const Line = styled.hr`
   background-color: ${grayThree};
   height: 1px;
-  margin: 25px 0 25px 0px;
+  margin: 24px 0 24px 0px;
   width: 480px;
   align-self: center;
   ${addStyleForMobile(`
@@ -75,7 +75,7 @@ const Line = styled.hr`
 
 const IconContainer = styled.div`
   align-self: center;
-  margin: 30px 0px;
+  margin: 32px 0px;
 `;
 
 const Car = styled.img`
@@ -93,8 +93,8 @@ margin: 0px 50px 20px;
 `;
 const Close = styled.a`
   position: absolute;
-  top: 20px;
-  right: 20px;
+  top: 24px;
+  right: 24px;
   cursor: pointer;
 `;
 const {
