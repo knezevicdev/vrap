@@ -5,7 +5,8 @@ import {
   InvSearchNetworker,
 } from '@vroom-web/inv-search-networking';
 import { InvServiceNetworker } from '@vroom-web/inv-service-networking';
-import { TaxiServiceNetworker } from '@vroom-web/taxi-service-networking';
+import { Client, GQLTypes, isSuccessResponse } from '@vroom-web/networking';
+import gql from 'graphql-tag';
 import { action, observable, runInAction } from 'mobx';
 import getConfig from 'next/config';
 import { createContext } from 'react';
@@ -150,15 +151,27 @@ export async function getInventoryAvailabilityState(
   }
 }
 
+interface DeliveryFeeData {
+  taxiGetShippingFee: GQLTypes.ShippingFee;
+}
+
 export async function fetchDeliveryFeeState(
-  taxiServiceNetworker: TaxiServiceNetworker,
+  gearboxClient: Client,
   deliveryFeeDefault: number
 ): Promise<number> {
-  try {
-    const response = await taxiServiceNetworker.getShippingFee();
+  const response = await gearboxClient.gqlRequest<DeliveryFeeData>({
+    document: gql`
+      {
+        taxiGetShippingFee {
+          fee
+        }
+      }
+    `,
+  });
+  if (isSuccessResponse(response)) {
     return response.data.taxiGetShippingFee.fee || deliveryFeeDefault;
-  } catch (error) {
-    console.error(JSON.stringify(error));
+  } else {
+    console.error(JSON.stringify(response.error));
     return deliveryFeeDefault;
   }
 }
@@ -185,9 +198,9 @@ export async function getInitialInventoryStoreState(
     publicRuntimeConfig.INV_SERVICE_V2_URL || ''
   );
 
-  const taxiServiceNetworker = new TaxiServiceNetworker(
-    publicRuntimeConfig.GEARBOX_URL || ''
-  );
+  const gearboxClient = new Client(publicRuntimeConfig.GEARBOX_URL, {
+    timeout: 4000,
+  });
 
   const vehicleState = await getVehicleState(
     vin,
@@ -204,7 +217,7 @@ export async function getInitialInventoryStoreState(
     invServiceNetworker
   );
   const deliveryFeeState = await fetchDeliveryFeeState(
-    taxiServiceNetworker,
+    gearboxClient,
     deliveryFeeDefault
   );
 

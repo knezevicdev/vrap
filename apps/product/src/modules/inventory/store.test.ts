@@ -7,7 +7,7 @@ import {
   MakeCount,
 } from '@vroom-web/inv-search-networking';
 import { InvServiceNetworker } from '@vroom-web/inv-service-networking';
-import { TaxiServiceNetworker } from '@vroom-web/taxi-service-networking';
+import { Client } from '@vroom-web/networking';
 
 import {
   fetchDeliveryFeeState,
@@ -233,42 +233,42 @@ describe('Inventory Store', () => {
   });
 
   describe('fetchDeliveryFeeState()', () => {
-    const taxiServiceNetworkerMock = new TaxiServiceNetworker(BASE_URL);
+    const gearboxClient = new Client(BASE_URL);
     const deliveryFeeDefault = 299;
     it('it should return the response fee if the API call is successful', async () => {
-      taxiServiceNetworkerMock.getShippingFee = jest
+      gearboxClient.gqlRequest = jest
         .fn()
         .mockResolvedValue({ data: { taxiGetShippingFee: { fee: 499 } } });
 
       const response = await fetchDeliveryFeeState(
-        taxiServiceNetworkerMock,
+        gearboxClient,
         deliveryFeeDefault
       );
-      expect(taxiServiceNetworkerMock.getShippingFee).toHaveBeenCalledTimes(1);
+      expect(gearboxClient.gqlRequest).toHaveBeenCalledTimes(1);
       expect(response).toBe(499);
     });
     it('it should return the default fee if the API call is successful but no fee is in the response', async () => {
-      taxiServiceNetworkerMock.getShippingFee = jest.fn().mockResolvedValue({
+      gearboxClient.gqlRequest = jest.fn().mockResolvedValue({
         data: { taxiGetShippingFee: { fee: undefined } },
       });
 
       const response = await fetchDeliveryFeeState(
-        taxiServiceNetworkerMock,
+        gearboxClient,
         deliveryFeeDefault
       );
-      expect(taxiServiceNetworkerMock.getShippingFee).toHaveBeenCalledTimes(1);
+      expect(gearboxClient.gqlRequest).toHaveBeenCalledTimes(1);
       expect(response).toBe(299);
     });
     it('it should return the default fee if the API call fails', async () => {
-      taxiServiceNetworkerMock.getShippingFee = jest
-        .fn()
-        .mockRejectedValue(new Error('test'));
+      gearboxClient.gqlRequest = jest.fn().mockResolvedValue({
+        error: new Error('test'),
+      });
 
       const response = await fetchDeliveryFeeState(
-        taxiServiceNetworkerMock,
+        gearboxClient,
         deliveryFeeDefault
       );
-      expect(taxiServiceNetworkerMock.getShippingFee).toHaveBeenCalledTimes(1);
+      expect(gearboxClient.gqlRequest).toHaveBeenCalledTimes(1);
       expect(response).toBe(299);
     });
   });
