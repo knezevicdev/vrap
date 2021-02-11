@@ -1,5 +1,6 @@
 import {
   addStyleForMobile,
+  Body,
   ThemeProps,
 } from '@vroom-web/temp-ui-alias-for-checkout';
 import React from 'react';
@@ -18,9 +19,6 @@ const grayTwo = (props: { theme: ThemeProps }): string =>
 
 const primaryBlack = (props: { theme: ThemeProps }): string =>
   props.theme.colors.primary.black;
-
-const primaryWhite = (props: { theme: ThemeProps }): string =>
-  props.theme.colors.primary.white;
 
 const ProgressBarWrapper = styled.ul`
   list-style: none;
@@ -59,16 +57,14 @@ const Step = styled.li<{ active: boolean }>`
     width: 100%;
     height: 2px;
     position: absolute;
-    top: 9px;
+    top: 5px;
     background-color: ${({ active }) => (active ? primaryBrand : grayTwo)};
     z-index: 0;
     transform: translateX(-50%);
   }
 `;
 
-const LowerText = styled.span<{ active: boolean }>`
-  font-weight: 600;
-  line-height: 1.3;
+const LowerText = styled(Body.Small)<{ active: boolean }>`
   text-align: center;
   display: block;
   margin: 5px 5px 0 5px;
@@ -88,7 +84,6 @@ const Dot = styled.span<{ active: boolean }>`
   z-index: 1;
   display: inline-block;
   background-color: ${({ active }) => (active ? primaryBrand : grayTwo)};
-  border: 4px solid ${primaryWhite};
 `;
 
 export const ProgressBar: React.FC<ProgressBar> = ({ steps, activeStep }) => {
@@ -99,7 +94,9 @@ export const ProgressBar: React.FC<ProgressBar> = ({ steps, activeStep }) => {
         return (
           <Step key={step} active={isActive}>
             <Dot active={isActive} />
-            <LowerText active={isActive}>{step}</LowerText>
+            <LowerText bold active={isActive}>
+              {step}
+            </LowerText>
           </Step>
         );
       })}

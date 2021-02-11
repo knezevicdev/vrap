@@ -12,7 +12,7 @@ interface Props {
   viewModel: FooterViewModel;
 }
 
-const Footer: React.FC<Props> = ({ viewModel }) => {
+const FooterView: React.FC<Props> = ({ viewModel }) => {
   const { links, trackLink } = viewModel;
   return (
     <Container>
@@ -62,15 +62,13 @@ const Copyright = styled(Typography.Fine)`
 
 const LinkText = styled(Typography.Body.Small)`
   color: ${primaryWhite};
-  margin-bottom: 8px;
-  padding: 0px 12px 0px 12px;
   letter-spacing: 1.25px;
 `;
 
 const LinksContainer = styled.div`
-  justify-content: space-around;
-  display: flex;
-  flex-direction: row;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
 `;
 
-export default Footer;
+export default FooterView;

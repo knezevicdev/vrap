@@ -4,6 +4,7 @@ import styled from 'styled-components';
 
 import { buildPrice } from '../buildPrice';
 import ToolTipLink from '../ToolTipLink';
+import ViewModel from './ViewModel';
 
 import CustomToolTip from 'src/modules/common/ToolTip';
 
@@ -20,8 +21,14 @@ const Row = styled.div`
   display: flex;
   justify-content: space-between;
 `;
-import ViewModel from './ViewModel';
 
+const LeftColumn = styled.div`
+  margin-right: 8px;
+`;
+
+const Value = styled(Body.Regular)`
+  text-align: right;
+`;
 interface Props {
   viewModel: ViewModel;
 }
@@ -37,8 +44,8 @@ const View = ({ viewModel }: Props): JSX.Element => {
   return (
     <>
       {hasVehicleServiceinDeal() && (
-        <div>
-          <Row>
+        <Row>
+          <LeftColumn>
             <ToolTipContainer>
               <RegularText>Vehicle Service Protection</RegularText>
               <CustomToolTip
@@ -48,17 +55,15 @@ const View = ({ viewModel }: Props): JSX.Element => {
                 }
               />
             </ToolTipContainer>
-            <Body.Regular>
-              {buildPrice(vehicleServiceProtection?.cost)}
-            </Body.Regular>
-          </Row>
-          <Body.Small bold>{vehicleServiceProtection?.summary}</Body.Small>
-        </div>
+            <Body.Small bold>{vehicleServiceProtection?.summary}</Body.Small>
+          </LeftColumn>
+          <Value>{buildPrice(vehicleServiceProtection?.cost)}</Value>
+        </Row>
       )}
 
       {hasTireinDeal() && (
-        <div>
-          <Row>
+        <Row>
+          <LeftColumn>
             <ToolTipContainer>
               <RegularText>Tire & Wheel Coverage</RegularText>
               <CustomToolTip
@@ -68,17 +73,15 @@ const View = ({ viewModel }: Props): JSX.Element => {
                 }
               />
             </ToolTipContainer>
-            <Body.Regular>
-              {buildPrice(tireAndWheelCoverage?.cost)}
-            </Body.Regular>
-          </Row>
-          <Body.Small bold>{tireAndWheelCoverage?.summary}</Body.Small>
-        </div>
+            <Body.Small bold>{tireAndWheelCoverage?.summary}</Body.Small>
+          </LeftColumn>
+          <Value>{buildPrice(tireAndWheelCoverage?.cost)}</Value>
+        </Row>
       )}
 
       {hasGapinDeal() && (
-        <div>
-          <Row>
+        <Row>
+          <LeftColumn>
             <ToolTipContainer>
               <RegularText>GAP Coverage</RegularText>
               <CustomToolTip
@@ -88,10 +91,10 @@ const View = ({ viewModel }: Props): JSX.Element => {
                 }
               />
             </ToolTipContainer>
-            <Body.Regular>{buildPrice(gapCoverage?.cost)}</Body.Regular>
-          </Row>
-          <Body.Small bold>{gapCoverage?.summary}</Body.Small>
-        </div>
+            <Body.Small bold>{gapCoverage?.summary}</Body.Small>
+          </LeftColumn>
+          <Value>{buildPrice(gapCoverage?.cost)}</Value>
+        </Row>
       )}
     </>
   );

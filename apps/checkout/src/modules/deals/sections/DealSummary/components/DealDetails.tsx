@@ -32,6 +32,14 @@ const Row = styled.div`
   justify-content: space-between;
 `;
 
+const Property = styled(Body.Regular)`
+  margin-right: 8px;
+`;
+
+const Value = styled(Body.Regular)`
+  text-align: right;
+`;
+
 const Section = styled.div`
   display: grid;
   grid-template-columns: 1fr;
@@ -85,8 +93,8 @@ const DealDetails = ({ deal, trades }: Props): JSX.Element => {
 
   const PaymentMethod = (): JSX.Element => (
     <Row>
-      <Body.Regular>Payment method:</Body.Regular>
-      <Body.Regular bold>{method}</Body.Regular>
+      <Property>Payment method:</Property>
+      <Value bold>{method}</Value>
     </Row>
   );
 
@@ -99,7 +107,7 @@ const DealDetails = ({ deal, trades }: Props): JSX.Element => {
           tooltipText={<ToolTipLink href="https://vroom.com/protection" />}
         />
       </ToolTipContainer>
-      <Body.Regular>Included</Body.Regular>
+      <Value>Included</Value>
     </Row>
   );
 
@@ -112,7 +120,7 @@ const DealDetails = ({ deal, trades }: Props): JSX.Element => {
           tooltipText={<ToolTipLink href="https://vroom.com/protection" />}
         />
       </ToolTipContainer>
-      <Body.Regular>Included</Body.Regular>
+      <Value>Included</Value>
     </Row>
   );
 
@@ -125,14 +133,14 @@ const DealDetails = ({ deal, trades }: Props): JSX.Element => {
           tooltipText="Taxes and fees are estimates and may change."
         />
       </ToolTipContainer>
-      <Body.Regular>{buildPrice(taxes)}</Body.Regular>
+      <Value>{buildPrice(taxes)}</Value>
     </Row>
   );
 
   const ShippingFee = (): JSX.Element => (
     <Row>
-      <Body.Regular>Shipping Fee</Body.Regular>
-      <Body.Regular>{buildPrice(shippingFee)}</Body.Regular>
+      <Property>Shipping Fee</Property>
+      <Value>{buildPrice(shippingFee)}</Value>
     </Row>
   );
 
@@ -144,17 +152,17 @@ const DealDetails = ({ deal, trades }: Props): JSX.Element => {
     <>
       <Section>
         <Row>
-          <Body.Regular>Trade-in Vehicle</Body.Regular>
-          <Body.Regular>{`${year} ${make} ${model}`}</Body.Regular>
+          <Property>Trade-in Vehicle</Property>
+          <Value>{`${year} ${make} ${model}`}</Value>
         </Row>
         <Row>
-          <Body.Regular>Your Est. Trade-In Credit</Body.Regular>
-          <Body.Regular>({buildPrice(credit)})</Body.Regular>
+          <Property>Your Est. Trade-In Credit</Property>
+          <Value>({buildPrice(credit)})</Value>
         </Row>
         {loanBalance && (
           <Row>
-            <Body.Regular>Est. Remaining Loan Balance</Body.Regular>
-            <Body.Regular>{buildPrice(loanBalance)}</Body.Regular>
+            <Property>Est. Remaining Loan Balance</Property>
+            <Value>{buildPrice(loanBalance)}</Value>
           </Row>
         )}
       </Section>
@@ -164,7 +172,7 @@ const DealDetails = ({ deal, trades }: Props): JSX.Element => {
 
   const SubTotal = (): JSX.Element => (
     <Row>
-      <Title.Three>Est. subtotal</Title.Three>
+      <Title.Three>Est. Subtotal</Title.Three>
       <Title.Three>{buildPrice(subtotal)}</Title.Three>
     </Row>
   );

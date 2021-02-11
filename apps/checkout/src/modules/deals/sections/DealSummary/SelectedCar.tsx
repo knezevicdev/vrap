@@ -7,16 +7,11 @@ import {
 import React from 'react';
 import styled from 'styled-components';
 
+import { buildPrice } from './components/buildPrice';
 import { VehicleProps } from './types';
 
 const grayThree = (props: { theme: ThemeProps }): string =>
   props.theme.colors.gray.three;
-
-const Container = styled.div`
-  box-shadow: 0 0 4px 0 #00000014;
-  display: inline-flex;
-  flex-direction: column;
-`;
 
 const CarInfo = styled.div`
   margin: 16px;
@@ -39,13 +34,13 @@ const SelectedCar = (props: VehicleProps): JSX.Element => {
   } = props;
 
   return (
-    <Container>
+    <>
       <Picture
         alt={`${make} ${model}`}
         src={leadPhotoURL || ''}
-        width="410px"
-        height="310px"
-        objectFit="contain"
+        width="100%"
+        height="260px"
+        objectFit="cover"
       />
 
       <CarInfo>
@@ -54,9 +49,9 @@ const SelectedCar = (props: VehicleProps): JSX.Element => {
           {trim} <Divider>|</Divider> {miles ? miles.toLocaleString() : `-`}{' '}
           miles
         </Body.Regular>
-        <Title.Two>{listingPrice}</Title.Two>
+        <Title.Two>{buildPrice(listingPrice)}</Title.Two>
       </CarInfo>
-    </Container>
+    </>
   );
 };
 

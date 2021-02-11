@@ -21,6 +21,14 @@ const Row = styled.div`
   justify-content: space-between;
 `;
 
+const Property = styled(Body.Regular)`
+  margin-right: 8px;
+`;
+
+const Value = styled(Body.Regular)`
+  text-align: right;
+`;
+
 const Section = styled.div`
   display: grid;
   grid-template-columns: 1fr;
@@ -65,34 +73,32 @@ const FinancingInformation = (props: FinancingProps): JSX.Element => {
       <Divider />
       <Section>
         <Row>
-          <Body.Regular>Down Payment</Body.Regular>
-          <Body.Regular>{buildPrice(downPayment)}</Body.Regular>
+          <Property>Down Payment</Property>
+          <Value>{buildPrice(downPayment)}</Value>
         </Row>
         <Row>
-          <Body.Regular>Financing Bank</Body.Regular>
-          <Body.Regular>{bank}</Body.Regular>
+          <Property>Financing Bank</Property>
+          <Value>{bank}</Value>
         </Row>
         <Row>
-          <Body.Regular>APR</Body.Regular>
-          <Body.Regular>{`${(apr * 100).toFixed(2)}%`}</Body.Regular>
+          <Property>APR</Property>
+          <Value>{`${(apr * 100).toFixed(2)}%`}</Value>
         </Row>
         <Row>
-          <Body.Regular>Finance Term</Body.Regular>
-          <Body.Regular>
-            {financeTerm ? `${financeTerm} months` : `-`}
-          </Body.Regular>
+          <Property>Finance Term</Property>
+          <Value>{financeTerm ? `${financeTerm} months` : `-`}</Value>
         </Row>
         <Row>
-          <Body.Regular>Number of payments</Body.Regular>
-          <Body.Regular>{numberOfPayments}</Body.Regular>
+          <Property>Number of payments</Property>
+          <Value>{numberOfPayments}</Value>
         </Row>
         <Row>
-          <Body.Regular>Amount Financed</Body.Regular>
-          <Body.Regular>{buildPrice(amountFinanced)}</Body.Regular>
+          <Property>Amount Financed</Property>
+          <Value>{buildPrice(amountFinanced)}</Value>
         </Row>
         <Row>
-          <Body.Regular>Finance charge</Body.Regular>
-          <Body.Regular>{buildPrice(financeCharge)}</Body.Regular>
+          <Property>Finance charge</Property>
+          <Value>{buildPrice(financeCharge)}</Value>
         </Row>
       </Section>
       <Divider />
