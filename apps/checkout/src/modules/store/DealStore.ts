@@ -12,6 +12,14 @@ export interface DealState {
 }
 
 export class DealStore {
+  steps: string[] = [
+    'Trade-In Info',
+    'Your Info',
+    'Payment Details',
+    'Finalize Purchase',
+    'Deposit',
+    'Additional Docs',
+  ];
   activeStep = -1;
   deal: GQLTypes.Deal = {} as GQLTypes.Deal;
   vehicle: VehicleProps = {} as VehicleProps;
