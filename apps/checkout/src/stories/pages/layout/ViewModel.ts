@@ -8,7 +8,7 @@ const mockVehicle: VehicleProps = {
   listingPrice: 10804,
   trim: 'Limited',
   miles: 67908,
-  leadPhotoURL: 'https://source.unsplash.com/random/800x600/?car',
+  leadPhotoURL: 'https://source.unsplash.com/random/800x600/?jeep',
 };
 
 const mockDeal = {
@@ -46,7 +46,7 @@ const mockDeal = {
       cashDownPayment: 20016.505559414625,
       taxableAmount: 27337.186224266887,
       totalTaxesAndFees: 17937.79811772704,
-      shippingFee: 33771.78910139203,
+      shippingFee: 599,
       tradeIn: {
         value: 3521.5644950512797,
         loanPayoff: 6341.355780605227,
@@ -57,7 +57,7 @@ const mockDeal = {
     inventory: {
       id: '362',
       miles: 67908,
-      leadPhotoURL: 'https://source.unsplash.com/random/800x600/?car',
+      leadPhotoURL: 'https://source.unsplash.com/random/800x600/?jeep',
       pricing: {
         listPrice: 10804,
       },
