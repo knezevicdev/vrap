@@ -38,6 +38,9 @@ export default async (
 
   try {
     const response = await axios.post(url, gql, config);
+    if (response.data.errors) {
+      throw { type: 'service', errors: response.data.errors };
+    }
     const body: IdToken = jwtDecode(response.data.data.signin.idToken);
     if (
       body['cognito:groups'] &&
@@ -63,10 +66,19 @@ export default async (
       res.setHeader('Set-Cookie', setCookies);
       res.json(body);
     } else {
-      res.redirect(401, '/signin');
+      res.status(403).json({});
     }
   } catch (err) {
-    console.error(err);
-    res.status(500).json(err);
+    if (err.type === 'service') {
+      const message: string = err.errors[0].message;
+      const status = parseInt(
+        message.substring(message.search(/\d/g), message.search(/\d/g) + 3),
+        10
+      );
+      const body = JSON.parse(message.substring(message.indexOf('{')));
+      res.status(status).json(body);
+    } else {
+      res.status(500).json(err);
+    }
   }
 };

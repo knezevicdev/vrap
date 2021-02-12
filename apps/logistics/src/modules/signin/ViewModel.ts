@@ -14,8 +14,37 @@ class SignInViewModel {
     makeAutoObservable(this, { signInModel: false });
   }
 
+  get disabled(): boolean {
+    if (this.email.length === 0) {
+      return true;
+    }
+    if (this.password.length === 0) {
+      return true;
+    }
+    if (this.loading) {
+      return true;
+    }
+    return false;
+  }
+
+  get loading(): boolean {
+    return this.signInModel.status === Status.FETCHING;
+  }
+
   get success(): boolean {
     return this.signInModel.status === Status.SUCCESS;
+  }
+
+  get error(): string {
+    if (this.signInModel.status === Status.ERROR) {
+      return this.signInModel.errorMessage;
+    } else {
+      return '';
+    }
+  }
+
+  clearError(): void {
+    this.signInModel.setErrorMessage('');
   }
 
   get previousUrl(): string {
