@@ -24,14 +24,18 @@ const Divider = styled(Body.Regular)`
   color: ${grayThree};
 `;
 
-const SelectedCar = (props: VehicleProps): JSX.Element => {
+interface Props {
+  vehicle: VehicleProps;
+}
+
+const SelectedCar = ({ vehicle }: Props): JSX.Element => {
   const {
     vehicle: { year, make, model },
     trim,
     miles,
     leadPhotoURL,
     listingPrice,
-  } = props;
+  } = vehicle;
 
   return (
     <>

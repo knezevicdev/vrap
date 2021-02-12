@@ -7,7 +7,7 @@ import DealSummary from '../deals/sections/DealSummary/index';
 import SelectedCar from '../deals/sections/DealSummary/SelectedCar';
 import Footer from '../footer';
 import Header from '../header';
-import { useDeal } from "src/core/hooks";
+import { useDeal } from 'src/core/hooks';
 import { ProgressBar } from './ProgressBar';
 
 const grayFour = (props: { theme: ThemeProps }): string =>
@@ -99,13 +99,7 @@ interface Props {
 }
 
 const CheckoutLayout: FC<Props> = ({ showCarCard, children }) => {
-  const {
-    steps,
-    activeStep,
-    deal,
-    vehicle,
-    showDropdown,
-  } = useDeal();
+  const { steps, activeStep, deal, vehicle, showDropdown } = useDeal();
 
   return (
     <Container>
@@ -118,7 +112,7 @@ const CheckoutLayout: FC<Props> = ({ showCarCard, children }) => {
           <DealContent>{children}</DealContent>
           <DealSummarySection showDropdown={showDropdown}>
             {!showCarCard && <DealSummary deal={deal} />}
-            {showCarCard && <SelectedCar {...vehicle} />}
+            {showCarCard && <SelectedCar vehicle={vehicle} />}
           </DealSummarySection>
         </CheckoutSection>
       </Section>
