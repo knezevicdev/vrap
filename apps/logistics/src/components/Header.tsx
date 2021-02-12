@@ -52,6 +52,7 @@ const Header: React.FC<Props> = (props) => {
       display="flex"
       bgcolor="primary.main"
       color="primary.contrastText"
+      py={{ xs: 1, sm: 4 }}
     >
       <Section container direction="row">
         <Grid item>
