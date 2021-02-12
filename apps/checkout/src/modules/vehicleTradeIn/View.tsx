@@ -1,14 +1,9 @@
 import { SimpleHeader } from '@vroom-web/header-components';
-import { Footer, ThemeProps } from '@vroom-web/temp-ui-alias-for-checkout';
 import { observer } from 'mobx-react-lite';
 import getConfig from 'next/config';
 import React from 'react';
 import styled from 'styled-components';
 
-import Error from './sections/Error';
-import Loading from './sections/Loading';
-import Questions from './sections/Questions';
-import Success from './sections/Success';
 import CongratsViewModel from './ViewModel';
 
 const primaryWhite = (props: { theme: ThemeProps }): string =>
@@ -31,19 +26,9 @@ const {
 } = getConfig();
 
 const CongratsView: React.FC<Props> = ({ viewModel }) => {
-  const { sections, trackEventHandler } = viewModel.footerProps;
-  const questionsProps = viewModel.questionsProps;
-
-  viewModel.trackAnalytics();
-
   return (
     <Page>
       <SimpleHeader gearboxPrivateUrl={GEARBOX_PRIVATE_URL} />
-      {viewModel.showLoading && <Loading />}
-      {viewModel.showError && <Error />}
-      {viewModel.showSuccess && <Success viewModel={viewModel} />}
-      <Questions {...questionsProps} />
-      <Footer sections={sections} trackEventHandler={trackEventHandler} />
     </Page>
   );
 };

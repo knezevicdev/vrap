@@ -1,7 +1,7 @@
 import { GQLTypes } from '@vroom-web/networking';
 
+import { DealState } from 'src/core/store/DealStore';
 import { VehicleProps } from 'src/modules/deals/sections/DealSummary/types';
-import { DealState } from 'src/modules/store/DealStore';
 
 const mockVehicle: VehicleProps = {
   vehicle: { year: 2018, make: 'Jeep', model: 'Wrangler JK Unlimited' },

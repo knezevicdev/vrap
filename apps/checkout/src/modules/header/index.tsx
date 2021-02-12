@@ -1,11 +1,12 @@
-import React, { useContext } from 'react';
+import React from 'react';
 
-import { DealContext } from '../store/DealStore';
 import View from './View';
 import ViewModel from './ViewModel';
 
+import { useDeal } from 'src/core/hooks';
+
 const Header = (): JSX.Element => {
-  const store = useContext(DealContext);
+  const store = useDeal();
   const viewModel = new ViewModel(store);
   return <View viewModel={viewModel} />;
 };

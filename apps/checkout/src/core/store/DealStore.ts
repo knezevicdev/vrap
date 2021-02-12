@@ -1,8 +1,7 @@
 import { GQLTypes } from '@vroom-web/networking';
 import { makeAutoObservable } from 'mobx';
-import { createContext } from 'react';
 
-import { VehicleProps } from '../deals/sections/DealSummary/types';
+import { VehicleProps } from 'src/modules/deals/sections/DealSummary/types';
 
 export interface DealState {
   activeStep: number;
@@ -39,5 +38,3 @@ export class DealStore {
     this.showDropdown = !this.showDropdown;
   };
 }
-
-export const DealContext = createContext<DealStore>(new DealStore());
