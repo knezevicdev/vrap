@@ -2,19 +2,19 @@ import { GetServerSideProps, NextPage } from 'next';
 import Head from 'next/head';
 import React from 'react';
 
-import Congratulations from 'src/modules/congratulations';
+import VehicleTradeIn from 'src/modules/vehicleTradeIn';
 
 interface Props {
   title: string;
 }
 
-const CongratulationsPage: NextPage<Props> = ({ title }) => {
+const VehicleTradeInPage: NextPage<Props> = ({ title }) => {
   return (
     <>
       <Head>
         <title>{title}</title>
       </Head>
-      <Congratulations />
+      <VehicleTradeIn />
     </>
   );
 };
@@ -22,9 +22,9 @@ const CongratulationsPage: NextPage<Props> = ({ title }) => {
 export const getServerSideProps: GetServerSideProps<Props> = async () => {
   return {
     props: {
-      title: 'Congratulations | Vroom',
+      title: 'VehicleTradeIn | Vroom',
     },
   };
 };
 
-export default CongratulationsPage;
+export default VehicleTradeInPage;

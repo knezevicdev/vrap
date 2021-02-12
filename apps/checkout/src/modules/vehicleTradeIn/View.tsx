@@ -1,10 +1,9 @@
-import { SimpleHeader } from '@vroom-web/header-components';
+import { ThemeProps} from "@vroom-web/temp-ui-alias-for-checkout";
 import { observer } from 'mobx-react-lite';
-import getConfig from 'next/config';
 import React from 'react';
 import styled from 'styled-components';
 
-import CongratsViewModel from './ViewModel';
+import VehicleTradeInViewModel from './ViewModel';
 
 const primaryWhite = (props: { theme: ThemeProps }): string =>
   props.theme.colors.primary.white;
@@ -18,19 +17,16 @@ const Page = styled.div`
 `;
 
 interface Props {
-  viewModel: CongratsViewModel;
+  viewModel: VehicleTradeInViewModel;
 }
+ 
 
-const {
-  publicRuntimeConfig: { GEARBOX_PRIVATE_URL },
-} = getConfig();
-
-const CongratsView: React.FC<Props> = ({ viewModel }) => {
+const VehicleTradeInView: React.FC<Props> = ({ viewModel }) => {
   return (
-    <Page>
-      <SimpleHeader gearboxPrivateUrl={GEARBOX_PRIVATE_URL} />
+    <Page> 
+      This is the Vehicle Trade View Component
     </Page>
   );
 };
 
-export default observer(CongratsView);
+export default observer(VehicleTradeInView);

@@ -6,7 +6,7 @@ interface Data {
   user: GQLTypes.User;
 }
 
-export default class CongratsModel {
+export default class VehicleTradeInModel {
   data: Data = {} as Data;
   dataStatus: Status = Status.LOADING;
 

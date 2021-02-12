@@ -7,9 +7,8 @@ import DealSummary from '../deals/sections/DealSummary/index';
 import SelectedCar from '../deals/sections/DealSummary/SelectedCar';
 import Footer from '../footer';
 import Header from '../header';
+import { useDeal } from "src/core/hooks";
 import { ProgressBar } from './ProgressBar';
-
-import { useDeal } from 'src/core/hooks';
 
 const grayFour = (props: { theme: ThemeProps }): string =>
   props.theme.colors.gray.four;
@@ -100,7 +99,13 @@ interface Props {
 }
 
 const CheckoutLayout: FC<Props> = ({ showCarCard, children }) => {
-  const { steps, activeStep, deal, vehicle, showDropdown } = useDeal();
+  const {
+    steps,
+    activeStep,
+    deal,
+    vehicle,
+    showDropdown,
+  } = useDeal();
 
   return (
     <Container>
