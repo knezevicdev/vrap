@@ -1,6 +1,6 @@
 class ViewModel {
   readonly bannerText: string =
-    'Due to the inclement weather, all Houston area locations will be closed Monday February 15th. You can still reach us via phone at (832) 225-3686.';
+    'Due to the inclement weather, all Houston area locations will be closed Tuesday February 16th. You can still reach us via phone at (832) 225-3686.';
   readonly linkText: string = 'SUYC Location Details';
   readonly linkHref: string = '#locations-section';
   scrollToLocation(): void {
