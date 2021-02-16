@@ -39,22 +39,19 @@ const Cars = styled('div')(({ theme }) => ({
   display: 'flex',
   width: '100%',
   [theme.breakpoints.only('sm')]: {
-    '& *:nth-child(n+4)': {
+    '& #car:nth-child(n+4)': {
       display: 'none',
     },
-    '& *:nth-child(n+3)': {
+    '& #car:nth-child(n+3)': {
       marginRight: 0,
     },
   },
   [theme.breakpoints.only('xs')]: {
-    '& *:nth-child(n+3)': {
+    '& #car:nth-child(n+3)': {
       display: 'none',
     },
     flexDirection: 'column',
     margin: theme.spacing(0),
-  },
-  '& *:last-child': {
-    marginRight: 0,
   },
 }));
 
