@@ -1,17 +1,9 @@
+import { GQLTypes } from "@vroom-web/networking"
 export interface DealSummaryProps {
-  vehicle: VehicleProps;
+  vehicle: GQLTypes.VehicleInventory;
   deal: DealProps;
   trades?: DealTradeProps;
 }
-
-export interface VehicleProps {
-  vehicle: Vehicle;
-  listingPrice: number;
-  trim: string;
-  miles?: number | null;
-  leadPhotoURL?: string | null;
-}
-
 export interface DealProps {
   method: string;
   taxes: number;

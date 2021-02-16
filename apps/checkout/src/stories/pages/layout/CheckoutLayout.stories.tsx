@@ -7,7 +7,7 @@ import { DealProvider } from 'src/core/contexts';
 import { DealStore } from 'src/core/store';
 import CheckoutLayout from 'src/modules/common/CheckoutLayout';
 
-const store = new DealStore(dealState);
+const store = new DealStore(dealState.model);
 const height = 500;
 
 export const ShowCarCard = (): JSX.Element => {

@@ -3,6 +3,7 @@ import head from 'lodash/head';
 export interface DealState {
   activeStep: number;
   showDropdown: boolean;
+  model: DealStoreProps | undefined;
 }
 export interface DealStoreProps {
   data: {
@@ -33,7 +34,7 @@ export class DealStore {
     return this.model && head(this.model?.data?.user?.deals);
   }
 
-  get vehicle(): GQLTypes.InvSearchVehicleData | undefined | null {
+  get vehicle(): GQLTypes.InvSearchVehicleData | undefined | null { 
     return this.model && head(this.model?.data.invSearch?.vehicles);
   }
 
