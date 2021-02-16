@@ -80,7 +80,7 @@ export const getVehicleTrade = async (
     document: GET_VEHICLE_TRADE,
     variables: {
       dealID,
-      dealStatus
+      dealStatus,
     },
   });
 

@@ -18,10 +18,10 @@ export default class VehicleTradeInModel implements DealStoreProps {
     });
   }
 
-  async getData(vin?: string): Promise<void> {
+  async getData(): Promise<void> {
     this.dataStatus = Status.LOADING;
 
-    const response = await getVehicleTrade(vin);
+    const response = await getVehicleTrade();
 
     if (isErrorResponse(response)) {
       runInAction(() => {

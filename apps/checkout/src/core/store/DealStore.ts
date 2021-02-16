@@ -34,7 +34,7 @@ export class DealStore {
     return this.model && head(this.model?.data?.user?.deals);
   }
 
-  get vehicle(): GQLTypes.InvSearchVehicleData | undefined | null { 
+  get vehicle(): GQLTypes.InvSearchVehicleData | undefined | null {
     return this.model && head(this.model?.data.invSearch?.vehicles);
   }
 

@@ -1,17 +1,16 @@
 import { GQLTypes } from '@vroom-web/networking';
 
 import { DealState } from 'src/core/store/DealStore';
-import { VehicleProps } from 'src/modules/deals/sections/DealSummary/types';
 
 const mockVehicle = {
-  year: 2018, 
+  year: 2018,
   make: 'Jeep',
-  model: 'Wrangler JK Unlimited', 
+  model: 'Wrangler JK Unlimited',
   listingPrice: 30980,
   trim: 'Sport',
-  miles: 27849, 
+  miles: 27849,
   leadPhotoUrl: 'https://source.unsplash.com/random/800x600/?jeep',
-} as GQLTypes.InvSearchVehicleData ;
+} as GQLTypes.InvSearchVehicleData;
 
 const mockDeal = {
   accountID: 9586,
@@ -134,12 +133,11 @@ export const dealState: DealState = {
   model: {
     data: {
       user: {
-        deals: [mockDeal]
-      },
+        deals: [mockDeal],
+      } as GQLTypes.User,
       invSearch: {
-        vehicles: [mockVehicle]
-      }
-    }
-  }
- 
+        vehicles: [mockVehicle],
+      } as GQLTypes.InvSearchResult,
+    },
+  },
 };

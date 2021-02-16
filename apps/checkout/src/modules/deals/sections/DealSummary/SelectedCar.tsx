@@ -28,6 +28,11 @@ interface Props {
   vehicle: GQLTypes.InvSearchVehicleData;
 }
 
+/**
+ * This view is rendered using the invSearch api
+ * when the user doest not have a deal yet.
+ * @param vehicle
+ */
 const SelectedCar = ({ vehicle }: Props): JSX.Element => {
   const {
     year,
