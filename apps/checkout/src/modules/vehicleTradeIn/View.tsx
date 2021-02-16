@@ -1,4 +1,4 @@
-import { ThemeProps} from "@vroom-web/temp-ui-alias-for-checkout";
+import { ThemeProps } from '@vroom-web/temp-ui-alias-for-checkout';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
 import styled from 'styled-components';
@@ -19,12 +19,11 @@ const Page = styled.div`
 interface Props {
   viewModel: VehicleTradeInViewModel;
 }
- 
 
 const VehicleTradeInView: React.FC<Props> = ({ viewModel }) => {
   return (
-    <Page> 
-      {viewModel.dealId} <br/>
+    <Page>
+      {viewModel.dealId} <br />
       This is the Vehicle Trade View Component
     </Page>
   );

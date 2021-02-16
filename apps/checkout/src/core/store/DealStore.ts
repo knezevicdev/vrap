@@ -1,15 +1,14 @@
 import { GQLTypes } from '@vroom-web/networking';
-import head from "lodash/head";
+import head from 'lodash/head';
 export interface DealState {
   activeStep: number;
   showDropdown: boolean;
-
 }
-export interface DealStoreProps { 
-    data: {
-      user: GQLTypes.User;
-      invSearch: GQLTypes.InvSearchResult;
-    } 
+export interface DealStoreProps {
+  data: {
+    user: GQLTypes.User;
+    invSearch: GQLTypes.InvSearchResult;
+  };
 }
 export class DealStore {
   steps: string[] = [
@@ -21,23 +20,23 @@ export class DealStore {
     'Additional Docs',
   ];
   activeStep = -1;
- 
-  showDropdown = false; 
-  model: DealStoreProps | undefined
 
-  constructor(model: DealStoreProps, currentStep: number) { 
-   this.model = model;
-   this.activeStep = currentStep
+  showDropdown = false;
+  model: DealStoreProps | undefined;
+
+  constructor(model: DealStoreProps, currentStep: number) {
+    this.model = model;
+    this.activeStep = currentStep;
   }
 
-  get deal(): GQLTypes.Deal | undefined | null { 
-      return this.model &&  head(this.model?.data?.user?.deals)
+  get deal(): GQLTypes.Deal | undefined | null {
+    return this.model && head(this.model?.data?.user?.deals);
   }
 
-  get vehicle(): GQLTypes.InvSearchVehicleData | undefined | null {  
-    return this.model && head(this.model?.data.invSearch?.vehicles)
-}
- 
+  get vehicle(): GQLTypes.InvSearchVehicleData | undefined | null {
+    return this.model && head(this.model?.data.invSearch?.vehicles);
+  }
+
   toggleDropdown = (): void => {
     this.showDropdown = !this.showDropdown;
   };

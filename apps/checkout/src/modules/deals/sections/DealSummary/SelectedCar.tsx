@@ -1,3 +1,4 @@
+import { GQLTypes } from '@vroom-web/networking';
 import {
   Body,
   Picture,
@@ -8,7 +9,6 @@ import React from 'react';
 import styled from 'styled-components';
 
 import { buildPrice } from './components/buildPrice';
-import { GQLTypes } from '@vroom-web/networking';
 
 const grayThree = (props: { theme: ThemeProps }): string =>
   props.theme.colors.gray.three;
@@ -30,8 +30,8 @@ interface Props {
 
 const SelectedCar = ({ vehicle }: Props): JSX.Element => {
   const {
-    year, 
-    make, 
+    year,
+    make,
     model,
     trim,
     miles,

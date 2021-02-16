@@ -7,8 +7,9 @@ import DealSummary from '../deals/sections/DealSummary/index';
 import SelectedCar from '../deals/sections/DealSummary/SelectedCar';
 import Footer from '../footer';
 import Header from '../header';
-import { useDeal } from 'src/core/hooks';
 import { ProgressBar } from './ProgressBar';
+
+import { useDeal } from 'src/core/hooks';
 
 const grayFour = (props: { theme: ThemeProps }): string =>
   props.theme.colors.gray.four;

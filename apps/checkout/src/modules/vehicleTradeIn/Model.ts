@@ -1,6 +1,7 @@
 import { GQLTypes, isErrorResponse, Status } from '@vroom-web/networking';
-import { makeObservable, runInAction, observable } from 'mobx';
-import { DealStoreProps } from "src/core/store/DealStore";
+import { makeObservable, observable, runInAction } from 'mobx';
+
+import { DealStoreProps } from 'src/core/store/DealStore';
 import { getVehicleTrade } from 'src/networking';
 export interface VehicleTradeInData {
   user: GQLTypes.User;
@@ -13,7 +14,7 @@ export default class VehicleTradeInModel implements DealStoreProps {
   constructor() {
     makeObservable(this, {
       data: observable,
-      dataStatus: observable
+      dataStatus: observable,
     });
   }
 
@@ -31,7 +32,7 @@ export default class VehicleTradeInModel implements DealStoreProps {
     }
 
     runInAction(() => {
-      this.data = response.data; 
+      this.data = response.data;
       this.dataStatus = Status.SUCCESS;
     });
   }

@@ -5,7 +5,7 @@ import { getTestDeal } from './util/getTestDeal';
 
 import DEAL_VALIDATOR from 'src/graphql/queries/dealValidator.graphql';
 import GET_USER_DEAL from 'src/graphql/queries/getUserDeal.graphql';
-import GET_VEHICLE_TRADE from "src/graphql/queries/getVehicleTrade.graphql";
+import GET_VEHICLE_TRADE from 'src/graphql/queries/getVehicleTrade.graphql';
 interface Data {
   user: GQLTypes.User;
 }
@@ -34,9 +34,9 @@ export interface DealValidatorData {
 }
 /**
  * Query for Modal Deal Validation Modals
- * @param vin 
- * @param inDealID 
- * @param inDealStatus 
+ * @param vin
+ * @param inDealID
+ * @param inDealStatus
  */
 export const getDealValidator = async (
   vin: string | undefined,
@@ -62,9 +62,9 @@ export const getDealValidator = async (
 
 /**
  * Get Data for vehicle trade step
- * @param vin 
- * @param inDealID 
- * @param inDealStatus 
+ * @param vin
+ * @param inDealID
+ * @param inDealStatus
  */
 
 export const getVehicleTrade = async (
@@ -72,7 +72,6 @@ export const getVehicleTrade = async (
   inDealID?: number,
   inDealStatus?: string[]
 ): Promise<Response<DealValidatorData>> => {
-
   //switch between the real deal and dealStatus or mock deal if exist
   const { dealID, dealStatus } = getTestDeal(inDealID, inDealStatus);
   const res = await client.gqlRequest<
