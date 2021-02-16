@@ -24,9 +24,9 @@ export class DealStore {
   showDropdown = false;
   model: DealStoreProps | undefined;
 
-  constructor(model: DealStoreProps, currentStep: number) {
+  constructor(model?: DealStoreProps, currentStep?: number) {
     this.model = model;
-    this.activeStep = currentStep;
+    this.activeStep = currentStep || -1;
   }
 
   get deal(): GQLTypes.Deal | undefined | null {

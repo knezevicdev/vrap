@@ -1,13 +1,10 @@
 import React from 'react';
-
 import Model from './Model';
 import View from './View';
 import ViewModel from './ViewModel';
-
 import { DealProvider } from 'src/core/contexts';
 import { DealStore } from 'src/core/store';
 import CheckoutLayout from 'src/modules/common/CheckoutLayout';
-import { getCurrentVin } from 'src/networking/util/getCurrentVin';
 
 class VehicleTradeIn extends React.Component {
   model = new Model();
@@ -16,15 +13,14 @@ class VehicleTradeIn extends React.Component {
   //Init Store for the deal summary and layout
   store = new DealStore(this.model, 1);
 
-  componentDidMount(): void {
-    const vin = getCurrentVin();
-    this.model.getData(vin);
+  componentDidMount(): void { 
+    this.model.getData();
   }
 
   render(): React.ReactNode {
     return (
       <DealProvider value={this.store}>
-        <CheckoutLayout showCarCard={true}>
+        <CheckoutLayout>
           <View viewModel={this.viewModel} />
         </CheckoutLayout>
       </DealProvider>

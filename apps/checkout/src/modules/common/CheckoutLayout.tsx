@@ -96,7 +96,7 @@ const DealSummarySection = styled.div<{ showDropdown?: boolean }>`
 `;
 
 interface Props {
-  showCarCard: boolean;
+  showCarCard?: boolean;
 }
 
 const CheckoutLayout: FC<Props> = ({ showCarCard, children }) => {

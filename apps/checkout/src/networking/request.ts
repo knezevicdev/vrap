@@ -68,7 +68,6 @@ export const getDealValidator = async (
  */
 
 export const getVehicleTrade = async (
-  inVin?: string,
   inDealID?: number,
   inDealStatus?: string[]
 ): Promise<Response<DealValidatorData>> => {
@@ -76,14 +75,12 @@ export const getVehicleTrade = async (
   const { dealID, dealStatus } = getTestDeal(inDealID, inDealStatus);
   const res = await client.gqlRequest<
     DealValidatorData,
-    GQLTypes.UserDealsArgs | GQLTypes.QueryInvSearchArgs
+    GQLTypes.UserDealsArgs
   >({
     document: GET_VEHICLE_TRADE,
     variables: {
       dealID,
-      dealStatus,
-      vin: inVin ? [inVin] : undefined,
-      source: 'vroom-web | Checkout | Vehicle Trade',
+      dealStatus
     },
   });
 

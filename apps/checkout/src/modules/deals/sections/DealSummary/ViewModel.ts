@@ -34,7 +34,7 @@ export default class ViewModel {
       financing: this.financingProps,
       shippingFee: this.amountDue.shippingFee,
       subtotal: this.amountDue.subTotal,
-      depositCaptured: this.deposit.DepositCaptured,
+      depositCaptured: this.deposit && this.deposit.DepositCaptured,
     };
   }
 
