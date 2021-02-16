@@ -14,11 +14,11 @@ interface TestParameters {
  * example: checkout/module?testDeal&testDealStatus="In-Progress"
  * example: checkout/module?testDealStatus="Pending"
  * @param dealID
- * @param dealStatus
+ * @param dealStatus string[]
  */
 export const getTestDeal = (
   dealID?: number,
-  dealStatus?: string[]
+  dealStatus?: string[],
 ): TestParameters => {
   const { router } = NextJSRouter;
 
@@ -27,7 +27,7 @@ export const getTestDeal = (
 
     return {
       dealID: typeof testDealId === 'string' ? parseInt(testDealId) : undefined,
-      dealStatus: typeof testDealStatus === 'string' ? [testDealStatus] : [],
+      dealStatus: typeof testDealStatus === 'string' ? [testDealStatus] : []
     };
   }
 

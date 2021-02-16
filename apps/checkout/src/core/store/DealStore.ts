@@ -1,15 +1,16 @@
 import { GQLTypes } from '@vroom-web/networking';
-import { makeAutoObservable } from 'mobx';
-
-import { VehicleProps } from 'src/modules/deals/sections/DealSummary/types';
-
+import head from "lodash/head";
 export interface DealState {
   activeStep: number;
   showDropdown: boolean;
-  deal: GQLTypes.Deal;
-  vehicle: VehicleProps;
-}
 
+}
+export interface DealStoreProps { 
+    data: {
+      user: GQLTypes.User;
+      invSearch: GQLTypes.InvSearchResult;
+    } 
+}
 export class DealStore {
   steps: string[] = [
     'Trade-In Info',
@@ -20,20 +21,23 @@ export class DealStore {
     'Additional Docs',
   ];
   activeStep = -1;
-  deal: GQLTypes.Deal = {} as GQLTypes.Deal;
-  vehicle: VehicleProps = {} as VehicleProps;
-  showDropdown = false;
+ 
+  showDropdown = false; 
+  model: DealStoreProps | undefined
 
-  constructor(dealState?: DealState) {
-    makeAutoObservable(this);
-    if (dealState) {
-      this.activeStep = dealState.activeStep;
-      this.showDropdown = dealState.showDropdown;
-      this.deal = dealState.deal;
-      this.vehicle = dealState.vehicle;
-    }
+  constructor(model: DealStoreProps, currentStep: number) { 
+   this.model = model;
+   this.activeStep = currentStep
   }
 
+  get deal(): GQLTypes.Deal | undefined | null { 
+      return this.model &&  head(this.model?.data?.user?.deals)
+  }
+
+  get vehicle(): GQLTypes.InvSearchVehicleData | undefined | null {  
+    return this.model && head(this.model?.data.invSearch?.vehicles)
+}
+ 
   toggleDropdown = (): void => {
     this.showDropdown = !this.showDropdown;
   };

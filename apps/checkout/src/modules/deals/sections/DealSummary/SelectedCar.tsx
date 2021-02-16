@@ -8,7 +8,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 import { buildPrice } from './components/buildPrice';
-import { VehicleProps } from './types';
+import { GQLTypes } from '@vroom-web/networking';
 
 const grayThree = (props: { theme: ThemeProps }): string =>
   props.theme.colors.gray.three;
@@ -25,15 +25,17 @@ const Divider = styled(Body.Regular)`
 `;
 
 interface Props {
-  vehicle: VehicleProps;
+  vehicle: GQLTypes.InvSearchVehicleData;
 }
 
 const SelectedCar = ({ vehicle }: Props): JSX.Element => {
   const {
-    vehicle: { year, make, model },
+    year, 
+    make, 
+    model,
     trim,
     miles,
-    leadPhotoURL,
+    leadPhotoUrl,
     listingPrice,
   } = vehicle;
 
@@ -41,7 +43,7 @@ const SelectedCar = ({ vehicle }: Props): JSX.Element => {
     <>
       <Picture
         alt={`${make} ${model}`}
-        src={leadPhotoURL || ''}
+        src={leadPhotoUrl || ''}
         width="100%"
         height="260px"
         objectFit="cover"

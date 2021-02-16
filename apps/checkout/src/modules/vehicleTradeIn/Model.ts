@@ -1,23 +1,26 @@
 import { GQLTypes, isErrorResponse, Status } from '@vroom-web/networking';
-import { makeAutoObservable, runInAction } from 'mobx';
-
-import { getCongratsData } from 'src/networking';
-interface Data {
+import { makeObservable, runInAction, observable } from 'mobx';
+import { DealStoreProps } from "src/core/store/DealStore";
+import { getVehicleTrade } from 'src/networking';
+export interface VehicleTradeInData {
   user: GQLTypes.User;
+  invSearch: GQLTypes.InvSearchResult;
 }
-
-export default class VehicleTradeInModel {
-  data: Data = {} as Data;
+export default class VehicleTradeInModel implements DealStoreProps {
+  data: VehicleTradeInData = {} as VehicleTradeInData;
   dataStatus: Status = Status.LOADING;
 
   constructor() {
-    makeAutoObservable(this);
+    makeObservable(this, {
+      data: observable,
+      dataStatus: observable
+    });
   }
 
-  async getData(dealID?: number): Promise<void> {
+  async getData(vin?: string): Promise<void> {
     this.dataStatus = Status.LOADING;
 
-    const response = await getCongratsData(dealID, ['Pending']);
+    const response = await getVehicleTrade(vin);
 
     if (isErrorResponse(response)) {
       runInAction(() => {
@@ -28,7 +31,7 @@ export default class VehicleTradeInModel {
     }
 
     runInAction(() => {
-      this.data = response.data;
+      this.data = response.data; 
       this.dataStatus = Status.SUCCESS;
     });
   }

@@ -5,6 +5,7 @@ import { getTestDeal } from './util/getTestDeal';
 
 import DEAL_VALIDATOR from 'src/graphql/queries/dealValidator.graphql';
 import GET_USER_DEAL from 'src/graphql/queries/getUserDeal.graphql';
+import GET_VEHICLE_TRADE from "src/graphql/queries/getVehicleTrade.graphql";
 interface Data {
   user: GQLTypes.User;
 }
@@ -31,7 +32,12 @@ export interface DealValidatorData {
   user: GQLTypes.User;
   invSearch: GQLTypes.InvSearchResult;
 }
-
+/**
+ * Query for Modal Deal Validation Modals
+ * @param vin 
+ * @param inDealID 
+ * @param inDealStatus 
+ */
 export const getDealValidator = async (
   vin: string | undefined,
   inDealID?: number,
@@ -47,7 +53,38 @@ export const getDealValidator = async (
       dealID,
       dealStatus,
       vin: vin ? [vin] : undefined,
-      source: 'vroom-web | Checkout',
+      source: 'vroom-web | Checkout | Init App',
+    },
+  });
+
+  return res;
+};
+
+/**
+ * Get Data for vehicle trade step
+ * @param vin 
+ * @param inDealID 
+ * @param inDealStatus 
+ */
+
+export const getVehicleTrade = async (
+  inVin?: string,
+  inDealID?: number,
+  inDealStatus?: string[]
+): Promise<Response<DealValidatorData>> => {
+
+  //switch between the real deal and dealStatus or mock deal if exist
+  const { dealID, dealStatus } = getTestDeal(inDealID, inDealStatus);
+  const res = await client.gqlRequest<
+    DealValidatorData,
+    GQLTypes.UserDealsArgs | GQLTypes.QueryInvSearchArgs
+  >({
+    document: GET_VEHICLE_TRADE,
+    variables: {
+      dealID,
+      dealStatus,
+      vin: inVin ? [inVin] : undefined,
+      source: 'vroom-web | Checkout | Vehicle Trade',
     },
   });
 

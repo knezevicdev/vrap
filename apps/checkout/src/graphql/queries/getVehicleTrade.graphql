@@ -1,0 +1,20 @@
+query VEHICLE_TRADE($dealID: Int, $dealStatus: [String!], $source: String!, $vin: [String!]) {
+  invSearch(source: $source, vin: $vin) {
+      vehicles {
+        soldStatus
+        make
+        model
+        vin
+        year
+        miles
+        leadPhotoUrl
+        listingPrice
+      }
+  } 
+  user {
+      deals(dealID: $dealID ,dealStatus: $dealStatus) {
+        accountID,
+        dealID,
+    }
+  }
+}

@@ -24,6 +24,7 @@ interface Props {
 const VehicleTradeInView: React.FC<Props> = ({ viewModel }) => {
   return (
     <Page> 
+      {viewModel.dealId} <br/>
       This is the Vehicle Trade View Component
     </Page>
   );

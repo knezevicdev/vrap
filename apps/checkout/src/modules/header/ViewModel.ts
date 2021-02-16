@@ -1,4 +1,4 @@
-import { DealStore } from '../../core/store/DealStore';
+import { DealStore } from 'src/core/store/DealStore';
 
 class HeaderViewModel {
   readonly logoHref = '/';
