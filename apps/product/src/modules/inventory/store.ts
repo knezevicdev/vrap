@@ -15,7 +15,7 @@ import { Status } from 'src/networking/types';
 
 const { publicRuntimeConfig } = getConfig();
 
-const deliveryFeeDefault = 599;
+const deliveryFeeDefault = 699;
 
 export enum GallerySelections {
   GENERAL = 'General Photos',
