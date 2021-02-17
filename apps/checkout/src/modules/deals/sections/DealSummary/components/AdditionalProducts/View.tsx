@@ -36,6 +36,9 @@ interface Props {
 const View = ({ viewModel }: Props): JSX.Element => {
   const {
     products: { gapCoverage, tireAndWheelCoverage, vehicleServiceProtection },
+    vehicleServiceProtectionLabel,
+    tireAndWheelCoverageLabel,
+    gapCoverageLabel,
     hasVehicleServiceinDeal,
     hasTireinDeal,
     hasGapinDeal,
@@ -47,11 +50,14 @@ const View = ({ viewModel }: Props): JSX.Element => {
         <Row>
           <LeftColumn>
             <ToolTipContainer>
-              <RegularText>Vehicle Service Protection</RegularText>
+              <RegularText>{vehicleServiceProtectionLabel}</RegularText>
               <CustomToolTip
                 component={<Icon icon={Icons.FEEDBACK_QUESTION} />}
                 tooltipText={
-                  <ToolTipLink href="https://vroom.zendesk.com/hc/en-us/articles/205444915-What-is-Vroom-Protect-" />
+                  <ToolTipLink
+                    href="https://vroom.zendesk.com/hc/en-us/articles/205444915-What-is-Vroom-Protect-"
+                    label={vehicleServiceProtectionLabel}
+                  />
                 }
               />
             </ToolTipContainer>
@@ -65,11 +71,14 @@ const View = ({ viewModel }: Props): JSX.Element => {
         <Row>
           <LeftColumn>
             <ToolTipContainer>
-              <RegularText>Tire & Wheel Coverage</RegularText>
+              <RegularText>{tireAndWheelCoverageLabel}</RegularText>
               <CustomToolTip
                 component={<Icon icon={Icons.FEEDBACK_QUESTION} />}
                 tooltipText={
-                  <ToolTipLink href="https://vroom.zendesk.com/hc/en-us/articles/360033879711-What-is-Tire-Wheel-Protection-" />
+                  <ToolTipLink
+                    href="https://vroom.zendesk.com/hc/en-us/articles/360033879711-What-is-Tire-Wheel-Protection-"
+                    label={tireAndWheelCoverageLabel}
+                  />
                 }
               />
             </ToolTipContainer>
@@ -83,11 +92,14 @@ const View = ({ viewModel }: Props): JSX.Element => {
         <Row>
           <LeftColumn>
             <ToolTipContainer>
-              <RegularText>GAP Coverage</RegularText>
+              <RegularText>{gapCoverageLabel}</RegularText>
               <CustomToolTip
                 component={<Icon icon={Icons.FEEDBACK_QUESTION} />}
                 tooltipText={
-                  <ToolTipLink href="https://vroom.zendesk.com/hc/en-us/articles/204740399-What-does-GAP-protection-cover-" />
+                  <ToolTipLink
+                    href="https://vroom.zendesk.com/hc/en-us/articles/204740399-What-does-GAP-protection-cover-"
+                    label={gapCoverageLabel}
+                  />
                 }
               />
             </ToolTipContainer>

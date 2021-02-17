@@ -92,13 +92,14 @@ interface Props {
 const HeaderView = ({ viewModel }: Props): JSX.Element => {
   const {
     logoHref,
+    handleLogoClick,
     telephone: { text, href, number },
     handleClick,
   } = viewModel;
 
   return (
     <Container>
-      <Link href={logoHref}>
+      <Link href={logoHref} onClick={handleLogoClick}>
         <VroomIcon icon={Icons.VROOM} />
       </Link>
 
