@@ -1,4 +1,0 @@
-version: '3'
-services:
-  deals-v2-networking:
-    command: ash -c "yarn workspace @vroom-web/deals-v2-networking build"

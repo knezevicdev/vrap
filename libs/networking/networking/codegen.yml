@@ -1,5 +1,0 @@
-schema: https://dev.vroom.com/gql
-generates:
-  ./src/generated/graphql-types.ts:
-    plugins:
-      - typescript
