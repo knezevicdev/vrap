@@ -15,7 +15,6 @@ const Banner = styled('div')(({ theme }) => ({
   position: 'absolute',
   top: 0,
   padding: theme.spacing(0, 2),
-  width: 'fit-content',
   boxShadow: '0px 0px 6px rgba(0, 0, 0, 0.15)',
   display: 'inline-flex',
   paddingLeft: theme.spacing(4),

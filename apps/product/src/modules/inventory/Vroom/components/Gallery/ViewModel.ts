@@ -147,26 +147,20 @@ class GalleryViewModel {
 
   getDefectImages(): DefectPhoto[] {
     const { defectPhotos } = this.inventoryStore.vehicle._source;
-    const defectImages =
-      !!defectPhotos && !isEmpty(defectPhotos)
-        ? defectPhotos.map(
-            (img: {
-              url: string;
-              defectType: DefectType;
-              location: string;
-            }) => {
-              return {
-                original: this.getHiResImageUrl(img.url),
-                thumbnail: img.url,
-                description: `${this.getDefectDisplay(img.defectType)} - ${
-                  img.location
-                }`,
-                renderItem: Description.bind(this),
-              };
-            }
-          )
-        : [];
-    return defectImages;
+    return !!defectPhotos && !isEmpty(defectPhotos)
+      ? defectPhotos.map(
+          (img: { url: string; defectType: DefectType; location: string }) => {
+            return {
+              original: this.getHiResImageUrl(img.url),
+              thumbnail: img.url,
+              description: `${this.getDefectDisplay(img.defectType)} - ${
+                img.location
+              }`,
+              renderItem: Description.bind(this),
+            };
+          }
+        )
+      : [];
   }
 
   getSpincarIframeUrl(): string | undefined {

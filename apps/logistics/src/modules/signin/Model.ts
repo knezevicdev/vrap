@@ -5,6 +5,7 @@ import { postSignIn, Status } from 'src/networking/Networker';
 
 class SignInModel {
   status = Status.INITIAL;
+  errorMessage = '';
   previousUrl = '/';
 
   constructor(previousUrl?: string) {
@@ -17,6 +18,8 @@ class SignInModel {
   }
 
   authenticate = async (email: string, password: string): Promise<void> => {
+    this.status = Status.FETCHING;
+    this.errorMessage = '';
     try {
       const { data } = await postSignIn(email, password);
       setAuthDataCookie(data);
@@ -27,9 +30,15 @@ class SignInModel {
       console.error(err);
       runInAction(() => {
         this.status = Status.ERROR;
+        this.errorMessage =
+          err.message ?? 'There was an error with your request';
       });
     }
   };
+
+  setErrorMessage(message: string): void {
+    this.errorMessage = message;
+  }
 }
 
 export default SignInModel;

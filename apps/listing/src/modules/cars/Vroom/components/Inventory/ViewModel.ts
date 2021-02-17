@@ -9,6 +9,10 @@ class InventoryViewModel {
     this.store = store;
   }
 
+  getGoBiasExperimentAssignedExperiment(): boolean {
+    return this.store.goBiasExperiment?.assignedVariant === 1;
+  }
+
   hideVehicleCount(): boolean {
     const filters = this.store.filtersData;
 

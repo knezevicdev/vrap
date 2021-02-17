@@ -274,17 +274,17 @@ describe('getTransmissionRequestData', () => {
     const mockFiltersData: FiltersData = {
       [Filters.TRANSMISSION]: Transmission.AUTO,
     };
-    expect(getTransmissionRequestData(mockFiltersData)).toEqual(
-      TransmissionAPI.AUTO
-    );
+    expect(getTransmissionRequestData(mockFiltersData)).toEqual([
+      TransmissionAPI.AUTO,
+    ]);
   });
   test('3', () => {
     const mockFiltersData: FiltersData = {
       [Filters.TRANSMISSION]: Transmission.MANUAL,
     };
-    expect(getTransmissionRequestData(mockFiltersData)).toEqual(
-      TransmissionAPI.MANUAL
-    );
+    expect(getTransmissionRequestData(mockFiltersData)).toEqual([
+      TransmissionAPI.MANUAL,
+    ]);
   });
 });
 
@@ -403,7 +403,7 @@ describe('getPostInventoryRequestDataFromFilterData', () => {
       offset: 24,
       sortby: 'listingPrice',
       sortdirection: 'desc',
-      transmissionid: '1',
+      transmissionDetail: ['manual'],
     };
     expect(getPostInventoryRequestDataFromFilterData(mockFiltersData4)).toEqual(
       mockRequestData4

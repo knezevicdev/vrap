@@ -12,7 +12,7 @@ const ViewContainer = styled('div')(({ theme }) => ({
   display: 'flex',
   margin: theme.spacing(0, 'auto'),
   width: '100%',
-  backgroundImage: `url(${publicRuntimeConfig.BASE_PATH}/modules/home/tda/images/tda_hero.jpg)`,
+  backgroundImage: `url(${publicRuntimeConfig.BASE_PATH}/modules/home/images/other_td_hero.jpg)`,
   backgroundRepeat: 'no-repeat',
   backgroundSize: 'cover',
   backgroundPosition: 'center',
