@@ -47,7 +47,7 @@ class VroomApp extends App {
     ) => {
       if (isAccessDeniedErrorResponse(errorResponse)) {
         // TODO: open a login dialog instead of redirecting.
-        // window.location.href = `/account/login?redirect=${window.location.pathname}`;
+        window.location.href = `/account/login?redirect=${window.location.pathname}`;
       }
     };
     client.addResponseInterceptor(errorInterceptor);

@@ -71,8 +71,9 @@ export default class DealValidatorModalViewModel {
       this.model.dataStatus === Status.SUCCESS &&
       !this.model.data.isAuthenticated
     ) {
-      this.openModal = true;
-      this.modalContent = dialogInnerContent(DialogTypeEnum.LOGIN);
+      //TODO: Finish the Login Modal View
+      //this.openModal = true;
+      //this.modalContent = dialogInnerContent(DialogTypeEnum.LOGIN);
     } else if (
       this.model.dataStatus === Status.SUCCESS &&
       this.model.data.isVehicleSold
