@@ -4,6 +4,7 @@ import { createContext, useContext } from 'react';
 import AnalyticsHandler from 'src/integrations/AnalyticsHandler';
 import { AsyncStatus, PlaidData, Store, StoreStatus } from 'src/interfaces.d';
 import { Networker } from 'src/networking/Networker';
+import { Experiment } from '@vroom-web/experiment-sdk';
 
 const defaultDDState: DDStoreState = {
   LinkToken: '',
@@ -58,6 +59,7 @@ export class DirectDepositStore implements Store {
   @observable showPlaidLink = true;
   @observable storeStatus = StoreStatus.Initial;
   @observable asyncStatus = AsyncStatus.Idle;
+  @observable plaidExperiment?: Experiment;
 
   constructor(priceId?: string) {
     if (priceId) {
@@ -79,6 +81,11 @@ export class DirectDepositStore implements Store {
   @action
   togglePlaidLink = (): void => {
     this.showPlaidLink = !this.showPlaidLink;
+  };
+
+  @action
+  setPlaidExperiment = (plaidExperiment?: Experiment): void => {
+    this.plaidExperiment = plaidExperiment;
   };
 }
 

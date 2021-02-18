@@ -29,7 +29,7 @@ class OptionsViewModel {
   onPayOptionClick = (
     selectedOption: React.MouseEvent<HTMLInputElement, MouseEvent>
   ): void => {
-    this.store.setPayOptionSelected(selectedOption.currentTarget.name);
+    this.store.setPayOptionSelected(selectedOption.currentTarget.value);
   };
 
   onPlaidSubmitting = (value: boolean): void => {

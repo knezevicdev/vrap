@@ -87,6 +87,7 @@ export class OptionsStore implements Store {
   @observable poq = defaultOptionsState.poq;
   @observable storeStatus = StoreStatus.Initial;
   @observable asyncStatus = AsyncStatus.Idle;
+  @observable institutionNotFound = false;
 
   constructor(priceId?: string) {
     if (priceId) this.init(priceId);
@@ -113,6 +114,11 @@ export class OptionsStore implements Store {
   @action
   setPlaidSubmitting = (value: boolean): void => {
     this.plaidSubmitting = value;
+  };
+
+  @action
+  setInstitutionNotFound = (value: boolean): void => {
+    this.institutionNotFound = value;
   };
 }
 

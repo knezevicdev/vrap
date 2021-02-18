@@ -65,7 +65,10 @@ const PlaidButtonView: React.FC<Props> = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const onExit = useCallback((): void => {
+  const onExit = useCallback((error, metadata): void => {
+		if (metadata && metadata.status === 'institution_not_found') {
+      viewModel.setInstitutionNotFound(true); 
+    }
     viewModel.onPlaidSubmitting(false);
   }, [viewModel]);
 

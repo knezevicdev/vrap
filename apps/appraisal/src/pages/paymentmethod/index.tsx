@@ -4,8 +4,9 @@ import { IncomingMessage } from 'http';
 import { NextPage, NextPageContext } from 'next';
 import getConfig from 'next/config';
 import { useRouter } from 'next/router';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
+import experimentSDK from 'src/integrations/experimentSDK';
 
 import ToolFooter from 'src/core/ToolFooter';
 import {
@@ -69,6 +70,19 @@ const EPayOptions: NextPage<Props> = ({ brand }) => {
   const ddStore = new DirectDepositStore(priceId);
   const poStore = new PaymentOverviewStore(priceId);
   const [stateDropdownOpen, setStateDropdown] = useState(false);
+
+  useEffect(() => {
+    experimentSDK
+      .getAndLogExperimentClientSide('cw-plaid-experiment')
+      .then((experiment) => ddStore.setPlaidExperiment(experiment));
+  }, [ddStore]);
+
+  useEffect(() => {
+    if (ddStore.plaidExperiment) {
+      analyticsHandler.registerExperiment(ddStore.plaidExperiment);
+    }
+  }, [ddStore.plaidExperiment]);
+
 
   return (
     <ThemeProvider brand={brand}>

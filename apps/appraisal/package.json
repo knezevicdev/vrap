@@ -20,6 +20,7 @@
     "@types/yup": "^0.29.11",
     "@vroom-web/analytics-integration": "^1.2.2",
     "@vroom-web/cat-sdk": "^1.0.5",
+    "@vroom-web/experiment-sdk": "^2.0.1",
     "@vroom-web/deals-v2-networking": "^1.0.1",
     "@vroom-web/header-components": "^1.0.5",
     "@vroom-web/ui": "^1.0.1",

@@ -34,10 +34,13 @@ export interface Props {
 
 const DirectDepositView: React.FC<Props> = ({ viewModel }) => {
   const token = viewModel.getPlaidLinkToken();
-
+  console.log(viewModel.getPlaidExperimentAssignedExperiment());
   return (
     <DirectDepositContainer>
       <DirectDepositCopy>{viewModel.bankInfo}</DirectDepositCopy>
+      {viewModel.getPlaidExperimentAssignedExperiment() && (
+        <span id="plaid-experiment"></span>
+      )}
       {viewModel.getShowPlaidLink() ? (
         <>
           <PlaidButton

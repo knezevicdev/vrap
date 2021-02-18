@@ -19,6 +19,10 @@ class PlaidButtonViewModel {
   getEmail = (): string => {
     return this.store.email;
   };
+
+  setInstitutionNotFound = (value: boolean): void => {
+    this.store.setPlaidSubmitting(value);
+  };
 }
 
 export default PlaidButtonViewModel;
