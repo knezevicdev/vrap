@@ -26,8 +26,12 @@ class PaymentOverviewViewModel {
   }
 
   get hasPoq(): boolean {
-    // empty string account_number means there is no poq
-    return this.oStore.poq.account_number != '';
+    if (this.oStore && this.oStore.poq && this.oStore.poq.account_number) {
+      // empty string account_number means there is no poq
+      return this.oStore.poq.account_number != '';
+    } else {
+      return false;
+    }
   }
 
   get hasFinalPayment(): boolean {
