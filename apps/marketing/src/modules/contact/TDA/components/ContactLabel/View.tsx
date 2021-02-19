@@ -1,6 +1,7 @@
 import { styled } from '@material-ui/core/styles';
+import { CatData, CatSDK } from '@vroom-web/cat-sdk';
 import { Container, Typography } from '@vroom-web/ui';
-import React from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 
 import ViewModel from './ViewModel';
 
@@ -39,13 +40,26 @@ const StyledBox = styled(Typography)(() => ({
 }));
 
 const Contact: React.FC<Props> = ({ viewModel }) => {
+  const [phoneNumber, setPhoneNumber] = useState<string>(viewModel.phone);
+  const catEventDataListener = useCallback((event: CustomEvent<CatData>) => {
+    setPhoneNumber(event.detail.sitePhoneNumber);
+  }, []);
+
+  useEffect(() => {
+    const catSDK = new CatSDK();
+    catSDK.observeCatData(catEventDataListener);
+    return () => {
+      catSDK.unobserveCatData(catEventDataListener);
+    };
+  }, [catEventDataListener]);
+
   return (
     <StyledContainer>
       <Title variant="h2">{viewModel.title}</Title>
       <StyledBox>
         <SubTitle component="span">
           {viewModel.supportText}
-          <strong>{viewModel.phone}</strong>
+          <strong>{phoneNumber}</strong>
           {viewModel.speak}
         </SubTitle>
       </StyledBox>
