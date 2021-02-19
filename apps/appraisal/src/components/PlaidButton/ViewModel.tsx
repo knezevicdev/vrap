@@ -20,8 +20,8 @@ class PlaidButtonViewModel {
     return this.store.email;
   };
 
-  setInstitutionNotFound = (value: boolean): void => {
-    this.store.setPlaidSubmitting(value);
+  setInstitutionFound = (value: boolean): void => {
+    this.store.setInstitutionFound(value);
   };
 }
 

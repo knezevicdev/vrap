@@ -34,13 +34,22 @@ export interface Props {
 
 const DirectDepositView: React.FC<Props> = ({ viewModel }) => {
   const token = viewModel.getPlaidLinkToken();
-  console.log(viewModel.getPlaidExperimentAssignedExperiment());
+  const showManualCopy = (viewModel.getPlaidExperimentAssignedExperiment() && viewModel.getInstitutionNotFound()) || !viewModel.getPlaidExperimentAssignedExperiment();
+
+  const DirectDepositLink = ({ lang }: {lang: string}) => {
+    return (
+      <DirectDepositCopy>
+        {viewModel.ddToggleOrCopy}&nbsp;
+        <DDToggleLink onClick={(): void => viewModel.togglePlaidLink()}>
+          {lang}
+        </DDToggleLink>
+      </DirectDepositCopy>
+    )
+  }
+
   return (
     <DirectDepositContainer>
       <DirectDepositCopy>{viewModel.bankInfo}</DirectDepositCopy>
-      {viewModel.getPlaidExperimentAssignedExperiment() && (
-        <span id="plaid-experiment"></span>
-      )}
       {viewModel.getShowPlaidLink() ? (
         <>
           <PlaidButton
@@ -48,22 +57,14 @@ const DirectDepositView: React.FC<Props> = ({ viewModel }) => {
             plaidSuccess={viewModel.onPlaidSuccess}
             priceId={viewModel.getPriceId()}
           />
-          <DirectDepositCopy>
-            {viewModel.ddToggleOrCopy}&nbsp;
-            <DDToggleLink onClick={(): void => viewModel.togglePlaidLink()}>
-              {viewModel.ddToggleManualCopy}
-            </DDToggleLink>
-          </DirectDepositCopy>
+          { showManualCopy && (
+            <DirectDepositLink lang={viewModel.ddToggleManualCopy} />
+          )}
         </>
       ) : (
         <>
           <DirectDeposit />
-          <DirectDepositCopy>
-            {viewModel.ddToggleOrCopy}&nbsp;
-            <DDToggleLink onClick={(): void => viewModel.togglePlaidLink()}>
-              {viewModel.ddTogglePlaidCopy}
-            </DDToggleLink>
-          </DirectDepositCopy>
+          <DirectDepositLink lang={viewModel.ddTogglePlaidCopy} />
         </>
       )}
     </DirectDepositContainer>

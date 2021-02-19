@@ -66,8 +66,9 @@ const PlaidButtonView: React.FC<Props> = ({
   }, []);
 
   const onExit = useCallback((error, metadata): void => {
+    if (error) console.log(error);
 		if (metadata && metadata.status === 'institution_not_found') {
-      viewModel.setInstitutionNotFound(true); 
+      viewModel.setInstitutionFound(false); 
     }
     viewModel.onPlaidSubmitting(false);
   }, [viewModel]);

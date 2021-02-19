@@ -7,6 +7,7 @@ import { useRouter } from 'next/router';
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import experimentSDK from 'src/integrations/experimentSDK';
+import AnalyticsHandler from 'src/integrations/AnalyticsHandler';
 
 import ToolFooter from 'src/core/ToolFooter';
 import {
@@ -70,7 +71,10 @@ const EPayOptions: NextPage<Props> = ({ brand }) => {
   const ddStore = new DirectDepositStore(priceId);
   const poStore = new PaymentOverviewStore(priceId);
   const [stateDropdownOpen, setStateDropdown] = useState(false);
+  const [analyticsHandler] = useState<AnalyticsHandler>(new AnalyticsHandler());
 
+  // TODO: Haven't tested this where it's set to 1 yet
+  // gotta force the variant to make sure it works
   useEffect(() => {
     experimentSDK
       .getAndLogExperimentClientSide('cw-plaid-experiment')
