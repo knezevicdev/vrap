@@ -1,12 +1,9 @@
 import { observer } from 'mobx-react-lite';
 import React from 'react';
 import styled from 'styled-components';
-import { Heading, Typography, ThemeProps, Icon, Icons } from '@vroom-web/temp-ui-alias-for-checkout'
-//import Trade from "./components/Trade";
+import { Heading, Typography, ThemeProps, Icon, Icons, addStyleForMobile } from '@vroom-web/temp-ui-alias-for-checkout'
+import Trade from "./components/Trade";
 import VehicleTradeInViewModel from './ViewModel';
-
-const primaryWhite = (props: { theme: ThemeProps }): string =>
-  props.theme.colors.primary.white;
 
 const Page = styled.div`
   display: grid;
@@ -14,7 +11,11 @@ const Page = styled.div`
   padding-top: 62px;
   padding-bottom: 65px;
   row-gap: 8px;
-  grid-template-rows: 40px 24px 148px 48px 48px;
+  grid-template-rows: auto 24px auto;
+
+  ${addStyleForMobile(`
+    padding: 8px;
+  `)}
 `;
 
 const SubTitle = styled(Typography.Body.Regular)`
@@ -24,6 +25,10 @@ const SubTitle = styled(Typography.Body.Regular)`
    align-items: center;
 `;
 
+const ComponentTitle = styled(Heading.Three)`
+  text-align: center; 
+`;
+
 interface Props {
   viewModel: VehicleTradeInViewModel;
 }
@@ -31,11 +36,9 @@ interface Props {
 const VehicleTradeInView: React.FC<Props> = ({ viewModel }) => {
   return (
     <Page> 
-      <Heading.Three>your trade-in information</Heading.Three>
+      <ComponentTitle>your trade-in information</ComponentTitle>
       <SubTitle>Start by entering your license plate or VIN <Icon icon={Icons.FEEDBACK_QUESTION} /></SubTitle>
-      {/* <Trade/>  */}
-      <div>Continue</div>
-      <div>back</div>
+      <Trade/> 
     </Page>
   );
 };
