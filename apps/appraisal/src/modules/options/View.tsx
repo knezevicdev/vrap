@@ -181,7 +181,7 @@ const OptionsView: React.FC<Props> = ({ viewModel }) => {
       validateOnMount={true}
     >
       {({ isValid, values, isSubmitting, setFieldValue }): JSX.Element => {
-        const showDirectDeposit = values.paymentOption === 'Direct Deposit';
+        const showDirectDeposit = viewModel.showDirectDeposit();
         const showSubmitButton = shouldShowSubmitButton || !showDirectDeposit;
 
         return (
@@ -195,7 +195,10 @@ const OptionsView: React.FC<Props> = ({ viewModel }) => {
               </OptionsTitle>
               <OptionsBody>{viewModel.optionQuestion}</OptionsBody>
 
-              <PayOptions selected={values.paymentOption} />
+              <PayOptions
+                selected={values.paymentOption}
+                onPayOptionClick={viewModel.onPayOptionClick}
+              />
 
               <OptionDisplay>
                 {showDirectDeposit ? (
