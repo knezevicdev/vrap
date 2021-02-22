@@ -34,4 +34,20 @@ describe('Price ViewModel Tests', () => {
       ]);
     });
   });
+
+  describe('getShippingFee', () => {
+    it('getShippingFee returns string of shipping fee details', () => {
+      const invInitialState = {
+        vehicle: {
+          _source: {
+            listingPrice: 22500,
+          },
+        },
+      } as InventoryStoreState;
+      const inventoryStore = new InventoryStore(invInitialState);
+      inventoryStore.deliveryFee = 899;
+      const viewModel = new ViewModel(inventoryStore);
+      expect(viewModel.getShippingFee()).toBe('$899 Shipping');
+    });
+  });
 });
