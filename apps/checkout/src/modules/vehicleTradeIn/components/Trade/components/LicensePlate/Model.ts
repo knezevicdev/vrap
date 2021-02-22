@@ -1,19 +1,10 @@
-import {
-  Client,
-  GQLTypes,
-  isErrorResponse,
-  Status,
-} from '@vroom-web/networking';
-import gql from 'graphql-tag';
+import { Client, isErrorResponse, Status } from '@vroom-web/networking';
 import { makeAutoObservable, runInAction } from 'mobx';
 
-interface Data {
-  licensePlateToVin: GQLTypes.LpToVin;
-}
-
+import { getPlateToVin, LicensePlateToVinData } from 'src/networking/request';
 export default class LicensePlateModel {
   client: Client;
-  data: Data = {} as Data;
+  data: LicensePlateToVinData = {} as LicensePlateToVinData;
   dataStatus: Status = Status.INITIAL;
 
   constructor(client: Client) {
@@ -24,29 +15,7 @@ export default class LicensePlateModel {
   async getData(lp: string, state: string): Promise<void> {
     this.dataStatus = Status.LOADING;
 
-    const document = gql`
-      query($lp: String!, $state: String!, $source: String!) {
-        licensePlateToVin(lp: $lp, state: $state, source: $source) {
-          vehicles {
-            modelYear
-            make
-            vin
-          }
-        }
-      }
-    `;
-
-    const res = await this.client.gqlRequest<
-      Data,
-      GQLTypes.QueryLicensePlateToVinArgs
-    >({
-      document,
-      variables: {
-        lp: lp,
-        state: state,
-        source: 'vroom.com',
-      },
-    });
+    const res = await getPlateToVin(lp, state);
 
     if (isErrorResponse(res)) {
       runInAction(() => {

@@ -56,7 +56,7 @@ const DealContent = styled.div`
   background-color: ${primaryWhite};
   box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.15);
 
-  padding: 32px 96px 40px;
+  padding: 32px 96px 32px;
   grid-column: span 8;
 
   @media (max-width: 1023px) {

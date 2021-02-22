@@ -13,27 +13,26 @@ import Modal from './Modal';
 const VinContainer = styled.div`
   position: relative;
 `;
- 
 
 const VIN = styled(Input)`
   width: 100%;
 `;
 
 const BtnContainer = styled.div`
-    display: grid;
-    grid-template-rows: 48px;
-    grid-gap: 8px;
-    justify-content: center;
-    padding-top: 112px;
-    max-width: 272px;
-    margin: 0px auto 0px auto;
-`
+  display: grid;
+  grid-template-rows: 48px;
+  grid-gap: 8px;
+  justify-content: center;
+  padding-top: 112px;
+  max-width: 272px;
+  margin: 0px auto 0px auto;
+`;
 
-const CTA = styled(Button.Primary)` 
+const CTA = styled(Button.Primary)`
   width: 100%;
 `;
 
-const BackBtn = styled(Button.Bare)` 
+const BackBtn = styled(Button.Bare)`
   width: 100%;
 `;
 
@@ -79,10 +78,10 @@ const Vin: React.FC<VinProps> = ({
         />
       </VinContainer>
       <BtnContainer>
-      <CTA onClick={onButtonClick} disabled={disabled}>
-        Continue
-      </CTA>
-      <BackBtn> Back to Purchase </BackBtn>
+        <CTA onClick={onButtonClick} disabled={disabled}>
+          Continue
+        </CTA>
+        <BackBtn> Back to Purchase </BackBtn>
       </BtnContainer>
     </>
   );

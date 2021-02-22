@@ -1,4 +1,9 @@
-import { Button, Dropdown, Input, addStyleForMobile } from '@vroom-web/temp-ui-alias-for-checkout';
+import {
+  addStyleForMobile,
+  Button,
+  Dropdown,
+  Input,
+} from '@vroom-web/temp-ui-alias-for-checkout';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
 import styled from 'styled-components';
@@ -9,13 +14,12 @@ const Inputs = styled.div`
   display: grid;
   grid-template-columns: 200px 200px;
   grid-gap: 16px;
-  
+
   ${addStyleForMobile(`
      grid-template-columns: auto;
      grid-template-rows: auto;
      grid-gap: 8px;
   `)}
-
 `;
 
 const State = styled(Dropdown)`
@@ -32,20 +36,20 @@ const LicensePlate = styled(Input)`
 `;
 
 const BtnContainer = styled.div`
-    display: grid;
-    grid-template-rows: 48px;
-    grid-gap: 8px;
-    justify-content: center;
-    padding-top: 112px;
-    max-width: 272px;
-    margin: 0px auto 0px auto;
-`
+  display: grid;
+  grid-template-rows: 48px;
+  grid-gap: 8px;
+  justify-content: center;
+  padding-top: 112px;
+  max-width: 272px;
+  margin: 0px auto 0px auto;
+`;
 
-const CTA = styled(Button.Primary)` 
+const CTA = styled(Button.Primary)`
   width: 100%;
 `;
 
-const BackBtn = styled(Button.Bare)` 
+const BackBtn = styled(Button.Bare)`
   width: 100%;
 `;
 
@@ -111,10 +115,10 @@ const LicensePlateView: React.FC<LicensePlateViewProps> = ({
         />
       </Inputs>
       <BtnContainer>
-      <CTA onClick={onButtonClick} disabled={disabled}>
-        Continue
-      </CTA>
-      <BackBtn> Back to Purchase </BackBtn>
+        <CTA onClick={onButtonClick} disabled={disabled}>
+          Continue
+        </CTA>
+        <BackBtn> Back to Purchase </BackBtn>
       </BtnContainer>
     </>
   );

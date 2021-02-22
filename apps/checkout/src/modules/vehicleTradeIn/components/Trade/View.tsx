@@ -2,7 +2,6 @@ import {
   addStyleForMobile,
   addStyleForTablet,
   Body,
-  Heading,
   ThemeProps,
 } from '@vroom-web/temp-ui-alias-for-checkout';
 import { observer } from 'mobx-react-lite';
@@ -22,7 +21,7 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-self: center;
-  width: 40%;
+  width: 100%;
   margin: 0 auto;
   max-width: 416px;
 
@@ -76,7 +75,6 @@ const Bar = styled.div<{ left: boolean }>`
   max-height: 2px;
   ${(props): string => (props.left ? `left: 0;` : 'left: 50%;')}
 `;
- 
 
 export interface TradeProps {
   onLicensePlateClick: () => void;
@@ -101,7 +99,7 @@ const Trade: React.FC<TradeProps> = ({
   const vinSelected = isVinActive();
 
   return (
-    <Container> 
+    <Container>
       <TabContainer>
         <Tab selected={licensePlateSelected} onClick={onLicensePlateClick}>
           License Plate
