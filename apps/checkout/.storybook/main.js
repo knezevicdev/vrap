@@ -22,6 +22,12 @@ module.exports = {
         config.resolve.alias = {
           ...config.resolve.alias
         };
+
+        config.module.rules.push({ 
+          test: /\.graphql$/,
+          exclude: /node_modules/,
+          loader: 'graphql-tag/loader',
+        });
     
         config.resolve.modules = [
           ...(config.resolve.modules || []),

@@ -3,7 +3,6 @@ import {
   Heading,
   Icon,
   Icons,
-  ThemeProps,
   Typography,
 } from '@vroom-web/temp-ui-alias-for-checkout';
 import { observer } from 'mobx-react-lite';
