@@ -41,7 +41,7 @@ class BookModel {
         shipmentId: this.shipmentId,
         shipmentStopId: this.originShipmentStopId,
         idType: 'shipment',
-        estimatedDeparture: pickup,
+        estimatedArrival: pickup,
       });
 
       await patchShipmentStop({
