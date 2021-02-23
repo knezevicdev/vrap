@@ -24,7 +24,7 @@
     "@vroom-web/deals-v2-networking": "^1.0.1",
     "@vroom-web/header-components": "^2.0.0",
     "@vroom-web/networking": "0.0.4",
-    "@vroom-web/temp-ui-alias-for-checkout": "^2.2.5",
+    "@vroom-web/temp-ui-alias-for-checkout": "^2.3.0",
     "@vroom-web/ui": "^1.0.1",
     "axios": "^0.21.1",
     "concurrently": "^5.3.0",
