@@ -105,83 +105,10 @@ const CarsPage: NextPage<Props> = ({ brand, initialStoreState }) => {
     }
   }, [carsStore.geoShippingExperiment, analyticsHandler]);
 
-  useEffect(() => {
-    experimentSDK
-      .getAndLogExperimentClientSide('snd-cylinder-filters')
-      .then((experiment) => {
-        carsStore.setCylindersFilterExperiment(experiment);
-      });
-  }, [carsStore]);
-
-  useEffect(() => {
-    if (carsStore.cylinderFilterExperiment) {
-      analyticsHandler.registerExperiment(carsStore.cylinderFilterExperiment);
-    }
-  }, [carsStore.cylinderFilterExperiment, analyticsHandler]);
-
-  useEffect(() => {
-    experimentSDK
-      .getAndLogExperimentClientSide('snd-catalog-fuel-efficiency')
-      .then((experiment) => {
-        carsStore.setFuelEfficiencyFilterExperiment(experiment);
-      });
-  }, [carsStore]);
-
-  useEffect(() => {
-    if (carsStore.fuelEfficiencyFilterExperiment) {
-      analyticsHandler.registerExperiment(
-        carsStore.fuelEfficiencyFilterExperiment
-      );
-    }
-  }, [carsStore.fuelEfficiencyFilterExperiment, analyticsHandler]);
-
-  useEffect(() => {
-    experimentSDK
-      .getAndLogExperimentClientSide('snd-catalog-truck-cab-type-sub-filter')
-      .then((experiment) => {
-        carsStore.setTruckCabTypeFilterExperiment(experiment);
-      });
-  }, [carsStore]);
-
-  useEffect(() => {
-    if (carsStore.truckCabTypeFilterExperiment) {
-      analyticsHandler.registerExperiment(
-        carsStore.truckCabTypeFilterExperiment
-      );
-    }
-  }, [carsStore.truckCabTypeFilterExperiment, analyticsHandler]);
-
-  useEffect(() => {
-    experimentSDK
-      .getAndLogExperimentClientSide('snd-catalog-fuel-type-filter')
-      .then((experiment) => {
-        carsStore.setFuelTypeFilterExperiment(experiment);
-      });
-  }, [carsStore]);
-
-  useEffect(() => {
-    experimentSDK
-      .getAndLogExperimentClientSide('snd-feature-filter')
-      .then((experiment) => {
-        carsStore.setFeaturesFilterExperiment(experiment);
-      });
-  }, [carsStore]);
-
-  useEffect(() => {
-    if (carsStore.fuelTypeFilterExperiment) {
-      analyticsHandler.registerExperiment(carsStore.fuelTypeFilterExperiment);
-    }
-  }, [carsStore.fuelTypeFilterExperiment, analyticsHandler]);
-
-  useEffect(() => {
-    if (carsStore.featuresFilterExperiment) {
-      analyticsHandler.registerExperiment(carsStore.featuresFilterExperiment);
-    }
-  }, [carsStore.featuresFilterExperiment, analyticsHandler]);
-
   const [resumeSearchExperiment, setResumeSearchExperiment] = useState<
     Experiment | undefined
   >();
+
   useEffect(() => {
     experimentSDK
       .getAndLogExperimentClientSide('delta-resume-search')
@@ -192,6 +119,19 @@ const CarsPage: NextPage<Props> = ({ brand, initialStoreState }) => {
       analyticsHandler.registerExperiment(resumeSearchExperiment);
     }
   }, [resumeSearchExperiment, analyticsHandler]);
+
+  useEffect(() => {
+    experimentSDK
+      .getAndLogExperimentClientSide('snd-go-bias')
+      .then((experiment) => carsStore.setGoBiasExperiment(experiment));
+  }, [carsStore]);
+
+  useEffect(() => {
+    if (carsStore.goBiasExperiment) {
+      analyticsHandler.registerExperiment(carsStore.goBiasExperiment);
+    }
+  }, [carsStore.goBiasExperiment, analyticsHandler]);
+
   useEffect(() => {
     const localStorageKey = 'listing_filters_data';
     if (!resumeSearchExperiment) {
@@ -468,19 +408,32 @@ export const getServerSideProps: GetServerSideProps<Props> = async (
   };
 
   const makesStart = new Date().getTime();
-  const makesR = await invSearchNetworker.postInventory(makesRequestData);
+
+  let makes;
+  try {
+    const makesR = await invSearchNetworker.postInventory(makesRequestData);
+    makes = makesR.data.aggregations.make_count.buckets;
+  } catch {
+    makes = undefined;
+  }
+
   const makesElapsed = new Date().getTime() - makesStart;
   console.log('{"MAKES_AND_MODELS_FILTERS_ms":' + makesElapsed + '}');
 
   const popularStart = new Date().getTime();
-  const popularCarsR = await invSearchNetworker.postInventory(
-    popularCarsRequestData
-  );
+
+  let popularCars;
+  try {
+    const popularCarsR = await invSearchNetworker.postInventory(
+      popularCarsRequestData
+    );
+    popularCars = popularCarsR.data;
+  } catch {
+    popularCars = undefined;
+  }
+
   const popularElapsed = new Date().getTime() - popularStart;
   console.log('{"POPULAR_CARS_ms":' + popularElapsed + '}');
-
-  const makes = makesR.data.aggregations.make_count.buckets;
-  const popularCars = popularCarsR.data;
 
   // FIT-583
   // Persist key attribution query params across navigation.

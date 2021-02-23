@@ -2,8 +2,11 @@ import { Link } from '@vroom-web/temp-ui-alias-for-checkout';
 import React from 'react';
 import styled from 'styled-components';
 
+import { dealSummaryAnalyticsHandler } from 'src/integrations/dealSummary/DealSummaryAnalyticsHandler';
+
 interface Props {
   href: string;
+  label: string;
 }
 
 const StyledLink = styled(Link)`
@@ -12,10 +15,17 @@ const StyledLink = styled(Link)`
   color: #fff;
 `;
 
-const ToolTipLink = ({ href }: Props): JSX.Element => {
+const ToolTipLink = ({ href, label }: Props): JSX.Element => {
+  const handleClick = (): void => {
+    dealSummaryAnalyticsHandler.trackDealSummaryToolTipsLinkClicked(label);
+  };
+
   return (
     <>
-      For more details, <StyledLink href={href}>Check here.</StyledLink>
+      For more details,{' '}
+      <StyledLink href={href} onClick={handleClick}>
+        Check here.
+      </StyledLink>
     </>
   );
 };

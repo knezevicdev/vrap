@@ -7,8 +7,10 @@ import {
   MakeCount,
 } from '@vroom-web/inv-search-networking';
 import { InvServiceNetworker } from '@vroom-web/inv-service-networking';
+import { Client } from '@vroom-web/networking';
 
 import {
+  fetchDeliveryFeeState,
   getInventoryAvailabilityState,
   getVehicleResponse,
   getVehicleSimilarState,
@@ -227,6 +229,47 @@ describe('Inventory Store', () => {
         invServiceNetworkerMock.getInventoryAvailability
       ).toHaveBeenCalledTimes(1);
       expect(response).toEqual(false);
+    });
+  });
+
+  describe('fetchDeliveryFeeState()', () => {
+    const gearboxClient = new Client(BASE_URL);
+    const deliveryFeeDefault = 299;
+    it('it should return the response fee if the API call is successful', async () => {
+      gearboxClient.gqlRequest = jest
+        .fn()
+        .mockResolvedValue({ data: { taxiGetShippingFee: { fee: 499 } } });
+
+      const response = await fetchDeliveryFeeState(
+        gearboxClient,
+        deliveryFeeDefault
+      );
+      expect(gearboxClient.gqlRequest).toHaveBeenCalledTimes(1);
+      expect(response).toBe(499);
+    });
+    it('it should return the default fee if the API call is successful but no fee is in the response', async () => {
+      gearboxClient.gqlRequest = jest.fn().mockResolvedValue({
+        data: { taxiGetShippingFee: { fee: undefined } },
+      });
+
+      const response = await fetchDeliveryFeeState(
+        gearboxClient,
+        deliveryFeeDefault
+      );
+      expect(gearboxClient.gqlRequest).toHaveBeenCalledTimes(1);
+      expect(response).toBe(299);
+    });
+    it('it should return the default fee if the API call fails', async () => {
+      gearboxClient.gqlRequest = jest.fn().mockResolvedValue({
+        error: new Error('test'),
+      });
+
+      const response = await fetchDeliveryFeeState(
+        gearboxClient,
+        deliveryFeeDefault
+      );
+      expect(gearboxClient.gqlRequest).toHaveBeenCalledTimes(1);
+      expect(response).toBe(299);
     });
   });
 });

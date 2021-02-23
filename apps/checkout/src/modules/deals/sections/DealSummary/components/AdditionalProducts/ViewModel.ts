@@ -6,6 +6,10 @@ class ViewModel {
     this.products = products;
   }
 
+  readonly vehicleServiceProtectionLabel = 'Vehicle Service Protection';
+  readonly tireAndWheelCoverageLabel = 'Tire & Wheel Coverage';
+  readonly gapCoverageLabel = 'GAP Coverage';
+
   hasGapinDeal = (): boolean =>
     Object.keys(this.products).includes('gapCoverage');
 

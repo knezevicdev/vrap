@@ -98,31 +98,37 @@ const DealDetails = ({ deal, trades }: Props): JSX.Element => {
     </Row>
   );
 
-  const LimitedWarranty = (): JSX.Element => (
-    <Row>
-      <ToolTipContainer>
-        <RegularText>90-Day Limited Warranty</RegularText>
-        <ToolTip
-          component={<Icon icon={Icons.FEEDBACK_QUESTION} />}
-          tooltipText={<ToolTipLink href="https://vroom.com/protection" />}
-        />
-      </ToolTipContainer>
-      <Value>Included</Value>
-    </Row>
-  );
+  const LimitedWarranty = (): JSX.Element => {
+    const label = '90-Day Limited Warranty';
+    return (
+      <Row>
+        <ToolTipContainer>
+          <RegularText>{label}</RegularText>
+          <ToolTip
+            component={<Icon icon={Icons.FEEDBACK_QUESTION} />}
+            tooltipText={<ToolTipLink href="/protection" label={label} />}
+          />
+        </ToolTipContainer>
+        <Value>Included</Value>
+      </Row>
+    );
+  };
 
-  const RoadsideAssistance = (): JSX.Element => (
-    <Row>
-      <ToolTipContainer>
-        <RegularText>1-Year roadside assistance</RegularText>
-        <ToolTip
-          component={<Icon icon={Icons.FEEDBACK_QUESTION} />}
-          tooltipText={<ToolTipLink href="https://vroom.com/protection" />}
-        />
-      </ToolTipContainer>
-      <Value>Included</Value>
-    </Row>
-  );
+  const RoadsideAssistance = (): JSX.Element => {
+    const label = '1-Year roadside assistance';
+    return (
+      <Row>
+        <ToolTipContainer>
+          <RegularText>{label}</RegularText>
+          <ToolTip
+            component={<Icon icon={Icons.FEEDBACK_QUESTION} />}
+            tooltipText={<ToolTipLink href="/protection" label={label} />}
+          />
+        </ToolTipContainer>
+        <Value>Included</Value>
+      </Row>
+    );
+  };
 
   const TransactionTaxes = (): JSX.Element => (
     <Row>

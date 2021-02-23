@@ -115,7 +115,7 @@ const PriceView: React.FC<Props> = ({ viewModel }) => {
           </Typography>
           <List>
             <Typography>
-              {viewModel.list.bullets.map((item: string) => {
+              {viewModel.getListBullets().map((item: string) => {
                 return <ListItem key={item}>{item}</ListItem>;
               })}
             </Typography>

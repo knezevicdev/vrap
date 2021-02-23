@@ -2,6 +2,7 @@ image: node:erbium
 
 stages:
   - build
+  - test
 
 build-appraisal:
   only:
@@ -91,18 +92,6 @@ test-listing:
     - npm install --quiet
     - npm run test:ci
 
-lint-logistics:
-  only:
-    refs:
-      - merge_requests
-    changes:
-      - apps/logistics/**/*
-  stage: build
-  script:
-    - cd apps/logistics
-    - npm install --quiet
-    - npm run lint
-
 build-logistics:
   only:
     refs:
@@ -114,6 +103,37 @@ build-logistics:
     - cd apps/logistics
     - npm install --quiet
     - npm run build
+
+lint-logistics:
+  only:
+    refs:
+      - merge_requests
+    changes:
+      - apps/logistics/**/*
+  stage: test
+  script:
+    - cd apps/logistics
+    - npm install --quiet
+    - npm run lint
+
+test-logistics:
+  only:
+    refs:
+      - merge_requests
+    changes:
+      - apps/logistics/**/*
+  stage: test
+  script:
+    - cd apps/logistics
+    - npm install --quiet
+    - npm run test:ci
+  artifacts:
+    when: always
+    reports:
+      junit:
+        - apps/logistics/junit.xml
+      cobertura: apps/logistics/coverage/cobertura-coverage.xml
+
 
 build-marketing:
   only:

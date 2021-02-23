@@ -30,6 +30,6 @@ export default class FooterViewModel {
     },
   ] as FooterData[];
 
-  trackLink = (eventName: string): void =>
-    this.analyticsHandler.trackFooterLinks(eventName);
+  trackLink = (label: string): void =>
+    this.analyticsHandler.trackFooterLinks(label);
 }

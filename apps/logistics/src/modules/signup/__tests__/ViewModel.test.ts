@@ -22,11 +22,11 @@ describe('Signup ViewModel', () => {
         target: { value: 'P@ssw0rd' },
       } as React.ChangeEvent<HTMLInputElement>;
 
-      viewModel.changeFirst(firstName);
-      viewModel.changeLast(lastName);
-      viewModel.changeEmail(email);
-      viewModel.changePassword(password);
-      viewModel.changePasswordConfirm(passwordConfirm);
+      viewModel.handleChange('firstName', firstName);
+      viewModel.handleChange('lastName', lastName);
+      viewModel.handleChange('email', email);
+      viewModel.handleChange('password', password);
+      viewModel.handleChange('passwordConfirm', passwordConfirm);
 
       expect(viewModel.validation).toEqual({
         firstName: true,
@@ -56,11 +56,11 @@ describe('Signup ViewModel', () => {
         target: { value: 'P@ssw0rd' },
       } as React.ChangeEvent<HTMLInputElement>;
 
-      viewModel.changeFirst(firstName);
-      viewModel.changeLast(lastName);
-      viewModel.changeEmail(email);
-      viewModel.changePassword(password);
-      viewModel.changePasswordConfirm(passwordConfirm);
+      viewModel.handleChange('firstName', firstName);
+      viewModel.handleChange('lastName', lastName);
+      viewModel.handleChange('email', email);
+      viewModel.handleChange('password', password);
+      viewModel.handleChange('passwordConfirm', passwordConfirm);
 
       expect(viewModel.validation).toEqual({
         firstName: true,
@@ -90,11 +90,11 @@ describe('Signup ViewModel', () => {
         target: { value: 'Password1' },
       } as React.ChangeEvent<HTMLInputElement>;
 
-      viewModel.changeFirst(firstName);
-      viewModel.changeLast(lastName);
-      viewModel.changeEmail(email);
-      viewModel.changePassword(password);
-      viewModel.changePasswordConfirm(passwordConfirm);
+      viewModel.handleChange('firstName', firstName);
+      viewModel.handleChange('lastName', lastName);
+      viewModel.handleChange('email', email);
+      viewModel.handleChange('password', password);
+      viewModel.handleChange('passwordConfirm', passwordConfirm);
 
       expect(viewModel.validation).toEqual({
         firstName: true,
@@ -124,11 +124,11 @@ describe('Signup ViewModel', () => {
         target: { value: 'P@ssword' },
       } as React.ChangeEvent<HTMLInputElement>;
 
-      viewModel.changeFirst(firstName);
-      viewModel.changeLast(lastName);
-      viewModel.changeEmail(email);
-      viewModel.changePassword(password);
-      viewModel.changePasswordConfirm(passwordConfirm);
+      viewModel.handleChange('firstName', firstName);
+      viewModel.handleChange('lastName', lastName);
+      viewModel.handleChange('email', email);
+      viewModel.handleChange('password', password);
+      viewModel.handleChange('passwordConfirm', passwordConfirm);
 
       expect(viewModel.validation).toEqual({
         firstName: true,

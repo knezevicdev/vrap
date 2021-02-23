@@ -22,7 +22,7 @@ const Page: React.FC<Props> = ({
 }) => {
   if (unprotected) {
     return (
-      <Box height="100vh" flexDirection="column">
+      <Box height="100vh" display="flex" flexDirection="column">
         {head && <Head>{head}</Head>}
         <Header title={name} />
         <Box flex="1 0 auto">{children}</Box>
