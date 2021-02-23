@@ -6,6 +6,7 @@ import ViewModel from './ViewModel';
 
 const Container = styled('div')(({ theme }) => ({
   display: 'flex',
+  flexDirection: 'column',
   margin: theme.spacing(0, 'auto', 8, 'auto'),
   width: '100%',
   maxWidth: '1232px',
@@ -16,6 +17,7 @@ const StyledTypography = styled(Typography)(({ theme }) => ({
   fontSize: '13px',
   letterSpacing: '0.35px',
   color: theme.palette.grey['600'],
+  paddingBottom: theme.spacing(1),
 }));
 
 interface Props {
@@ -25,7 +27,9 @@ interface Props {
 const LegalFooterView: React.FC<Props> = ({ viewModel }) => {
   return (
     <Container>
-      <StyledTypography>{viewModel.legalText}</StyledTypography>
+      {viewModel.getLegalText().map((item: string) => {
+        return <StyledTypography key={item}>{item}</StyledTypography>;
+      })}
     </Container>
   );
 };

@@ -11,6 +11,7 @@ interface RadioButtonProps extends React.HTMLAttributes<HTMLInputElement> {
   disabled?: boolean;
   checked?: boolean;
   value: string;
+  onClick?: (value: React.MouseEvent<HTMLInputElement, MouseEvent>) => void;
 }
 
 const CheckMark = styled.span<{ disabled?: boolean }>`
@@ -76,7 +77,7 @@ const RadioButtonStyled = styled(Field).attrs({ type: 'radio' })`
 `;
 
 export const RadioButton: React.FC<RadioButtonProps> = (props) => {
-  const { id, name, value, checked, children, disabled } = props;
+  const { id, name, value, checked, children, disabled, onClick } = props;
 
   return (
     <Label disabled={disabled}>
@@ -87,6 +88,7 @@ export const RadioButton: React.FC<RadioButtonProps> = (props) => {
         disabled={disabled}
         checked={checked}
         value={value}
+        onClick={onClick}
       />
       <CheckMark disabled={disabled} />
     </Label>

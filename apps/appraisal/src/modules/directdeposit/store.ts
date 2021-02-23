@@ -1,6 +1,7 @@
 import { action, observable, runInAction } from 'mobx';
 import { createContext, useContext } from 'react';
 
+import AnalyticsHandler from 'src/integrations/AnalyticsHandler';
 import { AsyncStatus, PlaidData, Store, StoreStatus } from 'src/interfaces.d';
 import { Networker } from 'src/networking/Networker';
 
@@ -35,7 +36,10 @@ export async function plaidSuccess(
   onPlaidSubmitting: (value: boolean) => void
 ): Promise<void> {
   const networker = new Networker();
+  const analyticsHandler = new AnalyticsHandler();
+
   try {
+    analyticsHandler.trackPaymentOptionsSubmitted('Plaid ACH');
     await networker.postPlaidPayment(mutationInput);
     const url = `/sell/verification-congrats`;
     window.location.href = url;

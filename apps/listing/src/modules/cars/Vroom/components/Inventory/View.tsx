@@ -27,6 +27,9 @@ const InventoryView: React.FC<Props> = ({ viewModel }) => {
     <StyledGrid container direction="column">
       <TopSection />
       <LandingBanner />
+      {viewModel.getGoBiasExperimentAssignedExperiment() && (
+        <span id="go-bias"></span>
+      )}
       <Cars />
       {!viewModel.hideVehicleCount() && <Count />}
       {!viewModel.hidePagination() && <Pagination />}

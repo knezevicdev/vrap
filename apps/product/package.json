@@ -1,6 +1,6 @@
 {
   "name": "@vroom-web/product",
-  "version": "1.4.3",
+  "version": "1.6.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -27,8 +27,9 @@
     "@vroom-web/experiment-sdk": "^2.0.1",
     "@vroom-web/footer-components": "^1.0.9",
     "@vroom-web/header-components": "^1.0.5",
-    "@vroom-web/inv-search-networking": "^1.1.0",
+    "@vroom-web/inv-search-networking": "^1.2.0",
     "@vroom-web/inv-service-networking": "^1.2.1",
+    "@vroom-web/networking": "^0.0.4",
     "@vroom-web/ui": "^1.0.1",
     "@vroom-web/whitelabel": "^1.0.1",
     "axios": "^0.21.1",
@@ -43,6 +44,7 @@
     "mobx-react": "^6.2.2",
     "next": "^9.5.1",
     "nookies": "^2.3.0",
+    "graphql-tag": "^2.11.0",
     "qs": "^6.9.1",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",

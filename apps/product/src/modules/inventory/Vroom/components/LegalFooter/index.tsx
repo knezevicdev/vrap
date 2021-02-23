@@ -3,9 +3,20 @@ import React from 'react';
 import View from './View';
 import ViewModel from './ViewModel';
 
+import {
+  InventoryStore,
+  InventoryStoreContext,
+} from 'src/modules/inventory/store';
+
 const LegalFooter: React.FC = () => {
-  const viewModel = new ViewModel();
-  return <View viewModel={viewModel} />;
+  return (
+    <InventoryStoreContext.Consumer>
+      {(store: InventoryStore): JSX.Element => {
+        const viewModel = new ViewModel(store);
+        return <View viewModel={viewModel} />;
+      }}
+    </InventoryStoreContext.Consumer>
+  );
 };
 
 export default LegalFooter;

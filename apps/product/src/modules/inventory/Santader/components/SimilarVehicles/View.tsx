@@ -52,9 +52,6 @@ const Cars = styled('div')(({ theme }) => ({
     flexDirection: 'column',
     margin: theme.spacing(0),
   },
-  '& #car:last-child': {
-    marginRight: 0,
-  },
 }));
 
 const ViewAll = styled(Typography)(({ theme }) => ({

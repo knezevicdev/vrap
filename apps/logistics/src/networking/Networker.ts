@@ -1,7 +1,5 @@
 import axios, { AxiosError } from 'axios';
-import Cookie from 'js-cookie';
 
-import { IdToken } from './models/Auth';
 export * from './auth';
 export * from './shipments';
 export * from './user';
@@ -22,8 +20,7 @@ axiosInstance.interceptors.response.use(
     return response;
   },
   (err: AxiosError) => {
-    const authDataCookie: IdToken | undefined = Cookie.getJSON('authData');
-    if (err.response?.status === 401 || authDataCookie === undefined) {
+    if (err.response?.status === 401) {
       if (err.response?.headers.location) {
         const redirectUrl =
           err.response.headers.location === window.location.pathname
@@ -33,6 +30,10 @@ axiosInstance.interceptors.response.use(
       } else {
         window.history.back();
       }
+    }
+    const e = err.response?.data.error;
+    if (e && e.details[0].message) {
+      return Promise.reject(new Error(e.details[0].message));
     }
     return Promise.reject(err);
   }

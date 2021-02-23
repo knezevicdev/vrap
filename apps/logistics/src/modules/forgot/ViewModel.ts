@@ -12,6 +12,29 @@ class ForgotViewModel {
     this.model = model;
     makeAutoObservable(this, { model: false });
   }
+  get disabled(): boolean {
+    if (this.email.length === 0) {
+      return true;
+    }
+
+    if (this.loading) {
+      return true;
+    }
+
+    return false;
+  }
+
+  get error(): string {
+    if (this.model.status === Status.ERROR) {
+      return this.model.errorMessage;
+    } else {
+      return '';
+    }
+  }
+
+  get loading(): boolean {
+    return this.model.status === Status.FETCHING;
+  }
 
   get success(): boolean {
     return this.model.status === Status.SUCCESS;
