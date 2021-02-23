@@ -57,11 +57,15 @@ const Shipments: React.FC<Props> = ({ viewModel }) => {
         {/* <ShipmentChanger /> */}
         <Grid item style={{ textAlign: 'right' }}>
           {from} - {until} of {total}
-          {viewModel.offset <= 0 || (
+          {viewModel.offset > 0 ? (
             <NavArrowLeft onClick={(): void => viewModel.prevPage()} />
+          ) : (
+            ''
           )}
-          {viewModel.offset > lastOffset || (
+          {viewModel.offset <= lastOffset ? (
             <NavArrowRight onClick={(): void => viewModel.nextPage()} />
+          ) : (
+            ''
           )}
         </Grid>
         <Grid item>
