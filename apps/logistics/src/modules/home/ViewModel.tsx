@@ -69,12 +69,16 @@ class ShipmentsViewModel {
   }
   /* eslint-enable @typescript-eslint/camelcase */
 
-  setSelectedStatus(tabValue: number): void {
-    this.model.setSelectedStatus(this.tabs[tabValue].status);
+  setSelectedTab(value: number): void {
+    this.model.setSelectedTab(value, this.tabs[value].status);
   }
 
   getShipments(): void {
     this.model.getShipments();
+  }
+
+  get tab(): number {
+    return this.model.selectedTab;
   }
 
   get offset(): number {
@@ -83,6 +87,22 @@ class ShipmentsViewModel {
 
   get limit(): number {
     return this.model.limit;
+  }
+
+  get total(): number {
+    return this.tabs[this.model.selectedTab].count;
+  }
+
+  get from(): number {
+    return Math.min(this.offset + 1, this.total);
+  }
+
+  get until(): number {
+    return this.offset + Math.min(this.limit, this.total);
+  }
+
+  get lastOffset(): number {
+    return this.total - this.limit;
   }
 
   nextPage(): void {

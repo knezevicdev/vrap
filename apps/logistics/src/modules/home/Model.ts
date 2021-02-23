@@ -12,6 +12,7 @@ class ShipmentsModel {
 
   counts: Counts[] = [];
   selectedStatus = ShipmentStatus.Posted;
+  selectedTab = 0;
   shipments: Shipment[] = [];
   status: Status = Status.INITIAL;
   offset = 0;
@@ -22,8 +23,9 @@ class ShipmentsModel {
     makeAutoObservable(this, { email: false });
   }
 
-  setSelectedStatus = (value: ShipmentStatus): void => {
-    this.selectedStatus = value;
+  setSelectedTab = (tab: number, status: ShipmentStatus): void => {
+    this.selectedTab = tab;
+    this.selectedStatus = status;
     this.offset = 0;
   };
 

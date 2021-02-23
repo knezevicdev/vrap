@@ -37,7 +37,7 @@ const Shipments: React.FC<Props> = ({ viewModel }) => {
     newValue: number
   ): void => {
     setValue(newValue);
-    viewModel.setSelectedStatus(newValue);
+    viewModel.setSelectedTab(newValue);
   };
 
   useEffect(() => {
@@ -46,23 +46,18 @@ const Shipments: React.FC<Props> = ({ viewModel }) => {
 
   const { headers, rows } = viewModel.tabs[value].tableData;
 
-  const total = viewModel.tabs[value].count;
-  const from = Math.min(viewModel.offset + 1, total);
-  const until = viewModel.offset + Math.min(viewModel.limit, total);
-  const lastOffset = total - viewModel.limit;
-
   return (
     <Box mx={6} my={4}>
       <Grid direction="column" container spacing={2}>
         {/* <ShipmentChanger /> */}
         <Grid item style={{ textAlign: 'right' }}>
-          {from} - {until} of {total}
+          {viewModel.from} - {viewModel.until} of {viewModel.total}
           {viewModel.offset > 0 ? (
             <NavArrowLeft onClick={(): void => viewModel.prevPage()} />
           ) : (
             ''
           )}
-          {viewModel.offset <= lastOffset ? (
+          {viewModel.offset <= viewModel.lastOffset ? (
             <NavArrowRight onClick={(): void => viewModel.nextPage()} />
           ) : (
             ''
