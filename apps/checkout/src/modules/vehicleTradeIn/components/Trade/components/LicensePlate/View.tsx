@@ -93,12 +93,12 @@ const LicensePlateView: React.FC<LicensePlateViewProps> = ({
 
   return (
     <>
-      {/* <Modal
+      <Modal
         vehicles={vehicles}
         isOpen={isDialogOpen}
         close={closeDialog}
         trackLicensePlateClick={trackLicensePlateClick}
-      /> */}
+      />
       <Inputs>
         <LicensePlate
           label="License plate"

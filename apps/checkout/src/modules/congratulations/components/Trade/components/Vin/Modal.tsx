@@ -104,7 +104,6 @@ const VinTitle = styled(Title.Three)`
   margin-bottom: 8px;
 `;
 
-Modal.setAppElement('#__next');
 
 interface Props {
   close: () => void;

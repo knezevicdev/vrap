@@ -108,7 +108,6 @@ const Next = styled(Button.Primary)`
   margin-right: auto;
 `;
 
-Modal.setAppElement('#__next');
 
 export interface ModalProps {
   close: () => void;

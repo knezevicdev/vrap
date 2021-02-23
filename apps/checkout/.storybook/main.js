@@ -28,7 +28,6 @@ module.exports = {
           exclude: /node_modules/,
           loader: 'graphql-tag/loader',
         });
-    
         config.resolve.modules = [
           ...(config.resolve.modules || []),
           path.resolve(__dirname, "../"),

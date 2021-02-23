@@ -7,7 +7,7 @@ import {
 import { ThemeProvider } from 'styled-components';
 import { withPerformance } from 'storybook-addon-performance';
 import { setConfig } from 'next/config';
-
+import Modal from "react-modal"
 setConfig({
   publicRuntimeConfig: {
     VERSION: '',
@@ -33,6 +33,10 @@ export const parameters = {
 
 function withGlobalStyles(storyFn) {
   const theme = getVroomTheme();
+
+  React.useEffect(()=>{
+    Modal.setAppElement('body');
+  },[]);
   return (
     <ThemeProvider theme={theme}>
       <GlobalStyle />
