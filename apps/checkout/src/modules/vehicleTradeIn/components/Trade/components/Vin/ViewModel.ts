@@ -1,14 +1,16 @@
 import { action, makeObservable, observable } from 'mobx';
-import { getCurrentVin } from "src/networking/util/getCurrentVin";
+
 import { VinProps } from './View';
+
+import { getCurrentVin } from 'src/networking/util/getCurrentVin';
 
 export default class VinViewModel implements VinProps {
   vin = '';
   trackVinClick?: () => void;
 
   constructor(trackVinClick?: () => void) {
-    makeObservable(this, { 
-      vin: observable, 
+    makeObservable(this, {
+      vin: observable,
       setVin: action,
     });
 
@@ -64,6 +66,5 @@ export default class VinViewModel implements VinProps {
   onBackToPurchase = (): void => {
     const vin = getCurrentVin();
     window.location.href = `/e2e/${vin}/checkoutTradeIn`;
-  }
-
+  };
 }

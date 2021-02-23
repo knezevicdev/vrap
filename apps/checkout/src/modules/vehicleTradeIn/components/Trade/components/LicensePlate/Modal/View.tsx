@@ -108,7 +108,6 @@ const Next = styled(Button.Primary)`
   margin-right: auto;
 `;
 
-
 export interface ModalProps {
   close: () => void;
   isOpen: boolean;

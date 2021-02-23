@@ -1,5 +1,6 @@
-import Model from './Model';
 import { action, makeObservable, observable } from 'mobx';
+
+import Model from './Model';
 export default class VehicleTradeInViewModel {
   model: Model;
   isOpen = false;
@@ -8,7 +9,7 @@ export default class VehicleTradeInViewModel {
     this.model = model;
     makeObservable(this, {
       isOpen: observable,
-      setIsOpen: action
+      setIsOpen: action,
     });
   }
   openDialog = (): void => {
@@ -25,6 +26,4 @@ export default class VehicleTradeInViewModel {
   getIsOpen = (): boolean => {
     return this.isOpen;
   };
-
- 
 }

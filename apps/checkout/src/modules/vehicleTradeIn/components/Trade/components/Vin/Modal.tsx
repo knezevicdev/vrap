@@ -7,10 +7,10 @@ import {
   ThemeProps,
   Title,
 } from '@vroom-web/temp-ui-alias-for-checkout';
+import getConfig from 'next/config';
 import React from 'react';
 import Modal from 'react-modal';
 import styled from 'styled-components';
-import getConfig from "next/config";
 
 const primaryBrand = (props: { theme: ThemeProps }): string =>
   props.theme.colors.primary.brand;
@@ -105,7 +105,6 @@ const VinTitle = styled(Title.Three)`
   margin-bottom: 8px;
 `;
 
-
 interface Props {
   close: () => void;
   isOpen: boolean;
@@ -157,7 +156,10 @@ const ModalView: React.FC<Props> = ({ close, isOpen }): JSX.Element => {
             5. Under your spare tire in the trunk.
           </InformationItem>
         </LocationInformation>
-        <Car src={`${publicRuntimeConfig.BASE_PATH}/assets/images/car-vin.png`} alt="car with points" />
+        <Car
+          src={`${publicRuntimeConfig.BASE_PATH}/assets/images/car-vin.png`}
+          alt="car with points"
+        />
       </LocationContainer>
       <VinTitle>
         Your VIN can also be found on the following documents:

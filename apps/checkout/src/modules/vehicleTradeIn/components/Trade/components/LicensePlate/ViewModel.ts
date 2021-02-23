@@ -1,10 +1,12 @@
 import { Status } from '@vroom-web/networking';
 import { Vehicles } from '@vroom-web/networking/dist/generated/graphql-types';
 import { action, makeObservable, observable } from 'mobx';
-import { getCurrentVin } from "src/networking/util/getCurrentVin";
+
 import states from './data/states.json';
 import Model from './Model';
 import { LicensePlateViewProps } from './View';
+
+import { getCurrentVin } from 'src/networking/util/getCurrentVin';
 export default class LicensePlateViewModel implements LicensePlateViewProps {
   plate = '';
   state: undefined | { value: string; label: string } = undefined;
@@ -152,7 +154,7 @@ export default class LicensePlateViewModel implements LicensePlateViewProps {
   onBackToPurchase = (): void => {
     const vin = getCurrentVin();
     window.location.href = `/e2e/${vin}/checkoutTradeIn`;
-  }
+  };
 
   getStates = (): { value: string; label: string }[] => states;
 }

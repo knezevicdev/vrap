@@ -14,8 +14,9 @@ import { configure as configureMobx } from 'mobx';
 import App from 'next/app';
 import getConfig from 'next/config';
 import React from 'react';
+import Modal from 'react-modal';
 import { ThemeProvider as StyledThemeProvider } from 'styled-components';
-import Modal from "react-modal";
+
 import DealValidatorModal from 'src/modules/dealValidator';
 import client from 'src/networking/client';
 

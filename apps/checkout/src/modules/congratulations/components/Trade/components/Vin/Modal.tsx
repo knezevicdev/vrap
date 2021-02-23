@@ -104,7 +104,6 @@ const VinTitle = styled(Title.Three)`
   margin-bottom: 8px;
 `;
 
-
 interface Props {
   close: () => void;
   isOpen: boolean;
