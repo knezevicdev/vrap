@@ -14,6 +14,7 @@ class BookModel {
   shipmentId: number;
   originShipmentStopId: number;
   destinationShipmentStopId: number;
+
   shipmentsModel: ShipmentsModel;
 
   constructor(

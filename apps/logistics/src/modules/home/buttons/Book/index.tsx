@@ -24,7 +24,8 @@ const Pickup: React.FC<Props> = ({
     destinationShipmentStopId,
     shipmentsModel
   );
-  return <View {...ViewModel(model)} />;
+
+  return <View viewModel={new ViewModel(model)} />;
 };
 
 export default Pickup;
