@@ -1,3 +1,4 @@
+import { GQLTypes } from '@vroom-web/networking';
 import {
   Body,
   Picture,
@@ -8,7 +9,6 @@ import React from 'react';
 import styled from 'styled-components';
 
 import { buildPrice } from './components/buildPrice';
-import { VehicleProps } from './types';
 
 const grayThree = (props: { theme: ThemeProps }): string =>
   props.theme.colors.gray.three;
@@ -24,20 +24,31 @@ const Divider = styled(Body.Regular)`
   color: ${grayThree};
 `;
 
-const SelectedCar = (props: VehicleProps): JSX.Element => {
+interface Props {
+  vehicle: GQLTypes.InvSearchVehicleData;
+}
+
+/**
+ * This view is rendered using the invSearch api
+ * when the user doest not have a deal yet.
+ * @param vehicle
+ */
+const SelectedCar = ({ vehicle }: Props): JSX.Element => {
   const {
-    vehicle: { year, make, model },
+    year,
+    make,
+    model,
     trim,
     miles,
-    leadPhotoURL,
+    leadPhotoUrl,
     listingPrice,
-  } = props;
+  } = vehicle;
 
   return (
     <>
       <Picture
         alt={`${make} ${model}`}
-        src={leadPhotoURL || ''}
+        src={leadPhotoUrl || ''}
         width="100%"
         height="260px"
         objectFit="cover"

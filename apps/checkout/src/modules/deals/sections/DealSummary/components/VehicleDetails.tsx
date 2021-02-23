@@ -23,8 +23,14 @@ const Title = styled(Body.Regular)`
   overflow: hidden;
   text-overflow: ellipsis;
 `;
-
-const VehicleDetails = (vehicle: VehicleProps): JSX.Element => {
+interface VehicleDetailsProps {
+  vehicle: VehicleProps;
+}
+/**
+ * Use vehicle information from the deal object
+ * @param vehicle
+ */
+const VehicleDetails = ({ vehicle }: VehicleDetailsProps): JSX.Element => {
   const {
     vehicle: { year, make, model },
     trim,

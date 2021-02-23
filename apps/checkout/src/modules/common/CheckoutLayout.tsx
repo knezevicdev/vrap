@@ -1,14 +1,15 @@
 import { ThemeProps } from '@vroom-web/temp-ui-alias-for-checkout';
 import { observer } from 'mobx-react-lite';
-import React, { FC, useContext } from 'react';
+import React, { FC } from 'react';
 import styled from 'styled-components';
 
 import DealSummary from '../deals/sections/DealSummary/index';
 import SelectedCar from '../deals/sections/DealSummary/SelectedCar';
 import Footer from '../footer';
 import Header from '../header';
-import { DealContext, DealStore } from '../store/DealStore';
 import { ProgressBar } from './ProgressBar';
+
+import { useDeal } from 'src/core/hooks';
 
 const grayFour = (props: { theme: ThemeProps }): string =>
   props.theme.colors.gray.four;
@@ -95,17 +96,11 @@ const DealSummarySection = styled.div<{ showDropdown?: boolean }>`
 `;
 
 interface Props {
-  showCarCard: boolean;
+  showCarCard?: boolean;
 }
 
 const CheckoutLayout: FC<Props> = ({ showCarCard, children }) => {
-  const {
-    steps,
-    activeStep,
-    deal,
-    vehicle,
-    showDropdown,
-  } = useContext<DealStore>(DealContext);
+  const { steps, activeStep, deal, vehicle, showDropdown } = useDeal();
 
   return (
     <Container>
@@ -117,8 +112,8 @@ const CheckoutLayout: FC<Props> = ({ showCarCard, children }) => {
         <CheckoutSection>
           <DealContent>{children}</DealContent>
           <DealSummarySection showDropdown={showDropdown}>
-            {!showCarCard && <DealSummary deal={deal} />}
-            {showCarCard && <SelectedCar {...vehicle} />}
+            {!showCarCard && deal && <DealSummary deal={deal} />}
+            {showCarCard && vehicle && <SelectedCar vehicle={vehicle} />}
           </DealSummarySection>
         </CheckoutSection>
       </Section>

@@ -1,4 +1,4 @@
-import { DealStore } from '../store/DealStore';
+import { DealStore } from 'src/core/store/DealStore';
 
 import { HeaderAnalyticsHandler } from 'src/integrations/header/HeaderAnalyticsHandler';
 

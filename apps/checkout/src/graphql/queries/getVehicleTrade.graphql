@@ -1,0 +1,32 @@
+query VEHICLE_TRADE($dealID: Int, $dealStatus: [String!]) {
+  user {
+      deals(dealID: $dealID ,dealStatus: $dealStatus) {
+        accountID,
+        dealID,
+        dealSummary { 
+          amountDue {
+            subTotal 
+            totalTaxesAndFees
+            shippingFee 
+          } 
+          depositPaymentInfo {
+            DepositCaptured
+          }
+          inventory { 
+             pricing{
+             listPrice
+           }
+           vehicle {  
+              vin
+              year
+              make
+              model
+              trim
+           }
+            miles
+            leadPhotoURL
+          }
+        }
+    }
+  }
+}
