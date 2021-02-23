@@ -8,7 +8,7 @@ import { observer } from 'mobx-react';
 
 export interface Props {
   selected: string;
-  viewModel: PayOptionViewModel;
+  viewModel: ViewModel;
 }
 
 const PayOptionsContainer = styled.div`
@@ -39,7 +39,7 @@ const PayOptionsView: React.FC<Props> = ({
 }) => {
   const radioOptions = viewModel.optionMeta.map(option => {
     const checked = selected === option;
-    let child = option;
+    let child = <div>{option}</div>;
     if (option === 'Direct Deposit' && viewModel.getPlaidExperimentAssignedExperiment()) {
       child = (
         <>

@@ -1,4 +1,4 @@
-import { OptionsStore } from './store';
+import { OptionsStore } from '../../modules/options/store';
 
 class PayOptionViewModel {
   private readonly oStore: OptionsStore;
