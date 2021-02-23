@@ -37,7 +37,8 @@ const ComponentTitle = styled(Heading.Three)`
   text-align: center;
 `;
 
-const IconButton = styled.a`
+const IconButton = styled.span`
+  cursor: pointer;
   display: flex;
   align-items: center;
 `;
@@ -53,7 +54,7 @@ const VehicleTradeInView: React.FC<Props> = ({ viewModel }) => {
       <ComponentTitle>your trade-in information</ComponentTitle>
       <SubTitle>
         Start by entering your license plate or VIN{' '}
-        <IconButton href="javascript:void(0)" onClick={openDialog}>
+        <IconButton onClick={openDialog}>
           <Icon icon={Icons.FEEDBACK_QUESTION}  />
         </IconButton>
       </SubTitle>

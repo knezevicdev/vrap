@@ -10,6 +10,7 @@ import {
 import React from 'react';
 import Modal from 'react-modal';
 import styled from 'styled-components';
+import getConfig from "next/config";
 
 const primaryBrand = (props: { theme: ThemeProps }): string =>
   props.theme.colors.primary.brand;
@@ -109,6 +110,7 @@ interface Props {
   close: () => void;
   isOpen: boolean;
 }
+const { publicRuntimeConfig } = getConfig();
 
 const ModalView: React.FC<Props> = ({ close, isOpen }): JSX.Element => {
   const onAfterOpen = (): void => {
@@ -155,7 +157,7 @@ const ModalView: React.FC<Props> = ({ close, isOpen }): JSX.Element => {
             5. Under your spare tire in the trunk.
           </InformationItem>
         </LocationInformation>
-        <Car src="assets/images/car-vin.png" alt="car with points" />
+        <Car src={`${publicRuntimeConfig.BASE_PATH}/assets/images/car-vin.png`} alt="car with points" />
       </LocationContainer>
       <VinTitle>
         Your VIN can also be found on the following documents:

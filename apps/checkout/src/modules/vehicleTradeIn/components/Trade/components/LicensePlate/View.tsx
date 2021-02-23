@@ -67,6 +67,7 @@ export interface LicensePlateViewProps {
   getVehicles: () => { car: string; vin: string }[];
   closeDialog: () => void;
   trackLicensePlateClick?: () => void;
+  onBackToPurchase: () => void
 }
 
 const LicensePlateView: React.FC<LicensePlateViewProps> = ({
@@ -82,6 +83,7 @@ const LicensePlateView: React.FC<LicensePlateViewProps> = ({
   getVehicles,
   closeDialog,
   trackLicensePlateClick,
+  onBackToPurchase
 }): JSX.Element => {
   const states = getStates();
   const plate = getPlate();
@@ -116,9 +118,9 @@ const LicensePlateView: React.FC<LicensePlateViewProps> = ({
       </Inputs>
       <BtnContainer>
         <CTA onClick={onButtonClick} disabled={disabled}>
-          Continue
+          {button}
         </CTA>
-        <BackBtn> Back to Purchase </BackBtn>
+        <BackBtn onClick={onBackToPurchase}> Back to Purchase </BackBtn>
       </BtnContainer>
     </>
   );

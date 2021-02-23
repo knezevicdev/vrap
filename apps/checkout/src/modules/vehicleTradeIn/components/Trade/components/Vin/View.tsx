@@ -39,6 +39,7 @@ export interface VinProps {
   getError: () => string | undefined;
   getIsButtonDisabled: () => boolean;
   onButtonClick: () => void;
+  onBackToPurchase: () => void;
 }
 
 const Vin: React.FC<VinProps> = ({
@@ -47,6 +48,7 @@ const Vin: React.FC<VinProps> = ({
   getError,
   getIsButtonDisabled,
   onButtonClick,
+  onBackToPurchase
 }): JSX.Element => {
   const vin = getVin();
   const error = getError();
@@ -67,7 +69,7 @@ const Vin: React.FC<VinProps> = ({
         <CTA onClick={onButtonClick} disabled={disabled}>
           Continue
         </CTA>
-        <BackBtn> Back to Purchase </BackBtn>
+        <BackBtn onClick={onBackToPurchase}> Back to Purchase </BackBtn>
       </BtnContainer>
     </>
   );
