@@ -7,11 +7,11 @@ describe('Shipments ViewModel', () => {
       const model = new Model('finn@adventure.time');
       model.counts = [{ status: 'Posted', count: 1 }];
       const viewModel = new ViewModel(model);
-      expect(viewModel.tabs[0].display).toBe('Posted (1)');
-      expect(viewModel.tabs[1].display).toBe('Booked (0)');
-      expect(viewModel.tabs[2].display).toBe('In Transit (0)');
-      expect(viewModel.tabs[3].display).toBe('Cancelled (0)');
-      expect(viewModel.tabs[4].display).toBe('Delivered (0)');
+      expect(viewModel.tabs[0].display).toBe('Posted');
+      expect(viewModel.tabs[1].display).toBe('Booked');
+      expect(viewModel.tabs[2].display).toBe('In Transit');
+      expect(viewModel.tabs[3].display).toBe('Cancelled');
+      expect(viewModel.tabs[4].display).toBe('Delivered');
     });
   });
 });
