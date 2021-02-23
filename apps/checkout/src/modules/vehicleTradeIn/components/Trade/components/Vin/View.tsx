@@ -1,14 +1,11 @@
 import {
   Button,
-  Icon,
-  Icons,
   Input,
 } from '@vroom-web/temp-ui-alias-for-checkout';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
 import styled from 'styled-components';
 
-import Modal from './Modal';
 
 const VinContainer = styled.div`
   position: relative;
@@ -36,10 +33,7 @@ const BackBtn = styled(Button.Bare)`
   width: 100%;
 `;
 
-export interface VinProps {
-  getIsOpen: () => boolean;
-  closeDialog: () => void;
-  openDialog: () => void;
+export interface VinProps { 
   getVin: () => string;
   onVinInput: (event: React.FormEvent<HTMLInputElement>) => void;
   getError: () => string | undefined;
@@ -48,27 +42,19 @@ export interface VinProps {
 }
 
 const Vin: React.FC<VinProps> = ({
-  getIsOpen,
-  closeDialog,
-  openDialog,
   onVinInput,
   getVin,
   getError,
   getIsButtonDisabled,
   onButtonClick,
 }): JSX.Element => {
-  const isOpen = getIsOpen();
   const vin = getVin();
   const error = getError();
   const disabled = getIsButtonDisabled();
 
   return (
-    <>
-      {/* <Modal isOpen={isOpen} close={closeDialog} /> */}
+    <> 
       <VinContainer>
-        {/* <div onClick={openDialog}>
-          <Information icon={Icons.FEEDBACK_INFO} />
-        </div> */}
         <VIN
           label="Vehicle Identification Number"
           placeholder="Vehicle identification number"

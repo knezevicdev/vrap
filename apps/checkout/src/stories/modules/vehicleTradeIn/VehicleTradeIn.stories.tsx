@@ -1,14 +1,14 @@
 import React from 'react';
 
 import VehicleTradeIn from 'src/modules/vehicleTradeIn/View';
+import ViewModel from "src/modules/vehicleTradeIn/ViewModel";
+import Model from "src/modules/vehicleTradeIn/Model";
 
 export const Default = (): JSX.Element => {
-  const viewModel = {} as any; 
+ const model = new Model();
+ const viewModel = new ViewModel(model);
 
-  return <>
-  <div id="__next"></div>
-  <VehicleTradeIn viewModel={viewModel} />
-  </>;
+  return <VehicleTradeIn viewModel={viewModel} />;
 };
 
 export default {

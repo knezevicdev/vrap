@@ -93,8 +93,8 @@ const Trade: React.FC<TradeProps> = ({
   isVinActive,
   showLicensePlate,
   trackLicensePlateClick,
-  trackVinClick,
-}): JSX.Element => {
+  trackVinClick, 
+}): JSX.Element => { 
   const licensePlateSelected = isLicensePlateActive();
   const vinSelected = isVinActive();
 

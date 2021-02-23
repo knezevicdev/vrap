@@ -1,18 +1,31 @@
 import Model from './Model';
-
+import { action, makeObservable, observable } from 'mobx';
 export default class VehicleTradeInViewModel {
   model: Model;
+  isOpen = false;
 
   constructor(model: Model) {
     this.model = model;
+    makeObservable(this, {
+      isOpen: observable,
+      setIsOpen: action
+    });
   }
-  get dealId() {
-    if (this.model.dataStatus === 2) {
-      return (
-        this.model.data.user &&
-        this.model.data?.user?.deals &&
-        this.model.data?.user?.deals[0]?.dealID + '  <=Deal ID'
-      );
-    }
-  }
+  openDialog = (): void => {
+    console.log("YEAH")
+    this.setIsOpen(true);
+  };
+  setIsOpen = (isOpen: boolean): void => {
+    this.isOpen = isOpen;
+  };
+
+  closeDialog = (): void => {
+    this.setIsOpen(false);
+  };
+
+  getIsOpen = (): boolean => {
+    return this.isOpen;
+  };
+
+ 
 }

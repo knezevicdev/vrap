@@ -11,6 +11,7 @@ import styled from 'styled-components';
 
 import Trade from './components/Trade';
 import VehicleTradeInViewModel from './ViewModel';
+import Modal from './components/Trade/components/Vin/Modal';
 
 const Page = styled.div`
   display: grid;
@@ -36,17 +37,25 @@ const ComponentTitle = styled(Heading.Three)`
   text-align: center;
 `;
 
+const IconButton = styled.a`
+  display: flex;
+  align-items: center;
+`;
 interface Props {
   viewModel: VehicleTradeInViewModel;
 }
 
 const VehicleTradeInView: React.FC<Props> = ({ viewModel }) => {
+  const {isOpen, closeDialog, openDialog } = viewModel;
   return (
     <Page>
+      <Modal isOpen={isOpen} close={closeDialog} /> 
       <ComponentTitle>your trade-in information</ComponentTitle>
       <SubTitle>
         Start by entering your license plate or VIN{' '}
-        <Icon icon={Icons.FEEDBACK_QUESTION} />
+        <IconButton href="javascript:void(0)" onClick={openDialog}>
+          <Icon icon={Icons.FEEDBACK_QUESTION}  />
+        </IconButton>
       </SubTitle>
       <Trade />
     </Page>
