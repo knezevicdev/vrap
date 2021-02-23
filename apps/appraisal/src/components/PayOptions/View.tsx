@@ -2,13 +2,13 @@ import React from 'react';
 import styled from 'styled-components';
 
 import RadioButton from 'src/core/Radio';
+import ViewModel from './ViewModel';
+import Icon, { Icons } from 'src/core/Icon';
+import { observer } from 'mobx-react';
 
 export interface Props {
-  optionMeta: Array<string>;
   selected: string;
-  onPayOptionClick: (
-    value: React.MouseEvent<HTMLInputElement, MouseEvent>
-  ) => void;
+  viewModel: PayOptionViewModel;
 }
 
 const PayOptionsContainer = styled.div`
@@ -34,30 +34,47 @@ const OptionContainer = styled.div<{ selected?: boolean }>`
 `;
 
 const PayOptionsView: React.FC<Props> = ({
-  optionMeta,
   selected,
-  onPayOptionClick,
+  viewModel,
 }) => {
-  return (
-    <PayOptionsContainer>
-      {optionMeta.map((option) => {
-        const checked = selected === option;
-        return (
-          <OptionContainer selected={checked} key={option}>
-            <RadioButton
-              checked={checked}
-              disabled={false}
-              name={'paymentOption'}
-              value={option}
-              onClick={onPayOptionClick}
-            >
-              {option}
-            </RadioButton>
-          </OptionContainer>
-        );
-      })}
-    </PayOptionsContainer>
-  );
+  const radioOptions = viewModel.optionMeta.map(option => {
+    const checked = selected === option;
+    let child = option;
+    if (option === 'Direct Deposit' && viewModel.getPlaidExperimentAssignedExperiment()) {
+      child = (
+        <>
+          <Label>Direct Deposit with <Icon icon={Icons.PLAID_LOGO} /></Label>
+          <CheckItem><Icon icon={Icons.CHECK_MARK_GREEN} /> Faster than check by mail</CheckItem>
+          <CheckItem><Icon icon={Icons.CHECK_MARK_GREEN} /> Most secure way to transfer funds</CheckItem>
+        </>
+      );
+    }
+
+    return (
+      <OptionContainer selected={checked} key={option}>
+        <RadioButton
+          checked={checked}
+          disabled={false}
+          name={'paymentOption'}
+          value={option}
+          onClick={viewModel.onPayOptionClick}
+        >
+          {child}
+        </RadioButton>
+      </OptionContainer>
+    )
+  });
+
+  return <PayOptionsContainer>{radioOptions}</PayOptionsContainer>;
 };
 
-export default PayOptionsView;
+const CheckItem = styled.div`
+  font-weight: 300;
+  padding: 5px 0;
+`;
+
+const Label = styled.div`
+  display: flex;
+`;
+
+export default observer(PayOptionsView);

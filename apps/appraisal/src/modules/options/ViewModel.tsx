@@ -26,12 +26,6 @@ class OptionsViewModel {
     this.analyticsHandler.trackPaymentOptionsViewed();
   };
 
-  onPayOptionClick = (
-    selectedOption: React.MouseEvent<HTMLInputElement, MouseEvent>
-  ): void => {
-    this.store.setPayOptionSelected(selectedOption.currentTarget.value);
-  };
-
   onPlaidSubmitting = (value: boolean): void => {
     this.store.setPlaidSubmitting(value);
   };
@@ -130,6 +124,14 @@ class OptionsViewModel {
 
     const url = `/sell/verification-congrats`;
     window.location.href = url;
+  };
+
+  getPlaidExperimentAssignedExperiment = (): boolean => {
+    return this.store.plaidExperiment?.assignedVariant === 1;
+  }
+
+  getInstitutionNotFound = (): boolean => {
+    return this.store.institutionFound === false;
   };
 }
 

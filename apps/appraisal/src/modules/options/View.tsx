@@ -27,8 +27,9 @@ const OptionsContainer = styled.div`
   background: white;
   border: 1px solid #e0e0e0;
   margin: 0 20px;
-  padding: 30px 100px;
+  padding: 30px 80px;
   box-shadow: 0px 0px 4px #e0e0e0;
+  width: 805px;
 
   @media (max-width: 1280px) {
     margin: 20px;
@@ -182,7 +183,8 @@ const OptionsView: React.FC<Props> = ({ viewModel }) => {
     >
       {({ isValid, values, isSubmitting, setFieldValue }): JSX.Element => {
         const showDirectDeposit = viewModel.showDirectDeposit();
-        const showSubmitButton = shouldShowSubmitButton || !showDirectDeposit;
+        const showPlaidExperimentSubmit = viewModel.getPlaidExperimentAssignedExperiment() && viewModel.getInstitutionNotFound();
+        const showSubmitButton = (shouldShowSubmitButton || !showDirectDeposit) || (showPlaidExperimentSubmit);
 
         return (
           <FormContainer>
@@ -197,7 +199,6 @@ const OptionsView: React.FC<Props> = ({ viewModel }) => {
 
               <PayOptions
                 selected={values.paymentOption}
-                onPayOptionClick={viewModel.onPayOptionClick}
               />
 
               <OptionDisplay>

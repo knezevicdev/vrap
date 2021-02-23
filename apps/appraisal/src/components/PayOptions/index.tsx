@@ -2,21 +2,20 @@ import React from 'react';
 
 import View from './View';
 import ViewModel from './ViewModel';
+import { useOptionsStore } from '../../modules/options/store';
 
 interface Props {
   selected: string;
-  onPayOptionClick: (
-    value: React.MouseEvent<HTMLInputElement, MouseEvent>
-  ) => void;
 }
 
-const PayOptions: React.FC<Props> = ({ selected, onPayOptionClick }) => {
-  const viewModel = new ViewModel();
+const PayOptions: React.FC<Props> = ({ selected }) => {
+  const oStore = useOptionsStore();
+  const viewModel = new ViewModel(oStore);
+
   return (
     <View
-      optionMeta={viewModel.optionMeta}
+      viewModel={viewModel}
       selected={selected}
-      onPayOptionClick={onPayOptionClick}
     />
   );
 };

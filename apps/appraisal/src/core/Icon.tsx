@@ -99,6 +99,13 @@ export class Icons {
     path: `${ENVS.BASE_PATH}/icons/check-mark-white.svg`,
   });
 
+  static readonly CHECK_MARK_GREEN = new Icons('CHECK_MARK_GREEN', {
+    name: 'check-mark-green',
+    width: 13,
+    height: 13,
+    path: `${ENVS.BASE_PATH}/icons/check-mark-green.svg`,
+  });
+
   static readonly CHEVRON_UP = new Icons('CHEVRON_UP', {
     name: 'chevron-up',
     width: 13,
@@ -111,6 +118,20 @@ export class Icons {
     width: 13,
     height: 8,
     path: `${ENVS.BASE_PATH}/icons/chevron-down.svg`,
+  });
+
+  static readonly PLAID_LOGO = new Icons('PLAID_LOGO', {
+    name: 'plaid-logo',
+    width: 68,
+    height: 23,
+    path: `${ENVS.BASE_PATH}/icons/plaid-logo.svg`,
+  });
+
+  static readonly LOCK = new Icons('LOCK', {
+    name: 'lock',
+    width: 16,
+    height: 16,
+    path: `${ENVS.BASE_PATH}/icons/lock.svg`,
   });
 
   private constructor(

@@ -14,11 +14,12 @@ const PlaidButtonContainer = styled('div')(() => ({
 }));
 
 const PlaidButton = styled(Button.Primary)`
-  margin: 15px 0 30px;
-  white-space: normal;
-  width: auto;
   display: flex;
+  justify-content: center;
+  margin: 15px 0;
   padding: 13px 20px;
+  white-space: normal;
+  width: 50%;
 
   @media (max-width: 420px) {
     width: 100%;
@@ -79,11 +80,9 @@ const PlaidButtonView: React.FC<Props> = ({
     onExit,
   };
 
+  const { open, ready } = usePlaidLink(config);
   const tokenIsUndefined = token.length === 0;
   const isSubmitting = viewModel.getPlaidSubmitting();
-
-  const { open, ready } = usePlaidLink(config);
-
   const disableButton = (!ready && tokenIsUndefined) || isSubmitting;
 
   const handlePlaidButtonClick = (): void => {
@@ -94,7 +93,7 @@ const PlaidButtonView: React.FC<Props> = ({
   return (
     <PlaidButtonContainer>
       <PlaidButton onClick={handlePlaidButtonClick} disabled={disableButton}>
-        {viewModel.buttonCopy}
+        {viewModel.getPlaidExperimentAssignedExperiment() ? viewModel.buttonStartCopy : viewModel.buttonCopy }
         <ArrowForwardIcon />
       </PlaidButton>
     </PlaidButtonContainer>

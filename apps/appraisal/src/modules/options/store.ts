@@ -1,5 +1,6 @@
 import { action, observable, runInAction } from 'mobx';
 import { createContext, useContext } from 'react';
+import { Experiment } from '@vroom-web/experiment-sdk';
 
 import {
   AsyncStatus,
@@ -91,6 +92,7 @@ export class OptionsStore implements Store {
   @observable storeStatus = StoreStatus.Initial;
   @observable asyncStatus = AsyncStatus.Idle;
   @observable institutionFound = true;
+  @observable plaidExperiment?: Experiment;
 
   constructor(priceId?: string) {
     if (priceId) this.init(priceId);
@@ -122,6 +124,11 @@ export class OptionsStore implements Store {
   @action
   setInstitutionFound = (value: boolean): void => {
     this.institutionFound = value;
+  };
+
+  @action
+  setPlaidExperiment = (plaidExperiment?: Experiment): void => {
+    this.plaidExperiment = plaidExperiment;
   };
 }
 

@@ -73,19 +73,17 @@ const EPayOptions: NextPage<Props> = ({ brand }) => {
   const [stateDropdownOpen, setStateDropdown] = useState(false);
   const [analyticsHandler] = useState<AnalyticsHandler>(new AnalyticsHandler());
 
-  // TODO: Haven't tested this where it's set to 1 yet
-  // gotta force the variant to make sure it works
   useEffect(() => {
     experimentSDK
       .getAndLogExperimentClientSide('cw-plaid-experiment')
-      .then((experiment) => ddStore.setPlaidExperiment(experiment));
-  }, [ddStore]);
+      .then((experiment) => oStore.setPlaidExperiment(experiment));
+  }, [oStore]);
 
   useEffect(() => {
-    if (ddStore.plaidExperiment) {
-      analyticsHandler.registerExperiment(ddStore.plaidExperiment);
+    if (oStore.plaidExperiment) {
+      analyticsHandler.registerExperiment(oStore.plaidExperiment);
     }
-  }, [ddStore.plaidExperiment]);
+  }, [oStore.plaidExperiment]);
 
 
   return (
