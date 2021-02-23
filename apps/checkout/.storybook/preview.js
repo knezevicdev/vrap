@@ -10,8 +10,9 @@ import { setConfig } from 'next/config';
 
 setConfig({
   publicRuntimeConfig: {
-    VERSION: '',
-    BASE_PATH: ''
+    VERSION: 'TEST-0.0.1',
+    BASE_PATH: '',
+    NODE_ENV: 'storybook',
   },
 });
 
