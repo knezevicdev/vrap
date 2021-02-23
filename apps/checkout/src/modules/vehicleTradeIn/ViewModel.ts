@@ -12,7 +12,6 @@ export default class VehicleTradeInViewModel {
     });
   }
   openDialog = (): void => {
-    console.log("YEAH")
     this.setIsOpen(true);
   };
   setIsOpen = (isOpen: boolean): void => {

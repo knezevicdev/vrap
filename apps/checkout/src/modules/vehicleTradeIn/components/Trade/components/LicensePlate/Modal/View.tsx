@@ -27,7 +27,7 @@ const CustomModal = styled(Modal)`
   position: relative;
   flex-direction: column;
   background: ${primaryWhite};
-  max-width: 379px;
+  max-width: 378px;
   max-height: 460px;
   border-bottom: solid 4px ${primaryBrand};
   outline: none;

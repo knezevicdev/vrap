@@ -34,7 +34,7 @@ export default class ModalViewModel implements ModalProps {
 
   onNextClick = (): void => {
     this.trackLicensePlateClick && this.trackLicensePlateClick();
-    window.location.href = `/sell/vehicleInformation/${this.selectedVin}`;
+    window.location.href = `/tradeIn-selfService/${this.selectedVin}`;
   };
 
   getIsNextDisabled = (): boolean => {

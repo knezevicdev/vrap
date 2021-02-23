@@ -17,7 +17,7 @@ const Page = styled.div`
   display: grid;
   justify-items: center;
   padding-top: 62px;
-  padding-bottom: 65px;
+  padding-bottom: 64px;
   row-gap: 8px;
   grid-template-rows: auto 24px auto;
 
