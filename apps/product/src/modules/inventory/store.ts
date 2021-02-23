@@ -248,6 +248,7 @@ export class InventoryStore {
 
   @observable geoShippingExperiment?: Experiment;
   @observable goBiasExperiment?: Experiment;
+  @observable visibleShippingFeeExperiment?: Experiment;
   @observable actionFavorite = false;
 
   constructor(initialState?: InventoryStoreState) {
@@ -298,6 +299,13 @@ export class InventoryStore {
   @action
   setGoBiasExperiment = (goBiasExperiment?: Experiment): void => {
     this.goBiasExperiment = goBiasExperiment;
+  };
+
+  @action
+  setVisibleShippingFeeExperiment = (
+    visibleShippingFeeExperiment?: Experiment
+  ): void => {
+    this.visibleShippingFeeExperiment = visibleShippingFeeExperiment;
   };
 }
 
