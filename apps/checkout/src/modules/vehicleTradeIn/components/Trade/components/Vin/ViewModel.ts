@@ -1,24 +1,28 @@
 import { action, makeObservable, observable } from 'mobx';
-
+import debounce from "lodash/debounce"
 import { VinProps } from './View';
-
+import { validateVin} from "src/utils/validateVin";
 import { getCurrentVin } from 'src/networking/util/getCurrentVin';
 
 export default class VinViewModel implements VinProps {
   vin = '';
+  validateVin = false;
+  debounceFunc: any = null;
   trackVinClick?: () => void;
 
   constructor(trackVinClick?: () => void) {
     makeObservable(this, {
       vin: observable,
-      setVin: action,
+      validateVin: observable,
+      setVinValidationError: action,
+      setVin: action
     });
 
     this.trackVinClick = trackVinClick;
   }
 
   getIsButtonDisabled = (): boolean => {
-    const hasInput = this.vin.length > 0;
+    const hasInput = this.vin.length === 17;
 
     if (!hasInput) {
       return true;
@@ -40,19 +44,28 @@ export default class VinViewModel implements VinProps {
     return this.vin;
   };
 
+  setVinValidationError = (status: boolean): void => { 
+    this.validateVin = status === undefined ? true : status
+  }
+
   onVinInput = (event: React.FormEvent<HTMLInputElement>): void => {
     const { value } = event.currentTarget;
+    this.debounceFunc && this.debounceFunc.cancel()
+    this.debounceFunc = debounce(this.setVinValidationError, 500)
+
     if (value.length < 18) {
       this.setVin(value.toUpperCase());
-    }
+      this.setVinValidationError(false);
+    } 
+    this.debounceFunc()
   };
 
   getError = (): string | undefined => {
     const hasInput = this.vin.length > 0;
     const hasMetLength = hasInput ? this.vin.length === 17 : false;
-    const hasMetRegex = hasInput ? /^[A-Za-z0-9]+$/.test(this.vin) : true;
+    const hasMetRegex = hasInput &&  validateVin(this.vin);
 
-    if (hasInput && !hasMetLength) {
+    if (hasInput && !hasMetLength && this.validateVin) {
       return 'Minimum length not met.';
     }
 
