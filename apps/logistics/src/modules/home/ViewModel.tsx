@@ -77,38 +77,58 @@ class ShipmentsViewModel {
     this.model.getShipments();
   }
 
+  get offset(): number {
+    return this.model.offset;
+  }
+
+  get limit(): number {
+    return this.model.limit;
+  }
+
+  nextPage(): void {
+    this.model.nextPage();
+  }
+
+  prevPage(): void {
+    this.model.prevPage();
+  }
+
   get tabs(): {
     display: string;
+    count: number;
     status: ShipmentStatus;
     tableData: TableData;
   }[] {
-    const displayCount = (value: string): string => {
-      const found = this.model.counts.find((j) => j.status === value);
-      return `${value} (${found ? found.count : 0})`;
-    };
+    const count = (display: string): number =>
+      this.model.counts.find((j) => j.status === display)?.count || 0;
     return [
       {
-        display: displayCount('Posted'),
+        display: 'Posted',
+        count: count('Posted'),
         status: ShipmentStatus.Posted,
         tableData: this.posted,
       },
       {
-        display: displayCount('Booked'),
+        display: 'Booked',
+        count: count('Booked'),
         status: ShipmentStatus.Booked,
         tableData: this.booked,
       },
       {
-        display: displayCount('In Transit'),
+        display: 'In Transit',
+        count: count('In Transit'),
         status: ShipmentStatus.InTransit,
         tableData: this.inTransit,
       },
       {
-        display: displayCount('Cancelled'),
+        display: 'Cancelled',
+        count: count('Cancelled'),
         status: ShipmentStatus.Cancelled,
         tableData: this.cancelled,
       },
       {
-        display: displayCount('Delivered'),
+        display: 'Delivered',
+        count: count('Delivered'),
         status: ShipmentStatus.Delivered,
         tableData: this.delivered,
       },

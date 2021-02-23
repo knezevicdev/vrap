@@ -14,6 +14,8 @@ class ShipmentsModel {
   selectedStatus = ShipmentStatus.Posted;
   shipments: Shipment[] = [];
   status: Status = Status.INITIAL;
+  offset = 0;
+  limit = 50;
 
   constructor(email: string) {
     this.email = email;
@@ -22,13 +24,29 @@ class ShipmentsModel {
 
   setSelectedStatus = (value: ShipmentStatus): void => {
     this.selectedStatus = value;
+    this.offset = 0;
+  };
+
+  nextPage = (): void => {
+    this.offset += this.limit;
+    this.getShipments();
+  };
+
+  prevPage = (): void => {
+    this.offset -= this.limit;
+    this.getShipments();
   };
 
   getShipments = async (): Promise<void> => {
     this.status = Status.FETCHING;
 
     try {
-      const response = await getShipments(this.selectedStatus, this.email);
+      const response = await getShipments(
+        this.selectedStatus,
+        this.email,
+        this.offset,
+        this.limit
+      );
       runInAction(() => {
         this.shipments = response.data.shipments;
         this.counts = response.data.counts;
