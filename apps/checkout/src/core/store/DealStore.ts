@@ -1,4 +1,5 @@
 import { GQLTypes } from '@vroom-web/networking';
+import { action, makeObservable, observable } from 'mobx';
 import head from 'lodash/head';
 export interface DealState {
   activeStep: number;
@@ -28,6 +29,14 @@ export class DealStore {
   constructor(model?: DealStoreProps, currentStep?: number) {
     this.model = model;
     this.activeStep = currentStep || -1;
+
+    makeObservable(this, {
+      showDropdown: observable,
+      toggleDropdown: action,
+      model: observable,
+      activeStep: observable
+    });
+
   }
 
   get deal(): GQLTypes.Deal | undefined | null {

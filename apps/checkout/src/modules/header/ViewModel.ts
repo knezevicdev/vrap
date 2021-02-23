@@ -13,7 +13,7 @@ class HeaderViewModel {
     this.store = store;
   }
 
-  handleClick = (): void => {
+  handleClick = (): void => { 
     this.store.toggleDropdown();
   };
 }
