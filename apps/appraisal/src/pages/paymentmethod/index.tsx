@@ -83,7 +83,7 @@ const EPayOptions: NextPage<Props> = ({ brand }) => {
     if (oStore.plaidExperiment) {
       analyticsHandler.registerExperiment(oStore.plaidExperiment);
     }
-  }, [oStore.plaidExperiment]);
+  }, [oStore.plaidExperiment, analyticsHandler]);
 
 
   return (
