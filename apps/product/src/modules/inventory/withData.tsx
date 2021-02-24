@@ -9,7 +9,7 @@ export interface DataProps<T> {
 const withData = (Component: any) => {
   class HOC extends React.Component {
     static contextType = DataContext;
-    render() {
+    render(): JSX.Element {
       return <Component data={this.context} />;
     }
   }
