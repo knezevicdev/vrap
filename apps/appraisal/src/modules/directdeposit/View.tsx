@@ -18,7 +18,7 @@ const DirectDepositView: React.FC<Props> = ({ viewModel }) => {
   const showPlaidVariant = viewModel.getPlaidExperimentAssignedExperiment();
   const showNotFound = viewModel.getInstitutionNotFound();
 
-  const DirectDepositLink = ({ lang }: { lang: string }) => {
+  const DirectDepositLink = ({ lang }: { lang: string }): JSX.Element => {
     return (
       <DirectDepositCopy>
         {viewModel.ddToggleOrCopy}&nbsp;

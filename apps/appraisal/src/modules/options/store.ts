@@ -33,6 +33,7 @@ const defaultOptionsState: OptionStoreState = {
     final_payoff: 0,
   },
   institutionFound: true,
+  institutionSearched: false,
 };
 
 export interface OptionStoreState {
@@ -41,6 +42,7 @@ export interface OptionStoreState {
   currentPayments: boolean;
   poq: Poq;
   institutionFound: boolean;
+  institutionSearched: boolean;
 }
 
 export async function getInitialOptionsStoreState(
@@ -57,6 +59,7 @@ export async function getInitialOptionsStoreState(
       currentPayments: verificationData.current_payments,
       poq: verificationData.poq,
       institutionFound: true,
+      institutionSearched: false,
     };
 
     return optionState;
@@ -92,6 +95,7 @@ export class OptionsStore implements Store {
   @observable storeStatus = StoreStatus.Initial;
   @observable asyncStatus = AsyncStatus.Idle;
   @observable institutionFound = true;
+  @observable institutionSearched = false;
   @observable plaidExperiment?: Experiment;
 
   constructor(priceId?: string) {
@@ -124,6 +128,11 @@ export class OptionsStore implements Store {
   @action
   setInstitutionFound = (value: boolean): void => {
     this.institutionFound = value;
+  };
+
+  @action
+  setInstitutionSearched = (value: boolean): void => {
+    this.institutionSearched = value;
   };
 
   @action

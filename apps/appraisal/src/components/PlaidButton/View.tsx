@@ -43,7 +43,7 @@ const PlaidButtonView: React.FC<Props> = ({
   plaidSuccess,
   priceId,
 }) => {
-  const onSuccess = useCallback((_token: string, metaData: any): void => {
+  const onSuccess = useCallback((_token, metaData): void => {
     const email = viewModel.getEmail();
     viewModel.onPlaidSubmitting(true);
     const onPlaidSubmitting = viewModel.onPlaidSubmitting;
@@ -71,11 +71,24 @@ const PlaidButtonView: React.FC<Props> = ({
 
   const onExit = useCallback(
     (error, metadata): void => {
-      if (error) console.log(error);
-      if (metadata && metadata.status === 'institution_not_found') {
+      if (error) console.log(`Plaid onExit error: ${error}`);
+      if (
+        metadata &&
+        metadata.status === 'institution_not_found' &&
+        viewModel.getInstitutionSearched()
+      ) {
         viewModel.setInstitutionFound(false);
       }
       viewModel.onPlaidSubmitting(false);
+    },
+    [viewModel]
+  );
+
+  const onEvent = useCallback(
+    (event): void => {
+      if (event === 'SEARCH_INSTITUTION') {
+        viewModel.setInstitutionSearched(true);
+      }
     },
     [viewModel]
   );
@@ -84,6 +97,7 @@ const PlaidButtonView: React.FC<Props> = ({
     token,
     onSuccess,
     onExit,
+    onEvent,
   };
 
   const { open, ready } = usePlaidLink(config);

@@ -28,6 +28,14 @@ class PlaidButtonViewModel {
   setInstitutionFound = (value: boolean): void => {
     this.store.setInstitutionFound(value);
   };
+
+  setInstitutionSearched = (value: boolean): void => {
+    this.store.setInstitutionSearched(value);
+  };
+
+  getInstitutionSearched = (): boolean => {
+    return this.store.institutionSearched;
+  };
 }
 
 export default PlaidButtonViewModel;
