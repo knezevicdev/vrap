@@ -4,12 +4,12 @@ import { IncomingMessage } from 'http';
 import { NextPage, NextPageContext } from 'next';
 import getConfig from 'next/config';
 import { useRouter } from 'next/router';
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import experimentSDK from 'src/integrations/experimentSDK';
-import AnalyticsHandler from 'src/integrations/AnalyticsHandler';
 
 import ToolFooter from 'src/core/ToolFooter';
+import AnalyticsHandler from 'src/integrations/AnalyticsHandler';
+import experimentSDK from 'src/integrations/experimentSDK';
 import {
   DirectDepositStore,
   DirectDepositStoreContext,
@@ -84,7 +84,6 @@ const EPayOptions: NextPage<Props> = ({ brand }) => {
       analyticsHandler.registerExperiment(oStore.plaidExperiment);
     }
   }, [oStore.plaidExperiment, analyticsHandler]);
-
 
   return (
     <ThemeProvider brand={brand}>

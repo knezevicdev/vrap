@@ -30,7 +30,10 @@ const PlaidButton = styled(Button.Primary)`
 export interface Props {
   viewModel: PlaidButtonViewModel;
   token: string;
-  plaidSuccess(mutationInput: PlaidData, onPlaidSubmitting: any): void;
+  plaidSuccess(
+    mutationInput: PlaidData,
+    onPlaidSubmitting: (value: boolean) => void
+  ): void;
   priceId: string;
 }
 
@@ -66,13 +69,16 @@ const PlaidButtonView: React.FC<Props> = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const onExit = useCallback((error, metadata): void => {
-    if (error) console.log(error);
-		if (metadata && metadata.status === 'institution_not_found') {
-      viewModel.setInstitutionFound(false); 
-    }
-    viewModel.onPlaidSubmitting(false);
-  }, [viewModel]);
+  const onExit = useCallback(
+    (error, metadata): void => {
+      if (error) console.log(error);
+      if (metadata && metadata.status === 'institution_not_found') {
+        viewModel.setInstitutionFound(false);
+      }
+      viewModel.onPlaidSubmitting(false);
+    },
+    [viewModel]
+  );
 
   const config = {
     token,
@@ -93,7 +99,9 @@ const PlaidButtonView: React.FC<Props> = ({
   return (
     <PlaidButtonContainer>
       <PlaidButton onClick={handlePlaidButtonClick} disabled={disableButton}>
-        {viewModel.getPlaidExperimentAssignedExperiment() ? viewModel.buttonStartCopy : viewModel.buttonCopy }
+        {viewModel.getPlaidExperimentAssignedExperiment()
+          ? viewModel.buttonStartCopy
+          : viewModel.buttonCopy}
         <ArrowForwardIcon />
       </PlaidButton>
     </PlaidButtonContainer>

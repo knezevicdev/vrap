@@ -128,7 +128,7 @@ class OptionsViewModel {
 
   getPlaidExperimentAssignedExperiment = (): boolean => {
     return this.store.plaidExperiment?.assignedVariant === 1;
-  }
+  };
 
   getInstitutionNotFound = (): boolean => {
     return this.store.institutionFound === false;

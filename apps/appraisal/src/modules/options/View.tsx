@@ -183,8 +183,13 @@ const OptionsView: React.FC<Props> = ({ viewModel }) => {
     >
       {({ isValid, values, isSubmitting, setFieldValue }): JSX.Element => {
         const showDirectDeposit = viewModel.showDirectDeposit();
-        const showPlaidExperimentSubmit = viewModel.getPlaidExperimentAssignedExperiment() && viewModel.getInstitutionNotFound();
-        const showSubmitButton = (shouldShowSubmitButton || !showDirectDeposit) || (showPlaidExperimentSubmit);
+        const showPlaidExperimentSubmit =
+          viewModel.getPlaidExperimentAssignedExperiment() &&
+          viewModel.getInstitutionNotFound();
+        const showSubmitButton =
+          shouldShowSubmitButton ||
+          !showDirectDeposit ||
+          showPlaidExperimentSubmit;
 
         return (
           <FormContainer>
@@ -197,9 +202,7 @@ const OptionsView: React.FC<Props> = ({ viewModel }) => {
               </OptionsTitle>
               <OptionsBody>{viewModel.optionQuestion}</OptionsBody>
 
-              <PayOptions
-                selected={values.paymentOption}
-              />
+              <PayOptions selected={values.paymentOption} />
 
               <OptionDisplay>
                 {showDirectDeposit ? (

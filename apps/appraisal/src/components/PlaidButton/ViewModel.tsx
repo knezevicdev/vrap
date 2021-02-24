@@ -3,7 +3,7 @@ import { OptionsStore } from '../../modules/options/store';
 class PlaidButtonViewModel {
   private readonly store: OptionsStore;
   readonly buttonCopy: string = 'Link bank account';
-  readonly buttonStartCopy : string = 'Start direct deposit';
+  readonly buttonStartCopy: string = 'Start direct deposit';
 
   constructor(store: OptionsStore) {
     this.store = store;
@@ -23,7 +23,7 @@ class PlaidButtonViewModel {
 
   getPlaidExperimentAssignedExperiment = (): boolean => {
     return this.store.plaidExperiment?.assignedVariant === 1;
-  }
+  };
 
   setInstitutionFound = (value: boolean): void => {
     this.store.setInstitutionFound(value);

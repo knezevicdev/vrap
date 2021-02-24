@@ -1,10 +1,11 @@
+import { observer } from 'mobx-react';
 import React from 'react';
 import styled from 'styled-components';
 
-import RadioButton from 'src/core/Radio';
 import ViewModel from './ViewModel';
+
 import Icon, { Icons } from 'src/core/Icon';
-import { observer } from 'mobx-react';
+import RadioButton from 'src/core/Radio';
 
 export interface Props {
   selected: string;
@@ -33,19 +34,26 @@ const OptionContainer = styled.div<{ selected?: boolean }>`
   }
 `;
 
-const PayOptionsView: React.FC<Props> = ({
-  selected,
-  viewModel,
-}) => {
-  const radioOptions = viewModel.optionMeta.map(option => {
+const PayOptionsView: React.FC<Props> = ({ selected, viewModel }) => {
+  const radioOptions = viewModel.optionMeta.map((option) => {
     const checked = selected === option;
     let child = <div>{option}</div>;
-    if (option === 'Direct Deposit' && viewModel.getPlaidExperimentAssignedExperiment()) {
+    if (
+      option === 'Direct Deposit' &&
+      viewModel.getPlaidExperimentAssignedExperiment()
+    ) {
       child = (
         <>
-          <Label>Direct Deposit with <Icon icon={Icons.PLAID_LOGO} /></Label>
-          <CheckItem><Icon icon={Icons.CHECK_MARK_GREEN} /> Faster than check by mail</CheckItem>
-          <CheckItem><Icon icon={Icons.CHECK_MARK_GREEN} /> Most secure way to transfer funds</CheckItem>
+          <Label>
+            Direct Deposit with <Icon icon={Icons.PLAID_LOGO} />
+          </Label>
+          <CheckItem>
+            <Icon icon={Icons.CHECK_MARK_GREEN} /> Faster than check by mail
+          </CheckItem>
+          <CheckItem>
+            <Icon icon={Icons.CHECK_MARK_GREEN} /> Most secure way to transfer
+            funds
+          </CheckItem>
         </>
       );
     }
@@ -62,7 +70,7 @@ const PayOptionsView: React.FC<Props> = ({
           {child}
         </RadioButton>
       </OptionContainer>
-    )
+    );
   });
 
   return <PayOptionsContainer>{radioOptions}</PayOptionsContainer>;

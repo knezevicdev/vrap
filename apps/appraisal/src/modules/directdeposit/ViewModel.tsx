@@ -1,5 +1,5 @@
-import { DirectDepositStore, plaidSuccess } from './store';
 import { OptionsStore } from '../options/store';
+import { DirectDepositStore, plaidSuccess } from './store';
 
 import { PlaidData } from 'src/interfaces.d';
 
@@ -42,7 +42,7 @@ class DirectDepositViewModel {
 
   getPlaidExperimentAssignedExperiment = (): boolean => {
     return this.oStore.plaidExperiment?.assignedVariant === 1;
-  }
+  };
 
   getInstitutionNotFound = (): boolean => {
     return this.oStore.institutionFound === false;

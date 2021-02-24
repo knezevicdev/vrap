@@ -1,3 +1,4 @@
+import { observer } from 'mobx-react';
 import React from 'react';
 import styled from 'styled-components';
 
@@ -7,7 +8,6 @@ import DirectDeposit from 'src/components/DirectDeposit';
 import PlaidButton from 'src/components/PlaidButton';
 import Icon, { Icons } from 'src/core/Icon';
 import { Body } from 'src/core/Typography';
-import { observer } from 'mobx-react';
 
 export interface Props {
   viewModel: DirectDepositViewModel;
@@ -18,7 +18,7 @@ const DirectDepositView: React.FC<Props> = ({ viewModel }) => {
   const showPlaidVariant = viewModel.getPlaidExperimentAssignedExperiment();
   const showNotFound = viewModel.getInstitutionNotFound();
 
-  const DirectDepositLink = ({ lang }: {lang: string}) => {
+  const DirectDepositLink = ({ lang }: { lang: string }) => {
     return (
       <DirectDepositCopy>
         {viewModel.ddToggleOrCopy}&nbsp;
@@ -26,12 +26,14 @@ const DirectDepositView: React.FC<Props> = ({ viewModel }) => {
           {lang}
         </DDToggleLink>
       </DirectDepositCopy>
-    )
-  }
+    );
+  };
 
   return (
     <DirectDepositContainer>
-      { !viewModel.getPlaidExperimentAssignedExperiment() && (<DirectDepositCopy>{viewModel.bankInfo}</DirectDepositCopy> )}
+      {!viewModel.getPlaidExperimentAssignedExperiment() && (
+        <DirectDepositCopy>{viewModel.bankInfo}</DirectDepositCopy>
+      )}
       {viewModel.getShowPlaidLink() ? (
         <>
           <PlaidButton
@@ -39,17 +41,18 @@ const DirectDepositView: React.FC<Props> = ({ viewModel }) => {
             plaidSuccess={viewModel.onPlaidSuccess}
             priceId={viewModel.getPriceId()}
           />
-          { showPlaidVariant ? (
+          {showPlaidVariant ? (
             <>
-              { showNotFound ? ( 
+              {showNotFound ? (
                 <>
-                  <DirectDepositCopy>
-                    {viewModel.cantFind}
-                  </DirectDepositCopy>
+                  <DirectDepositCopy>{viewModel.cantFind}</DirectDepositCopy>
                   <DirectDeposit />
                 </>
               ) : (
-                <LockText><StyledIcon icon={Icons.LOCK} /> Your information will be secure and encrypted</LockText>
+                <LockText>
+                  <StyledIcon icon={Icons.LOCK} /> Your information will be
+                  secure and encrypted
+                </LockText>
               )}
             </>
           ) : (

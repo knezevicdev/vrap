@@ -1,6 +1,6 @@
+import { Experiment } from '@vroom-web/experiment-sdk';
 import { action, observable, runInAction } from 'mobx';
 import { createContext, useContext } from 'react';
-import { Experiment } from '@vroom-web/experiment-sdk';
 
 import {
   AsyncStatus,
