@@ -98,6 +98,16 @@ class AnalyticsHandler extends BaseAnalyticsHandler {
     };
     this.track(event, properties);
   }
+
+  trackLinkSectionLinkClicked(label: string, href: string): void {
+    const event = 'Link Section Link Clicked';
+    const properties = {
+      category: 'Home',
+      label,
+      url: href,
+    };
+    this.track(event, properties);
+  }
 }
 
 export default AnalyticsHandler;

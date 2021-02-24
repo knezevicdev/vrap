@@ -6,7 +6,7 @@ import {
   Icons,
   ThemeProps,
   Title,
-} from '@vroom-web/temp-ui-alias-for-checkout';
+} from '@vroom-web/ui-lib';
 import getConfig from 'next/config';
 import React from 'react';
 import Modal from 'react-modal';
