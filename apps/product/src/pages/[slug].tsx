@@ -80,21 +80,6 @@ const InventoryPage: NextPage<Props> = (props: Props) => {
     }
   }, [store.geoShippingExperiment, analyticsHandler]);
 
-  // useEffect(() => {
-  //   experimentSDK
-  //     .getAndLogExperimentClientSide('snd-pdp-visible-shipping-fee')
-  //     .then((experiment) => {
-  //       console.log(experiment)
-  //       store.setVisibleShippingFeeExperiment(experiment);
-  //     });
-  // }, [store, analyticsHandler]);
-
-  // useEffect(() => {
-  //   if (store.visibleShippingFeeExperiment) {
-  //     analyticsHandler.registerExperiment(store.visibleShippingFeeExperiment);
-  //   }
-  // }, [store.visibleShippingFeeExperiment, analyticsHandler]);
-
   const head = (
     <>
       <title>{title}</title>
