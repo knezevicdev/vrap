@@ -35,6 +35,7 @@ const SubTitle = styled(Typography.Body.Regular)`
 
 const ComponentTitle = styled(Heading.Three)`
   text-align: center;
+  font-display: swap;
 `;
 
 const IconButton = styled.span`

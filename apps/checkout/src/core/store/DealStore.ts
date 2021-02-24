@@ -1,6 +1,6 @@
 import { GQLTypes } from '@vroom-web/networking';
-import { action, makeObservable, observable } from 'mobx';
 import head from 'lodash/head';
+import { action, makeObservable, observable } from 'mobx';
 export interface DealState {
   activeStep: number;
   showDropdown: boolean;
@@ -34,9 +34,8 @@ export class DealStore {
       showDropdown: observable,
       toggleDropdown: action,
       model: observable,
-      activeStep: observable
+      activeStep: observable,
     });
-
   }
 
   get deal(): GQLTypes.Deal | undefined | null {

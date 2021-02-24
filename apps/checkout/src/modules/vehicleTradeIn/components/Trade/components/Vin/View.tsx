@@ -1,11 +1,7 @@
-import {
-  Button,
-  Input,
-} from '@vroom-web/temp-ui-alias-for-checkout';
+import { Button, Input } from '@vroom-web/temp-ui-alias-for-checkout';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
 import styled from 'styled-components';
-
 
 const VinContainer = styled.div`
   position: relative;
@@ -33,7 +29,7 @@ const BackBtn = styled(Button.Bare)`
   width: 100%;
 `;
 
-export interface VinProps { 
+export interface VinProps {
   getVin: () => string;
   onVinInput: (event: React.FormEvent<HTMLInputElement>) => void;
   getError: () => string | undefined;
@@ -48,14 +44,14 @@ const Vin: React.FC<VinProps> = ({
   getError,
   getIsButtonDisabled,
   onButtonClick,
-  onBackToPurchase
+  onBackToPurchase,
 }): JSX.Element => {
   const vin = getVin();
   const error = getError();
   const disabled = getIsButtonDisabled();
-
+  console.log('error', error);
   return (
-    <> 
+    <>
       <VinContainer>
         <VIN
           label="Vehicle Identification Number"

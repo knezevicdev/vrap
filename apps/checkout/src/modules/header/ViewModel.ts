@@ -1,5 +1,4 @@
 import { DealStore } from 'src/core/store/DealStore';
-
 import { HeaderAnalyticsHandler } from 'src/integrations/header/HeaderAnalyticsHandler';
 
 class HeaderViewModel {
@@ -16,12 +15,12 @@ class HeaderViewModel {
     this.store = store;
     this.analyticsHandler = analyticsHandler;
   }
- 
+
   handleLogoClick = (): void => {
     this.analyticsHandler.trackHeaderLogoClicked();
   };
 
-  handleClick = (): void => { 
+  handleClick = (): void => {
     this.store.toggleDropdown();
   };
 }

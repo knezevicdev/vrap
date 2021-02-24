@@ -1,8 +1,10 @@
+import debounce from 'lodash/debounce';
 import { action, makeObservable, observable } from 'mobx';
-import debounce from "lodash/debounce"
+
 import { VinProps } from './View';
-import { validateVin} from "src/utils/validateVin";
+
 import { getCurrentVin } from 'src/networking/util/getCurrentVin';
+import { validateVin } from 'src/utils/validateVin';
 
 export default class VinViewModel implements VinProps {
   vin = '';
@@ -15,7 +17,7 @@ export default class VinViewModel implements VinProps {
       vin: observable,
       validateVin: observable,
       setVinValidationError: action,
-      setVin: action
+      setVin: action,
     });
 
     this.trackVinClick = trackVinClick;
@@ -44,26 +46,26 @@ export default class VinViewModel implements VinProps {
     return this.vin;
   };
 
-  setVinValidationError = (status: boolean): void => { 
-    this.validateVin = status === undefined ? true : status
-  }
+  setVinValidationError = (status: boolean): void => {
+    this.validateVin = status === undefined ? true : status;
+  };
 
   onVinInput = (event: React.FormEvent<HTMLInputElement>): void => {
     const { value } = event.currentTarget;
-    this.debounceFunc && this.debounceFunc.cancel()
-    this.debounceFunc = debounce(this.setVinValidationError, 500)
+    this.debounceFunc && this.debounceFunc.cancel();
+    this.debounceFunc = debounce(this.setVinValidationError, 500);
 
     if (value.length < 18) {
       this.setVin(value.toUpperCase());
       this.setVinValidationError(false);
-    } 
-    this.debounceFunc()
+    }
+    this.debounceFunc();
   };
 
   getError = (): string | undefined => {
     const hasInput = this.vin.length > 0;
     const hasMetLength = hasInput ? this.vin.length === 17 : false;
-    const hasMetRegex = hasInput &&  validateVin(this.vin);
+    const hasMetRegex = hasInput && validateVin(this.vin);
 
     if (hasInput && !hasMetLength && this.validateVin) {
       return 'Minimum length not met.';
@@ -73,7 +75,7 @@ export default class VinViewModel implements VinProps {
       return hasMetRegex ? undefined : 'Please enter a valid vin';
     }
 
-    return undefined;
+    return hasInput ? ' ' : undefined;
   };
 
   onBackToPurchase = (): void => {
