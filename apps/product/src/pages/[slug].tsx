@@ -2,9 +2,9 @@ import { ThemeProvider } from '@vroom-web/ui';
 import { Brand, determineWhitelabel } from '@vroom-web/whitelabel';
 import { GetServerSideProps, GetServerSidePropsContext, NextPage } from 'next';
 import getConfig from 'next/config';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 
-import AnalyticsHandler from 'src/integrations/AnalyticsHandler';
+import { analyticsHandler } from 'src/integrations/AnalyticsHandler';
 import experimentSDK from 'src/integrations/experimentSDK';
 import Inventory from 'src/modules/inventory';
 import { BrandContext } from 'src/modules/inventory/BrandContext';
@@ -32,8 +32,6 @@ export interface Props {
 const InventoryPage: NextPage<Props> = (props: Props) => {
   const { canonicalHref, initialState, title, brand, vin, hasTddQuery } = props;
   const store = new InventoryStore(initialState);
-
-  const [analyticsHandler] = useState<AnalyticsHandler>(new AnalyticsHandler());
 
   useEffect(() => {
     experimentSDK
