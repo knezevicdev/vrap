@@ -25,8 +25,8 @@ class HowItWorksViewModel {
     'Vroom is changing the way people buy, sell, and trade in cars. Here’s a step-by-step guide on what\xa0to\xa0expect.';
   readonly link: Link;
   readonly video: Video = {
-    src: `${publicRuntimeConfig.STATIC_ASSETS_HOST_URL}/vroom/videos/how-it-works-promo.mp4`,
-    poster: `${publicRuntimeConfig.STATIC_ASSETS_HOST_URL}/vroom/images/how-it-works-poster.png`,
+    src: `${publicRuntimeConfig.VROOM_URL}/static-assets/videos/how-it-works-promo.mp4`,
+    poster: `${publicRuntimeConfig.VROOM_URL}/static-assets/images/how-it-works-poster.png`,
   };
 
   private analyticsHandler: AnalyticsHandler = new AnalyticsHandler();
