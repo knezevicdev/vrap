@@ -2,9 +2,9 @@ import { ThemeProvider } from '@vroom-web/ui';
 import { Brand, determineWhitelabel } from '@vroom-web/whitelabel';
 import { GetServerSideProps, GetServerSidePropsContext, NextPage } from 'next';
 import getConfig from 'next/config';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 
-import { analyticsHandler } from 'src/integrations/AnalyticsHandler';
+import AnalyticsHandler from 'src/integrations/AnalyticsHandler';
 import experimentSDK from 'src/integrations/experimentSDK';
 import Inventory from 'src/modules/inventory';
 import { BrandContext } from 'src/modules/inventory/BrandContext';
@@ -32,6 +32,8 @@ const InventoryPage: NextPage<Props> = (props: Props) => {
   const { canonicalHref, initialState, title, brand, vin, hasTddQuery } = props;
   const store = new InventoryStore(initialState);
 
+  const [analyticsHandler] = useState<AnalyticsHandler>(new AnalyticsHandler());
+
   useEffect(() => {
     experimentSDK
       .getAndLogExperimentClientSide('snd-pdp-vin-cluster-similar-vehicle')
@@ -47,7 +49,7 @@ const InventoryPage: NextPage<Props> = (props: Props) => {
         }
         store.getSimilar(vin, true);
       });
-  }, [initialState.similarStatus, store, vin]);
+  }, [initialState.similarStatus, store, vin, analyticsHandler]);
 
   useEffect(() => {
     experimentSDK
@@ -59,7 +61,7 @@ const InventoryPage: NextPage<Props> = (props: Props) => {
     if (store.goBiasExperiment) {
       analyticsHandler.registerExperiment(store.goBiasExperiment);
     }
-  }, [store.goBiasExperiment]);
+  }, [store.goBiasExperiment, analyticsHandler]);
 
   useEffect(() => {
     if (hasTddQuery) {
@@ -75,7 +77,7 @@ const InventoryPage: NextPage<Props> = (props: Props) => {
     if (store.geoShippingExperiment) {
       analyticsHandler.registerExperiment(store.geoShippingExperiment);
     }
-  }, [store.geoShippingExperiment]);
+  }, [store.geoShippingExperiment, analyticsHandler]);
 
   useEffect(() => {
     experimentSDK
@@ -89,7 +91,7 @@ const InventoryPage: NextPage<Props> = (props: Props) => {
     if (store.visibleShippingFeeExperiment) {
       analyticsHandler.registerExperiment(store.visibleShippingFeeExperiment);
     }
-  }, [store.visibleShippingFeeExperiment]);
+  }, [store.visibleShippingFeeExperiment, analyticsHandler]);
 
   const head = (
     <>
