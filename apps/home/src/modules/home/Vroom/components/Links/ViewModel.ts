@@ -42,21 +42,21 @@ class HeroViewModel {
       img_url: `${VROOM_URL}/static-assets/images/home-page/Truck-Body-Type.png`,
       link: {
         label: 'Shop Trucks',
-        href: `${VROOM_URL}/cars/type/truck`,
+        href: `${VROOM_URL}/cars/types/truck`,
       },
     },
     {
       img_url: `${VROOM_URL}/static-assets/images/home-page/SUV-Body-Type.png`,
       link: {
         label: 'Shop SUVs',
-        href: `${VROOM_URL}/cars/type/suv`,
+        href: `${VROOM_URL}/cars/types/suv`,
       },
     },
     {
       img_url: `${VROOM_URL}/static-assets/images/home-page/Sedan-Body-Type.png`,
       link: {
         label: 'Shop Sedans',
-        href: `${VROOM_URL}/cars/type/sedan`,
+        href: `${VROOM_URL}/cars/types/sedan`,
       },
     },
   ];
