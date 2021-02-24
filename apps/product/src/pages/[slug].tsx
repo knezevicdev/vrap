@@ -50,7 +50,7 @@ const InventoryPage: NextPage<Props> = (props: Props) => {
         }
         store.getSimilar(vin, true);
       });
-  }, [initialState.similarStatus, store, vin, analyticsHandler]);
+  }, [initialState.similarStatus, store, vin]);
 
   useEffect(() => {
     experimentSDK
@@ -62,7 +62,7 @@ const InventoryPage: NextPage<Props> = (props: Props) => {
     if (store.goBiasExperiment) {
       analyticsHandler.registerExperiment(store.goBiasExperiment);
     }
-  }, [store.goBiasExperiment, analyticsHandler]);
+  }, [store.goBiasExperiment]);
 
   useEffect(() => {
     if (hasTddQuery) {
@@ -78,7 +78,7 @@ const InventoryPage: NextPage<Props> = (props: Props) => {
     if (store.geoShippingExperiment) {
       analyticsHandler.registerExperiment(store.geoShippingExperiment);
     }
-  }, [store.geoShippingExperiment, analyticsHandler]);
+  }, [store.geoShippingExperiment]);
 
   const head = (
     <>
