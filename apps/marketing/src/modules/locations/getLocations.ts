@@ -25,7 +25,7 @@ export function getLocations(): LocationInfo[] {
   return [
     {
       name: 'Stafford',
-      closed: true,
+      closed: false,
       path: 'stafford',
       href: '/marketing/locations/stafford',
       address: {
@@ -49,7 +49,7 @@ export function getLocations(): LocationInfo[] {
     },
     {
       name: 'Clear\xa0Lake (League\xa0City)',
-      closed: true,
+      closed: false,
       path: 'clear-lake',
       href: '/marketing/locations/clear-lake',
       address: {
@@ -72,7 +72,7 @@ export function getLocations(): LocationInfo[] {
     },
     {
       name: 'The Woodlands',
-      closed: true,
+      closed: false,
       path: 'woodlands',
       href: '/marketing/locations/woodlands',
       address: {
@@ -96,7 +96,7 @@ export function getLocations(): LocationInfo[] {
     },
     {
       name: 'Memorial',
-      closed: true,
+      closed: false,
       path: 'memorial',
       href: '/marketing/locations/memorial',
       address: {
@@ -120,7 +120,7 @@ export function getLocations(): LocationInfo[] {
     },
     {
       name: 'Katy',
-      closed: true,
+      closed: false,
       path: 'katy',
       href: '/marketing/locations/katy',
       address: {
@@ -143,7 +143,7 @@ export function getLocations(): LocationInfo[] {
     },
     {
       name: 'Cypress',
-      closed: true,
+      closed: false,
       path: 'cypress',
       href: '/marketing/locations/cypress',
       address: {
@@ -167,7 +167,7 @@ export function getLocations(): LocationInfo[] {
     },
     {
       name: 'Kingwood',
-      closed: true,
+      closed: false,
       path: 'kingwood',
       href: '/marketing/locations/kingwood',
       address: {
@@ -190,7 +190,7 @@ export function getLocations(): LocationInfo[] {
     },
     {
       name: 'Galleria (Westheimer)',
-      closed: true,
+      closed: false,
       path: 'galleria',
       href: '/marketing/locations/galleria',
       address: {

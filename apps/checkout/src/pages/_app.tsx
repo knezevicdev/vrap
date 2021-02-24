@@ -16,6 +16,7 @@ import getConfig from 'next/config';
 import React from 'react';
 import { ThemeProvider as StyledThemeProvider } from 'styled-components';
 
+import DealValidatorModal from 'src/modules/dealValidator';
 import client from 'src/networking/client';
 
 configureMobx({
@@ -61,12 +62,12 @@ class VroomApp extends App {
   render(): JSX.Element {
     const { Component, pageProps } = this.props;
     const theme = getVroomTheme();
-
     return (
       <>
-        <GlobalStyle />
+        <GlobalStyle baseUrl={publicRuntimeConfig.BASE_PATH} />
         <ThemeProvider brand={Brand.VROOM}>
           <StyledThemeProvider theme={theme}>
+            <DealValidatorModal />
             <Component {...pageProps} />
           </StyledThemeProvider>
         </ThemeProvider>

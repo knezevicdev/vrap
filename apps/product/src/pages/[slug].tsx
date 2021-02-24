@@ -77,6 +77,20 @@ const InventoryPage: NextPage<Props> = (props: Props) => {
     }
   }, [store.geoShippingExperiment]);
 
+  useEffect(() => {
+    experimentSDK
+      .getAndLogExperimentClientSide('snd-pdp-visible-shipping-fee')
+      .then((experiment) => {
+        store.setVisibleShippingFeeExperiment(experiment);
+      });
+  }, [store]);
+
+  useEffect(() => {
+    if (store.visibleShippingFeeExperiment) {
+      analyticsHandler.registerExperiment(store.visibleShippingFeeExperiment);
+    }
+  }, [store.visibleShippingFeeExperiment]);
+
   const head = (
     <>
       <title>{title}</title>)

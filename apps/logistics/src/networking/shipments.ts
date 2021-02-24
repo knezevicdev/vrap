@@ -5,12 +5,14 @@ import { axiosInstance, GEARBOX_URL } from './Networker';
 
 export const getShipments = async (
   status: ShipmentStatus,
-  user: string
+  user: string,
+  offset: number,
+  limit: number
 ): Promise<AxiosResponse<{ shipments: Shipment[]; counts: Counts[] }>> => {
   const data = {
     query: `
-      query portalShipmentsQuery($user: String!, $status: String!) {
-        portalShipments(user: $user, status: $status) {
+      query portalShipmentsQuery($user: String!, $status: String!, $offset: Int!, $limit: Int!) {
+        portalShipments(user: $user, status: $status, offset: $offset, limit: $limit) {
           __typename
           ... on PortalShipmentsArray {
             shipments {
@@ -73,7 +75,7 @@ export const getShipments = async (
         }
       }
     `,
-    variables: { user, status },
+    variables: { user, status, offset, limit },
     queryKey: 'portalShipments',
   };
   return axiosInstance.post(GEARBOX_URL, data);

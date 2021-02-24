@@ -1,3 +1,4 @@
+import { Experiment } from '@vroom-web/experiment-sdk';
 import { Car } from '@vroom-web/inv-search-networking';
 
 import { analyticsHandler, Product } from 'src/integrations/AnalyticsHandler';
@@ -13,6 +14,7 @@ class PriceViewModel {
   private readonly car: Car;
   readonly price: string;
   readonly title: string = 'Pricing';
+  readonly visibleShippingFeeExperiment?: Experiment;
   readonly list: List = {
     header: 'Price displayed <bold>does not</bold> include:',
     extra:
@@ -21,6 +23,8 @@ class PriceViewModel {
 
   constructor(inventoryStore: InventoryStore) {
     this.deliveryFee = inventoryStore.deliveryFee;
+    this.visibleShippingFeeExperiment =
+      inventoryStore.visibleShippingFeeExperiment;
     this.price = inventoryStore.vehicle._source.listingPrice.toLocaleString(
       'en-US'
     );
@@ -34,6 +38,10 @@ class PriceViewModel {
       'FL, NJ and NY residents only - Electronic registration filing charge of $15.00',
       'Applicable taxes, title, tag and registration charges which will be calculated at the time of purchase.',
     ];
+  }
+
+  getShippingFee(): string {
+    return `$${this.deliveryFee} Shipping`;
   }
 
   trackToolTipClick(): void {

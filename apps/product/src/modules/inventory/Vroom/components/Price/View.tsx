@@ -3,6 +3,7 @@ import Popover from '@material-ui/core/Popover';
 import { styled } from '@material-ui/core/styles';
 import CloseIcon from '@material-ui/icons/Close';
 import { Typography } from '@vroom-web/ui';
+import { observer } from 'mobx-react';
 import React, { useState } from 'react';
 import reactStringReplace from 'react-string-replace';
 
@@ -22,12 +23,27 @@ const PriceContainer = styled('div')(({ theme }) => ({
 const Price = styled(Typography)(({ theme }) => ({
   display: 'flex',
   flexDirection: 'row',
-  justifyContent: 'center',
+  justifyContent: 'flex-end',
   marginLeft: theme.spacing(1),
+  marginBottom: theme.spacing(1),
+  fontWeight: 600,
+}));
+
+const ShippingFee = styled(Typography)(({ theme }) => ({
+  display: 'flex',
+  flexDirection: 'row',
+  justifyContent: 'flex-end',
+  marginLeft: theme.spacing(1),
+  whiteSpace: 'nowrap',
 }));
 
 const StyledInfoIcon = styled(InfoIcon)(({ theme }) => ({
-  margin: theme.spacing(0, 1),
+  marginLeft: theme.spacing(1),
+  height: '18px',
+  width: 'auto',
+  [theme.breakpoints.down('sm')]: {
+    height: '16px',
+  },
 }));
 
 const Container = styled('div')(({ theme }) => ({
@@ -74,7 +90,7 @@ const PriceView: React.FC<Props> = ({ viewModel }) => {
   };
 
   return (
-    <>
+    <div>
       <PriceContainer
         id="price_container"
         onClick={handleClick}
@@ -82,7 +98,7 @@ const PriceView: React.FC<Props> = ({ viewModel }) => {
       >
         <Price>
           ${viewModel.price}
-          <StyledInfoIcon />
+          <StyledInfoIcon viewBox="0 0 20 20" />
         </Price>
       </PriceContainer>
       <Popover
@@ -125,8 +141,11 @@ const PriceView: React.FC<Props> = ({ viewModel }) => {
           <Typography>{viewModel.list.extra}</Typography>
         </Container>
       </Popover>
-    </>
+      {viewModel.visibleShippingFeeExperiment?.assignedVariant === 1 && (
+        <ShippingFee>{viewModel.getShippingFee()}</ShippingFee>
+      )}
+    </div>
   );
 };
 
-export default PriceView;
+export default observer(PriceView);

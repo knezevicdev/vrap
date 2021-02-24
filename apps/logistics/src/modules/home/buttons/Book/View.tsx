@@ -8,27 +8,20 @@ import {
   InputLabel,
 } from '@material-ui/core';
 import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
-import dayjs from 'dayjs';
-import React, { useState } from 'react';
+import { observer } from 'mobx-react';
+import React from 'react';
 
 import PopoverButton from '../PopoverButton';
+import ViewModel from './ViewModel';
 
-export interface BookViewProps {
-  handleBook: (pickup: string, delivery: string, shippingCost: string) => void;
+export interface Props {
+  viewModel: ViewModel;
 }
 
-const BookPopover = ({ handleBook }: BookViewProps): JSX.Element => {
-  const [pickupDate, setPickupDate] = useState(dayjs().format('YYYY-MM-DD'));
-  const [deliveryDate, setDeliveryDate] = useState(
-    dayjs().format('YYYY-MM-DD')
-  );
-  const [shippingCost, setShippingCost] = useState('0.00');
-
+const BookPopover = ({ viewModel }: Props): JSX.Element => {
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
     event.preventDefault();
-    const pickupIso = dayjs(pickupDate).toISOString();
-    const deliveryIso = dayjs(deliveryDate).toISOString();
-    handleBook(pickupIso, deliveryIso, shippingCost);
+    viewModel.handleBook();
   };
 
   return (
@@ -38,29 +31,33 @@ const BookPopover = ({ handleBook }: BookViewProps): JSX.Element => {
           <Grid container spacing={4} direction="column">
             <Grid item>
               <FormControl variant="outlined" fullWidth>
-                <InputLabel htmlFor="pickup-date">
+                <InputLabel htmlFor="pickup-date" shrink>
                   Estimated pickup date
                 </InputLabel>
                 <Input
                   id="pickup-date"
                   type="date"
-                  value={pickupDate}
-                  onChange={(event): void => setPickupDate(event.target.value)}
+                  value={viewModel.pickupDate}
+                  inputProps={{ min: viewModel.pickupDateMin }}
+                  onChange={(event): void => {
+                    viewModel.pickupDate = event.target.value;
+                  }}
                 />
               </FormControl>
             </Grid>
             <Grid item>
               <FormControl variant="outlined" fullWidth>
-                <InputLabel htmlFor="delivery-date">
+                <InputLabel htmlFor="delivery-date" shrink>
                   Estimated delivery date
                 </InputLabel>
                 <Input
                   id="delivery-date"
                   type="date"
-                  value={deliveryDate}
-                  onChange={(event): void =>
-                    setDeliveryDate(event.target.value)
-                  }
+                  inputProps={{ min: viewModel.deliveryDateMin }}
+                  value={viewModel.deliveryDate}
+                  onChange={(event): void => {
+                    viewModel.deliveryDate = event.target.value;
+                  }}
                 />
               </FormControl>
             </Grid>
@@ -72,10 +69,10 @@ const BookPopover = ({ handleBook }: BookViewProps): JSX.Element => {
                 <Input
                   id="shipping-cost"
                   type="number"
-                  value={shippingCost}
-                  onChange={(event): void =>
-                    setShippingCost(event.target.value)
-                  }
+                  value={viewModel.shippingCost}
+                  onChange={(event): void => {
+                    viewModel.shippingCost = event.target.value;
+                  }}
                   startAdornment={
                     <InputAdornment position="start">$</InputAdornment>
                   }
@@ -92,7 +89,12 @@ const BookPopover = ({ handleBook }: BookViewProps): JSX.Element => {
             </Grid>
           </Grid>
           <Grid container justify="flex-end" item>
-            <Button type="submit" color="primary" variant="contained">
+            <Button
+              type="submit"
+              color="primary"
+              variant="contained"
+              disabled={viewModel.disabled}
+            >
               Submit
             </Button>
           </Grid>
@@ -102,4 +104,4 @@ const BookPopover = ({ handleBook }: BookViewProps): JSX.Element => {
   );
 };
 
-export default BookPopover;
+export default observer(BookPopover);
