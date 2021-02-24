@@ -1,5 +1,6 @@
-import { Experiment } from '@vroom-web/experiment-sdk';
+import { ExperimentSDK } from '@vroom-web/experiment-sdk';
 import { Car } from '@vroom-web/inv-search-networking';
+import { action, observable } from 'mobx';
 
 import { analyticsHandler, Product } from 'src/integrations/AnalyticsHandler';
 import { InventoryStore } from 'src/modules/inventory/store';
@@ -14,7 +15,7 @@ class PriceViewModel {
   private readonly car: Car;
   readonly price: string;
   readonly title: string = 'Pricing';
-  readonly visibleShippingFeeExperiment?: Experiment;
+  @observable showVisibleShippingFee = false;
   readonly list: List = {
     header: 'Price displayed <bold>does not</bold> include:',
     extra:
@@ -23,12 +24,23 @@ class PriceViewModel {
 
   constructor(inventoryStore: InventoryStore) {
     this.deliveryFee = inventoryStore.deliveryFee;
-    this.visibleShippingFeeExperiment =
-      inventoryStore.visibleShippingFeeExperiment;
     this.price = inventoryStore.vehicle._source.listingPrice.toLocaleString(
       'en-US'
     );
     this.car = inventoryStore.vehicle._source;
+    new ExperimentSDK()
+      .getAndLogExperimentClientSide('snd-pdp-visible-shipping-fee')
+      .then((experiment) => {
+        if (experiment) {
+          this.setShowVisibleShippingFee(experiment.assignedVariant === 1);
+          analyticsHandler.registerExperiment(experiment);
+        }
+      });
+  }
+
+  @action
+  setShowVisibleShippingFee(isVisible: boolean): void {
+    this.showVisibleShippingFee = isVisible;
   }
 
   getListBullets(): string[] {

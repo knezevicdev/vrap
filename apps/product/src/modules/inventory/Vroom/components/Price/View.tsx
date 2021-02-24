@@ -141,7 +141,7 @@ const PriceView: React.FC<Props> = ({ viewModel }) => {
           <Typography>{viewModel.list.extra}</Typography>
         </Container>
       </Popover>
-      {viewModel.visibleShippingFeeExperiment?.assignedVariant === 1 && (
+      {viewModel.showVisibleShippingFee && (
         <ShippingFee>{viewModel.getShippingFee()}</ShippingFee>
       )}
     </div>
