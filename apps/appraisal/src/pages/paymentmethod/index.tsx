@@ -34,7 +34,7 @@ const ColumnBody = styled.div`
   padding: 20px;
   flex-wrap: wrap;
   min-height: ${(props: Partial<PaymentMethodContextType>): string =>
-    props.stateDropdownOpen ? '115vh' : '79vh'};
+    props.stateDropdownOpen ? '115vh' : '81vh'};
 
   @media (max-width: 1280px) {
     flex-wrap: wrap-reverse;

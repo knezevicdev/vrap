@@ -83,6 +83,10 @@ const LockText = styled(Body.Small)`
   display: flex;
   justify-content: center;
   width: 50%;
+
+  @media (max-width: 420px) {
+    width: 100%;
+  }
 `;
 
 const DDToggleLink = styled.span`

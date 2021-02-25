@@ -116,7 +116,6 @@ const PlaidButtonView: React.FC<Props> = ({
         {viewModel.getPlaidExperimentAssignedExperiment()
           ? viewModel.buttonStartCopy
           : viewModel.buttonCopy}
-        <ArrowForwardIcon />
       </PlaidButton>
     </PlaidButtonContainer>
   );

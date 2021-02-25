@@ -28,6 +28,7 @@ const OptionContainer = styled.div<{ selected?: boolean }>`
   box-sizing: border-box;
   box-shadow: ${({ selected }): string =>
     selected ? '0px 0px 3px rgba(0, 0, 0, 0.2)' : ''};
+  height: fit-content;
 
   @media (max-width: 420px) {
     width: 100%;
