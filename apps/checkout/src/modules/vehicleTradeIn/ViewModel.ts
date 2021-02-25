@@ -36,11 +36,6 @@ export default class VehicleTradeInViewModel {
   };
 
   get dealStatus(): GQLTypes.DealStatus | undefined {
-    console.log(
-      'this.model.data.user',
-      this.model.data.user.deals &&
-        this.model.data.user.deals[0].dealSummary.dealStatus.pastSteps
-    );
     if (this.model.dataStatus === Status.SUCCESS) {
       const deal = head(this.model.data.user.deals);
       return deal && deal.dealSummary.dealStatus;
