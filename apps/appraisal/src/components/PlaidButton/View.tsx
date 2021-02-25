@@ -1,4 +1,3 @@
-import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 import { observer } from 'mobx-react';
 import React, { useCallback } from 'react';
 import { usePlaidLink } from 'react-plaid-link';

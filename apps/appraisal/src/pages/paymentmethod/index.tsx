@@ -70,8 +70,12 @@ const EPayOptions: NextPage<Props> = ({ brand }) => {
   const oStore = new OptionsStore(priceId);
   const ddStore = new DirectDepositStore(priceId);
   const poStore = new PaymentOverviewStore(priceId);
-  const [stateDropdownOpen, setStateDropdown] = useState(false);
   const [analyticsHandler] = useState<AnalyticsHandler>(new AnalyticsHandler());
+
+  // TODO: this used to be used with <State isOpenCallback={setStateDropdown} />
+  // It caused the page to rerender and mobx would lose its state
+  // Ideally we would like to extend the page to accomodate the long dropdown
+  const [stateDropdownOpen, setStateDropdown] = useState(false);
 
   useEffect(() => {
     experimentSDK
