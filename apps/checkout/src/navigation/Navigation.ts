@@ -2,8 +2,6 @@ import { GQLTypes } from '@vroom-web/networking';
 import last from 'lodash/last';
 import getConfig from 'next/config';
 import Router from 'next/router';
-
-import { DealStatusEnum } from 'src/modules/dealValidator/services';
 import { getCurrentVin } from 'src/networking/util/getCurrentVin';
 
 export enum DealStepsEnum {
@@ -57,7 +55,6 @@ export const stepPagesMapping = (vin: string): StepPagesMappingData =>
 
 class Navigation {
   stepBack(dealStatus: GQLTypes.DealStatus | undefined) {
-    console.log('BACKKKK', dealStatus);
 
     const lastStep =
       dealStatus && dealStatus.pastSteps && last(dealStatus.pastSteps);

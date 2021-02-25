@@ -1,7 +1,9 @@
 import { ErrorResponse, Response } from '@vroom-web/networking';
 import RouterNext, { Router, SingletonRouter } from 'next/router';
 
-import { buildUrl, excludePage, initDealValidator } from './dealValidator';
+import { excludePage, initDealValidator } from './dealValidator';
+import { buildUrl } from "src/navigation/Navigation";
+ 
 import Deals from './mockData/deals.json';
 import Unauthorized from './mockData/unauthorized.json';
 
