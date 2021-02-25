@@ -1,14 +1,25 @@
 import { getVroomTheme } from '@vroom-web/temp-ui-alias-for-checkout';
 import React from 'react';
-import { withDesign } from 'storybook-addon-designs';
 import { ThemeProvider } from 'styled-components';
 
-import ReservedCar from '../../../../modules/congratulations/sections/ReservedCar';
-import { reservedCarViewModel } from '../ViewModels';
+import {
+  reservedCarViewModel,
+  reservedCarViewModelHasTradeIn,
+} from '../ViewModels';
+
+import ReservedCar from 'src/modules/congratulations/sections/ReservedCar';
 
 const theme = getVroomTheme();
 
-export const Success = (): JSX.Element => {
+export const HasTradeIn = (): JSX.Element => {
+  return (
+    <ThemeProvider theme={theme}>
+      <ReservedCar {...reservedCarViewModelHasTradeIn} />
+    </ThemeProvider>
+  );
+};
+
+export const NoTradeIn = (): JSX.Element => {
   return (
     <ThemeProvider theme={theme}>
       <ReservedCar {...reservedCarViewModel} />
@@ -16,15 +27,6 @@ export const Success = (): JSX.Element => {
   );
 };
 
-Success.parameters = {
-  design: {
-    type: 'figma',
-    url:
-      'https://www.figma.com/file/yhvMWzN95E1DdNLBfEr5OH/Desktop-Congrats?node-id=1%3A4',
-  },
-};
-
 export default {
   title: 'Checkout/Congratulations/Sections/Reserved Car',
-  decorators: [withDesign],
 };

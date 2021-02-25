@@ -2,8 +2,9 @@ import React from 'react';
 
 import View from './View';
 import ViewModel from './ViewModel';
-import { headerAnalyticsHandler } from 'src/integrations/header/HeaderAnalyticsHandler';
+
 import { useDeal } from 'src/core/hooks';
+import { headerAnalyticsHandler } from 'src/integrations/header/HeaderAnalyticsHandler';
 
 const Header = (): JSX.Element => {
   const store = useDeal();

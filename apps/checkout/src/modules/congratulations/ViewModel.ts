@@ -218,6 +218,10 @@ export default class CongratsViewModel {
     return !this.empty && !this.error && !this.showLoading;
   }
 
+  private get isDocUploadStepDone(): boolean {
+    return this.summary.dealStatus.docUploadStepDone;
+  }
+
   get reservedCarProps(): ReservedCarProps {
     const { year, make, model, trim } = this.vehicle;
     const { leadPhotoURL } = this.inventory;
@@ -225,6 +229,7 @@ export default class CongratsViewModel {
     const src = leadPhotoURL ? leadPhotoURL : '';
 
     return {
+      dealId: this.dealId,
       trackScheduleTime: this.trackScheduleTime,
       trackLicensePlateClick: this.trackLicensePlateClick,
       trackVinClick: this.trackVinClick,
@@ -238,6 +243,7 @@ export default class CongratsViewModel {
         },
       },
       hasTradeIn: this.hasTradeIn,
+      isDocUploadStepDone: this.isDocUploadStepDone,
     };
   }
 
