@@ -9,6 +9,13 @@ query VEHICLE_TRADE($dealID: Int, $dealStatus: [String!]) {
             totalTaxesAndFees
             shippingFee 
           } 
+          dealStatus {
+                step
+                status
+                interestedInTrade
+                canBeCancelled
+                pastSteps
+              }
           depositPaymentInfo {
             DepositCaptured
           }
