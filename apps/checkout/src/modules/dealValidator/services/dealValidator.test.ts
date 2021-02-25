@@ -1,10 +1,11 @@
 import { ErrorResponse, Response } from '@vroom-web/networking';
 import RouterNext, { Router, SingletonRouter } from 'next/router';
 
-import { buildUrl, excludePage, initDealValidator } from './dealValidator';
+import { excludePage, initDealValidator } from './dealValidator';
 import Deals from './mockData/deals.json';
 import Unauthorized from './mockData/unauthorized.json';
 
+import { buildUrl } from 'src/navigation/Navigation';
 import * as Request from 'src/networking/request';
 
 jest.mock('next/config', () => (): unknown => ({

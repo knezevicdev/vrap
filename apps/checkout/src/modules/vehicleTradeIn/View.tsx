@@ -55,8 +55,11 @@ const VehicleTradeInView: React.FC<Props> = ({ viewModel }) => {
     trackLicensePlateClick,
     trackVinClick,
     trackInitialAnalytics,
+    onStepBack,
   } = viewModel;
+
   trackInitialAnalytics();
+
   return (
     <Page>
       <Modal isOpen={isOpen} close={closeDialog} />
@@ -70,6 +73,7 @@ const VehicleTradeInView: React.FC<Props> = ({ viewModel }) => {
       <Trade
         trackLicensePlateClick={trackLicensePlateClick}
         trackVinClick={trackVinClick}
+        onStepBack={onStepBack}
       />
     </Page>
   );

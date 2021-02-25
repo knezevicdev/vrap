@@ -3,23 +3,22 @@ import { action, makeObservable, observable } from 'mobx';
 
 import { VinProps } from './View';
 
-import { getCurrentVin } from 'src/networking/util/getCurrentVin';
 import { validateVin } from 'src/utils/validateVin';
-
 export default class VinViewModel implements VinProps {
   vin = '';
   validateVin = false;
   debounceFunc: any = null;
   trackVinClick?: () => void;
+  onStepBack?: () => void;
 
-  constructor(trackVinClick?: () => void) {
+  constructor(trackVinClick?: () => void, onStepBack?: () => void) {
     makeObservable(this, {
       vin: observable,
       validateVin: observable,
       setVinValidationError: action,
       setVin: action,
     });
-
+    this.onStepBack = onStepBack;
     this.trackVinClick = trackVinClick;
   }
 
@@ -79,7 +78,6 @@ export default class VinViewModel implements VinProps {
   };
 
   onBackToPurchase = (): void => {
-    const vin = getCurrentVin();
-    window.location.href = `/e2e/${vin}/checkoutTradeIn`;
+    this.onStepBack && this.onStepBack();
   };
 }

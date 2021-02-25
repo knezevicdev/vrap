@@ -8,6 +8,7 @@ import client from 'src/networking/client';
 
 interface Props {
   trackLicensePlateClick?: () => void;
+  onStepBack?: () => void;
 }
 
 class LicensePlate extends React.Component<Props> {
@@ -16,7 +17,11 @@ class LicensePlate extends React.Component<Props> {
   constructor(props: Props) {
     super(props);
     const model = new Model(client);
-    this.viewModel = new ViewModel(model, props.trackLicensePlateClick);
+    this.viewModel = new ViewModel(
+      model,
+      props.trackLicensePlateClick,
+      props.onStepBack
+    );
   }
 
   render(): React.ReactNode {

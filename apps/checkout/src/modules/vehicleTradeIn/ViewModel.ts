@@ -1,10 +1,12 @@
 import { datadogRum } from '@datadog/browser-rum';
 import { GQLTypes, Status } from '@vroom-web/networking';
+import head from 'lodash/head';
 import { action, makeObservable, observable } from 'mobx';
 
 import Model from './Model';
 
 import AnalyticsHandler from 'src/integrations/vehicleTradeIn/VehicleTradeInAnalyticsHandler';
+import Navigation from 'src/navigation/Navigation';
 
 interface AnalyticsData {
   UUID?: string;
@@ -21,6 +23,7 @@ interface AnalyticsData {
 export default class VehicleTradeInViewModel {
   model: Model;
   isOpen = false;
+  navigation: Navigation;
   analyticsHandler: AnalyticsHandler;
 
   constructor(model: Model) {
@@ -29,7 +32,10 @@ export default class VehicleTradeInViewModel {
     makeObservable(this, {
       isOpen: observable,
       setIsOpen: action,
+      onStepBack: action,
     });
+
+    this.navigation = new Navigation();
   }
   get showLoading(): boolean {
     return this.model.dataStatus === Status.LOADING;
@@ -109,5 +115,16 @@ export default class VehicleTradeInViewModel {
         },
       });
     }
+  };
+
+  get dealStatus(): GQLTypes.DealStatus | undefined {
+    if (this.model.dataStatus === Status.SUCCESS) {
+      const deal = head(this.model.data.user.deals);
+      return deal && deal.dealSummary.dealStatus;
+    }
+  }
+
+  onStepBack = (): void => {
+    this.navigation.stepBack(this.dealStatus);
   };
 }

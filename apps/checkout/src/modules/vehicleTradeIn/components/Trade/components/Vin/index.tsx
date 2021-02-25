@@ -5,6 +5,7 @@ import ViewModel from './ViewModel';
 
 interface Props {
   trackVinClick?: () => void;
+  onStepBack?: () => void;
 }
 
 class Vin extends React.Component<Props> {
@@ -12,7 +13,7 @@ class Vin extends React.Component<Props> {
 
   constructor(props: Props) {
     super(props);
-    this.viewModel = new ViewModel(props.trackVinClick);
+    this.viewModel = new ViewModel(props.trackVinClick, props.onStepBack);
   }
 
   render(): React.ReactNode {

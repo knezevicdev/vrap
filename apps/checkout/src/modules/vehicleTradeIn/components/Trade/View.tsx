@@ -84,6 +84,7 @@ export interface TradeProps {
   showLicensePlate: () => boolean;
   trackLicensePlateClick?: () => void;
   trackVinClick?: () => void;
+  onStepBack?: () => void;
 }
 
 const Trade: React.FC<TradeProps> = ({
@@ -94,6 +95,7 @@ const Trade: React.FC<TradeProps> = ({
   showLicensePlate,
   trackLicensePlateClick,
   trackVinClick,
+  onStepBack,
 }): JSX.Element => {
   const licensePlateSelected = isLicensePlateActive();
   const vinSelected = isVinActive();
@@ -112,9 +114,12 @@ const Trade: React.FC<TradeProps> = ({
         <Bar left={licensePlateSelected} />
       </BarContainer>
       {showLicensePlate() ? (
-        <LicensePlate trackLicensePlateClick={trackLicensePlateClick} />
+        <LicensePlate
+          trackLicensePlateClick={trackLicensePlateClick}
+          onStepBack={onStepBack}
+        />
       ) : (
-        <Vin trackVinClick={trackVinClick} />
+        <Vin trackVinClick={trackVinClick} onStepBack={onStepBack} />
       )}
     </Container>
   );

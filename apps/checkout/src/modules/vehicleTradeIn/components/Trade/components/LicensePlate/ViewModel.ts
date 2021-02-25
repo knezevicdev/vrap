@@ -5,16 +5,19 @@ import { action, makeObservable, observable } from 'mobx';
 import states from './data/states.json';
 import Model from './Model';
 import { LicensePlateViewProps } from './View';
-
-import { getCurrentVin } from 'src/networking/util/getCurrentVin';
 export default class LicensePlateViewModel implements LicensePlateViewProps {
   plate = '';
   state: undefined | { value: string; label: string } = undefined;
   model: Model | undefined = undefined;
   vehicles: { car: string; vin: string }[] = [];
   trackLicensePlateClick?: () => void;
+  onStepBack?: () => void;
 
-  constructor(model: Model, trackLicensePlateClick?: () => void) {
+  constructor(
+    model: Model,
+    trackLicensePlateClick?: () => void,
+    onStepBack?: () => void
+  ) {
     makeObservable(this, {
       plate: observable,
       state: observable,
@@ -23,7 +26,7 @@ export default class LicensePlateViewModel implements LicensePlateViewProps {
       setState: action,
       setVehicles: action,
     });
-
+    this.onStepBack = onStepBack;
     this.model = model;
     this.trackLicensePlateClick = trackLicensePlateClick;
   }
@@ -152,8 +155,7 @@ export default class LicensePlateViewModel implements LicensePlateViewProps {
   };
 
   onBackToPurchase = (): void => {
-    const vin = getCurrentVin();
-    window.location.href = `/e2e/${vin}/checkoutTradeIn`;
+    this.onStepBack && this.onStepBack();
   };
 
   getStates = (): { value: string; label: string }[] => states;

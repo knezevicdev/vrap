@@ -6,6 +6,7 @@ import ViewModel from './ViewModel';
 export interface Props {
   trackLicensePlateClick?: () => void;
   trackVinClick?: () => void;
+  onStepBack?: () => void;
 }
 
 class Trade extends React.Component<Props> {
@@ -17,13 +18,14 @@ class Trade extends React.Component<Props> {
   }
 
   render(): React.ReactNode {
-    const { trackLicensePlateClick, trackVinClick } = this.props;
+    const { trackLicensePlateClick, trackVinClick, onStepBack } = this.props;
 
     return (
       <View
         {...this.viewModel}
         trackLicensePlateClick={trackLicensePlateClick}
         trackVinClick={trackVinClick}
+        onStepBack={onStepBack}
       />
     );
   }
