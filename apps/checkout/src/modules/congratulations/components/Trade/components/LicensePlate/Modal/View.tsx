@@ -83,7 +83,8 @@ const Circle = styled.div<{ selected?: boolean }>`
   max-width: 16px;
   min-width: 16px;
   border: solid 1px
-    ${(props) => (props.selected ? primaryBrand(props) : primaryBlack(props))};
+    ${(props): string =>
+      props.selected ? primaryBrand(props) : primaryBlack(props)};
   border-radius: 50%;
   margin-right: 12px;
   margin-top: 10px;
@@ -107,8 +108,6 @@ const Next = styled(Button.Primary)`
   margin-left: auto;
   margin-right: auto;
 `;
-
-Modal.setAppElement('#__next');
 
 export interface ModalProps {
   close: () => void;

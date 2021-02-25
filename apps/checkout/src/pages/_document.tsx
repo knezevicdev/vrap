@@ -20,9 +20,9 @@ export default class CheckoutDocument extends Document {
     const originalRenderPage = ctx.renderPage;
 
     try {
-      ctx.renderPage = () =>
+      ctx.renderPage = (): ReturnType<typeof ctx.renderPage> =>
         originalRenderPage({
-          enhanceApp: (App) => (props) =>
+          enhanceApp: (App) => (props): JSX.Element =>
             styledComponentsSheet.collectStyles(
               materialSheets.collect(<App {...props} />)
             ),
