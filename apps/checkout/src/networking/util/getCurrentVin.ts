@@ -2,7 +2,7 @@ import get from 'lodash/get';
 import NextJSRouter from 'next/router';
 
 /**
- * Utility to get parameter
+ * Get the current VIN number from the parameter
  * @param parameterName
  */
 

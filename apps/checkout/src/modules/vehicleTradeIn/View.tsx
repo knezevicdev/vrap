@@ -48,7 +48,7 @@ interface Props {
 }
 
 const VehicleTradeInView: React.FC<Props> = ({ viewModel }) => {
-  const { isOpen, closeDialog, openDialog } = viewModel;
+  const { isOpen, closeDialog, openDialog, onStepBack } = viewModel;
   return (
     <Page>
       <Modal isOpen={isOpen} close={closeDialog} />
@@ -59,7 +59,7 @@ const VehicleTradeInView: React.FC<Props> = ({ viewModel }) => {
           <Icon icon={Icons.FEEDBACK_QUESTION} />
         </IconButton>
       </SubTitle>
-      <Trade />
+      <Trade onStepBack={onStepBack} />
     </Page>
   );
 };
