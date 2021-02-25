@@ -14,6 +14,7 @@ interface Link {
 
 interface Vehicle {
   img_url: string;
+  img_alt: string;
   link: Link;
 }
 
@@ -31,7 +32,6 @@ class HeroViewModel {
   private readonly analyticsHandler: AnalyticsHandler = new AnalyticsHandler();
   handleLinkClick = (label: string, href: string) => (): void => {
     this.analyticsHandler.trackLinkSectionLinkClicked(label, href);
-    window.location.href = href;
   };
 
   readonly title_vehicle: string = 'shop by vehicle type';
@@ -40,6 +40,7 @@ class HeroViewModel {
   readonly vehicles: Vehicle[] = [
     {
       img_url: `${VROOM_URL}/static-assets/images/home-page/Truck-Body-Type.png`,
+      img_alt: 'Truck - F-150',
       link: {
         label: 'Shop Trucks',
         href: `${VROOM_URL}/cars/types/truck`,
@@ -47,6 +48,7 @@ class HeroViewModel {
     },
     {
       img_url: `${VROOM_URL}/static-assets/images/home-page/SUV-Body-Type.png`,
+      img_alt: 'SUV - Lexus',
       link: {
         label: 'Shop SUVs',
         href: `${VROOM_URL}/cars/types/suv`,
@@ -54,6 +56,7 @@ class HeroViewModel {
     },
     {
       img_url: `${VROOM_URL}/static-assets/images/home-page/Sedan-Body-Type.png`,
+      img_alt: 'Sedan - Accord',
       link: {
         label: 'Shop Sedans',
         href: `${VROOM_URL}/cars/types/sedan`,

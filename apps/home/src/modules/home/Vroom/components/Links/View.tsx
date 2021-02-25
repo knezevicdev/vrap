@@ -197,9 +197,14 @@ const HeroView: React.FC<Props> = ({ viewModel }) => {
           {vehicles.map((vehicle) => (
             <VehicleTile
               onClick={handleLinkClick(vehicle.link.label, vehicle.link.href)}
+              href={vehicle.link.href}
               key={vehicle.img_url}
             >
-              <img src={vehicle.img_url} />
+              <img
+                src={vehicle.img_url}
+                alt={`${vehicle.img_alt}`}
+                loading="lazy"
+              />
               <Link>{vehicle.link.label}</Link>
             </VehicleTile>
           ))}
@@ -212,6 +217,7 @@ const HeroView: React.FC<Props> = ({ viewModel }) => {
           {brands.map((brand) => (
             <BrandTile
               onClick={handleLinkClick(brand.name, brand.href)}
+              href={brand.href}
               key={brand.name}
             >
               <BrandTileInner>
@@ -219,6 +225,8 @@ const HeroView: React.FC<Props> = ({ viewModel }) => {
                   src={brand.image.img_url}
                   max_height={brand.image.max_height}
                   max_width={brand.image.max_width}
+                  alt={`${brand.name} logo`}
+                  loading="lazy"
                 />
               </BrandTileInner>
             </BrandTile>
@@ -232,6 +240,7 @@ const HeroView: React.FC<Props> = ({ viewModel }) => {
           {models.map((model) => (
             <ModelLinkTile
               onClick={handleLinkClick(model.label, model.href)}
+              href={model.href}
               key={model.label}
             >
               <Link>{model.label}</Link>
