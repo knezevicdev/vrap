@@ -8,7 +8,7 @@ class CustomerQuoteViewModel {
   readonly name = 'Michael W.';
   readonly location = 'COLORADO SPRINGS, CO';
   readonly image = {
-    src: `${publicRuntimeConfig.BASE_PATH}/modules/home/images/customer-quote.png`,
+    src: `${publicRuntimeConfig.VROOM_URL}/static-assets/images/home-page/customer-quote.png`,
     alt: 'Person taking a photo.',
   };
 }

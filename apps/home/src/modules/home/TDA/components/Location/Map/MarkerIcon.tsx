@@ -13,7 +13,7 @@ const SizedIcon = styled('img')(() => ({
 const MarkerIcon: FC<Coords> = () => {
   return (
     <SizedIcon
-      src={`${publicRuntimeConfig.BASE_PATH}/modules/home/images/map-pin.svg`}
+      src={`${publicRuntimeConfig.VROOM_URL}/static-assets/icons/home-page/map-pin.svg`}
       alt="pin icon"
     />
   );
