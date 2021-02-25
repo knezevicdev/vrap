@@ -99,7 +99,6 @@ export class OptionsStore implements Store {
   @observable plaidExperiment?: Experiment;
 
   constructor(priceId?: string) {
-    console.log('making new sotre');
     if (priceId) this.init(priceId);
   }
 
