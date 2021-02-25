@@ -1,9 +1,10 @@
-import { action, makeObservable, observable } from 'mobx';
-import { GQLTypes, Status } from '@vroom-web/networking';
-import AnalyticsHandler from 'src/integrations/vehicleTradeIn/VehicleTradeInAnalyticsHandler';
 import { datadogRum } from '@datadog/browser-rum';
+import { GQLTypes, Status } from '@vroom-web/networking';
+import { action, makeObservable, observable } from 'mobx';
+
 import Model from './Model';
 
+import AnalyticsHandler from 'src/integrations/vehicleTradeIn/VehicleTradeInAnalyticsHandler';
 
 interface AnalyticsData {
   UUID?: string;
@@ -99,7 +100,7 @@ export default class VehicleTradeInViewModel {
   }
 
   trackInitialAnalytics = (): void => {
-    if (this.showSuccess) { 
+    if (this.showSuccess) {
       const { orderId, productId } = this.analyticsData;
       datadogRum.addUserAction('vehicleTradeIn', {
         deal: {
@@ -108,6 +109,5 @@ export default class VehicleTradeInViewModel {
         },
       });
     }
-  }
-
+  };
 }

@@ -10,9 +10,9 @@ class VehicleTradeInAnalyticsHandler extends BaseAnalyticsHandler {
     try {
       const properties = {
         action: event,
-        category: 'Ecommerce', 
+        category: 'Ecommerce',
         applicationVersion: VERSION,
-      }; 
+      };
       this.track(event, properties);
     } catch (err) {
       console.log('Analytic Event', err);
@@ -23,9 +23,9 @@ class VehicleTradeInAnalyticsHandler extends BaseAnalyticsHandler {
     try {
       const properties = {
         action: event,
-        category: 'Ecommerce', 
-        applicationVersion: VERSION
-      }; 
+        category: 'Ecommerce',
+        applicationVersion: VERSION,
+      };
       this.track(event, properties);
     } catch (err) {
       console.log('Analytic Event', err);

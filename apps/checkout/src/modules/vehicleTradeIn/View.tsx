@@ -12,7 +12,6 @@ import styled from 'styled-components';
 import Trade from './components/Trade';
 import Modal from './components/Trade/components/Vin/Modal';
 import VehicleTradeInViewModel from './ViewModel';
- 
 
 const Page = styled.div`
   display: grid;
@@ -49,7 +48,14 @@ interface Props {
 }
 
 const VehicleTradeInView: React.FC<Props> = ({ viewModel }) => {
-  const { isOpen, closeDialog, openDialog, trackLicensePlateClick, trackVinClick, trackInitialAnalytics } = viewModel;
+  const {
+    isOpen,
+    closeDialog,
+    openDialog,
+    trackLicensePlateClick,
+    trackVinClick,
+    trackInitialAnalytics,
+  } = viewModel;
   trackInitialAnalytics();
   return (
     <Page>
@@ -61,7 +67,10 @@ const VehicleTradeInView: React.FC<Props> = ({ viewModel }) => {
           <Icon icon={Icons.FEEDBACK_QUESTION} />
         </IconButton>
       </SubTitle>
-      <Trade trackLicensePlateClick={trackLicensePlateClick} trackVinClick={trackVinClick} />
+      <Trade
+        trackLicensePlateClick={trackLicensePlateClick}
+        trackVinClick={trackVinClick}
+      />
     </Page>
   );
 };

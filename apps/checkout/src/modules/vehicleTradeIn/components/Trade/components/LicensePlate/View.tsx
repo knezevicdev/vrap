@@ -29,7 +29,6 @@ const State = styled(Dropdown)`
 const LicensePlate = styled(Input)`
   width: 100%;
   margin-right: 16px;
-
 `;
 
 const BtnContainer = styled.div`
@@ -39,12 +38,11 @@ const BtnContainer = styled.div`
   justify-content: center;
   padding-top: 112px;
   max-width: 272px;
-  margin: 0px auto 0px auto; 
+  margin: 0px auto 0px auto;
 
   ${addStyleForMobile(`
     padding-top: 58px;
   `)}
-
 `;
 
 const CTA = styled(Button.Primary)`
