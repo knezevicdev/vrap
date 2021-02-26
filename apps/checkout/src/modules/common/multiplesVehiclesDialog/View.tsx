@@ -12,7 +12,7 @@ import { observer } from 'mobx-react';
 import getConfig from 'next/config';
 import React from 'react';
 import Modal from 'react-modal';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 const primaryBrand = (props: { theme: ThemeProps }): string =>
   props.theme.colors.primary.brand;
@@ -53,11 +53,27 @@ const ContentTitle = styled(Heading.Four)`
   text-align: center;
 `;
 
-const Select = styled.div`
+const SelectBorder = css`
+  outline: ${primaryBrand};
+  outline-width: 2px;
+  outline-style: solid;
+`;
+
+const Select = styled.div<{ selected?: boolean }>`
   display: flex;
   cursor: pointer;
-  padding: 0px 32px;
-  margin-bottom: 16px;
+  margin-top: 4px;
+  padding: 18px;
+  border: 1px solid ${primaryWhite};
+  box-sizing: border-box;
+  box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.2);
+  min-width: 480px;
+
+  ${(props) => props.selected && SelectBorder};
+
+  ${addStyleForMobile(` 
+min-width: 100%; 
+`)}
 `;
 
 const Vehicles = styled.div`
@@ -66,6 +82,7 @@ const Vehicles = styled.div`
   width: 100%;
   justify-content: center;
   display: grid;
+  grid-gap: 16px;
 `;
 
 const Vehicle = styled.div`
@@ -175,7 +192,7 @@ const ModalView: React.FC<ModalProps> = ({
           const selected = selectedVin ? selectedVin == vin : false;
 
           return (
-            <Select key={vin} onClick={onSelect(vin)}>
+            <Select key={vin} onClick={onSelect(vin)} selected={selected}>
               <Circle selected={selected}>{selected && <InnerCircle />}</Circle>
               <Vehicle>
                 <Title.Three>{car}</Title.Three>
