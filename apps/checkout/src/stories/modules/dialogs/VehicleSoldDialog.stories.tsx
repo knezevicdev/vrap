@@ -3,6 +3,7 @@ import React from 'react';
 import VehicleSoldDialog from 'src/modules/dealValidator/content/VehicleSold';
 import { DialogTypeEnum } from 'src/modules/dealValidator/types';
 import { dialogInnerContent } from 'src/modules/dealValidator/ViewModel';
+import { dialogDecorator } from "./dialogDecorator";
 
 export const Default = (): JSX.Element => {
   const [year, make, model] = ['2007', 'kia', 'Optima'];
@@ -27,4 +28,5 @@ export const Default = (): JSX.Element => {
 
 export default {
   title: 'Checkout/Dialogs/Vehicle Sold',
+  decorators: [dialogDecorator]
 };

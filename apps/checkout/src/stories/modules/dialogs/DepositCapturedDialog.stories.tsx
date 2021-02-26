@@ -1,13 +1,11 @@
 import React from 'react';
 
-import VehicleSoldDialog from 'src/modules/dealValidator/content/VehicleSold';
+import PendingDealDepositCaptured from 'src/modules/dealValidator/content/PendingDealDepositCaptured';
 import { DialogTypeEnum } from 'src/modules/dealValidator/types';
 import { dialogInnerContent } from 'src/modules/dealValidator/ViewModel';
+import { dialogDecorator } from "./dialogDecorator";
 
-export const Default = (): JSX.Element => {
-  const [year, make, model] = ['2007', 'kia', 'Optima'];
-
-  const carName = `${year} ${make} ${model}`;
+export const Default = (): JSX.Element => { 
 
   const dialogAction = (dialogType: DialogTypeEnum): void => {
     console.log('dialogType', dialogType);
@@ -17,8 +15,7 @@ export const Default = (): JSX.Element => {
   );
 
   return (
-    <VehicleSoldDialog
-      carName={carName}
+    <PendingDealDepositCaptured 
       dialogAction={dialogAction}
       title={title ?? ''}
       contentMsg={contentMsg ?? ''}
@@ -29,4 +26,5 @@ export const Default = (): JSX.Element => {
 
 export default {
   title: 'Checkout/Dialogs/Deposit Captured',
+  decorators: [dialogDecorator]
 };
