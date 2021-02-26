@@ -2,7 +2,9 @@ import React from 'react';
 
 import { dialogDecorator } from './dialogDecorator';
 
-import MultiplesVehiclesDialog from 'src/modules/common/multiplesVehiclesDialog';
+import MultiplesVehiclesDialog, {
+  USE_ON_PAGE,
+} from 'src/modules/common/multiplesVehiclesDialog';
 
 export const Default = (): JSX.Element => {
   const vehicles = [
@@ -26,6 +28,7 @@ export const Default = (): JSX.Element => {
       trackLicensePlateClick={() => {
         console.log('traking event');
       }}
+      useOnPage={USE_ON_PAGE.CONGRATS_PAGE}
     />
   );
 };

@@ -3,7 +3,9 @@ import { observer } from 'mobx-react-lite';
 import React from 'react';
 import styled from 'styled-components';
 
-import Modal from './Modal';
+import MultiplesVehiclesDialog, {
+  USE_ON_PAGE,
+} from 'src/modules/common/multiplesVehiclesDialog';
 
 const Inputs = styled.div`
   display: flex;
@@ -66,10 +68,11 @@ const LicensePlateView: React.FC<LicensePlateViewProps> = ({
 
   return (
     <>
-      <Modal
+      <MultiplesVehiclesDialog
         vehicles={vehicles}
         isOpen={isDialogOpen}
         close={closeDialog}
+        useOnPage={USE_ON_PAGE.CONGRATS_PAGE}
         trackLicensePlateClick={trackLicensePlateClick}
       />
       <Inputs>
