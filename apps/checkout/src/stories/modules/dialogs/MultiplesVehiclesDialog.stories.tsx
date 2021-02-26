@@ -8,14 +8,14 @@ import MultiplesVehiclesDialog, {
 
 export const Default = (): JSX.Element => {
   const vehicles = [
-    { car: 'Mazda 2019', vin: 'XVN' },
-    { car: 'Mazda 2020', vin: 'XVNXS' },
-    { car: 'Mazda 2021', vin: 'XVNXSSD' },
-    { car: 'BNW 2020', vin: 'XVNXUYT' },
-    { car: 'Mazda 2009', vin: 'XVNSFGG' },
-    { car: 'Mazda X3 2020', vin: 'XVNXS3X' },
-    { car: 'Mazda CX5 2019', vin: 'XVNCX5' },
-    { car: 'Mazda 3', vin: 'XVNX3' },
+    { car: 'Mazda 2019', vin: '1G1ZG5E71CF306804' },
+    { car: 'Mazda 2020', vin: '1G1ZG5E71CF306802' },
+    { car: 'Mazda 2021', vin: '1G1ZG5E71CF306803' },
+    { car: 'BNW 2020', vin: '1G1ZG5E71CF306805' },
+    { car: 'Mazda 2009', vin: '1G1ZG5E71CF306806' },
+    { car: 'Mazda X3 2020', vin: '1G1ZG5E71CF306807' },
+    { car: 'Mazda CX5 2019', vin: '1G1ZG5E71CF306808' },
+    { car: 'Mazda 3', vin: '1G1ZG5E71CF306809' },
   ];
 
   return (
