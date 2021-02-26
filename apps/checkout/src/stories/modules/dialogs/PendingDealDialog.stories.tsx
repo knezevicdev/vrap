@@ -1,12 +1,12 @@
 import React from 'react';
 
+import { dialogDecorator } from './dialogDecorator';
+
 import PendingDealDepositCaptured from 'src/modules/dealValidator/content/PendingDealDepositCaptured';
 import { DialogTypeEnum } from 'src/modules/dealValidator/types';
 import { dialogInnerContent } from 'src/modules/dealValidator/ViewModel';
-import { dialogDecorator } from "./dialogDecorator";
 
-export const Default = (): JSX.Element => { 
-
+export const Default = (): JSX.Element => {
   const dialogAction = (dialogType: DialogTypeEnum): void => {
     console.log('dialogType', dialogType);
   };
@@ -15,7 +15,7 @@ export const Default = (): JSX.Element => {
   );
 
   return (
-    <PendingDealDepositCaptured 
+    <PendingDealDepositCaptured
       dialogAction={dialogAction}
       title={title ?? ''}
       contentMsg={contentMsg ?? ''}
@@ -26,5 +26,5 @@ export const Default = (): JSX.Element => {
 
 export default {
   title: 'Checkout/Dialogs/Pending Purchase',
-  decorators: [dialogDecorator]
+  decorators: [dialogDecorator],
 };

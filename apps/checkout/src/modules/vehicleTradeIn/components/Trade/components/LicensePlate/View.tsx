@@ -8,7 +8,7 @@ import { observer } from 'mobx-react-lite';
 import React from 'react';
 import styled from 'styled-components';
 
-import Modal from './Modal';
+import Modal from 'src/modules/common/multiplesVehiclesDialog';
 
 const Inputs = styled.div`
   display: grid;
