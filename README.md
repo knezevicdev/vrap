@@ -19,7 +19,7 @@
   - It also gets around an long-standing issue in chrome: https://bugs.chromium.org/p/chromium/issues/detail?id=67743
   - In Gitlab add your SSH key
   - Click on tokens and generate your access token. Click "api" for scope
-  - Add `export=CI_JOB_TOKEN` to your environment variables
+  - Add `export CI_JOB_TOKEN={insert Gitlab token from previous step}` to your environment variables
   - Install CORS Unblock Extension
 
 - Determine which monorepo package you want to run. There are several here, so a good place to start would be one of the packages under the `/apps` folder.
@@ -148,42 +148,11 @@ To enable this monorepo architecture, we use these key tools
 - [VSCode - Optional](https://code.visualstudio.com/)
 - [VSCode Remote Container Extenstion - Optional](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers)
 
-### Building Libraries
-
-`yarn install` will take care of pulling down external packages, but we also need to prepare our local packages for use. As with any NPM package, source code needs to be built. The different here is that instead of uploading the output `dist` folder to an NPM registry, yarn will resolve local packages based on the `main` and `module` fields of that package's `package.json` file.
-
-Sound complicated? It's actually not too bad.
-
-Open up the `/libs/ui` folder. If this is your first time in the repo, you will not see a `/libs/ui/dist` folder there yet.
-
-Now open the `/libs/ui/package.json` file in a text editor.
-Notice that the `main` and `module` keys of the `package.json` file point to files under the `/libs/ui/dist` directory, which does not yet exist. If you try to reference this `@vroom-web/ui` library, you will encounter an error, because it will not be able to resolve files that don't exist.
-
-In order to create these files, we need to build the library.
-For the `/libs/ui` library in particular, we have a `build` script defined in `package.json` that will generate the `dist` files.
-
-To run this script, you can use `yarn workspace @vroom-web/ui build` as described above.
-But once again, you do not need to worry about this, because Docker is configured to execute this step.
-Just be aware of how it works in case you need to write your own Docker configuration.
-
 ## Docker
 
 We use docker to orchastrate our setup and build processes. This hides complexity from developers who don't need to worry about it, and it also allows us to know that our dev environment is as similar to our deployment environments as possible.
 
 Notice that in each package, there is a `/docker` folder which describes how to build an image and run a container. We use the `docker-compose` tool to inject environment variables and run our image for local development.
-
-# Gotchas
-When adding local packages you must specify the version and add from root, eg
-
-> yarn workspace @vroom-web/home add @vroom-web/banner@^0.1.0
-
-Otherwise yarn tries to grab from the registry.
-
-https://medium.com/rewire-to/webpack-module-resolution-within-a-monorepo-or-how-i-stopped-bundling-two-versions-of-react-7c1d8c31d5a0
-
-When using a package across multiple apps/libs, be sure the same version is installed. Packages like react, which require the same version across packages to work will only be correctly hoisted by yarn if all packages in the monorepo can resolve to the same version. Pay attention to the semver (^) used by package.json
-
-One way to debug this is to use the `yarn why` command. For example, `yarn why react` will show what packages are using what version of react.
 
 ### Generators
 
