@@ -7,10 +7,6 @@ import React from 'react';
 import { withDesign } from 'storybook-addon-designs';
 import styled, { ThemeProvider } from 'styled-components';
 
-import Next from 'src/modules/congratulations/sections/Next';
-import PurchaseSummary from 'src/modules/congratulations/sections/PurchaseSummary/PurchaseSummary';
-import Questions from 'src/modules/congratulations/sections/Questions';
-import ReservedCar from 'src/modules/congratulations/sections/ReservedCar';
 import {
   footerViewModel,
   nextViewModel,
@@ -18,6 +14,11 @@ import {
   questionsViewModel,
   reservedCarViewModel,
 } from '../../../ViewModels';
+
+import Next from 'src/modules/congratulations/sections/Next';
+import PurchaseSummary from 'src/modules/congratulations/sections/PurchaseSummary/PurchaseSummary';
+import Questions from 'src/modules/congratulations/sections/Questions';
+import ReservedCar from 'src/modules/congratulations/sections/ReservedCar';
 
 const primaryWhite = (props: { theme: ThemeProps }): string =>
   props.theme.colors.primary.white;

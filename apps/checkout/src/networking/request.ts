@@ -4,6 +4,8 @@ import client from './client';
 import { getTestDeal } from './util/getTestDeal';
 
 import DEAL_VALIDATOR from 'src/graphql/queries/dealValidator.graphql';
+import GET_DECODE_VIN from 'src/graphql/queries/getDecodeVin.graphql';
+import GE_PLATE_TO_VIN from 'src/graphql/queries/getPlateToVin.graphql';
 import GET_USER_DEAL from 'src/graphql/queries/getUserDeal.graphql';
 import GET_VEHICLE_TRADE from 'src/graphql/queries/getVehicleTrade.graphql';
 interface Data {
@@ -81,6 +83,67 @@ export const getVehicleTrade = async (
     variables: {
       dealID,
       dealStatus,
+    },
+  });
+
+  return res;
+};
+
+export interface LicensePlateToVinData {
+  licensePlateToVin: GQLTypes.LpToVin;
+}
+
+/**
+ * Get VIN number from the Plate and User State
+ * @param lp
+ * @param state
+ */
+
+export const getPlateToVin = async (
+  lp: string,
+  state: string
+): Promise<Response<LicensePlateToVinData>> => {
+  const res = await client.gqlRequest<
+    LicensePlateToVinData,
+    GQLTypes.QueryLicensePlateToVinArgs
+  >({
+    document: GE_PLATE_TO_VIN,
+    variables: {
+      lp,
+      state,
+      source: 'vroom.com | checkout',
+    },
+  });
+
+  return res;
+};
+
+export interface DecodeVinData {
+  decodeVIN: GQLTypes.VinData;
+}
+
+/**
+ * Get vehicle Information from the VIN number
+ * @param vin
+ * @param colors
+ * @param options optional
+ */
+
+export const decodeVin = async (
+  vin: string,
+  colors: boolean,
+  options?: boolean
+): Promise<Response<DecodeVinData>> => {
+  const res = await client.gqlRequest<
+    DecodeVinData,
+    GQLTypes.QueryDecodeVinArgs
+  >({
+    document: GET_DECODE_VIN,
+    variables: {
+      vin,
+      colors,
+      options,
+      source: 'vroom.com | checkout',
     },
   });
 

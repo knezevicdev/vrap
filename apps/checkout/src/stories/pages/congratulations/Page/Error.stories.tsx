@@ -7,9 +7,10 @@ import React from 'react';
 import { withDesign } from 'storybook-addon-designs';
 import styled, { ThemeProvider } from 'styled-components';
 
+import { footerViewModel, questionsViewModel } from '../ViewModels';
+
 import Error from 'src/modules/congratulations/sections/Error';
 import Questions from 'src/modules/congratulations/sections/Questions';
-import { footerViewModel, questionsViewModel } from '../ViewModels';
 
 const primaryWhite = (props: { theme: ThemeProps }): string =>
   props.theme.colors.primary.white;

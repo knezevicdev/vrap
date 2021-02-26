@@ -15,8 +15,6 @@ const primaryWhite = (props: { theme: ThemeProps }): string =>
 const primaryBrand = (props: { theme: ThemeProps }): string =>
   props.theme.colors.primary.brand;
 
-Modal.setAppElement('#__next');
-
 const CustomModal = styled(Modal)`
   display: flex;
   position: relative;

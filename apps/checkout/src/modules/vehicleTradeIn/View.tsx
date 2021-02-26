@@ -1,30 +1,65 @@
-import { ThemeProps } from '@vroom-web/temp-ui-alias-for-checkout';
+import {
+  addStyleForMobile,
+  Heading,
+  Icon,
+  Icons,
+  Typography,
+} from '@vroom-web/temp-ui-alias-for-checkout';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
 import styled from 'styled-components';
 
+import Trade from './components/Trade';
+import Modal from './components/Trade/components/Vin/Modal';
 import VehicleTradeInViewModel from './ViewModel';
 
-const primaryWhite = (props: { theme: ThemeProps }): string =>
-  props.theme.colors.primary.white;
-
 const Page = styled.div`
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  min-height: 100%;
-  background: ${primaryWhite};
+  display: grid;
+  justify-items: center;
+  padding-top: 62px;
+  padding-bottom: 64px;
+  row-gap: 8px;
+  grid-template-rows: auto 24px auto;
+
+  ${addStyleForMobile(`
+    padding: 8px;
+  `)}
 `;
 
+const SubTitle = styled(Typography.Body.Regular)`
+  display: grid;
+  grid-template-columns: auto 16px;
+  grid-gap: 8px;
+  align-items: center;
+`;
+
+const ComponentTitle = styled(Heading.Three)`
+  text-align: center;
+  font-display: swap;
+`;
+
+const IconButton = styled.span`
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+`;
 interface Props {
   viewModel: VehicleTradeInViewModel;
 }
 
 const VehicleTradeInView: React.FC<Props> = ({ viewModel }) => {
+  const { isOpen, closeDialog, openDialog, onStepBack } = viewModel;
   return (
     <Page>
-      {viewModel.dealId} <br />
-      This is the Vehicle Trade View Component
+      <Modal isOpen={isOpen} close={closeDialog} />
+      <ComponentTitle>your trade-in information</ComponentTitle>
+      <SubTitle>
+        Start by entering your license plate or VIN{' '}
+        <IconButton onClick={openDialog}>
+          <Icon icon={Icons.FEEDBACK_QUESTION} />
+        </IconButton>
+      </SubTitle>
+      <Trade onStepBack={onStepBack} />
     </Page>
   );
 };

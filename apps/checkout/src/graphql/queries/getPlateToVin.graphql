@@ -1,0 +1,15 @@
+query PLATE_TO_VIN($lp: String!, $state: String!, $source: String!) {
+        licensePlateToVin(lp: $lp, state: $state, source: $source) {
+          vehicles {
+            restrictedStateIndicator
+            processingType
+            vin
+            modelYear
+            make
+            stateOfRegistration
+            plateType
+            inputLicensePlate
+            vinPattern
+          }
+        }
+      }
