@@ -3,33 +3,34 @@ import React from 'react';
 
 import { dealState } from './ViewModel';
 
+import { DealProvider } from 'src/core/contexts';
+import { DealStore } from 'src/core/store';
 import CheckoutLayout from 'src/modules/common/CheckoutLayout';
-import { DealContext, DealStore } from 'src/modules/store/DealStore';
 
-const store = new DealStore(dealState);
+const store = new DealStore(dealState.model);
 const height = 500;
 
 export const ShowCarCard = (): JSX.Element => {
   return (
-    <DealContext.Provider value={store}>
+    <DealProvider value={store}>
       <CheckoutLayout showCarCard={true}>
         <div style={{ height: `${height}px` }}>
           <Heading.Four>{`Demo ${height}px`}</Heading.Four>
         </div>
       </CheckoutLayout>
-    </DealContext.Provider>
+    </DealProvider>
   );
 };
 
 export const ShowDealSummary = (): JSX.Element => {
   return (
-    <DealContext.Provider value={store}>
+    <DealProvider value={store}>
       <CheckoutLayout showCarCard={false}>
         <div style={{ height: `${height}px` }}>
           <Heading.Four>{`Demo ${height}px`}</Heading.Four>
         </div>
       </CheckoutLayout>
-    </DealContext.Provider>
+    </DealProvider>
   );
 };
 

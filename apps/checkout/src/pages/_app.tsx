@@ -14,6 +14,7 @@ import { configure as configureMobx } from 'mobx';
 import App from 'next/app';
 import getConfig from 'next/config';
 import React from 'react';
+import Modal from 'react-modal';
 import { ThemeProvider as StyledThemeProvider } from 'styled-components';
 
 import DealValidatorModal from 'src/modules/dealValidator';
@@ -26,7 +27,7 @@ configureMobx({
 });
 
 const { publicRuntimeConfig } = getConfig();
-
+Modal.setAppElement('#__next');
 class VroomApp extends App {
   componentDidMount(): void {
     if (publicRuntimeConfig.DATA_DOG_RUM_APPLICATION) {

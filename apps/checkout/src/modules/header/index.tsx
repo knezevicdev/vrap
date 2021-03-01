@@ -1,13 +1,13 @@
-import React, { useContext } from 'react';
+import React from 'react';
 
-import { DealContext } from '../store/DealStore';
 import View from './View';
 import ViewModel from './ViewModel';
 
+import { useDeal } from 'src/core/hooks';
 import { headerAnalyticsHandler } from 'src/integrations/header/HeaderAnalyticsHandler';
 
 const Header = (): JSX.Element => {
-  const store = useContext(DealContext);
+  const store = useDeal();
   const viewModel = new ViewModel(store, headerAnalyticsHandler);
   return <View viewModel={viewModel} />;
 };

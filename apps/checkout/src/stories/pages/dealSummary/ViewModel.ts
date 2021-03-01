@@ -1,3 +1,5 @@
+import { GQLTypes } from '@vroom-web/networking';
+
 import {
   DealProps,
   DealSummaryProps,
@@ -14,6 +16,17 @@ export const vehicle: VehicleProps = {
   leadPhotoURL:
     'https://cdn.spincar.com/swipetospin-viewers/vroomadesaatlanta/jthbw1gg0h2142332/20201203212657.Z81AZWJL/closeups/cu-0.jpg',
 };
+
+export const vehicleInvSearch = {
+  listingPrice: 14840,
+  year: 2017,
+  make: 'Alfa Romeo',
+  model: 'Giulia',
+  trim: 'SE',
+  miles: 11540,
+  leadPhotoUrl:
+    'https://cdn.spincar.com/swipetospin-viewers/vroomadesaatlanta/jthbw1gg0h2142332/20201203212657.Z81AZWJL/closeups/cu-0.jpg',
+} as GQLTypes.InvSearchVehicleData;
 
 export const partialDeal: DealProps = {
   method: 'TBD',

@@ -1,6 +1,4 @@
 import {
-  addStyleForMobile,
-  addStyleForTablet,
   Body,
   Heading,
   ThemeProps,
@@ -19,20 +17,8 @@ const grayThree = (props: { theme: ThemeProps }): string =>
   props.theme.colors.gray.three;
 
 const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-self: center;
-  width: 40%;
-  margin: 0 auto;
   max-width: 416px;
-
-  ${addStyleForTablet(`
-    width: 100%;
-  `)}
-
-  ${addStyleForMobile(`
-    width: 100%;
-  `)}
+  width: 100%;
 `;
 
 const TabContainer = styled.div`

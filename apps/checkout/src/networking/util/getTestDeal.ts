@@ -14,7 +14,7 @@ interface TestParameters {
  * example: checkout/module?testDeal&testDealStatus="In-Progress"
  * example: checkout/module?testDealStatus="Pending"
  * @param dealID
- * @param dealStatus
+ * @param dealStatus string[]
  */
 export const getTestDeal = (
   dealID?: number,

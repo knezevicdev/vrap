@@ -20,7 +20,7 @@ const DealCard = ({ vehicle, deal, trades }: DealSummaryProps): JSX.Element => {
   return (
     <Content>
       <Title>Purchase summary</Title>
-      <VehicleDetails {...vehicle} />
+      <VehicleDetails vehicle={vehicle} />
       <DealDetails deal={deal} trades={trades} />
     </Content>
   );
