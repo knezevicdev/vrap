@@ -11,6 +11,8 @@ export const setAuthDataCookie = (data: IdToken): void => {
     expires: new Date(data.exp * 1000),
     sameSite: 'strict',
   };
+
+  
   if (process.env.NODE_ENV !== 'development') {
     config.secure = true;
   }
