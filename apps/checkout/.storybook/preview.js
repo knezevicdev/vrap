@@ -29,7 +29,7 @@ export const parameters = {
       },
     },
   },
-  layout: 'fullscreen',
+  layout: 'centered',
 };
 
 function withGlobalStyles(storyFn) {

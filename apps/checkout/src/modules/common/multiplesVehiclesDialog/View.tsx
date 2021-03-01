@@ -9,9 +9,10 @@ import {
   Title,
 } from '@vroom-web/temp-ui-alias-for-checkout';
 import { observer } from 'mobx-react';
+import getConfig from 'next/config';
 import React from 'react';
 import Modal from 'react-modal';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 const primaryBrand = (props: { theme: ThemeProps }): string =>
   props.theme.colors.primary.brand;
@@ -23,57 +24,75 @@ const primaryWhite = (props: { theme: ThemeProps }): string =>
   props.theme.colors.primary.white;
 
 const CustomModal = styled(Modal)`
-  display: flex;
-  position: relative;
-  flex-direction: column;
+  display: grid;
+  padding-top: 18px;
+  padding-bottom: 48px;
+  grid-template-rows: 12px 68px auto auto 48px;
+  grid-gap: 16px;
+  max-width: 692px;
+  width: 100%;
+  justify-items: center;
   background: ${primaryWhite};
-  max-width: 379px;
-  max-height: 460px;
-  border-bottom: solid 4px ${primaryBrand};
-  outline: none;
-
-  ${addStyleForMobile(`
-    padding: 24px;
-  `)}
+  border-bottom: 4px solid ${primaryBrand};
+  z-index: 1;
+  &:focus {
+    outline: none;
+  }
+  ${addStyleForMobile(` 
+  width: 100%;
+`)}
 `;
 
-const Close = styled.div`
-  position: absolute;
-  top: 8px;
-  right: 8px;
+const Close = styled.a`
+  justify-self: right;
+  padding-right: 18px;
   cursor: pointer;
-  padding: 8px;
 `;
 
 const ContentTitle = styled(Heading.Four)`
   text-align: center;
-  padding: 24px 48px;
 `;
 
-const Select = styled.div`
+const SelectBorder = css`
+  outline: ${primaryBrand};
+  outline-width: 2px;
+  outline-style: solid;
+`;
+
+const Select = styled.li<{ selected?: boolean }>`
   display: flex;
   cursor: pointer;
-  padding: 0px 32px;
-  margin-bottom: 16px;
+  margin-top: 4px;
+  padding: 18px;
+  border: 1px solid ${primaryWhite};
+  box-sizing: border-box;
+  box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.2);
+  min-width: 480px;
+
+  ${(props) => props.selected && SelectBorder};
+
+  ${addStyleForMobile(` 
+min-width: 100%; 
+`)}
 `;
 
-const Vehicles = styled.div`
-  display: flex;
-  flex-direction: column;
-  overflow-y: auto;
+const Vehicles = styled.ul`
+  max-height: 254px;
+  overflow: auto;
+  width: 100%;
+  justify-content: center;
+  display: grid;
+  grid-gap: 16px;
+  padding: 0px;
 `;
+
+const BottomList = styled.div `
+  height: 10px;
+`
 
 const Vehicle = styled.div`
   display: flex;
   flex-direction: column;
-`;
-
-const Footer = styled.div`
-  display: flex;
-  justify-content: center;
-  padding-top: 16px;
-  padding-bottom: 16px;
-  box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.15);
 `;
 
 const Circle = styled.div<{ selected?: boolean }>`
@@ -83,8 +102,7 @@ const Circle = styled.div<{ selected?: boolean }>`
   max-width: 16px;
   min-width: 16px;
   border: solid 1px
-    ${(props): string =>
-      props.selected ? primaryBrand(props) : primaryBlack(props)};
+    ${(props) => (props.selected ? primaryBrand(props) : primaryBlack(props))};
   border-radius: 50%;
   margin-right: 12px;
   margin-top: 10px;
@@ -103,10 +121,16 @@ const InnerCircle = styled.div`
 `;
 
 const Next = styled(Button.Primary)`
-  min-width: 180px;
-  max-width: 180px;
-  margin-left: auto;
-  margin-right: auto;
+  max-width: 220px;
+  width: 100%;
+  ${addStyleForMobile(` 
+margin: 0px 50px 20px;
+`)}
+`;
+
+const Car = styled.img`
+  width: 68px;
+  height: 68px;
 `;
 
 export interface ModalProps {
@@ -118,6 +142,10 @@ export interface ModalProps {
   onSelect: (vin: string) => () => void;
   onNextClick: () => void;
 }
+
+const {
+  publicRuntimeConfig: { BASE_PATH },
+} = getConfig();
 
 const ModalView: React.FC<ModalProps> = ({
   close,
@@ -159,6 +187,8 @@ const ModalView: React.FC<ModalProps> = ({
       <Close onClick={close}>
         <Icon icon={Icons.CLOSE_LARGE} />
       </Close>
+      <Car src={`${BASE_PATH}/assets/icons/multiple-cars.svg`} />
+
       <ContentTitle>Which vehicle would you like to sell?</ContentTitle>
       <Vehicles>
         {vehicles.map((vehicle) => {
@@ -167,7 +197,7 @@ const ModalView: React.FC<ModalProps> = ({
           const selected = selectedVin ? selectedVin == vin : false;
 
           return (
-            <Select key={vin} onClick={onSelect(vin)}>
+            <Select key={vin} onClick={onSelect(vin)} selected={selected}>
               <Circle selected={selected}>{selected && <InnerCircle />}</Circle>
               <Vehicle>
                 <Title.Three>{car}</Title.Three>
@@ -176,12 +206,11 @@ const ModalView: React.FC<ModalProps> = ({
             </Select>
           );
         })}
+        <BottomList/>
       </Vehicles>
-      <Footer>
-        <Next disabled={isNextDisabled} onClick={onNextClick}>
-          Next
-        </Next>
-      </Footer>
+      <Next disabled={isNextDisabled} onClick={onNextClick}>
+        Next
+      </Next>
     </CustomModal>
   );
 };
