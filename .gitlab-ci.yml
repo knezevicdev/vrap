@@ -174,3 +174,13 @@ test-product:
     - cd apps/product
     - npm install --quiet
     - npm run test:ci
+  artifacts:
+    when: always
+    reports:
+      junit:
+        - apps/product/junit.xml
+      cobertura: apps/product/coverage/cobertura-coverage.xml
+    paths:
+      - apps/product/coverage
+
+
