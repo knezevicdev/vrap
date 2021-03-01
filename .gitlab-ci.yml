@@ -169,11 +169,11 @@ test-product:
       - merge_requests
     changes:
       - apps/product/**/*
-  stage: build
+  stage: test
   script:
     - cd apps/product
     - npm install --quiet
-    - npm run test:ci
+    - npm run test:cc
   artifacts:
     when: always
     reports:
