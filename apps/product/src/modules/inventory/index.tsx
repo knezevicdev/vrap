@@ -6,9 +6,6 @@ import Santander from './Santader';
 import TDA from './TDA';
 import Vroom from './Vroom';
 
-// for testing
-//again
-//again
 const Inventory: React.FC = () => {
   const brand = useContext(BrandContext);
   if (brand === Brand.SANTANDER) {
