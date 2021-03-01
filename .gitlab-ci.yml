@@ -179,7 +179,7 @@ test-product:
     reports:
       junit:
         - apps/product/junit.xml
-      cobertura: apps/product/coverage/cobertura-coverage.xml
+      cobertura: apps/product/coverage/clover.xml
     paths:
       - apps/product/coverage
 
