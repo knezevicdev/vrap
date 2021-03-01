@@ -26,7 +26,7 @@ module.exports = {
     //   '^.+\\.module\\.(css|sass|scss)$': 'identity-obj-proxy',
   },
   coverageReporters: ['json', 'lcov', 'text', 'clover', 'cobertura'],
-  reporters: ['default', 'jest-junit'],
+  reporters: ['default'],
   globals: {
     'ts-jest': {
       tsconfig: 'tsconfig.test.json',
