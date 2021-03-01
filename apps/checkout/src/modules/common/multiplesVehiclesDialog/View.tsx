@@ -59,7 +59,7 @@ const SelectBorder = css`
   outline-style: solid;
 `;
 
-const Select = styled.div<{ selected?: boolean }>`
+const Select = styled.li<{ selected?: boolean }>`
   display: flex;
   cursor: pointer;
   margin-top: 4px;
@@ -76,14 +76,19 @@ min-width: 100%;
 `)}
 `;
 
-const Vehicles = styled.div`
+const Vehicles = styled.ul`
   max-height: 254px;
   overflow: auto;
   width: 100%;
   justify-content: center;
   display: grid;
   grid-gap: 16px;
+  padding: 0px;
 `;
+
+const BottomList = styled.div `
+  height: 10px;
+`
 
 const Vehicle = styled.div`
   display: flex;
@@ -201,6 +206,7 @@ const ModalView: React.FC<ModalProps> = ({
             </Select>
           );
         })}
+        <BottomList/>
       </Vehicles>
       <Next disabled={isNextDisabled} onClick={onNextClick}>
         Next
