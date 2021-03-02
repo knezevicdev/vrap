@@ -133,6 +133,8 @@ test-logistics:
       junit:
         - apps/logistics/junit.xml
       cobertura: apps/logistics/coverage/cobertura-coverage.xml
+    paths:
+      -  apps/logistics/coverage
 
 
 build-marketing:
@@ -167,8 +169,18 @@ test-product:
       - merge_requests
     changes:
       - apps/product/**/*
-  stage: build
+  stage: test
   script:
     - cd apps/product
     - npm install --quiet
     - npm run test:ci
+  artifacts:
+    when: always
+    reports:
+      junit:
+        - apps/product/junit.xml
+      cobertura: apps/product/coverage/cobertura-coverage.xml
+    paths:
+      - apps/product/coverage
+
+
