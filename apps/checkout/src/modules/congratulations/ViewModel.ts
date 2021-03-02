@@ -1,5 +1,5 @@
 import { datadogRum } from '@datadog/browser-rum';
-import { GQLTypes, Status, ErrorResponse } from '@vroom-web/networking';
+import { GQLTypes, Status } from '@vroom-web/networking';
 import {
   FooterEventTrackerEnum,
   FooterProps,
