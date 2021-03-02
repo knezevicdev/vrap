@@ -16,7 +16,6 @@
     "@material-ui/icons": "^4.9.1",
     "@material-ui/lab": "^4.0.0-alpha.44",
     "@next/bundle-analyzer": "^9.4.4",
-    "@vroom-web/ui": "^1.0.0",
     "axios": "^0.21.1",
     "cookie": "^0.4.1",
     "dayjs": "^1.10.3",

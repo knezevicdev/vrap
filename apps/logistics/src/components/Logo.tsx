@@ -1,5 +1,6 @@
+import { Typography } from '@material-ui/core';
 import { styled } from '@material-ui/core/styles';
-import { Typography } from '@vroom-web/ui';
+import Link from 'next/link';
 import React from 'react';
 
 import { ReactComponent as LogoSvg } from 'src/svg/logo.svg';
@@ -18,17 +19,13 @@ const StyledLogoSvg = styled(LogoSvg)(({ theme }) => ({
   },
 }));
 
-export interface Props {
-  className: string;
-  href: string;
-  onClick: (event: React.MouseEvent<HTMLAnchorElement>) => void;
-}
-
-const Logo: React.FC<Props> = ({ className, href, onClick }) => (
-  <StyledAnchor className={className} href={href} onClick={onClick}>
-    <StyledLogoSvg />
-    <Typography variant="srOnly">Home</Typography>
-  </StyledAnchor>
+const Logo = (): JSX.Element => (
+  <Link href="/" passHref>
+    <StyledAnchor>
+      <StyledLogoSvg />
+      <Typography variant="srOnly">Home</Typography>
+    </StyledAnchor>
+  </Link>
 );
 
 export default Logo;

@@ -3,7 +3,7 @@ import {
   Button,
   CircularProgress,
   Grid,
-  Link,
+  Link as MuiLink,
   Paper,
   TextField,
   Typography,
@@ -11,6 +11,7 @@ import {
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import { Alert } from '@material-ui/lab';
 import { observer } from 'mobx-react';
+import Link from 'next/link';
 import React from 'react';
 
 import ViewModel from './ViewModel';
@@ -181,8 +182,8 @@ const SignupView: React.FC<Props> = ({ viewModel }) => {
                     </Grid>
                     <Grid item>
                       <Typography>
-                        <Link href="/signin">
-                          Already signed up? Log in here!
+                        <Link href="/signin" passHref>
+                          <MuiLink>Already signed up? Log in here!</MuiLink>
                         </Link>
                       </Typography>
                     </Grid>
