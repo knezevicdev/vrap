@@ -1,5 +1,5 @@
 import { datadogRum } from '@datadog/browser-rum';
-import { GQLTypes, Status } from '@vroom-web/networking';
+import { GQLTypes, Status, ErrorResponse } from '@vroom-web/networking';
 import {
   FooterEventTrackerEnum,
   FooterProps,
@@ -291,18 +291,30 @@ export default class CongratsViewModel {
     };
   }
 
-  trackAnalytics(): void {
-    if (this.showSuccess) {
-      this.analyticsHandler.trackCongratsViewed();
-      this.analyticsHandler.trackOrderCompleted();
+  trackSuccess(): void {
+    this.analyticsHandler.trackCongratsViewed();
+    this.analyticsHandler.trackOrderCompleted();
 
-      const { orderId, productId } = this.analyticsData;
-      datadogRum.addUserAction('completedDeal', {
-        deal: {
-          dealId: orderId,
-          inventoryId: productId,
-        },
-      });
+    const { orderId, productId } = this.analyticsData;
+    datadogRum.addUserAction('completedDeal', {
+      deal: {
+        dealId: orderId,
+        inventoryId: productId,
+      },
+    });
+  }
+
+  trackError(): void {
+    if (this.error) {
+      const {
+        error: { name, message },
+        status,
+      } = this.model.error;
+      this.analyticsHandler.trackErrorOnCongrats(`${name}: ${message}`, status);
+    } else if (this.empty) {
+      this.analyticsHandler.trackErrorOnCongrats('No Deal');
+    } else {
+      this.analyticsHandler.trackErrorOnCongrats('Something went wrong');
     }
   }
 

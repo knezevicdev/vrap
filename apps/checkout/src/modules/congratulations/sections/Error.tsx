@@ -5,8 +5,9 @@ import {
   Link,
   ThemeProps,
 } from '@vroom-web/temp-ui-alias-for-checkout';
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
+import ViewModel from '../ViewModel';
 
 const primaryBrand = (props: { theme: ThemeProps }): string =>
   props.theme.colors.primary.brand;
@@ -49,7 +50,15 @@ const CustomLink = styled(Link)`
   font-weight: 600;
 `;
 
-const Error: React.FC = (): JSX.Element => {
+interface Props {
+  viewModel: ViewModel;
+}
+
+const Error = ({ viewModel }: Props): JSX.Element => {
+  useEffect(() => {
+    viewModel.trackError();
+  }, []);
+
   return (
     <Background>
       <Container>
