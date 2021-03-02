@@ -1,16 +1,3 @@
-sonarcloud:
-  docker:
-  - image: circleci/node:erbium-browsers
-  steps:
-    - checkout
-    - run:
-        command: |-
-          # Bootstrap yarn workspaces.
-          yarn install --silent
-
-          # Build the main app.
-          yarn workspace @vroom-web/logistics build
-    - sonarcloud/scan
 logistics_build:
   docker:
   - image: vroom/mlp:3.0.2

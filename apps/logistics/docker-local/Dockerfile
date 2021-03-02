@@ -12,7 +12,6 @@ WORKDIR /www/apps/logistics
 # Install git so editor git commands work
 RUN apk --no-cache add git
 
-# Bootstrap yarn workspaces.
 RUN npm install
 
 CMD ["npm", "run", "start", "--port", "8080"]
