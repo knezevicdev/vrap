@@ -4,12 +4,10 @@ import { IncomingMessage } from 'http';
 import { NextPage, NextPageContext } from 'next';
 import getConfig from 'next/config';
 import { useRouter } from 'next/router';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 
 import ToolFooter from 'src/core/ToolFooter';
-import AnalyticsHandler from 'src/integrations/AnalyticsHandler';
-import experimentSDK from 'src/integrations/experimentSDK';
 import {
   DirectDepositStore,
   DirectDepositStoreContext,
@@ -70,24 +68,11 @@ const EPayOptions: NextPage<Props> = ({ brand }) => {
   const oStore = new OptionsStore(priceId);
   const ddStore = new DirectDepositStore(priceId);
   const poStore = new PaymentOverviewStore(priceId);
-  const [analyticsHandler] = useState<AnalyticsHandler>(new AnalyticsHandler());
 
   // TODO: this used to be used with <State isOpenCallback={setStateDropdown} />
   // It caused the page to rerender and mobx would lose its state
   // Ideally we would like to extend the page to accomodate the long dropdown
   const [stateDropdownOpen, setStateDropdown] = useState(false);
-
-  useEffect(() => {
-    experimentSDK
-      .getAndLogExperimentClientSide('cw-plaid-experiment')
-      .then((experiment) => oStore.setPlaidExperiment(experiment));
-  }, [oStore]);
-
-  useEffect(() => {
-    if (oStore.plaidExperiment) {
-      analyticsHandler.registerExperiment(oStore.plaidExperiment);
-    }
-  }, [oStore.plaidExperiment, analyticsHandler]);
 
   return (
     <ThemeProvider brand={brand}>
