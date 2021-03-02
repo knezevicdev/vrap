@@ -16,7 +16,7 @@ const Success: React.FC<Props> = ({ viewModel }): JSX.Element => {
 
   useEffect(() => {
     viewModel.trackSuccess();
-  }, []);
+  }, [viewModel]);
 
   return (
     <>

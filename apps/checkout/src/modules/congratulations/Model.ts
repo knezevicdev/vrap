@@ -1,8 +1,8 @@
 import {
+  ErrorResponse,
   GQLTypes,
   isErrorResponse,
   Status,
-  ErrorResponse,
 } from '@vroom-web/networking';
 import { makeAutoObservable, runInAction } from 'mobx';
 

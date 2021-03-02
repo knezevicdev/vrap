@@ -7,6 +7,7 @@ import {
 } from '@vroom-web/temp-ui-alias-for-checkout';
 import React, { useEffect } from 'react';
 import styled from 'styled-components';
+
 import ViewModel from '../ViewModel';
 
 const primaryBrand = (props: { theme: ThemeProps }): string =>
@@ -57,7 +58,7 @@ interface Props {
 const Error = ({ viewModel }: Props): JSX.Element => {
   useEffect(() => {
     viewModel.trackError();
-  }, []);
+  }, [viewModel]);
 
   return (
     <Background>
