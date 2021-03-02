@@ -33,7 +33,7 @@ export interface Link {
   name: string;
   trackingName?: FooterEventTrackerEnum;
 }
-interface AnalyticsData {
+export interface AnalyticsData {
   UUID?: string;
   username: string;
   vin?: string;
@@ -233,6 +233,7 @@ export default class CongratsViewModel {
       trackScheduleTime: this.trackScheduleTime,
       trackLicensePlateClick: this.trackLicensePlateClick,
       trackVinClick: this.trackVinClick,
+      trackDocUploadClicked: this.trackDocUploadClicked,
       data: {
         car: car,
         email: this.account.userName,
@@ -526,6 +527,10 @@ export default class CongratsViewModel {
 
   trackVinClick = (): void => {
     this.analyticsHandler.trackWhatsMyCarWorth(false);
+  };
+
+  trackDocUploadClicked = (): void => {
+    this.analyticsHandler.trackDocUploadClicked();
   };
 
   get footerProps(): FooterProps {

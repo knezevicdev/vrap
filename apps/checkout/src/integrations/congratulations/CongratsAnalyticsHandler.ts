@@ -152,6 +152,25 @@ class CongratsAnalyticsHandler extends BaseAnalyticsHandler {
       console.log('Analytic Event', err);
     }
   }
+
+  trackDocUploadClicked(): void {
+    try {
+      const { username, UUID } = this.viewModel.analyticsData;
+
+      const event = `Upload Docs Clicked`;
+      const properties = {
+        category: 'Ecommerce',
+        pageName: 'Congratulations',
+        section: 'hero',
+        userId: username,
+        UUID,
+        applicationVersion: VERSION,
+      };
+      this.track(event, properties);
+    } catch (err) {
+      console.log('Analytic Event', err);
+    }
+  }
 }
 
 export default CongratsAnalyticsHandler;
