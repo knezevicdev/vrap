@@ -63,7 +63,6 @@ export default class DealValidatorModalViewModel {
   openModal = false;
 
   constructor(model: DealValidatorModel) {
-    console.log("Init ViewModel deal Validator Status:", model.dataStatus, "Data:", JSON.stringify(model.data))
     this.model = model;
     this.modalContent = null;
     this.analyticsHandler = new DealValidatorAnalyticsHandler();
