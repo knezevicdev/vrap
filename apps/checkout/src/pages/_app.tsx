@@ -19,6 +19,7 @@ import { ThemeProvider as StyledThemeProvider } from 'styled-components';
 
 import DealValidatorModal from 'src/modules/dealValidator';
 import client from 'src/networking/client';
+import { ShowDealList } from "@vroom-web/graphql-mock-server"
 
 configureMobx({
   enforceActions: 'observed', // don't allow state modifications outside actions
@@ -58,6 +59,8 @@ class VroomApp extends App {
       serviceBasePath: dev ? 'https://dev.vroom.com' : undefined,
     });
     catSDK.initCatData();
+
+    ShowDealList()
   }
 
   render(): JSX.Element {
