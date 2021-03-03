@@ -47,7 +47,7 @@ const StyledInfoIcon = styled(InfoIcon)(({ theme }) => ({
 }));
 
 const Container = styled('div')(({ theme }) => ({
-  width: '385px',
+  maxWidth: '385px',
   padding: theme.spacing(3, 4),
   borderBottom: `5px solid ${theme.palette.primary.main}`,
 }));
