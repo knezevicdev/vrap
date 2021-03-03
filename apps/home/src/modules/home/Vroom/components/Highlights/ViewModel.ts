@@ -22,21 +22,21 @@ class HighlightsViewModel {
     {
       description: `Multiple inspections. Free CARFAX® history report. Free limited\xa0warranty.`,
       imgAlt: 'High-Quality Cars',
-      imgSrc: `${publicRuntimeConfig.BASE_PATH}/modules/home/images/highlight-1.png`,
+      imgSrc: `${publicRuntimeConfig.VROOM_URL}/static-assets/images/home-page/highlight-1.png`,
       title: 'High-Quality Cars',
     },
     {
       description:
         'No haggling. No hassles. An easy and efficient car buying process— the way it should be.',
       imgAlt: 'Buying Made Easy',
-      imgSrc: `${publicRuntimeConfig.BASE_PATH}/modules/home/images/highlight-2.png`,
+      imgSrc: `${publicRuntimeConfig.VROOM_URL}/static-assets/images/home-page/highlight-2.png`,
       title: 'Buying Made Easy',
     },
     {
       description:
         'Get your car or truck shipped to your home or a convenient nearby\xa0location.',
       imgAlt: 'Delivered Right to You',
-      imgSrc: `${publicRuntimeConfig.BASE_PATH}/modules/home/images/highlight-3.png`,
+      imgSrc: `${publicRuntimeConfig.VROOM_URL}/static-assets/images/home-page/highlight-3.png`,
       title: 'Delivered Right to You',
     },
   ];

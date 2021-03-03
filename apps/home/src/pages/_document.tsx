@@ -1,9 +1,8 @@
 import { ServerStyleSheets } from '@material-ui/core/styles';
 import { AnalyticsSnippet } from '@vroom-web/analytics-integration';
-import { Brand, UISnippet } from '@vroom-web/ui';
-import { determineWhitelabel } from '@vroom-web/whitelabel';
+import { GlobalStyle } from '@vroom-web/ui-lib';
+import { Brand, determineWhitelabel } from '@vroom-web/whitelabel';
 import getConfig from 'next/config';
-import { AppType, Enhancer, RenderPage } from 'next/dist/next-server/lib/utils';
 import Document, {
   DocumentContext,
   DocumentInitialProps,
@@ -13,6 +12,7 @@ import Document, {
   NextScript,
 } from 'next/document';
 import React from 'react';
+import { ServerStyleSheet } from 'styled-components';
 
 import { returnBrandConfig } from 'src/utils/utils';
 
@@ -27,33 +27,36 @@ interface Props extends DocumentInitialProps {
 class HomeDocument extends Document<Props> {
   static async getInitialProps(ctx: DocumentContext): Promise<Props> {
     const materialSheets = new ServerStyleSheets();
+    const styledComponentsSheet = new ServerStyleSheet();
     const originalRenderPage = ctx.renderPage;
+    try {
+      ctx.renderPage = () =>
+        originalRenderPage({
+          enhanceApp: (App) => (props) =>
+            styledComponentsSheet.collectStyles(
+              materialSheets.collect(<App {...props} />)
+            ),
+        });
 
-    // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-    const customEnhanceApp: Enhancer<AppType> = (App) => (props) =>
-      materialSheets.collect(<App {...props} />);
-    const customRenderPage: RenderPage = () =>
-      originalRenderPage({
-        enhanceApp: customEnhanceApp,
-      });
-    ctx.renderPage = customRenderPage;
+      const brand = determineWhitelabel(ctx);
+      const brandConfig = returnBrandConfig(brand);
 
-    const brand = determineWhitelabel(ctx);
-    const brandConfig = returnBrandConfig(brand);
-
-    const initialProps = await Document.getInitialProps(ctx);
-
-    return {
-      ...initialProps,
-      brand,
-      brandConfig,
-      styles: (
-        <>
-          {initialProps.styles}
-          {materialSheets.getStyleElement()}
-        </>
-      ),
-    };
+      const initialProps = await Document.getInitialProps(ctx);
+      return {
+        ...initialProps,
+        brand,
+        brandConfig,
+        styles: (
+          <>
+            {initialProps.styles}
+            {materialSheets.getStyleElement()}
+            {styledComponentsSheet.getStyleElement()}
+          </>
+        ),
+      };
+    } finally {
+      styledComponentsSheet.seal();
+    }
   }
 
   render(): JSX.Element {
@@ -62,10 +65,7 @@ class HomeDocument extends Document<Props> {
     return (
       <Html lang="en">
         <Head>
-          <UISnippet
-            brand={this.props.brand}
-            staticAssetsHostUrl={publicRuntimeConfig.STATIC_ASSETS_HOST_URL}
-          />
+          <GlobalStyle />
           {segmentWriteKey && (
             <AnalyticsSnippet
               appName="Vroom Web - Home"

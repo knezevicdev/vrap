@@ -26,6 +26,11 @@ const Message = styled(Typography)(({ theme }) => ({
   marginBottom: theme.spacing(3),
 }));
 
+/* SND-1659: We are manually turning this feature off for now.
+ * Clean up when feature is ready to be improved.
+ */
+const showEmailCapture = false;
+
 const CarsView: React.FC<Props> = ({ viewModel }) => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('xs'));
@@ -53,9 +58,9 @@ const CarsView: React.FC<Props> = ({ viewModel }) => {
           <Grid container spacing={isMobile ? 0 : 2}>
             {viewModel.cars().map((car, index) => (
               <React.Fragment key={index}>
-                {index === 2 && viewModel.getPage() === 1 && (
-                  <EmailCaptureCard car={car} />
-                )}
+                {showEmailCapture &&
+                  index === 2 &&
+                  viewModel.getPage() === 1 && <EmailCaptureCard car={car} />}
                 <CarCard
                   car={car}
                   position={index + viewModel.getStartingCountByPage()}

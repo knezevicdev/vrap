@@ -1,4 +1,3 @@
-import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 import { observer } from 'mobx-react';
 import React, { useCallback } from 'react';
 import { usePlaidLink } from 'react-plaid-link';
@@ -14,11 +13,12 @@ const PlaidButtonContainer = styled('div')(() => ({
 }));
 
 const PlaidButton = styled(Button.Primary)`
-  margin: 15px 0 30px;
-  white-space: normal;
-  width: auto;
   display: flex;
+  justify-content: center;
+  margin: 15px 0;
   padding: 13px 20px;
+  white-space: normal;
+  width: 50%;
 
   @media (max-width: 420px) {
     width: 100%;
@@ -29,7 +29,10 @@ const PlaidButton = styled(Button.Primary)`
 export interface Props {
   viewModel: PlaidButtonViewModel;
   token: string;
-  plaidSuccess(mutationInput: PlaidData, onPlaidSubmitting: any): void;
+  plaidSuccess(
+    mutationInput: PlaidData,
+    onPlaidSubmitting: (value: boolean) => void
+  ): void;
   priceId: string;
 }
 
@@ -39,7 +42,7 @@ const PlaidButtonView: React.FC<Props> = ({
   plaidSuccess,
   priceId,
 }) => {
-  const onSuccess = useCallback((_token: string, metaData: any): void => {
+  const onSuccess = useCallback((_token, metaData): void => {
     const email = viewModel.getEmail();
     viewModel.onPlaidSubmitting(true);
     const onPlaidSubmitting = viewModel.onPlaidSubmitting;
@@ -65,21 +68,40 @@ const PlaidButtonView: React.FC<Props> = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const onExit = useCallback((): void => {
-    viewModel.onPlaidSubmitting(false);
-  }, [viewModel]);
+  const onExit = useCallback(
+    (error, metadata): void => {
+      if (error) console.log(`Plaid onExit error: ${error}`);
+      if (
+        metadata &&
+        metadata.status === 'institution_not_found' &&
+        viewModel.getInstitutionSearched()
+      ) {
+        viewModel.setInstitutionFound(false);
+      }
+      viewModel.onPlaidSubmitting(false);
+    },
+    [viewModel]
+  );
+
+  const onEvent = useCallback(
+    (event): void => {
+      if (event === 'SEARCH_INSTITUTION') {
+        viewModel.setInstitutionSearched(true);
+      }
+    },
+    [viewModel]
+  );
 
   const config = {
     token,
     onSuccess,
     onExit,
+    onEvent,
   };
 
+  const { open, ready } = usePlaidLink(config);
   const tokenIsUndefined = token.length === 0;
   const isSubmitting = viewModel.getPlaidSubmitting();
-
-  const { open, ready } = usePlaidLink(config);
-
   const disableButton = (!ready && tokenIsUndefined) || isSubmitting;
 
   const handlePlaidButtonClick = (): void => {
@@ -90,8 +112,9 @@ const PlaidButtonView: React.FC<Props> = ({
   return (
     <PlaidButtonContainer>
       <PlaidButton onClick={handlePlaidButtonClick} disabled={disableButton}>
-        {viewModel.buttonCopy}
-        <ArrowForwardIcon />
+        {viewModel.getPlaidExperimentAssignedExperiment()
+          ? viewModel.buttonStartCopy
+          : viewModel.buttonCopy}
       </PlaidButton>
     </PlaidButtonContainer>
   );

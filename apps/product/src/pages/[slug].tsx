@@ -14,6 +14,7 @@ import {
   InventoryStoreContext,
   InventoryStoreState,
 } from 'src/modules/inventory/store';
+import { DataProvider } from 'src/modules/inventory/withData';
 import { Status } from 'src/networking/types';
 import Page from 'src/Page';
 
@@ -77,23 +78,9 @@ const InventoryPage: NextPage<Props> = (props: Props) => {
     }
   }, [store.geoShippingExperiment]);
 
-  useEffect(() => {
-    experimentSDK
-      .getAndLogExperimentClientSide('snd-pdp-visible-shipping-fee')
-      .then((experiment) => {
-        store.setVisibleShippingFeeExperiment(experiment);
-      });
-  }, [store]);
-
-  useEffect(() => {
-    if (store.visibleShippingFeeExperiment) {
-      analyticsHandler.registerExperiment(store.visibleShippingFeeExperiment);
-    }
-  }, [store.visibleShippingFeeExperiment]);
-
   const head = (
     <>
-      <title>{title}</title>)
+      <title>{title}</title>
       {canonicalHref && <link rel="canonical" href={canonicalHref} />}
     </>
   );
@@ -102,7 +89,9 @@ const InventoryPage: NextPage<Props> = (props: Props) => {
       <Page brand={brand} name="Product Details" head={head}>
         <BrandContext.Provider value={brand}>
           <InventoryStoreContext.Provider value={store}>
-            <Inventory />
+            <DataProvider value={store}>
+              <Inventory />
+            </DataProvider>
           </InventoryStoreContext.Provider>
         </BrandContext.Provider>
       </Page>

@@ -17,7 +17,7 @@ class HeroViewModel {
   };
   readonly mobileButtonLabel: string = 'Browse All Vehicles';
   car = {
-    src: `${publicRuntimeConfig.BASE_PATH}/modules/home/images/ford.png`,
+    src: `${publicRuntimeConfig.VROOM_URL}/static-assets/images/home-page/ford.png`,
     alt: 'F-150',
   };
 }

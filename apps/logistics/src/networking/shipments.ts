@@ -38,7 +38,7 @@ export const getShipments = async (
                 street_line_2
                 city
                 state
-                zipcode
+                zip_code
                 to_string
               }
               destination_address {
@@ -47,7 +47,7 @@ export const getShipments = async (
                 street_line_2
                 city
                 state
-                zipcode
+                zip_code
                 to_string
               }
               blackout_dates {

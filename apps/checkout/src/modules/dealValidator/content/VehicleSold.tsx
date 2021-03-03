@@ -24,83 +24,66 @@ interface VehicleSoldDialog {
 const primaryWhite = (props: { theme: ThemeProps }): string =>
   props.theme.colors.primary.white;
 
-const grayThree = (props: { theme: ThemeProps }): string =>
-  props.theme.colors.gray.three;
-
-const grayTwo = (props: { theme: ThemeProps }): string =>
-  props.theme.colors.gray.two;
+const primaryBlack = (props: { theme: ThemeProps }): string =>
+  props.theme.colors.primary.black;
 
 const Container = styled.div`
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  padding-top: 18px;
+  padding-bottom: 48px;
+  grid-template-rows: 12px 68px 40px auto 48px;
+  grid-gap: 16px;
+  max-width: 692px;
+  width: 100%;
+  justify-items: center;
   background: ${primaryWhite};
   z-index: 1;
-  position: relative;
-  width: 580px;
-  height: 432px;
   ${addStyleForMobile(`
-    height: 100%;
-      width: 100%;
-  `)}
+  height: 100%;
+  width: 100%;
+`)}
 `;
 
 const DialogTitle = styled(Heading.Three)`
-  padding: 24px 138px 0px;
   text-align: center;
-  ${addStyleForMobile(`
-    padding: 25px 0px 0px 0px;
-    font-size: 24px;
-  `)}
+  ${addStyleForMobile(` 
+  font-size: 24px;
+`)}
 `;
 
 const Content = styled(Body.Regular)`
-  margin: 8px 56px;
-  width: 480px;
-  height: 78px;
+  margin-left: 32px;
+  margin-right: 32px;
   text-align: center;
   ${addStyleForMobile(`
-    width: 300px;
-  `)}
-`;
-
-const Line = styled.hr`
-  background-color: ${grayThree};
-  height: 1px;
-  margin: 24px 0 24px 0px;
-  width: 480px;
-  align-self: center;
-  ${addStyleForMobile(`
-    width: 300px;
-  `)}
+ width: 300px;
+`)}
 `;
 
 const IconContainer = styled.div`
   align-self: center;
-  margin: 32px 0px;
 `;
 
 const Car = styled.img`
-  width: 80px;
-  height: 80px;
+  width: 68px;
+  height: 68px;
 `;
 
 const StyledButton = styled(Button.Primary)`
-  margin: 0px 100px;
-  width: 380px;
-  ${addStyleForMobile(`
-  width: 300px;
-  margin: 0px 50px 20px;
-  `)}
+  max-width: 220px;
+  width: 100%;
+  ${addStyleForMobile(` 
+margin: 0px 50px 20px;
+`)}
 `;
 const Close = styled.a`
-  position: absolute;
-  top: 24px;
-  right: 24px;
+  justify-self: right;
+  padding-right: 18px;
   cursor: pointer;
 `;
 
 const CloseIcon = styled(Icon)`
-  fill: ${grayTwo};
+  fill: ${primaryBlack};
 `;
 
 const {
@@ -119,14 +102,13 @@ export const VehicleSold: React.FC<VehicleSoldDialog> = ({
       <Close onClick={(): void => dialogAction(dialogType)}>
         <CloseIcon icon={Icons.CLOSE_LARGE} />
       </Close>
-      <DialogTitle>{title}</DialogTitle>
-      <Line />
-      <Content>
-        <Body.Regular bold>{carName}</Body.Regular> {contentMsg}
-      </Content>
       <IconContainer>
         <Car src={`${BASE_PATH}/assets/icons/car-search.svg`} />
       </IconContainer>
+      <DialogTitle>{title}</DialogTitle>
+      <Content>
+        <Body.Regular bold>{carName}</Body.Regular> {contentMsg}
+      </Content>
       <StyledButton onClick={(): void => dialogAction(dialogType)}>
         OK
       </StyledButton>

@@ -117,9 +117,10 @@ const CheckByMailView: React.FC<ViewProps> = ({
 }) => {
   const states = viewModel.getStates();
 
+  // {({ setStateDropdown }): React.ReactNode => (
   return (
     <PaymentMethodContext.Consumer>
-      {({ setStateDropdown }): React.ReactNode => (
+      {(): React.ReactNode => (
         <CBMContainer>
           <CBMMessage>{viewModel.mailingAddressMsg}</CBMMessage>
           <CBMMailingAddress className="fs-mask">
@@ -172,7 +173,6 @@ const CheckByMailView: React.FC<ViewProps> = ({
                       setFieldValue('state', value)
                     }
                     value={state}
-                    isOpenCallback={setStateDropdown}
                   />
                   <Zip
                     id="zipcode"

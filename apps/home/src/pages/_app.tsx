@@ -1,3 +1,4 @@
+import 'src/global.css';
 import 'mobx-react/batchingForReactDom';
 
 import { datadogRum } from '@datadog/browser-rum';

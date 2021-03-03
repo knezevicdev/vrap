@@ -23,7 +23,7 @@ class VinDialogViewModel {
     `Driver door jam (open the door first)`,
   ];
   readonly image = {
-    src: `${publicRuntimeConfig.BASE_PATH}/modules/home/images/where-is-vin.png`,
+    src: `${publicRuntimeConfig.VROOM_URL}/static-assets/images/home-page/where-is-vin.png`,
     alt: 'Car with VIN hot spots.',
   };
   readonly documentationTitle: string = 'In Your Documentation';
