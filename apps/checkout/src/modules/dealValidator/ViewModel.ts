@@ -63,7 +63,7 @@ export default class DealValidatorModalViewModel {
   openModal = false;
 
   constructor(model: DealValidatorModel) {
-    console.log("Init ViewModel deal Validator", JSON.stringify(model.data))
+    console.log("Init ViewModel deal Validator Status:", model.dataStatus, "Data:", JSON.stringify(model.data))
     this.model = model;
     this.modalContent = null;
     this.analyticsHandler = new DealValidatorAnalyticsHandler();
@@ -72,28 +72,28 @@ export default class DealValidatorModalViewModel {
   getModal(): void {
     if (
       this.model.dataStatus === Status.SUCCESS &&
-      !this.model.data.isAuthenticated
+      this.model.data && !this.model.data.isAuthenticated
     ) {
       //TODO: Finish the Login Modal View
       //this.openModal = true;
       //this.modalContent = dialogInnerContent(DialogTypeEnum.LOGIN);
     } else if (
       this.model.dataStatus === Status.SUCCESS &&
-      this.model.data.isVehicleSold
+      this.model.data && this.model.data.isVehicleSold
     ) {
       this.openModal = true;
       this.modalContent = dialogInnerContent(DialogTypeEnum.VEHICLE_SOLD);
       this.analyticsHandler.trackVehicleSoldModal();
     } else if (
       this.model.dataStatus === Status.SUCCESS &&
-      this.model.data.isDepositCaptured
+      this.model.data && this.model.data.isDepositCaptured
     ) {
       this.openModal = true;
       this.modalContent = dialogInnerContent(DialogTypeEnum.DEPOSIT_CAPTURED);
       this.analyticsHandler.trackDepositModal();
     } else if (
       this.model.dataStatus === Status.SUCCESS &&
-      this.model.data.hasPendingDeal
+      this.model.data && this.model.data.hasPendingDeal
     ) {
       this.openModal = true;
       this.modalContent = dialogInnerContent(DialogTypeEnum.PENDING_PURCHASE);
@@ -112,7 +112,7 @@ export default class DealValidatorModalViewModel {
 
   get carName(): string {
     if (this.model.dataStatus === Status.SUCCESS) {
-      const { year, make, model } = this.model.data.vehicleInfo || {};
+      const { year, make, model } = this.model.data && this.model.data.vehicleInfo || {};
       return `${year} ${make} ${model}`;
     }
     return '';
