@@ -66,7 +66,7 @@ export const initDealValidator = async (
 
     const { dealID } = getTestDeal(); //select Test Deal ID from the parameters on dev.
 
-    console.log("Deal Validation Parameters", router, vin)
+    console.log("Deal Validation Parameters", JSON.stringify(router), vin)
 
     const response = await getDealValidator(vin, dealID);
     console.log("Deal Validator Responses", JSON.stringify(response))
