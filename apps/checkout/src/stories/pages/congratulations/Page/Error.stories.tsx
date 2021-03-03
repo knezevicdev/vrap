@@ -11,6 +11,7 @@ import { footerViewModel, questionsViewModel } from '../ViewModels';
 
 import Error from 'src/modules/congratulations/sections/Error';
 import Questions from 'src/modules/congratulations/sections/Questions';
+import CongratsViewModel from 'src/modules/congratulations/ViewModel';
 
 const primaryWhite = (props: { theme: ThemeProps }): string =>
   props.theme.colors.primary.white;
@@ -23,13 +24,19 @@ const Page = styled.div`
   background: ${primaryWhite};
 `;
 
+const viewModel = {
+  trackError: () => {
+    console.log('Tracking error');
+  },
+} as CongratsViewModel;
+
 const theme = getVroomTheme();
 
 export const ErrorState = (): JSX.Element => {
   return (
     <ThemeProvider theme={theme}>
       <Page>
-        <Error />
+        <Error viewModel={viewModel} />
         <Questions {...questionsViewModel} />
         <Footer sections={footerViewModel.sections} />
       </Page>

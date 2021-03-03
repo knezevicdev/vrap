@@ -4,13 +4,20 @@ import { withDesign } from 'storybook-addon-designs';
 import { ThemeProvider } from 'styled-components';
 
 import Error from '../../../../modules/congratulations/sections/Error';
+import CongratsViewModel from 'src/modules/congratulations/ViewModel';
 
 const theme = getVroomTheme();
+
+const viewModel = {
+  trackError: () => {
+    console.log('Tracking error');
+  },
+} as CongratsViewModel;
 
 export const Static = (): JSX.Element => {
   return (
     <ThemeProvider theme={theme}>
-      <Error />
+      <Error viewModel={viewModel} />
     </ThemeProvider>
   );
 };
