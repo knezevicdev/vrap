@@ -185,7 +185,7 @@ test-product:
 
 
 include:
-  #- template: Jobs/Test.gitlab-ci.yml
+  - template: Jobs/Test.gitlab-ci.yml
   - template: Jobs/Code-Quality.gitlab-ci.yml
   - template: Jobs/Code-Intelligence.gitlab-ci.yml
   - template: Security/Container-Scanning.gitlab-ci.yml
