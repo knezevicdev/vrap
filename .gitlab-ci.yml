@@ -135,7 +135,7 @@ test-logistics:
       cobertura: apps/logistics/coverage/cobertura-coverage.xml
     paths:
       -  apps/logistics/coverage
-    coverage: /All\sfiles.*?\s+(\d+.\d+)/
+  coverage: /All\sfiles.*?\s+(\d+.\d+)/
 
 
 build-marketing:
@@ -183,7 +183,7 @@ test-product:
       cobertura: apps/product/coverage/cobertura-coverage.xml
     paths:
       - apps/product/coverage
-    coverage: /All\sfiles.*?\s+(\d+.\d+)/
+  coverage: /All\sfiles.*?\s+(\d+.\d+)/
 
 
 code_quality:
