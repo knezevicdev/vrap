@@ -33,7 +33,7 @@ export interface Link {
   name: string;
   trackingName?: FooterEventTrackerEnum;
 }
-interface AnalyticsData {
+export interface AnalyticsData {
   UUID?: string;
   username: string;
   vin?: string;
@@ -233,6 +233,7 @@ export default class CongratsViewModel {
       trackScheduleTime: this.trackScheduleTime,
       trackLicensePlateClick: this.trackLicensePlateClick,
       trackVinClick: this.trackVinClick,
+      trackDocUploadClicked: this.trackDocUploadClicked,
       data: {
         car: car,
         email: this.account.userName,
@@ -290,18 +291,30 @@ export default class CongratsViewModel {
     };
   }
 
-  trackAnalytics(): void {
-    if (this.showSuccess) {
-      this.analyticsHandler.trackCongratsViewed();
-      this.analyticsHandler.trackOrderCompleted();
+  trackSuccess(): void {
+    this.analyticsHandler.trackCongratsViewed();
+    this.analyticsHandler.trackOrderCompleted();
 
-      const { orderId, productId } = this.analyticsData;
-      datadogRum.addUserAction('completedDeal', {
-        deal: {
-          dealId: orderId,
-          inventoryId: productId,
-        },
-      });
+    const { orderId, productId } = this.analyticsData;
+    datadogRum.addUserAction('completedDeal', {
+      deal: {
+        dealId: orderId,
+        inventoryId: productId,
+      },
+    });
+  }
+
+  trackError(): void {
+    if (this.error) {
+      const {
+        error: { name, message },
+        status,
+      } = this.model.error;
+      this.analyticsHandler.trackErrorOnCongrats(`${name}: ${message}`, status);
+    } else if (this.empty) {
+      this.analyticsHandler.trackErrorOnCongrats('No Deal');
+    } else {
+      this.analyticsHandler.trackErrorOnCongrats('Something went wrong');
     }
   }
 
@@ -526,6 +539,10 @@ export default class CongratsViewModel {
 
   trackVinClick = (): void => {
     this.analyticsHandler.trackWhatsMyCarWorth(false);
+  };
+
+  trackDocUploadClicked = (): void => {
+    this.analyticsHandler.trackDocUploadClicked();
   };
 
   get footerProps(): FooterProps {

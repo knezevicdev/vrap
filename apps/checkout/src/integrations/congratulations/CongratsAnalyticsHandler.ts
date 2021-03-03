@@ -41,6 +41,22 @@ class CongratsAnalyticsHandler extends BaseAnalyticsHandler {
     }
   }
 
+  trackErrorOnCongrats(errorMessage: string, errorCode?: number): void {
+    const event = 'Congrats Page Error';
+    try {
+      const properties = {
+        category: 'Ecommerce',
+        pageName: 'Congratulations',
+        applicationVersion: VERSION,
+        errorCode,
+        errorMessage,
+      };
+      this.track(event, properties);
+    } catch (err) {
+      console.log('Analytic Event', err);
+    }
+  }
+
   trackScheduleTime(): void {
     try {
       const { username, UUID } = this.viewModel.analyticsData;
@@ -141,6 +157,25 @@ class CongratsAnalyticsHandler extends BaseAnalyticsHandler {
       const properties = {
         category: 'Ecommerce',
         label: plate ? 'License Plate' : 'VIN',
+        pageName: 'Congratulations',
+        section: 'hero',
+        userId: username,
+        UUID,
+        applicationVersion: VERSION,
+      };
+      this.track(event, properties);
+    } catch (err) {
+      console.log('Analytic Event', err);
+    }
+  }
+
+  trackDocUploadClicked(): void {
+    try {
+      const { username, UUID } = this.viewModel.analyticsData;
+
+      const event = `Upload Docs Clicked`;
+      const properties = {
+        category: 'Ecommerce',
         pageName: 'Congratulations',
         section: 'hero',
         userId: username,

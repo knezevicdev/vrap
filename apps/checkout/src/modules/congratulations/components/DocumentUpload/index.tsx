@@ -5,10 +5,14 @@ import ViewModel from './ViewModel';
 
 interface Props {
   dealId: number;
+  trackDocUploadClicked?: () => void;
 }
 
-const DocumentUpload = ({ dealId }: Props): JSX.Element => {
-  const viewModel = new ViewModel(dealId);
+const DocumentUpload = ({
+  dealId,
+  trackDocUploadClicked,
+}: Props): JSX.Element => {
+  const viewModel = new ViewModel(dealId, trackDocUploadClicked);
   return <View viewModel={viewModel} />;
 };
 
