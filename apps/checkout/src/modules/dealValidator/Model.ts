@@ -9,6 +9,7 @@ export default class DealValidatorModel {
   dataStatus: Status = Status.LOADING;
 
   constructor() {
+    console.log("stating deal validator")
     makeObservable(this, {
       dataStatus: observable,
       data: observable,
@@ -19,7 +20,7 @@ export default class DealValidatorModel {
   async getData(): Promise<void> {
     this.dataStatus = Status.LOADING;
     const response = await initDealValidator(Router);
-
+    console.log("Deal Validator Responses", JSON.stringify(response))
     runInAction(() => {
       this.data = response;
       this.dataStatus = Status.SUCCESS;

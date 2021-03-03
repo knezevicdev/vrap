@@ -59,14 +59,17 @@ export const initDealValidator = async (
   let isAuth = false;
 
   try {
+    console.log("Stating Deal Validation Logic")
     const { router } = Router;
 
     const vin = get(router, 'query.vin');
 
     const { dealID } = getTestDeal(); //select Test Deal ID from the parameters on dev.
 
-    const response = await getDealValidator(vin, dealID);
+    console.log("Deal Validation Parameters", router, vin)
 
+    const response = await getDealValidator(vin, dealID);
+    console.log("Deal Validator Responses", JSON.stringify(response))
     const isErrorResponded = isErrorResponse(response);
 
     //Check Authorization
