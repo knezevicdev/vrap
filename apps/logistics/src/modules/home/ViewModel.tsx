@@ -49,7 +49,6 @@ class ShipmentsViewModel {
     );
   }
 
-  /* eslint-disable @typescript-eslint/camelcase */
   private addressfmt({
     street_line_1,
     street_line_2,
@@ -67,7 +66,6 @@ class ShipmentsViewModel {
       </>
     );
   }
-  /* eslint-enable @typescript-eslint/camelcase */
 
   setSelectedTab(value: number): void {
     this.model.setSelectedTab(value, this.tabs[value].status);

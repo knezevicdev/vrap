@@ -1,4 +1,4 @@
-FROM node:erbium-alpine as BUILD_IMAGE
+FROM node:fermium-alpine as BUILD_IMAGE
 
 ARG CI_JOB_TOKEN
 
