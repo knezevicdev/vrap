@@ -135,6 +135,7 @@ test-logistics:
       cobertura: apps/logistics/coverage/cobertura-coverage.xml
     paths:
       -  apps/logistics/coverage
+    coverage: /All\sfiles.*?\s+(\d+.\d+)/
 
 
 build-marketing:
@@ -182,6 +183,7 @@ test-product:
       cobertura: apps/product/coverage/cobertura-coverage.xml
     paths:
       - apps/product/coverage
+    coverage: /All\sfiles.*?\s+(\d+.\d+)/
 
 
 code_quality:
@@ -194,7 +196,6 @@ code_quality:
 
 
 include:
-  - template: Jobs/Test.gitlab-ci.yml
   - template: Jobs/Code-Quality.gitlab-ci.yml
   - template: Jobs/Code-Intelligence.gitlab-ci.yml
   - template: Security/Container-Scanning.gitlab-ci.yml
