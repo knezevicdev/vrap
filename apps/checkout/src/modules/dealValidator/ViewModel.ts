@@ -7,7 +7,7 @@ import {
   ModalContentList,
   ModalContentSelected,
 } from './types';
-
+import DealValidatorAnalyticsHandler from "src/integrations/dealValidator/dealValidatorAnalyticsHandler";
 import Login from 'src/modules/login';
 
 /**
@@ -59,11 +59,13 @@ export const dialogInnerContent = (
 export default class DealValidatorModalViewModel {
   model: DealValidatorModel;
   modalContent: ModalContentSelected | null;
+  analyticsHandler: DealValidatorAnalyticsHandler;
   openModal = false;
 
   constructor(model: DealValidatorModel) {
     this.model = model;
     this.modalContent = null;
+    this.analyticsHandler = new DealValidatorAnalyticsHandler();
   }
 
   getModal(): void {
@@ -80,18 +82,21 @@ export default class DealValidatorModalViewModel {
     ) {
       this.openModal = true;
       this.modalContent = dialogInnerContent(DialogTypeEnum.VEHICLE_SOLD);
+      this.analyticsHandler.trackVehicleSoldModal();
     } else if (
       this.model.dataStatus === Status.SUCCESS &&
       this.model.data.isDepositCaptured
     ) {
       this.openModal = true;
       this.modalContent = dialogInnerContent(DialogTypeEnum.DEPOSIT_CAPTURED);
+      this.analyticsHandler.trackDepositModal();
     } else if (
       this.model.dataStatus === Status.SUCCESS &&
       this.model.data.hasPendingDeal
     ) {
       this.openModal = true;
       this.modalContent = dialogInnerContent(DialogTypeEnum.PENDING_PURCHASE);
+      this.analyticsHandler.trackPendingDealModal();
     }
   }
 
