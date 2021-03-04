@@ -18,4 +18,11 @@ module.exports = {
     '^.+\\.(js|jsx|ts|tsx)$': 'ts-jest',
   },
   transformIgnorePatterns: ['/node_modules/'],
+  coverageReporters: ['json', 'lcov', 'text', 'clover', 'cobertura'],
+  reporters: ['default'],
+  globals: {
+    'ts-jest': {
+      tsconfig: 'tsconfig.test.json',
+    },
+  },
 };

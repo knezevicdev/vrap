@@ -63,6 +63,29 @@ build-checkout:
     - npm install --quiet
     - npm run build
 
+test-checkout:
+  only:
+    refs:
+      - merge_requests
+    changes:
+      - apps/checkout/**/*
+  stage: test
+  script:
+    - cd apps/checkout
+    - npm install --quiet
+    - npm run test:ci
+  artifacts:
+    when: always
+    reports:
+      junit:
+        - apps/checkout/junit.xml
+      cobertura: apps/checkout/coverage/cobertura-coverage.xml
+    paths:
+      -  apps/checkout/coverage
+  coverage: /All\sfiles.*?\s+(\d+.\d+)/
+
+
+
 build-home:
   only:
     refs:
@@ -88,6 +111,27 @@ build-landing:
     - npm install --quiet
     - npm run lint
     - npm run build
+
+test-home:
+  only:
+    refs:
+      - merge_requests
+    changes:
+      - apps/home/**/*
+  stage: test
+  script:
+    - cd apps/home
+    - npm install --quiet
+    - npm run test:ci
+  artifacts:
+    when: always
+    reports:
+      junit:
+        - apps/home/junit.xml
+      cobertura: apps/home/coverage/cobertura-coverage.xml
+    paths:
+      -  apps/home/coverage
+  coverage: /All\sfiles.*?\s+(\d+.\d+)/
 
 build-listing:
   only:
