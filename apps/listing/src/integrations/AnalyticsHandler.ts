@@ -75,6 +75,13 @@ class AnalyticsHandler extends BaseAnalyticsHandler {
     this.track(event, properties);
   }
 
+  trackPricingPopupClicked(): void {
+    const event = 'Pricing Popup Clicked';
+    const category = 'Catalog';
+    const properties = { category };
+    this.track(event, properties);
+  }
+
   trackProductClicked(product: Product): void {
     const event = 'Product Clicked';
     const category = 'Catalog';

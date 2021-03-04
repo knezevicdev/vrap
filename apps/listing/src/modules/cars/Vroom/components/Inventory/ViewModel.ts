@@ -24,8 +24,8 @@ class InventoryViewModel {
     return true;
   }
 
-  hidePagination = (): boolean => {
-    return !this.store.hasInventory;
+  showWhenInventory = (): boolean => {
+    return this.store.hasInventory;
   };
 }
 
