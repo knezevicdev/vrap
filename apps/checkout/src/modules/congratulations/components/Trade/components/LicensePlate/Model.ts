@@ -5,7 +5,7 @@ import {
   Status,
 } from '@vroom-web/networking';
 import gql from 'graphql-tag';
-import { makeAutoObservable, runInAction } from 'mobx';
+import { action, makeObservable, observable, runInAction } from 'mobx';
 
 interface Data {
   licensePlateToVin: GQLTypes.LpToVin;
@@ -18,7 +18,11 @@ export default class LicensePlateModel {
 
   constructor(client: Client) {
     this.client = client;
-    makeAutoObservable(this);
+    makeObservable(this, {
+      dataStatus: observable,
+      data: observable,
+      getData: action,
+    });
   }
 
   async getData(lp: string, state: string): Promise<void> {

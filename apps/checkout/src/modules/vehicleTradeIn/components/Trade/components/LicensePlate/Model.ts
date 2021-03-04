@@ -1,5 +1,5 @@
 import { Client, isErrorResponse, Status } from '@vroom-web/networking';
-import { makeAutoObservable, runInAction } from 'mobx';
+import { action, makeObservable, observable, runInAction } from 'mobx';
 
 import { getPlateToVin, LicensePlateToVinData } from 'src/networking/request';
 export default class LicensePlateModel {
@@ -9,7 +9,11 @@ export default class LicensePlateModel {
 
   constructor(client: Client) {
     this.client = client;
-    makeAutoObservable(this);
+    makeObservable(this, {
+      dataStatus: observable,
+      data: observable,
+      getData: action,
+    });
   }
 
   async getData(lp: string, state: string): Promise<void> {
