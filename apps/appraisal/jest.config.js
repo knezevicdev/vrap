@@ -1,6 +1,5 @@
 // https://github.com/zeit/next.js/tree/master/examples/with-jest
 module.exports = {
-  setupFiles: ['<rootDir>/.jest/setEnvVars.js'],
   collectCoverageFrom: [
     '**/*.{js,jsx,ts,tsx}',
     '!**/*.d.ts',
