@@ -112,7 +112,15 @@ const OptionsView: React.FC<Props> = ({ viewModel }) => {
     paymentOption: Yup.string().required('Required'),
     routingNumber: Yup.string().when('paymentOption', {
       is: 'Direct Deposit',
-      then: Yup.string().required('Field is required'),
+      then: Yup.string()
+        .required('Field is required')
+        .test(
+          'valid-routing-number',
+          'Please enter a valid routing number',
+          (value) => {
+            return viewModel.isValidRouting(value);
+          }
+        ),
     }),
     bankAccountNumber: Yup.string().when('paymentOption', {
       is: 'Direct Deposit',
