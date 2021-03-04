@@ -1,6 +1,5 @@
 // https://github.com/zeit/next.js/tree/master/examples/with-jest
 module.exports = {
-  setupFiles: ['<rootDir>/.jest/setEnvVars.js'],
   collectCoverageFrom: [
     '**/*.{js,jsx,ts,tsx}',
     '!**/*.d.ts',
@@ -19,5 +18,12 @@ module.exports = {
   moduleNameMapper: {
     '^src(.*)$': '<rootDir>/src$1',
     //   '^.+\\.module\\.(css|sass|scss)$': 'identity-obj-proxy',
+  },
+  coverageReporters: ['json', 'lcov', 'text', 'clover', 'cobertura'],
+  reporters: ['default'],
+  globals: {
+    'ts-jest': {
+      tsconfig: 'tsconfig.test.json',
+    },
   },
 };
