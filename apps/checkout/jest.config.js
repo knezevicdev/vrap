@@ -1,9 +1,4 @@
 module.exports = {
-  globals: {
-    'ts-jest': {
-      babelConfig: true,
-    },
-  },
   collectCoverageFrom: [
     '**/*.{js,jsx,ts,tsx}',
     '!**/*.d.ts',
@@ -18,4 +13,12 @@ module.exports = {
     '^.+\\.(js|jsx|ts|tsx)$': 'ts-jest',
   },
   transformIgnorePatterns: ['/node_modules/'],
+  coverageReporters: ['json', 'lcov', 'text', 'clover', 'cobertura'],
+  reporters: ['default'],
+  globals: {
+    'ts-jest': {
+      tsconfig: 'tsconfig.test.json',
+      babelConfig: true,
+    },
+  },
 };

@@ -27,5 +27,11 @@ module.exports = {
     '^src(.*)$': '<rootDir>/src$1',
     //   '^.+\\.module\\.(css|sass|scss)$': 'identity-obj-proxy',
   },
-  reporters: ['default', 'jest-sonar'],
+  coverageReporters: ['json', 'lcov', 'text', 'clover', 'cobertura'],
+  reporters: ['default'],
+  globals: {
+    'ts-jest': {
+      tsconfig: 'tsconfig.test.json',
+    },
+  },
 };
