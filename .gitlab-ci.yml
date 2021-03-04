@@ -178,6 +178,16 @@ test-listing:
     - cd apps/listing
     - npm install --quiet
     - npm run test:ci
+  artifacts:
+    when: always
+    reports:
+      junit:
+        - apps/listing/junit.xml
+      cobertura: apps/listing/coverage/cobertura-coverage.xml
+    paths:
+      - apps/listing/coverage
+  coverage: /All\sfiles.*?\s+(\d+.\d+)/
+
 
 build-logistics:
   only:
