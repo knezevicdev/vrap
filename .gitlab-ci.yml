@@ -17,6 +17,28 @@ build-appraisal:
     - npm run lint
     - npm run build
 
+test-appraisal:
+  only:
+    refs:
+      - merge_requests
+    changes:
+      - apps/appraisal/**/*
+  stage: test
+  script:
+    - cd apps/appraisal
+    - npm install --quiet
+    - npm run test:ci
+  artifacts:
+    when: always
+    reports:
+      junit:
+        - apps/appraisal/junit.xml
+      cobertura: apps/appraisal/coverage/cobertura-coverage.xml
+    paths:
+      -  apps/appraisal/coverage
+  coverage: /All\sfiles.*?\s+(\d+.\d+)/
+
+
 lint-checkout:
   only:
     refs:

@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx,.json --format unix --fix > lintErrors.txt",
     "test": "jest --watch",
-    "test:ci": "jest --ci"
+    "test:ci": "jest --ci --coverage",
+    "test:cc": "jest  --coverage --passWithNoTests"
   },
   "dependencies": {
     "@datadog/browser-rum": "^1.16.0",
