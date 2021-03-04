@@ -8,7 +8,7 @@
     "start": "next start",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx,.json --format unix --fix > lintErrors.txt",
     "test": "jest --watch",
-    "test:ci": "jest --ci --coverage --passwithnotests",
+    "test:ci": "jest --ci --coverage --passWithNoTests",
     "test:cc": "jest  --coverage --passWithNoTests"
   },
   "dependencies": {

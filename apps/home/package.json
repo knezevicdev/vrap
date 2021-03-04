@@ -9,7 +9,7 @@
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx,.json",
     "lint:fix": "eslint . --ext .js,.jsx,.ts,.tsx,.json --fix",
     "test": "jest --watch",
-    "test:ci": "jest --ci --coverage --passwithnotests",
+    "test:ci": "jest --ci --coverage --passWithNoTests",
     "test:cc": "jest  --coverage --passWithNoTests"
   },
   "dependencies": {
