@@ -45,7 +45,7 @@ lint-checkout:
       - merge_requests
     changes:
       - apps/checkout/**/*
-  stage: build
+  stage: test
   script:
     - cd apps/checkout
     - npm install --quiet
@@ -247,6 +247,27 @@ build-marketing:
     - npm install --quiet
     - npm run lint
     - npm run build
+
+test-marketing:
+  only:
+    refs:
+      - merge_requests
+    changes:
+      - apps/marketing/**/*
+  stage: test
+  script:
+    - cd apps/marketing
+    - npm install --quiet
+    - npm run test:ci
+  artifacts:
+    when: always
+    reports:
+      junit:
+        - apps/marketing/junit.xml
+      cobertura: apps/marketing/coverage/cobertura-coverage.xml
+    paths:
+      -  apps/marketing/coverage
+  coverage: /All\sfiles.*?\s+(\d+.\d+)/
 
 build-product:
   only:
