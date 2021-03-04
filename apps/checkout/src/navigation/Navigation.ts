@@ -1,7 +1,7 @@
 import { GQLTypes } from '@vroom-web/networking';
 import last from 'lodash/last';
 import getConfig from 'next/config';
-import Router from 'next/router';
+//import Router from 'next/router';
 
 import { getCurrentVin } from 'src/networking/util/getCurrentVin';
 
@@ -18,6 +18,7 @@ export enum DealStepsEnum {
   PRODUCTS = 'BackendProducts',
   DEPOSIT = 'DepositPaymentInfo',
   DOCUMENT_UPLOAD = 'DocumentUpload',
+  VEHICLE_TRADE_IN = 'TradeInVehicle',
   DEAL_SUMMARY = 'DealSummary',
 }
 
@@ -39,37 +40,55 @@ export const buildUrl = (vin: string, to: string): string =>
 
 export const stepPagesMapping = (vin: string): StepPagesMappingData =>
   ({
-    [DealStepsEnum.TRADE]: buildUrl(vin, 'tradeIn'),
-    [DealStepsEnum.REGISTRATION]: buildUrl(vin, 'registration'),
-    [DealStepsEnum.DELIVERY]: buildUrl(vin, 'testPage'),
-    [DealStepsEnum.PAYMENT]: buildUrl(vin, 'testPage'),
-    [DealStepsEnum.FINANCING]: buildUrl(vin, 'testPage'),
-    [DealStepsEnum.FINANCING_PENDING]: buildUrl(vin, 'testPage'),
-    [DealStepsEnum.FINANCING_OPTION]: buildUrl(vin, 'testPage'),
-    [DealStepsEnum.FINANCING_DECLINED]: buildUrl(vin, 'testPage'),
-    [DealStepsEnum.PRODUCTS]: buildUrl(vin, 'testPage'),
-    [DealStepsEnum.DEPOSIT]: buildUrl(vin, 'testPage'),
-    [DealStepsEnum.DOCUMENT_UPLOAD]: buildUrl(vin, 'documentUpload'),
+    [DealStepsEnum.TRADE]: `/e2e/${vin}/tradeInLoanInfo`,
+    [DealStepsEnum.REGISTRATION]: `/e2e/${vin}/registration`,
+    [DealStepsEnum.DELIVERY]: `/e2e/${vin}/delivery`,
+    [DealStepsEnum.PAYMENT]: `/e2e/${vin}/payment`,
+    [DealStepsEnum.FINANCING]: `/e2e/${vin}/vroomFinancing`,
+    [DealStepsEnum.FINANCING_PENDING]: `/e2e/${vin}/checkoutTradeIn`,
+    [DealStepsEnum.FINANCING_OPTION]: `/e2e/${vin}/checkoutTradeIn`,
+    [DealStepsEnum.FINANCING_DECLINED]: `/e2e/${vin}/checkoutTradeIn`,
+    [DealStepsEnum.PRODUCTS]: `/e2e/${vin}/dealCoverage`,
+    [DealStepsEnum.DEPOSIT]: `/e2e/${vin}/deposit-form`,
+    [DealStepsEnum.DOCUMENT_UPLOAD]:`/e2e/${vin}/documentUpload`,
     [DealStepsEnum.DEAL_SUMMARY]: `${BASE_PATH}/congratulations`,
+    [DealStepsEnum.VEHICLE_TRADE_IN]: `${BASE_PATH}/${vin}/vehicleTradeIn`,
     [DealStepsEnum.ROOT]: `/e2e/${vin}/checkoutTradeIn`,
   } as StepPagesMappingData);
 
 class Navigation {
-  stepBack(dealStatus: GQLTypes.DealStatus | undefined) {
-    const lastStep =
-      dealStatus && dealStatus.pastSteps && last(dealStatus.pastSteps);
-    const vin = getCurrentVin();
+  stepBack(dealStatus: GQLTypes.DealStatus | undefined, currentStep: DealStepsEnum) {
+ 
+    const index: number | null | undefined =  dealStatus && dealStatus.pastSteps && dealStatus.pastSteps.indexOf(currentStep)
 
+    const lastStep = (()=> { 
+      if(typeof index === 'number' && index > -1) {
+     
+        return dealStatus && dealStatus.pastSteps && dealStatus.pastSteps[index -1];
+      } 
+      return  dealStatus && dealStatus.pastSteps && last(dealStatus.pastSteps);
+    })()
+
+
+    const vin = getCurrentVin();
+     
     if (!lastStep && vin) {
-      //Temporary for backward compatibility with classic
+      //Temporary for backward compatibility with classic   
       window.location.href = stepPagesMapping(vin)[DealStepsEnum.ROOT];
       return;
     }
 
+    if (lastStep && vin) {
+      //Temporary for backward compatibility with classic
+      window.location.href = stepPagesMapping(vin)[lastStep];
+      return;
+    }
+
     //Single Page Application after move all checkout steps to the new code base
-    Router.push({
-      pathname: vin && lastStep && stepPagesMapping(vin)[lastStep],
-    });
+    //TODO: navigate using nextJS after move others page to vroom-web 
+    //Router.push({
+    //  pathname: vin && lastStep && stepPagesMapping(vin)[lastStep],
+    //});
   }
 }
 
