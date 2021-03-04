@@ -112,6 +112,27 @@ build-landing:
     - npm run lint
     - npm run build
 
+test-landing:
+  only:
+    refs:
+      - merge_requests
+    changes:
+      - apps/landing/**/*
+  stage: test
+  script:
+    - cd apps/landing
+    - npm install --quiet
+    - npm run test:ci
+  artifacts:
+    when: always
+    reports:
+      junit:
+        - apps/landing/junit.xml
+      cobertura: apps/landing/coverage/cobertura-coverage.xml
+    paths:
+      -  apps/landing/coverage
+  coverage: /All\sfiles.*?\s+(\d+.\d+)/
+
 test-home:
   only:
     refs:
