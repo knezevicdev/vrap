@@ -33,7 +33,6 @@ class PricingPopupViewModel {
     const gearboxClient = new Client(publicRuntimeConfig.GEARBOX_URL, {
       timeout: 4000,
     });
-    this.fetchDeliveryFeeState(gearboxClient, this.deliveryFeeDefault);
 
     new ExperimentSDK()
       .getAndLogExperimentClientSide('snd-catalog-show-pricing-popup')
@@ -41,6 +40,10 @@ class PricingPopupViewModel {
         if (experiment) {
           this.setShowPricingPopup(experiment.assignedVariant === 1);
           analyticsHandler.registerExperiment(experiment);
+
+          if (experiment.assignedVariant === 1) {
+            this.fetchDeliveryFeeState(gearboxClient, this.deliveryFeeDefault);
+          }
         }
       });
   }
