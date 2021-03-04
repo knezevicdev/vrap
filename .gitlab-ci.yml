@@ -173,7 +173,7 @@ test-listing:
       - merge_requests
     changes:
       - apps/listing/**/*
-  stage: build
+  stage: test
   script:
     - cd apps/listing
     - npm install --quiet
