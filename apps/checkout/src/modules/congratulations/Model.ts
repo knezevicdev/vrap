@@ -4,7 +4,7 @@ import {
   isErrorResponse,
   Status,
 } from '@vroom-web/networking';
-import { makeObservable, observable, action, runInAction } from 'mobx';
+import { action, makeObservable, observable, runInAction } from 'mobx';
 
 import { getCongratsData } from 'src/networking';
 interface Data {
@@ -16,7 +16,7 @@ export default class CongratsModel {
   error: ErrorResponse = {} as ErrorResponse;
   dataStatus: Status = Status.LOADING;
 
-  constructor() { 
+  constructor() {
     makeObservable(this, {
       dataStatus: observable,
       data: observable,

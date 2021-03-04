@@ -1,9 +1,4 @@
 module.exports = {
-  globals: {
-    'ts-jest': {
-      babelConfig: true,
-    },
-  },
   collectCoverageFrom: [
     '**/*.{js,jsx,ts,tsx}',
     '!**/*.d.ts',
@@ -23,6 +18,7 @@ module.exports = {
   globals: {
     'ts-jest': {
       tsconfig: 'tsconfig.test.json',
+      babelConfig: true,
     },
   },
 };

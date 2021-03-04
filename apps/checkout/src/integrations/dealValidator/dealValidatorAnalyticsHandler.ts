@@ -4,15 +4,14 @@ const {
   publicRuntimeConfig: { VERSION },
 } = getConfig();
 
-
 class DealValidatorAnalyticsHandler extends BaseAnalyticsHandler {
   trackVehicleSoldModal(): void {
     const event = 'Transaction Blocked - Vehicle on Hold';
     try {
       const properties = {
         action: event,
-        category: 'Checkout', 
-        applicationVersion: VERSION
+        category: 'Checkout',
+        applicationVersion: VERSION,
       };
       this.track(event, properties);
     } catch (err) {
@@ -24,8 +23,8 @@ class DealValidatorAnalyticsHandler extends BaseAnalyticsHandler {
     try {
       const properties = {
         action: event,
-        category: 'Checkout', 
-        applicationVersion: VERSION
+        category: 'Checkout',
+        applicationVersion: VERSION,
       };
       this.track(event, properties);
     } catch (err) {
@@ -37,8 +36,8 @@ class DealValidatorAnalyticsHandler extends BaseAnalyticsHandler {
     try {
       const properties = {
         action: event,
-        category: 'Checkout', 
-        applicationVersion: VERSION
+        category: 'Checkout',
+        applicationVersion: VERSION,
       };
       this.track(event, properties);
     } catch (err) {

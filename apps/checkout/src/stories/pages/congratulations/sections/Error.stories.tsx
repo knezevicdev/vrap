@@ -4,6 +4,7 @@ import { withDesign } from 'storybook-addon-designs';
 import { ThemeProvider } from 'styled-components';
 
 import Error from '../../../../modules/congratulations/sections/Error';
+
 import CongratsViewModel from 'src/modules/congratulations/ViewModel';
 
 const theme = getVroomTheme();

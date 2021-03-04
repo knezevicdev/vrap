@@ -94,7 +94,7 @@ export default class VehicleTradeInViewModel {
 
   get analyticsData(): AnalyticsData {
     return {
-      username: this.model.data?.user.username || "",
+      username: this.model.data?.user.username || '',
       vin: this.summary.inventory?.vehicle?.vin,
       paymentMethod: this.summary.paymentType,
       step: this.summary.dealStatus.step,

@@ -280,7 +280,7 @@ export default class CongratsViewModel {
   get analyticsData(): AnalyticsData {
     return {
       UUID: undefined,
-      username: this.model.data?.user.username || "",
+      username: this.model.data?.user.username || '',
       vin: this.summary.inventory?.vehicle?.vin,
       paymentMethod: this.summary.paymentType,
       step: this.summary.dealStatus.step,
