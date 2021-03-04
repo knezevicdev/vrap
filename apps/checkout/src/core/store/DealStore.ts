@@ -10,7 +10,7 @@ export interface DealStoreProps {
   data: {
     user: GQLTypes.User;
     invSearch: GQLTypes.InvSearchResult;
-  };
+  } | null;
 }
 export class DealStore {
   steps: string[] = [
@@ -43,7 +43,7 @@ export class DealStore {
   }
 
   get vehicle(): GQLTypes.InvSearchVehicleData | undefined | null {
-    return this.model && head(this.model?.data.invSearch?.vehicles);
+    return this.model && head(this.model?.data?.invSearch?.vehicles);
   }
 
   toggleDropdown = (): void => {

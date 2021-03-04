@@ -12,7 +12,7 @@ interface Data {
 }
 
 export default class CongratsModel {
-  data: Data = {} as Data;
+  data: Data | null = null;
   error: ErrorResponse = {} as ErrorResponse;
   dataStatus: Status = Status.LOADING;
 
