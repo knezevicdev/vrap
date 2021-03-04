@@ -15,7 +15,7 @@ class PayOptionViewModel {
   };
 
   getPlaidExperimentAssignedExperiment = (): boolean => {
-    return this.oStore.plaidExperiment?.assignedVariant === 1;
+    return this.oStore.plaidExperiment;
   };
 }
 

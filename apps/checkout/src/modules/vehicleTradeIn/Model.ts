@@ -8,7 +8,7 @@ export interface VehicleTradeInData {
   invSearch: GQLTypes.InvSearchResult;
 }
 export default class VehicleTradeInModel implements DealStoreProps {
-  data: VehicleTradeInData = {} as VehicleTradeInData;
+  data: VehicleTradeInData | null = null;
   dataStatus: Status = Status.LOADING;
 
   constructor() {

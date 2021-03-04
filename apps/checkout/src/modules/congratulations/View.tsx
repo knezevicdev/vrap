@@ -34,13 +34,11 @@ const CongratsView: React.FC<Props> = ({ viewModel }) => {
   const { sections, trackEventHandler } = viewModel.footerProps;
   const questionsProps = viewModel.questionsProps;
 
-  viewModel.trackAnalytics();
-
   return (
     <Page>
       <SimpleHeader gearboxPrivateUrl={GEARBOX_PRIVATE_URL} />
       {viewModel.showLoading && <Loading />}
-      {viewModel.showError && <Error />}
+      {viewModel.showError && <Error viewModel={viewModel} />}
       {viewModel.showSuccess && <Success viewModel={viewModel} />}
       <Questions {...questionsProps} />
       <Footer sections={sections} trackEventHandler={trackEventHandler} />

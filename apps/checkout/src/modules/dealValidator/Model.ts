@@ -5,7 +5,7 @@ import Router from 'next/router';
 import { DealValidatorProps, initDealValidator } from './services';
 
 export default class DealValidatorModel {
-  data: DealValidatorProps = {} as DealValidatorProps;
+  data: DealValidatorProps | null = null;
   dataStatus: Status = Status.LOADING;
 
   constructor() {
@@ -19,7 +19,6 @@ export default class DealValidatorModel {
   async getData(): Promise<void> {
     this.dataStatus = Status.LOADING;
     const response = await initDealValidator(Router);
-
     runInAction(() => {
       this.data = response;
       this.dataStatus = Status.SUCCESS;

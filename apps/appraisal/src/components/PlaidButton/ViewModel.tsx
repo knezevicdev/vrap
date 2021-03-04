@@ -22,7 +22,7 @@ class PlaidButtonViewModel {
   };
 
   getPlaidExperimentAssignedExperiment = (): boolean => {
-    return this.store.plaidExperiment?.assignedVariant === 1;
+    return this.store.plaidExperiment;
   };
 
   setInstitutionFound = (value: boolean): void => {

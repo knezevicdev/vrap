@@ -33,7 +33,7 @@ export interface Link {
   name: string;
   trackingName?: FooterEventTrackerEnum;
 }
-interface AnalyticsData {
+export interface AnalyticsData {
   UUID?: string;
   username: string;
   vin?: string;
@@ -61,19 +61,19 @@ export default class CongratsViewModel {
   }
 
   private get dealId(): number {
-    return (this.model.data.user.deals as Array<GQLTypes.Deal>)[0].dealID;
+    return (this.model.data?.user.deals as Array<GQLTypes.Deal>)[0].dealID;
   }
 
   private get transactionPlacedDate(): string {
-    return (this.model.data.user.deals as Array<GQLTypes.Deal>)[0].createdAt;
+    return (this.model.data?.user.deals as Array<GQLTypes.Deal>)[0].createdAt;
   }
 
   private get summary(): GQLTypes.DealSummary {
-    return (this.model.data.user.deals as Array<GQLTypes.Deal>)[0].dealSummary;
+    return (this.model.data?.user.deals as Array<GQLTypes.Deal>)[0].dealSummary;
   }
 
   private get tradeIns(): null | undefined | Array<GQLTypes.TradeIn> {
-    return (this.model.data.user.deals as Array<GQLTypes.Deal>)[0].TradeIns;
+    return (this.model.data?.user.deals as Array<GQLTypes.Deal>)[0].TradeIns;
   }
 
   private get account(): GQLTypes.Account {
@@ -173,10 +173,10 @@ export default class CongratsViewModel {
     if (this.model.dataStatus !== Status.SUCCESS) {
       return false;
     }
-    if (!this.model.data.user.deals) {
+    if (!this.model.data?.user.deals) {
       return true;
     }
-    return this.model.data.user.deals.length === 0;
+    return this.model.data?.user.deals.length === 0;
   }
 
   private get showNotAvailableDates(): boolean {
@@ -233,6 +233,7 @@ export default class CongratsViewModel {
       trackScheduleTime: this.trackScheduleTime,
       trackLicensePlateClick: this.trackLicensePlateClick,
       trackVinClick: this.trackVinClick,
+      trackDocUploadClicked: this.trackDocUploadClicked,
       data: {
         car: car,
         email: this.account.userName,
@@ -279,7 +280,7 @@ export default class CongratsViewModel {
   get analyticsData(): AnalyticsData {
     return {
       UUID: undefined,
-      username: this.model.data.user.username,
+      username: this.model.data?.user.username || "",
       vin: this.summary.inventory?.vehicle?.vin,
       paymentMethod: this.summary.paymentType,
       step: this.summary.dealStatus.step,
@@ -290,18 +291,30 @@ export default class CongratsViewModel {
     };
   }
 
-  trackAnalytics(): void {
-    if (this.showSuccess) {
-      this.analyticsHandler.trackCongratsViewed();
-      this.analyticsHandler.trackOrderCompleted();
+  trackSuccess(): void {
+    this.analyticsHandler.trackCongratsViewed();
+    this.analyticsHandler.trackOrderCompleted();
 
-      const { orderId, productId } = this.analyticsData;
-      datadogRum.addUserAction('completedDeal', {
-        deal: {
-          dealId: orderId,
-          inventoryId: productId,
-        },
-      });
+    const { orderId, productId } = this.analyticsData;
+    datadogRum.addUserAction('completedDeal', {
+      deal: {
+        dealId: orderId,
+        inventoryId: productId,
+      },
+    });
+  }
+
+  trackError(): void {
+    if (this.error) {
+      const {
+        error: { name, message },
+        status,
+      } = this.model.error;
+      this.analyticsHandler.trackErrorOnCongrats(`${name}: ${message}`, status);
+    } else if (this.empty) {
+      this.analyticsHandler.trackErrorOnCongrats('No Deal');
+    } else {
+      this.analyticsHandler.trackErrorOnCongrats('Something went wrong');
     }
   }
 
@@ -526,6 +539,10 @@ export default class CongratsViewModel {
 
   trackVinClick = (): void => {
     this.analyticsHandler.trackWhatsMyCarWorth(false);
+  };
+
+  trackDocUploadClicked = (): void => {
+    this.analyticsHandler.trackDocUploadClicked();
   };
 
   get footerProps(): FooterProps {

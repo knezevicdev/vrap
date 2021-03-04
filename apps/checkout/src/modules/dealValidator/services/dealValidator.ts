@@ -42,7 +42,7 @@ export const excludePage = (router: Router | null): Rules | null => {
   const excludeListOfPages = SpecialPageRules;
 
   for (const page of excludeListOfPages) {
-    if (router && router.route.indexOf(page.path) > -1) {
+    if (router && router.route && router.route.indexOf(page.path) > -1) {
       return page.rules;
     }
   }
@@ -56,62 +56,71 @@ export const excludePage = (router: Router | null): Rules | null => {
 export const initDealValidator = async (
   Router: SingletonRouter
 ): Promise<DealValidatorProps> => {
-  const { router } = Router;
+  let isAuth = false;
 
-  const vin = get(router, 'query.vin');
+  try {
+    const { router } = Router;
 
-  const { dealID } = getTestDeal(); //select Test Deal ID from the parameters on dev.
+    const vin = get(router, 'query.vin');
 
-  const response = await getDealValidator(vin, dealID);
+    const { dealID } = getTestDeal(); //select Test Deal ID from the parameters on dev.
 
-  const isErrorResponded = isErrorResponse(response);
+    const response = await getDealValidator(vin, dealID);
+    const isErrorResponded = isErrorResponse(response);
 
-  //Check Authorization
-  let isAuth = !(
-    isErrorResponded && isAccessDeniedErrorResponse(response as ErrorResponse)
-  );
-
-  if (isSuccessResponse(response)) {
-    const excludedRules = excludePage(router);
-
-    //Check if the Vehicle has being sold
-    const isVehicleSold =
-      head(response.data.invSearch.vehicles)?.soldStatus !== 0;
-
-    //does it has pending deal
-    const hasPendingDeal = response.data.user.deals?.find(
-      (f) => f.dealSummary.dealStatus.status === DealStatusEnum.PENDING
-    );
-    const hasInProgressDeal = response.data.user.deals?.find(
-      (f) => f.dealSummary.dealStatus.status === DealStatusEnum.IN_PROGRESS
+    //Check Authorization
+    isAuth = !(
+      isErrorResponded && isAccessDeniedErrorResponse(response as ErrorResponse)
     );
 
-    const isDepositCapturedInProgress = !!hasInProgressDeal?.dealSummary
-      .depositPaymentInfo?.DepositCaptured;
+    if (isSuccessResponse(response)) {
+      const excludedRules = excludePage(router);
 
-    const firstDeal = head(response.data.user.deals);
+      //Check if the Vehicle has being sold
+      const isVehicleSold =
+        get(response.data.invSearch, 'vehicles[0].soldStatus') !== 0;
 
-    const vehicleInfo = firstDeal && firstDeal.dealSummary.inventory?.vehicle;
+      //does it has pending deal
+      const hasPendingDeal =
+        response.data.user &&
+        response.data.user.deals?.find(
+          (f) => f.dealSummary.dealStatus.status === DealStatusEnum.PENDING
+        );
+      const hasInProgressDeal =
+        response.data.user &&
+        response.data.user.deals?.find(
+          (f) => f.dealSummary.dealStatus.status === DealStatusEnum.IN_PROGRESS
+        );
 
-    return {
-      isAuthenticated: isAuth,
-      isVehicleSold: excludedRules
-        ? excludedRules.vehicleSold && isVehicleSold
-        : isVehicleSold,
-      hasPendingDeal: excludedRules
-        ? excludedRules.pendingDeal && !!hasPendingDeal
-        : !!hasPendingDeal,
-      hasInProgressDeal: excludedRules
-        ? excludedRules.inProgressDeal && !!hasInProgressDeal
-        : !!hasInProgressDeal,
-      isDepositCaptured: excludedRules
-        ? excludedRules.depositCaptured && isDepositCapturedInProgress
-        : isDepositCapturedInProgress,
-      vehicleInfo,
-    };
-  } else {
-    //Is there some error related with the graphQL update auth flag
-    isAuth = false;
+      const isDepositCapturedInProgress = !!hasInProgressDeal?.dealSummary
+        .depositPaymentInfo?.DepositCaptured;
+
+      const firstDeal = head(response.data.user.deals);
+
+      const vehicleInfo = firstDeal && firstDeal.dealSummary.inventory?.vehicle;
+
+      return {
+        isAuthenticated: isAuth,
+        isVehicleSold: excludedRules
+          ? excludedRules.vehicleSold && isVehicleSold
+          : isVehicleSold,
+        hasPendingDeal: excludedRules
+          ? excludedRules.pendingDeal && !!hasPendingDeal
+          : !!hasPendingDeal,
+        hasInProgressDeal: excludedRules
+          ? excludedRules.inProgressDeal && !!hasInProgressDeal
+          : !!hasInProgressDeal,
+        isDepositCaptured: excludedRules
+          ? excludedRules.depositCaptured && isDepositCapturedInProgress
+          : isDepositCapturedInProgress,
+        vehicleInfo,
+      };
+    } else {
+      //Is there some error related with the graphQL update auth flag
+      isAuth = false;
+    }
+  } catch (error) {
+    console.error(JSON.stringify(error));
   }
 
   return {
