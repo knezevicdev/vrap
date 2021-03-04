@@ -87,7 +87,7 @@ const Header: React.FC<Props> = (props) => {
             </Grid>
           ) : (
             <Grid item>
-              <Link href="/sigin" passHref>
+              <Link href="/signin" passHref>
                 <MuiLink color="inherit">Sign-In</MuiLink>
               </Link>
             </Grid>
