@@ -6,7 +6,7 @@ import { action, makeObservable, observable } from 'mobx';
 import Model from './Model';
 
 import AnalyticsHandler from 'src/integrations/vehicleTradeIn/VehicleTradeInAnalyticsHandler';
-import Navigation from 'src/navigation/Navigation';
+import Navigation, { DealStepsEnum } from 'src/navigation/Navigation';
 
 interface AnalyticsData {
   UUID?: string;
@@ -125,6 +125,6 @@ export default class VehicleTradeInViewModel {
   }
 
   onStepBack = (): void => {
-    this.navigation.stepBack(this.dealStatus);
+    this.navigation.stepBack(this.dealStatus, DealStepsEnum.VEHICLE_TRADE_IN);
   };
 }

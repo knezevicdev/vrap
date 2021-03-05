@@ -12,9 +12,9 @@ spy.mockImplementation(() => "XYXYXYXYXYXYX")
 
 global.window = Object.create(window);
 
-describe('Testing navigation', () => {
+describe('Testing Navigation', () => {
 
- it('Resting Regular step back', () => { 
+ it('Take the user to the last step when the current step is not in the pastStep array', () => { 
   
     const url = "/e2e/XYXYXYXYXYXYX/registration";
 
@@ -117,7 +117,7 @@ describe('Testing navigation', () => {
    /**
    * Including the 
    */
-  it('If include the current step on the list the the one before', () => { 
+  it('If past step array include the current step choose the last step before the current one', () => { 
  
     //if the current step is in the pastStep object get the index and subtract (1) to get the last before the current step
     const url = "/e2e/XYXYXYXYXYXYX/registration"; 
