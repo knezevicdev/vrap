@@ -9,6 +9,8 @@ import React from 'react';
 
 import LoggedOut from './LoggedOut';
 import ViewModel from './ViewModel';
+
+import { analyticsHandler } from 'src/integrations/AnalyticsHandler';
 interface Props {
   viewModel: ViewModel;
 }
@@ -23,6 +25,7 @@ const Container = styled(Typography)(({ theme }) => ({
 const FavoritesView: React.FC<Props> = (props) => {
   const { viewModel } = props;
   const handleClick = (): void => {
+    analyticsHandler.trackFavoritesClicked();
     if (viewModel.isLoggedIn()) {
       viewModel.isFavorited()
         ? viewModel.removeFavorite()

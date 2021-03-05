@@ -133,15 +133,29 @@ class AnalyticsHandler extends BaseAnalyticsHandler {
     this.track(event, properties);
   }
 
-  trackFavoritesSuccess(): void {
-    const event = 'Favorites Success';
+  trackFavoritesAddSuccess(): void {
+    const event = 'Favorites Add Success';
     const category = 'Product';
     const properties = { category };
     this.track(event, properties);
   }
 
-  trackFavoritesFailed(): void {
-    const event = 'Favorites Failed';
+  trackFavoritesAddFailed(): void {
+    const event = 'Favorites Add Failed';
+    const category = 'Product';
+    const properties = { category };
+    this.track(event, properties);
+  }
+
+  trackFavoritesRemoveSuccess(): void {
+    const event = 'Favorites Remove Success';
+    const category = 'Product';
+    const properties = { category };
+    this.track(event, properties);
+  }
+
+  trackFavoritesRemoveFailed(): void {
+    const event = 'Favorites Remove Failed';
     const category = 'Product';
     const properties = { category };
     this.track(event, properties);
