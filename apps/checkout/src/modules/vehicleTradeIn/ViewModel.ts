@@ -6,7 +6,7 @@ import { action, makeObservable, observable } from 'mobx';
 import Model from './Model';
 
 import AnalyticsHandler from 'src/integrations/vehicleTradeIn/VehicleTradeInAnalyticsHandler';
-import Navigation from 'src/navigation/Navigation';
+import Navigation, { DealStepsEnum } from 'src/navigation/Navigation';
 
 interface AnalyticsData {
   UUID?: string;
@@ -49,10 +49,10 @@ export default class VehicleTradeInViewModel {
     if (this.model.dataStatus !== Status.SUCCESS) {
       return false;
     }
-    if (!this.model.data.user.deals) {
+    if (!this.model.data?.user.deals) {
       return true;
     }
-    return this.model.data.user.deals.length === 0;
+    return this.model.data?.user.deals.length === 0;
   }
 
   get showError(): boolean {
@@ -85,16 +85,16 @@ export default class VehicleTradeInViewModel {
   };
 
   private get summary(): GQLTypes.DealSummary {
-    return (this.model.data.user.deals as Array<GQLTypes.Deal>)[0].dealSummary;
+    return (this.model.data?.user.deals as Array<GQLTypes.Deal>)[0].dealSummary;
   }
 
   private get dealId(): number {
-    return (this.model.data.user.deals as Array<GQLTypes.Deal>)[0].dealID;
+    return (this.model.data?.user.deals as Array<GQLTypes.Deal>)[0].dealID;
   }
 
   get analyticsData(): AnalyticsData {
     return {
-      username: this.model.data.user.username,
+      username: this.model.data?.user.username || '',
       vin: this.summary.inventory?.vehicle?.vin,
       paymentMethod: this.summary.paymentType,
       step: this.summary.dealStatus.step,
@@ -119,12 +119,12 @@ export default class VehicleTradeInViewModel {
 
   get dealStatus(): GQLTypes.DealStatus | undefined {
     if (this.model.dataStatus === Status.SUCCESS) {
-      const deal = head(this.model.data.user.deals);
+      const deal = head(this.model.data?.user.deals);
       return deal && deal.dealSummary.dealStatus;
     }
   }
 
   onStepBack = (): void => {
-    this.navigation.stepBack(this.dealStatus);
+    this.navigation.stepBack(this.dealStatus, DealStepsEnum.VEHICLE_TRADE_IN);
   };
 }

@@ -17,13 +17,35 @@ build-appraisal:
     - npm run lint
     - npm run build
 
+test-appraisal:
+  only:
+    refs:
+      - merge_requests
+    changes:
+      - apps/appraisal/**/*
+  stage: test
+  script:
+    - cd apps/appraisal
+    - npm install --quiet
+    - npm run test:ci
+  artifacts:
+    when: always
+    reports:
+      junit:
+        - apps/appraisal/junit.xml
+      cobertura: apps/appraisal/coverage/cobertura-coverage.xml
+    paths:
+      -  apps/appraisal/coverage
+  coverage: /All\sfiles.*?\s+(\d+.\d+)/
+
+
 lint-checkout:
   only:
     refs:
       - merge_requests
     changes:
       - apps/checkout/**/*
-  stage: build
+  stage: test
   script:
     - cd apps/checkout
     - npm install --quiet
@@ -40,6 +62,29 @@ build-checkout:
     - cd apps/checkout
     - npm install --quiet
     - npm run build
+
+test-checkout:
+  only:
+    refs:
+      - merge_requests
+    changes:
+      - apps/checkout/**/*
+  stage: test
+  script:
+    - cd apps/checkout
+    - npm install --quiet
+    - npm run test:ci
+  artifacts:
+    when: always
+    reports:
+      junit:
+        - apps/checkout/junit.xml
+      cobertura: apps/checkout/coverage/cobertura-coverage.xml
+    paths:
+      -  apps/checkout/coverage
+  coverage: /All\sfiles.*?\s+(\d+.\d+)/
+
+
 
 build-home:
   only:
@@ -67,6 +112,48 @@ build-landing:
     - npm run lint
     - npm run build
 
+test-landing:
+  only:
+    refs:
+      - merge_requests
+    changes:
+      - apps/landing/**/*
+  stage: test
+  script:
+    - cd apps/landing
+    - npm install --quiet
+    - npm run test:ci
+  artifacts:
+    when: always
+    reports:
+      junit:
+        - apps/landing/junit.xml
+      cobertura: apps/landing/coverage/cobertura-coverage.xml
+    paths:
+      -  apps/landing/coverage
+  coverage: /All\sfiles.*?\s+(\d+.\d+)/
+
+test-home:
+  only:
+    refs:
+      - merge_requests
+    changes:
+      - apps/home/**/*
+  stage: test
+  script:
+    - cd apps/home
+    - npm install --quiet
+    - npm run test:ci
+  artifacts:
+    when: always
+    reports:
+      junit:
+        - apps/home/junit.xml
+      cobertura: apps/home/coverage/cobertura-coverage.xml
+    paths:
+      -  apps/home/coverage
+  coverage: /All\sfiles.*?\s+(\d+.\d+)/
+
 build-listing:
   only:
     refs:
@@ -86,11 +173,21 @@ test-listing:
       - merge_requests
     changes:
       - apps/listing/**/*
-  stage: build
+  stage: test
   script:
     - cd apps/listing
     - npm install --quiet
     - npm run test:ci
+  artifacts:
+    when: always
+    reports:
+      junit:
+        - apps/listing/junit.xml
+      cobertura: apps/listing/coverage/cobertura-coverage.xml
+    paths:
+      - apps/listing/coverage
+  coverage: /All\sfiles.*?\s+(\d+.\d+)/
+
 
 build-logistics:
   only:
@@ -133,6 +230,9 @@ test-logistics:
       junit:
         - apps/logistics/junit.xml
       cobertura: apps/logistics/coverage/cobertura-coverage.xml
+    paths:
+      -  apps/logistics/coverage
+  coverage: /All\sfiles.*?\s+(\d+.\d+)/
 
 
 build-marketing:
@@ -147,6 +247,27 @@ build-marketing:
     - npm install --quiet
     - npm run lint
     - npm run build
+
+test-marketing:
+  only:
+    refs:
+      - merge_requests
+    changes:
+      - apps/marketing/**/*
+  stage: test
+  script:
+    - cd apps/marketing
+    - npm install --quiet
+    - npm run test:ci
+  artifacts:
+    when: always
+    reports:
+      junit:
+        - apps/marketing/junit.xml
+      cobertura: apps/marketing/coverage/cobertura-coverage.xml
+    paths:
+      -  apps/marketing/coverage
+  coverage: /All\sfiles.*?\s+(\d+.\d+)/
 
 build-product:
   only:
@@ -167,8 +288,36 @@ test-product:
       - merge_requests
     changes:
       - apps/product/**/*
-  stage: build
+  stage: test
   script:
     - cd apps/product
     - npm install --quiet
     - npm run test:ci
+  artifacts:
+    when: always
+    reports:
+      junit:
+        - apps/product/junit.xml
+      cobertura: apps/product/coverage/cobertura-coverage.xml
+    paths:
+      - apps/product/coverage
+  coverage: /All\sfiles.*?\s+(\d+.\d+)/
+
+
+code_quality:
+  rules:
+    - if: '$CODE_QUALITY_DISABLED'
+      when: never
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"' # Run code quality job in merge request pipelines
+    - if: '$CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH'      # Run code quality job in pipelines on the master branch (but not in other branch pipelines)
+    - if: '$CI_COMMIT_TAG'
+
+
+include:
+  - template: Jobs/Code-Quality.gitlab-ci.yml
+  - template: Jobs/Code-Intelligence.gitlab-ci.yml
+  - template: Security/Container-Scanning.gitlab-ci.yml
+  - template: Security/Dependency-Scanning.gitlab-ci.yml
+  - template: Security/License-Scanning.gitlab-ci.yml
+  - template: Security/SAST.gitlab-ci.yml
+  - template: Security/Secret-Detection.gitlab-ci.yml

@@ -1,4 +1,0 @@
-version: '3'
-services:
-  networking:
-    command: ash -c "yarn workspace @vroom-web/networking build"

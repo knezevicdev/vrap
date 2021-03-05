@@ -86,9 +86,9 @@ const Vehicles = styled.ul`
   padding: 0px;
 `;
 
-const BottomList = styled.div `
+const BottomList = styled.div`
   height: 10px;
-`
+`;
 
 const Vehicle = styled.div`
   display: flex;
@@ -206,7 +206,7 @@ const ModalView: React.FC<ModalProps> = ({
             </Select>
           );
         })}
-        <BottomList/>
+        <BottomList />
       </Vehicles>
       <Next disabled={isNextDisabled} onClick={onNextClick}>
         Next

@@ -27,7 +27,7 @@ export interface Address {
   street_line_2: string;
   city: string;
   state: string;
-  zipcode: string;
+  zip_code: string;
   to_string: string;
 }
 

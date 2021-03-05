@@ -4,7 +4,6 @@ import { styled } from '@material-ui/core/styles';
 import { Container, Typography } from '@vroom-web/ui';
 import React from 'react';
 
-import Picture from '../Picture';
 import ViewModel from './ViewModel';
 
 const Capsule = styled(Grid)(({ theme }) => ({
@@ -93,9 +92,7 @@ const CustomerQuoteView: React.FC<Props> = ({ viewModel }) => {
       <Paper elevation={0} square>
         <Capsule container>
           <PictureGrid item xs={12} md={6}>
-            <Picture src={src}>
-              <Image src={src} alt={alt} loading="lazy" />
-            </Picture>
+            <Image src={src} alt={alt} loading="lazy" />
           </PictureGrid>
           <QuoteGrid item xs={12} md={6}>
             <QuoteContainer>

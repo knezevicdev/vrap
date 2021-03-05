@@ -1,6 +1,6 @@
 {
   "name": "@vroom-web/checkout",
-  "version": "1.0.3",
+  "version": "1.0.4-beta.10",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -8,10 +8,12 @@
     "start": "next start",
     "graphql:mock-server": "node ./node_modules/@vroom-web/graphql-mock-server/dist/server.js",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx,.json --fix",
-    "test": "jest",
+    "test": "jest --watch",
     "dev:mock": "concurrently \"mockServer=true next dev\" \"npm run graphql:mock-server\"",
     "storybook": "start-storybook -p 1337 -s public",
-    "build:storybook": "build-storybook -s public"
+    "build:storybook": "build-storybook -s public",
+    "test:ci": "jest --ci --coverage",
+    "test:cc": "jest  --coverage --passWithNoTests"
   },
   "dependencies": {
     "@datadog/browser-rum": "^1.26.1",
@@ -22,7 +24,7 @@
     "@vroom-web/analytics-integration": "^1.2.11",
     "@vroom-web/cat-sdk": "^1.0.5",
     "@vroom-web/deals-v2-networking": "^1.0.1",
-    "@vroom-web/header-components": "^2.0.0",
+    "@vroom-web/header-components": "^2.1.0",
     "@vroom-web/networking": "0.0.4",
     "@vroom-web/temp-ui-alias-for-checkout": "^2.3.0",
     "@vroom-web/ui": "^1.0.1",
@@ -33,7 +35,7 @@
     "graphql-tag": "^2.11.0",
     "http-proxy-middleware": "^1.0.6",
     "libphonenumber-js": "^1.9.8",
-    "mobx": "^6.0.4",
+    "mobx": "^6.1.8",
     "mobx-react": "^7.0.5",
     "mobx-react-lite": "^3.1.6",
     "next": "^9.5.1",

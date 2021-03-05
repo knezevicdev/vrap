@@ -16,7 +16,7 @@ class ViewModel {
   };
   readonly officeHours = {
     label: 'Office hours',
-    line1: '10 AM to 6 PM Monday-Saturday',
+    line1: '10 AM to 7 PM Monday-Saturday',
     line2: 'Closed Sunday',
   };
   readonly paragraphs: string[] = [

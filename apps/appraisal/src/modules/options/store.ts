@@ -1,6 +1,8 @@
+import { ExperimentSDK } from '@vroom-web/experiment-sdk';
 import { action, observable, runInAction } from 'mobx';
 import { createContext, useContext } from 'react';
 
+import { analyticsHandler } from 'src/integrations/AnalyticsHandler';
 import {
   AsyncStatus,
   PaymentOverviewFormValues,
@@ -31,6 +33,8 @@ const defaultOptionsState: OptionStoreState = {
     // eslint-disable-next-line @typescript-eslint/camelcase
     final_payoff: 0,
   },
+  institutionFound: true,
+  institutionSearched: false,
 };
 
 export interface OptionStoreState {
@@ -38,6 +42,8 @@ export interface OptionStoreState {
   email: string;
   currentPayments: boolean;
   poq: Poq;
+  institutionFound: boolean;
+  institutionSearched: boolean;
 }
 
 export async function getInitialOptionsStoreState(
@@ -53,6 +59,8 @@ export async function getInitialOptionsStoreState(
       email: verificationData.email,
       currentPayments: verificationData.current_payments,
       poq: verificationData.poq,
+      institutionFound: true,
+      institutionSearched: false,
     };
 
     return optionState;
@@ -87,9 +95,20 @@ export class OptionsStore implements Store {
   @observable poq = defaultOptionsState.poq;
   @observable storeStatus = StoreStatus.Initial;
   @observable asyncStatus = AsyncStatus.Idle;
+  @observable institutionFound = true;
+  @observable institutionSearched = false;
+  @observable plaidExperiment = false;
 
   constructor(priceId?: string) {
     if (priceId) this.init(priceId);
+    new ExperimentSDK()
+      .getAndLogExperimentClientSide('cw-plaid-experiment')
+      .then((experiment) => {
+        if (experiment) {
+          this.setPlaidExperiment(experiment.assignedVariant === 1);
+          analyticsHandler.registerExperiment(experiment);
+        }
+      });
   }
 
   async init(priceId: string): Promise<void> {
@@ -113,6 +132,21 @@ export class OptionsStore implements Store {
   @action
   setPlaidSubmitting = (value: boolean): void => {
     this.plaidSubmitting = value;
+  };
+
+  @action
+  setInstitutionFound = (value: boolean): void => {
+    this.institutionFound = value;
+  };
+
+  @action
+  setInstitutionSearched = (value: boolean): void => {
+    this.institutionSearched = value;
+  };
+
+  @action
+  setPlaidExperiment = (plaidExperiment: boolean): void => {
+    this.plaidExperiment = plaidExperiment;
   };
 }
 

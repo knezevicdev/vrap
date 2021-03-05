@@ -1,5 +1,10 @@
-import { GQLTypes, isErrorResponse, Status } from '@vroom-web/networking';
-import { makeAutoObservable, runInAction } from 'mobx';
+import {
+  ErrorResponse,
+  GQLTypes,
+  isErrorResponse,
+  Status,
+} from '@vroom-web/networking';
+import { action, makeObservable, observable, runInAction } from 'mobx';
 
 import { getCongratsData } from 'src/networking';
 interface Data {
@@ -7,20 +12,26 @@ interface Data {
 }
 
 export default class CongratsModel {
-  data: Data = {} as Data;
+  data: Data | null = null;
+  error: ErrorResponse = {} as ErrorResponse;
   dataStatus: Status = Status.LOADING;
 
   constructor() {
-    makeAutoObservable(this);
+    makeObservable(this, {
+      dataStatus: observable,
+      data: observable,
+      error: observable,
+      getData: action,
+    });
   }
 
   async getData(dealID?: number): Promise<void> {
     this.dataStatus = Status.LOADING;
-
     const response = await getCongratsData(dealID, ['Pending']);
 
     if (isErrorResponse(response)) {
       runInAction(() => {
+        this.error = response;
         this.dataStatus = Status.ERROR;
       });
       console.log('ERROR', response);

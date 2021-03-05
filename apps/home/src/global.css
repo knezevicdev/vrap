@@ -1,0 +1,45 @@
+html {
+    display: flex;
+    min-height: 100%;
+  }
+  
+  body {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  #__next {
+    display: flex;
+    justify-content: center;
+    flex: 1;
+  }
+  
+  @font-face {
+    font-family: Calibre;
+    font-weight: normal;
+    src: url(public/fonts/Calibre-Regular.woff2) format('woff2');
+    font-display: swap;
+  }
+  @font-face {
+    font-family: Calibre;
+    font-weight: 600;
+    src: url(public/fonts/Calibre-Semibold.woff2) format('woff2');
+    font-display: swap;
+  }
+  @font-face {
+    font-family: Vroom Sans;
+    font-weight: normal;
+    src: url(public/fonts/Vroom-Sans.woff2) format('woff2');
+    font-display: swap;
+  }
+  @font-face {
+    font-family: VroomSans;
+    font-weight: normal;
+    src: url(public/fonts/Vroom-Sans.woff2) format('woff2');
+    font-display: swap;
+  }
+  

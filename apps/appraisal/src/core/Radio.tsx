@@ -6,7 +6,7 @@ import ENVS from 'src/integrations/Envs';
 
 interface RadioButtonProps extends React.HTMLAttributes<HTMLInputElement> {
   id?: string;
-  children?: string;
+  children?: React.ReactNode;
   name: string;
   disabled?: boolean;
   checked?: boolean;

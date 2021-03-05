@@ -32,7 +32,7 @@ const ColumnBody = styled.div`
   padding: 20px;
   flex-wrap: wrap;
   min-height: ${(props: Partial<PaymentMethodContextType>): string =>
-    props.stateDropdownOpen ? '115vh' : '79vh'};
+    props.stateDropdownOpen ? '115vh' : '81vh'};
 
   @media (max-width: 1280px) {
     flex-wrap: wrap-reverse;
@@ -68,6 +68,10 @@ const EPayOptions: NextPage<Props> = ({ brand }) => {
   const oStore = new OptionsStore(priceId);
   const ddStore = new DirectDepositStore(priceId);
   const poStore = new PaymentOverviewStore(priceId);
+
+  // TODO: this used to be used with <State isOpenCallback={setStateDropdown} />
+  // It caused the page to rerender and mobx would lose its state
+  // Ideally we would like to extend the page to accomodate the long dropdown
   const [stateDropdownOpen, setStateDropdown] = useState(false);
 
   return (

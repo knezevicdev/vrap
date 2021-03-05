@@ -15,11 +15,9 @@ module.exports = {
   ],
   extends: [
     'eslint:recommended',
-    'plugin:@typescript-eslint/eslint-recommended',
     'plugin:@typescript-eslint/recommended',
     'plugin:prettier/recommended',
     'plugin:react/recommended',
-    'prettier/@typescript-eslint',
   ],
   overrides: [
     {
@@ -42,16 +40,16 @@ module.exports = {
       {
         groups: [
           // Side effect imports.
-          ["^\\u0000"],
+          ['^\\u0000'],
           // Packages.
           // Things that start with a letter (or digit or underscore), or `@` followed by a letter.
-          ["^@?\\w"],
+          ['^@?\\w'],
           // Absolute imports and other imports such as Vue-style `@/foo`.
           // Anything not matched in another group.
-          ["^"],
+          ['^'],
           // Relative imports.
           // Anything that starts with a dot.
-          ["^\\."],
+          ['^\\.'],
           // Custom Groups
           ['^src/'],
         ],

@@ -206,6 +206,7 @@ export interface ReservedCarProps {
   trackScheduleTime?: () => void;
   trackLicensePlateClick?: () => void;
   trackVinClick?: () => void;
+  trackDocUploadClicked?: () => void;
   dealId: number;
   data: {
     car: string;
@@ -232,6 +233,7 @@ const ReservedCar: React.FC<ReservedCarProps> = ({
   hasTradeIn,
   trackLicensePlateClick,
   trackVinClick,
+  trackDocUploadClicked,
   isDocUploadStepDone,
 }): JSX.Element => {
   const hasTradeAndDocumentUploaded = hasTradeIn && isDocUploadStepDone;
@@ -286,7 +288,10 @@ const ReservedCar: React.FC<ReservedCarProps> = ({
           <>
             <Divider />
             <TradeContainer>
-              <DocumentUpload dealId={dealId} />
+              <DocumentUpload
+                dealId={dealId}
+                trackDocUploadClicked={trackDocUploadClicked}
+              />
             </TradeContainer>
           </>
         )}

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import CongratsViewModel from '../ViewModel';
 import Next from './Next';
@@ -13,6 +13,10 @@ const Success: React.FC<Props> = ({ viewModel }): JSX.Element => {
   const reservedCarProps = viewModel.reservedCarProps;
   const nextProps = viewModel.nextProps;
   const purchaseSummaryViewModel = viewModel.purchaseSummaryProps;
+
+  useEffect(() => {
+    viewModel.trackSuccess();
+  }, [viewModel]);
 
   return (
     <>

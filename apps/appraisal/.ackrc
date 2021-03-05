@@ -1,0 +1,7 @@
+--ignore-dir=node_modules
+--ignore-file=is:.tags
+--ignore-file=is:.keep
+--color
+--follow
+--group
+--sort-files

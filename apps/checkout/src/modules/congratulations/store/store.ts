@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/camelcase */
 import { CatData, CatSDK } from '@vroom-web/cat-sdk';
-import { makeAutoObservable } from 'mobx';
+import { action, makeObservable, observable } from 'mobx';
 import { parse, stringify } from 'qs';
 
 class FooterStore {
@@ -15,7 +15,12 @@ class FooterStore {
   }
 
   constructor() {
-    makeAutoObservable(this);
+    makeObservable(this, {
+      catData: observable,
+      setCatData: action,
+      initClientSide: action,
+      tearDownClientSide: action,
+    });
   }
 
   // FIT-566

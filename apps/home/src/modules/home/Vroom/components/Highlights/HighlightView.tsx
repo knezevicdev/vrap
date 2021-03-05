@@ -2,8 +2,6 @@ import { styled } from '@material-ui/core/styles';
 import { Typography } from '@vroom-web/ui';
 import React from 'react';
 
-import Picture from '../Picture';
-
 const Highlight = styled('div')(() => ({
   display: 'flex',
 }));
@@ -46,9 +44,7 @@ const HighlightView: React.FC<Props> = ({
 }) => {
   return (
     <Highlight>
-      <Picture src={imgSrc}>
-        <StyledImg src={imgSrc} alt={imgAlt} loading="lazy" />
-      </Picture>
+      <StyledImg src={imgSrc} alt={imgAlt} loading="lazy" />
       <Text>
         <Title variant="body1">{title}</Title>
         <Description variant="body1">{description}</Description>

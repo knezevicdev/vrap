@@ -3,6 +3,7 @@ import {
   Button,
   CircularProgress,
   Grid,
+  Link as MuiLink,
   Paper,
   TextField,
   Typography,
@@ -117,14 +118,16 @@ const SignIn: React.FC<Props> = ({ viewModel }) => {
                   </Grid>
                   <Grid item>
                     <Typography>
-                      <Link href="/signup">
-                        Need an account? Create one here.
+                      <Link href="/signup" passHref>
+                        <MuiLink>Need an account? Create one here.</MuiLink>
                       </Link>
                     </Typography>
                   </Grid>
                   <Grid item>
                     <Typography>
-                      <Link href="/forgot">Forgot your password?</Link>
+                      <Link href="/forgot" passHref>
+                        <MuiLink>Forgot your password?</MuiLink>
+                      </Link>
                     </Typography>
                   </Grid>
                 </Grid>

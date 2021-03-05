@@ -49,13 +49,12 @@ class ShipmentsViewModel {
     );
   }
 
-  /* eslint-disable @typescript-eslint/camelcase */
   private addressfmt({
     street_line_1,
     street_line_2,
     city,
     state,
-    zipcode,
+    zip_code,
   }: Address): JSX.Element {
     return (
       <>
@@ -63,11 +62,10 @@ class ShipmentsViewModel {
         <br />
         {street_line_2}
         {street_line_2 && <br />}
-        {city}, {state} {zipcode}
+        {city}, {state} {zip_code}
       </>
     );
   }
-  /* eslint-enable @typescript-eslint/camelcase */
 
   setSelectedTab(value: number): void {
     this.model.setSelectedTab(value, this.tabs[value].status);
