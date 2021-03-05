@@ -19,7 +19,7 @@ import { ThemeProvider as StyledThemeProvider } from 'styled-components';
 
 import DealValidatorModal from 'src/modules/dealValidator';
 import client from 'src/networking/client';
-import { ShowDealList } from "@vroom-web/graphql-mock-server"
+import { MockServerHelperUI } from "@vroom-web/graphql-mock-server"
 
 configureMobx({
   enforceActions: 'observed', // don't allow state modifications outside actions
@@ -28,6 +28,7 @@ configureMobx({
 });
 
 const { publicRuntimeConfig } = getConfig();
+//React-Modal portal injection
 Modal.setAppElement('#__next');
 class VroomApp extends App {
   componentDidMount(): void {
@@ -60,7 +61,8 @@ class VroomApp extends App {
     });
     catSDK.initCatData();
 
-    ShowDealList()
+    //Enable Mock Server UI Doc
+    !!publicRuntimeConfig.mockServer && MockServerHelperUI();
   }
 
   render(): JSX.Element {
