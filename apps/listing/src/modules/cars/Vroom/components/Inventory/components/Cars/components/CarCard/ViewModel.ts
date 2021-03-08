@@ -30,6 +30,7 @@ class CarCardViewModel {
   readonly availableSoon: string = 'Available Soon';
   readonly salePending: string = 'Sale Pending';
   readonly tenDayDelivery: string = '10-Day Delivery';
+  readonly loadedWithFeatures: string = 'Loaded with Features';
 
   constructor(carsStore: CarsStore, car: Car, position: number) {
     this.carsStore = carsStore;
@@ -69,6 +70,15 @@ class CarCardViewModel {
       this.carsStore.geoShippingExperiment?.assignedVariant === 1 &&
       !this.showSalePending() &&
       !this.showAvailableSoon()
+    );
+  };
+
+  showLoadedWithFeatures = (): boolean => {
+    return (
+      true && // TODO: Switch to logic from API response when service is ready
+      !this.showSalePending() &&
+      !this.showAvailableSoon() &&
+      !this.showTenDayDelivery()
     );
   };
 

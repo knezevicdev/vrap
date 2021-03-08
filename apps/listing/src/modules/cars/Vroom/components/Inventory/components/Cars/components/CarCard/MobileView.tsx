@@ -89,7 +89,7 @@ const SalePending = styled(Typography)(({ theme }) => ({
   },
 }));
 
-const TenDayDelivery = styled(Typography)(({ theme }) => ({
+const BlueBadge = styled(Typography)(({ theme }) => ({
   padding: theme.spacing(0, 2),
   fontSize: '16px',
   fontWeight: 600,
@@ -203,10 +203,14 @@ const MobileView: React.FC<MobileViewProps> = ({ viewModel }) => {
             </Media>
             <Content
               border={
-                viewModel.showTenDayDelivery() ? 'solid 3px #0F3A7B' : 'none'
+                viewModel.showTenDayDelivery() ||
+                viewModel.showLoadedWithFeatures()
+                  ? 'solid 3px #0F3A7B'
+                  : 'none'
               }
               borderTop={
-                viewModel.showTenDayDelivery()
+                viewModel.showTenDayDelivery() ||
+                viewModel.showLoadedWithFeatures()
                   ? 'solid 3px #0F3A7B'
                   : 'solid 1px #D6D7DA'
               }
@@ -219,7 +223,10 @@ const MobileView: React.FC<MobileViewProps> = ({ viewModel }) => {
                 <SalePending>{viewModel.salePending}</SalePending>
               )}
               {viewModel.showTenDayDelivery() && (
-                <TenDayDelivery>{viewModel.tenDayDelivery}</TenDayDelivery>
+                <BlueBadge>{viewModel.tenDayDelivery}</BlueBadge>
+              )}
+              {viewModel.showLoadedWithFeatures() && (
+                <BlueBadge>{viewModel.loadedWithFeatures}</BlueBadge>
               )}
               <CarDetails>
                 <Title>{title}</Title>
