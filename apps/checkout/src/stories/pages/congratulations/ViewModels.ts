@@ -178,7 +178,21 @@ export const purchaseSummaryViewModel: PurchaseSummaryProps = {
       miles: '20,818 miles',
     },
   },
-  showInsuranceDisclaimer: true,
+  documentsUploaded: {
+    documents: [
+      {
+        fileID: 'c56fea24-9009-44a7-8549-0eb630f52aa8',
+        fileType: 'drivers-license-back',
+        status: '',
+      },
+      {
+        fileID: '48272698-f1f9-4992-a1d9-5a9c182003b8',
+        fileType: 'drivers-license-front',
+        status: '',
+      },
+    ],
+    showInsuranceDisclaimer: true,
+  },
 };
 
 const sections = [

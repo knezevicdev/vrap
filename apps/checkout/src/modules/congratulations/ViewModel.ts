@@ -222,6 +222,15 @@ export default class CongratsViewModel {
     return this.summary.dealStatus.docUploadStepDone;
   }
 
+  private get documents(): Array<GQLTypes.DocumentMetadata> {
+    const { documents } = this.summary;
+    return documents
+      ? documents.filter(
+          (document: GQLTypes.DocumentMetadata): boolean => !!document.fileID
+        )
+      : [];
+  }
+
   get reservedCarProps(): ReservedCarProps {
     const { year, make, model, trim } = this.vehicle;
     const { leadPhotoURL } = this.inventory;
@@ -480,7 +489,10 @@ export default class CongratsViewModel {
         showNotAvailableDates: this.showNotAvailableDates,
         showTruckInformation: !this.deliveryDetails.wheelerTruck,
       },
-      showInsuranceDisclaimer: showInsuranceDisclaimer,
+      documentsUploaded: {
+        documents: this.documents,
+        showInsuranceDisclaimer: showInsuranceDisclaimer,
+      },
     };
   }
 
