@@ -12,7 +12,7 @@ interface Props {
 const Success: React.FC<Props> = ({ viewModel }): JSX.Element => {
   const reservedCarProps = viewModel.reservedCarProps;
   const nextProps = viewModel.nextProps;
-  const purchaseSummaryViewModel = viewModel.purchaseSummaryProps;
+  const purchaseSummaryProps = viewModel.purchaseSummaryProps;
 
   useEffect(() => {
     viewModel.trackSuccess();
@@ -22,7 +22,7 @@ const Success: React.FC<Props> = ({ viewModel }): JSX.Element => {
     <>
       <ReservedCar {...reservedCarProps} />
       <Next {...nextProps} />
-      <PurchaseSummary {...purchaseSummaryViewModel} />
+      <PurchaseSummary {...purchaseSummaryProps} />
     </>
   );
 };

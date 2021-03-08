@@ -30,7 +30,8 @@ import PurchaseDetails, {
 import RegistrationAddress, {
   RegistrationAddressProps,
 } from './components/RegistrationAddress';
-import UploadedDocuments from './components/UploadedDocuments';
+import UploadedDocuments from './components/UploadDocuments';
+import { UploadedDocumentsProps } from './components/UploadDocuments/ViewModel';
 export interface PurchaseSummaryProps {
   summary: {
     date: string;
@@ -51,7 +52,7 @@ export interface PurchaseSummaryProps {
   registrationAddress: RegistrationAddressProps;
   deliveryAddress: DeliveryAddressProps;
   deliveryDetails: DeliveryDetailsProps;
-  showInsuranceDisclaimer: boolean;
+  documentsUploaded: UploadedDocumentsProps;
 }
 
 const primaryWhite = (props: { theme: ThemeProps }): string =>
@@ -124,7 +125,7 @@ const PurchaseSummary: React.FC<PurchaseSummaryProps> = ({
   registrationAddress,
   deliveryAddress,
   deliveryDetails,
-  showInsuranceDisclaimer,
+  documentsUploaded,
 }) => {
   return (
     <Container>
@@ -167,8 +168,13 @@ const PurchaseSummary: React.FC<PurchaseSummaryProps> = ({
         <Space />
         <DeliveryDetails {...deliveryDetails} />
         <Space />
-        <UploadedDocuments showInsuranceDisclaimer={showInsuranceDisclaimer} />
-        <Space />
+        {documentsUploaded.documents.length !== 0 && (
+          <>
+            <UploadedDocuments {...documentsUploaded} />
+            <Space />
+          </>
+        )}
+
         <ShouldKnow>
           <Body.Regular bold>You Should Know:</Body.Regular> We’ve done our best
           to estimate the taxes and registration fees here but the final amounts
