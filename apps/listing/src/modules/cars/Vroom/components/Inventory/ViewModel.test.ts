@@ -51,8 +51,8 @@ describe('Inventory View Model', () => {
     });
   });
 
-  describe('Hide Pagination', () => {
-    it('should hide Pagination when no inventory', () => {
+  describe('Show When Inventory', () => {
+    it('should be false when no inventory', () => {
       store.inventoryData = {
         hits: {
           total: 0,
@@ -64,10 +64,10 @@ describe('Inventory View Model', () => {
           },
         },
       };
-      const hidePagination = viewModel.hidePagination();
-      expect(hidePagination).toEqual(true);
+      const showWhenInventory = viewModel.showWhenInventory();
+      expect(showWhenInventory).toEqual(false);
     });
-    it('should show Pagination when inventory', () => {
+    it('should be true when inventory', () => {
       store.inventoryData = {
         hits: {
           total: 1,
@@ -79,8 +79,8 @@ describe('Inventory View Model', () => {
           },
         },
       };
-      const hidePagination = viewModel.hidePagination();
-      expect(hidePagination).toEqual(false);
+      const showWhenInventory = viewModel.showWhenInventory();
+      expect(showWhenInventory).toEqual(true);
     });
   });
 });

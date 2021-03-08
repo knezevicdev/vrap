@@ -23,6 +23,7 @@ module.exports = {
     INVSEARCH_V3_URL: process.env.INVSEARCH_V3_URL,
     HORN_SERVICE_URL: process.env.HORN_SERVICE_URL,
     GEARBOX_PRIVATE_URL: process.env.GEARBOX_PRIVATE_URL,
+    GEARBOX_URL: process.env.GEARBOX_URL,
     NAME: name,
     NODE_ENV: process.env.NODE_ENV,
     SHORT_HASH: shortHash,
