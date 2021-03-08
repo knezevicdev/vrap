@@ -69,12 +69,13 @@ const ErrorContainer = styled('div')(({ theme }) => ({
   height: 'auto',
   display: 'flex',
   flexDirection: 'column',
-  width: '33%',
+  width: '100%',
   padding: theme.spacing(2),
 }));
 
 const ErrorButton = styled(DialogButton)(({ theme }) => ({
   width: '50%',
+  minWidth: '125px',
   alignSelf: 'center',
   marginTop: theme.spacing(1),
   marginBottom: theme.spacing(1),

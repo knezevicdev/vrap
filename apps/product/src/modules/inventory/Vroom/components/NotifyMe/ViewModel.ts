@@ -3,6 +3,7 @@ import { Car } from '@vroom-web/inv-search-networking';
 import NotifyMeNetworker from './NotifyMeNetworker';
 import { NotifyMeStore } from './store';
 
+import { analyticsHandler } from 'src/integrations/AnalyticsHandler';
 import { InventoryStore } from 'src/modules/inventory/store';
 
 interface LoggedIn {
@@ -29,7 +30,7 @@ class NotifyMeViewModel {
   private notifyMeNetworker: NotifyMeNetworker;
   readonly notifyMeButton: string = 'Notify Me';
   readonly notifiedButton: string =
-    'You’ll recieve a notification when this vehicle is available.';
+    'You’ll receive a notification when this vehicle is available.';
   readonly dialogTitle: string = 'Notify Me When Available';
   readonly dialogTitleSuccess: string = 'We’ll Notify You Soon';
   readonly dialogBodySuccess: string =
@@ -40,7 +41,7 @@ class NotifyMeViewModel {
   readonly logInButton: string = 'LOG IN';
 
   readonly loggedIn: LoggedIn = {
-    header: 'Sign up below to be notifed when this vehicle is available.',
+    header: 'Sign up below to be notified when this vehicle is available.',
     body:
       'Vroom will notify everyone that has expressed an interest in this vehicle at the same time, at which point the vehicle can be reserved by ANY Vroom customer by placing a deposit on the vehicle.',
     checkboxText:
@@ -75,6 +76,9 @@ class NotifyMeViewModel {
   }
 
   handleClick(): void {
+    if (!this.isOpen()) {
+      analyticsHandler.trackNotifyMeClicked();
+    }
     this.notifyMeStore.toggleModal();
     this.setError(false);
   }
@@ -125,13 +129,16 @@ class NotifyMeViewModel {
             this.setDialogButtonLoading(false);
             this.setSuccessful(true);
             this.handleClick();
+            analyticsHandler.trackNotifyMeSuccess();
           })
           .catch(() => {
             this.setError(true);
+            analyticsHandler.trackNotifyMeFailed();
           });
       })
       .catch(() => {
         this.setError(true);
+        analyticsHandler.trackNotifyMeFailed();
       });
   }
 

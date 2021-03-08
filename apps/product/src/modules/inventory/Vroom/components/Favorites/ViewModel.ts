@@ -1,6 +1,7 @@
 import FavoritesNetworker from './FavoritesNetworker';
 import { FavoritesStore } from './store';
 
+import { analyticsHandler } from 'src/integrations/AnalyticsHandler';
 import { InventoryStore } from 'src/modules/inventory/store';
 
 interface VinList {
@@ -136,10 +137,12 @@ class FavoritesViewModel {
         this.isError() && this.handleError();
         this.favoritesStore.setFavorited();
         this.handleSnackbar();
+        analyticsHandler.trackFavoritesAddSuccess();
       }
     } catch {
       !this.isError() && this.handleError();
       this.handleSnackbar();
+      analyticsHandler.trackFavoritesAddFailed();
     }
   }
 
@@ -160,10 +163,12 @@ class FavoritesViewModel {
         this.isError() && this.handleError();
         this.favoritesStore.setFavorited();
         this.handleSnackbar();
+        analyticsHandler.trackFavoritesRemoveSuccess();
       }
     } catch {
       !this.isError() && this.handleError();
       this.handleSnackbar();
+      analyticsHandler.trackFavoritesRemoveFailed();
     }
   }
 }

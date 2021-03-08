@@ -104,6 +104,62 @@ class AnalyticsHandler extends BaseAnalyticsHandler {
     const properties = { ...product, category };
     this.track(event, properties);
   }
+
+  trackNotifyMeClicked(): void {
+    const event = 'Notify Me Clicked';
+    const category = 'Product';
+    const properties = { category };
+    this.track(event, properties);
+  }
+
+  trackNotifyMeSuccess(): void {
+    const event = 'Notify Me Success';
+    const category = 'Product';
+    const properties = { category };
+    this.track(event, properties);
+  }
+
+  trackNotifyMeFailed(): void {
+    const event = 'Notify Me Failed';
+    const category = 'Product';
+    const properties = { category };
+    this.track(event, properties);
+  }
+
+  trackFavoritesClicked(): void {
+    const event = 'Favorites Clicked';
+    const category = 'Product';
+    const properties = { category };
+    this.track(event, properties);
+  }
+
+  trackFavoritesAddSuccess(): void {
+    const event = 'Favorites Add Success';
+    const category = 'Product';
+    const properties = { category };
+    this.track(event, properties);
+  }
+
+  trackFavoritesAddFailed(): void {
+    const event = 'Favorites Add Failed';
+    const category = 'Product';
+    const properties = { category };
+    this.track(event, properties);
+  }
+
+  trackFavoritesRemoveSuccess(): void {
+    const event = 'Favorites Remove Success';
+    const category = 'Product';
+    const properties = { category };
+    this.track(event, properties);
+  }
+
+  trackFavoritesRemoveFailed(): void {
+    const event = 'Favorites Remove Failed';
+    const category = 'Product';
+    const properties = { category };
+    this.track(event, properties);
+  }
 }
 
 // It probably makes more sense to export a single instance
