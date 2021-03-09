@@ -1,19 +1,30 @@
+import { CatStore, PhoneNumberLink } from 'src/core/store';
 import { DealStore } from 'src/core/store/DealStore';
 import { HeaderAnalyticsHandler } from 'src/integrations/header/HeaderAnalyticsHandler';
 
 class HeaderViewModel {
   readonly logoHref = '/';
-  readonly telephone = {
-    text: 'Questions?',
-    href: 'tel: (855) 524-1300',
-    number: `(855) 524-1300`,
-  };
-  private store: DealStore;
+  readonly label = 'Questions?';
+  private dealStore: DealStore;
+  private store: CatStore;
   private analyticsHandler: HeaderAnalyticsHandler;
 
-  constructor(store: DealStore, analyticsHandler: HeaderAnalyticsHandler) {
-    this.store = store;
+  constructor(
+    dealStore: DealStore,
+    analyticsHandler: HeaderAnalyticsHandler,
+    store: CatStore
+  ) {
+    this.dealStore = dealStore;
     this.analyticsHandler = analyticsHandler;
+    this.store = store;
+  }
+
+  handleMount(): void {
+    this.store.initClientSide();
+  }
+
+  handleUnmount(): void {
+    this.store.tearDownClientSide();
   }
 
   handleLogoClick = (): void => {
@@ -21,8 +32,12 @@ class HeaderViewModel {
   };
 
   handleClick = (): void => {
-    this.store.toggleDropdown();
+    this.dealStore.toggleDropdown();
   };
+
+  get phoneNumber(): PhoneNumberLink {
+    return this.store.phoneNumber;
+  }
 }
 
 export default HeaderViewModel;

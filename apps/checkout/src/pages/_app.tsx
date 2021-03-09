@@ -1,5 +1,6 @@
 import { datadogRum } from '@datadog/browser-rum';
 import { CatSDK } from '@vroom-web/cat-sdk';
+import { MockServerHelperUI } from '@vroom-web/graphql-mock-server';
 import {
   ErrorResponse,
   isAccessDeniedErrorResponse,
@@ -19,7 +20,6 @@ import { ThemeProvider as StyledThemeProvider } from 'styled-components';
 
 import DealValidatorModal from 'src/modules/dealValidator';
 import client from 'src/networking/client';
-import { MockServerHelperUI } from "@vroom-web/graphql-mock-server"
 
 configureMobx({
   enforceActions: 'observed', // don't allow state modifications outside actions

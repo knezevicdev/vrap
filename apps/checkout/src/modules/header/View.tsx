@@ -5,6 +5,7 @@ import {
   Link,
   ThemeProps,
 } from '@vroom-web/temp-ui-alias-for-checkout';
+import { observer } from 'mobx-react';
 import React from 'react';
 import styled from 'styled-components';
 
@@ -92,8 +93,9 @@ interface Props {
 const HeaderView = ({ viewModel }: Props): JSX.Element => {
   const {
     logoHref,
+    label,
     handleLogoClick,
-    telephone: { text, href, number },
+    phoneNumber: { href, name },
     handleClick,
   } = viewModel;
 
@@ -104,10 +106,10 @@ const HeaderView = ({ viewModel }: Props): JSX.Element => {
       </Link>
 
       <RightColumn>
-        <StyledText bold>{text}</StyledText>
+        <StyledText bold>{label}</StyledText>
         <CustomLink href={href}>
           <PhoneIcon icon={Icons.PHONE} />
-          <PhoneNumber bold>{number}</PhoneNumber>
+          <PhoneNumber bold>{name}</PhoneNumber>
         </CustomLink>
         <CartWrapper onClick={handleClick}>
           <CartIcon icon={Icons.CART_FILLED} />
@@ -117,4 +119,4 @@ const HeaderView = ({ viewModel }: Props): JSX.Element => {
   );
 };
 
-export default HeaderView;
+export default observer(HeaderView);
