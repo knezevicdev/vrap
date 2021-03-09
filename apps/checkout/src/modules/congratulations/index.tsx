@@ -1,19 +1,25 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import Model from './Model';
 import View from './View';
 import ViewModel from './ViewModel';
-class Congratulations extends React.Component {
-  model = new Model();
-  viewModel = new ViewModel(this.model);
 
-  componentDidMount(): void {
-    this.model.getData();
-  }
+import { CatStore } from 'src/core/store';
 
-  render(): React.ReactNode {
-    return <View viewModel={this.viewModel} />;
-  }
-}
+const Congratulations = (): JSX.Element => {
+  const model = new Model();
+  const store = new CatStore();
+  const viewModel = new ViewModel(model, store);
+
+  useEffect(() => {
+    model.getData();
+    viewModel.handleMount();
+    return (): void => {
+      viewModel.handleUnmount();
+    };
+  }, [model, viewModel]);
+
+  return <View viewModel={viewModel} />;
+};
 
 export default Congratulations;
