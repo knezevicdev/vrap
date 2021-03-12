@@ -10,22 +10,32 @@ const Chatbox: React.FC = () => {
     script.src = 'https://webchat-sandbox.pypestream.com/webchat-public.js';
     document.body.appendChild(script);
 
-    return () => {
+    return (): void => {
       document.body.removeChild(script);
     };
   }, []);
 
   const [booted, setBooted] = useState(false);
   const [showChatIcon, setShowChatIcon] = useState(true);
-  const handleOnClick = () => {
+  const handleOnClick = (): void => {
     const chatContainer = document.getElementById('chat-container');
 
+    /*
+      TODO:
+      This implementation is pretty horrible. @ts-ignore is a major red flag.
+      Pypestream is brought in from `webchat-public.js` in the useEffect, But when we compile Next.js isn't gonna know what it is.
+      Have tried copying the file and putting it into /public dir but pypestream complains about a VPN
+      An alternative solution is using old school `document.addEventListener` but there are implementaiton 
+      issues where React will lose track of the event listener and not clean up properly. You could try to hack your way with refs but even then cleanliness isn't
+      guaranteed.
+    */
     if (!booted) {
       // @ts-ignore
       Pypestream('config', {
         domain: 'dev',
         env: 'sandbox',
         beta: true,
+        /* eslint-disable @typescript-eslint/camelcase */
         gtm_id: 'GTM-PZJGZ67',
       });
 

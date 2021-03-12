@@ -48,7 +48,7 @@ const Contact: React.FC<Props> = ({ viewModel }) => {
   useEffect(() => {
     const catSDK = new CatSDK();
     catSDK.observeCatData(catEventDataListener);
-    return () => {
+    return (): void => {
       catSDK.unobserveCatData(catEventDataListener);
     };
   }, [catEventDataListener]);
