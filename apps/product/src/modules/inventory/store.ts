@@ -31,7 +31,6 @@ export interface InventoryStoreState {
   vehicleStatus: Status;
   vehicle: Hit;
   isAvailable: boolean;
-  deliveryFee: number;
   actionFavorite: boolean;
 }
 
@@ -155,34 +154,12 @@ interface DeliveryFeeData {
   taxiGetShippingFee: GQLTypes.ShippingFee;
 }
 
-export async function fetchDeliveryFeeState(
-  gearboxClient: Client,
-  deliveryFeeDefault: number
-): Promise<number> {
-  const response = await gearboxClient.gqlRequest<DeliveryFeeData>({
-    document: gql`
-      {
-        taxiGetShippingFee {
-          fee
-        }
-      }
-    `,
-  });
-  if (isSuccessResponse(response)) {
-    return response.data.taxiGetShippingFee.fee || deliveryFeeDefault;
-  } else {
-    console.error(JSON.stringify(response.error));
-    return deliveryFeeDefault;
-  }
-}
-
 export async function getInitialInventoryStoreState(
   vin: string,
   actionFavorite: boolean
 ): Promise<{
   similar: Hit[];
   isAvailable: boolean;
-  deliveryFee: number;
   vin: string;
   similarClusterCount: number;
   vehicleStatus: Status;
@@ -198,10 +175,6 @@ export async function getInitialInventoryStoreState(
     publicRuntimeConfig.INV_SERVICE_V2_URL || ''
   );
 
-  const gearboxClient = new Client(publicRuntimeConfig.GEARBOX_URL, {
-    timeout: 4000,
-  });
-
   const vehicleState = await getVehicleState(
     vin,
     getVehicleResponse,
@@ -216,17 +189,12 @@ export async function getInitialInventoryStoreState(
     vin,
     invServiceNetworker
   );
-  const deliveryFeeState = await fetchDeliveryFeeState(
-    gearboxClient,
-    deliveryFeeDefault
-  );
 
   return {
     vin,
     ...vehicleState,
     ...vehicleSimilarState,
     isAvailable: inventoryAvailableState,
-    deliveryFee: deliveryFeeState,
     actionFavorite,
   };
 }
@@ -237,6 +205,8 @@ export class InventoryStore {
   );
 
   @observable deliveryFee = deliveryFeeDefault;
+  @observable deliveryFeeHasSucceeded = false;
+  @observable deliveryFeeHasFailed = false;
   @observable similarStatus: Status = Status.FETCHING;
   @observable similar: Hit[] = [] as Hit[];
   @observable similarClusterCount = 0;
@@ -260,14 +230,48 @@ export class InventoryStore {
       // this.similarStatus = initialState.similarStatus;
       this.similar = initialState.similar;
       this.isAvailable = initialState.isAvailable;
-      this.deliveryFee = initialState.deliveryFee;
       this.actionFavorite = initialState.actionFavorite;
+
+      const gearboxClient = new Client(publicRuntimeConfig.GEARBOX_URL, {
+        timeout: 4000,
+      });
+      this.fetchDeliveryFeeState(gearboxClient, deliveryFeeDefault);
     }
   }
 
   @action
   setSimilarStatus = (similarStatus: Status): void => {
     this.similarStatus = similarStatus;
+  };
+
+  @action
+  fetchDeliveryFeeState = async (
+    gearboxClient: Client,
+    deliveryFeeDefault: number
+  ): Promise<void> => {
+    const response = await gearboxClient.gqlRequest<DeliveryFeeData>({
+      document: gql`
+        {
+          taxiGetShippingFee {
+            fee
+          }
+        }
+      `,
+    });
+    if (isSuccessResponse(response)) {
+      runInAction(() => {
+        this.deliveryFee =
+          response.data.taxiGetShippingFee.fee || deliveryFeeDefault;
+        this.deliveryFeeHasSucceeded = true;
+      });
+    } else {
+      console.log('in error state');
+      console.error(JSON.stringify(response.error));
+      runInAction(() => {
+        this.deliveryFee = deliveryFeeDefault;
+        this.deliveryFeeHasFailed = true;
+      });
+    }
   };
 
   @action

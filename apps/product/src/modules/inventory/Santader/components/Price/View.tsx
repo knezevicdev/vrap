@@ -3,6 +3,7 @@ import Popover from '@material-ui/core/Popover';
 import { styled } from '@material-ui/core/styles';
 import CloseIcon from '@material-ui/icons/Close';
 import { Typography } from '@vroom-web/ui';
+import { observer } from 'mobx-react';
 import React, { useState } from 'react';
 import reactStringReplace from 'react-string-replace';
 
@@ -127,4 +128,4 @@ const PriceView: React.FC<Props> = ({ viewModel }) => {
   );
 };
 
-export default PriceView;
+export default observer(PriceView);
