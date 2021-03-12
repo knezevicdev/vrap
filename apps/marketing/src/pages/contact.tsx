@@ -1,13 +1,12 @@
-import React from 'react';
-import Contact from 'src/modules/contact';
-import Page from 'src/Page';
-import getConfig from 'next/config';
-
-import { Brand, determineWhitelabel } from '@vroom-web/whitelabel';
-import { BrandContext } from 'src/modules/contact/BrandContext';
-import { GetServerSideProps, GetServerSidePropsContext, NextPage } from 'next';
-import { PageData, returnBrandConfig } from 'src/utils/utils';
 import { ThemeProvider } from '@vroom-web/ui';
+import { Brand, determineWhitelabel } from '@vroom-web/whitelabel';
+import { GetServerSideProps, GetServerSidePropsContext, NextPage } from 'next';
+import React from 'react';
+
+import Contact from 'src/modules/contact';
+import { BrandContext } from 'src/modules/contact/BrandContext';
+import Page from 'src/Page';
+import { PageData, returnBrandConfig } from 'src/utils/utils';
 
 interface Props {
   brand: Brand;
@@ -22,8 +21,6 @@ const ContactPage: NextPage<Props> = ({
   description,
   title,
 }) => {
-  const { publicRuntimeConfig } = getConfig();
-
   const head = (
     <>
       <title>{title}</title>

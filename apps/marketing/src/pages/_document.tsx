@@ -1,10 +1,8 @@
 import { ServerStyleSheets } from '@material-ui/core/styles';
-import { ServerStyleSheet } from 'styled-components';
 import { AnalyticsSnippet } from '@vroom-web/analytics-integration';
 import { UISnippet } from '@vroom-web/ui';
 import { Brand, determineWhitelabel } from '@vroom-web/whitelabel';
 import getConfig from 'next/config';
-import { AppType, Enhancer, RenderPage } from 'next/dist/next-server/lib/utils';
 import Document, {
   DocumentContext,
   DocumentInitialProps,
@@ -14,6 +12,7 @@ import Document, {
   NextScript,
 } from 'next/document';
 import React from 'react';
+import { ServerStyleSheet } from 'styled-components';
 
 const { serverRuntimeConfig, publicRuntimeConfig } = getConfig();
 
@@ -38,7 +37,7 @@ class MarketingDocument extends Document<Props> {
 
       const initialProps = await Document.getInitialProps(ctx);
       const brand = determineWhitelabel(ctx);
-    
+
       return {
         ...initialProps,
         brand,

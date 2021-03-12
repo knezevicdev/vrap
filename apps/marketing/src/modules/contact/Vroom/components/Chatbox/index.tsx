@@ -1,50 +1,58 @@
-import React, { useState, useEffect } from 'react';
 import getConfig from 'next/config';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
 const { publicRuntimeConfig } = getConfig();
 
 const Chatbox: React.FC = () => {
-
   useEffect(() => {
     const script = document.createElement('script');
-    script.src = "https://webchat-sandbox.pypestream.com/webchat-public.js";
+    script.src = 'https://webchat-sandbox.pypestream.com/webchat-public.js';
     document.body.appendChild(script);
 
     return () => {
       document.body.removeChild(script);
-    }
+    };
   }, []);
 
   const [booted, setBooted] = useState(false);
   const [showChatIcon, setShowChatIcon] = useState(true);
-  const handleOnClick = (e) => {
-    const chatContainer = document.getElementById("chat-container");
+  const handleOnClick = () => {
+    const chatContainer = document.getElementById('chat-container');
 
     if (!booted) {
-      Pypestream("config", {
-        domain: "dev",
-        env: "sandbox",
+      // @ts-ignore
+      Pypestream('config', {
+        domain: 'dev',
+        env: 'sandbox',
         beta: true,
-        gtm_id: 'GTM-PZJGZ67'
+        gtm_id: 'GTM-PZJGZ67',
       });
-      
-      Pypestream("boot", {
-        APP_ID: "70c71811-1c35-4db7-b9d2-21754f24ba0c"
-      }, chatContainer);
 
-      Pypestream("onShow", function() {
+      // @ts-ignore
+      Pypestream(
+        'boot',
+        {
+          APP_ID: '70c71811-1c35-4db7-b9d2-21754f24ba0c',
+        },
+        chatContainer
+      );
+
+      // @ts-ignore
+      Pypestream('onShow', function () {
         setShowChatIcon(false);
       });
 
-      Pypestream("onHide", function() {
+      // @ts-ignore
+      Pypestream('onHide', function () {
         setShowChatIcon(true);
       });
 
-      setBooted(true); 
+      setBooted(true);
       setShowChatIcon(false);
     } else {
-      Pypestream("toggle");
+      // @ts-ignore
+      Pypestream('toggle');
       setShowChatIcon(!showChatIcon);
     }
   };
@@ -52,9 +60,9 @@ const Chatbox: React.FC = () => {
   const chatIcon = `${publicRuntimeConfig.BASE_PATH}/modules/vroom/icons/chat-icon.svg`;
   return (
     <>
-      { showChatIcon && (
-        <ChatIconContainer id="toggle-chat" onClick={handleOnClick}> 
-          <ChatboxIcon src={chatIcon}/> 
+      {showChatIcon && (
+        <ChatIconContainer id="toggle-chat" onClick={handleOnClick}>
+          <ChatboxIcon src={chatIcon} />
         </ChatIconContainer>
       )}
       <ChatContainer id="chat-container"></ChatContainer>
