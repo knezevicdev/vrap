@@ -1,5 +1,6 @@
 import { styled } from '@material-ui/core/styles';
 import { Typography } from '@vroom-web/ui';
+import { observer } from 'mobx-react';
 import React from 'react';
 
 import ViewModel from './ViewModel';
@@ -34,4 +35,4 @@ const LegalFooterView: React.FC<Props> = ({ viewModel }) => {
   );
 };
 
-export default LegalFooterView;
+export default observer(LegalFooterView);

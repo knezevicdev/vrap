@@ -10,11 +10,11 @@ import { InvServiceNetworker } from '@vroom-web/inv-service-networking';
 import { Client } from '@vroom-web/networking';
 
 import {
-  fetchDeliveryFeeState,
   getInventoryAvailabilityState,
   getVehicleResponse,
   getVehicleSimilarState,
   getVehicleState,
+  InventoryStore,
 } from './store';
 
 import { Status } from 'src/networking/types';
@@ -239,37 +239,46 @@ describe('Inventory Store', () => {
       gearboxClient.gqlRequest = jest
         .fn()
         .mockResolvedValue({ data: { taxiGetShippingFee: { fee: 499 } } });
+      const inventoryStore = new InventoryStore();
 
-      const response = await fetchDeliveryFeeState(
+      await inventoryStore.fetchDeliveryFeeState(
         gearboxClient,
         deliveryFeeDefault
       );
       expect(gearboxClient.gqlRequest).toHaveBeenCalledTimes(1);
-      expect(response).toBe(499);
+      expect(inventoryStore.deliveryFee).toBe(499);
+      expect(inventoryStore.deliveryFeeHasSucceeded).toBe(true);
+      expect(inventoryStore.deliveryFeeHasFailed).toBe(false);
     });
     it('it should return the default fee if the API call is successful but no fee is in the response', async () => {
       gearboxClient.gqlRequest = jest.fn().mockResolvedValue({
         data: { taxiGetShippingFee: { fee: undefined } },
       });
+      const inventoryStore = new InventoryStore();
 
-      const response = await fetchDeliveryFeeState(
+      await inventoryStore.fetchDeliveryFeeState(
         gearboxClient,
         deliveryFeeDefault
       );
       expect(gearboxClient.gqlRequest).toHaveBeenCalledTimes(1);
-      expect(response).toBe(299);
+      expect(inventoryStore.deliveryFee).toBe(299);
+      expect(inventoryStore.deliveryFeeHasSucceeded).toBe(true);
+      expect(inventoryStore.deliveryFeeHasFailed).toBe(false);
     });
     it('it should return the default fee if the API call fails', async () => {
       gearboxClient.gqlRequest = jest.fn().mockResolvedValue({
         error: new Error('test'),
       });
+      const inventoryStore = new InventoryStore();
 
-      const response = await fetchDeliveryFeeState(
+      await inventoryStore.fetchDeliveryFeeState(
         gearboxClient,
         deliveryFeeDefault
       );
       expect(gearboxClient.gqlRequest).toHaveBeenCalledTimes(1);
-      expect(response).toBe(299);
+      expect(inventoryStore.deliveryFee).toBe(299);
+      expect(inventoryStore.deliveryFeeHasSucceeded).toBe(false);
+      expect(inventoryStore.deliveryFeeHasFailed).toBe(true);
     });
   });
 });
