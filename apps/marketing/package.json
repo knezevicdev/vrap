@@ -43,6 +43,7 @@
     "react-string-replace": "^0.4.4",
     "slick-carousel": "^1.8.1",
     "smoothscroll-polyfill": "^0.4.4",
+    "styled-components": "^5.2.1",
     "ua-parser-js": "^0.7.21"
   },
   "devDependencies": {
