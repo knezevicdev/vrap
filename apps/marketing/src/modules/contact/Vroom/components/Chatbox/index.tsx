@@ -1,5 +1,5 @@
-import getConfig from 'next/config';
 import React, { useEffect, useState } from 'react';
+import getConfig from 'next/config';
 import styled from 'styled-components';
 
 const { publicRuntimeConfig } = getConfig();
@@ -23,11 +23,11 @@ const Chatbox: React.FC = () => {
     /*
       TODO:
       This implementation is pretty horrible. @ts-ignore is a major red flag.
-      Pypestream is brought in from `webchat-public.js` in the useEffect, But when we compile Next.js isn't gonna know what it is.
-      Have tried copying the file and putting it into /public dir but pypestream complains about a VPN
-      An alternative solution is using old school `document.addEventListener` but there are implementaiton 
-      issues where React will lose track of the event listener and not clean up properly. You could try to hack your way with refs but even then cleanliness isn't
-      guaranteed.
+      Pypestream is brought in from `webchat-public.js` in useEffect, but when we compile Next.js isn't gonna know what it is.
+      I've tried copying the file to `/public` dir but pypestream complains about a VPN error.
+      The pypestream implemention uses old school `document.addEventListener` but there are implementaiton issues.
+      React will lose track of the event listener, not clean up properly, and you'll need to hack your way with refs.
+      Even then results are not guaranteed and may not even be a better implementation
     */
     if (!booted) {
       // @ts-ignore
@@ -84,7 +84,7 @@ const ChatIconContainer = styled.div`
   align-items: center;
   background-color: white;
   border-radius: 50%;
-  bottom: 40px;
+  bottom: 10px;
   box-shadow: 0 1px 5px 0 rgb(0 0 0 / 50%);
   display: flex;
   height: 70px;
@@ -96,7 +96,7 @@ const ChatIconContainer = styled.div`
   z-index: 10;
 
   @media (max-width: 1920px) {
-    right: 40px;
+    right: 10px;
   }
 `;
 
