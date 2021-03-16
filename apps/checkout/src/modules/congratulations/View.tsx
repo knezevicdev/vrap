@@ -31,8 +31,10 @@ const {
 } = getConfig();
 
 const CongratsView: React.FC<Props> = ({ viewModel }) => {
-  const { sections, trackEventHandler } = viewModel.footerProps;
-  const questionsProps = viewModel.questionsProps;
+  const {
+    footerProps: { sections, trackEventHandler },
+    questionsProps,
+  } = viewModel;
 
   return (
     <Page>

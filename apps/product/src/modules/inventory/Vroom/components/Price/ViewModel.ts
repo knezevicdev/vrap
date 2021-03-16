@@ -11,7 +11,7 @@ interface List {
 }
 
 class PriceViewModel {
-  private deliveryFee: number;
+  inventoryStore: InventoryStore;
   private readonly car: Car;
   readonly price: string;
   readonly title: string = 'Pricing';
@@ -23,7 +23,7 @@ class PriceViewModel {
   };
 
   constructor(inventoryStore: InventoryStore) {
-    this.deliveryFee = inventoryStore.deliveryFee;
+    this.inventoryStore = inventoryStore;
     this.price = inventoryStore.vehicle._source.listingPrice.toLocaleString(
       'en-US'
     );
@@ -46,14 +46,22 @@ class PriceViewModel {
   getListBullets(): string[] {
     return [
       'Pre-delivery service charges of $285.50 (MA residents $385.50)',
-      `Delivery fee of $${this.deliveryFee}`,
+      `Delivery fee of $${this.inventoryStore.deliveryFee}`,
       'FL, NJ and NY residents only - Electronic registration filing charge of $15.00',
       'Applicable taxes, title, tag and registration charges which will be calculated at the time of purchase.',
     ];
   }
 
+  showShippingFee(): boolean {
+    return (
+      this.showVisibleShippingFee &&
+      (this.inventoryStore.deliveryFeeHasFailed ||
+        this.inventoryStore.deliveryFeeHasSucceeded)
+    );
+  }
+
   getShippingFee(): string {
-    return `$${this.deliveryFee} Shipping`;
+    return `$${this.inventoryStore.deliveryFee} Shipping`;
   }
 
   trackToolTipClick(): void {

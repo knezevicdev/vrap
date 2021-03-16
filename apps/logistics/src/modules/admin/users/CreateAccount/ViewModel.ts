@@ -1,6 +1,7 @@
 import { makeAutoObservable } from 'mobx';
 
 import UsersModel from 'src/modules/admin/users/Model';
+import { Status } from 'src/networking/Networker';
 
 class CreateAccountViewModel {
   private usersModel: UsersModel;
@@ -18,6 +19,14 @@ class CreateAccountViewModel {
   set email(value: string) {
     this._email = value;
   }
+
+  get snackbar(): boolean {
+    return this.usersModel.createAccountStatus == Status.SUCCESS;
+  }
+
+  resetSnackbar = (): void => {
+    this.usersModel.resetCreateAccountStatus();
+  };
 
   get disabled(): boolean {
     const emailRegex = new RegExp(

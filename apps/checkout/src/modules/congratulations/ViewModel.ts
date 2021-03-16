@@ -4,15 +4,14 @@ import {
   FooterEventTrackerEnum,
   FooterProps,
 } from '@vroom-web/temp-ui-alias-for-checkout';
-import { parsePhoneNumberFromString } from 'libphonenumber-js';
 
 import Model from './Model';
 import { NextProps } from './sections/Next';
 import { PurchaseSummaryProps } from './sections/PurchaseSummary/PurchaseSummary';
 import { QuestionProps } from './sections/Questions';
 import { ReservedCarProps } from './sections/ReservedCar';
-import { FooterStore } from './store';
 
+import { CatStore, PhoneNumberLink } from 'src/core/store';
 import AnalyticsHandler, {
   TrackContactModule,
 } from 'src/integrations/congratulations/CongratsAnalyticsHandler';
@@ -28,11 +27,6 @@ interface Service {
   summary: string;
 }
 
-export interface Link {
-  href: string;
-  name: string;
-  trackingName?: FooterEventTrackerEnum;
-}
 export interface AnalyticsData {
   UUID?: string;
   username: string;
@@ -48,16 +42,25 @@ export default class CongratsViewModel {
   model: Model;
   analyticsHandler: AnalyticsHandler;
   currencyFormatter: Intl.NumberFormat;
-  private store: FooterStore;
+  store: CatStore;
 
-  constructor(model: Model) {
+  constructor(model: Model, store: CatStore) {
     this.model = model;
+    this.store = store;
     this.analyticsHandler = new AnalyticsHandler(this);
-    this.store = new FooterStore();
+
     this.currencyFormatter = new Intl.NumberFormat('en-US', {
       style: 'currency',
       currency: 'USD',
     });
+  }
+
+  handleMount(): void {
+    this.store.initClientSide();
+  }
+
+  handleUnmount(): void {
+    this.store.tearDownClientSide();
   }
 
   private get dealId(): number {
@@ -504,32 +507,8 @@ export default class CongratsViewModel {
     this.analyticsHandler.trackContactModule(eventName);
   };
 
-  private getPhoneNumberLinkData = (): Link => {
-    const defaultPhoneNumberLinkData: Link = {
-      href: 'tel:+18555241300',
-      name: '(855) 524-1300',
-    };
-
-    if (!this.store.phoneNumber) {
-      return defaultPhoneNumberLinkData;
-    }
-
-    const parsedPhoneNumber = parsePhoneNumberFromString(
-      decodeURIComponent(this.store.phoneNumber),
-      'US'
-    );
-
-    if (!parsedPhoneNumber) {
-      return defaultPhoneNumberLinkData;
-    }
-    if (!parsedPhoneNumber.isValid()) {
-      return defaultPhoneNumberLinkData;
-    }
-    const phoneNumberLinkData: Link = {
-      href: parsedPhoneNumber.getURI(),
-      name: parsedPhoneNumber.formatNational(),
-    };
-    return phoneNumberLinkData;
+  private getPhoneNumberLinkData = (): PhoneNumberLink => {
+    return this.store.phoneNumber;
   };
 
   get questionsProps(): QuestionProps {

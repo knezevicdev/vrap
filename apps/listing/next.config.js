@@ -34,6 +34,7 @@ module.exports = {
   serverRuntimeConfig: {
     // Will only be available on the server side
     SANTANDER_SEGMENT_WRITE_KEY: process.env.SANTANDER_SEGMENT_WRITE_KEY,
+    GQL_PROXY_TARGET: process.env.GQL_PROXY_TARGET,
     SEGMENT_WRITE_KEY: process.env.SEGMENT_WRITE_KEY,
     TDA_SEGMENT_WRITE_KEY: process.env.TDA_SEGMENT_WRITE_KEY,
   },

@@ -29,7 +29,6 @@ export const parameters = {
       },
     },
   },
-  layout: 'centered',
 };
 
 function withGlobalStyles(storyFn) {
@@ -38,6 +37,7 @@ function withGlobalStyles(storyFn) {
   React.useEffect(() => {
     Modal.setAppElement('body');
   }, []);
+
   return (
     <ThemeProvider theme={theme}>
       <GlobalStyle />
