@@ -1,65 +1,87 @@
-import React, { useEffect, useState } from 'react';
 import getConfig from 'next/config';
+import { useRouter } from 'next/router';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
 const { publicRuntimeConfig } = getConfig();
 
 const Chatbox: React.FC = () => {
-  useEffect(() => {
-    const script = document.createElement('script');
-    script.src = 'https://webchat-sandbox.pypestream.com/webchat-public.js';
-    document.body.appendChild(script);
-
-    return (): void => {
-      document.body.removeChild(script);
-    };
-  }, []);
-
   const [booted, setBooted] = useState(false);
   const [showChatIcon, setShowChatIcon] = useState(true);
-  const handleOnClick = (): void => {
-    const chatContainer = document.getElementById('chat-container');
+  const chatIcon = `${publicRuntimeConfig.BASE_PATH}/modules/vroom/icons/chat-icon.svg`;
+  const router = useRouter();
+  const { chatbox } = router.query || false;
 
-    /*
-      TODO:
+  const initChat = () => {
+    /* TODO:
       This implementation is pretty horrible. @ts-ignore is a major red flag.
       Pypestream is brought in from `webchat-public.js` in useEffect, but when we compile Next.js isn't gonna know what it is.
       I've tried copying the file to `/public` dir but pypestream complains about a VPN error.
       The pypestream implemention uses old school `document.addEventListener` but there are implementaiton issues.
       React will lose track of the event listener, not clean up properly, and you'll need to hack your way with refs.
-      Even then results are not guaranteed and may not even be a better implementation
-    */
-    if (!booted) {
-      // @ts-ignore
-      Pypestream('config', {
-        domain: 'dev',
-        env: 'sandbox',
-        beta: true,
-        /* eslint-disable @typescript-eslint/camelcase */
-        gtm_id: 'GTM-PZJGZ67',
-      });
+      Even then results are not guaranteed and may not even be a better implementation */
 
-      // @ts-ignore
-      Pypestream(
-        'boot',
-        {
-          APP_ID: '70c71811-1c35-4db7-b9d2-21754f24ba0c',
-        },
-        chatContainer
-      );
+    const dev = publicRuntimeConfig.NODE_ENV !== 'production';
+    const pypeStreamConfig = dev
+      ? {
+          domain: 'dev',
+          env: 'sandbox',
+          beta: true,
+          /* eslint-disable @typescript-eslint/camelcase */
+          gtm_id: 'GTM-PZJGZ67',
+        }
+      : {
+          domain: 'prod',
+          env: 'prod',
+          beta: true,
+          /* eslint-disable @typescript-eslint/camelcase */
+          gtm_id: 'GTM-PZJGZ67',
+        };
 
-      // @ts-ignore
-      Pypestream('onShow', function () {
-        setShowChatIcon(false);
-      });
+    // @ts-ignore
+    Pypestream('config', pypeStreamConfig);
 
-      // @ts-ignore
-      Pypestream('onHide', function () {
-        setShowChatIcon(true);
-      });
+    const chatContainer = document.getElementById('chat-container');
+    // @ts-ignore
+    Pypestream(
+      'boot',
+      { APP_ID: '70c71811-1c35-4db7-b9d2-21754f24ba0c' },
+      chatContainer
+    );
 
-      setBooted(true);
+    setBooted(true);
+    setShowChatIcon(false);
+
+    // @ts-ignore
+    Pypestream('onShow', function () {
       setShowChatIcon(false);
+    });
+
+    // @ts-ignore
+    Pypestream('onHide', function () {
+      setShowChatIcon(true);
+    });
+  };
+
+  useEffect(() => {
+    const script = document.createElement('script');
+    script.src = 'https://webchat-sandbox.pypestream.com/webchat-public.js';
+    document.body.appendChild(script);
+
+    // https://tdalabs.atlassian.net/browse/CW-82
+    const timer = setTimeout(() => {
+      if (chatbox) initChat();
+    }, 1000);
+
+    return (): void => {
+      document.body.removeChild(script);
+      clearTimeout(timer);
+    };
+  }, [chatbox]);
+
+  const handleOnClick = (): void => {
+    if (!booted) {
+      initChat();
     } else {
       // @ts-ignore
       Pypestream('toggle');
@@ -67,7 +89,6 @@ const Chatbox: React.FC = () => {
     }
   };
 
-  const chatIcon = `${publicRuntimeConfig.BASE_PATH}/modules/vroom/icons/chat-icon.svg`;
   return (
     <>
       {showChatIcon && (
