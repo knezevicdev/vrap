@@ -30,7 +30,7 @@ class CarCardViewModel {
   readonly availableSoon: string = 'Available Soon';
   readonly salePending: string = 'Sale Pending';
   readonly tenDayDelivery: string = '10-Day Delivery';
-  readonly loadedWithFeatures: string = 'Loaded with Features';
+  readonly greatFeatures: string = 'Great Features';
 
   constructor(carsStore: CarsStore, car: Car, position: number) {
     this.carsStore = carsStore;
@@ -73,7 +73,7 @@ class CarCardViewModel {
     );
   };
 
-  showLoadedWithFeatures = (): boolean => {
+  showGreatFeatures = (): boolean => {
     return (
       true && // TODO: Switch to logic from API response when service is ready
       !this.showSalePending() &&

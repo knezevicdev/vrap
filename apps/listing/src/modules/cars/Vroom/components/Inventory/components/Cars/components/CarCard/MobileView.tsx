@@ -203,14 +203,12 @@ const MobileView: React.FC<MobileViewProps> = ({ viewModel }) => {
             </Media>
             <Content
               border={
-                viewModel.showTenDayDelivery() ||
-                viewModel.showLoadedWithFeatures()
+                viewModel.showTenDayDelivery() || viewModel.showGreatFeatures()
                   ? 'solid 3px #0F3A7B'
                   : 'none'
               }
               borderTop={
-                viewModel.showTenDayDelivery() ||
-                viewModel.showLoadedWithFeatures()
+                viewModel.showTenDayDelivery() || viewModel.showGreatFeatures()
                   ? 'solid 3px #0F3A7B'
                   : 'solid 1px #D6D7DA'
               }
@@ -225,8 +223,8 @@ const MobileView: React.FC<MobileViewProps> = ({ viewModel }) => {
               {viewModel.showTenDayDelivery() && (
                 <BlueBadge>{viewModel.tenDayDelivery}</BlueBadge>
               )}
-              {viewModel.showLoadedWithFeatures() && (
-                <BlueBadge>{viewModel.loadedWithFeatures}</BlueBadge>
+              {viewModel.showGreatFeatures() && (
+                <BlueBadge>{viewModel.greatFeatures}</BlueBadge>
               )}
               <CarDetails>
                 <Title>{title}</Title>

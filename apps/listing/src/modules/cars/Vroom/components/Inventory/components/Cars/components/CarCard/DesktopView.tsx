@@ -200,8 +200,7 @@ const DesktopView: React.FC<DesktopViewProps> = ({ viewModel }) => {
           </Media>
           <Content
             border={
-              viewModel.showTenDayDelivery() ||
-              viewModel.showLoadedWithFeatures()
+              viewModel.showTenDayDelivery() || viewModel.showGreatFeatures()
                 ? 'solid 3px #0F3A7B'
                 : 'none'
             }
@@ -215,8 +214,8 @@ const DesktopView: React.FC<DesktopViewProps> = ({ viewModel }) => {
             {viewModel.showTenDayDelivery() && (
               <BlueBadge>{viewModel.tenDayDelivery}</BlueBadge>
             )}
-            {viewModel.showLoadedWithFeatures() && (
-              <BlueBadge>{viewModel.loadedWithFeatures}</BlueBadge>
+            {viewModel.showGreatFeatures() && (
+              <BlueBadge>{viewModel.greatFeatures}</BlueBadge>
             )}
             <CarDetails>
               <Title>{title}</Title>
