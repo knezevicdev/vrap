@@ -4,10 +4,36 @@ Disallow: /
 User-agent: Baiduspider
 Disallow: /
 
-User-agent: *
+User-agent: proximic
+Disallow: /
 
-Disallow: /catalog?search=
-Disallow: /web/
-Disallow: /errors/
+User-agent: MJ12bot
+Disallow: /
+
+User-agent: AhrefsBot
+Disallow: /
+
+User-agent: dotbot
+Disallow: /
+
+User-agent: SemrushBot
+Disallow: /
+
+User-agent: PetalBot
+Disallow: /
+
+User-agent: rogerbot
+Disallow: /
+
+User-agent: metajobbot
+Disallow: /
+
+User-agent: BLEXBot
+Disallow: /
+
+User-agent: oBot
+Disallow: /
+
+User-agent: *
 
 Sitemap: https://vroom.santanderconsumerusa.com/sitemap.xml
