@@ -19,6 +19,8 @@ interface Summary {
   price: string;
 }
 
+export const GREAT_FEATURES_BADGE = 'auto-combined-drivers-demand-only';
+
 class CarCardViewModel {
   private readonly carsStore: CarsStore;
   private readonly car: Car;
@@ -75,7 +77,8 @@ class CarCardViewModel {
 
   showGreatFeatures = (): boolean => {
     return (
-      true && // TODO: Switch to logic from API response when service is ready
+      this.car.badges !== null &&
+      !!this.car.badges.find((badge) => badge.code === GREAT_FEATURES_BADGE) &&
       !this.showSalePending() &&
       !this.showAvailableSoon() &&
       !this.showTenDayDelivery()

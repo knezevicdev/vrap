@@ -1,7 +1,7 @@
 import { Experiment } from '@vroom-web/experiment-sdk';
 import { Car, SoldStatusInt } from '@vroom-web/inv-search-networking';
 
-import ViewModel from './ViewModel';
+import ViewModel, { GREAT_FEATURES_BADGE } from './ViewModel';
 
 import { analyticsHandler } from 'src/integrations/AnalyticsHandler';
 import { CarsStore } from 'src/modules/cars/store';
@@ -221,6 +221,90 @@ describe('CarCard ViewModel Tests', () => {
       const position = 1;
       const viewModel = new ViewModel(store, car, position);
       expect(viewModel.showTenDayDelivery()).toBe(false);
+    });
+  });
+
+  describe('showGreatFeatures', () => {
+    it('showGreatFeatures returns true when badges contains the GREAT_FEATURES_BADGE, showSalePending false, showAvailableSoon false, and showTenDayDelivery false', () => {
+      const store = new CarsStore();
+      const car = {
+        leadFlagPhotoUrl: 'https://some-url.com',
+        hasStockPhotos: false,
+        soldStatus: SoldStatusInt.FOR_SALE,
+        location: 'Detroit',
+        badges: [{ code: GREAT_FEATURES_BADGE }],
+      } as Car;
+      const position = 1;
+      const viewModel = new ViewModel(store, car, position);
+      expect(viewModel.showGreatFeatures()).toBe(true);
+    });
+    it('showGreatFeatures returns false when badges contains the GREAT_FEATURES_BADGE, showSalePending true, showAvailableSoon false, and showTenDayDelivery false', () => {
+      const store = new CarsStore();
+      const car = {
+        leadFlagPhotoUrl: 'https://some-url.com',
+        hasStockPhotos: false,
+        soldStatus: SoldStatusInt.SALE_PENDING,
+        location: 'Detroit',
+        badges: [{ code: GREAT_FEATURES_BADGE }],
+      } as Car;
+      const position = 1;
+      const viewModel = new ViewModel(store, car, position);
+      expect(viewModel.showGreatFeatures()).toBe(false);
+    });
+    it('showGreatFeatures returns false when badges contains the GREAT_FEATURES_BADGE, showSalePending false, showAvailableSoon true, and showTenDayDelivery false', () => {
+      const store = new CarsStore();
+      const car = {
+        leadFlagPhotoUrl: '',
+        hasStockPhotos: true,
+        soldStatus: SoldStatusInt.FOR_SALE,
+        location: 'Detroit',
+        badges: [{ code: GREAT_FEATURES_BADGE }],
+      } as Car;
+      const position = 1;
+      const viewModel = new ViewModel(store, car, position);
+      expect(viewModel.showGreatFeatures()).toBe(false);
+    });
+    it('showGreatFeatures returns false when badges contains the GREAT_FEATURES_BADGE, showSalePending false, showAvailableSoon false, and showTenDayDelivery true', () => {
+      const store = new CarsStore();
+      store.geoShippingExperiment = {
+        assignedVariant: 1,
+      } as Experiment;
+      const car = {
+        leadFlagPhotoUrl: 'https://some-url.com',
+        hasStockPhotos: false,
+        soldStatus: SoldStatusInt.FOR_SALE,
+        location: 'Stafford',
+        badges: [{ code: GREAT_FEATURES_BADGE }],
+      } as Car;
+      const position = 1;
+      const viewModel = new ViewModel(store, car, position);
+      expect(viewModel.showGreatFeatures()).toBe(false);
+    });
+    it('showGreatFeatures returns false when badges does not contain the GREAT_FEATURES_BADGE, showSalePending false, showAvailableSoon false, and showTenDayDelivery false', () => {
+      const store = new CarsStore();
+      const car = {
+        leadFlagPhotoUrl: 'https://some-url.com',
+        hasStockPhotos: false,
+        soldStatus: SoldStatusInt.FOR_SALE,
+        location: 'Detroit',
+        badges: [{ code: 'something' }],
+      } as Car;
+      const position = 1;
+      const viewModel = new ViewModel(store, car, position);
+      expect(viewModel.showGreatFeatures()).toBe(false);
+    });
+    it('showGreatFeatures returns false when badges is null, showSalePending false, showAvailableSoon false, and showTenDayDelivery false', () => {
+      const store = new CarsStore();
+      const car = {
+        leadFlagPhotoUrl: 'https://some-url.com',
+        hasStockPhotos: false,
+        soldStatus: SoldStatusInt.FOR_SALE,
+        location: 'Detroit',
+        badges: null,
+      } as Car;
+      const position = 1;
+      const viewModel = new ViewModel(store, car, position);
+      expect(viewModel.showGreatFeatures()).toBe(false);
     });
   });
 
