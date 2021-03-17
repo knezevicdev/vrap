@@ -14,6 +14,9 @@ interface BannerInfo {
   tooltipText2?: string;
   tooltipText3?: string;
 }
+
+export const GREAT_FEATURES_BADGE = 'auto-combined-drivers-demand-only';
+
 class StatusBannerViewModel {
   private store: InventoryStore;
   private salesPending = {
@@ -41,6 +44,12 @@ class StatusBannerViewModel {
     tooltipText3:
       'Some deliveries may be delayed by weather or for other logistical reasons. In the event that happens, we will work with you to reschedule the delivery.',
   };
+  private greatFeatures = {
+    id: 'great-features',
+    label: 'Great Features',
+    color: '#0f3a7b',
+    font: '#ffffff',
+  };
 
   constructor(inventoryStore: InventoryStore) {
     this.store = inventoryStore;
@@ -51,6 +60,7 @@ class StatusBannerViewModel {
       hasStockPhotos,
       leadFlagPhotoUrl,
       soldStatus,
+      badges,
     } = this.store.vehicle._source;
     const vehicleServiceAvailability = this.store.isAvailable;
     if (hasStockPhotos || isEmpty(leadFlagPhotoUrl)) {
@@ -67,6 +77,12 @@ class StatusBannerViewModel {
       this.store.vehicle._source.location === 'Stafford'
     ) {
       return this.tenDayDelivery;
+    }
+    if (
+      badges !== null &&
+      !!badges.find((badge) => badge.code === GREAT_FEATURES_BADGE)
+    ) {
+      return this.greatFeatures;
     }
     return null;
   }
