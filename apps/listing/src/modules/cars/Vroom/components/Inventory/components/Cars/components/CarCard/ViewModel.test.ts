@@ -101,44 +101,18 @@ describe('CarCard ViewModel Tests', () => {
     });
   });
   describe('showSalePending', () => {
-    it('showSalePending returns true when showAvailableSoon returns false and soldStatus is pending', () => {
+    it('showSalePending returns true when soldStatus is pending', () => {
       const store = new CarsStore();
       const car = {
-        leadFlagPhotoUrl: 'https://some-url.com',
-        hasStockPhotos: false,
         soldStatus: SoldStatusInt.SALE_PENDING,
       } as Car;
       const position = 1;
       const viewModel = new ViewModel(store, car, position);
       expect(viewModel.showSalePending()).toBe(true);
     });
-    it('showSalePending returns false when showAvailableSoon returns true and soldStatus is pending', () => {
+    it('showSalePending returns false when soldStatus is anything but pending', () => {
       const store = new CarsStore();
       const car = {
-        leadFlagPhotoUrl: '',
-        hasStockPhotos: false,
-        soldStatus: SoldStatusInt.SALE_PENDING,
-      } as Car;
-      const position = 1;
-      const viewModel = new ViewModel(store, car, position);
-      expect(viewModel.showSalePending()).toBe(false);
-    });
-    it('showSalePending returns false when showAvailableSoon returns false and soldStatus is anything but pending', () => {
-      const store = new CarsStore();
-      const car = {
-        leadFlagPhotoUrl: 'https://some-url.com',
-        hasStockPhotos: false,
-        soldStatus: SoldStatusInt.FOR_SALE,
-      } as Car;
-      const position = 1;
-      const viewModel = new ViewModel(store, car, position);
-      expect(viewModel.showSalePending()).toBe(false);
-    });
-    it('showSalePending returns false when showAvailableSoon returns true and soldStatus is anything but pending', () => {
-      const store = new CarsStore();
-      const car = {
-        leadFlagPhotoUrl: '',
-        hasStockPhotos: false,
         soldStatus: SoldStatusInt.FOR_SALE,
       } as Car;
       const position = 1;
@@ -147,76 +121,49 @@ describe('CarCard ViewModel Tests', () => {
     });
   });
   describe('showTenDayDelivery', () => {
-    it('showTenDayDelivery returns true with location Stafford, assignedVariant 1, showSalePending false, and showAvailableSoon false', () => {
+    it('showTenDayDelivery returns true with location Stafford and assignedVariant 1', () => {
       const store = new CarsStore();
       store.geoShippingExperiment = {
         assignedVariant: 1,
       } as Experiment;
       const car = {
-        leadFlagPhotoUrl: 'https://some-url.com',
-        hasStockPhotos: false,
-        soldStatus: SoldStatusInt.FOR_SALE,
         location: 'Stafford',
       } as Car;
       const position = 1;
       const viewModel = new ViewModel(store, car, position);
       expect(viewModel.showTenDayDelivery()).toBe(true);
     });
-    it('showTenDayDelivery returns false with location other than Stafford, assignedVariant 1, showSalePending false, and showAvailableSoon false', () => {
+    it('showTenDayDelivery returns false with location other than Stafford and assignedVariant 1', () => {
       const store = new CarsStore();
       store.geoShippingExperiment = {
         assignedVariant: 1,
       } as Experiment;
       const car = {
-        leadFlagPhotoUrl: 'https://some-url.com',
-        hasStockPhotos: false,
-        soldStatus: SoldStatusInt.FOR_SALE,
         location: 'Detroit',
       } as Car;
       const position = 1;
       const viewModel = new ViewModel(store, car, position);
       expect(viewModel.showTenDayDelivery()).toBe(false);
     });
-    it('showTenDayDelivery returns false with location Stafford, assignedVariant 0, showSalePending false, and showAvailableSoon false', () => {
+    it('showTenDayDelivery returns false with location Stafford and assignedVariant 0', () => {
       const store = new CarsStore();
       store.geoShippingExperiment = {
         assignedVariant: 0,
       } as Experiment;
       const car = {
-        leadFlagPhotoUrl: 'https://some-url.com',
-        hasStockPhotos: false,
-        soldStatus: SoldStatusInt.FOR_SALE,
         location: 'Stafford',
       } as Car;
       const position = 1;
       const viewModel = new ViewModel(store, car, position);
       expect(viewModel.showTenDayDelivery()).toBe(false);
     });
-    it('showTenDayDelivery returns false with location Stafford, assignedVariant 1, showSalePending true, and showAvailableSoon false', () => {
+    it('showTenDayDelivery returns false with location other than Stafford and assignedVariant 0', () => {
       const store = new CarsStore();
       store.geoShippingExperiment = {
-        assignedVariant: 1,
+        assignedVariant: 0,
       } as Experiment;
       const car = {
-        leadFlagPhotoUrl: 'https://some-url.com',
-        hasStockPhotos: false,
-        soldStatus: SoldStatusInt.SALE_PENDING,
-        location: 'Stafford',
-      } as Car;
-      const position = 1;
-      const viewModel = new ViewModel(store, car, position);
-      expect(viewModel.showTenDayDelivery()).toBe(false);
-    });
-    it('showTenDayDelivery returns false with location Stafford, assignedVariant 1, showSalePending false, and showAvailableSoon true', () => {
-      const store = new CarsStore();
-      store.geoShippingExperiment = {
-        assignedVariant: 1,
-      } as Experiment;
-      const car = {
-        leadFlagPhotoUrl: '',
-        hasStockPhotos: false,
-        soldStatus: SoldStatusInt.FOR_SALE,
-        location: 'Stafford',
+        location: 'Detroit',
       } as Car;
       const position = 1;
       const viewModel = new ViewModel(store, car, position);
@@ -225,7 +172,7 @@ describe('CarCard ViewModel Tests', () => {
   });
 
   describe('showGreatFeatures', () => {
-    it('showGreatFeatures returns true when badges contains the GREAT_FEATURES_BADGE, showSalePending false, showAvailableSoon false, and showTenDayDelivery false', () => {
+    it('showGreatFeatures returns true when badges contains the GREAT_FEATURES_BADGE', () => {
       const store = new CarsStore();
       const car = {
         leadFlagPhotoUrl: 'https://some-url.com',
@@ -238,33 +185,71 @@ describe('CarCard ViewModel Tests', () => {
       const viewModel = new ViewModel(store, car, position);
       expect(viewModel.showGreatFeatures()).toBe(true);
     });
-    it('showGreatFeatures returns false when badges contains the GREAT_FEATURES_BADGE, showSalePending true, showAvailableSoon false, and showTenDayDelivery false', () => {
+    it('showGreatFeatures returns false when badges does not contain the GREAT_FEATURES_BADGE,', () => {
       const store = new CarsStore();
+      const car = {
+        badges: [{ code: 'something' }],
+      } as Car;
+      const position = 1;
+      const viewModel = new ViewModel(store, car, position);
+      expect(viewModel.showGreatFeatures()).toBe(false);
+    });
+    it('showGreatFeatures returns false when badges is null', () => {
+      const store = new CarsStore();
+      const car = {
+        badges: null,
+      } as Car;
+      const position = 1;
+      const viewModel = new ViewModel(store, car, position);
+      expect(viewModel.showGreatFeatures()).toBe(false);
+    });
+  });
+  describe('getBanner', () => {
+    it('getBanner returns availableSoon when all conditionals are true', () => {
+      const store = new CarsStore();
+      store.geoShippingExperiment = {
+        assignedVariant: 1,
+      } as Experiment;
+      const car = {
+        leadFlagPhotoUrl: '',
+        hasStockPhotos: true,
+        soldStatus: SoldStatusInt.SALE_PENDING,
+        location: 'Stafford',
+        badges: [{ code: GREAT_FEATURES_BADGE }],
+      } as Car;
+      const position = 1;
+      const viewModel = new ViewModel(store, car, position);
+      expect(viewModel.getBanner()).toEqual({
+        id: 'available-soon',
+        label: 'Available Soon',
+        color: '#bdbdbd',
+        fontColor: 'inherit',
+        hasBorder: false,
+      });
+    });
+    it('getBanner returns salePending when all conditionals but showAvailableSoon are true', () => {
+      const store = new CarsStore();
+      store.geoShippingExperiment = {
+        assignedVariant: 1,
+      } as Experiment;
       const car = {
         leadFlagPhotoUrl: 'https://some-url.com',
         hasStockPhotos: false,
         soldStatus: SoldStatusInt.SALE_PENDING,
-        location: 'Detroit',
+        location: 'Stafford',
         badges: [{ code: GREAT_FEATURES_BADGE }],
       } as Car;
       const position = 1;
       const viewModel = new ViewModel(store, car, position);
-      expect(viewModel.showGreatFeatures()).toBe(false);
+      expect(viewModel.getBanner()).toEqual({
+        id: 'sale-pending',
+        label: 'Sale Pending',
+        color: '#ffd400',
+        fontColor: 'inherit',
+        hasBorder: false,
+      });
     });
-    it('showGreatFeatures returns false when badges contains the GREAT_FEATURES_BADGE, showSalePending false, showAvailableSoon true, and showTenDayDelivery false', () => {
-      const store = new CarsStore();
-      const car = {
-        leadFlagPhotoUrl: '',
-        hasStockPhotos: true,
-        soldStatus: SoldStatusInt.FOR_SALE,
-        location: 'Detroit',
-        badges: [{ code: GREAT_FEATURES_BADGE }],
-      } as Car;
-      const position = 1;
-      const viewModel = new ViewModel(store, car, position);
-      expect(viewModel.showGreatFeatures()).toBe(false);
-    });
-    it('showGreatFeatures returns false when badges contains the GREAT_FEATURES_BADGE, showSalePending false, showAvailableSoon false, and showTenDayDelivery true', () => {
+    it('getBanner returns tenDayDelivery when all conditionals but showAvailableSoon and showSalePending are true', () => {
       const store = new CarsStore();
       store.geoShippingExperiment = {
         assignedVariant: 1,
@@ -278,10 +263,41 @@ describe('CarCard ViewModel Tests', () => {
       } as Car;
       const position = 1;
       const viewModel = new ViewModel(store, car, position);
-      expect(viewModel.showGreatFeatures()).toBe(false);
+      expect(viewModel.getBanner()).toEqual({
+        id: 'ten-day-delivery',
+        label: '10-Day Delivery',
+        color: '#0f3a7b',
+        fontColor: '#ffffff',
+        hasBorder: true,
+      });
     });
-    it('showGreatFeatures returns false when badges does not contain the GREAT_FEATURES_BADGE, showSalePending false, showAvailableSoon false, and showTenDayDelivery false', () => {
+    it('getBanner returns greatFeatures when all conditionals but showAvailableSoon, showSalePending and showTenDayDelivery are true', () => {
       const store = new CarsStore();
+      store.geoShippingExperiment = {
+        assignedVariant: 0,
+      } as Experiment;
+      const car = {
+        leadFlagPhotoUrl: 'https://some-url.com',
+        hasStockPhotos: false,
+        soldStatus: SoldStatusInt.FOR_SALE,
+        location: 'Detroit',
+        badges: [{ code: GREAT_FEATURES_BADGE }],
+      } as Car;
+      const position = 1;
+      const viewModel = new ViewModel(store, car, position);
+      expect(viewModel.getBanner()).toEqual({
+        id: 'great-features',
+        label: 'Great Features',
+        color: '#0f3a7b',
+        fontColor: '#ffffff',
+        hasBorder: true,
+      });
+    });
+    it('getBanner returns null when all conditionals are false', () => {
+      const store = new CarsStore();
+      store.geoShippingExperiment = {
+        assignedVariant: 0,
+      } as Experiment;
       const car = {
         leadFlagPhotoUrl: 'https://some-url.com',
         hasStockPhotos: false,
@@ -291,23 +307,9 @@ describe('CarCard ViewModel Tests', () => {
       } as Car;
       const position = 1;
       const viewModel = new ViewModel(store, car, position);
-      expect(viewModel.showGreatFeatures()).toBe(false);
-    });
-    it('showGreatFeatures returns false when badges is null, showSalePending false, showAvailableSoon false, and showTenDayDelivery false', () => {
-      const store = new CarsStore();
-      const car = {
-        leadFlagPhotoUrl: 'https://some-url.com',
-        hasStockPhotos: false,
-        soldStatus: SoldStatusInt.FOR_SALE,
-        location: 'Detroit',
-        badges: null,
-      } as Car;
-      const position = 1;
-      const viewModel = new ViewModel(store, car, position);
-      expect(viewModel.showGreatFeatures()).toBe(false);
+      expect(viewModel.getBanner()).toBe(null);
     });
   });
-
   describe('getPhotoStyle', () => {
     it('getPhotoStyle returns opacity 100% when leadFlagPhotoUrl has a value', () => {
       const store = new CarsStore();
