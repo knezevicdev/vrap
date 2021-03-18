@@ -5,7 +5,7 @@ import React, { FC, useContext, useEffect, useState } from 'react';
 
 import Hero from './components/Hero';
 import Highlights from './components/Highlights';
-import Links from './components/Links';
+import { LinksMake, LinksModel, LinksType } from './components/Links';
 import QuoteHIW from './components/QuoteHIW';
 import Quotes from './components/Quotes';
 import Values from './components/Values';
@@ -29,17 +29,21 @@ const Vroom: React.FC = () => {
     'Values',
     'QuoteHIW',
     'Quotes',
-    'Links',
+    'LinksType',
+    'LinksMake',
+    'LinksModel',
     'WhoWeAre',
   ];
 
   const expSectionOrder: string[] = [
     'Hero',
-    'Links',
+    'LinksType',
     'Highlights',
     'Values',
     'QuoteHIW',
     'Quotes',
+    'LinksMake',
+    'LinksModel',
     'WhoWeAre',
   ];
 
@@ -53,14 +57,16 @@ const Vroom: React.FC = () => {
     Values: Values,
     QuoteHIW: QuoteHIW,
     Quotes: Quotes,
-    Links: Links,
+    LinksType: LinksType,
+    LinksMake: LinksMake,
+    LinksModel: LinksModel,
     WhoWeAre: WhoWeAre,
   };
 
   useEffect(() => {
     const { experiments } = homeStore;
-    // detla lol
-    const expId = 'detla-home-page-links';
+
+    const expId = 'delta-home-page-links-v2';
     const variantCalculatedExp = experimentSDK.determineVariantClientSide(
       experiments,
       expId

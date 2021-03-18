@@ -1,11 +1,21 @@
 import React from 'react';
 
-import View from './View';
+import { LinksMakeView, LinksModelView, LinksTypeView } from './View';
 import ViewModel from './ViewModel';
 
-const Links: React.FC = () => {
+const LinksType: React.FC = () => {
   const viewModel = new ViewModel();
-  return <View viewModel={viewModel} />;
+  return <LinksTypeView viewModel={viewModel} />;
 };
 
-export default Links;
+const LinksMake: React.FC = () => {
+  const viewModel = new ViewModel();
+  return <LinksMakeView viewModel={viewModel} />;
+};
+
+const LinksModel: React.FC = () => {
+  const viewModel = new ViewModel();
+  return <LinksModelView viewModel={viewModel} />;
+};
+
+export { LinksType, LinksMake, LinksModel };
