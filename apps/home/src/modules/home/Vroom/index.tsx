@@ -47,9 +47,7 @@ const Vroom: React.FC = () => {
     'WhoWeAre',
   ];
 
-  const [sectionOrder, setSectionOrder] = useState<string[]>(
-    defaultSectionOrder
-  );
+  const [sectionOrder, setSectionOrder] = useState<string[]>(expSectionOrder);
 
   const componentMap: { [slug: string]: FC } = {
     Hero: Hero,

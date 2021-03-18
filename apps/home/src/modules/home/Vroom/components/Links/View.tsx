@@ -30,19 +30,10 @@ const maxWidthMobile = ({ max_width }: { max_width?: number }): string =>
   max_width ? `${Math.round(max_width * 0.85)}px` : 'none';
 
 const Container = styled.div`
-  margin: 32px 64px;
-
+  padding: 32px 64px;
+  background: #fff;
   ${addStyleForMobile(`
-    margin: 48px 16px;
-    
-    & div:nth-child(2) > h3{
-      margin-bottom: 16px;
-    };
-
-    & div:nth-child(3) > h3{
-      margin-left: 0;
-      text-align: left;
-    };
+    padding: 48px 16px;
 `)};
 `;
 
@@ -54,11 +45,20 @@ const Title = styled(Typography.Heading.Three)`
   color: ${primaryBrand};
   margin-bottom: 32px;
   ${addStyleForMobile(`
-    margin: 32px 16px;
+    margin: 16px;
     text-align: center;
     margin-top: 0;
 `)};
 `;
+
+const ModelTitle = styled(Title)`
+  ${addStyleForMobile(`
+    margin-left: 0;
+    margin-bottom: 32px;
+    text-align: left;
+  `)};
+`;
+
 const Link = styled(Typography.Body.Regular)`
   text-decoration: underline;
   &:hover {
@@ -256,7 +256,7 @@ const LinksModelView: React.FC<Props> = ({ viewModel }) => {
   return (
     <Container>
       <Section>
-        <Title>{title_model}</Title>
+        <ModelTitle>{title_model}</ModelTitle>
         <ModelLinkContainer>
           {models.map((model) => (
             <ModelLinkTile
