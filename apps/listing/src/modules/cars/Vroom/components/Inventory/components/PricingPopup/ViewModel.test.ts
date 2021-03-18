@@ -11,7 +11,6 @@ jest.mock('next/config', () => {
 describe('PricingPopup ViewModel Tests', () => {
   describe('getListBullets', () => {
     it('getListBullets returns an array of strings', () => {
-      // Mock the service to return a deliveryFee
       const viewModel = new ViewModel();
       viewModel.deliveryFee = 799;
       expect(viewModel.getListBullets()).toStrictEqual([
@@ -25,7 +24,6 @@ describe('PricingPopup ViewModel Tests', () => {
 
   describe('setShowPricingPopup', () => {
     it('setShowPricingPopup sets showPricingPopup', () => {
-      // Mock the service to return a deliveryFee
       const viewModel = new ViewModel();
       viewModel.setShowPricingPopup(true);
       expect(viewModel.showPricingPopup).toBe(true);

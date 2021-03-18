@@ -1,6 +1,9 @@
+import { Experiment, ExperimentSDK } from '@vroom-web/experiment-sdk';
 import { SoldStatusInt } from '@vroom-web/inv-service-networking';
 import isEmpty from 'lodash.isempty';
+import { action, observable } from 'mobx';
 
+import { analyticsHandler } from 'src/integrations/AnalyticsHandler';
 import { InventoryStore } from 'src/modules/inventory/store';
 
 interface BannerInfo {
@@ -14,6 +17,9 @@ interface BannerInfo {
   tooltipText2?: string;
   tooltipText3?: string;
 }
+
+export const GREAT_FEATURES_BADGE = 'auto-combined-drivers-demand-only';
+
 class StatusBannerViewModel {
   private store: InventoryStore;
   private salesPending = {
@@ -41,9 +47,33 @@ class StatusBannerViewModel {
     tooltipText3:
       'Some deliveries may be delayed by weather or for other logistical reasons. In the event that happens, we will work with you to reschedule the delivery.',
   };
+  private greatFeatures = {
+    id: 'great-features',
+    label: 'Great Features',
+    color: '#0f3a7b',
+    font: '#ffffff',
+  };
+
+  @observable greatFeaturesBadgeExperiment?: Experiment;
 
   constructor(inventoryStore: InventoryStore) {
     this.store = inventoryStore;
+
+    if (!this.greatFeaturesBadgeExperiment) {
+      new ExperimentSDK()
+        .getAndLogExperimentClientSide('snd-show-great-features-badge')
+        .then((experiment) => {
+          if (experiment) {
+            this.setGreatFeaturesBadgeExperiment(experiment);
+            analyticsHandler.registerExperiment(experiment);
+          }
+        });
+    }
+  }
+
+  @action
+  setGreatFeaturesBadgeExperiment(experiment: Experiment): void {
+    this.greatFeaturesBadgeExperiment = experiment;
   }
 
   getBanner(): BannerInfo | null {
@@ -51,6 +81,7 @@ class StatusBannerViewModel {
       hasStockPhotos,
       leadFlagPhotoUrl,
       soldStatus,
+      badges,
     } = this.store.vehicle._source;
     const vehicleServiceAvailability = this.store.isAvailable;
     if (hasStockPhotos || isEmpty(leadFlagPhotoUrl)) {
@@ -67,6 +98,13 @@ class StatusBannerViewModel {
       this.store.vehicle._source.location === 'Stafford'
     ) {
       return this.tenDayDelivery;
+    }
+    if (
+      badges !== null &&
+      !!badges.find((badge) => badge.code === GREAT_FEATURES_BADGE) &&
+      this.greatFeaturesBadgeExperiment?.assignedVariant === 1
+    ) {
+      return this.greatFeatures;
     }
     return null;
   }

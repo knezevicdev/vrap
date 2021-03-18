@@ -19,6 +19,16 @@ interface Summary {
   price: string;
 }
 
+interface BannerInfo {
+  id: string;
+  label: string;
+  color: string;
+  fontColor: string;
+  hasBorder: boolean;
+}
+
+export const GREAT_FEATURES_BADGE = 'auto-combined-drivers-demand-only';
+
 class CarCardViewModel {
   private readonly carsStore: CarsStore;
   private readonly car: Car;
@@ -27,9 +37,34 @@ class CarCardViewModel {
     alt: 'Evox Images',
     src: `${publicRuntimeConfig.BASE_PATH}/components/evox-logo.png`,
   };
-  readonly availableSoon: string = 'Available Soon';
-  readonly salePending: string = 'Sale Pending';
-  readonly tenDayDelivery: string = '10-Day Delivery';
+  private availableSoon: BannerInfo = {
+    id: 'available-soon',
+    label: 'Available Soon',
+    color: '#bdbdbd',
+    fontColor: 'inherit',
+    hasBorder: false,
+  };
+  private salePending: BannerInfo = {
+    id: 'sale-pending',
+    label: 'Sale Pending',
+    color: '#ffd400',
+    fontColor: 'inherit',
+    hasBorder: false,
+  };
+  private tenDayDelivery: BannerInfo = {
+    id: 'ten-day-delivery',
+    label: '10-Day Delivery',
+    color: '#0f3a7b',
+    fontColor: '#ffffff',
+    hasBorder: true,
+  };
+  private greatFeatures: BannerInfo = {
+    id: 'great-features',
+    label: 'Great Features',
+    color: '#0f3a7b',
+    fontColor: '#ffffff',
+    hasBorder: true,
+  };
 
   constructor(carsStore: CarsStore, car: Car, position: number) {
     this.carsStore = carsStore;
@@ -57,20 +92,39 @@ class CarCardViewModel {
   };
 
   showSalePending = (): boolean => {
-    return (
-      !this.showAvailableSoon() &&
-      this.car.soldStatus === SoldStatusInt.SALE_PENDING
-    );
+    return this.car.soldStatus === SoldStatusInt.SALE_PENDING;
   };
 
   showTenDayDelivery = (): boolean => {
     return (
       this.car.location === 'Stafford' &&
-      this.carsStore.geoShippingExperiment?.assignedVariant === 1 &&
-      !this.showSalePending() &&
-      !this.showAvailableSoon()
+      this.carsStore.geoShippingExperiment?.assignedVariant === 1
     );
   };
+
+  showGreatFeatures = (): boolean => {
+    return (
+      this.car.badges !== null &&
+      !!this.car.badges.find((badge) => badge.code === GREAT_FEATURES_BADGE) &&
+      this.carsStore.greatFeaturesBadgeExperiment?.assignedVariant === 1
+    );
+  };
+
+  getBanner(): BannerInfo | null {
+    if (this.showAvailableSoon()) {
+      return this.availableSoon;
+    }
+    if (this.showSalePending()) {
+      return this.salePending;
+    }
+    if (this.showTenDayDelivery()) {
+      return this.tenDayDelivery;
+    }
+    if (this.showGreatFeatures()) {
+      return this.greatFeatures;
+    }
+    return null;
+  }
 
   getPhotoStyle = (): { opacity: string } => {
     const { leadFlagPhotoUrl } = this.car;
