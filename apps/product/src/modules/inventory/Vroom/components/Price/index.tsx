@@ -8,7 +8,7 @@ import withData from 'src/modules/inventory/withData';
 class Price extends React.Component {
   viewModel: ViewModel;
 
-  constructor(props: any) {
+  constructor(props: Record<string, never>) {
     super(props);
     this.viewModel = new ViewModel(props.data);
   }
