@@ -5,7 +5,6 @@ import {
   ThemeProps,
   Typography,
 } from '@vroom-web/ui-lib';
-import { observer } from 'mobx-react';
 import React from 'react';
 import styled from 'styled-components';
 
@@ -20,6 +19,10 @@ const maxHeight = ({ max_height }: { max_height?: number }): string =>
 const maxWidth = ({ max_width }: { max_width?: number }): string =>
   max_width ? `${max_width}px` : 'none';
 
+const width = ({ width }: { width?: string }): string => width || '100%';
+const flexGrow = ({ flexGrow }: { flexGrow?: string }): string =>
+  flexGrow || '1';
+
 // quickest way to do this
 const maxHeightMobile = ({ max_height }: { max_height?: number }): string =>
   max_height ? `${Math.round(max_height * 0.85)}px` : 'none';
@@ -27,16 +30,16 @@ const maxWidthMobile = ({ max_width }: { max_width?: number }): string =>
   max_width ? `${Math.round(max_width * 0.85)}px` : 'none';
 
 const Container = styled.div`
-  margin: 64px;
+  margin: 32px 64px;
 
   ${addStyleForMobile(`
     margin: 48px 16px;
     
-    & div:nth-child(2) > h4{
+    & div:nth-child(2) > h3{
       margin-bottom: 16px;
     };
 
-    & div:nth-child(3) > h4{
+    & div:nth-child(3) > h3{
       margin-left: 0;
       text-align: left;
     };
@@ -44,10 +47,10 @@ const Container = styled.div`
 `;
 
 const Section = styled.div`
-  margin-bottom: 64px;
+  margin-bottom: 32px;
 `;
 
-const Title = styled(Typography.Heading.Four)`
+const Title = styled(Typography.Heading.Three)`
   color: ${primaryBrand};
   margin-bottom: 32px;
   ${addStyleForMobile(`
@@ -71,14 +74,20 @@ const VehicleImageContainer = styled.div`
 `)};
 `;
 
-const VehicleTile = styled.a`
-  flex: 1 1 0;
-  padding: 0 35px;
+interface VehicleTypeImageProps {
+  flexGrow?: string;
+  width?: string;
+}
+
+const VehicleTypeTile = styled('a')<VehicleTypeImageProps>`
+  flex: ${flexGrow} 1 0;
   display: flex;
   flex-direction: column;
   align-items: center;
   box-sizing: border-box;
   cursor: pointer;
+  justify-content: flex-end;
+  padding: 0 16px;
   &:hover {
     span {
       color: ${primaryBrand};
@@ -88,12 +97,16 @@ const VehicleTile = styled.a`
     width: 100%;
     margin-bottom: 8px;
   }
-  ${addStyleForMobile(`
+  @media (max-width: 599px) {
     margin-bottom: 32px;
-  &:last-of-type {
-    margin-bottom: 0;
+    &:last-of-type {
+      margin-bottom: 0;
+    }
+    & img {
+      width: 90%;
+      width: ${width};
+    }
   }
-  `)}
 `;
 const BrandImageContainer = styled.div`
   display: flex;
@@ -179,26 +192,20 @@ interface Props {
   viewModel: ViewModel;
 }
 
-const HeroView: React.FC<Props> = ({ viewModel }) => {
-  const {
-    title_vehicle,
-    vehicles,
-    title_brand,
-    brands,
-    title_model,
-    models,
-    handleLinkClick,
-  } = viewModel;
+const LinksTypeView: React.FC<Props> = ({ viewModel }) => {
+  const { title_vehicle, vehicles, handleLinkClick } = viewModel;
   return (
     <Container>
       <Section>
         <Title>{title_vehicle}</Title>
         <VehicleImageContainer>
           {vehicles.map((vehicle) => (
-            <VehicleTile
+            <VehicleTypeTile
               onClick={handleLinkClick(vehicle.link.label, vehicle.link.href)}
               href={vehicle.link.href}
               key={vehicle.img_url}
+              width={vehicle.width}
+              flexGrow={vehicle.flexGrow}
             >
               <img
                 src={vehicle.img_url}
@@ -206,11 +213,18 @@ const HeroView: React.FC<Props> = ({ viewModel }) => {
                 loading="lazy"
               />
               <Link>{vehicle.link.label}</Link>
-            </VehicleTile>
+            </VehicleTypeTile>
           ))}
         </VehicleImageContainer>
       </Section>
+    </Container>
+  );
+};
 
+const LinksMakeView: React.FC<Props> = ({ viewModel }) => {
+  const { title_brand, brands, handleLinkClick } = viewModel;
+  return (
+    <Container>
       <Section>
         <Title>{title_brand}</Title>
         <BrandImageContainer>
@@ -233,7 +247,14 @@ const HeroView: React.FC<Props> = ({ viewModel }) => {
           ))}
         </BrandImageContainer>
       </Section>
+    </Container>
+  );
+};
 
+const LinksModelView: React.FC<Props> = ({ viewModel }) => {
+  const { title_model, models, handleLinkClick } = viewModel;
+  return (
+    <Container>
       <Section>
         <Title>{title_model}</Title>
         <ModelLinkContainer>
@@ -252,4 +273,4 @@ const HeroView: React.FC<Props> = ({ viewModel }) => {
   );
 };
 
-export default observer(HeroView);
+export { LinksTypeView, LinksMakeView, LinksModelView };

@@ -16,6 +16,9 @@ interface Vehicle {
   img_url: string;
   img_alt: string;
   link: Link;
+  padding?: string;
+  width?: string;
+  flexGrow?: string;
 }
 
 interface Brand {
@@ -40,27 +43,36 @@ class HeroViewModel {
   readonly vehicles: Vehicle[] = [
     {
       img_url: `${VROOM_URL}/static-assets/images/home-page/Truck-Body-Type.png`,
+
       img_alt: 'Truck - F-150',
       link: {
         label: 'Shop Trucks',
         href: `${VROOM_URL}/cars/types/truck`,
       },
+      width: '100%',
+      flexGrow: '37.6%',
     },
     {
       img_url: `${VROOM_URL}/static-assets/images/home-page/SUV-Body-Type.png`,
+
       img_alt: 'SUV - Lexus',
       link: {
         label: 'Shop SUVs',
         href: `${VROOM_URL}/cars/types/suv`,
       },
+      width: '87%',
+      flexGrow: '32.7%',
     },
     {
       img_url: `${VROOM_URL}/static-assets/images/home-page/Sedan-Body-Type.png`,
+
       img_alt: 'Sedan - Accord',
       link: {
         label: 'Shop Sedans',
         href: `${VROOM_URL}/cars/types/sedan`,
       },
+      width: '79%',
+      flexGrow: '29.7%',
     },
   ];
   readonly brands: Brand[] = [
