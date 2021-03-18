@@ -446,6 +446,7 @@ export class CarsStore {
 
   @observable geoShippingExperiment?: Experiment;
   @observable goBiasExperiment?: Experiment;
+  @observable greatFeaturesBadgeExperiment?: Experiment;
 
   constructor(initialState?: InitialCarsStoreState) {
     this.invSearchNetworker = new InvSearchNetworker(
@@ -461,6 +462,11 @@ export class CarsStore {
       this.isTitleQAPass = initialState.titleQuery;
       this.zipCode = initialState.zipCode;
     }
+  }
+
+  @action
+  setGreatFeaturesBadgeExperiment(experiment: Experiment): void {
+    this.greatFeaturesBadgeExperiment = experiment;
   }
 
   @action

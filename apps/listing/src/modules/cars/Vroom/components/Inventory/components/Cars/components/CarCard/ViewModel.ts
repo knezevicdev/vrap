@@ -105,7 +105,8 @@ class CarCardViewModel {
   showGreatFeatures = (): boolean => {
     return (
       this.car.badges !== null &&
-      !!this.car.badges.find((badge) => badge.code === GREAT_FEATURES_BADGE)
+      !!this.car.badges.find((badge) => badge.code === GREAT_FEATURES_BADGE) &&
+      this.carsStore.greatFeaturesBadgeExperiment?.assignedVariant === 1
     );
   };
 

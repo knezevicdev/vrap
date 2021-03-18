@@ -172,8 +172,9 @@ describe('CarCard ViewModel Tests', () => {
   });
 
   describe('showGreatFeatures', () => {
-    it('showGreatFeatures returns true when badges contains the GREAT_FEATURES_BADGE', () => {
+    it('showGreatFeatures returns true when badges contains the GREAT_FEATURES_BADGE and assignedVariant is 1', () => {
       const store = new CarsStore();
+      store.greatFeaturesBadgeExperiment = { assignedVariant: 1 } as Experiment;
       const car = {
         leadFlagPhotoUrl: 'https://some-url.com',
         hasStockPhotos: false,
@@ -184,6 +185,19 @@ describe('CarCard ViewModel Tests', () => {
       const position = 1;
       const viewModel = new ViewModel(store, car, position);
       expect(viewModel.showGreatFeatures()).toBe(true);
+    });
+    it('showGreatFeatures returns false when badges contains the GREAT_FEATURES_BADGE and assignedVariant is 0', () => {
+      const store = new CarsStore();
+      const car = {
+        leadFlagPhotoUrl: 'https://some-url.com',
+        hasStockPhotos: false,
+        soldStatus: SoldStatusInt.FOR_SALE,
+        location: 'Detroit',
+        badges: [{ code: GREAT_FEATURES_BADGE }],
+      } as Car;
+      const position = 1;
+      const viewModel = new ViewModel(store, car, position);
+      expect(viewModel.showGreatFeatures()).toBe(false);
     });
     it('showGreatFeatures returns false when badges does not contain the GREAT_FEATURES_BADGE,', () => {
       const store = new CarsStore();
@@ -210,6 +224,7 @@ describe('CarCard ViewModel Tests', () => {
       store.geoShippingExperiment = {
         assignedVariant: 1,
       } as Experiment;
+      store.greatFeaturesBadgeExperiment = { assignedVariant: 1 } as Experiment;
       const car = {
         leadFlagPhotoUrl: '',
         hasStockPhotos: true,
@@ -232,6 +247,7 @@ describe('CarCard ViewModel Tests', () => {
       store.geoShippingExperiment = {
         assignedVariant: 1,
       } as Experiment;
+      store.greatFeaturesBadgeExperiment = { assignedVariant: 1 } as Experiment;
       const car = {
         leadFlagPhotoUrl: 'https://some-url.com',
         hasStockPhotos: false,
@@ -254,6 +270,7 @@ describe('CarCard ViewModel Tests', () => {
       store.geoShippingExperiment = {
         assignedVariant: 1,
       } as Experiment;
+      store.greatFeaturesBadgeExperiment = { assignedVariant: 1 } as Experiment;
       const car = {
         leadFlagPhotoUrl: 'https://some-url.com',
         hasStockPhotos: false,
@@ -276,6 +293,7 @@ describe('CarCard ViewModel Tests', () => {
       store.geoShippingExperiment = {
         assignedVariant: 0,
       } as Experiment;
+      store.greatFeaturesBadgeExperiment = { assignedVariant: 1 } as Experiment;
       const car = {
         leadFlagPhotoUrl: 'https://some-url.com',
         hasStockPhotos: false,
