@@ -1,6 +1,9 @@
+import { Experiment, ExperimentSDK } from '@vroom-web/experiment-sdk';
 import { SoldStatusInt } from '@vroom-web/inv-service-networking';
 import isEmpty from 'lodash.isempty';
+import { action, observable } from 'mobx';
 
+import { analyticsHandler } from 'src/integrations/AnalyticsHandler';
 import { InventoryStore } from 'src/modules/inventory/store';
 
 interface BannerInfo {
@@ -51,8 +54,26 @@ class StatusBannerViewModel {
     font: '#ffffff',
   };
 
+  @observable greatFeaturesBadgeExperiment?: Experiment;
+
   constructor(inventoryStore: InventoryStore) {
     this.store = inventoryStore;
+
+    if (!this.greatFeaturesBadgeExperiment) {
+      new ExperimentSDK()
+        .getAndLogExperimentClientSide('snd-show-great-features-badge')
+        .then((experiment) => {
+          if (experiment) {
+            this.setGreatFeaturesBadgeExperiment(experiment);
+            analyticsHandler.registerExperiment(experiment);
+          }
+        });
+    }
+  }
+
+  @action
+  setGreatFeaturesBadgeExperiment(experiment: Experiment): void {
+    this.greatFeaturesBadgeExperiment = experiment;
   }
 
   getBanner(): BannerInfo | null {
@@ -80,7 +101,8 @@ class StatusBannerViewModel {
     }
     if (
       badges !== null &&
-      !!badges.find((badge) => badge.code === GREAT_FEATURES_BADGE)
+      !!badges.find((badge) => badge.code === GREAT_FEATURES_BADGE) &&
+      this.greatFeaturesBadgeExperiment?.assignedVariant === 1
     ) {
       return this.greatFeatures;
     }
