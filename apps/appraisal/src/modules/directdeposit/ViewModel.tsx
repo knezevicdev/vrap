@@ -1,20 +1,22 @@
 import { OptionsStore } from '../options/store';
 import { DirectDepositStore, plaidSuccess } from './store';
+import { PaymentOverviewStore } from '../paymentoverview/store';
+import { PriceStore } from '../price/store';
 
 import { PlaidData } from 'src/interfaces.d';
 
 class DirectDepositViewModel {
   private readonly store: DirectDepositStore;
   private readonly oStore: OptionsStore;
-  readonly bankInfo: string = 'Please provide your bank information.';
+  private readonly poStore: PaymentOverviewStore;
   readonly ddToggleOrCopy: string = 'Or,';
-  readonly ddToggleManualCopy: string = 'enter bank information manually';
   readonly ddTogglePlaidCopy: string = 'link bank account';
   readonly cantFind: string = `Can't find your bank? Enter bank information manually`;
 
-  constructor(store: DirectDepositStore, oStore: OptionsStore) {
+  constructor(store: DirectDepositStore, oStore: OptionsStore, poStore: PaymentOverviewStore) {
     this.store = store;
     this.oStore = oStore;
+    this.poStore = poStore;
   }
 
   getPlaidLinkToken = (): string => {
@@ -29,6 +31,10 @@ class DirectDepositViewModel {
     return this.store.priceId;
   };
 
+  getPrice = (): string => {
+    return this.poStore.price;
+  };
+
   togglePlaidLink = (): void => {
     this.store.togglePlaidLink();
   };
@@ -38,10 +44,6 @@ class DirectDepositViewModel {
     onPlaidSubmitting: (value: boolean) => void
   ): void => {
     plaidSuccess(input, onPlaidSubmitting);
-  };
-
-  getPlaidExperimentAssignedExperiment = (): boolean => {
-    return this.oStore.plaidExperiment;
   };
 
   getInstitutionNotFound = (): boolean => {

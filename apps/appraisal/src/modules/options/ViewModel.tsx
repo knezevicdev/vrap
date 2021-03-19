@@ -126,10 +126,6 @@ class OptionsViewModel {
     window.location.href = url;
   };
 
-  getPlaidExperimentAssignedExperiment = (): boolean => {
-    return this.store.plaidExperiment;
-  };
-
   getInstitutionNotFound = (): boolean => {
     return this.store.institutionFound === false;
   };
