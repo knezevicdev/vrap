@@ -1,7 +1,6 @@
 import { OptionsStore } from '../options/store';
-import { DirectDepositStore, plaidSuccess } from './store';
 import { PaymentOverviewStore } from '../paymentoverview/store';
-import { PriceStore } from '../price/store';
+import { DirectDepositStore, plaidSuccess } from './store';
 
 import { PlaidData } from 'src/interfaces.d';
 
@@ -13,7 +12,11 @@ class DirectDepositViewModel {
   readonly ddTogglePlaidCopy: string = 'link bank account';
   readonly cantFind: string = `Can't find your bank? Enter bank information manually`;
 
-  constructor(store: DirectDepositStore, oStore: OptionsStore, poStore: PaymentOverviewStore) {
+  constructor(
+    store: DirectDepositStore,
+    oStore: OptionsStore,
+    poStore: PaymentOverviewStore
+  ) {
     this.store = store;
     this.oStore = oStore;
     this.poStore = poStore;
@@ -32,7 +35,7 @@ class DirectDepositViewModel {
   };
 
   getPrice = (): string => {
-    return this.poStore.price;
+    return this.poStore.price.toString();
   };
 
   togglePlaidLink = (): void => {

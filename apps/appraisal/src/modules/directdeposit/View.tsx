@@ -37,15 +37,15 @@ const DirectDepositView: React.FC<Props> = ({ viewModel }) => {
             plaidSuccess={viewModel.onPlaidSuccess}
             priceId={viewModel.getPriceId()}
           />
-          {showNotFound && viewModel.getPrice() <= 10000 ? (
+          {showNotFound && viewModel.getPrice() <= '10000' ? (
             <>
               <DirectDepositCopy>{viewModel.cantFind}</DirectDepositCopy>
               <DirectDeposit />
             </>
           ) : (
             <LockText>
-              <StyledIcon icon={Icons.LOCK} /> Your information will be
-              secure and encrypted
+              <StyledIcon icon={Icons.LOCK} /> Your information will be secure
+              and encrypted
             </LockText>
           )}
         </>

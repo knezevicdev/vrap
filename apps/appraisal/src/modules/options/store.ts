@@ -1,8 +1,6 @@
-import { ExperimentSDK } from '@vroom-web/experiment-sdk';
 import { action, observable, runInAction } from 'mobx';
 import { createContext, useContext } from 'react';
 
-import { analyticsHandler } from 'src/integrations/AnalyticsHandler';
 import {
   AsyncStatus,
   PaymentOverviewFormValues,
