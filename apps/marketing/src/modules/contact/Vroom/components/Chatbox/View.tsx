@@ -23,9 +23,9 @@ const View: React.FC<Props> = ({ viewModel }) => {
       This implementation is pretty horrible. @ts-ignore is a major red flag.
       Pypestream is brought in from `webchat-public.js` in useEffect, but when we compile Next.js isn't gonna know what it is.
       I've tried copying the file to `/public` dir but pypestream complains about a VPN error.
-      The pypestream implemention uses old school `document.addEventListener` but there are implementaiton issues.
+      The pypestream implemention uses old school `document.addEventListener` but there are implementation issues.
       React will lose track of the event listener, not clean up properly, and you'll need to hack your way with refs.
-      Even then results are not guaranteed and may not even be a better implementation */
+      Even then results are not guaranteed. */
 
     const dev = publicRuntimeConfig.NODE_ENV !== 'production';
     const pypeStreamConfig = dev
