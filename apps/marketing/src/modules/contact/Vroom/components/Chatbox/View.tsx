@@ -3,13 +3,15 @@ import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
+import ViewModel from './ViewModel';
+
 interface Props {
   viewModel: ViewModel;
 }
 
 const { publicRuntimeConfig } = getConfig();
 
-const Chatbox: React.FC = ({ viewModel }) => {
+const View: React.FC<Props> = ({ viewModel }) => {
   const [booted, setBooted] = useState(false);
   const [showChatIcon, setShowChatIcon] = useState(true);
   const chatIcon = `${publicRuntimeConfig.BASE_PATH}/modules/vroom/icons/chat-icon.svg`;
@@ -87,6 +89,7 @@ const Chatbox: React.FC = ({ viewModel }) => {
       document.body.removeChild(script);
       clearTimeout(timer);
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [chatboxOpen]);
 
   const handleOnClick = (): void => {
@@ -142,4 +145,4 @@ const ChatContainer = styled.div`
   right: 10px;
 `;
 
-export default Chatbox;
+export default View;

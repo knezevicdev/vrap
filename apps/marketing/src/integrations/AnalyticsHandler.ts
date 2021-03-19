@@ -24,7 +24,7 @@ class AnalyticsHandler extends BaseAnalyticsHandler {
     const properties = { category };
     this.track(event, properties);
   }
- 
+
   trackChatboxClosed(): void {
     const event = 'Conversation Ended';
     const category = 'Pypestream Chatbot';
