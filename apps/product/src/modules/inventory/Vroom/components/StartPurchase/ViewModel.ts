@@ -72,9 +72,13 @@ class StartPurchaseViewModel {
       Review: 'dealReview',
       DocumentUpload: 'documentUpload',
       TradeInLoanInfo: 'tradeInLoanInfo',
+      TradeInVehicle: 'vehicleTradeIn',
     };
     const stepUrl: string | undefined = urlDict[step];
-    return `/e2e/${vin}/${stepUrl ? stepUrl : `my-account/transactions`}`;
+    const targetUrl: string = stepUrl === 'vehicleTradeIn' ? 'checkout' : 'e2e';
+    return `/${targetUrl}/${vin}/${
+      stepUrl ? stepUrl : `my-account/transactions`
+    }`;
   }
 
   showTenDayDelivery(): boolean {

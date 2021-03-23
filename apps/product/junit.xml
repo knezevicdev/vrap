@@ -1,0 +1,315 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="jest tests" tests="123" failures="0" errors="0" time="5.173">
+  <testsuite name="Price ViewModel Tests" errors="0" failures="0" skipped="0" timestamp="2021-03-23T14:50:05" time="1.088" tests="10">
+    <testcase classname="Price ViewModel Tests getListBullets getListBullets returns an array of strings" name="Price ViewModel Tests getListBullets getListBullets returns an array of strings" time="0.085">
+    </testcase>
+    <testcase classname="Price ViewModel Tests showShippingFee showShippingFee returns false when showVisibleShippingFee is false and deliveryFeeHasSucceeded is false and deliveryFeeHasFailed is false" name="Price ViewModel Tests showShippingFee showShippingFee returns false when showVisibleShippingFee is false and deliveryFeeHasSucceeded is false and deliveryFeeHasFailed is false" time="0.009">
+    </testcase>
+    <testcase classname="Price ViewModel Tests showShippingFee showShippingFee returns false when showVisibleShippingFee is false and deliveryFeeHasSucceeded is true and deliveryFeeHasFailed is false" name="Price ViewModel Tests showShippingFee showShippingFee returns false when showVisibleShippingFee is false and deliveryFeeHasSucceeded is true and deliveryFeeHasFailed is false" time="0.005">
+    </testcase>
+    <testcase classname="Price ViewModel Tests showShippingFee showShippingFee returns false when showVisibleShippingFee is false and deliveryFeeHasSucceeded is false and deliveryFeeHasFailed is true" name="Price ViewModel Tests showShippingFee showShippingFee returns false when showVisibleShippingFee is false and deliveryFeeHasSucceeded is false and deliveryFeeHasFailed is true" time="0.005">
+    </testcase>
+    <testcase classname="Price ViewModel Tests showShippingFee showShippingFee returns false when showVisibleShippingFee is false and deliveryFeeHasSucceeded is true and deliveryFeeHasFailed is true" name="Price ViewModel Tests showShippingFee showShippingFee returns false when showVisibleShippingFee is false and deliveryFeeHasSucceeded is true and deliveryFeeHasFailed is true" time="0.011">
+    </testcase>
+    <testcase classname="Price ViewModel Tests showShippingFee showShippingFee returns false when showVisibleShippingFee is true and deliveryFeeHasSucceeded is false and deliveryFeeHasFailed is false" name="Price ViewModel Tests showShippingFee showShippingFee returns false when showVisibleShippingFee is true and deliveryFeeHasSucceeded is false and deliveryFeeHasFailed is false" time="0.008">
+    </testcase>
+    <testcase classname="Price ViewModel Tests showShippingFee showShippingFee returns true when showVisibleShippingFee is true and deliveryFeeHasSucceeded is true and deliveryFeeHasFailed is false" name="Price ViewModel Tests showShippingFee showShippingFee returns true when showVisibleShippingFee is true and deliveryFeeHasSucceeded is true and deliveryFeeHasFailed is false" time="0.006">
+    </testcase>
+    <testcase classname="Price ViewModel Tests showShippingFee showShippingFee returns true when showVisibleShippingFee is true and deliveryFeeHasSucceeded is false and deliveryFeeHasFailed is true" name="Price ViewModel Tests showShippingFee showShippingFee returns true when showVisibleShippingFee is true and deliveryFeeHasSucceeded is false and deliveryFeeHasFailed is true" time="0.005">
+    </testcase>
+    <testcase classname="Price ViewModel Tests showShippingFee showShippingFee returns true when showVisibleShippingFee is true and deliveryFeeHasSucceeded is true and deliveryFeeHasFailed is true" name="Price ViewModel Tests showShippingFee showShippingFee returns true when showVisibleShippingFee is true and deliveryFeeHasSucceeded is true and deliveryFeeHasFailed is true" time="0.004">
+    </testcase>
+    <testcase classname="Price ViewModel Tests getShippingFee getShippingFee returns string of shipping fee details" name="Price ViewModel Tests getShippingFee getShippingFee returns string of shipping fee details" time="0.004">
+    </testcase>
+  </testsuite>
+  <testsuite name="Gallery ViewModel" errors="0" failures="0" skipped="0" timestamp="2021-03-23T14:50:05" time="1.699" tests="2">
+    <testcase classname="Gallery ViewModel getDefectImages() if no defectPhotos, defectImages is empty array" name="Gallery ViewModel getDefectImages() if no defectPhotos, defectImages is empty array" time="0.004">
+    </testcase>
+    <testcase classname="Gallery ViewModel getDefectImages() if defectPhotos exists, defectImages is populated accordingly" name="Gallery ViewModel getDefectImages() if defectPhotos exists, defectImages is populated accordingly" time="0.002">
+    </testcase>
+  </testsuite>
+  <testsuite name="Start Purchase View Model" errors="0" failures="0" skipped="0" timestamp="2021-03-23T14:50:07" time="0.228" tests="3">
+    <testcase classname="Start Purchase View Model getResumeStepHref it should return the default if the step isn&apos;t in the dictionary" name="Start Purchase View Model getResumeStepHref it should return the default if the step isn&apos;t in the dictionary" time="0.001">
+    </testcase>
+    <testcase classname="Start Purchase View Model getResumeStepHref it should return the correct step based on what is in the dict" name="Start Purchase View Model getResumeStepHref it should return the correct step based on what is in the dict" time="0">
+    </testcase>
+    <testcase classname="Start Purchase View Model getResumeStepHref it should return the path when selecting the trade in vehicle step" name="Start Purchase View Model getResumeStepHref it should return the path when selecting the trade in vehicle step" time="0">
+    </testcase>
+  </testsuite>
+  <testsuite name="Favorites" errors="0" failures="0" skipped="0" timestamp="2021-03-23T14:50:07" time="0.955" tests="3">
+    <testcase classname="Favorites Favorite button When Logged Out should call handle Dialog if not logged in" name="Favorites Favorite button When Logged Out should call handle Dialog if not logged in" time="0.082">
+    </testcase>
+    <testcase classname="Favorites Favorite button When Logged In should call addFavorite if not favorited" name="Favorites Favorite button When Logged In should call addFavorite if not favorited" time="0.026">
+    </testcase>
+    <testcase classname="Favorites Favorite button When Logged In should call removeFavorites if favorited" name="Favorites Favorite button When Logged In should call removeFavorites if favorited" time="0.036">
+    </testcase>
+  </testsuite>
+  <testsuite name="Inventory Store" errors="0" failures="0" skipped="0" timestamp="2021-03-23T14:50:07" time="0.245" tests="12">
+    <testcase classname="Inventory Store getVehicleResponse() it should return a valid response if the call succeeds" name="Inventory Store getVehicleResponse() it should return a valid response if the call succeeds" time="0.001">
+    </testcase>
+    <testcase classname="Inventory Store getVehicleResponse() it should return undefined if the call errors" name="Inventory Store getVehicleResponse() it should return undefined if the call errors" time="0.013">
+    </testcase>
+    <testcase classname="Inventory Store getVehicleState() it should return the vehicle and set the status as success" name="Inventory Store getVehicleState() it should return the vehicle and set the status as success" time="0">
+    </testcase>
+    <testcase classname="Inventory Store getVehicleState() it should set the status as error if it the API errors" name="Inventory Store getVehicleState() it should set the status as error if it the API errors" time="0.001">
+    </testcase>
+    <testcase classname="Inventory Store getVehicleState() it should set the status as error if it cannot find the exact vin" name="Inventory Store getVehicleState() it should set the status as error if it cannot find the exact vin" time="0">
+    </testcase>
+    <testcase classname="Inventory Store getVehicleSimilarState() it should return the hits and set the status to success if the call succeeds" name="Inventory Store getVehicleSimilarState() it should return the hits and set the status to success if the call succeeds" time="0.001">
+    </testcase>
+    <testcase classname="Inventory Store getVehicleSimilarState() it should set the status to error if the call fails" name="Inventory Store getVehicleSimilarState() it should set the status to error if the call fails" time="0.001">
+    </testcase>
+    <testcase classname="Inventory Store getInventoryAvailabilityState() it should return the response if the API call resolves" name="Inventory Store getInventoryAvailabilityState() it should return the response if the API call resolves" time="0">
+    </testcase>
+    <testcase classname="Inventory Store getInventoryAvailabilityState() it should return false if the API call fails" name="Inventory Store getInventoryAvailabilityState() it should return false if the API call fails" time="0.002">
+    </testcase>
+    <testcase classname="Inventory Store fetchDeliveryFeeState() it should return the response fee if the API call is successful" name="Inventory Store fetchDeliveryFeeState() it should return the response fee if the API call is successful" time="0.007">
+    </testcase>
+    <testcase classname="Inventory Store fetchDeliveryFeeState() it should return the default fee if the API call is successful but no fee is in the response" name="Inventory Store fetchDeliveryFeeState() it should return the default fee if the API call is successful but no fee is in the response" time="0.001">
+    </testcase>
+    <testcase classname="Inventory Store fetchDeliveryFeeState() it should return the default fee if the API call fails" name="Inventory Store fetchDeliveryFeeState() it should return the default fee if the API call fails" time="0.001">
+    </testcase>
+  </testsuite>
+  <testsuite name="Features View" errors="0" failures="0" skipped="0" timestamp="2021-03-23T14:50:05" time="2.269" tests="1">
+    <testcase classname="Features View should call handleClick fn on button click" name="Features View should call handleClick fn on button click" time="0.278">
+    </testcase>
+  </testsuite>
+  <testsuite name="Features View" errors="0" failures="0" skipped="0" timestamp="2021-03-23T14:50:05" time="2.278" tests="1">
+    <testcase classname="Features View should call handleClick fn on button click" name="Features View should call handleClick fn on button click" time="0.283">
+    </testcase>
+  </testsuite>
+  <testsuite name="Car Details ViewModel" errors="0" failures="0" skipped="0" timestamp="2021-03-23T14:50:08" time="0.215" tests="5">
+    <testcase classname="Car Details ViewModel should return correct history for a given car with blank warrenty" name="Car Details ViewModel should return correct history for a given car with blank warrenty" time="0.002">
+    </testcase>
+    <testcase classname="Car Details ViewModel should return correct history for a given car with expired warrenty" name="Car Details ViewModel should return correct history for a given car with expired warrenty" time="0.001">
+    </testcase>
+    <testcase classname="Car Details ViewModel should return correct history for a given car with no warrenty data" name="Car Details ViewModel should return correct history for a given car with no warrenty data" time="0.001">
+    </testcase>
+    <testcase classname="Car Details ViewModel should return correct history for a given car 1 month left on warrenty" name="Car Details ViewModel should return correct history for a given car 1 month left on warrenty" time="0.001">
+    </testcase>
+    <testcase classname="Car Details ViewModel should return correct history for a given car multiple months left on warrenty" name="Car Details ViewModel should return correct history for a given car multiple months left on warrenty" time="0.001">
+    </testcase>
+  </testsuite>
+  <testsuite name="Car Details ViewModel" errors="0" failures="0" skipped="0" timestamp="2021-03-23T14:50:08" time="0.191" tests="5">
+    <testcase classname="Car Details ViewModel should return correct history for a given car with blank warrenty" name="Car Details ViewModel should return correct history for a given car with blank warrenty" time="0.002">
+    </testcase>
+    <testcase classname="Car Details ViewModel should return correct history for a given car with expired warrenty" name="Car Details ViewModel should return correct history for a given car with expired warrenty" time="0.001">
+    </testcase>
+    <testcase classname="Car Details ViewModel should return correct history for a given car with no warrenty data" name="Car Details ViewModel should return correct history for a given car with no warrenty data" time="0.001">
+    </testcase>
+    <testcase classname="Car Details ViewModel should return correct history for a given car 1 month left on warrenty" name="Car Details ViewModel should return correct history for a given car 1 month left on warrenty" time="0.001">
+    </testcase>
+    <testcase classname="Car Details ViewModel should return correct history for a given car multiple months left on warrenty" name="Car Details ViewModel should return correct history for a given car multiple months left on warrenty" time="0.001">
+    </testcase>
+  </testsuite>
+  <testsuite name="Select View" errors="0" failures="0" skipped="0" timestamp="2021-03-23T14:50:08" time="0.407" tests="1">
+    <testcase classname="Select View Tabs handle change is being called" name="Select View Tabs handle change is being called" time="0.058">
+    </testcase>
+  </testsuite>
+  <testsuite name="Features View" errors="0" failures="0" skipped="0" timestamp="2021-03-23T14:50:08" time="0.503" tests="3">
+    <testcase classname="Features View should not display the Show All/Show Less Text when features &lt; 14" name="Features View should not display the Show All/Show Less Text when features &lt; 14" time="0.035">
+    </testcase>
+    <testcase classname="Features View should display the Show All when features &gt; 14 and click should call view model onClick fn" name="Features View should display the Show All when features &gt; 14 and click should call view model onClick fn" time="0.037">
+    </testcase>
+    <testcase classname="Features View should display the Show Less Text when expanded and click should call view model onClick fn" name="Features View should display the Show Less Text when expanded and click should call view model onClick fn" time="0.073">
+    </testcase>
+  </testsuite>
+  <testsuite name="Features View" errors="0" failures="0" skipped="0" timestamp="2021-03-23T14:50:08" time="0.506" tests="3">
+    <testcase classname="Features View should not display the Show All/Show Less Text when features &lt; 14" name="Features View should not display the Show All/Show Less Text when features &lt; 14" time="0.035">
+    </testcase>
+    <testcase classname="Features View should display the Show All when features &gt; 14 and click should call view model onClick fn" name="Features View should display the Show All when features &gt; 14 and click should call view model onClick fn" time="0.049">
+    </testcase>
+    <testcase classname="Features View should display the Show Less Text when expanded and click should call view model onClick fn" name="Features View should display the Show Less Text when expanded and click should call view model onClick fn" time="0.06">
+    </testcase>
+  </testsuite>
+  <testsuite name="Favorites View Model" errors="0" failures="0" skipped="0" timestamp="2021-03-23T14:50:08" time="0.172" tests="3">
+    <testcase classname="Favorites View Model check favorites" name="Favorites View Model check favorites" time="0.001">
+    </testcase>
+    <testcase classname="Favorites View Model add favorite" name="Favorites View Model add favorite" time="0.001">
+    </testcase>
+    <testcase classname="Favorites View Model remove favorite" name="Favorites View Model remove favorite" time="0.001">
+    </testcase>
+  </testsuite>
+  <testsuite name="Similar Vehicles View Model" errors="0" failures="0" skipped="0" timestamp="2021-03-23T14:50:08" time="0.213" tests="4">
+    <testcase classname="Similar Vehicles View Model getCars getCars when null similar cars, should return []" name="Similar Vehicles View Model getCars getCars when null similar cars, should return []" time="0.001">
+    </testcase>
+    <testcase classname="Similar Vehicles View Model getCars getCars when 0 similar cars, should return []" name="Similar Vehicles View Model getCars getCars when 0 similar cars, should return []" time="0">
+    </testcase>
+    <testcase classname="Similar Vehicles View Model getCars getCars when similar cars &gt; 0, should return those similar cars" name="Similar Vehicles View Model getCars getCars when similar cars &gt; 0, should return those similar cars" time="0.002">
+    </testcase>
+    <testcase classname="Similar Vehicles View Model getCars getCars when similar cars &gt; 4, should only return 4 cars" name="Similar Vehicles View Model getCars getCars when similar cars &gt; 4, should only return 4 cars" time="0.008">
+    </testcase>
+  </testsuite>
+  <testsuite name="Notify Me View Model" errors="0" failures="0" skipped="0" timestamp="2021-03-23T14:50:08" time="0.216" tests="6">
+    <testcase classname="Notify Me View Model Set Subscription should call list subscription and VIN found" name="Notify Me View Model Set Subscription should call list subscription and VIN found" time="0.002">
+    </testcase>
+    <testcase classname="Notify Me View Model Set Subscription should call list subscription and VIN not found" name="Notify Me View Model Set Subscription should call list subscription and VIN not found" time="0.001">
+    </testcase>
+    <testcase classname="Notify Me View Model Create notify Me Subscription should call register email and create subscription" name="Notify Me View Model Create notify Me Subscription should call register email and create subscription" time="0.011">
+    </testcase>
+    <testcase classname="Notify Me View Model Create notify Me Subscription should throw error when registering email" name="Notify Me View Model Create notify Me Subscription should throw error when registering email" time="0.001">
+    </testcase>
+    <testcase classname="Notify Me View Model Create notify Me Subscription should throw error when creating subscription" name="Notify Me View Model Create notify Me Subscription should throw error when creating subscription" time="0.001">
+    </testcase>
+    <testcase classname="Notify Me View Model Get Year Make Model should return year make model as string" name="Notify Me View Model Get Year Make Model should return year make model as string" time="0.004">
+    </testcase>
+  </testsuite>
+  <testsuite name="Select View" errors="0" failures="0" skipped="0" timestamp="2021-03-23T14:50:08" time="0.684" tests="1">
+    <testcase classname="Select View Tabs handle change is being called" name="Select View Tabs handle change is being called" time="0.096">
+    </testcase>
+  </testsuite>
+  <testsuite name="Breadcrumbs ViewModel" errors="0" failures="0" skipped="0" timestamp="2021-03-23T14:50:08" time="0.194" tests="1">
+    <testcase classname="Breadcrumbs ViewModel should return the correct breadcrumbs for a given car" name="Breadcrumbs ViewModel should return the correct breadcrumbs for a given car" time="0.002">
+    </testcase>
+  </testsuite>
+  <testsuite name="Breadcrumbs ViewModel" errors="0" failures="0" skipped="0" timestamp="2021-03-23T14:50:08" time="0.189" tests="1">
+    <testcase classname="Breadcrumbs ViewModel should return the correct breadcrumbs for a given car" name="Breadcrumbs ViewModel should return the correct breadcrumbs for a given car" time="0.002">
+    </testcase>
+  </testsuite>
+  <testsuite name="SafetyAndQuality ViewModel" errors="0" failures="0" skipped="0" timestamp="2021-03-23T14:50:08" time="0.208" tests="4">
+    <testcase classname="SafetyAndQuality ViewModel getImperfections() Quantity and linkText show number of defect photos" name="SafetyAndQuality ViewModel getImperfections() Quantity and linkText show number of defect photos" time="0.002">
+    </testcase>
+    <testcase classname="SafetyAndQuality ViewModel getImperfections() Quantity and linkText show number of defect photos" name="SafetyAndQuality ViewModel getImperfections() Quantity and linkText show number of defect photos" time="0.001">
+    </testcase>
+    <testcase classname="SafetyAndQuality ViewModel handleShowDefectGallery() GallerySelection is set to imperfections tab when tab is general" name="SafetyAndQuality ViewModel handleShowDefectGallery() GallerySelection is set to imperfections tab when tab is general" time="0.001">
+    </testcase>
+    <testcase classname="SafetyAndQuality ViewModel handleShowDefectGallery() GallerySelection stays on imperfections tab when fired" name="SafetyAndQuality ViewModel handleShowDefectGallery() GallerySelection stays on imperfections tab when fired" time="0">
+    </testcase>
+  </testsuite>
+  <testsuite name="Notify Me View Model" errors="0" failures="0" skipped="0" timestamp="2021-03-23T14:50:08" time="0.235" tests="6">
+    <testcase classname="Notify Me View Model Set Subscription should call list subscription and VIN found" name="Notify Me View Model Set Subscription should call list subscription and VIN found" time="0.001">
+    </testcase>
+    <testcase classname="Notify Me View Model Set Subscription should call list subscription and VIN not found" name="Notify Me View Model Set Subscription should call list subscription and VIN not found" time="0.001">
+    </testcase>
+    <testcase classname="Notify Me View Model Create notify Me Subscription should call register email and create subscription" name="Notify Me View Model Create notify Me Subscription should call register email and create subscription" time="0.001">
+    </testcase>
+    <testcase classname="Notify Me View Model Create notify Me Subscription should throw error when registering email" name="Notify Me View Model Create notify Me Subscription should throw error when registering email" time="0.001">
+    </testcase>
+    <testcase classname="Notify Me View Model Create notify Me Subscription should throw error when creating subscription" name="Notify Me View Model Create notify Me Subscription should throw error when creating subscription" time="0">
+    </testcase>
+    <testcase classname="Notify Me View Model Get Year Make Model should return year make model as string" name="Notify Me View Model Get Year Make Model should return year make model as string" time="0.001">
+    </testcase>
+  </testsuite>
+  <testsuite name="Features ViewModel" errors="0" failures="0" skipped="0" timestamp="2021-03-23T14:50:09" time="0.196" tests="7">
+    <testcase classname="Features ViewModel Get Features should return features with 1 key added" name="Features ViewModel Get Features should return features with 1 key added" time="0.001">
+    </testcase>
+    <testcase classname="Features ViewModel Get Features should return limited features when features more than 14" name="Features ViewModel Get Features should return limited features when features more than 14" time="0.001">
+    </testcase>
+    <testcase classname="Features ViewModel Get Button Label should return SHOW ALL FEATURES when features less than equal to 14" name="Features ViewModel Get Button Label should return SHOW ALL FEATURES when features less than equal to 14" time="0">
+    </testcase>
+    <testcase classname="Features ViewModel Get Button Label should return SHOW LESS FEATURES when features more than 14" name="Features ViewModel Get Button Label should return SHOW LESS FEATURES when features more than 14" time="0">
+    </testcase>
+    <testcase classname="Features ViewModel Show Button should return false when features less than equal to 14" name="Features ViewModel Show Button should return false when features less than equal to 14" time="0.001">
+    </testcase>
+    <testcase classname="Features ViewModel Show Button should return true when features more than 14" name="Features ViewModel Show Button should return true when features more than 14" time="0.001">
+    </testcase>
+    <testcase classname="Features ViewModel On click should call toggleLimited" name="Features ViewModel On click should call toggleLimited" time="0">
+    </testcase>
+  </testsuite>
+  <testsuite name="Price ViewModel Tests" errors="0" failures="0" skipped="0" timestamp="2021-03-23T14:50:09" time="0.184" tests="1">
+    <testcase classname="Price ViewModel Tests getLegalText getLegalText returns an array of strings" name="Price ViewModel Tests getLegalText getLegalText returns an array of strings" time="0.006">
+    </testcase>
+  </testsuite>
+  <testsuite name="Features ViewModel" errors="0" failures="0" skipped="0" timestamp="2021-03-23T14:50:09" time="0.213" tests="7">
+    <testcase classname="Features ViewModel Get Features should return features with 1 key added" name="Features ViewModel Get Features should return features with 1 key added" time="0.001">
+    </testcase>
+    <testcase classname="Features ViewModel Get Features should return limited features when features more than 14" name="Features ViewModel Get Features should return limited features when features more than 14" time="0.004">
+    </testcase>
+    <testcase classname="Features ViewModel Get Button Label should return SHOW ALL FEATURES when features less than equal to 14" name="Features ViewModel Get Button Label should return SHOW ALL FEATURES when features less than equal to 14" time="0">
+    </testcase>
+    <testcase classname="Features ViewModel Get Button Label should return SHOW LESS FEATURES when features more than 14" name="Features ViewModel Get Button Label should return SHOW LESS FEATURES when features more than 14" time="0">
+    </testcase>
+    <testcase classname="Features ViewModel Show Button should return false when features less than equal to 14" name="Features ViewModel Show Button should return false when features less than equal to 14" time="0.001">
+    </testcase>
+    <testcase classname="Features ViewModel Show Button should return true when features more than 14" name="Features ViewModel Show Button should return true when features more than 14" time="0.009">
+    </testcase>
+    <testcase classname="Features ViewModel On click should call toggleLimited" name="Features ViewModel On click should call toggleLimited" time="0.001">
+    </testcase>
+  </testsuite>
+  <testsuite name="Features Store Test" errors="0" failures="0" skipped="0" timestamp="2021-03-23T14:50:09" time="0.099" tests="1">
+    <testcase classname="Features Store Test should toggle" name="Features Store Test should toggle" time="0.001">
+    </testcase>
+  </testsuite>
+  <testsuite name="Select View Model" errors="0" failures="0" skipped="0" timestamp="2021-03-23T14:50:09" time="0.191" tests="6">
+    <testcase classname="Select View Model hasDefects() car has nothing" name="Select View Model hasDefects() car has nothing" time="0.001">
+    </testcase>
+    <testcase classname="Select View Model hasDefects() car has defect photos but no spin" name="Select View Model hasDefects() car has defect photos but no spin" time="0.003">
+    </testcase>
+    <testcase classname="Select View Model hasDefects() car has spin but no defects" name="Select View Model hasDefects() car has spin but no defects" time="0.001">
+    </testcase>
+    <testcase classname="Select View Model hasDefects() car has spin and defects" name="Select View Model hasDefects() car has spin and defects" time="0.001">
+    </testcase>
+    <testcase classname="Select View Model getSelectedGallery() View Model returns the selected gallery" name="Select View Model getSelectedGallery() View Model returns the selected gallery" time="0.001">
+    </testcase>
+    <testcase classname="Select View Model handleChange() handleChange calls all functions" name="Select View Model handleChange() handleChange calls all functions" time="0.001">
+    </testcase>
+  </testsuite>
+  <testsuite name="Similar Vehicles View Model" errors="0" failures="0" skipped="0" timestamp="2021-03-23T14:50:09" time="0.198" tests="4">
+    <testcase classname="Similar Vehicles View Model getCars getCars when null similar cars, should return []" name="Similar Vehicles View Model getCars getCars when null similar cars, should return []" time="0.001">
+    </testcase>
+    <testcase classname="Similar Vehicles View Model getCars getCars when 0 similar cars, should return []" name="Similar Vehicles View Model getCars getCars when 0 similar cars, should return []" time="0">
+    </testcase>
+    <testcase classname="Similar Vehicles View Model getCars getCars when similar cars &gt; 0, should return those similar cars" name="Similar Vehicles View Model getCars getCars when similar cars &gt; 0, should return those similar cars" time="0.002">
+    </testcase>
+    <testcase classname="Similar Vehicles View Model getCars getCars when similar cars &gt; 4, should only return 4 cars" name="Similar Vehicles View Model getCars getCars when similar cars &gt; 4, should only return 4 cars" time="0.005">
+    </testcase>
+  </testsuite>
+  <testsuite name="Select View Model" errors="0" failures="0" skipped="0" timestamp="2021-03-23T14:50:09" time="0.207" tests="6">
+    <testcase classname="Select View Model hasDefects() car has nothing" name="Select View Model hasDefects() car has nothing" time="0.011">
+    </testcase>
+    <testcase classname="Select View Model hasDefects() car has defect photos but no spin" name="Select View Model hasDefects() car has defect photos but no spin" time="0.001">
+    </testcase>
+    <testcase classname="Select View Model hasDefects() car has spin but no defects" name="Select View Model hasDefects() car has spin but no defects" time="0.001">
+    </testcase>
+    <testcase classname="Select View Model hasDefects() car has spin and defects" name="Select View Model hasDefects() car has spin and defects" time="0.001">
+    </testcase>
+    <testcase classname="Select View Model getSelectedGallery() View Model returns the selected gallery" name="Select View Model getSelectedGallery() View Model returns the selected gallery" time="0.001">
+    </testcase>
+    <testcase classname="Select View Model handleChange() handleChange calls all functions" name="Select View Model handleChange() handleChange calls all functions" time="0.001">
+    </testcase>
+  </testsuite>
+  <testsuite name="Favorites Networker" errors="0" failures="0" skipped="0" timestamp="2021-03-23T14:50:09" time="0.135" tests="3">
+    <testcase classname="Favorites Networker should list favorites" name="Favorites Networker should list favorites" time="0.001">
+    </testcase>
+    <testcase classname="Favorites Networker should add a favorite" name="Favorites Networker should add a favorite" time="0.001">
+    </testcase>
+    <testcase classname="Favorites Networker should remove favorite" name="Favorites Networker should remove favorite" time="0.001">
+    </testcase>
+  </testsuite>
+  <testsuite name="NotifyMe Networker" errors="0" failures="0" skipped="0" timestamp="2021-03-23T14:50:09" time="0.16" tests="4">
+    <testcase classname="NotifyMe Networker should list subscription" name="NotifyMe Networker should list subscription" time="0">
+    </testcase>
+    <testcase classname="NotifyMe Networker should register email" name="NotifyMe Networker should register email" time="0.001">
+    </testcase>
+    <testcase classname="NotifyMe Networker should create subscription" name="NotifyMe Networker should create subscription" time="0">
+    </testcase>
+    <testcase classname="NotifyMe Networker should create subscription - Duplicate" name="NotifyMe Networker should create subscription - Duplicate" time="0.001">
+    </testcase>
+  </testsuite>
+  <testsuite name="Features Store Test" errors="0" failures="0" skipped="0" timestamp="2021-03-23T14:50:09" time="0.118" tests="1">
+    <testcase classname="Features Store Test should toggle" name="Features Store Test should toggle" time="0.001">
+    </testcase>
+  </testsuite>
+  <testsuite name="NotifyMe Store Test" errors="0" failures="0" skipped="0" timestamp="2021-03-23T14:50:09" time="0.106" tests="2">
+    <testcase classname="NotifyMe Store Test Init Client Side Logged In behavior should set the access token from cookies if not expired" name="NotifyMe Store Test Init Client Side Logged In behavior should set the access token from cookies if not expired" time="0.001">
+    </testcase>
+    <testcase classname="NotifyMe Store Test Init Client Side Logged out behavior should set the access token undefined if expired" name="NotifyMe Store Test Init Client Side Logged out behavior should set the access token undefined if expired" time="0.001">
+    </testcase>
+  </testsuite>
+  <testsuite name="NotifyMe Networker" errors="0" failures="0" skipped="0" timestamp="2021-03-23T14:50:09" time="0.19" tests="4">
+    <testcase classname="NotifyMe Networker should list subscription" name="NotifyMe Networker should list subscription" time="0.001">
+    </testcase>
+    <testcase classname="NotifyMe Networker should register email" name="NotifyMe Networker should register email" time="0">
+    </testcase>
+    <testcase classname="NotifyMe Networker should create subscription" name="NotifyMe Networker should create subscription" time="0.001">
+    </testcase>
+    <testcase classname="NotifyMe Networker should create subscription - Duplicate" name="NotifyMe Networker should create subscription - Duplicate" time="0">
+    </testcase>
+  </testsuite>
+  <testsuite name="NotifyMe Store Test" errors="0" failures="0" skipped="0" timestamp="2021-03-23T14:50:09" time="0.093" tests="2">
+    <testcase classname="NotifyMe Store Test Init Client Side Logged In behavior should set the access token from cookies if not expired" name="NotifyMe Store Test Init Client Side Logged In behavior should set the access token from cookies if not expired" time="0.002">
+    </testcase>
+    <testcase classname="NotifyMe Store Test Init Client Side Logged out behavior should set the access token undefined if expired" name="NotifyMe Store Test Init Client Side Logged out behavior should set the access token undefined if expired" time="0">
+    </testcase>
+  </testsuite>
+</testsuites>
