@@ -27,7 +27,9 @@ const View: React.FC<Props> = ({ viewModel }) => {
       React will lose track of the event listener, not clean up properly, and you'll need to hack your way with refs.
       Even then results are not guaranteed. */
 
+    const chatContainer = document.getElementById('chat-container');
     const dev = publicRuntimeConfig.NODE_ENV !== 'production';
+    const appId = dev ? '70c71811-1c35-4db7-b9d2-21754f24ba0c' : 'e0987638-07c6-43b4-a10e-fa51ad9174d2';
     const pypeStreamConfig = dev
       ? {
           domain: 'dev',
@@ -47,17 +49,12 @@ const View: React.FC<Props> = ({ viewModel }) => {
     // @ts-ignore
     Pypestream('config', pypeStreamConfig);
 
-    const chatContainer = document.getElementById('chat-container');
     // @ts-ignore
     Pypestream(
       'boot',
-      { APP_ID: '70c71811-1c35-4db7-b9d2-21754f24ba0c' },
+      { APP_ID: appId },
       chatContainer
     );
-
-    viewModel.trackChatboxOpened();
-    setBooted(true);
-    setShowChatIcon(false);
 
     // @ts-ignore
     Pypestream('onShow', function () {
@@ -73,6 +70,10 @@ const View: React.FC<Props> = ({ viewModel }) => {
     Pypestream('onChatEnd', function () {
       viewModel.trackChatboxClosed();
     });
+
+    viewModel.trackChatboxOpened();
+    setBooted(true);
+    setShowChatIcon(false);
   };
 
   useEffect(() => {
