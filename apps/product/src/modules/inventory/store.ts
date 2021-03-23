@@ -7,7 +7,7 @@ import {
 import { InvServiceNetworker } from '@vroom-web/inv-service-networking';
 import { Client, GQLTypes, isSuccessResponse } from '@vroom-web/networking';
 import gql from 'graphql-tag';
-import { action, observable, runInAction } from 'mobx';
+import { action, makeObservable, observable, runInAction } from 'mobx';
 import getConfig from 'next/config';
 import { createContext } from 'react';
 
@@ -237,6 +237,7 @@ export class InventoryStore {
       });
       this.fetchDeliveryFeeState(gearboxClient, deliveryFeeDefault);
     }
+    makeObservable(this);
   }
 
   @action

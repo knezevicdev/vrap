@@ -1,6 +1,6 @@
 import ClientSideCookies from 'js-cookie';
 import jwtDecode from 'jwt-decode';
-import { action, observable, runInAction } from 'mobx';
+import { action, makeObservable, observable, runInAction } from 'mobx';
 
 import { Status } from 'src/networking/types';
 
@@ -13,6 +13,10 @@ export class NotifyMeStore {
   @observable isSuccessful = false;
   @observable notifyMeLoading = true;
   @observable dialogButtonLoading = true;
+
+  constructor() {
+    makeObservable(this);
+  }
 
   @action
   private initUserAccount = async (): Promise<void> => {

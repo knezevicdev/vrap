@@ -1,6 +1,6 @@
 import ClientSideCookies from 'js-cookie';
 import jwtDecode from 'jwt-decode';
-import { action, observable, runInAction } from 'mobx';
+import { action, makeObservable, observable, runInAction } from 'mobx';
 
 import { Status } from 'src/networking/types';
 
@@ -12,6 +12,10 @@ export class FavoritesStore {
   @observable isDialogOpen = false;
   @observable isSnackbarOpen = false;
   @observable isError = false;
+
+  constructor() {
+    makeObservable(this);
+  }
 
   @action
   private initUserAccount = async (): Promise<void> => {
