@@ -8,7 +8,16 @@
           "P8NC3MA5Q7.com.vroom.app.qa",
           "P8NC3MA5Q7.com.vroom.app.uat"
         ],
-        "components": []
+        "components": [
+          {
+            "/": "/my-account/transactions/*/Pending/details",
+            "comment": "Matches any URL whose path starts with /my-account/transcations/<id>/Pending/details and instructs the system to open it as a universal link"
+          },
+          {
+            "/": "/myaccount/transactions/*/Pending/details",
+            "comment": "Matches any URL whose path starts with /myaccount/transcations/<id>/Pending/details and instructs the system to open it as a universal link"
+          }
+        ]
       }
     ]
   },
