@@ -17,6 +17,7 @@ const View: React.FC<Props> = ({ viewModel }) => {
   const chatIcon = `${publicRuntimeConfig.BASE_PATH}/modules/vroom/icons/chat-icon.svg`;
   const router = useRouter();
   const { chatboxOpen } = router.query || false;
+  const dev = publicRuntimeConfig.NODE_ENV !== 'production';
 
   const initChat = () => {
     /* TODO:
@@ -28,7 +29,6 @@ const View: React.FC<Props> = ({ viewModel }) => {
       Even then results are not guaranteed. */
 
     const chatContainer = document.getElementById('chat-container');
-    const dev = publicRuntimeConfig.NODE_ENV !== 'production';
     const appId = dev
       ? '70c71811-1c35-4db7-b9d2-21754f24ba0c'
       : 'e0987638-07c6-43b4-a10e-fa51ad9174d2';
@@ -76,7 +76,11 @@ const View: React.FC<Props> = ({ viewModel }) => {
 
   useEffect(() => {
     const script = document.createElement('script');
-    script.src = 'https://webchat-sandbox.pypestream.com/webchat-public.js';
+    if (dev) {
+      script.src = 'https://webchat-sandbox.pypestream.com/webchat-public.js';
+    } else {
+      script.src = 'https://webchat.pypestream.com/webchat-public.js';
+    }
     document.body.appendChild(script);
 
     // https://tdalabs.atlassian.net/browse/CW-82
