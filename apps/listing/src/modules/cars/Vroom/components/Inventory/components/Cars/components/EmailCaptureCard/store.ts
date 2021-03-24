@@ -1,7 +1,7 @@
 import { PostInventoryRequestData } from '@vroom-web/inv-search-networking';
 import ClientSideCookies from 'js-cookie';
 import jwtDecode from 'jwt-decode';
-import { action, observable, runInAction } from 'mobx';
+import { action, makeObservable, observable, runInAction } from 'mobx';
 import getConfig from 'next/config';
 import { parseCookies } from 'nookies';
 
@@ -32,6 +32,7 @@ export class EmailCaptureStore {
         this.emailCaptureStatus = status as Status;
       }
     }
+    makeObservable(this);
   }
 
   getUserId = (): string | undefined => {

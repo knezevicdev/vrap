@@ -1,6 +1,6 @@
 import { InvSearchNetworker } from '@vroom-web/inv-search-networking';
 import debounce from 'lodash.debounce';
-import { action, observable, runInAction } from 'mobx';
+import { action, makeObservable, observable, runInAction } from 'mobx';
 import getConfig from 'next/config';
 
 import { Status } from 'src/networking/types';
@@ -27,6 +27,7 @@ export class AutocompleteStore {
     this.invSearchNetworker = new InvSearchNetworker(
       publicRuntimeConfig.INVSEARCH_V3_URL
     );
+    makeObservable(this);
   }
 
   @action

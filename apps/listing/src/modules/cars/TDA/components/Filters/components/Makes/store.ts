@@ -1,8 +1,12 @@
-import { action, IObservableArray, observable } from 'mobx';
+import { action, IObservableArray, makeObservable, observable } from 'mobx';
 
 class MakesStore {
   @observable showMore = false;
   readonly makesVisibility: IObservableArray<string> = observable([]);
+
+  constructor() {
+    makeObservable(this);
+  }
 
   @action
   toggleShowMore = (): void => {

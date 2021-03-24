@@ -1,4 +1,4 @@
-import { action, IObservableArray, observable } from 'mobx';
+import { action, IObservableArray, makeObservable, observable } from 'mobx';
 
 import BodyTypes from './components/BodyTypes';
 import Color from './components/Color';
@@ -76,6 +76,10 @@ class FiltersStore {
       open: false,
     },
   ]);
+
+  constructor() {
+    makeObservable(this);
+  }
 
   @action
   toggleVisibility = (filter: Filter): void => {

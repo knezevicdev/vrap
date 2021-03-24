@@ -11,7 +11,13 @@ import {
   PostInventoryRequestData,
   SoldStatus,
 } from '@vroom-web/inv-search-networking';
-import { action, computed, observable, runInAction } from 'mobx';
+import {
+  action,
+  computed,
+  makeObservable,
+  observable,
+  runInAction,
+} from 'mobx';
 import getConfig from 'next/config';
 import Router from 'next/router';
 import { createContext } from 'react';
@@ -462,6 +468,7 @@ export class CarsStore {
       this.isTitleQAPass = initialState.titleQuery;
       this.zipCode = initialState.zipCode;
     }
+    makeObservable(this);
   }
 
   @action
