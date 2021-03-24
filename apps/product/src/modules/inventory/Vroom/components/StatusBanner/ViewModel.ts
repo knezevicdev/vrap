@@ -18,7 +18,8 @@ interface BannerInfo {
   tooltipText3?: string;
 }
 
-export const GREAT_FEATURES_BADGE = 'auto-combined-drivers-demand-only';
+export const GREAT_FEATURES_BADGE_1 = 'auto-combined-drivers-price-and-demand';
+export const GREAT_FEATURES_BADGE_2 = 'auto-combined-drivers-demand-only';
 
 class StatusBannerViewModel {
   private store: InventoryStore;
@@ -76,34 +77,51 @@ class StatusBannerViewModel {
     this.greatFeaturesBadgeExperiment = experiment;
   }
 
-  getBanner(): BannerInfo | null {
-    const {
-      hasStockPhotos,
-      leadFlagPhotoUrl,
-      soldStatus,
-      badges,
-    } = this.store.vehicle._source;
+  showAvailableSoon = (): boolean => {
+    const { hasStockPhotos, leadFlagPhotoUrl } = this.store.vehicle._source;
+    return hasStockPhotos || isEmpty(leadFlagPhotoUrl);
+  };
+
+  showSalePending = (): boolean => {
+    const { soldStatus } = this.store.vehicle._source;
     const vehicleServiceAvailability = this.store.isAvailable;
-    if (hasStockPhotos || isEmpty(leadFlagPhotoUrl)) {
+    return (
+      soldStatus === SoldStatusInt.SALE_PENDING || !vehicleServiceAvailability
+    );
+  };
+
+  showTenDayDelivery = (): boolean => {
+    const { location } = this.store.vehicle._source;
+    return (
+      this.store.geoShippingExperiment?.assignedVariant === 1 &&
+      location === 'Stafford'
+    );
+  };
+
+  showGreatFeatures = (): boolean => {
+    const { badges } = this.store.vehicle._source;
+    return (
+      badges !== null &&
+      !!badges.find(
+        (badge) =>
+          badge.code === GREAT_FEATURES_BADGE_1 ||
+          badge.code === GREAT_FEATURES_BADGE_2
+      ) &&
+      this.greatFeaturesBadgeExperiment?.assignedVariant === 1
+    );
+  };
+
+  getBanner(): BannerInfo | null {
+    if (this.showAvailableSoon()) {
       return this.availableSoon;
     }
-    if (
-      soldStatus === SoldStatusInt.SALE_PENDING ||
-      !vehicleServiceAvailability
-    ) {
+    if (this.showSalePending()) {
       return this.salesPending;
     }
-    if (
-      this.store.geoShippingExperiment?.assignedVariant === 1 &&
-      this.store.vehicle._source.location === 'Stafford'
-    ) {
+    if (this.showTenDayDelivery()) {
       return this.tenDayDelivery;
     }
-    if (
-      badges !== null &&
-      !!badges.find((badge) => badge.code === GREAT_FEATURES_BADGE) &&
-      this.greatFeaturesBadgeExperiment?.assignedVariant === 1
-    ) {
+    if (this.showGreatFeatures()) {
       return this.greatFeatures;
     }
     return null;

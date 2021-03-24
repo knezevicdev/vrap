@@ -1,7 +1,10 @@
 import { Experiment } from '@vroom-web/experiment-sdk';
 import { Car, SoldStatusInt } from '@vroom-web/inv-search-networking';
 
-import ViewModel, { GREAT_FEATURES_BADGE } from './ViewModel';
+import ViewModel, {
+  GREAT_FEATURES_BADGE_1,
+  GREAT_FEATURES_BADGE_2,
+} from './ViewModel';
 
 import { analyticsHandler } from 'src/integrations/AnalyticsHandler';
 import { CarsStore } from 'src/modules/cars/store';
@@ -172,7 +175,7 @@ describe('CarCard ViewModel Tests', () => {
   });
 
   describe('showGreatFeatures', () => {
-    it('showGreatFeatures returns true when badges contains the GREAT_FEATURES_BADGE and assignedVariant is 1', () => {
+    it('showGreatFeatures returns true when badges contains the GREAT_FEATURES_BADGE_1 and assignedVariant is 1', () => {
       const store = new CarsStore();
       store.greatFeaturesBadgeExperiment = { assignedVariant: 1 } as Experiment;
       const car = {
@@ -180,20 +183,51 @@ describe('CarCard ViewModel Tests', () => {
         hasStockPhotos: false,
         soldStatus: SoldStatusInt.FOR_SALE,
         location: 'Detroit',
-        badges: [{ code: GREAT_FEATURES_BADGE }],
+        badges: [{ code: GREAT_FEATURES_BADGE_1 }],
       } as Car;
       const position = 1;
       const viewModel = new ViewModel(store, car, position);
       expect(viewModel.showGreatFeatures()).toBe(true);
     });
-    it('showGreatFeatures returns false when badges contains the GREAT_FEATURES_BADGE and assignedVariant is 0', () => {
+    it('showGreatFeatures returns true when badges contains the GREAT_FEATURES_BADGE_2 and assignedVariant is 1', () => {
+      const store = new CarsStore();
+      store.greatFeaturesBadgeExperiment = { assignedVariant: 1 } as Experiment;
+      const car = {
+        leadFlagPhotoUrl: 'https://some-url.com',
+        hasStockPhotos: false,
+        soldStatus: SoldStatusInt.FOR_SALE,
+        location: 'Detroit',
+        badges: [{ code: GREAT_FEATURES_BADGE_2 }],
+      } as Car;
+      const position = 1;
+      const viewModel = new ViewModel(store, car, position);
+      expect(viewModel.showGreatFeatures()).toBe(true);
+    });
+    it('showGreatFeatures returns true when badges contains the GREAT_FEATURES_BADGE_1 and GREAT_FEATURES_BADGE_2 and assignedVariant is 1', () => {
+      const store = new CarsStore();
+      store.greatFeaturesBadgeExperiment = { assignedVariant: 1 } as Experiment;
+      const car = {
+        leadFlagPhotoUrl: 'https://some-url.com',
+        hasStockPhotos: false,
+        soldStatus: SoldStatusInt.FOR_SALE,
+        location: 'Detroit',
+        badges: [
+          { code: GREAT_FEATURES_BADGE_1 },
+          { code: GREAT_FEATURES_BADGE_2 },
+        ],
+      } as Car;
+      const position = 1;
+      const viewModel = new ViewModel(store, car, position);
+      expect(viewModel.showGreatFeatures()).toBe(true);
+    });
+    it('showGreatFeatures returns false when badges contains one or both of the GREAT_FEATURES_BADGE and assignedVariant is 0', () => {
       const store = new CarsStore();
       const car = {
         leadFlagPhotoUrl: 'https://some-url.com',
         hasStockPhotos: false,
         soldStatus: SoldStatusInt.FOR_SALE,
         location: 'Detroit',
-        badges: [{ code: GREAT_FEATURES_BADGE }],
+        badges: [{ code: GREAT_FEATURES_BADGE_1 }],
       } as Car;
       const position = 1;
       const viewModel = new ViewModel(store, car, position);
@@ -230,7 +264,7 @@ describe('CarCard ViewModel Tests', () => {
         hasStockPhotos: true,
         soldStatus: SoldStatusInt.SALE_PENDING,
         location: 'Stafford',
-        badges: [{ code: GREAT_FEATURES_BADGE }],
+        badges: [{ code: GREAT_FEATURES_BADGE_1 }],
       } as Car;
       const position = 1;
       const viewModel = new ViewModel(store, car, position);
@@ -253,7 +287,7 @@ describe('CarCard ViewModel Tests', () => {
         hasStockPhotos: false,
         soldStatus: SoldStatusInt.SALE_PENDING,
         location: 'Stafford',
-        badges: [{ code: GREAT_FEATURES_BADGE }],
+        badges: [{ code: GREAT_FEATURES_BADGE_1 }],
       } as Car;
       const position = 1;
       const viewModel = new ViewModel(store, car, position);
@@ -276,7 +310,7 @@ describe('CarCard ViewModel Tests', () => {
         hasStockPhotos: false,
         soldStatus: SoldStatusInt.FOR_SALE,
         location: 'Stafford',
-        badges: [{ code: GREAT_FEATURES_BADGE }],
+        badges: [{ code: GREAT_FEATURES_BADGE_2 }],
       } as Car;
       const position = 1;
       const viewModel = new ViewModel(store, car, position);
@@ -299,7 +333,7 @@ describe('CarCard ViewModel Tests', () => {
         hasStockPhotos: false,
         soldStatus: SoldStatusInt.FOR_SALE,
         location: 'Detroit',
-        badges: [{ code: GREAT_FEATURES_BADGE }],
+        badges: [{ code: GREAT_FEATURES_BADGE_2 }],
       } as Car;
       const position = 1;
       const viewModel = new ViewModel(store, car, position);
