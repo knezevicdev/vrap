@@ -10,6 +10,7 @@ import QuoteHIW from './components/QuoteHIW';
 import Quotes from './components/Quotes';
 import Values from './components/Values';
 import WhoWeAre from './components/WhoWeAre';
+import Chatbox from './components/Chatbox';
 
 import AnalyticsHandler from 'src/integrations/AnalyticsHandler';
 import experimentSDK from 'src/integrations/experimentSDK';
@@ -33,6 +34,7 @@ const Vroom: React.FC = () => {
     'LinksMake',
     'LinksModel',
     'WhoWeAre',
+    'Chatbox',
   ];
 
   const expSectionOrder: string[] = [
@@ -45,6 +47,7 @@ const Vroom: React.FC = () => {
     'LinksMake',
     'LinksModel',
     'WhoWeAre',
+    'Chatbox',
   ];
 
   const [sectionOrder, setSectionOrder] = useState<string[]>(
@@ -61,6 +64,7 @@ const Vroom: React.FC = () => {
     LinksMake: LinksMake,
     LinksModel: LinksModel,
     WhoWeAre: WhoWeAre,
+    Chatbox: Chatbox,
   };
 
   useEffect(() => {
