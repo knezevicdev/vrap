@@ -23,7 +23,7 @@ module.exports = {
   ],
   overrides: [
     {
-      files: ['*.js', '*.jsx'],
+      files: ['*.js', '*.jsx', '*.ts', '*.tsx'],
       rules: {
         '@typescript-eslint/explicit-function-return-type': 'off',
         '@typescript-eslint/no-var-requires': 'off',
