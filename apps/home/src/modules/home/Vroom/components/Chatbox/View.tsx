@@ -127,7 +127,7 @@ const ChatIconContainer = styled.div`
   height: 70px;
   justify-content: center;
   margin: 10px;
-  position: absolute;
+  position: fixed;
   right: 70px;
   width: 70px;
   z-index: 10;
