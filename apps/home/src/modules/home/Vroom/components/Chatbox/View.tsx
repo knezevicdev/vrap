@@ -19,7 +19,7 @@ const View: React.FC<Props> = ({ viewModel }) => {
   const { chatboxOpen } = router.query || false;
   const dev = publicRuntimeConfig.NODE_ENV !== 'production';
 
-  const initChat = () => {
+  const initChat = (): void => {
     /* TODO:
       This implementation is pretty horrible. @ts-ignore is a major red flag.
       Pypestream is brought in from `webchat-public.js` in useEffect, but when we compile Next.js isn't gonna know what it is.

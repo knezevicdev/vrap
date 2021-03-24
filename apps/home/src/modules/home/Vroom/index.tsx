@@ -3,6 +3,7 @@ import { SimpleHeader } from '@vroom-web/header-components';
 import getConfig from 'next/config';
 import React, { FC, useContext, useEffect, useState } from 'react';
 
+import Chatbox from './components/Chatbox';
 import Hero from './components/Hero';
 import Highlights from './components/Highlights';
 import { LinksMake, LinksModel, LinksType } from './components/Links';
@@ -10,7 +11,6 @@ import QuoteHIW from './components/QuoteHIW';
 import Quotes from './components/Quotes';
 import Values from './components/Values';
 import WhoWeAre from './components/WhoWeAre';
-import Chatbox from './components/Chatbox';
 
 import AnalyticsHandler from 'src/integrations/AnalyticsHandler';
 import experimentSDK from 'src/integrations/experimentSDK';
