@@ -28,10 +28,6 @@ const View: React.FC<Props> = ({ viewModel }) => {
       Even then results are not guaranteed. */
 
     const chatContainer = document.getElementById('chat-container');
-    const dev = publicRuntimeConfig.NODE_ENV !== 'production';
-    const appId = dev
-      ? '70c71811-1c35-4db7-b9d2-21754f24ba0c'
-      : 'e0987638-07c6-43b4-a10e-fa51ad9174d2';
     const pypeStreamConfig = dev
       ? {
           domain: 'dev',
@@ -52,7 +48,7 @@ const View: React.FC<Props> = ({ viewModel }) => {
     Pypestream('config', pypeStreamConfig);
 
     // @ts-ignore
-    Pypestream('boot', { APP_ID: appId }, chatContainer);
+    Pypestream('boot', { APP_ID: publicRuntimeConfig.PYPESTREAM_APP_ID }, chatContainer);
 
     // @ts-ignore
     Pypestream('onShow', function () {

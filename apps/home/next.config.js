@@ -33,6 +33,7 @@ const config = {
     STATIC_ASSETS_HOST_URL: process.env.STATIC_ASSETS_HOST_URL,
     VERSION: version,
     VROOM_URL: process.env.VROOM_URL,
+    PYPESTREAM_APP_ID: process.env.PYPESTREAM_APP_ID,
   },
   serverRuntimeConfig: {
     // Will only be available on the server side
