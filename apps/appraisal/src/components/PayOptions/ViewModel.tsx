@@ -13,10 +13,6 @@ class PayOptionViewModel {
   ): void => {
     this.oStore.setPayOptionSelected(selectedOption.currentTarget.value);
   };
-
-  getPlaidExperimentAssignedExperiment = (): boolean => {
-    return this.oStore.plaidExperiment;
-  };
 }
 
 export default PayOptionViewModel;

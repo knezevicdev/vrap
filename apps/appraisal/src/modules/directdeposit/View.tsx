@@ -15,7 +15,6 @@ export interface Props {
 
 const DirectDepositView: React.FC<Props> = ({ viewModel }) => {
   const token = viewModel.getPlaidLinkToken();
-  const showPlaidVariant = viewModel.getPlaidExperimentAssignedExperiment();
   const showNotFound = viewModel.getInstitutionNotFound();
 
   const DirectDepositLink = ({ lang }: { lang: string }): JSX.Element => {
@@ -31,9 +30,6 @@ const DirectDepositView: React.FC<Props> = ({ viewModel }) => {
 
   return (
     <DirectDepositContainer>
-      {!viewModel.getPlaidExperimentAssignedExperiment() && (
-        <DirectDepositCopy>{viewModel.bankInfo}</DirectDepositCopy>
-      )}
       {viewModel.getShowPlaidLink() ? (
         <>
           <PlaidButton
@@ -41,22 +37,16 @@ const DirectDepositView: React.FC<Props> = ({ viewModel }) => {
             plaidSuccess={viewModel.onPlaidSuccess}
             priceId={viewModel.getPriceId()}
           />
-          {showPlaidVariant ? (
+          {showNotFound && viewModel.getPrice() <= '10000' ? (
             <>
-              {showNotFound ? (
-                <>
-                  <DirectDepositCopy>{viewModel.cantFind}</DirectDepositCopy>
-                  <DirectDeposit />
-                </>
-              ) : (
-                <LockText>
-                  <StyledIcon icon={Icons.LOCK} /> Your information will be
-                  secure and encrypted
-                </LockText>
-              )}
+              <DirectDepositCopy>{viewModel.cantFind}</DirectDepositCopy>
+              <DirectDeposit />
             </>
           ) : (
-            <DirectDepositLink lang={viewModel.ddToggleManualCopy} />
+            <LockText>
+              <StyledIcon icon={Icons.LOCK} /> Your information will be secure
+              and encrypted
+            </LockText>
           )}
         </>
       ) : (
