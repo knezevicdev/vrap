@@ -2,6 +2,7 @@ import ViewModel from './ViewModel';
 
 import { Product } from 'src/integrations/AnalyticsHandler';
 import { GallerySelections, InventoryStore } from 'src/modules/inventory/store';
+
 jest.mock('src/integrations/AnalyticsHandler');
 
 jest.mock('next/config', () => {
@@ -11,6 +12,11 @@ jest.mock('next/config', () => {
     };
   };
 });
+
+jest.mock('src/modules/inventory/store', () => ({
+  ...jest.requireActual('src/modules/inventory/store'),
+  InventoryStore: jest.fn(),
+}));
 
 describe('Select View Model', () => {
   const mockProduct: Product = {
@@ -75,6 +81,7 @@ describe('Select View Model', () => {
 
   describe('getSelectedGallery()', () => {
     test('View Model returns the selected gallery', () => {
+      mockStore.selectedGallery = GallerySelections.GENERAL;
       const viewModel = new ViewModel(mockStore, mockProduct);
       expect(viewModel.getSelectedGallery()).toEqual(GallerySelections.GENERAL);
     });
