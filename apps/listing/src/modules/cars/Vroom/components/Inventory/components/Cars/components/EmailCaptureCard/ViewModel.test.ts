@@ -15,7 +15,12 @@ jest.mock('next/config', () => {
   };
 });
 
-jest.mock('src/modules/cars/store');
+jest.mock('./store');
+
+jest.mock('src/modules/cars/store', () => ({
+  ...jest.requireActual('src/modules/cars/store'),
+  getPostInventoryRequestDataFromFilterData: jest.fn(),
+}));
 
 const mockSearchParams = (getPostInventoryRequestDataFromFilterData as unknown) as jest.Mock<
   PostInventoryRequestData
