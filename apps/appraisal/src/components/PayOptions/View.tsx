@@ -39,10 +39,7 @@ const PayOptionsView: React.FC<Props> = ({ selected, viewModel }) => {
   const radioOptions = viewModel.optionMeta.map((option) => {
     const checked = selected === option;
     let child = <div>{option}</div>;
-    if (
-      option === 'Direct Deposit' &&
-      viewModel.getPlaidExperimentAssignedExperiment()
-    ) {
+    if (option === 'Direct Deposit') {
       child = (
         <>
           <Label>

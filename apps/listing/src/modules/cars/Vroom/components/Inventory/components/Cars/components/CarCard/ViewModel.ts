@@ -27,7 +27,8 @@ interface BannerInfo {
   hasBorder: boolean;
 }
 
-export const GREAT_FEATURES_BADGE = 'auto-combined-drivers-demand-only';
+export const GREAT_FEATURES_BADGE_1 = 'auto-combined-drivers-price-and-demand';
+export const GREAT_FEATURES_BADGE_2 = 'auto-combined-drivers-demand-only';
 
 class CarCardViewModel {
   private readonly carsStore: CarsStore;
@@ -105,7 +106,11 @@ class CarCardViewModel {
   showGreatFeatures = (): boolean => {
     return (
       this.car.badges !== null &&
-      !!this.car.badges.find((badge) => badge.code === GREAT_FEATURES_BADGE) &&
+      !!this.car.badges.find(
+        (badge) =>
+          badge.code === GREAT_FEATURES_BADGE_1 ||
+          badge.code === GREAT_FEATURES_BADGE_2
+      ) &&
       this.carsStore.greatFeaturesBadgeExperiment?.assignedVariant === 1
     );
   };
