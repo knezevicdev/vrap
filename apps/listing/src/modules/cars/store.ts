@@ -477,36 +477,36 @@ export class CarsStore {
   }
 
   @action
-  setGeoShippingExperiment = (geoShippingExperiment?: Experiment): void => {
+  setGeoShippingExperiment(geoShippingExperiment?: Experiment): void {
     if (this.zipCode && geoShippingExperiment) {
       geoShippingExperiment.assignedVariant = 1;
       this.geoShippingExperiment = geoShippingExperiment;
     }
     this.geoShippingExperiment = geoShippingExperiment;
-  };
+  }
 
   @action
-  setGoBiasExperiment = (goBiasExperiment?: Experiment): void => {
+  setGoBiasExperiment(goBiasExperiment?: Experiment): void {
     this.goBiasExperiment = goBiasExperiment;
-  };
+  }
 
   @action
-  setAreFiltersOpen = (areFiltersOpen: boolean): void => {
+  setAreFiltersOpen(areFiltersOpen: boolean): void {
     this.areFiltersOpen = areFiltersOpen;
-  };
+  }
 
   @action
-  toggleAreFiltersOpen = (): void => {
+  toggleAreFiltersOpen(): void {
     this.areFiltersOpen = !this.areFiltersOpen;
-  };
+  }
 
   @action
-  setInventoryStatus = (inventoryStatus: Status): void => {
+  setInventoryStatus(inventoryStatus: Status): void {
     this.inventoryStatus = inventoryStatus;
-  };
+  }
 
   @action
-  fetchInventoryData = async (shippingOrigins?: string[]): Promise<void> => {
+  async fetchInventoryData(shippingOrigins?: string[]): Promise<void> {
     try {
       this.inventoryStatus = Status.FETCHING;
       const postInventoryRequestDataFromFiltersData = getPostInventoryRequestDataFromFilterData(
@@ -526,7 +526,7 @@ export class CarsStore {
         source: `${publicRuntimeConfig.NAME}-${publicRuntimeConfig.VERSION}`,
         isTitleQAPass: this.isTitleQAPass,
         // DELTA-265.
-        // It's needed on the TDA whitelabel b/c the 'isAvailableSoon' field
+        // It's needed on the TDA white label b/c the 'isAvailableSoon' field
         // must be false when querying Test Drivable vehicles.
         isAvailableSoon: showIsAvailableSoon,
       };
@@ -544,10 +544,10 @@ export class CarsStore {
         this.inventoryStatus = Status.ERROR;
       });
     }
-  };
+  }
 
   @action
-  private fetchPopularCarsData = async (): Promise<void> => {
+  private async fetchPopularCarsData(): Promise<void> {
     try {
       this.popularCarsStatus = Status.FETCHING;
       const popularCarsRequestData = {
@@ -572,13 +572,13 @@ export class CarsStore {
         this.popularCarsStatus = Status.ERROR;
       });
     }
-  };
+  }
 
   @action
-  updateFiltersData = async (
+  async updateFiltersData(
     filtersData?: FiltersData,
     isPagination?: boolean
-  ): Promise<void> => {
+  ): Promise<void> {
     // Unless we are explicity paginating, reset the page to the start.
     const filtersDataToUse: FiltersData | undefined = isPagination
       ? filtersData
@@ -594,7 +594,7 @@ export class CarsStore {
 
     // FIT-583
     // Persist key attribution query params across navigation.
-    // This is a stopgap so that vlassic attributuion works.
+    // This is a stopgap so that vlassic attribution works.
     // We should come back and remove this when a better attribution system is in place.
     let asWithAttributionQueryString = as;
     if (this.attributionQueryString !== '') {
@@ -614,7 +614,7 @@ export class CarsStore {
     if (!this.hasInventory) {
       await this.fetchPopularCarsData();
     }
-  };
+  }
 }
 
 export const CarsStoreContext = createContext<CarsStore>(new CarsStore());

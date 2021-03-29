@@ -35,7 +35,7 @@ export class EmailCaptureStore {
     makeObservable(this);
   }
 
-  getUserId = (): string | undefined => {
+  getUserId(): string | undefined {
     const authTokenWithExpressPrefix = ClientSideCookies.get('authToken');
     if (!authTokenWithExpressPrefix) {
       return undefined;
@@ -43,12 +43,12 @@ export class EmailCaptureStore {
     const authToken = JSON.parse(authTokenWithExpressPrefix.slice(2));
     const { sub } = jwtDecode(authToken.accessToken);
     return sub;
-  };
+  }
 
   @action
-  fetchEmailCapture = async (
+  async fetchEmailCapture(
     searchParams?: PostInventoryRequestData
-  ): Promise<void> => {
+  ): Promise<void> {
     try {
       this.emailCaptureStatus = Status.FETCHING;
 
@@ -76,20 +76,20 @@ export class EmailCaptureStore {
         analyticsHandler.trackEmailCaptureErrorShown();
       });
     }
-  };
+  }
 
   @action
-  setEmail = (value: string): void => {
+  setEmail(value: string): void {
     this.email = value;
-  };
+  }
 
   @action
-  setEmailValidationError = (value: boolean): void => {
+  setEmailValidationError(value: boolean): void {
     this.isValidationError = value;
-  };
+  }
 
   @action
-  setEmailCaptureStatus = (value: Status): void => {
+  setEmailCaptureStatus(value: Status): void {
     this.emailCaptureStatus = value;
-  };
+  }
 }

@@ -82,14 +82,14 @@ class FiltersStore {
   }
 
   @action
-  toggleVisibility = (filter: Filter): void => {
+  toggleVisibility(filter: Filter): void {
     const matchingFilter = this.filters.find(
       (f) => f.display === filter.display
     );
     if (matchingFilter) {
       matchingFilter.open = !matchingFilter.open;
     }
-  };
+  }
 }
 
 export default FiltersStore;
