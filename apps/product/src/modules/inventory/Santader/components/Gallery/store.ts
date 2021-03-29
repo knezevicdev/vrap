@@ -10,18 +10,18 @@ export class GalleryStore {
   }
 
   @action
-  changeListView = (): void => {
+  changeListView(): void {
     this.isListView = !this.isListView;
-  };
+  }
 
   @action
-  setListViewFullscreen = (image?: string): void => {
+  setListViewFullscreen(image?: string): void {
     if (image) {
       this.listViewFullscreenImage = image;
     } else {
       this.listViewFullscreenImage = undefined;
     }
-  };
+  }
 }
 
 export const GalleryStoreContext = createContext<GalleryStore>(

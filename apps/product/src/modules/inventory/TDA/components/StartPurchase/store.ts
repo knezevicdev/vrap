@@ -26,7 +26,7 @@ export class StartPurchaseStore {
   }
 
   @action
-  private initDealStatus = async (): Promise<void> => {
+  private async initDealStatus(): Promise<void> {
     try {
       const accessToken = this.accessToken;
       if (!accessToken) {
@@ -58,10 +58,10 @@ export class StartPurchaseStore {
         this.dealStatus = DealStatus.NO_DEAL;
       });
     }
-  };
+  }
 
   @action
-  private initUserAccount = async (): Promise<void> => {
+  private async initUserAccount(): Promise<void> {
     try {
       // https://github.com/js-cookie/js-cookie/blob/master/SERVER_SIDE.md#express
       const authTokenWithExpressPrefix = ClientSideCookies.get('authToken');
@@ -84,11 +84,11 @@ export class StartPurchaseStore {
         this.userTokenStatus = Status.ERROR;
       });
     }
-  };
+  }
 
   @action
-  initClientSide = (): void => {
+  initClientSide(): void {
     this.initUserAccount();
     this.initDealStatus();
-  };
+  }
 }

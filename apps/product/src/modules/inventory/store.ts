@@ -241,15 +241,15 @@ export class InventoryStore {
   }
 
   @action
-  setSimilarStatus = (similarStatus: Status): void => {
+  setSimilarStatus(similarStatus: Status): void {
     this.similarStatus = similarStatus;
-  };
+  }
 
   @action
-  fetchDeliveryFeeState = async (
+  async fetchDeliveryFeeState(
     gearboxClient: Client,
     deliveryFeeDefault: number
-  ): Promise<void> => {
+  ): Promise<void> {
     const response = await gearboxClient.gqlRequest<DeliveryFeeData>({
       document: gql`
         {
@@ -273,10 +273,10 @@ export class InventoryStore {
         this.deliveryFeeHasFailed = true;
       });
     }
-  };
+  }
 
   @action
-  getSimilar = async (vin: string, useVinCluster: boolean): Promise<void> => {
+  async getSimilar(vin: string, useVinCluster: boolean): Promise<void> {
     this.similarStatus = Status.FETCHING;
     const data = await getVehicleSimilarState(
       vin,
@@ -288,22 +288,22 @@ export class InventoryStore {
       this.similarStatus = data.similarStatus;
       this.similarClusterCount = data.similarClusterCount;
     });
-  };
+  }
 
   @action
-  changeSelectedGallery = (gallery: GallerySelections): void => {
+  changeSelectedGallery(gallery: GallerySelections): void {
     this.selectedGallery = gallery;
-  };
+  }
 
   @action
-  setGeoShippingExperiment = (geoShippingExperiment?: Experiment): void => {
+  setGeoShippingExperiment(geoShippingExperiment?: Experiment): void {
     this.geoShippingExperiment = geoShippingExperiment;
-  };
+  }
 
   @action
-  setGoBiasExperiment = (goBiasExperiment?: Experiment): void => {
+  setGoBiasExperiment(goBiasExperiment?: Experiment): void {
     this.goBiasExperiment = goBiasExperiment;
-  };
+  }
 }
 
 export const InventoryStoreContext = createContext<InventoryStore>(

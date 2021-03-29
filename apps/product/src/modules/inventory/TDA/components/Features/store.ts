@@ -8,7 +8,7 @@ export class FeaturesStore {
   }
 
   @action
-  toggleLimited = (): void => {
+  toggleLimited(): void {
     this.limited = !this.limited;
-  };
+  }
 }

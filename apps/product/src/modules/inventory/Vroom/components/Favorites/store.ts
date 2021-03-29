@@ -18,7 +18,7 @@ export class FavoritesStore {
   }
 
   @action
-  private initUserAccount = async (): Promise<void> => {
+  private async initUserAccount(): Promise<void> {
     try {
       // https://github.com/js-cookie/js-cookie/blob/master/SERVER_SIDE.md#express
       const authTokenWithExpressPrefix = ClientSideCookies.get('authToken');
@@ -42,35 +42,35 @@ export class FavoritesStore {
         this.userTokenStatus = Status.ERROR;
       });
     }
-  };
+  }
 
   @action
-  initClientSide = (): void => {
+  initClientSide(): void {
     this.initUserAccount();
-  };
+  }
 
   @action
-  setFavorited = (): void => {
+  setFavorited(): void {
     this.isFavorited = !this.isFavorited;
-  };
+  }
 
   @action
-  setLoading = (flag: boolean): void => {
+  setLoading(flag: boolean): void {
     this.loading = flag;
-  };
+  }
 
   @action
-  setDialog = (): void => {
+  setDialog(): void {
     this.isDialogOpen = !this.isDialogOpen;
-  };
+  }
 
   @action
-  setSnackbar = (): void => {
+  setSnackbar(): void {
     this.isSnackbarOpen = !this.isSnackbarOpen;
-  };
+  }
 
   @action
-  setError = (): void => {
+  setError(): void {
     this.isError = !this.isError;
-  };
+  }
 }
