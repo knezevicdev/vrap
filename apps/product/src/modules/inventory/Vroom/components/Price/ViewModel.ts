@@ -1,6 +1,6 @@
 import { ExperimentSDK } from '@vroom-web/experiment-sdk';
 import { Car } from '@vroom-web/inv-search-networking';
-import { action, observable } from 'mobx';
+import { action, makeAutoObservable } from 'mobx';
 
 import { analyticsHandler, Product } from 'src/integrations/AnalyticsHandler';
 import { InventoryStore } from 'src/modules/inventory/store';
@@ -15,7 +15,7 @@ class PriceViewModel {
   private readonly car: Car;
   readonly price: string;
   readonly title: string = 'Pricing';
-  @observable showVisibleShippingFee = false;
+  showVisibleShippingFee = false;
   readonly list: List = {
     header: 'Price displayed <bold>does not</bold> include:',
     extra:
@@ -36,6 +36,7 @@ class PriceViewModel {
           analyticsHandler.registerExperiment(experiment);
         }
       });
+    makeAutoObservable(this);
   }
 
   @action
