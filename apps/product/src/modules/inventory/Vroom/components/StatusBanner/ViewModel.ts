@@ -1,7 +1,7 @@
 import { Experiment, ExperimentSDK } from '@vroom-web/experiment-sdk';
 import { SoldStatusInt } from '@vroom-web/inv-service-networking';
 import isEmpty from 'lodash.isempty';
-import { action, observable, makeObservable } from 'mobx';
+import { action, makeObservable, observable } from 'mobx';
 
 import { analyticsHandler } from 'src/integrations/AnalyticsHandler';
 import { InventoryStore } from 'src/modules/inventory/store';
