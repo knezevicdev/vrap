@@ -41,6 +41,12 @@ class DirectDepositViewModel {
       poq: { account_number, final_payment },
     } = this.oStore;
 
+    const price1 = this.poStore.price.toString();
+    console.log({currentPayments});
+    console.log({account_number});
+    console.log({final_payment });
+    console.log({price1 });
+
     // eslint-disable-next-line @typescript-eslint/camelcase
     if (currentPayments && account_number != '') {
       // eslint-disable-next-line @typescript-eslint/camelcase
