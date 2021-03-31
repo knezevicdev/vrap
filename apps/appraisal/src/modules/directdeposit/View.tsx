@@ -42,12 +42,11 @@ const DirectDepositView: React.FC<Props> = ({ viewModel }) => {
             and encrypted
           </LockText>
 
-          {showNotFound && viewModel.getPrice() <= '10000' ? (
+          {showNotFound && viewModel.getPrice() <= '10000' && (
             <>
               <DirectDepositCopy>{viewModel.cantFind}</DirectDepositCopy>
               <DirectDeposit />
             </>
-          ) : (
           )}
         </>
       ) : (
