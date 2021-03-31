@@ -42,20 +42,11 @@ class DirectDepositViewModel {
     } = this.oStore;
 
     // eslint-disable-next-line @typescript-eslint/camelcase
-    console.log({ currentPayments });
-    // eslint-disable-next-line @typescript-eslint/camelcase
-    console.log({ account_number });
-    // eslint-disable-next-line @typescript-eslint/camelcase
-    console.log({ final_payment });
-
-    // eslint-disable-next-line @typescript-eslint/camelcase
     if (currentPayments && account_number != '') {
       // eslint-disable-next-line @typescript-eslint/camelcase
       return final_payment;
     }
 
-    const returning = this.poStore.price.toString();
-    console.log({ returning });
     return this.poStore.price;
   };
 
