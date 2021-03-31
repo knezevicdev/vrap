@@ -35,7 +35,19 @@ class DirectDepositViewModel {
   };
 
   getPrice = (): string => {
-    return this.poStore.price.toString();
+    const {
+      currentPayments,
+      poq: {
+        account_number,
+        final_payment
+      }
+    } = this.oStore;
+
+    if (currentPayments && account_number != '') {
+      return final_payment;
+    }
+
+    return this.poStore.price;
   };
 
   togglePlaidLink = (): void => {
