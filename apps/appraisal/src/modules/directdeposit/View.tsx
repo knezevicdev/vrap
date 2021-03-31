@@ -38,11 +38,11 @@ const DirectDepositView: React.FC<Props> = ({ viewModel }) => {
             priceId={viewModel.getPriceId()}
           />
           <LockText>
-            <StyledIcon icon={Icons.LOCK} /> Your information will be secure
-            and encrypted
+            <StyledIcon icon={Icons.LOCK} /> Your information will be secure and
+            encrypted
           </LockText>
 
-          {showNotFound && viewModel.getPrice() <= '10000' && (
+          {showNotFound && viewModel.getPrice() <= 10000 && (
             <>
               <DirectDepositCopy>{viewModel.cantFind}</DirectDepositCopy>
               <DirectDeposit />

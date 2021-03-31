@@ -34,26 +34,29 @@ class DirectDepositViewModel {
     return this.store.priceId;
   };
 
-  getPrice = (): string => {
+  getPrice = (): number => {
     const {
       currentPayments,
       // eslint-disable-next-line @typescript-eslint/camelcase
       poq: { account_number, final_payment },
     } = this.oStore;
 
-    const price1 = this.poStore.price.toString();
-    console.log({currentPayments});
-    console.log({account_number});
-    console.log({final_payment });
-    console.log({price1 });
+    // eslint-disable-next-line @typescript-eslint/camelcase
+    console.log({ currentPayments });
+    // eslint-disable-next-line @typescript-eslint/camelcase
+    console.log({ account_number });
+    // eslint-disable-next-line @typescript-eslint/camelcase
+    console.log({ final_payment });
 
     // eslint-disable-next-line @typescript-eslint/camelcase
     if (currentPayments && account_number != '') {
       // eslint-disable-next-line @typescript-eslint/camelcase
-      return final_payment.toString();
+      return final_payment;
     }
 
-    return this.poStore.price.toString();
+    const returning = this.poStore.price.toString();
+    console.log({ returning });
+    return this.poStore.price;
   };
 
   togglePlaidLink = (): void => {
