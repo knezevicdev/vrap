@@ -1,6 +1,6 @@
 import { MaxAndMin } from '@vroom-web/catalog-url-integration';
 import debounce from 'lodash.debounce';
-import { action, observable } from 'mobx';
+import { action, makeObservable, observable } from 'mobx';
 
 import { Variant } from './index';
 
@@ -37,6 +37,7 @@ class MaxAndMinInputsStore {
     this.minSliderValue = value ? value.min : range.min;
     this.maxSliderValue = value ? value.max : range.max;
     this.variant = variant;
+    makeObservable(this);
   }
 
   @action

@@ -33,5 +33,10 @@ describe('Start Purchase View Model', () => {
       const url = viewModel.getResumeStepHref('TradeIn', 'test');
       expect(url).toEqual(`/e2e/test/checkoutTradeIn`);
     });
+
+    test('it should return the path when selecting the trade in vehicle step', () => {
+      const url = viewModel.getResumeStepHref('TradeInVehicle', '12345');
+      expect(url).toEqual(`/checkout/12345/vehicleTradeIn`);
+    });
   });
 });

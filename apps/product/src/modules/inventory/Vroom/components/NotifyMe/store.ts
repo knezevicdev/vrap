@@ -1,6 +1,6 @@
 import ClientSideCookies from 'js-cookie';
 import jwtDecode from 'jwt-decode';
-import { action, observable, runInAction } from 'mobx';
+import { action, makeObservable, observable, runInAction } from 'mobx';
 
 import { Status } from 'src/networking/types';
 
@@ -14,8 +14,12 @@ export class NotifyMeStore {
   @observable notifyMeLoading = true;
   @observable dialogButtonLoading = true;
 
+  constructor() {
+    makeObservable(this);
+  }
+
   @action
-  private initUserAccount = async (): Promise<void> => {
+  private async initUserAccount(): Promise<void> {
     try {
       // https://github.com/js-cookie/js-cookie/blob/master/SERVER_SIDE.md#express
       const authTokenWithExpressPrefix = ClientSideCookies.get('authToken');
@@ -38,40 +42,40 @@ export class NotifyMeStore {
         this.userTokenStatus = Status.ERROR;
       });
     }
-  };
+  }
 
   @action
-  initClientSide = (): void => {
+  initClientSide(): void {
     this.initUserAccount();
-  };
+  }
 
   @action
-  toggleModal = (): void => {
+  toggleModal(): void {
     this.modalOpen = !this.modalOpen;
-  };
+  }
 
   @action
-  toggleCheckbox = (): void => {
+  toggleCheckbox(): void {
     this.isChecked = !this.isChecked;
-  };
+  }
 
   @action
-  setError = (value: boolean): void => {
+  setError(value: boolean): void {
     this.isError = value;
-  };
+  }
 
   @action
-  setSuccess = (value: boolean): void => {
+  setSuccess(value: boolean): void {
     this.isSuccessful = value;
-  };
+  }
 
   @action
-  setNotifyMeLoading = (value: boolean): void => {
+  setNotifyMeLoading(value: boolean): void {
     this.notifyMeLoading = value;
-  };
+  }
 
   @action
-  setDialogButtonLoading = (value: boolean): void => {
+  setDialogButtonLoading(value: boolean): void {
     this.dialogButtonLoading = value;
-  };
+  }
 }
