@@ -9,6 +9,8 @@ interface Props {
   viewModel: ViewModel;
 }
 
+declare let Pypestream: any;
+
 const { publicRuntimeConfig } = getConfig();
 
 const View: React.FC<Props> = ({ viewModel }) => {
@@ -48,23 +50,18 @@ const View: React.FC<Props> = ({ viewModel }) => {
           gtm_id: 'GTM-PZJGZ67',
         };
 
-    // @ts-ignore
     Pypestream('config', pypeStreamConfig);
 
-    // @ts-ignore
     Pypestream('boot', { APP_ID: appId }, chatContainer);
 
-    // @ts-ignore
     Pypestream('onShow', function () {
       setShowChatIcon(false);
     });
 
-    // @ts-ignore
     Pypestream('onHide', function () {
       setShowChatIcon(true);
     });
 
-    // @ts-ignore
     Pypestream('onChatEnd', function () {
       viewModel.trackChatboxClosed();
     });
@@ -99,7 +96,6 @@ const View: React.FC<Props> = ({ viewModel }) => {
     if (!booted) {
       initChat();
     } else {
-      // @ts-ignore
       Pypestream('toggle');
       setShowChatIcon(!showChatIcon);
     }
