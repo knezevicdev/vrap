@@ -1,7 +1,14 @@
 import React from 'react';
+import { StandardFooter } from '@vroom-web/footer-components';
+import { SimpleHeader } from '@vroom-web/header-components';
+import getConfig from 'next/config';
+
+const { publicRuntimeConfig: GEARBOX_PRIVATE_URL } = getConfig();
 
 const Vroom: React.FC = () => {
   return (
+    <>
+      <SimpleHeader gearboxPrivateUrl={GEARBOX_PRIVATE_URL} />
       <iframe
         src={'https://vroom-web.force.com/support/s/welcome'}
         style={{
@@ -10,6 +17,8 @@ const Vroom: React.FC = () => {
         }}
         sandbox="allow-same-origin allow-scripts"
       />
+      <StandardFooter />
+    </>
   );
 };
 
