@@ -141,7 +141,11 @@ const ChatboxIcon = styled.img`
   width: 40px;
 `;
 
-const ChatContainer = styled.div`
+interface ChatProps {
+  isClosed: boolean;
+}
+
+const ChatContainer = styled.div<ChatProps>`
   height: ${(props) => (props.isClosed ? '0px !important' : '0px')};
   position: fixed;
   bottom: 10px;
