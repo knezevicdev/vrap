@@ -21,10 +21,6 @@ class PlaidButtonViewModel {
     return this.store.email;
   };
 
-  getPlaidExperimentAssignedExperiment = (): boolean => {
-    return this.store.plaidExperiment;
-  };
-
   setInstitutionFound = (value: boolean): void => {
     this.store.setInstitutionFound(value);
   };

@@ -1,9 +1,13 @@
-import { action, observable } from 'mobx';
+import { action, makeObservable, observable } from 'mobx';
 
 export class VinStore {
   @observable vin = '';
   @observable isDialogOpen = false;
   @observable hasError = false;
+
+  constructor() {
+    makeObservable(this);
+  }
 
   @action
   setVin = (vin: string): void => {

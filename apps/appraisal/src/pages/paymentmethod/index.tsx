@@ -84,10 +84,10 @@ const EPayOptions: NextPage<Props> = ({ brand }) => {
           <SuccessBar />
           <ColumnBody stateDropdownOpen={stateDropdownOpen}>
             <OptionsStoreContext.Provider value={oStore}>
-              <DirectDepositStoreContext.Provider value={ddStore}>
-                <Options />
-              </DirectDepositStoreContext.Provider>
               <PaymentOverviewStoreContext.Provider value={poStore}>
+                <DirectDepositStoreContext.Provider value={ddStore}>
+                  <Options />
+                </DirectDepositStoreContext.Provider>
                 <PaymentOverview />
               </PaymentOverviewStoreContext.Provider>
             </OptionsStoreContext.Provider>

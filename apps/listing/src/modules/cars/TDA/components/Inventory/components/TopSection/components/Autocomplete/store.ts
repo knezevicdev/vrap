@@ -1,6 +1,6 @@
 import { InvSearchNetworker } from '@vroom-web/inv-search-networking';
 import debounce from 'lodash.debounce';
-import { action, observable, runInAction } from 'mobx';
+import { action, makeObservable, observable, runInAction } from 'mobx';
 import getConfig from 'next/config';
 
 import { Status } from 'src/networking/types';
@@ -13,7 +13,7 @@ export interface InventorySuggestions {
   Model: string[];
 }
 
-// The amount of time a user must stop typing before we get autcomplete options.
+// The amount of time a user must stop typing before we get autocomplete options.
 const INPUT_DEBOUNCE_WAIT = 400; // milliseconds
 
 export class AutocompleteStore {
@@ -27,10 +27,19 @@ export class AutocompleteStore {
     this.invSearchNetworker = new InvSearchNetworker(
       publicRuntimeConfig.INVSEARCH_V3_URL
     );
+    makeObservable(this);
   }
 
+  private afterSetInputValue = debounce((value: string) => {
+    if (value.length > 0) {
+      this.getInventorySuggestions(value);
+    } else {
+      this.clearInventorySuggestions();
+    }
+  }, INPUT_DEBOUNCE_WAIT);
+
   @action
-  getInventorySuggestions = async (input: string): Promise<void> => {
+  async getInventorySuggestions(input: string): Promise<void> {
     this.inventorySuggestionsStatus = Status.FETCHING;
     try {
       const response = await this.invSearchNetworker.getInventorySuggestions(
@@ -47,25 +56,17 @@ export class AutocompleteStore {
         this.inventorySuggestionsStatus = Status.ERROR;
       });
     }
-  };
-
-  private afterSetInputValue = debounce((value: string) => {
-    if (value.length > 0) {
-      this.getInventorySuggestions(value);
-    } else {
-      this.clearInventorySuggestions();
-    }
-  }, INPUT_DEBOUNCE_WAIT);
+  }
 
   @action
-  setInputValue = (value: string): void => {
+  setInputValue(value: string): void {
     this.inputValue = value;
     this.afterSetInputValue(value);
-  };
+  }
 
   @action
-  clearInventorySuggestions = (): void => {
+  clearInventorySuggestions(): void {
     this.inventorySuggestions = undefined;
     this.inventorySuggestionsStatus = Status.INITIAL;
-  };
+  }
 }

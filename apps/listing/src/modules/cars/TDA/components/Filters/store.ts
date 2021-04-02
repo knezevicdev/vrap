@@ -1,4 +1,4 @@
-import { action, IObservableArray, observable } from 'mobx';
+import { action, IObservableArray, makeObservable, observable } from 'mobx';
 
 import BodyTypes from './components/BodyTypes';
 import Color from './components/Color';
@@ -84,15 +84,19 @@ class FiltersStore {
     },
   ]);
 
+  constructor() {
+    makeObservable(this);
+  }
+
   @action
-  toggleVisibility = (filter: Filter): void => {
+  toggleVisibility(filter: Filter): void {
     const matchingFilter = this.filters.find(
       (f) => f.display === filter.display
     );
     if (matchingFilter) {
       matchingFilter.open = !matchingFilter.open;
     }
-  };
+  }
 }
 
 export default FiltersStore;

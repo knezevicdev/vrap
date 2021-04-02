@@ -1,8 +1,6 @@
-import { ExperimentSDK } from '@vroom-web/experiment-sdk';
 import { action, observable, runInAction } from 'mobx';
 import { createContext, useContext } from 'react';
 
-import { analyticsHandler } from 'src/integrations/AnalyticsHandler';
 import {
   AsyncStatus,
   PaymentOverviewFormValues,
@@ -97,18 +95,9 @@ export class OptionsStore implements Store {
   @observable asyncStatus = AsyncStatus.Idle;
   @observable institutionFound = true;
   @observable institutionSearched = false;
-  @observable plaidExperiment = false;
 
   constructor(priceId?: string) {
     if (priceId) this.init(priceId);
-    new ExperimentSDK()
-      .getAndLogExperimentClientSide('cw-plaid-experiment')
-      .then((experiment) => {
-        if (experiment) {
-          this.setPlaidExperiment(experiment.assignedVariant === 1);
-          analyticsHandler.registerExperiment(experiment);
-        }
-      });
   }
 
   async init(priceId: string): Promise<void> {
@@ -142,11 +131,6 @@ export class OptionsStore implements Store {
   @action
   setInstitutionSearched = (value: boolean): void => {
     this.institutionSearched = value;
-  };
-
-  @action
-  setPlaidExperiment = (plaidExperiment: boolean): void => {
-    this.plaidExperiment = plaidExperiment;
   };
 }
 

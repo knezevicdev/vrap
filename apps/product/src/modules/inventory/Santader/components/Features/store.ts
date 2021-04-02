@@ -1,10 +1,14 @@
-import { action, observable } from 'mobx';
+import { action, makeObservable, observable } from 'mobx';
 
 export class FeaturesStore {
   @observable limited = true;
 
+  constructor() {
+    makeObservable(this);
+  }
+
   @action
-  toggleLimited = (): void => {
+  toggleLimited(): void {
     this.limited = !this.limited;
-  };
+  }
 }

@@ -1,8 +1,12 @@
 import { FiltersData } from '@vroom-web/catalog-url-integration';
-import { action, observable } from 'mobx';
+import { action, makeObservable, observable } from 'mobx';
 
 export class BuySellTradeBuyStore {
   @observable filtersData?: FiltersData;
+
+  constructor() {
+    makeObservable(this);
+  }
 
   // DELTA-119
   // The "listing_filters_data" local storage key

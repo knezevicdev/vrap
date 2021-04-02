@@ -191,13 +191,10 @@ const OptionsView: React.FC<Props> = ({ viewModel }) => {
     >
       {({ isValid, values, isSubmitting, setFieldValue }): JSX.Element => {
         const showDirectDeposit = viewModel.showDirectDeposit();
-        const showPlaidExperimentSubmit =
-          viewModel.getPlaidExperimentAssignedExperiment() &&
-          viewModel.getInstitutionNotFound();
         const showSubmitButton =
           shouldShowSubmitButton ||
           !showDirectDeposit ||
-          showPlaidExperimentSubmit;
+          viewModel.getInstitutionNotFound();
 
         return (
           <FormContainer>

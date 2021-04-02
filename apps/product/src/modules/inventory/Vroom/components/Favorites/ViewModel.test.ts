@@ -19,6 +19,8 @@ jest.mock('next/config', () => {
   };
 });
 
+jest.mock('./store');
+
 const car: Car = data;
 
 describe('Favorites View Model', () => {
