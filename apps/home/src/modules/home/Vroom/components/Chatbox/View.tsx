@@ -108,7 +108,10 @@ const View: React.FC<Props> = ({ viewModel }) => {
           <ChatboxIcon src={chatIcon} />
         </ChatIconContainer>
       )}
-      <ChatContainer id="chat-container"></ChatContainer>
+      <ChatContainer
+        id="chat-container"
+        isClosed={showChatIcon}
+      ></ChatContainer>
     </>
   );
 };
@@ -139,6 +142,7 @@ const ChatboxIcon = styled.img`
 `;
 
 const ChatContainer = styled.div`
+  height: ${(props) => (props.isClosed ? '0px !important' : '0px')};
   position: fixed;
   bottom: 10px;
   right: 10px;
