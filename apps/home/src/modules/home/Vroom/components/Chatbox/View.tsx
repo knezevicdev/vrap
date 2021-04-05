@@ -139,6 +139,7 @@ const ChatIconContainer = styled.div`
 const ChatboxIcon = styled.img`
   height: 40px;
   width: 40px;
+  cursor: pointer;
 `;
 
 interface ChatProps {
@@ -150,6 +151,7 @@ const ChatContainer = styled.div<ChatProps>`
   position: fixed;
   bottom: 10px;
   right: 10px;
+  z-index: 9;
 `;
 
 export default View;
