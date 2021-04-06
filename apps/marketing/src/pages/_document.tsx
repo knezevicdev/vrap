@@ -3,7 +3,6 @@ import { AnalyticsSnippet } from '@vroom-web/analytics-integration';
 import { UISnippet } from '@vroom-web/ui';
 import { Brand, determineWhitelabel } from '@vroom-web/whitelabel';
 import getConfig from 'next/config';
-import { AppType, Enhancer, RenderPage } from 'next/dist/next-server/lib/utils';
 import Document, {
   DocumentContext,
   DocumentInitialProps,
@@ -13,6 +12,7 @@ import Document, {
   NextScript,
 } from 'next/document';
 import React from 'react';
+import { ServerStyleSheet } from 'styled-components';
 
 const { serverRuntimeConfig, publicRuntimeConfig } = getConfig();
 
@@ -22,32 +22,36 @@ interface Props extends DocumentInitialProps {
 
 class MarketingDocument extends Document<Props> {
   static async getInitialProps(ctx: DocumentContext): Promise<Props> {
+    const styledComponentsSheet = new ServerStyleSheet();
     const materialSheets = new ServerStyleSheets();
     const originalRenderPage = ctx.renderPage;
 
-    // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-    const customEnhanceApp: Enhancer<AppType> = (App) => (props) =>
-      materialSheets.collect(<App {...props} />);
-    const customRenderPage: RenderPage = () =>
-      originalRenderPage({
-        enhanceApp: customEnhanceApp,
-      });
-    ctx.renderPage = customRenderPage;
+    try {
+      ctx.renderPage = (): ReturnType<typeof ctx.renderPage> =>
+        originalRenderPage({
+          enhanceApp: (App) => (props): JSX.Element =>
+            styledComponentsSheet.collectStyles(
+              materialSheets.collect(<App {...props} />)
+            ),
+        });
 
-    const brand = determineWhitelabel(ctx);
+      const initialProps = await Document.getInitialProps(ctx);
+      const brand = determineWhitelabel(ctx);
 
-    const initialProps = await Document.getInitialProps(ctx);
-
-    return {
-      ...initialProps,
-      brand,
-      styles: (
-        <>
-          {initialProps.styles}
-          {materialSheets.getStyleElement()}
-        </>
-      ),
-    };
+      return {
+        ...initialProps,
+        brand,
+        styles: (
+          <>
+            {initialProps.styles}
+            {styledComponentsSheet.getStyleElement()}
+            {materialSheets.getStyleElement()}
+          </>
+        ),
+      };
+    } finally {
+      styledComponentsSheet.seal();
+    }
   }
 
   render(): JSX.Element {

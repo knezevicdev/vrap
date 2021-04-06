@@ -5,6 +5,7 @@ import { BrandContext } from './BrandContext';
 import Santander from './Santander';
 import TDA from './TDA';
 import Vroom from './Vroom';
+import Chatbox from './Vroom/components/Chatbox';
 
 const Contact: React.FC = () => {
   const brand = useContext(BrandContext);
@@ -15,7 +16,12 @@ const Contact: React.FC = () => {
   if (brand === Brand.TDA) {
     return <TDA />;
   }
-  return <Vroom />;
+  return (
+    <>
+      <Vroom />
+      <Chatbox />
+    </>
+  );
 };
 
 export default Contact;
