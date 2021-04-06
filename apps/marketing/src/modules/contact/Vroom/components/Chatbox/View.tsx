@@ -16,11 +16,28 @@ const { publicRuntimeConfig } = getConfig();
 const View: React.FC<Props> = ({ viewModel }) => {
   const [booted, setBooted] = useState(false);
   const [showChatIcon, setShowChatIcon] = useState(true);
-  const chatIcon = `${publicRuntimeConfig.BASE_PATH}/modules/vroom/icons/chat-icon.svg`;
+
   const router = useRouter();
   const { chatboxOpen } = router.query || false;
+
   const dev = publicRuntimeConfig.NODE_ENV !== 'production';
-  console.log({dev})
+  const devConfig = {
+    appId: '70c71811-1c35-4db7-b9d2-21754f24ba0c',
+    src: 'https://webchat-sandbox.pypestream.com/webchat-public.js',
+    gtm: 'GTM-PZJGZ67',
+    domain: 'dev',
+    env: 'sandbox',
+    beta: true,
+  };
+  const prodConfig = {
+    appId: 'e0987638-07c6-43b4-a10e-fa51ad9174d2',
+    src: 'https://webchat.pypestream.com/webchat-public.js',
+    gtm: 'GTM-5PLCDGC',
+    domain: 'prod',
+    env: 'prod',
+    beta: true,
+  };
+  const pypestreamConfig = dev ? devConfig : prodConfig;
 
   const initChat = () => {
     /* TODO:
@@ -32,28 +49,17 @@ const View: React.FC<Props> = ({ viewModel }) => {
       Even then results are not guaranteed. */
 
     const chatContainer = document.getElementById('chat-container');
-    const appId = dev
-      ? '70c71811-1c35-4db7-b9d2-21754f24ba0c'
-      : 'e0987638-07c6-43b4-a10e-fa51ad9174d2';
-    const pypeStreamConfig = dev
-      ? {
-          domain: 'dev',
-          env: 'sandbox',
-          beta: true,
-          /* eslint-disable @typescript-eslint/camelcase */
-          gtm_id: 'GTM-PZJGZ67',
-        }
-      : {
-          domain: 'prod',
-          env: 'prod',
-          beta: true,
-          /* eslint-disable @typescript-eslint/camelcase */
-          gtm_id: 'GTM-PZJGZ67',
-        };
+    const initConfig = {
+      domain: pypestreamConfig.domain,
+      env: pypestreamConfig.env,
+      beta: pypestreamConfig.beta,
+      /* eslint-disable @typescript-eslint/camelcase */
+      gtm_id: pypestreamConfig.gtm,
+    };
 
-    Pypestream('config', pypeStreamConfig);
+    Pypestream('config', initConfig);
 
-    Pypestream('boot', { APP_ID: appId }, chatContainer);
+    Pypestream('boot', { APP_ID: pypestreamConfig.appId }, chatContainer);
 
     Pypestream('onShow', function () {
       setShowChatIcon(false);
@@ -74,11 +80,7 @@ const View: React.FC<Props> = ({ viewModel }) => {
 
   useEffect(() => {
     const script = document.createElement('script');
-    if (dev) {
-      script.src = 'https://webchat-sandbox.pypestream.com/webchat-public.js';
-    } else {
-      script.src = 'https://webchat.pypestream.com/webchat-public.js';
-    }
+    script.src = pypestreamConfig.src;
     document.body.appendChild(script);
 
     // https://tdalabs.atlassian.net/browse/CW-82
@@ -106,7 +108,9 @@ const View: React.FC<Props> = ({ viewModel }) => {
     <>
       {showChatIcon && (
         <ChatIconContainer id="toggle-chat" onClick={handleOnClick}>
-          <ChatboxIcon src={chatIcon} />
+          <ChatboxIcon
+            src={`${publicRuntimeConfig.BASE_PATH}/modules/vroom/icons/chat-icon.svg`}
+          />
         </ChatIconContainer>
       )}
       <ChatContainer
