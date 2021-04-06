@@ -20,6 +20,7 @@ const View: React.FC<Props> = ({ viewModel }) => {
   const router = useRouter();
   const { chatboxOpen } = router.query || false;
   const dev = publicRuntimeConfig.NODE_ENV !== 'production';
+  console.log({dev})
 
   const initChat = () => {
     /* TODO:
