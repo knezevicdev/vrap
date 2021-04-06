@@ -3,6 +3,7 @@ import { SimpleHeader } from '@vroom-web/header-components';
 import getConfig from 'next/config';
 import React, { FC, useContext, useEffect, useState } from 'react';
 
+import Chatbox from './components/Chatbox';
 import Hero from './components/Hero';
 import Highlights from './components/Highlights';
 import { LinksMake, LinksModel, LinksType } from './components/Links';
@@ -33,6 +34,7 @@ const Vroom: React.FC = () => {
     'LinksMake',
     'LinksModel',
     'WhoWeAre',
+    'Chatbox',
   ];
 
   const expSectionOrder: string[] = [
@@ -45,6 +47,7 @@ const Vroom: React.FC = () => {
     'LinksMake',
     'LinksModel',
     'WhoWeAre',
+    'Chatbox',
   ];
 
   const [sectionOrder, setSectionOrder] = useState<string[]>(
@@ -61,6 +64,7 @@ const Vroom: React.FC = () => {
     LinksMake: LinksMake,
     LinksModel: LinksModel,
     WhoWeAre: WhoWeAre,
+    Chatbox: Chatbox,
   };
 
   useEffect(() => {
