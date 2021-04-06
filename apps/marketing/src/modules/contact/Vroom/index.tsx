@@ -1,7 +1,7 @@
-import React from 'react';
 import { StandardFooter } from '@vroom-web/footer-components';
 import { SimpleHeader } from '@vroom-web/header-components';
 import getConfig from 'next/config';
+import React from 'react';
 
 const { publicRuntimeConfig: GEARBOX_PRIVATE_URL } = getConfig();
 

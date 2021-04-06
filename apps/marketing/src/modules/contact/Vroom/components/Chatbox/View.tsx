@@ -108,7 +108,7 @@ const View: React.FC<Props> = ({ viewModel }) => {
           <ChatboxIcon src={chatIcon} />
         </ChatIconContainer>
       )}
-			<ChatContainer
+      <ChatContainer
         id="chat-container"
         isClosed={showChatIcon}
       ></ChatContainer>
