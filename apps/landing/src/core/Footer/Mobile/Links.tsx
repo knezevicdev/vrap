@@ -101,10 +101,10 @@ export const MobileLinks: React.FC<Props> = ({ sections }) => {
               <Arrow visible={visible} icon={Icons.ARROW_DOWN} />
             </TitleContainer>
             <LinksContainer visible={visible}>
-              {links.map((link: Link) => {
+              {links.map((link: Link, index: number) => {
                 const { href, name } = link;
                 return (
-                  <CustomLink key={href} href={href} visible={visible}>
+                  <CustomLink key={index} href={href} visible={visible}>
                     <LinkText>{name}</LinkText>
                   </CustomLink>
                 );

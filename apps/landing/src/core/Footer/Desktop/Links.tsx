@@ -65,10 +65,10 @@ export const DesktopLinks: React.FC<Props> = ({ sections }) => {
           <SectionDiv key={title}>
             <Title>{title}</Title>
 
-            {links.map((link: Link) => {
+            {links.map((link: Link, index: number) => {
               const { href, name } = link;
               return (
-                <CustomLink key={href} href={href}>
+                <CustomLink key={index} href={href}>
                   <LinkText>{name}</LinkText>
                 </CustomLink>
               );
