@@ -2,7 +2,10 @@ import { makeStyles, styled } from '@material-ui/core/styles';
 import Tab from '@material-ui/core/Tab';
 import Tabs from '@material-ui/core/Tabs';
 import { observer } from 'mobx-react';
-import React from 'react';
+import { HomeStore, HomeStoreContext } from 'src/modules/home/store';
+import React, { useState, useEffect, useContext } from 'react';
+import AnalyticsHandler from 'src/integrations/AnalyticsHandler';
+import experimentSDK from 'src/integrations/experimentSDK';
 
 import Buy from './Buy';
 import Sell from './Sell';
@@ -51,17 +54,60 @@ const BuySellTradeView: React.FC<Props> = ({ viewModel }) => {
   const tabsClass = tabsStyles();
   const tabClass = tabStyle();
 
+  const homeStore = useContext<HomeStore>(HomeStoreContext);
+  const [analyticsHandler] = useState<AnalyticsHandler>(new AnalyticsHandler());
+  const [swapTabs, setSwapTabs] = useState<boolean>(false);
+
+  useEffect(() => {
+    const { experiments } = homeStore;
+    const expId = 'cw-swap-tabs';
+    const variantCalculatedExp = experimentSDK.determineVariantClientSide(
+      experiments,
+      expId
+    );
+
+    if (variantCalculatedExp) {
+      analyticsHandler.registerExperiment(variantCalculatedExp);
+      if (variantCalculatedExp.assignedVariant === 1)
+        setSwapTabs(true);
+    }
+  });
+
+  const defaultTabs = () => {
+    return (
+      <>
+        <Tabs
+          classes={tabsClass}
+          value={viewModel.getTab()}
+          onChange={viewModel.handleChange}
+        >
+          <Tab classes={tabClass} label={viewModel.buyTab} />
+          <Tab classes={tabClass} label={viewModel.sellTab} />
+        </Tabs>
+        {viewModel.showBuy() ? <Buy /> : <Sell />}
+      </>
+    )
+  }
+
+  const swappedTabs = () => {
+    return (
+      <>
+        <Tabs
+          classes={tabsClass}
+          value={viewModel.getTab()}
+          onChange={viewModel.handleChange}
+        >
+          <Tab classes={tabClass} label={viewModel.sellTab} />
+          <Tab classes={tabClass} label={viewModel.buyTab} />
+        </Tabs>
+        {viewModel.showBuy() ? <Sell /> : <Buy /> }
+      </>
+    )
+  }
+
   return (
     <TabsContainer>
-      <Tabs
-        classes={tabsClass}
-        value={viewModel.getTab()}
-        onChange={viewModel.handleChange}
-      >
-        <Tab classes={tabClass} label={viewModel.buyTab} />
-        <Tab classes={tabClass} label={viewModel.sellTab} />
-      </Tabs>
-      {viewModel.showBuy() ? <Buy /> : <Sell />}
+      { swapTabs ? swappedTabs() : defaultTabs() }
     </TabsContainer>
   );
 };
