@@ -60,33 +60,26 @@ const BuySellTradeView: React.FC<Props> = ({
     ? viewModel.sellTabExperiment
     : viewModel.sellTab;
 
+  // TODO: Looks really bad. If we don't do this way and put it as
+  // a react conditional rendering, there's some weird race condition
+  // between Mui and the useEffect which sets A/B tests
+  const labelOne = swapTabs ? sellTabLabel : viewModel.buyTab;
+  const labelTwo = swapTabs ? viewModel.buyTab : sellTabLabel;
+
+  const componentOne = swapTabs ? <Sell /> : <Buy />;
+  const componentTwo = swapTabs ? <Buy /> : <Sell />;
+
   return (
     <TabsContainer>
-      {swapTabs ? (
-        <>
-          <Tabs
-            classes={tabsClass}
-            value={viewModel.getTab()}
-            onChange={viewModel.handleChange}
-          >
-            <Tab classes={tabClass} label={sellTabLabel} />
-            <Tab classes={tabClass} label={viewModel.buyTab} />
-          </Tabs>
-          {viewModel.showBuy() ? <Sell /> : <Buy />}
-        </>
-      ) : (
-        <>
-          <Tabs
-            classes={tabsClass}
-            value={viewModel.getTab()}
-            onChange={viewModel.handleChange}
-          >
-            <Tab classes={tabClass} label={viewModel.buyTab} />
-            <Tab classes={tabClass} label={sellTabLabel} />
-          </Tabs>
-          {viewModel.showBuy() ? <Buy /> : <Sell />}
-        </>
-      )}
+      <Tabs
+        classes={tabsClass}
+        value={viewModel.getTab()}
+        onChange={viewModel.handleChange}
+      >
+        <Tab classes={tabClass} label={labelOne} />
+        <Tab classes={tabClass} label={labelTwo} />
+      </Tabs>
+      {viewModel.showBuy() ? componentOne : componentTwo}
     </TabsContainer>
   );
 };
