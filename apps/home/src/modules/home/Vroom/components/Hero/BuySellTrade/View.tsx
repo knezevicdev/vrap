@@ -60,9 +60,9 @@ const BuySellTradeView: React.FC<Props> = ({
     ? viewModel.sellTabExperiment
     : viewModel.sellTab;
 
-  // TODO: Looks really bad. If we don't do this way and put it as
-  // a react conditional rendering, there's some weird race condition
-  // between Mui and the useEffect which sets A/B tests
+  // When writing this out noticed a funky bug where MUI
+  // compiles in a different order in staging vs local.
+  // This causes some styles to load differently and could be a source of a problem
   const labelOne = swapTabs ? sellTabLabel : viewModel.buyTab;
   const labelTwo = swapTabs ? viewModel.buyTab : sellTabLabel;
 
