@@ -1,4 +1,4 @@
-import { action, observable } from 'mobx';
+import { action, makeObservable, observable } from 'mobx';
 
 import { AsyncStatus, Store, StoreStatus } from 'src/interfaces.d';
 import { Price } from 'src/networking/models/Price';
@@ -51,15 +51,21 @@ export const defaultPriceState: PriceStoreState = {
 export class PriceStore implements Store {
   private readonly networker = new Networker();
 
-  @observable price = defaultPriceState;
-  @observable storeStatus = StoreStatus.Initial;
-  @observable asyncStatus = AsyncStatus.Idle;
+  price = defaultPriceState;
+  storeStatus = StoreStatus.Initial;
+  asyncStatus = AsyncStatus.Idle;
 
   constructor(priceId: string) {
+    makeObservable(this, {
+      price: observable,
+      storeStatus: observable,
+      asyncStatus: observable,
+      getOfferDetails: action,
+      submitPriceResponse: action,
+    });
     this.getOfferDetails(priceId);
   }
 
-  @action
   getOfferDetails = (priceId: string): void => {
     this.networker
       .getOfferDetails(priceId)
@@ -102,7 +108,6 @@ export class PriceStore implements Store {
       });
   };
 
-  @action
   submitPriceResponse = async (): Promise<void> => {
     const priceData: PriceData = {
       priceId: this.price.priceId,

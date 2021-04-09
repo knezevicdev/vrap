@@ -1,4 +1,4 @@
-import { action, observable, runInAction } from 'mobx';
+import { action, makeObservable, observable, runInAction } from 'mobx';
 import { createContext, useContext } from 'react';
 
 import { AsyncStatus, Store, StoreStatus } from 'src/interfaces.d';
@@ -34,15 +34,23 @@ export async function getInitialPaymentOverviewStoreState(
 }
 
 export class PaymentOverviewStore implements Store {
-  @observable price = 0;
-  @observable storeStatus = StoreStatus.Initial;
-  @observable asyncStatus = AsyncStatus.Idle;
+  price = 0;
+  storeStatus = StoreStatus.Initial;
+  asyncStatus = AsyncStatus.Idle;
 
   constructor(priceId?: string) {
-    if (priceId) this.init(priceId);
+    if (priceId) {
+      this.init(priceId);
+    }
+
+    makeObservable(this, {
+      price: observable,
+      storeStatus: observable,
+      asyncStatus: observable,
+      init: action,
+    });
   }
 
-  @action
   async init(priceId: string): Promise<void> {
     const initialState = await getInitialPaymentOverviewStoreState(priceId);
     runInAction(() => {
