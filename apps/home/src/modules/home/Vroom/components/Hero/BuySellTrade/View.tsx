@@ -60,7 +60,7 @@ const BuySellTradeView: React.FC<Props> = ({
     ? viewModel.sellTabExperiment
     : viewModel.sellTab;
 
-  const defaultTabs: React.FC = () => {
+  const DefaultTabs: React.FC = () => {
     return (
       <>
         <Tabs
@@ -76,7 +76,7 @@ const BuySellTradeView: React.FC<Props> = ({
     );
   };
 
-  const swappedTabs: React.FC = () => {
+  const SwappedTabs: React.FC = () => {
     return (
       <>
         <Tabs
@@ -92,7 +92,11 @@ const BuySellTradeView: React.FC<Props> = ({
     );
   };
 
-  return <TabsContainer>{swapTabs ? swappedTabs : defaultTabs}</TabsContainer>;
+  return (
+    <TabsContainer>
+      {swapTabs ? <SwappedTabs /> : <DefaultTabs />}
+    </TabsContainer>
+  );
 };
 
 export default observer(BuySellTradeView);
