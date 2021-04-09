@@ -79,7 +79,7 @@ export interface Props {
 
 const PaymentOverviewView: React.FC<Props> = ({ viewModel }) => {
   const theme = useTheme();
-  const isDesktop = useMediaQuery(theme.breakpoints.up('lg'), { noSsr: true });
+  const isDesktop = useMediaQuery(theme.breakpoints.up('lg'), { noSsr: false });
   const [isExpanded, setIsExpanded] = useState<boolean>(isDesktop);
 
   const handleToggle = (): void => setIsExpanded((isExpanded) => !isExpanded);
