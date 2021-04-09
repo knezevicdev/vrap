@@ -60,41 +60,33 @@ const BuySellTradeView: React.FC<Props> = ({
     ? viewModel.sellTabExperiment
     : viewModel.sellTab;
 
-  const DefaultTabs: React.FC = () => {
-    return (
-      <>
-        <Tabs
-          classes={tabsClass}
-          value={viewModel.getTab()}
-          onChange={viewModel.handleChange}
-        >
-          <Tab classes={tabClass} label={viewModel.buyTab} />
-          <Tab classes={tabClass} label={sellTabLabel} />
-        </Tabs>
-        {viewModel.showBuy() ? <Buy /> : <Sell />}
-      </>
-    );
-  };
-
-  const SwappedTabs: React.FC = () => {
-    return (
-      <>
-        <Tabs
-          classes={tabsClass}
-          value={viewModel.getTab()}
-          onChange={viewModel.handleChange}
-        >
-          <Tab classes={tabClass} label={sellTabLabel} />
-          <Tab classes={tabClass} label={viewModel.buyTab} />
-        </Tabs>
-        {viewModel.showBuy() ? <Sell /> : <Buy />}
-      </>
-    );
-  };
-
   return (
     <TabsContainer>
-      {swapTabs ? <SwappedTabs /> : <DefaultTabs />}
+      {swapTabs ? (
+        <>
+          <Tabs
+            classes={tabsClass}
+            value={viewModel.getTab()}
+            onChange={viewModel.handleChange}
+          >
+            <Tab classes={tabClass} label={sellTabLabel} />
+            <Tab classes={tabClass} label={viewModel.buyTab} />
+          </Tabs>
+          {viewModel.showBuy() ? <Sell /> : <Buy />}
+        </>
+      ) : (
+        <>
+          <Tabs
+            classes={tabsClass}
+            value={viewModel.getTab()}
+            onChange={viewModel.handleChange}
+          >
+            <Tab classes={tabClass} label={viewModel.buyTab} />
+            <Tab classes={tabClass} label={sellTabLabel} />
+          </Tabs>
+          {viewModel.showBuy() ? <Buy /> : <Sell />}
+        </>
+      )}
     </TabsContainer>
   );
 };
