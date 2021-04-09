@@ -158,8 +158,10 @@ const HeroView: React.FC<Props> = ({ viewModel }) => {
 
     if (variantCalculatedExp) {
       analyticsHandler.registerExperiment(variantCalculatedExp);
-      if (variantCalculatedExp.assignedVariant === 1) setSwapTabs(true);
-      setChangeTitle(true);
+      if (variantCalculatedExp.assignedVariant === 1) {
+        setSwapTabs(true);
+        setChangeTitle(true);
+      }
     }
 
     if (variantCalculatedExp2) {
