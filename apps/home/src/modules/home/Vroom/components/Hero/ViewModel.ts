@@ -8,9 +8,12 @@ interface Link {
 }
 
 class HeroViewModel {
-  readonly title: string = 'delivering, now and\xa0always.';
+  readonly title: string = 'get cash for your\xa0car.';
+  readonly titleExperiment: string = 'delivering, now and\xa0always.';
   readonly subtitle: string =
-    'Buy, sell, or trade vehicles all from your couch.';
+    'Buy a car entirely online, and have it safely delivered, contact-free.';
+  readonly subtitleExperiment: string =
+    'Sell us your car entirely online – we\'ll even pick it up.';
   readonly subtitleLink: Link = {
     href: 'https://www.vroom.com/how-it-works',
     label: 'Learn\xa0More',

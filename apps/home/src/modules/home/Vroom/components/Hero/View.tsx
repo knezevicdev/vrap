@@ -2,7 +2,10 @@ import { makeStyles, styled, useTheme } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { Container as VroomContainer, Typography } from '@vroom-web/ui';
 import { observer } from 'mobx-react';
-import React from 'react';
+import { HomeStore, HomeStoreContext } from 'src/modules/home/store';
+import React, { useState, useEffect, useContext } from 'react';
+import AnalyticsHandler from 'src/integrations/AnalyticsHandler';
+import experimentSDK from 'src/integrations/experimentSDK';
 
 import BuySellTrade from './BuySellTrade';
 import ViewModel from './ViewModel';
@@ -132,12 +135,47 @@ const HeroView: React.FC<Props> = ({ viewModel }) => {
   const theme = useTheme();
   const smDown = useMediaQuery(theme.breakpoints.down('sm'));
 
+  const homeStore = useContext<HomeStore>(HomeStoreContext);
+  const [swapTabs, setSwapTabs] = useState<boolean>(false);
+  const [changeTitle, setChangeTitle] = useState<boolean>(false);
+  const [changeTabLabel, setChangeTabLabel] = useState<boolean>(false);
+  const [analyticsHandler] = useState<AnalyticsHandler>(new AnalyticsHandler());
+
+  useEffect(() => {
+    const { experiments } = homeStore;
+    const expId = 'cw-swap-tabs';
+    const expId2 = 'cw-change-tab-label';
+
+    const variantCalculatedExp = experimentSDK.determineVariantClientSide(
+      experiments,
+      expId
+    );
+
+    const variantCalculatedExp2 = experimentSDK.determineVariantClientSide(
+      experiments,
+      expId2
+    );
+
+    if (variantCalculatedExp) {
+      analyticsHandler.registerExperiment(variantCalculatedExp);
+      if (variantCalculatedExp.assignedVariant === 1)
+        setSwapTabs(true);
+        setChangeTitle(true);
+    }
+
+    if (variantCalculatedExp2) {
+      analyticsHandler.registerExperiment(variantCalculatedExp2);
+      if (variantCalculatedExp2.assignedVariant === 1)
+        setChangeTabLabel(true);
+    }
+  });
+
   return (
     <Background>
       <Container maxWidth={smDown ? 'sm' : 'lg'}>
-        <Title variant="h1">{viewModel.title}</Title>
+        <Title variant="h1">{changeTitle ? viewModel.titleExperiment : viewModel.title}</Title>
         <SubTitle>
-          {viewModel.subtitle}{' '}
+          { changeTitle ? viewModel.subtitleExperiment : viewModel.subtitle}{' '}
           <SubTitleLink href={viewModel.subtitleLink.href}>
             {viewModel.subtitleLink.label}
           </SubTitleLink>
@@ -147,7 +185,7 @@ const HeroView: React.FC<Props> = ({ viewModel }) => {
           src={viewModel.car.src}
           carImageHeight={'225px'}
         />
-        <BuySellTrade />
+        <BuySellTrade swapTabs={swapTabs} changeTabLabel={changeTabLabel}/>
       </Container>
     </Background>
   );

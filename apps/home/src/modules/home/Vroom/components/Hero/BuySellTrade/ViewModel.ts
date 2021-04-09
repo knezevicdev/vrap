@@ -4,6 +4,7 @@ class BuySellTradeViewModel {
   private readonly store: BuySellTradeStore;
   readonly buyTab: string = 'BUY';
   readonly sellTab: string = 'SELL/TRADE';
+  readonly sellTabExperiment: string = 'SELL';
 
   constructor(store: BuySellTradeStore) {
     this.store = store;
