@@ -8,10 +8,6 @@ import Buy from './Buy';
 import Sell from './Sell';
 import ViewModel from './ViewModel';
 
-interface Props {
-  viewModel: ViewModel;
-}
-
 const TabsContainer = styled('div')(({ theme }) => ({
   backgroundColor: theme.palette.background.paper,
   padding: theme.spacing(4),
@@ -47,12 +43,24 @@ const tabStyle = makeStyles((theme) => ({
   },
 }));
 
-const BuySellTradeView: React.FC<Props> = ({ viewModel, swapTabs, changeTabLabel }) => {
+interface Props {
+  viewModel: ViewModel;
+  swapTabs: boolean;
+  changeTabLabel: boolean;
+}
+
+const BuySellTradeView: React.FC<Props> = ({
+  viewModel,
+  swapTabs,
+  changeTabLabel,
+}) => {
   const tabsClass = tabsStyles();
   const tabClass = tabStyle();
-  const sellTabLabel = changeTabLabel ? viewModel.sellTabExperiment : viewModel.sellTab;
+  const sellTabLabel = changeTabLabel
+    ? viewModel.sellTabExperiment
+    : viewModel.sellTab;
 
-  const defaultTabs = () => {
+  const defaultTabs: React.FC = () => {
     return (
       <>
         <Tabs
@@ -65,10 +73,10 @@ const BuySellTradeView: React.FC<Props> = ({ viewModel, swapTabs, changeTabLabel
         </Tabs>
         {viewModel.showBuy() ? <Buy /> : <Sell />}
       </>
-    )
-  }
+    );
+  };
 
-  const swappedTabs = () => {
+  const swappedTabs: React.FC = () => {
     return (
       <>
         <Tabs
@@ -79,16 +87,12 @@ const BuySellTradeView: React.FC<Props> = ({ viewModel, swapTabs, changeTabLabel
           <Tab classes={tabClass} label={sellTabLabel} />
           <Tab classes={tabClass} label={viewModel.buyTab} />
         </Tabs>
-        {viewModel.showBuy() ? <Sell /> : <Buy /> }
+        {viewModel.showBuy() ? <Sell /> : <Buy />}
       </>
-    )
-  }
+    );
+  };
 
-  return (
-    <TabsContainer>
-      { swapTabs ? swappedTabs() : defaultTabs() }
-    </TabsContainer>
-  );
+  return <TabsContainer>{swapTabs ? swappedTabs : defaultTabs}</TabsContainer>;
 };
 
 export default observer(BuySellTradeView);

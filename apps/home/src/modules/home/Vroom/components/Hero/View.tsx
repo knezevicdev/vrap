@@ -2,14 +2,14 @@ import { makeStyles, styled, useTheme } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { Container as VroomContainer, Typography } from '@vroom-web/ui';
 import { observer } from 'mobx-react';
-import { HomeStore, HomeStoreContext } from 'src/modules/home/store';
-import React, { useState, useEffect, useContext } from 'react';
-import AnalyticsHandler from 'src/integrations/AnalyticsHandler';
-import experimentSDK from 'src/integrations/experimentSDK';
+import React, { useContext, useEffect, useState } from 'react';
 
 import BuySellTrade from './BuySellTrade';
 import ViewModel from './ViewModel';
 
+import AnalyticsHandler from 'src/integrations/AnalyticsHandler';
+import experimentSDK from 'src/integrations/experimentSDK';
+import { HomeStore, HomeStoreContext } from 'src/modules/home/store';
 import ExternalLink from 'src/ui/ExternalLink';
 
 //#region Styling
@@ -158,24 +158,25 @@ const HeroView: React.FC<Props> = ({ viewModel }) => {
 
     if (variantCalculatedExp) {
       analyticsHandler.registerExperiment(variantCalculatedExp);
-      if (variantCalculatedExp.assignedVariant === 1)
-        setSwapTabs(true);
-        setChangeTitle(true);
+      if (variantCalculatedExp.assignedVariant === 1) setSwapTabs(true);
+      setChangeTitle(true);
     }
 
     if (variantCalculatedExp2) {
       analyticsHandler.registerExperiment(variantCalculatedExp2);
-      if (variantCalculatedExp2.assignedVariant === 1)
-        setChangeTabLabel(true);
+      if (variantCalculatedExp2.assignedVariant === 1) setChangeTabLabel(true);
     }
-  });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <Background>
       <Container maxWidth={smDown ? 'sm' : 'lg'}>
-        <Title variant="h1">{changeTitle ? viewModel.titleExperiment : viewModel.title}</Title>
+        <Title variant="h1">
+          {changeTitle ? viewModel.titleExperiment : viewModel.title}
+        </Title>
         <SubTitle>
-          { changeTitle ? viewModel.subtitleExperiment : viewModel.subtitle}{' '}
+          {changeTitle ? viewModel.subtitleExperiment : viewModel.subtitle}{' '}
           <SubTitleLink href={viewModel.subtitleLink.href}>
             {viewModel.subtitleLink.label}
           </SubTitleLink>
@@ -185,7 +186,7 @@ const HeroView: React.FC<Props> = ({ viewModel }) => {
           src={viewModel.car.src}
           carImageHeight={'225px'}
         />
-        <BuySellTrade swapTabs={swapTabs} changeTabLabel={changeTabLabel}/>
+        <BuySellTrade swapTabs={swapTabs} changeTabLabel={changeTabLabel} />
       </Container>
     </Background>
   );
