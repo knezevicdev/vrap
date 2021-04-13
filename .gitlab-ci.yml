@@ -1,4 +1,4 @@
-image: node:erbium
+image: node:fermium
 
 stages:
   - build
