@@ -7,13 +7,13 @@ class ChatboxViewModel {
     this.analyticsHandler = new AnalyticsHandler();
   }
 
-  trackChatboxOpened(): void {
+  trackChatboxOpened = () => {
     this.analyticsHandler.trackChatboxOpened();
-  }
+  };
 
-  trackChatboxClosed(): void {
+  trackChatboxClosed = () => {
     this.analyticsHandler.trackChatboxClosed();
-  }
+  };
 }
 
 export default ChatboxViewModel;

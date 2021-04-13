@@ -13,6 +13,59 @@ declare let Pypestream: any;
 
 const { publicRuntimeConfig } = getConfig();
 
+/* TODO:
+  The pypestream implemention uses old school `document.addEventListener` but there are implementation issues.
+  React will lose track of the event listener, not clean up properly, and you'll need to hack your way with refs.
+  Even then results are not guaranteed. */
+const devConfig = {
+  appId: '70c71811-1c35-4db7-b9d2-21754f24ba0c',
+  src: 'https://webchat-sandbox.pypestream.com/webchat-public.js',
+  gtm: 'GTM-PZJGZ67',
+  domain: 'dev',
+  env: 'sandbox',
+  beta: true,
+};
+const prodConfig = {
+  appId: 'e0987638-07c6-43b4-a10e-fa51ad9174d2',
+  src: 'https://webchat.pypestream.com/webchat-public.js',
+  gtm: 'GTM-5PLCDGC',
+  domain: 'prod',
+  env: 'prod',
+  beta: true,
+};
+const pypestreamConfig =
+  publicRuntimeConfig.NODE_ENV !== 'production' ? devConfig : prodConfig;
+const initConfig = {
+  domain: pypestreamConfig.domain,
+  env: pypestreamConfig.env,
+  beta: pypestreamConfig.beta,
+  /* eslint-disable @typescript-eslint/camelcase */
+  gtm_id: pypestreamConfig.gtm,
+};
+
+const initChat = (
+  enableChatIcon: () => void,
+  disableChatIcon: () => void,
+  trackChatboxOpened: () => void,
+  trackChatboxClosed: () => void,
+  completeBoot: () => void
+) => {
+  // can't do anything until Pypestream loads in
+  if (typeof Pypestream === 'undefined') {
+    return;
+  }
+
+  const chatContainer = document.getElementById('chat-container');
+  Pypestream('config', initConfig);
+  Pypestream('boot', { APP_ID: pypestreamConfig.appId }, chatContainer);
+  Pypestream('onShow', disableChatIcon);
+  Pypestream('onHide', enableChatIcon);
+  Pypestream('onChatEnd', trackChatboxClosed);
+
+  trackChatboxOpened();
+  completeBoot();
+};
+
 const View: React.FC<Props> = ({ viewModel }) => {
   const [booted, setBooted] = useState(false);
   const [showChatIcon, setShowChatIcon] = useState(true);
@@ -20,62 +73,11 @@ const View: React.FC<Props> = ({ viewModel }) => {
   const router = useRouter();
   const { chatboxOpen } = router.query || false;
 
-  const dev = publicRuntimeConfig.NODE_ENV !== 'production';
-  const devConfig = {
-    appId: '70c71811-1c35-4db7-b9d2-21754f24ba0c',
-    src: 'https://webchat-sandbox.pypestream.com/webchat-public.js',
-    gtm: 'GTM-PZJGZ67',
-    domain: 'dev',
-    env: 'sandbox',
-    beta: true,
-  };
-  const prodConfig = {
-    appId: 'e0987638-07c6-43b4-a10e-fa51ad9174d2',
-    src: 'https://webchat.pypestream.com/webchat-public.js',
-    gtm: 'GTM-5PLCDGC',
-    domain: 'prod',
-    env: 'prod',
-    beta: true,
-  };
-  const pypestreamConfig = dev ? devConfig : prodConfig;
-
-  const initChat = () => {
-    /* TODO:
-      This implementation is pretty horrible. @ts-ignore is a major red flag.
-      Pypestream is brought in from `webchat-public.js` in useEffect, but when we compile Next.js isn't gonna know what it is.
-      I've tried copying the file to `/public` dir but pypestream complains about a VPN error.
-      The pypestream implemention uses old school `document.addEventListener` but there are implementation issues.
-      React will lose track of the event listener, not clean up properly, and you'll need to hack your way with refs.
-      Even then results are not guaranteed. */
-
-    const chatContainer = document.getElementById('chat-container');
-    const initConfig = {
-      domain: pypestreamConfig.domain,
-      env: pypestreamConfig.env,
-      beta: pypestreamConfig.beta,
-      /* eslint-disable @typescript-eslint/camelcase */
-      gtm_id: pypestreamConfig.gtm,
-    };
-
-    Pypestream('config', initConfig);
-
-    Pypestream('boot', { APP_ID: pypestreamConfig.appId }, chatContainer);
-
-    Pypestream('onShow', function () {
-      setShowChatIcon(false);
-    });
-
-    Pypestream('onHide', function () {
-      setShowChatIcon(true);
-    });
-
-    Pypestream('onChatEnd', function () {
-      viewModel.trackChatboxClosed();
-    });
-
-    viewModel.trackChatboxOpened();
-    setBooted(true);
+  const enableChatIcon = () => setShowChatIcon(true);
+  const disableChatIcon = () => setShowChatIcon(false);
+  const completeBoot = () => {
     setShowChatIcon(false);
+    setBooted(true);
   };
 
   useEffect(() => {
@@ -84,20 +86,32 @@ const View: React.FC<Props> = ({ viewModel }) => {
     document.body.appendChild(script);
 
     // https://tdalabs.atlassian.net/browse/CW-82
-    const timer = setTimeout(() => {
-      if (chatboxOpen) initChat();
-    }, 1000);
+    if (chatboxOpen) {
+      script.onload = () => {
+        initChat(
+          enableChatIcon,
+          disableChatIcon,
+          viewModel.trackChatboxOpened,
+          viewModel.trackChatboxClosed,
+          completeBoot
+        );
+      };
+    }
 
-    return (): void => {
+    return () => {
       document.body.removeChild(script);
-      clearTimeout(timer);
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [chatboxOpen]);
+  }, [chatboxOpen, viewModel.trackChatboxOpened, viewModel.trackChatboxClosed]);
 
   const handleOnClick = (): void => {
     if (!booted) {
-      initChat();
+      initChat(
+        enableChatIcon,
+        disableChatIcon,
+        viewModel.trackChatboxOpened,
+        viewModel.trackChatboxClosed,
+        completeBoot
+      );
     } else {
       Pypestream('toggle');
       setShowChatIcon(!showChatIcon);
@@ -134,7 +148,7 @@ const ChatIconContainer = styled.div`
   position: fixed;
   right: 70px;
   width: 70px;
-  z-index: 10;
+  z-index: 1200;
 
   @media (max-width: 1920px) {
     right: 10px;
@@ -156,7 +170,7 @@ const ChatContainer = styled.div<ChatProps>`
   position: fixed;
   bottom: 10px;
   right: 10px;
-  z-index: 9;
+  z-index: 1199;
 `;
 
 export default View;
