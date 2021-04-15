@@ -1,8 +1,0 @@
-{
-  "extends": "./tsconfig.json",
-  "compilerOptions": {
-    "lib": ["dom", "ES2019"],
-    "target": "ES2019",
-    "jsx": "react"
-  }
-}
