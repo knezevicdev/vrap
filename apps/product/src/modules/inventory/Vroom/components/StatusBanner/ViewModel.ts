@@ -1,6 +1,9 @@
+import { Experiment, ExperimentSDK } from '@vroom-web/experiment-sdk';
 import { SoldStatusInt } from '@vroom-web/inv-service-networking';
 import isEmpty from 'lodash.isempty';
+import { action, makeObservable, observable } from 'mobx';
 
+import { analyticsHandler } from 'src/integrations/AnalyticsHandler';
 import { InventoryStore } from 'src/modules/inventory/store';
 
 interface BannerInfo {
@@ -14,6 +17,10 @@ interface BannerInfo {
   tooltipText2?: string;
   tooltipText3?: string;
 }
+
+export const GREAT_FEATURES_BADGE_1 = 'auto-combined-drivers-price-and-demand';
+export const GREAT_FEATURES_BADGE_2 = 'auto-combined-drivers-demand-only';
+
 class StatusBannerViewModel {
   private store: InventoryStore;
   private salesPending = {
@@ -41,32 +48,82 @@ class StatusBannerViewModel {
     tooltipText3:
       'Some deliveries may be delayed by weather or for other logistical reasons. In the event that happens, we will work with you to reschedule the delivery.',
   };
+  private greatFeatures = {
+    id: 'great-features',
+    label: 'Great Features',
+    color: '#0f3a7b',
+    font: '#ffffff',
+  };
+
+  @observable greatFeaturesBadgeExperiment?: Experiment;
 
   constructor(inventoryStore: InventoryStore) {
     this.store = inventoryStore;
+
+    if (!this.greatFeaturesBadgeExperiment) {
+      new ExperimentSDK()
+        .getAndLogExperimentClientSide('snd-show-great-features-badge')
+        .then((experiment) => {
+          if (experiment) {
+            this.setGreatFeaturesBadgeExperiment(experiment);
+            analyticsHandler.registerExperiment(experiment);
+          }
+        });
+    }
+    makeObservable(this);
   }
 
-  getBanner(): BannerInfo | null {
-    const {
-      hasStockPhotos,
-      leadFlagPhotoUrl,
-      soldStatus,
-    } = this.store.vehicle._source;
+  @action
+  setGreatFeaturesBadgeExperiment(experiment: Experiment): void {
+    this.greatFeaturesBadgeExperiment = experiment;
+  }
+
+  showAvailableSoon = (): boolean => {
+    const { hasStockPhotos, leadFlagPhotoUrl } = this.store.vehicle._source;
+    return hasStockPhotos || isEmpty(leadFlagPhotoUrl);
+  };
+
+  showSalePending = (): boolean => {
+    const { soldStatus } = this.store.vehicle._source;
     const vehicleServiceAvailability = this.store.isAvailable;
-    if (hasStockPhotos || isEmpty(leadFlagPhotoUrl)) {
+    return (
+      soldStatus === SoldStatusInt.SALE_PENDING || !vehicleServiceAvailability
+    );
+  };
+
+  showTenDayDelivery = (): boolean => {
+    const { location } = this.store.vehicle._source;
+    return (
+      this.store.geoShippingExperiment?.assignedVariant === 1 &&
+      location === 'Stafford'
+    );
+  };
+
+  showGreatFeatures = (): boolean => {
+    const { badges } = this.store.vehicle._source;
+    return (
+      badges !== null &&
+      !!badges.find(
+        (badge) =>
+          badge.code === GREAT_FEATURES_BADGE_1 ||
+          badge.code === GREAT_FEATURES_BADGE_2
+      ) &&
+      this.greatFeaturesBadgeExperiment?.assignedVariant === 1
+    );
+  };
+
+  getBanner(): BannerInfo | null {
+    if (this.showAvailableSoon()) {
       return this.availableSoon;
     }
-    if (
-      soldStatus === SoldStatusInt.SALE_PENDING ||
-      !vehicleServiceAvailability
-    ) {
+    if (this.showSalePending()) {
       return this.salesPending;
     }
-    if (
-      this.store.geoShippingExperiment?.assignedVariant === 1 &&
-      this.store.vehicle._source.location === 'Stafford'
-    ) {
+    if (this.showTenDayDelivery()) {
       return this.tenDayDelivery;
+    }
+    if (this.showGreatFeatures()) {
+      return this.greatFeatures;
     }
     return null;
   }

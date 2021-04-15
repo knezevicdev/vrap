@@ -8,10 +8,6 @@ import Buy from './Buy';
 import Sell from './Sell';
 import ViewModel from './ViewModel';
 
-interface Props {
-  viewModel: ViewModel;
-}
-
 const TabsContainer = styled('div')(({ theme }) => ({
   backgroundColor: theme.palette.background.paper,
   padding: theme.spacing(4),
@@ -47,9 +43,31 @@ const tabStyle = makeStyles((theme) => ({
   },
 }));
 
-const BuySellTradeView: React.FC<Props> = ({ viewModel }) => {
+interface Props {
+  viewModel: ViewModel;
+  swapTabs: boolean;
+  changeTabLabel: boolean;
+}
+
+const BuySellTradeView: React.FC<Props> = ({
+  viewModel,
+  swapTabs,
+  changeTabLabel,
+}) => {
   const tabsClass = tabsStyles();
   const tabClass = tabStyle();
+  const sellTabLabel = changeTabLabel
+    ? viewModel.sellTabExperiment
+    : viewModel.sellTab;
+
+  // When writing this out noticed a funky bug where MUI
+  // compiles in a different order in staging vs local.
+  // This causes some styles to load differently and could be a source of a problem
+  const labelOne = swapTabs ? sellTabLabel : viewModel.buyTab;
+  const labelTwo = swapTabs ? viewModel.buyTab : sellTabLabel;
+
+  const componentOne = swapTabs ? <Sell /> : <Buy />;
+  const componentTwo = swapTabs ? <Buy /> : <Sell />;
 
   return (
     <TabsContainer>
@@ -58,10 +76,10 @@ const BuySellTradeView: React.FC<Props> = ({ viewModel }) => {
         value={viewModel.getTab()}
         onChange={viewModel.handleChange}
       >
-        <Tab classes={tabClass} label={viewModel.buyTab} />
-        <Tab classes={tabClass} label={viewModel.sellTab} />
+        <Tab classes={tabClass} label={labelOne} />
+        <Tab classes={tabClass} label={labelTwo} />
       </Tabs>
-      {viewModel.showBuy() ? <Buy /> : <Sell />}
+      {viewModel.showBuy() ? componentOne : componentTwo}
     </TabsContainer>
   );
 };

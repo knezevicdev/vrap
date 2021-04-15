@@ -1,4 +1,5 @@
 import { Filters } from '@vroom-web/catalog-url-integration';
+import { ExperimentSDK } from '@vroom-web/experiment-sdk';
 import {
   Car,
   Hit,
@@ -20,6 +21,17 @@ class CarsViewModel {
   constructor(store: CarsStore) {
     this.store = store;
     this.analyticsHandler = new AnalyticsHandler();
+
+    if (!this.store.greatFeaturesBadgeExperiment) {
+      new ExperimentSDK()
+        .getAndLogExperimentClientSide('snd-show-great-features-badge')
+        .then((experiment) => {
+          if (experiment) {
+            this.store.setGreatFeaturesBadgeExperiment(experiment);
+            this.analyticsHandler.registerExperiment(experiment);
+          }
+        });
+    }
   }
 
   showAvailableSoon = (car: Car): boolean => {

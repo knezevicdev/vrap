@@ -2,8 +2,8 @@
 /* eslint-disable no-nested-ternary */
 
 import { Experiment } from '@vroom-web/experiment-sdk';
-import { getVroomTheme } from '@vroom-web/temp-ui-alias-for-checkout';
 import { ThemeProvider } from '@vroom-web/ui';
+import { getVroomTheme } from '@vroom-web/ui-lib';
 import { Brand, determineWhitelabel } from '@vroom-web/whitelabel';
 import { GetServerSideProps, GetServerSidePropsContext, NextPage } from 'next';
 import React from 'react';

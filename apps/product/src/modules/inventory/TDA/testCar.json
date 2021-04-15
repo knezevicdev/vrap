@@ -2,6 +2,10 @@
   "vin": "some-vin",
   "bodyType": "",
   "interiorPhotoUrl": "",
+  "badges": [],
+  "cabType": null,
+  "location": "RA Detroit",
+  "transmissionDetail": null,
   "diesel": 0,
   "leadFlagPhotoUrl": "",
   "listingPrice": 0,
@@ -57,5 +61,7 @@
   "height": 0,
   "hasStockPhotos": false,
   "consignmentPartnerId": "",
-  "isAvailableToSell": false
+  "isAvailableToSell": false,
+  "vinClusterPrimary": 0,
+  "vinClusterSecondary": 0
 }

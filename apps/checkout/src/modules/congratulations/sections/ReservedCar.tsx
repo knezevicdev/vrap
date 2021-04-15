@@ -13,6 +13,7 @@ import {
 import React from 'react';
 import styled from 'styled-components';
 
+import DocumentUpload from '../components/DocumentUpload';
 import Trade from '../components/Trade';
 
 const primaryBrand = (props: { theme: ThemeProps }): string =>
@@ -33,11 +34,11 @@ const Background = styled.div`
   background: linear-gradient(${primaryBrand} 70%, ${grayFour} 30%);
 `;
 
-const Container = styled.div<{ hasTradeIn: boolean }>`
+const Container = styled.div`
   display: flex;
-  padding: 48px 0;
-  width: ${(props): string => (props.hasTradeIn ? '84%' : '100%')};
-  max-width: ${(props): string => (props.hasTradeIn ? '1088px' : '1312px')};
+  padding: 64px 24px;
+  width: 100%;
+  max-width: 1312px;
   margin: 64px;
   box-shadow: 0px 4px 24px 4px rgba(0, 0, 0, 0.1);
   background: ${primaryWhite};
@@ -57,18 +58,17 @@ const Container = styled.div<{ hasTradeIn: boolean }>`
   `)}
 `;
 
-const Content = styled.div<{ hasTradeIn: boolean }>`
+const smallScreenContent = `
+    flex-direction: column;
+`;
+
+const Content = styled.div<{ fullWidth: boolean }>`
   display: flex;
-  flex-direction: ${(props): string => (props.hasTradeIn ? 'row' : 'column')};
   align-items: center;
-
-  ${addStyleForTablet(`
-    flex-direction: column;
-  `)}
-
-  ${addStyleForMobile(`
-    flex-direction: column;
-  `)}
+  flex-direction: ${({ fullWidth }): string => (fullWidth ? `row` : `column`)};
+  padding-bottom: ${({ fullWidth }): string => (fullWidth ? `16px` : `0`)};
+  ${addStyleForMobile(smallScreenContent)};
+  ${addStyleForTablet(smallScreenContent)};
 `;
 
 const Information = styled.div`
@@ -87,7 +87,6 @@ const CarPicture = styled.div`
   max-height: 190px;
   width: 28px;
   height: 190px;
-
   margin-top: 24px;
 
   ${addStyleForMobile(`
@@ -123,18 +122,17 @@ const Steps = styled.div`
   }
 `;
 
-const CarTitle = styled(Title.Two)<{ hasTradeIn: boolean }>`
+const CarTitle = styled(Title.Two)<{ fullWidth: boolean }>`
   margin-top: 24px;
   margin-bottom: 16px;
-  ${(props): string | false => !props.hasTradeIn && `text-align: center;`}
-  ${addStyleForTablet(`
-    text-align: center;
-  `)}
-  
+  text-align: ${({ fullWidth }): string => (fullWidth ? `left` : `center`)};
   ${addStyleForMobile(`
         font-size: 20px;
         margin-top: 16px;
         line-height: 24px;
+        text-align: center;
+   `)}
+  ${addStyleForTablet(`
         text-align: center;
    `)}
 `;
@@ -151,11 +149,10 @@ const Schedule = styled(Link)`
   color: ${primaryBrand} !important;
 `;
 
-const Reserved = styled.div<{ hasTradeIn: boolean }>`
+const Reserved = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: ${(props): string => (props.hasTradeIn ? '100%' : '40%')};
   margin: 0 auto;
   ${addStyleForMobile(`
     width: 100%;
@@ -172,7 +169,7 @@ const Divider = styled.div`
   max-width: 1px;
   min-height: 100%;
   max-height: 100%;
-
+  margin: 0 24px;
   ${addStyleForTablet(`
     min-width: 100%;
     max-width: 100%;
@@ -190,10 +187,27 @@ const Divider = styled.div`
   `)}
 `;
 
+const TradeContainer = styled.div`
+  width: 45%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  ${addStyleForMobile(`
+    width: 100%;
+  `)}
+
+  ${addStyleForTablet(`
+    width: 100%;
+  `)}
+`;
+
 export interface ReservedCarProps {
   trackScheduleTime?: () => void;
   trackLicensePlateClick?: () => void;
   trackVinClick?: () => void;
+  trackDocUploadClicked?: () => void;
+  dealId: number;
   data: {
     car: string;
     email: string;
@@ -204,10 +218,12 @@ export interface ReservedCarProps {
     };
   };
   hasTradeIn: boolean;
+  isDocUploadStepDone: boolean;
 }
 
 const ReservedCar: React.FC<ReservedCarProps> = ({
   trackScheduleTime,
+  dealId,
   data: {
     car,
     email,
@@ -217,24 +233,28 @@ const ReservedCar: React.FC<ReservedCarProps> = ({
   hasTradeIn,
   trackLicensePlateClick,
   trackVinClick,
+  trackDocUploadClicked,
+  isDocUploadStepDone,
 }): JSX.Element => {
+  const hasTradeAndDocumentUploaded = hasTradeIn && isDocUploadStepDone;
+
   return (
     <Background>
-      <Container hasTradeIn={hasTradeIn}>
-        <Reserved hasTradeIn={hasTradeIn}>
+      <Container>
+        <Reserved>
           <CarHeading>your car is reserved!</CarHeading>
-          <Content hasTradeIn={hasTradeIn}>
+          <Content fullWidth={hasTradeAndDocumentUploaded}>
             <CarPicture>
               <Picture
                 alt={alt}
                 src={src}
                 width="100%"
                 aspectRatio="3:2"
-                objectFit="contain"
+                objectFit="cover"
               />
             </CarPicture>
             <Information>
-              <CarTitle hasTradeIn={hasTradeIn}>{car}</CarTitle>
+              <CarTitle fullWidth={hasTradeAndDocumentUploaded}>{car}</CarTitle>
               <Steps>
                 <Step>
                   <Check icon={Icons.ENVELOPE} />
@@ -263,13 +283,28 @@ const ReservedCar: React.FC<ReservedCarProps> = ({
             </Information>
           </Content>
         </Reserved>
+
+        {hasTradeIn && !isDocUploadStepDone && (
+          <>
+            <Divider />
+            <TradeContainer>
+              <DocumentUpload
+                dealId={dealId}
+                trackDocUploadClicked={trackDocUploadClicked}
+              />
+            </TradeContainer>
+          </>
+        )}
+
         {!hasTradeIn && (
           <>
             <Divider />
-            <Trade
-              trackLicensePlateClick={trackLicensePlateClick}
-              trackVinClick={trackVinClick}
-            />
+            <TradeContainer>
+              <Trade
+                trackLicensePlateClick={trackLicensePlateClick}
+                trackVinClick={trackVinClick}
+              />
+            </TradeContainer>
           </>
         )}
       </Container>

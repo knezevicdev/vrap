@@ -36,16 +36,51 @@ export const questionsViewModel: QuestionProps = {
 };
 
 export const reservedCarViewModel: ReservedCarProps = {
+  dealId: 123,
   data: {
     car: '2018 Land Rover Range Rover Sport',
     image: {
       alt: '2018 Land Rover Range Rover Sport',
-      src: '/assets/car.png',
+      src:
+        'https://cdn.spincar.com/swipetospin-viewers/vroomadesaatlanta/jthbw1gg0h2142332/20201203212657.Z81AZWJL/closeups/cu-0.jpg',
+    },
+    email: 'ph123@gmail.com',
+    phoneNumber: '1 (212) 200-1000',
+  },
+  hasTradeIn: false,
+  isDocUploadStepDone: true,
+};
+
+export const reservedCarViewModelHasTradeIn: ReservedCarProps = {
+  dealId: 456,
+  data: {
+    car: '2018 Land Rover Range Rover Sport',
+    image: {
+      alt: '2018 Land Rover Range Rover Sport',
+      src:
+        'https://cdn.spincar.com/swipetospin-viewers/vroomadesaatlanta/jthbw1gg0h2142332/20201203212657.Z81AZWJL/closeups/cu-0.jpg',
     },
     email: 'ph123@gmail.com',
     phoneNumber: '1 (212) 200-1000',
   },
   hasTradeIn: true,
+  isDocUploadStepDone: false,
+};
+
+export const reservedCarViewModelHasTradeInDocUploadStepDone: ReservedCarProps = {
+  dealId: 456,
+  data: {
+    car: '2018 Land Rover Range Rover Sport',
+    image: {
+      alt: '2018 Land Rover Range Rover Sport',
+      src:
+        'https://cdn.spincar.com/swipetospin-viewers/vroomadesaatlanta/jthbw1gg0h2142332/20201203212657.Z81AZWJL/closeups/cu-0.jpg',
+    },
+    email: 'ph123@gmail.com',
+    phoneNumber: '1 (212) 200-1000',
+  },
+  hasTradeIn: true,
+  isDocUploadStepDone: true,
 };
 
 export const purchaseSummaryViewModel: PurchaseSummaryProps = {
@@ -143,7 +178,21 @@ export const purchaseSummaryViewModel: PurchaseSummaryProps = {
       miles: '20,818 miles',
     },
   },
-  showInsuranceDisclaimer: true,
+  documentsUploaded: {
+    documents: [
+      {
+        fileID: 'c56fea24-9009-44a7-8549-0eb630f52aa8',
+        fileType: 'drivers-license-back',
+        status: '',
+      },
+      {
+        fileID: '48272698-f1f9-4992-a1d9-5a9c182003b8',
+        fileType: 'drivers-license-front',
+        status: '',
+      },
+    ],
+    showInsuranceDisclaimer: true,
+  },
 };
 
 const sections = [

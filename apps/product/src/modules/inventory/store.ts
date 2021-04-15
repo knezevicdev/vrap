@@ -5,13 +5,17 @@ import {
   InvSearchNetworker,
 } from '@vroom-web/inv-search-networking';
 import { InvServiceNetworker } from '@vroom-web/inv-service-networking';
-import { action, observable, runInAction } from 'mobx';
+import { Client, GQLTypes, isSuccessResponse } from '@vroom-web/networking';
+import gql from 'graphql-tag';
+import { action, makeObservable, observable, runInAction } from 'mobx';
 import getConfig from 'next/config';
 import { createContext } from 'react';
 
 import { Status } from 'src/networking/types';
 
 const { publicRuntimeConfig } = getConfig();
+
+const deliveryFeeDefault = 699;
 
 export enum GallerySelections {
   GENERAL = 'General Photos',
@@ -146,6 +150,10 @@ export async function getInventoryAvailabilityState(
   }
 }
 
+interface DeliveryFeeData {
+  taxiGetShippingFee: GQLTypes.ShippingFee;
+}
+
 export async function getInitialInventoryStoreState(
   vin: string,
   actionFavorite: boolean
@@ -181,6 +189,7 @@ export async function getInitialInventoryStoreState(
     vin,
     invServiceNetworker
   );
+
   return {
     vin,
     ...vehicleState,
@@ -195,6 +204,9 @@ export class InventoryStore {
     publicRuntimeConfig.INVSEARCH_V3_URL || ''
   );
 
+  @observable deliveryFee = deliveryFeeDefault;
+  @observable deliveryFeeHasSucceeded = false;
+  @observable deliveryFeeHasFailed = false;
   @observable similarStatus: Status = Status.FETCHING;
   @observable similar: Hit[] = [] as Hit[];
   @observable similarClusterCount = 0;
@@ -219,16 +231,52 @@ export class InventoryStore {
       this.similar = initialState.similar;
       this.isAvailable = initialState.isAvailable;
       this.actionFavorite = initialState.actionFavorite;
+
+      const gearboxClient = new Client(publicRuntimeConfig.GEARBOX_URL, {
+        timeout: 4000,
+      });
+      this.fetchDeliveryFeeState(gearboxClient, deliveryFeeDefault);
+    }
+    makeObservable(this);
+  }
+
+  @action
+  setSimilarStatus(similarStatus: Status): void {
+    this.similarStatus = similarStatus;
+  }
+
+  @action
+  async fetchDeliveryFeeState(
+    gearboxClient: Client,
+    deliveryFeeDefault: number
+  ): Promise<void> {
+    const response = await gearboxClient.gqlRequest<DeliveryFeeData>({
+      document: gql`
+        {
+          taxiGetShippingFee {
+            fee
+          }
+        }
+      `,
+    });
+    if (isSuccessResponse(response)) {
+      runInAction(() => {
+        this.deliveryFee =
+          response.data.taxiGetShippingFee.fee || deliveryFeeDefault;
+        this.deliveryFeeHasSucceeded = true;
+      });
+    } else {
+      console.log('in error state');
+      console.error(JSON.stringify(response.error));
+      runInAction(() => {
+        this.deliveryFee = deliveryFeeDefault;
+        this.deliveryFeeHasFailed = true;
+      });
     }
   }
 
   @action
-  setSimilarStatus = (similarStatus: Status): void => {
-    this.similarStatus = similarStatus;
-  };
-
-  @action
-  getSimilar = async (vin: string, useVinCluster: boolean): Promise<void> => {
+  async getSimilar(vin: string, useVinCluster: boolean): Promise<void> {
     this.similarStatus = Status.FETCHING;
     const data = await getVehicleSimilarState(
       vin,
@@ -240,22 +288,22 @@ export class InventoryStore {
       this.similarStatus = data.similarStatus;
       this.similarClusterCount = data.similarClusterCount;
     });
-  };
+  }
 
   @action
-  changeSelectedGallery = (gallery: GallerySelections): void => {
+  changeSelectedGallery(gallery: GallerySelections): void {
     this.selectedGallery = gallery;
-  };
+  }
 
   @action
-  setGeoShippingExperiment = (geoShippingExperiment?: Experiment): void => {
+  setGeoShippingExperiment(geoShippingExperiment?: Experiment): void {
     this.geoShippingExperiment = geoShippingExperiment;
-  };
+  }
 
   @action
-  setGoBiasExperiment = (goBiasExperiment?: Experiment): void => {
+  setGoBiasExperiment(goBiasExperiment?: Experiment): void {
     this.goBiasExperiment = goBiasExperiment;
-  };
+  }
 }
 
 export const InventoryStoreContext = createContext<InventoryStore>(

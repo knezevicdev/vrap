@@ -31,6 +31,8 @@ const defaultOptionsState: OptionStoreState = {
     // eslint-disable-next-line @typescript-eslint/camelcase
     final_payoff: 0,
   },
+  institutionFound: true,
+  institutionSearched: false,
 };
 
 export interface OptionStoreState {
@@ -38,6 +40,8 @@ export interface OptionStoreState {
   email: string;
   currentPayments: boolean;
   poq: Poq;
+  institutionFound: boolean;
+  institutionSearched: boolean;
 }
 
 export async function getInitialOptionsStoreState(
@@ -53,6 +57,8 @@ export async function getInitialOptionsStoreState(
       email: verificationData.email,
       currentPayments: verificationData.current_payments,
       poq: verificationData.poq,
+      institutionFound: true,
+      institutionSearched: false,
     };
 
     return optionState;
@@ -78,7 +84,6 @@ export async function submitPaymentOptions(
 }
 
 export class OptionsStore implements Store {
-  @observable payOptionSelected = 'Direct Deposit';
   @observable showDD = true;
   @observable mailingAddress = defaultOptionsState.mailingAddress;
   @observable priceId = '';
@@ -88,6 +93,8 @@ export class OptionsStore implements Store {
   @observable poq = defaultOptionsState.poq;
   @observable storeStatus = StoreStatus.Initial;
   @observable asyncStatus = AsyncStatus.Idle;
+  @observable institutionFound = true;
+  @observable institutionSearched = false;
 
   constructor(priceId?: string) {
     if (priceId) this.init(priceId);
@@ -108,13 +115,22 @@ export class OptionsStore implements Store {
 
   @action
   setPayOptionSelected = (value: string): void => {
-    this.payOptionSelected = value;
-    this.showDD = value === 'Yes';
+    this.showDD = value === 'Direct Deposit';
   };
 
   @action
   setPlaidSubmitting = (value: boolean): void => {
     this.plaidSubmitting = value;
+  };
+
+  @action
+  setInstitutionFound = (value: boolean): void => {
+    this.institutionFound = value;
+  };
+
+  @action
+  setInstitutionSearched = (value: boolean): void => {
+    this.institutionSearched = value;
   };
 }
 

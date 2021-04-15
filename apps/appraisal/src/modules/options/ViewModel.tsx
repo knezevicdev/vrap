@@ -26,22 +26,12 @@ class OptionsViewModel {
     this.analyticsHandler.trackPaymentOptionsViewed();
   };
 
-  onPayOptionClick = (
-    selectedOption: React.ChangeEvent<HTMLInputElement>
-  ): void => {
-    this.store.setPayOptionSelected(selectedOption.currentTarget.name);
-  };
-
   onPlaidSubmitting = (value: boolean): void => {
     this.store.setPlaidSubmitting(value);
   };
 
   getPlaidSubmitting = (): boolean => {
     return this.store.plaidSubmitting;
-  };
-
-  getPayOptionSelected = (): string => {
-    return this.store.payOptionSelected;
   };
 
   getMailiingAddress = (): MailingAddress => {
@@ -129,11 +119,15 @@ class OptionsViewModel {
     const mailingAddress = calcMailingAddress();
     submitPaymentOptions(values, this.store.priceId, mailingAddress);
 
-    const submittedType = this.store.showDD ? 'ACH' : 'Check';
-    const url = `/sell/verification-congrats`;
-
+    const submittedType = this.store.showDD ? 'Manual ACH' : 'Check';
     this.analyticsHandler.trackPaymentOptionsSubmitted(submittedType);
+
+    const url = `/sell/verification-congrats`;
     window.location.href = url;
+  };
+
+  getInstitutionNotFound = (): boolean => {
+    return this.store.institutionFound === false;
   };
 }
 

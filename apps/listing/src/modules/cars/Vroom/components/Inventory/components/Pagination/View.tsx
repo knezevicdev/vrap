@@ -12,8 +12,7 @@ const StyledPagination = styled(Pagination)(({ theme }) => ({
   justifyContent: 'center',
   marginTop: theme.spacing(3),
   [theme.breakpoints.only('xs')]: {
-    marginTop: theme.spacing(3),
-    margin: theme.spacing(6),
+    margin: theme.spacing(3, 6, 2, 6),
   },
 
   '& .MuiPaginationItem-page.Mui-selected': {

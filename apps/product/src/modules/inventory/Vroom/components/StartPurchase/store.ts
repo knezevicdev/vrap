@@ -1,7 +1,7 @@
 import { DealsV2Networker } from '@vroom-web/deals-v2-networking';
 import ClientSideCookies from 'js-cookie';
 import jwtDecode from 'jwt-decode';
-import { action, observable, runInAction } from 'mobx';
+import { action, makeObservable, observable, runInAction } from 'mobx';
 
 import { Status } from 'src/networking/types';
 
@@ -22,10 +22,11 @@ export class StartPurchaseStore {
 
   constructor(gearboxPrivateUrl: string) {
     this.dealsV2Networker = new DealsV2Networker(gearboxPrivateUrl);
+    makeObservable(this);
   }
 
   @action
-  private initDealStatus = async (): Promise<void> => {
+  private async initDealStatus(): Promise<void> {
     try {
       const accessToken = this.accessToken;
       if (!accessToken) {
@@ -57,10 +58,10 @@ export class StartPurchaseStore {
         this.dealStatus = DealStatus.NO_DEAL;
       });
     }
-  };
+  }
 
   @action
-  private initUserAccount = async (): Promise<void> => {
+  private async initUserAccount(): Promise<void> {
     try {
       // https://github.com/js-cookie/js-cookie/blob/master/SERVER_SIDE.md#express
       const authTokenWithExpressPrefix = ClientSideCookies.get('authToken');
@@ -83,11 +84,11 @@ export class StartPurchaseStore {
         this.userTokenStatus = Status.ERROR;
       });
     }
-  };
+  }
 
   @action
-  initClientSide = (): void => {
+  initClientSide(): void {
     this.initUserAccount();
     this.initDealStatus();
-  };
+  }
 }

@@ -12,9 +12,7 @@ WORKDIR /www/apps/landing
 RUN \
   # Install git so editor git commands work
   apk --no-cache add git &&\
-  # Bootstrap yarn workspaces.
   npm install &&\
-  # Build the main app.
   npm run build
 
 EXPOSE 8080

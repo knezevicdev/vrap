@@ -1,4 +1,4 @@
-import { action, observable, runInAction } from 'mobx';
+import { action, makeObservable, observable, runInAction } from 'mobx';
 import getConfig from 'next/config';
 
 import LicensePlateToVinNetworker, {
@@ -18,6 +18,10 @@ export class LicensePlateStore {
   @observable vehicles: Vehicles[] | undefined = undefined;
   @observable isDialogOpen = false;
   @observable fetching = false;
+
+  constructor() {
+    makeObservable(this);
+  }
 
   @action
   setSelectedState = (state: string): void => {

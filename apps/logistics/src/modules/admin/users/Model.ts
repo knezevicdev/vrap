@@ -120,6 +120,10 @@ class UsersModel {
   setStatusFilter = (value: UserStatus): void => {
     this.statusFilter = value;
   };
+
+  resetCreateAccountStatus = (): void => {
+    this.createAccountStatus = Status.INITIAL;
+  };
 }
 
 export default UsersModel;

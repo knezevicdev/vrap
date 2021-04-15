@@ -49,13 +49,12 @@ class ShipmentsViewModel {
     );
   }
 
-  /* eslint-disable @typescript-eslint/camelcase */
   private addressfmt({
     street_line_1,
     street_line_2,
     city,
     state,
-    zipcode,
+    zip_code,
   }: Address): JSX.Element {
     return (
       <>
@@ -63,52 +62,91 @@ class ShipmentsViewModel {
         <br />
         {street_line_2}
         {street_line_2 && <br />}
-        {city}, {state} {zipcode}
+        {city}, {state} {zip_code}
       </>
     );
   }
-  /* eslint-enable @typescript-eslint/camelcase */
 
-  setSelectedStatus(tabValue: number): void {
-    this.model.setSelectedStatus(this.tabs[tabValue].status);
+  setSelectedTab(value: number): void {
+    this.model.setSelectedTab(value, this.tabs[value].status);
   }
 
   getShipments(): void {
     this.model.getShipments();
   }
 
+  get tab(): number {
+    return this.model.selectedTab;
+  }
+
+  get offset(): number {
+    return this.model.offset;
+  }
+
+  get limit(): number {
+    return this.model.limit;
+  }
+
+  get total(): number {
+    return this.tabs[this.model.selectedTab].count;
+  }
+
+  get from(): number {
+    return Math.min(this.offset + 1, this.total);
+  }
+
+  get until(): number {
+    return this.offset + Math.min(this.limit, this.total);
+  }
+
+  get lastOffset(): number {
+    return this.total - this.limit;
+  }
+
+  nextPage(): void {
+    this.model.nextPage();
+  }
+
+  prevPage(): void {
+    this.model.prevPage();
+  }
+
   get tabs(): {
     display: string;
+    count: number;
     status: ShipmentStatus;
     tableData: TableData;
   }[] {
-    const displayCount = (value: string): string => {
-      const found = this.model.counts.find((j) => j.status === value);
-      return `${value} (${found ? found.count : 0})`;
-    };
+    const count = (display: string): number =>
+      this.model.counts.find((j) => j.status === display)?.count || 0;
     return [
       {
-        display: displayCount('Posted'),
+        display: 'Posted',
+        count: count('Posted'),
         status: ShipmentStatus.Posted,
         tableData: this.posted,
       },
       {
-        display: displayCount('Booked'),
+        display: 'Booked',
+        count: count('Booked'),
         status: ShipmentStatus.Booked,
         tableData: this.booked,
       },
       {
-        display: displayCount('In Transit'),
+        display: 'In Transit',
+        count: count('In Transit'),
         status: ShipmentStatus.InTransit,
         tableData: this.inTransit,
       },
       {
-        display: displayCount('Cancelled'),
+        display: 'Cancelled',
+        count: count('Cancelled'),
         status: ShipmentStatus.Cancelled,
         tableData: this.cancelled,
       },
       {
-        display: displayCount('Delivered'),
+        display: 'Delivered',
+        count: count('Delivered'),
         status: ShipmentStatus.Delivered,
         tableData: this.delivered,
       },

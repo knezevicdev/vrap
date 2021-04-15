@@ -15,6 +15,8 @@ jest.mock('next/config', () => {
   };
 });
 
+jest.mock('./store');
+
 const ACCESS_TOKEN = 'access-token';
 const VIN = 'some-vin';
 
@@ -58,6 +60,7 @@ describe('Notify Me View Model', () => {
           },
         },
       });
+
       await viewModel.setSubscription();
       expect(notifyMeStore.setNotifyMeLoading).toHaveBeenCalledTimes(2);
       expect(notifyMeStore.setSuccess).toHaveBeenCalledTimes(2);

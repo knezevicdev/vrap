@@ -1,4 +1,4 @@
-FROM node:erbium-alpine
+FROM node:fermium-alpine
 ARG CI_JOB_TOKEN
 WORKDIR /www
 COPY .git ./.git

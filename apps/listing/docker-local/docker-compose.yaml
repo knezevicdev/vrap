@@ -11,6 +11,8 @@ services:
       - BRANCH_IO_KEY=key_live_kcLYw3YkcZ81GfwRZ84cBcgmusnd6ysn=
       - CI_JOB_TOKEN=${CI_JOB_TOKEN}
       - GEARBOX_PRIVATE_URL=https://gearbox-dev-int.vroomapi.com/query-private
+      - GEARBOX_URL=cars/api/gql
+      - GQL_PROXY_TARGET=https://dev.vroom.com/gql
       - HORN_SERVICE_URL=https://horn-dev-int.vroomapi.com
       - INVSEARCH_V3_URL=https://invsearch-v3-dev-int.aws.vroomapi.com:8443/v3
       - SANTANDER_SEGMENT_WRITE_KEY=BP2otWcD2EbECrCfUwn1RuDQAPPYa6mv

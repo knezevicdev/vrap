@@ -1,8 +1,14 @@
-import Box from '@material-ui/core/Box';
-import Button from '@material-ui/core/Button';
-import Grid from '@material-ui/core/Grid';
-import Paper from '@material-ui/core/Paper';
-import TextField from '@material-ui/core/TextField';
+import {
+  Box,
+  Button,
+  CircularProgress,
+  Grid,
+  Link as MuiLink,
+  Paper,
+  TextField,
+  Typography,
+} from '@material-ui/core';
+import { Alert } from '@material-ui/lab';
 import { observer } from 'mobx-react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
@@ -22,75 +28,115 @@ const SignIn: React.FC<Props> = ({ viewModel }) => {
     }
   }, [router, viewModel.previousUrl, viewModel.success]);
 
-  const handleSubmit = async (
-    event: React.FormEvent<HTMLFormElement>
-  ): Promise<void> => {
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
     event.preventDefault();
     viewModel.authenticate();
   };
 
   return (
-    <Grid container justify="center">
-      <Grid item xs={12} sm={4}>
-        <Paper variant="outlined" square>
-          <Box p={2}>
-            <form onSubmit={handleSubmit}>
-              <Box pb={2}>
-                <Grid container spacing={2}>
-                  <Grid item xs={12}>
-                    Sign In
-                  </Grid>
-                  <Grid item xs={12}>
-                    <TextField
-                      value={viewModel.email}
-                      onChange={(e): void => viewModel.setEmail(e.target.value)}
-                      label="Email"
-                      variant="outlined"
-                      required
-                      fullWidth
-                      autoComplete="email"
-                    />
-                  </Grid>
-                  <Grid item xs={12}>
-                    <TextField
-                      value={viewModel.password}
-                      onChange={(e): void =>
-                        viewModel.setPassword(e.target.value)
-                      }
-                      label="Password"
-                      variant="outlined"
-                      required
-                      fullWidth
-                      type="password"
-                      autoComplete="current-password"
-                    />
-                  </Grid>
-                </Grid>
-              </Box>
-              <Grid container justify="space-between">
-                <Grid item>
-                  <Link href="/forgot" passHref>
-                    <Button variant="contained" color="primary">
-                      Forgot Password
-                    </Button>
-                  </Link>
-                </Grid>
-                <Grid item>
-                  <Button
-                    size="small"
-                    type="submit"
-                    variant="contained"
-                    color="primary"
+    <Box py={{ xs: 0, sm: 6 }}>
+      {viewModel.error && (
+        <Box pb={4}>
+          <Grid container justify="center">
+            <Grid item xs={12} sm={8} md={6} lg={4}>
+              <Alert
+                severity="error"
+                onClose={(): void => viewModel.clearError()}
+              >
+                {viewModel.error}
+              </Alert>
+            </Grid>
+          </Grid>
+        </Box>
+      )}
+      <Grid container justify="center">
+        <Grid item xs={12} sm={8} md={6} lg={4}>
+          <Paper variant="outlined" square>
+            <Box py={3} px={{ xs: 2, md: 10 }}>
+              <form onSubmit={handleSubmit}>
+                <Box pb={3}>
+                  <Grid
+                    container
+                    justify="center"
+                    alignItems="center"
+                    spacing={2}
                   >
-                    Submit
-                  </Button>
+                    <Grid item>
+                      <Box pb={1} fontWeight={600} fontSize={18}>
+                        Sign In
+                      </Box>
+                    </Grid>
+                    <Grid item xs={12}>
+                      <TextField
+                        value={viewModel.email}
+                        onChange={(e): void =>
+                          viewModel.setEmail(e.target.value)
+                        }
+                        label="Email"
+                        variant="outlined"
+                        required
+                        fullWidth
+                        autoComplete="email"
+                      />
+                    </Grid>
+                    <Grid item xs={12}>
+                      <TextField
+                        value={viewModel.password}
+                        onChange={(e): void =>
+                          viewModel.setPassword(e.target.value)
+                        }
+                        label="Password"
+                        variant="outlined"
+                        required
+                        fullWidth
+                        type="password"
+                        autoComplete="current-password"
+                      />
+                    </Grid>
+                  </Grid>
+                </Box>
+                <Grid
+                  container
+                  direction="column"
+                  alignItems="center"
+                  spacing={2}
+                >
+                  <Grid item>
+                    <Button
+                      size="large"
+                      type="submit"
+                      variant="contained"
+                      color="primary"
+                      disabled={viewModel.disabled}
+                    >
+                      {viewModel.loading ? (
+                        <CircularProgress size="1.5rem" />
+                      ) : (
+                        'Sign In'
+                      )}
+                    </Button>
+                  </Grid>
+                  <Grid item>
+                    <Typography>
+                      <Link href="/signup" passHref>
+                        <MuiLink>Need an account? Create one here.</MuiLink>
+                      </Link>
+                    </Typography>
+                  </Grid>
+                  <Grid item>
+                    <Typography>
+                      <Link href="/forgot" passHref>
+                        <MuiLink>Forgot your password?</MuiLink>
+                      </Link>
+                    </Typography>
+                  </Grid>
                 </Grid>
-              </Grid>
-            </form>
-          </Box>
-        </Paper>
+              </form>
+            </Box>
+          </Paper>
+        </Grid>
       </Grid>
-    </Grid>
+    </Box>
   );
 };
 

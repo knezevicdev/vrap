@@ -29,7 +29,7 @@ class SuperCenterViewModel {
     hoursOfOperation: {
       title: 'Hours of Operation',
       days: 'Monday - Saturday',
-      time: '10 am - 6 pm',
+      time: '10 am - 7 pm',
     },
   };
 }

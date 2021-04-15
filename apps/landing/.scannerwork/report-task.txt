@@ -1,7 +1,0 @@
-organization=tdalabs-1
-projectKey=vroom-web:Landing
-serverUrl=https://sonarcloud.io
-serverVersion=8.0.0.13024
-dashboardUrl=https://sonarcloud.io/dashboard?id=vroom-web%3ALanding
-ceTaskId=AXT-8IyK1FvPMfJB5Jpa
-ceTaskUrl=https://sonarcloud.io/api/ce/task?id=AXT-8IyK1FvPMfJB5Jpa

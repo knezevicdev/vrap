@@ -8,10 +8,16 @@ import ViewModel from './ViewModel';
 const { publicRuntimeConfig } = getConfig();
 
 const Background = styled('div')({
-  backgroundImage: `url(${publicRuntimeConfig.BASE_PATH}/modules/home/images/who-we-are-background.png)`,
-  backgroundRepeat: 'no-repeat',
-  backgroundSize: 'cover',
-  backgroundPosition: 'center top',
+  position: 'relative',
+});
+
+const BackgroundImg = styled('img')({
+  width: '100%',
+  height: '100%',
+  objectFit: 'cover',
+  objectPosition: 'top',
+  position: 'absolute',
+  zIndex: -1,
 });
 
 const StyledContainer = styled(Container)(({ theme }) => ({
@@ -58,6 +64,11 @@ const WhoWeAreView: React.FC<Props> = ({ viewModel }) => {
 
   return (
     <Background>
+      <BackgroundImg
+        src={`${publicRuntimeConfig.VROOM_URL}/static-assets/images/home-page/who-we-are-background.png`}
+        alt={'Reconditioning center'}
+        loading="lazy"
+      />
       <StyledContainer>
         <Title variant="h2">{viewModel.title}</Title>
         <SubTitle>{viewModel.subtitle}</SubTitle>

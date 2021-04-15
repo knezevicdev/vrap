@@ -2,7 +2,7 @@ const path = require('path');
 module.exports = {
     "stories": [
         "../src/stories/**/*.stories.mdx",
-        "../src//stories/**/*.stories.@(js|jsx|ts|tsx)",
+        "../src/stories/**/*.stories.@(js|jsx|ts|tsx)",
     ],
     "addons": [
         {
@@ -22,7 +22,12 @@ module.exports = {
         config.resolve.alias = {
           ...config.resolve.alias
         };
-    
+
+        config.module.rules.push({ 
+          test: /\.graphql$/,
+          exclude: /node_modules/,
+          loader: 'graphql-tag/loader',
+        });
         config.resolve.modules = [
           ...(config.resolve.modules || []),
           path.resolve(__dirname, "../"),

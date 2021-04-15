@@ -1,3 +1,4 @@
+import CircularProgress from '@material-ui/core/CircularProgress';
 import { styled } from '@material-ui/core/styles';
 import CloseIcon from '@material-ui/icons/Close';
 import FullscreenExitIcon from '@material-ui/icons/FullscreenExit';
@@ -34,6 +35,33 @@ const StyledCloseIcon = styled(CloseIcon)(() => ({
   top: 0,
   right: 0,
   margin: '10px 30px',
+}));
+
+const IFrameContainer = styled('div')(() => ({
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  position: 'relative',
+  backgroundColor: '#041022',
+  marginTop: '50px',
+}));
+
+const SpincarIframe = styled('iframe')(({ theme }) => ({
+  position: 'relative',
+  margin: 0,
+  padding: 0,
+  border: 'none',
+  height: '60vh',
+  width: '100%',
+  zIndex: 2,
+  [theme.breakpoints.only('xs')]: {
+    height: '36vh',
+  },
+}));
+
+const StyledCircularProgress = styled(CircularProgress)(() => ({
+  position: 'absolute',
+  zIndex: 1,
 }));
 
 const StyledImage = styled('img')(() => ({
@@ -107,31 +135,40 @@ const GalleryListView: React.FC<Props> = ({ viewModel }) => {
           <StyledCloseIcon onClick={handleCloseIconClick} />
         </Header>
         <ImagesContainer id="listViewImagesContainer">
-          {images.map(
-            (
-              image: {
-                original: string;
-                thumbnail: string;
-                description?: string;
-              },
-              index: number
-            ) => {
-              return (
-                <React.Fragment key={'listView_' + index}>
-                  <ImageHeader>
-                    {index + 1}
-                    {viewModel.indexSeparator}
-                    {images.length}
-                  </ImageHeader>
-                  <StyledImage
-                    src={image.thumbnail}
-                    onClick={(): void =>
-                      viewModel.handleListViewImageClick(image.original)
-                    }
-                  />
-                </React.Fragment>
-              );
-            }
+          {viewModel.isSpincarView() ? (
+            <IFrameContainer>
+              <SpincarIframe src={viewModel.getSpincarIframeUrl()}>
+                {viewModel.iFrameNotSupported}
+              </SpincarIframe>
+              <StyledCircularProgress />
+            </IFrameContainer>
+          ) : (
+            images.map(
+              (
+                image: {
+                  original: string;
+                  thumbnail: string;
+                  description?: string;
+                },
+                index: number
+              ) => {
+                return (
+                  <React.Fragment key={'listView_' + index}>
+                    <ImageHeader>
+                      {index + 1}
+                      {viewModel.indexSeparator}
+                      {images.length}
+                    </ImageHeader>
+                    <StyledImage
+                      src={image.thumbnail}
+                      onClick={(): void =>
+                        viewModel.handleListViewImageClick(image.original)
+                      }
+                    />
+                  </React.Fragment>
+                );
+              }
+            )
           )}
         </ImagesContainer>
       </StyledContainer>

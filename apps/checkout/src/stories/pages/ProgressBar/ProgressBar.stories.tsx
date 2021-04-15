@@ -8,11 +8,16 @@ const muckSteps = [
   'Payment details',
   'Finalize purchase',
   'Deposit',
-  'Additionla docs'
+  'Additionla docs',
 ];
 
-export const progressBar: React.FC = (props: any) => {
-  return <ProgressBar steps={props.steps} activeStep={props.activeStep} />;
+interface Props {
+  steps: string[];
+  activeStep: number;
+}
+
+export const progressBar = ({ steps, activeStep }: Props): JSX.Element => {
+  return <ProgressBar steps={steps} activeStep={activeStep} />;
 };
 
 export default {

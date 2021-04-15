@@ -1,5 +1,6 @@
 import { styled } from '@material-ui/core/styles';
 import { Typography } from '@vroom-web/ui';
+import { observer } from 'mobx-react';
 import React from 'react';
 
 import ViewModel from './ViewModel';
@@ -16,7 +17,7 @@ const Container = styled('div')(({ theme }) => ({
 const StyledTypography = styled(Typography)(({ theme }) => ({
   fontSize: '13px',
   letterSpacing: '0.35px',
-  paddingBottom: theme.spacing(2),
+  paddingBottom: theme.spacing(1),
 }));
 
 interface Props {
@@ -26,10 +27,11 @@ interface Props {
 const LegalFooterView: React.FC<Props> = ({ viewModel }) => {
   return (
     <Container>
-      <StyledTypography>{viewModel.legalText[0]}</StyledTypography>
-      <StyledTypography>{viewModel.legalText[1]}</StyledTypography>
+      {viewModel.getLegalText().map((item: string) => {
+        return <StyledTypography key={item}>{item}</StyledTypography>;
+      })}
     </Container>
   );
 };
 
-export default LegalFooterView;
+export default observer(LegalFooterView);

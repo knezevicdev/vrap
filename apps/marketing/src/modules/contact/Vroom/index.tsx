@@ -1,19 +1,24 @@
 import { StandardFooter } from '@vroom-web/footer-components';
 import { SimpleHeader } from '@vroom-web/header-components';
 import getConfig from 'next/config';
+import { useRouter } from 'next/router';
 import React from 'react';
 
-import ContactLabel from './components/ContactLabel';
-
-const { publicRuntimeConfig } = getConfig();
+const { publicRuntimeConfig: GEARBOX_PRIVATE_URL } = getConfig();
 
 const Vroom: React.FC = () => {
-  const gearboxPrivateUrl = publicRuntimeConfig.GEARBOX_PRIVATE_URL;
-
+  const { query } = useRouter();
+  const path = query.path || 'welcome';
   return (
     <>
-      <SimpleHeader gearboxPrivateUrl={gearboxPrivateUrl} />
-      <ContactLabel />
+      <SimpleHeader gearboxPrivateUrl={GEARBOX_PRIVATE_URL} />
+      <iframe
+        src={`https://vroom-web.force.com/support/s/${path}`}
+        style={{
+          height: '100vh',
+        }}
+        sandbox="allow-same-origin allow-scripts"
+      />
       <StandardFooter />
     </>
   );

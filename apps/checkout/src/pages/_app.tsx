@@ -1,5 +1,6 @@
 import { datadogRum } from '@datadog/browser-rum';
 import { CatSDK } from '@vroom-web/cat-sdk';
+import { MockServerHelperUI } from '@vroom-web/graphql-mock-server';
 import {
   ErrorResponse,
   isAccessDeniedErrorResponse,
@@ -14,8 +15,10 @@ import { configure as configureMobx } from 'mobx';
 import App from 'next/app';
 import getConfig from 'next/config';
 import React from 'react';
+import Modal from 'react-modal';
 import { ThemeProvider as StyledThemeProvider } from 'styled-components';
 
+import DealValidatorModal from 'src/modules/dealValidator';
 import client from 'src/networking/client';
 
 configureMobx({
@@ -25,7 +28,8 @@ configureMobx({
 });
 
 const { publicRuntimeConfig } = getConfig();
-
+//React-Modal portal injection
+Modal.setAppElement('#__next');
 class VroomApp extends App {
   componentDidMount(): void {
     if (publicRuntimeConfig.DATA_DOG_RUM_APPLICATION) {
@@ -56,17 +60,20 @@ class VroomApp extends App {
       serviceBasePath: dev ? 'https://dev.vroom.com' : undefined,
     });
     catSDK.initCatData();
+
+    //Enable Mock Server UI Doc
+    !!publicRuntimeConfig.mockServer && MockServerHelperUI();
   }
 
   render(): JSX.Element {
     const { Component, pageProps } = this.props;
     const theme = getVroomTheme();
-
     return (
       <>
-        <GlobalStyle />
+        <GlobalStyle baseUrl={publicRuntimeConfig.BASE_PATH} />
         <ThemeProvider brand={Brand.VROOM}>
           <StyledThemeProvider theme={theme}>
+            <DealValidatorModal />
             <Component {...pageProps} />
           </StyledThemeProvider>
         </ThemeProvider>

@@ -17,6 +17,20 @@ class AnalyticsHandler extends BaseAnalyticsHandler {
     };
     this.track(event, properties);
   }
+
+  trackChatboxOpened(): void {
+    const event = 'Conversation Started';
+    const category = 'Pypestream Chatbot';
+    const properties = { category };
+    this.track(event, properties);
+  }
+
+  trackChatboxClosed(): void {
+    const event = 'Conversation Ended';
+    const category = 'Pypestream Chatbot';
+    const properties = { category };
+    this.track(event, properties);
+  }
 }
 
 export default AnalyticsHandler;

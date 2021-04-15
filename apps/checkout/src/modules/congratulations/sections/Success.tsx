@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import CongratsViewModel from '../ViewModel';
 import Next from './Next';
@@ -12,13 +12,17 @@ interface Props {
 const Success: React.FC<Props> = ({ viewModel }): JSX.Element => {
   const reservedCarProps = viewModel.reservedCarProps;
   const nextProps = viewModel.nextProps;
-  const purchaseSummaryViewModel = viewModel.purchaseSummaryProps;
+  const purchaseSummaryProps = viewModel.purchaseSummaryProps;
+
+  useEffect(() => {
+    viewModel.trackSuccess();
+  }, [viewModel]);
 
   return (
     <>
       <ReservedCar {...reservedCarProps} />
       <Next {...nextProps} />
-      <PurchaseSummary {...purchaseSummaryViewModel} />
+      <PurchaseSummary {...purchaseSummaryProps} />
     </>
   );
 };

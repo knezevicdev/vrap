@@ -1,18 +1,32 @@
 {
-"applinks": {
-      "details": [
-           {
-             "appIDs": [ "P8NC3MA5Q7.com.vroom.app.dev", "P8NC3MA5Q7.com.vroom.app.qa", "P8NC3MA5Q7.com.vroom.app.uat", "P8NC3MA5Q7.com.vroom.app.ios" ],
-             "components": [ ]
-           }
-       ]
-   },
-   "webcredentials": {
-      "apps": [
-        "P8NC3MA5Q7.com.vroom.app.dev",
-        "P8NC3MA5Q7.com.vroom.app.qa",
-        "P8NC3MA5Q7.com.vroom.app.uat",
-        "P8NC3MA5Q7.com.vroom.app.ios"
-       ]
-   }
+  "applinks": {
+    "details": [
+      {
+        "appIDs": [
+          "P8NC3MA5Q7.com.vroom.app.ios",
+          "P8NC3MA5Q7.com.vroom.app.dev",
+          "P8NC3MA5Q7.com.vroom.app.qa",
+          "P8NC3MA5Q7.com.vroom.app.uat"
+        ],
+        "components": [
+          {
+            "/": "/my-account/transactions/*/Pending/details",
+            "comment": "Matches any URL whose path starts with /my-account/transcations/<id>/Pending/details and instructs the system to open it as a universal link"
+          },
+          {
+            "/": "/myaccount/transactions/*/Pending/details",
+            "comment": "Matches any URL whose path starts with /myaccount/transcations/<id>/Pending/details and instructs the system to open it as a universal link"
+          }
+        ]
+      }
+    ]
+  },
+  "webcredentials": {
+    "apps": [
+      "P8NC3MA5Q7.com.vroom.app.ios",
+      "P8NC3MA5Q7.com.vroom.app.dev",
+      "P8NC3MA5Q7.com.vroom.app.qa",
+      "P8NC3MA5Q7.com.vroom.app.uat"
+    ]
+  }
 }

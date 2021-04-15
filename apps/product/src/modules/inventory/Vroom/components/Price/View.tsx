@@ -3,6 +3,7 @@ import Popover from '@material-ui/core/Popover';
 import { styled } from '@material-ui/core/styles';
 import CloseIcon from '@material-ui/icons/Close';
 import { Typography } from '@vroom-web/ui';
+import { observer } from 'mobx-react';
 import React, { useState } from 'react';
 import reactStringReplace from 'react-string-replace';
 
@@ -22,16 +23,31 @@ const PriceContainer = styled('div')(({ theme }) => ({
 const Price = styled(Typography)(({ theme }) => ({
   display: 'flex',
   flexDirection: 'row',
-  justifyContent: 'center',
+  justifyContent: 'flex-end',
   marginLeft: theme.spacing(1),
+  marginBottom: theme.spacing(1),
+  fontWeight: 600,
+}));
+
+const ShippingFee = styled(Typography)(({ theme }) => ({
+  display: 'flex',
+  flexDirection: 'row',
+  justifyContent: 'flex-end',
+  marginLeft: theme.spacing(1),
+  whiteSpace: 'nowrap',
 }));
 
 const StyledInfoIcon = styled(InfoIcon)(({ theme }) => ({
-  margin: theme.spacing(0, 1),
+  marginLeft: theme.spacing(1),
+  height: '18px',
+  width: 'auto',
+  [theme.breakpoints.down('sm')]: {
+    height: '16px',
+  },
 }));
 
 const Container = styled('div')(({ theme }) => ({
-  width: '385px',
+  maxWidth: '385px',
   padding: theme.spacing(3, 4),
   borderBottom: `5px solid ${theme.palette.primary.main}`,
 }));
@@ -62,7 +78,7 @@ interface Props {
 
 const PriceView: React.FC<Props> = ({ viewModel }) => {
   //Rather than create a store for tracking a single piece of state,
-  //I thought this would be an approprite time to use local state diretly
+  //I thought this would be an appropriate time to use local state directly
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
   const open = Boolean(anchorEl);
   const handleClick = (event: React.MouseEvent<HTMLElement>): void => {
@@ -72,8 +88,9 @@ const PriceView: React.FC<Props> = ({ viewModel }) => {
   const handleClose = (): void => {
     setAnchorEl(null);
   };
+
   return (
-    <>
+    <div>
       <PriceContainer
         id="price_container"
         onClick={handleClick}
@@ -81,7 +98,7 @@ const PriceView: React.FC<Props> = ({ viewModel }) => {
       >
         <Price>
           ${viewModel.price}
-          <StyledInfoIcon />
+          <StyledInfoIcon viewBox="0 0 20 20" />
         </Price>
       </PriceContainer>
       <Popover
@@ -116,7 +133,7 @@ const PriceView: React.FC<Props> = ({ viewModel }) => {
           </Typography>
           <List>
             <Typography>
-              {viewModel.list.bullets.map((item: string) => {
+              {viewModel.getListBullets().map((item: string) => {
                 return <ListItem key={item}>{item}</ListItem>;
               })}
             </Typography>
@@ -124,8 +141,11 @@ const PriceView: React.FC<Props> = ({ viewModel }) => {
           <Typography>{viewModel.list.extra}</Typography>
         </Container>
       </Popover>
-    </>
+      {viewModel.showShippingFee() && (
+        <ShippingFee>{viewModel.getShippingFee()}</ShippingFee>
+      )}
+    </div>
   );
 };
 
-export default PriceView;
+export default observer(PriceView);

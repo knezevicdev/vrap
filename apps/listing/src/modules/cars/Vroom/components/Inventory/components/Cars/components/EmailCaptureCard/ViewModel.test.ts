@@ -15,7 +15,10 @@ jest.mock('next/config', () => {
   };
 });
 
-jest.mock('src/modules/cars/store');
+jest.mock('src/modules/cars/store', () => ({
+  ...jest.requireActual('src/modules/cars/store'),
+  getPostInventoryRequestDataFromFilterData: jest.fn(),
+}));
 
 const mockSearchParams = (getPostInventoryRequestDataFromFilterData as unknown) as jest.Mock<
   PostInventoryRequestData
@@ -41,14 +44,14 @@ describe('EmailCaptureCard ViewModel Tests', () => {
     expect(viewModel.getInputValue()).toBe('test@vroom.com');
   });
 
-  it('getShowEmailCaptureForm returns true when the status is intitial', () => {
+  it('getShowEmailCaptureForm returns true when the status is initial', () => {
     const store = new EmailCaptureStore();
     const viewModel = new EmailCaptureCardViewModel(store);
     store.setEmailCaptureStatus(Status.INITIAL);
     expect(viewModel.getShowEmailCaptureForm()).toBe(true);
   });
 
-  it('getShowEmailCaptureForm returns false when the status is anything but intitial', () => {
+  it('getShowEmailCaptureForm returns false when the status is anything but initial', () => {
     const store = new EmailCaptureStore();
     const viewModel = new EmailCaptureCardViewModel(store);
     store.setEmailCaptureStatus(Status.FETCHING);

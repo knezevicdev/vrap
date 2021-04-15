@@ -9,15 +9,18 @@ interface Link {
 
 class HeroViewModel {
   readonly title: string = 'delivering, now and\xa0always.';
+  readonly titleExperiment: string = 'get cash for your\xa0car.';
   readonly subtitle: string =
     'Buy a car entirely online, and have it safely delivered, contact-free.';
+  readonly subtitleExperiment: string =
+    "Sell us your car entirely online – we'll even pick it up.";
   readonly subtitleLink: Link = {
-    href: 'https://vroom.zendesk.com/hc/en-us',
+    href: 'https://www.vroom.com/how-it-works',
     label: 'Learn\xa0More',
   };
   readonly mobileButtonLabel: string = 'Browse All Vehicles';
   car = {
-    src: `${publicRuntimeConfig.BASE_PATH}/modules/home/images/ford.png`,
+    src: `${publicRuntimeConfig.VROOM_URL}/static-assets/images/home-page/ford.png`,
     alt: 'F-150',
   };
 }

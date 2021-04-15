@@ -31,6 +31,7 @@ const VIN = styled(Input)`
 const CTA = styled(Button.Primary)`
   margin-top: 16px;
   width: 100%;
+  white-space: normal;
 `;
 
 export interface VinProps {

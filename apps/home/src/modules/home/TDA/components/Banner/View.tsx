@@ -1,6 +1,7 @@
 import { styled } from '@material-ui/core/styles';
 import Close from '@material-ui/icons/Close';
-import React from 'react';
+import { CatData, CatSDK } from '@vroom-web/cat-sdk';
+import React, { useCallback, useEffect, useState } from 'react';
 
 import ViewModel from './ViewModel';
 
@@ -42,10 +43,23 @@ interface Props {
 }
 
 const View: React.FC<Props> = ({ viewModel }) => {
+  const [phoneNumber, setPhoneNumber] = useState<string | undefined>(undefined);
+  const catEventDataListener = useCallback((event: CustomEvent<CatData>) => {
+    setPhoneNumber(event.detail.sitePhoneNumber);
+  }, []);
+
+  useEffect(() => {
+    const catSDK = new CatSDK();
+    catSDK.observeCatData(catEventDataListener);
+    return () => {
+      catSDK.unobserveCatData(catEventDataListener);
+    };
+  }, [catEventDataListener]);
+
   return (
     <Container data-tda-banner>
       <Inner>
-        {`${viewModel.bannerText} `}
+        {`${viewModel.getBannerText(phoneNumber)} `}
         <LocationsLink onClick={viewModel.scrollToLocation}>
           {viewModel.linkText}
         </LocationsLink>

@@ -14,7 +14,10 @@ const Container = styled(Card)(({ theme }) => ({
   boxShadow: '0px 0px 6px rgba(0, 0, 0, 0.15)',
   borderRadius: '0px',
   marginRight: theme.spacing(4),
-  [theme.breakpoints.only('xs')]: { margin: theme.spacing(1, 0) },
+  [theme.breakpoints.only('xs')]: {
+    margin: theme.spacing(1, 0),
+    maxWidth: '100%',
+  },
 }));
 
 const Media = styled('div')(({ theme }) => ({

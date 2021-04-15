@@ -4,15 +4,14 @@ import {
   FooterEventTrackerEnum,
   FooterProps,
 } from '@vroom-web/temp-ui-alias-for-checkout';
-import { parsePhoneNumberFromString } from 'libphonenumber-js';
 
 import Model from './Model';
 import { NextProps } from './sections/Next';
 import { PurchaseSummaryProps } from './sections/PurchaseSummary/PurchaseSummary';
 import { QuestionProps } from './sections/Questions';
 import { ReservedCarProps } from './sections/ReservedCar';
-import { FooterStore } from './store';
 
+import { CatStore, PhoneNumberLink } from 'src/core/store';
 import AnalyticsHandler, {
   TrackContactModule,
 } from 'src/integrations/congratulations/CongratsAnalyticsHandler';
@@ -28,12 +27,7 @@ interface Service {
   summary: string;
 }
 
-export interface Link {
-  href: string;
-  name: string;
-  trackingName?: FooterEventTrackerEnum;
-}
-interface AnalyticsData {
+export interface AnalyticsData {
   UUID?: string;
   username: string;
   vin?: string;
@@ -48,32 +42,41 @@ export default class CongratsViewModel {
   model: Model;
   analyticsHandler: AnalyticsHandler;
   currencyFormatter: Intl.NumberFormat;
-  private store: FooterStore;
+  store: CatStore;
 
-  constructor(model: Model) {
+  constructor(model: Model, store: CatStore) {
     this.model = model;
+    this.store = store;
     this.analyticsHandler = new AnalyticsHandler(this);
-    this.store = new FooterStore();
+
     this.currencyFormatter = new Intl.NumberFormat('en-US', {
       style: 'currency',
       currency: 'USD',
     });
   }
 
+  handleMount(): void {
+    this.store.initClientSide();
+  }
+
+  handleUnmount(): void {
+    this.store.tearDownClientSide();
+  }
+
   private get dealId(): number {
-    return (this.model.data.user.deals as Array<GQLTypes.Deal>)[0].dealID;
+    return (this.model.data?.user.deals as Array<GQLTypes.Deal>)[0].dealID;
   }
 
   private get transactionPlacedDate(): string {
-    return (this.model.data.user.deals as Array<GQLTypes.Deal>)[0].createdAt;
+    return (this.model.data?.user.deals as Array<GQLTypes.Deal>)[0].createdAt;
   }
 
   private get summary(): GQLTypes.DealSummary {
-    return (this.model.data.user.deals as Array<GQLTypes.Deal>)[0].dealSummary;
+    return (this.model.data?.user.deals as Array<GQLTypes.Deal>)[0].dealSummary;
   }
 
   private get tradeIns(): null | undefined | Array<GQLTypes.TradeIn> {
-    return (this.model.data.user.deals as Array<GQLTypes.Deal>)[0].TradeIns;
+    return (this.model.data?.user.deals as Array<GQLTypes.Deal>)[0].TradeIns;
   }
 
   private get account(): GQLTypes.Account {
@@ -173,10 +176,10 @@ export default class CongratsViewModel {
     if (this.model.dataStatus !== Status.SUCCESS) {
       return false;
     }
-    if (!this.model.data.user.deals) {
+    if (!this.model.data?.user.deals) {
       return true;
     }
-    return this.model.data.user.deals.length === 0;
+    return this.model.data?.user.deals.length === 0;
   }
 
   private get showNotAvailableDates(): boolean {
@@ -218,6 +221,19 @@ export default class CongratsViewModel {
     return !this.empty && !this.error && !this.showLoading;
   }
 
+  private get isDocUploadStepDone(): boolean {
+    return this.summary.dealStatus.docUploadStepDone;
+  }
+
+  private get documents(): Array<GQLTypes.DocumentMetadata> {
+    const { documents } = this.summary;
+    return documents
+      ? documents.filter(
+          (document: GQLTypes.DocumentMetadata): boolean => !!document.fileID
+        )
+      : [];
+  }
+
   get reservedCarProps(): ReservedCarProps {
     const { year, make, model, trim } = this.vehicle;
     const { leadPhotoURL } = this.inventory;
@@ -225,9 +241,11 @@ export default class CongratsViewModel {
     const src = leadPhotoURL ? leadPhotoURL : '';
 
     return {
+      dealId: this.dealId,
       trackScheduleTime: this.trackScheduleTime,
       trackLicensePlateClick: this.trackLicensePlateClick,
       trackVinClick: this.trackVinClick,
+      trackDocUploadClicked: this.trackDocUploadClicked,
       data: {
         car: car,
         email: this.account.userName,
@@ -238,6 +256,7 @@ export default class CongratsViewModel {
         },
       },
       hasTradeIn: this.hasTradeIn,
+      isDocUploadStepDone: this.isDocUploadStepDone,
     };
   }
 
@@ -273,7 +292,7 @@ export default class CongratsViewModel {
   get analyticsData(): AnalyticsData {
     return {
       UUID: undefined,
-      username: this.model.data.user.username,
+      username: this.model.data?.user.username || '',
       vin: this.summary.inventory?.vehicle?.vin,
       paymentMethod: this.summary.paymentType,
       step: this.summary.dealStatus.step,
@@ -284,18 +303,30 @@ export default class CongratsViewModel {
     };
   }
 
-  trackAnalytics(): void {
-    if (this.showSuccess) {
-      this.analyticsHandler.trackCongratsViewed();
-      this.analyticsHandler.trackOrderCompleted();
+  trackSuccess(): void {
+    this.analyticsHandler.trackCongratsViewed();
+    this.analyticsHandler.trackOrderCompleted();
 
-      const { orderId, productId } = this.analyticsData;
-      datadogRum.addUserAction('completedDeal', {
-        deal: {
-          dealId: orderId,
-          inventoryId: productId,
-        },
-      });
+    const { orderId, productId } = this.analyticsData;
+    datadogRum.addUserAction('completedDeal', {
+      deal: {
+        dealId: orderId,
+        inventoryId: productId,
+      },
+    });
+  }
+
+  trackError(): void {
+    if (this.error) {
+      const {
+        error: { name, message },
+        status,
+      } = this.model.error;
+      this.analyticsHandler.trackErrorOnCongrats(`${name}: ${message}`, status);
+    } else if (this.empty) {
+      this.analyticsHandler.trackErrorOnCongrats('No Deal');
+    } else {
+      this.analyticsHandler.trackErrorOnCongrats('Something went wrong');
     }
   }
 
@@ -461,7 +492,10 @@ export default class CongratsViewModel {
         showNotAvailableDates: this.showNotAvailableDates,
         showTruckInformation: !this.deliveryDetails.wheelerTruck,
       },
-      showInsuranceDisclaimer: showInsuranceDisclaimer,
+      documentsUploaded: {
+        documents: this.documents,
+        showInsuranceDisclaimer: showInsuranceDisclaimer,
+      },
     };
   }
 
@@ -473,32 +507,8 @@ export default class CongratsViewModel {
     this.analyticsHandler.trackContactModule(eventName);
   };
 
-  private getPhoneNumberLinkData = (): Link => {
-    const defaultPhoneNumberLinkData: Link = {
-      href: 'tel:+18555241300',
-      name: '(855) 524-1300',
-    };
-
-    if (!this.store.phoneNumber) {
-      return defaultPhoneNumberLinkData;
-    }
-
-    const parsedPhoneNumber = parsePhoneNumberFromString(
-      decodeURIComponent(this.store.phoneNumber),
-      'US'
-    );
-
-    if (!parsedPhoneNumber) {
-      return defaultPhoneNumberLinkData;
-    }
-    if (!parsedPhoneNumber.isValid()) {
-      return defaultPhoneNumberLinkData;
-    }
-    const phoneNumberLinkData: Link = {
-      href: parsedPhoneNumber.getURI(),
-      name: parsedPhoneNumber.formatNational(),
-    };
-    return phoneNumberLinkData;
+  private getPhoneNumberLinkData = (): PhoneNumberLink => {
+    return this.store.phoneNumber;
   };
 
   get questionsProps(): QuestionProps {
@@ -520,6 +530,10 @@ export default class CongratsViewModel {
 
   trackVinClick = (): void => {
     this.analyticsHandler.trackWhatsMyCarWorth(false);
+  };
+
+  trackDocUploadClicked = (): void => {
+    this.analyticsHandler.trackDocUploadClicked();
   };
 
   get footerProps(): FooterProps {

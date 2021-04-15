@@ -1,14 +1,11 @@
-FROM node:erbium-alpine as BUILD_IMAGE
+FROM node:fermium-alpine as BUILD_IMAGE
 
 ARG CI_JOB_TOKEN
 
 RUN apk --no-cache add git
-
-RUN mkdir -p /www/apps/home && chown -R 1000:1000 /www/apps/home
+RUN mkdir -p /www/apps/home
 
 WORKDIR /www/apps/home
-
-USER 1000
 
 COPY ./apps/home/package.json ./apps/home/package-lock.json ./apps/home/.npmrc /www/apps/home/
 
@@ -21,6 +18,9 @@ COPY ./apps/home /www/apps/home/
 RUN npm run build
 
 RUN npm prune --production
+
+RUN chown -R 1000:1000 /www/apps/home
+USER 1000
 
 ARG PORT=8080
 

@@ -1,4 +1,4 @@
-FROM node:erbium-alpine
+FROM node:fermium-alpine
 
 ARG CI_JOB_TOKEN
 
@@ -8,13 +8,10 @@ COPY .vscode ./.vscode
 COPY ./apps/logistics ./apps/logistics
 
 WORKDIR /www/apps/logistics
-RUN \
-  # Install git so editor git commands work
-  apk --no-cache add git &&\
-  # Bootstrap yarn workspaces.
-  npm install
 
-# Build the main app.
-RUN npm run build
+# Install git so editor git commands work
+RUN apk --no-cache add git
+
+RUN npm install
 
 CMD ["npm", "run", "start", "--port", "8080"]

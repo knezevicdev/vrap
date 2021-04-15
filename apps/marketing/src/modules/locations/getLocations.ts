@@ -40,7 +40,7 @@ export function getLocations(): LocationInfo[] {
       },
       businessHours: {
         days: 'Monday - Saturday',
-        hours: '10 am - 6 pm',
+        hours: '10 am - 7 pm',
       },
       googleMapsUrl: 'https://goo.gl/maps/KUwJwFhbxi2tF8NP8',
 
@@ -64,7 +64,7 @@ export function getLocations(): LocationInfo[] {
       },
       businessHours: {
         days: 'Monday - Saturday',
-        hours: '9 am - 6 pm',
+        hours: '10 am - 7 pm',
       },
       googleMapsUrl: 'https://goo.gl/maps/y8rvyunyoPWBqkMn7',
       mapsImgUrl:
@@ -87,7 +87,7 @@ export function getLocations(): LocationInfo[] {
       },
       businessHours: {
         days: 'Monday - Saturday',
-        hours: '9 am - 6 pm',
+        hours: '10 am - 7 pm',
       },
       googleMapsUrl: 'https://goo.gl/maps/uCkWMp49FBMrjZSFA',
 
@@ -111,7 +111,7 @@ export function getLocations(): LocationInfo[] {
       },
       businessHours: {
         days: 'Monday - Saturday',
-        hours: '9 am - 6 pm',
+        hours: '10 am - 7 pm',
       },
       googleMapsUrl: 'https://goo.gl/maps/Yek1r2zTcJvnZtJZ9',
 
@@ -135,7 +135,7 @@ export function getLocations(): LocationInfo[] {
       },
       businessHours: {
         days: 'Monday - Saturday',
-        hours: '9 am - 6 pm',
+        hours: '10 am - 7 pm',
       },
       googleMapsUrl: 'https://goo.gl/maps/VeRiY68MWa24Qx5n7',
       mapsImgUrl:
@@ -158,7 +158,7 @@ export function getLocations(): LocationInfo[] {
       },
       businessHours: {
         days: 'Monday - Saturday',
-        hours: '9 am - 6 pm',
+        hours: '10 am - 7 pm',
       },
       googleMapsUrl: 'https://goo.gl/maps/rVHXyavJk4v2Qi5v7',
 
@@ -167,7 +167,7 @@ export function getLocations(): LocationInfo[] {
     },
     {
       name: 'Kingwood',
-      closed: true,
+      closed: false,
       path: 'kingwood',
       href: '/marketing/locations/kingwood',
       address: {
@@ -182,7 +182,7 @@ export function getLocations(): LocationInfo[] {
       },
       businessHours: {
         days: 'Monday - Saturday',
-        hours: '9 am - 6 pm',
+        hours: '10 am - 7 pm',
       },
       googleMapsUrl: 'https://goo.gl/maps/SBhBhUNdCBkCZH9Y7',
       mapsImgUrl:
@@ -205,7 +205,7 @@ export function getLocations(): LocationInfo[] {
       },
       businessHours: {
         days: 'Monday - Saturday',
-        hours: '9 am - 6 pm',
+        hours: '10 am - 7 pm',
       },
       googleMapsUrl: 'https://goo.gl/maps/QNpUtKDbv1yy6qLL9',
 

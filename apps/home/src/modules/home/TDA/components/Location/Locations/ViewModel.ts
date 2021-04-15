@@ -27,7 +27,7 @@ class ViewModel {
           lng: -95.57154,
         },
       },
-      hours: '10 am - 6 pm',
+      hours: '10 am - 7 pm',
       phone: {
         office: '(281) 499-8200',
         fax: '(281) 783-2098',
@@ -45,7 +45,7 @@ class ViewModel {
           lng: -95.11477,
         },
       },
-      hours: '9 am - 6 pm',
+      hours: '10 am - 7 pm',
       phone: {
         office: '(281) 895-2754',
         fax: '(281) 854-2543',
@@ -63,7 +63,7 @@ class ViewModel {
           lng: -95.42916,
         },
       },
-      hours: '9 am - 6 pm',
+      hours: '10 am - 7 pm',
       phone: {
         office: '(281) 895-3464',
         fax: '(832) 310-2167',
@@ -81,7 +81,7 @@ class ViewModel {
           lng: -95.60163,
         },
       },
-      hours: '9 am - 6 pm',
+      hours: '10 am - 7 pm',
       phone: {
         office: '(281) 895-1872',
         fax: '(832) 463-1192',
@@ -99,7 +99,7 @@ class ViewModel {
           lng: -95.76281,
         },
       },
-      hours: '9 am - 6 pm',
+      hours: '10 am - 7 pm',
       phone: {
         office: '(281) 872-6648',
         fax: '(281) 476-7493',
@@ -117,7 +117,7 @@ class ViewModel {
           lng: -95.61384,
         },
       },
-      hours: '9 am - 6 pm',
+      hours: '10 am - 7 pm',
       phone: {
         office: '(281) 895-1447',
         fax: '(281) 854-2547',
@@ -135,7 +135,7 @@ class ViewModel {
           lng: -95.24828,
         },
       },
-      hours: '9 am - 6 pm',
+      hours: '10 am - 7 pm',
       phone: {
         office: '(281) 895-3466',
         fax: '(281) 605-5764',
@@ -143,7 +143,7 @@ class ViewModel {
       urlPath: 'locations/kingwood',
       title: 'Kingwood',
       googleMapsUrl: 'https://goo.gl/maps/SBhBhUNdCBkCZH9Y7',
-      closed: true,
+      closed: false,
     },
     {
       locationInfo: {
@@ -153,7 +153,7 @@ class ViewModel {
           lng: -95.50478,
         },
       },
-      hours: '9 am - 6 pm',
+      hours: '10 am - 7 pm',
       phone: {
         office: '(281) 895-2405',
         fax: '(832) 460-3128',

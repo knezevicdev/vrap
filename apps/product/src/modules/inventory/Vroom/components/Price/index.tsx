@@ -3,20 +3,19 @@ import React from 'react';
 import View from './View';
 import ViewModel from './ViewModel';
 
-import {
-  InventoryStore,
-  InventoryStoreContext,
-} from 'src/modules/inventory/store';
+import withData from 'src/modules/inventory/withData';
 
-const Price: React.FC = () => {
-  return (
-    <InventoryStoreContext.Consumer>
-      {(store: InventoryStore): JSX.Element => {
-        const viewModel = new ViewModel(store);
-        return <View viewModel={viewModel} />;
-      }}
-    </InventoryStoreContext.Consumer>
-  );
-};
+class Price extends React.Component {
+  viewModel: ViewModel;
 
-export default Price;
+  constructor(props: Record<string, never>) {
+    super(props);
+    this.viewModel = new ViewModel(props.data);
+  }
+
+  render(): React.ReactNode {
+    return <View viewModel={this.viewModel} />;
+  }
+}
+
+export default withData(Price);

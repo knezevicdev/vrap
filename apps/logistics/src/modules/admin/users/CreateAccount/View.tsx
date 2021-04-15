@@ -1,6 +1,17 @@
-import { Box, Button, Grid, TextField } from '@material-ui/core';
+import {
+  Box,
+  Button,
+  Grid,
+  Icon,
+  InputAdornment,
+  Paper,
+  Snackbar,
+  TextField,
+  Typography,
+} from '@material-ui/core';
+import Alert from '@material-ui/lab/Alert';
 import { observer } from 'mobx-react';
-import React, { useState } from 'react';
+import React from 'react';
 
 import ViewModel from './ViewModel';
 
@@ -8,44 +19,70 @@ interface Props {
   viewModel: ViewModel;
 }
 const CreateAccountView: React.FC<Props> = ({ viewModel }) => {
-  const [email, setEmail] = useState('');
-
-  const handleSubmit = async (
-    event: React.FormEvent<HTMLFormElement>
-  ): Promise<void> => {
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
     event.preventDefault();
-    viewModel.createAccount(email);
+    viewModel.createAccount();
   };
 
   return (
-    <Box>
-      <form onSubmit={handleSubmit}>
-        <Grid container alignItems="center" spacing={2}>
-          <Grid item xs={10}>
-            <TextField
-              value={email}
-              onChange={(e): void => setEmail(e.target.value)}
-              label="Email"
-              variant="outlined"
-              required
-              fullWidth
-              autoComplete="email"
-            />
-          </Grid>
-          <Grid item xs={2}>
-            <Button
-              type="submit"
-              variant="contained"
-              color="primary"
-              size="large"
-              fullWidth
-            >
-              Submit
-            </Button>
-          </Grid>
-        </Grid>
-      </form>
-    </Box>
+    <>
+      <Paper square>
+        <Box p={2}>
+          <form onSubmit={handleSubmit}>
+            <Grid container alignItems="center" spacing={2}>
+              <Grid item xs={12}>
+                <label htmlFor="create-account-email">
+                  <Typography>
+                    To invite a user, enter their email in the box below and
+                    click send
+                  </Typography>
+                </label>
+                <TextField
+                  id="create-account-email"
+                  value={viewModel.email}
+                  onChange={(e): void => {
+                    viewModel.email = e.target.value;
+                  }}
+                  placeholder="Email"
+                  variant="outlined"
+                  required
+                  fullWidth
+                  autoComplete="email"
+                  type="email"
+                  InputProps={{
+                    endAdornment: (
+                      <InputAdornment position="end">
+                        <Button
+                          type="submit"
+                          color="primary"
+                          endIcon={<Icon>send</Icon>}
+                          disabled={viewModel.disabled}
+                        >
+                          Send
+                        </Button>
+                      </InputAdornment>
+                    ),
+                  }}
+                />
+              </Grid>
+            </Grid>
+          </form>
+        </Box>
+      </Paper>
+      <Snackbar
+        anchorOrigin={{
+          vertical: 'bottom',
+          horizontal: 'left',
+        }}
+        open={viewModel.snackbar}
+        autoHideDuration={6000}
+        onClose={viewModel.resetSnackbar}
+      >
+        <Alert severity="success" onClose={viewModel.resetSnackbar}>
+          Approval email successfully sent to new user
+        </Alert>
+      </Snackbar>
+    </>
   );
 };
 

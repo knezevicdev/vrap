@@ -15,6 +15,8 @@ jest.mock('next/config', () => {
   };
 });
 
+jest.mock('./store');
+
 const ACCESS_TOKEN = 'access-token';
 const VIN = 'some-vin';
 

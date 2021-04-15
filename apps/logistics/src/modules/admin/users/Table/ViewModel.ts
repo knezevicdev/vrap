@@ -53,10 +53,8 @@ class UsersViewModel {
       ],
       rows: this.model.users.map((i) => {
         const carrier = i.carrier || {
-          // eslint-disable-next-line @typescript-eslint/camelcase
           carrier_id: -1,
           carrier: '',
-          // eslint-disable-next-line @typescript-eslint/camelcase
           carrier_code: '',
         };
         return {

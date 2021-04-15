@@ -9,6 +9,7 @@ const Options: React.FC = () => {
   const store = useOptionsStore();
   const ddStore = useDirectDepositStore();
   const viewModel = new ViewModel(store, ddStore);
+
   return <View viewModel={viewModel} />;
 };
 
