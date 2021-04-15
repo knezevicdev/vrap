@@ -170,7 +170,7 @@ export const ButtonSection: FC = () => {
   const onClick = (): void => {
     new AnalyticsHandler().trackLearnMoreClicked(store.vehicle._source);
     window.location.href =
-      'https://vroom.zendesk.com/hc/en-us/articles/205360565-When-does-the-7-day-return-period-begin-';
+      'https://www.vroom.com/contact?path=article/When-does-the-7-day-return-period-begin';
   };
   return (
     <Button.Secondary onClick={onClick}>
