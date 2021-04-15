@@ -35,16 +35,16 @@ class DirectDepositViewModel {
   };
 
   getPrice = (): number => {
-    const {
-      currentPayments,
+    if (this.oStore && this.oStore.poq) {
       // eslint-disable-next-line @typescript-eslint/camelcase
-      poq: { account_number, final_payment },
-    } = this.oStore;
+      const { account_number, final_payment } = this.oStore.poq || {};
+      const { currentPayments } = this.oStore;
 
-    // eslint-disable-next-line @typescript-eslint/camelcase
-    if (currentPayments && account_number != '') {
       // eslint-disable-next-line @typescript-eslint/camelcase
-      return final_payment;
+      if (currentPayments && account_number != '') {
+        // eslint-disable-next-line @typescript-eslint/camelcase
+        return final_payment;
+      }
     }
 
     return this.poStore.price;
