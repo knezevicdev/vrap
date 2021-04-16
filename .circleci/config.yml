@@ -83,27 +83,6 @@ jobs:
                 version: 18.09.3
             - run:
                 command: deploy -a vroom-web/apps/landing/docker -n << parameters.env >>
-    listing_build:
-        docker:
-            - image: vroom/mlp:3.0.2
-        steps:
-            - checkout
-            - setup_remote_docker:
-                version: 18.09.3
-            - run:
-                command: build -a vroom-web/apps/listing/docker
-    listing_deploy:
-        docker:
-            - image: vroom/mlp:3.0.2
-        parameters:
-            env:
-                type: string
-        steps:
-            - checkout
-            - setup_remote_docker:
-                version: 18.09.3
-            - run:
-                command: deploy -a vroom-web/apps/listing/docker -n << parameters.env >>
     logistics_build:
         docker:
             - image: vroom/mlp:3.0.2
@@ -146,27 +125,6 @@ jobs:
                 version: 18.09.3
             - run:
                 command: deploy -a vroom-web/apps/marketing/docker -n << parameters.env >>
-    product_build:
-        docker:
-            - image: vroom/mlp:3.0.2
-        steps:
-            - checkout
-            - setup_remote_docker:
-                version: 18.09.3
-            - run:
-                command: build -a vroom-web/apps/product/docker
-    product_deploy:
-        docker:
-            - image: vroom/mlp:3.0.2
-        parameters:
-            env:
-                type: string
-        steps:
-            - checkout
-            - setup_remote_docker:
-                version: 18.09.3
-            - run:
-                command: deploy -a vroom-web/apps/product/docker -n << parameters.env >>
     static-assets_deploy:
         docker:
             - image: vroom/mlp:3.0.2
@@ -438,70 +396,6 @@ workflows:
                 name: landing_deploy_prod
                 requires:
                     - hold_prod
-    listing:
-        jobs:
-            - listing_build:
-                context: aws-non-prod
-                filters:
-                    branches:
-                        ignore: /.*/
-                    tags:
-                        only: /^listing-v.*/
-            - hold:
-                filters:
-                    branches:
-                        ignore: /.*/
-                    tags:
-                        only: /^listing-v.*/
-                matrix:
-                    parameters:
-                        env:
-                            - dev
-                            - qa
-                            - uat
-                name: hold_<< matrix.env >>
-                requires:
-                    - listing_build
-                type: approval
-            - listing_deploy:
-                context: aws-non-prod
-                filters:
-                    branches:
-                        ignore: /.*/
-                    tags:
-                        only: /^listing-v.*/
-                matrix:
-                    parameters:
-                        env:
-                            - dev
-                            - qa
-                            - uat
-                name: listing_deploy_<< matrix.env >>
-                requires:
-                    - hold_<< matrix.env >>
-            - hold:
-                filters:
-                    branches:
-                        ignore: /.*/
-                    tags:
-                        only: /^listing-v.*/
-                name: hold_prod
-                requires:
-                    - listing_deploy_dev
-                    - listing_deploy_qa
-                    - listing_deploy_uat
-                type: approval
-            - listing_deploy:
-                context: aws-non-prod
-                env: prod
-                filters:
-                    branches:
-                        ignore: /.*/
-                    tags:
-                        only: /^listing-v.*/
-                name: listing_deploy_prod
-                requires:
-                    - hold_prod
     logistics:
         jobs:
             - logistics_build:
@@ -628,70 +522,6 @@ workflows:
                     tags:
                         only: /^marketing-v.*/
                 name: marketing_deploy_prod
-                requires:
-                    - hold_prod
-    product:
-        jobs:
-            - product_build:
-                context: aws-non-prod
-                filters:
-                    branches:
-                        ignore: /.*/
-                    tags:
-                        only: /^product-v.*/
-            - hold:
-                filters:
-                    branches:
-                        ignore: /.*/
-                    tags:
-                        only: /^product-v.*/
-                matrix:
-                    parameters:
-                        env:
-                            - dev
-                            - qa
-                            - uat
-                name: hold_<< matrix.env >>
-                requires:
-                    - product_build
-                type: approval
-            - product_deploy:
-                context: aws-non-prod
-                filters:
-                    branches:
-                        ignore: /.*/
-                    tags:
-                        only: /^product-v.*/
-                matrix:
-                    parameters:
-                        env:
-                            - dev
-                            - qa
-                            - uat
-                name: product_deploy_<< matrix.env >>
-                requires:
-                    - hold_<< matrix.env >>
-            - hold:
-                filters:
-                    branches:
-                        ignore: /.*/
-                    tags:
-                        only: /^product-v.*/
-                name: hold_prod
-                requires:
-                    - product_deploy_dev
-                    - product_deploy_qa
-                    - product_deploy_uat
-                type: approval
-            - product_deploy:
-                context: aws-non-prod
-                env: prod
-                filters:
-                    branches:
-                        ignore: /.*/
-                    tags:
-                        only: /^product-v.*/
-                name: product_deploy_prod
                 requires:
                     - hold_prod
     static-assets:

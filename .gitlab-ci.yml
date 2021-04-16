@@ -38,7 +38,6 @@ test-appraisal:
       -  apps/appraisal/coverage
   coverage: /All\sfiles.*?\s+(\d+.\d+)/
 
-
 lint-checkout:
   only:
     refs:
@@ -83,8 +82,6 @@ test-checkout:
     paths:
       -  apps/checkout/coverage
   coverage: /All\sfiles.*?\s+(\d+.\d+)/
-
-
 
 build-home:
   only:
@@ -154,41 +151,6 @@ test-home:
       -  apps/home/coverage
   coverage: /All\sfiles.*?\s+(\d+.\d+)/
 
-build-listing:
-  only:
-    refs:
-      - merge_requests
-    changes:
-      - apps/listing/**/*
-  stage: build
-  script:
-    - cd apps/listing
-    - npm install --quiet
-    - npm run lint
-    - npm run build
-
-test-listing:
-  only:
-    refs:
-      - merge_requests
-    changes:
-      - apps/listing/**/*
-  stage: test
-  script:
-    - cd apps/listing
-    - npm install --quiet
-    - npm run test:ci
-  artifacts:
-    when: always
-    reports:
-      junit:
-        - apps/listing/junit.xml
-      cobertura: apps/listing/coverage/cobertura-coverage.xml
-    paths:
-      - apps/listing/coverage
-  coverage: /All\sfiles.*?\s+(\d+.\d+)/
-
-
 build-logistics:
   only:
     refs:
@@ -234,7 +196,6 @@ test-logistics:
       -  apps/logistics/coverage
   coverage: /All\sfiles.*?\s+(\d+.\d+)/
 
-
 build-marketing:
   only:
     refs:
@@ -267,40 +228,6 @@ test-marketing:
       cobertura: apps/marketing/coverage/cobertura-coverage.xml
     paths:
       -  apps/marketing/coverage
-  coverage: /All\sfiles.*?\s+(\d+.\d+)/
-
-build-product:
-  only:
-    refs:
-      - merge_requests
-    changes:
-      - apps/product/**/*
-  stage: build
-  script:
-    - cd apps/product
-    - npm install --quiet
-    - npm run lint
-    - npm run build
-
-test-product:
-  only:
-    refs:
-      - merge_requests
-    changes:
-      - apps/product/**/*
-  stage: test
-  script:
-    - cd apps/product
-    - npm install --quiet
-    - npm run test:ci
-  artifacts:
-    when: always
-    reports:
-      junit:
-        - apps/product/junit.xml
-      cobertura: apps/product/coverage/cobertura-coverage.xml
-    paths:
-      - apps/product/coverage
   coverage: /All\sfiles.*?\s+(\d+.\d+)/
 
 
