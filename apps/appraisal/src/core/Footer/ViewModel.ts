@@ -100,7 +100,7 @@ class FooterViewModel {
         links: [
           this.getPhoneNumber(),
           {
-            href: 'https://vroom.zendesk.com/hc/en-us',
+            href: '/contact',
             name: 'FAQ',
           },
           {

@@ -102,6 +102,7 @@ const PlaidButtonView: React.FC<Props> = ({
   const { open, ready } = usePlaidLink(config);
   const tokenIsUndefined = token.length === 0;
   const isSubmitting = viewModel.getPlaidSubmitting();
+
   const disableButton = (!ready && tokenIsUndefined) || isSubmitting;
 
   const handlePlaidButtonClick = (): void => {

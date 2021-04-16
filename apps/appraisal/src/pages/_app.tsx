@@ -1,5 +1,6 @@
 import { datadogRum } from '@datadog/browser-rum';
 import { Brand, ThemeProvider } from '@vroom-web/ui';
+import { configure as configureMobx } from 'mobx';
 import App from 'next/app';
 import { name, version } from 'package.json';
 import React from 'react';
@@ -9,6 +10,10 @@ import { ThemeProvider as StyledComponentsThemeProvider } from 'styled-component
 import { GlobalStyle, theme } from '../core/themes/Vroom';
 
 import ENVS from 'src/integrations/Envs';
+
+configureMobx({
+  enforceActions: 'observed', // don't allow state modifications outside actions
+});
 
 class AppraisalApp extends App {
   componentDidMount(): void {

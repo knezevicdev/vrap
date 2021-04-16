@@ -1,4 +1,4 @@
-import { action, observable, runInAction } from 'mobx';
+import { action, makeObservable, observable, runInAction } from 'mobx';
 import { createContext, useContext } from 'react';
 
 import {
@@ -84,20 +84,40 @@ export async function submitPaymentOptions(
 }
 
 export class OptionsStore implements Store {
-  @observable showDD = true;
-  @observable mailingAddress = defaultOptionsState.mailingAddress;
-  @observable priceId = '';
-  @observable email = '';
-  @observable plaidSubmitting = false;
-  @observable currentPayments = defaultOptionsState.currentPayments;
-  @observable poq = defaultOptionsState.poq;
-  @observable storeStatus = StoreStatus.Initial;
-  @observable asyncStatus = AsyncStatus.Idle;
-  @observable institutionFound = true;
-  @observable institutionSearched = false;
+  showDD = true;
+  mailingAddress = defaultOptionsState.mailingAddress;
+  priceId = '';
+  email = '';
+  plaidSubmitting = false;
+  currentPayments = defaultOptionsState.currentPayments;
+  poq = defaultOptionsState.poq;
+  storeStatus = StoreStatus.Initial;
+  asyncStatus = AsyncStatus.Idle;
+  institutionFound = true;
+  institutionSearched = false;
 
   constructor(priceId?: string) {
-    if (priceId) this.init(priceId);
+    makeObservable(this, {
+      showDD: observable,
+      mailingAddress: observable,
+      priceId: observable,
+      email: observable,
+      plaidSubmitting: observable,
+      currentPayments: observable,
+      poq: observable,
+      storeStatus: observable,
+      asyncStatus: observable,
+      institutionFound: observable,
+      institutionSearched: observable,
+      setPayOptionSelected: action,
+      setPlaidSubmitting: action,
+      setInstitutionFound: action,
+      setInstitutionSearched: action,
+    });
+
+    if (priceId) {
+      this.init(priceId);
+    }
   }
 
   async init(priceId: string): Promise<void> {
@@ -113,22 +133,18 @@ export class OptionsStore implements Store {
     });
   }
 
-  @action
   setPayOptionSelected = (value: string): void => {
     this.showDD = value === 'Direct Deposit';
   };
 
-  @action
   setPlaidSubmitting = (value: boolean): void => {
     this.plaidSubmitting = value;
   };
 
-  @action
   setInstitutionFound = (value: boolean): void => {
     this.institutionFound = value;
   };
 
-  @action
   setInstitutionSearched = (value: boolean): void => {
     this.institutionSearched = value;
   };

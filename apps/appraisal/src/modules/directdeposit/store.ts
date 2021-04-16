@@ -1,4 +1,4 @@
-import { action, observable, runInAction } from 'mobx';
+import { action, makeObservable, observable, runInAction } from 'mobx';
 import { createContext, useContext } from 'react';
 
 import AnalyticsHandler from 'src/integrations/AnalyticsHandler';
@@ -51,22 +51,32 @@ export async function plaidSuccess(
 }
 
 export class DirectDepositStore implements Store {
-  @observable linkToken = defaultDDState.LinkToken;
-  @observable expiration = defaultDDState.Expiration;
-  @observable requestId = defaultDDState.RequestId;
-  @observable priceId = '';
-  @observable showPlaidLink = true;
-  @observable storeStatus = StoreStatus.Initial;
-  @observable asyncStatus = AsyncStatus.Idle;
+  linkToken = defaultDDState.LinkToken;
+  expiration = defaultDDState.Expiration;
+  requestId = defaultDDState.RequestId;
+  priceId = '';
+  showPlaidLink = true;
+  storeStatus = StoreStatus.Initial;
+  asyncStatus = AsyncStatus.Idle;
 
   constructor(priceId?: string) {
     if (priceId) {
       this.priceId = priceId;
       this.initClientSide();
     }
+    makeObservable(this, {
+      linkToken: observable,
+      expiration: observable,
+      requestId: observable,
+      priceId: observable,
+      showPlaidLink: observable,
+      storeStatus: observable,
+      asyncStatus: observable,
+      initClientSide: action,
+      togglePlaidLink: action,
+    });
   }
 
-  @action
   async initClientSide(): Promise<void> {
     const initialState = await getInitialDDStoreState(this.priceId);
     runInAction(() => {
@@ -76,7 +86,6 @@ export class DirectDepositStore implements Store {
     });
   }
 
-  @action
   togglePlaidLink = (): void => {
     this.showPlaidLink = !this.showPlaidLink;
   };
