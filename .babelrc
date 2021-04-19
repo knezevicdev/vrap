@@ -1,0 +1,22 @@
+{
+  "presets": [
+    [
+      "next/babel",
+      {
+        "class-properties": {
+          "loose": true
+        }
+      }
+    ]
+  ],
+  "plugins": [
+    "@fullstory/babel-plugin-annotate-react",
+     ["styled-components", { "ssr": true }],
+     [
+       "@babel/plugin-proposal-decorators",
+       {
+         "legacy": true
+       }
+     ]
+  ]
+}
