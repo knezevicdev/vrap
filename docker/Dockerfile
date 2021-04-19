@@ -5,19 +5,19 @@ ARG CI_JOB_TOKEN
 
 RUN apk --no-cache add git
 
-RUN mkdir -p /www/apps/appraisal && chown -R 1000:1000 /www/apps/appraisal
+RUN mkdir -p /www && chown -R 1000:1000 /www
 
-WORKDIR /www/apps/appraisal
+WORKDIR /www
 
 USER 1000
 
-COPY ./apps/appraisal/package.json ./apps/appraisal/package-lock.json ./apps/appraisal/.npmrc /www/apps/appraisal/
+COPY ./package.json ./package-lock.json ./.npmrc /www/
 
 RUN npm ci
 
 COPY ./.git /www/.git
 
-COPY ./apps/appraisal /www/apps/appraisal/
+COPY . .
 
 RUN npm run build
 

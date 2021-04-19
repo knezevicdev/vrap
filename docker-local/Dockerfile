@@ -5,9 +5,8 @@ ARG CI_JOB_TOKEN
 WORKDIR /www
 COPY .git ./.git
 COPY .vscode ./.vscode
-COPY ./apps/appraisal ./apps/appraisal
+COPY . .
 
-WORKDIR /www/apps/appraisal
 RUN \
   # Install git so editor git commands work
   apk --no-cache add git &&\

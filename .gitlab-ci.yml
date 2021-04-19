@@ -9,10 +9,9 @@ build-appraisal:
     refs:
       - merge_requests
     changes:
-      - apps/appraisal/**/*
+      - "**/*"
   stage: build
   script:
-    - cd apps/appraisal
     - npm install --quiet
     - npm run lint
     - npm run build
@@ -22,214 +21,20 @@ test-appraisal:
     refs:
       - merge_requests
     changes:
-      - apps/appraisal/**/*
+      - "**/*"
   stage: test
   script:
-    - cd apps/appraisal
     - npm install --quiet
     - npm run test:ci
   artifacts:
     when: always
     reports:
       junit:
-        - apps/appraisal/junit.xml
-      cobertura: apps/appraisal/coverage/cobertura-coverage.xml
+        - junit.xml
+      cobertura: coverage/cobertura-coverage.xml
     paths:
-      -  apps/appraisal/coverage
+      -  coverage
   coverage: /All\sfiles.*?\s+(\d+.\d+)/
-
-lint-checkout:
-  only:
-    refs:
-      - merge_requests
-    changes:
-      - apps/checkout/**/*
-  stage: test
-  script:
-    - cd apps/checkout
-    - npm install --quiet
-    - npm run lint
-
-build-checkout:
-  only:
-    refs:
-      - merge_requests
-    changes:
-      - apps/checkout/**/*
-  stage: build
-  script:
-    - cd apps/checkout
-    - npm install --quiet
-    - npm run build
-
-test-checkout:
-  only:
-    refs:
-      - merge_requests
-    changes:
-      - apps/checkout/**/*
-  stage: test
-  script:
-    - cd apps/checkout
-    - npm install --quiet
-    - npm run test:ci
-  artifacts:
-    when: always
-    reports:
-      junit:
-        - apps/checkout/junit.xml
-      cobertura: apps/checkout/coverage/cobertura-coverage.xml
-    paths:
-      -  apps/checkout/coverage
-  coverage: /All\sfiles.*?\s+(\d+.\d+)/
-
-build-home:
-  only:
-    refs:
-      - merge_requests
-    changes:
-      - apps/home/**/*
-  stage: build
-  script:
-    - cd apps/home
-    - npm install --quiet
-    - npm run lint
-    - npm run build
-
-build-landing:
-  only:
-    refs:
-      - merge_requests
-    changes:
-      - apps/landing/**/*
-  stage: build
-  script:
-    - cd apps/landing
-    - npm install --quiet
-    - npm run lint
-    - npm run build
-
-test-landing:
-  only:
-    refs:
-      - merge_requests
-    changes:
-      - apps/landing/**/*
-  stage: test
-  script:
-    - cd apps/landing
-    - npm install --quiet
-    - npm run test:ci
-  artifacts:
-    when: always
-    reports:
-      junit:
-        - apps/landing/junit.xml
-      cobertura: apps/landing/coverage/cobertura-coverage.xml
-    paths:
-      -  apps/landing/coverage
-  coverage: /All\sfiles.*?\s+(\d+.\d+)/
-
-test-home:
-  only:
-    refs:
-      - merge_requests
-    changes:
-      - apps/home/**/*
-  stage: test
-  script:
-    - cd apps/home
-    - npm install --quiet
-    - npm run test:ci
-  artifacts:
-    when: always
-    reports:
-      junit:
-        - apps/home/junit.xml
-      cobertura: apps/home/coverage/cobertura-coverage.xml
-    paths:
-      -  apps/home/coverage
-  coverage: /All\sfiles.*?\s+(\d+.\d+)/
-
-build-logistics:
-  only:
-    refs:
-      - merge_requests
-    changes:
-      - apps/logistics/**/*
-  stage: build
-  script:
-    - cd apps/logistics
-    - npm install --quiet
-    - npm run build
-
-lint-logistics:
-  only:
-    refs:
-      - merge_requests
-    changes:
-      - apps/logistics/**/*
-  stage: test
-  script:
-    - cd apps/logistics
-    - npm install --quiet
-    - npm run lint
-
-test-logistics:
-  only:
-    refs:
-      - merge_requests
-    changes:
-      - apps/logistics/**/*
-  stage: test
-  script:
-    - cd apps/logistics
-    - npm install --quiet
-    - npm run test:ci
-  artifacts:
-    when: always
-    reports:
-      junit:
-        - apps/logistics/junit.xml
-      cobertura: apps/logistics/coverage/cobertura-coverage.xml
-    paths:
-      -  apps/logistics/coverage
-  coverage: /All\sfiles.*?\s+(\d+.\d+)/
-
-build-marketing:
-  only:
-    refs:
-      - merge_requests
-    changes:
-      - apps/marketing/**/*
-  stage: build
-  script:
-    - cd apps/marketing
-    - npm install --quiet
-    - npm run lint
-    - npm run build
-
-test-marketing:
-  only:
-    refs:
-      - merge_requests
-    changes:
-      - apps/marketing/**/*
-  stage: test
-  script:
-    - cd apps/marketing
-    - npm install --quiet
-    - npm run test:ci
-  artifacts:
-    when: always
-    reports:
-      junit:
-        - apps/marketing/junit.xml
-      cobertura: apps/marketing/coverage/cobertura-coverage.xml
-    paths:
-      -  apps/marketing/coverage
-  coverage: /All\sfiles.*?\s+(\d+.\d+)/
-
 
 code_quality:
   rules:

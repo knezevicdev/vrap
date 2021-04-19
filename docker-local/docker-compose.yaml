@@ -4,8 +4,8 @@ services:
     build:
       args:
         CI_JOB_TOKEN: $CI_JOB_TOKEN
-      context: ../../../
-      dockerfile: ./apps/appraisal/docker-local/Dockerfile
+      context: ../
+      dockerfile: ./docker-local/Dockerfile
     user: 'root'
     environment:
       - CI_JOB_TOKEN=$CI_JOB_TOKEN
@@ -24,12 +24,11 @@ services:
       - '8080:8080'
     volumes:
       # Setup a volume so source code edits will be reflected outside the container.
-      - '../../../:/www/'
+      - '../:/www/'
       # Setup volumes for dependencies and built artifacts.
       # This allows the node_modules created during the build to not be overwritten.
       # https://stackoverflow.com/questions/30043872/docker-compose-node-modules-not-present-in-a-volume-after-npm-install-succeeds
       # It also makes sure that the built artifacts are only present on the container,
       # and not copied back to the host machine.
       - '/www/node_modules'
-      - '/www/apps/appraisal/.next'
-      - '/www/apps/appraisal/node_modules'
+      - '/www/.next'
