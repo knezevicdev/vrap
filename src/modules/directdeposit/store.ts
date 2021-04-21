@@ -24,6 +24,8 @@ export async function getInitialDDStoreState(
   try {
     const tokenResponse = await networker.getPlaidToken(priceId);
     const plaidToken = tokenResponse.data.data.getLinkToken;
+    localStorage.setItem('linkToken', plaidToken.LinkToken);
+    localStorage.setItem('priceId', priceId);
     return plaidToken;
   } catch (err) {
     const errorState = defaultDDState;
@@ -60,10 +62,12 @@ export class DirectDepositStore implements Store {
   asyncStatus = AsyncStatus.Idle;
 
   constructor(priceId?: string) {
-    if (priceId) {
-      this.priceId = priceId;
-      this.initClientSide();
-    }
+    // if (priceId) {
+    //   this.priceId = priceId;
+    //   this.initClientSide();
+    // }
+    this.initClientSide(priceId);
+
     makeObservable(this, {
       linkToken: observable,
       expiration: observable,
@@ -77,13 +81,21 @@ export class DirectDepositStore implements Store {
     });
   }
 
-  async initClientSide(): Promise<void> {
-    const initialState = await getInitialDDStoreState(this.priceId);
-    runInAction(() => {
-      this.linkToken = initialState.LinkToken;
-      this.expiration = initialState.Expiration;
-      this.requestId = initialState.RequestId;
-    });
+  async initClientSide(priceId?: string): Promise<void> {
+    const localToken = localStorage.getItem('linkToken');
+    const localPriceId = localStorage.getItem('priceId');
+    const initPriceId = localPriceId || priceId || '';
+
+    if (localToken) {
+      this.linkToken = localToken;
+    } else {
+      const initialState = await getInitialDDStoreState(initPriceId);
+      runInAction(() => {
+        this.linkToken = initialState.LinkToken;
+        this.expiration = initialState.Expiration;
+        this.requestId = initialState.RequestId;
+      });
+    }
   }
 
   togglePlaidLink = (): void => {

@@ -115,13 +115,23 @@ export class OptionsStore implements Store {
       setInstitutionSearched: action,
     });
 
-    if (priceId) {
-      this.init(priceId);
-    }
+    // if (priceId) {
+    //   this.init(priceId);
+    // }
+    this.init(priceId);
   }
 
-  async init(priceId: string): Promise<void> {
-    const initialState = await getInitialOptionsStoreState(priceId);
+  async init(priceId?: string): Promise<void> {
+    const localPriceId = localStorage.getItem('priceId');
+    let initPriceId;
+
+    if (localPriceId) {
+      initPriceId = localPriceId;
+    } else {
+      initPriceId = priceId || '';
+    }
+
+    const initialState = await getInitialOptionsStoreState(initPriceId);
 
     runInAction(() => {
       this.storeStatus = StoreStatus.Success;
