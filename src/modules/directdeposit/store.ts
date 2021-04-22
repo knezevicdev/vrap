@@ -62,10 +62,10 @@ export class DirectDepositStore implements Store {
   asyncStatus = AsyncStatus.Idle;
 
   constructor(priceId?: string) {
-    // if (priceId) {
-    //   this.priceId = priceId;
-    //   this.initClientSide();
-    // }
+    if (priceId) {
+      this.priceId = priceId;
+    }
+
     this.initClientSide(priceId);
 
     makeObservable(this, {
@@ -84,12 +84,20 @@ export class DirectDepositStore implements Store {
   async initClientSide(priceId?: string): Promise<void> {
     const localToken = localStorage.getItem('linkToken');
     const localPriceId = localStorage.getItem('priceId');
-    const initPriceId = localPriceId || priceId || '';
+
+    if (localPriceId && priceId === undefined) {
+      this.priceId = localPriceId;
+      priceId = localPriceId;
+    }
 
     if (localToken) {
       this.linkToken = localToken;
     } else {
-      const initialState = await getInitialDDStoreState(initPriceId);
+      if (priceId === undefined) {
+        return;
+      }
+
+      const initialState = await getInitialDDStoreState(priceId);
       runInAction(() => {
         this.linkToken = initialState.LinkToken;
         this.expiration = initialState.Expiration;

@@ -115,23 +115,21 @@ export class OptionsStore implements Store {
       setInstitutionSearched: action,
     });
 
-    // if (priceId) {
-    //   this.init(priceId);
-    // }
     this.init(priceId);
   }
 
   async init(priceId?: string): Promise<void> {
     const localPriceId = localStorage.getItem('priceId');
-    let initPriceId;
 
-    if (localPriceId) {
-      initPriceId = localPriceId;
+    priceId = localPriceId || priceId;
+
+    if (priceId !== undefined) {
+      this.priceId = priceId;
     } else {
-      initPriceId = priceId || '';
+      return;
     }
 
-    const initialState = await getInitialOptionsStoreState(initPriceId);
+    const initialState = await getInitialOptionsStoreState(priceId);
 
     runInAction(() => {
       this.storeStatus = StoreStatus.Success;
@@ -139,7 +137,6 @@ export class OptionsStore implements Store {
       this.email = initialState.email;
       this.currentPayments = initialState.currentPayments;
       this.poq = initialState.poq;
-      this.priceId = priceId;
     });
   }
 
