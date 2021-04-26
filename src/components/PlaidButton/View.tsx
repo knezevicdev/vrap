@@ -110,6 +110,8 @@ const PlaidButtonView: React.FC<Props> = ({
     open();
   };
 
+  // here we need to check if token came from localStorage and if so auto-open plaid
+
   return (
     <PlaidButtonContainer>
       <PlaidButton onClick={handlePlaidButtonClick} disabled={disableButton}>
