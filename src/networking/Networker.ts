@@ -91,17 +91,18 @@ export class Networker {
   }
 
   getPlaidToken = async (
-    userId: string
+    userId: string,
+    redirectUri: string
   ): Promise<AxiosResponse<PlaidTokenResp>> => {
     const data = {
-      query: `query ($userId: String!) {
-        getLinkToken(userId: $userId) {
+      query: `query ($userId: String!, $redirectUri: String!) {
+        getLinkToken(userId: $userId, redirect_uri: $redirectUri) {
           LinkToken,
           Expiration,
           RequestId
         }
       }`,
-      variables: { userId },
+      variables: { userId, redirectUri },
     };
 
     return this.axiosInstance.post(this.gearboxUrl, data);

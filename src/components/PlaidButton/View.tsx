@@ -1,5 +1,5 @@
 import { observer } from 'mobx-react';
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { usePlaidLink } from 'react-plaid-link';
 import styled from 'styled-components';
 
@@ -29,6 +29,7 @@ const PlaidButton = styled(Button.Primary)`
 export interface Props {
   viewModel: PlaidButtonViewModel;
   token: string;
+  tokenIsLocal: boolean;
   plaidSuccess(
     mutationInput: PlaidData,
     onPlaidSubmitting: (value: boolean) => void
@@ -39,9 +40,11 @@ export interface Props {
 const PlaidButtonView: React.FC<Props> = ({
   viewModel,
   token,
+  tokenIsLocal,
   plaidSuccess,
   priceId,
 }) => {
+  let config;
   const onSuccess = useCallback((_token, metaData): void => {
     const email = viewModel.getEmail();
     viewModel.onPlaidSubmitting(true);
@@ -92,12 +95,22 @@ const PlaidButtonView: React.FC<Props> = ({
     [viewModel]
   );
 
-  const config = {
-    token,
-    onSuccess,
-    onExit,
-    onEvent,
-  };
+  if (tokenIsLocal) {
+    config = {
+      token,
+      receivedRedirectUri: window.location.href,
+      onSuccess,
+      onExit,
+      onEvent,
+    };
+  } else {
+    config = {
+      token,
+      onSuccess,
+      onExit,
+      onEvent,
+    };
+  }
 
   const { open, ready } = usePlaidLink(config);
   const tokenIsUndefined = token.length === 0;
@@ -110,7 +123,11 @@ const PlaidButtonView: React.FC<Props> = ({
     open();
   };
 
-  // here we need to check if token came from localStorage and if so auto-open plaid
+  useEffect(() => {
+    if (ready && tokenIsLocal) {
+      open();
+    }
+  });
 
   return (
     <PlaidButtonContainer>

@@ -22,7 +22,8 @@ export async function getInitialDDStoreState(
 ): Promise<DDStoreState> {
   const networker = new Networker();
   try {
-    const tokenResponse = await networker.getPlaidToken(priceId);
+    const redirectUri = window.location.href;
+    const tokenResponse = await networker.getPlaidToken(priceId, redirectUri);
     const plaidToken = tokenResponse.data.data.getLinkToken;
     localStorage.setItem('linkToken', plaidToken.LinkToken);
     localStorage.setItem('priceId', priceId);
@@ -60,14 +61,9 @@ export class DirectDepositStore implements Store {
   showPlaidLink = true;
   storeStatus = StoreStatus.Initial;
   asyncStatus = AsyncStatus.Idle;
+  tokenIsLocal = false;
 
-  constructor(priceId?: string) {
-    if (priceId) {
-      this.priceId = priceId;
-    }
-
-    this.initClientSide(priceId);
-
+  constructor() {
     makeObservable(this, {
       linkToken: observable,
       expiration: observable,
@@ -76,12 +72,13 @@ export class DirectDepositStore implements Store {
       showPlaidLink: observable,
       storeStatus: observable,
       asyncStatus: observable,
+      tokenIsLocal: observable,
       initClientSide: action,
       togglePlaidLink: action,
     });
   }
 
-  async initClientSide(priceId?: string): Promise<void> {
+  async initClientSide(priceId: string): Promise<void> {
     const localToken = localStorage.getItem('linkToken');
     const localPriceId = localStorage.getItem('priceId');
 
@@ -92,6 +89,7 @@ export class DirectDepositStore implements Store {
 
     if (localToken) {
       this.linkToken = localToken;
+      this.tokenIsLocal = true;
     } else {
       if (priceId === undefined) {
         return;

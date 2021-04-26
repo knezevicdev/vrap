@@ -96,7 +96,7 @@ export class OptionsStore implements Store {
   institutionFound = true;
   institutionSearched = false;
 
-  constructor(priceId?: string) {
+  constructor() {
     makeObservable(this, {
       showDD: observable,
       mailingAddress: observable,
@@ -107,6 +107,7 @@ export class OptionsStore implements Store {
       poq: observable,
       storeStatus: observable,
       asyncStatus: observable,
+      init: action,
       institutionFound: observable,
       institutionSearched: observable,
       setPayOptionSelected: action,
@@ -114,11 +115,9 @@ export class OptionsStore implements Store {
       setInstitutionFound: action,
       setInstitutionSearched: action,
     });
-
-    this.init(priceId);
   }
 
-  async init(priceId?: string): Promise<void> {
+  async init(priceId: string): Promise<void> {
     const localPriceId = localStorage.getItem('priceId');
 
     priceId = localPriceId || priceId;
