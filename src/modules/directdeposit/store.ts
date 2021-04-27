@@ -44,6 +44,8 @@ export async function plaidSuccess(
   try {
     analyticsHandler.trackPaymentOptionsSubmitted('Plaid ACH');
     await networker.postPlaidPayment(mutationInput);
+    localStorage.removeItem('linkToken');
+    localStorage.removeItem('priceId');
     const url = `/sell/verification-congrats`;
     window.location.href = url;
   } catch (err) {
@@ -88,8 +90,10 @@ export class DirectDepositStore implements Store {
     }
 
     if (localToken) {
-      this.linkToken = localToken;
-      this.tokenIsLocal = true;
+      runInAction(() => {
+        this.linkToken = localToken;
+        this.tokenIsLocal = true;
+      });
     } else {
       if (priceId === undefined) {
         return;
