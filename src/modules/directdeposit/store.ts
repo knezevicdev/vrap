@@ -22,8 +22,7 @@ export async function getInitialDDStoreState(
 ): Promise<DDStoreState> {
   const networker = new Networker();
   try {
-    const redirectUri = window.location.href;
-    const tokenResponse = await networker.getPlaidToken(priceId, redirectUri);
+    const tokenResponse = await networker.getPlaidToken(priceId);
     const plaidToken = tokenResponse.data.data.getLinkToken;
     localStorage.setItem('linkToken', plaidToken.LinkToken);
     localStorage.setItem('priceId', priceId);
