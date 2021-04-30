@@ -89,10 +89,8 @@ export class DirectDepositStore implements Store {
     }
 
     if (localToken) {
-      runInAction(() => {
-        this.linkToken = localToken;
-        this.tokenIsLocal = true;
-      });
+      this.linkToken = localToken;
+      this.tokenIsLocal = true;
     } else {
       if (priceId === undefined) {
         return;

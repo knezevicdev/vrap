@@ -123,9 +123,7 @@ export class OptionsStore implements Store {
     priceId = localPriceId || priceId;
 
     if (priceId !== undefined) {
-      runInAction(() => {
-        this.priceId = priceId;
-      });
+      this.priceId = priceId;
     } else {
       return;
     }
