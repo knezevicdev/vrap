@@ -94,14 +94,14 @@ export class Networker {
     userId: string
   ): Promise<AxiosResponse<PlaidTokenResp>> => {
     const data = {
-      query: `query ($userId: String!) {
-        getLinkToken(userId: $userId) {
+      query: `query ($userId: String!, $source: String) {
+        getLinkToken(userId: $userId, source: $source) {
           LinkToken,
           Expiration,
           RequestId
         }
       }`,
-      variables: { userId },
+      variables: { userId, source: 'acquisition' },
     };
 
     return this.axiosInstance.post(this.gearboxUrl, data);

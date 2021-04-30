@@ -26,6 +26,10 @@ class DirectDepositViewModel {
     return this.store.linkToken;
   };
 
+  getTokenIsLocal = (): boolean => {
+    return this.store.tokenIsLocal;
+  };
+
   getShowPlaidLink = (): boolean => {
     return this.store.showPlaidLink;
   };

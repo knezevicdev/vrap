@@ -8,6 +8,7 @@ import { PlaidData } from 'src/interfaces.d';
 
 export type Props = {
   token: string;
+  tokenIsLocal: boolean;
   plaidSuccess(
     mutationInput: PlaidData,
     onPlaidSubmitting: (value: boolean) => void
@@ -15,7 +16,12 @@ export type Props = {
   priceId: string;
 };
 
-const PlaidButton: React.FC<Props> = ({ token, plaidSuccess, priceId }) => {
+const PlaidButton: React.FC<Props> = ({
+  token,
+  tokenIsLocal,
+  plaidSuccess,
+  priceId,
+}) => {
   const oStore = useOptionsStore();
   const viewModel = new ViewModel(oStore);
 
@@ -23,6 +29,7 @@ const PlaidButton: React.FC<Props> = ({ token, plaidSuccess, priceId }) => {
     <View
       viewModel={viewModel}
       token={token}
+      tokenIsLocal={tokenIsLocal}
       plaidSuccess={plaidSuccess}
       priceId={priceId}
     />

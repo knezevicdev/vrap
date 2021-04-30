@@ -24,6 +24,8 @@ export async function getInitialDDStoreState(
   try {
     const tokenResponse = await networker.getPlaidToken(priceId);
     const plaidToken = tokenResponse.data.data.getLinkToken;
+    localStorage.setItem('linkToken', plaidToken.LinkToken);
+    localStorage.setItem('priceId', priceId);
     return plaidToken;
   } catch (err) {
     const errorState = defaultDDState;
@@ -41,6 +43,8 @@ export async function plaidSuccess(
   try {
     analyticsHandler.trackPaymentOptionsSubmitted('Plaid ACH');
     await networker.postPlaidPayment(mutationInput);
+    localStorage.removeItem('linkToken');
+    localStorage.removeItem('priceId');
     const url = `/sell/verification-congrats`;
     window.location.href = url;
   } catch (err) {
@@ -58,12 +62,9 @@ export class DirectDepositStore implements Store {
   showPlaidLink = true;
   storeStatus = StoreStatus.Initial;
   asyncStatus = AsyncStatus.Idle;
+  tokenIsLocal = false;
 
-  constructor(priceId?: string) {
-    if (priceId) {
-      this.priceId = priceId;
-      this.initClientSide();
-    }
+  constructor() {
     makeObservable(this, {
       linkToken: observable,
       expiration: observable,
@@ -72,18 +73,36 @@ export class DirectDepositStore implements Store {
       showPlaidLink: observable,
       storeStatus: observable,
       asyncStatus: observable,
+      tokenIsLocal: observable,
       initClientSide: action,
       togglePlaidLink: action,
     });
   }
 
-  async initClientSide(): Promise<void> {
-    const initialState = await getInitialDDStoreState(this.priceId);
-    runInAction(() => {
-      this.linkToken = initialState.LinkToken;
-      this.expiration = initialState.Expiration;
-      this.requestId = initialState.RequestId;
-    });
+  async initClientSide(priceId: string): Promise<void> {
+    const localToken = localStorage.getItem('linkToken');
+    const localPriceId = localStorage.getItem('priceId');
+
+    if (localPriceId && priceId === undefined) {
+      this.priceId = localPriceId;
+      priceId = localPriceId;
+    }
+
+    if (localToken) {
+      this.linkToken = localToken;
+      this.tokenIsLocal = true;
+    } else {
+      if (priceId === undefined) {
+        return;
+      }
+
+      const initialState = await getInitialDDStoreState(priceId);
+      runInAction(() => {
+        this.linkToken = initialState.LinkToken;
+        this.expiration = initialState.Expiration;
+        this.requestId = initialState.RequestId;
+      });
+    }
   }
 
   togglePlaidLink = (): void => {

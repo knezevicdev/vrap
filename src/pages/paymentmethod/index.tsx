@@ -4,7 +4,7 @@ import { IncomingMessage } from 'http';
 import { NextPage, NextPageContext } from 'next';
 import getConfig from 'next/config';
 import { useRouter } from 'next/router';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
 import ToolFooter from 'src/core/ToolFooter';
@@ -65,9 +65,15 @@ const EPayOptions: NextPage<Props> = ({ brand }) => {
   const gearboxPrivateUrl = publicRuntimeConfig.GEARBOX_PRIVATE_URL;
   const priceId = router.query.priceId as string;
 
-  const oStore = new OptionsStore(priceId);
-  const ddStore = new DirectDepositStore(priceId);
-  const poStore = new PaymentOverviewStore(priceId);
+  const oStore = new OptionsStore();
+  const ddStore = new DirectDepositStore();
+  const poStore = new PaymentOverviewStore();
+
+  useEffect(() => {
+    oStore.init(priceId);
+    ddStore.initClientSide(priceId);
+    poStore.init(priceId);
+  }, [oStore, ddStore, poStore, priceId]);
 
   // TODO: this used to be used with <State isOpenCallback={setStateDropdown} />
   // It caused the page to rerender and mobx would lose its state

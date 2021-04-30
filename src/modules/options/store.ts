@@ -96,7 +96,7 @@ export class OptionsStore implements Store {
   institutionFound = true;
   institutionSearched = false;
 
-  constructor(priceId?: string) {
+  constructor() {
     makeObservable(this, {
       showDD: observable,
       mailingAddress: observable,
@@ -107,6 +107,7 @@ export class OptionsStore implements Store {
       poq: observable,
       storeStatus: observable,
       asyncStatus: observable,
+      init: action,
       institutionFound: observable,
       institutionSearched: observable,
       setPayOptionSelected: action,
@@ -114,13 +115,19 @@ export class OptionsStore implements Store {
       setInstitutionFound: action,
       setInstitutionSearched: action,
     });
-
-    if (priceId) {
-      this.init(priceId);
-    }
   }
 
   async init(priceId: string): Promise<void> {
+    const localPriceId = localStorage.getItem('priceId');
+
+    priceId = localPriceId || priceId;
+
+    if (priceId !== undefined) {
+      this.priceId = priceId;
+    } else {
+      return;
+    }
+
     const initialState = await getInitialOptionsStoreState(priceId);
 
     runInAction(() => {
@@ -129,7 +136,6 @@ export class OptionsStore implements Store {
       this.email = initialState.email;
       this.currentPayments = initialState.currentPayments;
       this.poq = initialState.poq;
-      this.priceId = priceId;
     });
   }
 

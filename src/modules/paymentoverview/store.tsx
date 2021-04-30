@@ -38,11 +38,7 @@ export class PaymentOverviewStore implements Store {
   storeStatus = StoreStatus.Initial;
   asyncStatus = AsyncStatus.Idle;
 
-  constructor(priceId?: string) {
-    if (priceId) {
-      this.init(priceId);
-    }
-
+  constructor() {
     makeObservable(this, {
       price: observable,
       storeStatus: observable,
@@ -52,6 +48,14 @@ export class PaymentOverviewStore implements Store {
   }
 
   async init(priceId: string): Promise<void> {
+    const localPriceId = localStorage.getItem('priceId');
+
+    priceId = localPriceId || priceId;
+
+    if (priceId === undefined) {
+      return;
+    }
+
     const initialState = await getInitialPaymentOverviewStoreState(priceId);
     runInAction(() => {
       this.storeStatus = StoreStatus.Success;
