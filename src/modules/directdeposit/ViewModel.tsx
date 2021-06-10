@@ -1,6 +1,6 @@
 import { OptionsStore } from '../options/store';
 import { PaymentOverviewStore } from '../paymentoverview/store';
-import { DirectDepositStore, plaidSuccess } from './store';
+import { DirectDepositStore } from './store';
 
 import { PlaidData } from 'src/interfaces.d';
 
@@ -62,7 +62,11 @@ class DirectDepositViewModel {
     input: PlaidData,
     onPlaidSubmitting: (value: boolean) => void
   ): void => {
-    plaidSuccess(input, onPlaidSubmitting);
+    this.store.plaidSuccess(input, onPlaidSubmitting);
+  };
+
+  onPlaidExit = (): void => {
+    this.store.plaidExit();
   };
 
   getInstitutionNotFound = (): boolean => {

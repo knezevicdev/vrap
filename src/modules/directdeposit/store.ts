@@ -33,27 +33,6 @@ export async function getInitialDDStoreState(
   }
 }
 
-export async function plaidSuccess(
-  mutationInput: PlaidData,
-  onPlaidSubmitting: (value: boolean) => void
-): Promise<void> {
-  const networker = new Networker();
-  const analyticsHandler = new AnalyticsHandler();
-
-  try {
-    analyticsHandler.trackPaymentOptionsSubmitted('Plaid ACH');
-    await networker.postPlaidPayment(mutationInput);
-    localStorage.removeItem('linkToken');
-    localStorage.removeItem('priceId');
-    const url = `/sell/verification-congrats`;
-    window.location.href = url;
-  } catch (err) {
-    onPlaidSubmitting(false);
-    console.log(JSON.stringify(err));
-    return err;
-  }
-}
-
 export class DirectDepositStore implements Store {
   linkToken = defaultDDState.LinkToken;
   expiration = defaultDDState.Expiration;
@@ -107,6 +86,35 @@ export class DirectDepositStore implements Store {
 
   togglePlaidLink = (): void => {
     this.showPlaidLink = !this.showPlaidLink;
+  };
+
+  plaidSuccess = async (
+    mutationInput: PlaidData,
+    onPlaidSubmitting: (value: boolean) => void
+  ): Promise<void> => {
+    const networker = new Networker();
+    const analyticsHandler = new AnalyticsHandler();
+
+    try {
+      analyticsHandler.trackPaymentOptionsSubmitted('Plaid ACH');
+      await networker.postPlaidPayment(mutationInput);
+      localStorage.removeItem('linkToken');
+      localStorage.removeItem('priceId');
+      const url = `/sell/verification-congrats`;
+      window.location.href = url;
+    } catch (err) {
+      onPlaidSubmitting(false);
+      console.log(JSON.stringify(err));
+      return err;
+    }
+  };
+
+  plaidExit = (): void => {
+    const localPriceId = localStorage.getItem('priceId') as string;
+
+    localStorage.removeItem('linkToken');
+
+    this.initClientSide(localPriceId);
   };
 }
 
