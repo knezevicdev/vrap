@@ -75,7 +75,7 @@ const PlaidButtonView: React.FC<Props> = ({
 
   const onExit = useCallback(
     (error, metadata): void => {
-      if (error) console.log(`Plaid onExit error: ${error}`);
+      if (error && token.length) console.log(`Plaid onExit error: ${error}`);
       if (
         metadata &&
         metadata.status === 'institution_not_found' &&
@@ -87,7 +87,7 @@ const PlaidButtonView: React.FC<Props> = ({
       plaidExit();
       viewModel.onPlaidSubmitting(false);
     },
-    [viewModel, plaidExit]
+    [viewModel, token]
   );
 
   const onEvent = useCallback(

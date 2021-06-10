@@ -114,7 +114,10 @@ export class DirectDepositStore implements Store {
 
     localStorage.removeItem('linkToken');
 
-    this.initClientSide(localPriceId);
+    if (this.tokenIsLocal) {
+      this.tokenIsLocal = false;
+      this.initClientSide(localPriceId);
+    }
   };
 }
 
