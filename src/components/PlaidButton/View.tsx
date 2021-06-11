@@ -34,6 +34,7 @@ export interface Props {
     mutationInput: PlaidData,
     onPlaidSubmitting: (value: boolean) => void
   ): void;
+  plaidExit(): void;
   priceId: string;
 }
 
@@ -42,6 +43,7 @@ const PlaidButtonView: React.FC<Props> = ({
   token,
   tokenIsLocal,
   plaidSuccess,
+  plaidExit,
   priceId,
 }) => {
   let config;
@@ -73,7 +75,7 @@ const PlaidButtonView: React.FC<Props> = ({
 
   const onExit = useCallback(
     (error, metadata): void => {
-      if (error) console.log(`Plaid onExit error: ${error}`);
+      if (error && token.length) console.log(`Plaid onExit error: ${error}`);
       if (
         metadata &&
         metadata.status === 'institution_not_found' &&
@@ -81,9 +83,11 @@ const PlaidButtonView: React.FC<Props> = ({
       ) {
         viewModel.setInstitutionFound(false);
       }
+
+      plaidExit();
       viewModel.onPlaidSubmitting(false);
     },
-    [viewModel]
+    [viewModel, token]
   );
 
   const onEvent = useCallback(

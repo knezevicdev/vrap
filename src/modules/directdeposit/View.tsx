@@ -37,6 +37,7 @@ const DirectDepositView: React.FC<Props> = ({ viewModel }) => {
             token={token}
             tokenIsLocal={tokenIsLocal}
             plaidSuccess={viewModel.onPlaidSuccess}
+            plaidExit={viewModel.onPlaidExit}
             priceId={viewModel.getPriceId()}
           />
           <LockText>

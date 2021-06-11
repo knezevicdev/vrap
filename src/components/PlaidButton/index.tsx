@@ -13,6 +13,7 @@ export type Props = {
     mutationInput: PlaidData,
     onPlaidSubmitting: (value: boolean) => void
   ): void;
+  plaidExit(): void;
   priceId: string;
 };
 
@@ -20,6 +21,7 @@ const PlaidButton: React.FC<Props> = ({
   token,
   tokenIsLocal,
   plaidSuccess,
+  plaidExit,
   priceId,
 }) => {
   const oStore = useOptionsStore();
@@ -31,6 +33,7 @@ const PlaidButton: React.FC<Props> = ({
       token={token}
       tokenIsLocal={tokenIsLocal}
       plaidSuccess={plaidSuccess}
+      plaidExit={plaidExit}
       priceId={priceId}
     />
   );

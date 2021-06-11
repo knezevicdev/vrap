@@ -101,7 +101,7 @@ export class Networker {
           RequestId
         }
       }`,
-      variables: { userId, source: 'acquisition' },
+      variables: { userId, source: 'appraisal' },
     };
 
     return this.axiosInstance.post(this.gearboxUrl, data);
