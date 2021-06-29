@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx,.json --format unix --fix > lintErrors.txt",
-    "test": "jest --watch",
+    "test": "jest --no-cache --ci --coverage --reporters=default --reporters=jest-junit --passWithNoTests",
+    "test:dev": "jest --watch",
     "test:ci": "jest --ci --coverage --passWithNoTests",
     "test:cc": "jest  --coverage --passWithNoTests"
   },
@@ -57,6 +58,7 @@
     "eslint-plugin-react-hooks": "^3.0.0",
     "eslint-plugin-simple-import-sort": "^6.0.0",
     "jest": "^25.4.0",
+    "jest-junit": "^12.2.0",
     "prettier": "^2.0.5",
     "typescript": "^3.8.2"
   }

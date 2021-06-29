@@ -1,31 +1,101 @@
-image: node:fermium
+# Customized for Vroom
+
+image: gitlab.vroom.com:5050/devops/alpine:latest
+
+variables:
+  POSTGRES_ENABLED: "false"
+
+  DOCKER_DRIVER: overlay2
+
+  ROLLOUT_RESOURCE_TYPE: deployment
+
+  INCREMENTAL_ROLLOUT_MODE: manual
+
+  AUTO_DEVOPS_BUILD_IMAGE_FORWARDED_CI_VARIABLES: CI_JOB_TOKEN
+
+  DOCKER_TLS_CERTDIR: ""  # https://gitlab.com/gitlab-org/gitlab-runner/issues/4501
+
+  FF_GITLAB_REGISTRY_HELPER_IMAGE: "true"
 
 stages:
   - build
   - test
+  - deploy  # dummy stage to follow the template guidelines
+  - review
+  - dev
+  - qa
+  - dast
+  - uat
+  - prod
+  - fastly-purge
+  - cleanup
 
-build-appraisal:
-  only:
-    refs:
-      - merge_requests
-    changes:
-      - "**/*"
-  stage: build
+workflow:
+  rules:
+    - exists:
+        - Dockerfile
+
+.auto-deploy:
+  image: "registry.gitlab.com/gitlab-org/cluster-integration/auto-deploy-image:v1.0.7"
+  dependencies: []
+
+review:
+  extends: .auto-deploy
+  stage: review
+  tags:
+  - review
   script:
-    - npm install --quiet
-    - npm run lint
-    - npm run build
+    - auto-deploy check_kube_domain
+    - auto-deploy download_chart
+    - auto-deploy ensure_namespace
+    - auto-deploy initialize_tiller
+    - auto-deploy create_secret
+    - auto-deploy deploy
+    - auto-deploy persist_environment_url
+  environment:
+    name: review/$CI_COMMIT_REF_NAME
+    url: http://$CI_PROJECT_NAME-$CI_ENVIRONMENT_SLUG.$KUBE_INGRESS_BASE_DOMAIN
+    on_stop: stop_review
+  artifacts:
+    paths: [environment_url.txt, tiller.log]
+    when: always
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "main"'
+      when: never
+    - if: $CI_COMMIT_BRANCH
+      when:   
 
-test-appraisal:
-  only:
-    refs:
-      - merge_requests
-    changes:
-      - "**/*"
+stop_review:
+  extends: .auto-deploy
+  stage: cleanup
+  tags:
+  - review
+  variables:
+    GIT_STRATEGY: none
+  script:
+    - auto-deploy initialize_tiller
+    - auto-deploy delete
+    - kubectl delete namespace $KUBE_NAMESPACE
+  environment:
+    name: review/$CI_COMMIT_REF_NAME
+    action: stop
+  allow_failure: true
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "main"'
+      when: never
+    - if: $CI_COMMIT_BRANCH
+      when: manual
+
+test:
+  image: gitlab.vroom.com:5050/devops/nextjs-builder/main:latest
   stage: test
   script:
-    - npm install --quiet
-    - npm run test:ci
+    - npm ci
+    - npm test
+# enable once a test is in place
+#    - if [[ `cat coverage/coverage-summary.json | jq ".total.lines.pct" | xargs printf "%.*f\n" "0"` -lt 35 ]] ; then echo fail && exit 1; else echo pass; fi
+#    - 'curl --location --request GET --header "JOB-TOKEN: ${CI_JOB_TOKEN}" "https://gitlab.vroom.com/api/v4/projects/${CI_PROJECT_ID}/jobs/artifacts/main/raw/coverage/coverage-summary.json?job=test" --output coverage-summary.json'
+#    - npm run jccp
   artifacts:
     when: always
     reports:
@@ -35,19 +105,160 @@ test-appraisal:
     paths:
       -  coverage
   coverage: /All\sfiles.*?\s+(\d+.\d+)/
-
-code_quality:
   rules:
-    - if: '$CODE_QUALITY_DISABLED'
+    - if: '$TEST_DISABLED'
       when: never
-    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"' # Run code quality job in merge request pipelines
-    - if: '$CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH'      # Run code quality job in pipelines on the master branch (but not in other branch pipelines)
-    - if: '$CI_COMMIT_TAG'
+    - if: '$CI_COMMIT_TAG || $CI_COMMIT_BRANCH'
 
+dev-deploy:
+  extends: .auto-deploy
+  stage: dev
+  tags:
+  - dev
+  script:
+    - auto-deploy check_kube_domain
+    - auto-deploy download_chart
+    - auto-deploy ensure_namespace
+    - auto-deploy initialize_tiller
+    - auto-deploy create_secret
+    - auto-deploy deploy
+  environment:
+    name: dev
+    url: https://$CI_PROJECT_PATH_SLUG.$KUBE_INGRESS_BASE_DOMAIN
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "main"'
+      when: always
+    - if: '$CI_COMMIT_BRANCH != "main"'
+      when: never
+
+qa-deploy:
+  extends: .auto-deploy
+  stage: qa
+  tags:
+  - qa
+  script:
+    - auto-deploy check_kube_domain
+    - auto-deploy download_chart
+    - auto-deploy ensure_namespace
+    - auto-deploy initialize_tiller
+    - auto-deploy create_secret
+    - auto-deploy deploy
+  environment:
+    name: qa
+    url: https://$CI_PROJECT_PATH_SLUG.$KUBE_INGRESS_BASE_DOMAIN
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "main"'
+      when: always
+    - if: '$CI_COMMIT_BRANCH != "main"'
+      when: never
+
+qa-purge:
+  image: gitlab.vroom.com:5050/devops/fastly-purge/main:latest
+  stage: fastly-purge
+  needs: ["qa-deploy"]
+  tags:
+  - qa
+  script:
+    - /usr/local/bin/fastly-purge
+  environment:
+    name: qa
+    url: https://$CI_PROJECT_PATH_SLUG.$KUBE_INGRESS_BASE_DOMAIN
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "main"'
+      when: always
+    - if: '$CI_COMMIT_BRANCH != "main"'
+      when: never
+
+uat-deploy:
+  extends: .auto-deploy
+  stage: uat
+  tags:
+    - uat
+  script:
+    - auto-deploy check_kube_domain
+    - auto-deploy download_chart
+    - auto-deploy ensure_namespace
+    - auto-deploy initialize_tiller
+    - auto-deploy create_secret
+    - auto-deploy deploy
+  environment:
+    name: uat
+    url: https://$CI_PROJECT_PATH_SLUG.$KUBE_INGRESS_BASE_DOMAIN    
+  rules:
+    - if: $CI_COMMIT_BRANCH
+      when: never
+    - if: '$CI_COMMIT_TAG =~ /^v\d+\.\d+\.\d+$/'
+      when: always
+    - if: '$CI_COMMIT_TAG =~ /^\w+-v\d+\.\d+\.\d+$/'
+      when: always
+
+uat-purge:
+  image: gitlab.vroom.com:5050/devops/fastly-purge/main:latest
+  stage: fastly-purge
+  needs: ["uat-deploy"]
+  tags:
+  - uat
+  script:
+    - /usr/local/bin/fastly-purge
+  environment:
+    name: uat
+  rules:
+    - if: $CI_COMMIT_BRANCH
+      when: never
+    - if: '$CI_COMMIT_TAG =~ /^v\d+\.\d+\.\d+$/'
+      when: always
+    - if: '$CI_COMMIT_TAG =~ /^\w+-v\d+\.\d+\.\d+$/'
+      when: always
+
+
+prod-deploy:
+  extends: .auto-deploy
+  stage: prod
+  tags:
+    - prod
+  script:
+    - auto-deploy check_kube_domain
+    - auto-deploy download_chart
+    - auto-deploy ensure_namespace
+    - auto-deploy initialize_tiller
+    - auto-deploy create_secret
+    - auto-deploy deploy
+    - auto-deploy persist_environment_url
+  environment:
+    name: prod
+    url: https://$CI_PROJECT_PATH_SLUG.$KUBE_INGRESS_BASE_DOMAIN
+  rules:
+    - if: $CI_COMMIT_BRANCH
+      when: never
+    - if: '$CI_COMMIT_TAG =~ /^v\d+\.\d+\.\d+$/'
+      when: manual
+    - if: '$CI_COMMIT_TAG =~ /^\w+-v\d+\.\d+\.\d+$/'
+      when: manual
+
+prod-purge:
+  image: gitlab.vroom.com:5050/devops/fastly-purge/main:latest
+  stage: fastly-purge
+  needs: ["prod-deploy"]
+  tags:
+  - prod
+  script:
+    - /usr/local/bin/fastly-purge
+  environment:
+    name: prod
+  rules:
+    - if: $CI_COMMIT_BRANCH
+      when: never
+    - if: '$CI_COMMIT_TAG =~ /^v\d+\.\d+\.\d+$/'
+      when: always
+    - if: '$CI_COMMIT_TAG =~ /^\w+-v\d+\.\d+\.\d+$/'
+      when: always
 
 include:
+  - template: Jobs/Build.gitlab-ci.yml
   - template: Jobs/Code-Quality.gitlab-ci.yml
   - template: Jobs/Code-Intelligence.gitlab-ci.yml
+  - template: Jobs/DAST-Default-Branch-Deploy.gitlab-ci.yml
+  - template: Security/DAST.gitlab-ci.yml
   - template: Security/Container-Scanning.gitlab-ci.yml
   - template: Security/Dependency-Scanning.gitlab-ci.yml
   - template: Security/License-Scanning.gitlab-ci.yml
