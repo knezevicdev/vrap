@@ -42,7 +42,7 @@ export TEST_ENG_ENV=uat
 printenv
 ```
 
-## Theme
+## Theming
 We are using MaterialUI component library. Mainly for its Grid Components and functionality. We may incorporate more as our projects grows. But for now, here is documentation around how we use the grid.
 
 ## Code Style Guide
