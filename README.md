@@ -26,7 +26,7 @@ open http://localhost:3000
 
 **Access Token Setup**
 1. Navigate to Gitlab setting -> Access Token
-2. "Name" and "Expires at" of your choice and select "scope" API and press button to create token
+2. Name and Expires at of your choice and select API on scope section and press button to create token
 3. open terminal and open bash_profile or zshrc
 ```
 vim ~/.bash_profile or vim ~/.zshrc
