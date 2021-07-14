@@ -47,3 +47,10 @@ printenv
 * [React](https://github.com/airbnb/javascript/tree/master/react)
 * [Javascript](https://github.com/airbnb/javascript)
 * [CSS](https://github.com/airbnb/css)
+
+
+## Build With
+
+* [Typescript](https://www.typescriptlang.org/)
+* [Nextjs](https://nextjs.org/)
+* [MobX](https://www.mobxjs.com/README.html)
