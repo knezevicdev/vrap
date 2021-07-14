@@ -41,6 +41,11 @@ export TEST_ENG_ENV=uat
 ```
 printenv
 ```
+[Read more about git setup](https://tdalabs.atlassian.net/wiki/spaces/FEE/pages/2853634364/Getting+started+with+your+Workstation+-+Mac#Git-Setup)
+
+### Git Commit Short SHA
+In a CI/CD context, Gitlab supplies an environment variable named CI_COMMIT_SHORT_SHA. We use this for several things, such as the application's build ID and for the version endpoint.
+This variable isn't defined on your local machine, so it gets injected by the npm run dev script.
 
 ## Theming
 We are using MaterialUI component library. Mainly for its Grid Components and functionality. We may incorporate more as our projects grows. But for now, here is documentation around how we use the grid.
