@@ -42,6 +42,9 @@ export TEST_ENG_ENV=uat
 printenv
 ```
 
+## Theme
+We are using MaterialUI component library. Mainly for its Grid Components and functionality. We may incorporate more as our projects grows. But for now, here is documentation around how we use the grid.
+
 ## Code Style Guide
 
 * [React](https://github.com/airbnb/javascript/tree/master/react)
@@ -54,3 +57,4 @@ printenv
 * [Typescript](https://www.typescriptlang.org/)
 * [Nextjs](https://nextjs.org/)
 * [MobX](https://www.mobxjs.com/README.html)
+* [MaterialUI](https://material-ui.com/)
