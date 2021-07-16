@@ -2,6 +2,14 @@ ingress:
   enabled: true
   path: '/appraisal'
 
+resources:
+  limits:
+    cpu: 500m
+    memory: 1000Mi
+  requests:
+    cpu: 100m
+    memory: 500Mi
+
 service:
   externalPort: 8080
   internalPort: 8080
