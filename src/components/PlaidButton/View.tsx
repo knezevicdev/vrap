@@ -131,7 +131,7 @@ const PlaidButtonView: React.FC<Props> = ({
     if (ready && tokenIsLocal) {
       open();
     }
-  });
+  }, [ready, tokenIsLocal]);
 
   return (
     <PlaidButtonContainer>
