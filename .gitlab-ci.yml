@@ -92,7 +92,7 @@ test:
   script:
     - npm ci
     - npm test
-    - if [[ `cat coverage/coverage-summary.json | jq ".total.lines.pct" | xargs printf "%.*f\n" "0"` -lt 35 ]] ; then echo fail && exit 1; else echo pass; fi
+#    - if [[ `cat coverage/coverage-summary.json | jq ".total.lines.pct" | xargs printf "%.*f\n" "0"` -lt 35 ]] ; then echo fail && exit 1; else echo pass; fi
 #    - 'curl --location --request GET --header "JOB-TOKEN: ${CI_JOB_TOKEN}" "https://gitlab.vroom.com/api/v4/projects/${CI_PROJECT_ID}/jobs/artifacts/main/raw/coverage/coverage-summary.json?job=test" --output coverage-summary.json'
 #    - npm run jccp
   artifacts:
