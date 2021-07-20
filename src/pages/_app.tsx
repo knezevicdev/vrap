@@ -50,13 +50,13 @@ class AppraisalApp extends App {
     });
 
     const firebaseConfig = {
-      apiKey: 'AIzaSyAf2yVhnnxthUA5C4RqIqeDkIhk74EBkAA',
+      apiKey: publicRuntimeConfig.NEXT_PUBLIC_FIREBASE_API,
       authDomain: 'vroom-web.firebaseapp.com',
       projectId: 'vroom-web',
       storageBucket: 'vroom-web.appspot.com',
-      messagingSenderId: '972016380498',
-      appId: '1:972016380498:web:bcef1f06e28ad2911f8d8b',
-      measurementId: 'G-RKV8HM65P9',
+      messagingSenderId: publicRuntimeConfig.NEXT_PUBLIC_MESSAGING_SENDER_ID,
+      appId: publicRuntimeConfig.NEXT_PUBLIC_FIREBASE_APP_ID,
+      measurementId: publicRuntimeConfig.NEXT_PUBLIC_MEASUREMENT_ID,
     };
 
     if (firebase.apps.length == 0) {

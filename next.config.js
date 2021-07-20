@@ -27,6 +27,11 @@ const config = {
     NEXT_PUBLIC_STATIC_ASSETS_HOST_URL:
       process.env.NEXT_PUBLIC_STATIC_ASSETS_HOST_URL,
     NEXT_PUBLIC_VROOM_URL: process.env.NEXT_PUBLIC_VROOM_URL,
+    NEXT_PUBLIC_FIREBASE_API: process.env.NEXT_PUBLIC_FIREBASE_API,
+    NEXT_PUBLIC_MESSAGING_SENDER_ID:
+      process.env.NEXT_PUBLIC_MESSAGING_SENDER_ID,
+    NEXT_PUBLIC_FIREBASE_APP_ID: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
+    NEXT_PUBLIC_MEASUREMENT_ID: process.env.NEXT_PUBLIC_MEASUREMENT_ID,
   },
   serverRuntimeConfig: {
     // Will only be available on the server side
