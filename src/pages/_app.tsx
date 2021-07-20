@@ -1,7 +1,14 @@
+import 'firebase/analytics';
+import 'firebase/remote-config';
+
 import { datadogRum } from '@datadog/browser-rum';
+import { CatSDK } from '@vroom-web/cat-sdk';
+import { Client } from '@vroom-web/networking';
 import { Brand, ThemeProvider } from '@vroom-web/ui';
+import firebase from 'firebase/app';
 import { configure as configureMobx } from 'mobx';
-import App from 'next/app';
+import App, { AppProps } from 'next/app';
+import getConfig from 'next/config';
 import { name, version } from 'package.json';
 import React from 'react';
 import smoothscroll from 'smoothscroll-polyfill';
@@ -9,13 +16,63 @@ import { ThemeProvider as StyledComponentsThemeProvider } from 'styled-component
 
 import { GlobalStyle, theme } from '../core/themes/Vroom';
 
+import { AnalyticsHandlerContext } from 'src/integrations/AnalyticHandlerContext';
+import AnalyticsHandler from 'src/integrations/AnalyticsHandler';
+import { CatSDKContext } from 'src/integrations/CatSDKContext';
 import ENVS from 'src/integrations/Envs';
+import { RemoteConfigContext } from 'src/integrations/RemoteConfigContext';
+import { ClientContext } from 'src/networking/ClientContext';
+
+const { publicRuntimeConfig } = getConfig();
 
 configureMobx({
   enforceActions: 'observed', // don't allow state modifications outside actions
 });
 
 class AppraisalApp extends App {
+  private readonly remoteConfig: firebase.remoteConfig.RemoteConfig;
+  private readonly catSDK: CatSDK;
+  private readonly client: Client;
+  private readonly analyticsHandler: AnalyticsHandler;
+
+  constructor(props: AppProps) {
+    super(props);
+    this.analyticsHandler = new AnalyticsHandler();
+    this.catSDK = new CatSDK({
+      serviceBasePath: publicRuntimeConfig.NEXT_PUBLIC_INTERCHANGE_URL || '',
+    });
+
+    const interchangeUrl =
+      publicRuntimeConfig.NEXT_PUBLIC_INTERCHANGE_URL || '';
+    const gqlUrl = `${interchangeUrl}/gql`;
+    this.client = new Client(gqlUrl, {
+      interchangeUrl: interchangeUrl,
+    });
+
+    const firebaseConfig = {
+      apiKey: 'AIzaSyAf2yVhnnxthUA5C4RqIqeDkIhk74EBkAA',
+      authDomain: 'vroom-web.firebaseapp.com',
+      projectId: 'vroom-web',
+      storageBucket: 'vroom-web.appspot.com',
+      messagingSenderId: '972016380498',
+      appId: '1:972016380498:web:bcef1f06e28ad2911f8d8b',
+      measurementId: 'G-RKV8HM65P9',
+    };
+
+    if (firebase.apps.length == 0) {
+      firebase.initializeApp(firebaseConfig);
+    }
+
+    this.remoteConfig =
+      typeof window !== 'undefined'
+        ? firebase.remoteConfig()
+        : ({} as firebase.remoteConfig.RemoteConfig);
+
+    if (typeof window !== 'undefined') {
+      this.remoteConfig.settings.minimumFetchIntervalMillis = 300000;
+    }
+  }
+
   componentDidMount(): void {
     smoothscroll.polyfill(); // needs access to the window
     if (ENVS.DATA_DOG_RUM_APPLICATION) {
@@ -29,6 +86,13 @@ class AppraisalApp extends App {
         trackInteractions: true,
       });
     }
+
+    const dev = publicRuntimeConfig.NODE_ENV !== 'production';
+    const catSDK = new CatSDK({
+      // Point to dev for local builds.
+      serviceBasePath: dev ? 'https://dev.vroom.com' : undefined,
+    });
+    catSDK.initCatData();
   }
 
   render(): JSX.Element {
@@ -36,11 +100,19 @@ class AppraisalApp extends App {
     return (
       <>
         <GlobalStyle />
-        <ThemeProvider brand={Brand.VROOM}>
-          <StyledComponentsThemeProvider theme={theme}>
-            <Component {...pageProps} />
-          </StyledComponentsThemeProvider>
-        </ThemeProvider>
+        <ClientContext.Provider value={this.client}>
+          <AnalyticsHandlerContext.Provider value={this.analyticsHandler}>
+            <CatSDKContext.Provider value={this.catSDK}>
+              <RemoteConfigContext.Provider value={this.remoteConfig}>
+                <ThemeProvider brand={Brand.VROOM}>
+                  <StyledComponentsThemeProvider theme={theme}>
+                    <Component {...pageProps} />
+                  </StyledComponentsThemeProvider>
+                </ThemeProvider>
+              </RemoteConfigContext.Provider>
+            </CatSDKContext.Provider>
+          </AnalyticsHandlerContext.Provider>
+        </ClientContext.Provider>
       </>
     );
   }

@@ -1,4 +1,3 @@
-import { SimpleHeader } from '@vroom-web/legacy-header-components';
 import { IncomingMessage } from 'http';
 import { GetServerSideProps, NextPage } from 'next';
 import { useRouter } from 'next/router';
@@ -6,6 +5,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 import AsyncIndicator from 'src/components/AsyncIndicator';
+import Header from 'src/components/Header';
 import Footer from 'src/core/Footer';
 import ENVS from 'src/integrations/Envs';
 import PriceInfo from 'src/modules/price';
@@ -21,7 +21,7 @@ const Price: NextPage = () => {
 
   return (
     <Page name="Home">
-      <SimpleHeader gearboxPrivateUrl={gearboxPrivateUrl} />
+      <Header />
       <Contents>
         <PriceInfo store={store} />
         <Questions />
