@@ -1,4 +1,4 @@
-import { SimpleHeader } from '@vroom-web/header-components';
+import { SimpleHeader } from '@vroom-web/legacy-header-components';
 import { Brand, ThemeProvider } from '@vroom-web/ui';
 import { IncomingMessage } from 'http';
 import { NextPage, NextPageContext } from 'next';

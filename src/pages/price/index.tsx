@@ -1,4 +1,4 @@
-import { SimpleHeader } from '@vroom-web/header-components';
+import { SimpleHeader } from '@vroom-web/legacy-header-components';
 import { IncomingMessage } from 'http';
 import { GetServerSideProps, NextPage } from 'next';
 import { useRouter } from 'next/router';
