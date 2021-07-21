@@ -1,7 +1,7 @@
 import { Brand, ThemeProvider } from '@vroom-web/ui';
 import { IncomingMessage } from 'http';
 import { NextPage, NextPageContext } from 'next';
-import getConfig from 'next/config';
+// import getConfig from 'next/config';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
@@ -58,11 +58,12 @@ interface Props {
   brand: Brand;
 }
 
-const { publicRuntimeConfig } = getConfig();
+// const { publicRuntimeConfig } = getConfig();
 
 const EPayOptions: NextPage<Props> = ({ brand }) => {
   const router = useRouter();
-  const gearboxPrivateUrl = publicRuntimeConfig.GEARBOX_PRIVATE_URL;
+  // comment this to fix build fail
+  // const gearboxPrivateUrl = publicRuntimeConfig.GEARBOX_PRIVATE_URL;
   const priceId = router.query.priceId as string;
 
   const oStore = new OptionsStore();
