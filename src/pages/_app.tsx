@@ -8,7 +8,6 @@ import { Brand, ThemeProvider } from '@vroom-web/ui';
 import firebase from 'firebase/app';
 import { configure as configureMobx } from 'mobx';
 import App, { AppProps } from 'next/app';
-import getConfig from 'next/config';
 import { name, version } from 'package.json';
 import React from 'react';
 import smoothscroll from 'smoothscroll-polyfill';
@@ -23,16 +22,14 @@ import ENVS from 'src/integrations/Envs';
 import { RemoteConfigContext } from 'src/integrations/RemoteConfigContext';
 import { ClientContext } from 'src/networking/ClientContext';
 
-const { publicRuntimeConfig } = getConfig();
-
 const firebaseConfig = {
-  apiKey: publicRuntimeConfig.NEXT_PUBLIC_FIREBASE_API,
+  apiKey: ENVS.NEXT_PUBLIC_FIREBASE_API,
   authDomain: 'vroom-web.firebaseapp.com',
   projectId: 'vroom-web',
   storageBucket: 'vroom-web.appspot.com',
-  messagingSenderId: publicRuntimeConfig.NEXT_PUBLIC_MESSAGING_SENDER_ID,
-  appId: publicRuntimeConfig.NEXT_PUBLIC_FIREBASE_APP_ID,
-  measurementId: publicRuntimeConfig.NEXT_PUBLIC_MEASUREMENT_ID,
+  messagingSenderId: ENVS.NEXT_PUBLIC_MESSAGING_SENDER_ID,
+  appId: ENVS.NEXT_PUBLIC_FIREBASE_APP_ID,
+  measurementId: ENVS.NEXT_PUBLIC_MEASUREMENT_ID,
 };
 
 configureMobx({
@@ -48,8 +45,7 @@ class AppraisalApp extends App {
   constructor(props: AppProps) {
     super(props);
     this.analyticsHandler = new AnalyticsHandler();
-    const serviceBasePath =
-      publicRuntimeConfig.NEXT_PUBLIC_INTERCHANGE_URL || '';
+    const serviceBasePath = ENVS.NEXT_PUBLIC_INTERCHANGE_URL;
     this.catSDK = new CatSDK({ serviceBasePath });
 
     const gqlUrl = serviceBasePath !== '' ? `${serviceBasePath}/gql` : '';
