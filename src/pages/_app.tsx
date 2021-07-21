@@ -25,6 +25,16 @@ import { ClientContext } from 'src/networking/ClientContext';
 
 const { publicRuntimeConfig } = getConfig();
 
+const firebaseConfig = {
+  apiKey: publicRuntimeConfig.NEXT_PUBLIC_FIREBASE_API,
+  authDomain: 'vroom-web.firebaseapp.com',
+  projectId: 'vroom-web',
+  storageBucket: 'vroom-web.appspot.com',
+  messagingSenderId: publicRuntimeConfig.NEXT_PUBLIC_MESSAGING_SENDER_ID,
+  appId: publicRuntimeConfig.NEXT_PUBLIC_FIREBASE_APP_ID,
+  measurementId: publicRuntimeConfig.NEXT_PUBLIC_MEASUREMENT_ID,
+};
+
 configureMobx({
   enforceActions: 'observed', // don't allow state modifications outside actions
 });
@@ -38,26 +48,12 @@ class AppraisalApp extends App {
   constructor(props: AppProps) {
     super(props);
     this.analyticsHandler = new AnalyticsHandler();
-    this.catSDK = new CatSDK({
-      serviceBasePath: publicRuntimeConfig.NEXT_PUBLIC_INTERCHANGE_URL || '',
-    });
-
-    const interchangeUrl =
+    const serviceBasePath =
       publicRuntimeConfig.NEXT_PUBLIC_INTERCHANGE_URL || '';
-    const gqlUrl = `${interchangeUrl}/gql`;
-    this.client = new Client(gqlUrl, {
-      interchangeUrl: interchangeUrl,
-    });
+    this.catSDK = new CatSDK({ serviceBasePath });
 
-    const firebaseConfig = {
-      apiKey: publicRuntimeConfig.NEXT_PUBLIC_FIREBASE_API,
-      authDomain: 'vroom-web.firebaseapp.com',
-      projectId: 'vroom-web',
-      storageBucket: 'vroom-web.appspot.com',
-      messagingSenderId: publicRuntimeConfig.NEXT_PUBLIC_MESSAGING_SENDER_ID,
-      appId: publicRuntimeConfig.NEXT_PUBLIC_FIREBASE_APP_ID,
-      measurementId: publicRuntimeConfig.NEXT_PUBLIC_MEASUREMENT_ID,
-    };
+    const gqlUrl = `${serviceBasePath}/gql`;
+    this.client = new Client(gqlUrl, { interchangeUrl: serviceBasePath });
 
     if (firebase.apps.length == 0) {
       firebase.initializeApp(firebaseConfig);
