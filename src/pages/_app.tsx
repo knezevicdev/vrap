@@ -52,7 +52,7 @@ class AppraisalApp extends App {
       publicRuntimeConfig.NEXT_PUBLIC_INTERCHANGE_URL || '';
     this.catSDK = new CatSDK({ serviceBasePath });
 
-    const gqlUrl = `${serviceBasePath}/gql`;
+    const gqlUrl = serviceBasePath !== '' ? `${serviceBasePath}/gql` : '';
     this.client = new Client(gqlUrl, { interchangeUrl: serviceBasePath });
 
     if (firebase.apps.length == 0) {
@@ -83,12 +83,7 @@ class AppraisalApp extends App {
       });
     }
 
-    const dev = publicRuntimeConfig.NODE_ENV !== 'production';
-    const catSDK = new CatSDK({
-      // Point to dev for local builds.
-      serviceBasePath: dev ? 'https://dev.vroom.com' : undefined,
-    });
-    catSDK.initCatData();
+    this.catSDK.initCatData();
   }
 
   render(): JSX.Element {
