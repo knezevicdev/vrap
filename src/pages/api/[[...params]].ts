@@ -13,7 +13,6 @@ export const config = {
 const proxy = createProxyMiddleware('/api/interchange/**', {
   changeOrigin: true,
   pathRewrite: (path) => {
-    console.log(path.replace('/api/interchange', ''));
     return path.replace('/api/interchange', '');
   },
   ignorePath: false,
