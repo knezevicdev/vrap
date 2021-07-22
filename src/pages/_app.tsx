@@ -2,6 +2,7 @@ import 'firebase/analytics';
 import 'firebase/remote-config';
 
 import { datadogRum } from '@datadog/browser-rum';
+import { IdProvider } from '@radix-ui/react-id';
 import { CatSDK } from '@vroom-web/cat-sdk';
 import { Client } from '@vroom-web/networking';
 import { Brand, ThemeProvider } from '@vroom-web/ui';
@@ -84,6 +85,7 @@ class AppraisalApp extends App {
 
   render(): JSX.Element {
     const { Component, pageProps } = this.props;
+
     return (
       <>
         <GlobalStyle />
@@ -91,11 +93,13 @@ class AppraisalApp extends App {
           <AnalyticsHandlerContext.Provider value={this.analyticsHandler}>
             <CatSDKContext.Provider value={this.catSDK}>
               <RemoteConfigContext.Provider value={this.remoteConfig}>
-                <ThemeProvider brand={Brand.VROOM}>
-                  <StyledComponentsThemeProvider theme={theme}>
-                    <Component {...pageProps} />
-                  </StyledComponentsThemeProvider>
-                </ThemeProvider>
+                <IdProvider>
+                  <ThemeProvider brand={Brand.VROOM}>
+                    <StyledComponentsThemeProvider theme={theme}>
+                      <Component {...pageProps} />
+                    </StyledComponentsThemeProvider>
+                  </ThemeProvider>
+                </IdProvider>
               </RemoteConfigContext.Provider>
             </CatSDKContext.Provider>
           </AnalyticsHandlerContext.Provider>
