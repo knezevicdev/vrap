@@ -1,12 +1,11 @@
-import { SimpleHeader } from '@vroom-web/header-components';
 import { Brand, ThemeProvider } from '@vroom-web/ui';
 import { IncomingMessage } from 'http';
 import { NextPage, NextPageContext } from 'next';
-import getConfig from 'next/config';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
+import Header from 'src/components/Header';
 import ToolFooter from 'src/core/ToolFooter';
 import {
   DirectDepositStore,
@@ -58,17 +57,13 @@ interface Props {
   brand: Brand;
 }
 
-const { publicRuntimeConfig } = getConfig();
-
 const EPayOptions: NextPage<Props> = ({ brand }) => {
   const router = useRouter();
-  const gearboxPrivateUrl = publicRuntimeConfig.GEARBOX_PRIVATE_URL;
   const priceId = router.query.priceId as string;
 
   const oStore = new OptionsStore();
   const ddStore = new DirectDepositStore();
   const poStore = new PaymentOverviewStore();
-
   useEffect(() => {
     oStore.init(priceId);
     ddStore.initClientSide(priceId);
@@ -86,7 +81,7 @@ const EPayOptions: NextPage<Props> = ({ brand }) => {
         value={{ stateDropdownOpen, setStateDropdown }}
       >
         <Page name="EPayOptions">
-          <SimpleHeader gearboxPrivateUrl={gearboxPrivateUrl} />
+          <Header />
           <SuccessBar />
           <ColumnBody stateDropdownOpen={stateDropdownOpen}>
             <OptionsStoreContext.Provider value={oStore}>

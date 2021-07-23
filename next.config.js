@@ -27,10 +27,12 @@ const config = {
     NEXT_PUBLIC_STATIC_ASSETS_HOST_URL:
       process.env.NEXT_PUBLIC_STATIC_ASSETS_HOST_URL,
     NEXT_PUBLIC_VROOM_URL: process.env.NEXT_PUBLIC_VROOM_URL,
+    NEXT_PUBLIC_INTERCHANGE_URL: process.env.NEXT_PUBLIC_INTERCHANGE_URL,
   },
   serverRuntimeConfig: {
     // Will only be available on the server side
     SEGMENT_WRITE_KEY: process.env.SEGMENT_WRITE_KEY,
+    INTERCHANGE_PROXY_TARGET: process.env.INTERCHANGE_PROXY_TARGET,
   },
   /* Custom webpack configuration. */
   webpack: (config) => {
