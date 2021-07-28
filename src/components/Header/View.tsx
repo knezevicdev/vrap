@@ -13,12 +13,14 @@ const HeaderView: React.FC = () => {
   const analyticsHandler = useContext(AnalyticsHandlerContext);
 
   return (
-    <FullHeader
-      client={client}
-      analyticsHandler={analyticsHandler}
-      remoteConfig={remoteConfig}
-      catSDK={catSDK}
-    />
+    <div data-qa={'fullheader'}>
+      <FullHeader
+        client={client}
+        analyticsHandler={analyticsHandler}
+        remoteConfig={remoteConfig}
+        catSDK={catSDK}
+      />
+    </div>
   );
 };
 
