@@ -134,6 +134,13 @@ export class Icons {
     path: `${ENVS.BASE_PATH}/icons/lock.svg`,
   });
 
+  static readonly CALL_US = new Icons('CALL_US', {
+    name: 'call-us',
+    width: 18,
+    height: 18,
+    path: `${ENVS.BASE_PATH}/icons/call-us.svg`,
+  });
+
   private constructor(
     protected key: string,
     public readonly value: {
