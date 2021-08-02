@@ -16,7 +16,7 @@ variables:
   DOCKER_TLS_CERTDIR: ""  # https://gitlab.com/gitlab-org/gitlab-runner/issues/4501
 
   FF_GITLAB_REGISTRY_HELPER_IMAGE: "true"
-
+  
 stages:
   - build
   - test
@@ -34,10 +34,6 @@ workflow:
   rules:
     - exists:
         - Dockerfile
-
-.auto-deploy:
-  image: "registry.gitlab.com/gitlab-org/cluster-integration/auto-deploy-image:v1.0.7"
-  dependencies: []
 
 review:
   extends: .auto-deploy
@@ -64,7 +60,7 @@ review:
       when: never
     - if: $CI_COMMIT_BRANCH
       when: on_success
-
+  
 stop_review:
   extends: .auto-deploy
   stage: cleanup
@@ -92,7 +88,7 @@ test:
   script:
     - npm ci
     - npm test
-#    - if [[ `cat coverage/coverage-summary.json | jq ".total.lines.pct" | xargs printf "%.*f\n" "0"` -lt 35 ]] ; then echo fail && exit 1; else echo pass; fi
+    - if [[ `cat coverage/coverage-summary.json | jq ".total.lines.pct" | xargs printf "%.*f\n" "0"` -lt 35 ]] ; then echo fail && exit 1; else echo pass; fi
 #    - 'curl --location --request GET --header "JOB-TOKEN: ${CI_JOB_TOKEN}" "https://gitlab.vroom.com/api/v4/projects/${CI_PROJECT_ID}/jobs/artifacts/main/raw/coverage/coverage-summary.json?job=test" --output coverage-summary.json'
 #    - npm run jccp
   artifacts:
@@ -182,7 +178,7 @@ uat-deploy:
     - auto-deploy deploy
   environment:
     name: uat
-    url: https://$CI_PROJECT_PATH_SLUG.$KUBE_INGRESS_BASE_DOMAIN    
+    url: https://$CI_PROJECT_PATH_SLUG.$KUBE_INGRESS_BASE_DOMAIN
   rules:
     - if: $CI_COMMIT_BRANCH
       when: never
@@ -208,7 +204,7 @@ uat-purge:
       when: on_success
     - if: '$CI_COMMIT_TAG =~ /^\w+-v\d+\.\d+\.\d+$/'
       when: on_success
-
+      
 
 prod-deploy:
   extends: .auto-deploy
@@ -253,7 +249,9 @@ prod-purge:
       when: on_success
 
 include:
-  - template: Jobs/Build.gitlab-ci.yml
+  - project: devops/template-jobs
+    file: deployments-kubernetes/build-push-ecr.yml 
+
   - template: Jobs/Code-Quality.gitlab-ci.yml
   - template: Jobs/Code-Intelligence.gitlab-ci.yml
   - template: Jobs/DAST-Default-Branch-Deploy.gitlab-ci.yml
