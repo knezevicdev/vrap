@@ -8,7 +8,7 @@ import styled from 'styled-components';
 // import Header from 'src/components/Header';
 import PaymentHeader from 'src/components/Header/PaymentHeader';
 import PaymentFooter from 'src/core/Footer/PaymentFooter';
-import ToolFooter from 'src/core/ToolFooter';
+// import ToolFooter from 'src/core/ToolFooter';
 import {
   DirectDepositStore,
   DirectDepositStoreContext,
