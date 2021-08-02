@@ -1,6 +1,6 @@
 # Customized for Vroom
 
-image: gitlab.vroom.com:5050/devops/alpine:latest
+image: 743956360704.dkr.ecr.us-west-2.amazonaws.com/base/alpine:3
 
 variables:
   POSTGRES_ENABLED: "false"
