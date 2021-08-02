@@ -1,6 +1,6 @@
 # syntax = docker/dockerfile:experimental
 
-FROM node:14-alpine
+FROM 743956360704.dkr.ecr.us-west-2.amazonaws.com/base/node:14-alpine
 
 RUN apk --no-cache add git
 
