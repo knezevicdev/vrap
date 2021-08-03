@@ -10,7 +10,7 @@ interface Prop {
   viewModel: ViewModel;
 }
 
-const PaymentHeaderView: React.FC<Prop> = ({ viewModel }) => {
+const SimpleHeaderView: React.FC<Prop> = ({ viewModel }) => {
   return (
     <HeaderContainer>
       <Logo />
@@ -59,4 +59,4 @@ const MobileIcon = styled.a`
     display: none;
   }
 `;
-export default PaymentHeaderView;
+export default SimpleHeaderView;

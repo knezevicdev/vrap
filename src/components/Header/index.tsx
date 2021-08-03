@@ -1,2 +1,2 @@
 export { default as Header } from './FullHeader';
-export { default as PaymentHeader } from './PaymentHeader';
+export { default as SimpleHeader } from './SimpleHeader';

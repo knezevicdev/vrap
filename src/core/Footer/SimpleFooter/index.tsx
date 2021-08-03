@@ -3,8 +3,8 @@ import React from 'react';
 import View from './View';
 import ViewModel from './ViewModel';
 
-const PaymentFooter: React.FC = () => {
+const SimpleFooter: React.FC = () => {
   return <View viewModel={new ViewModel()} />;
 };
 
-export default PaymentFooter;
+export default SimpleFooter;

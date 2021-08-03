@@ -5,8 +5,8 @@ import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
-import { PaymentHeader } from 'src/components/Header';
-import PaymentFooter from 'src/core/Footer/PaymentFooter';
+import { SimpleHeader } from 'src/components/Header';
+import SimpleFooter from 'src/core/Footer/SimpleFooter';
 import {
   DirectDepositStore,
   DirectDepositStoreContext,
@@ -81,7 +81,7 @@ const EPayOptions: NextPage<Props> = ({ brand }) => {
         value={{ stateDropdownOpen, setStateDropdown }}
       >
         <Page name="EPayOptions">
-          <PaymentHeader />
+          <SimpleHeader />
           <SuccessBar />
           <ColumnBody stateDropdownOpen={stateDropdownOpen}>
             <OptionsStoreContext.Provider value={oStore}>
@@ -93,8 +93,7 @@ const EPayOptions: NextPage<Props> = ({ brand }) => {
               </PaymentOverviewStoreContext.Provider>
             </OptionsStoreContext.Provider>
           </ColumnBody>
-          {/* <ToolFooter /> */}
-          <PaymentFooter />
+          <SimpleFooter />
         </Page>
       </PaymentMethodContext.Provider>
     </ThemeProvider>

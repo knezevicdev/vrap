@@ -3,7 +3,7 @@ interface FooterLink {
   href: string;
 }
 
-class PaymentFooterModel {
+class SimpleFooterModel {
   readonly copyRightMessage: string = '©2021 VROOM. ALL RIGHTS RESERVED.';
 
   get getSectionLink(): FooterLink[] {
@@ -24,4 +24,4 @@ class PaymentFooterModel {
   }
 }
 
-export default PaymentFooterModel;
+export default SimpleFooterModel;

@@ -7,7 +7,7 @@ interface Prop {
   viewModel: ViewModel;
 }
 
-const PaymentFooterView: React.FC<Prop> = ({ viewModel }) => {
+const SimpleFooterView: React.FC<Prop> = ({ viewModel }) => {
   return (
     <Container>
       <SectionContainer>
@@ -60,4 +60,4 @@ const CopyRightText = styled.div`
   color: #ffffff;
 `;
 
-export default PaymentFooterView;
+export default SimpleFooterView;
