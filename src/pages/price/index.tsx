@@ -5,7 +5,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 import AsyncIndicator from 'src/components/AsyncIndicator';
-import Header from 'src/components/Header';
+import { Header } from 'src/components/Header';
 import Footer from 'src/core/Footer';
 import PriceInfo from 'src/modules/price';
 import { PriceStore } from 'src/modules/price/store';

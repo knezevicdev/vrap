@@ -1,9 +1,2 @@
-import React from 'react';
-
-import View from './View';
-
-const Header: React.FC = () => {
-  return <View />;
-};
-
-export default Header;
+export { default as Header } from './FullHeader';
+export { default as PaymentHeader } from './PaymentHeader';
