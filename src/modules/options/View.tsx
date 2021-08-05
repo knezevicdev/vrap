@@ -1,3 +1,5 @@
+import { useTheme } from '@material-ui/core/styles';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { Form, Formik } from 'formik';
 import { observer } from 'mobx-react';
 import React, { useEffect } from 'react';
@@ -17,7 +19,9 @@ import DirectDeposit from 'src/modules/directdeposit';
 const FormContainer = styled(Form)`
   display: flex;
   height: 100%;
-
+  flex-direction: column;
+  background-color: #ffffff;
+  margin-right: 20px;
   @media (max-width: 1280px) {
     width: 100%;
   }
@@ -25,11 +29,9 @@ const FormContainer = styled(Form)`
 
 const OptionsContainer = styled.div`
   background: white;
-  border: 1px solid #e0e0e0;
   margin: 0 20px;
   padding: 30px 80px;
-  box-shadow: 0px 0px 4px #e0e0e0;
-  width: 805px;
+  width: 864px;
 
   @media (max-width: 1280px) {
     margin: 20px;
@@ -46,6 +48,7 @@ const OptionsContainer = styled.div`
 
 const StyledHero = styled(Hero.Three)`
   padding: 0 35px 0 0;
+  margin: 32px 0 64px 0;
   text-align: center;
 `;
 
@@ -175,6 +178,8 @@ const OptionsView: React.FC<Props> = ({ viewModel }) => {
 
   const shouldShowSubmitButton = viewModel.getShowSubmitButton();
   const isPlaidSubmitting = viewModel.getPlaidSubmitting();
+  const theme = useTheme();
+  const isDesktop = useMediaQuery(theme.breakpoints.up('lg'), { noSsr: false });
 
   return (
     <Formik
@@ -198,15 +203,8 @@ const OptionsView: React.FC<Props> = ({ viewModel }) => {
 
         return (
           <FormContainer>
+            {isDesktop && <StyledHero>{viewModel.hero}</StyledHero>}
             <OptionsContainer>
-              <StyledHero>{viewModel.hero}</StyledHero>
-              <Line />
-              <OptionsTitle>
-                <OptionTitleIcon icon={Icons.RED_ONE} />
-                {viewModel.optionTitle}
-              </OptionsTitle>
-              <OptionsBody>{viewModel.optionQuestion}</OptionsBody>
-
               <PayOptions selected={values.paymentOption} />
 
               <OptionDisplay>

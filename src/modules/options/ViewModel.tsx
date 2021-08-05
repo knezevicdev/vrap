@@ -10,9 +10,8 @@ class OptionsViewModel {
   private readonly store: OptionsStore;
   private readonly ddStore: DirectDepositStore;
   private analyticsHandler: AnalyticsHandler;
-  readonly hero: string = `let's set up your payment method`;
+  readonly hero: string = `how would like to get paid?`;
   readonly optionTitle: string = 'Payment Method';
-  readonly optionQuestion: string = 'How would you like to get paid?';
   readonly submit: string = 'submit';
   readonly submitting: string = 'submitting';
 

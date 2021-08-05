@@ -8,9 +8,11 @@ import PlaidButtonViewModel from './ViewModel';
 import { Button } from 'src/core/Button';
 import { PlaidData } from 'src/interfaces.d';
 
-const PlaidButtonContainer = styled('div')(() => ({
-  width: '100%',
-}));
+const PlaidButtonContainer = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: center;
+`;
 
 const PlaidButton = styled(Button.Primary)`
   display: flex;
