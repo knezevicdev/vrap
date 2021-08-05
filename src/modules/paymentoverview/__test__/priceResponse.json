@@ -1,0 +1,24 @@
+{
+  "data": [
+    {
+      "automated_appraisal": false,
+      "ID": 1,
+      "Price__c": 10000,
+      "Year__c": 2016,
+      "Make__c": "Nissan",
+      "Model__c": "Murano",
+      "Trim__c": "trim",
+      "miles": 111111,
+      "Good_Until__c": 2020,
+      "VIN__c": "1234567890",
+      "offer_id": 123,
+      "created": "12345",
+      "offer_status": "12345",
+      "user_email": "test",
+      "active": true,
+      "new_offer": true,
+      "verification_url": "url",
+      "tax_credit_savings": 0
+    }
+  ]
+}
