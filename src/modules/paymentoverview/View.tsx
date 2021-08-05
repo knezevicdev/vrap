@@ -1,12 +1,12 @@
 import { useTheme } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { observer } from 'mobx-react';
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 
 import PaymentOverviewViewModel from './ViewModel';
 
-import Icon, { Icons } from 'src/core/Icon';
+import { theme } from 'src/core/themes/Vroom';
 import { Body, Hero, Title } from 'src/core/Typography';
 
 const PaymentOverview = styled.div`
@@ -30,27 +30,24 @@ const PaymentOverview = styled.div`
   }
 `;
 
-const StyledHero = styled(Hero.Five)`
-  padding: 0 0 8px 0;
-  text-align: left;
+const StyledHero = styled(Hero.Three)`
+  text-align: center;
+  font-style: italic;
+  font-weight: 800;
+  font-size: 35px;
+  padding: 0 40px;
 `;
 
 const OverviewHeader = styled.div`
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
+  margin-bottom: 32px;
 `;
 
 const OverviewBody = styled.div``;
 
-const OverviewExpand = styled.div`
-  margin: auto 0;
-`;
-
-const ExpandArrowUp = styled(Icon)``;
-const ExpandArrowDown = styled(Icon)``;
-
 const Line = styled.hr`
-  margin: 16px 0;
+  margin: 10px 0;
 `;
 
 const OverviewRow = styled.div`
@@ -59,10 +56,14 @@ const OverviewRow = styled.div`
   padding-bottom: 8px;
 `;
 
-const PaymentOverviewBody = styled(Body.Regular)``;
+const PaymentOverviewBody = styled(Title.Three)`
+  font-weight: 600;
+  line-height: 24px;
+`;
 
 const PaymentOverviewPrice = styled(Body.Regular)`
   font-weight: 600;
+  font-size: 18px;
 `;
 
 const TotalBody = styled(Title.Two)`
@@ -71,6 +72,7 @@ const TotalBody = styled(Title.Two)`
 
 const TotalPrice = styled(Title.Two)`
   font-weight: 600;
+  color: ${theme.colors.primary.brand};
 `;
 
 export interface Props {
@@ -80,46 +82,30 @@ export interface Props {
 const PaymentOverviewView: React.FC<Props> = ({ viewModel }) => {
   const theme = useTheme();
   const isDesktop = useMediaQuery(theme.breakpoints.up('lg'), { noSsr: false });
-  const [isExpanded, setIsExpanded] = useState<boolean>(isDesktop);
-
-  const handleToggle = (): void => setIsExpanded((isExpanded) => !isExpanded);
-
   return (
     <PaymentOverview>
       <OverviewHeader>
-        <StyledHero>{viewModel.hero}</StyledHero>
-        {!isDesktop && (
-          <OverviewExpand onClick={handleToggle}>
-            {isExpanded ? (
-              <ExpandArrowUp icon={Icons.CHEVRON_UP} />
-            ) : (
-              <ExpandArrowDown icon={Icons.CHEVRON_DOWN} />
-            )}
-          </OverviewExpand>
-        )}
+        <StyledHero>
+          {isDesktop ? viewModel.desktopTitle : viewModel.mobileTitle}
+        </StyledHero>
       </OverviewHeader>
-      {(isDesktop || isExpanded) && (
-        <OverviewBody>
-          <Line />
-          <OverviewRow>
-            <PaymentOverviewBody>{viewModel.carWorth}</PaymentOverviewBody>
-            <PaymentOverviewPrice>
-              {viewModel.carWorthPrice}
-            </PaymentOverviewPrice>
-          </OverviewRow>
-          <OverviewRow>
-            <PaymentOverviewBody>{viewModel.remainingLoan}</PaymentOverviewBody>
-            <PaymentOverviewPrice>
-              {viewModel.remainingLoanBalance}
-            </PaymentOverviewPrice>
-          </OverviewRow>
-          <Line />
-          <OverviewRow>
-            <TotalBody>{viewModel.total}</TotalBody>
-            <TotalPrice>{viewModel.totalPrice}</TotalPrice>
-          </OverviewRow>
-        </OverviewBody>
-      )}
+      <OverviewBody>
+        <OverviewRow>
+          <PaymentOverviewBody>{viewModel.carWorth}</PaymentOverviewBody>
+          <PaymentOverviewPrice>{viewModel.carWorthPrice}</PaymentOverviewPrice>
+        </OverviewRow>
+        <OverviewRow>
+          <PaymentOverviewBody>{viewModel.remainingLoan}</PaymentOverviewBody>
+          <PaymentOverviewBody>
+            {viewModel.remainingLoanBalance}
+          </PaymentOverviewBody>
+        </OverviewRow>
+        <Line />
+        <OverviewRow>
+          <TotalBody>{viewModel.total}</TotalBody>
+          <TotalPrice>{viewModel.totalPrice}</TotalPrice>
+        </OverviewRow>
+      </OverviewBody>
     </PaymentOverview>
   );
 };

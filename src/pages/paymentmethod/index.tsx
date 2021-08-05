@@ -22,7 +22,6 @@ import {
   PaymentOverviewStore,
   PaymentOverviewStoreContext,
 } from 'src/modules/paymentoverview/store';
-import SuccessBar from 'src/modules/successbar';
 import Page from 'src/Page';
 
 const ColumnBody = styled.div`
@@ -82,7 +81,6 @@ const EPayOptions: NextPage<Props> = ({ brand }) => {
       >
         <Page name="EPayOptions">
           <SimpleHeader />
-          <SuccessBar />
           <ColumnBody stateDropdownOpen={stateDropdownOpen}>
             <OptionsStoreContext.Provider value={oStore}>
               <PaymentOverviewStoreContext.Provider value={poStore}>
