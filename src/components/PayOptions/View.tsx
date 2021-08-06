@@ -2,24 +2,47 @@ import { observer } from 'mobx-react';
 import React from 'react';
 import styled from 'styled-components';
 
+import CheckByMail from '../CheckByMailAB';
 import ViewModel from './ViewModel';
 
 import Icon, { Icons } from 'src/core/Icon';
 import RadioButton from 'src/core/Radio';
 import { Body, Title } from 'src/core/Typography';
+import { MailingAddress } from 'src/interfaces.d';
 
 export interface Props {
   selected: string;
   viewModel: ViewModel;
+  mailingAddress: MailingAddress;
+  isPrimaryAddress: string;
+  setFieldValue: (field: string, value: string) => void;
+  state: string;
 }
 
-const PayOptionsView: React.FC<Props> = ({ selected, viewModel }) => {
+const PayOptionsView: React.FC<Props> = (props) => {
+  const {
+    selected,
+    viewModel,
+    mailingAddress,
+    isPrimaryAddress,
+    setFieldValue,
+    state,
+  } = props;
+
   const radioOptions = viewModel.optionMeta.map((option) => {
     const checked = selected === option;
     let child = (
       <div>
         <Label>{option}</Label>
         <OptionDescription>{viewModel.checkByMailDesc}</OptionDescription>
+        {selected !== 'Direct Deposit' && (
+          <CheckByMail
+            mailingAddress={mailingAddress}
+            isPrimaryAddress={isPrimaryAddress}
+            setFieldValue={setFieldValue}
+            state={state}
+          />
+        )}
       </div>
     );
     if (option === 'Direct Deposit') {

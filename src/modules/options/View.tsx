@@ -83,13 +83,20 @@ const OptionTitleIcon = styled(Icon)`
 
 const SubmitButton = styled(Button.Primary)`
   margin: 15px 0 30px;
-  max-width: 180px;
+  max-width: 320px;
   white-space: normal;
   width: 100%;
 
   @media (max-width: 420px) {
     max-width: 100%;
   }
+`;
+
+const ButtonContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  margin-top: 20px;
 `;
 
 export interface Props {
@@ -208,9 +215,15 @@ const OptionsView: React.FC<Props> = ({ viewModel }) => {
           <FormContainer>
             {isDesktop && <StyledHero>{viewModel.hero}</StyledHero>}
             <OptionsContainer>
-              <PayOptions selected={values.paymentOption} />
+              <PayOptions
+                selected={values.paymentOption}
+                mailingAddress={viewModel.getMailiingAddress()}
+                setFieldValue={setFieldValue}
+                isPrimaryAddress={values.isPrimaryAddress}
+                state={values.state}
+              />
 
-              <OptionDisplay>
+              {/* <OptionDisplay>
                 {showDirectDeposit ? (
                   <DirectDeposit />
                 ) : (
@@ -221,15 +234,17 @@ const OptionsView: React.FC<Props> = ({ viewModel }) => {
                     state={values.state}
                   />
                 )}
-              </OptionDisplay>
-
+              </OptionDisplay> */}
+              {showDirectDeposit && <DirectDeposit />}
               {showSubmitButton && (
-                <SubmitButton
-                  type="submit"
-                  disabled={!isValid || isSubmitting || isPlaidSubmitting}
-                >
-                  {isSubmitting ? viewModel.submitting : viewModel.submit}
-                </SubmitButton>
+                <ButtonContainer>
+                  <SubmitButton
+                    type="submit"
+                    disabled={!isValid || isSubmitting || isPlaidSubmitting}
+                  >
+                    {isSubmitting ? viewModel.submitting : viewModel.submit}
+                  </SubmitButton>
+                </ButtonContainer>
               )}
             </OptionsContainer>
           </FormContainer>
