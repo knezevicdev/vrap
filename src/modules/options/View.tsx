@@ -72,7 +72,6 @@ const OptionsBody = styled(Body.Regular)`
 
 const OptionDisplay = styled.div`
   min-width: 573px;
-
   @media (max-width: 420px) {
     min-width: 100%;
   }

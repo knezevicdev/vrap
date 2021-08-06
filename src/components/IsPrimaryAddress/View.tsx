@@ -13,23 +13,25 @@ const PayOptionsContainer = styled.div`
   margin-bottom: 20px;
 
   @media (max-width: 420px) {
-    flex-direction: column;
+    flex-direction: row;
   }
 `;
 
 const OptionContainer = styled.div<{ selected?: boolean }>`
   width: 25%;
   padding: 0;
-  height: 40px;
+  height: 48px;
   border-left: none;
-  border: 2px solid
-    ${({ selected }): string => (selected ? '#E7131A' : '#d6d7da')};
+  /* border: 2px solid
+    ${({ selected }): string => (selected ? '#E7131A' : '#d6d7da')}; */
+    border: 2px solid
+    ${({ selected }): string => (selected ? '#041022' : '#d6d7da')};
   box-sizing: border-box;
   box-shadow: ${({ selected }): string =>
     selected ? '0px 0px 3px rgba(0, 0, 0, 0.2)' : ''};
 
   @media (max-width: 420px) {
-    width: 100%;
+    width: 50%;
   }
 `;
 
@@ -45,6 +47,7 @@ const IsPrimaryAddressView: React.FC<Props> = ({ optionMeta, selected }) => {
               disabled={false}
               name={'isPrimaryAddress'}
               value={option}
+              styleType={'checkMail'}
             >
               {option}
             </YesNoBox>
