@@ -13,7 +13,6 @@ const PaymentOverview = styled.div`
   background: white;
   width: 379px;
   height: 100%;
-  border: 1px solid #e0e0e0;
   box-shadow: 0px 0px 4px #e0e0e0;
   padding: 30px 16px 16px;
 

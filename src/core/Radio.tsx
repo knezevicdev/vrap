@@ -12,6 +12,7 @@ interface RadioButtonProps extends React.HTMLAttributes<HTMLInputElement> {
   checked?: boolean;
   value: string;
   onClick?: (value: React.MouseEvent<HTMLInputElement, MouseEvent>) => void;
+  type: string;
 }
 
 const CheckMark = styled.span<{ disabled?: boolean }>`
@@ -76,27 +77,78 @@ const RadioButtonStyled = styled(Field).attrs({ type: 'radio' })`
   }
 `;
 
+const InnerCircle = styled.div`
+  display: none;
+  position: absolute;
+  height: 10px;
+  width: 10px;
+  border-radius: 50%;
+  background-color: #e7131a;
+`;
+
+const CircleRadioButton = styled(Field).attrs({ type: 'radio' })`
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+
+  &:checked ~ ${CheckMark} {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: ${({ disabled }): string =>
+      disabled ? `1px solid #999DA3` : `1px solid #E7131A`};
+    div {
+      display: inline-block;
+    }
+  }
+
+  /* &:checked ~ ${InnerCircle} {
+    display: inline-block;
+  } */
+`;
+
 export const RadioButton: React.FC<RadioButtonProps> = (props) => {
-  const { id, name, value, checked, children, disabled, onClick } = props;
+  const { id, name, value, checked, children, disabled, onClick, type } = props;
 
   return (
     <Label disabled={disabled}>
       {children}
-      <RadioButtonStyled
-        id={id}
-        name={name}
-        disabled={disabled}
-        checked={checked}
-        value={value}
-        onClick={onClick}
-      />
-      <CheckMark disabled={disabled} />
+      {type === 'circle' ? (
+        <>
+          <CircleRadioButton
+            id={id}
+            name={name}
+            disabled={disabled}
+            checked={checked}
+            value={value}
+            onClick={onClick}
+          />
+          <CheckMark disabled={disabled}>
+            <InnerCircle />
+          </CheckMark>
+        </>
+      ) : (
+        <>
+          <RadioButtonStyled
+            id={id}
+            name={name}
+            disabled={disabled}
+            checked={checked}
+            value={value}
+            onClick={onClick}
+          />
+          <CheckMark disabled={disabled} />
+        </>
+      )}
     </Label>
   );
 };
 
 RadioButton.defaultProps = {
   disabled: false,
+  type: '',
 };
 
 export default RadioButton;

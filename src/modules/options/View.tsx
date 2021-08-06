@@ -24,6 +24,7 @@ const FormContainer = styled(Form)`
   margin-right: 20px;
   @media (max-width: 1280px) {
     width: 100%;
+    margin: 0;
   }
 `;
 
@@ -47,8 +48,11 @@ const OptionsContainer = styled.div`
 `;
 
 const StyledHero = styled(Hero.Three)`
-  padding: 0 35px 0 0;
-  margin: 32px 0 64px 0;
+  margin: 32px 0;
+  font-weight: 800;
+  font-size: 48px;
+  line-height: 48px;
+  letter-spacing: 1px;
   text-align: center;
 `;
 

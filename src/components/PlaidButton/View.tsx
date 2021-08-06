@@ -12,6 +12,7 @@ const PlaidButtonContainer = styled.div`
   width: 100%;
   display: flex;
   justify-content: center;
+  margin-top: 16px;
 `;
 
 const PlaidButton = styled(Button.Primary)`

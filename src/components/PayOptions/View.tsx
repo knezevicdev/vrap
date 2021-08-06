@@ -16,7 +16,12 @@ export interface Props {
 const PayOptionsView: React.FC<Props> = ({ selected, viewModel }) => {
   const radioOptions = viewModel.optionMeta.map((option) => {
     const checked = selected === option;
-    let child = <div>{option}</div>;
+    let child = (
+      <div>
+        <Label>{option}</Label>
+        <OptionDescription>{viewModel.checkByMailDesc}</OptionDescription>
+      </div>
+    );
     if (option === 'Direct Deposit') {
       child = (
         <>
@@ -73,6 +78,7 @@ const PayOptionsView: React.FC<Props> = ({ selected, viewModel }) => {
           name={'paymentOption'}
           value={option}
           onClick={viewModel.onPayOptionClick}
+          type={'circle'}
         >
           {child}
         </RadioButton>
@@ -93,7 +99,7 @@ const PayOptionsContainer = styled.div`
 `;
 
 const OptionContainer = styled.div<{ selected?: boolean }>`
-  width: 50%;
+  width: 60%;
   padding: 20px;
   border: ${({ selected }): string => (selected ? '' : '1px solid #D6D7DA')};
   box-sizing: border-box;
@@ -102,6 +108,7 @@ const OptionContainer = styled.div<{ selected?: boolean }>`
   height: fit-content;
   :first-child {
     margin-bottom: 16px;
+    border-top: 4px solid #1960d0;
   }
   @media (max-width: 420px) {
     width: 100%;
@@ -163,9 +170,12 @@ const LogoContainer = styled.div`
   font-size: 14px;
   line-height: 20px;
   color: #999da3;
+  padding-right: 28px;
   img {
     margin-left: 4px;
   }
 `;
+
+const OptionDescription = styled(Body.Regular)``;
 
 export default observer(PayOptionsView);
