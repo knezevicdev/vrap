@@ -7,22 +7,37 @@ import styled from 'styled-components';
 
 import { SimpleHeader } from 'src/components/Header';
 import SimpleFooter from 'src/core/Footer/SimpleFooter';
+// import {
+//   DirectDepositStore,
+//   DirectDepositStoreContext,
+// } from 'src/modules/directdeposit/store';
 import {
   DirectDepositStore,
   DirectDepositStoreContext,
-} from 'src/modules/directdeposit/store';
+} from 'src/modules/directdepositAB/store';
+import Options from 'src/modules/optionsAB';
+// import {
+//   PaymentMethodContext,
+//   PaymentMethodContextType,
+// } from 'src/modules/options/paymentMethodContext';
 import {
   PaymentMethodContext,
   PaymentMethodContextType,
-} from 'src/modules/options/paymentMethodContext';
-import { OptionsStore, OptionsStoreContext } from 'src/modules/options/store';
-import Options from 'src/modules/optionsAB';
+} from 'src/modules/optionsAB/paymentMethodContext';
+// import { OptionsStore, OptionsStoreContext } from 'src/modules/options/store';
+import { OptionsStore, OptionsStoreContext } from 'src/modules/optionsAB/store';
+import PaymentOverview from 'src/modules/paymentoverviewAB';
 // import PaymentOverview from 'src/modules/paymentoverview';
+// import Options from 'src/modules/options';
+// import SuccessBar from 'src/modules/successbar';
+// import {
+//   PaymentOverviewStore,
+//   PaymentOverviewStoreContext,
+// } from 'src/modules/paymentoverview/store';
 import {
   PaymentOverviewStore,
   PaymentOverviewStoreContext,
-} from 'src/modules/paymentoverview/store';
-import PaymentOverview from 'src/modules/paymentoverviewAB';
+} from 'src/modules/paymentoverviewAB/store';
 import Page from 'src/Page';
 
 const ColumnBody = styled.div`
@@ -82,6 +97,7 @@ const EPayOptions: NextPage<Props> = ({ brand }) => {
       >
         <Page name="EPayOptions">
           <SimpleHeader />
+          {/* <SuccessBar /> */}
           <ColumnBody stateDropdownOpen={stateDropdownOpen}>
             <OptionsStoreContext.Provider value={oStore}>
               <PaymentOverviewStoreContext.Provider value={poStore}>

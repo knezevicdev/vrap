@@ -6,7 +6,6 @@ import DirectDepositViewModel from './ViewModel';
 
 import DirectDeposit from 'src/components/DirectDeposit';
 import PlaidButton from 'src/components/PlaidButtonAB';
-// import PlaidButton from 'src/components/PlaidButton';
 import Icon, { Icons } from 'src/core/Icon';
 import { Body } from 'src/core/Typography';
 
