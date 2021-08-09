@@ -22,8 +22,9 @@ const PlaidButton = styled(Button.Primary)`
   padding: 13px 20px;
   white-space: normal;
   width: 50%;
+  max-width: 320px;
 
-  @media (max-width: 420px) {
+  @media (max-width: 768px) {
     width: 100%;
     justify-content: center;
   }
