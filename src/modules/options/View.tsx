@@ -17,6 +17,7 @@ import DirectDeposit from 'src/modules/directdeposit';
 const FormContainer = styled(Form)`
   display: flex;
   height: 100%;
+
   @media (max-width: 1280px) {
     width: 100%;
   }
@@ -31,11 +32,11 @@ const OptionsContainer = styled.div`
   width: 805px;
 
   @media (max-width: 1280px) {
-    margin: 0;
-    padding: 20px;
+    margin: 20px;
+    padding: 30px 55px;
     width: 100%;
-    box-shadow: none;
   }
+
   @media (max-width: 420px) {
     margin: 0;
     padding: 20px;
@@ -45,11 +46,6 @@ const OptionsContainer = styled.div`
 
 const StyledHero = styled(Hero.Three)`
   padding: 0 35px 0 0;
-  margin: 32px 0;
-  font-weight: 800;
-  font-size: 48px;
-  line-height: 48px;
-  letter-spacing: 1px;
   text-align: center;
 `;
 
@@ -69,6 +65,7 @@ const OptionsBody = styled(Body.Regular)`
 
 const OptionDisplay = styled.div`
   min-width: 573px;
+
   @media (max-width: 420px) {
     min-width: 100%;
   }
@@ -224,6 +221,7 @@ const OptionsView: React.FC<Props> = ({ viewModel }) => {
                   />
                 )}
               </OptionDisplay>
+
               {showSubmitButton && (
                 <SubmitButton
                   type="submit"
