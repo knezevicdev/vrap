@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import YesNoBox from 'src/core/YesNoBox';
+import YesNoBox from 'src/core/YesNoBoxAB';
 
 export interface Props {
   optionMeta: Array<string>;
@@ -22,9 +22,7 @@ const OptionContainer = styled.div<{ selected?: boolean }>`
   padding: 0;
   height: 48px;
   border-left: none;
-  /* border: 2px solid
-    ${({ selected }): string => (selected ? '#E7131A' : '#d6d7da')}; */
-    border: 2px solid
+  border: 2px solid
     ${({ selected }): string => (selected ? '#041022' : '#d6d7da')};
   box-sizing: border-box;
   box-shadow: ${({ selected }): string =>

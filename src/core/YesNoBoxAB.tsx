@@ -11,6 +11,7 @@ interface YesNoBoxProps extends React.HTMLAttributes<HTMLInputElement> {
   disabled?: boolean;
   checked?: boolean;
   value: string;
+  styleType: string;
 }
 
 const CheckMark = styled.span<{ disabled?: boolean }>`
@@ -49,7 +50,7 @@ const Label = styled.label<{
   cursor: pointer;
   font-family: Calibre;
   font-size: 18px;
-  font-weight: 500;
+  font-weight: ${({ styleType }): string => (styleType === '' ? '500' : '600')};
   color: ${({ checked }): string => (!checked ? '#999DA3' : '#041022')};
   -webkit-user-select: none;
   -moz-user-select: none;
@@ -81,10 +82,10 @@ const YesNoBoxStyled = styled(Field).attrs({ type: 'radio' })`
 `;
 
 export const YesNoBox: React.FC<YesNoBoxProps> = (props) => {
-  const { id, name, value, checked, children, disabled } = props;
+  const { id, name, value, checked, children, disabled, styleType } = props;
 
   return (
-    <Label disabled={disabled} checked={checked}>
+    <Label disabled={disabled} checked={checked} styleType={styleType}>
       {children}
       <YesNoBoxStyled
         id={id}
@@ -100,6 +101,7 @@ export const YesNoBox: React.FC<YesNoBoxProps> = (props) => {
 
 YesNoBox.defaultProps = {
   disabled: false,
+  styleType: '',
 };
 
 export default YesNoBox;
