@@ -41,10 +41,10 @@ const DirectDepositView: React.FC<Props> = ({ viewModel }) => {
             plaidExit={viewModel.onPlaidExit}
             priceId={viewModel.getPriceId()}
           />
-          <LockText>
+          {/* <LockText>
             <StyledIcon icon={Icons.LOCK} /> Your information will be secure and
             encrypted
-          </LockText>
+          </LockText> */}
 
           {showNotFound && viewModel.getPrice() <= 10000 && (
             <>

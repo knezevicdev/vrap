@@ -1,3 +1,5 @@
+import { useTheme } from '@material-ui/core/styles';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { Form, Formik } from 'formik';
 import { observer } from 'mobx-react';
 import React, { useEffect } from 'react';
@@ -7,28 +9,30 @@ import * as Yup from 'yup';
 import OptionsViewModel from './ViewModel';
 
 import CheckByMail from 'src/components/CheckByMail';
-import PayOptions from 'src/components/PayOptions';
+import PayOptions from 'src/components/PayOptionsAB';
 import { Button } from 'src/core/Button';
 import Icon, { Icons } from 'src/core/Icon';
 import { Body, Hero, Title } from 'src/core/Typography';
 import { PaymentOverviewFormValues } from 'src/interfaces.d';
-import DirectDeposit from 'src/modules/directdeposit';
+import DirectDeposit from 'src/modules/directdepositAB';
 
 const FormContainer = styled(Form)`
   display: flex;
   height: 100%;
+  flex-direction: column;
+  background-color: #ffffff;
+  margin-right: 20px;
   @media (max-width: 1280px) {
     width: 100%;
+    margin: 0;
   }
 `;
 
 const OptionsContainer = styled.div`
   background: white;
-  border: 1px solid #e0e0e0;
   margin: 0 20px;
   padding: 30px 80px;
-  box-shadow: 0px 0px 4px #e0e0e0;
-  width: 805px;
+  width: 864px;
 
   @media (max-width: 1280px) {
     margin: 0;
@@ -44,7 +48,6 @@ const OptionsContainer = styled.div`
 `;
 
 const StyledHero = styled(Hero.Three)`
-  padding: 0 35px 0 0;
   margin: 32px 0;
   font-weight: 800;
   font-size: 48px;
@@ -80,13 +83,20 @@ const OptionTitleIcon = styled(Icon)`
 
 const SubmitButton = styled(Button.Primary)`
   margin: 15px 0 30px;
-  max-width: 180px;
+  max-width: 320px;
   white-space: normal;
   width: 100%;
 
   @media (max-width: 420px) {
     max-width: 100%;
   }
+`;
+
+const ButtonContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  margin-top: 20px;
 `;
 
 export interface Props {
@@ -178,6 +188,8 @@ const OptionsView: React.FC<Props> = ({ viewModel }) => {
 
   const shouldShowSubmitButton = viewModel.getShowSubmitButton();
   const isPlaidSubmitting = viewModel.getPlaidSubmitting();
+  const theme = useTheme();
+  const isDesktop = useMediaQuery(theme.breakpoints.up('lg'), { noSsr: false });
 
   return (
     <Formik
@@ -201,18 +213,17 @@ const OptionsView: React.FC<Props> = ({ viewModel }) => {
 
         return (
           <FormContainer>
+            {isDesktop && <StyledHero>{viewModel.hero}</StyledHero>}
             <OptionsContainer>
-              <StyledHero>{viewModel.hero}</StyledHero>
-              <Line />
-              <OptionsTitle>
-                <OptionTitleIcon icon={Icons.RED_ONE} />
-                {viewModel.optionTitle}
-              </OptionsTitle>
-              <OptionsBody>{viewModel.optionQuestion}</OptionsBody>
+              <PayOptions
+                selected={values.paymentOption}
+                mailingAddress={viewModel.getMailiingAddress()}
+                setFieldValue={setFieldValue}
+                isPrimaryAddress={values.isPrimaryAddress}
+                state={values.state}
+              />
 
-              <PayOptions selected={values.paymentOption} />
-
-              <OptionDisplay>
+              {/* <OptionDisplay>
                 {showDirectDeposit ? (
                   <DirectDeposit />
                 ) : (
@@ -223,14 +234,17 @@ const OptionsView: React.FC<Props> = ({ viewModel }) => {
                     state={values.state}
                   />
                 )}
-              </OptionDisplay>
+              </OptionDisplay> */}
+              {showDirectDeposit && <DirectDeposit />}
               {showSubmitButton && (
-                <SubmitButton
-                  type="submit"
-                  disabled={!isValid || isSubmitting || isPlaidSubmitting}
-                >
-                  {isSubmitting ? viewModel.submitting : viewModel.submit}
-                </SubmitButton>
+                <ButtonContainer>
+                  <SubmitButton
+                    type="submit"
+                    disabled={!isValid || isSubmitting || isPlaidSubmitting}
+                  >
+                    {isSubmitting ? viewModel.submitting : viewModel.submit}
+                  </SubmitButton>
+                </ButtonContainer>
               )}
             </OptionsContainer>
           </FormContainer>
