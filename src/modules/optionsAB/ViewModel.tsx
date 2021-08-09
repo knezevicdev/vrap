@@ -4,7 +4,7 @@ import { OptionsStore } from './store';
 import AnalyticsHandler from 'src/integrations/AnalyticsHandler';
 import { MailingAddress } from 'src/interfaces.d';
 import { PaymentOverviewFormValues } from 'src/interfaces.d';
-import { submitPaymentOptions } from 'src/modules/options/store';
+import { submitPaymentOptions } from 'src/modules/optionsAB/store';
 
 class OptionsViewModel {
   private readonly store: OptionsStore;
