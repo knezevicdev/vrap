@@ -18,12 +18,6 @@ const PaymentOverview = styled.div`
 
   @media (max-width: 1280px) {
     width: 100%;
-    margin: 20px 20px 0;
-    padding: 20px;
-  }
-
-  @media (max-width: 420px) {
-    width: 100%;
     margin: 0;
     box-shadow: none;
   }

@@ -35,11 +35,11 @@ const OptionsContainer = styled.div`
   width: 864px;
 
   @media (max-width: 1280px) {
-    margin: 20px;
-    padding: 30px 55px;
+    margin: 0;
+    padding: 20px;
     width: 100%;
+    box-shadow: none;
   }
-
   @media (max-width: 420px) {
     margin: 0;
     padding: 20px;

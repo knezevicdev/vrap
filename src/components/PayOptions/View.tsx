@@ -133,7 +133,7 @@ const OptionContainer = styled.div<{ selected?: boolean }>`
     margin-bottom: 16px;
     border-top: 4px solid #1960d0;
   }
-  @media (max-width: 420px) {
+  @media (max-width: 1280px) {
     width: 100%;
   }
 `;
