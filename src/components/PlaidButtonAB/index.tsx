@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { useOptionsStore } from '../../modules/options/store';
+import { useOptionsStore } from '../../modules/optionsAB/store';
 import View from './View';
 import ViewModel from './ViewModel';
 

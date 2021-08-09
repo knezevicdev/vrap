@@ -1,4 +1,4 @@
-import { OptionsStore } from '../../modules/options/store';
+import { OptionsStore } from '../../modules/optionsAB/store';
 
 class PlaidButtonViewModel {
   private readonly store: OptionsStore;

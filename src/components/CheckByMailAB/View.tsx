@@ -3,12 +3,12 @@ import styled from 'styled-components';
 
 import CheckByMailViewModel from './ViewModel';
 
-import { Props } from 'src/components/CheckByMail';
+import { Props } from 'src/components/CheckByMailAB';
 import IsPrimaryAddress from 'src/components/IsPrimaryAddressAB';
 import Dropdown from 'src/core/Dropdown';
 import FormikInput from 'src/core/FormikInput';
 import { Body } from 'src/core/Typography';
-import { PaymentMethodContext } from 'src/modules/options/paymentMethodContext';
+import { PaymentMethodContext } from 'src/modules/optionsAB/paymentMethodContext';
 
 type ViewProps = Props & { viewModel: CheckByMailViewModel };
 
