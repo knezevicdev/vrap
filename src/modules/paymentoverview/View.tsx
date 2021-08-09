@@ -11,7 +11,7 @@ import { Body, Hero, Title } from 'src/core/Typography';
 
 const PaymentOverview = styled.div`
   background: white;
-  width: 379px;
+  width: 416px;
   height: 100%;
   box-shadow: 0px 0px 4px #e0e0e0;
   padding: 30px 16px 16px;
@@ -33,8 +33,12 @@ const StyledHero = styled(Hero.Three)`
 
 const OverviewHeader = styled.div`
   display: flex;
+  flex-direction: column;
   justify-content: center;
   margin-bottom: 32px;
+  @media (min-width: 1280px) {
+    margin-bottom: 8px;
+  }
 `;
 
 const OverviewBody = styled.div``;
@@ -68,6 +72,27 @@ const TotalPrice = styled(Title.Two)`
   color: ${theme.colors.primary.brand};
 `;
 
+const CarInformationContainer = styled.div`
+  margin-top: 32px;
+`;
+
+const CarModelDetailContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+`;
+
+const CarModelDetailText = styled(Body.Regular)`
+  font-weight: 400;
+`;
+
+const CarModelDetailDivide = styled(CarModelDetailText)`
+  margin: 0 8px;
+`;
+
+const CarModelText = styled(Title.Two)`
+  font-weight: 600;
+`;
+
 export interface Props {
   viewModel: PaymentOverviewViewModel;
 }
@@ -81,6 +106,19 @@ const PaymentOverviewView: React.FC<Props> = ({ viewModel }) => {
         <StyledHero>
           {isDesktop ? viewModel.desktopTitle : viewModel.mobileTitle}
         </StyledHero>
+        {isDesktop && (
+          <CarInformationContainer>
+            <div>
+              <CarModelText>2018 Land Rover Range Rover Sport</CarModelText>
+              <CarModelDetailContainer>
+                <CarModelDetailText>SE</CarModelDetailText>
+                <CarModelDetailDivide>|</CarModelDetailDivide>
+                <CarModelDetailText>20,818 miles</CarModelDetailText>
+              </CarModelDetailContainer>
+            </div>
+            <Line />
+          </CarInformationContainer>
+        )}
       </OverviewHeader>
       <OverviewBody>
         <OverviewRow>
