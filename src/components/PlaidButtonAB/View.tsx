@@ -140,7 +140,7 @@ const PlaidButtonView: React.FC<Props> = ({
   return (
     <PlaidButtonContainer>
       <PlaidButton onClick={handlePlaidButtonClick} disabled={disableButton}>
-        {viewModel.buttonStartCopy}
+        {viewModel.buttonCopy}
       </PlaidButton>
     </PlaidButtonContainer>
   );

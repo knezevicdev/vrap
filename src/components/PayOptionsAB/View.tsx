@@ -46,18 +46,18 @@ const PayOptionsView: React.FC<Props> = (props) => {
           onClick={viewModel.onPayOptionClick}
           type={'circle'}
         >
-          <Label>Direct Deposit</Label>
-          <Description>Sign in using your exiting back login</Description>
+          <Label>{viewModel.directDeposit}</Label>
+          <Description>{viewModel.singinDesc}</Description>
           <BodyContainer>
             <SectionContainer>
               <SectionTitle>
-                <Icon icon={Icons.CALENDAR} /> Get your money faster
+                <Icon icon={Icons.CALENDAR} /> {viewModel.getMoneyFaster}
               </SectionTitle>
-              <span>Customers who use Plaid receive their money sooner</span>
+              <span>{viewModel.plaidBenefitFaster}</span>
             </SectionContainer>
             <SectionContainer>
               <SectionTitle>
-                <Icon icon={Icons.PEOPLE} /> Most popular method
+                <Icon icon={Icons.PEOPLE} /> {viewModel.mostPopularMethod}
               </SectionTitle>
               <span>
                 <strong>Over 60%</strong> of Vroom customers choose to get paid
@@ -66,7 +66,7 @@ const PayOptionsView: React.FC<Props> = (props) => {
             </SectionContainer>
             <SectionContainer>
               <SectionTitle>
-                <Icon icon={Icons.SECURE_LOCK} /> Most secure method
+                <Icon icon={Icons.SECURE_LOCK} /> {viewModel.mostSecureMethod}
               </SectionTitle>
               <span>
                 Plaid is <strong>trusted worldwide</strong> for transfering
@@ -89,7 +89,7 @@ const PayOptionsView: React.FC<Props> = (props) => {
             value={'Manual Input'}
             type={'circle'}
           >
-            <Label>Enter your bank information manually</Label>
+            <Label>{viewModel.enterBankInfoManual}</Label>
             <DirectDeposit />
           </RadioButton>
         </OptionContainer>
@@ -106,7 +106,7 @@ const PayOptionsView: React.FC<Props> = (props) => {
           onClick={viewModel.onPayOptionClick}
           type={'circle'}
         >
-          <Label>Check By Mail</Label>
+          <Label>{viewModel.checkByMail}</Label>
           <OptionDescription>{viewModel.checkByMailDesc}</OptionDescription>
           {selected === 'Check by Mail' && (
             <CheckByMail
