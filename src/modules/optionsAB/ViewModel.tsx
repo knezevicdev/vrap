@@ -1,4 +1,4 @@
-import { DirectDepositStore } from '../directdeposit/store';
+import { DirectDepositStore } from '../directdepositAB/store';
 import { OptionsStore } from './store';
 
 import AnalyticsHandler from 'src/integrations/AnalyticsHandler';

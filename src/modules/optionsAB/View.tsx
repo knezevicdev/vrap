@@ -8,11 +8,9 @@ import * as Yup from 'yup';
 
 import OptionsViewModel from './ViewModel';
 
-import CheckByMail from 'src/components/CheckByMail';
 import PayOptions from 'src/components/PayOptionsAB';
 import { Button } from 'src/core/Button';
-import Icon, { Icons } from 'src/core/Icon';
-import { Body, Hero, Title } from 'src/core/Typography';
+import { Hero } from 'src/core/Typography';
 import { PaymentOverviewFormValues } from 'src/interfaces.d';
 import DirectDeposit from 'src/modules/directdepositAB';
 
@@ -54,31 +52,6 @@ const StyledHero = styled(Hero.Three)`
   line-height: 48px;
   letter-spacing: 1px;
   text-align: center;
-`;
-
-const Line = styled.hr`
-  margin: 30px 0 20px;
-`;
-
-const OptionsTitle = styled(Title.Three)`
-  font-weight: 600;
-  display: flex;
-`;
-
-const OptionsBody = styled(Body.Regular)`
-  display: flex;
-  padding: 15px 0;
-`;
-
-const OptionDisplay = styled.div`
-  min-width: 573px;
-  @media (max-width: 420px) {
-    min-width: 100%;
-  }
-`;
-
-const OptionTitleIcon = styled(Icon)`
-  margin: auto 10px auto 0;
 `;
 
 const SubmitButton = styled(Button.Primary)`
@@ -223,18 +196,6 @@ const OptionsView: React.FC<Props> = ({ viewModel }) => {
                 state={values.state}
               />
 
-              {/* <OptionDisplay>
-                {showDirectDeposit ? (
-                  <DirectDeposit />
-                ) : (
-                  <CheckByMail
-                    mailingAddress={viewModel.getMailiingAddress()}
-                    isPrimaryAddress={values.isPrimaryAddress}
-                    setFieldValue={setFieldValue}
-                    state={values.state}
-                  />
-                )}
-              </OptionDisplay> */}
               {showDirectDeposit && <DirectDeposit />}
               {showSubmitButton && (
                 <ButtonContainer>
