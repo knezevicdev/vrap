@@ -3,6 +3,7 @@ import { OptionsStore } from '../../modules/optionsAB/store';
 class PayOptionViewModel {
   private readonly oStore: OptionsStore;
   readonly optionMeta: string[] = ['Direct Deposit', 'Check by Mail'];
+
   readonly checkByMailDesc: string = "we'll send you a check in the mail";
   constructor(oStore: OptionsStore) {
     this.oStore = oStore;

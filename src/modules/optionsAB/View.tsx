@@ -178,7 +178,8 @@ const OptionsView: React.FC<Props> = ({ viewModel }) => {
       validateOnMount={true}
     >
       {({ isValid, values, isSubmitting, setFieldValue }): JSX.Element => {
-        const showDirectDeposit = viewModel.showDirectDeposit();
+        const showDirectDeposit =
+          viewModel.showDirectDeposit() && !viewModel.getInstitutionNotFound();
         const showSubmitButton =
           shouldShowSubmitButton ||
           !showDirectDeposit ||
@@ -194,6 +195,7 @@ const OptionsView: React.FC<Props> = ({ viewModel }) => {
                 setFieldValue={setFieldValue}
                 isPrimaryAddress={values.isPrimaryAddress}
                 state={values.state}
+                instituteNotFound={viewModel.getInstitutionNotFound()}
               />
 
               {showDirectDeposit && <DirectDeposit />}

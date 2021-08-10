@@ -4,7 +4,7 @@ import styled from 'styled-components';
 
 import DirectDepositViewModel from './ViewModel';
 
-import DirectDeposit from 'src/components/DirectDeposit';
+import DirectDeposit from 'src/components/DirectDepositAB';
 import PlaidButton from 'src/components/PlaidButtonAB';
 import Icon, { Icons } from 'src/core/Icon';
 import { Body } from 'src/core/Typography';
@@ -40,17 +40,6 @@ const DirectDepositView: React.FC<Props> = ({ viewModel }) => {
             plaidExit={viewModel.onPlaidExit}
             priceId={viewModel.getPriceId()}
           />
-          {/* <LockText>
-            <StyledIcon icon={Icons.LOCK} /> Your information will be secure and
-            encrypted
-          </LockText> */}
-
-          {showNotFound && viewModel.getPrice() <= 10000 && (
-            <>
-              <DirectDepositCopy>{viewModel.cantFind}</DirectDepositCopy>
-              <DirectDeposit />
-            </>
-          )}
         </>
       ) : (
         <>

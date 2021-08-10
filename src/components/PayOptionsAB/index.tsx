@@ -12,6 +12,7 @@ interface Props {
   isPrimaryAddress: string;
   setFieldValue: (field: string, value: string) => void;
   state: string;
+  instituteNotFound: boolean;
 }
 
 const PayOptions: React.FC<Props> = (props) => {

@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import CheckByMail from '../CheckByMailAB';
 import ViewModel from './ViewModel';
 
+import DirectDeposit from 'src/components/DirectDepositAB';
 import Icon, { Icons } from 'src/core/Icon';
 import RadioButton from 'src/core/Radio';
 import { Body, Title } from 'src/core/Typography';
@@ -17,6 +18,7 @@ export interface Props {
   isPrimaryAddress: string;
   setFieldValue: (field: string, value: string) => void;
   state: string;
+  instituteNotFound: boolean;
 }
 
 const PayOptionsView: React.FC<Props> = (props) => {
@@ -27,37 +29,23 @@ const PayOptionsView: React.FC<Props> = (props) => {
     isPrimaryAddress,
     setFieldValue,
     state,
+    instituteNotFound,
   } = props;
 
-  const radioOptions = viewModel.optionMeta.map((option) => {
-    const checked = selected === option;
-    let child = (
-      <div>
-        <Label>{option}</Label>
-        <OptionDescription>{viewModel.checkByMailDesc}</OptionDescription>
-        {selected !== 'Direct Deposit' && (
-          <CheckByMail
-            mailingAddress={mailingAddress}
-            isPrimaryAddress={isPrimaryAddress}
-            setFieldValue={setFieldValue}
-            state={state}
-          />
-        )}
-      </div>
-    );
-    if (option === 'Direct Deposit') {
-      child = (
-        <>
-          {/* <Label>
-            Direct Deposit with <Icon icon={Icons.PLAID_LOGO} />
-          </Label>
-          <CheckItem>
-            <Icon icon={Icons.CHECK_MARK_GREEN} /> Faster than check by mail
-          </CheckItem>
-          <CheckItem>
-            <Icon icon={Icons.CHECK_MARK_GREEN} /> Most secure way to transfer
-            funds
-          </CheckItem> */}
+  return (
+    <PayOptionsContainer>
+      <OptionContainer
+        selected={selected === 'Direct Deposit'}
+        key={'Direct Deposit'}
+      >
+        <RadioButton
+          checked={selected === 'Direct Deposit'}
+          disabled={false}
+          name={'paymentOption'}
+          value={'Direct Deposit'}
+          onClick={viewModel.onPayOptionClick}
+          type={'circle'}
+        >
           <Label>Direct Deposit</Label>
           <Description>Sign in using your exiting back login</Description>
           <BodyContainer>
@@ -89,27 +77,49 @@ const PayOptionsView: React.FC<Props> = (props) => {
           <LogoContainer>
             Powered by <Icon icon={Icons.PLAID_LOGO_GRAY} />
           </LogoContainer>
-        </>
-      );
-    }
+        </RadioButton>
+      </OptionContainer>
 
-    return (
-      <OptionContainer selected={checked} key={option}>
+      {instituteNotFound && selected === 'Direct Deposit' && (
+        <OptionContainer selected={true}>
+          <RadioButton
+            name={''}
+            checked={true}
+            disabled={false}
+            value={'Manual Input'}
+            type={'circle'}
+          >
+            <Label>Enter your bank information manually</Label>
+            <DirectDeposit />
+          </RadioButton>
+        </OptionContainer>
+      )}
+      <OptionContainer
+        selected={selected === 'Check by Mail'}
+        key={'Check by Mail'}
+      >
         <RadioButton
-          checked={checked}
+          checked={selected === 'Check by Mail'}
           disabled={false}
           name={'paymentOption'}
-          value={option}
+          value={'Check by Mail'}
           onClick={viewModel.onPayOptionClick}
           type={'circle'}
         >
-          {child}
+          <Label>Check By Mail</Label>
+          <OptionDescription>{viewModel.checkByMailDesc}</OptionDescription>
+          {selected === 'Check by Mail' && (
+            <CheckByMail
+              mailingAddress={mailingAddress}
+              isPrimaryAddress={isPrimaryAddress}
+              setFieldValue={setFieldValue}
+              state={state}
+            />
+          )}
         </RadioButton>
       </OptionContainer>
-    );
-  });
-
-  return <PayOptionsContainer>{radioOptions}</PayOptionsContainer>;
+    </PayOptionsContainer>
+  );
 };
 
 const PayOptionsContainer = styled.div`
@@ -129,8 +139,12 @@ const OptionContainer = styled.div<{ selected?: boolean }>`
   box-shadow: ${({ selected }): string =>
     selected ? '0px 4px 24px 4px rgba(0, 0, 0, 0.1)' : ''};
   height: fit-content;
+  margin-bottom: 16px;
+  :last-child {
+    margin-bottom: 0;
+  }
+
   :first-child {
-    margin-bottom: 16px;
     border-top: 4px solid #1960d0;
   }
   @media (max-width: 1280px) {
@@ -197,6 +211,11 @@ const LogoContainer = styled.div`
   img {
     margin-left: 4px;
   }
+`;
+
+const ManualContainer = styled.div`
+  display: flex;
+  flex-direction: column;
 `;
 
 const OptionDescription = styled(Body.Regular)``;
