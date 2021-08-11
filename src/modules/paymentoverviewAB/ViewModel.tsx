@@ -1,5 +1,5 @@
 import { OptionsStore } from '../options/store';
-import { PaymentOverviewStore } from '../paymentoverview/store';
+import { DetailProp, PaymentOverviewStore } from '../paymentoverview/store';
 
 import { StoreStatus } from 'src/interfaces.d';
 
@@ -69,6 +69,10 @@ class PaymentOverviewViewModel {
       this.oStore.storeStatus != StoreStatus.Initial &&
       this.poStore.storeStatus != StoreStatus.Initial
     );
+  }
+
+  get carDetail(): DetailProp {
+    return this.poStore.detail;
   }
 }
 

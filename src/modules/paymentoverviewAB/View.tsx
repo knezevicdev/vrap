@@ -108,14 +108,23 @@ const PaymentOverviewView: React.FC<Props> = ({ viewModel }) => {
         </StyledHero>
         {isDesktop && (
           <CarInformationContainer>
-            <div>
-              <CarModelText>2018 Land Rover Range Rover Sport</CarModelText>
-              <CarModelDetailContainer>
-                <CarModelDetailText>SE</CarModelDetailText>
-                <CarModelDetailDivide>|</CarModelDetailDivide>
-                <CarModelDetailText>20,818 miles</CarModelDetailText>
-              </CarModelDetailContainer>
-            </div>
+            {viewModel.carDetail.maker.length > 0 && (
+              <div>
+                <CarModelText>
+                  {viewModel.carDetail.year} {viewModel.carDetail.maker}{' '}
+                  {viewModel.carDetail.model}
+                </CarModelText>
+                <CarModelDetailContainer>
+                  <CarModelDetailText>
+                    {viewModel.carDetail.trim}
+                  </CarModelDetailText>
+                  <CarModelDetailDivide>|</CarModelDetailDivide>
+                  <CarModelDetailText>
+                    {viewModel.carDetail.miles} miles
+                  </CarModelDetailText>
+                </CarModelDetailContainer>
+              </div>
+            )}
             <Line />
           </CarInformationContainer>
         )}
