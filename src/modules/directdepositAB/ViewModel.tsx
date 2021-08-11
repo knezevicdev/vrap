@@ -1,6 +1,6 @@
-import { OptionsStore } from '../optionsAB/store';
-import { PaymentOverviewStore } from '../paymentoverviewAB/store';
-import { DirectDepositStore } from './store';
+import { DirectDepositStore } from '../directdeposit/store';
+import { OptionsStore } from '../options/store';
+import { PaymentOverviewStore } from '../paymentoverview/store';
 
 import { PlaidData } from 'src/interfaces.d';
 

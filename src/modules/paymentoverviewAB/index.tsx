@@ -1,7 +1,7 @@
 import React from 'react';
 
-import { useOptionsStore } from '../optionsAB/store';
-import { usePaymentOverviewStore } from './store';
+import { useOptionsStore } from '../options/store';
+import { usePaymentOverviewStore } from '../paymentoverview/store';
 import View from './View';
 import ViewModel from './ViewModel';
 

@@ -1,44 +1,38 @@
+import { ABSmartlyModel } from '@vroom-web/absmartly-integration';
+import { Status as NetworkingStatus } from '@vroom-web/networking';
 import { Brand, ThemeProvider } from '@vroom-web/ui';
 import { IncomingMessage } from 'http';
 import { NextPage, NextPageContext } from 'next';
+import getConfig from 'next/config';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
+// import { Header } from 'src/components/Header';
 import { SimpleHeader } from 'src/components/Header';
-import SimpleFooter from 'src/core/Footer/SimpleFooter';
-// import {
-//   DirectDepositStore,
-//   DirectDepositStoreContext,
-// } from 'src/modules/directdeposit/store';
+import ToolFooter from 'src/core/ToolFooter';
+import { analyticsHandler } from 'src/integrations/AnalyticsHandler';
 import {
   DirectDepositStore,
   DirectDepositStoreContext,
-} from 'src/modules/directdepositAB/store';
-import Options from 'src/modules/optionsAB';
-// import {
-//   PaymentMethodContext,
-//   PaymentMethodContextType,
-// } from 'src/modules/options/paymentMethodContext';
+} from 'src/modules/directdeposit/store';
 import {
   PaymentMethodContext,
   PaymentMethodContextType,
-} from 'src/modules/optionsAB/paymentMethodContext';
-// import { OptionsStore, OptionsStoreContext } from 'src/modules/options/store';
-import { OptionsStore, OptionsStoreContext } from 'src/modules/optionsAB/store';
-import PaymentOverview from 'src/modules/paymentoverviewAB';
+} from 'src/modules/options/paymentMethodContext';
+import { OptionsStore, OptionsStoreContext } from 'src/modules/options/store';
+import Options from 'src/modules/optionsAB';
 // import PaymentOverview from 'src/modules/paymentoverview';
 // import Options from 'src/modules/options';
 // import SuccessBar from 'src/modules/successbar';
-// import {
-//   PaymentOverviewStore,
-//   PaymentOverviewStoreContext,
-// } from 'src/modules/paymentoverview/store';
 import {
   PaymentOverviewStore,
   PaymentOverviewStoreContext,
-} from 'src/modules/paymentoverviewAB/store';
+} from 'src/modules/paymentoverview/store';
+import PaymentOverview from 'src/modules/paymentoverviewAB';
 import Page from 'src/Page';
+
+const { publicRuntimeConfig } = getConfig();
 
 const ColumnBody = styled.div`
   display: flex;
@@ -83,6 +77,29 @@ const EPayOptions: NextPage<Props> = ({ brand }) => {
     oStore.init(priceId);
     ddStore.initClientSide(priceId);
     poStore.init(priceId);
+
+    const abSmartlyModel = new ABSmartlyModel({
+      endpoint: publicRuntimeConfig.NEXT_PUBLIC_ABSMARTLY_URL,
+      apiKey: publicRuntimeConfig.ABSMARTLY_API_KEY,
+      environment: publicRuntimeConfig.ABSMARTLY_ENV,
+      application: publicRuntimeConfig.ABSMARTLY_APP,
+    });
+
+    oStore.setABSmartlyModel(abSmartlyModel);
+
+    const checkAnalytics = window.setTimeout(() => {
+      oStore.abSmartlyModel?.setStatus(NetworkingStatus.ERROR);
+    }, 3500);
+
+    analyticsHandler.onAnalyticsReady(async () => {
+      clearTimeout(checkAnalytics);
+      const sessionId = analyticsHandler.getAnonymousId();
+      if (sessionId) {
+        await abSmartlyModel?.initABSmartly(sessionId);
+      } else {
+        abSmartlyModel?.setStatus(NetworkingStatus.ERROR);
+      }
+    });
   }, [oStore, ddStore, poStore, priceId]);
 
   // TODO: this used to be used with <State isOpenCallback={setStateDropdown} />
@@ -108,7 +125,7 @@ const EPayOptions: NextPage<Props> = ({ brand }) => {
               </PaymentOverviewStoreContext.Provider>
             </OptionsStoreContext.Provider>
           </ColumnBody>
-          <SimpleFooter />
+          <ToolFooter />
         </Page>
       </PaymentMethodContext.Provider>
     </ThemeProvider>

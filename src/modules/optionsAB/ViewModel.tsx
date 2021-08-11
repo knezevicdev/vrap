@@ -1,10 +1,10 @@
-import { DirectDepositStore } from '../directdepositAB/store';
-import { OptionsStore } from './store';
+import { DirectDepositStore } from '../directdeposit/store';
+import { OptionsStore, submitPaymentOptions } from '../options/store';
 
 import AnalyticsHandler from 'src/integrations/AnalyticsHandler';
 import { MailingAddress } from 'src/interfaces.d';
 import { PaymentOverviewFormValues } from 'src/interfaces.d';
-import { submitPaymentOptions } from 'src/modules/optionsAB/store';
+// import { submitPaymentOptions } from 'src/modules/options/store';
 
 class OptionsViewModel {
   private readonly store: OptionsStore;

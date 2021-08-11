@@ -1,5 +1,5 @@
-import { OptionsStore } from '../optionsAB/store';
-import { PaymentOverviewStore } from './store';
+import { OptionsStore } from '../options/store';
+import { PaymentOverviewStore } from '../paymentoverview/store';
 
 import { StoreStatus } from 'src/interfaces.d';
 

@@ -8,7 +8,7 @@ import IsPrimaryAddress from 'src/components/IsPrimaryAddressAB';
 import Dropdown from 'src/core/Dropdown';
 import FormikInput from 'src/core/FormikInput';
 import { Body } from 'src/core/Typography';
-import { PaymentMethodContext } from 'src/modules/optionsAB/paymentMethodContext';
+import { PaymentMethodContext } from 'src/modules/options/paymentMethodContext';
 
 type ViewProps = Props & { viewModel: CheckByMailViewModel };
 
