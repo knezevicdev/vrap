@@ -47,31 +47,33 @@ const PlaidButtonView: React.FC<Props> = ({
   priceId,
 }) => {
   let config;
-  const onSuccess = useCallback((_token, metaData): void => {
-    const email = viewModel.getEmail();
-    viewModel.onPlaidSubmitting(true);
-    const onPlaidSubmitting = viewModel.onPlaidSubmitting;
-    const mutationInput = {
-      Account: {
-        Id: metaData.account.id,
-        Name: metaData.account.name,
-        Type: metaData.account.type,
-        Subtype: metaData.account.subtype,
-        Mask: metaData.account.mask,
-      },
-      Institution: {
-        Id: metaData.institution.institution_id,
-        Name: metaData.institution.name,
-      },
-      PublicToken: metaData.public_token,
-      Source: 'acquisitions',
-      ReferenceId: priceId,
-      Email: email,
-    };
+  const onSuccess = useCallback(
+    (_token, metaData): void => {
+      const email = viewModel.getEmail();
+      viewModel.onPlaidSubmitting(true);
+      const onPlaidSubmitting = viewModel.onPlaidSubmitting;
+      const mutationInput = {
+        Account: {
+          Id: metaData.account.id,
+          Name: metaData.account.name,
+          Type: metaData.account.type,
+          Subtype: metaData.account.subtype,
+          Mask: metaData.account.mask,
+        },
+        Institution: {
+          Id: metaData.institution.institution_id,
+          Name: metaData.institution.name,
+        },
+        PublicToken: metaData.public_token,
+        Source: 'acquisitions',
+        ReferenceId: priceId,
+        Email: email,
+      };
 
-    plaidSuccess(mutationInput, onPlaidSubmitting);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+      plaidSuccess(mutationInput, onPlaidSubmitting);
+    },
+    [viewModel, priceId, plaidSuccess]
+  );
 
   const onExit = useCallback(
     (error, metadata): void => {
