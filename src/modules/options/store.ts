@@ -97,6 +97,7 @@ export class OptionsStore implements Store {
   institutionFound = true;
   institutionSearched = false;
   abSmartlyModel?: ABSmartlyModel;
+  abSmartlyTest?: boolean;
 
   constructor() {
     makeObservable(this, {
@@ -113,6 +114,7 @@ export class OptionsStore implements Store {
       institutionFound: observable,
       institutionSearched: observable,
       abSmartlyModel: observable,
+      abSmartlyTest: observable,
       setPayOptionSelected: action,
       setPlaidSubmitting: action,
       setInstitutionFound: action,
@@ -161,6 +163,10 @@ export class OptionsStore implements Store {
 
   setInstitutionSearched = (value: boolean): void => {
     this.institutionSearched = value;
+  };
+
+  setABSmartTest = (value: boolean): void => {
+    this.abSmartlyTest = value;
   };
 }
 

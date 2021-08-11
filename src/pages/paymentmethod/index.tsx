@@ -8,7 +8,7 @@ import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
-// import { Header } from 'src/components/Header';
+import { Header } from 'src/components/Header';
 import { SimpleHeader } from 'src/components/Header';
 import ToolFooter from 'src/core/ToolFooter';
 import { analyticsHandler } from 'src/integrations/AnalyticsHandler';
@@ -16,20 +16,19 @@ import {
   DirectDepositStore,
   DirectDepositStoreContext,
 } from 'src/modules/directdeposit/store';
+import Options from 'src/modules/options';
 import {
   PaymentMethodContext,
   PaymentMethodContextType,
 } from 'src/modules/options/paymentMethodContext';
 import { OptionsStore, OptionsStoreContext } from 'src/modules/options/store';
-import Options from 'src/modules/optionsAB';
-// import PaymentOverview from 'src/modules/paymentoverview';
-// import Options from 'src/modules/options';
-// import SuccessBar from 'src/modules/successbar';
+import PaymentOverview from 'src/modules/paymentoverview';
 import {
   PaymentOverviewStore,
   PaymentOverviewStoreContext,
 } from 'src/modules/paymentoverview/store';
-import PaymentOverview from 'src/modules/paymentoverviewAB';
+import PaymentOverviewAB from 'src/modules/paymentoverviewAB';
+import SuccessBar from 'src/modules/successbar';
 import Page from 'src/Page';
 
 const { publicRuntimeConfig } = getConfig();
@@ -106,22 +105,25 @@ const EPayOptions: NextPage<Props> = ({ brand }) => {
   // It caused the page to rerender and mobx would lose its state
   // Ideally we would like to extend the page to accomodate the long dropdown
   const [stateDropdownOpen, setStateDropdown] = useState(false);
-
   return (
     <ThemeProvider brand={brand}>
       <PaymentMethodContext.Provider
         value={{ stateDropdownOpen, setStateDropdown }}
       >
         <Page name="EPayOptions">
-          <SimpleHeader />
-          {/* <SuccessBar /> */}
+          {oStore.abSmartlyTest ? <SimpleHeader /> : <Header />}
+          {!oStore.abSmartlyTest && <SuccessBar />}
           <ColumnBody stateDropdownOpen={stateDropdownOpen}>
             <OptionsStoreContext.Provider value={oStore}>
               <PaymentOverviewStoreContext.Provider value={poStore}>
                 <DirectDepositStoreContext.Provider value={ddStore}>
                   <Options />
                 </DirectDepositStoreContext.Provider>
-                <PaymentOverview />
+                {oStore.abSmartlyTest ? (
+                  <PaymentOverviewAB />
+                ) : (
+                  <PaymentOverview />
+                )}
               </PaymentOverviewStoreContext.Provider>
             </OptionsStoreContext.Provider>
           </ColumnBody>

@@ -129,6 +129,12 @@ class OptionsViewModel {
   getInstitutionNotFound = (): boolean => {
     return this.store.institutionFound === false;
   };
+
+  inFaceliftTest(): boolean {
+    return (
+      this.store.abSmartlyModel?.inExperiment('ac-payment-facelift') || false
+    );
+  }
 }
 
 export default OptionsViewModel;
