@@ -12,7 +12,7 @@ export interface Props {
 
 const View: React.FC<Props> = ({ viewModel }) => {
   return (
-    <>
+    <div>
       <StyledHero>{viewModel.questions}</StyledHero>
       <StyledContainer>
         <IconSection>
@@ -36,7 +36,7 @@ const View: React.FC<Props> = ({ viewModel }) => {
           </StyledLink>
         </IconSection>
       </StyledContainer>
-    </>
+    </div>
   );
 };
 

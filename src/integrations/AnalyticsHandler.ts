@@ -7,6 +7,12 @@ class AnalyticsHandler extends BaseAnalyticsHandler {
     this.page(name, category);
   }
 
+  trackCongratsViewed(): void {
+    const name = 'Congratulations Page';
+    const category = 'sell';
+    this.page(name, category);
+  }
+
   trackPriceAutomated(): void {
     const event = 'Automated Price';
     const category = 'sell';

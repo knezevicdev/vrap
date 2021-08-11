@@ -23,11 +23,11 @@ interface PageProps {
 
 class Page extends React.Component<PageProps> {
   render(): React.ReactNode {
-    const { children } = this.props;
+    const { name, children } = this.props;
     return (
       <>
         <Head>
-          <title>Your Price</title>
+          <title>{name || `Your Price`}</title>
         </Head>
         <Container>
           <Contents>{children}</Contents>
