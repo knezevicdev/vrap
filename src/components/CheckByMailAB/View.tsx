@@ -25,10 +25,13 @@ const CBMMailingAddress = styled(Body.Regular)`
   display: flex;
   flex-direction: column;
   padding-bottom: 5px;
+  margin-bottom: 11px;
 `;
 
-const AddressLine = styled.span`
+const AddressLine = styled(Body.Regular)`
   display: flex;
+  font-family: Calibre;
+  font-weight: 600;
 `;
 
 const InputContainer = styled.div`

@@ -52,7 +52,6 @@ export async function getInitialOptionsStoreState(
   try {
     const verifyResponse = await networker.getVerificationDetails(priceId);
     const verificationData: Verification = verifyResponse.data.data;
-
     const optionState = {
       mailingAddress: verificationData.owner_mailing_address,
       email: verificationData.email,
@@ -85,7 +84,7 @@ export async function submitPaymentOptions(
 }
 
 export class OptionsStore implements Store {
-  showDD = true;
+  showDD = 'Direct Deposit';
   mailingAddress = defaultOptionsState.mailingAddress;
   priceId = '';
   email = '';
@@ -150,7 +149,7 @@ export class OptionsStore implements Store {
   }
 
   setPayOptionSelected = (value: string): void => {
-    this.showDD = value === 'Direct Deposit';
+    this.showDD = value;
   };
 
   setPlaidSubmitting = (value: boolean): void => {

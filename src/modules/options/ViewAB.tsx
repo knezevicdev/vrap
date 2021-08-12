@@ -97,7 +97,7 @@ const OptionsView: React.FC<Props> = ({ viewModel }) => {
   const PaymentOverviewSchema = Yup.object().shape({
     paymentOption: Yup.string().required('Required'),
     routingNumber: Yup.string().when('paymentOption', {
-      is: 'Direct Deposit',
+      is: 'Manual Input',
       then: Yup.string()
         .required('Field is required')
         .test(
@@ -109,7 +109,7 @@ const OptionsView: React.FC<Props> = ({ viewModel }) => {
         ),
     }),
     bankAccountNumber: Yup.string().when('paymentOption', {
-      is: 'Direct Deposit',
+      is: 'Manual Input',
       then: Yup.string()
         .required('Field is required')
         .matches(
@@ -159,7 +159,6 @@ const OptionsView: React.FC<Props> = ({ viewModel }) => {
     }),
   });
 
-  const shouldShowSubmitButton = viewModel.getShowSubmitButton();
   const isPlaidSubmitting = viewModel.getPlaidSubmitting();
   const theme = useTheme();
   const isDesktop = useMediaQuery(theme.breakpoints.up('lg'), { noSsr: false });
@@ -178,13 +177,8 @@ const OptionsView: React.FC<Props> = ({ viewModel }) => {
       validateOnMount={true}
     >
       {({ isValid, values, isSubmitting, setFieldValue }): JSX.Element => {
-        const showDirectDeposit =
-          viewModel.showDirectDeposit() && !viewModel.getInstitutionNotFound();
-        const showSubmitButton =
-          shouldShowSubmitButton ||
-          !showDirectDeposit ||
-          viewModel.getInstitutionNotFound();
-
+        const showDirectDeposit = viewModel.showDirectDeposit();
+        const showSubmitButton = !showDirectDeposit;
         return (
           <FormContainer>
             {isDesktop && <StyledHero>{viewModel.hero}</StyledHero>}

@@ -1,5 +1,5 @@
 import { observer } from 'mobx-react';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
 import CheckByMail from '../CheckByMailAB';
@@ -31,6 +31,15 @@ const PayOptionsView: React.FC<Props> = (props) => {
     state,
     instituteNotFound,
   } = props;
+
+  const [initialNotFound, changeNotFound] = useState(true);
+
+  useEffect(() => {
+    if (initialNotFound && instituteNotFound) {
+      setFieldValue('paymentOption', 'Manual Input');
+      changeNotFound(false);
+    }
+  }, [instituteNotFound]);
 
   return (
     <PayOptionsContainer>
@@ -80,20 +89,28 @@ const PayOptionsView: React.FC<Props> = (props) => {
         </RadioButton>
       </OptionContainer>
 
-      {instituteNotFound && selected === 'Direct Deposit' && (
-        <OptionContainer selected={true}>
+      {instituteNotFound && (
+        <OptionContainer
+          selected={selected === 'Manual Input'}
+          key={'Manual Input'}
+          className={instituteNotFound ? '' : 'hide'}
+        >
           <RadioButton
-            name={''}
-            checked={true}
+            checked={selected === 'Manual Input'}
             disabled={false}
+            name={'paymentOption'}
             value={'Manual Input'}
+            onClick={viewModel.onPayOptionClick}
             type={'circle'}
           >
-            <Label>{viewModel.enterBankInfoManual}</Label>
-            <DirectDeposit />
+            <Label className={'short-width'}>
+              {viewModel.enterBankInfoManual}
+            </Label>
+            {selected === 'Manual Input' && <DirectDeposit />}
           </RadioButton>
         </OptionContainer>
       )}
+
       <OptionContainer
         selected={selected === 'Check by Mail'}
         key={'Check by Mail'}
@@ -160,6 +177,10 @@ const CheckItem = styled.div`
 const Label = styled(Title.One)`
   display: flex;
   margin-bottom: 8px;
+  font-weight: 600;
+  &.short-width {
+    width: 80%;
+  }
 `;
 
 const Description = styled.div`
