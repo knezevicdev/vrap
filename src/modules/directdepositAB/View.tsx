@@ -6,7 +6,6 @@ import DirectDepositViewModel from './ViewModel';
 
 import DirectDeposit from 'src/components/DirectDepositAB';
 import PlaidButton from 'src/components/PlaidButtonAB';
-import Icon, { Icons } from 'src/core/Icon';
 import { Body } from 'src/core/Typography';
 
 export interface Props {
@@ -16,7 +15,6 @@ export interface Props {
 const DirectDepositView: React.FC<Props> = ({ viewModel }) => {
   const token = viewModel.getPlaidLinkToken();
   const tokenIsLocal = viewModel.getTokenIsLocal();
-  const showNotFound = viewModel.getInstitutionNotFound();
 
   const DirectDepositLink = ({ lang }: { lang: string }): JSX.Element => {
     return (
@@ -60,17 +58,6 @@ const DirectDepositCopy = styled(Body.Regular)`
   padding: 20px 0 15px;
 `;
 
-const LockText = styled(Body.Small)`
-  align-items: center;
-  display: flex;
-  justify-content: center;
-  width: 50%;
-
-  @media (max-width: 420px) {
-    width: 100%;
-  }
-`;
-
 const DDToggleLink = styled.span`
   font-family: Calibre;
   font-weight: normal;
@@ -80,10 +67,6 @@ const DDToggleLink = styled.span`
   line-height: 24px;
   text-decoration: underline;
   cursor: pointer;
-`;
-
-const StyledIcon = styled(Icon)`
-  margin: 0 5px;
 `;
 
 export default observer(DirectDepositView);

@@ -169,11 +169,6 @@ const OptionContainer = styled.div<{ selected?: boolean }>`
   }
 `;
 
-const CheckItem = styled.div`
-  font-weight: 300;
-  padding: 5px 0;
-`;
-
 const Label = styled(Title.One)`
   display: flex;
   margin-bottom: 8px;
@@ -232,11 +227,6 @@ const LogoContainer = styled.div`
   img {
     margin-left: 4px;
   }
-`;
-
-const ManualContainer = styled.div`
-  display: flex;
-  flex-direction: column;
 `;
 
 const OptionDescription = styled(Body.Regular)``;

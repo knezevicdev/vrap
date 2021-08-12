@@ -50,12 +50,16 @@ const Label = styled.label<{
   cursor: pointer;
   font-family: Calibre;
   font-size: 18px;
-  font-weight: ${({ styleType }): string => (styleType === '' ? '500' : '600')};
+  font-weight: 500;
   color: ${({ checked }): string => (!checked ? '#999DA3' : '#041022')};
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
+
+  &.checkMail {
+    font-weight: 600;
+  }
 
   &:hover {
     span {
@@ -85,7 +89,11 @@ export const YesNoBox: React.FC<YesNoBoxProps> = (props) => {
   const { id, name, value, checked, children, disabled, styleType } = props;
 
   return (
-    <Label disabled={disabled} checked={checked} styleType={styleType}>
+    <Label
+      disabled={disabled}
+      checked={checked}
+      className={styleType ? styleType : ''}
+    >
       {children}
       <YesNoBoxStyled
         id={id}
