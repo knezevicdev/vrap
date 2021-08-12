@@ -1,3 +1,4 @@
+import { ABSmartlyModel } from '@vroom-web/absmartly-integration';
 import { action, makeObservable, observable, runInAction } from 'mobx';
 import { createContext, useContext } from 'react';
 
@@ -95,6 +96,7 @@ export class OptionsStore implements Store {
   asyncStatus = AsyncStatus.Idle;
   institutionFound = true;
   institutionSearched = false;
+  abSmartlyModel?: ABSmartlyModel;
 
   constructor() {
     makeObservable(this, {
@@ -110,10 +112,12 @@ export class OptionsStore implements Store {
       init: action,
       institutionFound: observable,
       institutionSearched: observable,
+      abSmartlyModel: observable,
       setPayOptionSelected: action,
       setPlaidSubmitting: action,
       setInstitutionFound: action,
       setInstitutionSearched: action,
+      setABSmartlyModel: action,
     });
   }
 
@@ -137,6 +141,10 @@ export class OptionsStore implements Store {
       this.currentPayments = initialState.currentPayments;
       this.poq = initialState.poq;
     });
+  }
+
+  setABSmartlyModel(abSmartlyModel: ABSmartlyModel): void {
+    this.abSmartlyModel = abSmartlyModel;
   }
 
   setPayOptionSelected = (value: string): void => {
