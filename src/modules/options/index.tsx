@@ -19,7 +19,7 @@ const Options: React.FC = () => {
     store.setABSmartTest(test);
   }, []);
 
-  return !facelistTest ? (
+  return facelistTest ? (
     <ViewAB viewModel={viewModel} />
   ) : (
     <View viewModel={viewModel} />

@@ -111,15 +111,15 @@ const EPayOptions: NextPage<Props> = ({ brand }) => {
         value={{ stateDropdownOpen, setStateDropdown }}
       >
         <Page name="EPayOptions">
-          {!oStore.abSmartlyTest ? <SimpleHeader /> : <Header />}
-          {oStore.abSmartlyTest && <SuccessBar />}
+          {oStore.abSmartlyTest ? <SimpleHeader /> : <Header />}
+          {!oStore.abSmartlyTest && <SuccessBar />}
           <ColumnBody stateDropdownOpen={stateDropdownOpen}>
             <OptionsStoreContext.Provider value={oStore}>
               <PaymentOverviewStoreContext.Provider value={poStore}>
                 <DirectDepositStoreContext.Provider value={ddStore}>
                   <Options />
                 </DirectDepositStoreContext.Provider>
-                {!oStore.abSmartlyTest ? (
+                {oStore.abSmartlyTest ? (
                   <PaymentOverviewAB />
                 ) : (
                   <PaymentOverview />
