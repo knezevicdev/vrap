@@ -62,29 +62,30 @@ const PayOptionsView: React.FC<Props> = (props) => {
               <SectionTitle>
                 <Icon icon={Icons.CALENDAR} /> {viewModel.getMoneyFaster}
               </SectionTitle>
-              <span>{viewModel.plaidBenefitFaster}</span>
+              <BodyText>{viewModel.plaidBenefitFaster}</BodyText>
             </SectionContainer>
             <SectionContainer>
               <SectionTitle>
                 <Icon icon={Icons.PEOPLE} /> {viewModel.mostPopularMethod}
               </SectionTitle>
-              <span>
-                <strong>Over 60%</strong> of Vroom customers choose to get paid
-                through Plaid
-              </span>
+              <BodyText>
+                <EmphasizeText>{viewModel.overSixty}</EmphasizeText>{' '}
+                {viewModel.paymentPreference}
+              </BodyText>
             </SectionContainer>
             <SectionContainer>
               <SectionTitle>
                 <Icon icon={Icons.SECURE_LOCK} /> {viewModel.mostSecureMethod}
               </SectionTitle>
-              <span>
-                Plaid is <strong>trusted worldwide</strong> for transfering
-                funds
-              </span>
+              <BodyText>
+                {viewModel.plaidIs}
+                <EmphasizeText>{viewModel.worldwide}</EmphasizeText>
+                {viewModel.transferingFund}
+              </BodyText>
             </SectionContainer>
           </BodyContainer>
           <LogoContainer>
-            Powered by <Icon icon={Icons.PLAID_LOGO_GRAY} />
+            {viewModel.poweredBy} <Icon icon={Icons.PLAID_LOGO_GRAY} />
           </LogoContainer>
         </RadioButton>
       </OptionContainer>
@@ -188,12 +189,6 @@ const Description = styled.div`
 const BodyContainer = styled.div`
   display: flex;
   flex-direction: column;
-  span {
-    margin-left: 32px;
-    font-family: Calibre;
-    font-size: 18px;
-    line-height: 24px;
-  }
 `;
 
 const SectionTitle = styled.div`
@@ -227,6 +222,19 @@ const LogoContainer = styled.div`
   img {
     margin-left: 4px;
   }
+`;
+
+const BodyText = styled.span`
+  margin-left: 32px;
+  font-family: Calibre;
+  font-size: 18px;
+  width: 70%;
+  line-height: 24px;
+`;
+
+const EmphasizeText = styled(BodyText)`
+  font-weight: bold;
+  margin: 0;
 `;
 
 const OptionDescription = styled(Body.Regular)``;

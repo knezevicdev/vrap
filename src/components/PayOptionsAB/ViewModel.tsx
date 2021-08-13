@@ -9,10 +9,18 @@ class PayOptionViewModel {
   readonly mostPopularMethod: string = 'Most popular method';
   readonly mostSecureMethod: string = 'Most secure method';
   readonly plaidBenefitFaster: string =
-    'Customers who use Plaid receive their money sooner';
+    'Customers who use Plaid receive their money sooner.';
   readonly enterBankInfoManual: string = 'Enter your bank information manually';
   readonly checkByMail: string = 'Check By Mail';
   readonly checkByMailDesc: string = "we'll send you a check in the mail";
+  readonly overSixty: string = 'Over 60%';
+  readonly paymentPreference: string =
+    'of Vroom customers choose to get paid through Plaid.';
+  readonly plaidIs: string = 'Plaid is';
+  readonly worldwide: string = 'trusted worldwide';
+  readonly transferingFund: string = ' for transfering funds.';
+  readonly poweredBy: string = 'Powered by';
+
   constructor(oStore: OptionsStore) {
     this.oStore = oStore;
   }
