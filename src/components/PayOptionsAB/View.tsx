@@ -229,11 +229,12 @@ const BodyText = styled.span`
   font-family: Calibre;
   font-size: 18px;
   width: 70%;
+  font-weight: 400;
   line-height: 24px;
 `;
 
 const EmphasizeText = styled(BodyText)`
-  font-weight: bold;
+  font-weight: 600;
   margin: 0;
 `;
 

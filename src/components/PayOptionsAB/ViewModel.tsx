@@ -17,7 +17,7 @@ class PayOptionViewModel {
   readonly paymentPreference: string =
     'of Vroom customers choose to get paid through Plaid.';
   readonly plaidIs: string = 'Plaid is';
-  readonly worldwide: string = 'trusted worldwide';
+  readonly worldwide: string = ' trusted worldwide ';
   readonly transferingFund: string = ' for transfering funds.';
   readonly poweredBy: string = 'Powered by';
 
