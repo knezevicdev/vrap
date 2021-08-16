@@ -3,8 +3,8 @@ import styled from 'styled-components';
 
 import CheckByMailViewModel from './ViewModel';
 
-import { Props } from 'src/components/CheckByMail';
-import IsPrimaryAddress from 'src/components/IsPrimaryAddress';
+import { Props } from 'src/components/CheckByMailAB';
+import IsPrimaryAddress from 'src/components/IsPrimaryAddressAB';
 import Dropdown from 'src/core/Dropdown';
 import FormikInput from 'src/core/FormikInput';
 import { Body } from 'src/core/Typography';
@@ -25,16 +25,19 @@ const CBMMailingAddress = styled(Body.Regular)`
   display: flex;
   flex-direction: column;
   padding-bottom: 5px;
+  margin-bottom: 11px;
 `;
 
-const AddressLine = styled.span`
+const AddressLine = styled(Body.Regular)`
   display: flex;
+  font-family: Calibre;
+  font-weight: 600;
 `;
 
 const InputContainer = styled.div`
   display: flex;
   justify-content: space-between;
-
+  flex-direction: column;
   @media (max-width: 768px) {
     display: block;
     margin-bottom: 0px;
@@ -42,83 +45,64 @@ const InputContainer = styled.div`
 `;
 
 const ZipStateContainer = styled.div`
-  width: 50%;
+  width: 100%;
   display: flex;
   justify-content: space-between;
-
-  @media (max-width: 768px) {
-    display: block;
-    margin-bottom: 0px;
-  }
-
-  @media (max-width: 420px) {
-    display: flex;
-    width: 100%;
-  }
 `;
 
 const Address = styled(FormikInput)`
-  width: 50%;
-  margin-right: 10px;
-
-  @media (max-width: 768px) {
-    width: 100%;
-    margin-right: 0px;
-    margin-bottom: 16px;
+  width: 100%;
+  margin-right: 0px;
+  margin-bottom: 16px;
+  > label {
+    font-family: Calibre;
+    font-size: 14px;
+    line-height: 20px;
+    letter-spacing: 0.25px;
+    font-weight: normal;
   }
 `;
 
 const Apartment = styled(FormikInput)`
-  width: 50%;
-  margin-left: 10px;
-
-  @media (max-width: 768px) {
-    width: 100%;
-    margin-left: 0px;
-    margin-bottom: 16px;
+  width: 100%;
+  margin-left: 0px;
+  margin-bottom: 16px;
+  > label {
+    font-family: Calibre;
+    font-size: 14px;
+    line-height: 20px;
+    letter-spacing: 0.25px;
+    font-weight: normal;
   }
 `;
 
 const City = styled(FormikInput)`
-  width: 50%;
-  margin-right: 10px;
-
-  @media (max-width: 768px) {
-    width: 100%;
-    margin-right: 0px;
-    margin-bottom: 16px;
+  width: 100%;
+  margin-right: 0px;
+  margin-bottom: 16px;
+  > label {
+    font-family: Calibre;
+    font-size: 14px;
+    line-height: 20px;
+    letter-spacing: 0.25px;
+    font-weight: normal;
   }
 `;
 
 const State = styled(Dropdown)`
   width: 50%;
   height: 40px;
-  margin-left: 10px;
-
-  @media (max-width: 768px) {
-    width: 100%;
-    margin-left: 0px;
-    margin-bottom: 40px;
-  }
-
-  @media (max-width: 768px) {
-    width: 50%;
-  }
 `;
 
 const Zip = styled(FormikInput)`
   width: 50%;
   margin-left: 10px;
-
-  @media (max-width: 768px) {
-    width: 100%;
-    margin-left: 0px;
-    margin-bottom: 16px;
-  }
-
-  @media (max-width: 768px) {
-    width: 50%;
-    margin-left: 16px;
+  > label {
+    font-family: Calibre;
+    font-size: 14px;
+    line-height: 20px;
+    letter-spacing: 0.25px;
+    font-weight: normal;
   }
 `;
 

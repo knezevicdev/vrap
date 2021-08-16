@@ -64,6 +64,7 @@ const PayOptionsView: React.FC<Props> = ({ selected, viewModel }) => {
           name={'paymentOption'}
           value={option}
           onClick={viewModel.onPayOptionClick}
+          type={''}
         >
           {child}
         </RadioButton>

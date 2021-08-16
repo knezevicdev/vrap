@@ -8,7 +8,7 @@ import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
-import Header from 'src/components/Header';
+import { Header } from 'src/components/Header';
 import ToolFooter from 'src/core/ToolFooter';
 import { analyticsHandler } from 'src/integrations/AnalyticsHandler';
 import {
@@ -26,6 +26,7 @@ import {
   PaymentOverviewStore,
   PaymentOverviewStoreContext,
 } from 'src/modules/paymentoverview/store';
+import PaymentOverviewAB from 'src/modules/paymentoverviewAB';
 import SuccessBar from 'src/modules/successbar';
 import Page from 'src/Page';
 
@@ -103,7 +104,6 @@ const EPayOptions: NextPage<Props> = ({ brand }) => {
   // It caused the page to rerender and mobx would lose its state
   // Ideally we would like to extend the page to accomodate the long dropdown
   const [stateDropdownOpen, setStateDropdown] = useState(false);
-
   return (
     <ThemeProvider brand={brand}>
       <PaymentMethodContext.Provider
@@ -111,14 +111,18 @@ const EPayOptions: NextPage<Props> = ({ brand }) => {
       >
         <Page name="EPayOptions">
           <Header />
-          <SuccessBar />
+          {!oStore.abSmartlyTest && <SuccessBar />}
           <ColumnBody stateDropdownOpen={stateDropdownOpen}>
             <OptionsStoreContext.Provider value={oStore}>
               <PaymentOverviewStoreContext.Provider value={poStore}>
                 <DirectDepositStoreContext.Provider value={ddStore}>
                   <Options />
                 </DirectDepositStoreContext.Provider>
-                <PaymentOverview />
+                {oStore.abSmartlyTest ? (
+                  <PaymentOverviewAB />
+                ) : (
+                  <PaymentOverview />
+                )}
               </PaymentOverviewStoreContext.Provider>
             </OptionsStoreContext.Provider>
           </ColumnBody>
