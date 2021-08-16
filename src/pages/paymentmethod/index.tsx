@@ -9,7 +9,6 @@ import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
 import { Header } from 'src/components/Header';
-import { SimpleHeader } from 'src/components/Header';
 import ToolFooter from 'src/core/ToolFooter';
 import { analyticsHandler } from 'src/integrations/AnalyticsHandler';
 import {
@@ -111,7 +110,7 @@ const EPayOptions: NextPage<Props> = ({ brand }) => {
         value={{ stateDropdownOpen, setStateDropdown }}
       >
         <Page name="EPayOptions">
-          {oStore.abSmartlyTest ? <SimpleHeader /> : <Header />}
+          <Header />
           {!oStore.abSmartlyTest && <SuccessBar />}
           <ColumnBody stateDropdownOpen={stateDropdownOpen}>
             <OptionsStoreContext.Provider value={oStore}>
