@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 
 import { useDirectDepositStore } from '../directdeposit/store';
 import { useOptionsStore } from './store';
@@ -6,20 +6,16 @@ import View from './View';
 import ViewAB from './ViewAB';
 import ViewModel from './ViewModel';
 
-const Options: React.FC = () => {
+interface Prop {
+  abTest: boolean;
+}
+
+const Options = (props: Prop): JSX.Element => {
   const store = useOptionsStore();
   const ddStore = useDirectDepositStore();
   const viewModel = new ViewModel(store, ddStore);
 
-  const [facelistTest, changeFaceliftTest] = useState(false);
-
-  useEffect(() => {
-    const test = viewModel.inFaceliftTest();
-    changeFaceliftTest(test);
-    store.setABSmartTest(test);
-  }, []);
-
-  return facelistTest ? (
+  return props.abTest ? (
     <ViewAB viewModel={viewModel} />
   ) : (
     <View viewModel={viewModel} />
