@@ -71,6 +71,10 @@ const EPayOptions: NextPage<Props> = ({ brand }) => {
   const oStore = new OptionsStore();
   const ddStore = new DirectDepositStore();
   const poStore = new PaymentOverviewStore();
+
+  const [stateDropdownOpen, setStateDropdown] = useState(false);
+  const [abTestFacelift, setAbTestFacelift] = useState(false);
+
   useEffect(() => {
     oStore.init(priceId);
     ddStore.initClientSide(priceId);
@@ -94,6 +98,8 @@ const EPayOptions: NextPage<Props> = ({ brand }) => {
       const sessionId = analyticsHandler.getAnonymousId();
       if (sessionId) {
         await abSmartlyModel?.initABSmartly(sessionId);
+        const abTest = abSmartlyModel?.inExperiment('ac-payment-facelift');
+        setAbTestFacelift(abTest);
       } else {
         abSmartlyModel?.setStatus(NetworkingStatus.ERROR);
       }
@@ -103,7 +109,7 @@ const EPayOptions: NextPage<Props> = ({ brand }) => {
   // TODO: this used to be used with <State isOpenCallback={setStateDropdown} />
   // It caused the page to rerender and mobx would lose its state
   // Ideally we would like to extend the page to accomodate the long dropdown
-  const [stateDropdownOpen, setStateDropdown] = useState(false);
+
   return (
     <ThemeProvider brand={brand}>
       <PaymentMethodContext.Provider
@@ -111,18 +117,14 @@ const EPayOptions: NextPage<Props> = ({ brand }) => {
       >
         <Page name="EPayOptions">
           <Header />
-          {!oStore.abSmartlyTest && <SuccessBar />}
+          {!abTestFacelift && <SuccessBar />}
           <ColumnBody stateDropdownOpen={stateDropdownOpen}>
             <OptionsStoreContext.Provider value={oStore}>
               <PaymentOverviewStoreContext.Provider value={poStore}>
                 <DirectDepositStoreContext.Provider value={ddStore}>
-                  <Options />
+                  <Options abTest={abTestFacelift} />
                 </DirectDepositStoreContext.Provider>
-                {oStore.abSmartlyTest ? (
-                  <PaymentOverviewAB />
-                ) : (
-                  <PaymentOverview />
-                )}
+                {abTestFacelift ? <PaymentOverviewAB /> : <PaymentOverview />}
               </PaymentOverviewStoreContext.Provider>
             </OptionsStoreContext.Provider>
           </ColumnBody>
