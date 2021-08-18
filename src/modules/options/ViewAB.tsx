@@ -181,7 +181,7 @@ const OptionsView: React.FC<Props> = ({ viewModel }) => {
         const showSubmitButton = !showDirectDeposit;
         return (
           <FormContainer>
-            {isDesktop && <StyledHero>{viewModel.hero}</StyledHero>}
+            {isDesktop && <StyledHero>{viewModel.desktopTitle}</StyledHero>}
             <OptionsContainer>
               <PayOptions
                 selected={values.paymentOption}
