@@ -44,7 +44,8 @@ const Dropdown = (props: DropdownProps): JSX.Element => {
   const actualLabel = label ? label : placeholder;
   const isShowingPlaceholder = label === '' || label === undefined;
   const showError = (error && error !== '') || false;
-  const onValueClick = (): void => {
+  const onValueClick = (e: React.MouseEvent): void => {
+    e.preventDefault();
     setOpen(!open);
   };
 
