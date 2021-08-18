@@ -120,21 +120,25 @@ const EPayOptions: NextPage<Props> = ({ brand }) => {
       >
         <Page name="EPayOptions">
           <Header />
-          {initialExperimentLoad && !abTestFacelift && <SuccessBar />}
-          <ColumnBody stateDropdownOpen={stateDropdownOpen}>
-            <OptionsStoreContext.Provider value={oStore}>
-              <PaymentOverviewStoreContext.Provider value={poStore}>
-                <DirectDepositStoreContext.Provider value={ddStore}>
-                  {initialExperimentLoad && <Options abTest={abTestFacelift} />}
-                </DirectDepositStoreContext.Provider>
-                {initialExperimentLoad && abTestFacelift ? (
-                  <PaymentOverviewAB />
-                ) : (
-                  <PaymentOverview />
-                )}
-              </PaymentOverviewStoreContext.Provider>
-            </OptionsStoreContext.Provider>
-          </ColumnBody>
+          {initialExperimentLoad && (
+            <>
+              {!abTestFacelift && <SuccessBar />}
+              <ColumnBody stateDropdownOpen={stateDropdownOpen}>
+                <OptionsStoreContext.Provider value={oStore}>
+                  <PaymentOverviewStoreContext.Provider value={poStore}>
+                    <DirectDepositStoreContext.Provider value={ddStore}>
+                      <Options abTest={abTestFacelift} />
+                    </DirectDepositStoreContext.Provider>
+                    {abTestFacelift ? (
+                      <PaymentOverviewAB />
+                    ) : (
+                      <PaymentOverview />
+                    )}
+                  </PaymentOverviewStoreContext.Provider>
+                </OptionsStoreContext.Provider>
+              </ColumnBody>
+            </>
+          )}
           <ToolFooter />
         </Page>
       </PaymentMethodContext.Provider>
