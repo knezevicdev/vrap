@@ -55,7 +55,12 @@ const Dropdown = (props: DropdownProps): JSX.Element => {
     onSelectCallback(value, label);
   };
 
-  const onSelectClick = (value: string, label: string) => (): void => {
+  const onSelectClick = (
+    e: React.MouseEvent,
+    value: string,
+    label: string
+  ): void => {
+    e.preventDefault();
     setSelection(value, label);
   };
 
@@ -175,7 +180,7 @@ const Dropdown = (props: DropdownProps): JSX.Element => {
           return (
             <Option
               key={value}
-              onClick={onSelectClick(value, label)}
+              onClick={(e) => onSelectClick(e, value, label)}
               manualHover={manualHover}
             >
               {label}

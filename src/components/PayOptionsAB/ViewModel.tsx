@@ -4,7 +4,7 @@ class PayOptionViewModel {
   private readonly oStore: OptionsStore;
   readonly optionMeta: string[] = ['Direct Deposit', 'Check by Mail'];
   readonly directDeposit: string = 'Direct Deposit';
-  readonly singinDesc: string = 'Sign in using your exiting back login';
+  readonly singinDesc: string = 'Sign in using your existing back login';
   readonly getMoneyFaster: string = 'Get your money faster';
   readonly mostPopularMethod: string = 'Most popular method';
   readonly mostSecureMethod: string = 'Most secure method';
@@ -12,7 +12,7 @@ class PayOptionViewModel {
     'Customers who use Plaid receive their money sooner.';
   readonly enterBankInfoManual: string = 'Enter your bank information manually';
   readonly checkByMail: string = 'Check By Mail';
-  readonly checkByMailDesc: string = "we'll send you a check in the mail";
+  readonly checkByMailDesc: string = "We'll send you a check in the mail";
   readonly overSixty: string = 'Over 60%';
   readonly paymentPreference: string =
     'of Vroom customers choose to get paid through Plaid.';

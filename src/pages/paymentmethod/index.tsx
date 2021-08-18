@@ -72,44 +72,50 @@ const EPayOptions: NextPage<Props> = ({ brand }) => {
   const ddStore = new DirectDepositStore();
   const poStore = new PaymentOverviewStore();
 
+  const abSmartlyModel = new ABSmartlyModel({
+    endpoint: publicRuntimeConfig.NEXT_PUBLIC_ABSMARTLY_URL,
+    apiKey: publicRuntimeConfig.ABSMARTLY_API_KEY,
+    environment: publicRuntimeConfig.ABSMARTLY_ENV,
+    application: publicRuntimeConfig.ABSMARTLY_APP,
+  });
+
   const [stateDropdownOpen, setStateDropdown] = useState(false);
   const [abTestFacelift, setAbTestFacelift] = useState(false);
+  const [initialExperimentLoad, setInitialExperimentLoad] = useState(false);
 
   useEffect(() => {
     oStore.init(priceId);
     ddStore.initClientSide(priceId);
     poStore.init(priceId);
 
-    const abSmartlyModel = new ABSmartlyModel({
-      endpoint: publicRuntimeConfig.NEXT_PUBLIC_ABSMARTLY_URL,
-      apiKey: publicRuntimeConfig.ABSMARTLY_API_KEY,
-      environment: publicRuntimeConfig.ABSMARTLY_ENV,
-      application: publicRuntimeConfig.ABSMARTLY_APP,
-    });
+    if (!initialExperimentLoad) {
+      oStore.setABSmartlyModel(abSmartlyModel);
 
-    oStore.setABSmartlyModel(abSmartlyModel);
+      const checkAnalytics = window.setTimeout(() => {
+        oStore.abSmartlyModel?.setStatus(NetworkingStatus.ERROR);
+      }, 3500);
 
-    const checkAnalytics = window.setTimeout(() => {
-      oStore.abSmartlyModel?.setStatus(NetworkingStatus.ERROR);
-    }, 3500);
-
-    analyticsHandler.onAnalyticsReady(async () => {
-      clearTimeout(checkAnalytics);
-      const sessionId = analyticsHandler.getAnonymousId();
-      if (sessionId) {
-        await abSmartlyModel?.initABSmartly(sessionId);
-        const abTest = abSmartlyModel?.inExperiment('ac-payment-facelift');
-        setAbTestFacelift(abTest);
-      } else {
-        abSmartlyModel?.setStatus(NetworkingStatus.ERROR);
-      }
-    });
+      analyticsHandler.onAnalyticsReady(async () => {
+        clearTimeout(checkAnalytics);
+        const sessionId = analyticsHandler.getAnonymousId();
+        if (sessionId) {
+          await abSmartlyModel?.initABSmartly(sessionId);
+          const abTest = abSmartlyModel?.inExperiment('ac-payment-facelift');
+          setAbTestFacelift(abTest);
+          setInitialExperimentLoad(true);
+        } else {
+          abSmartlyModel?.setStatus(NetworkingStatus.ERROR);
+        }
+      });
+    }
   }, [oStore, ddStore, poStore, priceId]);
 
   // TODO: this used to be used with <State isOpenCallback={setStateDropdown} />
   // It caused the page to rerender and mobx would lose its state
   // Ideally we would like to extend the page to accomodate the long dropdown
-
+  if (!initialExperimentLoad) {
+    return <div />;
+  }
   return (
     <ThemeProvider brand={brand}>
       <PaymentMethodContext.Provider
@@ -156,7 +162,6 @@ EPayOptions.getInitialProps = async (
 ): Promise<Props> => {
   const { req, query } = context;
   const priceId = query.priceId as string;
-
   if (req) {
     const cookies = parseCookies(req);
 
