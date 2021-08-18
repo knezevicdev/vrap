@@ -113,9 +113,6 @@ const EPayOptions: NextPage<Props> = ({ brand }) => {
   // TODO: this used to be used with <State isOpenCallback={setStateDropdown} />
   // It caused the page to rerender and mobx would lose its state
   // Ideally we would like to extend the page to accomodate the long dropdown
-  if (!initialExperimentLoad) {
-    return <div />;
-  }
   return (
     <ThemeProvider brand={brand}>
       <PaymentMethodContext.Provider
@@ -123,17 +120,25 @@ const EPayOptions: NextPage<Props> = ({ brand }) => {
       >
         <Page name="EPayOptions">
           <Header />
-          {!abTestFacelift && <SuccessBar />}
-          <ColumnBody stateDropdownOpen={stateDropdownOpen}>
-            <OptionsStoreContext.Provider value={oStore}>
-              <PaymentOverviewStoreContext.Provider value={poStore}>
-                <DirectDepositStoreContext.Provider value={ddStore}>
-                  <Options abTest={abTestFacelift} />
-                </DirectDepositStoreContext.Provider>
-                {abTestFacelift ? <PaymentOverviewAB /> : <PaymentOverview />}
-              </PaymentOverviewStoreContext.Provider>
-            </OptionsStoreContext.Provider>
-          </ColumnBody>
+          {initialExperimentLoad && (
+            <>
+              {!abTestFacelift && <SuccessBar />}
+              <ColumnBody stateDropdownOpen={stateDropdownOpen}>
+                <OptionsStoreContext.Provider value={oStore}>
+                  <PaymentOverviewStoreContext.Provider value={poStore}>
+                    <DirectDepositStoreContext.Provider value={ddStore}>
+                      <Options abTest={abTestFacelift} />
+                    </DirectDepositStoreContext.Provider>
+                    {abTestFacelift ? (
+                      <PaymentOverviewAB />
+                    ) : (
+                      <PaymentOverview />
+                    )}
+                  </PaymentOverviewStoreContext.Provider>
+                </OptionsStoreContext.Provider>
+              </ColumnBody>
+            </>
+          )}
           <ToolFooter />
         </Page>
       </PaymentMethodContext.Provider>
