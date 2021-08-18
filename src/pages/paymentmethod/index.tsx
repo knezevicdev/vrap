@@ -81,7 +81,7 @@ const EPayOptions: NextPage<Props> = ({ brand }) => {
 
   const [stateDropdownOpen, setStateDropdown] = useState(false);
   const [abTestFacelift, setAbTestFacelift] = useState(false);
-  const [initialExperimentLoad, changeInitialExperimentLoad] = useState(false);
+  const [initialExperimentLoad, setInitialExperimentLoad] = useState(false);
 
   useEffect(() => {
     oStore.init(priceId);
@@ -102,7 +102,7 @@ const EPayOptions: NextPage<Props> = ({ brand }) => {
           await abSmartlyModel?.initABSmartly(sessionId);
           const abTest = abSmartlyModel?.inExperiment('ac-payment-facelift');
           setAbTestFacelift(abTest);
-          changeInitialExperimentLoad(true);
+          setInitialExperimentLoad(true);
         } else {
           abSmartlyModel?.setStatus(NetworkingStatus.ERROR);
         }
