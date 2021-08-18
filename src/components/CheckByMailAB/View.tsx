@@ -32,6 +32,7 @@ const AddressLine = styled(Body.Regular)`
   display: flex;
   font-family: Calibre;
   font-weight: 600;
+  width: 100%;
 `;
 
 const InputContainer = styled.div`
@@ -114,7 +115,6 @@ const CheckByMailView: React.FC<ViewProps> = ({
   state,
 }) => {
   const states = viewModel.getStates();
-
   // {({ setStateDropdown }): React.ReactNode => (
   return (
     <PaymentMethodContext.Consumer>
