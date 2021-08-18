@@ -4,7 +4,7 @@ class PayOptionViewModel {
   private readonly oStore: OptionsStore;
   readonly optionMeta: string[] = ['Direct Deposit', 'Check by Mail'];
   readonly directDeposit: string = 'Direct Deposit';
-  readonly singinDesc: string = 'Sign in using your existing back login';
+  readonly singinDesc: string = 'Sign in using your existing bank login';
   readonly getMoneyFaster: string = 'Get your money faster';
   readonly mostPopularMethod: string = 'Most popular method';
   readonly mostSecureMethod: string = 'Most secure method';
