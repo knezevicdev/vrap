@@ -73,8 +73,7 @@ const EPayOptions: NextPage<Props> = ({ brand }) => {
   const poStore = new PaymentOverviewStore();
 
   const [stateDropdownOpen, setStateDropdown] = useState(false);
-  const [abTestFacelift, setAbTestFacelift] = useState(false);
-
+  const [abTestFacelift, setAbTestFacelift] = useState(null);
   useEffect(() => {
     oStore.init(priceId);
     ddStore.initClientSide(priceId);
@@ -109,7 +108,9 @@ const EPayOptions: NextPage<Props> = ({ brand }) => {
   // TODO: this used to be used with <State isOpenCallback={setStateDropdown} />
   // It caused the page to rerender and mobx would lose its state
   // Ideally we would like to extend the page to accomodate the long dropdown
-
+  if (abTestFacelift === null) {
+    return <div />;
+  }
   return (
     <ThemeProvider brand={brand}>
       <PaymentMethodContext.Provider
@@ -156,7 +157,6 @@ EPayOptions.getInitialProps = async (
 ): Promise<Props> => {
   const { req, query } = context;
   const priceId = query.priceId as string;
-
   if (req) {
     const cookies = parseCookies(req);
 
