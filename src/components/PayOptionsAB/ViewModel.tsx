@@ -31,7 +31,7 @@ class PayOptionViewModel {
     this.oStore.setPayOptionSelected(selectedOption.currentTarget.value);
   };
 
-  setManualInputSubmitButton = (value: string): void => {
+  setPayOption = (value: string): void => {
     this.oStore.setPayOptionSelected(value);
   };
 }

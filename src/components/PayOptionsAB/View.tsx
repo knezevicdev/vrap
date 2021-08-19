@@ -37,7 +37,7 @@ const PayOptionsView: React.FC<Props> = (props) => {
   useEffect(() => {
     if (initialNotFound && instituteNotFound) {
       setFieldValue('paymentOption', 'Manual Input');
-      viewModel.setManualInputSubmitButton('Manual Input');
+      viewModel.setPayOption('Manual Input');
       changeNotFound(false);
     }
   }, [instituteNotFound]);
