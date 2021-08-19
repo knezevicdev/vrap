@@ -30,10 +30,6 @@ class PayOptionViewModel {
   ): void => {
     this.oStore.setPayOptionSelected(selectedOption.currentTarget.value);
   };
-
-  setPayOption = (value: string): void => {
-    this.oStore.setPayOptionSelected(value);
-  };
 }
 
 export default PayOptionViewModel;

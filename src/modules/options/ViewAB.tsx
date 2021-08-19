@@ -97,7 +97,7 @@ const OptionsView: React.FC<Props> = ({ viewModel }) => {
   const PaymentOverviewSchema = Yup.object().shape({
     paymentOption: Yup.string().required('Required'),
     routingNumber: Yup.string().when('paymentOption', {
-      is: (value) => value === 'Manual Input' || value === 'Direct Deposit',
+      is: 'Manual Input',
       then: Yup.string()
         .required('Field is required')
         .test(
@@ -109,7 +109,7 @@ const OptionsView: React.FC<Props> = ({ viewModel }) => {
         ),
     }),
     bankAccountNumber: Yup.string().when('paymentOption', {
-      is: (value) => value === 'Manual Input' || value === 'Direct Deposit',
+      is: 'Manual Input',
       then: Yup.string()
         .required('Field is required')
         .matches(
