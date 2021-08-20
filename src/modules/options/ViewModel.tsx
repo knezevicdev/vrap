@@ -140,6 +140,10 @@ class OptionsViewModel {
       this.store.abSmartlyModel?.inExperiment('ac-payment-facelift') || false
     );
   }
+
+  setPaymentOption = (value: string): void => {
+    this.store.showDD = value;
+  };
 }
 
 export default OptionsViewModel;
