@@ -18,7 +18,7 @@ const Price: NextPage = () => {
   const store = new PriceStore(priceId);
 
   return (
-    <Page name="Home">
+    <Page name="Price">
       <Header />
       <Contents>
         <PriceInfo store={store} />

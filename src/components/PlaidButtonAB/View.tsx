@@ -128,7 +128,8 @@ const PlaidButtonView: React.FC<Props> = ({
 
   const disableButton = (!ready && tokenIsUndefined) || isSubmitting;
 
-  const handlePlaidButtonClick = (): void => {
+  const handlePlaidButtonClick = (e: React.MouseEvent): void => {
+    e.preventDefault();
     viewModel.onPlaidSubmitting(true);
     open();
   };

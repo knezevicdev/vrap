@@ -52,7 +52,6 @@ const PayOptionsView: React.FC<Props> = (props) => {
           disabled={false}
           name={'paymentOption'}
           value={'Direct Deposit'}
-          onClick={viewModel.onPayOptionClick}
           type={'circle'}
         >
           <Label>{viewModel.directDeposit}</Label>
@@ -101,7 +100,6 @@ const PayOptionsView: React.FC<Props> = (props) => {
             disabled={false}
             name={'paymentOption'}
             value={'Manual Input'}
-            onClick={viewModel.onPayOptionClick}
             type={'circle'}
           >
             <Label className={'short-width'}>
@@ -121,7 +119,6 @@ const PayOptionsView: React.FC<Props> = (props) => {
           disabled={false}
           name={'paymentOption'}
           value={'Check by Mail'}
-          onClick={viewModel.onPayOptionClick}
           type={'circle'}
         >
           <Label>{viewModel.checkByMail}</Label>

@@ -1,7 +1,4 @@
-import { OptionsStore } from '../../modules/options/store';
-
 class PayOptionViewModel {
-  private readonly oStore: OptionsStore;
   readonly optionMeta: string[] = ['Direct Deposit', 'Check by Mail'];
   readonly directDeposit: string = 'Direct Deposit';
   readonly singinDesc: string = 'Sign in using your existing bank login';
@@ -20,16 +17,6 @@ class PayOptionViewModel {
   readonly worldwide: string = ' trusted worldwide ';
   readonly transferingFund: string = ' for transfering funds.';
   readonly poweredBy: string = 'Powered by';
-
-  constructor(oStore: OptionsStore) {
-    this.oStore = oStore;
-  }
-
-  onPayOptionClick = (
-    selectedOption: React.MouseEvent<HTMLInputElement, MouseEvent>
-  ): void => {
-    this.oStore.setPayOptionSelected(selectedOption.currentTarget.value);
-  };
 }
 
 export default PayOptionViewModel;

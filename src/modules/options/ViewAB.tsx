@@ -177,8 +177,9 @@ const OptionsView: React.FC<Props> = ({ viewModel }) => {
       validateOnMount={true}
     >
       {({ isValid, values, isSubmitting, setFieldValue }): JSX.Element => {
-        const showDirectDeposit = viewModel.showDirectDeposit();
+        const showDirectDeposit = values.paymentOption === 'Direct Deposit';
         const showSubmitButton = !showDirectDeposit;
+        viewModel.setPaymentOption(values.paymentOption);
         return (
           <FormContainer>
             {isDesktop && <StyledHero>{viewModel.desktopTitle}</StyledHero>}
