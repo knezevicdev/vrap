@@ -37,9 +37,16 @@ const PayOptionsView: React.FC<Props> = (props) => {
   useEffect(() => {
     if (initialNotFound && instituteNotFound) {
       setFieldValue('paymentOption', 'Manual Input');
+      viewModel.onPayOptionClick('Manual Input');
       changeNotFound(false);
     }
   }, [instituteNotFound]);
+
+  const handlePayOption = (
+    e: React.MouseEvent<HTMLInputElement, MouseEvent>
+  ): void => {
+    viewModel.onPayOptionClick(e.currentTarget.value);
+  };
 
   return (
     <PayOptionsContainer>
@@ -52,7 +59,7 @@ const PayOptionsView: React.FC<Props> = (props) => {
           disabled={false}
           name={'paymentOption'}
           value={'Direct Deposit'}
-          onClick={viewModel.onPayOptionClick}
+          onClick={handlePayOption}
           type={'circle'}
         >
           <Label>{viewModel.directDeposit}</Label>
@@ -101,7 +108,7 @@ const PayOptionsView: React.FC<Props> = (props) => {
             disabled={false}
             name={'paymentOption'}
             value={'Manual Input'}
-            onClick={viewModel.onPayOptionClick}
+            onClick={handlePayOption}
             type={'circle'}
           >
             <Label className={'short-width'}>
@@ -121,7 +128,7 @@ const PayOptionsView: React.FC<Props> = (props) => {
           disabled={false}
           name={'paymentOption'}
           value={'Check by Mail'}
-          onClick={viewModel.onPayOptionClick}
+          onClick={handlePayOption}
           type={'circle'}
         >
           <Label>{viewModel.checkByMail}</Label>
