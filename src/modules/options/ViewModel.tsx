@@ -142,7 +142,7 @@ class OptionsViewModel {
   }
 
   setPaymentOption = (value: string): void => {
-    this.store.showDD = value;
+    this.store.setPayOptionSelected(value);
   };
 }
 
