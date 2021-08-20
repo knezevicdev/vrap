@@ -25,8 +25,10 @@ class PayOptionViewModel {
     this.oStore = oStore;
   }
 
-  onPayOptionClick = (selectedOption: string): void => {
-    this.oStore.setPayOptionSelected(selectedOption);
+  onPayOptionClick = (
+    selectedOption: React.MouseEvent<HTMLInputElement, MouseEvent>
+  ): void => {
+    this.oStore.setPayOptionSelected(selectedOption.currentTarget.value);
   };
 }
 
