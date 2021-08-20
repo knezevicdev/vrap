@@ -118,7 +118,7 @@ const EPayOptions: NextPage<Props> = ({ brand }) => {
       <PaymentMethodContext.Provider
         value={{ stateDropdownOpen, setStateDropdown }}
       >
-        <Page name="EPayOptions">
+        <Page name="Payment Method">
           <Header />
           {initialExperimentLoad && (
             <>
