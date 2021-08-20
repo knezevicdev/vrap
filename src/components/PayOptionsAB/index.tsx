@@ -1,6 +1,5 @@
 import React from 'react';
 
-import { useOptionsStore } from '../../modules/options/store';
 import View from './View';
 import ViewModel from './ViewModel';
 
@@ -16,8 +15,7 @@ interface Props {
 }
 
 const PayOptions: React.FC<Props> = (props) => {
-  const oStore = useOptionsStore();
-  const viewModel = new ViewModel(oStore);
+  const viewModel = new ViewModel();
 
   return <View viewModel={viewModel} {...props} />;
 };
