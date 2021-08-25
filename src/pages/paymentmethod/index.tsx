@@ -9,6 +9,7 @@ import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
 import { Header } from 'src/components/Header';
+import VerificationStepper from 'src/components/Stepper';
 import ToolFooter from 'src/core/ToolFooter';
 import { analyticsHandler } from 'src/integrations/AnalyticsHandler';
 import {
@@ -87,7 +88,6 @@ const EPayOptions: NextPage<Props> = ({ brand }) => {
     oStore.init(priceId);
     ddStore.initClientSide(priceId);
     poStore.init(priceId);
-
     if (!initialExperimentLoad) {
       oStore.setABSmartlyModel(abSmartlyModel);
 
@@ -123,6 +123,9 @@ const EPayOptions: NextPage<Props> = ({ brand }) => {
           {initialExperimentLoad && (
             <>
               {!abTestFacelift && <SuccessBar />}
+              {oStore.activeStep && (
+                <VerificationStepper activeStep={oStore.activeStep} />
+              )}
               <ColumnBody stateDropdownOpen={stateDropdownOpen}>
                 <OptionsStoreContext.Provider value={oStore}>
                   <PaymentOverviewStoreContext.Provider value={poStore}>
