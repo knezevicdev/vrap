@@ -1,6 +1,6 @@
 import { Stepper } from 'src/interfaces.d';
 
-class VerificationStepper {
+class VerificationStepperViewModel {
   readonly steps: Stepper[] = [
     {
       step: '1',
@@ -29,4 +29,4 @@ class VerificationStepper {
   ];
 }
 
-export default VerificationStepper;
+export default VerificationStepperViewModel;

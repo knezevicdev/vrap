@@ -10,7 +10,10 @@ export interface Props {
   activeStep: Stepper;
 }
 
-const VerificationStepper: React.FC<Props> = ({ activeStep, viewModel }) => {
+const VerificationStepperView: React.FC<Props> = ({
+  activeStep,
+  viewModel,
+}) => {
   return (
     <Container>
       <Row>
@@ -115,4 +118,4 @@ const StepTitle = styled.span`
   }
 `;
 
-export default VerificationStepper;
+export default VerificationStepperView;
