@@ -47,6 +47,27 @@ class AnalyticsHandler extends BaseAnalyticsHandler {
     const properties = { category, label };
     this.track(event, properties);
   }
+
+  trackPlaidACHSelected(): void {
+    const event = 'Plaid ACH Selected';
+    const category = 'Verification';
+    const properties = { category };
+    this.track(event, properties);
+  }
+
+  trackManualACHSelected(): void {
+    const event = 'Manual ACH Selected';
+    const category = 'Verification';
+    const properties = { category };
+    this.track(event, properties);
+  }
+
+  trackCheckSelected(): void {
+    const event = 'Check Selected';
+    const category = 'Verification';
+    const properties = { category };
+    this.track(event, properties);
+  }
 }
 
 // It probably makes more sense to export a single instance

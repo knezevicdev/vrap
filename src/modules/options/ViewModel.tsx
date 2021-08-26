@@ -102,6 +102,7 @@ class OptionsViewModel {
   };
 
   paymentOptionsSubmit = (values: PaymentOverviewFormValues): void => {
+    let submittedType;
     const calcMailingAddress = (): MailingAddress => {
       if (values.isPrimaryAddress === 'No') {
         return {
@@ -120,14 +121,20 @@ class OptionsViewModel {
     const mailingAddress = calcMailingAddress();
     submitPaymentOptions(values, this.store.priceId, mailingAddress);
 
-    const submittedType =
+    if (
       this.store.showDD === 'Manual Input' ||
       this.store.showDD === 'Direct Deposit'
-        ? 'Manual ACH'
-        : 'Check';
+    ) {
+      submittedType = 'Manual ACH';
+      this.analyticsHandler.trackManualACHSelected();
+    } else {
+      submittedType = 'Check';
+      this.analyticsHandler.trackCheckSelected();
+    }
+
     this.analyticsHandler.trackPaymentOptionsSubmitted(submittedType);
 
-    const url = `/sell/verification-congrats`;
+    const url = `/appraisal/congratulations`;
     window.location.href = url;
   };
 
