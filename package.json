@@ -27,7 +27,7 @@
     "@vroom-web/cat-sdk": "^1.0.5",
     "@vroom-web/deals-v2-networking": "^1.0.1",
     "@vroom-web/experiment-sdk": "^2.0.1",
-    "@vroom-web/shared-components": "^1.0.0",
+    "@vroom-web/shared-components": "^1.3.1",
     "@vroom-web/legacy-header-components": "^2.3.4",
     "@vroom-web/ui-lib": "^2.10.2",
     "@vroom-web/networking": "^0.4.0",
@@ -69,6 +69,7 @@
     "eslint-plugin-simple-import-sort": "^6.0.0",
     "jest": "^25.4.0",
     "jest-junit": "^12.2.0",
+    "jest-sonar": "^0.2.12",
     "prettier": "^2.0.5",
     "typescript": "^3.8.2"
   }
