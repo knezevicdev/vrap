@@ -16,7 +16,7 @@ const VerificationStepperView: React.FC<Props> = ({
 }) => {
   return (
     <Container>
-      <Row>
+      <ProgressContainer>
         {viewModel.steps.map((item) => {
           const active =
             parseInt(activeStep.step) >= parseInt(item.step) ? 'active' : '';
@@ -29,7 +29,7 @@ const VerificationStepperView: React.FC<Props> = ({
             </ItemContainer>
           );
         })}
-      </Row>
+      </ProgressContainer>
       <TextContainer>
         {viewModel.steps.map((item) => {
           return (
@@ -49,7 +49,7 @@ const VerificationStepperView: React.FC<Props> = ({
 };
 
 const Container = styled.div`
-  width: 100%;
+  width: 95%;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -60,6 +60,13 @@ const Container = styled.div`
 const Row = styled.div`
   display: flex;
   flex-direction: row;
+`;
+
+const ProgressContainer = styled(Row)`
+  justify-content: center;
+  align-items: center;
+  width: 80%;
+  max-width: 775px;
 `;
 
 const Circle = styled.div`
@@ -73,7 +80,7 @@ const Circle = styled.div`
 `;
 
 const Line = styled.div`
-  width: 238px;
+  width: 100%;
   height: 2px;
   background-color: #979797;
   &.active {
@@ -84,6 +91,10 @@ const Line = styled.div`
 const ItemContainer = styled.div`
   display: flex;
   flex-direction: column;
+  width: 32%;
+  :first-child {
+    width: 12px;
+  }
 `;
 
 const LineContainer = styled.div`
@@ -97,6 +108,9 @@ const TextContainer = styled(Row)`
   width: 100%;
   max-width: 900px;
   margin-top: 8px;
+  @media (max-width: 420px) {
+    width: 90%;
+  }
 `;
 
 const StepTitle = styled.span`
@@ -115,6 +129,18 @@ const StepTitle = styled.span`
   }
   &.active {
     color: #041022;
+  }
+
+  @media (max-width: 720px) {
+    line-height: 16px;
+    text-align: center;
+    width: 130px;
+    height: 32px;
+    font-size: 14px;
+  }
+
+  @media (max-width: 452px) {
+    width: 60px;
   }
 `;
 
