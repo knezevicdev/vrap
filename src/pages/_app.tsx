@@ -7,6 +7,7 @@ import { ABSmartlyModel } from '@vroom-web/absmartly-integration';
 import { CatSDK } from '@vroom-web/cat-sdk';
 import { Client } from '@vroom-web/networking';
 import { Status as NetworkingStatus } from '@vroom-web/networking';
+import { CommonHandler } from '@vroom-web/shared-components';
 import { Brand, ThemeProvider } from '@vroom-web/ui';
 import firebase from 'firebase/app';
 import { configure as configureMobx } from 'mobx';
@@ -49,6 +50,7 @@ class AppraisalApp extends App {
   private readonly catSDK: CatSDK;
   private readonly client: Client;
   private readonly analyticsHandler: AnalyticsHandler;
+  private readonly commonHandler: CommonHandler;
   appStore: AppStore = new AppStore();
 
   constructor(props: AppProps) {
@@ -58,7 +60,12 @@ class AppraisalApp extends App {
     this.catSDK = new CatSDK({ serviceBasePath });
 
     const gqlUrl = serviceBasePath !== '' ? `${serviceBasePath}/gql` : '';
+    const webLeadUrl =
+      serviceBasePath !== ''
+        ? `${serviceBasePath}/api/weblead/attribution`
+        : '';
     this.client = new Client(gqlUrl, { interchangeUrl: serviceBasePath });
+    this.commonHandler = new CommonHandler(gqlUrl, webLeadUrl);
 
     if (firebase.apps.length == 0) {
       firebase.initializeApp(firebaseConfig);
@@ -89,6 +96,7 @@ class AppraisalApp extends App {
     }
 
     this.catSDK.initCatData();
+    this.commonHandler.check3rdPartyAuth();
     this.handleAbsmart();
   }
 
