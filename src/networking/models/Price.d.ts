@@ -10,6 +10,7 @@ export interface Price {
   Good_Until__c: string;
   VIN__c: string;
   offer_id: number;
+  experiment_ids: object;
   created: string;
   offer_status: string;
   user_email: string;
@@ -17,6 +18,11 @@ export interface Price {
   new_offer: boolean | null;
   verification_url: string | null;
   tax_credit_savings: number | null;
+  first_name: string;
+  last_name: string;
+  payment_method: string | null;
+  phone: string;
+  zipcode: string;
 }
 
 export interface Prices {
