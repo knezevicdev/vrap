@@ -134,6 +134,41 @@ export class Icons {
     path: `${ENVS.BASE_PATH}/icons/lock.svg`,
   });
 
+  static readonly CALL_US = new Icons('CALL_US', {
+    name: 'call-us',
+    width: 18,
+    height: 18,
+    path: `${ENVS.BASE_PATH}/icons/call-us.svg`,
+  });
+
+  static readonly CALENDAR = new Icons('CALENDAR', {
+    name: 'calendar',
+    width: 24,
+    height: 24,
+    path: `${ENVS.BASE_PATH}/icons/calendar.svg`,
+  });
+
+  static readonly SECURE_LOCK = new Icons('SECURE_LOCK', {
+    name: 'secure-lock',
+    width: 24,
+    height: 24,
+    path: `${ENVS.BASE_PATH}/icons/secure-lock.svg`,
+  });
+
+  static readonly PEOPLE = new Icons('PEOPLE', {
+    name: 'people',
+    width: 24,
+    height: 24,
+    path: `${ENVS.BASE_PATH}/icons/people.svg`,
+  });
+
+  static readonly PLAID_LOGO_GRAY = new Icons('PLAID_LOGO_GRAY', {
+    name: 'plaid-logo-gray',
+    width: 63,
+    height: 24,
+    path: `${ENVS.BASE_PATH}/icons/plaid-logo-gray.svg`,
+  });
+
   private constructor(
     protected key: string,
     public readonly value: {

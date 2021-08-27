@@ -7,10 +7,26 @@ import { Networker } from 'src/networking/Networker';
 
 const defaultPaymentOverviewState: PaymentOverviewStoreState = {
   price: 0,
+  detail: {
+    maker: '',
+    model: '',
+    trim: '',
+    year: 0,
+    miles: 0,
+  },
 };
+
+export interface DetailProp {
+  maker: string;
+  model: string;
+  trim: string;
+  year: number;
+  miles: number;
+}
 
 export interface PaymentOverviewStoreState {
   price: number;
+  detail: DetailProp;
 }
 
 export async function getInitialPaymentOverviewStoreState(
@@ -24,6 +40,13 @@ export async function getInitialPaymentOverviewStoreState(
 
     const optionState = {
       price: price.Price__c,
+      detail: {
+        maker: price.Make__c,
+        model: price.Model__c,
+        trim: price.Trim__c,
+        year: price.Year__c,
+        miles: price.miles,
+      },
     };
     return optionState;
   } catch (err) {
@@ -35,6 +58,13 @@ export async function getInitialPaymentOverviewStoreState(
 
 export class PaymentOverviewStore implements Store {
   price = 0;
+  detail = {
+    maker: '',
+    model: '',
+    trim: '',
+    year: 0,
+    miles: 0,
+  };
   storeStatus = StoreStatus.Initial;
   asyncStatus = AsyncStatus.Idle;
 
@@ -43,6 +73,7 @@ export class PaymentOverviewStore implements Store {
       price: observable,
       storeStatus: observable,
       asyncStatus: observable,
+      detail: observable,
       init: action,
     });
   }
@@ -60,6 +91,7 @@ export class PaymentOverviewStore implements Store {
     runInAction(() => {
       this.storeStatus = StoreStatus.Success;
       this.price = initialState.price;
+      this.detail = { ...initialState.detail };
     });
   }
 }

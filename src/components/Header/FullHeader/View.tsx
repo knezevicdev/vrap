@@ -1,4 +1,4 @@
-import { FullHeader } from '@vroom-web/header-components';
+import { FullHeader } from '@vroom-web/shared-components';
 import React, { useContext } from 'react';
 
 import { AnalyticsHandlerContext } from 'src/integrations/AnalyticHandlerContext';

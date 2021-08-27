@@ -80,6 +80,7 @@ export class DirectDepositStore implements Store {
         this.linkToken = initialState.LinkToken;
         this.expiration = initialState.Expiration;
         this.requestId = initialState.RequestId;
+        this.priceId = priceId;
       });
     }
   }

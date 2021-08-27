@@ -50,6 +50,11 @@ const ZipStateContainer = styled.div`
     display: block;
     margin-bottom: 0px;
   }
+
+  @media (max-width: 420px) {
+    display: flex;
+    width: 100%;
+  }
 `;
 
 const Address = styled(FormikInput)`
@@ -95,6 +100,10 @@ const State = styled(Dropdown)`
     margin-left: 0px;
     margin-bottom: 40px;
   }
+
+  @media (max-width: 768px) {
+    width: 50%;
+  }
 `;
 
 const Zip = styled(FormikInput)`
@@ -105,6 +114,11 @@ const Zip = styled(FormikInput)`
     width: 100%;
     margin-left: 0px;
     margin-bottom: 16px;
+  }
+
+  @media (max-width: 768px) {
+    width: 50%;
+    margin-left: 16px;
   }
 `;
 

@@ -1,3 +1,4 @@
+import { ABSmartlyModel } from '@vroom-web/absmartly-integration';
 import { action, makeObservable, observable, runInAction } from 'mobx';
 import { createContext, useContext } from 'react';
 
@@ -51,7 +52,6 @@ export async function getInitialOptionsStoreState(
   try {
     const verifyResponse = await networker.getVerificationDetails(priceId);
     const verificationData: Verification = verifyResponse.data.data;
-
     const optionState = {
       mailingAddress: verificationData.owner_mailing_address,
       email: verificationData.email,
@@ -84,7 +84,7 @@ export async function submitPaymentOptions(
 }
 
 export class OptionsStore implements Store {
-  showDD = true;
+  showDD = 'Direct Deposit';
   mailingAddress = defaultOptionsState.mailingAddress;
   priceId = '';
   email = '';
@@ -95,6 +95,8 @@ export class OptionsStore implements Store {
   asyncStatus = AsyncStatus.Idle;
   institutionFound = true;
   institutionSearched = false;
+  abSmartlyModel?: ABSmartlyModel;
+  abSmartlyTest?: boolean;
 
   constructor() {
     makeObservable(this, {
@@ -110,10 +112,13 @@ export class OptionsStore implements Store {
       init: action,
       institutionFound: observable,
       institutionSearched: observable,
+      abSmartlyModel: observable,
+      abSmartlyTest: observable,
       setPayOptionSelected: action,
       setPlaidSubmitting: action,
       setInstitutionFound: action,
       setInstitutionSearched: action,
+      setABSmartlyModel: action,
     });
   }
 
@@ -139,8 +144,12 @@ export class OptionsStore implements Store {
     });
   }
 
+  setABSmartlyModel(abSmartlyModel: ABSmartlyModel): void {
+    this.abSmartlyModel = abSmartlyModel;
+  }
+
   setPayOptionSelected = (value: string): void => {
-    this.showDD = value === 'Direct Deposit';
+    this.showDD = value;
   };
 
   setPlaidSubmitting = (value: boolean): void => {
@@ -153,6 +162,10 @@ export class OptionsStore implements Store {
 
   setInstitutionSearched = (value: boolean): void => {
     this.institutionSearched = value;
+  };
+
+  setABSmartTest = (value: boolean): void => {
+    this.abSmartlyTest = value;
   };
 }
 

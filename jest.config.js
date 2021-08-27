@@ -1,26 +1,39 @@
-// https://github.com/zeit/next.js/tree/master/examples/with-jest
 module.exports = {
   collectCoverageFrom: [
-    '**/*.{js,jsx,ts,tsx}',
+    '**/*.{js,ts}',
     '!**/*.d.ts',
     '!**/node_modules/**',
-  ],
-  // setupFilesAfterEnv: ['<rootDir>/setupTests.js'],
-  testPathIgnorePatterns: ['/node_modules/', '/.next/'],
-  transform: {
-    '^.+\\.(js|jsx|ts|tsx)$': 'babel-jest',
-    // '^.+\\.css$': '<rootDir>/config/jest/cssTransform.js',
-  },
-  transformIgnorePatterns: [
-    '/node_modules/',
-    '^.+\\.module\\.(css|sass|scss)$',
+    '!**/.next/**',
+    '!**/src/stories/**',
+    '!**/src/jest/**',
+    '!**/src/pages/api/jest/**',
+    '!.storybook/**',
+    '!./src/core/store/CatStore.ts',
+    '!coverage/lcov-report/**',
+    '!**/src/pages/api/**',
+    '!.eslintrc.js',
+    '!.prettierrc.js',
+    '!jest.config.js',
+    '!next.config.js',
   ],
   moduleNameMapper: {
     '^src(.*)$': '<rootDir>/src$1',
-    //   '^.+\\.module\\.(css|sass|scss)$': 'identity-obj-proxy',
   },
-  coverageReporters: ['json', 'lcov', 'text', 'clover', 'cobertura'],
-  reporters: ['default'],
+  setupFilesAfterEnv: ['<rootDir>/jest-setup.js'],
+  testPathIgnorePatterns: ['/node_modules/'],
+  transform: {
+    '\\.(gql|graphql)$': 'jest-transform-graphql',
+    '^.+\\.(js|jsx|ts|tsx)$': 'babel-jest',
+  },
+  coverageReporters: [
+    'clover',
+    'cobertura',
+    'json',
+    'json-summary',
+    'lcov',
+    'text',
+  ],
+  reporters: ['default', 'jest-junit'],
   globals: {
     'ts-jest': {
       tsconfig: 'tsconfig.test.json',

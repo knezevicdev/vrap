@@ -1,12 +1,16 @@
+import { ABSmartlyModel } from '@vroom-web/absmartly-integration';
+import { Status as NetworkingStatus } from '@vroom-web/networking';
 import { Brand, ThemeProvider } from '@vroom-web/ui';
 import { IncomingMessage } from 'http';
 import { NextPage, NextPageContext } from 'next';
+import getConfig from 'next/config';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
-import Header from 'src/components/Header';
+import { Header } from 'src/components/Header';
 import ToolFooter from 'src/core/ToolFooter';
+import { analyticsHandler } from 'src/integrations/AnalyticsHandler';
 import {
   DirectDepositStore,
   DirectDepositStoreContext,
@@ -22,8 +26,11 @@ import {
   PaymentOverviewStore,
   PaymentOverviewStoreContext,
 } from 'src/modules/paymentoverview/store';
+import PaymentOverviewAB from 'src/modules/paymentoverviewAB';
 import SuccessBar from 'src/modules/successbar';
 import Page from 'src/Page';
+
+const { publicRuntimeConfig } = getConfig();
 
 const ColumnBody = styled.div`
   display: flex;
@@ -64,35 +71,74 @@ const EPayOptions: NextPage<Props> = ({ brand }) => {
   const oStore = new OptionsStore();
   const ddStore = new DirectDepositStore();
   const poStore = new PaymentOverviewStore();
+
+  const abSmartlyModel = new ABSmartlyModel({
+    endpoint: publicRuntimeConfig.NEXT_PUBLIC_ABSMARTLY_URL,
+    apiKey: publicRuntimeConfig.ABSMARTLY_API_KEY,
+    environment: publicRuntimeConfig.ABSMARTLY_ENV,
+    application: publicRuntimeConfig.ABSMARTLY_APP,
+  });
+
+  const [stateDropdownOpen, setStateDropdown] = useState(false);
+  const [abTestFacelift, setAbTestFacelift] = useState(false);
+  const [initialExperimentLoad, setInitialExperimentLoad] = useState(false);
+
   useEffect(() => {
     oStore.init(priceId);
     ddStore.initClientSide(priceId);
     poStore.init(priceId);
+
+    if (!initialExperimentLoad) {
+      oStore.setABSmartlyModel(abSmartlyModel);
+
+      const checkAnalytics = window.setTimeout(() => {
+        oStore.abSmartlyModel?.setStatus(NetworkingStatus.ERROR);
+      }, 3500);
+
+      analyticsHandler.onAnalyticsReady(async () => {
+        clearTimeout(checkAnalytics);
+        const sessionId = analyticsHandler.getAnonymousId();
+        if (sessionId) {
+          await abSmartlyModel?.initABSmartly(sessionId);
+          const abTest = abSmartlyModel?.inExperiment('ac-payment-facelift');
+          setAbTestFacelift(abTest);
+          setInitialExperimentLoad(true);
+        } else {
+          abSmartlyModel?.setStatus(NetworkingStatus.ERROR);
+        }
+      });
+    }
   }, [oStore, ddStore, poStore, priceId]);
 
   // TODO: this used to be used with <State isOpenCallback={setStateDropdown} />
   // It caused the page to rerender and mobx would lose its state
   // Ideally we would like to extend the page to accomodate the long dropdown
-  const [stateDropdownOpen, setStateDropdown] = useState(false);
-
   return (
     <ThemeProvider brand={brand}>
       <PaymentMethodContext.Provider
         value={{ stateDropdownOpen, setStateDropdown }}
       >
-        <Page name="EPayOptions">
+        <Page name="Payment Method">
           <Header />
-          <SuccessBar />
-          <ColumnBody stateDropdownOpen={stateDropdownOpen}>
-            <OptionsStoreContext.Provider value={oStore}>
-              <PaymentOverviewStoreContext.Provider value={poStore}>
-                <DirectDepositStoreContext.Provider value={ddStore}>
-                  <Options />
-                </DirectDepositStoreContext.Provider>
-                <PaymentOverview />
-              </PaymentOverviewStoreContext.Provider>
-            </OptionsStoreContext.Provider>
-          </ColumnBody>
+          {initialExperimentLoad && (
+            <>
+              {!abTestFacelift && <SuccessBar />}
+              <ColumnBody stateDropdownOpen={stateDropdownOpen}>
+                <OptionsStoreContext.Provider value={oStore}>
+                  <PaymentOverviewStoreContext.Provider value={poStore}>
+                    <DirectDepositStoreContext.Provider value={ddStore}>
+                      <Options abTest={abTestFacelift} />
+                    </DirectDepositStoreContext.Provider>
+                    {abTestFacelift ? (
+                      <PaymentOverviewAB />
+                    ) : (
+                      <PaymentOverview />
+                    )}
+                  </PaymentOverviewStoreContext.Provider>
+                </OptionsStoreContext.Provider>
+              </ColumnBody>
+            </>
+          )}
           <ToolFooter />
         </Page>
       </PaymentMethodContext.Provider>
@@ -121,7 +167,6 @@ EPayOptions.getInitialProps = async (
 ): Promise<Props> => {
   const { req, query } = context;
   const priceId = query.priceId as string;
-
   if (req) {
     const cookies = parseCookies(req);
 

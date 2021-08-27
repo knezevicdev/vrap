@@ -11,6 +11,7 @@ class OptionsViewModel {
   private readonly ddStore: DirectDepositStore;
   private analyticsHandler: AnalyticsHandler;
   readonly hero: string = `let's set up your payment method`;
+  readonly desktopTitle: string = 'how would you like to get paid?';
   readonly optionTitle: string = 'Payment Method';
   readonly optionQuestion: string = 'How would you like to get paid?';
   readonly submit: string = 'submit';
@@ -43,7 +44,7 @@ class OptionsViewModel {
   };
 
   showDirectDeposit = (): boolean => {
-    return this.store.showDD;
+    return this.store.showDD === 'Direct Deposit';
   };
 
   getShowSubmitButton = (): boolean => {
@@ -119,7 +120,11 @@ class OptionsViewModel {
     const mailingAddress = calcMailingAddress();
     submitPaymentOptions(values, this.store.priceId, mailingAddress);
 
-    const submittedType = this.store.showDD ? 'Manual ACH' : 'Check';
+    const submittedType =
+      this.store.showDD === 'Manual Input' ||
+      this.store.showDD === 'Direct Deposit'
+        ? 'Manual ACH'
+        : 'Check';
     this.analyticsHandler.trackPaymentOptionsSubmitted(submittedType);
 
     const url = `/sell/verification-congrats`;
@@ -128,6 +133,16 @@ class OptionsViewModel {
 
   getInstitutionNotFound = (): boolean => {
     return this.store.institutionFound === false;
+  };
+
+  inFaceliftTest(): boolean {
+    return (
+      this.store.abSmartlyModel?.inExperiment('ac-payment-facelift') || false
+    );
+  }
+
+  setPaymentOption = (value: string): void => {
+    this.store.setPayOptionSelected(value);
   };
 }
 

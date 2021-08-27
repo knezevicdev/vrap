@@ -49,6 +49,46 @@ const Icon: React.FC<Props> = ({ icon, fill, stroke, className }) => {
 export default Icon;
 
 export const Icons: { [name: string]: IconType } = {
+  CONGRATS_DOCUMENT: {
+    name: 'Congrats Document',
+    width: 66,
+    height: 67,
+    getPath: (
+      <>
+        <defs>
+          <path
+            d="M72.2110691,6.33333333 L64.5704022,49.6666667 L61.2370687,49.6666667 L68.2897356,9.66666667 L21.6230674,9.66666667 L11.0437337,69.6666667 L39.377068,69.6666667 L38.789068,73 L7.12240028,73 L18.877734,6.33333333 L72.2110691,6.33333333 Z M68.1575327,52.837265 L70.3168659,54.9959317 L51.8701998,72.969265 L43.7875334,64.3225983 L46.4542,61.8445983 L52.3935332,68.197265 L68.1575327,52.837265 Z M55.7942677,42.7220001 L55.2069343,46.0553335 L21.8736006,46.0553335 L22.460934,42.7220001 L55.7942677,42.7220001 Z M57.4596678,33.2779999 L56.8723345,36.6113332 L23.5390008,36.6113332 L24.1263342,33.2779999 L57.4596678,33.2779999 Z M59.1250006,23.8333333 L58.5370006,27.1666667 L25.2036673,27.1666667 L25.7916673,23.8333333 L59.1250006,23.8333333 Z"
+            id="path-1"
+          />
+        </defs>
+        <g
+          id="MEH"
+          stroke="none"
+          strokeWidth="1"
+          fill="none"
+          fillRule="evenodd"
+        >
+          <g
+            id="In-progress---02"
+            transform="translate(-607.000000, -393.000000)"
+          >
+            <g
+              id="Icons-/-Promo-/-Document-Complete"
+              transform="translate(600.000000, 387.000000)"
+            >
+              <mask id="mask-2" fill="white">
+                <use xlinkHref="#path-1" />
+              </mask>
+              <use id="Combined-Shape" fill="#000000" xlinkHref="#path-1" />
+              <g id="Color-Override-/-Black" mask="url(#mask-2)" fill="#E7131A">
+                <polygon id="Color-BG" points="0 80 80 80 80 0 0 0" />
+              </g>
+            </g>
+          </g>
+        </g>
+      </>
+    ),
+  },
   GAS: {
     name: 'gas',
     width: 24,
