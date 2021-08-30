@@ -129,6 +129,7 @@ class AppraisalApp extends App {
         this.appStore.setLoading(false);
       } else {
         abSmartlyModel?.setStatus(NetworkingStatus.ERROR);
+        this.appStore.setLoading(false);
       }
     });
   };
