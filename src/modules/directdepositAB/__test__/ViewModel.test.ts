@@ -1,8 +1,8 @@
 jest.mock('src/networking/request');
 
+import { DirectDepositStore } from '../../directdeposit/store';
 import { OptionsStore } from '../../options/store';
 import { PaymentOverviewStore } from '../../paymentoverview/store';
-import { DirectDepositStore } from '../store';
 import ViewModel from '../ViewModel';
 
 describe('Direct Deposit Test', () => {

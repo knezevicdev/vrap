@@ -2,7 +2,11 @@ import { action, makeObservable, observable } from 'mobx';
 
 import { AsyncStatus, Store, StoreStatus } from 'src/interfaces.d';
 import { Price } from 'src/networking/models/Price';
-import { Networker, PriceData } from 'src/networking/Networker';
+import {
+  getOfferDetails,
+  PriceData,
+  submitPriceResponse,
+} from 'src/networking/request';
 
 type Nullable<T> = T | null;
 
@@ -49,8 +53,6 @@ export const defaultPriceState: PriceStoreState = {
 };
 
 export class PriceStore implements Store {
-  private readonly networker = new Networker();
-
   price = defaultPriceState;
   storeStatus = StoreStatus.Initial;
   asyncStatus = AsyncStatus.Idle;
@@ -61,14 +63,13 @@ export class PriceStore implements Store {
       storeStatus: observable,
       asyncStatus: observable,
       getOfferDetails: action,
-      submitPriceResponse: action,
+      submitPriceAccept: action,
     });
     this.getOfferDetails(priceId);
   }
 
   getOfferDetails = (priceId: string): void => {
-    this.networker
-      .getOfferDetails(priceId)
+    getOfferDetails(priceId)
       .then((response) => {
         const prices: Price[] = response.data.data;
         if (prices.length) {
@@ -108,7 +109,7 @@ export class PriceStore implements Store {
       });
   };
 
-  submitPriceResponse = async (): Promise<void> => {
+  submitPriceAccept = async (): Promise<void> => {
     const priceData: PriceData = {
       priceId: this.price.priceId,
       accepted: true,
@@ -117,7 +118,7 @@ export class PriceStore implements Store {
     this.asyncStatus = AsyncStatus.Fetching;
 
     try {
-      await this.networker.submitPriceResponse(priceData);
+      await submitPriceResponse(priceData);
     } catch (err) {
       console.log(JSON.stringify(err));
       return err;

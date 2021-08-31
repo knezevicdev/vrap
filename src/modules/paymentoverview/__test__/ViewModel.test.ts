@@ -1,34 +1,26 @@
-import { useOptionsStore } from '../../options/store';
-import { usePaymentOverviewStore } from '../store';
+jest.mock('src/networking/request');
+
+import { OptionsStore } from '../../options/store';
+import { PaymentOverviewStore } from '../store';
 import ViewModel from '../ViewModel';
-// import mockOption from './optionStoreMock.json';
-// import mockPrice from './priceResponse.json';
-
-// import { Networker } from 'src/networking/Networker';
-
-jest.mock('next/config', () => (): unknown => ({
-  publicRuntimeConfig: {},
-  serverRuntimeConfig: {},
-}));
 
 describe('Direct Deposit Test', () => {
-  const oStore = useOptionsStore();
-  const poStore = usePaymentOverviewStore();
+  const oStore = new OptionsStore();
+  const poStore = new PaymentOverviewStore();
+  let viewModel: ViewModel;
 
-  const viewModel = new ViewModel(poStore, oStore);
-
-  // let useContextMock: jest.Mock<OptionsStore>;
-
-  beforeEach(() => {
-    jest.clearAllMocks();
-    localStorage.setItem('priceId', 'testItem');
+  beforeEach(async () => {
+    await oStore.init('12345');
+    await poStore.init('12345');
+    viewModel = new ViewModel(poStore, oStore);
   });
 
   afterEach(() => {
     localStorage.removeItem('priceId');
   });
 
-  it('test contents', () => {
+  it('test readonly initial values', () => {
+    viewModel = new ViewModel(poStore, oStore);
     expect(viewModel.hero).toEqual('payment overview');
     expect(viewModel.carWorth).toEqual('Your car is worth');
     expect(viewModel.remainingLoan).toEqual('Remaining Loan');

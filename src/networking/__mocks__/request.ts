@@ -145,7 +145,9 @@ export const getVerificationDetails = async (): Promise<
   });
 };
 
-export const submitPaymentOptions = async (): Promise<Response<boolean>> => {
+export const submitPaymentOptionSelected = async (): Promise<
+  Response<boolean>
+> => {
   return Promise.resolve<Response<boolean>>({
     headers: undefined,
     error: undefined,

@@ -3,7 +3,7 @@ import { createContext, useContext } from 'react';
 
 import { AsyncStatus, Store, StoreStatus } from 'src/interfaces.d';
 import { Prices } from 'src/networking/models/Price';
-import { Networker } from 'src/networking/Networker';
+import { getOfferDetails } from 'src/networking/request';
 
 const defaultPaymentOverviewState: PaymentOverviewStoreState = {
   price: 0,
@@ -32,9 +32,8 @@ export interface PaymentOverviewStoreState {
 export async function getInitialPaymentOverviewStoreState(
   priceId: string
 ): Promise<PaymentOverviewStoreState> {
-  const networker = new Networker();
   try {
-    const offerResponse = await networker.getOfferDetails(priceId);
+    const offerResponse = await getOfferDetails(priceId);
     const prices: Prices = offerResponse.data;
     const price = prices.data[0];
 

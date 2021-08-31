@@ -22,7 +22,6 @@ import AnalyticsHandler from 'src/integrations/AnalyticsHandler';
 import { CatSDKContext } from 'src/integrations/CatSDKContext';
 import ENVS from 'src/integrations/Envs';
 import { RemoteConfigContext } from 'src/integrations/RemoteConfigContext';
-import { ClientContext } from 'src/networking/ClientContext';
 
 const firebaseConfig = {
   apiKey: 'AIzaSyAf2yVhnnxthUA5C4RqIqeDkIhk74EBkAA',
@@ -97,21 +96,19 @@ class AppraisalApp extends App {
     return (
       <>
         <GlobalStyle />
-        <ClientContext.Provider value={this.client}>
-          <AnalyticsHandlerContext.Provider value={this.analyticsHandler}>
-            <CatSDKContext.Provider value={this.catSDK}>
-              <RemoteConfigContext.Provider value={this.remoteConfig}>
-                <IdProvider>
-                  <ThemeProvider brand={Brand.VROOM}>
-                    <StyledComponentsThemeProvider theme={theme}>
-                      <Component {...pageProps} />
-                    </StyledComponentsThemeProvider>
-                  </ThemeProvider>
-                </IdProvider>
-              </RemoteConfigContext.Provider>
-            </CatSDKContext.Provider>
-          </AnalyticsHandlerContext.Provider>
-        </ClientContext.Provider>
+        <AnalyticsHandlerContext.Provider value={this.analyticsHandler}>
+          <CatSDKContext.Provider value={this.catSDK}>
+            <RemoteConfigContext.Provider value={this.remoteConfig}>
+              <IdProvider>
+                <ThemeProvider brand={Brand.VROOM}>
+                  <StyledComponentsThemeProvider theme={theme}>
+                    <Component {...pageProps} />
+                  </StyledComponentsThemeProvider>
+                </ThemeProvider>
+              </IdProvider>
+            </RemoteConfigContext.Provider>
+          </CatSDKContext.Provider>
+        </AnalyticsHandlerContext.Provider>
       </>
     );
   }

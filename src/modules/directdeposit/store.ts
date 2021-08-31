@@ -3,7 +3,7 @@ import { createContext, useContext } from 'react';
 
 import AnalyticsHandler from 'src/integrations/AnalyticsHandler';
 import { AsyncStatus, PlaidData, Store, StoreStatus } from 'src/interfaces.d';
-import { Networker } from 'src/networking/Networker';
+import { getPlaidToken, postPlaidPayment } from 'src/networking/request';
 
 const defaultDDState: DDStoreState = {
   LinkToken: '',
@@ -20,9 +20,8 @@ export interface DDStoreState {
 export async function getInitialDDStoreState(
   priceId: string
 ): Promise<DDStoreState> {
-  const networker = new Networker();
   try {
-    const tokenResponse = await networker.getPlaidToken(priceId);
+    const tokenResponse = await getPlaidToken(priceId);
     const plaidToken = tokenResponse.data.data.getLinkToken;
     localStorage.setItem('linkToken', plaidToken.LinkToken);
     localStorage.setItem('priceId', priceId);
@@ -93,12 +92,11 @@ export class DirectDepositStore implements Store {
     mutationInput: PlaidData,
     onPlaidSubmitting: (value: boolean) => void
   ): Promise<void> => {
-    const networker = new Networker();
     const analyticsHandler = new AnalyticsHandler();
 
     try {
       analyticsHandler.trackPaymentOptionsSubmitted('Plaid ACH');
-      await networker.postPlaidPayment(mutationInput);
+      await postPlaidPayment(mutationInput);
       localStorage.removeItem('linkToken');
       localStorage.removeItem('priceId');
       const url = `/sell/verification-congrats`;

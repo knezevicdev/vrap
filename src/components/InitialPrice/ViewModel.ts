@@ -27,7 +27,7 @@ class InitialPriceViewModel {
   }
 
   onContinueClick = async (): Promise<void> => {
-    await this.store.submitPriceResponse();
+    await this.store.submitPriceAccept();
     this.analyticsHandler.trackContinueClick();
     const url = `/sell/verification/owner/${this.priceId}`;
     window.location.href = url;
