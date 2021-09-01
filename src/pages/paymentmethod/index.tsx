@@ -27,7 +27,7 @@ import {
 import PaymentOverviewAB from 'src/modules/paymentoverviewAB';
 import SuccessBar from 'src/modules/successbar';
 import Page from 'src/Page';
-import { useAppStore } from 'src/store/appStore';
+import { useAppStore } from 'src/store';
 
 const ColumnBody = styled.div`
   display: flex;
@@ -88,19 +88,19 @@ const EPayOptions: NextPage<Props> = ({ brand }) => {
       >
         <Page name="Payment Method">
           <Header />
-          {!appStore.loading && (
+          {!appStore.absmart.loading && (
             <>
-              {!appStore.abTestFacelift && <SuccessBar />}
-              {appStore.stepperAbTest && (
+              {!appStore.absmart.abTestFacelift && <SuccessBar />}
+              {appStore.absmart.stepperAbTest && (
                 <VerificationStepper activeStep={oStore.activeStep} />
               )}
               <ColumnBody stateDropdownOpen={stateDropdownOpen}>
                 <OptionsStoreContext.Provider value={oStore}>
                   <PaymentOverviewStoreContext.Provider value={poStore}>
                     <DirectDepositStoreContext.Provider value={ddStore}>
-                      <Options abTest={appStore.abTestFacelift} />
+                      <Options abTest={appStore.absmart.abTestFacelift} />
                     </DirectDepositStoreContext.Provider>
-                    {appStore.abTestFacelift ? (
+                    {appStore.absmart.abTestFacelift ? (
                       <PaymentOverviewAB />
                     ) : (
                       <PaymentOverview />

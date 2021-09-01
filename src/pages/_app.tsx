@@ -27,7 +27,7 @@ import { CatSDKContext } from 'src/integrations/CatSDKContext';
 import ENVS from 'src/integrations/Envs';
 import { RemoteConfigContext } from 'src/integrations/RemoteConfigContext';
 import { ClientContext } from 'src/networking/ClientContext';
-import { AppStore, AppStoreContext } from 'src/store/appStore';
+import Store, { StoreContext } from 'src/store';
 
 const firebaseConfig = {
   apiKey: 'AIzaSyAf2yVhnnxthUA5C4RqIqeDkIhk74EBkAA',
@@ -51,7 +51,7 @@ class AppraisalApp extends App {
   private readonly client: Client;
   private readonly analyticsHandler: AnalyticsHandler;
   private readonly commonHandler: CommonHandler;
-  appStore: AppStore = new AppStore();
+  appStore: Store = new Store();
 
   constructor(props: AppProps) {
     super(props);
@@ -108,9 +108,9 @@ class AppraisalApp extends App {
       application: publicRuntimeConfig.ABSMARTLY_APP,
     });
 
-    this.appStore.setABSmartlyModel(abSmartlyModel);
+    this.appStore.absmart.setABSmartlyModel(abSmartlyModel);
     const checkAnalytics = window.setTimeout(() => {
-      this.appStore.abSmartlyModel?.setStatus(NetworkingStatus.ERROR);
+      this.appStore.absmart.abSmartlyModel?.setStatus(NetworkingStatus.ERROR);
     }, 3500);
 
     analyticsHandler.onAnalyticsReady(async () => {
@@ -124,12 +124,12 @@ class AppraisalApp extends App {
         const faceliftAbTest = abSmartlyModel?.inExperiment(
           'ac-payment-facelift'
         );
-        this.appStore.setABSmartTest(stepperAbTest);
-        this.appStore.setFaceliftAbTest(faceliftAbTest);
-        this.appStore.setLoading(false);
+        this.appStore.absmart.setABSmartTest(stepperAbTest);
+        this.appStore.absmart.setFaceliftAbTest(faceliftAbTest);
+        this.appStore.absmart.setLoading(false);
       } else {
         abSmartlyModel?.setStatus(NetworkingStatus.ERROR);
-        this.appStore.setLoading(false);
+        this.appStore.absmart.setLoading(false);
       }
     });
   };
@@ -147,9 +147,9 @@ class AppraisalApp extends App {
                 <IdProvider>
                   <ThemeProvider brand={Brand.VROOM}>
                     <StyledComponentsThemeProvider theme={theme}>
-                      <AppStoreContext.Provider value={this.appStore}>
+                      <StoreContext.Provider value={this.appStore}>
                         <Component {...pageProps} />
-                      </AppStoreContext.Provider>
+                      </StoreContext.Provider>
                     </StyledComponentsThemeProvider>
                   </ThemeProvider>
                 </IdProvider>
