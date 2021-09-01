@@ -1,3 +1,4 @@
+import { isErrorResponse } from '@vroom-web/networking';
 import { action, makeObservable, observable } from 'mobx';
 
 import { AsyncStatus, Store, StoreStatus } from 'src/interfaces.d';
@@ -68,45 +69,45 @@ export class PriceStore implements Store {
     this.getOfferDetails(priceId);
   }
 
-  getOfferDetails = (priceId: string): void => {
-    getOfferDetails(priceId)
-      .then((response) => {
-        const prices: Price[] = response.data.data;
-        if (prices.length) {
-          const price = prices[0];
-          const priceMapFromResponse = {} as PriceStoreState;
-          priceMapFromResponse.active = price.active;
-          priceMapFromResponse.automatedAppraisal = price.automated_appraisal;
-          priceMapFromResponse.created = price.created;
-          priceMapFromResponse.goodUntil = price.Good_Until__c;
-          priceMapFromResponse.make = price.Make__c;
-          priceMapFromResponse.miles = price.miles;
-          priceMapFromResponse.model = price.Model__c;
-          priceMapFromResponse.newOffer = price.new_offer;
-          priceMapFromResponse.price = price.Price__c;
-          priceMapFromResponse.priceId = price.ID;
-          priceMapFromResponse.priceStatus = price.offer_status;
-          priceMapFromResponse.taxCreditSavings = price.tax_credit_savings;
-          priceMapFromResponse.trim = price.Trim__c;
-          priceMapFromResponse.userEmail = price.user_email;
-          priceMapFromResponse.verificationUrl = price.verification_url;
-          priceMapFromResponse.vin = price.VIN__c;
-          priceMapFromResponse.xkeId = price.offer_id;
-          priceMapFromResponse.year = price.Year__c;
+  getOfferDetails = async (priceId: string): Promise<void> => {
+    const response = await getOfferDetails(priceId);
 
-          // This actually creates "separate" updates
-          // - Price updates and refreshes views
-          // - Status updates and refreshes views
-          // Just a heads up this can cause race conditions
-          this.price = priceMapFromResponse;
-          this.storeStatus = StoreStatus.Success;
-        }
-      })
-      .catch((error) => {
-        this.storeStatus = StoreStatus.Error;
-        this.asyncStatus = AsyncStatus.Idle;
-        console.log(JSON.stringify(error));
-      });
+    if (isErrorResponse(response)) {
+      this.storeStatus = StoreStatus.Error;
+      this.asyncStatus = AsyncStatus.Idle;
+      console.log(JSON.stringify(Error));
+    } else {
+      const prices: Price[] = response.data.data;
+      if (prices.length) {
+        const price = prices[0];
+        const priceMapFromResponse = {} as PriceStoreState;
+        priceMapFromResponse.active = price.active;
+        priceMapFromResponse.automatedAppraisal = price.automated_appraisal;
+        priceMapFromResponse.created = price.created;
+        priceMapFromResponse.goodUntil = price.Good_Until__c;
+        priceMapFromResponse.make = price.Make__c;
+        priceMapFromResponse.miles = price.miles;
+        priceMapFromResponse.model = price.Model__c;
+        priceMapFromResponse.newOffer = price.new_offer;
+        priceMapFromResponse.price = price.Price__c;
+        priceMapFromResponse.priceId = price.ID;
+        priceMapFromResponse.priceStatus = price.offer_status;
+        priceMapFromResponse.taxCreditSavings = price.tax_credit_savings;
+        priceMapFromResponse.trim = price.Trim__c;
+        priceMapFromResponse.userEmail = price.user_email;
+        priceMapFromResponse.verificationUrl = price.verification_url;
+        priceMapFromResponse.vin = price.VIN__c;
+        priceMapFromResponse.xkeId = price.offer_id;
+        priceMapFromResponse.year = price.Year__c;
+
+        // This actually creates "separate" updates
+        // - Price updates and refreshes views
+        // - Status updates and refreshes views
+        // Just a heads up this can cause race conditions
+        this.price = priceMapFromResponse;
+        this.storeStatus = StoreStatus.Success;
+      }
+    }
   };
 
   submitPriceAccept = async (): Promise<void> => {

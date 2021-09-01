@@ -4,7 +4,6 @@ import 'firebase/remote-config';
 import { datadogRum } from '@datadog/browser-rum';
 import { IdProvider } from '@radix-ui/react-id';
 import { CatSDK } from '@vroom-web/cat-sdk';
-import { Client } from '@vroom-web/networking';
 import { CommonHandler } from '@vroom-web/shared-components';
 import { Brand, ThemeProvider } from '@vroom-web/ui';
 import firebase from 'firebase/app';
@@ -40,7 +39,6 @@ configureMobx({
 class AppraisalApp extends App {
   private readonly remoteConfig: firebase.remoteConfig.RemoteConfig;
   private readonly catSDK: CatSDK;
-  private readonly client: Client;
   private readonly analyticsHandler: AnalyticsHandler;
   private readonly commonHandler: CommonHandler;
 
@@ -55,7 +53,6 @@ class AppraisalApp extends App {
       serviceBasePath !== ''
         ? `${serviceBasePath}/api/weblead/attribution`
         : '';
-    this.client = new Client(gqlUrl, { interchangeUrl: serviceBasePath });
     this.commonHandler = new CommonHandler(gqlUrl, webLeadUrl);
 
     if (firebase.apps.length == 0) {

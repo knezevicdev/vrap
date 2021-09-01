@@ -1,3 +1,4 @@
+import { isErrorResponse } from '@vroom-web/networking';
 import { action, makeObservable, observable, runInAction } from 'mobx';
 import { createContext, useContext } from 'react';
 
@@ -22,7 +23,10 @@ export async function getInitialDDStoreState(
 ): Promise<DDStoreState> {
   try {
     const tokenResponse = await getPlaidToken(priceId);
-    const plaidToken = tokenResponse.data.data.getLinkToken;
+
+    if (isErrorResponse(tokenResponse)) throw tokenResponse;
+
+    const plaidToken = tokenResponse.data.getLinkToken;
     localStorage.setItem('linkToken', plaidToken.LinkToken);
     localStorage.setItem('priceId', priceId);
     return plaidToken;

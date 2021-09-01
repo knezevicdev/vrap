@@ -1,3 +1,4 @@
+import { isErrorResponse } from '@vroom-web/networking';
 import { action, makeObservable, observable, runInAction } from 'mobx';
 import { createContext, useContext } from 'react';
 
@@ -34,6 +35,9 @@ export async function getInitialPaymentOverviewStoreState(
 ): Promise<PaymentOverviewStoreState> {
   try {
     const offerResponse = await getOfferDetails(priceId);
+
+    if (isErrorResponse(offerResponse)) throw offerResponse;
+
     const prices: Prices = offerResponse.data;
     const price = prices.data[0];
 

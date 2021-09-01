@@ -1,4 +1,5 @@
 import { ABSmartlyModel } from '@vroom-web/absmartly-integration';
+import { isErrorResponse } from '@vroom-web/networking';
 import { action, makeObservable, observable, runInAction } from 'mobx';
 import { createContext, useContext } from 'react';
 
@@ -53,6 +54,9 @@ export async function getInitialOptionsStoreState(
 ): Promise<OptionStoreState> {
   try {
     const verifyResponse = await getVerificationDetails(priceId);
+
+    if (isErrorResponse(verifyResponse)) throw verifyResponse;
+
     const verificationData: Verification = verifyResponse.data.data;
     const optionState = {
       mailingAddress: verificationData.owner_mailing_address,
