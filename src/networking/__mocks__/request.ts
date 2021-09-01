@@ -110,12 +110,10 @@ const verificationResp: VerificationRespData = {
 };
 
 const plaidToken: PlaidTokenResp = {
-  data: {
-    getLinkToken: {
-      Expiration: '2021-06-24T23:53:23Z',
-      LinkToken: 'link-sandbox-95019b12-9671-4d70-bc7f-61676874fb04',
-      RequestId: 'y5mvFkVFcGFeYOJ',
-    },
+  getLinkToken: {
+    Expiration: '2021-06-24T23:53:23Z',
+    LinkToken: 'link-sandbox-95019b12-9671-4d70-bc7f-61676874fb04',
+    RequestId: 'y5mvFkVFcGFeYOJ',
   },
 };
 

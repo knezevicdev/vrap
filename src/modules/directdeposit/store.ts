@@ -25,7 +25,6 @@ export async function getInitialDDStoreState(
     const tokenResponse = await getPlaidToken(priceId);
 
     if (isErrorResponse(tokenResponse)) throw tokenResponse;
-
     const plaidToken = tokenResponse.data.getLinkToken;
     localStorage.setItem('linkToken', plaidToken.LinkToken);
     localStorage.setItem('priceId', priceId);
