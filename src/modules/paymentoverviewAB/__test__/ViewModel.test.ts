@@ -2,12 +2,12 @@
 jest.mock('src/networking/request');
 
 import { OptionsStore } from '../../options/store';
-import { PaymentOverviewStore } from '../store';
+import { PaymentOverviewStore } from '../../paymentoverview/store';
 import ViewModel from '../ViewModel';
 
 import { StoreStatus } from 'src/interfaces.d';
 
-describe('Payment Overview Test', () => {
+describe('Payment Overview AB Test', () => {
   const oStore = new OptionsStore();
   const poStore = new PaymentOverviewStore();
   let viewModel: ViewModel;
@@ -25,9 +25,11 @@ describe('Payment Overview Test', () => {
   it('test readonly initial values', () => {
     viewModel = new ViewModel(poStore, oStore);
     expect(viewModel.hero).toEqual('payment overview');
-    expect(viewModel.carWorth).toEqual('Your car is worth');
+    expect(viewModel.desktopTitle).toEqual('sell summary');
+    expect(viewModel.mobileTitle).toEqual('how would you like to get paid?');
+    expect(viewModel.carWorth).toEqual('Your price');
     expect(viewModel.remainingLoan).toEqual('Remaining Loan');
-    expect(viewModel.total).toEqual('Total');
+    expect(viewModel.total).toEqual('Your payment');
     expect(viewModel.tbd).toEqual('To be determined');
     expect(viewModel.pricePlaceholder).toEqual('--');
   });
@@ -85,5 +87,15 @@ describe('Payment Overview Test', () => {
     expect(viewModel.isInitialized).toBe(false);
     oStore.storeStatus = StoreStatus.Success;
     expect(viewModel.isInitialized).toBe(true);
+  });
+
+  it('carDetail', () => {
+    expect(viewModel.carDetail).toEqual({
+      maker: 'NISSAN',
+      miles: 999999,
+      model: 'Murano',
+      trim: 'Utility 4D SV 2WD V6',
+      year: 2016,
+    });
   });
 });

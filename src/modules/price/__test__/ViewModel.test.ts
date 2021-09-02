@@ -1,11 +1,7 @@
+jest.mock('src/networking/request');
 import ViewModel from '../ViewModel';
 
 import { PriceStore } from 'src/modules/price/store';
-
-jest.mock('next/config', () => (): unknown => ({
-  publicRuntimeConfig: {},
-  serverRuntimeConfig: {},
-}));
 
 describe('test price ViewModel', () => {
   const priceId = '12345';

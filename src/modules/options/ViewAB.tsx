@@ -6,7 +6,7 @@ import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import * as Yup from 'yup';
 
-import OptionsViewModel from '../options/ViewModel';
+import OptionsViewModel from './ViewModel';
 
 import PayOptions from 'src/components/PayOptionsAB';
 import { Button } from 'src/core/Button';
