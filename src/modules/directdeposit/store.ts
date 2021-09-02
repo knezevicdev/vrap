@@ -99,10 +99,11 @@ export class DirectDepositStore implements Store {
 
     try {
       analyticsHandler.trackPaymentOptionsSubmitted('Plaid ACH');
+      analyticsHandler.trackPlaidACHSelected();
       await postPlaidPayment(mutationInput);
       localStorage.removeItem('linkToken');
       localStorage.removeItem('priceId');
-      const url = `/sell/verification-congrats`;
+      const url = `/appraisal/congratulations`;
       window.location.href = url;
     } catch (err) {
       onPlaidSubmitting(false);

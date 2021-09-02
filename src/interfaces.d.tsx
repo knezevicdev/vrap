@@ -59,3 +59,10 @@ export interface Store {
   asyncStatus: AsyncStatus;
   storeStatus: StoreStatus;
 }
+
+export interface Stepper {
+  step: string;
+  progress: string;
+  next: string;
+  title: string;
+}

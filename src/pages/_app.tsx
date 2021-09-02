@@ -3,12 +3,15 @@ import 'firebase/remote-config';
 
 import { datadogRum } from '@datadog/browser-rum';
 import { IdProvider } from '@radix-ui/react-id';
+import { ABSmartlyModel } from '@vroom-web/absmartly-integration';
 import { CatSDK } from '@vroom-web/cat-sdk';
+import { Status as NetworkingStatus } from '@vroom-web/networking';
 import { CommonHandler } from '@vroom-web/shared-components';
 import { Brand, ThemeProvider } from '@vroom-web/ui';
 import firebase from 'firebase/app';
 import { configure as configureMobx } from 'mobx';
 import App, { AppProps } from 'next/app';
+import getConfig from 'next/config';
 import { name, version } from 'package.json';
 import React from 'react';
 import smoothscroll from 'smoothscroll-polyfill';
@@ -18,9 +21,11 @@ import { GlobalStyle, theme } from '../core/themes/Vroom';
 
 import { AnalyticsHandlerContext } from 'src/integrations/AnalyticHandlerContext';
 import AnalyticsHandler from 'src/integrations/AnalyticsHandler';
+import { analyticsHandler } from 'src/integrations/AnalyticsHandler';
 import { CatSDKContext } from 'src/integrations/CatSDKContext';
 import ENVS from 'src/integrations/Envs';
 import { RemoteConfigContext } from 'src/integrations/RemoteConfigContext';
+import { AppStore, AppStoreContext } from 'src/store/appStore';
 
 const firebaseConfig = {
   apiKey: 'AIzaSyAf2yVhnnxthUA5C4RqIqeDkIhk74EBkAA',
@@ -36,11 +41,14 @@ configureMobx({
   enforceActions: 'observed', // don't allow state modifications outside actions
 });
 
+const { publicRuntimeConfig } = getConfig();
+
 class AppraisalApp extends App {
   private readonly remoteConfig: firebase.remoteConfig.RemoteConfig;
   private readonly catSDK: CatSDK;
   private readonly analyticsHandler: AnalyticsHandler;
   private readonly commonHandler: CommonHandler;
+  appStore: AppStore = new AppStore();
 
   constructor(props: AppProps) {
     super(props);
@@ -85,7 +93,42 @@ class AppraisalApp extends App {
 
     this.catSDK.initCatData();
     this.commonHandler.check3rdPartyAuth();
+    this.handleAbsmart();
   }
+
+  handleAbsmart = (): void => {
+    const abSmartlyModel = new ABSmartlyModel({
+      endpoint: publicRuntimeConfig.NEXT_PUBLIC_ABSMARTLY_URL,
+      apiKey: publicRuntimeConfig.ABSMARTLY_API_KEY,
+      environment: publicRuntimeConfig.ABSMARTLY_ENV,
+      application: publicRuntimeConfig.ABSMARTLY_APP,
+    });
+
+    this.appStore.setABSmartlyModel(abSmartlyModel);
+    const checkAnalytics = window.setTimeout(() => {
+      this.appStore.abSmartlyModel?.setStatus(NetworkingStatus.ERROR);
+    }, 3500);
+
+    analyticsHandler.onAnalyticsReady(async () => {
+      clearTimeout(checkAnalytics);
+      const sessionId = analyticsHandler.getAnonymousId();
+      if (sessionId) {
+        await abSmartlyModel?.initABSmartly(sessionId);
+        const stepperAbTest = abSmartlyModel?.inExperiment(
+          'ac-appraisal-stepper-verification'
+        );
+        const faceliftAbTest = abSmartlyModel?.inExperiment(
+          'ac-payment-facelift'
+        );
+        this.appStore.setABSmartTest(stepperAbTest);
+        this.appStore.setFaceliftAbTest(faceliftAbTest);
+        this.appStore.setLoading(false);
+      } else {
+        abSmartlyModel?.setStatus(NetworkingStatus.ERROR);
+        this.appStore.setLoading(false);
+      }
+    });
+  };
 
   render(): JSX.Element {
     const { Component, pageProps } = this.props;
@@ -99,7 +142,9 @@ class AppraisalApp extends App {
               <IdProvider>
                 <ThemeProvider brand={Brand.VROOM}>
                   <StyledComponentsThemeProvider theme={theme}>
-                    <Component {...pageProps} />
+                    <AppStoreContext.Provider value={this.appStore}>
+                      <Component {...pageProps} />
+                    </AppStoreContext.Provider>
                   </StyledComponentsThemeProvider>
                 </ThemeProvider>
               </IdProvider>

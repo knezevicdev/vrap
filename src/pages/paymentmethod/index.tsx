@@ -1,16 +1,14 @@
-import { ABSmartlyModel } from '@vroom-web/absmartly-integration';
-import { Status as NetworkingStatus } from '@vroom-web/networking';
 import { Brand, ThemeProvider } from '@vroom-web/ui';
 import { IncomingMessage } from 'http';
+import { observer } from 'mobx-react';
 import { NextPage, NextPageContext } from 'next';
-import getConfig from 'next/config';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
 import { Header } from 'src/components/Header';
+import VerificationStepper from 'src/components/Stepper';
 import ToolFooter from 'src/core/ToolFooter';
-import { analyticsHandler } from 'src/integrations/AnalyticsHandler';
 import {
   DirectDepositStore,
   DirectDepositStoreContext,
@@ -29,8 +27,7 @@ import {
 import PaymentOverviewAB from 'src/modules/paymentoverviewAB';
 import SuccessBar from 'src/modules/successbar';
 import Page from 'src/Page';
-
-const { publicRuntimeConfig } = getConfig();
+import { useAppStore } from 'src/store/appStore';
 
 const ColumnBody = styled.div`
   display: flex;
@@ -71,43 +68,14 @@ const EPayOptions: NextPage<Props> = ({ brand }) => {
   const oStore = new OptionsStore();
   const ddStore = new DirectDepositStore();
   const poStore = new PaymentOverviewStore();
-
-  const abSmartlyModel = new ABSmartlyModel({
-    endpoint: publicRuntimeConfig.NEXT_PUBLIC_ABSMARTLY_URL,
-    apiKey: publicRuntimeConfig.ABSMARTLY_API_KEY,
-    environment: publicRuntimeConfig.ABSMARTLY_ENV,
-    application: publicRuntimeConfig.ABSMARTLY_APP,
-  });
+  const appStore = useAppStore();
 
   const [stateDropdownOpen, setStateDropdown] = useState(false);
-  const [abTestFacelift, setAbTestFacelift] = useState(false);
-  const [initialExperimentLoad, setInitialExperimentLoad] = useState(false);
 
   useEffect(() => {
     oStore.init(priceId);
     ddStore.initClientSide(priceId);
     poStore.init(priceId);
-
-    if (!initialExperimentLoad) {
-      oStore.setABSmartlyModel(abSmartlyModel);
-
-      const checkAnalytics = window.setTimeout(() => {
-        oStore.abSmartlyModel?.setStatus(NetworkingStatus.ERROR);
-      }, 3500);
-
-      analyticsHandler.onAnalyticsReady(async () => {
-        clearTimeout(checkAnalytics);
-        const sessionId = analyticsHandler.getAnonymousId();
-        if (sessionId) {
-          await abSmartlyModel?.initABSmartly(sessionId);
-          const abTest = abSmartlyModel?.inExperiment('ac-payment-facelift');
-          setAbTestFacelift(abTest);
-          setInitialExperimentLoad(true);
-        } else {
-          abSmartlyModel?.setStatus(NetworkingStatus.ERROR);
-        }
-      });
-    }
   }, [oStore, ddStore, poStore, priceId]);
 
   // TODO: this used to be used with <State isOpenCallback={setStateDropdown} />
@@ -120,16 +88,19 @@ const EPayOptions: NextPage<Props> = ({ brand }) => {
       >
         <Page name="Payment Method">
           <Header />
-          {initialExperimentLoad && (
+          {!appStore.loading && (
             <>
-              {!abTestFacelift && <SuccessBar />}
+              {!appStore.abTestFacelift && <SuccessBar />}
+              {appStore.stepperAbTest && (
+                <VerificationStepper activeStep={oStore.activeStep} />
+              )}
               <ColumnBody stateDropdownOpen={stateDropdownOpen}>
                 <OptionsStoreContext.Provider value={oStore}>
                   <PaymentOverviewStoreContext.Provider value={poStore}>
                     <DirectDepositStoreContext.Provider value={ddStore}>
-                      <Options abTest={abTestFacelift} />
+                      <Options abTest={appStore.abTestFacelift} />
                     </DirectDepositStoreContext.Provider>
-                    {abTestFacelift ? (
+                    {appStore.abTestFacelift ? (
                       <PaymentOverviewAB />
                     ) : (
                       <PaymentOverview />
@@ -194,4 +165,4 @@ EPayOptions.getInitialProps = async (
   return { brand };
 };
 
-export default EPayOptions;
+export default observer(EPayOptions);
