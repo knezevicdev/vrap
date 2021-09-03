@@ -20,6 +20,7 @@ import { ThemeProvider as StyledComponentsThemeProvider } from 'styled-component
 
 import { GlobalStyle, theme } from '../core/themes/Vroom';
 
+import AppStoreNetwork, { AppStoreNetworkContext } from 'src/context';
 import { AnalyticsHandlerContext } from 'src/integrations/AnalyticHandlerContext';
 import AnalyticsHandler from 'src/integrations/AnalyticsHandler';
 import { analyticsHandler } from 'src/integrations/AnalyticsHandler';
@@ -27,7 +28,6 @@ import { CatSDKContext } from 'src/integrations/CatSDKContext';
 import ENVS from 'src/integrations/Envs';
 import { RemoteConfigContext } from 'src/integrations/RemoteConfigContext';
 import { ClientContext } from 'src/networking/ClientContext';
-import Store, { StoreContext } from 'src/store';
 
 const firebaseConfig = {
   apiKey: 'AIzaSyAf2yVhnnxthUA5C4RqIqeDkIhk74EBkAA',
@@ -51,7 +51,7 @@ class AppraisalApp extends App {
   private readonly client: Client;
   private readonly analyticsHandler: AnalyticsHandler;
   private readonly commonHandler: CommonHandler;
-  appStore: Store = new Store();
+  appStore: AppStoreNetwork = new AppStoreNetwork();
 
   constructor(props: AppProps) {
     super(props);
@@ -101,6 +101,7 @@ class AppraisalApp extends App {
   }
 
   handleAbsmart = (): void => {
+    const { store } = this.appStore;
     const abSmartlyModel = new ABSmartlyModel({
       endpoint: publicRuntimeConfig.NEXT_PUBLIC_ABSMARTLY_URL,
       apiKey: publicRuntimeConfig.ABSMARTLY_API_KEY,
@@ -108,9 +109,9 @@ class AppraisalApp extends App {
       application: publicRuntimeConfig.ABSMARTLY_APP,
     });
 
-    this.appStore.absmart.setABSmartlyModel(abSmartlyModel);
+    store.absmart.setABSmartlyModel(abSmartlyModel);
     const checkAnalytics = window.setTimeout(() => {
-      this.appStore.absmart.abSmartlyModel?.setStatus(NetworkingStatus.ERROR);
+      store.absmart.abSmartlyModel?.setStatus(NetworkingStatus.ERROR);
     }, 3500);
 
     analyticsHandler.onAnalyticsReady(async () => {
@@ -124,12 +125,12 @@ class AppraisalApp extends App {
         const faceliftAbTest = abSmartlyModel?.inExperiment(
           'ac-payment-facelift'
         );
-        this.appStore.absmart.setABSmartTest(stepperAbTest);
-        this.appStore.absmart.setFaceliftAbTest(faceliftAbTest);
-        this.appStore.absmart.setLoading(false);
+        store.absmart.setABSmartTest(stepperAbTest);
+        store.absmart.setFaceliftAbTest(faceliftAbTest);
+        store.absmart.setLoading(false);
       } else {
         abSmartlyModel?.setStatus(NetworkingStatus.ERROR);
-        this.appStore.absmart.setLoading(false);
+        store.absmart.setLoading(false);
       }
     });
   };
@@ -147,9 +148,9 @@ class AppraisalApp extends App {
                 <IdProvider>
                   <ThemeProvider brand={Brand.VROOM}>
                     <StyledComponentsThemeProvider theme={theme}>
-                      <StoreContext.Provider value={this.appStore}>
+                      <AppStoreNetworkContext.Provider value={this.appStore}>
                         <Component {...pageProps} />
-                      </StoreContext.Provider>
+                      </AppStoreNetworkContext.Provider>
                     </StyledComponentsThemeProvider>
                   </ThemeProvider>
                 </IdProvider>
