@@ -14,7 +14,7 @@ class InitialPriceViewModel {
   readonly miles: string = '250 miles';
   readonly the: string = 'The ';
   readonly titleName: string = 'vehicle title ';
-  readonly yourName: string = 'must be in your name';
+  readonly yourName: string = 'must be in your name.';
   readonly price: string = '';
   readonly priceId: string = '';
   readonly goodUntil: string = '';
