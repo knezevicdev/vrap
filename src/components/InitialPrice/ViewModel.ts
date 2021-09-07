@@ -11,7 +11,7 @@ class InitialPriceViewModel {
   readonly continuePrice: string = 'continue';
   readonly offerExpPreDate: string = 'This price expires on ';
   readonly offerExpPostDate: string = ' or upon driving an additional ';
-  readonly miles: string = '250 miles';
+  readonly miles: string = '250 miles.';
   readonly the: string = 'The ';
   readonly titleName: string = 'vehicle title ';
   readonly yourName: string = 'must be in your name.';
