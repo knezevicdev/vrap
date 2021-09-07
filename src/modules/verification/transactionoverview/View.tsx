@@ -1,21 +1,46 @@
-import React from 'react';
+import { observer } from 'mobx-react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
 
 import ViewModel from './ViewModel';
 
+import Store from 'src/store';
+import { displayCurrency } from 'src/utils';
+
 interface Props {
   viewModel: ViewModel;
+  priceId: string;
+  store: Store;
 }
 
-const TransactionOverviewView: React.FC<Props> = ({ viewModel }) => {
+const TransactionOverviewView: React.FC<Props> = ({
+  viewModel,
+  priceId,
+  store,
+}) => {
+  const { offerDetail, loading } = store.offer;
+
+  useEffect(() => {
+    viewModel.getVerificationDetail(priceId);
+    viewModel.getOfferDetail(priceId);
+  }, [priceId]);
+
   return (
     <InfoContainer data-qa="OfferInfoCardContainer">
       <InfoTitle>{viewModel.title}</InfoTitle>
-      <InfoContent>
-        <VehicleInfo></VehicleInfo>
-        <VehicleTrim></VehicleTrim>
-        <OfferPrice></OfferPrice>
-      </InfoContent>
+      {!loading && (
+        <InfoContent>
+          <VehicleInfo>
+            {offerDetail?.year} {offerDetail?.make} {offerDetail?.model}
+          </VehicleInfo>
+          <VehicleTrim>
+            {offerDetail?.trim} | {offerDetail?.miles}
+          </VehicleTrim>
+          <OfferPrice>
+            Your Price: {displayCurrency(offerDetail?.price)}
+          </OfferPrice>
+        </InfoContent>
+      )}
     </InfoContainer>
   );
 };
@@ -62,4 +87,4 @@ const OfferPrice = styled.div`
   letter-spacing: 0.25px;
 `;
 
-export default TransactionOverviewView;
+export default observer(TransactionOverviewView);
