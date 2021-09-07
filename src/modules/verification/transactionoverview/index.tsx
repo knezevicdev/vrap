@@ -11,7 +11,6 @@ interface Prop {
 
 const TransactionOverview: React.FC<Prop> = ({ priceId }) => {
   const { store, network } = useAppStore();
-  console.log('router ', priceId);
   const viewModel = new ViewModel(store, network);
   return <View viewModel={viewModel} priceId={priceId} store={store} />;
 };
