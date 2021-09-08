@@ -7,6 +7,7 @@ class InitialPriceViewModel {
   private analyticsHandler: AnalyticsHandler;
 
   readonly yourPrice: string = 'your price';
+  readonly yourPriceAB: string = 'Your price';
   readonly yourPriceCamel: string = 'Your Price:';
   readonly continuePrice: string = 'continue';
   readonly offerExpPreDate: string = 'This price expires on ';
@@ -20,7 +21,13 @@ class InitialPriceViewModel {
   readonly goodUntil: string = '';
   readonly legalDocumentation: string =
     "This price is based on data from thousands of similar market transactions, as well as the information you provided. Vroom may modify or revoke this price if the information you provided is inaccurate or if there is a significant present or prospective change in the used vehicle market beyond Vroom's control. Other terms and restrictions apply.";
-
+  readonly whatYoullNeed: string = "What you'll need:";
+  whatYouNeedOptions = [
+    'Vehicle title in your name (if applicable)',
+    "Your driver's license",
+    'Vehicle registration',
+    'Photo of your odometer',
+  ];
   constructor(private store: PriceStore) {
     const price = store.price;
     this.price = displayCurrency(price.price);
