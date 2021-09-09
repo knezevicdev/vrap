@@ -5,6 +5,7 @@ import PriceViewModel from './ViewModel';
 
 import NextSteps from 'src/components/NextSteps';
 import PriceDetail from 'src/components/PriceDetail';
+import Icon, { Icons } from 'src/core/Icon';
 
 interface Props {
   viewModel: PriceViewModel;
@@ -19,6 +20,9 @@ const PriceView: React.FC<Props> = ({ viewModel }) => {
       <NextStepsContainer>
         <NextSteps />
       </NextStepsContainer>
+      <IconContainer>
+        <Icon icon={Icons.VROOM_TRUCK} />
+      </IconContainer>
     </PriceContainer>
   );
 };
@@ -64,6 +68,19 @@ const NextStepsContainer = styled.div`
   }
   @media (max-width: 420px) {
     padding: 30px 0;
+  }
+`;
+
+const IconContainer = styled.div`
+  @media (max-width: 620px) {
+    position: relative;
+    height: 250px;
+    width: 100%;
+    > img {
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
   }
 `;
 
