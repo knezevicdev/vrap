@@ -1,0 +1,3 @@
+.gitlab-ci.yaml	@security @devops @vroom-web
+CODEOWNERS @security @devops @vroom-web
+* @vroom-web
