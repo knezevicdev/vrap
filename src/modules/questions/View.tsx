@@ -5,31 +5,34 @@ import QuestionsViewModel from './ViewModel';
 
 import Icon, { Icons } from 'src/core/Icon';
 import { Hero, Link, Title } from 'src/core/Typography';
+import { useAppStore } from 'src/store/appStore';
 
 export interface Props {
   viewModel: QuestionsViewModel;
 }
 
 const View: React.FC<Props> = ({ viewModel }) => {
+  const appStore = useAppStore();
+  const className = appStore.offerFacelift ? 'abtest' : '';
   return (
     <div>
       <StyledHero>{viewModel.questions}</StyledHero>
       <StyledContainer>
-        <IconSection className={'abtest'}>
+        <IconSection className={className}>
           <Icon icon={Icons.FAQ} />
           <StyledLink href={viewModel.faqLink}>
             <StyledTitle>{viewModel.helpCenter}</StyledTitle>
           </StyledLink>
         </IconSection>
         <VerticalDivider />
-        <IconSection className={'abtest'}>
+        <IconSection className={className}>
           <Icon icon={Icons.EMAIL} />
           <StyledLink href={viewModel.emailLink}>
             <StyledTitle>{viewModel.sendMessage}</StyledTitle>
           </StyledLink>
         </IconSection>
         <VerticalDivider />
-        <IconSection className={'abtest'}>
+        <IconSection className={className}>
           <Icon icon={Icons.PHONE} />
           <StyledLink href={viewModel.phoneLink}>
             <StyledTitle>{viewModel.phoneNumber}</StyledTitle>

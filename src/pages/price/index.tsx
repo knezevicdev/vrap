@@ -11,11 +11,13 @@ import PriceInfo from 'src/modules/price';
 import { PriceStore } from 'src/modules/price/store';
 import Questions from 'src/modules/questions';
 import Page from 'src/Page';
+import { useAppStore } from 'src/store/appStore';
 
 const Price: NextPage = () => {
   const router = useRouter();
   const priceId = router.query.priceId as string;
   const store = new PriceStore(priceId);
+  const appStore = useAppStore();
 
   return (
     <Page name="Price">

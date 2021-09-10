@@ -124,8 +124,12 @@ class AppraisalApp extends App {
         const faceliftAbTest = abSmartlyModel?.inExperiment(
           'ac-payment-facelift'
         );
+        const offerFaceliftTest = abSmartlyModel?.inExperiment(
+          'ac-appraisal-offer-facelift'
+        );
         this.appStore.setABSmartTest(stepperAbTest);
         this.appStore.setFaceliftAbTest(faceliftAbTest);
+        this.appStore.setOfferFacelift(offerFaceliftTest);
         this.appStore.setLoading(false);
       } else {
         abSmartlyModel?.setStatus(NetworkingStatus.ERROR);
