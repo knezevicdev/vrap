@@ -1,3 +1,4 @@
+import { observer } from 'mobx-react';
 import React from 'react';
 import styled from 'styled-components';
 
@@ -96,4 +97,4 @@ const VerticalDivider = styled.div`
   }
 `;
 
-export default View;
+export default observer(View);

@@ -45,9 +45,10 @@ const InitialPriceView: React.FC<Props> = ({ viewModel }) => {
   return (
     <StyledContainer>
       <TitlePrice>{viewModel.yourPriceAB}</TitlePrice>
-      <StyledPrice>{viewModel.price}</StyledPrice>
-      {/* <StyledIcon icon={Icons.CAR_OFFER} /> */}
-
+      <StyledPrice>
+        {viewModel.price}
+        <span>{viewModel.star}</span>
+      </StyledPrice>
       <Content>
         <ContentText>
           {viewModel.offerExpPreDate}
@@ -97,6 +98,15 @@ const StyledPrice = styled(Hero.One)`
   font-weight: 800;
   line-height: 64px;
   margin: 8px 0;
+  position: relative;
+  > span {
+    font-family: Calibre;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 18px;
+    line-height: 24px;
+    position: absolute;
+  }
 `;
 
 const ListTitle = styled(Title.Two)`

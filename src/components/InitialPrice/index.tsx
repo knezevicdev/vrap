@@ -1,3 +1,4 @@
+import { observer } from 'mobx-react';
 import React from 'react';
 
 import View from './View';
@@ -17,4 +18,4 @@ const InitialPrice: React.FC<{ store: PriceStore }> = ({ store }) => {
   );
 };
 
-export default InitialPrice;
+export default observer(InitialPrice);

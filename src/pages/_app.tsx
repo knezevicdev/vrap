@@ -118,14 +118,14 @@ class AppraisalApp extends App {
       const sessionId = analyticsHandler.getAnonymousId();
       if (sessionId) {
         await abSmartlyModel?.initABSmartly(sessionId);
+        const offerFaceliftTest = abSmartlyModel?.inExperiment(
+          'ac-appraisal-offer-facelift'
+        );
         const stepperAbTest = abSmartlyModel?.inExperiment(
           'ac-appraisal-stepper-verification'
         );
         const faceliftAbTest = abSmartlyModel?.inExperiment(
           'ac-payment-facelift'
-        );
-        const offerFaceliftTest = abSmartlyModel?.inExperiment(
-          'ac-appraisal-offer-facelift'
         );
         this.appStore.setABSmartTest(stepperAbTest);
         this.appStore.setFaceliftAbTest(faceliftAbTest);
