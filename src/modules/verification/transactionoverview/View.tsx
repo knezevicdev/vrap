@@ -53,6 +53,7 @@ const InfoContainer = styled.div`
   box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.08);
   border: solid 1px #d6d7da;
   padding: 20px;
+  flex-basis: 30%;
 `;
 
 const InfoTitle = styled.div`

@@ -3,6 +3,7 @@ import Store from 'src/store';
 
 export default class VerificationReviewSectionViewModel {
   readonly title: string = 'transaction summary';
+  readonly submitBtn: string = 'SUBMIT MY INFORMATION';
   constructor(private store: Store, private network: Networker) {}
 
   async getVerificationDetail(priceId: string): Promise<void> {

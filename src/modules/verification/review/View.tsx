@@ -1,10 +1,13 @@
 import React, { useEffect } from 'react';
+import styled from 'styled-components';
 
 import OwnerInfoReview from './components/OwnerInfoReview';
 import PayOffInfoReview from './components/PayOffInfoReview';
 import PickupInfoReview from './components/PickupInfoReview';
 import SellDocumentReview from './components/SellDocumentReview';
 import ViewModel from './ViewModel';
+
+import { Button } from 'src/core/Button';
 
 interface Props {
   viewModel: ViewModel;
@@ -20,13 +23,21 @@ const VerificationReviewViewDetail: React.FC<Props> = ({
   }, [priceId]);
 
   return (
-    <div>
+    <Container>
       <OwnerInfoReview />
       <PickupInfoReview />
       <PayOffInfoReview />
       <SellDocumentReview />
-    </div>
+      <SubmitButton>{viewModel.submitBtn}</SubmitButton>
+    </Container>
   );
 };
+
+const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
+const SubmitButton = styled(Button.Primary)``;
 
 export default VerificationReviewViewDetail;

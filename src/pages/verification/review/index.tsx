@@ -1,9 +1,11 @@
 import { observer } from 'mobx-react';
 import { NextPage, NextPageContext } from 'next';
 import React from 'react';
+import styled from 'styled-components';
 
 import VerificationReviewViewDetail from 'src/modules/verification/review';
 import TransactionOverview from 'src/modules/verification/transactionoverview';
+import Page from 'src/Page';
 
 interface Prop {
   priceId: string;
@@ -11,12 +13,20 @@ interface Prop {
 
 const VerificationReview: NextPage<Prop> = ({ priceId }) => {
   return (
-    <div>
-      <TransactionOverview priceId={priceId} />
-      <VerificationReviewViewDetail priceId={priceId} />
-    </div>
+    <Page name={'Verification Review'}>
+      <Contents>
+        <TransactionOverview priceId={priceId} />
+        <VerificationReviewViewDetail priceId={priceId} />
+      </Contents>
+    </Page>
   );
 };
+
+const Contents = styled.div`
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+`;
 
 VerificationReview.getInitialProps = async (
   context: NextPageContext
