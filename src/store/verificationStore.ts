@@ -11,6 +11,7 @@ export class VerificationStore {
   }
 
   getVerificationDetail(data: Verification): void {
+    console.log('getVerificationDetail data ', data);
     this.verificationDetail = data;
   }
 

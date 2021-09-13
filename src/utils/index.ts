@@ -30,3 +30,25 @@ export const displayPhoneNumber = (phoneNumber: string | undefined): string => {
   // return number.length > 3 ? new AsYouType('US').input(number) : number;
   return number;
 };
+
+export const hiddenString = (length: number): string => {
+  const dot = '\u2022';
+  return new Array(length + 1).join(dot);
+};
+
+export const displaySecureSSN = (ssn: string | null | undefined): string => {
+  if (typeof ssn !== 'string') {
+    return '';
+  }
+
+  const ssnLength = ssn.length;
+  if (ssnLength <= 3) {
+    return hiddenString(ssn.length);
+  } else if (ssnLength === 4) {
+    return hiddenString(ssn.length);
+  } else if (ssnLength <= 5) {
+    return `${hiddenString(3)}-${hiddenString(ssn.slice(3).length)}`;
+  } else {
+    return `${hiddenString(3)}-${hiddenString(2)}-${ssn.slice(5, 9)}`;
+  }
+};

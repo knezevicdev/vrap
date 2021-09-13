@@ -1,3 +1,4 @@
+import { observer } from 'mobx-react';
 import React from 'react';
 import styled from 'styled-components';
 
@@ -146,4 +147,4 @@ const Edit = styled.span`
   cursor: pointer;
 `;
 
-export default OwnerInfoReviewView;
+export default observer(OwnerInfoReviewView);

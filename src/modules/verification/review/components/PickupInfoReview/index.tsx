@@ -5,10 +5,10 @@ import ViewModel from './ViewModel';
 
 import { useAppStore } from 'src/context';
 
-const OwnerInfoReview: React.FC = () => {
+const PickupInfoReview: React.FC = () => {
   const { store } = useAppStore();
   const viewModel = new ViewModel();
   return <View viewModel={viewModel} store={store} />;
 };
 
-export default OwnerInfoReview;
+export default PickupInfoReview;
