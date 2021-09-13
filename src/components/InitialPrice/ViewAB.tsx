@@ -52,7 +52,7 @@ const InitialPriceView: React.FC<Props> = ({ viewModel }) => {
       <Content>
         <ContentText>
           {viewModel.offerExpPreDate}
-          <b>{viewModel.goodUntil}</b>
+          <b>{viewModel.goodUntilMonthDay}</b>
           {viewModel.offerExpPostDate}
           <b>{viewModel.miles}</b>
         </ContentText>
