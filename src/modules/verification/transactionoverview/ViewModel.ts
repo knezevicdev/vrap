@@ -5,15 +5,6 @@ export default class TransactionOverviewViewModel {
   readonly title: string = 'transaction summary';
   constructor(private store: Store, private network: Networker) {}
 
-  async getVerificationDetail(priceId: string): Promise<void> {
-    try {
-      const response = await this.network.getVerificationDetails(priceId);
-      this.store.verification.getVerificationDetail(response.data.data);
-    } catch (e) {
-      console.log('error in verfication');
-    }
-  }
-
   async getOfferDetail(priceId: string): Promise<void> {
     try {
       const response = await this.network.getOfferDetails(priceId);

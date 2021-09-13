@@ -13,7 +13,7 @@ const VerificationReview: NextPage<Prop> = ({ priceId }) => {
   return (
     <div>
       <TransactionOverview priceId={priceId} />
-      <VerificationReviewViewDetail />
+      <VerificationReviewViewDetail priceId={priceId} />
     </div>
   );
 };

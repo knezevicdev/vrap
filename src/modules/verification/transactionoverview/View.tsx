@@ -21,7 +21,6 @@ const TransactionOverviewView: React.FC<Props> = ({
   const { offerDetail, loading } = store.offer;
 
   useEffect(() => {
-    viewModel.getVerificationDetail(priceId);
     viewModel.getOfferDetail(priceId);
   }, [priceId]);
 
