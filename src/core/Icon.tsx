@@ -169,6 +169,13 @@ export class Icons {
     path: `${ENVS.BASE_PATH}/icons/plaid-logo-gray.svg`,
   });
 
+  static readonly CHECK_MARK_GREEN_DOCS = new Icons('CHECK_MARK_GREEN', {
+    name: 'check-mark-green',
+    width: 15,
+    height: 25,
+    path: `${ENVS.BASE_PATH}/icons/check-mark-green.svg`,
+  });
+
   private constructor(
     protected key: string,
     public readonly value: {
