@@ -8,7 +8,7 @@ import SellDocumentReview from './components/SellDocumentReview';
 import ViewModel from './ViewModel';
 
 import { Button } from 'src/core/Button';
-
+import { theme } from 'src/core/themes/Vroom';
 interface Props {
   viewModel: ViewModel;
   priceId: string;
@@ -36,6 +36,8 @@ const VerificationReviewViewDetail: React.FC<Props> = ({
 const Container = styled.div`
   display: flex;
   flex-direction: column;
+  background-color: #ffffff;
+  width: 100%;
 `;
 
 const SubmitButton = styled(Button.Primary)``;

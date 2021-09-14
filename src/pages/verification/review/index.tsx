@@ -1,3 +1,4 @@
+import { Grid } from '@material-ui/core';
 import { observer } from 'mobx-react';
 import { NextPage, NextPageContext } from 'next';
 import React from 'react';
@@ -13,10 +14,16 @@ interface Prop {
 
 const VerificationReview: NextPage<Prop> = ({ priceId }) => {
   return (
-    <Page name={'Verification Review'}>
+    <Page name={'Sell Verification'} data-qa="SellVerificationContainer">
       <Contents>
-        <TransactionOverview priceId={priceId} />
-        <VerificationReviewViewDetail priceId={priceId} />
+        <VerificationContainer>
+          <Grid item sm={12} md={8}>
+            <VerificationReviewViewDetail priceId={priceId} />
+          </Grid>
+          <Grid item sm={12} md={4}>
+            <TransactionOverview priceId={priceId} />
+          </Grid>
+        </VerificationContainer>
       </Contents>
     </Page>
   );
@@ -24,8 +31,24 @@ const VerificationReview: NextPage<Prop> = ({ priceId }) => {
 
 const Contents = styled.div`
   display: flex;
-  flex-direction: column;
-  flex-grow: 1;
+  background-color: #f5f5f5;
+  padding-top: 20px;
+  min-height: calc(100vh - 130px);
+  justify-content: center;
+  @media (max-width: 420px) {
+    margin: 0;
+    width: 100%;
+  }
+  @media (max-width: 770px) {
+    padding-top: 0;
+  }
+`;
+
+const VerificationContainer = styled(Grid)`
+  display: flex;
+  @media (max-width: 770px) {
+    flex-direction: column-reverse;
+  }
 `;
 
 VerificationReview.getInitialProps = async (
