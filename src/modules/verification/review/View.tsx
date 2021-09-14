@@ -8,7 +8,7 @@ import SellDocumentReview from './components/SellDocumentReview';
 import ViewModel from './ViewModel';
 
 import { Button } from 'src/core/Button';
-import { theme } from 'src/core/themes/Vroom';
+
 interface Props {
   viewModel: ViewModel;
   priceId: string;
