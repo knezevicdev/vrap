@@ -5,7 +5,6 @@ import { datadogRum } from '@datadog/browser-rum';
 import { IdProvider } from '@radix-ui/react-id';
 import { ABSmartlyModel } from '@vroom-web/absmartly-integration';
 import { CatSDK } from '@vroom-web/cat-sdk';
-import { Client } from '@vroom-web/networking';
 import { Status as NetworkingStatus } from '@vroom-web/networking';
 import { CommonHandler } from '@vroom-web/shared-components';
 import { Brand, ThemeProvider } from '@vroom-web/ui';
@@ -27,7 +26,6 @@ import { analyticsHandler } from 'src/integrations/AnalyticsHandler';
 import { CatSDKContext } from 'src/integrations/CatSDKContext';
 import ENVS from 'src/integrations/Envs';
 import { RemoteConfigContext } from 'src/integrations/RemoteConfigContext';
-import { ClientContext } from 'src/networking/ClientContext';
 
 const firebaseConfig = {
   apiKey: 'AIzaSyAf2yVhnnxthUA5C4RqIqeDkIhk74EBkAA',
@@ -48,7 +46,6 @@ const { publicRuntimeConfig } = getConfig();
 class AppraisalApp extends App {
   private readonly remoteConfig: firebase.remoteConfig.RemoteConfig;
   private readonly catSDK: CatSDK;
-  private readonly client: Client;
   private readonly analyticsHandler: AnalyticsHandler;
   private readonly commonHandler: CommonHandler;
   appStore: AppStoreNetwork = new AppStoreNetwork();
@@ -64,7 +61,6 @@ class AppraisalApp extends App {
       serviceBasePath !== ''
         ? `${serviceBasePath}/api/weblead/attribution`
         : '';
-    this.client = new Client(gqlUrl, { interchangeUrl: serviceBasePath });
     this.commonHandler = new CommonHandler(gqlUrl, webLeadUrl);
 
     if (firebase.apps.length == 0) {
@@ -119,6 +115,9 @@ class AppraisalApp extends App {
       const sessionId = analyticsHandler.getAnonymousId();
       if (sessionId) {
         await abSmartlyModel?.initABSmartly(sessionId);
+        const offerFaceliftTest = abSmartlyModel?.inExperiment(
+          'ac-appraisal-offer-facelift'
+        );
         const stepperAbTest = abSmartlyModel?.inExperiment(
           'ac-appraisal-stepper-verification'
         );
@@ -127,6 +126,7 @@ class AppraisalApp extends App {
         );
         store.absmart.setABSmartTest(stepperAbTest);
         store.absmart.setFaceliftAbTest(faceliftAbTest);
+        store.absmart.setOfferFacelift(offerFaceliftTest);
         store.absmart.setLoading(false);
       } else {
         abSmartlyModel?.setStatus(NetworkingStatus.ERROR);
@@ -141,23 +141,21 @@ class AppraisalApp extends App {
     return (
       <>
         <GlobalStyle />
-        <ClientContext.Provider value={this.client}>
-          <AnalyticsHandlerContext.Provider value={this.analyticsHandler}>
-            <CatSDKContext.Provider value={this.catSDK}>
-              <RemoteConfigContext.Provider value={this.remoteConfig}>
-                <IdProvider>
-                  <ThemeProvider brand={Brand.VROOM}>
-                    <StyledComponentsThemeProvider theme={theme}>
-                      <AppStoreNetworkContext.Provider value={this.appStore}>
-                        <Component {...pageProps} />
-                      </AppStoreNetworkContext.Provider>
-                    </StyledComponentsThemeProvider>
-                  </ThemeProvider>
-                </IdProvider>
-              </RemoteConfigContext.Provider>
-            </CatSDKContext.Provider>
-          </AnalyticsHandlerContext.Provider>
-        </ClientContext.Provider>
+        <AnalyticsHandlerContext.Provider value={this.analyticsHandler}>
+          <CatSDKContext.Provider value={this.catSDK}>
+            <RemoteConfigContext.Provider value={this.remoteConfig}>
+              <IdProvider>
+                <ThemeProvider brand={Brand.VROOM}>
+                  <StyledComponentsThemeProvider theme={theme}>
+                    <AppStoreNetworkContext.Provider value={this.appStore}>
+                      <Component {...pageProps} />
+                    </AppStoreNetworkContext.Provider>
+                  </StyledComponentsThemeProvider>
+                </ThemeProvider>
+              </IdProvider>
+            </RemoteConfigContext.Provider>
+          </CatSDKContext.Provider>
+        </AnalyticsHandlerContext.Provider>
       </>
     );
   }

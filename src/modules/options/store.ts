@@ -1,4 +1,5 @@
 import { ABSmartlyModel } from '@vroom-web/absmartly-integration';
+import { isErrorResponse } from '@vroom-web/networking';
 import { action, makeObservable, observable, runInAction } from 'mobx';
 import { createContext, useContext } from 'react';
 
@@ -11,7 +12,10 @@ import {
 } from 'src/interfaces.d';
 import { MailingAddress } from 'src/interfaces.d';
 import { Poq, Verification } from 'src/networking/models/Price';
-import { Networker } from 'src/networking/Networker';
+import {
+  getVerificationDetails,
+  submitPaymentOptionSelected,
+} from 'src/networking/request';
 
 const defaultOptionsState: OptionStoreState = {
   mailingAddress: {
@@ -49,9 +53,11 @@ export interface OptionStoreState {
 export async function getInitialOptionsStoreState(
   priceId: string
 ): Promise<OptionStoreState> {
-  const networker = new Networker();
   try {
-    const verifyResponse = await networker.getVerificationDetails(priceId);
+    const verifyResponse = await getVerificationDetails(priceId);
+
+    if (isErrorResponse(verifyResponse)) throw verifyResponse;
+
     const verificationData: Verification = verifyResponse.data.data;
     const optionState = {
       mailingAddress: verificationData.owner_mailing_address,
@@ -69,15 +75,13 @@ export async function getInitialOptionsStoreState(
   }
 }
 
-export async function submitPaymentOptions(
+export async function submitPaymentOption(
   values: PaymentOverviewFormValues,
   priceId: string,
   address: MailingAddress
 ): Promise<void> {
-  const networker = new Networker();
-
   try {
-    await networker.submitPaymentOptions(values, priceId, address);
+    await submitPaymentOptionSelected(values, priceId, address);
   } catch (err) {
     console.log(JSON.stringify(err));
     return err;

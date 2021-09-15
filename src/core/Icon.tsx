@@ -176,6 +176,13 @@ export class Icons {
     path: `${ENVS.BASE_PATH}/icons/check-mark-green.svg`,
   });
 
+  static readonly VROOM_TRUCK = new Icons('VROOM_TRUCK', {
+    name: 'vroom-truck',
+    width: 640,
+    height: 225,
+    path: `${ENVS.BASE_PATH}/icons/vroom-truck.svg`,
+  });
+
   private constructor(
     protected key: string,
     public readonly value: {

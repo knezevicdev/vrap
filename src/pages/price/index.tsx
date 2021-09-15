@@ -1,4 +1,5 @@
 import { IncomingMessage } from 'http';
+import { observer } from 'mobx-react';
 import { GetServerSideProps, NextPage } from 'next';
 import { useRouter } from 'next/router';
 import React from 'react';
@@ -6,6 +7,7 @@ import styled from 'styled-components';
 
 import AsyncIndicator from 'src/components/AsyncIndicator';
 import { Header } from 'src/components/Header';
+import { useAppStore } from 'src/context';
 import Footer from 'src/core/Footer';
 import PriceInfo from 'src/modules/price';
 import { PriceStore } from 'src/modules/price/store';
@@ -16,14 +18,17 @@ const Price: NextPage = () => {
   const router = useRouter();
   const priceId = router.query.priceId as string;
   const store = new PriceStore(priceId);
+  const appStore = useAppStore();
 
   return (
     <Page name="Price">
       <Header />
-      <Contents>
-        <PriceInfo store={store} />
-        <Questions />
-      </Contents>
+      {!appStore.store.absmart.loading && (
+        <Contents>
+          <PriceInfo store={store} />
+          <Questions />
+        </Contents>
+      )}
       <Footer />
       <AsyncIndicator store={store} />
     </Page>
@@ -70,4 +75,4 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   return { props: {} };
 };
 
-export default Price;
+export default observer(Price);

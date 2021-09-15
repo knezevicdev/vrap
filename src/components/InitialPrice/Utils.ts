@@ -27,3 +27,25 @@ export const parsedDateTime = (dateTime: string): string => {
 
   return `${month} ${day}, ${year}`;
 };
+
+const setDay = (day: number): string => {
+  const leftOver = day % 10;
+  if (day !== 11 && leftOver === 1) {
+    return `${day}st`;
+  } else if (day !== 12 && leftOver === 2) {
+    return `${day}nd`;
+  } else if (day !== 13 && leftOver === 3) {
+    return `${day}rd`;
+  } else {
+    return `${day}th`;
+  }
+};
+
+export const parseDate = (datetime: string): string => {
+  const parsedDate = new Date(datetime);
+
+  const month = MONTHS[parsedDate.getUTCMonth()].label;
+  const day = parsedDate.getUTCDate();
+
+  return `${month} ${setDay(day)}`;
+};

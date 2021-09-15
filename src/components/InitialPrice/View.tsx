@@ -40,8 +40,7 @@ const InitialPriceView: React.FC<Props> = ({ viewModel }) => {
     viewModel.onPageLoad();
 
     return (): void => document.removeEventListener('scroll', handleScroll);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [viewModel]);
 
   return (
     <StyledContainer>
@@ -49,16 +48,17 @@ const InitialPriceView: React.FC<Props> = ({ viewModel }) => {
       <Hero.One>{viewModel.price}</Hero.One>
       <StyledIcon icon={Icons.CAR_OFFER} />
 
-      <div>
-        <Body.Regular>
+      <Content>
+        <ContentText>
           {viewModel.offerExpPreDate}
           <b>{viewModel.goodUntil}</b>
-        </Body.Regular>
-        <div>
-          <Body.Regular>{viewModel.offerExpPostDate}</Body.Regular>
-          <Title.Three>{viewModel.miles}</Title.Three>
-        </div>
-      </div>
+          {viewModel.offerExpPostDate}
+          <b>{viewModel.miles}</b>
+          {viewModel.the}
+          <b>{viewModel.titleName}</b>
+          {viewModel.yourName}
+        </ContentText>
+      </Content>
 
       <StyledButton id="priceDetails" onClick={viewModel.onContinueClick}>
         {viewModel.continuePrice}
@@ -129,6 +129,24 @@ const StickyFooter = styled.div`
   left: 0;
   position: fixed;
   width: 100%;
+`;
+
+const Content = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: center;
+`;
+
+const ContentText = styled(Body.Regular)`
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  max-width: 500px;
+  flex-wrap: wrap;
+  > b {
+    margin: 0 3px;
+  }
 `;
 
 export default observer(InitialPriceView);
