@@ -6,6 +6,7 @@ export class AppStore {
   abSmartlyModel?: ABSmartlyModel;
   stepperAbTest = false;
   abTestFacelift = false;
+  offerFacelift = false;
   loading = true;
 
   constructor() {
@@ -22,6 +23,10 @@ export class AppStore {
 
   setFaceliftAbTest = (value: boolean): void => {
     this.abTestFacelift = value;
+  };
+
+  setOfferFacelift = (value: boolean): void => {
+    this.offerFacelift = value;
   };
 
   setLoading = (value: boolean): void => {

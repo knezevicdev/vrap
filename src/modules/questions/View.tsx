@@ -1,3 +1,4 @@
+import { observer } from 'mobx-react';
 import React from 'react';
 import styled from 'styled-components';
 
@@ -5,31 +6,34 @@ import QuestionsViewModel from './ViewModel';
 
 import Icon, { Icons } from 'src/core/Icon';
 import { Hero, Link, Title } from 'src/core/Typography';
+import { useAppStore } from 'src/store/appStore';
 
 export interface Props {
   viewModel: QuestionsViewModel;
 }
 
 const View: React.FC<Props> = ({ viewModel }) => {
+  const appStore = useAppStore();
+  const className = appStore.offerFacelift ? 'abtest' : '';
   return (
     <div>
       <StyledHero>{viewModel.questions}</StyledHero>
       <StyledContainer>
-        <IconSection>
+        <IconSection className={className}>
           <Icon icon={Icons.FAQ} />
           <StyledLink href={viewModel.faqLink}>
             <StyledTitle>{viewModel.helpCenter}</StyledTitle>
           </StyledLink>
         </IconSection>
         <VerticalDivider />
-        <IconSection>
+        <IconSection className={className}>
           <Icon icon={Icons.EMAIL} />
           <StyledLink href={viewModel.emailLink}>
             <StyledTitle>{viewModel.sendMessage}</StyledTitle>
           </StyledLink>
         </IconSection>
         <VerticalDivider />
-        <IconSection>
+        <IconSection className={className}>
           <Icon icon={Icons.PHONE} />
           <StyledLink href={viewModel.phoneLink}>
             <StyledTitle>{viewModel.phoneNumber}</StyledTitle>
@@ -72,6 +76,14 @@ const IconSection = styled.div`
   align-items: center;
   display: flex;
   padding: 0 30px;
+  &.abtest {
+    @media (max-width: 599px) {
+      margin-bottom: 32px;
+      :last-child {
+        margin-bottom: 0;
+      }
+    }
+  }
 `;
 
 const VerticalDivider = styled.div`
@@ -85,4 +97,4 @@ const VerticalDivider = styled.div`
   }
 `;
 
-export default View;
+export default observer(View);

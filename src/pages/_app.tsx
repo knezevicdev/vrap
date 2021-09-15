@@ -114,6 +114,9 @@ class AppraisalApp extends App {
       const sessionId = analyticsHandler.getAnonymousId();
       if (sessionId) {
         await abSmartlyModel?.initABSmartly(sessionId);
+        const offerFaceliftTest = abSmartlyModel?.inExperiment(
+          'ac-appraisal-offer-facelift'
+        );
         const stepperAbTest = abSmartlyModel?.inExperiment(
           'ac-appraisal-stepper-verification'
         );
@@ -122,6 +125,7 @@ class AppraisalApp extends App {
         );
         this.appStore.setABSmartTest(stepperAbTest);
         this.appStore.setFaceliftAbTest(faceliftAbTest);
+        this.appStore.setOfferFacelift(offerFaceliftTest);
         this.appStore.setLoading(false);
       } else {
         abSmartlyModel?.setStatus(NetworkingStatus.ERROR);

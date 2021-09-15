@@ -5,7 +5,6 @@ import styled from 'styled-components';
 import InitialPriceViewModel from './ViewModel';
 
 import { Button } from 'src/core/Button';
-import Icon, { Icons } from 'src/core/Icon';
 import { Body, Hero, Title } from 'src/core/Typography';
 
 interface Props {
@@ -44,41 +43,38 @@ const InitialPriceView: React.FC<Props> = ({ viewModel }) => {
 
   return (
     <StyledContainer>
-      <Hero.Four>{viewModel.yourPrice}</Hero.Four>
-      <Hero.One>{viewModel.price}</Hero.One>
-      <StyledIcon icon={Icons.CAR_OFFER} />
-
+      <TitlePrice>{viewModel.yourPriceAB}</TitlePrice>
+      <StyledPrice>
+        {viewModel.price}
+        <span>{viewModel.star}</span>
+      </StyledPrice>
       <Content>
         <ContentText>
           {viewModel.offerExpPreDate}
-          <b>{viewModel.goodUntil}</b>
+          <b>{viewModel.goodUntilMonthDay}</b>
           {viewModel.offerExpPostDate}
           <b>{viewModel.miles}</b>
-          {viewModel.the}
-          <b>{viewModel.titleName}</b>
-          {viewModel.yourName}
         </ContentText>
       </Content>
+      <ListContainer>
+        <ListTitle>{viewModel.whatYoullNeed}</ListTitle>
+        {viewModel.whatYouNeedOptions.map((item, i) => {
+          return (
+            <ListItem key={i}>
+              <Dot />
+              {item}
+            </ListItem>
+          );
+        })}
+      </ListContainer>
 
       <StyledButton id="priceDetails" onClick={viewModel.onContinueClick}>
         {viewModel.continuePrice}
       </StyledButton>
 
       <StyledLegal>
-        <Body.Small>{viewModel.legalDocumentation}</Body.Small>
+        <LegalText>{viewModel.legalDocumentation}</LegalText>
       </StyledLegal>
-
-      <StickyFooter id="stickyFooter">
-        <StickyContent>
-          <StickyDetails>
-            <Title.Four>{viewModel.yourPriceCamel}</Title.Four>
-            <Hero.Four>{viewModel.price}</Hero.Four>
-          </StickyDetails>
-          <FullButton onClick={viewModel.onContinueClick}>
-            {viewModel.continuePrice}
-          </FullButton>
-        </StickyContent>
-      </StickyFooter>
     </StyledContainer>
   );
 };
@@ -86,10 +82,63 @@ const InitialPriceView: React.FC<Props> = ({ viewModel }) => {
 const StyledContainer = styled.div`
   height: 100%;
   text-align: center;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 `;
 
-const StyledIcon = styled(Icon)`
-  padding: 20px;
+const TitlePrice = styled(Title.One)`
+  font-weight: 600;
+  line-height: 40px;
+`;
+
+const StyledPrice = styled(Hero.One)`
+  font-weight: 800;
+  line-height: 64px;
+  margin: 8px 0;
+  position: relative;
+  > span {
+    font-family: Calibre;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 18px;
+    line-height: 24px;
+    position: absolute;
+  }
+`;
+
+const ListTitle = styled(Title.Two)`
+  font-weight: 600;
+  line-height: 32px;
+  text-align: start;
+  margin-bottom: 8px;
+`;
+
+const Dot = styled.div`
+  height: 6px;
+  width: 6px;
+  border-radius: 50%;
+  background-color: #041022;
+  margin: 0 8px;
+`;
+
+const ListContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  margin-top: 32px;
+`;
+
+const ListItem = styled(Body.Regular)`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  line-height: 24px;
+  margin-bottom: 8px;
+  :last-child {
+    margin-bottom: 0;
+  }
 `;
 
 const StyledButton = styled(Button.Primary)`
@@ -99,36 +148,15 @@ const StyledButton = styled(Button.Primary)`
   width: 100%;
 `;
 
-const FullButton = styled(Button.Primary)`
-  margin: auto;
-  width: 100%;
-`;
-
-const StickyDetails = styled.div`
-  align-items: center;
-  display: flex;
-  justify-content: space-between;
-  padding: 10px 0;
-`;
-
-const StickyContent = styled.div`
-  padding: 5px 20px;
-`;
-
 const StyledLegal = styled.div`
   max-width: 500px;
-  text-align: left;
+  text-align: center;
   margin: auto;
 `;
 
-const StickyFooter = styled.div`
-  background: white;
-  border-top: 2px solid #d6d7da;
-  bottom: 0;
-  display: none;
-  left: 0;
-  position: fixed;
-  width: 100%;
+const LegalText = styled(Body.Small)`
+  font-size: 10px;
+  line-height: 12px;
 `;
 
 const Content = styled.div`
@@ -137,13 +165,14 @@ const Content = styled.div`
   justify-content: center;
 `;
 
-const ContentText = styled(Body.Regular)`
+const ContentText = styled(Body.Small)`
   width: 100%;
   display: flex;
   flex-direction: row;
   justify-content: center;
   max-width: 500px;
   flex-wrap: wrap;
+  line-height: 20px;
   > b {
     margin: 0 3px;
   }
