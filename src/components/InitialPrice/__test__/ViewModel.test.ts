@@ -21,8 +21,8 @@ describe('InitialPrice Test', () => {
     expect(viewModel.yourPriceCamel).toBe(`Your Price:`);
     expect(viewModel.continuePrice).toBe(`continue`);
     expect(viewModel.offerExpPreDate).toBe(`This price expires on `);
-    expect(viewModel.offerExpPostDate).toBe(` or upon hitting `);
-    expect(viewModel.miles).toBe(`250 miles`);
+    expect(viewModel.offerExpPostDate).toBe(` or upon driving an additional `);
+    expect(viewModel.miles).toBe(`250 miles.`);
     expect(viewModel.price).toBe('$0');
     expect(viewModel.priceId).toBe(``);
     expect(viewModel.goodUntil).toBe('January 1, 2020');
