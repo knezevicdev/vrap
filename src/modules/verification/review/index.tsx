@@ -10,8 +10,8 @@ interface Props {
 }
 
 const VerificationReview: React.FC<Props> = ({ priceId }) => {
-  const { store, network } = useAppStore();
-  const viewModel = new ViewModel(store, network);
+  const { store } = useAppStore();
+  const viewModel = new ViewModel(store);
 
   return <View viewModel={viewModel} priceId={priceId} />;
 };

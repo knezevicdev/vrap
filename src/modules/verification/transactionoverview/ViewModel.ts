@@ -1,13 +1,13 @@
-import { Networker } from 'src/networking/Networker';
+import { getOfferDetails } from 'src/networking/request';
 import Store from 'src/store';
 
 export default class TransactionOverviewViewModel {
   readonly title: string = 'transaction summary';
-  constructor(private store: Store, private network: Networker) {}
+  constructor(private store: Store) {}
 
   async getOfferDetail(priceId: string): Promise<void> {
     try {
-      const response = await this.network.getOfferDetails(priceId);
+      const response = await getOfferDetails(priceId);
       const data = response.data.data[0];
       const offerDetailData = {
         make: data.Make__c,
