@@ -19,12 +19,10 @@ export interface PaymentOverviewFormValues {
 }
 
 export interface PlaidTokenResp {
-  data: {
-    getLinkToken: {
-      LinkToken: string;
-      Expiration: string;
-      RequestId: string;
-    };
+  getLinkToken: {
+    LinkToken: string;
+    Expiration: string;
+    RequestId: string;
   };
 }
 

@@ -10,6 +10,13 @@ const shortHash = childProcess
 
 const basePath = '/appraisal';
 
+const endPointSelector = () => {
+  if (process.env.NODE_ENV === 'production') {
+    return '/gql';
+  }
+  return `${basePath}/api/gql`;
+};
+
 const config = {
   basePath,
   distDir: `.next/${shortHash}`,
@@ -30,11 +37,14 @@ const config = {
       process.env.NEXT_PUBLIC_STATIC_ASSETS_HOST_URL,
     NEXT_PUBLIC_VROOM_URL: process.env.NEXT_PUBLIC_VROOM_URL,
     NEXT_PUBLIC_INTERCHANGE_URL: process.env.NEXT_PUBLIC_INTERCHANGE_URL,
+    NEXT_PUBLIC_GQL_URL: process.env.NEXT_PUBLIC_GQL_URL,
+    GQL_PROXY_URL: endPointSelector(),
   },
   serverRuntimeConfig: {
     // Will only be available on the server side
     SEGMENT_WRITE_KEY: process.env.SEGMENT_WRITE_KEY,
     INTERCHANGE_PROXY_TARGET: process.env.INTERCHANGE_PROXY_TARGET,
+    GQL_PROXY_TARGET: process.env.GQL_PROXY_TARGET,
   },
   /* Custom webpack configuration. */
   webpack: (config) => {
@@ -42,6 +52,12 @@ const config = {
     config.module.rules.push({
       test: /\.svg$/,
       use: ['@svgr/webpack', 'url-loader'],
+    });
+    /* Enable graphql imports */
+    config.module.rules.push({
+      test: /\.(graphql|gql)$/,
+      exclude: /node_modules/,
+      loader: 'graphql-tag/loader',
     });
     /* Enable imports relative to the project root. */
     config.resolve.modules.push(__dirname);

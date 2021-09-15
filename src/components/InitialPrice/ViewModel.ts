@@ -30,17 +30,18 @@ class InitialPriceViewModel {
     'Vehicle registration',
     'Photo of your odometer',
   ];
-  constructor(private store: PriceStore) {
+
+  constructor(private store: PriceStore, analyticsHandler: AnalyticsHandler) {
     const price = store.price;
     this.price = displayCurrency(price.price);
     this.priceId = price.priceId;
     this.goodUntil = parsedDateTime(price.goodUntil);
     this.goodUntilMonthDay = parseDate(price.goodUntil);
-    this.analyticsHandler = new AnalyticsHandler();
+    this.analyticsHandler = analyticsHandler;
   }
 
   onContinueClick = async (): Promise<void> => {
-    await this.store.submitPriceResponse();
+    await this.store.submitPriceAccept();
     this.analyticsHandler.trackContinueClick();
     const url = `/sell/verification/owner/${this.priceId}`;
     window.location.href = url;

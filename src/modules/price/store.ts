@@ -1,8 +1,13 @@
+import { isErrorResponse } from '@vroom-web/networking';
 import { action, makeObservable, observable } from 'mobx';
 
 import { AsyncStatus, Store, StoreStatus } from 'src/interfaces.d';
 import { Price } from 'src/networking/models/Price';
-import { Networker, PriceData } from 'src/networking/Networker';
+import {
+  getOfferDetails,
+  PriceData,
+  submitPriceResponse,
+} from 'src/networking/request';
 
 type Nullable<T> = T | null;
 
@@ -49,8 +54,6 @@ export const defaultPriceState: PriceStoreState = {
 };
 
 export class PriceStore implements Store {
-  private readonly networker = new Networker();
-
   price = defaultPriceState;
   storeStatus = StoreStatus.Initial;
   asyncStatus = AsyncStatus.Idle;
@@ -61,54 +64,53 @@ export class PriceStore implements Store {
       storeStatus: observable,
       asyncStatus: observable,
       getOfferDetails: action,
-      submitPriceResponse: action,
+      submitPriceAccept: action,
     });
     this.getOfferDetails(priceId);
   }
 
-  getOfferDetails = (priceId: string): void => {
-    this.networker
-      .getOfferDetails(priceId)
-      .then((response) => {
-        const prices: Price[] = response.data.data;
-        if (prices.length) {
-          const price = prices[0];
-          const priceMapFromResponse = {} as PriceStoreState;
-          priceMapFromResponse.active = price.active;
-          priceMapFromResponse.automatedAppraisal = price.automated_appraisal;
-          priceMapFromResponse.created = price.created;
-          priceMapFromResponse.goodUntil = price.Good_Until__c;
-          priceMapFromResponse.make = price.Make__c;
-          priceMapFromResponse.miles = price.miles;
-          priceMapFromResponse.model = price.Model__c;
-          priceMapFromResponse.newOffer = price.new_offer;
-          priceMapFromResponse.price = price.Price__c;
-          priceMapFromResponse.priceId = price.ID;
-          priceMapFromResponse.priceStatus = price.offer_status;
-          priceMapFromResponse.taxCreditSavings = price.tax_credit_savings;
-          priceMapFromResponse.trim = price.Trim__c;
-          priceMapFromResponse.userEmail = price.user_email;
-          priceMapFromResponse.verificationUrl = price.verification_url;
-          priceMapFromResponse.vin = price.VIN__c;
-          priceMapFromResponse.xkeId = price.offer_id;
-          priceMapFromResponse.year = price.Year__c;
+  getOfferDetails = async (priceId: string): Promise<void> => {
+    const response = await getOfferDetails(priceId);
 
-          // This actually creates "separate" updates
-          // - Price updates and refreshes views
-          // - Status updates and refreshes views
-          // Just a heads up this can cause race conditions
-          this.price = priceMapFromResponse;
-          this.storeStatus = StoreStatus.Success;
-        }
-      })
-      .catch((error) => {
-        this.storeStatus = StoreStatus.Error;
-        this.asyncStatus = AsyncStatus.Idle;
-        console.log(JSON.stringify(error));
-      });
+    if (isErrorResponse(response)) {
+      this.storeStatus = StoreStatus.Error;
+      this.asyncStatus = AsyncStatus.Idle;
+      console.log(JSON.stringify(Error));
+    } else {
+      const prices: Price[] = response.data.data;
+      if (prices.length) {
+        const price = prices[0];
+        const priceMapFromResponse = {} as PriceStoreState;
+        priceMapFromResponse.active = price.active;
+        priceMapFromResponse.automatedAppraisal = price.automated_appraisal;
+        priceMapFromResponse.created = price.created;
+        priceMapFromResponse.goodUntil = price.Good_Until__c;
+        priceMapFromResponse.make = price.Make__c;
+        priceMapFromResponse.miles = price.miles;
+        priceMapFromResponse.model = price.Model__c;
+        priceMapFromResponse.newOffer = price.new_offer;
+        priceMapFromResponse.price = price.Price__c;
+        priceMapFromResponse.priceId = price.ID;
+        priceMapFromResponse.priceStatus = price.offer_status;
+        priceMapFromResponse.taxCreditSavings = price.tax_credit_savings;
+        priceMapFromResponse.trim = price.Trim__c;
+        priceMapFromResponse.userEmail = price.user_email;
+        priceMapFromResponse.verificationUrl = price.verification_url;
+        priceMapFromResponse.vin = price.VIN__c;
+        priceMapFromResponse.xkeId = price.offer_id;
+        priceMapFromResponse.year = price.Year__c;
+
+        // This actually creates "separate" updates
+        // - Price updates and refreshes views
+        // - Status updates and refreshes views
+        // Just a heads up this can cause race conditions
+        this.price = priceMapFromResponse;
+        this.storeStatus = StoreStatus.Success;
+      }
+    }
   };
 
-  submitPriceResponse = async (): Promise<void> => {
+  submitPriceAccept = async (): Promise<void> => {
     const priceData: PriceData = {
       priceId: this.price.priceId,
       accepted: true,
@@ -117,7 +119,7 @@ export class PriceStore implements Store {
     this.asyncStatus = AsyncStatus.Fetching;
 
     try {
-      await this.networker.submitPriceResponse(priceData);
+      await submitPriceResponse(priceData);
     } catch (err) {
       console.log(JSON.stringify(err));
       return err;

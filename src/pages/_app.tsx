@@ -5,7 +5,6 @@ import { datadogRum } from '@datadog/browser-rum';
 import { IdProvider } from '@radix-ui/react-id';
 import { ABSmartlyModel } from '@vroom-web/absmartly-integration';
 import { CatSDK } from '@vroom-web/cat-sdk';
-import { Client } from '@vroom-web/networking';
 import { Status as NetworkingStatus } from '@vroom-web/networking';
 import { CommonHandler } from '@vroom-web/shared-components';
 import { Brand, ThemeProvider } from '@vroom-web/ui';
@@ -26,7 +25,6 @@ import { analyticsHandler } from 'src/integrations/AnalyticsHandler';
 import { CatSDKContext } from 'src/integrations/CatSDKContext';
 import ENVS from 'src/integrations/Envs';
 import { RemoteConfigContext } from 'src/integrations/RemoteConfigContext';
-import { ClientContext } from 'src/networking/ClientContext';
 import { AppStore, AppStoreContext } from 'src/store/appStore';
 
 const firebaseConfig = {
@@ -48,7 +46,6 @@ const { publicRuntimeConfig } = getConfig();
 class AppraisalApp extends App {
   private readonly remoteConfig: firebase.remoteConfig.RemoteConfig;
   private readonly catSDK: CatSDK;
-  private readonly client: Client;
   private readonly analyticsHandler: AnalyticsHandler;
   private readonly commonHandler: CommonHandler;
   appStore: AppStore = new AppStore();
@@ -64,7 +61,6 @@ class AppraisalApp extends App {
       serviceBasePath !== ''
         ? `${serviceBasePath}/api/weblead/attribution`
         : '';
-    this.client = new Client(gqlUrl, { interchangeUrl: serviceBasePath });
     this.commonHandler = new CommonHandler(gqlUrl, webLeadUrl);
 
     if (firebase.apps.length == 0) {
@@ -144,23 +140,21 @@ class AppraisalApp extends App {
     return (
       <>
         <GlobalStyle />
-        <ClientContext.Provider value={this.client}>
-          <AnalyticsHandlerContext.Provider value={this.analyticsHandler}>
-            <CatSDKContext.Provider value={this.catSDK}>
-              <RemoteConfigContext.Provider value={this.remoteConfig}>
-                <IdProvider>
-                  <ThemeProvider brand={Brand.VROOM}>
-                    <StyledComponentsThemeProvider theme={theme}>
-                      <AppStoreContext.Provider value={this.appStore}>
-                        <Component {...pageProps} />
-                      </AppStoreContext.Provider>
-                    </StyledComponentsThemeProvider>
-                  </ThemeProvider>
-                </IdProvider>
-              </RemoteConfigContext.Provider>
-            </CatSDKContext.Provider>
-          </AnalyticsHandlerContext.Provider>
-        </ClientContext.Provider>
+        <AnalyticsHandlerContext.Provider value={this.analyticsHandler}>
+          <CatSDKContext.Provider value={this.catSDK}>
+            <RemoteConfigContext.Provider value={this.remoteConfig}>
+              <IdProvider>
+                <ThemeProvider brand={Brand.VROOM}>
+                  <StyledComponentsThemeProvider theme={theme}>
+                    <AppStoreContext.Provider value={this.appStore}>
+                      <Component {...pageProps} />
+                    </AppStoreContext.Provider>
+                  </StyledComponentsThemeProvider>
+                </ThemeProvider>
+              </IdProvider>
+            </RemoteConfigContext.Provider>
+          </CatSDKContext.Provider>
+        </AnalyticsHandlerContext.Provider>
       </>
     );
   }
