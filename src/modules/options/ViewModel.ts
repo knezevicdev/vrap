@@ -4,7 +4,7 @@ import { OptionsStore } from './store';
 import AnalyticsHandler from 'src/integrations/AnalyticsHandler';
 import { MailingAddress } from 'src/interfaces.d';
 import { PaymentOverviewFormValues } from 'src/interfaces.d';
-import { submitPaymentOptions } from 'src/modules/options/store';
+import { submitPaymentOption } from 'src/modules/options/store';
 
 class OptionsViewModel {
   private readonly store: OptionsStore;
@@ -17,10 +17,14 @@ class OptionsViewModel {
   readonly submit: string = 'submit';
   readonly submitting: string = 'submitting';
 
-  constructor(store: OptionsStore, ddStore: DirectDepositStore) {
+  constructor(
+    store: OptionsStore,
+    ddStore: DirectDepositStore,
+    analyticsHandler: AnalyticsHandler
+  ) {
     this.store = store;
     this.ddStore = ddStore;
-    this.analyticsHandler = new AnalyticsHandler();
+    this.analyticsHandler = analyticsHandler;
   }
 
   onPageLoad = (): void => {
@@ -119,7 +123,7 @@ class OptionsViewModel {
     };
 
     const mailingAddress = calcMailingAddress();
-    submitPaymentOptions(values, this.store.priceId, mailingAddress);
+    submitPaymentOption(values, this.store.priceId, mailingAddress);
 
     if (
       this.store.showDD === 'Manual Input' ||

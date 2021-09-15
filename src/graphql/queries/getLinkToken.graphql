@@ -1,0 +1,7 @@
+query GET_PLAID_TOKEN($userId: String!, $source: String) {
+  getLinkToken(userId: $userId, source: $source) {
+    LinkToken,
+    Expiration,
+    RequestId
+  }
+}

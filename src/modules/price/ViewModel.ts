@@ -10,6 +10,10 @@ class PriceViewModel {
   onPageLoad = (): void => {
     this.analyticsHandler.trackPriceViewed();
   };
+
+  get getAnalyticHandler(): AnalyticsHandler {
+    return this.analyticsHandler;
+  }
 }
 
 export default PriceViewModel;
