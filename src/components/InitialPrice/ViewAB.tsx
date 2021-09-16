@@ -73,7 +73,10 @@ const InitialPriceView: React.FC<Props> = ({ viewModel }) => {
       </StyledButton>
 
       <StyledLegal>
-        <LegalText>{viewModel.legalDocumentation}</LegalText>
+        <LegalText>
+          {viewModel.star}
+          {viewModel.legalDocumentation}
+        </LegalText>
       </StyledLegal>
     </StyledContainer>
   );
