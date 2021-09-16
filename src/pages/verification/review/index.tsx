@@ -4,6 +4,7 @@ import { NextPage, NextPageContext } from 'next';
 import React from 'react';
 import styled from 'styled-components';
 
+import { Header } from 'src/components/Header';
 import VerificationReviewViewDetail from 'src/modules/verification/review';
 import TransactionOverview from 'src/modules/verification/transactionoverview';
 import Page from 'src/Page';
@@ -15,14 +16,15 @@ interface Prop {
 const VerificationReview: NextPage<Prop> = ({ priceId }) => {
   return (
     <Page name={'Sell Verification'} data-qa="SellVerificationContainer">
+      <Header />
       <Contents>
         <VerificationContainer>
-          <Grid item sm={12} md={8}>
+          <ContentContainer item sm={12} md={8}>
             <VerificationReviewViewDetail priceId={priceId} />
-          </Grid>
-          <Grid item sm={12} md={4}>
+          </ContentContainer>
+          <ContentContainer item sm={12} md={4}>
             <TransactionOverview priceId={priceId} />
-          </Grid>
+          </ContentContainer>
         </VerificationContainer>
       </Contents>
     </Page>
@@ -42,11 +44,21 @@ const Contents = styled.div`
   @media (max-width: 770px) {
     padding-top: 0;
   }
+  @media (max-width: 1280px) {
+    width: calc(100% - 100px);
+  }
+`;
+
+const ContentContainer = styled(Grid)`
+  padding: 0 10px;
 `;
 
 const VerificationContainer = styled(Grid)`
   display: flex;
   width: 100%;
+  max-width: 1280px;
+  margin-left: auto;
+  margin-right: auto;
   @media (max-width: 770px) {
     flex-direction: column-reverse;
   }

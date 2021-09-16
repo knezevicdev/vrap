@@ -38,6 +38,8 @@ const Container = styled.div`
   flex-direction: column;
   background-color: #ffffff;
   width: 100%;
+  padding: 0 10px;
+  margin: 0 10px;
 `;
 
 const SubmitButton = styled(Button.Primary)``;

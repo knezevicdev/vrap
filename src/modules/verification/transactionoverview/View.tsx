@@ -48,11 +48,13 @@ const InfoContainer = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
+  max-width: 450px;
   border-radius: 0;
   background-color: #ffffff;
   box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.08);
   border: solid 1px #d6d7da;
   padding: 20px;
+  margin: 0 10px;
 `;
 
 const InfoTitle = styled.div`
