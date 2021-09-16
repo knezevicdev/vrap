@@ -46,6 +46,7 @@ const Contents = styled.div`
 
 const VerificationContainer = styled(Grid)`
   display: flex;
+  width: 100%;
   @media (max-width: 770px) {
     flex-direction: column-reverse;
   }
