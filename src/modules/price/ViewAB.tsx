@@ -76,6 +76,7 @@ const IconContainer = styled.div`
     position: relative;
     height: 250px;
     width: 100%;
+    overflow: hidden;
     > img {
       position: absolute;
       top: 0;
