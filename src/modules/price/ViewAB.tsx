@@ -56,6 +56,7 @@ const PriceDetailContainer = styled.div`
   width: 100%;
   @media (max-width: 768px) {
     padding: 24px;
+    margin-top: 8px;
   }
 `;
 
@@ -67,7 +68,7 @@ const NextStepsContainer = styled.div`
     padding: 30px 20px;
   }
   @media (max-width: 420px) {
-    padding: 30px 0;
+    padding: 48px 0 64px 0;
   }
 `;
 
