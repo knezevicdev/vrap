@@ -4,8 +4,10 @@ import styled from 'styled-components';
 
 import ViewModel from './ViewModel';
 
+import { Title } from 'src/core/Typography';
 import Store from 'src/store';
 import { displaySecureSSN } from 'src/utils';
+
 interface Props {
   viewModel: ViewModel;
   store: Store;
@@ -19,10 +21,11 @@ interface Props {
 const PayoffInfoReview: React.FC<Props> = ({ viewModel, store }) => {
   const { verificationDetail } = store.verification;
   return (
-    <>
-      <Subtitle>
-        {viewModel.payOfftitle} <Edit onClick={() => console.log(3)}>Edit</Edit>
-      </Subtitle>
+    <Container>
+      <SubTitleContainer>
+        <Subtitle>{viewModel.payOfftitle}</Subtitle>
+        <Edit onClick={() => console.log(3)}>Edit</Edit>
+      </SubTitleContainer>
 
       <Row>
         <Info>
@@ -44,55 +47,80 @@ const PayoffInfoReview: React.FC<Props> = ({ viewModel, store }) => {
           <Field>{displaySecureSSN(verificationDetail?.last_four_ssn)}</Field>
         </Info>
       </Row>
-    </>
+    </Container>
   );
 };
 
-const Subtitle = styled.h2`
-  /* ${(props) => props.theme.typography.sectionTitleSemi3} */
-  text-align: left;
+const Container = styled.div`
+  padding: 20px 0 30px 0;
 `;
 
-// const SectionTitle = styled.h3`
-//   ${(props) => props.theme.typography.supportTextBold}
-//   text-align: left;
-//   margin: 20px 0;
-// `;
+const SubTitleContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  height: 26px;
+`;
+
+const Subtitle = styled.div`
+  font-family: 'Calibre';
+  font-style: normal;
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 26px;
+  letter-spacing: 0.25px;
+  color: #041022;
+`;
 
 const Row = styled.div`
   display: flex;
-  margin-bottom: 10px;
-  /* ${(props) => props.theme.media.lte('mobile')} {
+  margin-top: 15px;
+  @media (max-width: 767px) {
     flex-direction: column;
-    margin-bottom: 0;
-  } */
+    margin-top: 0;
+  }
 `;
 
 const Info = styled.div`
   display: flex;
   flex-direction: column;
   width: 33%;
-  /* ${(props) => props.theme.media.lte('mobile')} {
+  @media (max-width: 767px) {
     width: 100%;
-    padding-bottom: 10px;
-  } */
+    margin-bottom: 10px;
+  }
 `;
 
 const Label = styled.span`
-  /* ${(props) => props.theme.typography.h14()}
-  color: ${(props) => props.theme.colors.dark}; */
+  font-family: 'Calibre';
+  font-style: normal;
+  font-weight: normal;
+  font-size: 13px;
+  line-height: 16px;
+  letter-spacing: 0.35px;
+  color: #041022;
 `;
 
 const Field = styled.span`
+  font-family: 'Calibre';
+  font-style: normal;
+  font-weight: normal;
   font-size: 18px;
-  line-height: 1.39;
+  line-height: 25px;
   letter-spacing: 0.25px;
+  color: #041022;
+  word-wrap: break-word;
 `;
 
-const Edit = styled.span`
-  /* ${(props) => props.theme.typography.h10()}
-  color: ${(props) => props.theme.colors.vroomRed}; */
+const Edit = styled(Title.Four)`
+  margin-left: 5px;
   cursor: pointer;
+  font-style: normal;
+  font-weight: normal;
+  line-height: 22px;
+  letter-spacing: 0.25px;
+  color: #e7131a;
+  padding-top: 4px;
 `;
 
 export default observer(PayoffInfoReview);

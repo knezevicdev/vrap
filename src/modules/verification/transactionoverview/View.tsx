@@ -4,6 +4,7 @@ import styled from 'styled-components';
 
 import ViewModel from './ViewModel';
 
+import { Hero } from 'src/core/Typography';
 import Store from 'src/store';
 import { displayCurrency } from 'src/utils';
 
@@ -26,7 +27,9 @@ const TransactionOverviewView: React.FC<Props> = ({
 
   return (
     <InfoContainer data-qa="OfferInfoCardContainer">
-      <InfoTitle>{viewModel.title}</InfoTitle>
+      <InfoTitle>
+        <InfoTitleText>{viewModel.title}</InfoTitleText>
+      </InfoTitle>
       {!loading && (
         <InfoContent>
           <VehicleInfo>
@@ -35,9 +38,9 @@ const TransactionOverviewView: React.FC<Props> = ({
           <VehicleTrim>
             {offerDetail?.trim} | {offerDetail?.miles}
           </VehicleTrim>
-          <OfferPrice>
+          <VehicleTrim>
             Your Price: {displayCurrency(offerDetail?.price)}
-          </OfferPrice>
+          </VehicleTrim>
         </InfoContent>
       )}
     </InfoContainer>
@@ -48,43 +51,52 @@ const InfoContainer = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
-  max-width: 450px;
+  max-width: 380px;
   border-radius: 0;
   background-color: #ffffff;
   box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.08);
   border: solid 1px #d6d7da;
   padding: 20px;
-  margin: 0 10px;
+  @media (max-width: 1020px) {
+    max-width: calc(100% - 20px);
+    margin: 0 10px;
+  }
+  @media (max-width: 720px) {
+    max-width: 100%;
+    margin: 0;
+  }
 `;
 
 const InfoTitle = styled.div`
-  font-size: 28px;
-  line-height: 32px;
-  letter-spacing: 1px;
   padding-bottom: 15px;
   border-bottom: 1px solid #d6d7da;
 `;
 
-const InfoContent = styled.div``;
+const InfoTitleText = styled(Hero.Five)`
+  font-style: italic;
+  font-weight: 800;
+  letter-spacing: 1px;
+  color: #041022;
+  height: 30px;
+  margin-bottom: 2px;
+`;
+
+const InfoContent = styled.div`
+  padding-top: 15px;
+`;
 
 const VehicleInfo = styled.div`
-  font-family: 'Calibre-Semibold';
-  font-size: 18px;
-  line-height: 25px;
-  letter-spacing: 0.25px;
+  font-family: 'Calibre';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 150%;
+  color: #041022;
 `;
 
-const VehicleTrim = styled.div`
-  font-family: 'Calibre-Regular';
-  font-size: 16px;
-  line-height: 22px;
-  letter-spacing: 0.25px;
-`;
-
-const OfferPrice = styled.div`
-  font-family: 'Calibre-Semibold';
-  font-size: 18px;
-  line-height: 25px;
+const VehicleTrim = styled(VehicleInfo)`
+  font-weight: normal;
+  line-height: 26px;
   letter-spacing: 0.25px;
 `;
 

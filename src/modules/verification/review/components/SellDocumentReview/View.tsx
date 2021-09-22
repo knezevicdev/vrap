@@ -15,128 +15,144 @@ interface Props {
 const SellDocumentsReview: React.FC<Props> = ({ viewModel, store }) => {
   const { verificationDetail } = store.verification;
   return (
-    <>
-      <Subtitle>
-        {viewModel.SellDoctitle}{' '}
+    <Container>
+      <SubTitleContainer>
+        <Subtitle>{viewModel.SellDoctitle}</Subtitle>
         <Edit onClick={() => console.log('verificationDocUpload')}>Edit</Edit>
-      </Subtitle>
+      </SubTitleContainer>
       <Row>
         {verificationDetail?.front_of_driver_license_file_id && (
           <Info>
             <Icon icon={Icons.CHECK_MARK_GREEN_DOCS} />
-            <Title>{viewModel.dlFront}</Title>
+            <Field>{viewModel.dlFront}</Field>
           </Info>
         )}
 
         {verificationDetail?.second_owner_front_of_driver_license_file_id && (
           <Info>
             <Icon icon={Icons.CHECK_MARK_GREEN_DOCS} />
-            <Title>{viewModel.secondDlFront}</Title>
+            <Field>{viewModel.secondDlFront}</Field>
           </Info>
         )}
 
         {verificationDetail?.front_of_title_lien_file_id && (
           <Info>
             <Icon icon={Icons.CHECK_MARK_GREEN_DOCS} />
-            <Title>{viewModel.tiFront}</Title>
+            <Field>{viewModel.tiFront}</Field>
           </Info>
         )}
         {verificationDetail?.back_of_title_lien_file_id && (
           <Info>
             <Icon icon={Icons.CHECK_MARK_GREEN_DOCS} />
-            <Title>{viewModel.tiBack}</Title>
+            <Field>{viewModel.tiBack}</Field>
           </Info>
         )}
 
         {verificationDetail?.current_registration_file_id && (
           <Info>
             <Icon icon={Icons.CHECK_MARK_GREEN_DOCS} />
-            <Title>{viewModel.registration}</Title>
+            <Field>{viewModel.registration}</Field>
           </Info>
         )}
 
         {verificationDetail?.lien_release_letter_file_id && (
           <Info>
             <Icon icon={Icons.CHECK_MARK_GREEN_DOCS} />
-            <Title>{viewModel.lienRelease}</Title>
+            <Field>{viewModel.lienRelease}</Field>
           </Info>
         )}
 
         {verificationDetail?.mileage_file_id && (
           <Info>
             <Icon icon={Icons.CHECK_MARK_GREEN_DOCS} />
-            <Title>{viewModel.odometer}</Title>
+            <Field>{viewModel.odometer}</Field>
           </Info>
         )}
       </Row>
 
       <Row>
-        <SpanInfo>
-          <SpanLabel>{viewModel.exactMileage}</SpanLabel>
-          <SpanField>{verificationDetail?.exact_mileage}</SpanField>
-        </SpanInfo>
+        <Label>{viewModel.exactMileage}</Label>
+        <Field>{verificationDetail?.exact_mileage}</Field>
       </Row>
-    </>
+    </Container>
   );
 };
 
-const Subtitle = styled.h2`
-  /* ${(props) => props.theme.typography.sectionTitleSemi3} */
-  text-align: left;
+const Container = styled.div`
+  padding: 20px 0 30px 0;
+`;
+
+const SubTitleContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  height: 26px;
+`;
+
+const Subtitle = styled.div`
+  font-family: 'Calibre';
+  font-style: normal;
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 26px;
+  letter-spacing: 0.25px;
+  color: #041022;
 `;
 
 const Row = styled.div`
   display: flex;
-  margin-bottom: 10px;
-  flex-wrap: wrap;
-  /* ${(props) => props.theme.media.lte('mobile')} {
+  margin-top: 15px;
+  @media (max-width: 767px) {
     flex-direction: column;
-    margin-bottom: 0;
-  } */
+    margin-top: 0;
+  }
+`;
+
+const Label = styled.span`
+  font-family: 'Calibre';
+  font-style: normal;
+  font-weight: normal;
+  font-size: 13px;
+  line-height: 16px;
+  letter-spacing: 0.35px;
+  color: #041022;
 `;
 
 const Info = styled.div`
   display: flex;
-  flex-direction: row;
-  width: 50%;
-  /* ${(props) => props.theme.media.lte('mobile')} {
-    width: 100%;
-    padding-bottom: 10px;
-  } */
-`;
-
-const Title = styled.span`
-  /* ${(props) => props.theme.typography.body} */
-  margin-left: 10px;
-`;
-
-// const CheckmarkIcon = styled.img``;
-
-const SpanInfo = styled.div`
-  display: flex;
   flex-direction: column;
   width: 33%;
-  /* ${(props) => props.theme.media.lte('mobile')} {
+  @media (max-width: 767px) {
     width: 100%;
-    padding-bottom: 10px;
-  } */
+    margin-bottom: 10px;
+  }
 `;
 
-const SpanLabel = styled.span`
-  /* ${(props) => props.theme.typography.h14()}
-  color: ${(props) => props.theme.colors.dark}; */
-`;
-
-const SpanField = styled.span`
+const Field = styled.span`
+  font-family: 'Calibre';
+  font-style: normal;
+  font-weight: normal;
   font-size: 18px;
-  line-height: 1.39;
+  line-height: 25px;
   letter-spacing: 0.25px;
+  color: #041022;
+  word-wrap: break-word;
 `;
 
 const Edit = styled.span`
-  /* ${(props) => props.theme.typography.h10()}
-  color: ${(props) => props.theme.colors.vroomRed}; */
+  font-family: 'Calibre';
+  font-style: normal;
+  font-weight: normal;
+  font-size: 16px;
+  line-height: 22px;
+  margin-left: 5px;
   cursor: pointer;
+  font-style: normal;
+  font-weight: normal;
+  line-height: 22px;
+  letter-spacing: 0.25px;
+  color: #e7131a;
+  padding-top: 4px;
 `;
 
 export default observer(SellDocumentsReview);
