@@ -7,6 +7,7 @@ export class ABSmartStore {
   stepperAbTest = false;
   abTestFacelift = false;
   offerFacelift = false;
+  agreementAbtest = false;
   loading = true;
 
   constructor() {
@@ -27,6 +28,10 @@ export class ABSmartStore {
 
   setOfferFacelift = (value: boolean): void => {
     this.offerFacelift = value;
+  };
+
+  setAgreementAbtest = (value: boolean): void => {
+    this.agreementAbtest = value;
   };
 
   setLoading = (value: boolean): void => {

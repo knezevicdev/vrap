@@ -1,9 +1,11 @@
 import { observer } from 'mobx-react';
 import { NextPage, NextPageContext } from 'next';
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
 
 import { Header } from 'src/components/Header';
+import VerificationStepper from 'src/components/Stepper';
+import { useAppStore } from 'src/context';
 import Footer from 'src/core/Footer';
 import VerificationReviewViewDetail from 'src/modules/verification/review';
 import TransactionOverview from 'src/modules/verification/transactionoverview';
@@ -14,9 +16,17 @@ interface Prop {
 }
 
 const VerificationReview: NextPage<Prop> = ({ priceId }) => {
+  const { store } = useAppStore();
+  useEffect(() => {
+    store.stepper.setStep(2);
+  }, []);
+
   return (
     <Page name={'Sell Verification'} data-qa="SellVerificationContainer">
       <Header />
+      {!store.absmart.loading && store.absmart.stepperAbTest && (
+        <VerificationStepper activeStep={store.stepper.currentStep} />
+      )}
       <Contents>
         <VerificationContainer>
           <ReviewContainer>
