@@ -1,6 +1,6 @@
 import { makeAutoObservable } from 'mobx';
 
-interface StepModel {
+export interface StepModel {
   step: string;
   progress: string;
   next: string;

@@ -3,6 +3,7 @@ import { NextPage, NextPageContext } from 'next';
 import React, { useEffect } from 'react';
 import styled from 'styled-components';
 
+import DefaultStepper from 'src/components/DefaultStepper';
 import { Header } from 'src/components/Header';
 import VerificationStepper from 'src/components/Stepper';
 import { useAppStore } from 'src/context';
@@ -24,9 +25,17 @@ const VerificationReview: NextPage<Prop> = ({ priceId }) => {
   return (
     <Page name={'Sell Verification'} data-qa="SellVerificationContainer">
       <Header />
-      {!store.absmart.loading && store.absmart.stepperAbTest && (
-        <VerificationStepper activeStep={store.stepper.currentStep} />
-      )}
+      {/* <DefaultStepper activeStep={store.stepper.currentStep} /> */}
+      <StepperWrapper>
+        <StepperContainer>
+          {!store.absmart.loading && !store.absmart.stepperAbTest && (
+            <DefaultStepper activeStep={store.stepper.currentStep} />
+          )}
+          {!store.absmart.loading && store.absmart.stepperAbTest && (
+            <VerificationStepper activeStep={store.stepper.currentStep} />
+          )}
+        </StepperContainer>
+      </StepperWrapper>
       <Contents>
         <VerificationContainer>
           <ReviewContainer>
@@ -87,6 +96,21 @@ const OverviewContainer = styled.div`
     width: 100%;
     margin: 0;
   }
+`;
+
+const StepperWrapper = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin: 20px 0 0 10px;
+  @media (max-width: 1020px) {
+    margin-bottom: 20px;
+  }
+`;
+
+const StepperContainer = styled.div`
+  width: 100%;
+  max-width: 1080px;
 `;
 
 VerificationReview.getInitialProps = async (
