@@ -132,3 +132,24 @@ export const postPlaidPayment = async (
 
   return res;
 };
+
+export const patchVerification = async (data: any): Promise<Response<any>> => {
+  const url = `${ENVS.VROOM_URL}/api/appraisal/verification`;
+  const res = await client.httpRequest({
+    method: 'patch',
+    url,
+    data,
+  });
+  return res;
+};
+
+export const getDownloadUrl = async (
+  fileId: string | null,
+  offerId: string
+): Promise<Response<any>> => {
+  const url = `${ENVS.VROOM_URL}/api/appraisal/get-download-url?fileId=${fileId}&offerId=${offerId}`;
+  return await client.httpRequest({
+    method: 'get',
+    url,
+  });
+};

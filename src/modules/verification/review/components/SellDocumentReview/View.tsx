@@ -70,10 +70,10 @@ const SellDocumentsReview: React.FC<Props> = ({ viewModel, store }) => {
         )}
       </Row>
 
-      <Row>
+      <MileContainer>
         <Label>{viewModel.exactMileage}</Label>
         <Field>{verificationDetail?.exact_mileage}</Field>
-      </Row>
+      </MileContainer>
     </Container>
   );
 };
@@ -102,10 +102,15 @@ const Subtitle = styled.div`
 const Row = styled.div`
   display: flex;
   margin-top: 15px;
+  flex-wrap: wrap;
   @media (max-width: 767px) {
     flex-direction: column;
     margin-top: 0;
   }
+`;
+
+const MileContainer = styled(Row)`
+  flex-direction: column;
 `;
 
 const Label = styled.span`
@@ -120,8 +125,11 @@ const Label = styled.span`
 
 const Info = styled.div`
   display: flex;
-  flex-direction: column;
-  width: 33%;
+  flex-direction: row;
+  width: 50%;
+  > :first-child {
+    margin-right: 10px;
+  }
   @media (max-width: 767px) {
     width: 100%;
     margin-bottom: 10px;
