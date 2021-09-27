@@ -53,3 +53,10 @@ export const displaySecureSSN = (ssn: string | null | undefined): string => {
     return `${hiddenString(3)}-${hiddenString(2)}-${ssn.slice(5, 9)}`;
   }
 };
+
+export function displayNumber(num: number | undefined): string {
+  if (typeof num !== 'number') {
+    return '';
+  }
+  return Math.round(num).toLocaleString();
+}

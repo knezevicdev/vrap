@@ -6,6 +6,7 @@ import ViewModel from './ViewModel';
 
 import Icon, { Icons } from 'src/core/Icon';
 import Store from 'src/store';
+import { displayNumber } from 'src/utils';
 
 interface Props {
   viewModel: ViewModel;
@@ -72,7 +73,7 @@ const SellDocumentsReview: React.FC<Props> = ({ viewModel, store }) => {
 
       <MileContainer>
         <Label>{viewModel.exactMileage}</Label>
-        <Field>{verificationDetail?.exact_mileage}</Field>
+        <Field>{displayNumber(verificationDetail?.exact_mileage)}</Field>
       </MileContainer>
     </Container>
   );

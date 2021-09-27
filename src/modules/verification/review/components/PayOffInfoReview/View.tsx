@@ -84,7 +84,7 @@ const Row = styled.div`
 const Info = styled.div`
   display: flex;
   flex-direction: column;
-  width: 33%;
+  width: 35%;
   @media (max-width: 767px) {
     width: 100%;
     margin-bottom: 10px;
