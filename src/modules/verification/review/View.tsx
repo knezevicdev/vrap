@@ -27,6 +27,10 @@ const VerificationReviewViewDetail: React.FC<Props> = ({
     viewModel.getVerificationDetail(priceId);
   }, [priceId]);
 
+  const handleSubmit = (): void => {
+    viewModel.verificationSubmit();
+  };
+
   return (
     <Container>
       <Title>{viewModel.title}</Title>
@@ -50,13 +54,15 @@ const VerificationReviewViewDetail: React.FC<Props> = ({
               />
               <ReviewText>{viewModel.reviewVerification}</ReviewText>
             </CheckboxContainer>
-            <SubmitButton disabled={!checked}>
+            <SubmitButton disabled={!checked} onClick={handleSubmit}>
               {viewModel.submitBtn}
             </SubmitButton>
           </>
         ) : (
           <>
-            <SubmitButton>{viewModel.submitBtn}</SubmitButton>
+            <SubmitButton onClick={handleSubmit}>
+              {viewModel.submitBtn}
+            </SubmitButton>
             <WarningText>{viewModel.verificationWarning}</WarningText>
           </>
         ))}

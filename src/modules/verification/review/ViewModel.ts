@@ -24,7 +24,7 @@ export default class VerificationReviewSectionViewModel {
     const { verificationDetail } = this.store.verification;
     const firstName = verificationDetail?.owner_first_name || '';
     const email = verificationDetail?.owner_email_address || '';
-    this.analyticsHandler.trackVerificationSubmitted(email, firstName);
+
     const payload = {
       ownerInfo: this.store.verification.ownerInfo,
       pickupInfo: this.store.verification.pickupInfo,
@@ -35,8 +35,13 @@ export default class VerificationReviewSectionViewModel {
       // eslint-disable-next-line @typescript-eslint/camelcase
       offer_id: this.store.verification.offerId,
     };
+
     const verificationResponse = await patchVerification(payload);
-    console.log('verificationResponse ', verificationResponse);
+    if (isErrorResponse(verificationResponse)) throw verificationResponse;
+    this.analyticsHandler.trackVerificationSubmitted(email, firstName);
+    const priceId =
+      this.store.verification.priceId || localStorage.getItem('priceId');
+    window.location.href = `/appraisal/paymentmethod?priceId=${priceId}`;
   };
   async getVerificationDetail(priceId: string): Promise<void> {
     try {

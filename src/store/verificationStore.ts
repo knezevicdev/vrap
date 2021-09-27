@@ -1,3 +1,4 @@
+import { isErrorResponse } from '@vroom-web/networking';
 import { makeAutoObservable } from 'mobx';
 
 import { Verification } from 'src/networking/models/Price';
@@ -64,6 +65,7 @@ export class VerificationStore {
   exactMileage?: number;
   documents?: any;
   loading = false;
+  priceId?: string;
   bankOptions = [
     {
       label: 'Ally Financial',
@@ -192,11 +194,16 @@ export class VerificationStore {
     makeAutoObservable(this);
   }
 
-  getVerificationDetail(data: Verification): void {
-    this.verificationDetail = data;
+  setPriceId(priceId: string): void {
+    this.priceId = priceId;
   }
 
-  async processVerificationData(data: Verification): void {
+  getVerificationDetail(data: Verification): void {
+    this.verificationDetail = data;
+    this.processVerificationData(data);
+  }
+
+  async processVerificationData(data: Verification): Promise<void> {
     this.offerId = data.offer_id;
     this.formState = data.form_state;
     this.exactMileage = data.exact_mileage;
@@ -246,6 +253,7 @@ export class VerificationStore {
         .filter((doc) => doc.id !== null && doc.id.length)
         .map(async (doc) => {
           const fileDownloadData = await getDownloadUrl(doc.id, data.offer_id);
+          if (isErrorResponse(fileDownloadData)) throw fileDownloadData;
           return {
             ...doc,
             ...fileDownloadData.data[0],

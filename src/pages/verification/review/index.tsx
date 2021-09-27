@@ -20,6 +20,7 @@ const VerificationReview: NextPage<Prop> = ({ priceId }) => {
   const { store } = useAppStore();
   useEffect(() => {
     store.stepper.setStep(2);
+    store.verification.setPriceId(priceId);
   }, []);
 
   return (

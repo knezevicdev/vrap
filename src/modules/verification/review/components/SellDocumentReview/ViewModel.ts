@@ -1,3 +1,5 @@
+import Store from 'src/store';
+
 export default class SellDocumentReviewViewModel {
   readonly SellDoctitle: string = 'Document Upload';
   readonly frontTitle: string = 'Front of Title Information';
@@ -12,4 +14,10 @@ export default class SellDocumentReviewViewModel {
   readonly tiBack: string = 'Back of Title Information';
   readonly registration: string = 'Registration';
   readonly odometer: string = 'Odometer Picture';
+
+  constructor(private store: Store) {}
+
+  handleEditClick(): void {
+    window.location.href = `/sell/verification/documents/${this.store.verification.offerId}`;
+  }
 }
