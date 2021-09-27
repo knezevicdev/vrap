@@ -18,7 +18,7 @@ const SellDocumentsReview: React.FC<Props> = ({ viewModel, store }) => {
     <Container>
       <SubTitleContainer>
         <Subtitle>{viewModel.SellDoctitle}</Subtitle>
-        <Edit onClick={() => console.log('verificationDocUpload')}>Edit</Edit>
+        <Edit onClick={(): void => viewModel.handleEditClick()}>Edit</Edit>
       </SubTitleContainer>
       <Row>
         {verificationDetail?.front_of_driver_license_file_id && (

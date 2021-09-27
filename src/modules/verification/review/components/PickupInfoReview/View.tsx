@@ -18,7 +18,7 @@ const PickupInfoReviewView: React.FC<Props> = ({ viewModel, store }) => {
     <Container>
       <SubTitleContainer>
         <Subtitle>{viewModel.pickUpInfotitle}</Subtitle>
-        <Edit onClick={() => console.log(2)}>Edit</Edit>
+        <Edit onClick={(): void => viewModel.handleEditClick()}>Edit</Edit>
       </SubTitleContainer>
       <Row>
         <FullInfo>

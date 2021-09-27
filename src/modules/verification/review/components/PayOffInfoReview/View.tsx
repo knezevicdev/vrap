@@ -24,7 +24,7 @@ const PayoffInfoReview: React.FC<Props> = ({ viewModel, store }) => {
     <Container>
       <SubTitleContainer>
         <Subtitle>{viewModel.payOfftitle}</Subtitle>
-        <Edit onClick={() => console.log(3)}>Edit</Edit>
+        <Edit onClick={(): void => viewModel.handleEditClick()}>Edit</Edit>
       </SubTitleContainer>
 
       <Row>
