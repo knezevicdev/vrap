@@ -1,3 +1,5 @@
+import { AsYouType } from 'libphonenumber-js';
+
 export const numbersOnlyString = (
   string: string,
   maxLength?: number
@@ -27,8 +29,7 @@ export const displayPhoneNumber = (phoneNumber: string | undefined): string => {
     return '';
   }
   const number = numbersOnlyString(phoneNumber);
-  // return number.length > 3 ? new AsYouType('US').input(number) : number;
-  return number;
+  return number.length > 3 ? new AsYouType('US').input(number) : number;
 };
 
 export const hiddenString = (length: number): string => {

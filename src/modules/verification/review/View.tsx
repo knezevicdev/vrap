@@ -76,7 +76,7 @@ const Container = styled.div`
   background-color: #ffffff;
   width: 100%;
   max-width: 780px;
-  padding: 0 100px 30px 100px;
+  padding: 0 24px 30px 24px;
   border: solid 1px #d6d7da;
   @media (max-width: 1020px) {
     max-width: 100%;

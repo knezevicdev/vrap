@@ -77,7 +77,7 @@ const InfoTitleText = styled(Hero.Five)`
   font-weight: 800;
   letter-spacing: 1px;
   color: #041022;
-  height: 30px;
+  min-height: 30px;
   margin-bottom: 2px;
 `;
 
