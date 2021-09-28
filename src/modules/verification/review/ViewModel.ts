@@ -21,9 +21,9 @@ export default class VerificationReviewSectionViewModel {
   };
 
   verificationSubmit = async (): Promise<void> => {
-    const { verificationDetail } = this.store.verification;
-    const firstName = verificationDetail?.owner_first_name || '';
-    const email = verificationDetail?.owner_email_address || '';
+    // const { verificationDetail } = this.store.verification;
+    // const firstName = verificationDetail?.owner_first_name || '';
+    // const email = verificationDetail?.owner_email_address || '';
 
     const payload = {
       ownerInfo: this.store.verification.ownerInfo,
@@ -38,11 +38,32 @@ export default class VerificationReviewSectionViewModel {
 
     const verificationResponse = await patchVerification(payload);
     if (isErrorResponse(verificationResponse)) throw verificationResponse;
-    this.analyticsHandler.trackVerificationSubmitted(email, firstName);
+
+    const responseData = verificationResponse.data;
+    const finalPayment = responseData.poq.final_payment || {};
+    // eslint-disable-next-line @typescript-eslint/camelcase
+    const { owner_email_address, owner_first_name } = responseData;
+    this.analyticsHandler.trackVerificationSubmitted(
+      owner_email_address,
+      owner_first_name
+    );
     const priceId =
       this.store.verification.priceId || localStorage.getItem('priceId');
-    window.location.href = `/appraisal/paymentmethod?priceId=${priceId}`;
+    const offerDetail = this.store.offer.offerDetail;
+    if (finalPayment !== null) {
+      if (finalPayment > 0) {
+        window.location.href = `/appraisal/paymentmethod?priceId=${priceId}`;
+      } else {
+        window.location.href = '/appraisal/congratulations';
+      }
+    } else {
+      if (offerDetail && offerDetail.price > 0) {
+        window.location.href = `/appraisal/paymentmethod?priceId=${priceId}`;
+      }
+      window.location.href = '/appraisal/congratulations';
+    }
   };
+
   async getVerificationDetail(priceId: string): Promise<void> {
     try {
       const response = await getVerificationDetails(priceId);

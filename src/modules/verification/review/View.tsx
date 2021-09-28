@@ -50,7 +50,7 @@ const VerificationReviewViewDetail: React.FC<Props> = ({
               <Checkbox
                 checked={checked}
                 id={'verification-agreement-checkbox'}
-                onChange={() => chageCheck(!checked)}
+                onChange={(): void => chageCheck(!checked)}
               />
               <ReviewText>{viewModel.reviewVerification}</ReviewText>
             </CheckboxContainer>
@@ -78,6 +78,7 @@ const Container = styled.div`
   max-width: 780px;
   padding: 0 24px 30px 24px;
   border: solid 1px #d6d7da;
+  margin-bottom: 20px;
   @media (max-width: 1020px) {
     max-width: 100%;
     padding: 30px 24px;
