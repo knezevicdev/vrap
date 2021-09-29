@@ -1,13 +1,6 @@
 import { makeAutoObservable } from 'mobx';
 
-export interface OfferDetail {
-  make: string;
-  model: string;
-  price: number;
-  trim: string;
-  year: number;
-  miles: number;
-}
+import { OfferDetail } from 'src/types/offer';
 
 export class OfferStore {
   offerDetail?: OfferDetail;

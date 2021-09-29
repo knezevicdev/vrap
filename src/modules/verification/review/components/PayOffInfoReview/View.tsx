@@ -13,11 +13,6 @@ interface Props {
   store: Store;
 }
 
-interface Props {
-  viewModel: ViewModel;
-  store: Store;
-}
-
 const PayoffInfoReview: React.FC<Props> = ({ viewModel, store }) => {
   const { verificationDetail } = store.verification;
   return (
