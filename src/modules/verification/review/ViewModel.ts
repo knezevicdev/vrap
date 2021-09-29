@@ -55,8 +55,9 @@ export default class VerificationReviewSectionViewModel {
     } else {
       if (offerDetail && offerDetail.price > 0) {
         window.location.href = `/appraisal/paymentmethod?priceId=${priceId}`;
+      } else {
+        window.location.href = '/appraisal/congratulations';
       }
-      window.location.href = '/appraisal/congratulations';
     }
   };
 

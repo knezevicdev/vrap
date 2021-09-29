@@ -66,3 +66,18 @@ export interface DocumentInfo {
   id: string;
   originalFileName: string;
 }
+
+export interface DocumentResponse {
+  data: DocumentInfo[];
+}
+
+export interface PatchReviewData {
+  ownerInfo: OwnerInfo | undefined;
+  pickupInfo: PickupInfo | undefined;
+  payoffInfo: PayoffInfo | undefined;
+  documents: DocumentInfo[] | [] | undefined;
+  exactMileage: number | undefined;
+  formState: number;
+  // eslint-disable-next-line @typescript-eslint/camelcase
+  offer_id: string | undefined;
+}

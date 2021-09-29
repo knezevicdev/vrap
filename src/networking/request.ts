@@ -17,6 +17,7 @@ import {
   PlaidData,
   PlaidTokenResp,
 } from 'src/interfaces.d';
+import { DocumentResponse, PatchReviewData } from 'src/types/verification';
 
 export enum Status {
   INITIAL = 'initial',
@@ -133,7 +134,9 @@ export const postPlaidPayment = async (
   return res;
 };
 
-export const patchVerification = async (data: any): Promise<Response<any>> => {
+export const patchVerification = async (
+  data: PatchReviewData
+): Promise<Response<any>> => {
   const url = `${ENVS.VROOM_URL}/api/appraisal/verification`;
   const res = await client.httpRequest({
     method: 'patch',
@@ -146,7 +149,7 @@ export const patchVerification = async (data: any): Promise<Response<any>> => {
 export const getDownloadUrl = async (
   fileId: string | null,
   offerId: string
-): Promise<Response<any>> => {
+): Promise<Response<DocumentResponse>> => {
   const url = `${ENVS.VROOM_URL}/api/appraisal/get-download-url?fileId=${fileId}&offerId=${offerId}`;
   return await client.httpRequest({
     method: 'get',
