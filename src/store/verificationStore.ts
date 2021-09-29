@@ -3,7 +3,137 @@ import { makeAutoObservable } from 'mobx';
 
 import { Verification } from 'src/networking/models/Price';
 import { getDownloadUrl } from 'src/networking/request';
-import { OwnerInfo, PayoffInfo, PickupInfo } from 'src/types/verification';
+import {
+  DocumentInfo,
+  OwnerInfo,
+  PayoffInfo,
+  PickupInfo,
+} from 'src/types/verification';
+
+const BankOptions = [
+  {
+    label: 'Ally Financial',
+    value: 'A_Ally_Financial',
+    phone: '(888) 919-2559',
+  },
+  {
+    label: 'Bank of America',
+    value: 'A_Bank_of_America',
+    phone: '(800) 215-6195',
+  },
+  {
+    label: 'BMW Financial Services',
+    value: 'A_BMW_Financial_Services',
+    phone: '(800) 576-5000',
+  },
+  {
+    label: 'Bridgecrest Acceptance Corp',
+    value: 'A_Bridgecrest_Acceptance_Corp',
+    phone: '(800) 967-8526',
+  },
+  {
+    label: 'Capital One Auto Finance',
+    value: 'A_Capital_One_Auto_Finance',
+    phone: '(800) 946-0332',
+  },
+  {
+    label: 'Carmax Auto Finance',
+    value: 'A_Carmax_Auto_Finance',
+    phone: '(800) 759-4091',
+  },
+  {
+    label: 'Chase Auto Finance',
+    value: 'A_Chase_Auto_Finance',
+    phone: '(800) 223-5050',
+  },
+  {
+    label: 'Chrysler Capital',
+    value: 'A_Chrysler_Capital',
+    phone: '(855) 563-5635',
+  },
+  { label: 'Fifth Third', value: 'A_Fifth_Third', phone: '(800) 972-3030' },
+  { label: 'Ford Credit', value: 'A_Ford_Credit', phone: '(800) 727-7000' },
+  { label: 'GM Financial', value: 'A_GM_Financial', phone: '(800) 284-2271' },
+  {
+    label: 'Honda Finance Exchange Inc',
+    value: 'A_Honda_Finance_Exchange_Inc',
+    phone: '(800) 448-9307',
+  },
+  {
+    label: 'Hyundai Motor Finance',
+    value: 'A_Hyundai_Motor_Finance',
+    phone: '(800) 523-4030',
+  },
+  {
+    label: 'Infiniti Financial Services',
+    value: 'A_Infiniti_Financial_Services',
+    phone: '(800) 627-4437',
+  },
+  {
+    label: 'JSC Federal Credit Union',
+    value: 'A_JSC_Federal_Credit_Union',
+    phone: '(281) 488-7070',
+  },
+  {
+    label: 'Lexus Financial Services',
+    value: 'A_Lexus_Financial_Services',
+    phone: '(800) 874-7050',
+  },
+  {
+    label: 'Mercedes Benz Financial Services',
+    value: 'A_Mercedes_Benz_Financial_Services',
+    phone: '(800) 654-6222',
+  },
+  {
+    label: 'Navy Federal Credit Union',
+    value: 'A_Navy_Federal_Credit_Union',
+    phone: '(888) 842-6328',
+  },
+  {
+    label: 'Nissan Motor Acceptance Corporation',
+    value: 'A_Nissan_Motor_Acceptance_Corporation',
+    phone: '(800) 456-6622',
+  },
+  { label: 'PNC Bank', value: 'A_PNC_Bank', phone: '(888) 762-2265' },
+  {
+    label: 'Santander Consumer USA',
+    value: 'A_Santander_Consumer_USA',
+    phone: '(888) 222-4227',
+  },
+  {
+    label: 'SunTrust Bank',
+    value: 'A_SunTrust_Bank',
+    phone: '(888) 461-8862',
+  },
+  {
+    label: 'TD Auto Finance',
+    value: 'A_TD_Auto_Finance',
+    phone: '(800) 556-8172',
+  },
+  {
+    label: 'Toyota Financial Services',
+    value: 'A_Toyota_Financial_Services',
+    phone: '(800) 874-8822',
+  },
+  { label: 'US Bank NA', value: 'A_US_Bank_NA', phone: '(800) 872-2657' },
+  {
+    label: 'USAA Federal Savings Bank',
+    value: 'A_USAA_Federal_Savings_Bank',
+    phone: '(800) 531-8722',
+  },
+  { label: 'Volkswagen', value: 'A_Volkswagen', phone: '(800) 428-4034' },
+  {
+    label: 'Wells Fargo Auto Finance',
+    value: 'A_Wells_Fargo_Auto_Finance',
+    phone: '(800) 559-3557',
+  },
+  {
+    label: 'Wells Fargo Dealer Services',
+    value: 'A_Wells_Fargo_Dealer_Services',
+    phone: '(800) 289-8004',
+  },
+  { label: 'Other', value: 'Other', phone: '' },
+];
 
 export class VerificationStore {
   verificationDetail?: Verification;
@@ -13,133 +143,10 @@ export class VerificationStore {
   payoffInfo?: PayoffInfo;
   formState?: number;
   exactMileage?: number;
-  documents?: any;
+  documents?: DocumentInfo[];
   loading = false;
   priceId?: string;
-  bankOptions = [
-    {
-      label: 'Ally Financial',
-      value: 'A_Ally_Financial',
-      phone: '(888) 919-2559',
-    },
-    {
-      label: 'Bank of America',
-      value: 'A_Bank_of_America',
-      phone: '(800) 215-6195',
-    },
-    {
-      label: 'BMW Financial Services',
-      value: 'A_BMW_Financial_Services',
-      phone: '(800) 576-5000',
-    },
-    {
-      label: 'Bridgecrest Acceptance Corp',
-      value: 'A_Bridgecrest_Acceptance_Corp',
-      phone: '(800) 967-8526',
-    },
-    {
-      label: 'Capital One Auto Finance',
-      value: 'A_Capital_One_Auto_Finance',
-      phone: '(800) 946-0332',
-    },
-    {
-      label: 'Carmax Auto Finance',
-      value: 'A_Carmax_Auto_Finance',
-      phone: '(800) 759-4091',
-    },
-    {
-      label: 'Chase Auto Finance',
-      value: 'A_Chase_Auto_Finance',
-      phone: '(800) 223-5050',
-    },
-    {
-      label: 'Chrysler Capital',
-      value: 'A_Chrysler_Capital',
-      phone: '(855) 563-5635',
-    },
-    { label: 'Fifth Third', value: 'A_Fifth_Third', phone: '(800) 972-3030' },
-    { label: 'Ford Credit', value: 'A_Ford_Credit', phone: '(800) 727-7000' },
-    { label: 'GM Financial', value: 'A_GM_Financial', phone: '(800) 284-2271' },
-    {
-      label: 'Honda Finance Exchange Inc',
-      value: 'A_Honda_Finance_Exchange_Inc',
-      phone: '(800) 448-9307',
-    },
-    {
-      label: 'Hyundai Motor Finance',
-      value: 'A_Hyundai_Motor_Finance',
-      phone: '(800) 523-4030',
-    },
-    {
-      label: 'Infiniti Financial Services',
-      value: 'A_Infiniti_Financial_Services',
-      phone: '(800) 627-4437',
-    },
-    {
-      label: 'JSC Federal Credit Union',
-      value: 'A_JSC_Federal_Credit_Union',
-      phone: '(281) 488-7070',
-    },
-    {
-      label: 'Lexus Financial Services',
-      value: 'A_Lexus_Financial_Services',
-      phone: '(800) 874-7050',
-    },
-    {
-      label: 'Mercedes Benz Financial Services',
-      value: 'A_Mercedes_Benz_Financial_Services',
-      phone: '(800) 654-6222',
-    },
-    {
-      label: 'Navy Federal Credit Union',
-      value: 'A_Navy_Federal_Credit_Union',
-      phone: '(888) 842-6328',
-    },
-    {
-      label: 'Nissan Motor Acceptance Corporation',
-      value: 'A_Nissan_Motor_Acceptance_Corporation',
-      phone: '(800) 456-6622',
-    },
-    { label: 'PNC Bank', value: 'A_PNC_Bank', phone: '(888) 762-2265' },
-    {
-      label: 'Santander Consumer USA',
-      value: 'A_Santander_Consumer_USA',
-      phone: '(888) 222-4227',
-    },
-    {
-      label: 'SunTrust Bank',
-      value: 'A_SunTrust_Bank',
-      phone: '(888) 461-8862',
-    },
-    {
-      label: 'TD Auto Finance',
-      value: 'A_TD_Auto_Finance',
-      phone: '(800) 556-8172',
-    },
-    {
-      label: 'Toyota Financial Services',
-      value: 'A_Toyota_Financial_Services',
-      phone: '(800) 874-8822',
-    },
-    { label: 'US Bank NA', value: 'A_US_Bank_NA', phone: '(800) 872-2657' },
-    {
-      label: 'USAA Federal Savings Bank',
-      value: 'A_USAA_Federal_Savings_Bank',
-      phone: '(800) 531-8722',
-    },
-    { label: 'Volkswagen', value: 'A_Volkswagen', phone: '(800) 428-4034' },
-    {
-      label: 'Wells Fargo Auto Finance',
-      value: 'A_Wells_Fargo_Auto_Finance',
-      phone: '(800) 559-3557',
-    },
-    {
-      label: 'Wells Fargo Dealer Services',
-      value: 'A_Wells_Fargo_Dealer_Services',
-      phone: '(800) 289-8004',
-    },
-    { label: 'Other', value: 'Other', phone: '' },
-  ];
+  bankOptions = BankOptions;
   constructor() {
     makeAutoObservable(this);
   }
@@ -204,19 +211,19 @@ export class VerificationStore {
         .map(async (doc) => {
           const fileDownloadData = await getDownloadUrl(doc.id, data.offer_id);
           if (isErrorResponse(fileDownloadData)) throw fileDownloadData;
+          const responseData = fileDownloadData.data;
           return {
             ...doc,
-            ...fileDownloadData.data[0],
-            fileURL: fileDownloadData.data[0].FileDownloadURL,
-            originalFileName: fileDownloadData.data[0].OriginalFileName,
-            fileExtension: fileDownloadData.data[0].FileExtension,
-            fileSize: fileDownloadData.data[0].FileSize,
+            ...responseData.data[0],
+            fileURL: responseData.data[0].FileDownloadURL,
+            originalFileName: responseData.data[0].OriginalFileName,
+            fileExtension: responseData.data[0].FileExtension,
+            fileSize: responseData.data[0].FileSize,
           };
         })
     ).catch(() => {
       return [];
     });
-
     const ownerInfo = {
       primaryOwner: data.is_owner ? 'Yes' : 'No',
       primaryFirst: data.owner_first_name,

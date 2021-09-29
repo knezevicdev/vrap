@@ -21,10 +21,6 @@ export default class VerificationReviewSectionViewModel {
   };
 
   verificationSubmit = async (): Promise<void> => {
-    // const { verificationDetail } = this.store.verification;
-    // const firstName = verificationDetail?.owner_first_name || '';
-    // const email = verificationDetail?.owner_email_address || '';
-
     const payload = {
       ownerInfo: this.store.verification.ownerInfo,
       pickupInfo: this.store.verification.pickupInfo,

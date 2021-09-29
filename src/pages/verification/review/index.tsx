@@ -26,7 +26,6 @@ const VerificationReview: NextPage<Prop> = ({ priceId }) => {
   return (
     <Page name={'Sell Verification'} data-qa="SellVerificationContainer">
       <Header />
-      {/* <DefaultStepper activeStep={store.stepper.currentStep} /> */}
       <StepperWrapper>
         <StepperContainer>
           {!store.absmart.loading && !store.absmart.stepperAbTest && (

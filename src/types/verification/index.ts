@@ -48,3 +48,21 @@ export interface PayoffInfo {
   loanAccountNumber: string;
   termsCheckbox: boolean;
 }
+
+export interface DocumentInfo {
+  Created: string;
+  FileDownloadURL: string;
+  FileExtension: string;
+  FileSize: number;
+  FileType: string;
+  OriginalFileName: string;
+  ReferenceId: string;
+  ThumbnailDownloadURL: string;
+  UploadDone: boolean;
+  fileExtension: string;
+  fileSize: number;
+  fileType: string;
+  fileURL: string;
+  id: string;
+  originalFileName: string;
+}
