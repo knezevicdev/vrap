@@ -1,4 +1,4 @@
-import AnalyticsHandler from '../../..//integrations/AnalyticsHandler';
+import AnalyticsHandler from '../../../integrations/AnalyticsHandler';
 import store from '../../../store';
 import ViewModel from '../review/ViewModel';
 
