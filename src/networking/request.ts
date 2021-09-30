@@ -17,7 +17,10 @@ import {
   PlaidData,
   PlaidTokenResp,
 } from 'src/interfaces.d';
-import { DocumentResponse, PatchReviewData } from 'src/types/verification';
+import {
+  DocumentResponse,
+  PatchReviewData,
+} from 'src/networking/models/Verification';
 
 export enum Status {
   INITIAL = 'initial',

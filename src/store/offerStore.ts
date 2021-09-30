@@ -1,6 +1,6 @@
 import { makeAutoObservable } from 'mobx';
 
-import { OfferDetail } from 'src/types/offer';
+import { OfferDetail } from 'src/networking/models/Offer';
 
 export class OfferStore {
   offerDetail?: OfferDetail;

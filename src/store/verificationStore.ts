@@ -2,13 +2,13 @@ import { isErrorResponse } from '@vroom-web/networking';
 import { makeAutoObservable } from 'mobx';
 
 import { Verification } from 'src/networking/models/Price';
-import { getDownloadUrl } from 'src/networking/request';
 import {
   DocumentInfo,
   OwnerInfo,
   PayoffInfo,
   PickupInfo,
-} from 'src/types/verification';
+} from 'src/networking/models/Verification';
+import { getDownloadUrl } from 'src/networking/request';
 
 const BankOptions = [
   {
