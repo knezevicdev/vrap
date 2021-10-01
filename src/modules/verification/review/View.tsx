@@ -24,7 +24,7 @@ const VerificationReviewViewDetail: React.FC<Props> = ({
   const [checked, chageCheck] = useState(false);
   const { store } = useAppStore();
   useEffect(() => {
-    viewModel.getVerificationDetail(priceId);
+    viewModel.getVerificationDetails(priceId);
   }, [priceId]);
 
   const handleSubmit = (): void => {

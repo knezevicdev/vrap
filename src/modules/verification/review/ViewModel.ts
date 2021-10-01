@@ -61,7 +61,7 @@ export default class VerificationReviewSectionViewModel {
     }
   };
 
-  async getVerificationDetail(priceId: string): Promise<void> {
+  async getVerificationDetails(priceId: string): Promise<void> {
     try {
       const response = await getVerificationDetails(priceId);
       if (isErrorResponse(response)) throw response;
