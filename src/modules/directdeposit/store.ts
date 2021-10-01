@@ -98,9 +98,16 @@ export class DirectDepositStore implements Store {
     const analyticsHandler = new AnalyticsHandler();
 
     try {
+      const plaidPaymentRes = await postPlaidPayment(mutationInput);
+
+      if (isErrorResponse(plaidPaymentRes)) {
+        onPlaidSubmitting(false);
+        console.log(JSON.stringify(plaidPaymentRes));
+        throw plaidPaymentRes;
+      }
+
       analyticsHandler.trackPaymentOptionsSubmitted('Plaid ACH');
       analyticsHandler.trackPlaidACHSelected();
-      await postPlaidPayment(mutationInput);
       localStorage.removeItem('linkToken');
       localStorage.removeItem('priceId');
       const url = `/appraisal/congratulations`;
