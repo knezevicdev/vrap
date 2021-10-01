@@ -119,6 +119,9 @@ const StyledLegal = styled.div`
   max-width: 500px;
   text-align: left;
   margin: auto;
+  > span {
+    line-height: 12px;
+  }
 `;
 
 const StickyFooter = styled.div`

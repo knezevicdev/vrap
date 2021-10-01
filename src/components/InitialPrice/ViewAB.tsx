@@ -73,7 +73,10 @@ const InitialPriceView: React.FC<Props> = ({ viewModel }) => {
       </StyledButton>
 
       <StyledLegal>
-        <LegalText>{viewModel.legalDocumentation}</LegalText>
+        <LegalText>
+          {viewModel.star}
+          {viewModel.legalDocumentation}
+        </LegalText>
       </StyledLegal>
     </StyledContainer>
   );
@@ -97,6 +100,7 @@ const StyledPrice = styled(Hero.One)`
   font-weight: 800;
   line-height: 64px;
   margin: 8px 0;
+  font-size: 62px;
   position: relative;
   > span {
     font-family: Calibre;
@@ -105,6 +109,12 @@ const StyledPrice = styled(Hero.One)`
     font-size: 18px;
     line-height: 24px;
     position: absolute;
+  }
+  @media (max-width: 420px) {
+    font-size: 48px;
+    > span {
+      margin-top: 6px;
+    }
   }
 `;
 
@@ -136,8 +146,12 @@ const ListItem = styled(Body.Regular)`
   align-items: center;
   line-height: 24px;
   margin-bottom: 8px;
+  text-align: left;
   :last-child {
     margin-bottom: 0;
+  }
+  @media (max-width: 380px) {
+    font-size: 16px;
   }
 `;
 
@@ -146,6 +160,10 @@ const StyledButton = styled(Button.Primary)`
   max-width: 300px;
   white-space: normal;
   width: 100%;
+  @media (max-width: 420px) {
+    margin: 32px 0 16px 0;
+    max-width: 100%;
+  }
 `;
 
 const StyledLegal = styled.div`
@@ -154,9 +172,14 @@ const StyledLegal = styled.div`
   margin: auto;
 `;
 
-const LegalText = styled(Body.Small)`
+const LegalText = styled.div`
+  font-family: Calibre;
+  font-style: normal;
+  font-weight: normal;
   font-size: 10px;
   line-height: 12px;
+  text-align: center;
+  color: #041022;
 `;
 
 const Content = styled.div`

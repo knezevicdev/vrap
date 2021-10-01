@@ -38,6 +38,10 @@ const StyledHero = styled(Hero.Two)`
   line-height: 48px;
   color: #e7131a;
   margin-bottom: 32px;
+  @media (max-width: 420px) {
+    font-size: 36px;
+    line-height: 40px;
+  }
 `;
 
 const NextItemContainer = styled.div`
