@@ -47,6 +47,7 @@ export interface PayoffInfo {
   bankPhoneNumber: string;
   loanAccountNumber: string;
   termsCheckbox: boolean;
+  whereIsVehicleRegistered: string;
 }
 
 export interface DocumentInfo {

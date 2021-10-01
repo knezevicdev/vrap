@@ -24,6 +24,9 @@ const VerificationReviewViewDetail: React.FC<Props> = ({
   const [checked, chageCheck] = useState(false);
   const { store } = useAppStore();
   useEffect(() => {
+    const whereIsVehicleRegistered =
+      localStorage.getItem('whereIsVehicleRegistered') || '';
+    viewModel.setWhereIsVehicleRegistered(whereIsVehicleRegistered);
     viewModel.getVerificationDetails(priceId);
   }, [priceId]);
 

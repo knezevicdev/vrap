@@ -61,6 +61,10 @@ export default class VerificationReviewSectionViewModel {
     }
   };
 
+  setWhereIsVehicleRegistered(value: string): void {
+    this.store.verification.setWhereIsVehicleRegistered(value);
+  }
+
   async getVerificationDetails(priceId: string): Promise<void> {
     try {
       const response = await getVerificationDetails(priceId);

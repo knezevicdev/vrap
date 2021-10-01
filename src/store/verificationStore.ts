@@ -147,8 +147,13 @@ export class VerificationStore {
   loading = false;
   priceId?: string;
   bankOptions = BankOptions;
+  whereIsVehicleRegistered = '';
   constructor() {
     makeAutoObservable(this);
+  }
+
+  setWhereIsVehicleRegistered(value: string): void {
+    this.whereIsVehicleRegistered = value;
   }
 
   setPriceId(priceId: string): void {
@@ -276,7 +281,7 @@ export class VerificationStore {
       pocFirst: data.pickup_contact_first_name,
       pocLast: data.pickup_contact_last_name,
       pocPhone: data.pickup_contact_phone_number,
-      // pocEmail: data.pickup_contact_email, commented out until BE writes to XKE
+      pocEmail: data.pickup_contact_email,
     };
 
     const payoffInfo = {
@@ -292,6 +297,8 @@ export class VerificationStore {
       bankPhoneNumber: data.financial_institution_phone,
       loanAccountNumber: data.lien_account_number,
       termsCheckbox: data.acknowledgement_of_terms,
+      lastFourSSN: data.last_four_ssn,
+      whereIsVehicleRegistered: this.whereIsVehicleRegistered || '',
     };
     this.ownerInfo = ownerInfo;
     this.pickupInfo = pickupInfo;
