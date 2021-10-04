@@ -142,7 +142,7 @@ export const patchVerification = async (
 ): Promise<Response<any>> => {
   const url = `${ENVS.VROOM_URL}/acquisition/verification/form`;
   const res = await client.httpRequest({
-    method: 'patch',
+    method: 'PATCH',
     url,
     data,
   });
