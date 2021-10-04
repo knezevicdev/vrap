@@ -43,7 +43,7 @@ const CongratulationsView = ({ viewModel }: Props): JSX.Element => {
 };
 
 const primaryWhite = (props: { theme: ThemeProps }): string =>
-  props.theme.colors.gray.three;
+  props.theme.colors.primary.white;
 
 const grayFour = (props: { theme: ThemeProps }): string =>
   props.theme.colors.gray.four;
