@@ -1,6 +1,11 @@
-import ViewModel from '../review/components/PayOffInfoReview/ViewModel';
+import ViewModel from '../ViewModel';
 
 import store from 'src/store';
+
+jest.mock('next/config', () => (): unknown => ({
+  publicRuntimeConfig: {},
+  serverRuntimeConfig: {},
+}));
 
 describe('Pay Off Review component test', () => {
   const stores = new store();

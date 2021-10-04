@@ -1,6 +1,11 @@
-import ViewModel from '../review/components/PickupInfoReview/ViewModel';
+import ViewModel from '../ViewModel';
 
 import store from 'src/store';
+
+jest.mock('next/config', () => (): unknown => ({
+  publicRuntimeConfig: {},
+  serverRuntimeConfig: {},
+}));
 
 describe('Pickup Infomation Review component test', () => {
   const stores = new store();
