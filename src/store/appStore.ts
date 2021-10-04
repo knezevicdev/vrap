@@ -7,6 +7,7 @@ export class AppStore {
   stepperAbTest = false;
   abTestFacelift = false;
   offerFacelift = false;
+  inProgressiveTest = false;
   loading = true;
 
   constructor() {
@@ -27,6 +28,10 @@ export class AppStore {
 
   setOfferFacelift = (value: boolean): void => {
     this.offerFacelift = value;
+  };
+
+  setProgressiveTest = (value: boolean): void => {
+    this.inProgressiveTest = value;
   };
 
   setLoading = (value: boolean): void => {

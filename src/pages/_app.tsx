@@ -123,9 +123,13 @@ class AppraisalApp extends App {
         const faceliftAbTest = abSmartlyModel?.inExperiment(
           'ac-payment-facelift'
         );
+        const progressiveAbTest = abSmartlyModel?.inExperiment(
+          'vadd-progressive-ad-suyc'
+        );
         this.appStore.setABSmartTest(stepperAbTest);
         this.appStore.setFaceliftAbTest(faceliftAbTest);
         this.appStore.setOfferFacelift(offerFaceliftTest);
+        this.appStore.setProgressiveTest(progressiveAbTest);
         this.appStore.setLoading(false);
       } else {
         abSmartlyModel?.setStatus(NetworkingStatus.ERROR);

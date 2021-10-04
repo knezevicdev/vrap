@@ -1,3 +1,5 @@
+import { ProgressiveAd } from '@vroom-web/shared-components';
+import { observer } from 'mobx-react';
 import React, { useEffect } from 'react';
 import styled from 'styled-components';
 
@@ -26,11 +28,22 @@ const CongratulationsView = ({ viewModel }: Props): JSX.Element => {
         </CongratsContainer>
         <CongratsNextSteps />
       </HeroContainer>
+      {viewModel.showProgressiveAd && (
+        <ProgressiveWrapper>
+          <ProgressiveAd
+            eventName={viewModel.eventName}
+            placementCode={viewModel.placementCode}
+            category={viewModel.category}
+          />
+        </ProgressiveWrapper>
+      )}
     </Container>
   );
 };
 
 const Container = styled.div`
+  display: flex;
+  flex-direction: column;
   flex: 1;
   background-color: #f5f5f5;
 `;
@@ -72,11 +85,16 @@ const CongratsDetailContainer = styled.div`
   flex-basis: 60%;
   padding: 50px;
   z-index: 1;
+  margin: 24px;
 
   @media (max-width: 768px) {
-    margin: 24px;
     padding: 80px 20px;
   }
 `;
 
-export default CongratulationsView;
+const ProgressiveWrapper = styled.div`
+  text-align: center;
+  margin: 0 24px 24px;
+`;
+
+export default observer(CongratulationsView);
