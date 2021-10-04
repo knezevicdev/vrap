@@ -140,7 +140,7 @@ export const postPlaidPayment = async (
 export const patchVerification = async (
   data: PatchReviewData
 ): Promise<Response<any>> => {
-  const url = `${ENVS.VROOM_URL}/acquisition/verification/form`;
+  const url = `${ENVS.ACQUISITIONS_URL}/acquisition/verification/form`;
   const res = await client.httpRequest({
     method: 'PATCH',
     url,
