@@ -10,6 +10,7 @@ import { Header } from 'src/components/Header';
 import Footer from 'src/core/Footer';
 import PriceInfo from 'src/modules/price';
 import { PriceStore } from 'src/modules/price/store';
+import ProgressiveAd from 'src/modules/progressiveAd';
 import Questions from 'src/modules/questions';
 import Page from 'src/Page';
 import { useAppStore } from 'src/store/appStore';
@@ -26,6 +27,7 @@ const Price: NextPage = () => {
       {!appStore.loading && (
         <Contents>
           <PriceInfo store={store} />
+          <ProgressiveAd store={store} />
           <Questions />
         </Contents>
       )}
