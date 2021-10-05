@@ -1,3 +1,6 @@
+import { ProgressiveAd } from '@vroom-web/shared-components';
+import { ThemeProps } from '@vroom-web/ui-lib';
+import { observer } from 'mobx-react';
 import React, { useEffect } from 'react';
 import styled from 'styled-components';
 
@@ -26,13 +29,31 @@ const CongratulationsView = ({ viewModel }: Props): JSX.Element => {
         </CongratsContainer>
         <CongratsNextSteps />
       </HeroContainer>
+      {viewModel.showProgressiveAd && (
+        <ProgressiveWrapper>
+          <ProgressiveAd
+            eventName={viewModel.eventName}
+            placementCode={viewModel.placementCode}
+            category={viewModel.category}
+          />
+        </ProgressiveWrapper>
+      )}
     </Container>
   );
 };
 
+const primaryWhite = (props: { theme: ThemeProps }): string =>
+  props.theme.colors.primary.white;
+
+const grayFour = (props: { theme: ThemeProps }): string =>
+  props.theme.colors.gray.four;
+
 const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   flex: 1;
-  background-color: #f5f5f5;
+  background-color: ${grayFour};
 `;
 
 const HeroContainer = styled.div`
@@ -40,7 +61,6 @@ const HeroContainer = styled.div`
   background-repeat: no-repeat;
   background-image: url('${ENVS.BASE_PATH}/images/offer-hero.png');
   width: 100%;
-  flex: 1;
 
   @media (max-width: 768px) {
     background-size: 100% 200px;
@@ -67,16 +87,21 @@ const CongratsContainer = styled.div`
 
 const CongratsDetailContainer = styled.div`
   margin-top: 56px;
-  background-color: white;
+  background-color: ${primaryWhite};
   box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.15);
   flex-basis: 60%;
   padding: 50px;
   z-index: 1;
+  margin: 24px;
 
   @media (max-width: 768px) {
-    margin: 24px;
     padding: 80px 20px;
   }
 `;
 
-export default CongratulationsView;
+const ProgressiveWrapper = styled.div`
+  text-align: center;
+  margin: 0 24px 24px;
+`;
+
+export default observer(CongratulationsView);

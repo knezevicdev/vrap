@@ -11,6 +11,7 @@ import { useAppStore } from 'src/context';
 import Footer from 'src/core/Footer';
 import PriceInfo from 'src/modules/price';
 import { PriceStore } from 'src/modules/price/store';
+import ProgressiveAd from 'src/modules/progressiveAd';
 import Questions from 'src/modules/questions';
 import Page from 'src/Page';
 
@@ -26,6 +27,7 @@ const Price: NextPage = () => {
       {!appStore.store.absmart.loading && (
         <Contents>
           <PriceInfo store={store} />
+          <ProgressiveAd store={store} />
           <Questions />
         </Contents>
       )}

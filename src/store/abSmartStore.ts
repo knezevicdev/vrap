@@ -8,6 +8,7 @@ export class ABSmartStore {
   abTestFacelift = false;
   offerFacelift = false;
   agreementAbtest = false;
+  inProgressiveTest = false;
   loading = true;
 
   constructor() {
@@ -32,6 +33,10 @@ export class ABSmartStore {
 
   setAgreementAbtest = (value: boolean): void => {
     this.agreementAbtest = value;
+  };
+
+  setProgressiveTest = (value: boolean): void => {
+    this.inProgressiveTest = value;
   };
 
   setLoading = (value: boolean): void => {
