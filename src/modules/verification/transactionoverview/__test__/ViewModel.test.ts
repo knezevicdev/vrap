@@ -15,7 +15,6 @@ describe('Review component test', () => {
   const stores = new store();
   let viewModel: ViewModel;
   const spyRequest = jest.spyOn(Request, 'getOfferDetails');
-  spyRequest.mockResolvedValue(getOfferDetails());
 
   beforeEach(() => {
     viewModel = new ViewModel(stores);
@@ -26,6 +25,7 @@ describe('Review component test', () => {
   });
 
   it('test api call getOfferDetail', async () => {
+    spyRequest.mockResolvedValue(getOfferDetails());
     await viewModel.getOfferDetail('26300');
     const response = {
       make: 'NISSAN',
@@ -34,6 +34,23 @@ describe('Review component test', () => {
       trim: 'Utility 4D SV 2WD V6',
       year: 2016,
       miles: 999999,
+    };
+
+    expect(JSON.stringify(stores.offer.offerDetail)).toEqual(
+      JSON.stringify(response)
+    );
+  });
+
+  it('test api call faile ', async () => {
+    spyRequest.mockRejectedValue(getOfferDetails());
+    await viewModel.getOfferDetail('26400');
+    const response = {
+      make: '',
+      model: '',
+      price: 0,
+      trim: '',
+      year: 0,
+      miles: 0,
     };
 
     expect(JSON.stringify(stores.offer.offerDetail)).toEqual(
