@@ -77,7 +77,7 @@ class OptionsViewModel {
   };
 
   isValidStreetAddress = (str: string | null | undefined): boolean => {
-    const re = /\d{1,5}(\-?\/?\d{1,5})?\s(\w.\s)?(\b\w*\b\s){1,2}\w*\.?/g;
+    const re = /\d{1,5}(-?\/?\d{1,5})?\s(\w.\s)?(\b\w*\b\s){1,2}\w*\.?/g;
     const val = str || '';
     return re.test(val);
   };
