@@ -97,7 +97,8 @@ class OptionsViewModel {
   };
 
   isValidName = (str: string | null | undefined): boolean => {
-    const re = /^[a-zA-ZàâäôéèëêïîçùûüÿæœÀÂÄÔÉÈËÊÏÎŸÇÙÛÜÆŒäöüßÄÖÜẞąćęłńóśźżĄĆĘŁŃÓŚŹŻàèéìíîòóùúÀÈÉÌÍÎÒÓÙÚáéíñóúüÁÉÍÑÓÚÜ \-']+$/;
+    const re =
+      /^[a-zA-ZàâäôéèëêïîçùûüÿæœÀÂÄÔÉÈËÊÏÎŸÇÙÛÜÆŒäöüßÄÖÜẞąćęłńóśźżĄĆĘŁŃÓŚŹŻàèéìíîòóùúÀÈÉÌÍÎÒÓÙÚáéíñóúüÁÉÍÑÓÚÜ \-']+$/;
     if (!str || !re.test(str)) {
       return false;
     } else {
@@ -110,9 +111,7 @@ class OptionsViewModel {
     const calcMailingAddress = (): MailingAddress => {
       if (values.isPrimaryAddress === 'No') {
         return {
-          // eslint-disable-next-line @typescript-eslint/camelcase
           address_1: values.address,
-          // eslint-disable-next-line @typescript-eslint/camelcase
           address_2: values.apartment,
           city: values.city,
           state: values.state,

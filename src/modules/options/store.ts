@@ -19,9 +19,7 @@ import {
 
 const defaultOptionsState: OptionStoreState = {
   mailingAddress: {
-    // eslint-disable-next-line @typescript-eslint/camelcase
     address_1: '',
-    // eslint-disable-next-line @typescript-eslint/camelcase
     address_2: '',
     city: '',
     state: '',
@@ -30,11 +28,8 @@ const defaultOptionsState: OptionStoreState = {
   email: '',
   currentPayments: false,
   poq: {
-    // eslint-disable-next-line @typescript-eslint/camelcase
     account_number: '',
-    // eslint-disable-next-line @typescript-eslint/camelcase
     final_payment: 0,
-    // eslint-disable-next-line @typescript-eslint/camelcase
     final_payoff: 0,
   },
   institutionFound: true,

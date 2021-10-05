@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/camelcase */
 jest.mock('src/networking/request');
 
 import { OptionsStore } from '../../options/store';

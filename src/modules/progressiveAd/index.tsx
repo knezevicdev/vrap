@@ -11,11 +11,10 @@ import { useAppStore } from 'src/store/appStore';
 const ProgressiveAd: React.FC<{ store: PriceStore }> = ({ store }) => {
   const { query } = useRouter();
   const appStore = useAppStore();
-  const viewModel = useMemo(() => new ViewModel(store, query, appStore), [
-    store,
-    query,
-    appStore,
-  ]);
+  const viewModel = useMemo(
+    () => new ViewModel(store, query, appStore),
+    [store, query, appStore]
+  );
   return <View viewModel={viewModel} />;
 };
 

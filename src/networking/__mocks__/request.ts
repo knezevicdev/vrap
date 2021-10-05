@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/camelcase */
 import { Response } from '@vroom-web/networking';
 
 import { Prices, VerificationRespData } from '../models/Price';

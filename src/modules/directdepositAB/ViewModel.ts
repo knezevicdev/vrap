@@ -40,13 +40,10 @@ class DirectDepositViewModel {
 
   getPrice = (): number => {
     if (this.oStore && this.oStore.poq) {
-      // eslint-disable-next-line @typescript-eslint/camelcase
       const { account_number, final_payment } = this.oStore.poq || {};
       const { currentPayments } = this.oStore;
 
-      // eslint-disable-next-line @typescript-eslint/camelcase
       if (currentPayments && account_number != '') {
-        // eslint-disable-next-line @typescript-eslint/camelcase
         return final_payment;
       }
     }
