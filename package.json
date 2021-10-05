@@ -1,6 +1,6 @@
 {
   "name": "@vroom-web/appraisal",
-  "version": "3.0.10",
+  "version": "3.1.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -10,7 +10,14 @@
     "test": "jest --no-cache --ci --coverage --reporters=default --reporters=jest-junit --passWithNoTests",
     "test:dev": "jest --watch",
     "test:ci": "jest --ci --coverage --passWithNoTests",
-    "test:cc": "jest  --coverage --passWithNoTests"
+    "test:cc": "jest  --coverage --passWithNoTests",
+    "release:prepatch": "npm version prepatch",
+    "release:patch": "npm version patch",
+    "release:preminor": "npm version preminor",
+    "release:minor": "npm version minor",
+    "release:premajor": "npm version premajor",
+    "release:major": "npm version major",
+    "postversion": "git push --follow-tags"
   },
   "dependencies": {
     "@absmartly/javascript-sdk": "^1.6.0",
