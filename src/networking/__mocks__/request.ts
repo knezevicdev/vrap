@@ -18,7 +18,6 @@ const offerbyIdResp: Prices = {
       active: true,
       automated_appraisal: true,
       created: '2021-08-27T19:09:21.46248Z',
-      experiment_ids: {},
       first_name: 'fname',
       last_name: 'lname',
       miles: 999999,

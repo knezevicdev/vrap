@@ -4,7 +4,7 @@ import React from 'react';
 import { CoreInput, CoreInputProps } from './CoreInput';
 
 interface FormikProps {
-  field: object;
+  field: any;
   meta: {
     error: string | undefined;
     touched: boolean | undefined;

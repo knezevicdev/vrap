@@ -115,7 +115,7 @@ export class DirectDepositStore implements Store {
     } catch (err) {
       onPlaidSubmitting(false);
       console.log(JSON.stringify(err));
-      return err;
+      throw err;
     }
   };
 
