@@ -77,7 +77,7 @@ class OptionsViewModel {
   };
 
   isValidStreetAddress = (str: string | null | undefined): boolean => {
-    const re = /\S+(?:\s+[0-9]*[A-z]+)/g;
+    const re = /\d{1,5}(\-?\/?\d{1,5})?\s(\w.\s)?(\b\w*\b\s){1,2}\w*\.?/g;
     const val = str || '';
     return re.test(val);
   };
@@ -88,7 +88,7 @@ class OptionsViewModel {
     }
 
     const length = zipCode.length;
-    const reg = /^\d+$/;
+    const reg = /^\d{1,5}$/;
     const numbersOnly = reg.test(zipCode);
     if (length !== 5 || !numbersOnly) {
       return false;
@@ -98,7 +98,7 @@ class OptionsViewModel {
 
   isValidName = (str: string | null | undefined): boolean => {
     const re =
-      /^[a-zA-ZàâäôéèëêïîçùûüÿæœÀÂÄÔÉÈËÊÏÎŸÇÙÛÜÆŒäöüßÄÖÜẞąćęłńóśźżĄĆĘŁŃÓŚŹŻàèéìíîòóùúÀÈÉÌÍÎÒÓÙÚáéíñóúüÁÉÍÑÓÚÜ \-']+$/;
+      /^[a-zA-ZàâäôéèëêïîçùûüÿæœÀÂÄÔÉÈËÊÏÎŸÇÙÛÜÆŒäöüßÄÖÜẞąćęłńóśźżĄĆĘŁŃÓŚŹŻàèéìíîòóùúÀÈÉÌÍÎÒÓÙÚáéíñóúüÁÉÍÑÓÚÜ \-']{2,30}$/;
     if (!str || !re.test(str)) {
       return false;
     } else {
