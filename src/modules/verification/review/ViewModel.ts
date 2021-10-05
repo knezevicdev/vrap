@@ -18,9 +18,13 @@ export default class VerificationReviewSectionViewModel {
 
   constructor(private store: Store) {}
 
-  onPageLoad = (): void => {
+  onPageLoad(): void {
     this.analyticsHandler.trackVerificationReviewViewed();
-  };
+  }
+
+  getAnalyticHandler(): AnalyticsHandler {
+    return this.analyticsHandler;
+  }
 
   createVerificationPayload = (): PatchReview => {
     const { verificationDetail } = this.store.verification;
@@ -81,7 +85,7 @@ export default class VerificationReviewSectionViewModel {
     return payload;
   };
 
-  verificationSubmit = async (): Promise<void> => {
+  async verificationSubmit(): Promise<void> {
     const payload = this.createVerificationPayload();
     const data = {
       source: 'vroom.com',
@@ -89,14 +93,11 @@ export default class VerificationReviewSectionViewModel {
       timestamp: new Date().toISOString(),
       payload,
     };
-    console.log('payload >>> ', data);
     const verificationResponse = await patchVerification(data);
-    console.log(' verificationResponse ', verificationResponse);
     if (isErrorResponse(verificationResponse)) throw verificationResponse;
 
-    const responseData = verificationResponse.data;
+    const responseData = verificationResponse.data.data;
     const finalPayment = responseData.poq.final_payment || {};
-    // eslint-disable-next-line @typescript-eslint/camelcase
     const { owner_email_address, owner_first_name } = responseData;
     this.analyticsHandler.trackVerificationSubmitted(
       owner_email_address,
@@ -118,7 +119,7 @@ export default class VerificationReviewSectionViewModel {
         window.location.href = '/appraisal/congratulations';
       }
     }
-  };
+  }
 
   setWhereIsVehicleRegistered(value: string): void {
     this.store.verification.setWhereIsVehicleRegistered(value);
