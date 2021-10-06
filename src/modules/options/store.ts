@@ -79,7 +79,6 @@ export async function submitPaymentOption(
     await submitPaymentOptionSelected(values, priceId, address);
   } catch (err) {
     console.log(JSON.stringify(err));
-    throw err;
   }
 }
 

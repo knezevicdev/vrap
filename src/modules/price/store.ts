@@ -122,7 +122,6 @@ export class PriceStore implements Store {
       await submitPriceResponse(priceData);
     } catch (err) {
       console.log(JSON.stringify(err));
-      throw err;
     }
   };
 }
