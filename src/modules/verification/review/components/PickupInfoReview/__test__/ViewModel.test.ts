@@ -22,5 +22,6 @@ describe('Pickup Infomation Review component test', () => {
     expect(viewModel.name).toEqual('Name');
     expect(viewModel.email).toEqual('Email');
     expect(viewModel.phoneNumber).toEqual('Phone Number');
+    expect(viewModel.edit).toEqual('Edit');
   });
 });

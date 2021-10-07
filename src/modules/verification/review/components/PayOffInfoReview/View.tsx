@@ -19,13 +19,15 @@ const PayoffInfoReview: React.FC<Props> = ({ viewModel, store }) => {
     <Container>
       <SubTitleContainer>
         <Subtitle>{viewModel.payOfftitle}</Subtitle>
-        <Edit onClick={(): void => viewModel.handleEditClick()}>Edit</Edit>
+        <Edit onClick={(): void => viewModel.handleEditClick()}>
+          {viewModel.edit}
+        </Edit>
       </SubTitleContainer>
 
       <Row>
         <Info>
           <Label>{viewModel.carPayment}</Label>
-          <Field>{verificationDetail?.current_payments ? 'Yes' : 'No'}</Field>
+          <Field>{viewModel.getCurrentPayment()}</Field>
         </Info>
         <Info>
           <Label>{viewModel.whereCarPayment}</Label>

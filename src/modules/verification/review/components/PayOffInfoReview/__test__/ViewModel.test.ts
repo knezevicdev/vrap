@@ -25,5 +25,6 @@ describe('Pay Off Review component test', () => {
     expect(viewModel.ssnLastFour).toEqual(
       'Last Four Digits of Social Security Number'
     );
+    expect(viewModel.edit).toEqual('Edit');
   });
 });

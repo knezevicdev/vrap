@@ -19,7 +19,9 @@ const OwnerInfoReviewView: React.FC<Props> = ({ viewModel, store }) => {
     <Container>
       <SubTitleContainer>
         <Subtitle>{viewModel.title}</Subtitle>
-        <Edit onClick={(): void => viewModel.handleEditClick()}>Edit</Edit>
+        <Edit onClick={(): void => viewModel.handleEditClick()}>
+          {viewModel.edit}
+        </Edit>
       </SubTitleContainer>
 
       <SectionTitle>{viewModel.primarySectionTitle}</SectionTitle>

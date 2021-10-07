@@ -8,6 +8,8 @@ export default class OwnerInfoReviewViewModel {
   readonly email: string = 'Email';
   readonly phone: string = 'Phone';
   readonly address: string = 'Address';
+  readonly edit: string = 'Edit';
+
   constructor(private store: Store) {}
 
   handleEditClick(): void {
