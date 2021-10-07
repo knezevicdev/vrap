@@ -1,4 +1,5 @@
 import { Checkbox } from '@vroom-web/ui-lib';
+import { Typography } from '@vroom-web/ui-lib';
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
@@ -10,7 +11,6 @@ import ViewModel from './ViewModel';
 
 import { useAppStore } from 'src/context';
 import { Button } from 'src/core/Button';
-import { Body, Hero } from 'src/core/Typography';
 
 interface Props {
   viewModel: ViewModel;
@@ -94,12 +94,11 @@ const Container = styled.div`
   }
 `;
 
-const Title = styled(Hero.Three)`
+const Title = styled(Typography.Heading.Three)`
   font-style: 'italic';
+  font-family: 'Vroom Sans';
   font-weight: 800;
-  font-size: 36px;
   letter-spacing: 1px;
-  color: #041022;
   padding: 30px 0;
 `;
 
@@ -109,15 +108,8 @@ const Line = styled.div`
   background-color: #d6d7da;
 `;
 
-const WarningText = styled.div`
+const WarningText = styled(Typography.Body.Small)`
   margin-top: 16px;
-  font-family: 'Calibre';
-  font-style: normal;
-  font-weight: normal;
-  font-size: 14px;
-  line-height: 20px;
-  letter-spacing: 0.25px;
-  color: #041022;
 `;
 
 const SubmitButton = styled(Button.Primary)`
@@ -138,9 +130,8 @@ const CheckboxContainer = styled.div`
   }
 `;
 
-const ReviewText = styled(Body.Regular)`
+const ReviewText = styled(Typography.Body.Regular)`
   letter-spacing: 0.25px;
-  color: #041022;
   margin-left: 8px;
 `;
 export default VerificationReviewViewDetail;

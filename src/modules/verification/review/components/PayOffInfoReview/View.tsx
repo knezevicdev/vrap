@@ -1,10 +1,10 @@
+import { Typography } from '@vroom-web/ui-lib';
 import { observer } from 'mobx-react';
 import React from 'react';
 import styled from 'styled-components';
 
 import ViewModel from './ViewModel';
 
-import { Title } from 'src/core/Typography';
 import Store from 'src/store';
 import { displaySecureSSN } from 'src/utils';
 
@@ -59,14 +59,8 @@ const SubTitleContainer = styled.div`
   height: 26px;
 `;
 
-const Subtitle = styled.div`
-  font-family: 'Calibre';
-  font-style: normal;
-  font-weight: 600;
-  font-size: 20px;
+const Subtitle = styled(Typography.Title.Three)`
   line-height: 26px;
-  letter-spacing: 0.25px;
-  color: #041022;
 `;
 
 const Row = styled.div`
@@ -88,31 +82,21 @@ const Info = styled.div`
   }
 `;
 
-const Label = styled.span`
-  font-family: 'Calibre';
-  font-style: normal;
-  font-weight: normal;
+const Label = styled(Typography.Fine)`
   font-size: 13px;
-  line-height: 16px;
   letter-spacing: 0.35px;
-  color: #041022;
 `;
 
-const Field = styled.span`
-  font-family: 'Calibre';
-  font-style: normal;
-  font-weight: normal;
+const Field = styled(Typography.Body.Regular)`
   font-size: 18px;
   line-height: 25px;
-  letter-spacing: 0.25px;
-  color: #041022;
   word-wrap: break-word;
 `;
 
-const Edit = styled(Title.Four)`
+const Edit = styled(Typography.Title.Three)`
   margin-left: 5px;
   cursor: pointer;
-  font-style: normal;
+  font-size: 16px;
   font-weight: normal;
   line-height: 22px;
   letter-spacing: 0.25px;
