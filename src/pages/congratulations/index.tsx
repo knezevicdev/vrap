@@ -41,7 +41,6 @@ const parseCookies = (req: IncomingMessage): Cookie => {
       req.headers.cookie.split('; ').map((v) => v.split(/=(.+)/))
     );
   } else {
-    // eslint-disable-next-line @typescript-eslint/camelcase
     return { uuid: '', ajs_anonymous_id: '' };
   }
 };

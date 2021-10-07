@@ -10,7 +10,6 @@ export interface Price {
   Good_Until__c: string;
   VIN__c: string;
   offer_id: number;
-  experiment_ids: object;
   created: string;
   offer_status: string;
   user_email: string;

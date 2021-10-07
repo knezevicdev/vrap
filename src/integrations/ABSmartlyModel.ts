@@ -52,7 +52,6 @@ class Model {
     });
     const request = {
       units: {
-        // eslint-disable-next-line @typescript-eslint/camelcase
         anonymous_id: anonymousId,
       },
     };
