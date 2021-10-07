@@ -1,3 +1,4 @@
+import { Typography } from '@vroom-web/ui-lib';
 import { observer } from 'mobx-react';
 import React, { useEffect } from 'react';
 import styled from 'styled-components';
@@ -72,26 +73,27 @@ const InfoTitle = styled.div`
   border-bottom: 1px solid #d6d7da;
 `;
 
-const InfoTitleText = styled(Hero.Five)`
-  font-style: italic;
+const InfoTitleText = styled(Typography.Heading.Four)`
+  font-style: 'italic';
+  font-family: 'Vroom Sans';
   font-weight: 800;
+  font-size: 28px;
+  line-height: 32px;
   letter-spacing: 1px;
-  color: #041022;
   min-height: 30px;
   margin-bottom: 2px;
 `;
 
 const InfoContent = styled.div`
   padding-top: 15px;
+  display: flex;
+  flex-direction: column;
 `;
 
-const VehicleInfo = styled.div`
-  font-family: 'Calibre';
-  font-style: normal;
+const VehicleInfo = styled(Typography.Body.Regular)`
   font-weight: 500;
   font-size: 20px;
   line-height: 150%;
-  color: #041022;
 `;
 
 const VehicleTrim = styled(VehicleInfo)`

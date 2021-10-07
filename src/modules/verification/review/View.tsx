@@ -1,5 +1,4 @@
-import { Checkbox } from '@vroom-web/ui-lib';
-import { Typography } from '@vroom-web/ui-lib';
+import { Checkbox, Typography } from '@vroom-web/ui-lib';
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
