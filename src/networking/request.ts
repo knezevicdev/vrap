@@ -87,7 +87,6 @@ export const submitPaymentOptionSelected = async (
   priceId: string,
   address: MailingAddress
 ): Promise<Response<PaymentOptionsRespData>> => {
-  // eslint-disable-next-line @typescript-eslint/camelcase
   const data: PaymentData = { sf_offer_id: priceId };
   const url = `${ENVS.VROOM_URL}/api/appraisal/payment`;
 

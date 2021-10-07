@@ -1,0 +1,28 @@
+ingress:
+  enabled: true
+  tls:
+    enabled: false
+
+resources:
+  limits:
+    cpu: 500m
+    memory: 1000Mi
+  requests:
+    cpu: 100m
+    memory: 500Mi
+
+service:
+  externalPort: 8080
+  internalPort: 8080
+
+livenessProbe:
+  path: '/appraisal/api/version'
+
+readinessProbe:
+  path: '/appraisal/api/version'
+
+podAnnotations:
+  ad.datadoghq.com/auto-deploy-app.check_names: '["auto-deploy-app"]'
+  ad.datadoghq.com/auto-deploy-app.init_configs: '[{}]'
+  ad.datadoghq.com/auto-deploy-app.instances: '[{"host": "%%host%%", "port": "%%port%%"}]'
+  ad.datadoghq.com/auto-deploy-app.logs: '[{"source": "appraisal", "service": "appraisal"}]'

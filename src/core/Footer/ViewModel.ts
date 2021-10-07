@@ -125,8 +125,7 @@ class FooterViewModel {
             name: 'Careers',
           },
           {
-            href:
-              'https://privacyportal.onetrust.com/webform/8086730d-99f7-48ea-b3a1-0b3bb0cf163e/aa3e2126-7439-411d-a9a2-9fa0c4f8b01d',
+            href: 'https://privacyportal.onetrust.com/webform/8086730d-99f7-48ea-b3a1-0b3bb0cf163e/aa3e2126-7439-411d-a9a2-9fa0c4f8b01d',
             name: 'Do Not Sell My Info (CA Residents)',
           },
         ],
