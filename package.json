@@ -34,7 +34,7 @@
     "@vroom-web/cat-sdk": "^1.0.5",
     "@vroom-web/deals-v2-networking": "^1.0.1",
     "@vroom-web/experiment-sdk": "^2.0.1",
-    "@vroom-web/shared-components": "^1.7.3",
+    "@vroom-web/shared-components": "^1.8.3",
     "@vroom-web/legacy-header-components": "^2.3.4",
     "@vroom-web/ui-lib": "^2.10.2",
     "@vroom-web/networking": "^0.6.9",
