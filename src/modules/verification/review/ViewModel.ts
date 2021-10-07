@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/camelcase */
 import { isErrorResponse } from '@vroom-web/networking';
 
 import AnalyticsHandler from 'src/integrations/AnalyticsHandler';
