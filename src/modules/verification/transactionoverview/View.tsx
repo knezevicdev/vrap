@@ -5,7 +5,6 @@ import styled from 'styled-components';
 
 import ViewModel from './ViewModel';
 
-import { Hero } from 'src/core/Typography';
 import Store from 'src/store';
 import { displayCurrency } from 'src/utils';
 
