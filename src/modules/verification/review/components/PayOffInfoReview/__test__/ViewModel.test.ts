@@ -27,4 +27,10 @@ describe('Pay Off Review component test', () => {
     );
     expect(viewModel.edit).toEqual('Edit');
   });
+
+  it('test call getCurrentPayment should return No', () => {
+    const fn = jest.fn(() => viewModel.getCurrentPayment());
+    fn();
+    expect(fn).toHaveReturnedWith('No');
+  })
 });
