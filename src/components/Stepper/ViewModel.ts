@@ -1,7 +1,7 @@
 import { Stepper } from 'src/interfaces.d';
 
 class VerificationStepperViewModel {
-  readonly steps: Stepper[] = [
+  readonly defaultSteps: Stepper[] = [
     {
       step: '1',
       progress: '25',
@@ -27,6 +27,42 @@ class VerificationStepperViewModel {
       title: 'Payment Method',
     },
   ];
+
+  readonly paymentRequiredSteps: Stepper[] = [
+    {
+      step: '1',
+      progress: '25',
+      next: 'Document upload',
+      title: 'Verify Your Info',
+    },
+    {
+      step: '2',
+      progress: '50',
+      next: 'Review your information',
+      title: 'Additional Docs',
+    },
+    {
+      step: '3',
+      progress: '75',
+      next: 'Review',
+      title: 'Payment Method',
+    },
+    {
+      step: '4',
+      progress: '100',
+      next: 'Your Information is submitted',
+      title: 'Review',
+    },
+  ];
+
+  stepper: Stepper[] = this.defaultSteps;
+
+  setStepper(value: boolean): void {
+    value
+      ? (this.stepper = this.paymentRequiredSteps)
+      : (this.stepper = this.defaultSteps);
+    console.log(value, ' steps ', this.stepper);
+  }
 }
 
 export default VerificationStepperViewModel;

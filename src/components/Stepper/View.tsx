@@ -1,9 +1,11 @@
-import React from 'react';
+import { observer } from 'mobx-react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
 
 import ViewModel from './ViewModel';
 
 import { Stepper } from 'src/interfaces.d';
+import { useAppStore } from 'src/store/appStore';
 
 export interface Props {
   viewModel: ViewModel;
@@ -14,10 +16,17 @@ const VerificationStepperView: React.FC<Props> = ({
   activeStep,
   viewModel,
 }) => {
+  // eslint-disable-next-line @typescript-eslint/naming-convention
+  const { paymentRequired } = useAppStore();
+  useEffect(() => {
+    console.log('paymentRequired ', paymentRequired);
+    viewModel.setStepper(paymentRequired);
+  }, [paymentRequired, viewModel]);
+
   return (
     <Container>
       <ProgressContainer>
-        {viewModel.steps.map((item) => {
+        {viewModel.stepper.map((item) => {
           const active =
             parseInt(activeStep.step) >= parseInt(item.step) ? 'active' : '';
           return (
@@ -31,7 +40,7 @@ const VerificationStepperView: React.FC<Props> = ({
         })}
       </ProgressContainer>
       <TextContainer>
-        {viewModel.steps.map((item) => {
+        {viewModel.stepper.map((item) => {
           return (
             <StepTitle
               key={item.step}
@@ -144,4 +153,4 @@ const StepTitle = styled.span`
   }
 `;
 
-export default VerificationStepperView;
+export default observer(VerificationStepperView);
