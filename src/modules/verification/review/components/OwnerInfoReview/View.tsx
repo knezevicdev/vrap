@@ -114,7 +114,6 @@ const Subtitle = styled(Typography.Title.Three)`
 `;
 
 const SectionTitle = styled(Typography.Title.Three)`
-  font-style: normal;
   text-align: left;
   margin: 20px 0;
   font-size: 16px;
@@ -151,18 +150,14 @@ const Label = styled(Typography.Fine)`
 `;
 
 const Field = styled(Typography.Body.Regular)`
-  font-size: 18px;
-  line-height: 25px;
   word-wrap: break-word;
 `;
 
-const Edit = styled(Typography.Title.Three)`
+const Edit = styled(Typography.Body.Regular)`
   margin-left: 5px;
   cursor: pointer;
   font-size: 16px;
-  font-weight: normal;
   line-height: 22px;
-  letter-spacing: 0.25px;
   color: #e7131a;
   padding-top: 4px;
 `;

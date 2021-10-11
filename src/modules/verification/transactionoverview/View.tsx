@@ -72,13 +72,10 @@ const InfoTitle = styled.div`
   border-bottom: 1px solid #d6d7da;
 `;
 
-const InfoTitleText = styled(Typography.Heading.Four)`
+const InfoTitleText = styled(Typography.Title.One)`
   font-style: 'italic';
   font-family: 'Vroom Sans';
   font-weight: 800;
-  font-size: 28px;
-  line-height: 32px;
-  letter-spacing: 1px;
   min-height: 30px;
   margin-bottom: 2px;
 `;
@@ -96,9 +93,7 @@ const VehicleInfo = styled(Typography.Body.Regular)`
 `;
 
 const VehicleTrim = styled(VehicleInfo)`
-  font-weight: normal;
   line-height: 26px;
-  letter-spacing: 0.25px;
 `;
 
 export default observer(TransactionOverviewView);

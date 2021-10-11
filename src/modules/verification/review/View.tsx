@@ -97,7 +97,6 @@ const Title = styled(Typography.Heading.Three)`
   font-style: 'italic';
   font-family: 'Vroom Sans';
   font-weight: 800;
-  letter-spacing: 1px;
   padding: 30px 0;
 `;
 
@@ -130,7 +129,6 @@ const CheckboxContainer = styled.div`
 `;
 
 const ReviewText = styled(Typography.Body.Regular)`
-  letter-spacing: 0.25px;
   margin-left: 8px;
 `;
 export default VerificationReviewViewDetail;
