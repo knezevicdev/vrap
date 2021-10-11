@@ -8,6 +8,7 @@ export class AppStore {
   abTestFacelift = false;
   offerFacelift = false;
   inProgressiveTest = false;
+  paymentRequired = false;
   loading = true;
 
   constructor() {
@@ -32,6 +33,10 @@ export class AppStore {
 
   setProgressiveTest = (value: boolean): void => {
     this.inProgressiveTest = value;
+  };
+
+  setPaymentRequired = (value: boolean): void => {
+    this.paymentRequired = value;
   };
 
   setLoading = (value: boolean): void => {

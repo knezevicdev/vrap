@@ -7,6 +7,7 @@ import ViewAB from './ViewAB';
 import ViewModel from './ViewModel';
 
 import AnalyticsHandler from 'src/integrations/AnalyticsHandler';
+import { useAppStore } from 'src/store/appStore';
 
 interface Prop {
   abTest: boolean;
@@ -15,8 +16,9 @@ interface Prop {
 const Options = (props: Prop): JSX.Element => {
   const analyticsHandler = new AnalyticsHandler();
   const store = useOptionsStore();
+  const appStore = useAppStore();
   const ddStore = useDirectDepositStore();
-  const viewModel = new ViewModel(store, ddStore, analyticsHandler);
+  const viewModel = new ViewModel(store, ddStore, analyticsHandler, appStore);
 
   return props.abTest ? (
     <ViewAB viewModel={viewModel} />

@@ -5,11 +5,13 @@ import AnalyticsHandler from 'src/integrations/AnalyticsHandler';
 import { MailingAddress } from 'src/interfaces.d';
 import { PaymentOverviewFormValues } from 'src/interfaces.d';
 import { submitPaymentOption } from 'src/modules/options/store';
+import { AppStore } from 'src/store/appStore';
 
 class OptionsViewModel {
   private readonly store: OptionsStore;
   private readonly ddStore: DirectDepositStore;
   private analyticsHandler: AnalyticsHandler;
+  private appStore: AppStore;
   readonly hero: string = `let's set up your payment method`;
   readonly desktopTitle: string = 'how would you like to get paid?';
   readonly optionTitle: string = 'Payment Method';
@@ -20,11 +22,13 @@ class OptionsViewModel {
   constructor(
     store: OptionsStore,
     ddStore: DirectDepositStore,
-    analyticsHandler: AnalyticsHandler
+    analyticsHandler: AnalyticsHandler,
+    appStore: AppStore
   ) {
     this.store = store;
     this.ddStore = ddStore;
     this.analyticsHandler = analyticsHandler;
+    this.appStore = appStore;
   }
 
   onPageLoad = (): void => {
@@ -137,8 +141,9 @@ class OptionsViewModel {
 
     this.analyticsHandler.trackPaymentOptionsSubmitted(submittedType);
 
-    const url = `/appraisal/congratulations`;
-    window.location.href = url;
+    this.appStore.paymentRequired
+      ? (window.location.href = '/sell/verification/review')
+      : (window.location.href = `/appraisal/congratulations`);
   };
 
   getInstitutionNotFound = (): boolean => {
