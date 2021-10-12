@@ -4,7 +4,7 @@ import { PriceStore } from '../price/store';
 
 import { StoreStatus } from 'src/interfaces.d';
 import { isMobileWebView } from 'src/networking/utils/isMobileWebView';
-import { AppStore } from 'src/store/appStore';
+import Store from 'src/store';
 
 class PriceViewModel {
   readonly placementCode = 2871300002;
@@ -14,7 +14,7 @@ class PriceViewModel {
   constructor(
     public store: PriceStore,
     private query: ParsedUrlQuery,
-    private appStore: AppStore
+    private appStore: Store
   ) {}
 
   private get isManualPricing(): boolean {
@@ -30,7 +30,7 @@ class PriceViewModel {
     return (
       this.isManualPricing &&
       !isMobileWebView(this.query) &&
-      this.appStore.inProgressiveTest
+      this.appStore.absmart.inProgressiveTest
     );
   }
 }

@@ -2,7 +2,7 @@ import { ParsedUrlQuery } from 'querystring';
 
 import AnalyticsHandler from 'src/integrations/AnalyticsHandler';
 import { isMobileWebView } from 'src/networking/utils/isMobileWebView';
-import { AppStore } from 'src/store/appStore';
+import Store from 'src/store';
 
 class CongratulationsViewModel {
   readonly placementCode = 2871300002;
@@ -11,12 +11,12 @@ class CongratulationsViewModel {
 
   private analyticsHandler: AnalyticsHandler;
   private query: ParsedUrlQuery;
-  private appStore: AppStore;
+  private appStore: Store;
 
   constructor(
     analyticsHandler: AnalyticsHandler,
     query: ParsedUrlQuery,
-    appStore: AppStore
+    appStore: Store
   ) {
     this.analyticsHandler = analyticsHandler;
     this.query = query;
@@ -28,7 +28,9 @@ class CongratulationsViewModel {
   };
 
   get showProgressiveAd(): boolean {
-    return !isMobileWebView(this.query) && this.appStore.inProgressiveTest;
+    return (
+      !isMobileWebView(this.query) && this.appStore.absmart.inProgressiveTest
+    );
   }
 }
 

@@ -19,13 +19,13 @@ import { ThemeProvider as StyledComponentsThemeProvider } from 'styled-component
 
 import { GlobalStyle, theme } from '../core/themes/Vroom';
 
+import AppStoreNetwork, { AppStoreNetworkContext } from 'src/context';
 import { AnalyticsHandlerContext } from 'src/integrations/AnalyticHandlerContext';
 import AnalyticsHandler from 'src/integrations/AnalyticsHandler';
 import { analyticsHandler } from 'src/integrations/AnalyticsHandler';
 import { CatSDKContext } from 'src/integrations/CatSDKContext';
 import ENVS from 'src/integrations/Envs';
 import { RemoteConfigContext } from 'src/integrations/RemoteConfigContext';
-import { AppStore, AppStoreContext } from 'src/store/appStore';
 
 const firebaseConfig = {
   apiKey: 'AIzaSyAf2yVhnnxthUA5C4RqIqeDkIhk74EBkAA',
@@ -48,7 +48,7 @@ class AppraisalApp extends App {
   private readonly catSDK: CatSDK;
   private readonly analyticsHandler: AnalyticsHandler;
   private readonly commonHandler: CommonHandler;
-  appStore: AppStore = new AppStore();
+  appStore: AppStoreNetwork = new AppStoreNetwork();
 
   constructor(props: AppProps) {
     super(props);
@@ -97,6 +97,7 @@ class AppraisalApp extends App {
   }
 
   handleAbsmart = (): void => {
+    const { store } = this.appStore;
     const abSmartlyModel = new ABSmartlyModel({
       endpoint: publicRuntimeConfig.NEXT_PUBLIC_ABSMARTLY_URL,
       apiKey: publicRuntimeConfig.ABSMARTLY_API_KEY,
@@ -104,9 +105,9 @@ class AppraisalApp extends App {
       application: publicRuntimeConfig.ABSMARTLY_APP,
     });
 
-    this.appStore.setABSmartlyModel(abSmartlyModel);
+    store.absmart.setABSmartlyModel(abSmartlyModel);
     const checkAnalytics = window.setTimeout(() => {
-      this.appStore.abSmartlyModel?.setStatus(NetworkingStatus.ERROR);
+      store.absmart.abSmartlyModel?.setStatus(NetworkingStatus.ERROR);
     }, 3500);
 
     analyticsHandler.onAnalyticsReady(async () => {
@@ -123,17 +124,21 @@ class AppraisalApp extends App {
         const faceliftAbTest = abSmartlyModel?.inExperiment(
           'ac-payment-facelift'
         );
+        const agreementTest = abSmartlyModel?.inExperiment(
+          'ac-appraisal-review-agreement'
+        );
         const progressiveAbTest = abSmartlyModel?.inExperiment(
           'vadd-progressive-ad-suyc'
         );
-        this.appStore.setABSmartTest(stepperAbTest);
-        this.appStore.setFaceliftAbTest(faceliftAbTest);
-        this.appStore.setOfferFacelift(offerFaceliftTest);
-        this.appStore.setProgressiveTest(progressiveAbTest);
-        this.appStore.setLoading(false);
+        store.absmart.setABSmartTest(stepperAbTest);
+        store.absmart.setFaceliftAbTest(faceliftAbTest);
+        store.absmart.setOfferFacelift(offerFaceliftTest);
+        store.absmart.setAgreementAbtest(agreementTest);
+        store.absmart.setProgressiveTest(progressiveAbTest);
+        store.absmart.setLoading(false);
       } else {
         abSmartlyModel?.setStatus(NetworkingStatus.ERROR);
-        this.appStore.setLoading(false);
+        store.absmart.setLoading(false);
       }
     });
   };
@@ -150,9 +155,9 @@ class AppraisalApp extends App {
               <IdProvider>
                 <ThemeProvider brand={Brand.VROOM}>
                   <StyledComponentsThemeProvider theme={theme}>
-                    <AppStoreContext.Provider value={this.appStore}>
+                    <AppStoreNetworkContext.Provider value={this.appStore}>
                       <Component {...pageProps} />
-                    </AppStoreContext.Provider>
+                    </AppStoreNetworkContext.Provider>
                   </StyledComponentsThemeProvider>
                 </ThemeProvider>
               </IdProvider>

@@ -5,16 +5,16 @@ import React, { useMemo } from 'react';
 import CongratulationsView from './View';
 import ViewModel from './ViewModel';
 
+import { useAppStore } from 'src/context';
 import AnalyticsHandler from 'src/integrations/AnalyticsHandler';
-import { useAppStore } from 'src/store/appStore';
 
 const Congratulations = (): JSX.Element => {
   const analyticsHandler = useMemo(() => new AnalyticsHandler(), []);
   const { query } = useRouter();
-  const appStore = useAppStore();
+  const { store } = useAppStore();
   const viewModel = useMemo(
-    () => new ViewModel(analyticsHandler, query, appStore),
-    [analyticsHandler, query, appStore]
+    () => new ViewModel(analyticsHandler, query, store),
+    [analyticsHandler, query, store]
   );
   return <CongratulationsView viewModel={viewModel} />;
 };

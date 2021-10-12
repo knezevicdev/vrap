@@ -4,11 +4,12 @@ import View from './View';
 import ViewAB from './ViewAB';
 import ViewModel from './ViewModel';
 
-import { useAppStore } from 'src/store/appStore';
+import { useAppStore } from 'src/context';
+
 const NextSteps: React.FC = () => {
   const viewModel = new ViewModel();
-  const appStore = useAppStore();
-  return appStore.offerFacelift ? (
+  const { store } = useAppStore();
+  return store.absmart.offerFacelift ? (
     <ViewAB viewModel={viewModel} />
   ) : (
     <View viewModel={viewModel} />
