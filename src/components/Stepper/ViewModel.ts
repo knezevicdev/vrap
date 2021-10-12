@@ -54,15 +54,6 @@ class VerificationStepperViewModel {
       title: 'Review',
     },
   ];
-
-  stepper: Stepper[] = this.defaultSteps;
-
-  setStepper(value: boolean): void {
-    value
-      ? (this.stepper = this.paymentRequiredSteps)
-      : (this.stepper = this.defaultSteps);
-    console.log(value, ' steps ', this.stepper);
-  }
 }
 
 export default VerificationStepperViewModel;

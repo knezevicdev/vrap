@@ -6,7 +6,6 @@ import { createContext, useContext } from 'react';
 import {
   AsyncStatus,
   PaymentOverviewFormValues,
-  Stepper,
   Store,
   StoreStatus,
 } from 'src/interfaces.d';
@@ -96,12 +95,6 @@ export class OptionsStore implements Store {
   institutionSearched = false;
   abSmartlyModel?: ABSmartlyModel;
   abSmartlyTest?: boolean;
-  activeStep = {
-    step: '4',
-    progress: '100',
-    next: 'Your Information is submitted',
-    title: 'Payment Method',
-  };
 
   constructor() {
     makeObservable(this, {
@@ -124,8 +117,6 @@ export class OptionsStore implements Store {
       setInstitutionFound: action,
       setInstitutionSearched: action,
       setABSmartlyModel: action,
-      activeStep: observable,
-      setActiveStep: action,
     });
   }
 
@@ -173,10 +164,6 @@ export class OptionsStore implements Store {
 
   setABSmartTest = (value: boolean): void => {
     this.abSmartlyTest = value;
-  };
-
-  setActiveStep = (value: Stepper): void => {
-    this.activeStep = value;
   };
 }
 

@@ -1,34 +1,36 @@
 import { observer } from 'mobx-react';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
 import ViewModel from './ViewModel';
 
-import { Stepper } from 'src/interfaces.d';
 import { useAppStore } from 'src/store/appStore';
 
 export interface Props {
   viewModel: ViewModel;
-  activeStep: Stepper;
+  activeStep: string;
 }
 
 const VerificationStepperView: React.FC<Props> = ({
-  activeStep,
   viewModel,
+  activeStep,
 }) => {
   // eslint-disable-next-line @typescript-eslint/naming-convention
   const { paymentRequired } = useAppStore();
+  const [stepper, changeStepper] = useState(viewModel.defaultSteps);
+
   useEffect(() => {
-    console.log('paymentRequired ', paymentRequired);
-    viewModel.setStepper(paymentRequired);
+    paymentRequired
+      ? changeStepper(viewModel.paymentRequiredSteps)
+      : changeStepper(viewModel.defaultSteps);
   }, [paymentRequired, viewModel]);
 
   return (
     <Container>
       <ProgressContainer>
-        {viewModel.stepper.map((item) => {
+        {stepper.map((item) => {
           const active =
-            parseInt(activeStep.step) >= parseInt(item.step) ? 'active' : '';
+            parseInt(activeStep) >= parseInt(item.step) ? 'active' : '';
           return (
             <ItemContainer key={item.step}>
               <LineContainer>
@@ -40,12 +42,12 @@ const VerificationStepperView: React.FC<Props> = ({
         })}
       </ProgressContainer>
       <TextContainer>
-        {viewModel.stepper.map((item) => {
+        {stepper.map((item) => {
           return (
             <StepTitle
               key={item.step}
               className={
-                parseInt(activeStep.step) >= parseInt(item.step) ? 'active' : ''
+                parseInt(activeStep) >= parseInt(item.step) ? 'active' : ''
               }
             >
               {item.title}

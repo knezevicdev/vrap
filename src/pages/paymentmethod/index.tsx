@@ -92,7 +92,9 @@ const EPayOptions: NextPage<Props> = ({ brand }) => {
             <>
               {!appStore.abTestFacelift && <SuccessBar />}
               {appStore.stepperAbTest && (
-                <VerificationStepper activeStep={oStore.activeStep} />
+                <VerificationStepper
+                  activeStep={appStore.paymentRequired ? '3' : '4'}
+                />
               )}
               <ColumnBody stateDropdownOpen={stateDropdownOpen}>
                 <OptionsStoreContext.Provider value={oStore}>
