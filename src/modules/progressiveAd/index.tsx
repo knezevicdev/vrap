@@ -5,15 +5,15 @@ import React, { useMemo } from 'react';
 import View from './View';
 import ViewModel from './ViewModel';
 
+import { useAppStore } from 'src/context';
 import { PriceStore } from 'src/modules/price/store';
-import { useAppStore } from 'src/store/appStore';
 
 const ProgressiveAd: React.FC<{ store: PriceStore }> = ({ store }) => {
   const { query } = useRouter();
   const appStore = useAppStore();
   const viewModel = useMemo(
-    () => new ViewModel(store, query, appStore),
-    [store, query, appStore]
+    () => new ViewModel(store, query, appStore.store),
+    [store, query, appStore.store]
   );
   return <View viewModel={viewModel} />;
 };

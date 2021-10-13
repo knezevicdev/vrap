@@ -8,6 +8,7 @@ const ENVS = {
   DATA_DOG_RUM_APPLICATION: publicRuntimeConfig.DATA_DOG_RUM_APPLICATION || '',
   DATA_DOG_RUM_TOKEN: publicRuntimeConfig.DATA_DOG_RUM_TOKEN || '',
   VROOM_URL: publicRuntimeConfig.NEXT_PUBLIC_VROOM_URL || '',
+  ACQUISITIONS_URL: publicRuntimeConfig.NEXT_PUBLIC_ACQUISITIONS_URL || '',
   STATIC_ASSETS_HOST_URL:
     publicRuntimeConfig.NEXT_PUBLIC_STATIC_ASSETS_HOST_URL || '',
   BRANCH_IO_KEY: publicRuntimeConfig.BRANCH_IO_KEY || '',

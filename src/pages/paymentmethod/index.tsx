@@ -8,6 +8,7 @@ import styled from 'styled-components';
 
 import { Header } from 'src/components/Header';
 import VerificationStepper from 'src/components/Stepper';
+import { useAppStore } from 'src/context';
 import ToolFooter from 'src/core/ToolFooter';
 import {
   DirectDepositStore,
@@ -27,7 +28,6 @@ import {
 import PaymentOverviewAB from 'src/modules/paymentoverviewAB';
 import SuccessBar from 'src/modules/successbar';
 import Page from 'src/Page';
-import { useAppStore } from 'src/store/appStore';
 
 const ColumnBody = styled.div`
   display: flex;
@@ -68,7 +68,7 @@ const EPayOptions: NextPage<Props> = ({ brand }) => {
   const oStore = new OptionsStore();
   const ddStore = new DirectDepositStore();
   const poStore = new PaymentOverviewStore();
-  const appStore = useAppStore();
+  const { store } = useAppStore();
 
   const [stateDropdownOpen, setStateDropdown] = useState(false);
 
@@ -88,19 +88,19 @@ const EPayOptions: NextPage<Props> = ({ brand }) => {
       >
         <Page name="Payment Method">
           <Header />
-          {!appStore.loading && (
+          {!store.absmart.loading && (
             <>
-              {!appStore.abTestFacelift && <SuccessBar />}
-              {appStore.stepperAbTest && (
+              {!store.absmart.abTestFacelift && <SuccessBar />}
+              {store.absmart.stepperAbTest && (
                 <VerificationStepper activeStep={oStore.activeStep} />
               )}
               <ColumnBody stateDropdownOpen={stateDropdownOpen}>
                 <OptionsStoreContext.Provider value={oStore}>
                   <PaymentOverviewStoreContext.Provider value={poStore}>
                     <DirectDepositStoreContext.Provider value={ddStore}>
-                      <Options abTest={appStore.abTestFacelift} />
+                      <Options abTest={store.absmart.abTestFacelift} />
                     </DirectDepositStoreContext.Provider>
-                    {appStore.abTestFacelift ? (
+                    {store.absmart.abTestFacelift ? (
                       <PaymentOverviewAB />
                     ) : (
                       <PaymentOverview />
