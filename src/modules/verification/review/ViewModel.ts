@@ -96,23 +96,28 @@ export default class VerificationReviewSectionViewModel {
     if (isErrorResponse(verificationResponse)) throw verificationResponse;
 
     const responseData = verificationResponse.data.data;
-    const finalPayment = responseData.poq.final_payment || {};
-    const { owner_email_address, owner_first_name } = responseData;
+    const { owner_email_address, owner_first_name, offer_price, poq } =
+      responseData;
+
+    const finalPayment =
+      poq !== null && poq.final_payment ? poq.final_payment : null;
+
     this.analyticsHandler.trackVerificationSubmitted(
       owner_email_address,
       owner_first_name
     );
+
     const priceId =
       this.store.verification.priceId || localStorage.getItem('priceId');
-    const offerDetail = this.store.offer.offerDetail;
-    if (finalPayment !== null) {
+
+    if (poq !== null && finalPayment !== null) {
       if (finalPayment > 0) {
         window.location.href = `/appraisal/paymentmethod?priceId=${priceId}`;
       } else {
         window.location.href = '/appraisal/congratulations';
       }
     } else {
-      if (offerDetail && offerDetail.price > 0) {
+      if (offer_price && offer_price > 0) {
         window.location.href = `/appraisal/paymentmethod?priceId=${priceId}`;
       } else {
         window.location.href = '/appraisal/congratulations';
