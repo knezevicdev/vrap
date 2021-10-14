@@ -110,7 +110,7 @@ export default class VerificationReviewSectionViewModel {
     const priceId =
       this.store.verification.priceId || localStorage.getItem('priceId');
 
-    if (poq !== null && finalPayment !== null) {
+    if (finalPayment !== null) {
       if (finalPayment > 0) {
         window.location.href = `/appraisal/paymentmethod?priceId=${priceId}`;
       } else {
