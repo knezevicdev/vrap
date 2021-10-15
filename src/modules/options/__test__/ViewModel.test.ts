@@ -5,13 +5,13 @@ import { OptionsStore } from '../../options/store';
 import ViewModel from '../ViewModel';
 
 import AnalyticsHandler from 'src/integrations/AnalyticsHandler';
-import { AppStore } from 'src/store/appStore';
+import store from 'src/store';
 
 describe('Options Test', () => {
   const analyticsHandler = new AnalyticsHandler();
   const oStore = new OptionsStore();
   const ddStore = new DirectDepositStore();
-  const appStore = new AppStore();
+  const appStore = new store();
   const paymentOptionsViewedSpy = jest
     .spyOn(analyticsHandler, 'trackPaymentOptionsViewed')
     .mockReturnValue();

@@ -5,13 +5,13 @@ import AnalyticsHandler from 'src/integrations/AnalyticsHandler';
 import { MailingAddress } from 'src/interfaces.d';
 import { PaymentOverviewFormValues } from 'src/interfaces.d';
 import { submitPaymentOption } from 'src/modules/options/store';
-import { AppStore } from 'src/store/appStore';
+import Store from 'src/store';
 
 class OptionsViewModel {
   private readonly store: OptionsStore;
   private readonly ddStore: DirectDepositStore;
   private analyticsHandler: AnalyticsHandler;
-  private appStore: AppStore;
+  private appStore: Store;
   readonly hero: string = `let's set up your payment method`;
   readonly desktopTitle: string = 'how would you like to get paid?';
   readonly optionTitle: string = 'Payment Method';
@@ -23,7 +23,7 @@ class OptionsViewModel {
     store: OptionsStore,
     ddStore: DirectDepositStore,
     analyticsHandler: AnalyticsHandler,
-    appStore: AppStore
+    appStore: Store
   ) {
     this.store = store;
     this.ddStore = ddStore;
@@ -141,7 +141,7 @@ class OptionsViewModel {
 
     this.analyticsHandler.trackPaymentOptionsSubmitted(submittedType);
 
-    this.appStore.paymentRequired
+    this.appStore.absmart.paymentRequired
       ? (window.location.href = `/appraisal/verification/review?priceId=${this.store.priceId}`)
       : (window.location.href = `/appraisal/congratulations`);
   };
