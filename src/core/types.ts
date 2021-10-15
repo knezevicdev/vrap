@@ -1,4 +1,4 @@
-import { Theme as MuiTheme } from '@material-ui/core/styles/createMuiTheme';
+import { Theme as MuiTheme } from '@material-ui/core/styles';
 import { Typography as MuiThemeTypography } from '@material-ui/core/styles/createTypography';
 
 export enum Brand {
