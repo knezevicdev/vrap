@@ -32,5 +32,5 @@ describe('Pay Off Review component test', () => {
     const fn = jest.fn(() => viewModel.getCurrentPayment());
     fn();
     expect(fn).toHaveReturnedWith('No');
-  })
+  });
 });
