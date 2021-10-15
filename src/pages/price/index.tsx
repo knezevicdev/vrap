@@ -7,13 +7,13 @@ import styled from 'styled-components';
 
 import AsyncIndicator from 'src/components/AsyncIndicator';
 import { Header } from 'src/components/Header';
+import { useAppStore } from 'src/context';
 import Footer from 'src/core/Footer';
 import PriceInfo from 'src/modules/price';
 import { PriceStore } from 'src/modules/price/store';
 import ProgressiveAd from 'src/modules/progressiveAd';
 import Questions from 'src/modules/questions';
 import Page from 'src/Page';
-import { useAppStore } from 'src/store/appStore';
 
 const Price: NextPage = () => {
   const router = useRouter();
@@ -24,7 +24,7 @@ const Price: NextPage = () => {
   return (
     <Page name="Price">
       <Header />
-      {!appStore.loading && (
+      {!appStore.store.absmart.loading && (
         <Contents>
           <PriceInfo store={store} />
           <ProgressiveAd store={store} />

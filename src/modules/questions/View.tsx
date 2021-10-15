@@ -4,17 +4,17 @@ import styled from 'styled-components';
 
 import QuestionsViewModel from './ViewModel';
 
+import { useAppStore } from 'src/context';
 import Icon, { Icons } from 'src/core/Icon';
 import { Hero, Link, Title } from 'src/core/Typography';
-import { useAppStore } from 'src/store/appStore';
 
 export interface Props {
   viewModel: QuestionsViewModel;
 }
 
 const View: React.FC<Props> = ({ viewModel }) => {
-  const appStore = useAppStore();
-  const className = appStore.offerFacelift ? 'abtest' : '';
+  const { store } = useAppStore();
+  const className = store.absmart.offerFacelift ? 'abtest' : '';
   return (
     <div>
       <StyledHero>{viewModel.questions}</StyledHero>

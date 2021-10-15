@@ -142,7 +142,7 @@ class OptionsViewModel {
     this.analyticsHandler.trackPaymentOptionsSubmitted(submittedType);
 
     this.appStore.paymentRequired
-      ? (window.location.href = '/sell/verification/review')
+      ? (window.location.href = `/appraisal/verification/review?priceId=${this.store.priceId}`)
       : (window.location.href = `/appraisal/congratulations`);
   };
 

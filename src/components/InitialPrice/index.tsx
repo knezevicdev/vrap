@@ -5,15 +5,16 @@ import View from './View';
 import ViewAB from './ViewAB';
 import InitialPriceViewModel from './ViewModel';
 
+import { useAppStore } from 'src/context';
 import AnalyticsHandler from 'src/integrations/AnalyticsHandler';
 import { PriceStore } from 'src/modules/price/store';
-import { useAppStore } from 'src/store/appStore';
+
 const InitialPrice: React.FC<{ store: PriceStore }> = ({ store }) => {
   const analyticsHandler = new AnalyticsHandler();
   const viewModel = new InitialPriceViewModel(store, analyticsHandler);
   const appStore = useAppStore();
 
-  return appStore.offerFacelift ? (
+  return appStore.store.absmart.offerFacelift ? (
     <ViewAB viewModel={viewModel} />
   ) : (
     <View viewModel={viewModel} />

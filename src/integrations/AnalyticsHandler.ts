@@ -68,6 +68,19 @@ class AnalyticsHandler extends BaseAnalyticsHandler {
     const properties = { category };
     this.track(event, properties);
   }
+
+  trackVerificationReviewViewed(): void {
+    const name = 'Verification Review';
+    const category = 'verification';
+    this.page(name, category);
+  }
+
+  trackVerificationSubmitted(email: string, firstName: string): void {
+    const event = 'Verification Submitted';
+    const category = 'verification';
+    const properties = { email, 'Account.FirstName': firstName, category };
+    this.track(event, properties);
+  }
 }
 
 // It probably makes more sense to export a single instance

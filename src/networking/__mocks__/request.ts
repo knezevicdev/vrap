@@ -34,7 +34,7 @@ const offerbyIdResp: Prices = {
   ],
 };
 
-const verificationResp: VerificationRespData = {
+export const verificationResp: VerificationRespData = {
   data: {
     acknowledgement_of_terms: false,
     appraisal_vehicle_id: 15,
@@ -107,6 +107,17 @@ const verificationResp: VerificationRespData = {
   },
 };
 
+export const verificationSubmitResp: VerificationRespData = {
+  data: {
+    ...verificationResp.data,
+    poq: {
+      account_number: '123456',
+      final_payment: 100,
+      final_payoff: 10,
+    },
+  },
+};
+
 const plaidToken: PlaidTokenResp = {
   getLinkToken: {
     Expiration: '2021-06-24T23:53:23Z',
@@ -165,4 +176,14 @@ export const postPlaidPayment = async (): Promise<Response<boolean>> => {
     error: undefined,
     data: true,
   } as Response<boolean>);
+};
+
+export const patchVerification = async (): Promise<
+  Response<VerificationRespData>
+> => {
+  return Promise.resolve<Response<VerificationRespData>>({
+    headers: undefined,
+    error: undefined,
+    data: verificationSubmitResp,
+  });
 };

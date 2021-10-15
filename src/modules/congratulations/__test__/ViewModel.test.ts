@@ -3,12 +3,17 @@ import { ParsedUrlQuery } from 'querystring';
 import ViewModel from '../ViewModel';
 
 import AnalyticsHandler from 'src/integrations/AnalyticsHandler';
-import { AppStore } from 'src/store/appStore';
+import Store from 'src/store';
+
+jest.mock('next/config', () => (): unknown => ({
+  publicRuntimeConfig: {},
+  serverRuntimeConfig: {},
+}));
 
 describe('Congratulations Test', () => {
   const analyticsHandler = new AnalyticsHandler();
   const query = {} as ParsedUrlQuery;
-  const appStore = {} as AppStore;
+  const appStore = new Store();
   const viewModel = new ViewModel(analyticsHandler, query, appStore);
 
   const congratsViewedSpy = jest
@@ -28,22 +33,22 @@ describe('Congratulations Test', () => {
 
   describe('Show Progressive Ad Test', () => {
     it('should show ad if not in a mobile web view and in experiment', () => {
-      appStore.inProgressiveTest = true;
+      appStore.absmart.inProgressiveTest = true;
       expect(viewModel.showProgressiveAd).toEqual(true);
     });
     it('should not show ad if in android web view and in experiment', () => {
       query['utm_source'] = 'vroom_app_android';
-      appStore.inProgressiveTest = true;
+      appStore.absmart.inProgressiveTest = true;
       expect(viewModel.showProgressiveAd).toEqual(false);
     });
     it('should not show ad if in ios web view and in experiment', () => {
       query['utm_source'] = 'vroom_app_ios';
-      appStore.inProgressiveTest = true;
+      appStore.absmart.inProgressiveTest = true;
       expect(viewModel.showProgressiveAd).toEqual(false);
     });
     it('should not show ad if not in experiment', () => {
       query['utm_source'] = '';
-      appStore.inProgressiveTest = false;
+      appStore.absmart.inProgressiveTest = false;
       expect(viewModel.showProgressiveAd).toEqual(false);
     });
   });
