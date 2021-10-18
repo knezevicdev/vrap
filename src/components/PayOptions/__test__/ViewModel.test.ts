@@ -18,4 +18,9 @@ describe('PayOptions Test', () => {
   it('readonly values', () => {
     expect(viewModel.optionMeta).toEqual(['Direct Deposit', 'Check by Mail']);
   });
+
+  it('should update payment option in store when choose', () => {
+    viewModel.onPayOptionClick({ currentTarget: { value: 'Direct Deposit' } });
+    expect(oStore.showDD).toEqual('Direct Deposit');
+  });
 });
