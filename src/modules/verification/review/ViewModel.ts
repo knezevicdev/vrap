@@ -1,6 +1,7 @@
 import { isErrorResponse } from '@vroom-web/networking';
 
 import AnalyticsHandler from 'src/integrations/AnalyticsHandler';
+import { submitPaymentOption } from 'src/modules/options/store';
 import { PatchReview } from 'src/networking/models/Verification';
 import { getVerificationDetails } from 'src/networking/request';
 import { patchVerification } from 'src/networking/request';
@@ -13,6 +14,24 @@ export default class VerificationReviewSectionViewModel {
     'I acknowledge that all information provided is accurate. Vroom reserves the right to modify or revoke your price if any information provided is inaccurate.';
   readonly verificationWarning: string =
     'By clicking "Submit My Information," you acknowledge that all the information you provided is accurate. Vroom reserves the right to modify or revoke your price if any information provided is inaccurate.';
+  readonly defaultValues = {
+    paymentOption: '',
+    routingNumber: '',
+    bankAccountNumber: '',
+    isPrimaryAddress: '',
+    address: '',
+    apartment: '',
+    city: '',
+    state: '',
+    zipcode: '',
+  };
+  readonly mailAddress = {
+    address_1: '',
+    address_2: '',
+    city: '',
+    state: '',
+    zipcode: '',
+  };
   private analyticsHandler: AnalyticsHandler = new AnalyticsHandler();
 
   constructor(private store: Store) {}
@@ -84,7 +103,32 @@ export default class VerificationReviewSectionViewModel {
     return payload;
   };
 
+  async submitPayment(): Promise<void> {
+    const { payment, option } = this.store;
+    const values = payment.values || this.defaultValues;
+    const priceId = payment.priceId || '';
+    const address = payment.address || this.mailAddress;
+    await submitPaymentOption(values, priceId, address);
+
+    if (
+      option.showDD === 'Manual Input' ||
+      option.showDD === 'Direct Deposit'
+    ) {
+      payment.setSubmitType('Manual ACH');
+      this.analyticsHandler.trackManualACHSelected();
+    } else {
+      payment.setSubmitType('Check');
+      this.analyticsHandler.trackCheckSelected();
+    }
+    const submittedType = payment.submittedType || '';
+    this.analyticsHandler.trackPaymentOptionsSubmitted(submittedType);
+  }
+
   async verificationSubmit(): Promise<void> {
+    const { absmart } = this.store;
+    if (absmart.paymentRequired) {
+      await this.submitPayment();
+    }
     const payload = this.createVerificationPayload();
     const data = {
       source: 'vroom.com',
@@ -105,6 +149,10 @@ export default class VerificationReviewSectionViewModel {
     const priceId =
       this.store.verification.priceId || localStorage.getItem('priceId');
     const offerDetail = this.store.offer.offerDetail;
+    if (absmart.paymentRequired) {
+      window.location.href = '/appraisal/congratulations';
+      return;
+    }
     if (finalPayment !== null) {
       if (finalPayment > 0) {
         window.location.href = `/appraisal/paymentmethod?priceId=${priceId}`;

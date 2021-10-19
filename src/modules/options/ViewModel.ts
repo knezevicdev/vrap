@@ -1,3 +1,5 @@
+import { valueFromAST } from 'graphql';
+
 import { DirectDepositStore } from '../directdeposit/store';
 import { OptionsStore } from './store';
 
@@ -101,8 +103,7 @@ class OptionsViewModel {
   };
 
   isValidName = (str: string | null | undefined): boolean => {
-    const re =
-      /^[a-zA-ZàâäôéèëêïîçùûüÿæœÀÂÄÔÉÈËÊÏÎŸÇÙÛÜÆŒäöüßÄÖÜẞąćęłńóśźżĄĆĘŁŃÓŚŹŻàèéìíîòóùúÀÈÉÌÍÎÒÓÙÚáéíñóúüÁÉÍÑÓÚÜ \-']{2,30}$/;
+    const re = /^[a-zA-ZàâäôéèëêïîçùûüÿæœÀÂÄÔÉÈËÊÏÎŸÇÙÛÜÆŒäöüßÄÖÜẞąćęłńóśźżĄĆĘŁŃÓŚŹŻàèéìíîòóùúÀÈÉÌÍÎÒÓÙÚáéíñóúüÁÉÍÑÓÚÜ \-']{2,30}$/;
     if (!str || !re.test(str)) {
       return false;
     } else {
@@ -110,22 +111,33 @@ class OptionsViewModel {
     }
   };
 
+  calcMailingAddress = (values: PaymentOverviewFormValues): MailingAddress => {
+    if (values.isPrimaryAddress === 'No') {
+      return {
+        address_1: values.address,
+        address_2: values.apartment,
+        city: values.city,
+        state: values.state,
+        zipcode: values.zipcode,
+      };
+    }
+    return this.store.mailingAddress;
+  };
+
+  isSubmitPaymentRequired = (values: PaymentOverviewFormValues): void => {
+    if (!this.appStore.absmart.paymentRequired) {
+      this.paymentOptionsSubmit(values);
+      return;
+    }
+    const mailingAddress = this.calcMailingAddress(values);
+    this.appStore.payment.setValues(values, this.store.priceId, mailingAddress);
+    window.location.href = `/appraisal/verification/review?priceId=${this.store.priceId}`;
+  };
+
   paymentOptionsSubmit = (values: PaymentOverviewFormValues): void => {
     let submittedType;
-    const calcMailingAddress = (): MailingAddress => {
-      if (values.isPrimaryAddress === 'No') {
-        return {
-          address_1: values.address,
-          address_2: values.apartment,
-          city: values.city,
-          state: values.state,
-          zipcode: values.zipcode,
-        };
-      }
-      return this.store.mailingAddress;
-    };
 
-    const mailingAddress = calcMailingAddress();
+    const mailingAddress = this.calcMailingAddress(values);
     submitPaymentOption(values, this.store.priceId, mailingAddress);
 
     if (
@@ -140,10 +152,7 @@ class OptionsViewModel {
     }
 
     this.analyticsHandler.trackPaymentOptionsSubmitted(submittedType);
-
-    this.appStore.absmart.paymentRequired
-      ? (window.location.href = `/appraisal/verification/review?priceId=${this.store.priceId}`)
-      : (window.location.href = `/appraisal/congratulations`);
+    window.location.href = `/appraisal/congratulations`;
   };
 
   getInstitutionNotFound = (): boolean => {

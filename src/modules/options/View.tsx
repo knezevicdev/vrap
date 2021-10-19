@@ -184,7 +184,7 @@ const OptionsView: React.FC<Props> = ({ viewModel }) => {
         { setSubmitting }
       ): void => {
         setSubmitting(true);
-        viewModel.paymentOptionsSubmit(values);
+        viewModel.isSubmitPaymentRequired(values);
       }}
       validateOnMount={true}
     >
