@@ -1,5 +1,3 @@
-import { valueFromAST } from 'graphql';
-
 import { DirectDepositStore } from '../directdeposit/store';
 import { OptionsStore } from './store';
 
