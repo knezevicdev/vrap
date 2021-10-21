@@ -27,7 +27,6 @@ const VerificationReviewViewDetail: React.FC<Props> = ({
     const whereIsVehicleRegistered =
       localStorage.getItem('whereIsVehicleRegistered') || '';
     const lastFourSSN = localStorage.getItem('lastFour') || '';
-    console.log('lastFourSSB ', lastFourSSN);
     viewModel.setWhereIsVehicleRegistered(whereIsVehicleRegistered);
     viewModel.onPageLoad();
     viewModel.getVerificationDetails(priceId, lastFourSSN);
