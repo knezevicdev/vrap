@@ -140,7 +140,7 @@ export default class VerificationReviewSectionViewModel {
     try {
       const response = await getVerificationDetails(priceId);
       if (isErrorResponse(response)) throw response;
-
+      this.store.verification.setLastFourSSN(lastFourSSN);
       this.store.verification.getVerificationDetail(
         response.data.data,
         lastFourSSN
