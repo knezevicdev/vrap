@@ -45,9 +45,16 @@ describe('Review component test', () => {
 
   it('test when get verification data ', async () => {
     spyRequest.mockResolvedValue(getVerificationDetails());
-    await viewModel.getVerificationDetails('cb5b06d43cb95286ceeb50efc7a82e08');
+    await viewModel.getVerificationDetails(
+      'cb5b06d43cb95286ceeb50efc7a82e08',
+      '1234'
+    );
+    const response = {
+      ...verificationResp.data,
+      last_four_ssn: '1234',
+    };
     expect(JSON.stringify(stores.verification.verificationDetail)).toEqual(
-      JSON.stringify(verificationResp.data)
+      JSON.stringify(response)
     );
   });
 

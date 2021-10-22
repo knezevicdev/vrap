@@ -96,8 +96,12 @@ export default class VerificationReviewSectionViewModel {
     if (isErrorResponse(verificationResponse)) throw verificationResponse;
 
     const responseData = verificationResponse.data.data;
-    const { owner_email_address, owner_first_name, offer_price, poq } =
-      responseData;
+    const {
+      owner_email_address,
+      owner_first_name,
+      offer_price,
+      poq,
+    } = responseData;
 
     const finalPayment =
       poq !== null && poq.final_payment ? poq.final_payment : null;
@@ -129,12 +133,18 @@ export default class VerificationReviewSectionViewModel {
     this.store.verification.setWhereIsVehicleRegistered(value);
   }
 
-  async getVerificationDetails(priceId: string): Promise<void> {
+  async getVerificationDetails(
+    priceId: string,
+    lastFourSSN: string
+  ): Promise<void> {
     try {
       const response = await getVerificationDetails(priceId);
       if (isErrorResponse(response)) throw response;
-
-      this.store.verification.getVerificationDetail(response.data.data);
+      this.store.verification.setLastFourSSN(lastFourSSN);
+      this.store.verification.getVerificationDetail(
+        response.data.data,
+        lastFourSSN
+      );
     } catch (e) {
       console.log('error in verfication');
     }

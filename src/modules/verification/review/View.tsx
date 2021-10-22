@@ -22,15 +22,19 @@ const VerificationReviewViewDetail: React.FC<Props> = ({
 }) => {
   const [checked, chageCheck] = useState(false);
   const { store } = useAppStore();
+
   useEffect(() => {
     const whereIsVehicleRegistered =
       localStorage.getItem('whereIsVehicleRegistered') || '';
+    const lastFourSSN =
+      localStorage.getItem('lastFour') || store.verification.lastFourSSN;
     viewModel.setWhereIsVehicleRegistered(whereIsVehicleRegistered);
     viewModel.onPageLoad();
-    viewModel.getVerificationDetails(priceId);
+    viewModel.getVerificationDetails(priceId, lastFourSSN);
   }, [priceId]);
 
   const handleSubmit = (): void => {
+    localStorage.removeItem('lastFour');
     viewModel.verificationSubmit();
   };
 
