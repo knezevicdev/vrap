@@ -46,8 +46,12 @@ const VerificationReviewViewDetail: React.FC<Props> = ({
       <PayOffInfoReview />
       <Line />
       <SellDocumentReview />
-      <Line />
-      <PaymentInfoReview />
+      {store.absmart.paymentRequired && (
+        <>
+          <Line />
+          <PaymentInfoReview />
+        </>
+      )}
       <Line />
       {!store.absmart.loading &&
         (store.absmart.agreementAbtest ? (

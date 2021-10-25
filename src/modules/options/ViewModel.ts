@@ -18,17 +18,19 @@ class OptionsViewModel {
   readonly optionQuestion: string = 'How would you like to get paid?';
   readonly submit: string = 'submit';
   readonly submitting: string = 'submitting';
-
+  private router: any;
   constructor(
     store: OptionsStore,
     ddStore: DirectDepositStore,
     analyticsHandler: AnalyticsHandler,
-    appStore: Store
+    appStore: Store,
+    router: any
   ) {
     this.store = store;
     this.ddStore = ddStore;
     this.analyticsHandler = analyticsHandler;
     this.appStore = appStore;
+    this.router = router;
   }
 
   onPageLoad = (): void => {
@@ -129,7 +131,7 @@ class OptionsViewModel {
     }
     const mailingAddress = this.calcMailingAddress(values);
     this.appStore.payment.setValues(values, this.store.priceId, mailingAddress);
-    window.location.href = `/appraisal/verification/review?priceId=${this.store.priceId}`;
+    this.router.push(`/verification/review?priceId=${this.store.priceId}`);
   };
 
   paymentOptionsSubmit = (values: PaymentOverviewFormValues): void => {

@@ -6,13 +6,14 @@ import styled from 'styled-components';
 import ViewModel from './ViewModel';
 
 import Store from 'src/store';
+import { displayAccountNumber } from 'src/utils';
 interface Props {
   viewModel: ViewModel;
   store: Store;
 }
 
-const OwnerInfoReviewView: React.FC<Props> = ({ viewModel, store }) => {
-  // const { verificationDetail } = store.verification;
+const PaymentInfoReviewView: React.FC<Props> = ({ viewModel, store }) => {
+  const { values, address } = store.payment;
   return (
     <Container>
       <SubTitleContainer>
@@ -21,39 +22,43 @@ const OwnerInfoReviewView: React.FC<Props> = ({ viewModel, store }) => {
           {viewModel.edit}
         </Edit>
       </SubTitleContainer>
-
-      {/* <SectionTitle>{viewModel.primarySectionTitle}</SectionTitle>
-      <Row>
-        <Info>
-          <Label>{viewModel.name}</Label>
-          <Field>
-            {verificationDetail?.owner_first_name}{' '}
-            {verificationDetail?.owner_last_name}
-          </Field>
-        </Info>
-        <Info>
-          <Label>{viewModel.email}</Label>
-          <Field>{verificationDetail?.owner_email_address}</Field>
-        </Info>
-        <Info>
-          <Label>{viewModel.phone}</Label>
-          <Field>
-            {displayPhoneNumber(verificationDetail?.owner_phone_number)}
-          </Field>
-        </Info>
-      </Row>
-      <Row>
-        <FullInfo>
-          <Label>{viewModel.address}</Label>
-          <Field>
-            {verificationDetail?.owner_mailing_address.address_1}{' '}
-            {verificationDetail?.owner_mailing_address.address_2}{' '}
-            {verificationDetail?.owner_mailing_address.city},{' '}
-            {verificationDetail?.owner_mailing_address.state}{' '}
-            {verificationDetail?.owner_mailing_address.zipcode}
-          </Field>
-        </FullInfo>
-      </Row> */}
+      {values?.paymentOption === 'Check by Mail' && (
+        <>
+          <Row>
+            <Info>
+              <Label>{viewModel.methodOfPayment}</Label>
+              <Field>{values?.paymentOption}</Field>
+            </Info>
+            <AddressInfo>
+              <Label>{viewModel.address}</Label>
+              <Field>
+                {address?.address_1} {address?.address_2} {address?.city},{' '}
+                {address?.state} {address?.zipcode}
+              </Field>
+            </AddressInfo>
+          </Row>
+        </>
+      )}
+      {values?.paymentOption !== 'Check by Mail' && (
+        <>
+          <Row>
+            <Info>
+              <Label>{viewModel.methodOfPayment}</Label>
+              <Field>{values?.paymentOption}</Field>
+            </Info>
+            <Info>
+              <Label>{viewModel.selectedBank}</Label>
+              <Field>Bank</Field>
+            </Info>
+          </Row>
+          <Row>
+            <Info>
+              <Label>{viewModel.accountForDeposit}</Label>
+              <Field>{displayAccountNumber(values?.bankAccountNumber)}</Field>
+            </Info>
+          </Row>
+        </>
+      )}
     </Container>
   );
 };
@@ -98,10 +103,12 @@ const Info = styled.div`
   }
 `;
 
-const FullInfo = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 100%;
+const AddressInfo = styled(Info)`
+  width: 66%;
+  @media (max-width: 767px) {
+    width: 100%;
+    margin-bottom: 10px;
+  }
 `;
 
 const Label = styled(Typography.Fine)`
@@ -122,4 +129,4 @@ const Edit = styled(Typography.Body.Regular)`
   padding-top: 4px;
 `;
 
-export default observer(OwnerInfoReviewView);
+export default observer(PaymentInfoReviewView);

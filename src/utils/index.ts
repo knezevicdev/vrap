@@ -60,3 +60,11 @@ export function displayNumber(num: number | undefined): string {
   }
   return Math.round(num).toLocaleString();
 }
+
+export function displayAccountNumber(acct: string | null | undefined): string {
+  const showingAcctNum = 4;
+  if (!acct || typeof acct !== 'string') return '';
+  if (acct.length <= showingAcctNum) return acct;
+  const frontNum = acct.slice(0, acct.length - showingAcctNum);
+  return hiddenString(frontNum.length) + acct.slice(showingAcctNum * -1);
+}
