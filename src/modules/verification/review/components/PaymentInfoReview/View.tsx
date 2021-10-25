@@ -78,12 +78,6 @@ const Subtitle = styled(Typography.Title.Three)`
   line-height: 26px;
 `;
 
-const SectionTitle = styled(Typography.Title.Three)`
-  text-align: left;
-  margin: 20px 0;
-  font-size: 16px;
-`;
-
 const Row = styled.div`
   display: flex;
   margin-top: 15px;

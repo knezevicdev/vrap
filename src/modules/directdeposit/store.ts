@@ -3,7 +3,13 @@ import { action, makeObservable, observable, runInAction } from 'mobx';
 import { createContext, useContext } from 'react';
 
 import AnalyticsHandler from 'src/integrations/AnalyticsHandler';
-import { AsyncStatus, PlaidData, Store, StoreStatus } from 'src/interfaces.d';
+import {
+  AsyncStatus,
+  MutationInput,
+  PlaidData,
+  Store,
+  StoreStatus,
+} from 'src/interfaces.d';
 import { getPlaidToken, postPlaidPayment } from 'src/networking/request';
 
 const defaultDDState: DDStoreState = {
@@ -16,6 +22,10 @@ export interface DDStoreState {
   LinkToken: string;
   Expiration: string;
   RequestId: string;
+}
+
+export interface OnPlaidSubmitting {
+  (value: boolean): void;
 }
 
 export async function getInitialDDStoreState(
@@ -44,6 +54,8 @@ export class DirectDepositStore implements Store {
   storeStatus = StoreStatus.Initial;
   asyncStatus = AsyncStatus.Idle;
   tokenIsLocal = false;
+  mutationInput?: MutationInput;
+  onPlaidSubmitting?: OnPlaidSubmitting;
 
   constructor() {
     makeObservable(this, {
@@ -127,6 +139,14 @@ export class DirectDepositStore implements Store {
       this.tokenIsLocal = false;
       this.initClientSide(localPriceId);
     }
+  };
+
+  setMutationInput = (
+    value: MutationInput,
+    onPlaidSubmitting: OnPlaidSubmitting
+  ): void => {
+    this.mutationInput = value;
+    this.onPlaidSubmitting = onPlaidSubmitting;
   };
 }
 

@@ -5,9 +5,9 @@ import styled from 'styled-components';
 
 import PlaidButtonViewModel from './ViewModel';
 
+import { useAppStore } from 'src/context';
 import { Button } from 'src/core/Button';
 import { PlaidData } from 'src/interfaces.d';
-
 const PlaidButtonContainer = styled('div')(() => ({
   width: '100%',
 }));
@@ -46,6 +46,7 @@ const PlaidButtonView: React.FC<Props> = ({
   plaidExit,
   priceId,
 }) => {
+  const { store } = useAppStore();
   let config;
   const onSuccess = useCallback(
     (_token, metaData): void => {
@@ -69,8 +70,11 @@ const PlaidButtonView: React.FC<Props> = ({
         ReferenceId: priceId,
         Email: email,
       };
-
-      plaidSuccess(mutationInput, onPlaidSubmitting);
+      if (store.absmart.paymentRequired) {
+        store.deposit.setMutationInput(mutationInput, onPlaidSubmitting);
+      } else {
+        plaidSuccess(mutationInput, onPlaidSubmitting);
+      }
     },
     [viewModel, priceId, plaidSuccess]
   );

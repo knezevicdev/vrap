@@ -4,6 +4,7 @@ import { PaymentStore } from './paymentStore';
 import { StepperStore } from './stepperStore';
 import { VerificationStore } from './verificationStore';
 
+import { DirectDepositStore } from 'src/modules/directdeposit/store';
 import { OptionsStore } from 'src/modules/options/store';
 
 export default class Store {
@@ -13,4 +14,5 @@ export default class Store {
   stepper = new StepperStore();
   payment = new PaymentStore();
   option = new OptionsStore();
+  deposit = new DirectDepositStore();
 }

@@ -66,3 +66,25 @@ export interface Stepper {
   next: string;
   title: string;
 }
+
+interface MutationInputAccount {
+  Id: string;
+  Name: string;
+  Type: string;
+  Subtype: string;
+  Mask: string;
+}
+
+interface MutationInputInstitution {
+  Id: string;
+  Name: string;
+}
+
+export interface MutationInput {
+  Account: MutationInputAccount;
+  Institution: MutationInputInstitution;
+  PublicToken: string;
+  Source: string;
+  ReferenceId: string;
+  Email: string;
+}
