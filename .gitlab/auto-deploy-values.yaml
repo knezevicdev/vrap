@@ -4,10 +4,10 @@ ingress:
 
 resources:
   limits:
-    cpu: 500m
+    cpu: 1500
     memory: 1000Mi
   requests:
-    cpu: 100m
+    cpu: 500
     memory: 500Mi
 
 service:
