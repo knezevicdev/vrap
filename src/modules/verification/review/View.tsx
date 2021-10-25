@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
 import OwnerInfoReview from './components/OwnerInfoReview';
+import PaymentInfoReview from './components/PaymentInfoReview';
 import PayOffInfoReview from './components/PayOffInfoReview';
 import PickupInfoReview from './components/PickupInfoReview';
 import SellDocumentReview from './components/SellDocumentReview';
@@ -45,6 +46,8 @@ const VerificationReviewViewDetail: React.FC<Props> = ({
       <PayOffInfoReview />
       <Line />
       <SellDocumentReview />
+      <Line />
+      <PaymentInfoReview />
       <Line />
       {!store.absmart.loading &&
         (store.absmart.agreementAbtest ? (
