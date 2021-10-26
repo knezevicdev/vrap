@@ -18,6 +18,7 @@ class OptionsViewModel {
   readonly optionQuestion: string = 'How would you like to get paid?';
   readonly submit: string = 'submit';
   readonly submitting: string = 'submitting';
+  readonly review: string = 'REVIEW';
   private router: any;
   constructor(
     store: OptionsStore,

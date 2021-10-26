@@ -8,12 +8,12 @@ import OptionsViewModel from './ViewModel';
 
 import CheckByMail from 'src/components/CheckByMail';
 import PayOptions from 'src/components/PayOptions';
+import { useAppStore } from 'src/context';
 import { Button } from 'src/core/Button';
 import Icon, { Icons } from 'src/core/Icon';
 import { Body, Hero, Title } from 'src/core/Typography';
 import { PaymentOverviewFormValues } from 'src/interfaces.d';
 import DirectDeposit from 'src/modules/directdeposit';
-
 const FormContainer = styled(Form)`
   display: flex;
   height: 100%;
@@ -103,6 +103,7 @@ const InitialValues: PaymentOverviewFormValues = {
 };
 
 const OptionsView: React.FC<Props> = ({ viewModel }) => {
+  const { store } = useAppStore();
   useEffect(() => {
     viewModel.onPageLoad();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -194,7 +195,12 @@ const OptionsView: React.FC<Props> = ({ viewModel }) => {
           shouldShowSubmitButton ||
           !showDirectDeposit ||
           viewModel.getInstitutionNotFound();
-
+        const submitText = isSubmitting
+          ? viewModel.submitting
+          : viewModel.submit;
+        const buttonText = store.absmart.paymentRequired
+          ? viewModel.review
+          : submitText;
         return (
           <FormContainer>
             <OptionsContainer>
@@ -226,7 +232,7 @@ const OptionsView: React.FC<Props> = ({ viewModel }) => {
                   type="submit"
                   disabled={!isValid || isSubmitting || isPlaidSubmitting}
                 >
-                  {isSubmitting ? viewModel.submitting : viewModel.submit}
+                  {buttonText}
                 </SubmitButton>
               )}
             </OptionsContainer>
