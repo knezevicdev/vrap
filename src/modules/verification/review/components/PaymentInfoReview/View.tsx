@@ -6,7 +6,11 @@ import styled from 'styled-components';
 import ViewModel from './ViewModel';
 
 import Store from 'src/store';
-import { displayAccountNumber } from 'src/utils';
+import {
+  displayAccountNumber,
+  displayFirstTextUpper,
+  hiddenString,
+} from 'src/utils';
 interface Props {
   viewModel: ViewModel;
   store: Store;
@@ -14,6 +18,7 @@ interface Props {
 
 const PaymentInfoReviewView: React.FC<Props> = ({ viewModel, store }) => {
   const { values, address } = store.payment;
+  const { mutationInput } = store.deposit;
   return (
     <Container>
       <SubTitleContainer>
@@ -39,26 +44,51 @@ const PaymentInfoReviewView: React.FC<Props> = ({ viewModel, store }) => {
           </Row>
         </>
       )}
-      {values?.paymentOption !== 'Check by Mail' && (
-        <>
-          <Row>
-            <Info>
-              <Label>{viewModel.methodOfPayment}</Label>
-              <Field>{values?.paymentOption}</Field>
-            </Info>
-            <Info>
-              <Label>{viewModel.selectedBank}</Label>
-              <Field>Bank</Field>
-            </Info>
-          </Row>
-          <Row>
-            <Info>
-              <Label>{viewModel.accountForDeposit}</Label>
-              <Field>{displayAccountNumber(values?.bankAccountNumber)}</Field>
-            </Info>
-          </Row>
-        </>
-      )}
+      {values?.paymentOption !== 'Check by Mail' &&
+        mutationInput === undefined && (
+          <>
+            <Row>
+              <Info>
+                <Label>{viewModel.methodOfPayment}</Label>
+                <Field>{values?.paymentOption}</Field>
+              </Info>
+              <Info>
+                <Label>{viewModel.bankRoutingNumber}</Label>
+                <Field>{values?.routingNumber}</Field>
+              </Info>
+            </Row>
+            <Row>
+              <Info>
+                <Label>{viewModel.accountForDeposit}</Label>
+                <Field>{displayAccountNumber(values?.bankAccountNumber)}</Field>
+              </Info>
+            </Row>
+          </>
+        )}
+      {values?.paymentOption !== 'Check by Mail' &&
+        mutationInput !== undefined && (
+          <>
+            <Row>
+              <Info>
+                <Label>{viewModel.methodOfPayment}</Label>
+                <Field>{viewModel.directDeposit}</Field>
+              </Info>
+              <Info>
+                <Label>{viewModel.selectedBank}</Label>
+                <Field>{mutationInput?.Institution?.Name}</Field>
+              </Info>
+            </Row>
+            <Row>
+              <Info>
+                <Label>{viewModel.accountForDeposit}</Label>
+                <Field>
+                  {displayFirstTextUpper(mutationInput?.Account?.Subtype)}:
+                  {' ' + hiddenString(7) + mutationInput?.Account?.Mask}
+                </Field>
+              </Info>
+            </Row>
+          </>
+        )}
     </Container>
   );
 };
