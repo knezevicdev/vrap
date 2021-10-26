@@ -141,12 +141,8 @@ export class DirectDepositStore implements Store {
     }
   };
 
-  setMutationInput = (
-    value: MutationInput,
-    onPlaidSubmitting: OnPlaidSubmitting
-  ): void => {
+  setMutationInput = (value: MutationInput): void => {
     this.mutationInput = value;
-    this.onPlaidSubmitting = onPlaidSubmitting;
   };
 }
 
