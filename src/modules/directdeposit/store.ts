@@ -1,5 +1,5 @@
 import { isErrorResponse } from '@vroom-web/networking';
-import { makeAutoObservable, runInAction } from 'mobx';
+import { action, makeObservable, observable, runInAction } from 'mobx';
 import { createContext, useContext } from 'react';
 
 import AnalyticsHandler from 'src/integrations/AnalyticsHandler';
@@ -57,8 +57,27 @@ export class DirectDepositStore implements Store {
   mutationInput?: MutationInput;
   onPlaidSubmitting?: OnPlaidSubmitting;
   plaidOpen = false;
+
   constructor() {
-    makeAutoObservable(this);
+    makeObservable(this, {
+      linkToken: observable,
+      expiration: observable,
+      requestId: observable,
+      priceId: observable,
+      showPlaidLink: observable,
+      storeStatus: observable,
+      asyncStatus: observable,
+      tokenIsLocal: observable,
+      initClientSide: action,
+      togglePlaidLink: action,
+      mutationInput: observable,
+      onPlaidSubmitting: observable,
+      plaidOpen: observable,
+      setMutationInput: action,
+      setPlaidOpen: action,
+      plaidSuccess: action,
+      plaidExit: action,
+    });
   }
 
   async initClientSide(priceId: string): Promise<void> {

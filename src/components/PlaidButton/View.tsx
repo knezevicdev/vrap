@@ -1,5 +1,4 @@
 import { observer } from 'mobx-react';
-import { useRouter } from 'next/router';
 import React, { useCallback, useEffect } from 'react';
 import { usePlaidLink } from 'react-plaid-link';
 import styled from 'styled-components';
@@ -49,7 +48,6 @@ const PlaidButtonView: React.FC<Props> = ({
   priceId,
 }) => {
   const { store } = useAppStore();
-  const router = useRouter();
   let config;
   const onSuccess = useCallback(
     (_token, metaData): void => {
@@ -144,12 +142,6 @@ const PlaidButtonView: React.FC<Props> = ({
 
   useEffect(() => {
     if (store.deposit.plaidOpen && ready) {
-      console.log(
-        'working ion effect ',
-        store.deposit.plaidOpen,
-        ' ready ',
-        ready
-      );
       open();
       store.deposit.setPlaidOpen(false);
     }
