@@ -79,8 +79,6 @@ const PlaidButtonView: React.FC<Props> = ({
       };
       if (store.absmart.paymentRequired) {
         store.deposit.setMutationInput(mutationInput);
-        const priceId = store.option.priceId || localStorage.getItem('priceId');
-        router.push(`/verification/review?priceId=${priceId}`);
       } else {
         plaidSuccess(mutationInput, onPlaidSubmitting);
       }

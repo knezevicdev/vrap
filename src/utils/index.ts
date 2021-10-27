@@ -73,3 +73,8 @@ export function displayFirstTextUpper(str: string | null | undefined): string {
   if (!str || typeof str !== 'string') return '';
   return str[0].toUpperCase() + str.slice(1);
 }
+
+export function displayPaymentAccount(length: number): string {
+  const x = 'X';
+  return new Array(length + 1).join(x);
+}

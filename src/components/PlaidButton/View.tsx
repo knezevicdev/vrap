@@ -9,6 +9,7 @@ import PlaidButtonViewModel from './ViewModel';
 import { useAppStore } from 'src/context';
 import { Button } from 'src/core/Button';
 import { PlaidData } from 'src/interfaces.d';
+
 const PlaidButtonContainer = styled('div')(() => ({
   width: '100%',
 }));
@@ -74,8 +75,6 @@ const PlaidButtonView: React.FC<Props> = ({
       };
       if (store.absmart.paymentRequired) {
         store.deposit.setMutationInput(mutationInput);
-        const priceId = store.option.priceId || localStorage.getItem('priceId');
-        router.push(`/verification/review?priceId=${priceId}`);
       } else {
         plaidSuccess(mutationInput, onPlaidSubmitting);
       }
@@ -142,6 +141,19 @@ const PlaidButtonView: React.FC<Props> = ({
       open();
     }
   }, [ready, tokenIsLocal]);
+
+  useEffect(() => {
+    if (store.deposit.plaidOpen && ready) {
+      console.log(
+        'working ion effect ',
+        store.deposit.plaidOpen,
+        ' ready ',
+        ready
+      );
+      open();
+      store.deposit.setPlaidOpen(false);
+    }
+  }, [store.deposit.plaidOpen, ready]);
 
   return (
     <PlaidButtonContainer>

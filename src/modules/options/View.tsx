@@ -4,6 +4,7 @@ import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import * as Yup from 'yup';
 
+import DirectDepositReview from './components/DirectDepositReview';
 import OptionsViewModel from './ViewModel';
 
 import CheckByMail from 'src/components/CheckByMail';
@@ -14,6 +15,7 @@ import Icon, { Icons } from 'src/core/Icon';
 import { Body, Hero, Title } from 'src/core/Typography';
 import { PaymentOverviewFormValues } from 'src/interfaces.d';
 import DirectDeposit from 'src/modules/directdeposit';
+
 const FormContainer = styled(Form)`
   display: flex;
   height: 100%;
@@ -201,31 +203,48 @@ const OptionsView: React.FC<Props> = ({ viewModel }) => {
         const buttonText = store.absmart.paymentRequired
           ? viewModel.review
           : submitText;
+        const showDirectDepositReview =
+          store.absmart.paymentRequired &&
+          store.deposit.mutationInput !== undefined;
+        console.log(
+          'wprlog ',
+          showDirectDepositReview,
+          ' mutationInput ',
+          JSON.stringify(store.deposit.mutationInput)
+        );
         return (
           <FormContainer>
             <OptionsContainer>
               <StyledHero>{viewModel.hero}</StyledHero>
               <Line />
-              <OptionsTitle>
-                <OptionTitleIcon icon={Icons.RED_ONE} />
-                {viewModel.optionTitle}
-              </OptionsTitle>
-              <OptionsBody>{viewModel.optionQuestion}</OptionsBody>
+              {showDirectDepositReview ? (
+                <>
+                  <DirectDepositReview />
+                </>
+              ) : (
+                <>
+                  <OptionsTitle>
+                    <OptionTitleIcon icon={Icons.RED_ONE} />
+                    {viewModel.optionTitle}
+                  </OptionsTitle>
+                  <OptionsBody>{viewModel.optionQuestion}</OptionsBody>
 
-              <PayOptions selected={values.paymentOption} />
+                  <PayOptions selected={values.paymentOption} />
 
-              <OptionDisplay>
-                {showDirectDeposit ? (
-                  <DirectDeposit />
-                ) : (
-                  <CheckByMail
-                    mailingAddress={viewModel.getMailiingAddress()}
-                    isPrimaryAddress={values.isPrimaryAddress}
-                    setFieldValue={setFieldValue}
-                    state={values.state}
-                  />
-                )}
-              </OptionDisplay>
+                  <OptionDisplay>
+                    {showDirectDeposit ? (
+                      <DirectDeposit />
+                    ) : (
+                      <CheckByMail
+                        mailingAddress={viewModel.getMailiingAddress()}
+                        isPrimaryAddress={values.isPrimaryAddress}
+                        setFieldValue={setFieldValue}
+                        state={values.state}
+                      />
+                    )}
+                  </OptionDisplay>
+                </>
+              )}
 
               {showSubmitButton && (
                 <SubmitButton
