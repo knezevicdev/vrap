@@ -1,9 +1,9 @@
 import React from 'react';
 
-import { useOptionsStore } from '../../modules/options/store';
 import View from './View';
 import ViewModel from './ViewModel';
 
+import { useAppStore } from 'src/context';
 import { PlaidData } from 'src/interfaces.d';
 
 export type Props = {
@@ -24,8 +24,8 @@ const PlaidButton: React.FC<Props> = ({
   plaidExit,
   priceId,
 }) => {
-  const oStore = useOptionsStore();
-  const viewModel = new ViewModel(oStore);
+  const { store } = useAppStore();
+  const viewModel = new ViewModel(store);
 
   return (
     <View

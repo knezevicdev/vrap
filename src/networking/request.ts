@@ -158,3 +158,11 @@ export const getDownloadUrl = async (
     url,
   });
 };
+
+export const getInstitutionLogo = async (id: string): Promise<any> => {
+  const url = `${ENVS.NEXT_PUBLIC_GEARBOX_REST_URL}/payment/logo/${id}`;
+  return await client.httpRequest({
+    method: 'get',
+    url,
+  });
+};

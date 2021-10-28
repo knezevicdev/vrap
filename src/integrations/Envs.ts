@@ -19,6 +19,8 @@ const ENVS = {
   ABSMARTLY_APP: publicRuntimeConfig.ABSMARTLY_APP || '',
   ABSMARTLY_ENV: publicRuntimeConfig.ABSMARTLY_ENV || '',
   ABSMARTLY_URL: publicRuntimeConfig.NEXT_PUBLIC_ABSMARTLY_URL || '',
+  NEXT_PUBLIC_GEARBOX_REST_URL:
+    publicRuntimeConfig.NEXT_PUBLIC_GEARBOX_REST_URL || '',
 };
 
 export default ENVS;

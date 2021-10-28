@@ -31,7 +31,13 @@ const DirectDepositReviewView: React.FC<Props> = ({ viewModel }) => {
   return (
     <Container>
       <AccountContainer>
-        <div>image</div>
+        {store.deposit.institutionLogo && (
+          <LogoContainer>
+            <LogoImg
+              src={`data:image/png;base64, ${store.deposit.institutionLogo}`}
+            />
+          </LogoContainer>
+        )}
         <Account>
           <AcctTitle>
             {viewModel.depositToLink} {mutationInput?.Institution?.Name}{' '}
@@ -106,6 +112,17 @@ const SubmitButton = styled(Button.Primary)`
   @media (max-width: 420px) {
     max-width: 100%;
   }
+`;
+
+const LogoContainer = styled.div`
+  width: 48px;
+  height: 48px;
+  margin-right: 8px;
+`;
+
+const LogoImg = styled.img`
+  width: 48px;
+  height: 48px;
 `;
 
 export default observer(DirectDepositReviewView);
