@@ -38,7 +38,6 @@ class PlaidButtonViewModel {
     if (isErrorResponse(resp)) {
       throw resp;
     }
-    console.log('resp for onmstitition >>>> ', JSON.stringify(resp));
     this.store.deposit.setInstitutionLogo(resp.data.data.logo);
   };
 }
