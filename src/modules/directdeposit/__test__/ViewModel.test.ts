@@ -9,6 +9,7 @@ describe('Direct Deposit Test', () => {
   const oStore = new OptionsStore();
   const poStore = new PaymentOverviewStore();
   const ddStore = new DirectDepositStore();
+
   const onPlaidSuccessSpy = jest.spyOn(ddStore, 'plaidSuccess');
   const onPlaidExitSpy = jest.spyOn(ddStore, 'plaidExit');
   let viewModel: ViewModel;
