@@ -1,5 +1,7 @@
 import { isErrorResponse } from '@vroom-web/networking';
 
+import { OptionsStore } from '../../modules/options/store';
+
 import { getInstitutionLogo } from 'src/networking/request';
 import Store from 'src/store';
 
@@ -7,30 +9,30 @@ class PlaidButtonViewModel {
   readonly buttonCopy: string = 'Link bank account';
   readonly buttonStartCopy: string = 'Start direct deposit';
 
-  constructor(private store: Store) {}
+  constructor(private oStore: OptionsStore, private store: Store) {}
 
   onPlaidSubmitting = (value: boolean): void => {
-    this.store.option.setPlaidSubmitting(value);
+    this.oStore.setPlaidSubmitting(value);
   };
 
   getPlaidSubmitting = (): boolean => {
-    return this.store.option.plaidSubmitting;
+    return this.oStore.plaidSubmitting;
   };
 
   getEmail = (): string => {
-    return this.store.option.email;
+    return this.oStore.email;
   };
 
   setInstitutionFound = (value: boolean): void => {
-    this.store.option.setInstitutionFound(value);
+    this.oStore.setInstitutionFound(value);
   };
 
   setInstitutionSearched = (value: boolean): void => {
-    this.store.option.setInstitutionSearched(value);
+    this.oStore.setInstitutionSearched(value);
   };
 
   getInstitutionSearched = (): boolean => {
-    return this.store.option.institutionSearched;
+    return this.oStore.institutionSearched;
   };
 
   getInstitutionLogo = async (institutionId: string): Promise<void> => {

@@ -17,7 +17,6 @@ const DirectDepositView: React.FC<Props> = ({ viewModel }) => {
   const token = viewModel.getPlaidLinkToken();
   const tokenIsLocal = viewModel.getTokenIsLocal();
   const showNotFound = viewModel.getInstitutionNotFound();
-
   const DirectDepositLink = ({ lang }: { lang: string }): JSX.Element => {
     return (
       <DirectDepositCopy>

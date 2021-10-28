@@ -1,5 +1,6 @@
 import React from 'react';
 
+import { useOptionsStore } from '../../modules/options/store';
 import View from './View';
 import ViewModel from './ViewModel';
 
@@ -24,8 +25,9 @@ const PlaidButton: React.FC<Props> = ({
   plaidExit,
   priceId,
 }) => {
+  const oStore = useOptionsStore();
   const { store } = useAppStore();
-  const viewModel = new ViewModel(store);
+  const viewModel = new ViewModel(oStore, store);
 
   return (
     <View

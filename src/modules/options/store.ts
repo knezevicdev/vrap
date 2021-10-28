@@ -116,6 +116,7 @@ export class OptionsStore implements Store {
       setInstitutionFound: action,
       setInstitutionSearched: action,
       setABSmartlyModel: action,
+      setPlaidSubmitting: action,
     });
   }
 
