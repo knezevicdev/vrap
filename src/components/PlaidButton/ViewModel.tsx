@@ -1,18 +1,13 @@
 import { isErrorResponse } from '@vroom-web/networking';
 
-import { OptionsStore } from '../../modules/options/store';
-
 import { getInstitutionLogo } from 'src/networking/request';
 import Store from 'src/store';
 
 class PlaidButtonViewModel {
-  // private readonly store: OptionsStore;
   readonly buttonCopy: string = 'Link bank account';
   readonly buttonStartCopy: string = 'Start direct deposit';
 
-  constructor(private store: Store) {
-    // this.store = store;
-  }
+  constructor(private store: Store) {}
 
   onPlaidSubmitting = (value: boolean): void => {
     this.store.option.setPlaidSubmitting(value);
