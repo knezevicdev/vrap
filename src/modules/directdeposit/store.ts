@@ -74,8 +74,6 @@ export class DirectDepositStore implements Store {
       mutationInput: observable,
       onPlaidSubmitting: observable,
       plaidOpen: observable,
-      setMutationInput: action,
-      setPlaidOpen: action,
       institutionLogo: observable,
       setInstitutionLogo: action,
     });

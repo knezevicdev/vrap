@@ -113,7 +113,6 @@ export class OptionsStore implements Store {
       abSmartlyModel: observable,
       abSmartlyTest: observable,
       setPayOptionSelected: action,
-      setPlaidSubmitting: action,
       setInstitutionFound: action,
       setInstitutionSearched: action,
       setABSmartlyModel: action,
