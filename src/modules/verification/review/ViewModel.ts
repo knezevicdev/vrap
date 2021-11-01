@@ -221,12 +221,18 @@ export default class VerificationReviewSectionViewModel {
     this.store.verification.setWhereIsVehicleRegistered(value);
   }
 
-  async getVerificationDetails(priceId: string): Promise<void> {
+  async getVerificationDetails(
+    priceId: string,
+    lastFourSSN: string
+  ): Promise<void> {
     try {
       const response = await getVerificationDetails(priceId);
       if (isErrorResponse(response)) throw response;
-
-      this.store.verification.getVerificationDetail(response.data.data);
+      this.store.verification.setLastFourSSN(lastFourSSN);
+      this.store.verification.getVerificationDetail(
+        response.data.data,
+        lastFourSSN
+      );
     } catch (e) {
       console.log('error in verfication');
     }

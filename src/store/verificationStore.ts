@@ -148,6 +148,8 @@ export class VerificationStore {
   priceId?: string;
   bankOptions = BankOptions;
   whereIsVehicleRegistered = '';
+  lastFourSSN = '';
+
   constructor() {
     makeAutoObservable(this);
   }
@@ -160,8 +162,11 @@ export class VerificationStore {
     this.priceId = priceId;
   }
 
-  getVerificationDetail(data: Verification): void {
-    this.verificationDetail = data;
+  getVerificationDetail(data: Verification, lastFourSSN: string): void {
+    this.verificationDetail = {
+      ...data,
+      last_four_ssn: lastFourSSN,
+    };
     this.processVerificationData(data);
   }
 
@@ -308,5 +313,9 @@ export class VerificationStore {
 
   setLoading(value: boolean): void {
     this.loading = value;
+  }
+
+  setLastFourSSN(value: string): void {
+    this.lastFourSSN = value;
   }
 }

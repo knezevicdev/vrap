@@ -29,15 +29,13 @@ const CongratulationsView = ({ viewModel }: Props): JSX.Element => {
         </CongratsContainer>
         <CongratsNextSteps />
       </HeroContainer>
-      {viewModel.showProgressiveAd && (
-        <ProgressiveWrapper>
-          <ProgressiveAd
-            eventName={viewModel.eventName}
-            placementCode={viewModel.placementCode}
-            category={viewModel.category}
-          />
-        </ProgressiveWrapper>
-      )}
+      <ProgressiveWrapper>
+        <ProgressiveAd
+          eventName={viewModel.eventName}
+          placementCode={viewModel.placementCode}
+          category={viewModel.category}
+        />
+      </ProgressiveWrapper>
     </Container>
   );
 };
