@@ -11,7 +11,6 @@ describe('Direct Deposit Review Test', () => {
   const AppStore = new Store();
   const viewModel = new ViewModel(AppStore);
 
-  const setMutationInputSpy = jest.spyOn(AppStore.deposit, 'setMutationInput');
   const setPlaidOpenSpy = jest.spyOn(AppStore.deposit, 'setPlaidOpen');
 
   it('readonly value ', () => {
@@ -27,7 +26,6 @@ describe('Direct Deposit Review Test', () => {
 
   it('should called in store when viewmodel handleOpenLink ', () => {
     viewModel.handleOpenLink();
-    expect(setMutationInputSpy).toHaveBeenCalled();
     expect(setPlaidOpenSpy).toHaveBeenCalled();
   });
 });
