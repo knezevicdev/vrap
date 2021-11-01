@@ -61,7 +61,10 @@ describe('Review component test', () => {
 
   it('test when called createVerificationPayload ', async () => {
     spyRequest.mockResolvedValue(getVerificationDetails());
-    await viewModel.getVerificationDetails('cb5b06d43cb95286ceeb50efc7a82e08');
+    await viewModel.getVerificationDetails(
+      'cb5b06d43cb95286ceeb50efc7a82e08',
+      ''
+    );
     const mockFn = jest.fn(() => viewModel.createVerificationPayload());
     mockFn();
     expect(mockFn).toHaveReturnedWith(createVerificationData);

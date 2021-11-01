@@ -46,7 +46,7 @@ export const createVerificationData = {
   front_of_driver_license_file_id: 'c37cd6f6-4b3c-4748-9069-bd989ad7e3a9',
   front_of_title_lien_file_id: 'fe21cf08-f92e-41dc-b460-34a086df3f59',
   is_owner: true,
-  last_four_ssn: null,
+  last_four_ssn: '',
   lien_account_number: '',
   lien_financial_institution_name: '',
   lien_release_letter_file_id: 'ca322735-9cde-473e-b80b-7529fcac39e4',
