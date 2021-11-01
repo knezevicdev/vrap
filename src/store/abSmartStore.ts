@@ -9,7 +9,7 @@ export class ABSmartStore {
   offerFacelift = false;
   agreementAbtest = false;
   inProgressiveTest = false;
-  paymentRequired = true;
+  paymentRequired = false;
   loading = true;
 
   constructor() {
