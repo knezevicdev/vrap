@@ -105,4 +105,27 @@ describe('Review component test', () => {
     expect(verificationSubmitted).toHaveBeenCalled();
     expect(window.location.href).toEqual(url);
   });
+
+  it('test handlePlaidSubmit ', async () => {
+    const trackPaymentOptionsSubmitted = jest.spyOn(
+      viewModel.getAnalyticHandler(),
+      'trackPaymentOptionsSubmitted'
+    );
+    const trackPlaidACHSelected = jest.spyOn(
+      viewModel.getAnalyticHandler(),
+      'trackPlaidACHSelected'
+    );
+    await viewModel.handlePlaidSubmit();
+    expect(trackPaymentOptionsSubmitted).toHaveBeenCalled();
+    expect(trackPlaidACHSelected).toHaveBeenCalled();
+  });
+
+  test('test error on handlePlaidSubmit ', () => {
+    const mockError = jest
+      .fn(() => viewModel.handlePlaidSubmit())
+      .mockRejectedValue({ message: '' });
+
+    mockError();
+    expect(stores.option.plaidSubmitting).toEqual(false);
+  });
 });
