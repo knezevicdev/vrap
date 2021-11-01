@@ -90,7 +90,8 @@ const EPayOptions: NextPage<Props> = ({ brand }) => {
           <Header />
           {!store.absmart.loading && (
             <>
-              {!store.absmart.abTestFacelift && <SuccessBar />}
+              {!store.absmart.abTestFacelift &&
+                !store.absmart.paymentRequired && <SuccessBar />}
               {store.absmart.stepperAbTest && (
                 <VerificationStepper
                   activeStep={store.absmart.paymentRequired ? '3' : '4'}

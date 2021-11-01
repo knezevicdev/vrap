@@ -61,14 +61,6 @@ export function displayNumber(num: number | undefined): string {
   return Math.round(num).toLocaleString();
 }
 
-export function displayAccountNumber(acct: string | null | undefined): string {
-  const showingAcctNum = 4;
-  if (!acct || typeof acct !== 'string') return '';
-  if (acct.length <= showingAcctNum) return acct;
-  const frontNum = acct.slice(0, acct.length - showingAcctNum);
-  return hiddenString(frontNum.length) + acct.slice(showingAcctNum * -1);
-}
-
 export function displayFirstTextUpper(str: string | null | undefined): string {
   if (!str || typeof str !== 'string') return '';
   return str[0].toUpperCase() + str.slice(1);
@@ -77,4 +69,14 @@ export function displayFirstTextUpper(str: string | null | undefined): string {
 export function displayPaymentAccount(length: number): string {
   const x = 'X';
   return new Array(length + 1).join(x);
+}
+
+export function displayAccountNumber(acct: string | null | undefined): string {
+  const showingAcctNum = 4;
+  if (!acct || typeof acct !== 'string') return '';
+  if (acct.length <= showingAcctNum) return acct;
+  const frontNum = acct.slice(0, acct.length - showingAcctNum);
+  return (
+    displayPaymentAccount(frontNum.length) + acct.slice(showingAcctNum * -1)
+  );
 }

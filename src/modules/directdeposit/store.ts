@@ -76,6 +76,7 @@ export class DirectDepositStore implements Store {
       plaidOpen: observable,
       institutionLogo: observable,
       setInstitutionLogo: action,
+      setMutationInput: action,
     });
   }
 

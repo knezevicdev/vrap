@@ -8,7 +8,7 @@ const displayCurrency = (num: number): string => {
 };
 
 class PaymentOverviewViewModel {
-  readonly hero: string = 'payment overview';
+  readonly hero: string = 'transaction overview';
   readonly carWorth: string = 'Your car is worth';
   readonly remainingLoan: string = 'Remaining Loan';
   readonly total: string = 'Total';
