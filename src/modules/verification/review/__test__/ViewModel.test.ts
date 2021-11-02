@@ -79,6 +79,16 @@ describe('Review component test', () => {
     expect(trackPaymentOptionsSubmitted).toHaveBeenCalled();
   });
 
+  it('when submit payment, should called check analyticsHandler ', async () => {
+    const trackCheckSelected = jest.spyOn(
+      viewModel.getAnalyticHandler(),
+      'trackCheckSelected'
+    );
+    stores.option.setPayOptionSelected('Check');
+    await viewModel.submitPayment();
+    expect(trackCheckSelected).toHaveBeenCalled();
+  });
+
   it('test setWhereIsVehicleRegistered function called ', () => {
     viewModel.setWhereIsVehicleRegistered('NY');
     expect(stores.verification.whereIsVehicleRegistered).toEqual('NY');
@@ -103,6 +113,19 @@ describe('Review component test', () => {
     });
     expect(createVerificationPayload).toHaveBeenCalled();
     expect(verificationSubmitted).toHaveBeenCalled();
+    expect(window.location.href).toEqual(url);
+  });
+
+  it('test when verification submitted when payment require is true ', async () => {
+    stores.absmart.setPaymentRequired(true);
+    await viewModel.verificationSubmit();
+    const url = '/appraisal/congratulations';
+    Object.defineProperty(window, 'location', {
+      value: {
+        href: url,
+      },
+    });
+
     expect(window.location.href).toEqual(url);
   });
 

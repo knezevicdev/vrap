@@ -1,3 +1,5 @@
+import { Router } from 'next/router';
+
 import { DirectDepositStore } from '../directdeposit/store';
 import { OptionsStore } from './store';
 
@@ -19,13 +21,14 @@ class OptionsViewModel {
   readonly submit: string = 'submit';
   readonly submitting: string = 'submitting';
   readonly review: string = 'REVIEW';
-  private router: any;
+  private router: Router;
+
   constructor(
     store: OptionsStore,
     ddStore: DirectDepositStore,
     analyticsHandler: AnalyticsHandler,
     appStore: Store,
-    router: any
+    router: Router
   ) {
     this.store = store;
     this.ddStore = ddStore;
