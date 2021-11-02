@@ -57,7 +57,8 @@ export class DirectDepositStore implements Store {
   mutationInput?: MutationInput;
   onPlaidSubmitting?: OnPlaidSubmitting;
   plaidOpen = false;
-  institutionLogo: string | undefined;
+  institutionLogo: string | undefined | null;
+  institutionId = '';
 
   constructor() {
     makeObservable(this, {
@@ -77,6 +78,9 @@ export class DirectDepositStore implements Store {
       institutionLogo: observable,
       setInstitutionLogo: action,
       setMutationInput: action,
+      institutionId: observable,
+      setInstitutionId: action,
+      setPlaidOpen: action,
     });
   }
 
@@ -152,11 +156,16 @@ export class DirectDepositStore implements Store {
   setMutationInput = (value: MutationInput | undefined): void => {
     this.mutationInput = value;
   };
+
+  setInstitutionId = (value: string): void => {
+    this.institutionId = value;
+  };
+
   setPlaidOpen = (value: boolean): void => {
     this.plaidOpen = value;
   };
 
-  setInstitutionLogo = (value: string | undefined): void => {
+  setInstitutionLogo = (value: string | undefined | null): void => {
     this.institutionLogo = value;
   };
 }

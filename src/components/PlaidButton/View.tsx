@@ -72,7 +72,7 @@ const PlaidButtonView: React.FC<Props> = ({
         Email: email,
       };
       if (store.absmart.paymentRequired) {
-        viewModel.getInstitutionLogo(metaData.institution.institution_id);
+        store.deposit.setInstitutionId(metaData.institution.institution_id);
         store.deposit.setMutationInput(mutationInput);
       } else {
         plaidSuccess(mutationInput, onPlaidSubmitting);

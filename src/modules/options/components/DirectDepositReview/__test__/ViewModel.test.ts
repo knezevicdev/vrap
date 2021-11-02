@@ -11,8 +11,6 @@ describe('Direct Deposit Review Test', () => {
   const AppStore = new Store();
   const viewModel = new ViewModel(AppStore);
 
-  const setPlaidOpenSpy = jest.spyOn(AppStore.deposit, 'setPlaidOpen');
-
   it('readonly value ', () => {
     expect(viewModel.depositToLink).toEqual('Deposit to linked ');
     expect(viewModel.account).toEqual('account');
@@ -22,10 +20,5 @@ describe('Direct Deposit Review Test', () => {
     expect(viewModel.infoEncrypted).toEqual(
       'Your information will be secure and encrypted'
     );
-  });
-
-  it('should called in store when viewmodel handleOpenLink ', () => {
-    viewModel.handleOpenLink();
-    expect(setPlaidOpenSpy).toHaveBeenCalled();
   });
 });

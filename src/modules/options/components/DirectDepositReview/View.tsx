@@ -1,13 +1,14 @@
 import { Button, Typography } from '@vroom-web/ui-lib';
 import { observer } from 'mobx-react';
 import { useRouter } from 'next/router';
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
 
 import ViewModel from './ViewModel';
 
 import { useAppStore } from 'src/context';
 import Icon, { Icons } from 'src/core/Icon';
+import ENVS from 'src/integrations/Envs';
 import { displayFirstTextUpper, displayPaymentAccount } from 'src/utils';
 
 export interface Props {
@@ -18,6 +19,12 @@ const DirectDepositReviewView: React.FC<Props> = ({ viewModel }) => {
   const { store } = useAppStore();
   const { mutationInput } = store.deposit;
   const router = useRouter();
+
+  useEffect(() => {
+    if (store.deposit.institutionId) {
+      viewModel.getLogo(store.deposit.institutionId);
+    }
+  }, [store.deposit.institutionId]);
 
   const handleReview = () => {
     const priceId = store.deposit.priceId || localStorage.getItem('priceId');
@@ -34,7 +41,7 @@ const DirectDepositReviewView: React.FC<Props> = ({ viewModel }) => {
         {store.deposit.institutionLogo && (
           <LogoContainer>
             <LogoImg
-              src={`data:image/png;base64, ${store.deposit.institutionLogo}`}
+              src={`${ENVS.VROOM_URL}/mypayments/logo/${store.deposit.institutionId}`}
             />
           </LogoContainer>
         )}
