@@ -1,4 +1,5 @@
 import { Checkbox, Typography } from '@vroom-web/ui-lib';
+import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
@@ -23,6 +24,7 @@ const VerificationReviewViewDetail: React.FC<Props> = ({
 }) => {
   const [checked, chageCheck] = useState(false);
   const { store } = useAppStore();
+  const router = useRouter();
 
   useEffect(() => {
     const whereIsVehicleRegistered =
@@ -33,6 +35,12 @@ const VerificationReviewViewDetail: React.FC<Props> = ({
     viewModel.onPageLoad();
     viewModel.getVerificationDetails(priceId, lastFourSSN);
   }, [priceId]);
+
+  useEffect(() => {
+    if (store.verification.formState && store.verification.formState === 5) {
+      router.push('/congratulations');
+    }
+  }, [store.verification.formState]);
 
   const handleSubmit = (): void => {
     localStorage.removeItem('lastFour');
