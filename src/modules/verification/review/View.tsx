@@ -65,29 +65,17 @@ const VerificationReviewViewDetail: React.FC<Props> = ({
         </>
       )}
       <Line />
-      {!store.absmart.loading &&
-        (store.absmart.agreementAbtest ? (
-          <>
-            <CheckboxContainer>
-              <Checkbox
-                checked={checked}
-                id={'verification-agreement-checkbox'}
-                onChange={(): void => chageCheck(!checked)}
-              />
-              <ReviewText>{viewModel.reviewVerification}</ReviewText>
-            </CheckboxContainer>
-            <SubmitButton disabled={!checked} onClick={handleSubmit}>
-              {viewModel.submitBtn}
-            </SubmitButton>
-          </>
-        ) : (
-          <>
-            <SubmitButton onClick={handleSubmit}>
-              {viewModel.submitBtn}
-            </SubmitButton>
-            <WarningText>{viewModel.verificationWarning}</WarningText>
-          </>
-        ))}
+      <CheckboxContainer>
+        <Checkbox
+          checked={checked}
+          id={'verification-agreement-checkbox'}
+          onChange={(): void => chageCheck(!checked)}
+        />
+        <ReviewText>{viewModel.reviewVerification}</ReviewText>
+      </CheckboxContainer>
+      <SubmitButton disabled={!checked} onClick={handleSubmit}>
+        {viewModel.submitBtn}
+      </SubmitButton>
     </Container>
   );
 };
