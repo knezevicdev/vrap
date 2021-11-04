@@ -1,7 +1,8 @@
-import { Stepper } from 'src/interfaces.d';
+import ViewModel from '../ViewModel';
 
-class VerificationStepperViewModel {
-  readonly defaultSteps: Stepper[] = [
+describe('Stepper Test', () => {
+  const viewModel = new ViewModel();
+  const defaultSteps = [
     {
       step: '1',
       progress: '25',
@@ -28,7 +29,7 @@ class VerificationStepperViewModel {
     },
   ];
 
-  readonly paymentRequiredSteps: Stepper[] = [
+  const paymentRequiredSteps = [
     {
       step: '1',
       progress: '25',
@@ -54,6 +55,9 @@ class VerificationStepperViewModel {
       title: 'Review',
     },
   ];
-}
 
-export default VerificationStepperViewModel;
+  it('readonly values', () => {
+    expect(viewModel.defaultSteps).toEqual(defaultSteps);
+    expect(viewModel.paymentRequiredSteps).toEqual(paymentRequiredSteps);
+  });
+});

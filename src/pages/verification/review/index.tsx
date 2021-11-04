@@ -32,7 +32,9 @@ const VerificationReview: NextPage<Prop> = ({ priceId }) => {
             <DefaultStepper activeStep={store.stepper.currentStep} />
           )}
           {!store.absmart.loading && store.absmart.stepperAbTest && (
-            <VerificationStepper activeStep={store.stepper.currentStep} />
+            <VerificationStepper
+              activeStep={store.absmart.paymentRequired ? '4' : '3'}
+            />
           )}
         </StepperContainer>
       </StepperWrapper>

@@ -1,36 +1,46 @@
+import { isErrorResponse } from '@vroom-web/networking';
+
 import { OptionsStore } from '../../modules/options/store';
 
+import { getInstitutionLogo } from 'src/networking/request';
+import Store from 'src/store';
+
 class PlaidButtonViewModel {
-  private readonly store: OptionsStore;
   readonly buttonCopy: string = 'Link bank account';
   readonly buttonStartCopy: string = 'Start direct deposit';
 
-  constructor(store: OptionsStore) {
-    this.store = store;
-  }
+  constructor(private oStore: OptionsStore, private store: Store) {}
 
   onPlaidSubmitting = (value: boolean): void => {
-    this.store.setPlaidSubmitting(value);
+    this.oStore.setPlaidSubmitting(value);
   };
 
   getPlaidSubmitting = (): boolean => {
-    return this.store.plaidSubmitting;
+    return this.oStore.plaidSubmitting;
   };
 
   getEmail = (): string => {
-    return this.store.email;
+    return this.oStore.email;
   };
 
   setInstitutionFound = (value: boolean): void => {
-    this.store.setInstitutionFound(value);
+    this.oStore.setInstitutionFound(value);
   };
 
   setInstitutionSearched = (value: boolean): void => {
-    this.store.setInstitutionSearched(value);
+    this.oStore.setInstitutionSearched(value);
   };
 
   getInstitutionSearched = (): boolean => {
-    return this.store.institutionSearched;
+    return this.oStore.institutionSearched;
+  };
+
+  getInstitutionLogo = async (institutionId: string): Promise<void> => {
+    const resp = await getInstitutionLogo(institutionId);
+    if (isErrorResponse(resp)) {
+      throw resp;
+    }
+    this.store.deposit.setInstitutionLogo(resp.data.data.logo);
   };
 }
 

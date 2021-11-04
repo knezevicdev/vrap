@@ -1,8 +1,10 @@
 import { Checkbox, Typography } from '@vroom-web/ui-lib';
+import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
 import OwnerInfoReview from './components/OwnerInfoReview';
+import PaymentInfoReview from './components/PaymentInfoReview';
 import PayOffInfoReview from './components/PayOffInfoReview';
 import PickupInfoReview from './components/PickupInfoReview';
 import SellDocumentReview from './components/SellDocumentReview';
@@ -22,6 +24,7 @@ const VerificationReviewViewDetail: React.FC<Props> = ({
 }) => {
   const [checked, chageCheck] = useState(false);
   const { store } = useAppStore();
+  const router = useRouter();
 
   useEffect(() => {
     const whereIsVehicleRegistered =
@@ -32,6 +35,12 @@ const VerificationReviewViewDetail: React.FC<Props> = ({
     viewModel.onPageLoad();
     viewModel.getVerificationDetails(priceId, lastFourSSN);
   }, [priceId]);
+
+  useEffect(() => {
+    if (store.verification.formState && store.verification.formState === 5) {
+      router.push('/congratulations');
+    }
+  }, [store.verification.formState]);
 
   const handleSubmit = (): void => {
     localStorage.removeItem('lastFour');
@@ -49,6 +58,12 @@ const VerificationReviewViewDetail: React.FC<Props> = ({
       <PayOffInfoReview />
       <Line />
       <SellDocumentReview />
+      {store.absmart.paymentRequired && (
+        <>
+          <Line />
+          <PaymentInfoReview />
+        </>
+      )}
       <Line />
       {!store.absmart.loading &&
         (store.absmart.agreementAbtest ? (

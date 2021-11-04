@@ -1,3 +1,4 @@
+import { useRouter } from 'next/router';
 import React from 'react';
 
 import { useDirectDepositStore } from '../directdeposit/store';
@@ -6,6 +7,7 @@ import View from './View';
 import ViewAB from './ViewAB';
 import ViewModel from './ViewModel';
 
+import { useAppStore } from 'src/context';
 import AnalyticsHandler from 'src/integrations/AnalyticsHandler';
 
 interface Prop {
@@ -13,10 +15,18 @@ interface Prop {
 }
 
 const Options = (props: Prop): JSX.Element => {
+  const router = useRouter();
   const analyticsHandler = new AnalyticsHandler();
-  const store = useOptionsStore();
+  const oStore = useOptionsStore();
+  const { store } = useAppStore();
   const ddStore = useDirectDepositStore();
-  const viewModel = new ViewModel(store, ddStore, analyticsHandler);
+  const viewModel = new ViewModel(
+    oStore,
+    ddStore,
+    analyticsHandler,
+    store,
+    router
+  );
 
   return props.abTest ? (
     <ViewAB viewModel={viewModel} />

@@ -5,11 +5,13 @@ import { OptionsStore } from '../../options/store';
 import ViewModel from '../ViewModel';
 
 import AnalyticsHandler from 'src/integrations/AnalyticsHandler';
+import store from 'src/store';
 
 describe('Options Test', () => {
   const analyticsHandler = new AnalyticsHandler();
   const oStore = new OptionsStore();
   const ddStore = new DirectDepositStore();
+  const appStore = new store();
   const paymentOptionsViewedSpy = jest
     .spyOn(analyticsHandler, 'trackPaymentOptionsViewed')
     .mockReturnValue();
@@ -21,7 +23,7 @@ describe('Options Test', () => {
   beforeEach(async () => {
     await oStore.init('12345');
     await ddStore.initClientSide('12345');
-    viewModel = new ViewModel(oStore, ddStore, analyticsHandler);
+    viewModel = new ViewModel(oStore, ddStore, analyticsHandler, appStore);
   });
 
   afterEach(() => {

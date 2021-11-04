@@ -1,6 +1,7 @@
 import ViewModel from '../ViewModel';
 
 import {
+  createVerificationData,
   getVerificationDetails,
   verificationResp,
 } from 'src/networking/__mocks__/request';
@@ -58,6 +59,36 @@ describe('Review component test', () => {
     );
   });
 
+  it('test when called createVerificationPayload ', async () => {
+    spyRequest.mockResolvedValue(getVerificationDetails());
+    await viewModel.getVerificationDetails(
+      'cb5b06d43cb95286ceeb50efc7a82e08',
+      ''
+    );
+    const mockFn = jest.fn(() => viewModel.createVerificationPayload());
+    mockFn();
+    expect(mockFn).toHaveReturnedWith(createVerificationData);
+  });
+
+  it('when submit payment, should called analyticsHandler ', async () => {
+    const trackPaymentOptionsSubmitted = jest.spyOn(
+      viewModel.getAnalyticHandler(),
+      'trackPaymentOptionsSubmitted'
+    );
+    await viewModel.submitPayment();
+    expect(trackPaymentOptionsSubmitted).toHaveBeenCalled();
+  });
+
+  it('when submit payment, should called check analyticsHandler ', async () => {
+    const trackCheckSelected = jest.spyOn(
+      viewModel.getAnalyticHandler(),
+      'trackCheckSelected'
+    );
+    stores.option.setPayOptionSelected('Check');
+    await viewModel.submitPayment();
+    expect(trackCheckSelected).toHaveBeenCalled();
+  });
+
   it('test setWhereIsVehicleRegistered function called ', () => {
     viewModel.setWhereIsVehicleRegistered('NY');
     expect(stores.verification.whereIsVehicleRegistered).toEqual('NY');
@@ -83,5 +114,41 @@ describe('Review component test', () => {
     expect(createVerificationPayload).toHaveBeenCalled();
     expect(verificationSubmitted).toHaveBeenCalled();
     expect(window.location.href).toEqual(url);
+  });
+
+  it('test when verification submitted when payment require is true ', async () => {
+    stores.absmart.setPaymentRequired(true);
+    await viewModel.verificationSubmit();
+    const url = '/appraisal/congratulations';
+    Object.defineProperty(window, 'location', {
+      value: {
+        href: url,
+      },
+    });
+
+    expect(window.location.href).toEqual(url);
+  });
+
+  it('test handlePlaidSubmit ', async () => {
+    const trackPaymentOptionsSubmitted = jest.spyOn(
+      viewModel.getAnalyticHandler(),
+      'trackPaymentOptionsSubmitted'
+    );
+    const trackPlaidACHSelected = jest.spyOn(
+      viewModel.getAnalyticHandler(),
+      'trackPlaidACHSelected'
+    );
+    await viewModel.handlePlaidSubmit();
+    expect(trackPaymentOptionsSubmitted).toHaveBeenCalled();
+    expect(trackPlaidACHSelected).toHaveBeenCalled();
+  });
+
+  test('test error on handlePlaidSubmit ', () => {
+    const mockError = jest
+      .fn(() => viewModel.handlePlaidSubmit())
+      .mockRejectedValue({ message: '' });
+
+    mockError();
+    expect(stores.option.plaidSubmitting).toEqual(false);
   });
 });

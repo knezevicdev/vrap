@@ -1,8 +1,12 @@
 import { isErrorResponse } from '@vroom-web/networking';
 
 import AnalyticsHandler from 'src/integrations/AnalyticsHandler';
+import { submitPaymentOption } from 'src/modules/options/store';
 import { PatchReview } from 'src/networking/models/Verification';
-import { getVerificationDetails } from 'src/networking/request';
+import {
+  getVerificationDetails,
+  postPlaidPayment,
+} from 'src/networking/request';
 import { patchVerification } from 'src/networking/request';
 import Store from 'src/store';
 
@@ -13,6 +17,24 @@ export default class VerificationReviewSectionViewModel {
     'I acknowledge that all information provided is accurate. Vroom reserves the right to modify or revoke your price if any information provided is inaccurate.';
   readonly verificationWarning: string =
     'By clicking "Submit My Information," you acknowledge that all the information you provided is accurate. Vroom reserves the right to modify or revoke your price if any information provided is inaccurate.';
+  readonly defaultValues = {
+    paymentOption: '',
+    routingNumber: '',
+    bankAccountNumber: '',
+    isPrimaryAddress: '',
+    address: '',
+    apartment: '',
+    city: '',
+    state: '',
+    zipcode: '',
+  };
+  readonly mailAddress = {
+    address_1: '',
+    address_2: '',
+    city: '',
+    state: '',
+    zipcode: '',
+  };
   private analyticsHandler: AnalyticsHandler = new AnalyticsHandler();
 
   constructor(private store: Store) {}
@@ -84,7 +106,69 @@ export default class VerificationReviewSectionViewModel {
     return payload;
   };
 
+  async submitPayment(): Promise<void> {
+    const { payment, option } = this.store;
+    const values = payment.values || this.defaultValues;
+    const priceId = payment.priceId || '';
+    const address = payment.address || this.mailAddress;
+    await submitPaymentOption(values, priceId, address);
+
+    if (
+      option.showDD === 'Manual Input' ||
+      option.showDD === 'Direct Deposit'
+    ) {
+      payment.setSubmitType('Manual ACH');
+      this.analyticsHandler.trackManualACHSelected();
+    } else {
+      payment.setSubmitType('Check');
+      this.analyticsHandler.trackCheckSelected();
+    }
+    const submittedType = payment.submittedType || '';
+    this.analyticsHandler.trackPaymentOptionsSubmitted(submittedType);
+  }
+
+  async handlePlaidSubmit(): Promise<void> {
+    const mutationInput = this.store.deposit.mutationInput || {
+      Account: {
+        Id: '',
+        Mask: '',
+        Name: '',
+        Subtype: '',
+        Type: '',
+      },
+      Email: '',
+      Institution: {
+        Id: '',
+        Name: '',
+      },
+      PublicToken: '',
+      ReferenceId: '',
+      Source: '',
+    };
+    try {
+      const plaidPaymentRes = await postPlaidPayment(mutationInput);
+      if (isErrorResponse(plaidPaymentRes)) {
+        this.store.option.setPlaidSubmitting(false);
+        throw plaidPaymentRes;
+      }
+      this.analyticsHandler.trackPaymentOptionsSubmitted('Plaid ACH');
+      this.analyticsHandler.trackPlaidACHSelected();
+      localStorage.removeItem('linkToken');
+      localStorage.removeItem('priceId');
+    } catch (err) {
+      this.store.option.setPlaidSubmitting(false);
+      console.log(JSON.stringify(err));
+    }
+  }
+
   async verificationSubmit(): Promise<void> {
+    const { absmart, deposit } = this.store;
+    if (absmart.paymentRequired && deposit.mutationInput) {
+      await this.handlePlaidSubmit();
+    }
+    if (absmart.paymentRequired && !deposit.mutationInput) {
+      await this.submitPayment();
+    }
     const payload = this.createVerificationPayload();
     const data = {
       source: 'vroom.com',
@@ -113,6 +197,10 @@ export default class VerificationReviewSectionViewModel {
 
     const priceId =
       this.store.verification.priceId || localStorage.getItem('priceId');
+    if (absmart.paymentRequired) {
+      window.location.href = '/appraisal/congratulations';
+      return;
+    }
 
     if (finalPayment !== null) {
       if (finalPayment > 0) {

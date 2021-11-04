@@ -4,10 +4,12 @@ import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import * as Yup from 'yup';
 
+import DirectDepositReview from './components/DirectDepositReview';
 import OptionsViewModel from './ViewModel';
 
 import CheckByMail from 'src/components/CheckByMail';
 import PayOptions from 'src/components/PayOptions';
+import { useAppStore } from 'src/context';
 import { Button } from 'src/core/Button';
 import Icon, { Icons } from 'src/core/Icon';
 import { Body, Hero, Title } from 'src/core/Typography';
@@ -103,6 +105,7 @@ const InitialValues: PaymentOverviewFormValues = {
 };
 
 const OptionsView: React.FC<Props> = ({ viewModel }) => {
+  const { store } = useAppStore();
   useEffect(() => {
     viewModel.onPageLoad();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -175,6 +178,8 @@ const OptionsView: React.FC<Props> = ({ viewModel }) => {
 
   const shouldShowSubmitButton = viewModel.getShowSubmitButton();
   const isPlaidSubmitting = viewModel.getPlaidSubmitting();
+  const showDirectDepositReview =
+    store.absmart.paymentRequired && store.deposit.mutationInput !== undefined;
   return (
     <Formik
       initialValues={InitialValues}
@@ -184,7 +189,7 @@ const OptionsView: React.FC<Props> = ({ viewModel }) => {
         { setSubmitting }
       ): void => {
         setSubmitting(true);
-        viewModel.paymentOptionsSubmit(values);
+        viewModel.isSubmitPaymentRequired(values);
       }}
       validateOnMount={true}
     >
@@ -194,39 +199,52 @@ const OptionsView: React.FC<Props> = ({ viewModel }) => {
           shouldShowSubmitButton ||
           !showDirectDeposit ||
           viewModel.getInstitutionNotFound();
-
+        const submitText = isSubmitting
+          ? viewModel.submitting
+          : viewModel.submit;
+        const buttonText = store.absmart.paymentRequired
+          ? viewModel.review
+          : submitText;
         return (
           <FormContainer>
             <OptionsContainer>
               <StyledHero>{viewModel.hero}</StyledHero>
               <Line />
-              <OptionsTitle>
-                <OptionTitleIcon icon={Icons.RED_ONE} />
-                {viewModel.optionTitle}
-              </OptionsTitle>
-              <OptionsBody>{viewModel.optionQuestion}</OptionsBody>
+              {showDirectDepositReview ? (
+                <>
+                  <DirectDepositReview />
+                </>
+              ) : (
+                <>
+                  <OptionsTitle>
+                    <OptionTitleIcon icon={Icons.RED_ONE} />
+                    {viewModel.optionTitle}
+                  </OptionsTitle>
+                  <OptionsBody>{viewModel.optionQuestion}</OptionsBody>
 
-              <PayOptions selected={values.paymentOption} />
+                  <PayOptions selected={values.paymentOption} />
 
-              <OptionDisplay>
-                {showDirectDeposit ? (
-                  <DirectDeposit />
-                ) : (
-                  <CheckByMail
-                    mailingAddress={viewModel.getMailiingAddress()}
-                    isPrimaryAddress={values.isPrimaryAddress}
-                    setFieldValue={setFieldValue}
-                    state={values.state}
-                  />
-                )}
-              </OptionDisplay>
+                  <OptionDisplay>
+                    {showDirectDeposit ? (
+                      <DirectDeposit />
+                    ) : (
+                      <CheckByMail
+                        mailingAddress={viewModel.getMailiingAddress()}
+                        isPrimaryAddress={values.isPrimaryAddress}
+                        setFieldValue={setFieldValue}
+                        state={values.state}
+                      />
+                    )}
+                  </OptionDisplay>
+                </>
+              )}
 
               {showSubmitButton && (
                 <SubmitButton
                   type="submit"
                   disabled={!isValid || isSubmitting || isPlaidSubmitting}
                 >
-                  {isSubmitting ? viewModel.submitting : viewModel.submit}
+                  {buttonText}
                 </SubmitButton>
               )}
             </OptionsContainer>

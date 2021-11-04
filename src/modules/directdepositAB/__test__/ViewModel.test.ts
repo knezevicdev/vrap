@@ -81,7 +81,6 @@ describe('Direct Deposit Test', () => {
       Source: 'string',
     };
     const onSubmitting = oStore.setPlaidSubmitting;
-
     viewModel.onPlaidSuccess(plaidData, onSubmitting);
     expect(onPlaidSuccessSpy).toHaveBeenCalled();
   });

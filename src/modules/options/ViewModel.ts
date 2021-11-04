@@ -5,26 +5,34 @@ import AnalyticsHandler from 'src/integrations/AnalyticsHandler';
 import { MailingAddress } from 'src/interfaces.d';
 import { PaymentOverviewFormValues } from 'src/interfaces.d';
 import { submitPaymentOption } from 'src/modules/options/store';
+import Store from 'src/store';
 
 class OptionsViewModel {
   private readonly store: OptionsStore;
   private readonly ddStore: DirectDepositStore;
   private analyticsHandler: AnalyticsHandler;
+  private appStore: Store;
   readonly hero: string = `let's set up your payment method`;
   readonly desktopTitle: string = 'how would you like to get paid?';
   readonly optionTitle: string = 'Payment Method';
   readonly optionQuestion: string = 'How would you like to get paid?';
   readonly submit: string = 'submit';
   readonly submitting: string = 'submitting';
+  readonly review: string = 'REVIEW';
+  private router: any;
 
   constructor(
     store: OptionsStore,
     ddStore: DirectDepositStore,
-    analyticsHandler: AnalyticsHandler
+    analyticsHandler: AnalyticsHandler,
+    appStore: Store,
+    router: any
   ) {
     this.store = store;
     this.ddStore = ddStore;
     this.analyticsHandler = analyticsHandler;
+    this.appStore = appStore;
+    this.router = router;
   }
 
   onPageLoad = (): void => {
@@ -97,8 +105,7 @@ class OptionsViewModel {
   };
 
   isValidName = (str: string | null | undefined): boolean => {
-    const re =
-      /^[a-zA-ZàâäôéèëêïîçùûüÿæœÀÂÄÔÉÈËÊÏÎŸÇÙÛÜÆŒäöüßÄÖÜẞąćęłńóśźżĄĆĘŁŃÓŚŹŻàèéìíîòóùúÀÈÉÌÍÎÒÓÙÚáéíñóúüÁÉÍÑÓÚÜ \-']{2,30}$/;
+    const re = /^[a-zA-ZàâäôéèëêïîçùûüÿæœÀÂÄÔÉÈËÊÏÎŸÇÙÛÜÆŒäöüßÄÖÜẞąćęłńóśźżĄĆĘŁŃÓŚŹŻàèéìíîòóùúÀÈÉÌÍÎÒÓÙÚáéíñóúüÁÉÍÑÓÚÜ \-']{2,30}$/;
     if (!str || !re.test(str)) {
       return false;
     } else {
@@ -106,22 +113,33 @@ class OptionsViewModel {
     }
   };
 
+  calcMailingAddress = (values: PaymentOverviewFormValues): MailingAddress => {
+    if (values.isPrimaryAddress === 'No') {
+      return {
+        address_1: values.address,
+        address_2: values.apartment,
+        city: values.city,
+        state: values.state,
+        zipcode: values.zipcode,
+      };
+    }
+    return this.store.mailingAddress;
+  };
+
+  isSubmitPaymentRequired = (values: PaymentOverviewFormValues): void => {
+    if (!this.appStore.absmart.paymentRequired) {
+      this.paymentOptionsSubmit(values);
+      return;
+    }
+    const mailingAddress = this.calcMailingAddress(values);
+    this.appStore.payment.setValues(values, this.store.priceId, mailingAddress);
+    this.router.push(`/verification/review?priceId=${this.store.priceId}`);
+  };
+
   paymentOptionsSubmit = (values: PaymentOverviewFormValues): void => {
     let submittedType;
-    const calcMailingAddress = (): MailingAddress => {
-      if (values.isPrimaryAddress === 'No') {
-        return {
-          address_1: values.address,
-          address_2: values.apartment,
-          city: values.city,
-          state: values.state,
-          zipcode: values.zipcode,
-        };
-      }
-      return this.store.mailingAddress;
-    };
 
-    const mailingAddress = calcMailingAddress();
+    const mailingAddress = this.calcMailingAddress(values);
     submitPaymentOption(values, this.store.priceId, mailingAddress);
 
     if (
@@ -136,9 +154,7 @@ class OptionsViewModel {
     }
 
     this.analyticsHandler.trackPaymentOptionsSubmitted(submittedType);
-
-    const url = `/appraisal/congratulations`;
-    window.location.href = url;
+    window.location.href = `/appraisal/congratulations`;
   };
 
   getInstitutionNotFound = (): boolean => {

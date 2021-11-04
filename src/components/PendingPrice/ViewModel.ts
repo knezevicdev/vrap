@@ -21,6 +21,10 @@ class PendingPriceViewModel {
     const url = `/cars`;
     window.location.href = url;
   }
+
+  get getAnalyticsHandler(): AnalyticsHandler {
+    return this.analyticsHandler;
+  }
 }
 
 export default PendingPriceViewModel;
