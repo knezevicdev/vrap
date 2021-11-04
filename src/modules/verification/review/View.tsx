@@ -113,10 +113,6 @@ const Line = styled.div`
   background-color: #d6d7da;
 `;
 
-const WarningText = styled(Typography.Body.Small)`
-  margin-top: 16px;
-`;
-
 const SubmitButton = styled(Button.Primary)`
   margin-top: 32px;
   @media (max-width: 1020px) {
