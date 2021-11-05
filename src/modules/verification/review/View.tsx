@@ -1,4 +1,5 @@
 import { Checkbox, Typography } from '@vroom-web/ui-lib';
+import { observer } from 'mobx-react';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
@@ -150,4 +151,5 @@ const CheckboxContainer = styled.div`
 const ReviewText = styled(Typography.Body.Regular)`
   margin-left: 8px;
 `;
-export default VerificationReviewViewDetail;
+
+export default observer(VerificationReviewViewDetail);
