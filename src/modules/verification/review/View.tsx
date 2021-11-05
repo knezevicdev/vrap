@@ -22,7 +22,7 @@ const VerificationReviewViewDetail: React.FC<Props> = ({
   viewModel,
   priceId,
 }) => {
-  const [checked, chageCheck] = useState(false);
+  const [checked, setChecked] = useState(false);
   const { store } = useAppStore();
   const router = useRouter();
 
@@ -69,7 +69,7 @@ const VerificationReviewViewDetail: React.FC<Props> = ({
         <Checkbox
           checked={checked}
           id={'verification-agreement-checkbox'}
-          onChange={(): void => chageCheck(!checked)}
+          onChange={(): void => setChecked(!checked)}
         />
         <ReviewText>{viewModel.reviewVerification}</ReviewText>
       </CheckboxContainer>
