@@ -53,7 +53,7 @@ class AppraisalApp extends App {
   constructor(props: AppProps) {
     super(props);
     this.analyticsHandler = new AnalyticsHandler();
-    const serviceBasePath = ENVS.NEXT_PUBLIC_INTERCHANGE_URL;
+    const serviceBasePath = ENVS.NEXT_PUBLIC_INTERCHANGE_URL || '';
     this.catSDK = new CatSDK({ serviceBasePath });
 
     const gqlUrl = serviceBasePath !== '' ? `${serviceBasePath}/gql` : '';
