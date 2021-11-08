@@ -54,7 +54,9 @@ class AppraisalApp extends App {
     super(props);
     this.analyticsHandler = new AnalyticsHandler();
     const serviceBasePath = ENVS.NEXT_PUBLIC_INTERCHANGE_URL;
-    this.catSDK = new CatSDK({ serviceBasePath });
+    this.catSDK = new CatSDK({
+      serviceBasePath: publicRuntimeConfig.NEXT_PUBLIC_CAT_SERVICE_URL || '',
+    });
 
     const gqlUrl = serviceBasePath !== '' ? `${serviceBasePath}/gql` : '';
     const webLeadUrl =
