@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/naming-convention */
 const withBundleAnalyzer = require('@next/bundle-analyzer')({
   enabled: process.env.ANALYZE === 'true',
 });
@@ -27,6 +28,7 @@ const config = {
     ABSMARTLY_API_KEY: process.env.ABSMARTLY_API_KEY,
     ABSMARTLY_APP: process.env.ABSMARTLY_APP,
     ABSMARTLY_ENV: process.env.ABSMARTLY_ENV,
+    NEXT_PUBLIC_CAT_SERVICE_URL: process.env.NEXT_PUBLIC_CAT_SERVICE_URL,
     NEXT_PUBLIC_ABSMARTLY_URL: process.env.NEXT_PUBLIC_ABSMARTLY_URL,
     BRANCH_IO_KEY: process.env.BRANCH_IO_KEY,
     DATA_DOG_RUM_APPLICATION: process.env.DATA_DOG_RUM_APPLICATION,
@@ -47,6 +49,7 @@ const config = {
     SEGMENT_WRITE_KEY: process.env.SEGMENT_WRITE_KEY,
     INTERCHANGE_PROXY_TARGET: process.env.INTERCHANGE_PROXY_TARGET,
     GQL_PROXY_TARGET: process.env.GQL_PROXY_TARGET,
+    CAT_DATA_PROXY_TARGET: process.env.CAT_DATA_PROXY_TARGET,
   },
   /* Custom webpack configuration. */
   webpack: (config) => {
