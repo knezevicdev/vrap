@@ -1,4 +1,4 @@
 import { CatSDK } from '@vroom-web/cat-sdk';
-import React, { createContext, useContext } from 'react';
+import { createContext } from 'react';
 
 export const CatSDKContext = createContext<CatSDK>(new CatSDK());
