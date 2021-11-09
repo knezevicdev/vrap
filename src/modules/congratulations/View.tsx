@@ -31,7 +31,7 @@ const CongratulationsView = ({ viewModel }: Props): JSX.Element => {
       </HeroContainer>
       <ProgressiveWrapper>
         <ProgressiveAd
-          eventName={viewModel.eventName}
+          placementName={viewModel.placementName}
           placementCode={viewModel.placementCode}
           category={viewModel.category}
         />

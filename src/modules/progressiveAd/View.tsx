@@ -14,7 +14,7 @@ const PriceView: React.FC<Props> = ({ viewModel }) => {
     return (
       <ProgressiveWrapper>
         <ProgressiveAd
-          eventName={viewModel.eventName}
+          placementName={viewModel.placementName}
           placementCode={viewModel.placementCode}
           category={viewModel.category}
         />
