@@ -22,7 +22,6 @@ import { GlobalStyle, theme } from '../core/themes/Vroom';
 import AppStoreNetwork, { AppStoreNetworkContext } from 'src/context';
 import { AnalyticsHandlerContext } from 'src/integrations/AnalyticHandlerContext';
 import AnalyticsHandler from 'src/integrations/AnalyticsHandler';
-import { analyticsHandler } from 'src/integrations/AnalyticsHandler';
 import { CatSDKContext } from 'src/integrations/CatSDKContext';
 import ENVS from 'src/integrations/Envs';
 import { RemoteConfigContext } from 'src/integrations/RemoteConfigContext';
@@ -110,11 +109,12 @@ class AppraisalApp extends App {
     store.absmart.setABSmartlyModel(abSmartlyModel);
     const checkAnalytics = window.setTimeout(() => {
       store.absmart.abSmartlyModel?.setStatus(NetworkingStatus.ERROR);
+      store.absmart.setLoading(false);
     }, 3500);
 
-    analyticsHandler.onAnalyticsReady(async () => {
+    this.analyticsHandler.onAnalyticsReady(async () => {
       clearTimeout(checkAnalytics);
-      const sessionId = analyticsHandler.getAnonymousId();
+      const sessionId = this.analyticsHandler.getAnonymousId();
       if (sessionId) {
         await abSmartlyModel?.initABSmartly(sessionId);
         const offerFaceliftTest = abSmartlyModel?.inExperiment(
