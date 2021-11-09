@@ -139,7 +139,6 @@ export const postPlaidPayment = async (
 export const patchVerification = async (
   data: PatchReviewData
 ): Promise<Response<VerificationRespData>> => {
-  // const url = `${ENVS.ACQUISITIONS_URL}/acquisition/verification/form`;
   const url = `${ENVS.VROOM_URL}/suyc-api/v1/acquisition/verification/form`;
   const res = await client.httpRequest<VerificationRespData>({
     method: 'PATCH',
