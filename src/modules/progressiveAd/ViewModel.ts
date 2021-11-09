@@ -5,7 +5,7 @@ import { StoreStatus } from 'src/interfaces.d';
 class PriceViewModel {
   readonly placementCode = 2871300002;
   readonly category = 'sell';
-  readonly eventName = 'SUYC Price Ad Clicked';
+  readonly placementName = 'SUYC Price';
 
   constructor(public store: PriceStore) {}
 
