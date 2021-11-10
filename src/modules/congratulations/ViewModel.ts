@@ -3,7 +3,7 @@ import AnalyticsHandler from 'src/integrations/AnalyticsHandler';
 class CongratulationsViewModel {
   readonly placementCode = 2871300002;
   readonly category = 'sell';
-  readonly eventName = 'SUYC Congrats Ad Clicked';
+  readonly placementName = 'SUYC Congrats';
 
   private _analyticsHandler: AnalyticsHandler;
 
