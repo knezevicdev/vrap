@@ -70,6 +70,7 @@ const VerificationReviewViewDetail: React.FC<Props> = ({
           checked={checked}
           id={'verification-agreement-checkbox'}
           onChange={(): void => setChecked(!checked)}
+          dataQa={'verification-agreement-checkbox'}
         />
         <ReviewText>{viewModel.reviewVerification}</ReviewText>
       </CheckboxContainer>
