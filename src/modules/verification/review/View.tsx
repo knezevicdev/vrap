@@ -23,7 +23,7 @@ const VerificationReviewViewDetail: React.FC<Props> = ({
   viewModel,
   priceId,
 }) => {
-  const [checked, chageCheck] = useState(false);
+  const [checked, setChecked] = useState(false);
   const { store } = useAppStore();
   const router = useRouter();
 
@@ -66,30 +66,18 @@ const VerificationReviewViewDetail: React.FC<Props> = ({
         </>
       )}
       <Line />
-      {!store.absmart.loading &&
-        (store.absmart.agreementAbtest ? (
-          <>
-            <CheckboxContainer>
-              <Checkbox
-                checked={checked}
-                id={'verification-agreement-checkbox'}
-                onChange={(): void => chageCheck(!checked)}
-                dataQa={'verification-agreement-checkbox'}
-              />
-              <ReviewText>{viewModel.reviewVerification}</ReviewText>
-            </CheckboxContainer>
-            <SubmitButton disabled={!checked} onClick={handleSubmit}>
-              {viewModel.submitBtn}
-            </SubmitButton>
-          </>
-        ) : (
-          <>
-            <SubmitButton onClick={handleSubmit}>
-              {viewModel.submitBtn}
-            </SubmitButton>
-            <WarningText>{viewModel.verificationWarning}</WarningText>
-          </>
-        ))}
+      <CheckboxContainer>
+        <Checkbox
+          checked={checked}
+          id={'verification-agreement-checkbox'}
+          onChange={(): void => setChecked(!checked)}
+          dataQa={'verification-agreement-checkbox'}
+        />
+        <ReviewText>{viewModel.reviewVerification}</ReviewText>
+      </CheckboxContainer>
+      <SubmitButton disabled={!checked} onClick={handleSubmit}>
+        {viewModel.submitBtn}
+      </SubmitButton>
     </Container>
   );
 };
@@ -125,10 +113,6 @@ const Line = styled.div`
   width: 100%;
   height: 1px;
   background-color: #d6d7da;
-`;
-
-const WarningText = styled(Typography.Body.Small)`
-  margin-top: 16px;
 `;
 
 const SubmitButton = styled(Button.Primary)`
