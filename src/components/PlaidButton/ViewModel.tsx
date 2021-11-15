@@ -42,6 +42,10 @@ class PlaidButtonViewModel {
     }
     this.store.deposit.setInstitutionLogo(resp.data.data.logo);
   };
+
+  isPaymentRequireExp = (): boolean => {
+    return this.store.absmart.isInExperiment('ac-payment-required');
+  };
 }
 
 export default PlaidButtonViewModel;

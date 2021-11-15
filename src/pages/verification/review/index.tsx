@@ -27,6 +27,10 @@ const VerificationReview: NextPage<Prop> = ({ priceId }) => {
     'ac-appraisal-stepper-verification'
   );
 
+  const isPaymentRequireExp = store.absmart.isInExperiment(
+    'ac-payment-required'
+  );
+
   return (
     <Page name={'Sell Verification'} data-qa="SellVerificationContainer">
       <Header />
@@ -36,9 +40,7 @@ const VerificationReview: NextPage<Prop> = ({ priceId }) => {
             <DefaultStepper activeStep={store.stepper.currentStep} />
           )}
           {!store.absmart.isABSmartlyLoading && isStepperExp && (
-            <VerificationStepper
-              activeStep={store.absmart.paymentRequired ? '4' : '3'}
-            />
+            <VerificationStepper activeStep={isPaymentRequireExp ? '4' : '3'} />
           )}
         </StepperContainer>
       </StepperWrapper>

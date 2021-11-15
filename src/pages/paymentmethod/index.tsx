@@ -85,6 +85,10 @@ const EPayOptions: NextPage<Props> = ({ brand }) => {
     'ac-appraisal-stepper-verification'
   );
 
+  const isPaymentRequireExp = store.absmart.isInExperiment(
+    'ac-payment-required'
+  );
+
   return (
     <ThemeProvider brand={brand}>
       <PaymentMethodContext.Provider
@@ -94,11 +98,12 @@ const EPayOptions: NextPage<Props> = ({ brand }) => {
           <Header />
           {!store.absmart.isABSmartlyLoading && (
             <>
-              {!store.absmart.abTestFacelift &&
-                !store.absmart.paymentRequired && <SuccessBar />}
+              {!store.absmart.abTestFacelift && !isPaymentRequireExp && (
+                <SuccessBar />
+              )}
               {isStepperExp && (
                 <VerificationStepper
-                  activeStep={store.absmart.paymentRequired ? '3' : '4'}
+                  activeStep={isPaymentRequireExp ? '3' : '4'}
                 />
               )}
               <ColumnBody stateDropdownOpen={stateDropdownOpen}>

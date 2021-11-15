@@ -59,7 +59,7 @@ const VerificationReviewViewDetail: React.FC<Props> = ({
       <PayOffInfoReview />
       <Line />
       <SellDocumentReview />
-      {store.absmart.paymentRequired && (
+      {viewModel.isPaymentRequireExp() && (
         <>
           <Line />
           <PaymentInfoReview />

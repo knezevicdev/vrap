@@ -6,8 +6,6 @@ export class ABSmartStore {
   abSmartlyModel?: ABSmartlyModel;
   abTestFacelift = false;
   inProgressiveTest = false;
-  paymentRequired = false;
-  loading = true;
 
   constructor() {
     makeAutoObservable(this);
