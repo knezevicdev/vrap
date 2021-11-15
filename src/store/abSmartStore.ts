@@ -4,9 +4,7 @@ import { makeAutoObservable } from 'mobx';
 
 export class ABSmartStore {
   abSmartlyModel?: ABSmartlyModel;
-  stepperAbTest = false;
   abTestFacelift = false;
-  offerFacelift = false;
   inProgressiveTest = false;
   paymentRequired = false;
   loading = true;
