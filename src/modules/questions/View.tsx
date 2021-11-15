@@ -14,7 +14,10 @@ export interface Props {
 
 const View: React.FC<Props> = ({ viewModel }) => {
   const { store } = useAppStore();
-  const className = store.absmart.offerFacelift ? 'abtest' : '';
+  const isFaceliftExp = store.absmart.isInExperiment(
+    'ac-appraisal-offer-facelift'
+  );
+  const className = isFaceliftExp ? 'abtest' : '';
   return (
     <div>
       <StyledHero>{viewModel.questions}</StyledHero>

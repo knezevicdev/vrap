@@ -24,7 +24,7 @@ const Price: NextPage = () => {
   return (
     <Page name="Price">
       <Header />
-      {!appStore.store.absmart.loading && (
+      {!appStore.store.absmart.isABSmartlyLoading && (
         <Contents>
           <PriceInfo store={store} />
           <ProgressiveAd store={store} />

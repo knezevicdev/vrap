@@ -11,7 +11,10 @@ import { PriceStore } from 'src/modules/price/store';
 const Price: React.FC<{ store: PriceStore }> = ({ store }) => {
   const viewModel = new ViewModel(store);
   const appStore = useAppStore();
-  return appStore.store.absmart.offerFacelift ? (
+  const isFaceliftExp = appStore.store.absmart.isInExperiment(
+    'ac-appraisal-offer-facelift'
+  );
+  return isFaceliftExp ? (
     <PriceViewAB viewModel={viewModel} />
   ) : (
     <PriceView viewModel={viewModel} />
