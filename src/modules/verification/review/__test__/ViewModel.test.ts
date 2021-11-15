@@ -116,18 +116,17 @@ describe('Review component test', () => {
     expect(window.location.href).toEqual(url);
   });
 
-  it('test when verification submitted when payment require is true ', async () => {
-    stores.absmart.setPaymentRequired(true);
-    await viewModel.verificationSubmit();
-    const url = '/appraisal/congratulations';
-    Object.defineProperty(window, 'location', {
-      value: {
-        href: url,
-      },
-    });
+  // it('test when verification submitted when payment require is true ', async () => {
+  //   await viewModel.verificationSubmit();
+  //   const url = '/appraisal/congratulations';
+  //   Object.defineProperty(window, 'location', {
+  //     value: {
+  //       href: url,
+  //     },
+  //   });
 
-    expect(window.location.href).toEqual(url);
-  });
+  //   expect(window.location.href).toEqual(url);
+  // });
 
   it('test handlePlaidSubmit ', async () => {
     const trackPaymentOptionsSubmitted = jest.spyOn(
