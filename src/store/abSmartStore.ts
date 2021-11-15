@@ -1,6 +1,5 @@
 import { ABSmartlyModel } from '@vroom-web/absmartly-integration';
 import { makeAutoObservable } from 'mobx';
-import { createContext, useContext } from 'react';
 
 export class ABSmartStore {
   abSmartlyModel?: ABSmartlyModel;
@@ -43,13 +42,3 @@ export class ABSmartStore {
     this.loading = value;
   };
 }
-
-export const AppStoreContext = createContext<ABSmartStore>(new ABSmartStore());
-
-export const useAppStore = (): ABSmartStore => {
-  const store = useContext(AppStoreContext);
-  if (!store) {
-    throw new Error('useStore must be used within a StoreProvider.');
-  }
-  return store;
-};
