@@ -1,4 +1,5 @@
 import { ABSmartlyModel } from '@vroom-web/absmartly-integration';
+import { Status } from '@vroom-web/networking';
 import { makeAutoObservable } from 'mobx';
 
 export class ABSmartStore {
@@ -18,27 +19,15 @@ export class ABSmartStore {
     this.abSmartlyModel = abSmartlyModel;
   }
 
-  setABSmartTest = (value: boolean): void => {
-    this.stepperAbTest = value;
-  };
+  get isABSmartlyLoading(): boolean {
+    return (
+      !this.abSmartlyModel ||
+      this.abSmartlyModel?.status === Status.INITIAL ||
+      this.abSmartlyModel?.status === Status.LOADING
+    );
+  }
 
-  setFaceliftAbTest = (value: boolean): void => {
-    this.abTestFacelift = value;
-  };
-
-  setOfferFacelift = (value: boolean): void => {
-    this.offerFacelift = value;
-  };
-
-  setProgressiveTest = (value: boolean): void => {
-    this.inProgressiveTest = value;
-  };
-
-  setPaymentRequired = (value: boolean): void => {
-    this.paymentRequired = value;
-  };
-
-  setLoading = (value: boolean): void => {
-    this.loading = value;
-  };
+  isInExperiment(experimentID: string): boolean {
+    return this.abSmartlyModel?.inExperiment(experimentID) === true;
+  }
 }
