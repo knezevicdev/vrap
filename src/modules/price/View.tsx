@@ -1,3 +1,4 @@
+import { addStyleForMobile, addStyleForTablet } from '@vroom-web/ui-lib';
 import React from 'react';
 import styled from 'styled-components';
 
@@ -41,19 +42,21 @@ const HeroContainer = styled.div`
 
 const PriceContainer = styled.div`
   display: flex;
-  margin: 50px 100px;
+  margin: 40px auto;
   justify-content: center;
   position: relative;
+  max-width: 1360px;
+  padding: 0px 40px;
 
-  @media (max-width: 1024px) {
+  ${addStyleForTablet(`
     flex-direction: column;
-    margin: 20px 40px;
-  }
+  `)}
 
-  @media (max-width: 768px) {
+  ${addStyleForMobile(`
+    margin: 0;
     flex-direction: column;
-    margin: 20px;
-  }
+    padding: 24px;
+  `)}
 `;
 
 const PriceDetailContainer = styled.div`

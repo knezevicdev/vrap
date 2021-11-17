@@ -7,7 +7,8 @@ export class ABSmartStore {
   stepperAbTest = false;
   abTestFacelift = false;
   offerFacelift = false;
-  inProgressiveTest = false;
+  inPriceProgressiveTest = false;
+  inCongratsProgressiveTest = false;
   paymentRequired = false;
   loading = true;
 
@@ -31,8 +32,12 @@ export class ABSmartStore {
     this.offerFacelift = value;
   };
 
-  setProgressiveTest = (value: boolean): void => {
-    this.inProgressiveTest = value;
+  setPriceProgressiveTest = (value: boolean): void => {
+    this.inPriceProgressiveTest = value;
+  };
+
+  setCongratsProgressiveTest = (value: boolean): void => {
+    this.inCongratsProgressiveTest = value;
   };
 
   setPaymentRequired = (value: boolean): void => {
