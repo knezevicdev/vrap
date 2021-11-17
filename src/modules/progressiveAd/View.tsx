@@ -1,4 +1,5 @@
 import { ProgressiveAd } from '@vroom-web/shared-components';
+import { addStyleForMobile } from '@vroom-web/ui-lib';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
 import styled from 'styled-components';
@@ -10,30 +11,50 @@ interface Props {
 }
 
 const PriceView: React.FC<Props> = ({ viewModel }) => {
-  if (viewModel.showProgressiveAd) {
+  const {
+    showProgressiveAd,
+    isInProgressiveExperiment,
+    placementCode,
+    placementName,
+    category,
+    headline,
+  } = viewModel;
+  if (showProgressiveAd) {
     return (
       <ProgressiveWrapper>
-        <ProgressiveAd
-          placementName={viewModel.placementName}
-          placementCode={viewModel.placementCode}
-          category={viewModel.category}
-        />
+        {isInProgressiveExperiment ? (
+          <ProgressiveAd
+            placementName={placementName}
+            placementCode={placementCode}
+            category={category}
+            headline={headline}
+            version={2}
+          />
+        ) : (
+          <ProgressiveAd
+            placementName={placementName}
+            placementCode={placementCode}
+            category={category}
+            version={1}
+          />
+        )}
       </ProgressiveWrapper>
     );
   } else return <></>;
 };
 
 const ProgressiveWrapper = styled.div`
-  text-align: center;
-  margin: 0 100px 24px;
+  display: flex;
+  justify-content: center;
+  max-width: 1360px;
+  width: 100%;
+  padding: 0px 40px;
+  margin: 0 auto 50px;
 
-  @media (max-width: 1024px) {
-    margin: 0 40px 24px;
-  }
-
-  @media (max-width: 768px) {
-    margin: 0 20px 24px;
-  }
+  ${addStyleForMobile(`
+    margin: 0;
+    padding: 0 20px;
+  `)}
 `;
 
 export default observer(PriceView);

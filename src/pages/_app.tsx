@@ -126,8 +126,11 @@ class AppraisalApp extends App {
         const faceliftAbTest = abSmartlyModel?.inExperiment(
           'ac-payment-facelift'
         );
-        const progressiveAbTest = abSmartlyModel?.inExperiment(
-          'vadd-progressive-ad-suyc'
+        const progressivePriceAbTest = abSmartlyModel?.inExperiment(
+          'vadd-progressive-ad-suyc-price-v2'
+        );
+        const progressiveCongratsAbTest = abSmartlyModel?.inExperiment(
+          'vadd-progressive-ad-suyc-congrats-v2'
         );
         const paymentRequired = abSmartlyModel?.inExperiment(
           'ac-payment-required'
@@ -135,7 +138,8 @@ class AppraisalApp extends App {
         store.absmart.setABSmartTest(stepperAbTest);
         store.absmart.setFaceliftAbTest(faceliftAbTest);
         store.absmart.setOfferFacelift(offerFaceliftTest);
-        store.absmart.setProgressiveTest(progressiveAbTest);
+        store.absmart.setPriceProgressiveTest(progressivePriceAbTest);
+        store.absmart.setCongratsProgressiveTest(progressiveCongratsAbTest);
         store.absmart.setPaymentRequired(paymentRequired);
         store.absmart.setLoading(false);
       } else {
