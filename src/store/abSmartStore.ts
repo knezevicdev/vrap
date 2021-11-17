@@ -6,6 +6,8 @@ export class ABSmartStore {
   abSmartlyModel?: ABSmartlyModel;
   abTestFacelift = false;
   inProgressiveTest = false;
+  inPriceProgressiveTest = false;
+  inCongratsProgressiveTest = false;
 
   constructor() {
     makeAutoObservable(this);

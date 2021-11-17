@@ -29,13 +29,28 @@ const CongratulationsView = ({ viewModel }: Props): JSX.Element => {
         </CongratsContainer>
         <CongratsNextSteps />
       </HeroContainer>
-      <ProgressiveWrapper>
-        <ProgressiveAd
-          placementName={viewModel.placementName}
-          placementCode={viewModel.placementCode}
-          category={viewModel.category}
-        />
-      </ProgressiveWrapper>
+      {viewModel.isInExperiment !== undefined && (
+        <CongratsContainer>
+          <ProgressiveWrapper>
+            {viewModel.isInExperiment ? (
+              <ProgressiveAd
+                placementName={viewModel.placementName}
+                placementCode={viewModel.placementCode}
+                category={viewModel.category}
+                headline={viewModel.headline}
+                version={2}
+              />
+            ) : (
+              <ProgressiveAd
+                placementName={viewModel.placementName}
+                placementCode={viewModel.placementCode}
+                category={viewModel.category}
+                version={1}
+              />
+            )}
+          </ProgressiveWrapper>
+        </CongratsContainer>
+      )}
     </Container>
   );
 };
@@ -98,7 +113,7 @@ const CongratsDetailContainer = styled.div`
 `;
 
 const ProgressiveWrapper = styled.div`
-  text-align: center;
+  flex-basis: 60%;
   margin: 0 24px 24px;
 `;
 
