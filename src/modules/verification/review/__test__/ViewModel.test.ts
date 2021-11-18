@@ -84,7 +84,25 @@ describe('Review component test', () => {
       viewModel.getAnalyticHandler(),
       'trackCheckSelected'
     );
-    stores.option.setPayOptionSelected('Check');
+    const paymentValue = {
+      paymentOption: 'Check by Mail',
+      routingNumber: '',
+      bankAccountNumber: '',
+      isPrimaryAddress: '',
+      address: '',
+      apartment: '',
+      city: '',
+      state: '',
+      zipcode: '',
+    };
+    const mailingAddressValue = {
+      address_1: '',
+      address_2: '',
+      city: '',
+      state: '',
+      zipcode: '',
+    };
+    stores.payment.setValues(paymentValue, '12345', mailingAddressValue);
     await viewModel.submitPayment();
     expect(trackCheckSelected).toHaveBeenCalled();
   });
