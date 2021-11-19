@@ -107,16 +107,13 @@ export default class VerificationReviewSectionViewModel {
   };
 
   async submitPayment(): Promise<void> {
-    const { payment, option } = this.store;
+    const { payment } = this.store;
     const values = payment.values || this.defaultValues;
     const priceId = payment.priceId || '';
     const address = payment.address || this.mailAddress;
     await submitPaymentOption(values, priceId, address);
 
-    if (
-      option.showDD === 'Manual Input' ||
-      option.showDD === 'Direct Deposit'
-    ) {
+    if (payment.values?.paymentOption !== 'Check by Mail') {
       payment.setSubmitType('Manual ACH');
       this.analyticsHandler.trackManualACHSelected();
     } else {
