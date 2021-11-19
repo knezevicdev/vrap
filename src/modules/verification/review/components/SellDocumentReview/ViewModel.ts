@@ -18,7 +18,6 @@ export default class SellDocumentReviewViewModel {
   constructor(private store: Store) {}
 
   handleEditClick(): void {
-    localStorage.setItem('review_edit_section', 'doc_upload');
     window.location.href = `/sell/verification/documents/${this.store.verification.offerId}`;
   }
 }
