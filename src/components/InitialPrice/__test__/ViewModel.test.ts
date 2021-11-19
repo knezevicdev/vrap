@@ -31,9 +31,16 @@ describe('InitialPrice Test', () => {
     );
   });
 
-  it('readonly values', async () => {
+  it('when called onContinueClick ', async () => {
     await viewModel.onContinueClick();
+    const url = `/sell/verification/owner/${priceId}`;
+    Object.defineProperty(window, 'location', {
+      value: {
+        href: url,
+      },
+    });
     expect(ContinueClickSpy).toHaveBeenCalled();
+    expect(window.location.href).toEqual(url);
   });
 
   it('should track onPageLoad', () => {

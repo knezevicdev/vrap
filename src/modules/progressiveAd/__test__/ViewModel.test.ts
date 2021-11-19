@@ -1,3 +1,5 @@
+import { mocked } from 'ts-jest/utils';
+
 import { PriceStore } from '../../price/store';
 import ViewModel from '../ViewModel';
 
@@ -14,14 +16,14 @@ describe('Progressive Ad Test', () => {
     storeStatus: StoreStatus.Success,
     price: {},
   } as PriceStore;
-  const appStore = {
+  const appStore = mocked({
     store: {
       absmart: {
-        loading: false,
-        inPriceProgressiveTest: false,
+        isABSmartlyLoading: false,
+        isInExperiment: jest.fn(),
       },
     },
-  } as AppStoreNetwork;
+  } as unknown) as AppStoreNetwork;
   store.storeStatus = StoreStatus.Success;
 
   describe('Show Ad test', () => {
@@ -33,14 +35,13 @@ describe('Progressive Ad Test', () => {
 
     it('should not show the Ad if absmartly is loading', () => {
       store.price.automatedAppraisal = false;
-      appStore.store.absmart.loading = true;
       const viewModel = new ViewModel(store, appStore);
+      appStore.store.absmart.isABSmartlyLoading = true;
       expect(viewModel.showProgressiveAd).toEqual(false);
     });
 
     it('should not show the Ad if automated appraisal', () => {
       store.price.automatedAppraisal = true;
-      appStore.store.absmart.loading = false;
       const viewModel = new ViewModel(store, appStore);
       expect(viewModel.showProgressiveAd).toEqual(false);
     });
@@ -49,11 +50,12 @@ describe('Progressive Ad Test', () => {
   describe('Is In Experiment Test', () => {
     const viewModel = new ViewModel(store, appStore);
     it('should return false if not in experiment', () => {
+      appStore.store.absmart.isInExperiment.mockReturnValueOnce(false);
       expect(viewModel.isInProgressiveExperiment).toBe(false);
     });
 
     it('should return true if in experiment', () => {
-      appStore.store.absmart.inPriceProgressiveTest = true;
+      appStore.store.absmart.isInExperiment.mockReturnValueOnce(true);
       expect(viewModel.isInProgressiveExperiment).toBe(true);
     });
   });

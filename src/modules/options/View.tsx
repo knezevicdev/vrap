@@ -179,7 +179,8 @@ const OptionsView: React.FC<Props> = ({ viewModel }) => {
   const shouldShowSubmitButton = viewModel.getShowSubmitButton();
   const isPlaidSubmitting = viewModel.getPlaidSubmitting();
   const showDirectDepositReview =
-    store.absmart.paymentRequired && store.deposit.mutationInput !== undefined;
+    viewModel.isPaymentRequireExp() &&
+    store.deposit.mutationInput !== undefined;
   return (
     <Formik
       initialValues={InitialValues}
@@ -202,7 +203,7 @@ const OptionsView: React.FC<Props> = ({ viewModel }) => {
         const submitText = isSubmitting
           ? viewModel.submitting
           : viewModel.submit;
-        const buttonText = store.absmart.paymentRequired
+        const buttonText = viewModel.isPaymentRequireExp()
           ? viewModel.review
           : submitText;
         return (

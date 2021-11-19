@@ -4,8 +4,6 @@ import styled from 'styled-components';
 
 import ViewModel from './ViewModel';
 
-import { useAppStore } from 'src/context';
-
 export interface Props {
   viewModel: ViewModel;
   activeStep: string;
@@ -16,14 +14,13 @@ const VerificationStepperView: React.FC<Props> = ({
   activeStep,
 }) => {
   // eslint-disable-next-line @typescript-eslint/naming-convention
-  const { store } = useAppStore();
   const [stepper, changeStepper] = useState(viewModel.defaultSteps);
 
   useEffect(() => {
-    store.absmart.paymentRequired
+    viewModel.isPaymentRequireExp()
       ? changeStepper(viewModel.paymentRequiredSteps)
       : changeStepper(viewModel.defaultSteps);
-  }, [store.absmart.paymentRequired, viewModel]);
+  }, [viewModel]);
 
   return (
     <Container>

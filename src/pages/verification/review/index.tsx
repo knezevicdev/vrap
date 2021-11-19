@@ -1,6 +1,8 @@
+import { VroomSpinner } from '@vroom-web/ui-lib';
 import { observer } from 'mobx-react';
 import { NextPage, NextPageContext } from 'next';
-import React, { useEffect } from 'react';
+import { useRouter } from 'next/router';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
 import DefaultStepper from 'src/components/DefaultStepper';
@@ -18,36 +20,63 @@ interface Prop {
 
 const VerificationReview: NextPage<Prop> = ({ priceId }) => {
   const { store } = useAppStore();
+  const router = useRouter();
+
+  const [isLoading, setLoading] = useState(true);
+
   useEffect(() => {
     store.stepper.setStep(2);
     store.verification.setPriceId(priceId);
   }, []);
+
+  const isStepperExp = store.absmart.isInExperiment(
+    'ac-appraisal-stepper-verification'
+  );
+
+  const isPaymentRequireExp = store.absmart.isInExperiment(
+    'ac-payment-required'
+  );
+
+  useEffect(() => {
+    if (store.verification.formState && store.verification.formState === 5) {
+      router.push('/congratulations');
+      setLoading(false);
+    } else {
+      setLoading(false);
+    }
+  }, [store.verification.formState]);
 
   return (
     <Page name={'Sell Verification'} data-qa="SellVerificationContainer">
       <Header />
       <StepperWrapper>
         <StepperContainer>
-          {!store.absmart.loading && !store.absmart.stepperAbTest && (
+          {!store.absmart.isABSmartlyLoading && !isStepperExp && (
             <DefaultStepper activeStep={store.stepper.currentStep} />
           )}
-          {!store.absmart.loading && store.absmart.stepperAbTest && (
-            <VerificationStepper
-              activeStep={store.absmart.paymentRequired ? '4' : '3'}
-            />
+          {!store.absmart.isABSmartlyLoading && isStepperExp && (
+            <VerificationStepper activeStep={isPaymentRequireExp ? '4' : '3'} />
           )}
         </StepperContainer>
       </StepperWrapper>
-      <Contents>
-        <VerificationContainer>
-          <ReviewContainer>
-            <VerificationReviewViewDetail priceId={priceId} />
-          </ReviewContainer>
-          <OverviewContainer>
-            <TransactionOverview priceId={priceId} />
-          </OverviewContainer>
-        </VerificationContainer>
-      </Contents>
+      <>
+        <Contents>
+          {isLoading || store.verification.formState === 5 ? (
+            <VroomSpinner />
+          ) : (
+            <>
+              <VerificationContainer>
+                <ReviewContainer>
+                  <VerificationReviewViewDetail priceId={priceId} />
+                </ReviewContainer>
+                <OverviewContainer>
+                  <TransactionOverview priceId={priceId} />
+                </OverviewContainer>
+              </VerificationContainer>
+            </>
+          )}
+        </Contents>
+      </>
       <Footer />
     </Page>
   );

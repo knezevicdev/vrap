@@ -23,7 +23,7 @@ describe('Options Test', () => {
   beforeEach(async () => {
     await oStore.init('12345');
     await ddStore.initClientSide('12345');
-    viewModel = new ViewModel(oStore, ddStore, analyticsHandler, appStore);
+    viewModel = new ViewModel(oStore, ddStore, analyticsHandler, appStore, '');
   });
 
   afterEach(() => {

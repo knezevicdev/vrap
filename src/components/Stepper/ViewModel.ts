@@ -1,6 +1,8 @@
 import { Stepper } from 'src/interfaces.d';
+import Store from 'src/store';
 
 class VerificationStepperViewModel {
+  constructor(private store: Store) {}
   readonly defaultSteps: Stepper[] = [
     {
       step: '1',
@@ -54,6 +56,10 @@ class VerificationStepperViewModel {
       title: 'Review',
     },
   ];
+
+  isPaymentRequireExp = (): boolean => {
+    return this.store.absmart.isInExperiment('ac-payment-required');
+  };
 }
 
 export default VerificationStepperViewModel;

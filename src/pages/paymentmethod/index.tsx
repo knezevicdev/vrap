@@ -81,6 +81,14 @@ const EPayOptions: NextPage<Props> = ({ brand }) => {
   // TODO: this used to be used with <State isOpenCallback={setStateDropdown} />
   // It caused the page to rerender and mobx would lose its state
   // Ideally we would like to extend the page to accomodate the long dropdown
+  const isStepperExp = store.absmart.isInExperiment(
+    'ac-appraisal-stepper-verification'
+  );
+
+  const isPaymentRequireExp = store.absmart.isInExperiment(
+    'ac-payment-required'
+  );
+
   return (
     <ThemeProvider brand={brand}>
       <PaymentMethodContext.Provider
@@ -88,13 +96,14 @@ const EPayOptions: NextPage<Props> = ({ brand }) => {
       >
         <Page name="Payment Method">
           <Header />
-          {!store.absmart.loading && (
+          {!store.absmart.isABSmartlyLoading && (
             <>
-              {!store.absmart.abTestFacelift &&
-                !store.absmart.paymentRequired && <SuccessBar />}
-              {store.absmart.stepperAbTest && (
+              {!store.absmart.abTestFacelift && !isPaymentRequireExp && (
+                <SuccessBar />
+              )}
+              {isStepperExp && (
                 <VerificationStepper
-                  activeStep={store.absmart.paymentRequired ? '3' : '4'}
+                  activeStep={isPaymentRequireExp ? '3' : '4'}
                 />
               )}
               <ColumnBody stateDropdownOpen={stateDropdownOpen}>

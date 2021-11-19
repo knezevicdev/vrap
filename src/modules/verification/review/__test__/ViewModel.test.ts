@@ -84,7 +84,25 @@ describe('Review component test', () => {
       viewModel.getAnalyticHandler(),
       'trackCheckSelected'
     );
-    stores.option.setPayOptionSelected('Check');
+    const paymentValue = {
+      paymentOption: 'Check by Mail',
+      routingNumber: '',
+      bankAccountNumber: '',
+      isPrimaryAddress: '',
+      address: '',
+      apartment: '',
+      city: '',
+      state: '',
+      zipcode: '',
+    };
+    const mailingAddressValue = {
+      address_1: '',
+      address_2: '',
+      city: '',
+      state: '',
+      zipcode: '',
+    };
+    stores.payment.setValues(paymentValue, '12345', mailingAddressValue);
     await viewModel.submitPayment();
     expect(trackCheckSelected).toHaveBeenCalled();
   });
@@ -113,19 +131,6 @@ describe('Review component test', () => {
     });
     expect(createVerificationPayload).toHaveBeenCalled();
     expect(verificationSubmitted).toHaveBeenCalled();
-    expect(window.location.href).toEqual(url);
-  });
-
-  it('test when verification submitted when payment require is true ', async () => {
-    stores.absmart.setPaymentRequired(true);
-    await viewModel.verificationSubmit();
-    const url = '/appraisal/congratulations';
-    Object.defineProperty(window, 'location', {
-      value: {
-        href: url,
-      },
-    });
-
     expect(window.location.href).toEqual(url);
   });
 
