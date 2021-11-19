@@ -22,11 +22,15 @@ class PriceViewModel {
   }
 
   get showProgressiveAd(): boolean {
-    return this.isManualPricing && !this.appStore.store.absmart.loading;
+    return (
+      this.isManualPricing && !this.appStore.store.absmart.isABSmartlyLoading
+    );
   }
 
   get isInProgressiveExperiment(): boolean {
-    return this.appStore.store.absmart.inPriceProgressiveTest;
+    return this.appStore.store.absmart.isInExperiment(
+      'vadd-progressive-ad-suyc-price-v2'
+    );
   }
 }
 

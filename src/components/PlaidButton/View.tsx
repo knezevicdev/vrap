@@ -71,7 +71,7 @@ const PlaidButtonView: React.FC<Props> = ({
         ReferenceId: priceId,
         Email: email,
       };
-      if (store.absmart.paymentRequired) {
+      if (viewModel.isPaymentRequireExp()) {
         store.deposit.setInstitutionId(metaData.institution.institution_id);
         store.deposit.setMutationInput(mutationInput);
       } else {

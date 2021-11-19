@@ -1,7 +1,20 @@
 import ViewModel from '../ViewModel';
 
+import store from 'src/store';
+
+jest.mock('next/config', () => (): unknown => ({
+  publicRuntimeConfig: {},
+  serverRuntimeConfig: {},
+}));
+
 describe('Stepper Test', () => {
-  const viewModel = new ViewModel();
+  const appStore = new store();
+  let viewModel: ViewModel;
+
+  beforeEach(() => {
+    viewModel = new ViewModel(appStore);
+  });
+
   const defaultSteps = [
     {
       step: '1',

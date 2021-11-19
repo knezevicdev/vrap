@@ -13,8 +13,10 @@ const InitialPrice: React.FC<{ store: PriceStore }> = ({ store }) => {
   const analyticsHandler = new AnalyticsHandler();
   const viewModel = new InitialPriceViewModel(store, analyticsHandler);
   const appStore = useAppStore();
-
-  return appStore.store.absmart.offerFacelift ? (
+  const isFaceliftExp = appStore.store.absmart.isInExperiment(
+    'ac-appraisal-offer-facelift'
+  );
+  return isFaceliftExp ? (
     <ViewAB viewModel={viewModel} />
   ) : (
     <View viewModel={viewModel} />

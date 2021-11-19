@@ -159,11 +159,11 @@ export default class VerificationReviewSectionViewModel {
   }
 
   async verificationSubmit(): Promise<void> {
-    const { absmart, deposit } = this.store;
-    if (absmart.paymentRequired && deposit.mutationInput) {
+    const { deposit } = this.store;
+    if (this.isPaymentRequireExp() && deposit.mutationInput) {
       await this.handlePlaidSubmit();
     }
-    if (absmart.paymentRequired && !deposit.mutationInput) {
+    if (this.isPaymentRequireExp() && !deposit.mutationInput) {
       await this.submitPayment();
     }
     const payload = this.createVerificationPayload();
@@ -194,7 +194,7 @@ export default class VerificationReviewSectionViewModel {
 
     const priceId =
       this.store.verification.priceId || localStorage.getItem('priceId');
-    if (absmart.paymentRequired) {
+    if (this.isPaymentRequireExp()) {
       window.location.href = '/appraisal/congratulations';
       return;
     }
@@ -217,6 +217,10 @@ export default class VerificationReviewSectionViewModel {
   setWhereIsVehicleRegistered(value: string): void {
     this.store.verification.setWhereIsVehicleRegistered(value);
   }
+
+  isPaymentRequireExp = (): boolean => {
+    return this.store.absmart.isInExperiment('ac-payment-required');
+  };
 
   async getVerificationDetails(
     priceId: string,

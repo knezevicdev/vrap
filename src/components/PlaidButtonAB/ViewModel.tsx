@@ -1,11 +1,13 @@
 import { OptionsStore } from '../../modules/options/store';
 
+import AppStore from 'src/store';
+
 class PlaidButtonViewModel {
   private readonly store: OptionsStore;
   readonly buttonCopy: string = 'Link bank account';
   readonly buttonStartCopy: string = 'Start direct deposit';
 
-  constructor(store: OptionsStore) {
+  constructor(private appStore: AppStore, store: OptionsStore) {
     this.store = store;
   }
 
@@ -31,6 +33,10 @@ class PlaidButtonViewModel {
 
   getInstitutionSearched = (): boolean => {
     return this.store.institutionSearched;
+  };
+
+  isPaymentRequireExp = (): boolean => {
+    return this.appStore.absmart.isInExperiment('ac-payment-required');
   };
 }
 

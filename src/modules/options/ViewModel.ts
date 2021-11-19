@@ -127,7 +127,7 @@ class OptionsViewModel {
   };
 
   isSubmitPaymentRequired = (values: PaymentOverviewFormValues): void => {
-    if (!this.appStore.absmart.paymentRequired) {
+    if (!this.isPaymentRequireExp()) {
       this.paymentOptionsSubmit(values);
       return;
     }
@@ -169,6 +169,10 @@ class OptionsViewModel {
 
   setPaymentOption = (value: string): void => {
     this.store.setPayOptionSelected(value);
+  };
+
+  isPaymentRequireExp = (): boolean => {
+    return this.appStore.absmart.isInExperiment('ac-payment-required');
   };
 }
 

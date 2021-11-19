@@ -75,7 +75,7 @@ const PlaidButtonView: React.FC<Props> = ({
         ReferenceId: priceId,
         Email: email,
       };
-      if (store.absmart.paymentRequired) {
+      if (viewModel.isPaymentRequireExp()) {
         store.deposit.setMutationInput(mutationInput);
       } else {
         plaidSuccess(mutationInput, onPlaidSubmitting);

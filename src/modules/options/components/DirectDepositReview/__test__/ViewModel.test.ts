@@ -21,4 +21,10 @@ describe('Direct Deposit Review Test', () => {
       'Your information will be secure and encrypted'
     );
   });
+  it('when called handleOpenLink ', () => {
+    viewModel.handleOpenLink();
+    expect(AppStore.deposit.mutationInput).toBe(undefined);
+    expect(AppStore.option.plaidSubmitting).toBe(true);
+    expect(AppStore.deposit.plaidOpen).toBe(true);
+  });
 });

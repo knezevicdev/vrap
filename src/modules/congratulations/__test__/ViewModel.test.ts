@@ -14,14 +14,15 @@ describe('Congratulations Test', () => {
   const analyticsHandler = mocked(({
     trackCongratsViewed: jest.fn(),
   } as unknown) as AnalyticsHandler);
-  const appStore = {
+
+  const appStore = mocked({
     store: {
       absmart: {
-        loading: false,
-        inCongratsProgressiveTest: false,
+        isABSmartlyLoading: false,
+        isInExperiment: jest.fn(),
       },
     },
-  } as AppStoreNetwork;
+  } as unknown) as AppStoreNetwork;
   const viewModel = new ViewModel(analyticsHandler, appStore);
 
   describe('Page View Test', () => {
@@ -33,16 +34,17 @@ describe('Congratulations Test', () => {
 
   describe('Is In Experiment Test', () => {
     it('should return false if not in experiment', () => {
+      appStore.store.absmart.isInExperiment.mockReturnValueOnce(false);
       expect(viewModel.isInExperiment).toBe(false);
     });
 
     it('should return true if in experiment', () => {
-      appStore.store.absmart.inCongratsProgressiveTest = true;
+      appStore.store.absmart.isInExperiment.mockReturnValueOnce(true);
       expect(viewModel.isInExperiment).toBe(true);
     });
 
     it('should return undefined if loading', () => {
-      appStore.store.absmart.loading = true;
+      appStore.store.absmart.isABSmartlyLoading = true;
       expect(viewModel.isInExperiment).toBe(undefined);
     });
   });

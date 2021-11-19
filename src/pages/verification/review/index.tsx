@@ -29,6 +29,14 @@ const VerificationReview: NextPage<Prop> = ({ priceId }) => {
     store.verification.setPriceId(priceId);
   }, []);
 
+  const isStepperExp = store.absmart.isInExperiment(
+    'ac-appraisal-stepper-verification'
+  );
+
+  const isPaymentRequireExp = store.absmart.isInExperiment(
+    'ac-payment-required'
+  );
+
   useEffect(() => {
     if (store.verification.formState && store.verification.formState === 5) {
       router.push('/congratulations');
@@ -43,13 +51,11 @@ const VerificationReview: NextPage<Prop> = ({ priceId }) => {
       <Header />
       <StepperWrapper>
         <StepperContainer>
-          {!store.absmart.loading && !store.absmart.stepperAbTest && (
+          {!store.absmart.isABSmartlyLoading && !isStepperExp && (
             <DefaultStepper activeStep={store.stepper.currentStep} />
           )}
-          {!store.absmart.loading && store.absmart.stepperAbTest && (
-            <VerificationStepper
-              activeStep={store.absmart.paymentRequired ? '4' : '3'}
-            />
+          {!store.absmart.isABSmartlyLoading && isStepperExp && (
+            <VerificationStepper activeStep={isPaymentRequireExp ? '4' : '3'} />
           )}
         </StepperContainer>
       </StepperWrapper>
