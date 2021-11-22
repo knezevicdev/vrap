@@ -17,7 +17,14 @@ export default class SellDocumentReviewViewModel {
 
   constructor(private store: Store) {}
 
+  isPaymentRequireExp = (): boolean => {
+    return this.store.absmart.isInExperiment('ac-payment-required');
+  };
+
   handleEditClick(): void {
+    if (this.isPaymentRequireExp()) {
+      localStorage.setItem('review_doc_section', 'doc_upload');
+    }
     window.location.href = `/sell/verification/documents/${this.store.verification.offerId}`;
   }
 }
