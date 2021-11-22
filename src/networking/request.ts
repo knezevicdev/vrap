@@ -91,7 +91,7 @@ export const submitPaymentOptionSelected = async (
   address: MailingAddress
 ): Promise<Response<PaymentOptionsRespData>> => {
   const data: PaymentData = { sf_offer_id: priceId };
-  const url = `${VROOM_URL}/api/appraisal/payment`;
+  const url = `${VROOM_URL}/suyc-api/v1/acquisition/payment`;
 
   if (paymentData.paymentOption === 'Direct Deposit') {
     data['payment_method'] = 'ach';
