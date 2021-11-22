@@ -55,7 +55,7 @@ const AppraisalReviewViewDetail: React.FC<Props> = ({ viewModel, store }) => {
             type="submit"
             value={isSubmitting ? 'Submitting' : 'Get My Price'}
             disabled={canSubmit}
-            // onClick={submitAppraisal}
+            onClick={submitAppraisal}
           />
         </SubmitButton>
         <TextContainer>
