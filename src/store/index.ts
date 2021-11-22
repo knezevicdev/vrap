@@ -1,4 +1,5 @@
 import { ABSmartStore } from './abSmartStore';
+import { AppraisalStore } from './appraisalStore';
 import { OfferStore } from './offerStore';
 import { PaymentStore } from './paymentStore';
 import { StepperStore } from './stepperStore';
@@ -15,4 +16,5 @@ export default class Store {
   payment = new PaymentStore();
   option = new OptionsStore();
   deposit = new DirectDepositStore();
+  appraisal = new AppraisalStore();
 }
