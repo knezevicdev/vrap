@@ -21,9 +21,9 @@ class CongratulationsViewModel {
 
   get isInExperiment(): boolean | undefined {
     /* eslint-disable-next-line */
-    const { isABSmartlyLoading, isInExperiment } = this._appStore.store.absmart;
-    if (isABSmartlyLoading) return;
-    return isInExperiment('vadd-progressive-ad-suyc-congrats-v2');
+    const { absmart } = this._appStore.store;
+    if (absmart.isABSmartlyLoading) return;
+    return absmart.isInExperiment('vadd-progressive-ad-suyc-congrats-v2');
   }
 }
 
