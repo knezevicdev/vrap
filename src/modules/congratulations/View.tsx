@@ -1,6 +1,7 @@
 import { ProgressiveAd } from '@vroom-web/shared-components';
 import { ThemeProps } from '@vroom-web/ui-lib';
 import { observer } from 'mobx-react';
+import getConfig from 'next/config';
 import React, { useEffect } from 'react';
 import styled from 'styled-components';
 
@@ -8,7 +9,9 @@ import CongratulationsViewModel from './ViewModel';
 
 import CongratsCard from 'src/components/CongratsCard';
 import CongratsNextSteps from 'src/components/CongratsNextSteps';
-import ENVS from 'src/integrations/Envs';
+
+const { publicRuntimeConfig } = getConfig();
+const BASE_PATH = publicRuntimeConfig.NEXT_PUBLIC_BASE_PATH;
 
 interface Props {
   viewModel: CongratulationsViewModel;
@@ -72,12 +75,12 @@ const Container = styled.div`
 const HeroContainer = styled.div`
   background-size: 100% 40%;
   background-repeat: no-repeat;
-  background-image: url('${ENVS.BASE_PATH}/images/offer-hero.png');
+  background-image: url('${BASE_PATH}/images/offer-hero.png');
   width: 100%;
 
   @media (max-width: 768px) {
     background-size: 100% 200px;
-    background-image: url('${ENVS.BASE_PATH}/images/offer-hero.png');
+    background-image: url('${BASE_PATH}/images/offer-hero.png');
   }
 `;
 

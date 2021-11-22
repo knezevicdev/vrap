@@ -1,8 +1,10 @@
 import { Field } from 'formik';
+import getConfig from 'next/config';
 import React from 'react';
 import styled from 'styled-components';
 
-import ENVS from 'src/integrations/Envs';
+const { publicRuntimeConfig } = getConfig();
+const BASE_PATH = publicRuntimeConfig.NEXT_PUBLIC_BASE_PATH;
 
 interface RadioButtonProps extends React.HTMLAttributes<HTMLInputElement> {
   id?: string;
@@ -70,7 +72,7 @@ const RadioButtonStyled = styled(Field).attrs({ type: 'radio' })`
   width: 0;
 
   &:checked ~ ${CheckMark} {
-    background: url(${ENVS.BASE_PATH}/icons/check-mark-red.svg);
+    background: url(${BASE_PATH}/icons/check-mark-red.svg);
     background-size: cover;
     border: ${({ disabled }): string =>
       disabled ? `1px solid #999DA3` : `1px solid #E7131A`};
