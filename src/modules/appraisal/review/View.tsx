@@ -2,12 +2,12 @@ import { Typography } from '@vroom-web/ui-lib';
 import React from 'react';
 import styled from 'styled-components';
 
-// import ExteriorCondition from './components/ExteriorCondition';
-// import InteriorCondition from './components/InteriorCondition';
-// import MechanicalCondition from './components/MechanicalCondition';
-// import PersonalInformation from './components/PersonalInformation';
-// import VehicleHistory from './components/VehicleHistory';
-// import VehicleInformation from './components/VehicleInformation';
+import ExteriorCondition from './components/ExteriorCondition';
+import InteriorCondition from './components/InteriorCondition';
+import MechanicalCondition from './components/MechanicalCondition';
+import PersonalInformation from './components/PersonalInformation';
+import VehicleHistory from './components/VehicleHistory';
+import VehicleInformation from './components/VehicleInformation';
 import ViewModel from './ViewModel';
 
 import { postAppraisal } from 'src/networking/request';
@@ -37,7 +37,7 @@ const AppraisalReviewViewDetail: React.FC<Props> = ({ viewModel, store }) => {
     <Container>
       <Title>{viewModel.title}</Title>
       <Line />
-      {/* <VehicleInformation />
+      <VehicleInformation />
       <Line />
       <VehicleHistory />
       <Line />
@@ -47,7 +47,7 @@ const AppraisalReviewViewDetail: React.FC<Props> = ({ viewModel, store }) => {
       <Line />
       <MechanicalCondition />
       <Line />
-      <PersonalInformation /> */}
+      <PersonalInformation />
       <SubmitContainer>
         <SubmitButton>
           <input
