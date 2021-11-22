@@ -49,7 +49,7 @@ export const getOfferDetails = async (
   priceId: string
 ): Promise<Response<Prices>> => {
   const encodedPriceID = encodeURIComponent(priceId);
-  const url = `${VROOM_URL}/api/appraisal/get-offer?offerID=${encodedPriceID}`;
+  const url = `${VROOM_URL}/suyc-api/v1/acquisition/offer?offerID=${encodedPriceID}`;
   const res = await client.httpRequest<Prices>({
     method: 'get',
     url,
@@ -76,7 +76,7 @@ export const submitPriceResponse = async (
 export const getVerificationDetails = async (
   priceId: string
 ): Promise<Response<VerificationRespData>> => {
-  const url = `${VROOM_URL}/api/appraisal/verification?offerId=${priceId}`;
+  const url = `${VROOM_URL}/suyc-api/v1/acquisition/verification/form?f=${priceId}`;
   const res = await client.httpRequest<VerificationRespData>({
     method: 'get',
     url,
@@ -155,7 +155,7 @@ export const getDownloadUrl = async (
   fileId: string | null,
   offerId: string
 ): Promise<Response<DocumentResponse>> => {
-  const url = `${VROOM_URL}/api/appraisal/get-download-url?fileId=${fileId}&offerId=${offerId}`;
+  const url = `${VROOM_URL}/suyc-api/v1/acquisition/verification/getdownloadurl?file=true&fid=${fileId}&offerId=${offerId}`;
   return await client.httpRequest({
     method: 'get',
     url,
