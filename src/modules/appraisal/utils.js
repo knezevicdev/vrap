@@ -7,7 +7,6 @@ function generateUUID4() {
 }
 
 function vehicleInformationData(data) {
-  debugger;
   return {
     vin: data.vin,
     year: data.year,
@@ -99,7 +98,6 @@ export function makeRequestBody(appraisalData) {
     // form: appraisalData.formType,
     // experimentIds: appraisalData.allExperiments,
   };
-  debugger;
   Object.assign(
     data,
     vehicleInformationData(appraisalData.vehicleInfoForm),
@@ -111,5 +109,5 @@ export function makeRequestBody(appraisalData) {
     attributionData(appraisalData)
   );
 
-  return data;
+  return { payload: data };
 }

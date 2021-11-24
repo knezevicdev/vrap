@@ -7,7 +7,7 @@ import { useAppStore } from 'src/context';
 
 const AppraisalReview: React.FC = () => {
   const { store } = useAppStore();
-  const viewModel = new ViewModel(store);
+  const viewModel = new ViewModel();
   return <View viewModel={viewModel} store={store} />;
 };
 

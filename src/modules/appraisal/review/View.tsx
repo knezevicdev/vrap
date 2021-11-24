@@ -12,7 +12,6 @@ import VehicleHistory from './components/VehicleHistory';
 import VehicleInformation from './components/VehicleInformation';
 import ViewModel from './ViewModel';
 
-import { useAppStore } from 'src/context';
 import Store from 'src/store';
 
 interface Props {
@@ -30,8 +29,11 @@ const AppraisalReviewViewDetail: React.FC<Props> = ({ viewModel, store }) => {
   }
 
   const handleSubmit = (): void => {
-    viewModel.submitAppraisal(toJS(store.appraisal));
-    // localStorage.removeItem('appraisal');
+    const appraisalData = toJS(store.appraisal);
+    appraisalData.brand = 'vroom';
+    appraisalData.dealership = 'vroom';
+    appraisalData.form = 'sell';
+    viewModel.submitAppraisal(appraisalData);
   };
 
   return (
