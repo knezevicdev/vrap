@@ -4,7 +4,7 @@ variables:
   CODE_QUALITY_DISABLED: "true"
   SECRET_DETECTION_DISABLED: "true"
   SAST_DISABLED: "true"
-
+  FF_GITLAB_REGISTRY_HELPER_IMAGE: "true"
   AUTO_DEVOPS_BUILD_IMAGE_FORWARDED_CI_VARIABLES: CI_JOB_TOKEN
 
   SONARQUBE_KEY: "" 
@@ -13,6 +13,7 @@ stages:
   - build
   - test
   - sonar
+  - deploy
   - review
   - dev
   - qa
