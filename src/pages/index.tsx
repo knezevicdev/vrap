@@ -38,8 +38,18 @@ const AppraisalReview: NextPage<Prop> = () => {
 
 const Contents = styled.div`
   display: flex;
-  flex-direction: column;
-  flex-grow: 1;
+  background-color: #f5f5f5;
+  padding-top: 20px;
+  min-height: calc(100vh - 130px);
+  justify-content: center;
+  @media (max-width: 420px) {
+    margin: 0;
+    width: 100%;
+  }
+  @media (max-width: 1020px) {
+    padding-top: 0;
+    width: 100%;
+  }
 `;
 
 const AppraisalContainer = styled.div`
