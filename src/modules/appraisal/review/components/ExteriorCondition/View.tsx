@@ -13,11 +13,11 @@ interface Props {
 }
 
 const VehicleInfomrationView: React.FC<Props> = ({ viewModel, store }) => {
-  const { appraisalDetail } = store.appraisal;
+  const appraisalDetail = store.appraisal;
   const AfterMarketList = () => {
     return (
       <>
-        {appraisalDetail?.extConditionForm?.afterMarket.map(
+        {appraisalDetail?.extConditionForm?.afterMarket?.map(
           (element, index) => {
             let value = element;
             if (element === 'Other') {

@@ -13,7 +13,7 @@ interface Props {
 }
 
 const VehicleInfomrationView: React.FC<Props> = ({ viewModel, store }) => {
-  const { appraisalDetail } = store.appraisal;
+  const appraisalDetail = store.appraisal;
   return (
     <Container>
       <SubTitleContainer>

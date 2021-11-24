@@ -15,6 +15,6 @@ export default class PickupInfoReviewViewModel {
   constructor(private store: Store) {}
 
   handleEditClick(): void {
-    window.location.href = `/sell/vehicleInformation/${this.store.appraisal?.appraisalDetail?.vehicleInfoForm?.vin}#exteriorondition`;
+    window.location.href = `/sell/vehicleInformation/${this.store.appraisal?.vehicleInfoForm?.vin}#exteriorondition`;
   }
 }

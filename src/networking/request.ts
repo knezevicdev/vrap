@@ -1,5 +1,5 @@
 import { GQLTypes, Response } from '@vroom-web/networking';
-import getConfig from 'next/config';
+import { AnyNsRecord } from 'dns';
 
 import client from './client';
 import { AppraisalRespData } from './models/Appraisal';
@@ -172,12 +172,13 @@ export const getInstitutionLogo = async (id: string): Promise<any> => {
 };
 
 export const postAppraisal = async (
-  data: string
+  data: any
 ): Promise<Response<AppraisalRespData>> => {
   const url = `${ENVS.VROOM_URL}/suyc-api/v1/acquisition/appraisal`;
-  return await client.httpRequest<AppraisalRespData>({
+  const retVal = await client.httpRequest<AppraisalRespData>({
     method: 'post',
     url,
     data,
   });
+  return retVal;
 };

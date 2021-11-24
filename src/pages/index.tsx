@@ -15,7 +15,9 @@ interface Prop {
 
 const AppraisalReview: NextPage<Prop> = () => {
   const { store } = useAppStore();
-  store.appraisal.init();
+  useEffect(() => {
+    store.appraisal.init();
+  });
 
   return (
     <Page name="Review Your Appraisal">
@@ -55,15 +57,6 @@ const ReviewContainer = styled.div`
   width: 70%;
   display: flex;
   justify-content: flex-end;
-  margin: 0 10px;
-  @media (max-width: 1020px) {
-    width: 100%;
-    margin: 0;
-  }
-`;
-
-const OverviewContainer = styled.div`
-  width: 30%;
   margin: 0 10px;
   @media (max-width: 1020px) {
     width: 100%;

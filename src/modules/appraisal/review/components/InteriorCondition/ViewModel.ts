@@ -7,9 +7,9 @@ export default class PickupInfoReviewViewModel {
   readonly odor: string = 'Odor';
   readonly edit: string = 'Edit';
 
-  constructor(private store: Store) {}
+  constructor(private _store: Store) {}
 
   handleEditClick(): void {
-    window.location.href = `/sell/vehicleInformation/${this.store.appraisal?.appraisalDetail?.vehicleInfoForm?.vin}#interiorcondition`;
+    window.location.href = `/sell/vehicleInformation/${this._store.appraisal?.appraisalDetail?.vehicleInfoForm?.vin}#interiorcondition`;
   }
 }

@@ -1,54 +1,55 @@
-export interface Appraisal {
-  vehicleInfoForm: {
-    vin: string;
-    exteriorColor: string;
-    keysAmount: string;
-    make: string;
-    mileage: number;
-    model: string;
-    trim: string;
-    vehicleOptions: string[];
-    year: number;
-  };
+export interface VehicleInfoForm {
+  vin: string;
+  exteriorColor: string;
+  keysAmount: string;
+  make: string;
+  mileage: number;
+  model: string;
+  trim: string;
+  vehicleOptions: string[];
+  year: number;
+}
 
-  vehicleHistoryForm: { hasAccident: string; titleStatus: string };
+export interface VehicleHistoryForm {
+  hasAccident: string;
+  titleStatus: string;
+}
 
-  personalInfoForm: {
-    email: string;
-    firstName: string;
-    lastName: string;
-    phoneNumber: string;
-    zipCode: string;
-  };
+export interface PersonalInfoForm {
+  email: string;
+  firstName: string;
+  lastName: string;
+  phoneNumber: string;
+  zipCode: string;
+}
 
-  mechConditionForm: {
-    additionalDetails: string;
-    floodFireDamage: string;
-    mechanicalCondition: string;
-    otherWarning: string;
-    runnable: string;
-    warningLights: string;
-    warningLightsValues: string[];
-  };
+export interface MechConditionForm {
+  additionalDetails: string;
+  floodFireDamage: string;
+  mechanicalCondition: string;
+  otherWarning: string;
+  runnable: string;
+  warningLights: string;
+  warningLightsValues: string[];
+}
 
-  intConditionForm: {
-    interiorCondition: string;
-    seats: string;
-    smokedIn: string;
-  };
+export interface IntConditionForm {
+  interiorCondition: string;
+  seats: string;
+  smokedIn: string;
+}
 
-  extConditionForm: {
-    afterMarket: string[];
-    dents: string;
-    dentsPanels?: number;
-    exteriorCondition: string;
-    hailDamage: string;
-    otherAfterMarket: string;
-    paintChipping: string;
-    paintChippingPanels?: number;
-    rust: string;
-    scratches: string;
-    scratchesPanels: null;
-    tiresAndWheels: string;
-  };
+export interface ExtConditionForm {
+  afterMarket: string[];
+  dents: string;
+  dentsPanels?: number;
+  exteriorCondition: string;
+  hailDamage: string;
+  otherAfterMarket: string;
+  paintChipping: string;
+  paintChippingPanels?: number;
+  rust: string;
+  scratches: string;
+  scratchesPanels: null;
+  tiresAndWheels: string;
 }

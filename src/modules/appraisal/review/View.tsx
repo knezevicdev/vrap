@@ -1,4 +1,6 @@
 import { Typography } from '@vroom-web/ui-lib';
+import { toJS } from 'mobx';
+import { observer } from 'mobx-react';
 import React from 'react';
 import styled from 'styled-components';
 
@@ -10,7 +12,7 @@ import VehicleHistory from './components/VehicleHistory';
 import VehicleInformation from './components/VehicleInformation';
 import ViewModel from './ViewModel';
 
-import { postAppraisal } from 'src/networking/request';
+import { useAppStore } from 'src/context';
 import Store from 'src/store';
 
 interface Props {
@@ -27,10 +29,9 @@ const AppraisalReviewViewDetail: React.FC<Props> = ({ viewModel, store }) => {
     submitButtonClasses.push('submitting');
   }
 
-  const submitAppraisal = () => {
-    postAppraisal('blah').then((response) => {
-      console.log(response);
-    });
+  const handleSubmit = (): void => {
+    viewModel.submitAppraisal(toJS(store.appraisal));
+    // localStorage.removeItem('appraisal');
   };
 
   return (
@@ -55,7 +56,7 @@ const AppraisalReviewViewDetail: React.FC<Props> = ({ viewModel, store }) => {
             type="submit"
             value={isSubmitting ? 'Submitting' : 'Get My Price'}
             disabled={canSubmit}
-            onClick={submitAppraisal}
+            onClick={handleSubmit}
           />
         </SubmitButton>
         <TextContainer>
@@ -182,4 +183,4 @@ const TextContainer = styled.p`
     padding: 0 2px;
   }
 `;
-export default AppraisalReviewViewDetail;
+export default observer(AppraisalReviewViewDetail);

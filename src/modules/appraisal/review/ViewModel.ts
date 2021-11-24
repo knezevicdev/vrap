@@ -1,18 +1,16 @@
-import AnalyticsHandler from 'src/integrations/AnalyticsHandler';
+import { makeRequestBody } from '../utils';
+
+import { postAppraisal } from 'src/networking/request';
 import Store from 'src/store';
 
-export default class VerificationReviewSectionViewModel {
-  private _analyticsHandler: AnalyticsHandler = new AnalyticsHandler();
-
+export default class AppraisalReviewModel {
   readonly title: string = 'my appraisal review';
 
   constructor(private _store: Store) {}
 
-  onPageLoad(): void {
-    this._analyticsHandler.trackVerificationReviewViewed();
-  }
-
-  getAnalyticHandler(): AnalyticsHandler {
-    return this._analyticsHandler;
+  submitAppraisal(data: any): void {
+    postAppraisal(makeRequestBody(data)).then((response) => {
+      console.log(response);
+    });
   }
 }

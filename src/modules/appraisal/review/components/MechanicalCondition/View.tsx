@@ -13,11 +13,11 @@ interface Props {
 }
 
 const VehicleInfomrationView: React.FC<Props> = ({ viewModel, store }) => {
-  const { appraisalDetail } = store.appraisal;
+  const appraisalDetail = store.appraisal;
   const ActiveWarningLightsList = () => {
     return (
       <>
-        {appraisalDetail?.mechConditionForm?.warningLightsValues.map(
+        {appraisalDetail?.mechConditionForm?.warningLightsValues?.map(
           (element, index) => {
             return <Field key={index}>{element}</Field>;
           }
