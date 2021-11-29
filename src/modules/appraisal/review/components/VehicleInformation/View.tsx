@@ -25,6 +25,18 @@ const VehicleInfomrationView: React.FC<Props> = ({ viewModel, store }) => {
       </>
     );
   };
+  function numberWithCommas(x: number) {
+    if (isNaN(x)) {
+      return '';
+    } else {
+      return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+    }
+  }
+  function addElipsesIfLong(str: string) {
+    if (str) {
+      return str.length > 23 ? str.substr(0, 20) + '...' : str;
+    }
+  }
   return (
     <Container>
       <SubTitleContainer>
@@ -40,11 +52,20 @@ const VehicleInfomrationView: React.FC<Props> = ({ viewModel, store }) => {
         </Info>
         <Info>
           <Label>{viewModel.trim}</Label>
-          <Field>{appraisalDetail?.vehicleInfoForm?.trim}</Field>
+          <Field title={appraisalDetail?.vehicleInfoForm?.trim}>
+            {addElipsesIfLong(appraisalDetail?.vehicleInfoForm?.trim)}
+          </Field>
         </Info>
         <Info>
           <Label>{viewModel.mileage}</Label>
-          <Field>{appraisalDetail?.vehicleInfoForm?.mileage}</Field>
+          <Field>
+            {numberWithCommas(appraisalDetail?.vehicleInfoForm?.mileage)}
+          </Field>
+        </Info>
+      </Row>
+      <Row>
+        <Info>
+          <Field>{`(${appraisalDetail?.vehicleInfoForm?.year} ${appraisalDetail?.vehicleInfoForm?.make} ${appraisalDetail?.vehicleInfoForm?.model})`}</Field>
         </Info>
       </Row>
       <Row>
@@ -56,9 +77,14 @@ const VehicleInfomrationView: React.FC<Props> = ({ viewModel, store }) => {
           <Label>{viewModel.keysAmount}</Label>
           <Field>{appraisalDetail?.vehicleInfoForm?.keysAmount}</Field>
         </Info>
+
         <Info>
           <Label>{viewModel.vehicleOptions}</Label>
-          <OptionsList />
+          {appraisalDetail?.vehicleInfoForm?.vehicleOptions?.length !== 0 ? (
+            <OptionsList />
+          ) : (
+            <Field>N\A</Field>
+          )}
         </Info>
       </Row>
     </Container>
@@ -92,7 +118,7 @@ const Row = styled.div`
 const Info = styled.div`
   display: flex;
   flex-direction: column;
-  width: 50%;
+  width: 33%;
   @media (max-width: 767px) {
     width: 100%;
     margin-bottom: 10px;
@@ -102,6 +128,7 @@ const Info = styled.div`
 const Label = styled(Typography.Fine)`
   font-size: 13px;
   letter-spacing: 0.35px;
+  text-overflow: ellipsis;
 `;
 
 const Field = styled(Typography.Body.Regular)`

@@ -44,20 +44,34 @@ const VehicleInfomrationView: React.FC<Props> = ({ viewModel, store }) => {
             {appraisalDetail?.mechConditionForm?.mechanicalCondition}
           </Field>
         </Info>
-        <Info>
-          <Label>{viewModel.warningLights}</Label>
-          <ActiveWarningLightsList />
-          <Field>{appraisalDetail?.mechConditionForm?.otherWarning}</Field>
-        </Info>
+        {appraisalDetail?.mechConditionForm?.warningLightsValues && (
+          <Info>
+            <Label>{viewModel.warningLights}</Label>
+            {appraisalDetail?.mechConditionForm?.warningLights === 'No' && (
+              <Field>{appraisalDetail?.mechConditionForm?.warningLights}</Field>
+            )}
+            <ActiveWarningLightsList />
+            {appraisalDetail?.mechConditionForm?.otherWarning && (
+              <Field>{appraisalDetail?.mechConditionForm?.otherWarning}</Field>
+            )}
+          </Info>
+        )}
       </Row>
       <Row>
         <Info>
           <Label>{viewModel.floodFireDamage}</Label>
           <Field>{appraisalDetail?.mechConditionForm?.floodFireDamage}</Field>
         </Info>
+
         <Info>
           <Label>{viewModel.additionalDetails}</Label>
-          <Field>{appraisalDetail?.mechConditionForm?.additionalDetails}</Field>
+          {appraisalDetail?.mechConditionForm?.additionalDetails ? (
+            <Field>
+              {appraisalDetail?.mechConditionForm?.additionalDetails}
+            </Field>
+          ) : (
+            <Field>N\A</Field>
+          )}
         </Info>
       </Row>
     </Container>
@@ -91,7 +105,7 @@ const Row = styled.div`
 const Info = styled.div`
   display: flex;
   flex-direction: column;
-  width: 50%;
+  width: 33%;
   @media (max-width: 767px) {
     width: 100%;
     margin-bottom: 10px;

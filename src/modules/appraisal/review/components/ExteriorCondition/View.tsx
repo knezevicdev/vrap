@@ -52,30 +52,42 @@ const VehicleInfomrationView: React.FC<Props> = ({ viewModel, store }) => {
         </Info>
         <Info>
           <Label>{viewModel.afterMarket}</Label>
-          <AfterMarketList />
+          {appraisalDetail?.extConditionForm?.otherAfterMarket?.length !== 0 ? (
+            <AfterMarketList />
+          ) : (
+            <Field>N\A</Field>
+          )}
         </Info>
       </Row>
       <Row>
-        <Info>
-          <Label>{viewModel.rust}</Label>
-          <Field>{appraisalDetail?.extConditionForm?.rust}</Field>
-        </Info>
-        <Info>
-          <Label>{viewModel.dents}</Label>
-          <Field>
-            {appraisalDetail?.extConditionForm?.dentsPanels} Panel(s)
-          </Field>
-        </Info>
-        <Info>
-          <Label>{viewModel.paintChipping}</Label>
-          <Field>
-            {appraisalDetail?.extConditionForm?.paintChippingPanels} Panel(s)
-          </Field>
-        </Info>
-        <Info>
-          <Label>{viewModel.scratches}</Label>
-          <Field>{appraisalDetail?.extConditionForm?.scratches}</Field>
-        </Info>
+        {appraisalDetail?.extConditionForm?.rust && (
+          <Info>
+            <Label>{viewModel.rust}</Label>
+            <Field>{appraisalDetail?.extConditionForm?.rust}</Field>
+          </Info>
+        )}
+        {appraisalDetail?.extConditionForm?.dentsPanels !== 0 && (
+          <Info>
+            <Label>{viewModel.dents}</Label>
+            <Field>
+              {appraisalDetail?.extConditionForm?.dentsPanels} Panel(s)
+            </Field>
+          </Info>
+        )}
+        {appraisalDetail?.extConditionForm?.paintChippingPanels !== 0 && (
+          <Info>
+            <Label>{viewModel.paintChipping}</Label>
+            <Field>
+              {appraisalDetail?.extConditionForm?.paintChippingPanels} Panel(s)
+            </Field>
+          </Info>
+        )}
+        {appraisalDetail?.extConditionForm?.scratches && (
+          <Info>
+            <Label>{viewModel.scratches}</Label>
+            <Field>{appraisalDetail?.extConditionForm?.scratches}</Field>
+          </Info>
+        )}
       </Row>
     </Container>
   );

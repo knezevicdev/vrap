@@ -178,7 +178,7 @@ const TextContainer = styled.p`
   text-align: center;
   line-height: 15px;
   letter-spacing: 0.35px;
-  width: 580px;
+  width: 585px;
   a {
     color: #e7131a;
     text-decoration: none;
