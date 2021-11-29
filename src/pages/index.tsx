@@ -24,9 +24,11 @@ const AppraisalReview: NextPage<Prop> = () => {
       const timeout = setTimeout(() => {
         window.location.href = '/sell/vehicleInformation';
       }, 5000);
-      return clearTimeout(timeout);
+      return () => {
+        clearTimeout(timeout);
+      };
     }
-  });
+  }, [hasData]);
 
   return (
     <Page name="Review Your Appraisal">
