@@ -13,7 +13,6 @@ interface Props {
 const PriceView: React.FC<Props> = ({ viewModel }) => {
   const {
     showProgressiveAd,
-    isInProgressiveExperiment,
     placementCode,
     placementName,
     category,
@@ -22,22 +21,13 @@ const PriceView: React.FC<Props> = ({ viewModel }) => {
   if (showProgressiveAd) {
     return (
       <ProgressiveWrapper>
-        {isInProgressiveExperiment ? (
-          <ProgressiveAd
-            placementName={placementName}
-            placementCode={placementCode}
-            category={category}
-            headline={headline}
-            version={2}
-          />
-        ) : (
-          <ProgressiveAd
-            placementName={placementName}
-            placementCode={placementCode}
-            category={category}
-            version={1}
-          />
-        )}
+        <ProgressiveAd
+          placementName={placementName}
+          placementCode={placementCode}
+          category={category}
+          headline={headline}
+          version={2}
+        />
       </ProgressiveWrapper>
     );
   } else return <></>;
