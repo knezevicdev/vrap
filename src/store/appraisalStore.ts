@@ -1,4 +1,5 @@
 import { makeAutoObservable, runInAction } from 'mobx';
+import { bool } from 'yup';
 
 import {
   ExtConditionForm,
@@ -16,12 +17,14 @@ export class AppraisalStore {
   mechConditionForm: MechConditionForm = {};
   intConditionForm: IntConditionForm = {};
   extConditionForm: ExtConditionForm = {};
-
+  brand = 'vroom';
+  dealership = 'vroom';
+  form = 'sell';
   constructor() {
     makeAutoObservable(this);
   }
 
-  init(): void {
+  init(): boolean {
     const appraisal = localStorage.getItem('appraisal');
 
     if (appraisal !== null) {
@@ -32,8 +35,9 @@ export class AppraisalStore {
       this.mechConditionForm = appraisalData.mechConditionForm;
       this.intConditionForm = appraisalData.intConditionForm;
       this.extConditionForm = appraisalData.extConditionForm;
+      return true;
     } else {
-      return;
+      return false;
     }
   }
 }

@@ -1,6 +1,6 @@
 import { observer } from 'mobx-react';
 import { NextPage, NextPageContext } from 'next';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
 import { Header } from 'src/components/Header';
@@ -15,8 +15,17 @@ interface Prop {
 
 const AppraisalReview: NextPage<Prop> = () => {
   const { store } = useAppStore();
+  const [hasData, setHasData] = useState(false);
   useEffect(() => {
-    store.appraisal.init();
+    setHasData(store.appraisal.init());
+  }, [store.appraisal]);
+  useEffect(() => {
+    if (!hasData) {
+      const timeout = setTimeout(() => {
+        window.location.href = '/sell/vehicleInformation';
+      }, 5000);
+      return clearTimeout(timeout);
+    }
   });
 
   return (
@@ -26,7 +35,20 @@ const AppraisalReview: NextPage<Prop> = () => {
         <Contents>
           <AppraisalContainer>
             <ReviewContainer>
-              <AppraisalReviewViewDetail />
+              {hasData ? (
+                <AppraisalReviewViewDetail />
+              ) : (
+                <Container>
+                  <p>
+                    No data found, if you are not automatically redirected in 5
+                    seconds please use the link below to go back to appraisal
+                    form.
+                  </p>
+                  <p>
+                    <a href="/sell/vehicleInformation">Appraisal Form Link</a>
+                  </p>
+                </Container>
+              )}
             </ReviewContainer>
           </AppraisalContainer>
         </Contents>
@@ -42,6 +64,7 @@ const Contents = styled.div`
   padding-top: 20px;
   min-height: calc(100vh - 130px);
   justify-content: center;
+  align-items: center;
   @media (max-width: 420px) {
     margin: 0;
     width: 100%;
@@ -49,6 +72,26 @@ const Contents = styled.div`
   @media (max-width: 1020px) {
     padding-top: 0;
     width: 100%;
+  }
+`;
+
+const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  background-color: #ffffff;
+  width: 100%;
+  max-width: 780px;
+  padding: 0 24px 30px 24px;
+  border: solid 1px #d6d7da;
+  margin-bottom: 20px;
+  @media (max-width: 1020px) {
+    max-width: 100%;
+    padding: 30px 24px;
+    margin: 0 10px;
+  }
+
+  @media (max-width: 720px) {
+    margin: 0;
   }
 `;
 

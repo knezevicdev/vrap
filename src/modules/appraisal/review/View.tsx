@@ -29,11 +29,7 @@ const AppraisalReviewViewDetail: React.FC<Props> = ({ viewModel, store }) => {
   }
 
   const handleSubmit = (): void => {
-    const appraisalData = toJS(store.appraisal);
-    appraisalData.brand = 'vroom';
-    appraisalData.dealership = 'vroom';
-    appraisalData.form = 'sell';
-    viewModel.submitAppraisal(appraisalData);
+    viewModel.submitAppraisal(toJS(store.appraisal));
   };
 
   return (
