@@ -1,5 +1,6 @@
 import { Button, Typography } from '@vroom-web/ui-lib';
 import { observer } from 'mobx-react';
+import getConfig from 'next/config';
 import { useRouter } from 'next/router';
 import React, { useEffect } from 'react';
 import styled from 'styled-components';
@@ -8,8 +9,10 @@ import ViewModel from './ViewModel';
 
 import { useAppStore } from 'src/context';
 import Icon, { Icons } from 'src/core/Icon';
-import ENVS from 'src/integrations/Envs';
 import { displayFirstTextUpper, displayPaymentAccount } from 'src/utils';
+const { publicRuntimeConfig } = getConfig();
+
+const VROOM_URL = publicRuntimeConfig.NEXT_PUBLIC_VROOM_URL;
 
 export interface Props {
   viewModel: ViewModel;
@@ -41,7 +44,7 @@ const DirectDepositReviewView: React.FC<Props> = ({ viewModel }) => {
         {store.deposit.institutionLogo && (
           <LogoContainer>
             <LogoImg
-              src={`${ENVS.VROOM_URL}/mypayments/logo/${store.deposit.institutionId}`}
+              src={`${VROOM_URL}/mypayments/logo/${store.deposit.institutionId}`}
             />
           </LogoContainer>
         )}

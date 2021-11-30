@@ -21,7 +21,6 @@ import AppProvider from 'src/context/AppContext';
 import { AnalyticsHandlerContext } from 'src/integrations/AnalyticHandlerContext';
 import AnalyticsHandler from 'src/integrations/AnalyticsHandler';
 import { CatSDKContext } from 'src/integrations/CatSDKContext';
-import ENVS from 'src/integrations/Envs';
 import { RemoteConfigContext } from 'src/integrations/RemoteConfigContext';
 
 const firebaseConfig = {
@@ -39,6 +38,10 @@ configureMobx({
 });
 
 const { publicRuntimeConfig } = getConfig();
+const NEXT_PUBLIC_INTERCHANGE_URL =
+  publicRuntimeConfig.NEXT_PUBLIC_INTERCHANGE_URL;
+const DATA_DOG_RUM_APPLICATION = publicRuntimeConfig.DATA_DOG_RUM_APPLICATION;
+const DATA_DOG_RUM_TOKEN = publicRuntimeConfig.DATA_DOG_RUM_TOKEN;
 
 class AppraisalApp extends App {
   private readonly remoteConfig: firebase.remoteConfig.RemoteConfig;
@@ -49,7 +52,7 @@ class AppraisalApp extends App {
   constructor(props: AppProps) {
     super(props);
     this.analyticsHandler = new AnalyticsHandler();
-    const serviceBasePath = ENVS.NEXT_PUBLIC_INTERCHANGE_URL;
+    const serviceBasePath = NEXT_PUBLIC_INTERCHANGE_URL;
     this.catSDK = new CatSDK({
       serviceBasePath: publicRuntimeConfig.NEXT_PUBLIC_CAT_SERVICE_URL || '',
     });
@@ -77,10 +80,10 @@ class AppraisalApp extends App {
 
   componentDidMount(): void {
     smoothscroll.polyfill(); // needs access to the window
-    if (ENVS.DATA_DOG_RUM_APPLICATION) {
+    if (DATA_DOG_RUM_APPLICATION) {
       datadogRum.init({
-        applicationId: ENVS.DATA_DOG_RUM_APPLICATION,
-        clientToken: ENVS.DATA_DOG_RUM_TOKEN,
+        applicationId: DATA_DOG_RUM_APPLICATION,
+        clientToken: DATA_DOG_RUM_TOKEN,
         site: 'datadoghq.com',
         service: name,
         version: version,

@@ -1,6 +1,7 @@
 import { ServerStyleSheets } from '@material-ui/core/styles';
 import { AnalyticsSnippet } from '@vroom-web/analytics-integration';
 import { Brand, UISnippet } from '@vroom-web/ui';
+import getConfig from 'next/config';
 import Document, {
   DocumentContext,
   DocumentInitialProps,
@@ -12,7 +13,11 @@ import Document, {
 import React from 'react';
 import { ServerStyleSheet } from 'styled-components';
 
-import ENVS from 'src/integrations/Envs';
+const { publicRuntimeConfig, serverRuntimeConfig } = getConfig();
+const STATIC_ASSETS_HOST_URL =
+  publicRuntimeConfig.NEXT_PUBLIC_STATIC_ASSETS_HOST_URL;
+const BRANCH_IO_KEY = publicRuntimeConfig.BRANCH_IO_KEY;
+const SEGMENT_WRITE_KEY = serverRuntimeConfig.SEGMENT_WRITE_KEY;
 
 export default class AppraisalDocument extends Document {
   static async getInitialProps(
@@ -25,10 +30,12 @@ export default class AppraisalDocument extends Document {
     try {
       ctx.renderPage = (): ReturnType<typeof ctx.renderPage> =>
         originalRenderPage({
-          enhanceApp: (App) => (props): JSX.Element =>
-            styledComponentsSheet.collectStyles(
-              materialSheets.collect(<App {...props} />)
-            ),
+          enhanceApp:
+            (App) =>
+            (props): JSX.Element =>
+              styledComponentsSheet.collectStyles(
+                materialSheets.collect(<App {...props} />)
+              ),
         });
 
       const initialProps = await Document.getInitialProps(ctx);
@@ -48,14 +55,14 @@ export default class AppraisalDocument extends Document {
   }
 
   render(): JSX.Element {
-    const segmentWriteKey = ENVS.SEGMENT_WRITE_KEY;
+    const segmentWriteKey = SEGMENT_WRITE_KEY;
 
     return (
       <Html lang="en">
         <Head>
           <UISnippet
             brand={Brand.VROOM}
-            staticAssetsHostUrl={ENVS.STATIC_ASSETS_HOST_URL}
+            staticAssetsHostUrl={STATIC_ASSETS_HOST_URL}
           />
           {segmentWriteKey && (
             <AnalyticsSnippet
@@ -67,7 +74,7 @@ export default class AppraisalDocument extends Document {
             defer
             dangerouslySetInnerHTML={{
               __html: `(function(b,r,a,n,c,h,_,s,d,k){if(!b[n]||!b[n]._q){for(;s<_.length;)c(h,_[s++]);d=r.createElement(a);d.async=1;d.src="https://cdn.branch.io/branch-latest.min.js";k=r.getElementsByTagName(a)[0];k.parentNode.insertBefore(d,k);b[n]=h}})(window,document,"script","branch",function(b,r){b[r]=function(){b._q.push([r,arguments])}},{_q:[],_v:1},"addListener applyCode autoAppIndex banner closeBanner closeJourney creditHistory credits data deepview deepviewCta first getCode init link logout redeem referrals removeListener sendSMS setBranchViewData setIdentity track validateCode trackCommerceEvent logEvent disableTracking".split(" "), 0);
-            branch.init("${ENVS.BRANCH_IO_KEY}");`,
+            branch.init("${BRANCH_IO_KEY}");`,
             }}
           />
         </Head>

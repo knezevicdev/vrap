@@ -1,4 +1,5 @@
 import { GQLTypes, Response } from '@vroom-web/networking';
+import getConfig from 'next/config';
 
 import client from './client';
 import {
@@ -10,7 +11,6 @@ import {
 import ACCEPT_REJECT_OFFER from 'src/graphql/mutations/acceptRejectOffer.graphql';
 import CREATE_USER_PAYMENT_ACCOUNT from 'src/graphql/mutations/createUserPaymentAccount.graphql';
 import GET_PLAID_TOKEN from 'src/graphql/queries/getLinkToken.graphql';
-import ENVS from 'src/integrations/Envs';
 import {
   MailingAddress,
   PaymentOverviewFormValues,
@@ -21,6 +21,9 @@ import {
   DocumentResponse,
   PatchReviewData,
 } from 'src/networking/models/Verification';
+
+const { publicRuntimeConfig } = getConfig();
+const VROOM_URL = publicRuntimeConfig.NEXT_PUBLIC_VROOM_URL;
 
 export enum Status {
   INITIAL = 'initial',
@@ -46,7 +49,7 @@ export const getOfferDetails = async (
   priceId: string
 ): Promise<Response<Prices>> => {
   const encodedPriceID = encodeURIComponent(priceId);
-  const url = `${ENVS.VROOM_URL}/api/appraisal/get-offer?offerID=${encodedPriceID}`;
+  const url = `${VROOM_URL}/suyc-api/v1/acquisition/offer?offerID=${encodedPriceID}`;
   const res = await client.httpRequest<Prices>({
     method: 'get',
     url,
@@ -73,7 +76,7 @@ export const submitPriceResponse = async (
 export const getVerificationDetails = async (
   priceId: string
 ): Promise<Response<VerificationRespData>> => {
-  const url = `${ENVS.VROOM_URL}/api/appraisal/verification?offerId=${priceId}`;
+  const url = `${VROOM_URL}/suyc-api/v1/acquisition/verification/form?f=${priceId}`;
   const res = await client.httpRequest<VerificationRespData>({
     method: 'get',
     url,
@@ -88,7 +91,7 @@ export const submitPaymentOptionSelected = async (
   address: MailingAddress
 ): Promise<Response<PaymentOptionsRespData>> => {
   const data: PaymentData = { sf_offer_id: priceId };
-  const url = `${ENVS.VROOM_URL}/api/appraisal/payment`;
+  const url = `${VROOM_URL}/suyc-api/v1/acquisition/payment`;
 
   if (paymentData.paymentOption === 'Direct Deposit') {
     data['payment_method'] = 'ach';
@@ -139,7 +142,7 @@ export const postPlaidPayment = async (
 export const patchVerification = async (
   data: PatchReviewData
 ): Promise<Response<VerificationRespData>> => {
-  const url = `${ENVS.VROOM_URL}/suyc-api/v1/acquisition/verification/form`;
+  const url = `${VROOM_URL}/suyc-api/v1/acquisition/verification/form`;
   const res = await client.httpRequest<VerificationRespData>({
     method: 'PATCH',
     url,
@@ -152,7 +155,7 @@ export const getDownloadUrl = async (
   fileId: string | null,
   offerId: string
 ): Promise<Response<DocumentResponse>> => {
-  const url = `${ENVS.VROOM_URL}/api/appraisal/get-download-url?fileId=${fileId}&offerId=${offerId}`;
+  const url = `${VROOM_URL}/suyc-api/v1/acquisition/verification/getdownloadurl?file=true&fid=${fileId}&offerId=${offerId}`;
   return await client.httpRequest({
     method: 'get',
     url,
@@ -160,7 +163,7 @@ export const getDownloadUrl = async (
 };
 
 export const getInstitutionLogo = async (id: string): Promise<any> => {
-  const url = `${ENVS.VROOM_URL}/mypayments/logo/${id}`;
+  const url = `${VROOM_URL}/mypayments/logo/${id}`;
   return await client.httpRequest({
     method: 'get',
     url,
