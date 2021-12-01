@@ -1,5 +1,5 @@
 import { GQLTypes, Response } from '@vroom-web/networking';
-import { AnyNsRecord } from 'dns';
+import getConfig from 'next/config';
 
 import client from './client';
 import { AppraisalRespData } from './models/Appraisal';
