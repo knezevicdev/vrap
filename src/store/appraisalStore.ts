@@ -1,5 +1,4 @@
-import { makeAutoObservable, runInAction } from 'mobx';
-import { bool } from 'yup';
+import { makeAutoObservable } from 'mobx';
 
 import {
   ExtConditionForm,

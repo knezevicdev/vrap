@@ -1,7 +1,8 @@
 import { Typography } from '@vroom-web/ui-lib';
+import { VroomSpinner } from '@vroom-web/ui-lib';
 import { toJS } from 'mobx';
 import { observer } from 'mobx-react';
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 
 import ExteriorCondition from './components/ExteriorCondition';
@@ -20,20 +21,30 @@ interface Props {
 }
 
 const AppraisalReviewViewDetail: React.FC<Props> = ({ viewModel, store }) => {
+  const [isLoading, setIsLoading] = useState(false);
   const submitButtonClasses = ['btn', 'btn-primary', 'finish-section-btn'];
-  const isSubmitting = false;
-  const canSubmit = !(isSubmitting || store.appraisal ? true : false);
+  const canSubmit = !(isLoading || store.appraisal ? true : false);
 
-  if (isSubmitting) {
+  if (isLoading) {
     submitButtonClasses.push('submitting');
   }
 
   const handleSubmit = (): void => {
-    viewModel.submitAppraisal(toJS(store.appraisal));
+    setIsLoading(true);
+    viewModel.submitAppraisal(toJS(store.appraisal)).then(() => {
+      setIsLoading(false);
+    });
   };
 
   return (
     <Container>
+      {isLoading && (
+        <WhiteBox>
+          <SpinnerContainer>
+            <VroomSpinner size="lg" />
+          </SpinnerContainer>
+        </WhiteBox>
+      )}
       <Title>{viewModel.title}</Title>
       <Line />
       <VehicleInformation />
@@ -52,7 +63,7 @@ const AppraisalReviewViewDetail: React.FC<Props> = ({ viewModel, store }) => {
           <input
             className={submitButtonClasses.join(' ')}
             type="submit"
-            value={isSubmitting ? 'Submitting' : 'Get My Price'}
+            value={isLoading ? 'Submitting' : 'Get My Price'}
             disabled={canSubmit}
             onClick={handleSubmit}
           />
@@ -181,4 +192,25 @@ const TextContainer = styled.p`
     padding: 0 2px;
   }
 `;
+
+const WhiteBox = styled.div`
+  position: fixed;
+  display: block;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  text-align: center;
+  opacity: 0.7;
+  background-color: #fff;
+  z-index: 99;
+`;
+
+const SpinnerContainer = styled.div`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  z-index: 100;
+`;
+
 export default observer(AppraisalReviewViewDetail);
