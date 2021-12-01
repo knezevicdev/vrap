@@ -32,28 +32,17 @@ const CongratulationsView = ({ viewModel }: Props): JSX.Element => {
         </CongratsContainer>
         <CongratsNextSteps />
       </HeroContainer>
-      {viewModel.isInExperiment !== undefined && (
-        <CongratsContainer>
-          <ProgressiveWrapper>
-            {viewModel.isInExperiment ? (
-              <ProgressiveAd
-                placementName={viewModel.placementName}
-                placementCode={viewModel.placementCode}
-                category={viewModel.category}
-                headline={viewModel.headline}
-                version={2}
-              />
-            ) : (
-              <ProgressiveAd
-                placementName={viewModel.placementName}
-                placementCode={viewModel.placementCode}
-                category={viewModel.category}
-                version={1}
-              />
-            )}
-          </ProgressiveWrapper>
-        </CongratsContainer>
-      )}
+      <CongratsContainer>
+        <ProgressiveWrapper>
+          <ProgressiveAd
+            placementName={viewModel.placementName}
+            placementCode={viewModel.placementCode}
+            category={viewModel.category}
+            headline={viewModel.headline}
+            version={2}
+          />
+        </ProgressiveWrapper>
+      </CongratsContainer>
     </Container>
   );
 };

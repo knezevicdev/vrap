@@ -1,6 +1,5 @@
 import { PriceStore } from '../price/store';
 
-import AppStoreNetwork from 'src/context';
 import { StoreStatus } from 'src/interfaces.d';
 
 class PriceViewModel {
@@ -9,7 +8,7 @@ class PriceViewModel {
   readonly placementName = 'SUYC Price';
   readonly headline = 'Switch Today and Save!';
 
-  constructor(public store: PriceStore, public appStore: AppStoreNetwork) {}
+  constructor(public store: PriceStore) {}
 
   private get isManualPricing(): boolean {
     const {
@@ -22,15 +21,7 @@ class PriceViewModel {
   }
 
   get showProgressiveAd(): boolean {
-    return (
-      this.isManualPricing && !this.appStore.store.absmart.isABSmartlyLoading
-    );
-  }
-
-  get isInProgressiveExperiment(): boolean {
-    return this.appStore.store.absmart.isInExperiment(
-      'vadd-progressive-ad-suyc-price-v2'
-    );
+    return this.isManualPricing;
   }
 }
 
