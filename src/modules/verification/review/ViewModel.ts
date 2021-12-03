@@ -160,12 +160,6 @@ export default class VerificationReviewSectionViewModel {
 
   async verificationSubmit(): Promise<void> {
     const { deposit } = this.store;
-    if (this.isPaymentRequireExp() && deposit.mutationInput) {
-      await this.handlePlaidSubmit();
-    }
-    if (this.isPaymentRequireExp() && !deposit.mutationInput) {
-      await this.submitPayment();
-    }
     const payload = this.createVerificationPayload();
     const data = {
       source: 'vroom.com',
@@ -176,13 +170,16 @@ export default class VerificationReviewSectionViewModel {
     const verificationResponse = await patchVerification(data);
     if (isErrorResponse(verificationResponse)) throw verificationResponse;
 
+    if (this.isPaymentRequireExp() && deposit.mutationInput) {
+      await this.handlePlaidSubmit();
+    }
+    if (this.isPaymentRequireExp() && !deposit.mutationInput) {
+      await this.submitPayment();
+    }
+
     const responseData = verificationResponse.data.data;
-    const {
-      owner_email_address,
-      owner_first_name,
-      offer_price,
-      poq,
-    } = responseData;
+    const { owner_email_address, owner_first_name, offer_price, poq } =
+      responseData;
 
     const finalPayment =
       poq !== null && poq.final_payment ? poq.final_payment : null;
