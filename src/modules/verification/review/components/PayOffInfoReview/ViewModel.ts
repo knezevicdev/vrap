@@ -14,7 +14,10 @@ export default class PayOffInfoReviewViewModel {
     const { values, address, submittedType, priceId } = this.store.payment;
     const { mutationInput } = this.store.deposit;
     const localPaymentValue = localStorage.getItem('review_payment_values');
-    if ((mutationInput || values) && !localPaymentValue) {
+    const hasValue =
+      !localPaymentValue &&
+      this.store.absmart.isInExperiment('ac-payment-required');
+    if ((mutationInput || values) && hasValue) {
       const reviewPaymentValue = mutationInput
         ? mutationInput
         : {
