@@ -12,6 +12,25 @@ export default class PickupInfoReviewViewModel {
   constructor(private store: Store) {}
 
   handleEditClick(): void {
+    const { values, address, submittedType, priceId } = this.store.payment;
+    const { mutationInput } = this.store.deposit;
+    const localPaymentValue = localStorage.getItem('review_payment_values');
+    if ((mutationInput || values) && !localPaymentValue) {
+      const reviewPaymentValue = mutationInput
+        ? mutationInput
+        : {
+            values,
+            address,
+            priceId,
+            submittedType,
+          };
+      const paymentType = mutationInput ? 'ach' : 'manual';
+      localStorage.setItem(
+        'review_payment_values',
+        JSON.stringify(reviewPaymentValue)
+      );
+      localStorage.setItem('review_payment_type', paymentType);
+    }
     localStorage.setItem('review_edit_section', '1');
     window.location.href = `/sell/verification/owner/${this.store.verification.offerId}`;
   }

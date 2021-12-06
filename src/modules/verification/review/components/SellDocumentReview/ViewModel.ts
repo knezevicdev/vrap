@@ -22,6 +22,25 @@ export default class SellDocumentReviewViewModel {
   };
 
   handleEditClick(): void {
+    const { values, address, submittedType, priceId } = this.store.payment;
+    const { mutationInput } = this.store.deposit;
+    const localPaymentValue = localStorage.getItem('review_payment_values');
+    if ((mutationInput || values) && !localPaymentValue) {
+      const reviewPaymentValue = mutationInput
+        ? mutationInput
+        : {
+            values,
+            address,
+            priceId,
+            submittedType,
+          };
+      const paymentType = mutationInput ? 'ach' : 'manual';
+      localStorage.setItem(
+        'review_payment_values',
+        JSON.stringify(reviewPaymentValue)
+      );
+      localStorage.setItem('review_payment_type', paymentType);
+    }
     if (this.isPaymentRequireExp()) {
       localStorage.setItem('review_doc_section', 'doc_upload');
     }

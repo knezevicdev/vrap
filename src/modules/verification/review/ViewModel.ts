@@ -178,8 +178,12 @@ export default class VerificationReviewSectionViewModel {
     }
 
     const responseData = verificationResponse.data.data;
-    const { owner_email_address, owner_first_name, offer_price, poq } =
-      responseData;
+    const {
+      owner_email_address,
+      owner_first_name,
+      offer_price,
+      poq,
+    } = responseData;
 
     const finalPayment =
       poq !== null && poq.final_payment ? poq.final_payment : null;
@@ -188,6 +192,9 @@ export default class VerificationReviewSectionViewModel {
       owner_email_address,
       owner_first_name
     );
+
+    localStorage.removeItem('review_payment_values');
+    localStorage.removeItem('review_payment_type');
 
     const priceId =
       this.store.verification.priceId || localStorage.getItem('priceId');

@@ -25,6 +25,21 @@ const VerificationReviewViewDetail: React.FC<Props> = ({
   const { store } = useAppStore();
 
   useEffect(() => {
+    const paymentValues = localStorage.getItem('review_payment_values');
+    const paymentType = localStorage.getItem('review_payment_type') === 'ach';
+    if (paymentValues) {
+      const parseValue = JSON.parse(paymentValues);
+      if (paymentType) {
+        store.deposit.setMutationInput(parseValue);
+      } else {
+        const { values, priceId, address, submittedType } = parseValue;
+        store.payment.setValues(values, priceId, address);
+        store.payment.setSubmitType(submittedType);
+      }
+    }
+  }, []);
+
+  useEffect(() => {
     const whereIsVehicleRegistered =
       localStorage.getItem('whereIsVehicleRegistered') || '';
     const lastFourSSN =
@@ -50,7 +65,8 @@ const VerificationReviewViewDetail: React.FC<Props> = ({
       <PayOffInfoReview />
       <Line />
       <SellDocumentReview />
-      {viewModel.isPaymentRequireExp() && (
+      {(viewModel.isPaymentRequireExp() ||
+        localStorage.getItem('review_payment_values')) && (
         <>
           <Line />
           <PaymentInfoReview />
