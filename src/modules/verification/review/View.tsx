@@ -51,6 +51,7 @@ const VerificationReviewViewDetail: React.FC<Props> = ({
 
   const handleSubmit = (): void => {
     localStorage.removeItem('lastFour');
+    store.verification.setLoading(true);
     viewModel.verificationSubmit();
   };
 
