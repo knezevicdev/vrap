@@ -1,5 +1,6 @@
 export interface AppraisalRespData {
   data: {
-    success: boolean;
+    // eslint-disable-next-line @typescript-eslint/naming-convention
+    ID: string;
   };
 }

@@ -10,12 +10,54 @@ import {
 } from 'src/modules/appraisal/review/store';
 
 export class AppraisalStore {
-  vehicleInfoForm: VehicleInfoForm = {};
-  vehicleHistoryForm: VehicleHistoryForm = {};
-  personalInfoForm: PersonalInfoForm = {};
-  mechConditionForm: MechConditionForm = {};
-  intConditionForm: IntConditionForm = {};
-  extConditionForm: ExtConditionForm = {};
+  vehicleInfoForm: VehicleInfoForm = {
+    vin: '',
+    exteriorColor: '',
+    keysAmount: '',
+    make: '',
+    mileage: 123,
+    model: '',
+    trim: '',
+    vehicleOptions: [],
+    year: 2000,
+  };
+  vehicleHistoryForm: VehicleHistoryForm = {
+    hasAccident: '',
+    titleStatus: '',
+  };
+  personalInfoForm: PersonalInfoForm = {
+    email: '',
+    firstName: '',
+    lastName: '',
+    phoneNumber: '',
+    zipCode: '',
+  };
+  mechConditionForm: MechConditionForm = {
+    additionalDetails: '',
+    floodFireDamage: '',
+    mechanicalCondition: '',
+    otherWarning: '',
+    runnable: '',
+    warningLights: '',
+    warningLightsValues: [],
+  };
+  intConditionForm: IntConditionForm = {
+    interiorCondition: '',
+    seats: '',
+    smokedIn: '',
+  };
+  extConditionForm: ExtConditionForm = {
+    afterMarket: [],
+    dents: '',
+    exteriorCondition: '',
+    hailDamage: '',
+    otherAfterMarket: '',
+    paintChipping: '',
+    rust: '',
+    scratches: '',
+    scratchesPanels: null,
+    tiresAndWheels: '',
+  };
   brand = 'vroom';
   dealership = 'vroom';
   form = 'sell';

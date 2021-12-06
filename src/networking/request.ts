@@ -174,7 +174,7 @@ export const getInstitutionLogo = async (id: string): Promise<any> => {
 export const postAppraisal = async (
   data: any
 ): Promise<Response<AppraisalRespData>> => {
-  const url = `${ENVS.VROOM_URL}/suyc-api/v1/acquisition/appraisal`;
+  const url = `${VROOM_URL}/suyc-api/v1/acquisition/appraisal`;
   const retVal = await client.httpRequest<AppraisalRespData>({
     method: 'post',
     url,

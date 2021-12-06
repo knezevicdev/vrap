@@ -95,8 +95,6 @@ export function makeRequestBody(appraisalData) {
     DateSubmitted: now,
     lead_id,
     anonymous_id,
-    // form: appraisalData.formType,
-    // experimentIds: appraisalData.allExperiments,
   };
   Object.assign(
     data,

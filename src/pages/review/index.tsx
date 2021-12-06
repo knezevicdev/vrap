@@ -33,28 +33,26 @@ const AppraisalReview: NextPage<Prop> = () => {
   return (
     <Page name="Review Your Appraisal">
       <Header />
-      {!store.absmart.loading && (
-        <Contents>
-          <AppraisalContainer>
-            <ReviewContainer>
-              {hasData ? (
-                <AppraisalReviewViewDetail />
-              ) : (
-                <Container>
-                  <p>
-                    No data found, if you are not automatically redirected in 5
-                    seconds please use the link below to go back to appraisal
-                    form.
-                  </p>
-                  <p>
-                    <a href="/sell/vehicleInformation">Appraisal Form Link</a>
-                  </p>
-                </Container>
-              )}
-            </ReviewContainer>
-          </AppraisalContainer>
-        </Contents>
-      )}
+      <Contents>
+        <AppraisalContainer>
+          <ReviewContainer>
+            {hasData ? (
+              <AppraisalReviewViewDetail />
+            ) : (
+              <Container>
+                <p>
+                  No data found, if you are not automatically redirected in 5
+                  seconds please use the link below to go back to appraisal
+                  form.
+                </p>
+                <p>
+                  <a href="/sell/vehicleInformation">Appraisal Form Link</a>
+                </p>
+              </Container>
+            )}
+          </ReviewContainer>
+        </AppraisalContainer>
+      </Contents>
       <Footer />
     </Page>
   );

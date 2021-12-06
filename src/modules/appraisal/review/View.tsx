@@ -41,7 +41,7 @@ const AppraisalReviewViewDetail: React.FC<Props> = ({ viewModel, store }) => {
       {isLoading && (
         <WhiteBox>
           <SpinnerContainer>
-            <VroomSpinner size="lg" />
+            <VroomSpinner />
           </SpinnerContainer>
         </WhiteBox>
       )}
