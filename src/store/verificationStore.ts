@@ -318,4 +318,8 @@ export class VerificationStore {
   setLastFourSSN(value: string): void {
     this.lastFourSSN = value;
   }
+
+  setOfferId(value: string): void {
+    this.offerId = value;
+  }
 }

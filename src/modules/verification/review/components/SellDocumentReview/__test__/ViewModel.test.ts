@@ -34,4 +34,14 @@ describe('Pickup Infomation Review component test', () => {
     expect(viewModel.registration).toEqual('Registration');
     expect(viewModel.odometer).toEqual('Odometer Picture');
   });
+
+  it('when click handleEdit should call window location href', () => {
+    stores.verification.setOfferId('123');
+    viewModel.handleEditClick();
+    Object.defineProperty(window, 'location', {
+      value: {
+        href: `/sell/verification/documents/123`,
+      },
+    });
+  });
 });
