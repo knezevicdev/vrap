@@ -1,12 +1,12 @@
-import { greenCheckPath, numberIcon } from '@app/assets/assets';
-import PrevNextButtons from '@app/pages/Deal/components/PrevNextButtons';
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import PrimaryButton from '@app/components/Button/PrimaryButton';
+import { numberIcon, greenCheckPath } from '@app/assets/assets';
+import ToolTip from '@app/components/ToolTip';
+import PrevNextButtons from '@app/pages/Deal/components/PrevNextButtons';
 
-import PrimaryButton from './components/Button/PrimaryButton';
-import ToolTip from './ToolTip';
-
-const MultiStepForm = (props) => {
+const MultiStepForm = props => {
   const {
     formTitle,
     formSubtittleSection,
@@ -19,7 +19,7 @@ const MultiStepForm = (props) => {
     nextText = 'Next',
     submitText = 'Review',
     appraisalTitle,
-    disableExperiments,
+    disableExperiments
   } = props;
 
   useEffect(() => {
@@ -65,14 +65,14 @@ const MultiStepForm = (props) => {
 
         window.scrollTo({
           top: offsetPosition,
-          behavior: 'smooth',
+          behavior: 'smooth'
         });
       }, 305);
     }
   }, [activeSection]);
 
   const handleRefreshButton = () => {
-    sections.forEach((section) => {
+    sections.forEach(section => {
       section.form.resetForm();
     });
 
@@ -159,7 +159,7 @@ const MultiStepForm = (props) => {
     } else {
       return (
         <NextButton
-          onClick={(e) => handleOnNext(e, onNextIntercept)}
+          onClick={e => handleOnNext(e, onNextIntercept)}
           disabled={formIsInvalid}
           data-qa={'Continue'}
         >
@@ -211,7 +211,7 @@ const MultiStepForm = (props) => {
       showDialog,
       title,
       data,
-      onNextIntercept,
+      onNextIntercept
     } = formComponent;
     const CurrentComponent = component;
     const isActive = idx === activeSection;
@@ -297,27 +297,27 @@ const Block = styled.div`
 
 const FormTitle = styled.h1`
   padding: 20px 0px;
-  ${(props) => props.theme.typography.h18()}
+  ${props => props.theme.typography.h18()}
   text-align: left;
-  ${(props) =>
+  ${props =>
     props.theme.addStylesFor({
       mobile: `text-align: center;
       padding-bottom: 16px;
       padding-top: 15px;
-      ${props.theme.typography.h4()}`,
+      ${props.theme.typography.h4()}`
     })}
 `;
 
 const FormRefresh = styled.div`
   margin: auto 0;
-  color: ${(props) => props.theme.colors.vroomRed};
+  color: ${props => props.theme.colors.vroomRed};
   font-weight: bold;
   cursor: pointer;
 `;
 
 const FormStep = styled.div`
   padding: 20px 0px;
-  border-top: 1px solid ${(props) => props.theme.colors.gray8};
+  border-top: 1px solid ${props => props.theme.colors.gray8};
 `;
 
 const FormSection = styled.div`
@@ -333,7 +333,7 @@ const FormSection = styled.div`
   }
 
   /* big max-height is used when animating variable height transitions */
-  ${(props) =>
+  ${props =>
     props.isActive === true &&
     `
       max-height: 4500px;
@@ -354,19 +354,18 @@ const StepNumber = styled.div`
 `;
 
 const StepTitle = styled.div`
-  ${(props) => props.theme.typography.sectionTitleSemi3}
-  color: ${(props) => props.theme.colors.dark};
+  ${props => props.theme.typography.sectionTitleSemi3}
+  color: ${props => props.theme.colors.dark};
 
-  ${(props) =>
-    props.isActive === false && `color: ${props.theme.colors.gray2};`}
-  ${(props) => props.theme.media.lte('mobile')} {
+  ${props => props.isActive === false && `color: ${props.theme.colors.gray2};`}
+  ${props => props.theme.media.lte('mobile')} {
     font-size: 18px;
   }
 `;
 
 const EditStep = styled.div`
   padding-left: 10px;
-  color: ${(props) => props.theme.colors.vroomRed};
+  color: ${props => props.theme.colors.vroomRed};
   cursor: pointer;
   line-height: 26px;
 `;
@@ -376,7 +375,7 @@ const TimeEst = styled.div`
   font-size: 18px;
   letter-spacing: 0.25px;
   line-height: 25px;
-  color: ${(props) => props.theme.colors.gray2};
+  color: ${props => props.theme.colors.gray2};
   padding-left: 5px;
   white-space: nowrap;
 `;
@@ -386,9 +385,9 @@ const NextButton = styled(PrimaryButton)`
   min-width: 180px;
   margin: 20px 0;
 
-  ${(props) =>
+  ${props =>
     props.theme.addStylesFor({
-      mobile: 'width: 100%;',
+      mobile: 'width: 100%;'
     })};
 `;
 const NextButtonWrapper = styled.span`
@@ -407,5 +406,24 @@ const FormWarning = styled.div`
     text-align: center;
   }
 `;
+
+MultiStepForm.propTypes = {
+  formTitle: PropTypes.string,
+  formSubtittleSection: PropTypes.func,
+  sections: PropTypes.array,
+  onDone: PropTypes.func,
+  onNext: PropTypes.func,
+  onNextIntercept: PropTypes.func,
+  active: PropTypes.number,
+  customAnalyticsFunc: PropTypes.func,
+  refreshButton: PropTypes.bool,
+  match: PropTypes.object,
+  history: PropTypes.object,
+  showDialog: PropTypes.func,
+  nextText: PropTypes.string,
+  submitText: PropTypes.string,
+  appraisalTitle: PropTypes.string,
+  disableExperiments: PropTypes.bool
+};
 
 export default MultiStepForm;

@@ -1,0 +1,38 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<MultiTab /> rendering should match the snapshot 1`] = `
+<styled.div>
+  <styled.div>
+    <styled.div
+      isActive={true}
+      key="0"
+      onClick={[Function]}
+      tabWidth={50}
+    >
+      Section 1
+    </styled.div>
+    <styled.div
+      isActive={false}
+      key="1"
+      onClick={[Function]}
+      tabWidth={50}
+    >
+      Section 2
+    </styled.div>
+  </styled.div>
+  <styled.div>
+    <styled.div
+      isActive={true}
+      key="0"
+    >
+      <FirstInfoTab />
+    </styled.div>
+    <styled.div
+      isActive={false}
+      key="1"
+    >
+      <SecondInfoTab />
+    </styled.div>
+  </styled.div>
+</styled.div>
+`;

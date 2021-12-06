@@ -1,0 +1,71 @@
+import React, { useEffect, useRef } from 'react';
+import styled from 'styled-components';
+import Input from '@app/components/Input';
+import PropTypes from 'prop-types';
+import {
+  isValidLicense,
+  getLicenseErrors
+} from '@app/lib/validation/validation';
+import { formatLicensePlate } from '@app/lib/validation/formatting';
+import { FormFields } from './Inputs.language';
+
+const LicenseInput = ({ field, className, onKeyPressEnter }) => {
+  const ref = useRef();
+  const { onChange } = field;
+
+  useEffect(() => {
+    // This is to prevent a bug for android https://tdalabs.atlassian.net/browse/CW-91
+    if (ref && ref.current) {
+      ref.current.blur();
+    }
+  }, []);
+
+  const handleOnChange = event => {
+    const value = formatLicensePlate(event.target.value);
+    const error = !isValidLicense(value);
+    const errorMessage = getLicenseErrors(value);
+    onChange({ ...field, value, error, errorMessage });
+  };
+
+  const { placeholder, label } = FormFields.license;
+
+  return (
+    <LicenseField
+      className={className}
+      innerRef={ref}
+      field={{
+        ...field,
+        placeholder: placeholder,
+        label: label,
+        onChange: handleOnChange,
+        onKeyPress: onKeyPressEnter
+      }}
+    />
+  );
+};
+
+const LicenseField = styled(Input)`
+  width: 100%;
+  margin-right: 15px;
+
+  ${props => props.theme.media.gte('tablet')} {
+    margin-right: 20px;
+  }
+
+  & label,
+  span {
+    text-align: left;
+  }
+
+  & input {
+    width: 100%;
+  }
+`;
+
+LicenseInput.propTypes = {
+  field: PropTypes.object,
+  className: PropTypes.string,
+  onKeyPressEnter: PropTypes.func
+};
+
+export default LicenseInput;
