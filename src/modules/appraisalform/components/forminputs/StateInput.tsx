@@ -1,5 +1,4 @@
 import React from 'react';
-import styled from 'styled-components';
 import Dropdown from '@app/components/Dropdown';
 import PropTypes from 'prop-types';
 import { FormFields } from '../Inputs.language';
@@ -13,27 +12,19 @@ const StateInput = ({ field, className, onKeyPressEnter }) => {
   };
 
   return (
-    <>
-      <Label>{FormFields.tradeInState.label}</Label>
-      <Dropdown
-        className={className}
-        field={{
-          ...field,
-          placeholder: FormFields.tradeInState.placeholder,
-          label: FormFields.tradeInState.subLabel,
-          type: FormFields.tradeInState.type,
-          onChange: handleOnChange,
-          onKeyPress: onKeyPressEnter
-        }}
-      />
-    </>
+    <Dropdown
+      className={className}
+      field={{
+        ...field,
+        placeholder: FormFields.state.placeholder,
+        label: FormFields.state.label,
+        type: FormFields.state.type,
+        onChange: handleOnChange,
+        onKeyPress: onKeyPressEnter
+      }}
+    />
   );
 };
-
-const Label = styled.div`
-  ${props => props.theme.typography.body}
-  margin-bottom: 8px;
-`;
 
 StateInput.propTypes = {
   field: PropTypes.object,

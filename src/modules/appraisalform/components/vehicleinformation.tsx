@@ -1,10 +1,11 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
 import {
   VehicleInfoLeaseCopy,
   VehicleInfoText,
-} from './AppraisalForm.language';
+} from '../AppraisalForm.language';
 import AppraisalLicenseToVin from './forminputs/AppraisalLicenseToVin';
 import ExactMileageInput from './forminputs/ExactMileageInput';
 import ExtColorInput from './forminputs/ExtColorInput';
@@ -13,7 +14,6 @@ import TrimInput from './forminputs/TrimInput';
 import VehicleOptionsGroup from './forminputs/VehicleOptionsGroup';
 import VinFormInput from './forminputs/VinFormInput';
 import { trackMileageChange } from './lib/analytics/analytics/appraisal';
-import { VROOM_VIN_SUBSTRING } from './misc';
 import { selectExperiment } from './store/absmartly/selectors';
 import { APPRAISAL_HIDE_HOW_MANY_KEYS_QUESTION } from './store/absmartly/types';
 import {
@@ -22,7 +22,7 @@ import {
   handleCarfaxCall,
 } from './store/appraisal/operations';
 import { selectUUID } from './store/auth/selectors';
-import { getVinErrors, isValidVin } from './validation';
+import { getVinErrors, isValidVin, VROOM_VIN_SUBSTRING } from './validation';
 
 const VehicleInformation = ({
   match,
@@ -34,17 +34,17 @@ const VehicleInformation = ({
   gradeCheck,
   disableExperiments,
   isHideHowManyKeysExperiment,
-}) => {
-  const [vinLoader, setVinLoader] = useState(false);
-  const [trimLoader, setTrimLoader] = useState(false);
-  const [vinDecoded, setVinDecoded] = useState(false);
-  const [year, setYear] = useState(null);
-  const [make, setMake] = useState(null);
-  const [model, setModel] = useState(null);
-  const [trims, setTrims] = useState([]);
-  const [options, setOptions] = useState([]);
-  const [gqlOptions, setGqlOptions] = useState([]);
-  const [extColors, setExtColors] = useState([
+}: any) => {
+  const [vinLoader, setVinLoader]: any = useState(false);
+  const [trimLoader, setTrimLoader]: any = useState(false);
+  const [vinDecoded, setVinDecoded]: any = useState(false);
+  const [year, setYear]: any = useState(null);
+  const [make, setMake]: any = useState(null);
+  const [model, setModel]: any = useState(null);
+  const [trims, setTrims]: any = useState([]);
+  const [options, setOptions]: any = useState([]);
+  const [gqlOptions, setGqlOptions]: any = useState([]);
+  const [extColors, setExtColors]: any = useState([
     { label: 'Black', value: 'Black' },
     { label: 'Blue', value: 'Blue' },
     { label: 'Brown', value: 'Brown' },
@@ -97,7 +97,7 @@ const VehicleInformation = ({
   }, [location.pathname]);
 
   useEffect(() => {
-    const fieldsToUpdate = {};
+    const fieldsToUpdate: any = {};
     const { vin } = fields;
     setOptions([]);
     if (!vinDecoded || vin.value === '') {
@@ -143,7 +143,7 @@ const VehicleInformation = ({
 
   useEffect(() => {
     const { value: trimValue, error } = fields.trim;
-    const trimData = trims.find((trim) => trim.value === trimValue);
+    const trimData = trims.find((trim: any) => trim.value === trimValue);
 
     if (fields.vin.value !== '') {
       if (trims.length === 1) {
@@ -158,7 +158,7 @@ const VehicleInformation = ({
     }
   }, [trims.length, fields.vin.value]);
 
-  const handleDecodeVin = (vinToDecode) => {
+  const handleDecodeVin = (vinToDecode: string) => {
     const validVin =
       vinToDecode.includes(VROOM_VIN_SUBSTRING) || isValidVin(vinToDecode);
     const errorMessage = getVinErrors(vinToDecode);
@@ -177,14 +177,14 @@ const VehicleInformation = ({
       setVinLoader(true);
 
       decodeVin(vinToDecode)
-        .then((response) => {
+        .then((response: any) => {
           const { basicData, trimData, colorData, options } = response;
           setGqlOptions(options);
-          const trimsArr = [];
+          const trimsArr: any = [];
           let extColorArr = [];
 
           if (trimData.trims) {
-            trimData.trims.forEach((t) => {
+            trimData.trims.forEach((t: any) => {
               trimsArr.push({
                 ...t,
                 label: t.long_description,
@@ -195,7 +195,7 @@ const VehicleInformation = ({
           }
 
           if (colorData.colors) {
-            extColorArr = colorData.colors.map((color) => {
+            extColorArr = colorData.colors.map((color: any) => {
               return {
                 label: color,
                 value: color,
@@ -223,7 +223,7 @@ const VehicleInformation = ({
     }
   };
 
-  const handleTrimChange = (value, error) => {
+  const handleTrimChange = (value: any, error: any) => {
     const { trim } = fields;
     trim.onChange({ ...trim, ...value, error });
   };
@@ -396,7 +396,7 @@ const VehicleOptionsField = styled(VehicleOptionsGroup)`
   padding-top: 10px;
 `;
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state: any) => {
   const experimentUUID = selectUUID(state);
 
   return {

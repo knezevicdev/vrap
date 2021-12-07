@@ -7,15 +7,24 @@ import {
   Prices,
   VerificationRespData,
 } from './models/Price';
+import { checkAppraisalPayload, getDummyOfferResp } from './utils';
 
 import ACCEPT_REJECT_OFFER from 'src/graphql/mutations/acceptRejectOffer.graphql';
 import CREATE_USER_PAYMENT_ACCOUNT from 'src/graphql/mutations/createUserPaymentAccount.graphql';
+import GRADE_CHECK from 'src/graphql/mutations/gradecheck.graphql';
+import DECODE_VIN from 'src/graphql/queries/decodeVin.graphql';
 import GET_PLAID_TOKEN from 'src/graphql/queries/getLinkToken.graphql';
 import {
+  AppraisalPayload,
+  AppraisalResp,
+  GradeCheckResp,
+  LtoVPayload,
+  LtoVResp,
   MailingAddress,
   PaymentOverviewFormValues,
   PlaidData,
   PlaidTokenResp,
+  VinDecodeResp,
 } from 'src/interfaces.d';
 import {
   DocumentResponse,
@@ -168,4 +177,72 @@ export const getInstitutionLogo = async (id: string): Promise<any> => {
     method: 'get',
     url,
   });
+};
+
+export const handleLicenseToVinApi = async (
+  data: LtoVPayload
+): Promise<Response<LtoVResp>> => {
+  const url = `${VROOM_URL}/suyc-api/v1/GetVinByLicencePlate`;
+  const payload = {
+    payload: data,
+  };
+
+  return await client.httpRequest({
+    method: 'post',
+    url,
+    data: payload,
+  });
+};
+
+export const postAppraisal = async (
+  data: AppraisalPayload
+): Promise<Response<AppraisalResp>> => {
+  const appraisalRequestScore = checkAppraisalPayload(data);
+  const url = `${VROOM_URL}/suyc-api/v1/acquisition/appraisal`;
+
+  if (appraisalRequestScore >= 3) {
+    return getDummyOfferResp(data);
+  } else {
+    const payload = {
+      payload: data,
+    };
+
+    return await client.httpRequest({
+      method: 'post',
+      url,
+      data: payload,
+    });
+  }
+};
+
+export const getVinDecode = async (
+  vin: string
+): Promise<Response<VinDecodeResp>> => {
+  const res = await client.gqlRequest<
+    VinDecodeResp,
+    GQLTypes.QueryDecodeVinArgs
+  >({
+    document: DECODE_VIN,
+    variables: { vin, colors: true, options: true },
+  });
+
+  return res;
+};
+
+export const getGradeCheck = async (
+  make: string,
+  model: string,
+  trim: string,
+  miles: number,
+  vin: string
+): Promise<Response<GradeCheckResp>> => {
+  const res = await client.gqlRequest<
+    GradeCheckResp,
+    GQLTypes.MutationGradeArgs
+  >({
+    document: GRADE_CHECK,
+    variables: { make, model, trim, miles, vin },
+  });
+
+  return res;
 };

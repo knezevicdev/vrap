@@ -1,0 +1,3 @@
+mutation GRADE_CHECK($make: String!, $model: String!, $trim: String!, $miles: Int!, $vin: String!) {
+  grade (make: $make, model: $model, trim: $trim, miles: $miles, vin: $vin)
+}
