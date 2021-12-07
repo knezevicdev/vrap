@@ -160,12 +160,6 @@ export default class VerificationReviewSectionViewModel {
 
   async verificationSubmit(): Promise<void> {
     const { deposit } = this.store;
-    if (this.isPaymentRequireExp() && deposit.mutationInput) {
-      await this.handlePlaidSubmit();
-    }
-    if (this.isPaymentRequireExp() && !deposit.mutationInput) {
-      await this.submitPayment();
-    }
     const payload = this.createVerificationPayload();
     const data = {
       source: 'vroom.com',
@@ -173,44 +167,60 @@ export default class VerificationReviewSectionViewModel {
       timestamp: new Date().toISOString(),
       payload,
     };
-    const verificationResponse = await patchVerification(data);
-    if (isErrorResponse(verificationResponse)) throw verificationResponse;
+    try {
+      const verificationResponse = await patchVerification(data);
+      if (isErrorResponse(verificationResponse)) throw verificationResponse;
 
-    const responseData = verificationResponse.data.data;
-    const {
-      owner_email_address,
-      owner_first_name,
-      offer_price,
-      poq,
-    } = responseData;
-
-    const finalPayment =
-      poq !== null && poq.final_payment ? poq.final_payment : null;
-
-    this.analyticsHandler.trackVerificationSubmitted(
-      owner_email_address,
-      owner_first_name
-    );
-
-    const priceId =
-      this.store.verification.priceId || localStorage.getItem('priceId');
-    if (this.isPaymentRequireExp()) {
-      window.location.href = '/appraisal/congratulations';
-      return;
-    }
-
-    if (finalPayment !== null) {
-      if (finalPayment > 0) {
-        window.location.href = `/appraisal/paymentmethod?priceId=${priceId}`;
-      } else {
-        window.location.href = '/appraisal/congratulations';
+      if (this.isPaymentRequireExp() && deposit.mutationInput) {
+        await this.handlePlaidSubmit();
       }
-    } else {
-      if (offer_price && offer_price > 0) {
-        window.location.href = `/appraisal/paymentmethod?priceId=${priceId}`;
-      } else {
-        window.location.href = '/appraisal/congratulations';
+      if (this.isPaymentRequireExp() && !deposit.mutationInput) {
+        await this.submitPayment();
       }
+
+      const responseData = verificationResponse.data.data;
+      const {
+        owner_email_address,
+        owner_first_name,
+        offer_price,
+        poq,
+      } = responseData;
+
+      const finalPayment =
+        poq !== null && poq.final_payment ? poq.final_payment : null;
+
+      this.analyticsHandler.trackVerificationSubmitted(
+        owner_email_address,
+        owner_first_name
+      );
+
+      localStorage.removeItem('review_payment_values');
+      localStorage.removeItem('review_payment_type');
+
+      const priceId =
+        this.store.verification.priceId || localStorage.getItem('priceId');
+      if (this.isPaymentRequireExp()) {
+        window.location.href = '/appraisal/congratulations';
+        this.store.verification.setLoading(false);
+        return;
+      }
+
+      if (finalPayment !== null) {
+        if (finalPayment > 0) {
+          window.location.href = `/appraisal/paymentmethod?priceId=${priceId}`;
+        } else {
+          window.location.href = '/appraisal/congratulations';
+        }
+      } else {
+        if (offer_price && offer_price > 0) {
+          window.location.href = `/appraisal/paymentmethod?priceId=${priceId}`;
+        } else {
+          window.location.href = '/appraisal/congratulations';
+        }
+      }
+      this.store.verification.setLoading(false);
+    } catch (err) {
+      this.store.verification.setLoading(false);
     }
   }
 

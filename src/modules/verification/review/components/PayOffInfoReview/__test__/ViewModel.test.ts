@@ -33,4 +33,14 @@ describe('Pay Off Review component test', () => {
     fn();
     expect(fn).toHaveReturnedWith('No');
   });
+
+  it('when click handleEdit should call window location href', () => {
+    stores.verification.setOfferId('123');
+    viewModel.handleEditClick();
+    Object.defineProperty(window, 'location', {
+      value: {
+        href: `/sell/verification/documents/123`,
+      },
+    });
+  });
 });

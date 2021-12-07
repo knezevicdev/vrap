@@ -29,4 +29,14 @@ describe('Owner Infomation Review component test', () => {
     expect(viewModel.address).toEqual('Address');
     expect(viewModel.edit).toEqual('Edit');
   });
+
+  it('when click handleEdit should call window location href', () => {
+    stores.verification.setOfferId('123');
+    viewModel.handleEditClick();
+    Object.defineProperty(window, 'location', {
+      value: {
+        href: `/sell/verification/documents/123`,
+      },
+    });
+  });
 });

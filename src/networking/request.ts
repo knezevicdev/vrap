@@ -114,7 +114,7 @@ export const submitPaymentOptionSelected = async (
   const res = await client.httpRequest<PaymentOptionsRespData>({
     method: 'post',
     url,
-    data,
+    data: { payload: data },
   });
 
   return res;
