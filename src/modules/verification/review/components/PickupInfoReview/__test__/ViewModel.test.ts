@@ -24,4 +24,14 @@ describe('Pickup Infomation Review component test', () => {
     expect(viewModel.phoneNumber).toEqual('Phone Number');
     expect(viewModel.edit).toEqual('Edit');
   });
+
+  it('when click handleEdit should call window location href', () => {
+    stores.verification.setOfferId('123');
+    viewModel.handleEditClick();
+    Object.defineProperty(window, 'location', {
+      value: {
+        href: `/sell/verification/documents/123`,
+      },
+    });
+  });
 });
