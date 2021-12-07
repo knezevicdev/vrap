@@ -74,6 +74,11 @@ const PlaidButtonView: React.FC<Props> = ({
       if (viewModel.isPaymentRequireExp()) {
         store.deposit.setInstitutionId(metaData.institution.institution_id);
         store.deposit.setMutationInput(mutationInput);
+        localStorage.setItem('review_payment_type', 'ach');
+        localStorage.setItem(
+          'review_payment_values',
+          JSON.stringify(mutationInput)
+        );
       } else {
         plaidSuccess(mutationInput, onPlaidSubmitting);
       }
