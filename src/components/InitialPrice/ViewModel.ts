@@ -52,7 +52,7 @@ class InitialPriceViewModel {
       'ac-account-create'
     );
     const url = isAccountCreateAbTest
-      ? '/myaccount/create/suyc'
+      ? `/myaccount/create/suyc?redirect=https://www.vroom.com/sell/verification/owner/${this.priceId}`
       : `/sell/verification/owner/${this.priceId}`;
     window.location.href = url;
   };

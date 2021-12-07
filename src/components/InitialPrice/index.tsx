@@ -15,7 +15,7 @@ const InitialPrice: React.FC<{ store: PriceStore }> = ({ store }) => {
   const viewModel = new InitialPriceViewModel(
     store,
     analyticsHandler,
-    appStore
+    appStore.store
   );
   const isFaceliftExp = appStore.store.absmart.isInExperiment(
     'ac-appraisal-offer-facelift'
