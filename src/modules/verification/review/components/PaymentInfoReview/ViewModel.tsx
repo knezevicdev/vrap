@@ -13,11 +13,6 @@ export default class PaymentInfoReviewViewModel {
   constructor(private store: Store) {}
 
   handleEditClick(): void {
-    const storedPayment = localStorage.getItem('review_payment_values');
-    if (storedPayment) {
-      localStorage.removeItem('review_payment_values');
-      localStorage.removeItem('review_payment_type');
-    }
     window.location.href = `/appraisal/paymentmethod?priceId=${this.store.verification.offerId}`;
   }
 }
