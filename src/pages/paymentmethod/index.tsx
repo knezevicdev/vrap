@@ -73,6 +73,10 @@ const EPayOptions: NextPage<Props> = ({ brand }) => {
   const [stateDropdownOpen, setStateDropdown] = useState(false);
 
   useEffect(() => {
+    const storedPriceId = localStorage.getItem('priceId');
+    if (priceId !== storedPriceId) {
+      localStorage.setItem('priceId', priceId);
+    }
     oStore.init(priceId);
     ddStore.initClientSide(priceId);
     poStore.init(priceId);
