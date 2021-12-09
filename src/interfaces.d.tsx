@@ -88,3 +88,103 @@ export interface MutationInput {
   ReferenceId: string;
   Email: string;
 }
+
+export interface VehicleArr {
+  inputLicensePlate: string;
+  make: string;
+  modelYear: string;
+  plateType: string;
+  processingType: string;
+  restrictedStateIndicator: string;
+  stateOfRegistration: string;
+  vin: string;
+  vinPattern: string;
+}
+
+export interface LtoVResp {
+  data: {
+    vehicles: VehicleArr[];
+  };
+}
+
+export interface LtoVPayload {
+  licensePlate: string;
+  state: string;
+}
+
+export interface VinDecodeResp {
+  decodeVIN: {
+    basicData: {
+      database: string;
+      make: string;
+      model: string;
+      source: string;
+      year: number;
+    };
+    colorData: {
+      colors: string[];
+      source: string;
+    };
+    options: [];
+    trimData: {
+      database: string;
+      source: string;
+      trims: {
+        Uid: number;
+        description: string;
+        doors: number;
+        long_description: string;
+        options: [];
+        source: string;
+      };
+    };
+  };
+}
+
+export interface GradeCheckResp {
+  grade: boolean;
+}
+
+export interface AppraisalResp {
+  resp: boolean;
+}
+
+export interface AppraisalPayload {
+  DateSubmitted: string;
+  additionalDetails: string;
+  afterMarket: [];
+  brand: string;
+  dealership: string;
+  email: string;
+  exteriorColor: string;
+  exteriorCondition: string;
+  firstName: string;
+  floodFireDamage: string;
+  form: string;
+  hailDamage: string;
+  hasAccident: string;
+  interiorCondition: string;
+  keysAmount: string;
+  lastName: string;
+  lead_id: string;
+  make: string;
+  mechanicalCondition: string;
+  mileage: number;
+  model: string;
+  options: [];
+  otherAfterMarket: string;
+  otherWarning: string;
+  phoneNumber: string;
+  runnable: string;
+  seats: string;
+  smokedIn: string;
+  tiresAndWheels: string;
+  titleStatus: string;
+  trim: string;
+  type: string;
+  vin: string;
+  warningLights: string;
+  warningLightsValues: [];
+  year: number;
+  zipCode: string;
+}
