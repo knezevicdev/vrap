@@ -81,6 +81,157 @@ class AnalyticsHandler extends BaseAnalyticsHandler {
     const properties = { email, 'Account.FirstName': firstName, category };
     this.track(event, properties);
   }
+
+  trackLicenseToVin(label: string, category: string): void {
+    const event = `What's My Car Worth? Clicked`;
+    const properties = { label, category };
+
+    this.track(event, properties);
+  }
+
+  trackSelectYourVehicle(category: string): void {
+    const event = 'Select Your Vehicle Viewed';
+    const properties = { category };
+    this.track(event, properties);
+  }
+
+  trackMileageChange(): void {
+    const event = 'Mileage Entered';
+    const category = 'Sell';
+    const action = 'Click';
+    const properties = { action, category };
+
+    this.track(event, properties);
+  }
+
+  trackColorChange(): void {
+    const event = 'Color Selected';
+    const category = 'Sell';
+    const action = 'Click';
+    const properties = { action, category };
+
+    this.track(event, properties);
+  }
+
+  trackNumberOfKeysChange(): void {
+    const event = 'Keys Selected';
+    const category = 'Sell';
+    const action = 'Click';
+    const properties = { action, category };
+
+    this.track(event, properties);
+  }
+
+  trackTrimChange(): void {
+    const event = 'Trim Selected';
+    const category = 'Sell';
+    const action = 'Click';
+    const properties = { action, category };
+
+    this.track(event, properties);
+  }
+
+  trackProcessStart(): void {
+    const name = 'Sell Funnel';
+    const category = 'Sell';
+    const properties = { category };
+    const event = 'Appraisal Started';
+    const nameSection = 'Vehicle Information';
+
+    this.page(name, category);
+
+    this.track(event, properties);
+
+    this.page(nameSection, category);
+  }
+
+  trackStepComplete(step: any, formData: any): void {
+    const sections: any = {
+      0: 'Vehicle Information',
+      1: 'Vehicle History',
+      2: 'Interior Conditions',
+      3: 'Exterior Conditions',
+      4: 'Mechanical Condition',
+      5: 'Your Information',
+    };
+    const stepName: string = sections[step];
+    const details =
+      step === 3
+        ? {
+            'Signs of Rust': formData.extConditionForm.rust,
+            Dents: formData.extConditionForm.dents,
+            'Dents Panels': formData.extConditionForm.dentPanels,
+            'Paint Chipping': formData.extConditionForm.paintChipping,
+            'Paint Chipping Panels':
+              formData.extConditionForm.paintChippingPanels,
+            Scratches: formData.extConditionForm.scratches,
+            'Scratches Panels': formData.extConditionForm.scratchesPanels,
+            Modifications: formData.extConditionForm.afterMarket,
+            'Other Modifications': formData.extConditionForm.otherAfterMarket,
+          }
+        : {};
+
+    const event = `${stepName} Completed`;
+    const category = 'Sell';
+    const properties = {
+      category,
+      ...details,
+    };
+
+    this.track(event, properties);
+  }
+
+  trackNextStepViewed(step: any): void {
+    const sections: any = {
+      0: 'Vehicle Information',
+      1: 'Vehicle History',
+      2: 'Interior Conditions',
+      3: 'Exterior Conditions',
+      4: 'Mechanical Condition',
+      5: 'Your Information',
+    };
+    const stepName = sections[step];
+    const pageName = `${stepName} Viewed`;
+    const category = 'Sell';
+
+    this.page(pageName, category);
+  }
+
+  trackAppraisalReviewViewed(): void {
+    const pageName = 'Appraisal Review';
+    const category = 'Sell';
+
+    this.page(pageName, category);
+  }
+
+  trackAppraisalSubmitted(): void {
+    const pageName = 'Congratulations';
+    const category = 'Sell';
+
+    this.page(pageName, category);
+  }
+
+  trackIntentQuestion(intentAnswer: string): void {
+    const category = 'Sell';
+    const event = `Why Are You Here Completed`;
+    const properties = {
+      category,
+      label: intentAnswer,
+    };
+
+    this.track(event, properties);
+  }
+
+  trackPanelsTooltip(damageType: string): void {
+    const category = 'Sell';
+    const event = `Tool Tip Clicked`;
+    const properties = {
+      category,
+      label: damageType,
+    };
+
+    this.track(event, properties);
+  }
 }
 
 export default AnalyticsHandler;
