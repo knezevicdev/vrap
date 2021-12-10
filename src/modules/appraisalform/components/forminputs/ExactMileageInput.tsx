@@ -1,12 +1,18 @@
-import Input from '@app/components/Input';
-import { displayNumber } from '@app/lib/validation/displayFormatting';
-import { numbersOnly } from '@app/lib/validation/formatting';
-import PropTypes from 'prop-types';
 import React from 'react';
 
-import { FormFields } from '../Inputs.language';
+import { FormField, GenericObject } from '../../../../interfaces.d';
+import { displayNumber, numbersOnly } from '../formatting';
+import Input from '../Input';
+import { FormFields } from './Inputs.language';
 
-const ExactMileageInput = ({
+interface Props {
+  field: FormField;
+  showToolTip: boolean;
+  className: string;
+  handleOnBlur: () => void;
+}
+
+const ExactMileageInput: React.FC<Props> = ({
   field,
   showToolTip = true,
   className,
@@ -16,7 +22,7 @@ const ExactMileageInput = ({
   const mileage = displayNumber(value);
   const toolTipText = showToolTip ? FormFields.exactMileage.toolTip : null;
 
-  const handleOnChange = (event) => {
+  const handleOnChange = (event: GenericObject) => {
     const value = numbersOnly(event.target.value);
     onChange({ ...field, value, element: event.target });
   };
@@ -36,14 +42,6 @@ const ExactMileageInput = ({
       }}
     />
   );
-};
-
-ExactMileageInput.propTypes = {
-  field: PropTypes.object,
-  className: PropTypes.string,
-  isLegal: PropTypes.bool,
-  showToolTip: PropTypes.bool,
-  trackOnBlur: PropTypes.func,
 };
 
 export default ExactMileageInput;

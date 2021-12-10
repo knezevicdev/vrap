@@ -1,25 +1,38 @@
 import React from 'react';
 import styled from 'styled-components';
-import MultiTab from '@app/components/MultiTab/MultiTab';
-import MultiTabTheme from '@app/components/MultiTab/styles/multiTabSlider';
+
+import LicenseStateInput from '../LicenseToVin/components/LicenseStateInput';
 import {
   licensePlateTabText,
-  vinTabText
-} from '@app/components/LicenseToVin/LicenseToVinMain.language';
-import LicenseStateInput from '@app/components/LicenseToVin/components/LicenseStateInput';
-import VinFormInput from '@app/components/Form/Inputs/VinFormInput';
+  vinTabText,
+} from '../LicenseToVin/LicenseToVinMain.language';
+import MultiTab from '../MultiTab/MultiTab';
+import MultiTabTheme from '../MultiTab/styles/multiTabSlider';
+import VinFormInput from './VinFormInput';
 
-const AppraisalLicenseToVin = ({ vin, vinLoader, handleUpdate, active }) => {
+interface Props {
+  vin: string;
+  vinLoader: boolean;
+  handleUpdate: (vin: string) => void;
+  active: number;
+}
+
+const AppraisalLicenseToVin: React.FC<Props> = ({
+  vin,
+  vinLoader,
+  handleUpdate,
+  active,
+}) => {
   const tabSections = [
     {
       component: LicenseStateInput,
-      title: licensePlateTabText
+      title: licensePlateTabText,
     },
     {
       component: VinFormInput,
       props: { field: vin, vinLoader, handleUpdate },
-      title: vinTabText
-    }
+      title: vinTabText,
+    },
   ];
 
   return (
@@ -36,7 +49,7 @@ const AppraisalLicenseToVin = ({ vin, vinLoader, handleUpdate, active }) => {
 const AppraisalLicenseToVinContainer = styled.div`
   width: 48%;
 
-  ${props => props.theme.media.mobile} {
+  ${(props) => props.theme.media.mobile} {
     width: 100%;
   }
 `;

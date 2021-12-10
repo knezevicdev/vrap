@@ -1,21 +1,28 @@
-import React, { useState } from 'react';
-import Input from '@app/components/Input';
-import PropTypes from 'prop-types';
-import { displayPhoneNumber } from '@app/lib/validation/displayFormatting';
-import { isValidPhoneNumber } from '@app/lib/validation/validation';
-import { numbersOnlyString } from '@app/lib/validation/formatting';
-import { FormFields } from './Inputs.language';
 import { isEmpty } from 'lodash';
-import { track } from '@app/lib/analytics/AnalyticsLib';
+import React from 'react';
 
-const PhoneInput = ({ field, className, optional = false, analytics }) => {
+import { displayPhoneNumber, numbersOnlyString } from '../formatting';
+import Input from '../Input';
+import { isValidPhoneNumber } from '../validation';
+import { FormFields } from './Inputs.language';
+
+interface Props {
+  field: any;
+  className: string;
+  optional: boolean;
+}
+
+const PhoneInput: React.FC<Props> = ({
+  field,
+  className,
+  optional = false,
+}) => {
   const { value, error, onChange } = field;
   const val = value || '';
   const number = numbersOnlyString(val);
   const phone = displayPhoneNumber(number);
-  const [tracked, setTracked] = useState(false);
 
-  const handleOnChange = event => {
+  const handleOnChange = (event: any) => {
     const value = event.target.value;
     // If the field is optional and empty, it's still considered valid
     const error =
@@ -23,10 +30,6 @@ const PhoneInput = ({ field, className, optional = false, analytics }) => {
     const maxPhoneLength = 15;
     if (value.length < maxPhoneLength) {
       onChange({ ...field, value, error });
-    }
-    if (analytics && !tracked) {
-      track({ ...analytics, eventName: 'Phone Number entered' });
-      setTracked(true);
     }
   };
 
@@ -44,17 +47,10 @@ const PhoneInput = ({ field, className, optional = false, analytics }) => {
         error: error,
         value: phone,
         onChange: handleOnChange,
-        dataQa: 'Phone Number'
+        dataQa: 'Phone Number',
       }}
     />
   );
-};
-
-PhoneInput.propTypes = {
-  field: PropTypes.object,
-  className: PropTypes.string,
-  optional: PropTypes.bool,
-  analytics: PropTypes.object
 };
 
 export default PhoneInput;

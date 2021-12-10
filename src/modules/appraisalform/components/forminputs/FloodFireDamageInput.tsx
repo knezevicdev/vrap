@@ -1,12 +1,18 @@
 import React from 'react';
-import SelectBoxes from '@app/components/SelectBoxes';
-import PropTypes from 'prop-types';
-import { FormFields } from '../Inputs.language';
 
-const FloodFireDamageInput = ({ field, className }) => {
+import { FormField } from '../../../../interfaces.d';
+import SelectBoxes from '../SelectBoxes';
+import { FormFields } from './Inputs.language';
+
+interface Props {
+  field: FormField;
+  className: string;
+}
+
+const FloodFireDamageInput: React.FC<Props> = ({ field, className }) => {
   const { onChange } = field;
 
-  const handleOnChange = value => {
+  const handleOnChange = (value: string) => {
     onChange({ ...field, value });
   };
 
@@ -17,19 +23,14 @@ const FloodFireDamageInput = ({ field, className }) => {
         ...field,
         options: [
           FormFields.floodFireDamage.yes,
-          FormFields.floodFireDamage.no
+          FormFields.floodFireDamage.no,
         ],
         label: FormFields.floodFireDamage.label,
         onClick: handleOnChange,
-        value: field.value
+        value: field.value,
       }}
     />
   );
-};
-
-FloodFireDamageInput.propTypes = {
-  field: PropTypes.object,
-  className: PropTypes.string
 };
 
 export default FloodFireDamageInput;

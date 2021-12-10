@@ -1,11 +1,20 @@
 import React from 'react';
-import Dropdown from '@app/components/Dropdown';
-import PropTypes from 'prop-types';
-import { FormFields } from '../Inputs.language';
 
-const StateInput = ({ field, className, onKeyPressEnter }) => {
+import { GenericObject } from '../../../../interfaces.d';
+import Dropdown from '../Dropdown';
+import { FormFields } from './Inputs.language';
+
+interface Props {
+  field: GenericObject;
+  className: string;
+  maSelectable: boolean;
+  paSelectable: boolean;
+  onKeyPressEnter: (event: GenericObject) => void;
+}
+
+const StateInput: React.FC<Props> = ({ field, className, onKeyPressEnter }) => {
   const { onChange } = field;
-  const handleOnChange = event => {
+  const handleOnChange = (event: GenericObject) => {
     const value = event.target.value;
     const error = value === 'state';
     onChange({ ...field, value, error });
@@ -20,19 +29,10 @@ const StateInput = ({ field, className, onKeyPressEnter }) => {
         label: FormFields.state.label,
         type: FormFields.state.type,
         onChange: handleOnChange,
-        onKeyPress: onKeyPressEnter
+        onKeyPress: onKeyPressEnter,
       }}
     />
   );
-};
-
-StateInput.propTypes = {
-  field: PropTypes.object,
-  className: PropTypes.string,
-  showDialog: PropTypes.func,
-  maSelectable: PropTypes.bool,
-  paSelectable: PropTypes.bool,
-  onKeyPressEnter: PropTypes.func
 };
 
 export default StateInput;

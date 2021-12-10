@@ -188,3 +188,24 @@ export interface AppraisalPayload {
   year: number;
   zipCode: string;
 }
+
+export interface GenericObject {
+  [key: string]: any;
+}
+
+export interface FormField {
+  onChange: (event: GenericObject) => void;
+  value: any; // => this is an example of a real any type
+  error?: boolean;
+  errorMessage?: string;
+  onBlur?: (event: GenericObject) => void;
+  onKeyPress?: (event: GenericObject) => void;
+  disabled?: boolean;
+  type?: string;
+  customOptions?: GenericObject[];
+  defaultLabel?: string;
+  options?: GenericObject[];
+  label?: string;
+  tooltipText?: string;
+  lenderId?: string;
+}
