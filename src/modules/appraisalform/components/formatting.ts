@@ -51,3 +51,24 @@ export function displayNumber(num: number): string {
 
   return Math.round(num).toLocaleString();
 }
+
+export function formatLicensePlate(lpStr: string): string {
+  const adjustedLicensePlate = lpStr.replace(/\s/g, '');
+
+  return adjustedLicensePlate.toUpperCase();
+}
+
+export function displayZipCode(zipCode: string): string | null {
+  if (typeof zipCode !== 'string') {
+    return null;
+  }
+
+  const numbersOnly = zipCode.toString().replace(/\D+/gi, '').substring(0, 9);
+  let formattedNumber = numbersOnly;
+
+  if (numbersOnly.length > 5) {
+    formattedNumber = numbersOnly.slice(0, 5) + '-' + numbersOnly.slice(5);
+  }
+
+  return formattedNumber;
+}

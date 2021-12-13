@@ -1,21 +1,29 @@
+import { Checkbox } from '@vroom-web/ui-lib';
+import { addStyleForMobile } from '@vroom-web/ui-lib';
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import PropTypes from 'prop-types';
-import { FormFields } from '../Inputs.language';
-import useForm from '@app/components/Form/useForm';
-import Checkbox from '@app/components/Checkbox';
-import OtherAfterMarketInput from '@app/components/Form/Inputs/AppraisalFormInput/OtherAfterMarketInput';
-import ToolTip from '@app/components/ToolTip';
-import Icon from '@app/components/Icon';
 
-const tooltip_icon = require('@static/icons/svg/tooltip.svg');
+import { FormField, GenericObject } from '../../../../interfaces.d';
+import { ReactComponent as InfoSvg } from '../info.svg';
+import ToolTip from '../ToolTip';
+import useForm from '../useForm';
+import { FormFields } from './Inputs.language';
+import OtherAfterMarketInput from './OtherAfterMarketInput';
 
-const AlternateAfterMarketModsOptionsGroup = ({
+interface Props {
+  field: FormField;
+  className: string;
+  otherAfterMarketField: FormField;
+}
+
+const AlternateAfterMarketModsOptionsGroup: React.FC<Props> = ({
   field,
   className,
-  otherAfterMarketField
+  otherAfterMarketField,
 }) => {
-  const [checkedValuesForParent, setCheckedValuesForParent] = useState([]);
+  const [checkedValuesForParent, setCheckedValuesForParent] = useState(
+    [] as string[]
+  );
   const options = [
     FormFields.alternateAfterMarket.stereo,
     // FormFields.alternateAfterMarket.sunroof,
@@ -23,7 +31,7 @@ const AlternateAfterMarketModsOptionsGroup = ({
     FormFields.alternateAfterMarket.exhaust,
     FormFields.alternateAfterMarket.suspension,
     FormFields.alternateAfterMarket.performance,
-    FormFields.alternateAfterMarket.other
+    FormFields.alternateAfterMarket.other,
   ];
 
   const { onChange } = field;
@@ -31,16 +39,16 @@ const AlternateAfterMarketModsOptionsGroup = ({
     const optChecked = field.value.includes(opt);
     return {
       ...result,
-      [opt]: { value: optChecked, isRequired: false }
+      [opt]: { value: optChecked, isRequired: false },
     };
   }, {});
 
   const optionsGroupForm = useForm({ defaultValues: optionsDefaultVals });
 
-  const handleOptionClick = (key, clickedCheckbox) => {
+  const handleOptionClick = (key: string, clickedCheckbox: GenericObject) => {
     clickedCheckbox.onChange({
       ...clickedCheckbox,
-      value: !clickedCheckbox.value
+      value: !clickedCheckbox.value,
     });
 
     if (!clickedCheckbox.value && checkedValuesForParent.indexOf(key) === -1) {
@@ -60,6 +68,10 @@ const AlternateAfterMarketModsOptionsGroup = ({
 
   const checkboxes = Object.entries(optionsGroupForm.fields).map(
     ([key, option]) => {
+      const handleOnClick = (option: GenericObject) => {
+        option.onChange({ ...field, checked: !option.value });
+      };
+
       return (
         <AfterMarketModsOption
           key={key}
@@ -69,11 +81,9 @@ const AlternateAfterMarketModsOptionsGroup = ({
           <Option
             name={key}
             id={key + '-checkbox'}
-            field={{
-              ...option,
-              checked: !!option.value,
-              label: key
-            }}
+            label={key}
+            onChange={handleOnClick}
+            checked={!!option.value}
           />
         </AfterMarketModsOption>
       );
@@ -89,7 +99,7 @@ const AlternateAfterMarketModsOptionsGroup = ({
           content={<span>{FormFields.alternateAfterMarket.toolTip}</span>}
           interactive={true}
         >
-          <RowTitleIcon id={tooltip_icon} />
+          <InfoIcon />
         </ToolTip>
       </LabelContainer>
       <AfterMarketModsOptionsLabel>
@@ -97,27 +107,30 @@ const AlternateAfterMarketModsOptionsGroup = ({
       </AfterMarketModsOptionsLabel>
       <CheckboxesContainer>{checkboxes}</CheckboxesContainer>
       {optionsGroupForm.fields.Other.value && (
-        <OtherAfterMarketInput field={otherAfterMarketField} />
+        <OtherAfterMarketInput
+          className={className}
+          field={otherAfterMarketField}
+        />
       )}
     </div>
   );
 };
+
+const InfoIcon = styled(InfoSvg)`
+  margin: 8px 0 0 5px;
+
+  ${addStyleForMobile(`
+    margin: 4px 0 0 5px;
+  `)}
+`;
 
 const Label = styled.h3`
   font-size: 18px;
   line-height: 1.39;
   letter-spacing: 0.3px;
 
-  ${props => props.theme.media.lte('mobile')} {
+  ${(props) => props.theme.media.lte('mobile')} {
     font-size: 16px;
-  }
-`;
-
-const RowTitleIcon = styled(Icon)`
-  margin: 8px 0 0 5px;
-
-  ${props => props.theme.media.mobile} {
-    margin: 4px 0 0 5px;
   }
 `;
 
@@ -133,22 +146,17 @@ const CheckboxesContainer = styled.ul`
 `;
 
 const AfterMarketModsOptionsLabel = styled.div`
-  ${props => props.theme.typography.h14()}
+  ${(props) => props.theme.typography.h14()}
   margin-bottom: 10px;
   letter-spacing: 0.35px;
 `;
 
-const AfterMarketModsOption = styled.li`
+const AfterMarketModsOption = styled(({ ...restProps }) => (
+  <li {...restProps} />
+))`
   padding: 0 0 10px;
 `;
 
 const Option = styled(Checkbox)``;
-
-AlternateAfterMarketModsOptionsGroup.propTypes = {
-  field: PropTypes.object,
-  options: PropTypes.array,
-  className: PropTypes.string,
-  otherAfterMarketField: PropTypes.object
-};
 
 export default AlternateAfterMarketModsOptionsGroup;

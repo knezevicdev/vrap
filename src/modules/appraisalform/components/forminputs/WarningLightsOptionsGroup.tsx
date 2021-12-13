@@ -1,70 +1,82 @@
+import { Checkbox } from '@vroom-web/ui-lib';
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import PropTypes from 'prop-types';
-import { FormFields } from '../Inputs.language';
-import useForm from '@app/components/Form/useForm';
-import Checkbox from '@app/components/Checkbox';
-import { globalConfig } from '@app/lib/globalConfig';
-import OtherOptionInput from '@app/components/Form/Inputs/AppraisalFormInput/OtherOptionInput';
 
-const { STATIC_URL } = globalConfig;
+import { FormField, GenericObject } from '../../../../interfaces.d';
+import useForm from '../useForm';
+import { FormFields } from './Inputs.language';
+import OtherOptionInput from './OtherOptionInput';
 
-const WarningLightsOptionsGroup = ({ field, className, otherWarningField }) => {
-  const [checkedValuesForParent, setCheckedValuesForParent] = useState([]);
+interface Props {
+  field: FormField;
+  className: string;
+  otherWarningField: FormField;
+}
+
+const STATIC_URL = 'https://assets.vroomcdn.com/static-rebrand';
+
+const WarningLightsOptionsGroup: React.FC<Props> = ({
+  field,
+  className,
+  otherWarningField,
+}) => {
+  const [checkedValuesForParent, setCheckedValuesForParent] = useState(
+    [] as string[]
+  );
   const { onChange } = field;
 
   const options = [
     {
       value: FormFields.warningLightOptions.abs,
-      imgSrc: `${STATIC_URL}/icons/vehicle-icons/abs-icon.png`
+      imgSrc: `${STATIC_URL}/icons/vehicle-icons/abs-icon.png`,
     },
     {
       value: FormFields.warningLightOptions.airbag,
-      imgSrc: `${STATIC_URL}/icons/vehicle-icons/air-bag-icon.png`
+      imgSrc: `${STATIC_URL}/icons/vehicle-icons/air-bag-icon.png`,
     },
     {
       value: FormFields.warningLightOptions.checkEngine,
-      imgSrc: `${STATIC_URL}/icons/vehicle-icons/check-engine-icon.png`
+      imgSrc: `${STATIC_URL}/icons/vehicle-icons/check-engine-icon.png`,
     },
     {
       value: FormFields.warningLightOptions.transmission,
-      imgSrc: `${STATIC_URL}/icons/vehicle-icons/transmission-icon.png`
+      imgSrc: `${STATIC_URL}/icons/vehicle-icons/transmission-icon.png`,
     },
     {
       value: FormFields.warningLightOptions.airConditioner,
-      imgSrc: `${STATIC_URL}/icons/vehicle-icons/air-conditioner-icon.png`
+      imgSrc: `${STATIC_URL}/icons/vehicle-icons/air-conditioner-icon.png`,
     },
     {
       value: FormFields.warningLightOptions.fluid,
-      imgSrc: `${STATIC_URL}/icons/vehicle-icons/fluid-icon.png`
+      imgSrc: `${STATIC_URL}/icons/vehicle-icons/fluid-icon.png`,
     },
     {
       value: FormFields.warningLightOptions.serviceEngine,
-      imgSrc: `${STATIC_URL}/icons/vehicle-icons/service-engine-icon.png`
+      imgSrc: `${STATIC_URL}/icons/vehicle-icons/service-engine-icon.png`,
     },
     {
       value: FormFields.warningLightOptions.lowCoolant,
-      imgSrc: `${STATIC_URL}/icons/vehicle-icons/low-coolant-icon.png`
+      imgSrc: `${STATIC_URL}/icons/vehicle-icons/low-coolant-icon.png`,
     },
     {
-      value: FormFields.warningLightOptions.other
-    }
+      value: FormFields.warningLightOptions.other,
+    },
   ];
 
   const optionsDefaultVals = options.reduce((result, opt) => {
     const optChecked = field.value.includes(opt.value);
     return {
       ...result,
-      [opt.value]: { value: optChecked, isRequired: false, imgSrc: opt.imgSrc }
+      [opt.value]: { value: optChecked, isRequired: false, imgSrc: opt.imgSrc },
     };
   }, {});
 
   const optionsGroupForm = useForm({ defaultValues: optionsDefaultVals });
 
-  const handleOptionClick = (key, clickedCheckbox) => {
+  const handleOptionClick = (key: string, clickedCheckbox: GenericObject) => {
     clickedCheckbox.onChange({
       ...clickedCheckbox,
-      value: !clickedCheckbox.value
+      value: !clickedCheckbox.value,
     });
 
     if (!clickedCheckbox.value && checkedValuesForParent.indexOf(key) === -1) {
@@ -84,6 +96,10 @@ const WarningLightsOptionsGroup = ({ field, className, otherWarningField }) => {
 
   const checkboxes = Object.entries(optionsGroupForm.fields).map(
     ([key, option]) => {
+      const handleOnClick = (option: GenericObject) => {
+        option.onChange({ ...field, checked: !option.value });
+      };
+
       return (
         <WarningOption
           key={key}
@@ -93,12 +109,10 @@ const WarningLightsOptionsGroup = ({ field, className, otherWarningField }) => {
           <Checkbox
             name={key}
             id={key + '-checkbox'}
-            field={{
-              ...option,
-              checked: !!option.value,
-              label: key,
-              imgSrc: option.imgSrc
-            }}
+            label={key}
+            onChange={handleOnClick}
+            checked={!!option.value}
+            imgSrc={option.imgSrc}
           />
         </WarningOption>
       );
@@ -112,7 +126,7 @@ const WarningLightsOptionsGroup = ({ field, className, otherWarningField }) => {
       </WarningOptionsLabel>
       <CheckboxesContainer>{checkboxes}</CheckboxesContainer>
       {optionsGroupForm.fields.Other.value && (
-        <OtherOptionInput field={otherWarningField} />
+        <OtherOptionInput className={className} field={otherWarningField} />
       )}
     </div>
   );
@@ -127,14 +141,8 @@ const WarningOptionsLabel = styled.div`
   padding: 0 0 10px;
 `;
 
-const WarningOption = styled.li`
+const WarningOption = styled(({ ...restProps }) => <li {...restProps} />)`
   padding: 0 0 10px;
 `;
-
-WarningLightsOptionsGroup.propTypes = {
-  field: PropTypes.object,
-  otherWarningField: PropTypes.object,
-  className: PropTypes.string
-};
 
 export default WarningLightsOptionsGroup;

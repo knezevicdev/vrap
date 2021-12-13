@@ -1,12 +1,18 @@
 import React from 'react';
-import SelectBoxes from '@app/components/SelectBoxes';
-import PropTypes from 'prop-types';
-import { FormFields } from '../Inputs.language';
 
-const PaintChippingPanelsInput = ({ field, className }) => {
+import { FormField } from '../../../../interfaces.d';
+import SelectBoxes from '../SelectBoxes';
+import { FormFields } from './Inputs.language';
+
+interface Props {
+  field: FormField;
+  className: string;
+}
+
+const PaintChippingPanelsInput: React.FC<Props> = ({ field, className }) => {
   const { onChange, value } = field;
 
-  const handleOnChange = value => {
+  const handleOnChange = (value: string) => {
     onChange({ ...field, value });
   };
 
@@ -19,15 +25,10 @@ const PaintChippingPanelsInput = ({ field, className }) => {
         label: FormFields.paintChippingPanels.label,
         onClick: handleOnChange,
         value,
-        panelsTooltip: 'paintChipping'
+        panelsTooltip: 'paintChipping',
       }}
     />
   );
-};
-
-PaintChippingPanelsInput.propTypes = {
-  field: PropTypes.object,
-  className: PropTypes.string
 };
 
 export default PaintChippingPanelsInput;

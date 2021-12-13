@@ -11,7 +11,7 @@ interface Props {
   field: FormField;
   options: [];
   className: string;
-  otherAfterMarketField: GenericObject;
+  otherAfterMarketField: FormField;
 }
 
 const AfterMarketModsOptionsGroup: React.FC<Props> = ({
@@ -95,7 +95,10 @@ const AfterMarketModsOptionsGroup: React.FC<Props> = ({
       </AfterMarketModsOptionsLabel>
       <CheckboxesContainer>{checkboxes}</CheckboxesContainer>
       {optionsGroupForm.fields.Other.value && (
-        <OtherAfterMarketInput field={otherAfterMarketField} />
+        <OtherAfterMarketInput
+          className={className}
+          field={otherAfterMarketField}
+        />
       )}
     </div>
   );

@@ -1,14 +1,22 @@
 import React from 'react';
-import SelectBoxes from '@app/components/SelectBoxes';
-import PropTypes from 'prop-types';
-import { FormFields } from '../Inputs.language';
-import { trackNumberOfKeysChange } from '@app/lib/analytics/analytics/appraisal';
 
-const NumberOfKeysInput = ({ field, className }) => {
+import { FormField } from '../../../../interfaces.d';
+import SelectBoxes from '../SelectBoxes';
+import { FormFields } from './Inputs.language';
+
+import AnalyticsHandler from 'src/integrations/AnalyticsHandler';
+
+interface Props {
+  field: FormField;
+  className: string;
+}
+
+const NumberOfKeysInput: React.FC<Props> = ({ field, className }) => {
   const { onChange, value } = field;
+  const analyticsHandler = new AnalyticsHandler();
 
-  const handleOnChange = value => {
-    trackNumberOfKeysChange();
+  const handleOnChange = (value: string) => {
+    analyticsHandler.trackNumberOfKeysChange();
     onChange({ ...field, value });
   };
 
@@ -20,15 +28,10 @@ const NumberOfKeysInput = ({ field, className }) => {
         options: ['1', '2+'],
         label: FormFields.howManyKeys.label,
         onClick: handleOnChange,
-        value
+        value,
       }}
     />
   );
-};
-
-NumberOfKeysInput.propTypes = {
-  field: PropTypes.object,
-  className: PropTypes.string
 };
 
 export default NumberOfKeysInput;

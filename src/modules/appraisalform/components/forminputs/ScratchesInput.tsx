@@ -1,12 +1,18 @@
 import React from 'react';
-import SelectBoxes from '@app/components/SelectBoxes';
-import PropTypes from 'prop-types';
-import { FormFields } from '../Inputs.language';
 
-const ScratchesInput = ({ field, className }) => {
+import { FormField } from '../../../../interfaces.d';
+import SelectBoxes from '../SelectBoxes';
+import { FormFields } from './Inputs.language';
+
+interface Props {
+  field: FormField;
+  className: string;
+}
+
+const ScratchesInput: React.FC<Props> = ({ field, className }) => {
   const { onChange, value } = field;
 
-  const handleOnChange = value => {
+  const handleOnChange = (value: string) => {
     onChange({ ...field, value });
   };
 
@@ -18,15 +24,10 @@ const ScratchesInput = ({ field, className }) => {
         options: [FormFields.scratches.yes, FormFields.scratches.no],
         label: FormFields.scratches.label,
         onClick: handleOnChange,
-        value
+        value,
       }}
     />
   );
-};
-
-ScratchesInput.propTypes = {
-  field: PropTypes.object,
-  className: PropTypes.string
 };
 
 export default ScratchesInput;

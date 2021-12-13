@@ -53,3 +53,26 @@ export function isValidName(str = ''): boolean {
     return true;
   }
 }
+
+export function isValidLicense(license: string): boolean {
+  return license.length <= 8 && /^[0-9a-zA-Z-]+$/.test(license);
+}
+
+export function getLicenseErrors(license: string): string | null {
+  if (!isValidLicense(license)) {
+    return 'Please enter a valid license plate number';
+  }
+  return null;
+}
+
+export function isValidZipCode(zipCode: number): boolean {
+  if (zipCode == null) {
+    return false;
+  }
+
+  const length = zipCode.toString().length;
+  if (length !== 5) {
+    return false;
+  }
+  return true;
+}

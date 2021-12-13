@@ -1,12 +1,18 @@
 import React from 'react';
-import SelectBoxes from '@app/components/SelectBoxes';
-import PropTypes from 'prop-types';
-import { FormFields } from '../Inputs.language';
 
-const SeatsInput = ({ field, className }) => {
+import { FormField } from '../../../../interfaces.d';
+import SelectBoxes from '../SelectBoxes';
+import { FormFields } from './Inputs.language';
+
+interface Props {
+  field: FormField;
+  className: string;
+}
+
+const SeatsInput: React.FC<Props> = ({ field, className }) => {
   const { onChange, value } = field;
 
-  const handleOnChange = value => {
+  const handleOnChange = (value: string) => {
     onChange({ ...field, value });
   };
 
@@ -18,15 +24,10 @@ const SeatsInput = ({ field, className }) => {
         options: [FormFields.seats.leather, FormFields.seats.cloth],
         label: FormFields.seats.label,
         onClick: handleOnChange,
-        value
+        value,
       }}
     />
   );
-};
-
-SeatsInput.propTypes = {
-  field: PropTypes.object,
-  className: PropTypes.string
 };
 
 export default SeatsInput;
