@@ -218,7 +218,6 @@ export default class VerificationReviewSectionViewModel {
           window.location.href = '/appraisal/congratulations';
         }
       }
-      this.store.verification.setLoading(false);
     } catch (err) {
       this.store.verification.setLoading(false);
     }
