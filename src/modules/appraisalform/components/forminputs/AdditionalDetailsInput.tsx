@@ -1,13 +1,24 @@
 import React from 'react';
-import Textarea from '@app/components/Textarea';
-import PropTypes from 'prop-types';
-import { FormFields } from '../Inputs.language';
 
-const AdditionalDetailsInput = ({ field, className, label }) => {
+import { FormField, GenericObject } from '../../../../interfaces.d';
+import Textarea from '../Textarea';
+import { FormFields } from './Inputs.language';
+
+interface Props {
+  field: FormField;
+  className: string;
+  label: string;
+}
+
+const AdditionalDetailsInput: React.FC<Props> = ({
+  field,
+  className,
+  label,
+}) => {
   const { onChange } = field;
 
-  const handleOnChange = event => {
-    let value = event.target.value;
+  const handleOnChange = (event: GenericObject) => {
+    const value = event.target.value;
     onChange({ ...field, value });
   };
 
@@ -20,16 +31,10 @@ const AdditionalDetailsInput = ({ field, className, label }) => {
         label: label || FormFields.additionalDetails.label,
         onChange: handleOnChange,
         maxlength: '255',
-        dataQa: 'AdditionalDetails'
+        dataQa: 'AdditionalDetails',
       }}
     />
   );
-};
-
-AdditionalDetailsInput.propTypes = {
-  field: PropTypes.object,
-  className: PropTypes.string,
-  label: PropTypes.string
 };
 
 export default AdditionalDetailsInput;

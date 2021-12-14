@@ -1,43 +1,44 @@
 import React from 'react';
-import RadioInput from '@app/components/RadioInput';
-import PropTypes from 'prop-types';
-import { FormFields } from '../Inputs.language';
 
-const LookingToAccomplishInput = ({ field, className }) => {
+import { FormField } from '../../../../interfaces.d';
+import RadioInput from '../RadioInput';
+import { FormFields } from './Inputs.language';
+
+interface Props {
+  field: FormField;
+  className: string;
+}
+
+const LookingToAccomplishInput: React.FC<Props> = ({ field, className }) => {
   const { onChange } = field;
 
-  const handleOnChange = value => {
+  const handleOnChange = (value: string) => {
     onChange({ ...field, value });
   };
 
   return (
     <RadioInput
+      className={className}
       field={{
         ...field,
-        className,
         name: FormFields.lookingToAccomplish.name,
         label: FormFields.lookingToAccomplish.label,
         onClick: handleOnChange,
         selected: field.value,
         options: [
           {
-            label: FormFields.lookingToAccomplish.sellMyVehicle.label
+            label: FormFields.lookingToAccomplish.sellMyVehicle.label,
           },
           {
-            label: FormFields.lookingToAccomplish.tradeIn.label
+            label: FormFields.lookingToAccomplish.tradeIn.label,
           },
           {
-            label: FormFields.lookingToAccomplish.notSure.label
-          }
-        ]
+            label: FormFields.lookingToAccomplish.notSure.label,
+          },
+        ],
       }}
     />
   );
-};
-
-LookingToAccomplishInput.propTypes = {
-  field: PropTypes.object,
-  className: PropTypes.string
 };
 
 export default LookingToAccomplishInput;

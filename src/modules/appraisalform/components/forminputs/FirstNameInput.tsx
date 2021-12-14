@@ -1,13 +1,20 @@
 import React from 'react';
-import Input from '@app/components/Input';
-import PropTypes from 'prop-types';
-import { isValidName } from '@app/lib/validation/validation';
+
+import { FormField, GenericObject } from '../../../../interfaces.d';
+import Input from '../Input';
+import { isValidName } from '../validation';
 import { FormFields } from './Inputs.language';
 
-const FirstNameInput = ({ field, className, isLegal }) => {
+interface Props {
+  field: FormField;
+  className: string;
+  isLegal: boolean;
+}
+
+const FirstNameInput: React.FC<Props> = ({ field, className, isLegal }) => {
   const { onChange } = field;
 
-  const handleOnChange = event => {
+  const handleOnChange = (event: GenericObject) => {
     const value = event.target.value;
     const error = !isValidName(value);
     onChange({ ...field, value, error });
@@ -23,16 +30,10 @@ const FirstNameInput = ({ field, className, isLegal }) => {
         placeholder: FormFields.first.placeholder,
         label: label,
         onChange: handleOnChange,
-        dataQa: 'First Name'
+        dataQa: 'First Name',
       }}
     />
   );
-};
-
-FirstNameInput.propTypes = {
-  field: PropTypes.object,
-  className: PropTypes.string,
-  isLegal: PropTypes.bool
 };
 
 export default FirstNameInput;

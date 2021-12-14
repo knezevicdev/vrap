@@ -26,4 +26,3 @@ query DECODE_VIN($vin: String!) {
     options
   }
 }
-`;

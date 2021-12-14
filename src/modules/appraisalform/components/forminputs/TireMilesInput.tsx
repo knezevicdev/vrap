@@ -1,12 +1,18 @@
 import React from 'react';
-import RadioInput from '@app/components/RadioInput';
-import PropTypes from 'prop-types';
-import { FormFields } from '../Inputs.language';
 
-const TireMilesInput = ({ field, className }) => {
+import { FormField } from '../../../../interfaces.d';
+import RadioInput from '../RadioInput';
+import { FormFields } from './Inputs.language';
+
+interface Props {
+  field: FormField;
+  className: string;
+}
+
+const TireMilesInput: React.FC<Props> = ({ field, className }) => {
   const { onChange } = field;
 
-  const handleOnChange = value => {
+  const handleOnChange = (value: string) => {
     onChange({ ...field, value });
   };
 
@@ -18,38 +24,33 @@ const TireMilesInput = ({ field, className }) => {
         options: [
           {
             label: FormFields.tireMiles.underFive.label,
-            description: ''
+            description: '',
           },
           {
             label: FormFields.tireMiles.fiveToTen.label,
-            description: ''
+            description: '',
           },
           {
             label: FormFields.tireMiles.tenToTwenty.label,
-            description: ''
+            description: '',
           },
           {
             label: FormFields.tireMiles.twentyToThirty.label,
-            description: ''
+            description: '',
           },
           {
             label: FormFields.tireMiles.overThirty.label,
-            description: ''
-          }
+            description: '',
+          },
         ],
         name: FormFields.tireMiles.name,
         label: FormFields.tireMiles.label,
         onClick: handleOnChange,
         tooltipText: FormFields.tireMiles.toolTip,
-        selected: field.value
+        selected: field.value,
       }}
     />
   );
-};
-
-TireMilesInput.propTypes = {
-  field: PropTypes.object,
-  className: PropTypes.string
 };
 
 export default TireMilesInput;

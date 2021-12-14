@@ -1,12 +1,18 @@
 import React from 'react';
-import RadioInput from '@app/components/RadioInput';
-import PropTypes from 'prop-types';
-import { FormFields } from '../Inputs.language';
 
-const ExteriorConditionInput = ({ field, className }) => {
+import { FormField } from '../../../../interfaces.d';
+import RadioInput from '../RadioInput';
+import { FormFields } from './Inputs.language';
+
+interface Props {
+  field: FormField;
+  className: string;
+}
+
+const ExteriorConditionInput: React.FC<Props> = ({ field, className }) => {
   const { onChange } = field;
 
-  const handleOnChange = value => {
+  const handleOnChange = (value: string) => {
     onChange({ ...field, value });
   };
 
@@ -18,29 +24,24 @@ const ExteriorConditionInput = ({ field, className }) => {
         options: [
           {
             label: FormFields.extCondition.aboveAverage.label,
-            description: FormFields.extCondition.aboveAverage.description
+            description: FormFields.extCondition.aboveAverage.description,
           },
           {
             label: FormFields.extCondition.average.label,
-            description: FormFields.extCondition.average.description
+            description: FormFields.extCondition.average.description,
           },
           {
             label: FormFields.extCondition.belowAverage.label,
-            description: FormFields.extCondition.belowAverage.description
-          }
+            description: FormFields.extCondition.belowAverage.description,
+          },
         ],
         name: FormFields.extCondition.name,
         label: FormFields.extCondition.label,
         onClick: handleOnChange,
-        selected: field.value
+        selected: field.value,
       }}
     />
   );
-};
-
-ExteriorConditionInput.propTypes = {
-  field: PropTypes.object,
-  className: PropTypes.string
 };
 
 export default ExteriorConditionInput;

@@ -1,15 +1,24 @@
+import { addStyleForTablet } from '@vroom-web/ui-lib';
 import React, { useEffect, useRef } from 'react';
 import styled from 'styled-components';
-import Input from '@app/components/Input';
-import PropTypes from 'prop-types';
-import {
-  isValidLicense,
-  getLicenseErrors
-} from '@app/lib/validation/validation';
-import { formatLicensePlate } from '@app/lib/validation/formatting';
+
+import { FormField, GenericObject } from '../../../../interfaces.d';
+import { formatLicensePlate } from '../formatting';
+import Input from '../Input';
+import { getLicenseErrors, isValidLicense } from '../validation';
 import { FormFields } from './Inputs.language';
 
-const LicenseInput = ({ field, className, onKeyPressEnter }) => {
+interface Props {
+  field: FormField;
+  className: string;
+  onKeyPressEnter: (event: GenericObject) => void;
+}
+
+const LicenseInput: React.FC<Props> = ({
+  field,
+  className,
+  onKeyPressEnter,
+}) => {
   const ref = useRef();
   const { onChange } = field;
 
@@ -20,7 +29,7 @@ const LicenseInput = ({ field, className, onKeyPressEnter }) => {
     }
   }, []);
 
-  const handleOnChange = event => {
+  const handleOnChange = (event: GenericObject) => {
     const value = formatLicensePlate(event.target.value);
     const error = !isValidLicense(value);
     const errorMessage = getLicenseErrors(value);
@@ -38,7 +47,7 @@ const LicenseInput = ({ field, className, onKeyPressEnter }) => {
         placeholder: placeholder,
         label: label,
         onChange: handleOnChange,
-        onKeyPress: onKeyPressEnter
+        onKeyPress: onKeyPressEnter,
       }}
     />
   );
@@ -48,9 +57,9 @@ const LicenseField = styled(Input)`
   width: 100%;
   margin-right: 15px;
 
-  ${props => props.theme.media.gte('tablet')} {
+  ${addStyleForTablet(`
     margin-right: 20px;
-  }
+  `)}
 
   & label,
   span {
@@ -61,11 +70,5 @@ const LicenseField = styled(Input)`
     width: 100%;
   }
 `;
-
-LicenseInput.propTypes = {
-  field: PropTypes.object,
-  className: PropTypes.string,
-  onKeyPressEnter: PropTypes.func
-};
 
 export default LicenseInput;

@@ -1,12 +1,18 @@
 import React from 'react';
-import SelectBoxes from '@app/components/SelectBoxes';
-import PropTypes from 'prop-types';
-import { FormFields } from '../Inputs.language';
 
-const DentsPanelsInput = ({ field, className }) => {
+import { FormField } from '../../../../interfaces.d';
+import SelectBoxes from '../SelectBoxes';
+import { FormFields } from './Inputs.language';
+
+interface Props {
+  field: FormField;
+  className: string;
+}
+
+const DentsPanelsInput: React.FC<Props> = ({ field, className }) => {
   const { onChange, value } = field;
 
-  const handleOnChange = value => {
+  const handleOnChange = (value: number) => {
     onChange({ ...field, value });
   };
 
@@ -19,15 +25,10 @@ const DentsPanelsInput = ({ field, className }) => {
         label: FormFields.dentsPanels.label,
         onClick: handleOnChange,
         value,
-        panelsTooltip: 'dents'
+        panelsTooltip: 'dents',
       }}
     />
   );
-};
-
-DentsPanelsInput.propTypes = {
-  field: PropTypes.object,
-  className: PropTypes.string
 };
 
 export default DentsPanelsInput;

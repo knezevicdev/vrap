@@ -1,8 +1,15 @@
+import { ThemeProps } from '@vroom-web/ui-lib';
 import React from 'react';
-import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-const Textarea = ({
+import { GenericObject } from '../../../interfaces.d';
+
+interface Props {
+  field: GenericObject;
+  className: string;
+}
+
+const Textarea: React.FC<Props> = ({
   field: {
     label,
     placeholder,
@@ -10,9 +17,9 @@ const Textarea = ({
     onChange,
     maxlength,
     height,
-    dataQa
+    dataQa,
   },
-  className
+  className,
 }) => {
   return (
     <Container className={className}>
@@ -29,10 +36,17 @@ const Textarea = ({
   );
 };
 
-Textarea.propTypes = {
-  field: PropTypes.object,
-  className: PropTypes.string
-};
+const primaryWhite = (props: { theme: ThemeProps }): string =>
+  props.theme.colors.primary.white;
+
+const primaryBlack = (props: { theme: ThemeProps }): string =>
+  props.theme.colors.primary.black;
+
+const grayTwo = (props: { theme: ThemeProps }): string =>
+  props.theme.colors.gray.two;
+
+const grayThree = (props: { theme: ThemeProps }): string =>
+  props.theme.colors.gray.three;
 
 const Container = styled.div`
   display: flex;
@@ -50,17 +64,17 @@ const Label = styled.label`
 const InputContainer = styled(({ height, ...restProps }) => (
   <textarea {...restProps} />
 ))`
-  height: ${props => props.height || 'auto'};
+  height: ${(props) => props.height || 'auto'};
   resize: none;
   padding: 5px 9px;
-  border: 1px solid ${props => props.theme.colors.gray3};
-  background-color: ${props => props.theme.colors.white};
-  color: ${props => props.theme.colors.dark};
+  border: 1px solid ${grayThree};
+  background-color: ${primaryWhite};
+  color: ${primaryBlack};
   outline: none;
   border-radius: 0;
 
   &::placeholder {
-    color: ${props => props.theme.colors.gray2};
+    color: ${grayTwo};
     opacity: 1;
   }
 `;

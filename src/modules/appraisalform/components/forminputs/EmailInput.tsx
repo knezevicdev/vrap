@@ -1,13 +1,19 @@
 import React from 'react';
-import Input from '@app/components/Input';
-import PropTypes from 'prop-types';
-import { isValidEmail } from '@app/lib/validation/validation';
+
+import { FormField, GenericObject } from '../../../../interfaces.d';
+import Input from '../Input';
+import { isValidEmail } from '../validation';
 import { FormFields } from './Inputs.language';
 
-const EmailInput = ({ field, className }) => {
+interface Props {
+  field: FormField;
+  className: string;
+}
+
+const EmailInput: React.FC<Props> = ({ field, className }) => {
   const { onChange } = field;
 
-  const handleOnChange = event => {
+  const handleOnChange = (event: GenericObject) => {
     const value = event.target.value;
     const error = !isValidEmail(value);
     onChange({ ...field, value, error });
@@ -21,15 +27,10 @@ const EmailInput = ({ field, className }) => {
         placeholder: FormFields.email.placeholder,
         label: FormFields.email.label,
         onChange: handleOnChange,
-        maxlength: '100'
+        maxlength: '100',
       }}
     />
   );
-};
-
-EmailInput.propTypes = {
-  field: PropTypes.object,
-  className: PropTypes.string
 };
 
 export default EmailInput;

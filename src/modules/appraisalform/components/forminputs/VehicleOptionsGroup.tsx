@@ -1,34 +1,44 @@
-import React, { useState, useEffect } from 'react';
+import { Checkbox } from '@vroom-web/ui-lib';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import PropTypes from 'prop-types';
-import { FormFields } from '../Inputs.language';
-import useForm from '@app/components/Form/useForm';
-import Checkbox from '@app/components/Checkbox';
 
-const VehicleOptionsGroup = ({ field, options, className }) => {
-  const [checkedValuesForParent, setCheckedValuesForParent] = useState([]);
+import { FormField, GenericObject } from '../../../../interfaces.d';
+import useForm from '../useForm';
+import { FormFields } from './Inputs.language';
+
+interface Props {
+  field: FormField;
+  className: string;
+  options: [];
+}
+
+const VehicleOptionsGroup: React.FC<Props> = ({
+  field,
+  options,
+  className,
+}) => {
+  const [checkedValuesForParent, setCheckedValuesForParent] = useState(
+    [] as string[]
+  );
   const { onChange } = field;
   const optionsDefaultVals = options.reduce((result, opt) => {
     const optChecked = field.value.includes(opt);
     return {
       ...result,
-      [opt]: { value: optChecked, isRequired: false }
+      [opt]: { value: optChecked, isRequired: false },
     };
   }, {});
 
   const optionsGroupForm = useForm({ defaultValues: optionsDefaultVals });
 
-  useEffect(
-    () => {
-      optionsGroupForm.setFormFields(optionsDefaultVals);
-    },
-    [options]
-  );
+  useEffect(() => {
+    optionsGroupForm.setFormFields(optionsDefaultVals);
+  }, [options]);
 
-  const handleOptionClick = (key, clickedCheckbox) => {
+  const handleOptionClick = (key: string, clickedCheckbox: GenericObject) => {
     clickedCheckbox.onChange({
       ...clickedCheckbox,
-      value: !clickedCheckbox.value
+      value: !clickedCheckbox.value,
     });
 
     if (!clickedCheckbox.value && checkedValuesForParent.indexOf(key) === -1) {
@@ -48,6 +58,10 @@ const VehicleOptionsGroup = ({ field, options, className }) => {
 
   const checkboxes = Object.entries(optionsGroupForm.fields).map(
     ([key, option]) => {
+      const handleOnClick = (option: GenericObject) => {
+        option.onChange({ ...field, checked: !option.value });
+      };
+
       return (
         <VehicleOption
           key={key}
@@ -57,11 +71,9 @@ const VehicleOptionsGroup = ({ field, options, className }) => {
           <Checkbox
             name={key}
             id={key + '-checkbox'}
-            field={{
-              ...option,
-              checked: !!option.value,
-              label: key
-            }}
+            label={key}
+            onChange={handleOnClick}
+            checked={!!option.value}
           />
         </VehicleOption>
       );
@@ -88,14 +100,8 @@ const VehicleOptionsLabel = styled.div`
   padding: 0 0 10px;
 `;
 
-const VehicleOption = styled.li`
+const VehicleOption = styled(({ ...restProps }) => <li {...restProps} />)`
   padding: 0 0 10px;
 `;
-
-VehicleOptionsGroup.propTypes = {
-  field: PropTypes.object,
-  options: PropTypes.array,
-  className: PropTypes.string
-};
 
 export default VehicleOptionsGroup;
