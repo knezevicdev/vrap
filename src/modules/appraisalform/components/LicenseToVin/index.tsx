@@ -1,22 +1,26 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import MultiTab from '@app/components/MultiTab/MultiTab';
-import MultiTabTheme from '@app/components/MultiTab/styles/multiTabBox';
-import { licensePlateTabText, vinTabText } from './LicenseToVinMain.language';
+
+import MultiTab from '../MultiTab/MultiTab';
+import MultiTabTheme from '../MultiTab/styles/multiTabBox';
 import LicenseStateInput from './components/LicenseStateInput';
 import VinInput from './components/VinInput';
+import { licensePlateTabText, vinTabText } from './LicenseToVinMain.language';
 
-const LicenseToVinMain = ({ className }) => {
+interface Props {
+  className: string;
+}
+
+const LicenseToVinMain: React.FC<Props> = ({ className }) => {
   const tabSections = [
     {
       component: LicenseStateInput,
-      title: licensePlateTabText
+      title: licensePlateTabText,
     },
     {
       component: VinInput,
-      title: vinTabText
-    }
+      title: vinTabText,
+    },
   ];
 
   return (
@@ -27,10 +31,6 @@ const LicenseToVinMain = ({ className }) => {
       <MultiTab tabSections={tabSections} theme={MultiTabTheme} />
     </LicenseToVinMainContainer>
   );
-};
-
-LicenseToVinMain.propTypes = {
-  className: PropTypes.string
 };
 
 const LicenseToVinMainContainer = styled.div`
