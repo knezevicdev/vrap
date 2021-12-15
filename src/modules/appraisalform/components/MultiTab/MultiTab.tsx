@@ -1,19 +1,29 @@
-import React, { useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
+import React, { useEffect, useState } from 'react';
 
-const MultiTab = ({ tabSections, active = 0, className, theme }) => {
+import { GenericObject } from '../../../../interfaces.d';
+
+interface Props {
+  tabSections: GenericObject[];
+  active: number;
+  className: string;
+  theme: any;
+}
+
+const MultiTab: React.FC<Props> = ({
+  tabSections,
+  active = 0,
+  className,
+  theme,
+}) => {
   const MultiTabTheme = theme;
   const [activeTab, setActiveTab] = useState(active);
   const tabWidth = 100 / tabSections.length;
 
-  useEffect(
-    () => {
-      setActiveTab(active);
-    },
-    [active]
-  );
+  useEffect(() => {
+    setActiveTab(active);
+  }, [active]);
 
-  const handleTabClick = tabToOpen => {
+  const handleTabClick = (tabToOpen: number) => {
     setActiveTab(tabToOpen);
   };
 
@@ -50,13 +60,6 @@ const MultiTab = ({ tabSections, active = 0, className, theme }) => {
       <MultiTabTheme.body>{tabComponents}</MultiTabTheme.body>
     </MultiTabTheme>
   );
-};
-
-MultiTab.propTypes = {
-  tabSections: PropTypes.array.isRequired,
-  active: PropTypes.number,
-  className: PropTypes.string,
-  theme: PropTypes.object
 };
 
 export default MultiTab;

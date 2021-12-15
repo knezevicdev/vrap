@@ -12,7 +12,7 @@ import OtherAfterMarketInput from './OtherAfterMarketInput';
 
 interface Props {
   field: FormField;
-  className: string;
+  className?: string;
   otherAfterMarketField: FormField;
 }
 

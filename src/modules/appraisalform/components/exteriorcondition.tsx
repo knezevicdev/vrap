@@ -1,25 +1,32 @@
-import AfterMarketModsOptionsGroup from '@app/components/Form/Inputs/AppraisalFormInput/AfterMarketModsOptionsGroup';
-import AlternateAfterMarketModsOptionsGroup from '@app/components/Form/Inputs/AppraisalFormInput/AlternateAfterMarketModsOptionsGroup';
-import DentsInput from '@app/components/Form/Inputs/AppraisalFormInput/DentsInput';
-import DentsPanelsInput from '@app/components/Form/Inputs/AppraisalFormInput/DentsPanelsInput';
-import ExteriorConditionInput from '@app/components/Form/Inputs/AppraisalFormInput/ExteriorConditionInput';
-import HailDamageInput from '@app/components/Form/Inputs/AppraisalFormInput/HailDamageInput';
-import PaintChippingInput from '@app/components/Form/Inputs/AppraisalFormInput/PaintChippingInput';
-import PaintChippingPanelsInput from '@app/components/Form/Inputs/AppraisalFormInput/PaintChippingPanelsInput';
-import RustInput from '@app/components/Form/Inputs/AppraisalFormInput/RustInput';
-import ScratchesInput from '@app/components/Form/Inputs/AppraisalFormInput/ScratchesInput';
-import ScratchesPanelsInput from '@app/components/Form/Inputs/AppraisalFormInput/ScratchesPanelsInput';
-import TireMilesInput from '@app/components/Form/Inputs/AppraisalFormInput/TireMilesInput';
 import { selectExperiment } from '@app/store/absmartly/selectors';
 import { APPRAISAL_DETAILED_CONDITION_QUESTIONS } from '@app/store/absmartly/types';
-import PropTypes from 'prop-types';
+import { addStyleForMobile } from '@vroom-web/ui-lib';
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import { compose } from 'recompose';
 import styled from 'styled-components';
 
-const ExteriorCondition = ({
+import AfterMarketModsOptionsGroup from './forminputs/AfterMarketModsOptionsGroup';
+import AlternateAfterMarketModsOptionsGroup from './forminputs/AlternateAfterMarketModsOptionsGroup';
+import DentsInput from './forminputs/DentsInput';
+import DentsPanelsInput from './forminputs/DentsPanelsInput';
+import ExteriorConditionInput from './forminputs/ExteriorConditionInput';
+import HailDamageInput from './forminputs/HailDamageInput';
+import PaintChippingInput from './forminputs/PaintChippingInput';
+import PaintChippingPanelsInput from './forminputs/PaintChippingPanelsInput';
+import RustInput from './forminputs/RustInput';
+import ScratchesInput from './forminputs/ScratchesInput';
+import ScratchesPanelsInput from './forminputs/ScratchesPanelsInput';
+import TireMilesInput from './forminputs/TireMilesInput';
+
+interface Props {
+  fields: any;
+  disableExperiments: boolean;
+  isDetailedConditionsExperiment: boolean;
+}
+
+const ExteriorCondition: React.FC<Props> = ({
   fields,
   disableExperiments,
   isDetailedConditionsExperiment,
@@ -116,12 +123,6 @@ const ExteriorCondition = ({
   );
 };
 
-ExteriorCondition.propTypes = {
-  fields: PropTypes.object,
-  disableExperiments: PropTypes.bool,
-  isDetailedConditionsExperiment: PropTypes.bool,
-};
-
 const mapStateToProps = (state) => {
   return {
     isDetailedConditionsExperiment: selectExperiment(
@@ -137,19 +138,19 @@ const InputContainer = styled.div`
   margin-bottom: 20px;
   justify-content: space-between;
 
-  ${(props) => props.theme.media.lte('mobile')} {
+  ${addStyleForMobile(`
     flex-direction: column;
     margin-bottom: 0px;
-  }
+  `)}
 `;
 
 const ExtCondition = styled(ExteriorConditionInput)`
   margin-right: 10px;
-  ${(props) => props.theme.media.lte('mobile')} {
+  ${addStyleForMobile(`
     width: 100%;
     margin-left: 0px;
     margin-bottom: 16px;
-  }
+  `)}
 `;
 
 const Rust = styled(RustInput)`

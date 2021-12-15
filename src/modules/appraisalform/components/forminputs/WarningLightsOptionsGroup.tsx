@@ -100,20 +100,23 @@ const WarningLightsOptionsGroup: React.FC<Props> = ({
         option.onChange({ ...field, checked: !option.value });
       };
 
+      const checkboxProps = {
+        name: key,
+        id: key + '-checkbox',
+        onChange: handleOnClick,
+        checked: !!option.value,
+      };
+
       return (
         <WarningOption
           key={key}
           htmlFor={key + '-checkbox'}
           onClick={() => handleOptionClick(key, option)}
         >
-          <Checkbox
-            name={key}
-            id={key + '-checkbox'}
-            label={key}
-            onChange={handleOnClick}
-            checked={!!option.value}
-            imgSrc={option.imgSrc}
-          />
+          <Checkbox {...checkboxProps}>
+            <ImgContainer src={option.imgSrc} />
+            <Label>{option.value}</Label>
+          </Checkbox>
         </WarningOption>
       );
     }
@@ -135,6 +138,19 @@ const WarningLightsOptionsGroup: React.FC<Props> = ({
 const CheckboxesContainer = styled.ul`
   list-style: none;
   width: 100%;
+`;
+
+const ImgContainer = styled.img`
+  height: 15px;
+  width: 22px;
+  margin-top: 2px;
+  margin-right: 8px;
+`;
+
+const Label = styled.span`
+  font-size: 18px;
+  line-height: 1;
+  letter-spacing: 0.3px;
 `;
 
 const WarningOptionsLabel = styled.div`
