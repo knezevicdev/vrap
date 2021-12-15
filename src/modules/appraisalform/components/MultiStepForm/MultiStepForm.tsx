@@ -1,12 +1,46 @@
-import React, { useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
+import { addStyleForMobile } from '@vroom-web/ui-lib';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import PrimaryButton from '@app/components/Button/PrimaryButton';
-import { numberIcon, greenCheckPath } from '@app/assets/assets';
-import ToolTip from '@app/components/ToolTip';
-import PrevNextButtons from '@app/pages/Deal/components/PrevNextButtons';
 
-const MultiStepForm = props => {
+import { GenericObject } from '../../../../interfaces.d';
+import PrevNextButtons from '../PrevNextButtons';
+import ToolTip from '../ToolTip';
+import { blueIcons, grayIcons, greenCheckPath } from './utils';
+
+import { Button } from 'src/core/Button';
+
+function numberIcon(index: number, activeSection: number, className: string) {
+  const isActive = activeSection === index;
+  let src = '';
+  if (isActive) {
+    src = blueIcons[index];
+  } else {
+    src = grayIcons[index];
+  }
+  return <img src={src} className={className} />;
+}
+
+interface Props {
+  formTitle: string;
+  formSubtittleSection: () => void;
+  sections: any[];
+  onDone: () => void;
+  onNext: (arg1: number, arg2?: string) => void;
+  onNextIntercept: () => void;
+  active: number;
+  customAnalyticsFunc: (
+    nextTitle: string | undefined,
+    currentTitle: string
+  ) => void;
+  refreshButton: boolean;
+  showDialog: () => void;
+  nextText: string;
+  submitText: string;
+  appraisalTitle: string;
+  disableExperiments: boolean;
+}
+
+const MultiStepForm: React.FC<Props> = (props) => {
   const {
     formTitle,
     formSubtittleSection,
@@ -19,7 +53,7 @@ const MultiStepForm = props => {
     nextText = 'Next',
     submitText = 'Review',
     appraisalTitle,
-    disableExperiments
+    disableExperiments,
   } = props;
 
   useEffect(() => {
@@ -58,21 +92,21 @@ const MultiStepForm = props => {
     // when active section isn't 0
     if (activeSection !== 0) {
       setTimeout(() => {
-        const activeElement = document.getElementById(activeSection);
+        const activeElement: any = document.getElementById(activeSection);
         const headerOffset = 70;
         const elementPosition = activeElement.offsetTop;
         const offsetPosition = elementPosition - headerOffset;
 
         window.scrollTo({
           top: offsetPosition,
-          behavior: 'smooth'
+          behavior: 'smooth',
         });
       }, 305);
     }
   }, [activeSection]);
 
   const handleRefreshButton = () => {
-    sections.forEach(section => {
+    sections.forEach((section: GenericObject) => {
       section.form.resetForm();
     });
 
@@ -81,7 +115,7 @@ const MultiStepForm = props => {
     onNext(activeSection, 'refreshed');
   };
 
-  const handleOnNext = (e, onNextIntercept) => {
+  const handleOnNext = (e: any, onNextIntercept: any) => {
     const nextStep = activeSection + 1;
     let currentSectionIsValid = sections[activeSection].form.isFormValid;
     //const nextSection = sections[nextStep];
@@ -127,14 +161,18 @@ const MultiStepForm = props => {
     }
   };
 
-  const handleEditSection = (sectionToOpen, newReturnSection) => {
+  const handleEditSection = (sectionToOpen: any, newReturnSection: any) => {
     //const currentSection = sections[sectionToOpen];
     setButtonText(submitText);
     setActiveSection(sectionToOpen);
     setReturnSection(newReturnSection);
   };
 
-  const getNextButton = (formComponent, formIsInvalid, onNextIntercept) => {
+  const getNextButton = (
+    formComponent: any,
+    formIsInvalid: any,
+    onNextIntercept: any
+  ) => {
     if (
       formComponent.toolTip &&
       formIsInvalid &&
@@ -159,7 +197,7 @@ const MultiStepForm = props => {
     } else {
       return (
         <NextButton
-          onClick={e => handleOnNext(e, onNextIntercept)}
+          onClick={(e: GenericObject) => handleOnNext(e, onNextIntercept)}
           disabled={formIsInvalid}
           data-qa={'Continue'}
         >
@@ -169,7 +207,7 @@ const MultiStepForm = props => {
     }
   };
 
-  const getPrevNextButtons = (formComponent, formIsInvalid) => {
+  const getPrevNextButtons = (formComponent: any, formIsInvalid: any) => {
     const { prevStep } = formComponent;
     if (
       formComponent.toolTip &&
@@ -203,7 +241,7 @@ const MultiStepForm = props => {
     }
   };
 
-  const formComponents = sections.map((formComponent, idx) => {
+  const formComponents = sections.map((formComponent: any, idx: any) => {
     const {
       component,
       form: { fields },
@@ -211,7 +249,7 @@ const MultiStepForm = props => {
       showDialog,
       title,
       data,
-      onNextIntercept
+      onNextIntercept,
     } = formComponent;
     const CurrentComponent = component;
     const isActive = idx === activeSection;
@@ -297,30 +335,36 @@ const Block = styled.div`
 
 const FormTitle = styled.h1`
   padding: 20px 0px;
-  ${props => props.theme.typography.h18()}
+  font-family: 'Vroom-Sans';
+  font-size: 36px;
+  line-height: 40px;
+  letter-spacing: 1px;
   text-align: left;
-  ${props =>
-    props.theme.addStylesFor({
-      mobile: `text-align: center;
+
+  ${addStyleForMobile(`
+      text-align: center;
       padding-bottom: 16px;
       padding-top: 15px;
-      ${props.theme.typography.h4()}`
-    })}
+      font-family: 'Vroom-Sans';
+      font-size: 28px;
+      line-height: 28px;
+      letter-spacing: 1px;
+    `)}
 `;
 
 const FormRefresh = styled.div`
   margin: auto 0;
-  color: ${props => props.theme.colors.vroomRed};
+  color: '#e7131a';
   font-weight: bold;
   cursor: pointer;
 `;
 
 const FormStep = styled.div`
   padding: 20px 0px;
-  border-top: 1px solid ${props => props.theme.colors.gray8};
+  border-top: 1px solid '#e0e0e0';
 `;
 
-const FormSection = styled.div`
+const FormSection = styled(({ ...restProps }) => <div {...restProps} />)`
   padding-top: 0;
   transition: max-height 300ms ease-in-out;
   height: auto;
@@ -333,7 +377,7 @@ const FormSection = styled.div`
   }
 
   /* big max-height is used when animating variable height transitions */
-  ${props =>
+  ${(props) =>
     props.isActive === true &&
     `
       max-height: 4500px;
@@ -353,19 +397,22 @@ const StepNumber = styled.div`
   padding-right: 10px;
 `;
 
-const StepTitle = styled.div`
-  ${props => props.theme.typography.sectionTitleSemi3}
-  color: ${props => props.theme.colors.dark};
+const StepTitle = styled(({ ...restProps }) => <div {...restProps} />)`
+  font-family: 'Calibre-Semibold';
+  font-size: 20px;
+  line-height: 26px;
+  letter-spacing: 0.25px;
+  color: '#041022';
 
-  ${props => props.isActive === false && `color: ${props.theme.colors.gray2};`}
-  ${props => props.theme.media.lte('mobile')} {
+  ${(props) => props.isActive === false && `color: '#999da3';`}
+  ${addStyleForMobile(`
     font-size: 18px;
-  }
+  `)}
 `;
 
 const EditStep = styled.div`
   padding-left: 10px;
-  color: ${props => props.theme.colors.vroomRed};
+  color: '#e7131a';
   cursor: pointer;
   line-height: 26px;
 `;
@@ -375,21 +422,23 @@ const TimeEst = styled.div`
   font-size: 18px;
   letter-spacing: 0.25px;
   line-height: 25px;
-  color: ${props => props.theme.colors.gray2};
+  color: '#999da3';
   padding-left: 5px;
   white-space: nowrap;
 `;
 
-const NextButton = styled(PrimaryButton)`
+const NextButton = styled(({ ...restProps }) => (
+  <Button.Primary {...restProps} />
+))`
   width: auto;
   min-width: 180px;
   margin: 20px 0;
 
-  ${props =>
-    props.theme.addStylesFor({
-      mobile: 'width: 100%;'
-    })};
+  ${addStyleForMobile(`
+    width: 100%;
+  `)};
 `;
+
 const NextButtonWrapper = styled.span`
   padding: 10px;
 `;
@@ -406,24 +455,5 @@ const FormWarning = styled.div`
     text-align: center;
   }
 `;
-
-MultiStepForm.propTypes = {
-  formTitle: PropTypes.string,
-  formSubtittleSection: PropTypes.func,
-  sections: PropTypes.array,
-  onDone: PropTypes.func,
-  onNext: PropTypes.func,
-  onNextIntercept: PropTypes.func,
-  active: PropTypes.number,
-  customAnalyticsFunc: PropTypes.func,
-  refreshButton: PropTypes.bool,
-  match: PropTypes.object,
-  history: PropTypes.object,
-  showDialog: PropTypes.func,
-  nextText: PropTypes.string,
-  submitText: PropTypes.string,
-  appraisalTitle: PropTypes.string,
-  disableExperiments: PropTypes.bool
-};
 
 export default MultiStepForm;
