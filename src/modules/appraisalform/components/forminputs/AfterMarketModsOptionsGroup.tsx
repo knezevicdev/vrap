@@ -9,8 +9,8 @@ import OtherAfterMarketInput from './OtherAfterMarketInput';
 
 interface Props {
   field: FormField;
-  options: [];
-  className: string;
+  options?: [];
+  className?: string;
   otherAfterMarketField: FormField;
 }
 
