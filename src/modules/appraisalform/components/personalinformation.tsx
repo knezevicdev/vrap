@@ -1,17 +1,17 @@
+import { selectExperiment } from '@app/store/absmartly/selectors';
+import { AC_APPRAISAL_INTENT_QUESTION_2 } from '@app/store/absmartly/types';
 import React from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import { compose } from 'recompose';
 import styled from 'styled-components';
 
-import ZipCodeInput from './forminputs/AddressInput/ZipCodeInput';
 import EmailInput from './forminputs/EmailInput';
 import FirstNameInput from './forminputs/FirstNameInput';
 import LastNameInput from './forminputs/LastNameInput';
 import LookingToAccomplishInput from './forminputs/LookingToAccomplishInput';
 import PhoneInput from './forminputs/PhoneInput';
-import { selectExperiment } from './store/absmartly/selectors';
-import { AC_APPRAISAL_INTENT_QUESTION_2 } from './store/absmartly/types';
+import ZipCodeInput from './forminputs/ZipCodeInput';
 
 const PersonalInformation = ({
   fields,

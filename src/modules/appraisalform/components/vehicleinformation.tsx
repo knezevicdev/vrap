@@ -1,4 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { selectExperiment } from '@app/store/absmartly/selectors';
+import { APPRAISAL_HIDE_HOW_MANY_KEYS_QUESTION } from '@app/store/absmartly/types';
+import {
+  decodeVin,
+  gradeCheck,
+  handleCarfaxCall,
+} from '@app/store/appraisal/operations';
+import { selectUUID } from '@app/store/auth/selectors';
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
@@ -13,16 +21,9 @@ import NumberOfKeysInput from './forminputs/NumberOfKeysInput';
 import TrimInput from './forminputs/TrimInput';
 import VehicleOptionsGroup from './forminputs/VehicleOptionsGroup';
 import VinFormInput from './forminputs/VinFormInput';
-import { trackMileageChange } from './lib/analytics/analytics/appraisal';
-import { selectExperiment } from './store/absmartly/selectors';
-import { APPRAISAL_HIDE_HOW_MANY_KEYS_QUESTION } from './store/absmartly/types';
-import {
-  decodeVin,
-  gradeCheck,
-  handleCarfaxCall,
-} from './store/appraisal/operations';
-import { selectUUID } from './store/auth/selectors';
 import { getVinErrors, isValidVin, VROOM_VIN_SUBSTRING } from './validation';
+
+import AnalyticsHandler from 'src/integrations/AnalyticsHandler';
 
 const VehicleInformation = ({
   match,
@@ -35,6 +36,7 @@ const VehicleInformation = ({
   disableExperiments,
   isHideHowManyKeysExperiment,
 }: any) => {
+  const analyticsHanler = new AnalyticsHandler();
   const [vinLoader, setVinLoader]: any = useState(false);
   const [trimLoader, setTrimLoader]: any = useState(false);
   const [vinDecoded, setVinDecoded]: any = useState(false);
@@ -242,7 +244,8 @@ const VehicleInformation = ({
     const miles = fields.mileage.value;
     const trim = fields.trim.value;
     gradeCheck(make, model, trim, miles, vin);
-    trackMileageChange();
+
+    analyticsHanler.trackMileageChange();
   };
 
   return (

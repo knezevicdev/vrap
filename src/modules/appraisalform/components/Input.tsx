@@ -1,15 +1,15 @@
+import success_icon from '@static/icons/svg/checkmark-circle.svg';
+import error_icon from '@static/icons/svg/error.svg';
+import tooltip_icon from '@static/icons/svg/tooltip.svg';
+import PropTypes from 'prop-types';
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import PropTypes from 'prop-types';
-import Icon from './Icon';
-import ToolTip from '@app/components/ToolTip';
+
 import { lang } from './Components.language';
+import Icon from './Icon';
+import ToolTip from './ToolTip';
 
-const success_icon = require('@static/icons/svg/checkmark-circle.svg');
-const error_icon = require('@static/icons/svg/error.svg');
-const tooltip_icon = require('@static/icons/svg/tooltip.svg');
-
-const Input = props => {
+const Input = (props) => {
   const {
     field: {
       label,
@@ -31,17 +31,17 @@ const Input = props => {
       toolTipText,
       id = '',
       autocomplete = 'off',
-      dataQa
+      dataQa,
     },
     className,
     IconStyle,
     footerMessage,
-    innerRef
+    innerRef,
   } = props;
 
   const [validate, setValidate] = useState(false);
 
-  const handleValidation = action => event => {
+  const handleValidation = (action) => (event) => {
     if (!validate) {
       setValidate(true);
     }
@@ -104,7 +104,7 @@ const Input = props => {
   );
 };
 
-const isEmpty = value => {
+const isEmpty = (value) => {
   return !value || 0 === value.length;
 };
 
@@ -117,15 +117,15 @@ Input.propTypes = {
   footerMessage: PropTypes.element,
   innerRef: PropTypes.oneOfType([
     PropTypes.func,
-    PropTypes.shape({ current: PropTypes.any })
-  ])
+    PropTypes.shape({ current: PropTypes.any }),
+  ]),
 };
 
 const InputIcon = styled(Icon)`
   position: absolute;
   right: 10px;
-  top: ${props => props.top || '30px'};
-  fill: ${props => props.theme.colors.green};
+  top: ${(props) => props.top || '30px'};
+  fill: ${(props) => props.theme.colors.green};
 `;
 
 const Container = styled.div`
@@ -135,7 +135,7 @@ const Container = styled.div`
 `;
 
 const Label = styled.label`
-  ${props => props.theme.typography.h14()}
+  ${(props) => props.theme.typography.h14()}
   margin-bottom: 5px;
   letter-spacing: 0.35px;
   display: flex;
@@ -146,27 +146,27 @@ const InputContainer = styled.input`
   padding: 8px 10px;
   outline: none;
   appearance: none;
-  border: solid 1px ${props => props.theme.colors.gray3};
+  border: solid 1px ${(props) => props.theme.colors.gray3};
   border-radius: 0;
-  ${props => props.theme.typography.h9()}
+  ${(props) => props.theme.typography.h9()}
   @include set-font(regular, 18px, 22px, 0.25px);
   letter-spacing: 0.25px;
-  ${props => props.isEmpty && `background-color: ${props.theme.colors.white};`}
-  ${props =>
-    props.showError && `border-color: ${props.theme.colors.orange};`}
+  ${(props) =>
+    props.isEmpty && `background-color: ${props.theme.colors.white};`}
+  ${(props) => props.showError && `border-color: ${props.theme.colors.orange};`}
 
   &:focus {
-    border-color: ${props => props.theme.colors.vroomBlue};
-    background-color: ${props => props.theme.colors.white};
+    border-color: ${(props) => props.theme.colors.vroomBlue};
+    background-color: ${(props) => props.theme.colors.white};
   }
 
   &:disabled {
-    background: ${props => props.theme.colors.gray4};
-    color: ${props => props.theme.colors.dark};
+    background: ${(props) => props.theme.colors.gray4};
+    color: ${(props) => props.theme.colors.dark};
   }
 
   &::placeholder {
-    color: ${props => props.theme.colors.gray2};
+    color: ${(props) => props.theme.colors.gray2};
   }
 
   &::-ms-clear {
@@ -175,9 +175,9 @@ const InputContainer = styled.input`
 `;
 
 const ErrorMessage = styled.span`
-  ${props => props.theme.typography.h16('bold')}
+  ${(props) => props.theme.typography.h16('bold')}
   margin-top: 3px;
-  color: ${props => props.theme.colors.orange};
+  color: ${(props) => props.theme.colors.orange};
   text-transform: uppercase;
 `;
 
