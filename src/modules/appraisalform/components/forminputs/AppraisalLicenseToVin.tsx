@@ -48,8 +48,7 @@ const AppraisalLicenseToVin: React.FC<Props> = ({
 
 const AppraisalLicenseToVinContainer = styled.div`
   width: 48%;
-
-  ${(props) => props.theme.media.mobile} {
+  @media (max-width: 767px) {
     width: 100%;
   }
 `;

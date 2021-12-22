@@ -1,21 +1,22 @@
-import React, { useState } from 'react';
-import PropTypes from 'prop-types';
-import styled from 'styled-components';
-import useForm from '@app/components/Form/useForm';
+import PrimaryButton from '@app/components/Button/PrimaryButton';
 import StateInput from '@app/components/Form/Inputs/AddressInput/StateInput';
 import LicenseInput from '@app/components/Form/Inputs/LicenseInput';
-import PrimaryButton from '@app/components/Button/PrimaryButton';
-import { PATHS, getThemedPath } from '@app/constants/routes';
+import useForm from '@app/components/Form/useForm';
+import { getThemedPath, PATHS } from '@app/constants/routes';
+import {
+  trackLicenseToVin,
+  trackSelectYourVehicle,
+} from '@app/lib/analytics/analytics/appraisal';
+import PropTypes from 'prop-types';
+import React, { useState } from 'react';
+import styled from 'styled-components';
+
 import {
   buttonText,
   dataQa,
   genericLPError,
-  licenseToVinErrorText
+  licenseToVinErrorText,
 } from './language';
-import {
-  trackLicenseToVin,
-  trackSelectYourVehicle
-} from '@app/lib/analytics/analytics/appraisal';
 
 const LicenseStateInput = ({
   handleLicenseToVin,
@@ -26,19 +27,19 @@ const LicenseStateInput = ({
   showSpinner,
   showDialog,
   buttonColor,
-  handleTabClick
+  handleTabClick,
 }) => {
   const [showLicenseError, setLicenseError] = useState(false);
   const form = useForm({
     defaultValues: {
       licensePlate: '',
-      state: ''
-    }
+      state: '',
+    },
   });
 
   const {
     fields: { licensePlate, state },
-    isFormValid
+    isFormValid,
   } = form;
 
   const handleLicenseStateSubmit = async () => {
@@ -46,7 +47,7 @@ const LicenseStateInput = ({
     showSpinner(true);
     const data = {
       licensePlate: licensePlate.value,
-      state: state.value
+      state: state.value,
     };
 
     const label = 'License Plate';
@@ -77,21 +78,21 @@ const LicenseStateInput = ({
       licensePlate.onChange({
         ...licensePlate,
         error: true,
-        errorMessage: licenseToVinErrorText
+        errorMessage: licenseToVinErrorText,
       });
       setLicenseError(true);
     } else if (vinResponse.vehicles.length > 1) {
       trackSelectYourVehicle(category);
       const isCheckoutTrade = pathname === PATHS.checkoutTradeAppraisal.prefix;
       showDialog('MultiSelectDialog', {
-        isCheckoutTrade
+        isCheckoutTrade,
       });
     } else if (vinResponse.vehicles[0].vin) {
       const vinForPath = vinResponse.vehicles[0].vin;
       let appraisalPath = '';
       if (pathname === PATHS.checkoutTradeAppraisal.prefix) {
         appraisalPath = PATHS.checkoutTradeAppraisal.withParams({
-          vin: vinForPath
+          vin: vinForPath,
         });
       } else if (pathname === PATHS.trade.prefix) {
         appraisalPath = PATHS.tradeAppraisal.withParams({ vin: vinForPath });
@@ -106,13 +107,13 @@ const LicenseStateInput = ({
       licensePlate.onChange({
         ...licensePlate,
         error: true,
-        errorMessage: genericLPError
+        errorMessage: genericLPError,
       });
       setLicenseError(true);
     }
   };
 
-  const handleOnKeyPressEnter = e => {
+  const handleOnKeyPressEnter = (e) => {
     if (e.key === 'Enter' && isFormValid) {
       handleLicenseStateSubmit();
     }
@@ -153,17 +154,17 @@ const InputContainer = styled.div`
 `;
 
 const LicenseInputContainer = styled(LicenseInput)`
-  ${props => props.theme.media.lte('tablet')} {
+  @media (min-width: 768px) {
     width: 70%;
   }
 `;
 
 const States = styled(StateInput)`
-  ${props => props.theme.media.lte('tablet')} {
+  @media (min-width: 768px) {
     width: 90px;
   }
 
-  ${props => props.theme.media.gte('desktop')} {
+  @media (min-width: 1024px) and (max-width: 1279px) {
     width: 160px;
   }
 
@@ -186,7 +187,7 @@ LicenseStateInput.propTypes = {
   theme: PropTypes.string,
   buttonColor: PropTypes.string,
   match: PropTypes.object,
-  handleTabClick: PropTypes.func
+  handleTabClick: PropTypes.func,
 };
 
 export default LicenseStateInput;

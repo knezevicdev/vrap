@@ -1,12 +1,12 @@
+import { Typography } from '@vroom-web/ui-lib';
 import styled from 'styled-components';
 
 const MultiTabBox = styled.div`
   max-width: 580px;
-  border: 1px solid ${props => props.theme.colors.gray3};
-  background: ${props => props.theme.colors.white};
+  border: 1px solid #d6d7da;
+  background: #ffffff;
   padding: 20px;
-
-  ${props => props.theme.media.gte('tablet')} {
+  @media (min-width: 768px) {
     padding: 30px;
   }
 `;
@@ -14,7 +14,7 @@ const MultiTabBox = styled.div`
 const Tabs = styled.div`
   display: flex;
   justify-content: space-evenly;
-  border-bottom: 1px solid ${props => props.theme.colors.gray8};
+  border-bottom: 1px solid #e0e0e0;
 `;
 
 const Body = styled.div`
@@ -24,23 +24,25 @@ const Body = styled.div`
 const TabContentSection = styled.div`
   display: none;
 
-  ${props => props.isActive === true && `display: block;`}
+  ${(props) => props.isActive === true && `display: block;`}
 `;
 
-const TabButton = styled.div`
-  ${props => props.theme.typography.bodyBold}
-  color: ${props => props.theme.colors.gray1};
+const TabButton = styled(Typography.Body.Regular)`
+  line-height: 25px;
+  letter-spacing: 0.25px;
+  font-weight: 600;
+  color: #6c717a;
   cursor: pointer;
   text-align: center;
-  width: ${props => props.tabWidth}%;
+  width: ${(props) => props.tabWidth}%;
   text-transform: uppercase;
   white-space: nowrap;
 
-  ${props =>
+  ${(props) =>
     props.isActive === true &&
     `
-      color: ${props.theme.colors.dark};
-      border-bottom: 2px solid ${props.theme.colors.vroomRed};
+      color: #343957;
+      border-bottom: 2px solid #e7131a;
     `}
 `;
 

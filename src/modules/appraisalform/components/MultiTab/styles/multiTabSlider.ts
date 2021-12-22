@@ -1,8 +1,9 @@
+import { Typography } from '@vroom-web/ui-lib';
 import styled from 'styled-components';
 
 const MultiTabSlider = styled.div`
   max-width: 580px;
-  background: ${props => props.theme.colors.white};
+  background: #ffffff;
 `;
 
 const Tabs = styled.div`
@@ -22,21 +23,23 @@ const Body = styled.div`
 const TabContentSection = styled.div`
   display: none;
 
-  ${props => props.isActive === true && `display: block;`}
+  ${(props) => props.isActive === true && `display: block;`}
 `;
 
-const TabButton = styled.div`
-  ${props => props.theme.typography.h12('semibold')}
-  color: ${props => props.theme.colors.gray1};
+const TabButton = styled(Typography.Body.Regular)`
+  font-size: 14px;
+  line-height: 14px;
+  letter-spacing: 1px;
+  color: #6c717a;
   cursor: pointer;
   line-height: 31px;
   text-align: center;
   text-transform: uppercase;
   white-space: nowrap;
-  width: ${props => props.tabWidth}%;
+  width: ${(props) => props.tabWidth}%;
   min-width: 145px;
 
-  ${props =>
+  ${(props) =>
     props.isActive === true &&
     `
       background-color: #FFFFFF;

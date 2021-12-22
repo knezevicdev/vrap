@@ -1,13 +1,14 @@
-import React from 'react';
-import styled from 'styled-components';
-import PropTypes from 'prop-types';
+import CircleLoader from '@app/components/CircleLoader';
 import Icon from '@app/components/Icon';
 import Input from '@app/components/Input';
-import { isValidVin, getVinErrors } from '@app/lib/validation/validation';
-import { lettersAndNumbersOnly } from '@app/lib/validation/formatting';
-import { FormFields } from '../Inputs.language';
-import CircleLoader from '@app/components/CircleLoader';
 import { VROOM_VIN_SUBSTRING } from '@app/constants/misc';
+import { lettersAndNumbersOnly } from '@app/lib/validation/formatting';
+import { getVinErrors, isValidVin } from '@app/lib/validation/validation';
+import PropTypes from 'prop-types';
+import React from 'react';
+import styled from 'styled-components';
+
+import { FormFields } from '../Inputs.language';
 
 const questionCircleIcon = require('@static/icons/svg/question-circle.svg');
 
@@ -17,11 +18,11 @@ const VinFormInput = ({
   className,
   vinLoader,
   handleUpdate,
-  onKeyPressEnter
+  onKeyPressEnter,
 }) => {
   const { onChange } = field;
 
-  const handleOnChange = event => {
+  const handleOnChange = (event) => {
     const value = lettersAndNumbersOnly(event.target.value, 17);
     const error = !value.includes(VROOM_VIN_SUBSTRING) && !isValidVin(value);
     const errorMessage = getVinErrors(value);
@@ -54,7 +55,7 @@ const VinFormInput = ({
           ),
           onChange: handleOnChange,
           onKeyPress: onKeyPressEnter,
-          dataQa: 'Vin Number'
+          dataQa: 'Vin Number',
         }}
       />
       {vinLoader && <Loader isLoading={vinLoader} />}
@@ -100,7 +101,7 @@ VinFormInput.propTypes = {
   className: PropTypes.string,
   vinLoader: PropTypes.bool,
   handleUpdate: PropTypes.func,
-  onKeyPressEnter: PropTypes.func
+  onKeyPressEnter: PropTypes.func,
 };
 
 export default VinFormInput;
