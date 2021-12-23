@@ -1,17 +1,17 @@
+import Icon from '@app/components/Icon';
+import { trackPanelsTooltip } from '@app/lib/analytics/analytics/sell';
+import { showDialog } from '@app/store/dialog/actions';
+import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import Icon from '@app/components/Icon';
-import { showDialog } from '@app/store/dialog/actions';
-import { trackPanelsTooltip } from '@app/lib/analytics/analytics/sell';
 const tooltip_icon = require('@static/icons/svg/tooltip.svg');
 
 const SelectBoxes = ({
   field: { options, onClick, value, label, panelsTooltip },
   handlePanelTooltipClick,
   className,
-  externalLabel
+  externalLabel,
 }) => {
   return (
     <Container className={className}>
@@ -30,7 +30,7 @@ const SelectBoxes = ({
         </LabelContainer>
       )}
       <OptionsContainer data-qa="SelectBoxesComponent">
-        {options.map(item => {
+        {options.map((item) => {
           return (
             <Option
               isSelected={value === item}
@@ -58,7 +58,7 @@ const LabelContainer = styled.div`
 const RowTitleIcon = styled(Icon)`
   margin: 4px 0 0 5px;
 
-  ${props => props.theme.media.mobile} {
+  @media (max-width: 767px) {
     margin: 4px 0 0 5px;
   }
 `;
@@ -85,24 +85,23 @@ const Option = styled(({ isSelected, optionsLength, ...restProps }) => (
   justify-content: center;
   line-height: 1.39;
   letter-spacing: 0.3px;
-  width: calc(100% / ${props => props.optionsLength});
+  width: calc(100% / ${(props) => props.optionsLength});
   border-left: none;
   cursor: pointer;
-  color: ${props =>
-    props.isSelected ? props.theme.colors.dark : props.theme.colors.gray2};
-  background-color: ${props => props.theme.colors.white};
-  border: 1px solid ${props => props.theme.colors.gray3};
+  color: ${(props) => (props.isSelected ? '#041022' : '#999da3')};
+  background-color: #ffffff;
+  border: 1px solid #d6d7da;
 
-  ${props =>
+  ${(props) =>
     props.isSelected &&
     `
-      border: 2px solid ${props.theme.colors.vroomRed};
+      border: 2px solid #e7131a;
   `}
 `;
 
 Option.propTypes = {
   isSelected: PropTypes.bool,
-  optionsLength: PropTypes.number
+  optionsLength: PropTypes.number,
 };
 
 SelectBoxes.propTypes = {
@@ -110,14 +109,11 @@ SelectBoxes.propTypes = {
   field: PropTypes.object,
   className: PropTypes.string,
   externalLabel: PropTypes.string,
-  handlePanelTooltipClick: PropTypes.func
+  handlePanelTooltipClick: PropTypes.func,
 };
 
-const mapDispatchToProps = dispatch => ({
-  handlePanelTooltipClick: () => dispatch(showDialog('PanelsDialog', {}, true))
+const mapDispatchToProps = (dispatch) => ({
+  handlePanelTooltipClick: () => dispatch(showDialog('PanelsDialog', {}, true)),
 });
 
-export default connect(
-  null,
-  mapDispatchToProps
-)(SelectBoxes);
+export default connect(null, mapDispatchToProps)(SelectBoxes);

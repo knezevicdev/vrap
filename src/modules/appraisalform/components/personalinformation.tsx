@@ -50,7 +50,7 @@ const InputContainer = styled.div`
   margin-top: 20px;
   justify-content: space-between;
 
-  ${(props) => props.theme.media.mobile} {
+  @media (max-width: 767px) {
     display: block;
     margin-bottom: 0px;
   }
@@ -60,7 +60,7 @@ const First = styled(FirstNameInput)`
   width: 50%;
   margin-right: 10px;
 
-  ${(props) => props.theme.media.mobile} {
+  @media (max-width: 767px) {
     width: 100%;
     margin-right: 0px;
     margin-bottom: 16px;
@@ -71,7 +71,7 @@ const Last = styled(LastNameInput)`
   margin-left: 10px;
   width: 50%;
 
-  ${(props) => props.theme.media.mobile} {
+  @media (max-width: 767px) {
     width: 100%;
     margin-left: 0px;
     margin-bottom: 16px;
@@ -82,7 +82,7 @@ const Phone = styled(PhoneInput)`
   width: 50%;
   margin-right: 10px;
 
-  ${(props) => props.theme.media.mobile} {
+  @media (max-width: 767px) {
     width: 100%;
     margin-right: 0px;
     margin-bottom: 16px;
@@ -93,7 +93,7 @@ const Zip = styled(ZipCodeInput)`
   margin-left: 10px;
   width: 50%;
 
-  ${(props) => props.theme.media.mobile} {
+  @media (max-width: 767px) {
     width: 100%;
     margin-left: 0px;
     margin-bottom: 16px;
@@ -103,7 +103,7 @@ const Zip = styled(ZipCodeInput)`
 const Email = styled(EmailInput)`
   width: 100%;
 
-  ${(props) => props.theme.media.mobile} {
+  @media (max-width: 767px) {
     margin-bottom: 16px;
   }
 `;
@@ -111,7 +111,7 @@ const Email = styled(EmailInput)`
 const LookingToAccomplish = styled(LookingToAccomplishInput)`
   width: 100%;
 
-  ${(props) => props.theme.media.mobile} {
+  @media (max-width: 767px) {
     margin-bottom: 16px;
   }
 `;

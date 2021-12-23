@@ -43,8 +43,7 @@ const InputContainer = styled.div`
   text-align: left;
   margin-bottom: 20px;
   justify-content: space-between;
-
-  ${(props) => props.theme.media.lte('mobile')} {
+  @media (max-width: 768px) {
     flex-direction: column;
     margin-bottom: 0px;
   }
@@ -53,7 +52,7 @@ const InputContainer = styled.div`
 const Left = styled.div`
   width: 50%;
 
-  ${(props) => props.theme.media.mobile} {
+  @media (max-width: 767px) {
     width: 100%;
   }
 `;
@@ -65,7 +64,7 @@ const WarningLightsOptionsContainer = styled(WarningLightsOptionsGroup)`
 const Runnable = styled(RunnableInput)`
   width: 50%;
   margin-right: 10px;
-  ${(props) => props.theme.media.lte('mobile')} {
+  @media (max-width: 768px) {
     width: 100%;
     margin-left: 0px;
     margin-bottom: 16px;
@@ -74,7 +73,7 @@ const Runnable = styled(RunnableInput)`
 
 const WarningLights = styled(WarningLightsInput)`
   margin-right: 10px;
-  ${(props) => props.theme.media.lte('mobile')} {
+  @media (max-width: 768px) {
     margin-left: 0px;
     margin-bottom: 16px;
   }
@@ -83,7 +82,7 @@ const WarningLights = styled(WarningLightsInput)`
 const FloodFireDamage = styled(FloodFireDamageInput)`
   width: 50%;
   margin-right: 10px;
-  ${(props) => props.theme.media.lte('mobile')} {
+  @media (max-width: 767px) {
     width: 100%;
     margin-left: 0px;
     margin-bottom: 16px;
@@ -92,7 +91,7 @@ const FloodFireDamage = styled(FloodFireDamageInput)`
 
 const MechanicalConditionRadios = styled(MechanicalConditionInput)`
   margin-right: 10px;
-  ${(props) => props.theme.media.lte('mobile')} {
+  @media (max-width: 767px) {
     width: 100%;
     margin-left: 0px;
     margin-bottom: 16px;
@@ -102,7 +101,7 @@ const MechanicalConditionRadios = styled(MechanicalConditionInput)`
 const AdditionalDetails = styled(AdditionalDetailsInput)`
   width: 100%;
 
-  ${(props) => props.theme.media.lte('mobile')} {
+  @media (max-width: 767px) {
     width: 100%;
     margin-left: 0px;
     margin-bottom: 16px;

@@ -1,15 +1,15 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import styled from 'styled-components';
-import ToolTip from '@app/components/ToolTip';
-import Icon from '@app/components/Icon';
 import { radioSelected } from '@app/assets/assets';
+import Icon from '@app/components/Icon';
+import ToolTip from '@app/components/ToolTip';
+import PropTypes from 'prop-types';
+import React from 'react';
+import styled from 'styled-components';
 
 const tooltip_icon = require('@static/icons/svg/tooltip.svg');
 
 const RadioInput = ({
   field: { options, onClick, label, name, selected, tooltipText = '' },
-  className
+  className,
 }) => {
   return (
     <Container className={className}>
@@ -26,7 +26,7 @@ const RadioInput = ({
         )}
       </LabelContainer>
       <div data-qa="SelectBoxesComponent">
-        {options.map(item => {
+        {options.map((item) => {
           return (
             <RadioContainer key={item.label}>
               <HiddenNativeRadio
@@ -90,20 +90,20 @@ const HiddenNativeRadio = styled.input`
 `;
 
 const StyledRadio = styled.div`
-  border: 1px solid ${props => props.theme.colors.gray3};
+  border: 1px solid #d6d7da;
   border-radius: 8px;
 
   width: 16px;
   height: 16px;
   margin: 5px;
 
-  ${props =>
+  ${(props) =>
     props.selected === props.value &&
     `background: url(${radioSelected}); background-size: cover;`}
 `;
 
 const RadioTextContainer = styled.div`
-  ${props => props.theme.media.lte('mobile')} {
+  @media (max-width: 768px) {
     width: 90%;
   }
 `;
@@ -115,7 +115,7 @@ const OptionLabel = styled.label`
   margin-bottom: 0px;
   cursor: pointer;
 
-  ${props => props.theme.media.lte('mobile')} {
+  @media (max-width: 768px) {
     font-size: 16px;
   }
 `;
@@ -127,7 +127,7 @@ const OptionDescription = styled.div`
   line-height: 1.71;
   width: 355px;
 
-  ${props => props.theme.media.lte('mobile')} {
+  @media (max-width: 768px) {
     width: 100%;
     line-height: 20px;
   }
@@ -136,7 +136,7 @@ const OptionDescription = styled.div`
 const RowTitleIcon = styled(Icon)`
   margin: 8px 0 0 5px;
 
-  ${props => props.theme.media.mobile} {
+  @media (max-width: 767px) {
     margin: 4px 0 0 5px;
   }
 `;
@@ -149,7 +149,7 @@ const LabelContainer = styled.div`
 RadioInput.propTypes = {
   field: PropTypes.object,
   className: PropTypes.string,
-  tooltipText: PropTypes.string
+  tooltipText: PropTypes.string,
 };
 
 export default RadioInput;
