@@ -1,15 +1,15 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import styled from 'styled-components';
-import PropTypes from 'prop-types';
-import Icon from '@app/components/Icon';
-import Input from '@app/components/Input';
-import { isValidVin, getVinErrors } from '@app/lib/validation/validation';
-import { lettersAndNumbersOnly } from '@app/lib/validation/formatting';
-import { FormFields } from '../Inputs.language';
-import CircleLoader from '@app/components/CircleLoader';
-import { VROOM_VIN_SUBSTRING } from '@app/constants/misc';
 
-const questionCircleIcon = require('@static/icons/svg/question-circle.svg');
+import { VROOM_VIN_SUBSTRING } from '../../../constants/misc';
+import { lettersAndNumbersOnly } from '../../../lib/validation/formatting';
+import { getVinErrors, isValidVin } from '../../../lib/validation/validation';
+import questionCircleIcon from '../../../static/icons/svg/question-circle.svg';
+import CircleLoader from '../../CircleLoader';
+import Icon from '../../Icon';
+import Input from '../../Input';
+import { FormFields } from '../Inputs.language';
 
 const VinFormInput = ({
   showDialog,
@@ -17,11 +17,11 @@ const VinFormInput = ({
   className,
   vinLoader,
   handleUpdate,
-  onKeyPressEnter
+  onKeyPressEnter,
 }) => {
   const { onChange } = field;
 
-  const handleOnChange = event => {
+  const handleOnChange = (event) => {
     const value = lettersAndNumbersOnly(event.target.value, 17);
     const error = !value.includes(VROOM_VIN_SUBSTRING) && !isValidVin(value);
     const errorMessage = getVinErrors(value);
@@ -54,7 +54,7 @@ const VinFormInput = ({
           ),
           onChange: handleOnChange,
           onKeyPress: onKeyPressEnter,
-          dataQa: 'Vin Number'
+          dataQa: 'Vin Number',
         }}
       />
       {vinLoader && <Loader isLoading={vinLoader} />}
@@ -100,7 +100,7 @@ VinFormInput.propTypes = {
   className: PropTypes.string,
   vinLoader: PropTypes.bool,
   handleUpdate: PropTypes.func,
-  onKeyPressEnter: PropTypes.func
+  onKeyPressEnter: PropTypes.func,
 };
 
 export default VinFormInput;

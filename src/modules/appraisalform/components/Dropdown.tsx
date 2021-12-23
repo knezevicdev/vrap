@@ -1,9 +1,10 @@
+import { FormField } from '@app/components/componentInterfaces.d';
+import { getCustomOptions, getOptions } from '@app/lib/utils/selectUtils.js';
 import React from 'react';
 import styled from 'styled-components';
+
+import { arrowPath } from '../assets/assets';
 import Icon from './Icon';
-import { getOptions, getCustomOptions } from '@app/lib/utils/selectUtils.js';
-import { arrowPath } from '@app/assets/assets';
-import { FormField } from '@app/components/componentInterfaces.d';
 
 const success_icon = require('@static/icons/svg/checkmark-circle.svg');
 
@@ -27,9 +28,9 @@ const Dropdown: React.FC<DropdownProps> = ({
     defaultLabel,
     options = customOptions
       ? getCustomOptions(defaultLabel, customOptions)
-      : getOptions(type)
+      : getOptions(type),
   },
-  className
+  className,
 }) => {
   return (
     <Container className={className}>
@@ -55,7 +56,7 @@ const Dropdown: React.FC<DropdownProps> = ({
   );
 };
 
-const isEmpty = value => {
+const isEmpty = (value) => {
   return !value || 0 === value.length;
 };
 
@@ -69,7 +70,7 @@ const SuccessIcon = styled(Icon)`
   position: absolute;
   right: 30px;
   top: 31px;
-  fill: ${props => props.theme.colors.green};
+  fill: ${(props) => props.theme.colors.green};
 `;
 
 const Container = styled.div`
@@ -79,7 +80,7 @@ const Container = styled.div`
 `;
 
 const Label = styled.label`
-  ${props => props.theme.typography.h14()}
+  ${(props) => props.theme.typography.h14()}
   margin-bottom: 5px;
   letter-spacing: 0.35px;
 `;
@@ -94,17 +95,17 @@ const SelectContainer = styled.select`
   cursor: pointer;
   outline: 0;
   letter-spacing: -0.3px;
-  color: ${props => props.theme.colors.dark};
-  background-color: ${props => props.theme.colors.white};
-  border: 1px solid ${props => props.theme.colors.gray3};
+  color: ${(props) => props.theme.colors.dark};
+  background-color: ${(props) => props.theme.colors.white};
+  border: 1px solid ${(props) => props.theme.colors.gray3};
 
-  ${props =>
+  ${(props) =>
     props.isEmpty &&
     `background-color: ${props.theme.colors.white};
     color: ${props.theme.colors.gray2};
   `}
-  ${props => props.error && `border-color: ${props.theme.colors.orange};`}
-  ${props => props.theme.media.mobile} {
+  ${(props) => props.error && `border-color: ${props.theme.colors.orange};`}
+  ${(props) => props.theme.media.mobile} {
     padding: 0 30px 0 10px;
     -webkit-padding-end: 45px;
     -webkit-padding-start: 10px;
@@ -126,8 +127,8 @@ const SelectArrow = styled.img`
 `;
 
 const ErrorMessage = styled.span`
-  ${props => props.theme.typography.h16('bold')}
+  ${(props) => props.theme.typography.h16('bold')}
   margin-top: 3px;
-  color: ${props => props.theme.colors.orange};
+  color: ${(props) => props.theme.colors.orange};
   text-transform: uppercase;
 `;

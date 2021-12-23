@@ -18,7 +18,7 @@ import {
 import ExteriorCondition from './components/ExteriorCondition';
 import InteriorCondition from './components/InteriorCondition';
 import MechanicalCondition from './components/mechanicalcondition';
-import MultiStepForm from './components/multistepform';
+import MultiStepForm from './components/MultiStepForm';
 import PersonalInformation from './components/personalinformation';
 import useFormInit from './components/useFormInit';
 import VehicleHistory from './components/vehiclehistory';

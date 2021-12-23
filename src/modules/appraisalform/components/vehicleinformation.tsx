@@ -1,12 +1,4 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { selectExperiment } from '@app/store/absmartly/selectors';
-import { APPRAISAL_HIDE_HOW_MANY_KEYS_QUESTION } from '@app/store/absmartly/types';
-import {
-  decodeVin,
-  gradeCheck,
-  handleCarfaxCall,
-} from '@app/store/appraisal/operations';
-import { selectUUID } from '@app/store/auth/selectors';
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
@@ -24,6 +16,14 @@ import VinFormInput from './forminputs/VinFormInput';
 import { getVinErrors, isValidVin, VROOM_VIN_SUBSTRING } from './validation';
 
 import AnalyticsHandler from 'src/integrations/AnalyticsHandler';
+import { selectExperiment } from 'src/store/absmartly/selectors';
+import { APPRAISAL_HIDE_HOW_MANY_KEYS_QUESTION } from 'src/store/absmartly/types';
+import {
+  decodeVin,
+  gradeCheck,
+  handleCarfaxCall,
+} from 'src/store/appraisal/operations';
+import { selectUUID } from 'src/store/auth/selectors';
 
 const VehicleInformation = ({
   match,

@@ -1,11 +1,11 @@
-import { parseBackEndDate, dateDiff } from '@app/lib/utils/utils';
+import { dateDiff, parseBackEndDate } from '@app/lib/utils/utils';
 
-export const getNextOfferToExpire = offerArr => {
+export const getNextOfferToExpire = (offerArr) => {
   const todayDate = new Date();
   let leastDaysToExpire = Infinity;
   let nextToExpire;
 
-  offerArr.forEach(offer => {
+  offerArr.forEach((offer) => {
     if (offer.offer_status === 'Pending') {
       let expirationDate = parseBackEndDate(offer.Good_Until__c);
       let isExpiringSoon =
@@ -18,7 +18,7 @@ export const getNextOfferToExpire = offerArr => {
         nextToExpire = {
           ...offer,
           daysToExpire: leastDaysToExpire,
-          expirationDate
+          expirationDate,
         };
       }
     } else {
