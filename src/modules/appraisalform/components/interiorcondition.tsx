@@ -20,8 +20,7 @@ const InteriorCondition = ({ fields }) => {
 const InteriorDetails = styled.div`
   display: flex;
   justify-content: space-between;
-
-  ${(props) => props.theme.media.mobile} {
+  @media (max-width: 767px) {
     display: block;
   }
 `;
@@ -29,8 +28,7 @@ const InteriorDetails = styled.div`
 const Seats = styled(SeatsInput)`
   width: 49%;
   margin: 20px 0;
-
-  ${(props) => props.theme.media.mobile} {
+  @media (max-width: 767px) {
     width: 100%;
     margin: 20px 0 0;
   }
@@ -39,8 +37,7 @@ const Seats = styled(SeatsInput)`
 const SmokedIn = styled(SmokedInInput)`
   width: 49%;
   margin: 20px 0;
-
-  ${(props) => props.theme.media.mobile} {
+  @media (max-width: 767px) {
     width: 100%;
     margin: 20px 0 0;
   }

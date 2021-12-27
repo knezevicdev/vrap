@@ -275,16 +275,16 @@ const AppraisalForm = ({
 
 const AppraisalFormContainer = styled.div`
   padding: 20px 60px;
-  background: ${(props) => props.theme.colors.white};
-  border: 1px solid ${(props) => props.theme.colors.gray3};
+  background: #ffffff;
+  border: 1px solid #d6d7da;
   width: 100%;
   max-width: 768px;
 
-  ${(props) => props.theme.media.lte('tablet')} {
+  (max-width: 1024px) {
     padding: 0 60px;
   }
 
-  ${(props) => props.theme.media.lte('mobile')} {
+  @media (max-width: 768px) {
     padding: 0 10px;
   }
 `;

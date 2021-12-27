@@ -59,7 +59,7 @@ const LabelContainer = styled.div`
 const RowTitleIcon = styled(Icon)`
   margin: 4px 0 0 5px;
 
-  ${(props) => props.theme.media.mobile} {
+  @media (max-width: 767px) {
     margin: 4px 0 0 5px;
   }
 `;
@@ -89,15 +89,14 @@ const Option = styled(({ isSelected, optionsLength, ...restProps }) => (
   width: calc(100% / ${(props) => props.optionsLength});
   border-left: none;
   cursor: pointer;
-  color: ${(props) =>
-    props.isSelected ? props.theme.colors.dark : props.theme.colors.gray2};
-  background-color: ${(props) => props.theme.colors.white};
-  border: 1px solid ${(props) => props.theme.colors.gray3};
+  color: ${(props) => (props.isSelected ? '#041022' : '#999da3')};
+  background-color: #ffffff;
+  border: 1px solid #d6d7da;
 
   ${(props) =>
     props.isSelected &&
     `
-      border: 2px solid ${props.theme.colors.vroomRed};
+      border: 2px solid #e7131a;
   `}
 `;
 

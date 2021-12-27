@@ -28,7 +28,7 @@ const HasAccident = styled(HasAccidentInput)`
   width: 50%;
   margin: 20px 0;
 
-  ${(props) => props.theme.media.mobile} {
+  @media (max-width: 767px) {
     width: 100%;
   }
 `;
@@ -36,7 +36,7 @@ const HasAccident = styled(HasAccidentInput)`
 const State = styled(StateInput)`
   width: 50%;
   margin-bottom: 32px;
-  ${(props) => props.theme.media.mobile} {
+  @media (max-width: 767px) {
     width: 100%;
   }
 `;

@@ -90,7 +90,7 @@ const HiddenNativeRadio = styled.input`
 `;
 
 const StyledRadio = styled.div`
-  border: 1px solid ${(props) => props.theme.colors.gray3};
+  border: 1px solid #d6d7da;
   border-radius: 8px;
 
   width: 16px;
@@ -103,7 +103,7 @@ const StyledRadio = styled.div`
 `;
 
 const RadioTextContainer = styled.div`
-  ${(props) => props.theme.media.lte('mobile')} {
+  @media (max-width: 768px) {
     width: 90%;
   }
 `;
@@ -115,7 +115,7 @@ const OptionLabel = styled.label`
   margin-bottom: 0px;
   cursor: pointer;
 
-  ${(props) => props.theme.media.lte('mobile')} {
+  @media (max-width: 768px) {
     font-size: 16px;
   }
 `;
@@ -127,7 +127,7 @@ const OptionDescription = styled.div`
   line-height: 1.71;
   width: 355px;
 
-  ${(props) => props.theme.media.lte('mobile')} {
+  @media (max-width: 768px) {
     width: 100%;
     line-height: 20px;
   }
@@ -136,7 +136,7 @@ const OptionDescription = styled.div`
 const RowTitleIcon = styled(Icon)`
   margin: 8px 0 0 5px;
 
-  ${(props) => props.theme.media.mobile} {
+  @media (max-width: 767px) {
     margin: 4px 0 0 5px;
   }
 `;

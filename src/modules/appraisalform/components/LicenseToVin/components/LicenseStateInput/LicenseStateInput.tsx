@@ -154,17 +154,17 @@ const InputContainer = styled.div`
 `;
 
 const LicenseInputContainer = styled(LicenseInput)`
-  ${(props) => props.theme.media.lte('tablet')} {
+  @media (min-width: 768px) {
     width: 70%;
   }
 `;
 
 const States = styled(StateInput)`
-  ${(props) => props.theme.media.lte('tablet')} {
+  @media (min-width: 768px) {
     width: 90px;
   }
 
-  ${(props) => props.theme.media.gte('desktop')} {
+  @media (min-width: 1024px) and (max-width: 1279px) {
     width: 160px;
   }
 

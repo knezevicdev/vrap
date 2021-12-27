@@ -1,4 +1,4 @@
-import { Checkbox } from '@vroom-web/ui-lib';
+import { Checkbox, Typography } from '@vroom-web/ui-lib';
 import { addStyleForMobile } from '@vroom-web/ui-lib';
 import React, { useState } from 'react';
 import styled from 'styled-components';
@@ -128,8 +128,7 @@ const Label = styled.h3`
   font-size: 18px;
   line-height: 1.39;
   letter-spacing: 0.3px;
-
-  ${(props) => props.theme.media.lte('mobile')} {
+  @media (max-width: 767px) {
     font-size: 16px;
   }
 `;
@@ -145,8 +144,10 @@ const CheckboxesContainer = styled.ul`
   width: 100%;
 `;
 
-const AfterMarketModsOptionsLabel = styled.div`
-  ${(props) => props.theme.typography.h14()}
+const AfterMarketModsOptionsLabel = styled(Typography.Body.Regular)`
+  font-size: 13px;
+  line-height: 13px;
+  letter-spacing: 1px;
   margin-bottom: 10px;
   letter-spacing: 0.35px;
 `;

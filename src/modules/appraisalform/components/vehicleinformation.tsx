@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { Typography } from '@vroom-web/ui-lib';
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
@@ -317,20 +318,23 @@ const VehicleInformation = ({
   );
 };
 
-const LeaseCopy = styled.div`
+const LeaseCopy = styled(Typography.Body.Regular)`
   padding-left: 8px;
   margin-top: 16px;
   margin-bottom: 32px;
-  border-left: 2px ${(props) => props.theme.colors.vroomRed} solid;
-  ${(props) => props.theme.typography.bodyBold};
+  border-left: 2px #e7131a solid;
+  font-size: 18px;
+  line-height: 25px;
+  letter-spacing: 0.25px;
+  font-weight: 600;
 `;
 
-const InputContainer = styled.div`
+const InputContainer = styled(Typography.Body.Regular)`
   display: flex;
   text-align: left;
   margin-top: 10px;
-  ${(props) => props.theme.typography.h9()};
-
+  line-height: 18px;
+  letter-spacing: 1px;
   ${(props) =>
     props.theme.addStylesFor({
       mobile: `
@@ -342,20 +346,21 @@ const InputContainer = styled.div`
 
 const VinField = styled.div`
   width: 48%;
-  ${(props) => props.theme.media.mobile} {
+  @media (max-width: 767px) {
     width: 100%;
   }
 `;
 
-const YearMakeModel = styled.div`
+const YearMakeModel = styled(Typography.Body.Regular)`
   width: 48%;
   font-weight: bold;
   // https://stackoverflow.com/questions/37534254/flex-auto-margin-not-working-in-ie10-11
   align-self: center;
-  ${(props) => props.theme.typography.h9('medium')};
+  /* ${(props) => props.theme.typography.h9('medium')}; */
   margin: auto auto 21px auto;
-
-  ${(props) => props.theme.media.mobile} {
+  line-height: 18px;
+  letter-spacing: 1px;
+  @media (max-width: 767px) {
     width: 100%;
   }
 `;
@@ -364,7 +369,7 @@ const TrimField = styled(TrimInput)`
   width: 48%;
   margin-bottom: 10px;
 
-  ${(props) => props.theme.media.mobile} {
+  @media (max-width: 767px) {
     width: 100%;
   }
 `;
@@ -372,7 +377,7 @@ const TrimField = styled(TrimInput)`
 const ExactMileageField = styled(ExactMileageInput)`
   width: 48%;
 
-  ${(props) => props.theme.media.mobile} {
+  @media (max-width: 767px) {
     width: 100%;
   }
 `;
@@ -381,7 +386,7 @@ const ExteriorColorField = styled(ExtColorInput)`
   width: 48%;
   margin: 0 auto;
 
-  ${(props) => props.theme.media.mobile} {
+  @media (max-width: 767px) {
     width: 100%;
   }
 `;
@@ -389,7 +394,7 @@ const ExteriorColorField = styled(ExtColorInput)`
 const NumberOfKeysField = styled(NumberOfKeysInput)`
   margin: 0 0 0 1px;
 
-  ${(props) => props.theme.media.mobile} {
+  @media (max-width: 767px) {
     width: 99%;
   }
 `;
