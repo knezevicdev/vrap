@@ -1,8 +1,8 @@
-import { getThemedPath, PATHS } from '@app/constants/routes';
+import { getThemedPath, PATHS } from '../../../../constants/routes';
 import {
   trackLicenseToVin,
   trackSelectYourVehicle,
-} from '@app/lib/analytics/analytics/appraisal';
+} from '../../../../lib/analytics/appraisal';
 import PropTypes from 'prop-types';
 import React, { useState } from 'react';
 import styled from 'styled-components';

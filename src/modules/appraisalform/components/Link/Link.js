@@ -1,10 +1,11 @@
-import { PATHS } from '@app/constants/routes';
-import { trackSearch } from '@app/lib/analytics/analytics/search';
-import { track } from '@app/lib/analytics/AnalyticsLib';
-import { appRouteExists } from '@app/routes';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { NavLink } from 'react-router-dom';
+
+import { PATHS } from '../../constants/routes';
+import { trackSearch } from '../../lib/analytics/search';
+import { track } from '../../lib/AnalyticsLib';
+import { appRouteExists } from '../../routes';
 
 const Link = (props) => {
   const {

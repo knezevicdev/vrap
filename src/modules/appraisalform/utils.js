@@ -1,9 +1,9 @@
-import { BREAKPOINT_VALUES } from '@app/constants/theme';
-import { numbersOnlyString } from '@app/lib/validation/formatting';
 import { parse } from 'qs';
 
 import { MONTHS, WEEKDAYS } from './constants/misc';
 import { PATHS } from './constants/routes';
+import { BREAKPOINT_VALUES } from './constants/theme';
+import { numbersOnlyString } from './lib/validation/formatting';
 
 const jwtDecode = require('jwt-decode');
 
@@ -415,21 +415,6 @@ export function checkTokenExp(token) {
   return expAccessToken;
 }
 
-// Flatten obj input:
-// {
-//   users: {
-//     set: "whatnot",
-//   },
-//   projects: {
-//     set: "whatnot",
-//   }
-// }
-//
-// Outputs:
-// {
-//  "users.set": "whatnot",
-//  "projects.set": "whatnot",
-// }
 export const flattenObj = (obj, keys = []) => {
   return Object.keys(obj).reduce((acc, key) => {
     return Object.assign(
