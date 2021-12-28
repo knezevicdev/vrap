@@ -1,14 +1,12 @@
 import { connect } from 'react-redux';
-import VinFormInput from './VinFormInput';
-import { showDialog } from '@app/store/dialog/actions';
 
-const mapDispatchToProps = dispatch => {
+import { showDialog } from '../../../store/dialog/actions';
+import VinFormInput from './VinFormInput';
+
+const mapDispatchToProps = (dispatch) => {
   return {
-    showDialog: dialogType => dispatch(showDialog(dialogType))
+    showDialog: (dialogType) => dispatch(showDialog(dialogType)),
   };
 };
 
-export default connect(
-  null,
-  mapDispatchToProps
-)(VinFormInput);
+export default connect(null, mapDispatchToProps)(VinFormInput);

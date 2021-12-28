@@ -1,9 +1,10 @@
-import { getVehicleAttribute } from '@app/lib/vehicle/vehicleModel';
-import { SSN as SSN_FIELD } from '@app/pages/Credit/components/IncomeInformation/fields';
-import { coApplicantPrefix } from '@app/lib/validation/validationReactMixins';
-import { numbersOnlyString } from '@app/lib/validation/formatting';
-import { getDecryptedValue } from '@app/lib/credit/creditLib.js';
 import { validate } from 'vin-validator';
+
+import { getDecryptedValue } from '../credit/creditLib.js';
+import { getVehicleAttribute } from '../vehicle/vehicleModel';
+import { numbersOnlyString } from './formatting';
+import { coApplicantPrefix } from './validationReactMixins';
+const SSN_FIELD = 'ssn';
 
 const daysInMonth = {
   1: 31,
@@ -17,7 +18,7 @@ const daysInMonth = {
   9: 30,
   10: 31,
   11: 30,
-  12: 31
+  12: 31,
 };
 
 // returns true if string is a number of length <length>
@@ -83,7 +84,7 @@ export function securePasswordValidation(pwVal) {
     isAtLength: pwVal.length >= MIN_PASSWORD_LENGTH,
     hasLowercase: lowercase.test(pwVal),
     hasUppercase: uppercase.test(pwVal),
-    hasNumbers: numbers.test(pwVal)
+    hasNumbers: numbers.test(pwVal),
   };
 }
 
@@ -335,7 +336,7 @@ export function getBirthdayErrors(birthday) {
   const [month, day, year] = [
     parseInt(birthday.slice(0, 2)),
     parseInt(birthday.slice(2, 4)),
-    parseInt(birthday.slice(4))
+    parseInt(birthday.slice(4)),
   ];
   if (!isValidDate(month, day, year)) {
     return 'Please enter a valid date';
@@ -387,12 +388,12 @@ export function isChecked(inputValue) {
   return null;
 }
 
-export const isPhoneEmptyOrValid = phone => {
+export const isPhoneEmptyOrValid = (phone) => {
   const isEmpty = !phone || phone.length === 0;
   const isValid = isValidPhoneNumber(numbersOnlyString(phone));
   return isEmpty || isValid;
 };
 
-export const isCountryCodeEmpty = countryCode => {
+export const isCountryCodeEmpty = (countryCode) => {
   return countryCode.length === 0;
 };

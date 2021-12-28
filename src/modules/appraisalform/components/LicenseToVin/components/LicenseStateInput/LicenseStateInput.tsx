@@ -1,12 +1,12 @@
-import { getThemedPath, PATHS } from '@app/constants/routes';
-import {
-  trackLicenseToVin,
-  trackSelectYourVehicle,
-} from '@app/lib/analytics/analytics/appraisal';
 import PropTypes from 'prop-types';
 import React, { useState } from 'react';
 import styled from 'styled-components';
 
+import { getThemedPath, PATHS } from '../../../../constants/routes';
+import {
+  trackLicenseToVin,
+  trackSelectYourVehicle,
+} from '../../../../lib/analytics/appraisal';
 import PrimaryButton from '../../../Button/PrimaryButton';
 import StateInput from '../../../forminputs/AddressInput/StateInput';
 import LicenseInput from '../../../forminputs/LicenseInput';

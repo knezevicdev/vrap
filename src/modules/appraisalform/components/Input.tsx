@@ -1,10 +1,10 @@
-import success_icon from '@static/icons/svg/checkmark-circle.svg';
-import error_icon from '@static/icons/svg/error.svg';
-import tooltip_icon from '@static/icons/svg/tooltip.svg';
 import PropTypes from 'prop-types';
 import React, { useState } from 'react';
 import styled from 'styled-components';
 
+import success_icon from '../static/icons/svg/checkmark-circle.svg';
+import error_icon from '../static/icons/svg/error.svg';
+import tooltip_icon from '../static/icons/svg/tooltip.svg';
 import { lang } from './Components.language';
 import Icon from './Icon';
 import ToolTip from './ToolTip';

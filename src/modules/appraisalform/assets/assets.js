@@ -1,7 +1,7 @@
 import React from 'react';
-import { globalConfig } from '@app/lib/globalConfig';
+import { globalConfig } from '../lib/globalConfig';
 
-import { CODENAME } from '@app/constants/misc';
+import { CODENAME } from '../constants/misc';
 
 const { STATIC_URL } = globalConfig;
 const SVG_PATH = `${STATIC_URL}/icons/svg`;

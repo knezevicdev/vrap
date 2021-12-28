@@ -1,10 +1,10 @@
 import types from './types';
-import { authActions } from '@app/store/user/types';
-import { appraisalActions } from '@app/store/appraisal/types';
+import { authActions } from '../user/types';
+import { appraisalActions } from '../appraisal/types';
 import {
   trackStepComplete,
   trackNextStepViewed
-} from '@app/lib/analytics/analytics/sell';
+} from '../../lib/analytics/analytics/sell';
 
 import {
   sections,

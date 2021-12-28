@@ -1,4 +1,4 @@
-import { dateDiff, parseBackEndDate } from '@app/lib/utils/utils';
+import { dateDiff, parseBackEndDate } from '../../lib/utils/utils';
 
 export const getNextOfferToExpire = (offerArr) => {
   const todayDate = new Date();

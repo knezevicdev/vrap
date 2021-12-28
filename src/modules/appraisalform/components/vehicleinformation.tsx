@@ -1,12 +1,20 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Typography } from '@vroom-web/ui-lib';
 import React, { useEffect, useState } from 'react';
+import { connect } from 'react-redux';
+import { withRouter } from 'react-router';
+import { compose } from 'recompose';
 import styled from 'styled-components';
 
 import {
   VehicleInfoLeaseCopy,
   VehicleInfoText,
 } from '../AppraisalForm.language';
+import {
+  decodeVin,
+  gradeCheck,
+  handleCarfaxCall,
+} from '../store/appraisal/operations';
 import AppraisalLicenseToVin from './forminputs/AppraisalLicenseToVin';
 import ExactMileageInput from './forminputs/ExactMileageInput';
 import ExtColorInput from './forminputs/ExtColorInput';
@@ -19,11 +27,6 @@ import { getVinErrors, isValidVin, VROOM_VIN_SUBSTRING } from './validation';
 import AnalyticsHandler from 'src/integrations/AnalyticsHandler';
 import { selectExperiment } from 'src/store/absmartly/selectors';
 import { APPRAISAL_HIDE_HOW_MANY_KEYS_QUESTION } from 'src/store/absmartly/types';
-import {
-  decodeVin,
-  gradeCheck,
-  handleCarfaxCall,
-} from 'src/store/appraisal/operations';
 import { selectUUID } from 'src/store/auth/selectors';
 
 const VehicleInformation = ({

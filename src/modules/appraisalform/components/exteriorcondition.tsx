@@ -1,5 +1,3 @@
-import { selectExperiment } from '@app/store/absmartly/selectors';
-import { APPRAISAL_DETAILED_CONDITION_QUESTIONS } from '@app/store/absmartly/types';
 import { addStyleForMobile } from '@vroom-web/ui-lib';
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
@@ -19,6 +17,9 @@ import RustInput from './forminputs/RustInput';
 import ScratchesInput from './forminputs/ScratchesInput';
 import ScratchesPanelsInput from './forminputs/ScratchesPanelsInput';
 import TireMilesInput from './forminputs/TireMilesInput';
+
+import { selectExperiment } from 'src/store/absmartly/selectors';
+import { APPRAISAL_DETAILED_CONDITION_QUESTIONS } from 'src/store/absmartly/types';
 
 interface Props {
   fields: any;

@@ -1,7 +1,3 @@
-import { setOfferData } from '../appraisal/actions';
-import { appraisalActions } from './types';
-import { getNextOfferToExpire } from './utils';
-
 import {
   getGradeCheck,
   getVinDecode,
@@ -10,11 +6,14 @@ import {
   handleGetAppraisalDataApi,
   handleGetOfferDataApi,
   handleLicenseToVinApi,
-} from 'src/api';
+} from '../../api';
+import { getNextOfferToExpire } from '../appraisal/utils';
 import {
   createAppraisalFailure,
   createAppraisalSuccess,
-} from 'src/store/sell/actions';
+} from '../sell/actions';
+import { setOfferData } from '../views/actions';
+import { checkoutTradeTypes } from './types';
 
 export function handleLicenseToVin(licenseInfo) {
   return (dispatch) => {
@@ -25,12 +24,12 @@ export function handleLicenseToVin(licenseInfo) {
         } = response;
         if (vehicles.length > 1) {
           dispatch({
-            type: appraisalActions.GET_MULTIPLE_VINS_FROM_LP,
+            type: checkoutTradeTypes.GET_MULTIPLE_VINS_FROM_LP,
             vehicles,
           });
         } else {
           dispatch({
-            type: appraisalActions.GET_LICENSE_TO_VIN,
+            type: checkoutTradeTypes.GET_LICENSE_TO_VIN,
             vehicle: vehicles[0],
           });
         }
@@ -47,7 +46,7 @@ export function handleCarfaxCall(vin) {
     return handleCarfaxApi(vin)
       .then((response) => {
         dispatch({
-          type: appraisalActions.GET_CARFAX,
+          type: checkoutTradeTypes.GET_CARFAX,
           carfaxData: response,
         });
         return response;
@@ -65,7 +64,7 @@ export function handleGetOfferData(email) {
         const offerArray = response.data.offerByEmail;
         const nextToExpire = getNextOfferToExpire(offerArray);
         dispatch(setOfferData(offerArray, nextToExpire));
-        return offerArray;
+        return response.data;
       })
       .catch((error) => {
         return error;
@@ -79,7 +78,7 @@ export function handleGetAppraisalData(email, vin) {
     return handleGetAppraisalDataApi(offerParams)
       .then((response) => {
         dispatch({
-          type: appraisalActions.GET_OFFER_DETAILS,
+          type: checkoutTradeTypes.GET_OFFER_DETAILS,
           offerDetails: response.data,
         });
         return response.data;
@@ -93,7 +92,7 @@ export function handleGetAppraisalData(email, vin) {
 export function selectVinFromMany(selectedVehicle) {
   return (dispatch) => {
     dispatch({
-      type: appraisalActions.SELECT_VIN_FROM_MANY,
+      type: checkoutTradeTypes.SELECT_VIN_FROM_MANY,
       selectedVehicle,
     });
   };
@@ -102,7 +101,7 @@ export function selectVinFromMany(selectedVehicle) {
 export function setAppraisal(appraisalFormInfo) {
   return (dispatch) => {
     dispatch({
-      type: appraisalActions.SET_APPRAISAL_INFO,
+      type: checkoutTradeTypes.SET_APPRAISAL_INFO,
       appraisalFormInfo,
     });
   };
@@ -111,7 +110,7 @@ export function setAppraisal(appraisalFormInfo) {
 export function updateAppraisal(appraisalFormInfo) {
   return (dispatch) => {
     dispatch({
-      type: appraisalActions.UPDATE_APPRAISAL_INFO,
+      type: checkoutTradeTypes.UPDATE_APPRAISAL_INFO,
       appraisalFormInfo,
     });
   };
@@ -120,16 +119,7 @@ export function updateAppraisal(appraisalFormInfo) {
 export function clearAppraisal() {
   return (dispatch) => {
     dispatch({
-      type: appraisalActions.REFRESH_APPRAISAL_INFO,
-    });
-  };
-}
-
-export function updateAppraisalPayloadData(payloadData) {
-  return (dispatch) => {
-    dispatch({
-      type: appraisalActions.UPDATE_APPRAISAL_PAYLOAD_DATA,
-      payloadData,
+      type: checkoutTradeTypes.REFRESH_APPRAISAL_INFO,
     });
   };
 }
@@ -137,7 +127,7 @@ export function updateAppraisalPayloadData(payloadData) {
 export function appraisalYearMakeModel(data) {
   return (dispatch) => {
     dispatch({
-      type: appraisalActions.SET_YEAR_MAKE_MODEL,
+      type: checkoutTradeTypes.SET_YEAR_MAKE_MODEL,
       data,
     });
   };
@@ -146,7 +136,7 @@ export function appraisalYearMakeModel(data) {
 export function realTimeOffer(offerData) {
   return (dispatch) => {
     dispatch({
-      type: appraisalActions.RECEIVED_REAL_TIME_OFFER,
+      type: checkoutTradeTypes.RECEIVED_REAL_TIME_OFFER,
       offerData,
     });
   };
@@ -155,7 +145,7 @@ export function realTimeOffer(offerData) {
 export function setExpireDialogDismiss() {
   return (dispatch) => {
     dispatch({
-      type: appraisalActions.DISMISS_EXPIRING_SOON_DIALOG,
+      type: checkoutTradeTypes.DISMISS_EXPIRING_SOON_DIALOG,
     });
   };
 }
@@ -165,7 +155,7 @@ export function decodeVin(vin) {
     return getVinDecode(vin)
       .then((response) => {
         dispatch({
-          type: appraisalActions.DECODE_VIN,
+          type: checkoutTradeTypes.DECODE_VIN,
           carData: response.data.decodeVIN,
         });
         return response.data.decodeVIN;
@@ -181,7 +171,7 @@ export function gradeCheck(make, model, trim, miles, vin) {
     return getGradeCheck(make, model, trim, miles, vin)
       .then((response) => {
         dispatch({
-          type: appraisalActions.GRADE_CHECK,
+          type: checkoutTradeTypes.GRADE_CHECK,
           gradeCheckData: response.data,
         });
         return response.data;
@@ -195,7 +185,7 @@ export function gradeCheck(make, model, trim, miles, vin) {
 export function setMileageDialogDismiss() {
   return (dispatch) => {
     dispatch({
-      type: appraisalActions.DISMISS_EXACT_MILEAGE_DIALOG,
+      type: checkoutTradeTypes.DISMISS_EXACT_MILEAGE_DIALOG,
     });
   };
 }

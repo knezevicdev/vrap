@@ -5,8 +5,8 @@ import PropTypes from 'prop-types';
 import {
   isValidLicense,
   getLicenseErrors
-} from '@app/lib/validation/validation';
-import { formatLicensePlate } from '@app/lib/validation/formatting';
+} from '../../lib/validation/validation';
+import { formatLicensePlate } from '../../lib/validation/formatting';
 import { FormFields } from './Inputs.language';
 
 const LicenseInput = ({ field, className, onKeyPressEnter }) => {

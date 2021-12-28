@@ -4,10 +4,10 @@
  * 2. Initialize this.state.errors = {}
  */
 
-import { getModifications } from '@app/lib/credit/creditModificationLogic';
-import { encrypt as encryptFn } from '@app/lib/utils/encrypted';
-import { getDecryptedValue } from '@app/lib/credit/creditLib.js';
-import { track } from '@app/lib/analytics/AnalyticsLib';
+import { track } from '../AnalyticsLib';
+import { getDecryptedValue } from '../credit/creditLib.js';
+import { getModifications } from '../credit/creditModificationLogic';
+import { encrypt as encryptFn } from '../utils/encrypted';
 
 export const coApplicantPrefix = 'coApplicant_';
 export const previousPrefix = 'previous_';
@@ -45,13 +45,13 @@ export function validateField(
   const error = validationFunc(valueToUse, propsOrState, field);
 
   if (modifyState) {
-    this.setState(previousState => {
+    this.setState((previousState) => {
       return {
         ...previousState,
         errors: {
           ...previousState.errors,
-          [field]: error
-        }
+          [field]: error,
+        },
       };
     });
   }
@@ -63,7 +63,7 @@ function getCoApplicantFields(self) {
   if (self.coApplicantFields == null) {
     self.coApplicantFields = (
       self.defaultApplicantFields || self.applicantFields
-    ).map(key => coApplicantPrefix + key);
+    ).map((key) => coApplicantPrefix + key);
   }
   return self.coApplicantFields;
 }
@@ -91,7 +91,7 @@ export function validateForm(event, useState = false) {
     fields.push(...this.allApplicantFields);
   }
 
-  fields.forEach(field => {
+  fields.forEach((field) => {
     let error = this.validateField(field, undefined, true, { useState });
     if (error && !isError && this['_' + field]) {
       this['_' + field].focus();
@@ -146,7 +146,7 @@ export function onChangeInput(event, args = {}) {
     newValue,
     useState = false,
     secure = false,
-    encrypt
+    encrypt,
   } = args;
   const { target } = event;
   const { name } = target;
@@ -170,7 +170,7 @@ export function onChangeInput(event, args = {}) {
   if (useState) {
     const newState = {
       [name]: valueToStore,
-      ...getModifications(name, valueToStore)
+      ...getModifications(name, valueToStore),
     };
     this.setState(newState);
   } else if (secure) {
@@ -189,7 +189,7 @@ export function blurField(fieldName, useState = false, formName = 'Form') {
   const trackData = {
     eventName: 'interaction',
     category: `${formName} Form`,
-    label: fieldName
+    label: fieldName,
   };
   track({ ...trackData });
   this.validateField(fieldName, undefined, true, { useState });
@@ -202,13 +202,13 @@ export function toggleCoApplicant(event) {
   ).reduce((acc, key) => {
     return {
       ...acc,
-      [coApplicantPrefix + key]: null
+      [coApplicantPrefix + key]: null,
     };
   }, {});
 
   if (this.coApplicantFields == null) {
     this.coApplicantFields = this.defaultApplicantFields.map(
-      key => coApplicantPrefix + key
+      (key) => coApplicantPrefix + key
     );
   } else {
     this.coApplicantFields = null;
@@ -228,5 +228,5 @@ function needToValidateCoApplicant(self) {
 // Can be deleted once we are allowed to sell vehicles in MA.
 export const isInvalidState = (prevState, currState) => {
   const invalidStates = ['MA', 'AK', 'HI', 'PA'];
-  return invalidStates.some(s => s === prevState || s === currState);
+  return invalidStates.some((s) => s === prevState || s === currState);
 };

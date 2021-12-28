@@ -109,10 +109,11 @@ export function formatLicensePlate(lpStr) {
   return adjustedLicensePlate.toUpperCase();
 }
 
-import { hiddenString } from '@app/components/Input/inputUtils';
-import { numbersOnlyString } from '@app/lib/validation/formatting';
 import { AsYouType } from 'libphonenumber-js';
 import moment from 'moment';
+
+import { hiddenString } from './components/Input/inputUtils';
+import { numbersOnlyString } from './lib/validation/formatting';
 
 // Formatting input boxes onChange. Returns string
 

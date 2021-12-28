@@ -1,13 +1,12 @@
-import { FormField } from '@app/components/componentInterfaces.d';
-import { getCustomOptions, getOptions } from '@app/lib/utils/selectUtils.js';
 import { Typography } from '@vroom-web/ui-lib';
 import React from 'react';
 import styled from 'styled-components';
 
 import { arrowPath } from '../assets/assets';
+import { getCustomOptions, getOptions } from '../lib/utils/selectUtils.js';
+import success_icon from '../static/icons/svg/checkmark-circle.svg';
+import { FormField } from './componentInterfaces.d';
 import Icon from './Icon';
-
-const success_icon = require('@static/icons/svg/checkmark-circle.svg');
 
 interface DropdownProps {
   field: FormField;
