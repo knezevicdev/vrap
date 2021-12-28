@@ -16,7 +16,7 @@ import {
   VehicleInfoText,
 } from './AppraisalForm.language';
 import ExteriorCondition from './components/ExteriorCondition';
-import InteriorCondition from './components/InteriorCondition';
+import InteriorCondition from './components/Interiorcondition';
 import MechanicalCondition from './components/mechanicalcondition';
 import MultiStepForm from './components/MultiStepForm';
 import PersonalInformation from './components/personalinformation';
@@ -49,24 +49,32 @@ const AppraisalForm = ({
   isAppraisalIntentExperiment,
   isDetailedConditionsExperiment,
 }) => {
-  const getActiveState = () => {
+  let activeSection = 0;
+  useEffect(() => {
     switch (location.hash) {
       case '#top':
-        return 0;
+        activeSection = 0;
+        break;
       case '#vehiclehistory':
-        return 1;
+        activeSection = 1;
+        break;
       case '#interiorcondition':
-        return 2;
+        activeSection = 2;
+        break;
       case '#exteriorcondition':
-        return 3;
+        activeSection = 3;
+        break;
       case '#mechanicalcondition':
-        return 4;
+        activeSection = 4;
+        break;
       case '#personalinformation':
-        return 5;
+        activeSection = 5;
+        break;
       default:
-        return 0;
+        activeSection = 0;
+        break;
     }
-  };
+  });
 
   const activeSection = getActiveState();
 
