@@ -1,12 +1,11 @@
 import { getFetchData } from './util';
 import { post } from '../httpHandlers';
 import { page, track } from '../../lib/analytics/AnalyticsLib';
-import { globalConfig } from '@app/lib/globalConfig';
-import { parseQueryString } from '@app/lib/utils/utils';
-import { cleanFilterParams } from '@app/pages/Catalog/CatalogFilterFunctions';
+import { globalConfig } from '../../lib/globalConfig';
+import { parseQueryString } from '../../lib/utils/utils';
 import { isEmpty } from 'lodash';
-import { soldStatusEnum } from '@app/api/Catalog/util';
-import { getThemedPath, PATHS } from '@app/constants/routes';
+import { soldStatusEnum } from '../../api/Catalog/util';
+import { getThemedPath, PATHS } from '../../constants/routes';
 
 const { INVSEARCH_V3 } = globalConfig;
 const { BROWSER } = process.env;
@@ -22,6 +21,20 @@ const getInventory = async data => {
 
   return { vehicles: hits, total: total };
 };
+
+const cleanFilterParams = function (params) {
+  let newParams = { ...params };
+  if (params.make === 'all-makes' || params.make === undefined) {
+    delete newParams.make;
+  }
+  if (params.year === 'all-years' || params.year === undefined) {
+    delete newParams.year;
+  }
+  if (params.body === 'all-bodies' || params.body === undefined) {
+    delete newParams.body;
+  }
+  return newParams;
+}
 
 const getMakeAndModelInfo = async () => {
   const data = {

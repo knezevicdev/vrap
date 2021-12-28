@@ -1,5 +1,5 @@
 import { appraisalActions } from './types';
-import { authActions } from '@app/store/user/types';
+import { authActions } from '../user/types';
 
 const INITIAL_STATE = {
   carfax: {},

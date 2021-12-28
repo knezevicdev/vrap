@@ -1,5 +1,3 @@
-import { selectExperiment } from '@app/store/absmartly/selectors';
-import { AC_APPRAISAL_INTENT_QUESTION_2 } from '@app/store/absmartly/types';
 import React from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
@@ -12,6 +10,9 @@ import LastNameInput from './forminputs/LastNameInput';
 import LookingToAccomplishInput from './forminputs/LookingToAccomplishInput';
 import PhoneInput from './forminputs/PhoneInput';
 import ZipCodeInput from './forminputs/ZipCodeInput';
+
+import { selectExperiment } from 'src/store/absmartly/selectors';
+import { AC_APPRAISAL_INTENT_QUESTION_2 } from 'src/store/absmartly/types';
 
 const PersonalInformation = ({
   fields,

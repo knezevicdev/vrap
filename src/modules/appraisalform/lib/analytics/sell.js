@@ -1,10 +1,9 @@
+import { sections } from '../../store/sell/constants';
 import { page, track } from '../AnalyticsLib';
-
-import { sections } from '@app/store/sell/constants';
 
 export const startAppraisalClicked = {
   action: 'Start Appraisal Clicked',
-  category: 'Sell'
+  category: 'Sell',
 };
 
 export function trackProcessStart() {
@@ -19,13 +18,13 @@ const trackEvent = (category, eventName, details = {}) => {
   track({ category, eventName, ...details });
 };
 
-const eventDetails = pageName => {
+const eventDetails = (pageName) => {
   const loc = window.location;
 
   return {
     pageName,
     url: loc.href,
-    path: loc.pathname
+    path: loc.pathname,
   };
 };
 
@@ -43,7 +42,7 @@ export function trackStepComplete(step, formData) {
           Scratches: formData.extConditionForm.scratches,
           'Scratches Panels': formData.extConditionForm.scratchesPanels,
           Modifications: formData.extConditionForm.afterMarket,
-          'Other Modifications': formData.extConditionForm.otherAfterMarket
+          'Other Modifications': formData.extConditionForm.otherAfterMarket,
         }
       : {};
 
@@ -67,14 +66,14 @@ export function trackNextStepViewed(step) {
 export function trackAppraisalReviewViewed() {
   page({
     pageName: 'Appraisal Review',
-    category: 'Sell'
+    category: 'Sell',
   });
 }
 
 export function trackAppraisalSubmitted() {
   page({
     pageName: 'Congratulations',
-    category: 'Sell'
+    category: 'Sell',
   });
 }
 
@@ -83,7 +82,7 @@ export function trackOfferResponse(response) {
   const trackEventDetails = {
     eventName: `Appraisal Offer ${accepted}`,
     accepted: response.accepted,
-    offerId: response.offerId
+    offerId: response.offerId,
   };
 
   track(trackEventDetails);
@@ -93,7 +92,7 @@ export function trackIntentQuestion(intentAnswer) {
   const trackEventDetails = {
     category: 'Sell',
     eventName: `Why Are You Here Completed`,
-    label: intentAnswer
+    label: intentAnswer,
   };
 
   track(trackEventDetails);
@@ -103,6 +102,6 @@ export function trackPanelsTooltip(damageType) {
   track({
     category: 'Sell',
     eventName: `Tool Tip Clicked`,
-    label: damageType
+    label: damageType,
   });
 }

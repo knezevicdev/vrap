@@ -1,6 +1,6 @@
 /* global describe, test, expect */
-import * as utils from './lib/utils/utils';
-import { PATHS } from './constants/routes';
+import * as utils from '@app/lib/utils/utils';
+import { PATHS } from '@app/constants/routes';
 
 describe('removeTrailingSlash', () => {
   test('should return strings without slashes as is', () => {

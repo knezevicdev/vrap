@@ -6,9 +6,9 @@ import {
   createAppraisalSuccess,
   createAppraisalFailure,
   setDealership
-} from '@app/store/sell/actions';
-import { appraisalYearMakeModel } from '@app/store/appraisal/operations';
-import { postAppraisal, getVinDecode } from '@app/api';
+} from '../sell/actions';
+import { appraisalYearMakeModel } from '../appraisal/operations';
+import { postAppraisal, getVinDecode } from '../../api';
 
 export function decodeVin(vin) {
   return dispatch => {

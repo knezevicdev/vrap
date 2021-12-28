@@ -1,5 +1,7 @@
 import { stringify } from 'qs';
 
+import { globalConfig } from '../lib/globalConfig';
+import { toQueryString } from '../lib/utils/utils';
 import {
   axiosDelete,
   deleteWithAuthToken,
@@ -17,9 +19,6 @@ import {
   createVerificationPayload,
   getDummyOfferResp,
 } from './utils';
-
-import { globalConfig } from 'src/modules/appraisalform/lib/globalConfig';
-import { toQueryString } from 'src/modules/appraisalform/lib/utils/utils';
 
 // Eventually, we shouldn't need these here
 // but let our express server delegate to these services.

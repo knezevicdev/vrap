@@ -1,6 +1,6 @@
-import { hiddenString } from 'src/modules/appraisalform/components/Input/inputUtils';
+import { hiddenString } from '../../components/Input/inputUtils';
 import { AsYouType } from 'libphonenumber-js';
-import { numbersOnlyString } from '@app/lib/validation/formatting';
+import { numbersOnlyString } from '../validation/formatting';
 import moment from 'moment';
 
 // Formatting input boxes onChange. Returns string
