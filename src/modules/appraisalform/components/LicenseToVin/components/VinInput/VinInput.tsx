@@ -1,15 +1,20 @@
-import PropTypes from 'prop-types';
 import React from 'react';
 import styled from 'styled-components';
 
-import { getThemedPath, PATHS } from '../../../../constants/routes';
-import { trackLicenseToVin } from '../../../../lib/analytics/appraisal';
 import PrimaryButton from '../../../Button/PrimaryButton';
 import useForm from '../../../forminputs/useForm';
 import VinFormInput from '../../../forminputs/VinFormInput';
 import { buttonText, dataQa } from './language';
+import ViewModel from './ViewModel';
 
-const VinInput = ({ history, location, theme, buttonColor }) => {
+interface Props {
+  viewModel: ViewModel;
+}
+
+//props
+//history, location, theme, buttonColor
+
+const VinInput: React.FC<Props> = ({ viewModel }) => {
   const form = useForm({
     defaultValues: {
       vin: '',
@@ -21,53 +26,11 @@ const VinInput = ({ history, location, theme, buttonColor }) => {
     isFormValid,
   } = form;
 
-  const trackVinClicked = () => {
-    const { pathname } = location;
-    const vinForPath = vin.value;
-    let appraisalPath;
-
-    switch (pathname) {
-      case PATHS.checkoutTradeAppraisal.prefix:
-        appraisalPath = PATHS.checkoutTradeAppraisal.withParams({
-          vin: vinForPath,
-        });
-        break;
-      case PATHS.trade.prefix:
-        appraisalPath = PATHS.tradeAppraisal.withParams({
-          vin: vinForPath,
-        });
-        break;
-      default:
-        appraisalPath = getThemedPath(
-          PATHS.sellAppraisal.withParams({
-            vin: vinForPath,
-          }),
-          theme
-        );
-        break;
-    }
-    const label = 'Vin';
-    let category = '';
-    switch (pathname) {
-      case PATHS.dealCongratulations.prefix:
-        category = 'Ecommerce';
-        break;
-      case PATHS.checkoutTradeAppraisal.prefix:
-        category = 'Trade';
-        break;
-      default:
-        category = 'sell';
-        break;
-    }
-
-    trackLicenseToVin(label, category);
-
-    history.push(appraisalPath);
-  };
-
-  const handleOnKeyPressEnter = (e) => {
+  const handleOnKeyPressEnter = (e: any): void => {
     if (e.key === 'Enter' && isFormValid) {
-      trackVinClicked();
+      const { pathname } = window.location;
+      const vinForPath = vin.value;
+      viewModel.trackVinClicked(pathname, vinForPath);
     }
   };
 
@@ -78,7 +41,7 @@ const VinInput = ({ history, location, theme, buttonColor }) => {
         tabIndex={0}
         onKeyPress={handleOnKeyPressEnter}
         disabled={!isFormValid}
-        onClick={trackVinClicked}
+        onClick={viewModel.trackVinClicked}
         buttonColor={buttonColor}
         data-qa={dataQa}
       >
@@ -100,12 +63,5 @@ const Vin = styled(VinFormInput)`
 const Button = styled(PrimaryButton)`
   width: 100%;
 `;
-
-VinInput.propTypes = {
-  history: PropTypes.object,
-  location: PropTypes.object,
-  theme: PropTypes.string,
-  buttonColor: PropTypes.string,
-};
 
 export default VinInput;

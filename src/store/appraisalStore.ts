@@ -61,6 +61,18 @@ export class AppraisalStore {
   brand = 'vroom';
   dealership = 'vroom';
   form = 'sell';
+
+  showSpinner = true;
+  vehicles: any = [];
+  vehicle: any = {};
+  vehicleError?: any;
+  checkoutTrade: any = {
+    vehicles: [],
+    vehicle: {},
+    error: null,
+  };
+  showLicenseError = false;
+
   constructor() {
     makeAutoObservable(this);
   }
@@ -80,5 +92,32 @@ export class AppraisalStore {
     } else {
       return false;
     }
+  }
+
+  setShowSpinner(value: boolean): void {
+    this.showSpinner = value;
+  }
+
+  setVehicles(value: any): void {
+    this.vehicles = value;
+  }
+
+  setVehicle(value: any): void {
+    this.vehicle = value;
+  }
+
+  setVehicleError(value: any): void {
+    this.vehicleError = value;
+  }
+
+  setCheckoutTrade(key: string, value: any): void {
+    this.checkoutTrade = {
+      ...this.checkoutTrade,
+      [key]: value,
+    };
+  }
+
+  setLicenseError(value: boolean): void {
+    this.showLicenseError = value;
   }
 }
