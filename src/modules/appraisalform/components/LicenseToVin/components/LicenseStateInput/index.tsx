@@ -1,5 +1,4 @@
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router';
 import { compose } from 'recompose';
 
 import { handleLicenseToVin } from '../../../../store/appraisal/operations';
@@ -22,7 +21,6 @@ const mapDispatchToProps = {
   showDialog,
 };
 
-export default compose(
-  withRouter,
-  connect(mapStateToProps, mapDispatchToProps)
-)(LicenseStateInput);
+export default compose(connect(mapStateToProps, mapDispatchToProps))(
+  LicenseStateInput
+);

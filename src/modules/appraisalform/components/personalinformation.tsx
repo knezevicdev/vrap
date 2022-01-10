@@ -1,6 +1,5 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router';
 import { compose } from 'recompose';
 import styled from 'styled-components';
 
@@ -126,7 +125,4 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default compose(
-  withRouter,
-  connect(mapStateToProps)
-)(PersonalInformation);
+export default PersonalInformation;

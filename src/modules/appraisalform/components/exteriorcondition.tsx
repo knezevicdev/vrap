@@ -1,8 +1,5 @@
 import { addStyleForMobile } from '@vroom-web/ui-lib';
 import React, { useEffect } from 'react';
-import { connect } from 'react-redux';
-import { withRouter } from 'react-router';
-import { compose } from 'recompose';
 import styled from 'styled-components';
 
 import AfterMarketModsOptionsGroup from './forminputs/AfterMarketModsOptionsGroup';
@@ -18,8 +15,8 @@ import ScratchesInput from './forminputs/ScratchesInput';
 import ScratchesPanelsInput from './forminputs/ScratchesPanelsInput';
 import TireMilesInput from './forminputs/TireMilesInput';
 
-import { selectExperiment } from 'src/store/absmartly/selectors';
-import { APPRAISAL_DETAILED_CONDITION_QUESTIONS } from 'src/store/absmartly/types';
+// import { selectExperiment } from 'src/store/absmartly/selectors';
+// import { APPRAISAL_DETAILED_CONDITION_QUESTIONS } from 'src/store/absmartly/types';
 
 interface Props {
   fields: any;
@@ -43,6 +40,7 @@ const ExteriorCondition: React.FC<Props> = ({
 
   ['dents', 'paintChipping', 'scratches'].map((damageType) => {
     const damageTypePanels = `${damageType}Panels`;
+    // eslint-disable-next-line react-hooks/rules-of-hooks
     useEffect(() => {
       if (!fields[damageType]) return;
       if (fields[damageType].value === 'Yes') {
@@ -124,14 +122,14 @@ const ExteriorCondition: React.FC<Props> = ({
   );
 };
 
-const mapStateToProps = (state) => {
-  return {
-    isDetailedConditionsExperiment: selectExperiment(
-      state,
-      APPRAISAL_DETAILED_CONDITION_QUESTIONS
-    ),
-  };
-};
+// const mapStateToProps = (state) => {
+//   return {
+//     isDetailedConditionsExperiment: selectExperiment(
+//       state,
+//       APPRAISAL_DETAILED_CONDITION_QUESTIONS
+//     ),
+//   };
+// };
 
 const InputContainer = styled.div`
   display: flex;
@@ -194,4 +192,4 @@ const ScratchesPanels = styled(ScratchesPanelsInput)`
   margin: 16px 0;
 `;
 
-export default compose(withRouter, connect(mapStateToProps))(ExteriorCondition);
+export default ExteriorCondition;

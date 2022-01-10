@@ -349,8 +349,20 @@ async function postCreditLead(data) {
 
 // ** Vehicle information **
 
+async function getLicencePlateToVinDecode(licencePlate) {
+  return await get(`${VROOM_URL}/suyc-api/v1/details/${licencePlate}`);
+}
+
 async function getVinDecode(vin) {
-  return await get(`${VROOM_URL}/api/appraisal/decode-vin/${vin}`);
+  return await get(`${VROOM_URL}/suyc-api/v1/details/${vin}`);
+}
+
+async function getDisambiguation(id) {
+  return await get(`${VROOM_URL}/suyc-api/v1/details/${id}`);
+}
+
+async function getMilageCheck(vin) {
+  return await get(`${VROOM_URL}/suyc-api/v1/mileage/${vin}`);
 }
 
 async function getGradeCheck(make, model, trim, miles, vin) {

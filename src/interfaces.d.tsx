@@ -209,3 +209,155 @@ export interface FormField {
   tooltipText?: string;
   lenderId?: string;
 }
+
+interface Carstory {
+  alternatives: [];
+  confidence: number;
+  displayStyle: string;
+  drivetrains: {
+    name: string;
+    price: number;
+    selected: boolean;
+  }[];
+  engines: {
+    name: string;
+    price: number;
+    selected: boolean;
+  }[];
+  features: {
+    name: string;
+    price: number;
+    selected: boolean;
+  }[];
+  generation: number;
+  id: string;
+  isDecoded: boolean;
+  make: string;
+  model: string;
+  modelId: number;
+  powertrains: {
+    drivetrain: string;
+    engine: string;
+    id: number;
+    name: string;
+    price: number;
+    selected: boolean;
+    transmission: string;
+  }[];
+  style: string;
+  subGeneration: number;
+  transmissions: {
+    name: string;
+    price: number;
+    selected: boolean;
+  }[];
+  vehicleType: string;
+  year: number;
+}
+
+export interface LicencePlateToVinResp {
+  vehicleInfo: {
+    bedStyle: string | null;
+    bodyStyle: string;
+    cabStyle: string | null;
+    condition: string | null;
+    conditionTimestamp: null;
+    confidenceScore4: string;
+    doors: 4;
+    driveType: string;
+    engine: string;
+    engineDescription: string;
+    engineDisplacement: string;
+    exteriorColor: string | null;
+    features: string[];
+    fuel: string;
+    generation: number | null;
+    interiorColor: string | null;
+    make: string;
+    mileage: number;
+    mileageTimestamp: number | null;
+    model: string;
+    mpg: number;
+    mpgCity: number;
+    mpgHighway: number;
+    subGeneration: number;
+    subModel: string | null;
+    subTrim: string | null;
+    transmission: string;
+    transmissionDetails: string;
+    trim: string;
+    vin: string;
+    wheelbase: string;
+    year: number;
+  };
+  dataProviderInfo: Carstory | null;
+}
+
+export interface NewVinDecodeResp {
+  vehicleInfo: {
+    bedStyle: string | null;
+    bodyStyle: string;
+    cabStyle: null;
+    condition: string;
+    conditionTimestamp: number;
+    confidenceScore4: string;
+    doors: number;
+    driveType: string;
+    engine: string;
+    engineDescription: string;
+    engineDisplacement: string;
+    exteriorColor: string;
+    features: string[];
+    fuel: string;
+    generation: number;
+    interiorColor: string;
+    make: string;
+    mileage: number;
+    mileageTimestamp: number | null;
+    model: string;
+    mpg: number;
+    mpgCity: number;
+    mpgHighway: number;
+    subGeneration: number;
+    subModel: string | null;
+    subTrim: string | null;
+    transmission: string;
+    transmissionDetails: string;
+    trim: string;
+    vin: string;
+    wheelbase: string;
+    year: number;
+  };
+  dataProviderInfo: Carstory | null;
+}
+
+export interface DisambiguationResp {
+  vehicleInfo: {
+    bodyStyle: string;
+    doors: number;
+    driveType: string;
+    engine: string;
+    engineDescription: string;
+    engineDisplacement: string;
+    features: {
+      name: string;
+      price: number;
+      selected: boolean;
+    }[];
+    fuel: string;
+    generation: number;
+    make: string;
+    mileage: number;
+    model: string;
+    subGeneration: number;
+    transmission: string;
+    trim: string;
+    year: number;
+  };
+  dataProviderInfo: Carstory;
+}
+
+export interface MileageCheckResp {
+  mileage: number;
+  errorMessage: string | null;
+}

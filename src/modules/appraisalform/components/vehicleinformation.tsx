@@ -2,7 +2,6 @@
 import { Typography } from '@vroom-web/ui-lib';
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router';
 import { compose } from 'recompose';
 import styled from 'styled-components';
 
@@ -63,7 +62,8 @@ const VehicleInformation = ({
     { label: 'Other', value: 'Other' },
   ]);
   const showOptionsGroup = options.length > 0;
-  const vinUrl = match.params.vin || fields.vin.value ? true : false;
+  // const vinUrl = match.params.vin || fields.vin.value ? true : false;
+  const vinUrl = fields.vin.value ? true : false; //TODO: make this dynamic
 
   isHideHowManyKeysExperiment = disableExperiments
     ? false
@@ -94,13 +94,14 @@ const VehicleInformation = ({
     }
   }, [isHideHowManyKeysExperiment]);
 
-  useEffect(() => {
-    const vinNumber = match.params.vin || fields.vin.value;
+  // useEffect(() => {
+  //   const vinNumber = match.params.vin || fields.vin.value;
 
-    if (vinNumber) {
-      handleDecodeVin(vinNumber);
-    }
-  }, [location.pathname]);
+  //   if (vinNumber) {
+  //     handleDecodeVin(vinNumber);
+  //   }
+  // }, [location.pathname]);
+  const vinNumber = fields.vin.value ? fields.vin.value : '2GEXG6U34K9550139'; //TODO: Make this dynamic
 
   useEffect(() => {
     const fieldsToUpdate: any = {};
@@ -184,24 +185,24 @@ const VehicleInformation = ({
 
       decodeVin(vinToDecode)
         .then((response: any) => {
-          const { basicData, trimData, colorData, options } = response;
+          // const { basicData, trimData, colorData, options } = response;
           setGqlOptions(options);
           const trimsArr: any = [];
           let extColorArr = [];
 
-          if (trimData.trims) {
-            trimData.trims.forEach((t: any) => {
-              trimsArr.push({
-                ...t,
-                label: t.long_description,
-                value: t.long_description,
-                tOptions: t.options,
-              });
-            });
-          }
+          // if (trimData.trims) {
+          //   trimData.trims.forEach((t: any) => {
+          //     trimsArr.push({
+          //       ...t,
+          //       label: t.long_description,
+          //       value: t.long_description,
+          //       tOptions: t.options,
+          //     });
+          //   });
+          // }
 
-          if (colorData.colors) {
-            extColorArr = colorData.colors.map((color: any) => {
+          if (extColors.colors) {
+            extColorArr = extColors.colors.map((color: any) => {
               return {
                 label: color,
                 value: color,
@@ -209,9 +210,9 @@ const VehicleInformation = ({
             });
           }
 
-          setYear(basicData.year);
-          setMake(basicData.make);
-          setModel(basicData.model);
+          setYear(response.year);
+          setMake(response.make);
+          setModel(response.model);
           setExtColors(extColorArr || extColors);
           setTrims([...trimsArr]);
           setVinDecoded(true);
@@ -407,25 +408,22 @@ const VehicleOptionsField = styled(VehicleOptionsGroup)`
   padding-top: 10px;
 `;
 
-const mapStateToProps = (state: any) => {
-  const experimentUUID = selectUUID(state);
+// const mapStateToProps = (state: any) => {
+//   const experimentUUID = selectUUID(state);
 
-  return {
-    experimentUUID,
-    isHideHowManyKeysExperiment: selectExperiment(
-      state,
-      APPRAISAL_HIDE_HOW_MANY_KEYS_QUESTION
-    ),
-  };
-};
+//   return {
+//     experimentUUID,
+//     isHideHowManyKeysExperiment: selectExperiment(
+//       state,
+//       APPRAISAL_HIDE_HOW_MANY_KEYS_QUESTION
+//     ),
+//   };
+// };
 
-const mapDispatchToProps = {
-  decodeVin,
-  handleCarfaxCall,
-  gradeCheck,
-};
+// const mapDispatchToProps = {
+//   decodeVin,
+//   handleCarfaxCall,
+//   gradeCheck,
+// };
 
-export default compose(
-  withRouter,
-  connect(mapStateToProps, mapDispatchToProps)
-)(VehicleInformation);
+export default VehicleInformation;

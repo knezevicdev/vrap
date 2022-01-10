@@ -18,10 +18,14 @@ import GET_PLAID_TOKEN from 'src/graphql/queries/getLinkToken.graphql';
 import {
   AppraisalPayload,
   AppraisalResp,
+  DisambiguationResp,
   GradeCheckResp,
+  LicencePlateToVinResp,
   LtoVPayload,
   LtoVResp,
   MailingAddress,
+  MileageCheckResp,
+  NewVinDecodeResp,
   PaymentOverviewFormValues,
   PlaidData,
   PlaidTokenResp,
@@ -259,3 +263,47 @@ export const getGradeCheck = async (
 
   return res;
 };
+
+// export const getLicencePlateToVin = async (
+//   stateLicence: string
+// ): Promise<Response<LicencePlateToVinResp>> => {
+//   const url = `${VROOM_URL}/suyc-api/v1/details/${stateLicence}`;
+
+//   return await client.httpRequest({
+//     method: 'get',
+//     url,
+//   });
+// };
+
+// export const getNewVinDecode = async (
+//   vin: string
+// ): Promise<Response<NewVinDecodeResp>> => {
+//   const url = `${VROOM_URL}/suyc-api/v1/details/${vin}`;
+
+//   return await client.httpRequest({
+//     method: 'get',
+//     url,
+//   });
+// };
+
+// export const getDisambiguation = async (
+//   id: string
+// ): Promise<Response<DisambiguationResp>> => {
+//   const url = `${VROOM_URL}/suyc-api/v1/details/${id}`;
+
+//   return await client.httpRequest({
+//     method: 'get',
+//     url,
+//   });
+// };
+
+// export const getMilageCheck = async (
+//   vin: string
+// ): Promise<Response<MileageCheckResp>> => {
+//   const url = `${VROOM_URL}/suyc-api/v1/mileage/${vin}`;
+
+//   return await client.httpRequest({
+//     method: 'get',
+//     url,
+//   });
+// };

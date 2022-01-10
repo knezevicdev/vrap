@@ -1,5 +1,4 @@
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router';
 import { compose } from 'recompose';
 
 import { selectTheme } from '../../../../store/theme/selectors';
@@ -11,4 +10,4 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default compose(withRouter, connect(mapStateToProps, null))(VinInput);
+export default compose(connect(mapStateToProps, null))(VinInput);

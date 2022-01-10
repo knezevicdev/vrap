@@ -17,5 +17,5 @@ export const checkoutTradeTypes = {
   DISMISS_EXACT_MILEAGE_DIALOG:
     '/checkoutTradeTypes/DISMISS_EXACT_MILEAGE_DIALOG',
   DECODE_VIN: '/checkoutTradeTypes/DECODE_VIN',
-  GRADE_CHECK: '/checkoutTradeTypes/GRADE_CHECK'
+  GRADE_CHECK: '/checkoutTradeTypes/GRADE_CHECK',
 };
