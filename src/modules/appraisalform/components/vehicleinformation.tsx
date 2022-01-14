@@ -190,6 +190,7 @@ const VehicleInformation = ({
           const trimsArr: any = [];
           let extColorArr = [];
 
+          //TODO: populate trim
           // if (trimData.trims) {
           //   trimData.trims.forEach((t: any) => {
           //     trimsArr.push({
@@ -339,13 +340,10 @@ const InputContainer = styled(Typography.Body.Regular)`
   margin-top: 10px;
   line-height: 18px;
   letter-spacing: 1px;
-  ${(props) =>
-    props.theme.addStylesFor({
-      mobile: `
-      flex-direction: column;
-      margin-bottom: 0px;
-    `,
-    })}
+  @media (max-width: 767px) {
+    flex-direction: column;
+    margin-bottom: 0px;
+  }
 `;
 
 const VinField = styled.div`
@@ -360,7 +358,6 @@ const YearMakeModel = styled(Typography.Body.Regular)`
   font-weight: bold;
   // https://stackoverflow.com/questions/37534254/flex-auto-margin-not-working-in-ie10-11
   align-self: center;
-  /* ${(props) => props.theme.typography.h9('medium')}; */
   margin: auto auto 21px auto;
   line-height: 18px;
   letter-spacing: 1px;

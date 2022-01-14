@@ -21,7 +21,9 @@ const BaseButton = styled(BaseButtonLink)`
   height: 45px; /* additional height to fix known bug with IE11 vertical align, FED-374 */
   padding: 0 18px;
   white-space: nowrap;
-  ${(props) => props.theme.typography.h10('semibold')};
+  font-family: Calibre-Semibold;
+  font-size: 16px;
+  line-height: 16px;
   letter-spacing: 1.75px;
   align-items: center;
   justify-content: center;
@@ -36,22 +38,18 @@ const BaseButton = styled(BaseButtonLink)`
 
   ${(props) =>
     props.isStickyOnMobile &&
-    props.theme.addStylesFor({
-      mobile: stickyButtonStyles,
-    })}
+    `@media (max-width: 767px) {
+      width: calc(100% - 40px);
+      position: fixed;
+      z-index: 1;
+      bottom: 20px;
+    }`}
 
   ${(props) =>
     props.isHiddenOnMobile &&
-    props.theme.addStylesFor({
-      mobile: 'display: none;',
-    })}
-`;
-
-const stickyButtonStyles = `
-  width: calc(100% - 40px);
-  position: fixed;
-  z-index: 1;
-  bottom: 20px;
+    `@media (max-width: 767px) {
+      mobile: 'display: none;'
+    }`}
 `;
 
 BaseButtonLink.propTypes = {

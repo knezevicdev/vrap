@@ -125,7 +125,7 @@ const InputIcon = styled(Icon)`
   position: absolute;
   right: 10px;
   top: ${(props) => props.top || '30px'};
-  fill: ${(props) => props.theme.colors.green};
+  fill: #308406;
 `;
 
 const Container = styled.div`
@@ -135,7 +135,9 @@ const Container = styled.div`
 `;
 
 const Label = styled.label`
-  ${(props) => props.theme.typography.h14()}
+  font-family: Calibre-Regular;
+  font-size: 13px;
+  line-height: 13px;
   margin-bottom: 5px;
   letter-spacing: 0.35px;
   display: flex;
@@ -146,27 +148,28 @@ const InputContainer = styled.input`
   padding: 8px 10px;
   outline: none;
   appearance: none;
-  border: solid 1px ${(props) => props.theme.colors.gray3};
+  border: solid 1px #d6d7da;
   border-radius: 0;
-  ${(props) => props.theme.typography.h9()}
+  font-family: Calibre-Regular;
+  font-size: 18px;
+  line-height: 18px;
   @include set-font(regular, 18px, 22px, 0.25px);
   letter-spacing: 0.25px;
-  ${(props) =>
-    props.isEmpty && `background-color: ${props.theme.colors.white};`}
-  ${(props) => props.showError && `border-color: ${props.theme.colors.orange};`}
+  ${(props) => props.isEmpty && `background-color: #ffffff`}
+  ${(props) => props.showError && `border-color: #f26900`}
 
   &:focus {
-    border-color: ${(props) => props.theme.colors.vroomBlue};
-    background-color: ${(props) => props.theme.colors.white};
+    border-color: #1960d0;
+    background-color: #ffffff;
   }
 
   &:disabled {
-    background: ${(props) => props.theme.colors.gray4};
-    color: ${(props) => props.theme.colors.dark};
+    background: #f5f5f5;
+    color: #041022;
   }
 
   &::placeholder {
-    color: ${(props) => props.theme.colors.gray2};
+    color: #999da3;
   }
 
   &::-ms-clear {
@@ -175,9 +178,12 @@ const InputContainer = styled.input`
 `;
 
 const ErrorMessage = styled.span`
-  ${(props) => props.theme.typography.h16('bold')}
+  font-family: Calibre-Bold;
+  font-size: 10px;
+  line-height: 10px;
+  letter-spacing: 1px;
   margin-top: 3px;
-  color: ${(props) => props.theme.colors.orange};
+  color: #f26900;
   text-transform: uppercase;
 `;
 

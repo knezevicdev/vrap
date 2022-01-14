@@ -117,4 +117,4 @@ const mapDispatchToProps = (dispatch) => ({
   handlePanelTooltipClick: () => dispatch(showDialog('PanelsDialog', {}, true)),
 });
 
-export default connect(null, mapDispatchToProps)(SelectBoxes);
+export default SelectBoxes;

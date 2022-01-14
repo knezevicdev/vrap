@@ -48,7 +48,7 @@ const LicenseField = styled(Input)`
   width: 100%;
   margin-right: 15px;
 
-  ${props => props.theme.media.gte('tablet')} {
+  @media (min-width: 768p) {
     margin-right: 20px;
   }
 
