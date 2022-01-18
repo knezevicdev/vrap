@@ -2,6 +2,7 @@ import { displayCurrency, parseDate, parsedDateTime } from './Utils';
 
 import AnalyticsHandler from 'src/integrations/AnalyticsHandler';
 import { PriceStore } from 'src/modules/price/store';
+import Store from 'src/store';
 
 class InitialPriceViewModel {
   private analyticsHandler: AnalyticsHandler;
@@ -32,7 +33,11 @@ class InitialPriceViewModel {
   ];
   readonly wicheverOccerFirst: string = ', whichever occurs first. ';
 
-  constructor(private store: PriceStore, analyticsHandler: AnalyticsHandler) {
+  constructor(
+    private store: PriceStore,
+    analyticsHandler: AnalyticsHandler,
+    private appStore: Store
+  ) {
     const price = store.price;
     this.price = displayCurrency(price.price);
     this.priceId = price.priceId;
@@ -44,7 +49,12 @@ class InitialPriceViewModel {
   onContinueClick = async (): Promise<void> => {
     await this.store.submitPriceAccept();
     this.analyticsHandler.trackContinueClick();
-    const url = `/sell/verification/owner/${this.priceId}`;
+    const isAccountCreateAbTest = this.appStore.absmart.isInExperiment(
+      'ac-account-create'
+    );
+    const url = isAccountCreateAbTest
+      ? `/myaccount/create/suyc?redirect=/sell/verification/owner/${this.priceId}`
+      : `/sell/verification/owner/${this.priceId}`;
     window.location.href = url;
   };
 

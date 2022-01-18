@@ -3,12 +3,14 @@ import ViewModel from '../ViewModel';
 
 import AnalyticsHandler from 'src/integrations/AnalyticsHandler';
 import { PriceStore } from 'src/modules/price/store';
+import Store from 'src/store';
 
 describe('InitialPrice Test', () => {
   const analyticsHandler = new AnalyticsHandler();
   const priceId = '12345';
   const store = new PriceStore(priceId);
-  const viewModel = new ViewModel(store, analyticsHandler);
+  const appStore = new Store();
+  const viewModel = new ViewModel(store, analyticsHandler, appStore);
   const ContinueClickSpy = jest
     .spyOn(analyticsHandler, 'trackContinueClick')
     .mockReturnValue();
