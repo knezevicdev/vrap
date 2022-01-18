@@ -191,10 +191,9 @@ export default function reducer(state = INITIAL_STATE, action = {}) {
             ...state.checkoutTrade.appraisalForm,
             vehicleInformation: {
               ...state.checkoutTrade.appraisalForm.vehicleInformation,
-              year: carData.basicData.year,
-              model: carData.basicData.model,
-              make: carData.basicData.make,
-              source: carData.basicData.source
+              year: carData.year,
+              model: carData.model,
+              make: carData.make,
             },
             showExactMileageDialog: true,
             isEmpty: false

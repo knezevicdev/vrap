@@ -52,6 +52,7 @@ const AppraisalForm = () =>
   // isAppraisalIntentExperiment,
   // isDetailedConditionsExperiment,
   // }
+  // handleCarfaxCall
   {
     const [vinForPath, setVinForPath] = useState('');
     const [submitText, setSubmitText] = useState('');
@@ -75,6 +76,10 @@ const AppraisalForm = () =>
       console.log('implement me');
     };
     const clearAppraisal = () => {
+      console.log('implement me');
+    };
+
+    const handleCarfaxCall = () => {
       console.log('implement me');
     };
 
@@ -236,6 +241,7 @@ const AppraisalForm = () =>
     const buildFormForStore = () => {
       return Object.entries(appraisalUseForm).reduce(
         (result, [formKey, formData]: any) => {
+          let csTrimId;
           const formSectionVals = buildFormSectionValues(formData.fields, {});
           const yearMakeModel =
             formKey === 'vehicleInfoForm'
@@ -246,11 +252,18 @@ const AppraisalForm = () =>
                 }
               : {};
 
+          if (formKey === 'vehicleInfoForm') {
+            csTrimId = formData.fields.trim.trimId
+              ? { csTrimId: formData.fields.trim.trimId }
+              : {};
+          }
+
           return {
             ...result,
             [formKey]: {
               ...formSectionVals,
               ...yearMakeModel,
+              ...csTrimId,
             },
           };
         },

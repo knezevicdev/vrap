@@ -51,7 +51,7 @@ const LicenseStateInput: React.FC<Props> = ({ viewModel }) => {
         onKeyPress={handleOnKeyPressEnter}
         onClick={viewModel.handleLicenseStateSubmit}
         disabled={!isFormValid}
-        buttonColor={buttonColor}
+        // buttonColor={buttonColor} //TODO: why is this not working suddenly?
         data-qa={dataQa}
       >
         {buttonText}

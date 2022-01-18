@@ -225,8 +225,8 @@ async function handleLicenseToVinApi(data) {
   );
 }
 
-async function handleCarfaxApi(data) {
-  return await post(`${VROOM_URL}/api/appraisal/carfax`, data);
+async function handleCarfaxApi(vin) {
+  return await get(`${INTERCHANGE_URL}/suyc-api/v1/mileage/${vin}`);
 }
 
 async function handleGetOfferDataApi(email) {
@@ -349,20 +349,12 @@ async function postCreditLead(data) {
 
 // ** Vehicle information **
 
-async function getLicencePlateToVinDecode(licencePlate) {
-  return await get(`${VROOM_URL}/suyc-api/v1/details/${licencePlate}`);
+async function getCarstoryVinDecode(vin) {
+  return await get(`${INTERCHANGE_URL}/suyc-api/v1/details/${vin}`);
 }
 
-async function getVinDecode(vin) {
-  return await get(`${VROOM_URL}/suyc-api/v1/details/${vin}`);
-}
-
-async function getDisambiguation(id) {
-  return await get(`${VROOM_URL}/suyc-api/v1/details/${id}`);
-}
-
-async function getMilageCheck(vin) {
-  return await get(`${VROOM_URL}/suyc-api/v1/mileage/${vin}`);
+async function getCarstoryTrimFeatures(trimId) {
+  return await get(`${INTERCHANGE_URL}/suyc-api/v1/details/${trimId}`);
 }
 
 async function getGradeCheck(make, model, trim, miles, vin) {
@@ -750,6 +742,8 @@ export {
   getAppraisalForDeal,
   getAppraisalOffer,
   getCaf,
+  getCarstoryTrimFeatures,
+  getCarstoryVinDecode,
   getClientIp,
   getDeal,
   getDealHoldAmount,
@@ -778,7 +772,6 @@ export {
   getVehicles,
   getVehicleV3,
   getVerification,
-  getVinDecode,
   handleCarfaxApi,
   handleGetAppraisal,
   handleGetAppraisalDataApi,

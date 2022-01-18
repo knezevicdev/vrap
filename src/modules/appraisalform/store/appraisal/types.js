@@ -17,4 +17,5 @@ export const appraisalActions = {
   DISMISS_EXACT_MILEAGE_DIALOG: '/appraisal/DISMISS_EXACT_MILEAGE_DIALOG',
   DECODE_VIN: '/appraisal/DECODE_VIN',
   GRADE_CHECK: '/appraisal/GRADE_CHECK',
+  GET_FEATURES: '/appraisal/GET_FEATURES',
 };

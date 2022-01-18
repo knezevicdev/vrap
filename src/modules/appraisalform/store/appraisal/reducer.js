@@ -53,15 +53,17 @@ export default function reducer(state = INITIAL_STATE, action = {}) {
     case appraisalActions.DECODE_VIN:
       return {
         ...state,
-        vinDecodeData: { ...carData },
+        vinDecodeData: {
+          ...state.vinDecodeData,
+          ...carData
+        },
         appraisalForm: {
           ...state.appraisalForm,
           vehicleInformation: {
             ...state.appraisalForm.vehicleInformation,
-            year: carData.basicData.year,
-            model: carData.basicData.model,
-            make: carData.basicData.make,
-            source: carData.basicData.source
+            year: carData.year,
+            model: carData.model,
+            make: carData.make
           },
           showExactMileageDialog: true,
           isEmpty: false

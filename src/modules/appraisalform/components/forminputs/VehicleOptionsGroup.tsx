@@ -22,10 +22,10 @@ const VehicleOptionsGroup: React.FC<Props> = ({
   );
   const { onChange } = field;
   const optionsDefaultVals = options.reduce((result, opt) => {
-    const optChecked = field.value.includes(opt);
+    const optChecked = field.value.includes(opt.name) || opt.selected;
     return {
       ...result,
-      [opt]: { value: optChecked, isRequired: false },
+      [opt.name]: { value: optChecked, isRequired: false },
     };
   }, {});
 

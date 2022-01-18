@@ -28,12 +28,10 @@ const TrimInput: React.FC<Props> = ({
   const handleOnChange = (event: GenericObject) => {
     analyticsHandler.trackTrimChange();
     const evtValue = event.target.value;
-    const trimOption = customOptions.find(
-      (t: GenericObject) => t.long_description === evtValue
-    );
-    const { value, tOptions } = trimOption as GenericObject;
     const error = value === 'Trim';
-    onChange({ ...field, value, tOptions });
+    const trimOption = customOptions.find((t) => t.trim === evtValue);
+    const { value, trimId, tOptions } = trimOption;
+    onChange({ ...field, value, trimId, error, tOptions });
   };
 
   return (

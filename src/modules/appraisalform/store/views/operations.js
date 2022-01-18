@@ -6,6 +6,7 @@ import {
   handleGetAppraisalDataApi,
   handleGetOfferDataApi,
   handleLicenseToVinApi,
+  getCarstoryVinDecode,
 } from '../../api';
 import { getNextOfferToExpire } from '../appraisal/utils';
 import {
@@ -161,6 +162,32 @@ export function decodeVin(vin) {
         return response.data.decodeVIN;
       })
       .catch((error) => {
+        return error;
+      });
+  };
+}
+
+export function carstoryDecodeVin(vin) {
+  return dispatch => {
+    return getCarstoryVinDecode(vin)
+      .then(response => {
+        dispatch({
+          type: checkoutTradeTypes.DECODE_VIN,
+          carData: {
+            alternatives: response.dataProviderInfo.carstory.alternatives,
+            features: response.dataProviderInfo.carstory.features,
+            exteriorColor: response.vehicleInfo.exteriorColor,
+            year: response.vehicleInfo.year,
+            make: response.vehicleInfo.make,
+            model: response.vehicleInfo.model
+          }
+        });
+        return {
+          ...response.dataProviderInfo.carstory,
+          exteriorColor: response.vehicleInfo.exteriorColor
+        };
+      })
+      .catch(error => {
         return error;
       });
   };

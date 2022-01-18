@@ -1,4 +1,6 @@
 import {
+  getCarstoryTrimFeatures,
+  getCarstoryVinDecode,
   getGradeCheck,
   getVinDecode,
   handleCarfaxApi,
@@ -168,6 +170,48 @@ export function decodeVin(vin) {
           carData: response.data.decodeVIN,
         });
         return response.data.decodeVIN;
+      })
+      .catch((error) => {
+        return error;
+      });
+  };
+}
+
+export function carstoryDecodeVin(vin) {
+  return (dispatch) => {
+    return getCarstoryVinDecode(vin)
+      .then((response) => {
+        dispatch({
+          type: appraisalActions.DECODE_VIN,
+          carData: response.vehicleInfo,
+        });
+        return {
+          alternatives: response.dataProviderInfo.carstory.alternatives,
+          features: response.dataProviderInfo.carstory.features,
+          exteriorColor: response.vehicleInfo.exteriorColor,
+          year: response.vehicleInfo.year,
+          make: response.vehicleInfo.make,
+          model: response.vehicleInfo.model,
+          trim: response.vehicleInfo.trim,
+        };
+      })
+      .catch((error) => {
+        return error;
+      });
+  };
+}
+
+export function getCarstoryFeatures(vin) {
+  return (dispatch) => {
+    return getCarstoryTrimFeatures(vin)
+      .then((response) => {
+        dispatch({
+          type: appraisalActions.GET_FEATURES,
+          carData: response.vehicleInfo,
+        });
+        return {
+          features: response.dataProviderInfo.carstory.features,
+        };
       })
       .catch((error) => {
         return error;
