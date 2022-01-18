@@ -14,10 +14,14 @@ import {
   gradeCheck,
   handleCarfaxCall,
 } from '../store/appraisal/operations';
+import PrimaryButton from './Button/PrimaryButton';
+import CircleLoader from './CircleLoader';
 import AppraisalLicenseToVin from './forminputs/AppraisalLicenseToVin';
 import ExactMileageInput from './forminputs/ExactMileageInput';
 import ExtColorInput from './forminputs/ExtColorInput';
+import LicenseInput from './forminputs/LicenseInput';
 import NumberOfKeysInput from './forminputs/NumberOfKeysInput';
+import StateInput from './forminputs/StateInput';
 import TrimInput from './forminputs/TrimInput';
 import VehicleOptionsGroup from './forminputs/VehicleOptionsGroup';
 import VinFormInput from './forminputs/VinFormInput';
@@ -38,17 +42,8 @@ const VehicleInformation = ({
   gradeCheck,
   disableExperiments,
   isHideHowManyKeysExperiment,
-}: any) => {
+}) => {
   const analyticsHanler = new AnalyticsHandler();
-  const [vinLoader, setVinLoader]: any = useState(false);
-  const [trimLoader, setTrimLoader]: any = useState(false);
-  const [vinDecoded, setVinDecoded]: any = useState(false);
-  const [year, setYear]: any = useState(null);
-  const [make, setMake]: any = useState(null);
-  const [model, setModel]: any = useState(null);
-  const [trims, setTrims]: any = useState([]);
-  const [options, setOptions]: any = useState([]);
-  const [gqlOptions, setGqlOptions]: any = useState([]);
   const defaultColors = [
     { label: 'Beige', value: 'Beige' },
     { label: 'Black', value: 'Black' },
@@ -67,7 +62,6 @@ const VehicleInformation = ({
     { label: 'White', value: 'White' },
     { label: 'Yellow', value: 'Yellow' },
   ];
-  const showOptionsGroup = options.length > 0;
   // const vinUrl = match.params.vin || fields.vin.value ? true : false;
   const vinUrl = fields.vin.value ? true : false; //TODO: make this dynamic
 
@@ -81,6 +75,8 @@ const VehicleInformation = ({
   const [options, setOptions] = useState([]);
   const [extColors, setExtColors] = useState(defaultColors);
   const [selectedExtColor, setSelectedExtColor] = useState(null);
+
+  const showOptionsGroup = options.length > 0;
 
   isHideHowManyKeysExperiment = disableExperiments
     ? false
@@ -552,28 +548,28 @@ const LeaseCopy = styled.div`
   padding-left: 8px;
   margin-top: 16px;
   margin-bottom: 32px;
-  border-left: 2px ${(props) => props.theme.colors.vroomRed} solid;
-  ${(props) => props.theme.typography.bodyBold};
+  border-left: 2px #e7131a solid;
+  font-size: 18px;
+  line-height: 25px;
+  letter-spacing: 0.25px;
+  font-weight: 600;
 `;
 
 const InputContainer = styled.div`
   display: flex;
   text-align: left;
   margin-top: 10px;
-  ${(props) => props.theme.typography.h9()};
-
-  ${(props) =>
-    props.theme.addStylesFor({
-      mobile: `
-      flex-direction: column;
-      margin-bottom: 0px;
-    `,
-    })}
+  line-height: 18px;
+  letter-spacing: 1px;
+  @media (max-width: 767px) {
+    flex-direction: column;
+    margin-bottom: 0px;
+  }
 `;
 
 const VinField = styled.div`
   width: 48%;
-  ${(props) => props.theme.media.mobile} {
+  @media (max-width: 767px) {
     width: 100%;
   }
 `;
@@ -587,7 +583,7 @@ const LicenseContainer = styled.div`
 const LicenseField = styled.div`
   display: flex;
   width: 100%;
-  ${(props) => props.theme.media.mobile} {
+  @media (max-width: 767px) {
     flex-direction: column;
     width: 100%;
   }
@@ -596,7 +592,7 @@ const LicenseField = styled.div`
 const License = styled.div`
   display: flex;
   width: 50%;
-  ${(props) => props.theme.media.mobile} {
+  @media (max-width: 767px) {
     width: 100%;
   }
 `;
@@ -605,22 +601,22 @@ const LicenseInputContainer = styled(LicenseInput)`
   width: 90%;
   margin-right: 0;
 
-  ${(props) => props.theme.media.lte('tablet')} {
+  @media (min-width: 768px)
     width: 70%;
   }
 `;
 
 const States = styled(StateInput)`
   margin-left: 20px;
-  ${(props) => props.theme.media.lte('tablet')} {
+  @media (min-width: 768px)
     width: 90px;
   }
 
-  ${(props) => props.theme.media.gte('desktop')} {
+  media (min-width: 1024px)
     width: 160px;
   }
 
-  ${(props) => props.theme.media.mobile} {
+  @media (max-width: 767px) {
     margin-left: 0;
   }
 
@@ -644,10 +640,13 @@ const YearMakeModel = styled.div`
   font-weight: bold;
   // https://stackoverflow.com/questions/37534254/flex-auto-margin-not-working-in-ie10-11
   align-self: center;
-  ${(props) => props.theme.typography.h9('medium')};
+  font-family: Calibre-Medium;
+  font-size: 18px;
+  line-height: 18px;
+  letter-spacing: 1px;
   margin: auto auto 21px auto;
 
-  ${(props) => props.theme.media.mobile} {
+  @media (max-width: 767px) {
     width: 100%;
   }
 `;
@@ -656,7 +655,7 @@ const TrimField = styled(TrimInput)`
   width: 48%;
   margin-bottom: 10px;
 
-  ${(props) => props.theme.media.mobile} {
+  @media (max-width: 767px) {
     width: 100%;
   }
 `;
@@ -664,7 +663,7 @@ const TrimField = styled(TrimInput)`
 const ExactMileageField = styled(ExactMileageInput)`
   width: 48%;
 
-  ${(props) => props.theme.media.mobile} {
+  @media (max-width: 767px) {
     width: 100%;
   }
 `;
@@ -673,7 +672,7 @@ const ExteriorColorField = styled(ExtColorInput)`
   width: 48%;
   margin: 0 auto;
 
-  ${(props) => props.theme.media.mobile} {
+  @media (max-width: 767px) {
     width: 100%;
   }
 `;
@@ -681,7 +680,7 @@ const ExteriorColorField = styled(ExtColorInput)`
 const NumberOfKeysField = styled(NumberOfKeysInput)`
   margin: 0 0 0 1px;
 
-  ${(props) => props.theme.media.mobile} {
+  @media (max-width: 767px) {
     width: 99%;
   }
 `;
