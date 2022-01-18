@@ -60,13 +60,13 @@ class InitialPriceViewModel {
 
   onContinueClick = async (): Promise<void> => {
     await this.store.submitPriceAccept();
-    const signInStatus = await this.checkSignInStatus();
+    const isSignInStatus = await this.checkSignInStatus();
     this.analyticsHandler.trackContinueClick();
     const isAccountCreateAbTest = this.appStore.absmart.isInExperiment(
       'ac-account-create'
     );
     const url =
-      isAccountCreateAbTest && signInStatus
+      isAccountCreateAbTest && isSignInStatus
         ? `/myaccount/create/suyc?redirect=/sell/verification/owner/${this.priceId}`
         : `/sell/verification/owner/${this.priceId}`;
     window.location.href = url;
