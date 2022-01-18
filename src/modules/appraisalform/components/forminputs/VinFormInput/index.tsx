@@ -9,4 +9,4 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(null, mapDispatchToProps)(VinFormInput);
+export default VinFormInput;

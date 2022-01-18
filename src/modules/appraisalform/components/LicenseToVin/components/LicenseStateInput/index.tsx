@@ -21,6 +21,4 @@ const mapDispatchToProps = {
   showDialog,
 };
 
-export default compose(connect(mapStateToProps, mapDispatchToProps))(
-  LicenseStateInput
-);
+export default LicenseStateInput;
