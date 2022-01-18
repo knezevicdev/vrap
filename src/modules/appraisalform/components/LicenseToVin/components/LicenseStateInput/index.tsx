@@ -1,24 +1,18 @@
-import { connect } from 'react-redux';
-import { compose } from 'recompose';
+import { useRouter } from 'next/router';
+import React from 'react';
 
-import { handleLicenseToVin } from '../../../../store/appraisal/operations';
-import { showSpinner } from '../../../../store/common/actions';
-import { showDialog } from '../../../../store/dialog/actions';
-import { selectTheme } from '../../../../store/theme/selectors';
-import { handleLicenseToVin as checkoutHandleLicenseToVin } from '../../../../store/views/operations';
 import LicenseStateInput from './LicenseStateInput';
+import ViewModel from './ViewModel';
 
-const mapStateToProps = (state) => {
-  return {
-    theme: selectTheme(state),
-  };
+import { useAppStore } from 'src/context';
+
+const LicenseToVin: React.FC = () => {
+  const { store } = useAppStore();
+  const router = useRouter();
+
+  const viewModel = new ViewModel(store, router);
+
+  return <LicenseStateInput viewModel={viewModel} />;
 };
 
-const mapDispatchToProps = {
-  handleLicenseToVin,
-  checkoutHandleLicenseToVin,
-  showSpinner,
-  showDialog,
-};
-
-export default LicenseStateInput;
+export default LicenseToVin;
