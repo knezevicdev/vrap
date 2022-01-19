@@ -184,18 +184,6 @@ export const getInstitutionLogo = async (id: string): Promise<any> => {
   });
 };
 
-export const postAppraisalReview = async (
-  data: any
-): Promise<Response<AppraisalRespData>> => {
-  const url = `${VROOM_URL}/suyc-api/v1/acquisition/appraisal`;
-  const retVal = await client.httpRequest<AppraisalRespData>({
-    method: 'post',
-    url,
-    data,
-  });
-  return retVal;
-};
-
 export const handleLicenseToVinApi = async (
   data: LtoVPayload
 ): Promise<Response<LtoVResp>> => {
@@ -211,7 +199,7 @@ export const handleLicenseToVinApi = async (
   });
 };
 
-export const postAppraisal = async (
+export const postAppraisalReview = async (
   data: AppraisalPayload
 ): Promise<Response<AppraisalResp>> => {
   const appraisalRequestScore = checkAppraisalPayload(data);
@@ -232,19 +220,21 @@ export const postAppraisal = async (
   }
 };
 
-export const getVinDecode = async (
-  vin: string
-): Promise<Response<VinDecodeResp>> => {
-  const res = await client.gqlRequest<
-    VinDecodeResp,
-    GQLTypes.QueryDecodeVinArgs
-  >({
-    document: DECODE_VIN,
-    variables: { vin, colors: true, options: true },
+export const getCarstoryVinDecode = async (vehicleId: string): Promise<any> => {
+  const url = `${VROOM_URL}/suyc-api/v1/details/${vehicleId}`;
+  return await client.httpRequest({
+    method: 'get',
+    url,
   });
+}
 
-  return res;
-};
+export const getCarstoryTrimFeatures = async (trimId: number): Promise<any> => {
+  const url = `${VROOM_URL}/suyc-api/v1/details/${trimId}`;
+  return await client.httpRequest({
+    method: 'get',
+    url,
+  });
+}
 
 export const getGradeCheck = async (
   make: string,
@@ -264,46 +254,13 @@ export const getGradeCheck = async (
   return res;
 };
 
-// export const getLicencePlateToVin = async (
-//   stateLicence: string
-// ): Promise<Response<LicencePlateToVinResp>> => {
-//   const url = `${VROOM_URL}/suyc-api/v1/details/${stateLicence}`;
+export const getMilageCheck = async (
+  vin: string
+): Promise<Response<MileageCheckResp>> => {
+  const url = `${VROOM_URL}/suyc-api/v1/mileage/${vin}`;
 
-//   return await client.httpRequest({
-//     method: 'get',
-//     url,
-//   });
-// };
-
-// export const getNewVinDecode = async (
-//   vin: string
-// ): Promise<Response<NewVinDecodeResp>> => {
-//   const url = `${VROOM_URL}/suyc-api/v1/details/${vin}`;
-
-//   return await client.httpRequest({
-//     method: 'get',
-//     url,
-//   });
-// };
-
-// export const getDisambiguation = async (
-//   id: string
-// ): Promise<Response<DisambiguationResp>> => {
-//   const url = `${VROOM_URL}/suyc-api/v1/details/${id}`;
-
-//   return await client.httpRequest({
-//     method: 'get',
-//     url,
-//   });
-// };
-
-// export const getMilageCheck = async (
-//   vin: string
-// ): Promise<Response<MileageCheckResp>> => {
-//   const url = `${VROOM_URL}/suyc-api/v1/mileage/${vin}`;
-
-//   return await client.httpRequest({
-//     method: 'get',
-//     url,
-//   });
-// };
+  return await client.httpRequest({
+    method: 'get',
+    url,
+  });
+};

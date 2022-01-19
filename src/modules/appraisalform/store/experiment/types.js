@@ -1,5 +1,0 @@
-export const ExperimentTypes = {
-  SET_ASSIGNMENTS: '/experiment/SET_ASSIGNMENTS',
-  SET_EXPERIMENTS: '/experiment/SET_EXPERIMENTS',
-  SET_EXPERIMENT_VARIATION_KEYS: '/experiment/SET_EXPERIMENT_VARIATION_KEYS'
-};

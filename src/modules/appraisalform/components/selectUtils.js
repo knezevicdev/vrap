@@ -1,18 +1,16 @@
-import React from 'react';
-import styled from 'styled-components';
-
 import {
-  ABOUTUSOPTIONS,
-  CONTACTOPTIONS,
-  DOCUPLOADTYPE,
   EMPLOYMENTSTATUS,
   PREVEMPLOYMENTSTATUS,
-  REASONFORVISIT,
   RETIREDEMPLOYMENTSTATUS,
   SECONDARYINCOME,
-  SELLTIMINGOPTIONS,
   STATES,
-} from '../../constants/misc';
+  SELLTIMINGOPTIONS,
+  DOCUPLOADTYPE,
+  CONTACTOPTIONS,
+  REASONFORVISIT,
+  ABOUTUSOPTIONS
+} from '../constants/misc';
+import styled from 'styled-components';
 
 /*** Intention of this file is to be an option generator for our new select boxes ***/
 
@@ -53,9 +51,9 @@ export function getCustomOptions(defaultLabel, options) {
   return [
     <option key={defaultLabel} defaultValue hidden>
       {defaultLabel}
-    </option>,
+    </option>
   ].concat(
-    options.map((opt) => {
+    options.map(opt => {
       const { label, value } = opt;
 
       return (
@@ -75,9 +73,9 @@ function getStateOptions(tradeIn = false) {
   return [
     <option key={'state'} defaultValue hidden>
       {tradeIn ? 'State of purchase' : 'State'}
-    </option>,
+    </option>
   ].concat(
-    STATES.map((state) => {
+    STATES.map(state => {
       const { label, value } = state;
 
       return (
@@ -102,7 +100,7 @@ function getAddressOption(savedAddresses) {
             {generateAddressValue(eachAddress)}
           </option>
         );
-      }),
+      })
   ].concat(
     <option key={'new address'} value={'new address'}>
       {'Add new address'}
@@ -110,13 +108,13 @@ function getAddressOption(savedAddresses) {
   );
 }
 
-export const generateAddressValue = (addressObject) => {
+export const generateAddressValue = addressObject => {
   const {
     streetLine1 = '',
     streetLine2 = '',
     city = '',
     state = '',
-    postCode = '',
+    postCode = ''
   } = addressObject;
   return `${streetLine1} ${streetLine2} - ${city}, ${state} ${postCode}`;
 };
@@ -125,9 +123,9 @@ function getEmploymentStatusOptions(employmentStatusOptions) {
   return [
     <option key={'employmentStatus'} defaultValue hidden>
       Employment Status
-    </option>,
+    </option>
   ].concat(
-    employmentStatusOptions.map((eStatus) => {
+    employmentStatusOptions.map(eStatus => {
       const { label, value } = eStatus;
 
       return (
@@ -143,9 +141,9 @@ function getSecondaryIncomeOptions(secondaryIncomeOptions) {
   return [
     <option key={'secondaryIncome'} defaultValue>
       Source of income
-    </option>,
+    </option>
   ].concat(
-    secondaryIncomeOptions.map((eStatus) => {
+    secondaryIncomeOptions.map(eStatus => {
       const { label, value } = eStatus;
 
       return (
@@ -161,9 +159,9 @@ function getSellTimingOptions(sellTimingOptions) {
   return [
     <option key={'sellTiming'} defaultValue>
       Sell timing
-    </option>,
+    </option>
   ].concat(
-    sellTimingOptions.map((eStatus) => {
+    sellTimingOptions.map(eStatus => {
       const { label, value } = eStatus;
 
       return (
@@ -179,9 +177,9 @@ function getContactUsOptions(contactOptions) {
   return [
     <option key={'contactType'} defaultValue hidden>
       What are you contacting us about?
-    </option>,
+    </option>
   ].concat(
-    contactOptions.map((type) => {
+    contactOptions.map(type => {
       const { label, value } = type;
 
       return (
@@ -197,15 +195,15 @@ function getDocUploadType(DOCUPLOADTYPE, alreadyUploadedDoc) {
   let dropdownList = DOCUPLOADTYPE;
   if (alreadyUploadedDoc) {
     dropdownList = DOCUPLOADTYPE.filter(
-      (item) => alreadyUploadedDoc.indexOf(item.value) === -1
+      item => alreadyUploadedDoc.indexOf(item.value) === -1
     );
   }
   return [
     <option key={'docType'} defaultValue>
       Document Type
-    </option>,
+    </option>
   ].concat(
-    dropdownList.map((type) => {
+    dropdownList.map(type => {
       const { label, value } = type;
 
       return (
@@ -221,9 +219,9 @@ function getreasonForVisit(optionList) {
   return [
     <option key={'reasonVisit'} defaultValue>
       Reason to visit
-    </option>,
+    </option>
   ].concat(
-    optionList.map((eStatus) => {
+    optionList.map(eStatus => {
       const { label, value } = eStatus;
 
       return (
@@ -239,9 +237,9 @@ function getAboutUs(optionList) {
   return [
     <option key={'aboutUs'} defaultValue>
       Choose an option
-    </option>,
+    </option>
   ].concat(
-    optionList.map((eStatus) => {
+    optionList.map(eStatus => {
       const { label, value } = eStatus;
 
       return (

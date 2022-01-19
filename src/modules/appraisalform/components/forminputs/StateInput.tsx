@@ -1,14 +1,15 @@
 import React from 'react';
 
 import { GenericObject } from '../../../../interfaces.d';
+import { FormField } from '../componentInterfaces.d';
 import Dropdown from '../Dropdown';
 import { FormFields } from './Inputs.language';
 
 interface Props {
-  field: GenericObject;
-  className: string;
-  maSelectable: boolean;
-  paSelectable: boolean;
+  field: FormField;
+  className?: string;
+  maSelectable?: boolean;
+  paSelectable?: boolean;
   onKeyPressEnter: (event: GenericObject) => void;
 }
 
@@ -25,7 +26,6 @@ const StateInput: React.FC<Props> = ({ field, className, onKeyPressEnter }) => {
       className={className}
       field={{
         ...field,
-        placeholder: FormFields.state.placeholder,
         label: FormFields.state.label,
         type: FormFields.state.type,
         onChange: handleOnChange,

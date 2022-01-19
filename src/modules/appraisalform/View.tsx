@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { useEffect, useState } from 'react';
+import { useRouter } from 'next/router';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
 
 import {
@@ -21,69 +22,28 @@ import MultiStepForm from './components/MultiStepForm';
 import PersonalInformation from './components/personalinformation';
 import useFormInit from './components/useFormInit';
 import VehicleHistory from './components/vehiclehistory';
-import VehicleInformation from './components/vehicleinformation';
-import { parseQueryString } from './utils';
+import VehicleInformation from './components/VehicleInformation';
+import AppraisalViewModel from './ViewModel';
 
-const AppraisalForm = () =>
-  // {
-  // ======= Ask someone where to get this from =======
-  // personalInfo,
-  // ======= We have a new api endpoint for this, implement in the component =======
-  // vehicleInfo
-  // ======= make useFormInit and components can manage all of these instead instead =======
-  // vehicleHistory,
-  // intCondition,
-  // extCondition,
-  // mechCondition,
-  // yourInformation,
-  // ======= Redeclare these in this component =======
-  // updateAppraisal,
-  // updateField,
-  // clearAppraisal,
-  // ======= No Idea what this is =======
-  // showDialog,
-  // ======= We have a new api endpoint for this, implement in the component =======
-  // carfaxOdoLast,
-  // ======= No Idea what these are =======
-  // grade,
-  // showExactMileageDialog,
-  // setMileageDialogDismiss,
-  // isAppraisalIntentExperiment,
-  // isDetailedConditionsExperiment,
-  // }
-  // handleCarfaxCall
+export interface Props {
+  viewModel: AppraisalViewModel;
+}
+
+const AppraisalForm: React.FC<Props> = ({ viewModel }) =>
   {
-    const [vinForPath, setVinForPath] = useState('');
-    const [submitText, setSubmitText] = useState('');
+    const router = useRouter();
+    const vinForPath = router.query.vehicle as string;
+    const pathname = router.pathname as string;
+    const editMode = pathname.includes('#');
+    const submitText = editMode ? SaveText : ReviewText;
 
-    //these should come from somewhere else
-    const personalInfo = { email: null, firstName: null, lastName: null };
-
-    //this should come from new api
-    const vehicleInfo = {};
-
-    const yourInformation = {};
-    const vehicleHistory = {};
-    const intCondition = {};
-    const extCondition = {};
-    const mechCondition = {};
-
-    const updateAppraisal = () => {
-      console.log('implement me');
-    };
-    const updateField = () => {
-      console.log('implement me');
-    };
-    const clearAppraisal = () => {
-      console.log('implement me');
-    };
-
-    const handleCarfaxCall = () => {
-      console.log('implement me');
-    };
-
-    const isAppraisalIntentExperiment = false;
-    const isDetailedConditionsExperiment = false;
+    const personalInfo = {}; //logged in users
+    const vehicleInfo = viewModel.appraisalStore.vehicleInfoForm;
+    const yourInformation = viewModel.appraisalStore.personalInfoForm;
+    const vehicleHistory = viewModel.appraisalStore.vehicleHistoryForm;
+    const intCondition = viewModel.appraisalStore.intConditionForm;
+    const extCondition = viewModel.appraisalStore.extConditionForm;
+    const mechCondition = viewModel.appraisalStore.mechConditionForm;
 
     let activeSection = 0;
     useEffect(() => {
@@ -112,10 +72,6 @@ const AppraisalForm = () =>
       }
     });
 
-    useEffect(() => {
-      setVinForPath(window.location.pathname);
-    }, []);
-
     const appraisalUseForm = useFormInit(
       personalInfo,
       vehicleInfo,
@@ -125,32 +81,57 @@ const AppraisalForm = () =>
       mechCondition,
       yourInformation,
       vinForPath,
-      isAppraisalIntentExperiment,
-      isDetailedConditionsExperiment
+      viewModel.isDetailedConditionsExperiment
     );
 
-    const onNextIntercept = (proceedNext: any) => {
+    const onNextIntercept = async (proceedNext: any) => {
       const exactMileageField = appraisalUseForm.vehicleInfoForm.fields.mileage;
-      const showStrictDialog = grade === false;
-
-      if (
-        exactMileageField.value < carfaxOdoLast - 1000 &&
-        showExactMileageDialog &&
-        activeSection === 0
-      ) {
-        showDialog('ExactMileageDialog', {
-          strictDialog: showStrictDialog,
-          enteredMiles: exactMileageField.value,
-          mileageCorrect: () => {
-            setMileageDialogDismiss();
-            proceedNext();
-          },
-          updateMileage: () => {
-            exactMileageField.element.focus();
-          },
-        });
+      const strictDialog = viewModel.grade === false;
+      let inlineCarfaxOdoLast;
+  
+      if (!viewModel.carfaxOdoLast) {
+        const vin = appraisalUseForm.vehicleInfoForm.fields.vin.value;
+        inlineCarfaxOdoLast = await viewModel.handleCarfaxCall(vin);
+  
+        if (
+          exactMileageField.value < inlineCarfaxOdoLast.mileage - 1000 &&
+          showExactMileageDialog &&
+          activeSection === 0
+        ) {
+          showDialog('ExactMileageDialog', {
+            strictDialog: strictDialog,
+            enteredMiles: exactMileageField.value,
+            mileageCorrect: () => {
+              setMileageDialogDismiss();
+              proceedNext();
+            },
+            updateMileage: () => {
+              exactMileageField.element.focus();
+            }
+          });
+        } else {
+          proceedNext();
+        }
       } else {
-        proceedNext();
+        if (
+          exactMileageField.value < viewModel.carfaxOdoLast - 1000 &&
+          showExactMileageDialog &&
+          activeSection === 0
+        ) {
+          showDialog('ExactMileageDialog', {
+            strictDialog: strictDialog,
+            enteredMiles: exactMileageField.value,
+            mileageCorrect: () => {
+              setMileageDialogDismiss();
+              proceedNext();
+            },
+            updateMileage: () => {
+              exactMileageField.element.focus();
+            }
+          });
+        } else {
+          proceedNext();
+        }
       }
     };
 
@@ -196,18 +177,18 @@ const AppraisalForm = () =>
     ];
 
     useEffect(() => {
-      const possibleParameters = ['brand', 'dealership', 'type'];
-      const query = parseQueryString(location.search);
+      const query = router.query;
 
-      //trackProcessStart();
+      viewModel.trackProcessStart();
 
-      if (query) {
-        possibleParameters.forEach((parameter) => {
-          const value = query[parameter] || '';
-          if (value) {
-            updateField(parameter, value);
-          }
-        });
+      if (query.brand || query.dealership || query.type) {
+        const fieldVals = {
+          brand: query.brand || '',
+          dealership: query.dealership || '',
+          type: query.type || '',
+        }
+        
+        viewModel.updateGeneralFields(fieldVals);
       }
     }, []);
 
@@ -231,7 +212,7 @@ const AppraisalForm = () =>
     }, [appraisalUseForm.mechConditionForm.fields.warningLights.value]);
 
     const buildFormSectionValues = (form: any, targetObj: any) => {
-      for (const [key, value] of Object.entries(form)) {
+      for (const [key, value] of Object.entries(form) as any) {
         targetObj[key] = value.value;
       }
       return targetObj;
@@ -273,41 +254,35 @@ const AppraisalForm = () =>
     const onSubmit = () => {
       const formInfo = buildFormForStore();
 
-      updateAppraisal(formInfo);
+      viewModel.updateAppraisal(formInfo);
 
-      history.push({
-        pathname,
-        search: modeParam,
+      router.push({
+        pathname: '/appraisal/review',
       });
     };
 
-    const onNext = async (activeSection, clearForm) => {
+    const onNext = async (activeSection: number, clearForm?: string) => {
       const formInfo = buildFormForStore();
 
-      trackStepComplete(activeSection, formInfo);
+      viewModel.trackStepComplete(activeSection, formInfo);
 
       if (activeSection < sections.length - 1) {
-        trackNextStepViewed(activeSection + 1);
+        viewModel.trackNextStepViewed(activeSection + 1);
       }
 
       if (clearForm) {
-        await clearAppraisal();
-        history.push({ pathname: PATHS.sellAppraisal.prefix });
+        await viewModel.clearAppraisal();
+        router.push({ pathname: '/appraisal' });
       } else {
-        updateAppraisal(formInfo);
+        viewModel.updateAppraisal(formInfo);
 
         if (location.hash.length) {
-          history.push({
-            pathname,
-            search: modeParam,
+          router.push({
+            pathname: '/appraisal/review',
           });
         }
       }
     };
-
-    useEffect(() => {
-      setSubmitText(location.hash.length ? SaveText : ReviewText);
-    }, []);
 
     return (
       <AppraisalFormContainer data-qa="AppraisalFormPage">

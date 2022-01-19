@@ -33,6 +33,10 @@ export function isValidVin(vin: string): RegExpMatchArray | null {
   }
 }
 
+export function isValidCSLicense(license: string) {
+  return /^[A-Z]{2}-.{1,9}$/.test(license);
+}
+
 export function isValidPhoneNumber(phoneNumber: string): boolean {
   const zerosReg = /[1-9]/g;
   return isNumberOfLength(phoneNumber, 10) && zerosReg.test(phoneNumber);

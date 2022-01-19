@@ -8,8 +8,8 @@ import AnalyticsHandler from 'src/integrations/AnalyticsHandler';
 
 interface Props {
   field: FormField;
-  className: string;
-  customOptions: [];
+  className?: string;
+  customOptions: any[];
 }
 
 const ExtColorInput: React.FC<Props> = ({

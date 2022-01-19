@@ -7,8 +7,8 @@ import { FormFields } from './Inputs.language';
 
 interface Props {
   field: FormField;
-  showToolTip: boolean;
-  className: string;
+  showToolTip?: boolean;
+  className?: string;
   handleOnBlur: () => void;
 }
 

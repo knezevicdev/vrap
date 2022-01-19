@@ -10,9 +10,9 @@ import AnalyticsHandler from 'src/integrations/AnalyticsHandler';
 
 interface Props {
   field: FormField;
-  className: string;
+  className?: string;
   customOptions: GenericObject[];
-  onChange: (event: GenericObject) => void;
+  onChange: (value: any, error: boolean) => void;
   trimLoader: boolean;
 }
 
@@ -28,10 +28,10 @@ const TrimInput: React.FC<Props> = ({
   const handleOnChange = (event: GenericObject) => {
     analyticsHandler.trackTrimChange();
     const evtValue = event.target.value;
-    const error = value === 'Trim';
-    const trimOption = customOptions.find((t) => t.trim === evtValue);
+    const error = evtValue === 'Trim';
+    const trimOption: any = customOptions.find((t) => t.trim === evtValue);
     const { value, trimId, tOptions } = trimOption;
-    onChange({ ...field, value, trimId, error, tOptions });
+    onChange({ ...field, value, trimId, error, tOptions }, error);
   };
 
   return (

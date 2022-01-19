@@ -8,8 +8,8 @@ import { FormFields } from './Inputs.language';
 
 interface Props {
   field: FormField;
-  className: string;
-  options: [];
+  className?: string;
+  options: any[];
 }
 
 const VehicleOptionsGroup: React.FC<Props> = ({

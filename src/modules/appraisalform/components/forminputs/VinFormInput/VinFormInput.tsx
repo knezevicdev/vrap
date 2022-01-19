@@ -2,25 +2,26 @@ import React from 'react';
 import styled from 'styled-components';
 
 import { VROOM_VIN_SUBSTRING } from '../../../constants/misc';
-import { lettersAndNumbersOnly } from '../../../lib/validation/formatting';
-import { getVinErrors, isValidVin } from '../../../lib/validation/validation';
+import { lettersAndNumbersOnly } from '../../formatting';
+import { getVinErrors, isValidVin } from '../../validation';
 import questionCircleIcon from '../../../static/icons/svg/question-circle.svg';
 import CircleLoader from '../../CircleLoader';
 import Icon from '../../Icon';
 import Input from '../../Input';
 import { FormFields } from '../Inputs.language';
 
-const VinFormInput = ({
+const VinFormInput: React.FC<any> = ({
   showDialog,
   field,
   className,
   vinLoader,
   handleUpdate,
   onKeyPressEnter,
+  disabled = false
 }) => {
   const { onChange } = field;
 
-  const handleOnChange = (event) => {
+  const handleOnChange = (event: any) => {
     const value = lettersAndNumbersOnly(event.target.value, 17);
     const error = !value.includes(VROOM_VIN_SUBSTRING) && !isValidVin(value);
     const errorMessage = getVinErrors(value);
@@ -54,6 +55,7 @@ const VinFormInput = ({
           onChange: handleOnChange,
           onKeyPress: onKeyPressEnter,
           dataQa: 'Vin Number',
+          disabled
         }}
       />
       {vinLoader && <Loader isLoading={vinLoader} />}
