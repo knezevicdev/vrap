@@ -16,7 +16,7 @@ class InitialPriceViewModel {
   readonly continuePrice: string = 'continue';
   readonly offerExpPreDate: string = 'This price expires on ';
   readonly offerExpPostDate: string = ' or upon driving an additional ';
-  readonly miles: string = '250 miles';
+  readonly miles: string = '250 miles, ';
   readonly the: string = 'The ';
   readonly titleName: string = 'vehicle title ';
   readonly yourName: string = 'must be in your name.';
@@ -34,7 +34,7 @@ class InitialPriceViewModel {
     'Vehicle registration',
     'Photo of your odometer',
   ];
-  readonly wicheverOccerFirst: string = ', whichever occurs first. ';
+  readonly wicheverOccerFirst: string = 'whichever occurs first. ';
 
   constructor(
     private store: PriceStore,
@@ -61,13 +61,18 @@ class InitialPriceViewModel {
 
   onContinueClick = async (): Promise<void> => {
     await this.store.submitPriceAccept();
-    const isSignInStatus = await this.checkSignInStatus();
+    // const isSignInStatus = await this.checkSignInStatus();
     this.analyticsHandler.trackContinueClick();
     const isAccountCreateAbTest = this.appStore.absmart.isInExperiment(
       'ac-account-create'
     );
+    let isSignInStatus;
+    if (isAccountCreateAbTest) {
+      isSignInStatus = await this.checkSignInStatus();
+    }
+    console.log('isSignInStatus : ', isSignInStatus);
     const url =
-      isAccountCreateAbTest && isSignInStatus
+      isAccountCreateAbTest && !isSignInStatus
         ? `/myaccount/create/suyc?redirect=/sell/verification/owner/${this.priceId}`
         : `/sell/verification/owner/${this.priceId}`;
     window.location.href = url;
