@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import React from 'react';
 import styled from 'styled-components';
 
@@ -51,12 +50,5 @@ const BaseButton = styled(BaseButtonLink)`
       mobile: 'display: none;'
     }`}
 `;
-
-BaseButtonLink.propTypes = {
-  isStickyOnMobile: PropTypes.bool,
-  isHiddenOnMobile: PropTypes.bool,
-  buttonColor: PropTypes.string,
-  disabled: PropTypes.bool,
-};
 
 export default BaseButton;

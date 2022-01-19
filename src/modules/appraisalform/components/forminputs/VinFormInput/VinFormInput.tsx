@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import React from 'react';
 import styled from 'styled-components';
 
@@ -93,14 +92,5 @@ const Loader = styled(CircleLoader)`
   position: relative;
   margin: -5px 5px 5px 10px;
 `;
-
-VinFormInput.propTypes = {
-  showDialog: PropTypes.func.isRequired,
-  field: PropTypes.object,
-  className: PropTypes.string,
-  vinLoader: PropTypes.bool,
-  handleUpdate: PropTypes.func,
-  onKeyPressEnter: PropTypes.func,
-};
 
 export default VinFormInput;

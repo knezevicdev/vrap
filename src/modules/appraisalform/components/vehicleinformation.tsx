@@ -690,19 +690,6 @@ const VehicleOptionsField = styled(VehicleOptionsGroup)`
   padding-top: 10px;
 `;
 
-// VehicleInformation.propTypes = {
-//   location: PropTypes.object,
-//   form: PropTypes.object,
-//   match: PropTypes.object,
-//   fields: PropTypes.object,
-//   carstoryDecodeVin: PropTypes.func,
-//   getCarstoryFeatures: PropTypes.func,
-//   gradeCheck: PropTypes.func,
-//   disableExperiments: PropTypes.bool,
-//   isHideHowManyKeysExperiment: PropTypes.bool,
-//   vehicleDecodeData: PropTypes.object
-// };
-
 // const mapStateToProps = (state: any) => {
 //   const experimentUUID = selectUUID(state);
 

@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import React from 'react';
 
 import Dropdown from '../../Dropdown';
@@ -25,15 +24,6 @@ const StateInput = ({ field, className, onKeyPressEnter }) => {
       }}
     />
   );
-};
-
-StateInput.propTypes = {
-  field: PropTypes.object,
-  className: PropTypes.string,
-  showDialog: PropTypes.func,
-  maSelectable: PropTypes.bool,
-  paSelectable: PropTypes.bool,
-  onKeyPressEnter: PropTypes.func,
 };
 
 export default StateInput;

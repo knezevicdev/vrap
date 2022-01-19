@@ -1,5 +1,4 @@
 import React, { forwardRef } from 'react';
-import PropTypes from 'prop-types';
 
 const Icon = forwardRef(
   ({ onClick, onMouseEnter, className, id, fill, width, height }, ref) => {
@@ -29,24 +28,5 @@ const Icon = forwardRef(
 );
 
 Icon.displayName = 'Icon';
-
-Icon.defaultProps = {
-  onClick: () => {},
-  onMouseEnter: () => {},
-  fill: '#58595b',
-  stroke: '#58595b'
-};
-
-Icon.propTypes = {
-  onClick: PropTypes.func,
-  onMouseEnter: PropTypes.func,
-  className: PropTypes.string,
-  id: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
-  width: PropTypes.number,
-  height: PropTypes.number,
-  fill: PropTypes.string,
-  stroke: PropTypes.string,
-  children: PropTypes.node
-};
 
 export default Icon;

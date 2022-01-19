@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
 export const CircleLoader = ({ isLoading, className }) => {
   return (
@@ -12,16 +11,6 @@ export const CircleLoader = ({ isLoading, className }) => {
       <div className="checkmark draw" />
     </div>
   );
-};
-
-CircleLoader.propTypes = {
-  className: PropTypes.string,
-  isLoading: PropTypes.bool
-};
-
-CircleLoader.defaultProps = {
-  className: '',
-  isLoading: false
 };
 
 export default CircleLoader;

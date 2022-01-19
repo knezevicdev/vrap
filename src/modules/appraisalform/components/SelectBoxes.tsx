@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
@@ -99,19 +98,6 @@ const Option = styled(({ isSelected, optionsLength, ...restProps }) => (
       border: 2px solid #e7131a;
   `}
 `;
-
-Option.propTypes = {
-  isSelected: PropTypes.bool,
-  optionsLength: PropTypes.number,
-};
-
-SelectBoxes.propTypes = {
-  props: PropTypes.object,
-  field: PropTypes.object,
-  className: PropTypes.string,
-  externalLabel: PropTypes.string,
-  handlePanelTooltipClick: PropTypes.func,
-};
 
 const mapDispatchToProps = (dispatch) => ({
   handlePanelTooltipClick: () => dispatch(showDialog('PanelsDialog', {}, true)),

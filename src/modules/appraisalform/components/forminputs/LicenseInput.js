@@ -1,7 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import Input from '../../components/Input';
-import PropTypes from 'prop-types';
 import {
   isValidLicense,
   getLicenseErrors
@@ -61,11 +60,5 @@ const LicenseField = styled(Input)`
     width: 100%;
   }
 `;
-
-LicenseInput.propTypes = {
-  field: PropTypes.object,
-  className: PropTypes.string,
-  onKeyPressEnter: PropTypes.func
-};
 
 export default LicenseInput;

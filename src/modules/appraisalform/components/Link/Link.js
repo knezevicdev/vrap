@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 
@@ -80,23 +79,6 @@ const Link = (props) => {
       {children}
     </a>
   );
-};
-
-Link.propTypes = {
-  activeClassName: PropTypes.string,
-  label: PropTypes.string,
-  className: PropTypes.string,
-  children: PropTypes.node,
-  href: PropTypes.string,
-  linkAnalytics: PropTypes.object,
-  onClick: PropTypes.func,
-  to: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
-};
-
-Link.defaultProps = {
-  linkAnalytics: {},
-  onClick: () => {},
-  label: '',
 };
 
 export default Link;

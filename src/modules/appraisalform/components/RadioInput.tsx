@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import React from 'react';
 import styled from 'styled-components';
 
@@ -145,11 +144,5 @@ const LabelContainer = styled.div`
   display: flex;
   cursor: pointer;
 `;
-
-RadioInput.propTypes = {
-  field: PropTypes.object,
-  className: PropTypes.string,
-  tooltipText: PropTypes.string,
-};
 
 export default RadioInput;

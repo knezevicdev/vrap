@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import React, { useState } from 'react';
 import styled from 'styled-components';
 
@@ -109,17 +108,6 @@ const isEmpty = (value) => {
 };
 
 export default Input;
-
-Input.propTypes = {
-  field: PropTypes.object,
-  className: PropTypes.string,
-  IconStyle: PropTypes.string,
-  footerMessage: PropTypes.element,
-  innerRef: PropTypes.oneOfType([
-    PropTypes.func,
-    PropTypes.shape({ current: PropTypes.any }),
-  ]),
-};
 
 const InputIcon = styled(Icon)`
   position: absolute;

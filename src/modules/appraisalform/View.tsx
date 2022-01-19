@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
@@ -15,8 +14,8 @@ import {
   VehicleHistoryText,
   VehicleInfoText,
 } from './AppraisalForm.language';
-import ExteriorCondition from './components/ExteriorCondition';
-import InteriorCondition from './components/Interiorcondition';
+import ExteriorCondition from './components/exteriorcondition';
+import InteriorCondition from './components/interiorcondition';
 import MechanicalCondition from './components/mechanicalcondition';
 import MultiStepForm from './components/MultiStepForm';
 import PersonalInformation from './components/personalinformation';
