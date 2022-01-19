@@ -9,7 +9,7 @@ import OtherOptionInput from './OtherOptionInput';
 
 interface Props {
   field: FormField;
-  className: string;
+  className?: string;
   otherWarningField: FormField;
 }
 

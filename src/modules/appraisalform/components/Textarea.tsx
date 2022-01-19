@@ -6,7 +6,7 @@ import { GenericObject } from '../../../interfaces.d';
 
 interface Props {
   field: GenericObject;
-  className: string;
+  className?: string;
 }
 
 const Textarea: React.FC<Props> = ({

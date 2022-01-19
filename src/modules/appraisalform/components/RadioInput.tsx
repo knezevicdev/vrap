@@ -1,12 +1,18 @@
 import React from 'react';
 import styled from 'styled-components';
 
+import { GenericObject } from '../../../interfaces.d';
 import { radioSelected } from '../assets/assets';
 import tooltip_icon from '../static/icons/svg/tooltip.svg';
 import Icon from './Icon';
 import ToolTip from './ToolTip';
 
-const RadioInput = ({
+interface Props {
+  field: GenericObject;
+  className?: string;
+}
+
+const RadioInput: React.FC<Props> = ({
   field: { options, onClick, label, name, selected, tooltipText = '' },
   className,
 }) => {
@@ -25,7 +31,7 @@ const RadioInput = ({
         )}
       </LabelContainer>
       <div data-qa="SelectBoxesComponent">
-        {options.map((item) => {
+        {options.map((item: any) => {
           return (
             <RadioContainer key={item.label}>
               <HiddenNativeRadio
@@ -73,7 +79,9 @@ const RadioContainer = styled.div`
   margin-bottom: 10px;
 `;
 
-const HiddenNativeRadio = styled.input`
+const HiddenNativeRadio = styled(({ ...restProps }) => (
+  <input {...restProps} />
+))`
   /* Hide checkbox visually but remain accessible to screen readers.
   Source: https://polished.js.org/docs/#hidevisually */
   border: 0;
@@ -88,7 +96,7 @@ const HiddenNativeRadio = styled.input`
   width: 1px;
 `;
 
-const StyledRadio = styled.div`
+const StyledRadio = styled(({ ...restProps }) => <div {...restProps} />)`
   border: 1px solid #d6d7da;
   border-radius: 8px;
 

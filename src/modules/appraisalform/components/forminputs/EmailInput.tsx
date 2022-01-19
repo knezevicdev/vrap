@@ -7,7 +7,7 @@ import { FormFields } from './Inputs.language';
 
 interface Props {
   field: FormField;
-  className: string;
+  className?: string;
 }
 
 const EmailInput: React.FC<Props> = ({ field, className }) => {

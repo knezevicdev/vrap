@@ -1,7 +1,7 @@
 import { uniqueId } from 'lodash';
 import { useState } from 'react';
 
-const getInitialState = (defaultValues, autofocus) => {
+const getInitialState = (defaultValues: any, autofocus?: any) => {
   return Object.keys(defaultValues).reduce((result, key, idx) => {
     let value,
       imgSrc,
@@ -30,7 +30,7 @@ const getInitialState = (defaultValues, autofocus) => {
   }, {});
 };
 
-const initResetForm = (fields) => {
+const initResetForm = (fields: any) => {
   return Object.keys(fields).reduce((result, key) => {
     let value;
     const fieldValue = fields[key].value;
@@ -56,7 +56,7 @@ const initResetForm = (fields) => {
   }, {});
 };
 
-const addEvents = (fields, events, customEvents) => {
+const addEvents = (fields: any, events: any, customEvents: any) => {
   return Object.keys(fields).reduce((result, key) => {
     return {
       ...result,
@@ -70,7 +70,7 @@ const addEvents = (fields, events, customEvents) => {
   }, fields);
 };
 
-const isFormValid = (fields, customValidationFunction) => {
+const isFormValid = (fields: any, customValidationFunction: any) => {
   const fieldsHaveAnEmptyValue = Object.keys(fields).some((key) => {
     // check if check boxes are false and required
     // check if string is empty and required
@@ -102,7 +102,7 @@ const isFormValid = (fields, customValidationFunction) => {
   }
 };
 
-const useForm = (props) => {
+const useForm = (props: any) => {
   const {
     defaultValues,
     autofocus = true,
@@ -114,15 +114,15 @@ const useForm = (props) => {
     getInitialState(defaultValues, autofocus)
   );
 
-  const onChange = (key) => (field) => {
+  const onChange = (key: any) => (field: any) => {
     setFields({ ...fields, [key]: field });
   };
 
-  const setFormFields = (value) => {
+  const setFormFields = (value: any) => {
     setFields(getInitialState(value));
   };
 
-  const updateMultipleFields = (fieldsToUpdate) => {
+  const updateMultipleFields = (fieldsToUpdate: any) => {
     setFields({ ...fields, ...fieldsToUpdate });
   };
 

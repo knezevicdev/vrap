@@ -1,27 +1,17 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import { compose } from 'recompose';
 import styled from 'styled-components';
 
 import EmailInput from './forminputs/EmailInput';
 import FirstNameInput from './forminputs/FirstNameInput';
 import LastNameInput from './forminputs/LastNameInput';
-import LookingToAccomplishInput from './forminputs/LookingToAccomplishInput';
 import PhoneInput from './forminputs/PhoneInput';
 import ZipCodeInput from './forminputs/ZipCodeInput';
 
-import { selectExperiment } from 'src/store/absmartly/selectors';
-import { AC_APPRAISAL_INTENT_QUESTION_2 } from 'src/store/absmartly/types';
+export interface Props {
+  fields: any;
+}
 
-const PersonalInformation = ({
-  fields,
-  disableExperiments,
-  isAppraisalIntentExperiment,
-}) => {
-  isAppraisalIntentExperiment = disableExperiments
-    ? false
-    : isAppraisalIntentExperiment;
-
+const PersonalInformation: React.FC<Props> = ({ fields }) => {
   return (
     <>
       <InputContainer>
@@ -35,11 +25,6 @@ const PersonalInformation = ({
         <Phone field={fields.phoneNumber} className="fs-mask" optional={true} />
         <Zip field={fields.zipCode} />
       </InputContainer>
-      {isAppraisalIntentExperiment && (
-        <InputContainer>
-          <LookingToAccomplish field={fields.appraisalIntent} />
-        </InputContainer>
-      )}
     </>
   );
 };
@@ -107,22 +92,5 @@ const Email = styled(EmailInput)`
     margin-bottom: 16px;
   }
 `;
-
-const LookingToAccomplish = styled(LookingToAccomplishInput)`
-  width: 100%;
-
-  @media (max-width: 767px) {
-    margin-bottom: 16px;
-  }
-`;
-
-const mapStateToProps = (state) => {
-  return {
-    isAppraisalIntentExperiment: selectExperiment(
-      state,
-      AC_APPRAISAL_INTENT_QUESTION_2
-    ),
-  };
-};
 
 export default PersonalInformation;

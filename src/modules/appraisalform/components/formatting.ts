@@ -73,7 +73,10 @@ export function displayZipCode(zipCode: string): string | null {
   return formattedNumber;
 }
 
-export function lettersAndNumbersOnly(string: string, maxLength: number | null = null) {
+export function lettersAndNumbersOnly(
+  string: string,
+  maxLength: number | null = null
+) {
   return acceptOnly(string, maxLength, /[^a-zA-Z0-9]/g);
 }
 

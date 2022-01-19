@@ -7,8 +7,8 @@ import { FormFields } from './Inputs.language';
 
 interface Props {
   field: FormField;
-  className: string;
-  isLegal: boolean;
+  className?: string;
+  isLegal?: boolean;
 }
 
 const LastNameInput: React.FC<Props> = ({ field, className, isLegal }) => {
