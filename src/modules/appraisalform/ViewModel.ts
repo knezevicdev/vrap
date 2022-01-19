@@ -1,9 +1,10 @@
 import { isErrorResponse } from '@vroom-web/networking';
+
 import AnalyticsHandler from 'src/integrations/AnalyticsHandler';
-import store from 'src/store';
-import { AppraisalStore } from 'src/store/appraisalStore';
-import { ABSmartStore } from 'src/store/abSmartStore';
 import { getMilageCheck } from 'src/networking/request';
+import store from 'src/store';
+import { ABSmartStore } from 'src/store/abSmartStore';
+import { AppraisalStore } from 'src/store/appraisalStore';
 
 class PriceViewModel {
   private _analyticsHandler: AnalyticsHandler = new AnalyticsHandler();
@@ -17,19 +18,21 @@ class PriceViewModel {
 
   get getAnalyticHandler(): AnalyticsHandler {
     return this._analyticsHandler;
-  };
+  }
 
   get grade(): any {
     return this.appraisalStore.gradeCheck.grade;
-  };
+  }
 
   get carfaxOdoLast(): any {
     return this.appraisalStore.carfaxOdoLast;
-  };
+  }
 
   get isDetailedConditionsExperiment(): boolean {
-    return this.absmartly.isInExperiment('appraisal-detailed-condition-questions');
-  };
+    return this.absmartly.isInExperiment(
+      'appraisal-detailed-condition-questions'
+    );
+  }
 
   updateAppraisal(formInfo: any): void {
     this.appraisalStore.updateAppraisal(formInfo);
@@ -55,9 +58,7 @@ class PriceViewModel {
     this._analyticsHandler.trackNextStepViewed(nextStep);
   };
 
-  async handleCarfaxCall(
-    vin: string
-  ): Promise<any> {
+  async handleCarfaxCall(vin: string): Promise<any> {
     try {
       const response: any = await getMilageCheck(vin);
       if (isErrorResponse(response)) throw response;
@@ -68,7 +69,7 @@ class PriceViewModel {
     } catch (e) {
       console.log('error in carfax');
     }
-  };
+  }
 }
 
 export default PriceViewModel;

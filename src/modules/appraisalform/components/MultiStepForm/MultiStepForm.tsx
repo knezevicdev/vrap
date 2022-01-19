@@ -92,7 +92,9 @@ const MultiStepForm: React.FC<Props> = (props) => {
     // when active section isn't 0
     if (activeSection !== 0) {
       setTimeout(() => {
-        const activeElement: any = document.getElementById(activeSection as any);
+        const activeElement: any = document.getElementById(
+          activeSection as any
+        );
         const headerOffset = 70;
         const elementPosition = activeElement.offsetTop;
         const offsetPosition = elementPosition - headerOffset;

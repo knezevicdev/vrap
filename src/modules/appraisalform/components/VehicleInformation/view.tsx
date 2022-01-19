@@ -18,9 +18,14 @@ import StateInput from '../forminputs/StateInput';
 import TrimInput from '../forminputs/TrimInput';
 import VehicleOptionsGroup from '../forminputs/VehicleOptionsGroup';
 import VinFormInput from '../forminputs/VinFormInput';
-import { getVinErrors, isValidVin, isValidCSLicense, VROOM_VIN_SUBSTRING } from '../validation';
-import VehicleInfoViewModel from './ViewModel';
 import useForm from '../useForm';
+import {
+  getVinErrors,
+  isValidCSLicense,
+  isValidVin,
+  VROOM_VIN_SUBSTRING,
+} from '../validation';
+import VehicleInfoViewModel from './ViewModel';
 
 export interface Props {
   form: any;
@@ -28,11 +33,7 @@ export interface Props {
   viewModel: VehicleInfoViewModel;
 }
 
-const VehicleInformation: React.FC<Props> = ({
-  form,
-  fields,
-  viewModel
-}) => {
+const VehicleInformation: React.FC<Props> = ({ form, fields, viewModel }) => {
   const defaultColors = [
     { label: 'Beige', value: 'Beige' },
     { label: 'Black', value: 'Black' },
@@ -77,13 +78,13 @@ const VehicleInformation: React.FC<Props> = ({
   const licenseForm = useForm({
     defaultValues: {
       licensePlate: '',
-      state: ''
-    }
+      state: '',
+    },
   });
 
   const {
     fields: { licensePlate, state },
-    isFormValid
+    isFormValid,
   } = licenseForm;
 
   const resetLocalState = () => {
@@ -210,7 +211,7 @@ const VehicleInformation: React.FC<Props> = ({
           ...t,
           label: t.trim,
           value: t.trim,
-          trimId: t.id
+          trimId: t.id,
         };
       });
       setTrims(trimTransform);
@@ -220,8 +221,9 @@ const VehicleInformation: React.FC<Props> = ({
       setMake(viewModel.vehicleDecodeData.make);
       setModel(viewModel.vehicleDecodeData.model);
     } else if (validVin) {
-      viewModel.getVinDecode(vinToDecode)
-        .then(response => {
+      viewModel
+        .getVinDecode(vinToDecode)
+        .then((response) => {
           const {
             year,
             make,
@@ -229,26 +231,27 @@ const VehicleInformation: React.FC<Props> = ({
             alternatives,
             features,
             exteriorColor,
-            trim
+            trim,
           } = response;
+          const isError = response.hasOwnPropery('error');
 
           vin.onChange({
             ...vin,
             value: vinToDecode.toUpperCase(),
-            error: response.hasOwnProperty('error'),
-            errorMessage
+            error: isError,
+            errorMessage,
           });
 
-          if (response.hasOwnProperty('error')) {
+          if (isError) {
             setVinLoader(false);
             return;
           }
 
-          let trimsArr = [];
+          const trimsArr = [];
           const csExtColor = { label: exteriorColor, value: exteriorColor };
 
           const foundColor = extColors.find(
-            color => color.value === exteriorColor
+            (color) => color.value === exteriorColor
           );
 
           if (!foundColor) {
@@ -261,7 +264,7 @@ const VehicleInformation: React.FC<Props> = ({
                 ...t,
                 label: t.trim,
                 value: t.trim,
-                trimId: t.id
+                trimId: t.id,
               });
             });
           } else {
@@ -287,7 +290,7 @@ const VehicleInformation: React.FC<Props> = ({
         ...vin,
         value: vinToDecode.toUpperCase(),
         error: !validVin,
-        errorMessage
+        errorMessage,
       });
       resetLocalState();
     }
@@ -303,8 +306,9 @@ const VehicleInformation: React.FC<Props> = ({
     setVinLoader(true);
     setLpLoader(true);
 
-    viewModel.getVinDecode(lpToDecode)
-      .then(response => {
+    viewModel
+      .getVinDecode(lpToDecode)
+      .then((response) => {
         const {
           year,
           make,
@@ -312,22 +316,23 @@ const VehicleInformation: React.FC<Props> = ({
           alternatives,
           features,
           exteriorColor,
-          trim
+          trim,
         } = response;
-        let trimsArr = [];
-        if (response.hasOwnProperty('error')) {
+        const trimsArr = [];
+        const isError = response.hasOwnPropery('error');
+        if (isError) {
           const [state, license] = lpToDecode.split('-');
           const fieldsToUpdate = {
             licensePlate: {
               ...licenseForm.fields.licensePlate,
               value: license,
               error: true,
-              errorMessage
+              errorMessage,
             },
             state: {
               ...licenseForm.fields.state,
-              value: state
-            }
+              value: state,
+            },
           };
           licenseForm.updateMultipleFields(fieldsToUpdate);
           setVinLoader(false);
@@ -340,13 +345,13 @@ const VehicleInformation: React.FC<Props> = ({
             ...vin,
             value: response.vin.toUpperCase(),
             error: false,
-            errorMessage
+            errorMessage,
           });
         }
         const csExtColor = { label: exteriorColor, value: exteriorColor };
 
         const foundColor = extColors.find(
-          color => color.value === exteriorColor
+          (color) => color.value === exteriorColor
         );
 
         if (!foundColor) {
@@ -359,7 +364,7 @@ const VehicleInformation: React.FC<Props> = ({
               ...t,
               label: t.trim,
               value: t.trim,
-              trimId: t.id
+              trimId: t.id,
             });
           });
         } else {
@@ -396,8 +401,8 @@ const VehicleInformation: React.FC<Props> = ({
       fieldsToUpdate['csTrimId'] = { ...csTrimId, value: value.trimId };
 
       if (trims.length === 1) {
-        let defaultSelected: any[] = [];
-        options.forEach(opt => {
+        const defaultSelected: any[] = [];
+        options.forEach((opt) => {
           if (opt.selected) {
             defaultSelected.push(opt.name);
           }
@@ -405,7 +410,7 @@ const VehicleInformation: React.FC<Props> = ({
 
         fieldsToUpdate['vehicleOptions'] = {
           ...vehicleOptions,
-          value: defaultSelected
+          value: defaultSelected,
         };
       }
 
@@ -413,7 +418,7 @@ const VehicleInformation: React.FC<Props> = ({
         fieldsToUpdate['exteriorColor'] = {
           ...exteriorColor,
           ...selectedExtColor,
-          error
+          error,
         };
       }
 
@@ -428,7 +433,7 @@ const VehicleInformation: React.FC<Props> = ({
     if (trimId && !vinFromStore) {
       const response = await viewModel.getTrimFeatures(trimId);
       const trimOptions = response.features;
-      let defaultSelected: any[] = [];
+      const defaultSelected: any[] = [];
       trimOptions.forEach((opt: any) => {
         if (opt.selected) {
           defaultSelected.push(opt.name);
@@ -437,7 +442,7 @@ const VehicleInformation: React.FC<Props> = ({
 
       vehicleOptions.onChange({
         ...vehicleOptions,
-        value: defaultSelected
+        value: defaultSelected,
       });
       setOptions([...trimOptions]);
     } else if (viewModel.vehicleDecodeData.features) {
@@ -615,7 +620,7 @@ const LicenseContainer = styled.div`
 const LicenseField = styled.div`
   display: flex;
   width: 100%;
-  ${props => props.theme.media.mobile} {
+  ${(props) => props.theme.media.mobile} {
     flex-direction: column;
     width: 100%;
   }
@@ -624,7 +629,7 @@ const LicenseField = styled.div`
 const License = styled.div`
   display: flex;
   width: 50%;
-  ${props => props.theme.media.mobile} {
+  ${(props) => props.theme.media.mobile} {
     width: 100%;
   }
 `;
@@ -633,22 +638,22 @@ const LicenseInputContainer = styled(LicenseInput)`
   width: 90%;
   margin-right: 0;
 
-  ${props => props.theme.media.lte('tablet')} {
+  ${(props) => props.theme.media.lte('tablet')} {
     width: 70%;
   }
 `;
 
 const States = styled(StateInput)`
   margin-left: 20px;
-  ${props => props.theme.media.lte('tablet')} {
+  ${(props) => props.theme.media.lte('tablet')} {
     width: 90px;
   }
 
-  ${props => props.theme.media.gte('desktop')} {
+  ${(props) => props.theme.media.gte('desktop')} {
     width: 160px;
   }
 
-  ${props => props.theme.media.mobile} {
+  ${(props) => props.theme.media.mobile} {
     margin-left: 0;
   }
 
@@ -721,23 +726,5 @@ const VehicleOptionsField = styled(VehicleOptionsGroup)`
   width: 100%;
   padding-top: 10px;
 `;
-
-// const mapStateToProps = (state: any) => {
-//   const experimentUUID = selectUUID(state);
-
-//   return {
-//     experimentUUID,
-//     isHideHowManyKeysExperiment: selectExperiment(
-//       state,
-//       APPRAISAL_HIDE_HOW_MANY_KEYS_QUESTION
-//     ),
-//   };
-// };
-
-// const mapDispatchToProps = {
-//   decodeVin,
-//   handleCarfaxCall,
-//   gradeCheck,
-// };
 
 export default VehicleInformation;

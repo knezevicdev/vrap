@@ -1,18 +1,20 @@
 import crypto from 'crypto';
 
 export const uuidCookieName = 'uuid';
+import { AppraisalPayload } from 'src/interfaces.d';
 
 function generateUUID4() {
   return crypto.randomBytes(16).toString('hex');
 }
 
-function vehicleInformationData(data) {
+function vehicleInformationData(data: any) {
   return {
     vin: data.vin,
     year: data.year,
     make: data.make,
     model: data.model,
     trim: data.trim,
+    csTrimId: data.csTrimId,
     mileage: data.mileage,
     exteriorColor: data.exteriorColor,
     keysAmount: data.keysAmount,
@@ -20,14 +22,14 @@ function vehicleInformationData(data) {
   };
 }
 
-function vehicleHistoryData(data) {
+function vehicleHistoryData(data: any) {
   return {
     hasAccident: data.hasAccident,
     titleStatus: data.titleStatus,
   };
 }
 
-function interiorConditionData(data) {
+function interiorConditionData(data: any) {
   return {
     interiorCondition: data.interiorCondition,
     seats: data.seats,
@@ -35,7 +37,7 @@ function interiorConditionData(data) {
   };
 }
 
-function exteriorConditionData(data) {
+function exteriorConditionData(data: any) {
   return {
     exteriorCondition: data.exteriorCondition,
     tiresAndWheels: data.tiresAndWheels,
@@ -45,7 +47,7 @@ function exteriorConditionData(data) {
   };
 }
 
-function mechanicalConditionData(data) {
+function mechanicalConditionData(data: any) {
   return {
     mechanicalCondition: data.mechanicalCondition,
     runnable: data.runnable,
@@ -57,7 +59,7 @@ function mechanicalConditionData(data) {
   };
 }
 
-function personalInformationData(data) {
+function personalInformationData(data: any) {
   return {
     firstName: data.firstName,
     lastName: data.lastName,
@@ -67,7 +69,7 @@ function personalInformationData(data) {
   };
 }
 
-function attributionData(data) {
+function attributionData(data: any) {
   const dealership = (data.dealership || '').toLowerCase();
   const brand = (data.brand || '').toLowerCase();
   const type = (data.type || '').toLowerCase();
@@ -79,7 +81,7 @@ function attributionData(data) {
   };
 }
 
-export function makeRequestBody(appraisalData) {
+export function makeRequestBody(appraisalData: any): AppraisalPayload {
   const now = new Date().toISOString();
   // eslint-disable-next-line @typescript-eslint/naming-convention
   const lead_id = generateUUID4();
@@ -95,17 +97,14 @@ export function makeRequestBody(appraisalData) {
     DateSubmitted: now,
     lead_id,
     anonymous_id,
+    ...vehicleInformationData(appraisalData.vehicleInfoForm),
+    ...vehicleHistoryData(appraisalData.vehicleHistoryForm),
+    ...interiorConditionData(appraisalData.intConditionForm),
+    ...exteriorConditionData(appraisalData.extConditionForm),
+    ...mechanicalConditionData(appraisalData.mechConditionForm),
+    ...personalInformationData(appraisalData.personalInfoForm),
+    ...attributionData(appraisalData),
   };
-  Object.assign(
-    data,
-    vehicleInformationData(appraisalData.vehicleInfoForm),
-    vehicleHistoryData(appraisalData.vehicleHistoryForm),
-    interiorConditionData(appraisalData.intConditionForm),
-    exteriorConditionData(appraisalData.extConditionForm),
-    mechanicalConditionData(appraisalData.mechConditionForm),
-    personalInformationData(appraisalData.personalInfoForm),
-    attributionData(appraisalData)
-  );
 
   return { payload: data };
 }

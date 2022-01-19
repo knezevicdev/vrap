@@ -11,11 +11,13 @@ interface Props {
   fields: any;
 }
 
-const AppraisalForm: React.FC<Props> = ({form, fields}) => {
+const AppraisalForm: React.FC<Props> = ({ form, fields }) => {
   const { store } = useAppStore();
   const viewModel = new ViewModel(store);
 
-  return <VehicleInformationView form={form} fields={fields} viewModel={viewModel} />;
+  return (
+    <VehicleInformationView form={form} fields={fields} viewModel={viewModel} />
+  );
 };
 
 export default observer(AppraisalForm);

@@ -25,8 +25,10 @@ const VehicleInfomrationView: React.FC<Props> = ({ viewModel, store }) => {
       </>
     );
   };
-  function numberWithCommas(x: number) {
-    if (isNaN(x)) {
+  function numberWithCommas(x: number | null) {
+    if (x === null) {
+      return '';
+    } else if (isNaN(x)) {
       return '';
     } else {
       return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');

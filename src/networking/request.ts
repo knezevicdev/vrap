@@ -14,7 +14,6 @@ import CREATE_USER_PAYMENT_ACCOUNT from 'src/graphql/mutations/createUserPayment
 import GRADE_CHECK from 'src/graphql/mutations/gradecheck.graphql';
 import GET_PLAID_TOKEN from 'src/graphql/queries/getLinkToken.graphql';
 import {
-  AppraisalPayload,
   AppraisalResp,
   GradeCheckResp,
   LtoVPayload,
@@ -194,7 +193,7 @@ export const handleLicenseToVinApi = async (
 };
 
 export const postAppraisalReview = async (
-  data: AppraisalPayload
+  data: any
 ): Promise<Response<AppraisalResp>> => {
   const appraisalRequestScore = checkAppraisalPayload(data);
   const url = `${VROOM_URL}/suyc-api/v1/acquisition/appraisal`;
@@ -220,7 +219,7 @@ export const getCarstoryVinDecode = async (vehicleId: string): Promise<any> => {
     method: 'get',
     url,
   });
-}
+};
 
 export const getCarstoryTrimFeatures = async (trimId: number): Promise<any> => {
   const url = `${VROOM_URL}/suyc-api/v1/details/${trimId}`;
@@ -228,7 +227,7 @@ export const getCarstoryTrimFeatures = async (trimId: number): Promise<any> => {
     method: 'get',
     url,
   });
-}
+};
 
 export const getGradeCheck = async (
   make: string,

@@ -25,7 +25,7 @@ const useAppraisalFormInit = (
     trim: vehicleInfo.trim || '',
     csTrimId: {
       value: vehicleInfo.csTrimId || null,
-      isRequired: false
+      isRequired: false,
     },
     mileage: vehicleInfo.mileage || null,
     exteriorColor: vehicleInfo.exteriorColor || '',
@@ -36,7 +36,7 @@ const useAppraisalFormInit = (
     keysAmount: vehicleInfo.keysAmount || '',
   };
 
-  let vehicleHistoryFields = {
+  const vehicleHistoryFields = {
     hasAccident: vehicleHistory.hasAccident || '',
     titleStatus: vehicleHistory.titleStatus || '',
   };

@@ -135,21 +135,21 @@ export class AppraisalStore {
   setVehicleData(data: any): void {
     this.vehicleDecodeData = {
       ...this.vehicleDecodeData,
-      ...data
+      ...data,
     };
 
     this.vehicleInfoForm = {
       ...this.vehicleInfoForm,
       year: data.year,
       model: data.model,
-      make: data.make
-    }
+      make: data.make,
+    };
   }
 
   setVehicleFeatureData(data: any): void {
     this.vehicleDecodeData = {
       ...this.vehicleDecodeData,
-      ...data
+      ...data,
     };
   }
 
@@ -159,8 +159,8 @@ export class AppraisalStore {
 
   updateAppraisal(formInfo: any): void {
     this.vehicleInfoForm = {
-        ...this.vehicleInfoForm,
-      ...formInfo.vehicleInfoForm
+      ...this.vehicleInfoForm,
+      ...formInfo.vehicleInfoForm,
     };
     this.vehicleHistoryForm = { ...formInfo.vehicleHistoryForm };
     this.intConditionForm = { ...formInfo.intConditionForm };
@@ -185,7 +185,7 @@ export class AppraisalStore {
     this.vehicleHistoryForm = {
       hasAccident: '',
       titleStatus: '',
-      whichStatePurchase: ''
+      whichStatePurchase: '',
     };
     this.personalInfoForm = {
       email: '',
@@ -225,7 +225,9 @@ export class AppraisalStore {
 
   updateGeneralFields(fields: any): void {
     this.brand = fields.brand.length ? fields.brand : this.brand;
-    this.dealership = fields.dealership.length ? fields.dealership : this.dealership;
+    this.dealership = fields.dealership.length
+      ? fields.dealership
+      : this.dealership;
     this.type = fields.type.length ? fields.type : this.type;
   }
 

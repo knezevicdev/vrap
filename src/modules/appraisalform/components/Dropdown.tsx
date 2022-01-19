@@ -3,10 +3,10 @@ import React from 'react';
 import styled from 'styled-components';
 
 import { arrowPath } from '../assets/assets';
-import { getCustomOptions, getOptions } from './selectUtils';
 import success_icon from '../static/icons/svg/checkmark-circle.svg';
 import { FormField } from './componentInterfaces.d';
 import Icon from './Icon';
+import { getCustomOptions, getOptions } from './selectUtils';
 
 interface DropdownProps {
   field: FormField;
@@ -87,9 +87,7 @@ const Label = styled(Typography.Body.Regular)`
   letter-spacing: 0.35px;
 `;
 
-const SelectContainer = styled(({ ...restProps }) => (
-  <select {...restProps} />
-))`
+const SelectContainer = styled(({ ...restProps }) => <select {...restProps} />)`
   height: 40px;
   padding: 8px 10px;
   font-size: 18px;
