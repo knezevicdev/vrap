@@ -8,7 +8,7 @@ import AnalyticsHandler from 'src/integrations/AnalyticsHandler';
 
 interface Props {
   field: FormField;
-  className: string;
+  className?: string;
 }
 
 const NumberOfKeysInput: React.FC<Props> = ({ field, className }) => {

@@ -1,18 +1,15 @@
 import useForm from './useForm';
 
 const useAppraisalFormInit = (
-  personalInfo,
-  vehicleInfo,
-  vehicleHistory,
-  intCondition,
-  extCondition,
-  mechCondition,
-  yourInformation,
-  vinInPath,
-  isAppraisalIntentExperiment,
-  isDetailedConditionsExperiment,
-  isTradeIn,
-  isTradeInState
+  personalInfo: any,
+  vehicleInfo: any,
+  vehicleHistory: any,
+  intCondition: any,
+  extCondition: any,
+  mechCondition: any,
+  yourInformation: any,
+  vinInPath: any,
+  isDetailedConditionsExperiment: any
 ) => {
   if (vinInPath !== vehicleInfo.vin) {
     vehicleInfo = {};
@@ -26,6 +23,10 @@ const useAppraisalFormInit = (
   const vehicleInfoFields = {
     vin: vehicleInfo.vin || '',
     trim: vehicleInfo.trim || '',
+    csTrimId: {
+      value: vehicleInfo.csTrimId || null,
+      isRequired: false,
+    },
     mileage: vehicleInfo.mileage || null,
     exteriorColor: vehicleInfo.exteriorColor || '',
     vehicleOptions: {
@@ -35,17 +36,10 @@ const useAppraisalFormInit = (
     keysAmount: vehicleInfo.keysAmount || '',
   };
 
-  let vehicleHistoryFields = {
+  const vehicleHistoryFields = {
     hasAccident: vehicleHistory.hasAccident || '',
     titleStatus: vehicleHistory.titleStatus || '',
   };
-
-  if (isTradeIn && isTradeInState) {
-    vehicleHistoryFields = {
-      ...vehicleHistoryFields,
-      whichStatePurchase: vehicleHistory.whichStatePurchase || '',
-    };
-  }
 
   const intConditionFields = {
     interiorCondition: intCondition.interiorCondition || '',
@@ -62,35 +56,34 @@ const useAppraisalFormInit = (
       value: extCondition.otherAfterMarket || '',
       isRequired: false,
     },
-  };
-
-  extConditionFields.rust = {
-    value: extCondition.rust || '',
-    isRequired: isDetailedConditionsExperiment,
-  };
-  extConditionFields.dents = {
-    value: extCondition.dents || '',
-    isRequired: isDetailedConditionsExperiment,
-  };
-  extConditionFields.paintChipping = {
-    value: extCondition.paintChipping || '',
-    isRequired: isDetailedConditionsExperiment,
-  };
-  extConditionFields.scratches = {
-    value: extCondition.scratches || '',
-    isRequired: isDetailedConditionsExperiment,
-  };
-  extConditionFields.dentsPanels = {
-    value: extCondition.dentsPanels || 0,
-    isRequired: false,
-  };
-  extConditionFields.paintChippingPanels = {
-    value: extCondition.paintChippingPanels || 0,
-    isRequired: false,
-  };
-  extConditionFields.scratchesPanels = {
-    value: extCondition.scratchesPanels || 0,
-    isRequired: false,
+    rust: {
+      value: extCondition.rust || '',
+      isRequired: isDetailedConditionsExperiment,
+    },
+    dents: {
+      value: extCondition.dents || '',
+      isRequired: isDetailedConditionsExperiment,
+    },
+    paintChipping: {
+      value: extCondition.paintChipping || '',
+      isRequired: isDetailedConditionsExperiment,
+    },
+    scratches: {
+      value: extCondition.scratches || '',
+      isRequired: isDetailedConditionsExperiment,
+    },
+    dentsPanels: {
+      value: extCondition.dentsPanels || 0,
+      isRequired: false,
+    },
+    paintChippingPanels: {
+      value: extCondition.paintChippingPanels || 0,
+      isRequired: false,
+    },
+    scratchesPanels: {
+      value: extCondition.scratchesPanels || 0,
+      isRequired: false,
+    },
   };
 
   const mechConditionFields = {
@@ -115,8 +108,6 @@ const useAppraisalFormInit = (
   const yourFirstName = yourInformation.firstName || personalInfo.firstName;
   const yourLastName = yourInformation.lastName || personalInfo.lastName;
   const yourEmail = yourInformation.email || personalInfo.email;
-  const yourAppraisalIntent =
-    yourInformation.appraisalIntent || personalInfo.appraisalIntent;
 
   const personalInfoFields = {
     firstName: yourFirstName || '',
@@ -128,10 +119,6 @@ const useAppraisalFormInit = (
       isRequired: false,
     },
   };
-
-  if (isAppraisalIntentExperiment) {
-    personalInfoFields.appraisalIntent = yourAppraisalIntent || '';
-  }
 
   const defaultFieldValues = {
     VehicleInfo: {

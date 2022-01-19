@@ -2,9 +2,11 @@ import { Brand, ThemeProvider } from '@vroom-web/ui';
 import { IncomingMessage } from 'http';
 import { observer } from 'mobx-react';
 import { NextPage, NextPageContext } from 'next';
+import { useRouter } from 'next/router';
 import React from 'react';
 
 import { Header } from 'src/components/Header';
+import { useAppStore } from 'src/context';
 import Footer from 'src/core/Footer';
 import AppraisalForm from 'src/modules/appraisalform';
 import Page from 'src/Page';
@@ -14,6 +16,11 @@ interface Props {
 }
 
 const AppraisalFormPage: NextPage<Props> = ({ brand }) => {
+  const router = useRouter();
+  const vehicle = router.query.vehicle as string;
+  const { store } = useAppStore();
+  store.appraisal.setVehicleId(vehicle);
+
   return (
     <ThemeProvider brand={brand}>
       <Page name="Appraisal Form">

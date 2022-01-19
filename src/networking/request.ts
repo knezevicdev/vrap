@@ -2,7 +2,6 @@ import { GQLTypes, Response } from '@vroom-web/networking';
 import getConfig from 'next/config';
 
 import client from './client';
-import { AppraisalRespData } from './models/Appraisal';
 import {
   PaymentOptionsRespData,
   Prices,
@@ -13,23 +12,17 @@ import { checkAppraisalPayload, getDummyOfferResp } from './utils';
 import ACCEPT_REJECT_OFFER from 'src/graphql/mutations/acceptRejectOffer.graphql';
 import CREATE_USER_PAYMENT_ACCOUNT from 'src/graphql/mutations/createUserPaymentAccount.graphql';
 import GRADE_CHECK from 'src/graphql/mutations/gradecheck.graphql';
-import DECODE_VIN from 'src/graphql/queries/decodeVin.graphql';
 import GET_PLAID_TOKEN from 'src/graphql/queries/getLinkToken.graphql';
 import {
-  AppraisalPayload,
   AppraisalResp,
-  DisambiguationResp,
   GradeCheckResp,
-  LicencePlateToVinResp,
   LtoVPayload,
   LtoVResp,
   MailingAddress,
   MileageCheckResp,
-  NewVinDecodeResp,
   PaymentOverviewFormValues,
   PlaidData,
   PlaidTokenResp,
-  VinDecodeResp,
 } from 'src/interfaces.d';
 import {
   DocumentResponse,
@@ -184,18 +177,6 @@ export const getInstitutionLogo = async (id: string): Promise<any> => {
   });
 };
 
-export const postAppraisalReview = async (
-  data: any
-): Promise<Response<AppraisalRespData>> => {
-  const url = `${VROOM_URL}/suyc-api/v1/acquisition/appraisal`;
-  const retVal = await client.httpRequest<AppraisalRespData>({
-    method: 'post',
-    url,
-    data,
-  });
-  return retVal;
-};
-
 export const handleLicenseToVinApi = async (
   data: LtoVPayload
 ): Promise<Response<LtoVResp>> => {
@@ -211,8 +192,8 @@ export const handleLicenseToVinApi = async (
   });
 };
 
-export const postAppraisal = async (
-  data: AppraisalPayload
+export const postAppraisalReview = async (
+  data: any
 ): Promise<Response<AppraisalResp>> => {
   const appraisalRequestScore = checkAppraisalPayload(data);
   const url = `${VROOM_URL}/suyc-api/v1/acquisition/appraisal`;
@@ -232,18 +213,20 @@ export const postAppraisal = async (
   }
 };
 
-export const getVinDecode = async (
-  vin: string
-): Promise<Response<VinDecodeResp>> => {
-  const res = await client.gqlRequest<
-    VinDecodeResp,
-    GQLTypes.QueryDecodeVinArgs
-  >({
-    document: DECODE_VIN,
-    variables: { vin, colors: true, options: true },
+export const getCarstoryVinDecode = async (vehicleId: string): Promise<any> => {
+  const url = `${VROOM_URL}/suyc-api/v1/details/${vehicleId}`;
+  return await client.httpRequest({
+    method: 'get',
+    url,
   });
+};
 
-  return res;
+export const getCarstoryTrimFeatures = async (trimId: number): Promise<any> => {
+  const url = `${VROOM_URL}/suyc-api/v1/details/${trimId}`;
+  return await client.httpRequest({
+    method: 'get',
+    url,
+  });
 };
 
 export const getGradeCheck = async (
@@ -264,46 +247,13 @@ export const getGradeCheck = async (
   return res;
 };
 
-// export const getLicencePlateToVin = async (
-//   stateLicence: string
-// ): Promise<Response<LicencePlateToVinResp>> => {
-//   const url = `${VROOM_URL}/suyc-api/v1/details/${stateLicence}`;
+export const getMilageCheck = async (
+  vin: string
+): Promise<Response<MileageCheckResp>> => {
+  const url = `${VROOM_URL}/suyc-api/v1/mileage/${vin}`;
 
-//   return await client.httpRequest({
-//     method: 'get',
-//     url,
-//   });
-// };
-
-// export const getNewVinDecode = async (
-//   vin: string
-// ): Promise<Response<NewVinDecodeResp>> => {
-//   const url = `${VROOM_URL}/suyc-api/v1/details/${vin}`;
-
-//   return await client.httpRequest({
-//     method: 'get',
-//     url,
-//   });
-// };
-
-// export const getDisambiguation = async (
-//   id: string
-// ): Promise<Response<DisambiguationResp>> => {
-//   const url = `${VROOM_URL}/suyc-api/v1/details/${id}`;
-
-//   return await client.httpRequest({
-//     method: 'get',
-//     url,
-//   });
-// };
-
-// export const getMilageCheck = async (
-//   vin: string
-// ): Promise<Response<MileageCheckResp>> => {
-//   const url = `${VROOM_URL}/suyc-api/v1/mileage/${vin}`;
-
-//   return await client.httpRequest({
-//     method: 'get',
-//     url,
-//   });
-// };
+  return await client.httpRequest({
+    method: 'get',
+    url,
+  });
+};

@@ -3,14 +3,14 @@ import React from 'react';
 import styled from 'styled-components';
 
 import { arrowPath } from '../assets/assets';
-import { getCustomOptions, getOptions } from '../lib/utils/selectUtils.js';
 import success_icon from '../static/icons/svg/checkmark-circle.svg';
 import { FormField } from './componentInterfaces.d';
 import Icon from './Icon';
+import { getCustomOptions, getOptions } from './selectUtils';
 
 interface DropdownProps {
   field: FormField;
-  className: string;
+  className?: string;
 }
 
 const Dropdown: React.FC<DropdownProps> = ({
@@ -56,11 +56,11 @@ const Dropdown: React.FC<DropdownProps> = ({
   );
 };
 
-const isEmpty = (value) => {
+const isEmpty = (value: any) => {
   return !value || 0 === value.length;
 };
 
-const isDefault = (value, label) => {
+const isDefault = (value: any, label: any) => {
   return value === label;
 };
 
@@ -87,7 +87,7 @@ const Label = styled(Typography.Body.Regular)`
   letter-spacing: 0.35px;
 `;
 
-const SelectContainer = styled.select`
+const SelectContainer = styled(({ ...restProps }) => <select {...restProps} />)`
   height: 40px;
   padding: 8px 10px;
   font-size: 18px;

@@ -3,16 +3,17 @@ export interface VehicleInfoForm {
   exteriorColor: string;
   keysAmount: string;
   make: string;
-  mileage: number;
+  mileage: number | null;
   model: string;
   trim: string;
   vehicleOptions: string[];
-  year: number;
+  year: number | null;
 }
 
 export interface VehicleHistoryForm {
   hasAccident: string;
   titleStatus: string;
+  whichStatePurchase: string;
 }
 
 export interface PersonalInfoForm {

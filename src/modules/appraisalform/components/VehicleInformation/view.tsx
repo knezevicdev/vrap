@@ -1,49 +1,39 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Typography } from '@vroom-web/ui-lib';
+import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
-import { connect } from 'react-redux';
-import { compose } from 'recompose';
 import styled from 'styled-components';
 
 import {
   VehicleInfoLeaseCopy,
   VehicleInfoText,
-} from '../AppraisalForm.language';
+} from '../../AppraisalForm.language';
+import PrimaryButton from '../Button/PrimaryButton';
+import CircleLoader from '../CircleLoader';
+import { lettersAndNumbersOnly } from '../formatting';
+import ExactMileageInput from '../forminputs/ExactMileageInput';
+import ExtColorInput from '../forminputs/ExtColorInput';
+import LicenseInput from '../forminputs/LicenseInput';
+import NumberOfKeysInput from '../forminputs/NumberOfKeysInput';
+import StateInput from '../forminputs/StateInput';
+import TrimInput from '../forminputs/TrimInput';
+import VehicleOptionsGroup from '../forminputs/VehicleOptionsGroup';
+import VinFormInput from '../forminputs/VinFormInput';
+import useForm from '../useForm';
 import {
-  decodeVin,
-  gradeCheck,
-  handleCarfaxCall,
-} from '../store/appraisal/operations';
-import PrimaryButton from './Button/PrimaryButton';
-import CircleLoader from './CircleLoader';
-import AppraisalLicenseToVin from './forminputs/AppraisalLicenseToVin';
-import ExactMileageInput from './forminputs/ExactMileageInput';
-import ExtColorInput from './forminputs/ExtColorInput';
-import LicenseInput from './forminputs/LicenseInput';
-import NumberOfKeysInput from './forminputs/NumberOfKeysInput';
-import StateInput from './forminputs/StateInput';
-import TrimInput from './forminputs/TrimInput';
-import VehicleOptionsGroup from './forminputs/VehicleOptionsGroup';
-import VinFormInput from './forminputs/VinFormInput';
-import { getVinErrors, isValidVin, VROOM_VIN_SUBSTRING } from './validation';
+  getVinErrors,
+  isValidCSLicense,
+  isValidVin,
+  VROOM_VIN_SUBSTRING,
+} from '../validation';
+import VehicleInfoViewModel from './ViewModel';
 
-import AnalyticsHandler from 'src/integrations/AnalyticsHandler';
-import { selectExperiment } from 'src/store/absmartly/selectors';
-import { APPRAISAL_HIDE_HOW_MANY_KEYS_QUESTION } from 'src/store/absmartly/types';
-import { selectUUID } from 'src/store/auth/selectors';
+export interface Props {
+  form: any;
+  fields: any;
+  viewModel: VehicleInfoViewModel;
+}
 
-const VehicleInformation = ({
-  match,
-  location,
-  form,
-  fields,
-  decodeVin,
-  handleCarfaxCall,
-  gradeCheck,
-  disableExperiments,
-  isHideHowManyKeysExperiment,
-}) => {
-  const analyticsHanler = new AnalyticsHandler();
+const VehicleInformation: React.FC<Props> = ({ form, fields, viewModel }) => {
   const defaultColors = [
     { label: 'Beige', value: 'Beige' },
     { label: 'Black', value: 'Black' },
@@ -62,25 +52,40 @@ const VehicleInformation = ({
     { label: 'White', value: 'White' },
     { label: 'Yellow', value: 'Yellow' },
   ];
-  // const vinUrl = match.params.vin || fields.vin.value ? true : false;
-  const vinUrl = fields.vin.value ? true : false; //TODO: make this dynamic
+  const router = useRouter();
+  const pathname = router.pathname as string;
+  const vinFromStore = pathname.includes('#top');
+  const vinUrl = viewModel.vehicleId;
 
   const [vinLoader, setVinLoader] = useState(false);
+  const [lpLoader, setLpLoader] = useState(false);
   const [trimLoader, setTrimLoader] = useState(false);
   const [vinDecoded, setVinDecoded] = useState(false);
-  const [year, setYear] = useState(null);
-  const [make, setMake] = useState(null);
-  const [model, setModel] = useState(null);
-  const [trims, setTrims] = useState([]);
-  const [options, setOptions] = useState([]);
+  const [year, setYear] = useState(null as any);
+  const [make, setMake] = useState(null as any);
+  const [model, setModel] = useState(null) as any;
+  const [trims, setTrims] = useState([] as any[]);
+  const [options, setOptions] = useState([] as any[]);
   const [extColors, setExtColors] = useState(defaultColors);
-  const [selectedExtColor, setSelectedExtColor] = useState(null);
+  const [selectedExtColor, setSelectedExtColor] = useState(null as any);
 
   const showOptionsGroup = options.length > 0;
 
-  isHideHowManyKeysExperiment = disableExperiments
-    ? false
-    : isHideHowManyKeysExperiment;
+  const isHideHowManyKeysExperiment = viewModel.isHideHowManyKeysExperiment;
+
+  const [showVin, setShowVin] = useState(true);
+  const [showLicense, setShowLicense] = useState(false);
+  const licenseForm = useForm({
+    defaultValues: {
+      licensePlate: '',
+      state: '',
+    },
+  });
+
+  const {
+    fields: { licensePlate, state },
+    isFormValid,
+  } = licenseForm;
 
   const resetLocalState = () => {
     setVinDecoded(false);
@@ -108,13 +113,25 @@ const VehicleInformation = ({
     }
   }, [isHideHowManyKeysExperiment]);
 
-  // useEffect(() => {
-  //   const vinNumber = match.params.vin || fields.vin.value;
+  useEffect(() => {
+    const vehicleId = router.query.vehicle || fields.vin.value;
+    const validVin =
+      vehicleId.includes(VROOM_VIN_SUBSTRING) || isValidVin(vehicleId);
+    const validLicense = isValidCSLicense(vehicleId);
+    setShowVin(validVin);
+    setShowLicense(validLicense || !vinUrl);
 
-  const vinNumber = fields.vin.value ? fields.vin.value : '2GEXG6U34K9550139'; //TODO: Make this dynamic
+    if (validVin) {
+      handleDecodeVin(vehicleId);
+    } else if (validLicense) {
+      handleDecodeLicense(vehicleId);
+    } else {
+      resetLocalState();
+    }
+  }, [router.pathname, router.query]);
 
   useEffect(() => {
-    const fieldsToUpdate = {};
+    const fieldsToUpdate: any = {};
     const { vin } = fields;
     if (!vinDecoded || vin.value === '') {
       resetLocalState();
@@ -175,7 +192,7 @@ const VehicleInformation = ({
     }
   }, [trims.length, fields.vin.value]);
 
-  const handleDecodeVin = (vinToDecode) => {
+  const handleDecodeVin = (vinToDecode: string) => {
     const validVin =
       vinToDecode.includes(VROOM_VIN_SUBSTRING) || isValidVin(vinToDecode);
     const errorMessage = getVinErrors(vinToDecode);
@@ -188,8 +205,8 @@ const VehicleInformation = ({
     setShowLicense(false);
 
     if (vinFromStore) {
-      const altsFromStore = vehicleDecodeData.alternatives;
-      const trimTransform = altsFromStore.map((t) => {
+      const altsFromStore = viewModel.vehicleDecodeData.alternatives;
+      const trimTransform = altsFromStore.map((t: any) => {
         return {
           ...t,
           label: t.trim,
@@ -198,13 +215,14 @@ const VehicleInformation = ({
         };
       });
       setTrims(trimTransform);
-      setOptions([...vehicleDecodeData.features]);
+      setOptions([...viewModel.vehicleDecodeData.features]);
       setVinDecoded(true);
-      setYear(vehicleDecodeData.year);
-      setMake(vehicleDecodeData.make);
-      setModel(vehicleDecodeData.model);
+      setYear(viewModel.vehicleDecodeData.year);
+      setMake(viewModel.vehicleDecodeData.make);
+      setModel(viewModel.vehicleDecodeData.model);
     } else if (validVin) {
-      carstoryDecodeVin(vinToDecode)
+      viewModel
+        .getVinDecode(vinToDecode)
         .then((response) => {
           const {
             year,
@@ -215,15 +233,16 @@ const VehicleInformation = ({
             exteriorColor,
             trim,
           } = response;
+          const isError = response.hasOwnPropery('error');
 
           vin.onChange({
             ...vin,
             value: vinToDecode.toUpperCase(),
-            error: response.hasOwnProperty('error'),
+            error: isError,
             errorMessage,
           });
 
-          if (response.hasOwnProperty('error')) {
+          if (isError) {
             setVinLoader(false);
             return;
           }
@@ -240,7 +259,7 @@ const VehicleInformation = ({
           }
 
           if (alternatives.length > 1) {
-            alternatives.forEach((t) => {
+            alternatives.forEach((t: any) => {
               trimsArr.push({
                 ...t,
                 label: t.trim,
@@ -278,7 +297,7 @@ const VehicleInformation = ({
     setVinLoader(false);
   };
 
-  const handleDecodeLicense = (lpToDecode) => {
+  const handleDecodeLicense = (lpToDecode: string) => {
     const { vin } = fields;
     const errorMessage = VehicleInfoText.licenseError;
 
@@ -287,7 +306,8 @@ const VehicleInformation = ({
     setVinLoader(true);
     setLpLoader(true);
 
-    carstoryDecodeVin(lpToDecode)
+    viewModel
+      .getVinDecode(lpToDecode)
       .then((response) => {
         const {
           year,
@@ -299,7 +319,8 @@ const VehicleInformation = ({
           trim,
         } = response;
         const trimsArr = [];
-        if (response.hasOwnProperty('error')) {
+        const isError = response.hasOwnPropery('error');
+        if (isError) {
           const [state, license] = lpToDecode.split('-');
           const fieldsToUpdate = {
             licensePlate: {
@@ -338,7 +359,7 @@ const VehicleInformation = ({
         }
 
         if (alternatives.length > 1) {
-          alternatives.forEach((t) => {
+          alternatives.forEach((t: any) => {
             trimsArr.push({
               ...t,
               label: t.trim,
@@ -371,16 +392,16 @@ const VehicleInformation = ({
       });
   };
 
-  const handleTrimChange = (value, error) => {
+  const handleTrimChange = (value: any, error: boolean) => {
     const { trim, csTrimId, exteriorColor, vehicleOptions } = fields;
-    const fieldsToUpdate = {};
+    const fieldsToUpdate: any = {};
 
     if (!vinFromStore) {
       fieldsToUpdate['trim'] = { ...trim, ...value, error };
       fieldsToUpdate['csTrimId'] = { ...csTrimId, value: value.trimId };
 
       if (trims.length === 1) {
-        const defaultSelected = [];
+        const defaultSelected: any[] = [];
         options.forEach((opt) => {
           if (opt.selected) {
             defaultSelected.push(opt.name);
@@ -405,15 +426,15 @@ const VehicleInformation = ({
     }
   };
 
-  const handleGetOptions = async (trimId) => {
+  const handleGetOptions = async (trimId: number) => {
     const { vehicleOptions } = fields;
     setTrimLoader(true);
 
     if (trimId && !vinFromStore) {
-      const response = await getCarstoryFeatures(trimId);
+      const response = await viewModel.getTrimFeatures(trimId);
       const trimOptions = response.features;
-      const defaultSelected = [];
-      trimOptions.forEach((opt) => {
+      const defaultSelected: any[] = [];
+      trimOptions.forEach((opt: any) => {
         if (opt.selected) {
           defaultSelected.push(opt.name);
         }
@@ -424,8 +445,8 @@ const VehicleInformation = ({
         value: defaultSelected,
       });
       setOptions([...trimOptions]);
-    } else if (vehicleDecodeData.features) {
-      setOptions([...vehicleDecodeData.features]);
+    } else if (viewModel.vehicleDecodeData.features) {
+      setOptions([...viewModel.vehicleDecodeData.features]);
     }
     setTrimLoader(false);
   };
@@ -434,11 +455,11 @@ const VehicleInformation = ({
     const vin = fields.vin.value;
     const miles = fields.mileage.value;
     const trim = fields.trim.value;
-    gradeCheck(make, model, trim, miles, vin);
-    trackMileageChange();
+    viewModel.gradeCheck(make, model, trim, miles, vin);
+    viewModel.trackMileageChange();
   };
 
-  const handleOnKeyPressEnter = (e) => {
+  const handleOnKeyPressEnter = (e: any) => {
     if (e.key === 'Enter' && isFormValid) {
       handleLicenseStateSubmit();
     }
@@ -455,7 +476,7 @@ const VehicleInformation = ({
     <>
       <LeaseCopy>{VehicleInfoLeaseCopy}</LeaseCopy>
       <InputContainer>
-        {vinUrl && showVin && (
+        {showVin && (
           <VinField>
             <VinFormInput
               field={fields.vin}
@@ -465,7 +486,7 @@ const VehicleInformation = ({
             />
           </VinField>
         )}
-        {vinUrl && showLicense && (
+        {showLicense && (
           <LicenseContainer>
             <LicenseField>
               <License>
@@ -489,11 +510,27 @@ const VehicleInformation = ({
           </LicenseContainer>
         )}
         {!vinUrl && (
-          <AppraisalLicenseToVin
-            vin={fields.vin}
-            vinLoader={vinLoader}
-            handleUpdate={handleDecodeVin}
-          />
+          <LicenseContainer>
+            <LicenseField>
+              <License>
+                <LicenseInputContainer
+                  field={licensePlate}
+                  onKeyPressEnter={handleOnKeyPressEnter}
+                />
+                {lpLoader && <Loader isLoading={lpLoader} />}
+              </License>
+              <States field={state} onKeyPressEnter={handleOnKeyPressEnter} />
+            </LicenseField>
+            <Button
+              tabIndex={0}
+              onKeyPress={handleOnKeyPressEnter}
+              onClick={handleLicenseStateSubmit}
+              disabled={!isFormValid}
+              data-qa={VehicleInfoText.licenseButtonDataQa}
+            >
+              {VehicleInfoText.licenseButton}
+            </Button>
+          </LicenseContainer>
         )}
         {vinDecoded && !vinLoader && (
           <YearMakeModel>
@@ -583,7 +620,7 @@ const LicenseContainer = styled.div`
 const LicenseField = styled.div`
   display: flex;
   width: 100%;
-  @media (max-width: 767px) {
+  ${(props) => props.theme.media.mobile} {
     flex-direction: column;
     width: 100%;
   }
@@ -592,7 +629,7 @@ const LicenseField = styled.div`
 const License = styled.div`
   display: flex;
   width: 50%;
-  @media (max-width: 767px) {
+  ${(props) => props.theme.media.mobile} {
     width: 100%;
   }
 `;
@@ -601,22 +638,22 @@ const LicenseInputContainer = styled(LicenseInput)`
   width: 90%;
   margin-right: 0;
 
-  @media (min-width: 768px)
+  ${(props) => props.theme.media.lte('tablet')} {
     width: 70%;
   }
 `;
 
 const States = styled(StateInput)`
   margin-left: 20px;
-  @media (min-width: 768px)
+  ${(props) => props.theme.media.lte('tablet')} {
     width: 90px;
   }
 
-  media (min-width: 1024px)
+  ${(props) => props.theme.media.gte('desktop')} {
     width: 160px;
   }
 
-  @media (max-width: 767px) {
+  ${(props) => props.theme.media.mobile} {
     margin-left: 0;
   }
 
@@ -689,23 +726,5 @@ const VehicleOptionsField = styled(VehicleOptionsGroup)`
   width: 100%;
   padding-top: 10px;
 `;
-
-// const mapStateToProps = (state: any) => {
-//   const experimentUUID = selectUUID(state);
-
-//   return {
-//     experimentUUID,
-//     isHideHowManyKeysExperiment: selectExperiment(
-//       state,
-//       APPRAISAL_HIDE_HOW_MANY_KEYS_QUESTION
-//     ),
-//   };
-// };
-
-// const mapDispatchToProps = {
-//   decodeVin,
-//   handleCarfaxCall,
-//   gradeCheck,
-// };
 
 export default VehicleInformation;

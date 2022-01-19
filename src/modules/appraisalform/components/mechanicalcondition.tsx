@@ -7,8 +7,11 @@ import MechanicalConditionInput from './forminputs/MechanicalConditionInput';
 import RunnableInput from './forminputs/RunnableInput';
 import WarningLightsInput from './forminputs/WarningLightsInput';
 import WarningLightsOptionsGroup from './forminputs/WarningLightsOptionsGroup';
+export interface Props {
+  fields: any;
+}
 
-const MechanicalCondition = ({ fields }) => {
+const MechanicalCondition: React.FC<Props> = ({ fields }) => {
   const showWarningLights = fields.warningLights.value === 'Yes';
 
   return (

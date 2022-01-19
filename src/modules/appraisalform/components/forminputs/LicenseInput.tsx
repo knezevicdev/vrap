@@ -10,7 +10,7 @@ import { FormFields } from './Inputs.language';
 
 interface Props {
   field: FormField;
-  className: string;
+  className?: string;
   onKeyPressEnter: (event: GenericObject) => void;
 }
 
@@ -19,7 +19,7 @@ const LicenseInput: React.FC<Props> = ({
   className,
   onKeyPressEnter,
 }) => {
-  const ref = useRef();
+  const ref = useRef() as any;
   const { onChange } = field;
 
   useEffect(() => {

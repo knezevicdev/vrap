@@ -65,6 +65,7 @@ const AfterMarketModsOptionsGroup: React.FC<Props> = ({
 
   const checkboxes = Object.entries(optionsGroupForm.fields).map(
     ([key, option]) => {
+      const typedOption: GenericObject = option as GenericObject;
       const handleOnClick = (option: GenericObject) => {
         option.onChange({ ...field, checked: !option.value });
       };
@@ -73,14 +74,15 @@ const AfterMarketModsOptionsGroup: React.FC<Props> = ({
         <AfterMarketModsOption
           key={key}
           htmlFor={key + '-checkbox'}
-          onClick={() => handleOptionClick(key, option)}
+          onClick={() => handleOptionClick(key, typedOption)}
         >
           <Option
             name={key}
             id={key + '-checkbox'}
             label={key}
             onChange={handleOnClick}
-            checked={!!option.value}
+            checked={!!typedOption.value}
+            dataQa="aftermarketoptioncheck"
           />
         </AfterMarketModsOption>
       );

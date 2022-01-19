@@ -185,6 +185,12 @@ export class Icons {
     path: `${BASE_PATH}/icons/vroom-truck.svg`,
   });
 
+  static readonly ClOSE = new Icons('CLOSE', {
+    name: 'close-large',
+    width: 44,
+    height: 44,
+  });
+
   private constructor(
     protected key: string,
     public readonly value: {

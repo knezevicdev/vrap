@@ -5,7 +5,11 @@ import InteriorConditionInput from './forminputs/InteriorConditionInput';
 import SeatsInput from './forminputs/SeatsInput';
 import SmokedInInput from './forminputs/SmokedInInput';
 
-const InteriorCondition = ({ fields }) => {
+export interface Props {
+  fields: any;
+}
+
+const InteriorCondition: React.FC<Props> = ({ fields }) => {
   return (
     <>
       <InteriorConditionInput field={fields.interiorCondition} />

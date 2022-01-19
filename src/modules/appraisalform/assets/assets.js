@@ -1,7 +1,7 @@
 import React from 'react';
-import { globalConfig } from '../lib/globalConfig';
 
 import { CODENAME } from '../constants/misc';
+import { globalConfig } from '../lib/globalConfig';
 
 const { STATIC_URL } = globalConfig;
 const SVG_PATH = `${STATIC_URL}/icons/svg`;
@@ -98,7 +98,7 @@ const blueIcons = {
   2: three_icon,
   3: four_icon,
   4: five_icon,
-  5: six_icon
+  5: six_icon,
 };
 
 const grayIcons = {
@@ -106,7 +106,7 @@ const grayIcons = {
   2: gray_three_icon,
   3: gray_four_icon,
   4: gray_five_icon,
-  5: gray_six_icon
+  5: gray_six_icon,
 };
 
 export function numberIcon(index, activeSection, className) {

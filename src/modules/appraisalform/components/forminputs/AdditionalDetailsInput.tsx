@@ -6,8 +6,8 @@ import { FormFields } from './Inputs.language';
 
 interface Props {
   field: FormField;
-  className: string;
-  label: string;
+  className?: string;
+  label?: string;
 }
 
 const AdditionalDetailsInput: React.FC<Props> = ({

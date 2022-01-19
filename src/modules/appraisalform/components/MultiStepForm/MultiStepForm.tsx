@@ -22,18 +22,18 @@ function numberIcon(index: number, activeSection: number, className: string) {
 
 interface Props {
   formTitle: string;
-  formSubtittleSection: () => void;
+  formSubtittleSection?: () => void;
   sections: any[];
   onDone: () => void;
   onNext: (arg1: number, arg2?: string) => void;
-  onNextIntercept: () => void;
+  onNextIntercept?: () => void;
   active: number;
-  customAnalyticsFunc: (
+  customAnalyticsFunc?: (
     nextTitle: string | undefined,
     currentTitle: string
   ) => void;
   refreshButton: boolean;
-  showDialog: () => void;
+  showDialog?: () => void;
   nextText: string;
   submitText: string;
   appraisalTitle: string;
@@ -92,7 +92,9 @@ const MultiStepForm: React.FC<Props> = (props) => {
     // when active section isn't 0
     if (activeSection !== 0) {
       setTimeout(() => {
-        const activeElement: any = document.getElementById(activeSection);
+        const activeElement: any = document.getElementById(
+          activeSection as any
+        );
         const headerOffset = 70;
         const elementPosition = activeElement.offsetTop;
         const offsetPosition = elementPosition - headerOffset;
@@ -115,7 +117,7 @@ const MultiStepForm: React.FC<Props> = (props) => {
     onNext(activeSection, 'refreshed');
   };
 
-  const handleOnNext = (e: any, onNextIntercept: any) => {
+  const handleOnNext = (_e: any, onNextIntercept: any) => {
     const nextStep = activeSection + 1;
     let currentSectionIsValid = sections[activeSection].form.isFormValid;
     //const nextSection = sections[nextStep];

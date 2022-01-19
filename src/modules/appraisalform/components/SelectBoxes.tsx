@@ -1,13 +1,20 @@
 import React from 'react';
-import { connect } from 'react-redux';
 import styled from 'styled-components';
 
+import { GenericObject } from '../../../interfaces.d';
 import { trackPanelsTooltip } from '../lib/analytics/sell';
 import tooltip_icon from '../static/icons/svg/tooltip.svg';
 import { showDialog } from '../store/dialog/actions';
 import Icon from './Icon';
 
-const SelectBoxes = ({
+interface Props {
+  field: GenericObject;
+  className?: string;
+  handlePanelTooltipClick?: any;
+  externalLabel?: any;
+}
+
+const SelectBoxes: React.FC<Props> = ({
   field: { options, onClick, value, label, panelsTooltip },
   handlePanelTooltipClick,
   className,
@@ -30,7 +37,7 @@ const SelectBoxes = ({
         </LabelContainer>
       )}
       <OptionsContainer data-qa="SelectBoxesComponent">
-        {options.map((item) => {
+        {options.map((item: any) => {
           return (
             <Option
               isSelected={value === item}
@@ -98,9 +105,5 @@ const Option = styled(({ isSelected, optionsLength, ...restProps }) => (
       border: 2px solid #e7131a;
   `}
 `;
-
-const mapDispatchToProps = (dispatch) => ({
-  handlePanelTooltipClick: () => dispatch(showDialog('PanelsDialog', {}, true)),
-});
 
 export default SelectBoxes;

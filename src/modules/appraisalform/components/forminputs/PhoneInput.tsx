@@ -8,8 +8,8 @@ import { FormFields } from './Inputs.language';
 
 interface Props {
   field: any;
-  className: string;
-  optional: boolean;
+  className?: string;
+  optional?: boolean;
 }
 
 const PhoneInput: React.FC<Props> = ({

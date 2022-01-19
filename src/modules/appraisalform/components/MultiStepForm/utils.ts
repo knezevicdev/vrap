@@ -12,7 +12,7 @@ const gray_four_icon = `https://assets.vroomcdn.com/static-rebrand/icons/svg/400
 const gray_five_icon = `https://assets.vroomcdn.com/static-rebrand/icons/svg/400-gt/5-inactive.svg`;
 const gray_six_icon = `https://assets.vroomcdn.com/static-rebrand/icons/svg/400-gt/6-inactive.svg`;
 
-export const blueIcons = {
+export const blueIcons: any = {
   0: one_icon,
   1: two_icon,
   2: three_icon,
@@ -21,7 +21,7 @@ export const blueIcons = {
   5: six_icon,
 };
 
-export const grayIcons = {
+export const grayIcons: any = {
   1: gray_two_icon,
   2: gray_three_icon,
   3: gray_four_icon,

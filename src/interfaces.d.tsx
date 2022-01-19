@@ -146,47 +146,53 @@ export interface GradeCheckResp {
 }
 
 export interface AppraisalResp {
-  resp: boolean;
+  data: {
+    // eslint-disable-next-line @typescript-eslint/naming-convention
+    ID: string;
+  };
 }
 
 export interface AppraisalPayload {
-  DateSubmitted: string;
-  additionalDetails: string;
-  afterMarket: [];
-  brand: string;
-  dealership: string;
-  email: string;
-  exteriorColor: string;
-  exteriorCondition: string;
-  firstName: string;
-  floodFireDamage: string;
-  form: string;
-  hailDamage: string;
-  hasAccident: string;
-  interiorCondition: string;
-  keysAmount: string;
-  lastName: string;
-  lead_id: string;
-  make: string;
-  mechanicalCondition: string;
-  mileage: number;
-  model: string;
-  options: [];
-  otherAfterMarket: string;
-  otherWarning: string;
-  phoneNumber: string;
-  runnable: string;
-  seats: string;
-  smokedIn: string;
-  tiresAndWheels: string;
-  titleStatus: string;
-  trim: string;
-  type: string;
-  vin: string;
-  warningLights: string;
-  warningLightsValues: [];
-  year: number;
-  zipCode: string;
+  payload: {
+    DateSubmitted: string;
+    additionalDetails: string;
+    afterMarket: [];
+    brand: string;
+    dealership: string;
+    email: string;
+    exteriorColor: string;
+    exteriorCondition: string;
+    firstName: string;
+    floodFireDamage: string;
+    hailDamage: string;
+    hasAccident: string;
+    interiorCondition: string;
+    keysAmount: string;
+    lastName: string;
+    lead_id: string;
+    anonymous_id: string;
+    make: string;
+    mechanicalCondition: string;
+    mileage: number;
+    model: string;
+    options: [];
+    otherAfterMarket: string;
+    otherWarning: string;
+    phoneNumber: string;
+    runnable: string;
+    seats: string;
+    smokedIn: string;
+    tiresAndWheels: string;
+    titleStatus: string;
+    trim: string;
+    csTrimId: number;
+    type: string;
+    vin: string;
+    warningLights: string;
+    warningLightsValues: [];
+    year: number;
+    zipCode: string;
+  };
 }
 
 export interface GenericObject {

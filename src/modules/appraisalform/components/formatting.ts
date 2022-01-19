@@ -72,3 +72,24 @@ export function displayZipCode(zipCode: string): string | null {
 
   return formattedNumber;
 }
+
+export function lettersAndNumbersOnly(
+  string: string,
+  maxLength: number | null = null
+) {
+  return acceptOnly(string, maxLength, /[^a-zA-Z0-9]/g);
+}
+
+function acceptOnly(string: string, maxLength: number | null, validExp: any) {
+  if (typeof string !== 'string') {
+    return '';
+  }
+
+  const validOnly = string.replace(validExp, '');
+
+  if (maxLength != null) {
+    return validOnly.substring(0, maxLength);
+  }
+
+  return validOnly;
+}
