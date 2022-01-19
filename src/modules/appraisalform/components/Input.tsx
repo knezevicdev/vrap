@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 
+import { GenericObject } from '../../../interfaces.d';
 import success_icon from '../static/icons/svg/checkmark-circle.svg';
 import error_icon from '../static/icons/svg/error.svg';
 import tooltip_icon from '../static/icons/svg/tooltip.svg';
@@ -8,7 +9,15 @@ import { lang } from './Components.language';
 import Icon from './Icon';
 import ToolTip from './ToolTip';
 
-const Input = (props) => {
+interface Props {
+  field: GenericObject;
+  className?: string;
+  IconStyle?: any;
+  footerMessage?: any;
+  innerRef?: any;
+}
+
+const Input: React.FC<Props> = (props) => {
   const {
     field: {
       label,
@@ -40,7 +49,7 @@ const Input = (props) => {
 
   const [validate, setValidate] = useState(false);
 
-  const handleValidation = (action) => (event) => {
+  const handleValidation = (action: any) => (event: any) => {
     if (!validate) {
       setValidate(true);
     }
@@ -103,13 +112,13 @@ const Input = (props) => {
   );
 };
 
-const isEmpty = (value) => {
+const isEmpty = (value: any) => {
   return !value || 0 === value.length;
 };
 
 export default Input;
 
-const InputIcon = styled(Icon)`
+const InputIcon = styled(({ ...restProps }) => <Icon {...restProps} />)`
   position: absolute;
   right: 10px;
   top: ${(props) => props.top || '30px'};
@@ -131,7 +140,7 @@ const Label = styled.label`
   display: flex;
 `;
 
-const InputContainer = styled.input`
+const InputContainer = styled(({ ...restProps }) => <input {...restProps} />)`
   height: 40px;
   padding: 8px 10px;
   outline: none;

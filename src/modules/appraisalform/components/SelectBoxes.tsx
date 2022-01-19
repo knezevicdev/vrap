@@ -10,8 +10,8 @@ import Icon from './Icon';
 interface Props {
   field: GenericObject;
   className?: string;
-  handlePanelTooltipClick: any;
-  externalLabel: any;
+  handlePanelTooltipClick?: any;
+  externalLabel?: any;
 }
 
 const SelectBoxes: React.FC<Props> = ({

@@ -58,6 +58,7 @@ const VehicleOptionsGroup: React.FC<Props> = ({
 
   const checkboxes = Object.entries(optionsGroupForm.fields).map(
     ([key, option]) => {
+      const typedOption: GenericObject = option as GenericObject;
       const handleOnClick = (option: GenericObject) => {
         option.onChange({ ...field, checked: !option.value });
       };
@@ -66,14 +67,15 @@ const VehicleOptionsGroup: React.FC<Props> = ({
         <VehicleOption
           key={key}
           htmlFor={key + '-checkbox'}
-          onClick={() => handleOptionClick(key, option)}
+          onClick={() => handleOptionClick(key, typedOption)}
         >
           <Checkbox
             name={key}
             id={key + '-checkbox'}
             label={key}
             onChange={handleOnClick}
-            checked={!!option.value}
+            checked={!!typedOption.value}
+            dataQa="vehicleoptioncheck"
           />
         </VehicleOption>
       );
