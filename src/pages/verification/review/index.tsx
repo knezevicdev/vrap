@@ -61,7 +61,9 @@ const VerificationReview: NextPage<Prop> = ({ priceId }) => {
       </StepperWrapper>
       <>
         <Contents>
-          {isLoading || store.verification.formState === 5 ? (
+          {isLoading ||
+          store.verification.formState === 5 ||
+          store.verification.loading ? (
             <VroomSpinner />
           ) : (
             <>

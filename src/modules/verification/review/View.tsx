@@ -25,17 +25,33 @@ const VerificationReviewViewDetail: React.FC<Props> = ({
   const { store } = useAppStore();
 
   useEffect(() => {
+    viewModel.onPageLoad();
+    const paymentValues = localStorage.getItem('review_payment_values');
+    const paymentType = localStorage.getItem('review_payment_type') === 'ach';
+    if (paymentValues) {
+      const parseValue = JSON.parse(paymentValues);
+      if (paymentType) {
+        store.deposit.setMutationInput(parseValue);
+      } else {
+        const { values, priceId, address, submittedType } = parseValue;
+        store.payment.setValues(values, priceId, address);
+        store.payment.setSubmitType(submittedType);
+      }
+    }
+  }, []);
+
+  useEffect(() => {
     const whereIsVehicleRegistered =
       localStorage.getItem('whereIsVehicleRegistered') || '';
     const lastFourSSN =
       localStorage.getItem('lastFour') || store.verification.lastFourSSN;
     viewModel.setWhereIsVehicleRegistered(whereIsVehicleRegistered);
-    viewModel.onPageLoad();
     viewModel.getVerificationDetails(priceId, lastFourSSN);
   }, [priceId]);
 
   const handleSubmit = (): void => {
     localStorage.removeItem('lastFour');
+    store.verification.setLoading(true);
     viewModel.verificationSubmit();
   };
 
@@ -50,7 +66,8 @@ const VerificationReviewViewDetail: React.FC<Props> = ({
       <PayOffInfoReview />
       <Line />
       <SellDocumentReview />
-      {viewModel.isPaymentRequireExp() && (
+      {(viewModel.isPaymentRequireExp() ||
+        localStorage.getItem('review_payment_values')) && (
         <>
           <Line />
           <PaymentInfoReview />

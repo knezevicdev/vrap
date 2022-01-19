@@ -1,6 +1,6 @@
 import { IncomingMessage } from 'http';
 import { GetServerSideProps, NextPage } from 'next';
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
 
 import { Header } from 'src/components/Header';
@@ -10,6 +10,10 @@ import Questions from 'src/modules/questions';
 import Page from 'src/Page';
 
 const CongratulationPage: NextPage = () => {
+  useEffect(() => {
+    localStorage.clear();
+  }, []);
+
   return (
     <Page name="Congrats! Document submitted">
       <Header />
