@@ -34,6 +34,10 @@ class PriceViewModel {
     );
   }
 
+  get showExactMileageDialog(): boolean {
+    return this.appraisalStore.showExactMileageDialog;
+  }
+
   updateAppraisal(formInfo: any): void {
     this.appraisalStore.updateAppraisal(formInfo);
   }
@@ -56,6 +60,10 @@ class PriceViewModel {
 
   trackNextStepViewed = (nextStep: number): void => {
     this._analyticsHandler.trackNextStepViewed(nextStep);
+  };
+
+  setMileageDialogDismiss = (): void => {
+    this.appraisalStore.dismissExactMileageDialog();
   };
 
   async handleCarfaxCall(vin: string): Promise<any> {

@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useRouter } from 'next/router';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
 import {
@@ -23,6 +23,7 @@ import PersonalInformation from './components/personalinformation';
 import useFormInit from './components/useFormInit';
 import VehicleHistory from './components/vehiclehistory';
 import VehicleInformation from './components/VehicleInformation';
+import Dialog from './Dialog/ExactMilage';
 import AppraisalViewModel from './ViewModel';
 
 export interface Props {
@@ -43,6 +44,8 @@ const AppraisalForm: React.FC<Props> = ({ viewModel }) => {
   const intCondition = viewModel.appraisalStore.intConditionForm;
   const extCondition = viewModel.appraisalStore.extConditionForm;
   const mechCondition = viewModel.appraisalStore.mechConditionForm;
+  const [exactMilageProps, setExactMileageProps] = useState({} as any);
+  const [showExactMilageDialog, setShowExactMilageDialog] = useState(false);
 
   let activeSection = 0;
   useEffect(() => {
@@ -86,7 +89,21 @@ const AppraisalForm: React.FC<Props> = ({ viewModel }) => {
   const onNextIntercept = async (proceedNext: any) => {
     const exactMileageField = appraisalUseForm.vehicleInfoForm.fields.mileage;
     const strictDialog = viewModel.grade === false;
+    const setMileageDialogDismiss = viewModel.setMileageDialogDismiss;
+    const showExactMileageDialog = viewModel.showExactMileageDialog;
     let inlineCarfaxOdoLast;
+
+    setExactMileageProps({
+      strictDialog: strictDialog,
+      enteredMiles: exactMileageField.value,
+      mileageCorrect: () => {
+        setMileageDialogDismiss();
+        proceedNext();
+      },
+      updateMileage: () => {
+        exactMileageField.element.focus();
+      },
+    });
 
     if (!viewModel.carfaxOdoLast) {
       const vin = appraisalUseForm.vehicleInfoForm.fields.vin.value;
@@ -97,17 +114,7 @@ const AppraisalForm: React.FC<Props> = ({ viewModel }) => {
         showExactMileageDialog &&
         activeSection === 0
       ) {
-        showDialog('ExactMileageDialog', {
-          strictDialog: strictDialog,
-          enteredMiles: exactMileageField.value,
-          mileageCorrect: () => {
-            setMileageDialogDismiss();
-            proceedNext();
-          },
-          updateMileage: () => {
-            exactMileageField.element.focus();
-          },
-        });
+        setShowExactMilageDialog(true);
       } else {
         proceedNext();
       }
@@ -117,17 +124,7 @@ const AppraisalForm: React.FC<Props> = ({ viewModel }) => {
         showExactMileageDialog &&
         activeSection === 0
       ) {
-        showDialog('ExactMileageDialog', {
-          strictDialog: strictDialog,
-          enteredMiles: exactMileageField.value,
-          mileageCorrect: () => {
-            setMileageDialogDismiss();
-            proceedNext();
-          },
-          updateMileage: () => {
-            exactMileageField.element.focus();
-          },
-        });
+        setShowExactMilageDialog(true);
       } else {
         proceedNext();
       }
@@ -283,6 +280,10 @@ const AppraisalForm: React.FC<Props> = ({ viewModel }) => {
     }
   };
 
+  const closeModalHandler = (): void => {
+    setShowExactMilageDialog(false);
+  };
+
   return (
     <AppraisalFormContainer data-qa="AppraisalFormPage">
       <MultiStepForm
@@ -297,6 +298,9 @@ const AppraisalForm: React.FC<Props> = ({ viewModel }) => {
         appraisalTitle={AppraisalTitle}
         disableExperiments={false}
       />
+      {showExactMilageDialog && (
+        <Dialog closeModalHandler={closeModalHandler} {...exactMilageProps} />
+      )}
     </AppraisalFormContainer>
   );
 };

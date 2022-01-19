@@ -67,6 +67,7 @@ export class AppraisalStore {
   type = 'Website';
   form = 'sell';
   isEmpty = true;
+  showExactMileageDialog = true;
   carfaxOdoLast: any = null;
 
   showSpinner = true;
@@ -155,6 +156,10 @@ export class AppraisalStore {
 
   setGradeCheck(data: any): void {
     this.gradeCheck = { ...data };
+  }
+
+  dismissExactMileageDialog(): void {
+    this.showExactMileageDialog = false;
   }
 
   updateAppraisal(formInfo: any): void {
