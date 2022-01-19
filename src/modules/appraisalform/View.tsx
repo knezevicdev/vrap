@@ -14,7 +14,7 @@ import {
   VehicleHistoryText,
   VehicleInfoText,
 } from './AppraisalForm.language';
-import ExteriorCondition from './components/exteriorcondition';
+import ExteriorCondition from './components/ExteriorConditions';
 import InteriorCondition from './components/interiorcondition';
 import MechanicalCondition from './components/mechanicalcondition';
 import MultiStepForm from './components/MultiStepForm';
