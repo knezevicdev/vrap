@@ -2,7 +2,6 @@ import { GQLTypes, Response } from '@vroom-web/networking';
 import getConfig from 'next/config';
 
 import client from './client';
-import { AppraisalRespData } from './models/Appraisal';
 import {
   PaymentOptionsRespData,
   Prices,
@@ -13,23 +12,18 @@ import { checkAppraisalPayload, getDummyOfferResp } from './utils';
 import ACCEPT_REJECT_OFFER from 'src/graphql/mutations/acceptRejectOffer.graphql';
 import CREATE_USER_PAYMENT_ACCOUNT from 'src/graphql/mutations/createUserPaymentAccount.graphql';
 import GRADE_CHECK from 'src/graphql/mutations/gradecheck.graphql';
-import DECODE_VIN from 'src/graphql/queries/decodeVin.graphql';
 import GET_PLAID_TOKEN from 'src/graphql/queries/getLinkToken.graphql';
 import {
   AppraisalPayload,
   AppraisalResp,
-  DisambiguationResp,
   GradeCheckResp,
-  LicencePlateToVinResp,
   LtoVPayload,
   LtoVResp,
   MailingAddress,
   MileageCheckResp,
-  NewVinDecodeResp,
   PaymentOverviewFormValues,
   PlaidData,
   PlaidTokenResp,
-  VinDecodeResp,
 } from 'src/interfaces.d';
 import {
   DocumentResponse,

@@ -115,7 +115,7 @@ const MultiStepForm: React.FC<Props> = (props) => {
     onNext(activeSection, 'refreshed');
   };
 
-  const handleOnNext = (e: any, onNextIntercept: any) => {
+  const handleOnNext = (_e: any, onNextIntercept: any) => {
     const nextStep = activeSection + 1;
     let currentSectionIsValid = sections[activeSection].form.isFormValid;
     //const nextSection = sections[nextStep];
