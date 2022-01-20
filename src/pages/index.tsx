@@ -1,9 +1,10 @@
-import { Brand, ThemeProvider } from '@vroom-web/ui';
+import { Brand } from '@vroom-web/ui';
 import { IncomingMessage } from 'http';
 import { observer } from 'mobx-react';
 import { NextPage, NextPageContext } from 'next';
 import { useRouter } from 'next/router';
 import React from 'react';
+import styled from 'styled-components';
 
 import { Header } from 'src/components/Header';
 import { useAppStore } from 'src/context';
@@ -15,22 +16,32 @@ interface Props {
   brand: Brand;
 }
 
-const AppraisalFormPage: NextPage<Props> = ({ brand }) => {
+const AppraisalFormPage: NextPage<Props> = () => {
   const router = useRouter();
   const vehicle = router.query.vehicle as string;
   const { store } = useAppStore();
   store.appraisal.setVehicleId(vehicle);
 
   return (
-    <ThemeProvider brand={brand}>
-      <Page name="Appraisal Form">
-        <Header />
+    <Page name="Appraisal Form">
+      <Header />
+      <PageContent>
         <AppraisalForm />
-        <Footer />
-      </Page>
-    </ThemeProvider>
+      </PageContent>
+      <Footer />
+    </Page>
   );
 };
+
+const PageContent = styled.div`
+  height: 100%;
+  background-color: #f5f5f5;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+`;
 
 interface Cookie {
   uuid: string;

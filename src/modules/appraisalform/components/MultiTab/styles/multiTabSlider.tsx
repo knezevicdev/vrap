@@ -24,7 +24,7 @@ const Body = styled.div`
 const TabContentSection = styled(({ ...restProps }) => <div {...restProps} />)`
   display: none;
 
-  ${(props) => props.isActive === true && `display: block;`}
+  ${(props) => props.isactive === true && `display: block;`}
 `;
 
 const TabButton = styled(({ ...restProps }) => (
@@ -43,7 +43,7 @@ const TabButton = styled(({ ...restProps }) => (
   min-width: 145px;
 
   ${(props) =>
-    props.isActive === true &&
+    props.isactive === true &&
     `
       background-color: #FFFFFF;
       border-radius: 20px;

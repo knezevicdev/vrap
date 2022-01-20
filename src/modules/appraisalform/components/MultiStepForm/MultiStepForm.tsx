@@ -1,10 +1,9 @@
-import { addStyleForMobile } from '@vroom-web/ui-lib';
+import { addStyleForMobile, Tooltip } from '@vroom-web/ui-lib';
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
 import { GenericObject } from '../../../../interfaces.d';
 import PrevNextButtons from '../PrevNextButtons';
-import ToolTip from '../ToolTip';
 import { blueIcons, grayIcons, greenCheckPath } from './utils';
 
 import { Button } from 'src/core/Button';
@@ -181,10 +180,8 @@ const MultiStepForm: React.FC<Props> = (props) => {
       formComponent.toolTip.showTooltip
     ) {
       return (
-        <ToolTip
-          arrow={true}
-          content={<span>{formComponent.toolTip.content}</span>}
-        >
+        <>
+          <Tooltip content={<span>{formComponent.toolTip.content}</span>} />
           <NextButtonWrapper>
             <NextButton
               onClick={handleOnNext}
@@ -194,7 +191,7 @@ const MultiStepForm: React.FC<Props> = (props) => {
               {buttonText}
             </NextButton>
           </NextButtonWrapper>
-        </ToolTip>
+        </>
       );
     } else {
       return (
@@ -217,10 +214,8 @@ const MultiStepForm: React.FC<Props> = (props) => {
       formComponent.toolTip.showTooltip
     ) {
       return (
-        <ToolTip
-          arrow={true}
-          content={<span>{formComponent.toolTip.content}</span>}
-        >
+        <>
+          <Tooltip content={<span>{formComponent.toolTip.content}</span>} />
           <NextButtonWrapper>
             <PrevNextButtons
               goToPrevStep={prevStep}
@@ -229,7 +224,7 @@ const MultiStepForm: React.FC<Props> = (props) => {
               nextButtonLabel={buttonText}
             />
           </NextButtonWrapper>
-        </ToolTip>
+        </>
       );
     } else {
       return (
@@ -275,7 +270,7 @@ const MultiStepForm: React.FC<Props> = (props) => {
             )}
             {!showGreenCheck && numberIcon(idx, activeSection, 'title-icon')}
           </StepNumber>
-          <StepTitle isActive={isActive}>{title}</StepTitle>
+          <StepTitle isactive={isActive}>{title}</StepTitle>
           {showEditButton && (
             <EditStep onClick={() => handleEditSection(idx, activeSection)}>
               Edit
@@ -287,7 +282,7 @@ const MultiStepForm: React.FC<Props> = (props) => {
               <TimeEst>{formComponent.timeEst}</TimeEst>
             )}
         </SectionHeader>
-        <FormSection isActive={isActive}>
+        <FormSection isactive={isActive}>
           {formComponent.subTitle && <h3>{formComponent.subTitle}</h3>}
           <CurrentComponent
             fields={fields}
@@ -380,7 +375,7 @@ const FormSection = styled(({ ...restProps }) => <div {...restProps} />)`
 
   /* big max-height is used when animating variable height transitions */
   ${(props) =>
-    props.isActive === true &&
+    props.isactive === true &&
     `
       max-height: 4500px;
 
@@ -406,7 +401,7 @@ const StepTitle = styled(({ ...restProps }) => <div {...restProps} />)`
   letter-spacing: 0.25px;
   color: '#041022';
 
-  ${(props) => props.isActive === false && `color: '#999da3';`}
+  ${(props) => props.isactive === false && `color: '#999da3';`}
   ${addStyleForMobile(`
     font-size: 18px;
   `)}

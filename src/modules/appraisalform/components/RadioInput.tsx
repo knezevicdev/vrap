@@ -1,10 +1,8 @@
+import { Tooltip } from '@vroom-web/ui-lib';
 import React from 'react';
 import styled from 'styled-components';
 
 import { GenericObject } from '../../../interfaces.d';
-import ToolTip from './ToolTip';
-
-import Icon, { Icons } from 'src/core/Icon';
 
 interface Props {
   field: GenericObject;
@@ -19,15 +17,7 @@ const RadioInput: React.FC<Props> = ({
     <Container className={className}>
       <LabelContainer>
         <Label>{label}</Label>
-        {tooltipText && (
-          <ToolTip
-            arrow={true}
-            content={<span>{tooltipText}</span>}
-            interactive={true}
-          >
-            <RowTitleIcon icon={Icons.TOOLTIP} />
-          </ToolTip>
-        )}
+        {tooltipText && <Tooltip content={<span>{tooltipText}</span>} />}
       </LabelContainer>
       <div data-qa="SelectBoxesComponent">
         {options.map((item: any) => {
@@ -167,14 +157,6 @@ const OptionDescription = styled.div`
   @media (max-width: 768px) {
     width: 100%;
     line-height: 20px;
-  }
-`;
-
-const RowTitleIcon = styled(Icon)`
-  margin: 8px 0 0 5px;
-
-  @media (max-width: 767px) {
-    margin: 4px 0 0 5px;
   }
 `;
 
