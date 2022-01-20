@@ -1,4 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import {
+  addStyleForDesktop,
+  addStyleForMobile,
+  addStyleForTablet,
+} from '@vroom-web/ui-lib';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
@@ -63,7 +68,7 @@ const VehicleInformation: React.FC<Props> = ({ form, fields, viewModel }) => {
   const [vinDecoded, setVinDecoded] = useState(false);
   const [year, setYear] = useState(null as any);
   const [make, setMake] = useState(null as any);
-  const [model, setModel] = useState(null) as any;
+  const [model, setModel] = useState(null as any);
   const [trims, setTrims] = useState([] as any[]);
   const [options, setOptions] = useState([] as any[]);
   const [extColors, setExtColors] = useState(defaultColors);
@@ -233,7 +238,7 @@ const VehicleInformation: React.FC<Props> = ({ form, fields, viewModel }) => {
             exteriorColor,
             trim,
           } = response;
-          const isError = response.hasOwnPropery('error');
+          const isError = Object.hasOwnProperty.bind(response)('error');
 
           vin.onChange({
             ...vin,
@@ -319,7 +324,7 @@ const VehicleInformation: React.FC<Props> = ({ form, fields, viewModel }) => {
           trim,
         } = response;
         const trimsArr = [];
-        const isError = response.hasOwnPropery('error');
+        const isError = Object.hasOwnProperty.bind(response)('error');
         if (isError) {
           const [state, license] = lpToDecode.split('-');
           const fieldsToUpdate = {
@@ -385,7 +390,8 @@ const VehicleInformation: React.FC<Props> = ({ form, fields, viewModel }) => {
         setVinLoader(false);
         setLpLoader(false);
       })
-      .catch(() => {
+      .catch((e) => {
+        console.log(e);
         resetLocalState();
         setVinLoader(false);
         setLpLoader(false);
@@ -476,7 +482,7 @@ const VehicleInformation: React.FC<Props> = ({ form, fields, viewModel }) => {
     <>
       <LeaseCopy>{VehicleInfoLeaseCopy}</LeaseCopy>
       <InputContainer>
-        {showVin && (
+        {vinUrl && showVin && (
           <VinField>
             <VinFormInput
               field={fields.vin}
@@ -486,7 +492,7 @@ const VehicleInformation: React.FC<Props> = ({ form, fields, viewModel }) => {
             />
           </VinField>
         )}
-        {showLicense && (
+        {vinUrl && showLicense && (
           <LicenseContainer>
             <LicenseField>
               <License>
@@ -620,42 +626,42 @@ const LicenseContainer = styled.div`
 const LicenseField = styled.div`
   display: flex;
   width: 100%;
-  ${(props) => props.theme.media.mobile} {
+  ${addStyleForMobile(`
     flex-direction: column;
     width: 100%;
-  }
+  `)}
 `;
 
 const License = styled.div`
   display: flex;
   width: 50%;
-  ${(props) => props.theme.media.mobile} {
+  ${addStyleForMobile(`
     width: 100%;
-  }
+  `)}
 `;
 
 const LicenseInputContainer = styled(LicenseInput)`
   width: 90%;
   margin-right: 0;
 
-  ${(props) => props.theme.media.lte('tablet')} {
+  ${addStyleForTablet(`
     width: 70%;
-  }
+  `)}
 `;
 
 const States = styled(StateInput)`
   margin-left: 20px;
-  ${(props) => props.theme.media.lte('tablet')} {
+  ${addStyleForTablet(`
     width: 90px;
-  }
+  `)}
 
-  ${(props) => props.theme.media.gte('desktop')} {
+  ${addStyleForDesktop(`
     width: 160px;
-  }
+  `)}
 
-  ${(props) => props.theme.media.mobile} {
+  ${addStyleForMobile(`
     margin-left: 0;
-  }
+  `)}
 
   & select {
     padding: 10px;

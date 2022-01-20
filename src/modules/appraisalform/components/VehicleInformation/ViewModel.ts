@@ -47,20 +47,21 @@ class VehicleInfoViewModel {
       const response = await getCarstoryVinDecode(vehicleId);
       if (isErrorResponse(response)) throw response;
       let alternatives, features;
+      const { dataProviderInfo, vehicleInfo } = response.data;
 
-      if (response.dataProviderInfo.carstory) {
-        alternatives = response.dataProviderInfo.carstory.alternatives || [];
-        features = response.dataProviderInfo.carstory.features || [];
-      } else if (response.dataProviderInfo.nada) {
-        alternatives = response.dataProviderInfo.nada.alternatives || [];
-        features = response.dataProviderInfo.nada.features || [];
+      if (dataProviderInfo.carstory) {
+        alternatives = dataProviderInfo.carstory.alternatives || [];
+        features = dataProviderInfo.carstory.features || [];
+      } else if (dataProviderInfo.nada) {
+        alternatives = dataProviderInfo.nada.alternatives || [];
+        features = dataProviderInfo.nada.features || [];
       } else {
         alternatives = [];
         features = [];
       }
 
       this.appraisalStore.setVehicleData({
-        ...response.vehicleInfo,
+        ...response.data.vehicleInfo,
         alternatives,
         features,
       });
@@ -68,15 +69,15 @@ class VehicleInfoViewModel {
       return {
         alternatives,
         features,
-        exteriorColor: response.vehicleInfo.exteriorColor,
-        year: response.vehicleInfo.year,
-        make: response.vehicleInfo.make,
-        model: response.vehicleInfo.model,
-        trim: response.vehicleInfo.trim,
-        vin: response.vehicleInfo.vin,
+        exteriorColor: vehicleInfo.exteriorColor,
+        year: vehicleInfo.year,
+        make: vehicleInfo.make,
+        model: vehicleInfo.model,
+        trim: vehicleInfo.trim,
+        vin: vehicleInfo.vin,
       };
-    } catch (e) {
-      console.log('error in Vin Decode');
+    } catch (error) {
+      return error;
     }
   }
 
@@ -84,9 +85,10 @@ class VehicleInfoViewModel {
     try {
       const response = await getCarstoryTrimFeatures(trimId);
       if (isErrorResponse(response)) throw response;
+      const { dataProviderInfo } = response.data;
 
-      const features = response.dataProviderInfo.carstory
-        ? response.dataProviderInfo.carstory.features
+      const features = dataProviderInfo.carstory
+        ? dataProviderInfo.carstory.features
         : [];
 
       this.appraisalStore.setVehicleFeatureData({
@@ -96,8 +98,8 @@ class VehicleInfoViewModel {
       return {
         features,
       };
-    } catch (e) {
-      console.log('error in Trim Features');
+    } catch (error) {
+      return error;
     }
   }
 
@@ -115,8 +117,8 @@ class VehicleInfoViewModel {
       this.appraisalStore.setGradeCheck(response.data);
 
       return response.data;
-    } catch (e) {
-      console.log('error in gradeCheck');
+    } catch (error) {
+      return error;
     }
   }
 }

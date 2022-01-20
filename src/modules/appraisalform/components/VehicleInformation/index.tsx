@@ -11,7 +11,7 @@ interface Props {
   fields: any;
 }
 
-const AppraisalForm: React.FC<Props> = ({ form, fields }) => {
+const VehicleInformation: React.FC<Props> = ({ form, fields }) => {
   const { store } = useAppStore();
   const viewModel = new ViewModel(store);
 
@@ -20,4 +20,4 @@ const AppraisalForm: React.FC<Props> = ({ form, fields }) => {
   );
 };
 
-export default observer(AppraisalForm);
+export default observer(VehicleInformation);

@@ -1,11 +1,10 @@
+import { Tooltip } from '@vroom-web/ui-lib';
 import React, { useState } from 'react';
 import styled from 'styled-components';
 
 import { GenericObject } from '../../../interfaces.d';
 import { lang } from './Components.language';
-import ToolTip from './ToolTip';
 
-import Icon, { Icons } from 'src/core/Icon';
 import ErrorIcon from 'src/core/Icon/ErrorIcon';
 import SuccessIcon from 'src/core/Icon/SuccessIcon';
 
@@ -65,15 +64,7 @@ const Input: React.FC<Props> = (props) => {
         <Label>
           <>
             {label}
-            {toolTipText && (
-              <ToolTip
-                arrow={true}
-                content={<span>{toolTipText}</span>}
-                interactive={true}
-              >
-                <RowTitleIcon icon={Icons.TOOLTIP} />
-              </ToolTip>
-            )}
+            {toolTipText && <Tooltip content={<span>{toolTipText}</span>} />}
           </>
         </Label>
       )}
@@ -195,8 +186,4 @@ const ErrorMessage = styled.span`
 
 const FooterMessage = styled.div`
   padding-top: 10px;
-`;
-
-const RowTitleIcon = styled(Icon)`
-  margin-left: 5px;
 `;

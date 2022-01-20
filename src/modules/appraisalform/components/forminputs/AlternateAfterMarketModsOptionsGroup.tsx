@@ -1,11 +1,8 @@
-import { Checkbox, Typography } from '@vroom-web/ui-lib';
-import { addStyleForMobile } from '@vroom-web/ui-lib';
+import { Checkbox, Tooltip, Typography } from '@vroom-web/ui-lib';
 import React, { useState } from 'react';
 import styled from 'styled-components';
 
 import { FormField, GenericObject } from '../../../../interfaces.d';
-import { ReactComponent as InfoSvg } from '../info.svg';
-import ToolTip from '../ToolTip';
 import useForm from '../useForm';
 import { FormFields } from './Inputs.language';
 import OtherAfterMarketInput from './OtherAfterMarketInput';
@@ -96,13 +93,9 @@ const AlternateAfterMarketModsOptionsGroup: React.FC<Props> = ({
     <div className={className}>
       <LabelContainer>
         <Label>{FormFields.alternateAfterMarket.label}</Label>
-        <ToolTip
-          arrow={true}
+        <Tooltip
           content={<span>{FormFields.alternateAfterMarket.toolTip}</span>}
-          interactive={true}
-        >
-          <InfoIcon />
-        </ToolTip>
+        />
       </LabelContainer>
       <AfterMarketModsOptionsLabel>
         {FormFields.afterMarket.placeholder}
@@ -117,14 +110,6 @@ const AlternateAfterMarketModsOptionsGroup: React.FC<Props> = ({
     </div>
   );
 };
-
-const InfoIcon = styled(InfoSvg)`
-  margin: 8px 0 0 5px;
-
-  ${addStyleForMobile(`
-    margin: 4px 0 0 5px;
-  `)}
-`;
 
 const Label = styled.h3`
   font-size: 18px;

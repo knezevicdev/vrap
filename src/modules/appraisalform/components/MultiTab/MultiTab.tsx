@@ -32,7 +32,7 @@ const MultiTab: React.FC<Props> = ({
 
     return (
       <MultiTabTheme.tabButton
-        isActive={isActive}
+        isactive={isActive}
         key={idx}
         tabWidth={tabWidth}
         onClick={() => handleTabClick(idx)}
@@ -48,7 +48,7 @@ const MultiTab: React.FC<Props> = ({
     const isActive = idx === activeTab;
 
     return (
-      <MultiTabTheme.tabContentSection isActive={isActive} key={idx}>
+      <MultiTabTheme.tabContentSection isactive={isActive} key={idx}>
         <CurrentTab {...tab.props} handleTabClick={handleTabClick} />
       </MultiTabTheme.tabContentSection>
     );
