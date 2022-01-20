@@ -12,7 +12,7 @@ import { checkAppraisalPayload, getDummyOfferResp } from './utils';
 
 import ACCEPT_REJECT_OFFER from 'src/graphql/mutations/acceptRejectOffer.graphql';
 import CREATE_USER_PAYMENT_ACCOUNT from 'src/graphql/mutations/createUserPaymentAccount.graphql';
-import GRADE_CHECK from 'src/graphql/mutations/gradecheck.graphql';
+import GRADE_CHECK from 'src/graphql/mutations/gradeCheck.graphql';
 import GET_PLAID_TOKEN from 'src/graphql/queries/getLinkToken.graphql';
 import {
   AppraisalResp,

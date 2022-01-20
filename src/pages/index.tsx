@@ -16,7 +16,7 @@ interface Props {
   brand: Brand;
 }
 
-const AppraisalFormPage: NextPage<Props> = () => {
+const AppraisalFormPage: NextPage = () => {
   const router = useRouter();
   const vehicle = router.query.vehicle as string;
   const { store } = useAppStore();
