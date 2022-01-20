@@ -2,10 +2,10 @@ import { Typography } from '@vroom-web/ui-lib';
 import React from 'react';
 import styled from 'styled-components';
 
-import { arrowPath } from '../assets/assets';
 import { FormField } from './componentInterfaces.d';
 import { getCustomOptions, getOptions } from './selectUtils';
 
+import Icon, { Icons } from 'src/core/Icon';
 import SuccessIcon from 'src/core/Icon/SuccessIcon';
 
 interface DropdownProps {
@@ -50,7 +50,7 @@ const Dropdown: React.FC<DropdownProps> = ({
       {!error && !isEmpty(value) && !isDefault(value, label) && (
         <SuccessIcon label="success" />
       )}
-      <SelectArrow src={arrowPath} />
+      <SelectArrow icon={Icons.CHEVRON_DOWN} />
       {error && <ErrorMessage>{errorMessage}</ErrorMessage>}
     </Container>
   );
@@ -112,7 +112,7 @@ const SelectContainer = styled(({ ...restProps }) => <select {...restProps} />)`
   }
 `;
 
-const SelectArrow = styled.img`
+const SelectArrow = styled(Icon)`
   position: absolute;
   top: 34px;
   right: 8px;

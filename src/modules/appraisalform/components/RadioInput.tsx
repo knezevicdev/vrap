@@ -2,7 +2,6 @@ import React from 'react';
 import styled from 'styled-components';
 
 import { GenericObject } from '../../../interfaces.d';
-import { radioSelected } from '../assets/assets';
 import ToolTip from './ToolTip';
 
 import Icon, { Icons } from 'src/core/Icon';
@@ -96,6 +95,30 @@ const HiddenNativeRadio = styled(({ ...restProps }) => (
   width: 1px;
 `;
 
+const CheckMark = styled.span<{ disabled?: boolean }>`
+  position: absolute;
+  top: 3px;
+  left: 0;
+  height: 16px;
+  width: 16px;
+  background-color: ${({ disabled }): string =>
+    disabled ? '#f5f5f5' : '#fff'};
+  border: 1px solid
+    ${({ disabled }): string => (disabled ? '#999DA3' : '#D6D7DA')};
+
+  border-radius: 50%;
+
+  &:hover {
+    background-color: ${({ disabled }): string => (!disabled ? '#fafafa' : '')};
+  }
+
+  &:after {
+    content: '';
+    position: absolute;
+    display: none;
+  }
+`;
+
 const StyledRadio = styled(({ ...restProps }) => <div {...restProps} />)`
   border: 1px solid #d6d7da;
   border-radius: 8px;
@@ -104,9 +127,16 @@ const StyledRadio = styled(({ ...restProps }) => <div {...restProps} />)`
   height: 16px;
   margin: 5px;
 
-  ${(props) =>
-    props.selected === props.value &&
-    `background: url(${radioSelected}); background-size: cover;`}
+  &:checked ~ ${CheckMark} {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: ${({ disabled }): string =>
+      disabled ? `1px solid #999DA3` : `1px solid #E7131A`};
+    div {
+      display: inline-block;
+    }
+  }
 `;
 
 const RadioTextContainer = styled.div`

@@ -42,7 +42,6 @@ const Input: React.FC<Props> = (props) => {
       dataQa,
     },
     className,
-    IconStyle,
     footerMessage,
     innerRef,
   } = props;

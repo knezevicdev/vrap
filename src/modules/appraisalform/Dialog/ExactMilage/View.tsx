@@ -1,11 +1,14 @@
 import { addStyleForMobile, Button } from '@vroom-web/ui-lib';
 import { observer } from 'mobx-react';
+import getConfig from 'next/config';
 import React from 'react';
 import styled from 'styled-components';
 
-import { car_timer_icon } from '../../assets/assets';
 import { displayNumber } from '../../components/formatting';
 import { lang } from './ExactMilageDialog.language';
+
+const { publicRuntimeConfig } = getConfig();
+const BASE_PATH = publicRuntimeConfig.NEXT_PUBLIC_BASE_PATH;
 
 import Icon, { Icons } from 'src/core/Icon';
 
@@ -74,8 +77,10 @@ const ExactMileageContent = styled.div`
   position: relative;
 `;
 
+const carTimerIcon = `${BASE_PATH}/icons/car-timer.svg}`;
+
 const ExactMileageImage = styled.div`
-  background-image: url(${car_timer_icon});
+  background-image: url(${carTimerIcon});
   width: 75px;
   height: 66px;
   margin: 0 auto 20px;

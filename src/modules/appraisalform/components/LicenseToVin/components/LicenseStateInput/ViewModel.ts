@@ -2,7 +2,6 @@ import { lettersAndNumbersOnly } from '../../../formatting';
 import { genericLPError } from './language';
 
 import AnalyticsHandler from 'src/integrations/AnalyticsHandler';
-import { handleLicenseToVinApi } from 'src/modules/appraisalform/api';
 import Store from 'src/store';
 
 class LicenseToVinViewModel {
@@ -14,24 +13,6 @@ class LicenseToVinViewModel {
 
   showSpinner(value: boolean): void {
     this.store.appraisal.setShowSpinner(value);
-  }
-
-  async checkoutHandleLicenseToVin(licenseInfo: any): Promise<any> {
-    try {
-      const response = await handleLicenseToVinApi(licenseInfo);
-      const {
-        data: { vehicles },
-      } = response;
-
-      if (vehicles.length > 1) {
-        this.store.appraisal.setCheckoutTrade('vehicles', vehicles);
-      } else {
-        this.store.appraisal.setCheckoutTrade('vehicle', vehicles[0]);
-      }
-      return response.data;
-    } catch (e) {
-      this.store.appraisal.setCheckoutTrade('error', e);
-    }
   }
 
   handleLicenseStateSubmit(licensePlate: any, state: any): void {

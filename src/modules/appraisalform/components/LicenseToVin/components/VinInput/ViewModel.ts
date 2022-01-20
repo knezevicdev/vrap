@@ -7,7 +7,7 @@ export default class LicenseToVinViewModel {
     this.analyticsHandler = new AnalyticsHandler();
   }
 
-  trackVinClicked(pathname: string, vinForPath: string): void {
+  trackVinClicked(vinForPath: string): void {
     const appraisalPath = `/appraisal?vehicle=${vinForPath}`;
     const label = 'Vin';
     const category = 'Sell';
