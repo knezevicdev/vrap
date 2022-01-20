@@ -2,12 +2,9 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 
 import { GenericObject } from '../../../interfaces.d';
-import success_icon from '../static/icons/svg/checkmark-circle.svg';
-import error_icon from '../static/icons/svg/error.svg';
-import tooltip_icon from '../static/icons/svg/tooltip.svg';
-import { lang } from './Components.language';
-import Icon from './Icon';
 import ToolTip from './ToolTip';
+
+import Icon, { Icons } from 'src/core/Icon';
 
 interface Props {
   field: GenericObject;
@@ -72,7 +69,7 @@ const Input: React.FC<Props> = (props) => {
                 content={<span>{toolTipText}</span>}
                 interactive={true}
               >
-                <RowTitleIcon id={tooltip_icon} />
+                <RowTitleIcon icon={Icons.TOOLTIP} />
               </ToolTip>
             )}
           </>
@@ -101,12 +98,14 @@ const Input: React.FC<Props> = (props) => {
       <FooterMessage>{footerMessage}</FooterMessage>
       {showError ? (
         <>
-          <InputIcon id={error_icon} top={IconStyle} />
+          <InputIcon icon={Icons.ERROR} top={IconStyle} />
           <ErrorMessage>{errorMessage}</ErrorMessage>
         </>
       ) : (
         !isEmpty(value) &&
-        displayCheck && <InputIcon id={success_icon} top={IconStyle} />
+        displayCheck && (
+          <InputIcon icon={Icons.CHECKMARK_CIRCLE} top={IconStyle} />
+        )
       )}
     </Container>
   );

@@ -3,10 +3,10 @@ import React from 'react';
 import styled from 'styled-components';
 
 import { arrowPath } from '../assets/assets';
-import success_icon from '../static/icons/svg/checkmark-circle.svg';
 import { FormField } from './componentInterfaces.d';
-import Icon from './Icon';
 import { getCustomOptions, getOptions } from './selectUtils';
+
+import Icon, { Icons } from 'src/core/Icon';
 
 interface DropdownProps {
   field: FormField;
@@ -48,7 +48,7 @@ const Dropdown: React.FC<DropdownProps> = ({
         {options}
       </SelectContainer>
       {!error && !isEmpty(value) && !isDefault(value, label) && (
-        <SuccessIcon id={success_icon} />
+        <SuccessIcon icon={Icons.CHECKMARK_CIRCLE} />
       )}
       <SelectArrow src={arrowPath} />
       {error && <ErrorMessage>{errorMessage}</ErrorMessage>}

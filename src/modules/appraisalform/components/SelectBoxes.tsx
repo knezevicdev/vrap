@@ -3,9 +3,9 @@ import styled from 'styled-components';
 
 import { GenericObject } from '../../../interfaces.d';
 import { trackPanelsTooltip } from '../lib/analytics/sell';
-import tooltip_icon from '../static/icons/svg/tooltip.svg';
-import { showDialog } from '../store/dialog/actions';
-import Icon from './Icon';
+
+// import tooltip_icon from '../static/icons/svg/tooltip.svg';
+import Icon, { Icons } from 'src/core/Icon';
 
 interface Props {
   field: GenericObject;
@@ -27,7 +27,7 @@ const SelectBoxes: React.FC<Props> = ({
           <Label>{label}</Label>
           {panelsTooltip && (
             <RowTitleIcon
-              id={tooltip_icon}
+              icon={Icons.TOOLTIP}
               onClick={() => {
                 trackPanelsTooltip(panelsTooltip);
                 handlePanelTooltipClick();

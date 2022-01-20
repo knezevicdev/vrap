@@ -191,6 +191,30 @@ export class Icons {
     height: 44,
   });
 
+  static readonly CHECKMARK_CIRCLE = new Icons('CHECKMARK_CIRCLE', {
+    name: 'checkmark-circle',
+    width: 13,
+    height: 13,
+  });
+
+  static readonly ERROR = new Icons('ERROR', {
+    name: 'error',
+    width: 13,
+    height: 13,
+  });
+
+  static readonly QUESTION_CIRCLE = new Icons('QUESTION_CIRCLE', {
+    name: 'question-circle',
+    width: 13,
+    height: 13,
+  });
+
+  static readonly TOOLTIP = new Icons('TOOLTIP', {
+    name: 'tooltip',
+    width: 13,
+    height: 13,
+  });
+
   private constructor(
     protected key: string,
     public readonly value: {

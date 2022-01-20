@@ -3,9 +3,9 @@ import styled from 'styled-components';
 
 import { GenericObject } from '../../../interfaces.d';
 import { radioSelected } from '../assets/assets';
-import tooltip_icon from '../static/icons/svg/tooltip.svg';
-import Icon from './Icon';
 import ToolTip from './ToolTip';
+
+import Icon, { Icons } from 'src/core/Icon';
 
 interface Props {
   field: GenericObject;
@@ -26,7 +26,7 @@ const RadioInput: React.FC<Props> = ({
             content={<span>{tooltipText}</span>}
             interactive={true}
           >
-            <RowTitleIcon id={tooltip_icon} />
+            <RowTitleIcon icon={Icons.TOOLTIP} />
           </ToolTip>
         )}
       </LabelContainer>
