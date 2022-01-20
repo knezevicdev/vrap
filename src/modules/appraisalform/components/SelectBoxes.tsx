@@ -12,6 +12,7 @@ interface Props {
   className?: string;
   handlePanelTooltipClick?: any;
   externalLabel?: any;
+  panelsTooltip?: any;
 }
 
 const SelectBoxes: React.FC<Props> = ({
