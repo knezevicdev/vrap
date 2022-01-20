@@ -191,8 +191,6 @@ export class Icons {
     height: 44,
   });
 
-<<<<<<< HEAD
-=======
   static readonly CHECKMARK_CIRCLE = new Icons('CHECKMARK_CIRCLE', {
     name: 'checkmark-circle',
     width: 13,
@@ -205,21 +203,17 @@ export class Icons {
     height: 13,
   });
 
->>>>>>> 5689fc9688307835c169832b31948acc2c0f46b5
   static readonly QUESTION_CIRCLE = new Icons('QUESTION_CIRCLE', {
     name: 'question-circle',
     width: 13,
     height: 13,
-<<<<<<< HEAD
     path: `${BASE_PATH}/icons/question-circle.svg`,
-=======
   });
 
   static readonly TOOLTIP = new Icons('TOOLTIP', {
     name: 'tooltip',
     width: 13,
     height: 13,
->>>>>>> 5689fc9688307835c169832b31948acc2c0f46b5
   });
 
   private constructor(

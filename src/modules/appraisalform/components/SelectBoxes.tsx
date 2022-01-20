@@ -2,17 +2,10 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 
 import { GenericObject } from '../../../interfaces.d';
-<<<<<<< HEAD
 import Dialog from '../Dialog/Panels';
 
 import Icon, { Icons } from 'src/core/Icon';
 import AnalyticsHandler from 'src/integrations/AnalyticsHandler';
-=======
-import { trackPanelsTooltip } from '../lib/analytics/sell';
-
-// import tooltip_icon from '../static/icons/svg/tooltip.svg';
-import Icon, { Icons } from 'src/core/Icon';
->>>>>>> 5689fc9688307835c169832b31948acc2c0f46b5
 
 interface Props {
   field: GenericObject;
@@ -45,11 +38,7 @@ const SelectBoxes: React.FC<Props> = ({
           <Label>{label}</Label>
           {panelsTooltip && (
             <RowTitleIcon
-<<<<<<< HEAD
               icon={Icons.QUESTION_CIRCLE}
-=======
-              icon={Icons.TOOLTIP}
->>>>>>> 5689fc9688307835c169832b31948acc2c0f46b5
               onClick={() => {
                 handleShowPanelsDialog();
               }}

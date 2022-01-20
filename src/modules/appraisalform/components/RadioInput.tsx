@@ -26,11 +26,7 @@ const RadioInput: React.FC<Props> = ({
             content={<span>{tooltipText}</span>}
             interactive={true}
           >
-<<<<<<< HEAD
-            <RowTitleIcon icon={Icons.QUESTION_CIRCLE} />
-=======
             <RowTitleIcon icon={Icons.TOOLTIP} />
->>>>>>> 5689fc9688307835c169832b31948acc2c0f46b5
           </ToolTip>
         )}
       </LabelContainer>
