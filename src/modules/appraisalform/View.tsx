@@ -226,14 +226,8 @@ const AppraisalForm: React.FC<Props> = ({ viewModel }) => {
     const hasEmailCaptureLocal = emailCaptureLocal === 'true';
     if (viewModel.isEmailCaptureExperiment() && !hasEmailCaptureLocal) {
       // const { vehicleInfoForm } = buildFormForStore();
-      // const isEmpty = !vehicleInfoForm.milage && !vehicleInfoForm.keysAmount;
-      // const formBuild = buildFormForStore();
-      const isEmpty = false;
-      // if (formBuild && formBuild?.vehicleInfoForm) {
-      //   isEmpty =
-      //     !formBuild.vehicleInfoForm.milage &&
-      //     !formBuild.vehicleInfoForm.keysAmount;
-      // }
+      const vehicleInfoForm = appraisalUseForm.vehicleInfoForm.fields;
+      const isEmpty = !vehicleInfoForm.milage && !vehicleInfoForm.keysAmount;
 
       window.onscroll = () => {
         const currentHeight =
