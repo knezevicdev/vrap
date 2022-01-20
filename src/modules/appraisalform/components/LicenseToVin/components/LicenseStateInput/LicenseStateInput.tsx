@@ -27,8 +27,7 @@ const LicenseStateInput: React.FC<Props> = ({ viewModel }) => {
 
   const handleOnKeyPressEnter = (e: any): void => {
     if (e.key === 'Enter' && isFormValid) {
-      const { pathname } = window.location;
-      viewModel.handleLicenseStateSubmit(pathname, licensePlate, state);
+      viewModel.handleLicenseStateSubmit(licensePlate, state);
     }
   };
 

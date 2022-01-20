@@ -4,8 +4,8 @@ import { GenericObject } from '../../../../interfaces.d';
 
 interface Props {
   tabSections: GenericObject[];
-  active: number;
-  className: string;
+  active?: number;
+  className?: string;
   theme: any;
 }
 
