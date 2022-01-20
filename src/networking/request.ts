@@ -1,4 +1,5 @@
 import { GQLTypes, Response } from '@vroom-web/networking';
+import { isErrorResponse } from '@vroom-web/networking';
 import getConfig from 'next/config';
 
 import client from './client';
@@ -272,4 +273,14 @@ export const postEmailCapture = async (
     url,
     data: payload,
   });
+};
+
+export const IsUserSignIn = async (): Promise<boolean> => {
+  const signInStatusResp = await client.signInStatus();
+  if (isErrorResponse(signInStatusResp)) throw signInStatusResp;
+  return (
+    signInStatusResp &&
+    signInStatusResp.data &&
+    signInStatusResp.data.status === 'active'
+  );
 };
