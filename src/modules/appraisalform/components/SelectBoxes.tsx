@@ -1,26 +1,36 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 
 import { GenericObject } from '../../../interfaces.d';
-import { trackPanelsTooltip } from '../lib/analytics/sell';
-import tooltip_icon from '../static/icons/svg/tooltip.svg';
-import { showDialog } from '../store/dialog/actions';
-import Icon from './Icon';
+import Dialog from '../Dialog/Panels';
+
+import Icon, { Icons } from 'src/core/Icon';
+import AnalyticsHandler from 'src/integrations/AnalyticsHandler';
 
 interface Props {
   field: GenericObject;
   className?: string;
-  handlePanelTooltipClick?: any;
   externalLabel?: any;
   panelsTooltip?: any;
 }
 
 const SelectBoxes: React.FC<Props> = ({
   field: { options, onClick, value, label, panelsTooltip },
-  handlePanelTooltipClick,
   className,
   externalLabel,
 }) => {
+  const analyticsHandler: AnalyticsHandler = new AnalyticsHandler();
+  const [showPanelsDialog, setShowPanelsDialog] = useState(false);
+
+  const handleShowPanelsDialog = () => {
+    analyticsHandler.trackPanelsTooltip(panelsTooltip);
+    setShowPanelsDialog(true);
+  };
+
+  const handleHidePanelsDialog = () => {
+    setShowPanelsDialog(false);
+  };
+
   return (
     <Container className={className}>
       {externalLabel || (
@@ -28,10 +38,9 @@ const SelectBoxes: React.FC<Props> = ({
           <Label>{label}</Label>
           {panelsTooltip && (
             <RowTitleIcon
-              id={tooltip_icon}
+              icon={Icons.QUESTION_CIRCLE}
               onClick={() => {
-                trackPanelsTooltip(panelsTooltip);
-                handlePanelTooltipClick();
+                handleShowPanelsDialog();
               }}
             />
           )}
@@ -52,6 +61,9 @@ const SelectBoxes: React.FC<Props> = ({
           );
         })}
       </OptionsContainer>
+      {showPanelsDialog && (
+        <Dialog closeModalHandler={handleHidePanelsDialog} />
+      )}
     </Container>
   );
 };

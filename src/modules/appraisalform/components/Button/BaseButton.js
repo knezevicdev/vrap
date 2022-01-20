@@ -3,13 +3,7 @@ import styled from 'styled-components';
 
 import Link from '../Link';
 
-const BaseButtonLink = ({
-  isStickyOnMobile,
-  isHiddenOnMobile,
-  disabled,
-  buttonColor,
-  ...other
-}) => {
+const BaseButtonLink = ({ ...other }) => {
   return <Link {...other} />;
 };
 

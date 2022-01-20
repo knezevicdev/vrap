@@ -28,9 +28,8 @@ const VinInput: React.FC<Props> = ({ viewModel }) => {
 
   const handleOnKeyPressEnter = (e: any): void => {
     if (e.key === 'Enter' && isFormValid) {
-      const { pathname } = window.location;
       const vinForPath = vin.value;
-      viewModel.trackVinClicked(pathname, vinForPath);
+      viewModel.trackVinClicked(vinForPath);
     }
   };
 
@@ -42,7 +41,6 @@ const VinInput: React.FC<Props> = ({ viewModel }) => {
         onKeyPress={handleOnKeyPressEnter}
         disabled={!isFormValid}
         onClick={viewModel.trackVinClicked}
-        buttonColor={buttonColor}
         data-qa={dataQa}
       >
         {buttonText}

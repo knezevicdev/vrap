@@ -205,6 +205,31 @@ export class Icons {
     path: `${BASE_PATH}/icons/email-all-set.svg`,
   });
 
+  static readonly CHECKMARK_CIRCLE = new Icons('CHECKMARK_CIRCLE', {
+    name: 'checkmark-circle',
+    width: 13,
+    height: 13,
+  });
+
+  static readonly ERROR = new Icons('ERROR', {
+    name: 'error',
+    width: 13,
+    height: 13,
+  });
+
+  static readonly QUESTION_CIRCLE = new Icons('QUESTION_CIRCLE', {
+    name: 'question-circle',
+    width: 13,
+    height: 13,
+    path: `${BASE_PATH}/icons/question-circle.svg`,
+  });
+
+  static readonly TOOLTIP = new Icons('TOOLTIP', {
+    name: 'tooltip',
+    width: 13,
+    height: 13,
+  });
+
   private constructor(
     protected key: string,
     public readonly value: {
@@ -221,9 +246,10 @@ interface Props {
   icon: Icons;
   color?: string;
   className?: string;
+  onClick?: () => void;
 }
 
-const Icon: React.FC<Props> = ({ icon, color, className }) => {
+const Icon: React.FC<Props> = ({ icon, color, className, onClick }) => {
   const path = icon.value.path;
   const width = icon.value.width;
   const height = icon.value.height;
@@ -237,10 +263,17 @@ const Icon: React.FC<Props> = ({ icon, color, className }) => {
   return (
     <>
       {path ? (
-        <img className={className} width={width} height={height} src={path} />
+        <img
+          className={className}
+          width={width}
+          height={height}
+          src={path}
+          onClick={onClick}
+        />
       ) : (
         <svg
           className={className}
+          onClick={onClick}
           fill={fill}
           width={width}
           height={height}

@@ -1,7 +1,8 @@
 import { Typography } from '@vroom-web/ui-lib';
+import React from 'react';
 import styled from 'styled-components';
 
-const MultiTabSlider = styled.div`
+const MultiTabSlider: any = styled.div`
   max-width: 580px;
   background: #ffffff;
 `;
@@ -20,13 +21,15 @@ const Body = styled.div`
   padding-top: 20px;
 `;
 
-const TabContentSection = styled.div`
+const TabContentSection = styled(({ ...restProps }) => <div {...restProps} />)`
   display: none;
 
   ${(props) => props.isActive === true && `display: block;`}
 `;
 
-const TabButton = styled(Typography.Body.Regular)`
+const TabButton = styled(({ ...restProps }) => (
+  <Typography.Body.Regular {...restProps} />
+))`
   font-size: 14px;
   line-height: 14px;
   letter-spacing: 1px;
