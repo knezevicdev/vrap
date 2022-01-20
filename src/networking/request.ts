@@ -257,3 +257,19 @@ export const getMilageCheck = async (
     url,
   });
 };
+
+export const postEmailCapture = async (
+  emailAddress: string,
+  marketingId: string
+): Promise<Response<any>> => {
+  // need to change response type
+  const searchParams = { searchall: '-' };
+  const contextData = { category: 'sell' };
+  const payload = { emailAddress, marketingId, searchParams, contextData };
+  const url = `${VROOM_URL}/horn/v2/email-capture`;
+  return await client.httpRequest({
+    method: 'post',
+    url,
+    data: payload,
+  });
+};

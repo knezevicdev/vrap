@@ -232,6 +232,33 @@ class AnalyticsHandler extends BaseAnalyticsHandler {
 
     this.track(event, properties);
   }
+
+  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+  tracksEmailCapture = (
+    eventName: string,
+    loggedIn: boolean,
+    mobile: number,
+    nonInteraction: number,
+    result: string | boolean
+  ) => {
+    const trackObj = result
+      ? {
+          eventName,
+          category: 'sell',
+          loggedIn,
+          mobile,
+          nonInteraction,
+          result,
+        }
+      : {
+          eventName,
+          category: 'sell',
+          loggedIn,
+          mobile,
+          nonInteraction,
+        };
+    this.track(eventName, trackObj);
+  };
 }
 
 export default AnalyticsHandler;
