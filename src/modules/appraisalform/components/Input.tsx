@@ -2,12 +2,12 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 
 import { GenericObject } from '../../../interfaces.d';
-import success_icon from '../static/icons/svg/checkmark-circle.svg';
-import error_icon from '../static/icons/svg/error.svg';
-import tooltip_icon from '../static/icons/svg/tooltip.svg';
 import { lang } from './Components.language';
-import Icon from './Icon';
 import ToolTip from './ToolTip';
+
+import Icon, { Icons } from 'src/core/Icon';
+import ErrorIcon from 'src/core/Icon/ErrorIcon';
+import SuccessIcon from 'src/core/Icon/SuccessIcon';
 
 interface Props {
   field: GenericObject;
@@ -72,7 +72,7 @@ const Input: React.FC<Props> = (props) => {
                 content={<span>{toolTipText}</span>}
                 interactive={true}
               >
-                <RowTitleIcon id={tooltip_icon} />
+                <RowTitleIcon icon={Icons.QUESTION_CIRCLE} />
               </ToolTip>
             )}
           </>
@@ -101,12 +101,11 @@ const Input: React.FC<Props> = (props) => {
       <FooterMessage>{footerMessage}</FooterMessage>
       {showError ? (
         <>
-          <InputIcon id={error_icon} top={IconStyle} />
+          <StyledErrorIcon label="error" />
           <ErrorMessage>{errorMessage}</ErrorMessage>
         </>
       ) : (
-        !isEmpty(value) &&
-        displayCheck && <InputIcon id={success_icon} top={IconStyle} />
+        !isEmpty(value) && displayCheck && <StyledSuccessIcon label="success" />
       )}
     </Container>
   );
@@ -118,7 +117,18 @@ const isEmpty = (value: any) => {
 
 export default Input;
 
-const InputIcon = styled(({ ...restProps }) => <Icon {...restProps} />)`
+const StyledErrorIcon = styled(({ ...restProps }) => (
+  <ErrorIcon {...restProps} />
+))`
+  position: absolute;
+  right: 10px;
+  top: ${(props) => props.top || '30px'};
+  fill: #308406;
+`;
+
+const StyledSuccessIcon = styled(({ ...restProps }) => (
+  <SuccessIcon {...restProps} />
+))`
   position: absolute;
   right: 10px;
   top: ${(props) => props.top || '30px'};

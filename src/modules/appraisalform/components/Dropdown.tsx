@@ -3,10 +3,10 @@ import React from 'react';
 import styled from 'styled-components';
 
 import { arrowPath } from '../assets/assets';
-import success_icon from '../static/icons/svg/checkmark-circle.svg';
 import { FormField } from './componentInterfaces.d';
-import Icon from './Icon';
 import { getCustomOptions, getOptions } from './selectUtils';
+
+import SuccessIcon from 'src/core/Icon/SuccessIcon';
 
 interface DropdownProps {
   field: FormField;
@@ -48,7 +48,7 @@ const Dropdown: React.FC<DropdownProps> = ({
         {options}
       </SelectContainer>
       {!error && !isEmpty(value) && !isDefault(value, label) && (
-        <SuccessIcon id={success_icon} />
+        <SuccessIcon label="success" />
       )}
       <SelectArrow src={arrowPath} />
       {error && <ErrorMessage>{errorMessage}</ErrorMessage>}
@@ -65,13 +65,6 @@ const isDefault = (value: any, label: any) => {
 };
 
 export default Dropdown;
-
-const SuccessIcon = styled(Icon)`
-  position: absolute;
-  right: 30px;
-  top: 31px;
-  fill: #308406;
-`;
 
 const Container = styled.div`
   display: flex;
