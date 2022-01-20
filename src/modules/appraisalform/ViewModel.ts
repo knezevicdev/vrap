@@ -2,6 +2,7 @@ import { isErrorResponse } from '@vroom-web/networking';
 
 import AnalyticsHandler from 'src/integrations/AnalyticsHandler';
 import { getMilageCheck } from 'src/networking/request';
+import { IsUserSignIn } from 'src/networking/request';
 import store from 'src/store';
 import { ABSmartStore } from 'src/store/abSmartStore';
 import { AppraisalStore } from 'src/store/appraisalStore';
@@ -78,6 +79,39 @@ class PriceViewModel {
       console.log('error in carfax');
     }
   }
+
+  isEmailCaptureExperiment = (): boolean => {
+    return this.store.absmart.isInExperiment('ac-email-capture');
+  };
+
+  isSignIn = async (): Promise<void> => {
+    const isLoggedIn = await IsUserSignIn();
+    this.appraisalStore.setIsLoggedIn(isLoggedIn);
+  };
+
+  getUserSignIn = (): boolean => {
+    return this.appraisalStore.isUserLoggedIn;
+  };
+
+  emailAnalytics = (
+    eventName: string,
+    loggedIn: boolean,
+    mobile: number,
+    nonInteraction: number,
+    result: string | boolean
+  ): void => {
+    this._analyticsHandler.tracksEmailCapture(
+      eventName,
+      loggedIn,
+      mobile,
+      nonInteraction,
+      result
+    );
+  };
+
+  getAnonymousId = (): string => {
+    return this._analyticsHandler.getAnonymousId();
+  };
 }
 
 export default PriceViewModel;

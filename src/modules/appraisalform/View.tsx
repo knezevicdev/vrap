@@ -23,6 +23,8 @@ import PersonalInformation from './components/personalinformation';
 import useFormInit from './components/useFormInit';
 import VehicleHistory from './components/vehiclehistory';
 import VehicleInformation from './components/VehicleInformation';
+import EmailCapture from './Dialog/EmailCapture';
+import useTrackActive from './Dialog/EmailCapture/trackActive';
 import Dialog from './Dialog/ExactMilage';
 import AppraisalViewModel from './ViewModel';
 
@@ -207,6 +209,93 @@ const AppraisalForm: React.FC<Props> = ({ viewModel }) => {
     }
   }, [appraisalUseForm.mechConditionForm.fields.warningLights.value]);
 
+  /*
+    email capture logic
+  */
+  const { inactive, removeEvent } = useTrackActive();
+  const [emailModalShowed, changeEmailModalShowed] = useState(false);
+  const [emailModal, changeEmailModal] = useState(false);
+  const [checkSection, changeCheckSection] = useState(0);
+
+  useEffect(() => {
+    viewModel.isSignIn();
+  }, []);
+
+  useEffect(() => {
+    const emailCaptureLocal = localStorage.getItem('email_capture');
+    const hasEmailCaptureLocal = emailCaptureLocal === 'true';
+    if (viewModel.isEmailCaptureExperiment() && !hasEmailCaptureLocal) {
+      // const { vehicleInfoForm } = buildFormForStore();
+      // const isEmpty = !vehicleInfoForm.milage && !vehicleInfoForm.keysAmount;
+      // const formBuild = buildFormForStore();
+      const isEmpty = false;
+      // if (formBuild && formBuild?.vehicleInfoForm) {
+      //   isEmpty =
+      //     !formBuild.vehicleInfoForm.milage &&
+      //     !formBuild.vehicleInfoForm.keysAmount;
+      // }
+
+      window.onscroll = () => {
+        const currentHeight =
+          (window.scrollY + window.innerHeight) / document.body.clientHeight;
+        // this is when user scroll without adding any field in first section
+        // should add abtest in condition name : ac-email-capture
+        if (
+          window.scrollY &&
+          !emailModalShowed &&
+          checkSection === 0 &&
+          currentHeight > 0.75 &&
+          isEmpty
+        ) {
+          handleClearEvent();
+        }
+      };
+    }
+  }, [emailModalShowed, appraisalUseForm, checkSection]);
+
+  useEffect(() => {
+    // this is when user is inactive 6 second in first 2 section
+    // should add abtest in condition name : ac-email-capture isEmailCapture
+    const emailCaptureLocal = localStorage.getItem('email_capture');
+    const hasEmailCaptureLocal = emailCaptureLocal === 'true';
+    if (!viewModel.isEmailCaptureExperiment() || hasEmailCaptureLocal) {
+      removeEvent();
+    }
+    if (
+      inactive &&
+      !emailModalShowed &&
+      checkSection < 2 &&
+      viewModel.isEmailCaptureExperiment() &&
+      !hasEmailCaptureLocal
+    ) {
+      handleClearEvent();
+    }
+  }, [inactive, emailModalShowed, checkSection]);
+
+  const isMobile = window.innerWidth <= 767 ? 1 : 0;
+
+  const handleClearEvent = () => {
+    changeEmailModalShowed(true);
+    changeEmailModal(true);
+    removeEvent();
+    window.onscroll = null;
+    localStorage.setItem('email_capture', 'true');
+    viewModel.emailAnalytics(
+      'Remind Me Viewed',
+      viewModel.getUserSignIn(),
+      isMobile,
+      1,
+      false
+    );
+  };
+
+  const handleModalClose = () => {
+    changeEmailModal(false);
+  };
+
+  /*
+    end email capture logic
+  */
   const buildFormSectionValues = (form: any, targetObj: any) => {
     for (const [key, value] of Object.entries(form) as any) {
       targetObj[key] = value.value;
@@ -265,6 +354,12 @@ const AppraisalForm: React.FC<Props> = ({ viewModel }) => {
     if (activeSection < sections.length - 1) {
       viewModel.trackNextStepViewed(activeSection + 1);
     }
+    /* email capture logic */
+    if (activeSection > 1) {
+      removeEvent();
+    }
+    changeCheckSection(activeSection + 1);
+    /* end email capture logic */
 
     if (clearForm) {
       await viewModel.clearAppraisal();
@@ -286,6 +381,13 @@ const AppraisalForm: React.FC<Props> = ({ viewModel }) => {
 
   return (
     <AppraisalFormContainer data-qa="AppraisalFormPage">
+      {emailModal && (
+        <EmailCapture
+          handleClose={handleModalClose}
+          experimentUUID={viewModel.getAnonymousId()}
+          isUserLoggedIn={viewModel.getUserSignIn()}
+        />
+      )}
       <MultiStepForm
         formTitle={SellFormTitleText}
         sections={sections}

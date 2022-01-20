@@ -27,3 +27,5 @@ const EmailCapture: React.FC<Props> = ({
     />
   );
 };
+
+export default EmailCapture;
