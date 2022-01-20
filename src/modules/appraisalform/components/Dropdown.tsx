@@ -6,7 +6,11 @@ import { arrowPath } from '../assets/assets';
 import { FormField } from './componentInterfaces.d';
 import { getCustomOptions, getOptions } from './selectUtils';
 
+<<<<<<< HEAD
 import SuccessIcon from 'src/core/Icon/SuccessIcon';
+=======
+import Icon, { Icons } from 'src/core/Icon';
+>>>>>>> 5689fc9688307835c169832b31948acc2c0f46b5
 
 interface DropdownProps {
   field: FormField;
@@ -48,7 +52,11 @@ const Dropdown: React.FC<DropdownProps> = ({
         {options}
       </SelectContainer>
       {!error && !isEmpty(value) && !isDefault(value, label) && (
+<<<<<<< HEAD
         <SuccessIcon label="success" />
+=======
+        <SuccessIcon icon={Icons.CHECKMARK_CIRCLE} />
+>>>>>>> 5689fc9688307835c169832b31948acc2c0f46b5
       )}
       <SelectArrow src={arrowPath} />
       {error && <ErrorMessage>{errorMessage}</ErrorMessage>}

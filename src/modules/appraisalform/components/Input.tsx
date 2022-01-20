@@ -2,12 +2,18 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 
 import { GenericObject } from '../../../interfaces.d';
+<<<<<<< HEAD
 import { lang } from './Components.language';
 import ToolTip from './ToolTip';
 
 import Icon, { Icons } from 'src/core/Icon';
 import ErrorIcon from 'src/core/Icon/ErrorIcon';
 import SuccessIcon from 'src/core/Icon/SuccessIcon';
+=======
+import ToolTip from './ToolTip';
+
+import Icon, { Icons } from 'src/core/Icon';
+>>>>>>> 5689fc9688307835c169832b31948acc2c0f46b5
 
 interface Props {
   field: GenericObject;
@@ -72,7 +78,11 @@ const Input: React.FC<Props> = (props) => {
                 content={<span>{toolTipText}</span>}
                 interactive={true}
               >
+<<<<<<< HEAD
                 <RowTitleIcon icon={Icons.QUESTION_CIRCLE} />
+=======
+                <RowTitleIcon icon={Icons.TOOLTIP} />
+>>>>>>> 5689fc9688307835c169832b31948acc2c0f46b5
               </ToolTip>
             )}
           </>
@@ -101,11 +111,22 @@ const Input: React.FC<Props> = (props) => {
       <FooterMessage>{footerMessage}</FooterMessage>
       {showError ? (
         <>
+<<<<<<< HEAD
           <StyledErrorIcon label="error" />
           <ErrorMessage>{errorMessage}</ErrorMessage>
         </>
       ) : (
         !isEmpty(value) && displayCheck && <StyledSuccessIcon label="success" />
+=======
+          <InputIcon icon={Icons.ERROR} top={IconStyle} />
+          <ErrorMessage>{errorMessage}</ErrorMessage>
+        </>
+      ) : (
+        !isEmpty(value) &&
+        displayCheck && (
+          <InputIcon icon={Icons.CHECKMARK_CIRCLE} top={IconStyle} />
+        )
+>>>>>>> 5689fc9688307835c169832b31948acc2c0f46b5
       )}
     </Container>
   );
