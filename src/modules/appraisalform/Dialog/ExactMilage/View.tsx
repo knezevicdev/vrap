@@ -87,7 +87,7 @@ const ExactMileageImage = styled.div`
 `;
 
 const ExactMileageTitle = styled.div`
-  font-family: 'Vroom-Sans';
+  font-family: Vroom-Sans;
   font-size: 42px;
   line-height: 46px;
   letter-spacing: 1px;

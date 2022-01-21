@@ -138,6 +138,19 @@ const Label = styled.label`
   margin-bottom: 5px;
   letter-spacing: 0.35px;
   display: flex;
+
+  button {
+    width: 13px;
+    height: 13px;
+    margin-left: 5px;
+
+    svg {
+      min-width: 13px;
+      min-height: 13px;
+      max-width: 13px;
+      max-height: 13px;
+    }
+  }
 `;
 
 const InputContainer = styled(({ ...restProps }) => <input {...restProps} />)`
@@ -148,7 +161,7 @@ const InputContainer = styled(({ ...restProps }) => <input {...restProps} />)`
   border: solid 1px #d6d7da;
   border-radius: 0;
   box-shadow: none;
-  font-family: 'Calibre-Regular';
+  font-family: Calibre-Regular;
   font-size: 18px;
   line-height: 18px;
   @include set-font(regular, 18px, 22px, 0.25px);
@@ -176,7 +189,7 @@ const InputContainer = styled(({ ...restProps }) => <input {...restProps} />)`
 `;
 
 const ErrorMessage = styled.span`
-  font-family: Calibre-Bold;
+  font-family: Calibre-Semibold;
   font-size: 10px;
   line-height: 10px;
   letter-spacing: 1px;

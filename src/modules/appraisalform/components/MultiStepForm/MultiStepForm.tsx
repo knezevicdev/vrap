@@ -332,17 +332,18 @@ const Block = styled.div`
 
 const FormTitle = styled.h1`
   padding: 20px 0px;
-  font-family: 'Vroom-Sans';
+  font-family: Vroom-Sans;
   font-size: 36px;
   line-height: 40px;
   letter-spacing: 1px;
   text-align: left;
+  margin: 0 0 8px 0;
 
   ${addStyleForMobile(`
       text-align: center;
       padding-bottom: 16px;
       padding-top: 15px;
-      font-family: 'Vroom-Sans';
+      font-family: Vroom-Sans;
       font-size: 28px;
       line-height: 28px;
       letter-spacing: 1px;
@@ -351,14 +352,15 @@ const FormTitle = styled.h1`
 
 const FormRefresh = styled.div`
   margin: auto 0;
-  color: '#e7131a';
+  color: #e7131a;
   font-weight: bold;
   cursor: pointer;
+  font-family: Calibre-Regular;
 `;
 
 const FormStep = styled.div`
   padding: 20px 0px;
-  border-top: 1px solid '#e0e0e0';
+  border-top: 1px solid #e0e0e0;
 `;
 
 const FormSection = styled(({ ...restProps }) => <div {...restProps} />)`
@@ -392,16 +394,22 @@ const SectionHeader = styled.div`
 
 const StepNumber = styled.div`
   padding-right: 10px;
+  margin: auto 0;
+
+  img {
+    vertical-align: middle;
+    border-style: none;
+  }
 `;
 
 const StepTitle = styled(({ ...restProps }) => <div {...restProps} />)`
-  font-family: 'Calibre-Semibold';
+  font-family: Calibre-Semibold;
   font-size: 20px;
   line-height: 26px;
   letter-spacing: 0.25px;
-  color: '#041022';
+  color: #041022;
 
-  ${(props) => props.isactive === false && `color: '#999da3';`}
+  ${(props) => props.isactive === false && `color: #999da3;`}
   ${addStyleForMobile(`
     font-size: 18px;
   `)}
@@ -409,17 +417,17 @@ const StepTitle = styled(({ ...restProps }) => <div {...restProps} />)`
 
 const EditStep = styled.div`
   padding-left: 10px;
-  color: '#e7131a';
+  color: #e7131a;
   cursor: pointer;
   line-height: 26px;
 `;
 
 const TimeEst = styled.div`
-  font-family: 'Calibre-Regular';
+  font-family: Calibre-Regular;
   font-size: 18px;
   letter-spacing: 0.25px;
   line-height: 25px;
-  color: '#999da3';
+  color: #999da3;
   padding-left: 5px;
   white-space: nowrap;
 `;
@@ -442,6 +450,7 @@ const NextButtonWrapper = styled.span`
 
 const FormWarning = styled.div`
   font-size: 18px;
+  font-family: Calibre-Regular;
   line-height: 24px;
   display: flex;
   align-items: center;

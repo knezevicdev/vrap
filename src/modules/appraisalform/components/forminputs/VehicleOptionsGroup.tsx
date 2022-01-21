@@ -96,6 +96,8 @@ const CheckboxesContainer = styled.ul`
   list-style: none;
   column-count: 2;
   width: 100%;
+  margin: 0;
+  padding: 0;
 `;
 
 const VehicleOptionsLabel = styled.div`
@@ -103,7 +105,7 @@ const VehicleOptionsLabel = styled.div`
 `;
 
 const VehicleOption = styled(({ ...restProps }) => <li {...restProps} />)`
-  padding: 0 0 10px;
+  padding: 0 0 5px;
 `;
 
 export default VehicleOptionsGroup;

@@ -120,6 +120,8 @@ const CheckboxesContainer = styled.ul`
   list-style: none;
   column-count: 2;
   width: 100%;
+  margin: 0;
+  padding: 0;
 `;
 
 const AfterMarketModsOptionsLabel = styled(Typography.Body.Regular)`
@@ -133,7 +135,7 @@ const AfterMarketModsOptionsLabel = styled(Typography.Body.Regular)`
 const AfterMarketModsOption = styled(({ ...restProps }) => (
   <li {...restProps} />
 ))`
-  padding: 0 0 10px;
+  padding: 0 0 5px;
 `;
 
 const Option = styled(Checkbox)``;
