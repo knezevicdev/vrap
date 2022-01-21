@@ -41,6 +41,7 @@ const PageContent = styled.div`
   display: flex;
   justify-content: center;
   align-items: flex-start;
+  font-family: ${(props): string => props.theme.typography.family.body};
 `;
 
 interface Cookie {
