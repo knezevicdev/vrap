@@ -2,7 +2,7 @@ import { IncomingMessage } from 'http';
 import { observer } from 'mobx-react';
 import { GetServerSideProps, NextPage } from 'next';
 import { useRouter } from 'next/router';
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
 
 import AsyncIndicator from 'src/components/AsyncIndicator';
@@ -20,6 +20,13 @@ const Price: NextPage = () => {
   const priceId = router.query.priceId as string;
   const store = new PriceStore(priceId);
   const appStore = useAppStore();
+
+  useEffect(() => {
+    const storedId = localStorage.getItem('priceId');
+    if (storedId && storedId !== priceId) {
+      localStorage.removeItem('priceId');
+    }
+  }, []);
 
   return (
     <Page name="Price">

@@ -1,9 +1,9 @@
 import { Response } from '@vroom-web/networking';
+import { SignInStatusResponseData } from '@vroom-web/networking';
 
 import { Prices, VerificationRespData } from '../models/Price';
 
 import { PlaidTokenResp } from 'src/interfaces.d';
-
 const offerbyIdResp: Prices = {
   data: [
     {
@@ -243,5 +243,25 @@ export const patchVerification = async (): Promise<
     headers: undefined,
     error: undefined,
     data: verificationSubmitResp,
+  });
+};
+
+export const getIsSignIn = async (): Promise<
+  Response<SignInStatusResponseData>
+> => {
+  return Promise.resolve<Response<SignInStatusResponseData>>({
+    headers: undefined,
+    error: undefined,
+    data: { status: 'invalid', reason: '' },
+  });
+};
+
+export const getIsSignInInValid = async (): Promise<
+  Response<SignInStatusResponseData>
+> => {
+  return Promise.resolve<Response<SignInStatusResponseData>>({
+    headers: undefined,
+    error: undefined,
+    data: { status: 'active', reason: '' },
   });
 };

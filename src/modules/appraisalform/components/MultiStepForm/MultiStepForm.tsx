@@ -420,6 +420,8 @@ const EditStep = styled.div`
   color: #e7131a;
   cursor: pointer;
   line-height: 26px;
+  font-family: Calibre-Regular;
+  font-size: 16px;
 `;
 
 const TimeEst = styled.div`

@@ -11,8 +11,12 @@ import { PriceStore } from 'src/modules/price/store';
 
 const InitialPrice: React.FC<{ store: PriceStore }> = ({ store }) => {
   const analyticsHandler = new AnalyticsHandler();
-  const viewModel = new InitialPriceViewModel(store, analyticsHandler);
   const appStore = useAppStore();
+  const viewModel = new InitialPriceViewModel(
+    store,
+    analyticsHandler,
+    appStore.store
+  );
   const isFaceliftExp = appStore.store.absmart.isInExperiment(
     'ac-appraisal-offer-facelift'
   );
