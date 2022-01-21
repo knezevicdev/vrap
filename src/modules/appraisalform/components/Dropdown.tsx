@@ -48,7 +48,7 @@ const Dropdown: React.FC<DropdownProps> = ({
         {options}
       </SelectContainer>
       {!error && !isEmpty(value) && !isDefault(value, label) && (
-        <SuccessIcon label="success" />
+        <StyledSuccessIcon label="success" />
       )}
       <SelectArrow icon={Icons.CHEVRON_DOWN} />
       {error && <ErrorMessage>{errorMessage}</ErrorMessage>}
@@ -93,6 +93,9 @@ const SelectContainer = styled(({ ...restProps }) => <select {...restProps} />)`
   color: #041022;
   background-color: #ffffff;
   border: 1px solid #d6d7da;
+  box-shadow: none;
+  font-family: 'Calibre-Regular';
+  appearance: none;
 
   ${(props) =>
     props.isEmpty &&
@@ -129,4 +132,9 @@ const ErrorMessage = styled(Typography.Body.Regular)`
   margin-top: 3px;
   color: #f26900;
   text-transform: uppercase;
+`;
+
+const StyledSuccessIcon = styled(SuccessIcon)`
+  right: 30px;
+  top: 31px;
 `;

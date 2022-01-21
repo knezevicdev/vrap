@@ -141,6 +141,8 @@ const WarningLightsOptionsGroup: React.FC<Props> = ({
 const CheckboxesContainer = styled.ul`
   list-style: none;
   width: 100%;
+  margin: 0;
+  padding: 0;
 `;
 
 const ImgContainer = styled.img`
@@ -161,7 +163,7 @@ const WarningOptionsLabel = styled.div`
 `;
 
 const WarningOption = styled(({ ...restProps }) => <li {...restProps} />)`
-  padding: 0 0 10px;
+  padding: 0 0 5px;
 `;
 
 export default WarningLightsOptionsGroup;

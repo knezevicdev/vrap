@@ -1,11 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import PrimaryButton from '../../../Button/PrimaryButton';
-import useForm from '../../../forminputs/useForm';
 import VinFormInput from '../../../forminputs/VinFormInput';
+import useForm from '../../../useForm';
 import { buttonText, dataQa } from './language';
 import ViewModel from './ViewModel';
+
+import { Button } from 'src/core/Button';
 
 interface Props {
   viewModel: ViewModel;
@@ -36,7 +37,7 @@ const VinInput: React.FC<Props> = ({ viewModel }) => {
   return (
     <Container>
       <Vin field={vin} onKeyPressEnter={handleOnKeyPressEnter} />
-      <Button
+      <SubmitButton
         tabIndex={0}
         onKeyPress={handleOnKeyPressEnter}
         disabled={!isFormValid}
@@ -44,7 +45,7 @@ const VinInput: React.FC<Props> = ({ viewModel }) => {
         data-qa={dataQa}
       >
         {buttonText}
-      </Button>
+      </SubmitButton>
     </Container>
   );
 };
@@ -58,7 +59,9 @@ const Vin = styled(VinFormInput)`
   margin-bottom: 25px;
 `;
 
-const Button = styled(PrimaryButton)`
+const SubmitButton = styled(({ ...restProps }) => (
+  <Button.Primary {...restProps} />
+))`
   width: 100%;
 `;
 

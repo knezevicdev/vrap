@@ -129,7 +129,7 @@ const SubmitButton = styled.div`
     margin-top: 15px;
     background-color: #d6d7da;
     font-size: 16px;
-    font-family: 'Calibre-Semibold';
+    font-family: Calibre-Semibold;
     font-weight: normal;
     text-align: center;
     line-height: 1;
@@ -153,7 +153,7 @@ const SubmitButton = styled.div`
 
 const Title = styled(Typography.Heading.Three)`
   font-style: 'italic';
-  font-family: 'Vroom Sans';
+  font-family: Vroom-Sans;
   font-weight: 800;
   padding: 30px 0;
 `;

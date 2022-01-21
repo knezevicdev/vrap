@@ -1,10 +1,15 @@
 import React from 'react';
 
-export const CircleLoader = ({ isLoading, className }) => {
+export interface Props {
+  isLoading: boolean;
+  className?: string;
+}
+
+export const CircleLoader: React.FC<Props> = ({ isLoading, className }) => {
   return (
     <div
       className={['circle-loader', className, isLoading ? '' : 'load-complete']
-        .filter(el => el)
+        .filter((el) => el)
         .join(' ')}
       data-qa="CircleLoaderComponent"
     >

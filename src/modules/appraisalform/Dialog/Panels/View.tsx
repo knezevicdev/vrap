@@ -118,7 +118,7 @@ const CloseButtonContainer = styled.div`
 const SectionTitle = styled.h1`
   padding: 25px 0 18px 0;
   text-align: center;
-  font-family: 'Vroom-Sans';
+  font-family: Vroom-Sans;
   font-size: 36px;
   line-height: 36px;
   letter-spacing: 1px;

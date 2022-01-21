@@ -55,7 +55,7 @@ const StepperText = styled.div`
 `;
 
 const Title = styled.div`
-  font-family: 'Calibre';
+  font-family: Calibre;
   font-size: 18px;
   letter-spacing: 0.25px;
   font-weight: 600;
@@ -65,7 +65,7 @@ const Title = styled.div`
 const SubTitle = styled.div`
   width: 250px;
   height: 16px;
-  font-family: 'Calibre';
+  font-family: Calibre;
   font-size: 13px;
   font-weight: normal;
   font-stretch: normal;

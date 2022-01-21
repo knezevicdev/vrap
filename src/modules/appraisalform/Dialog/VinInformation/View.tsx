@@ -144,7 +144,7 @@ const CloseButtonContainer = styled.div`
 
 const Title = styled.h2`
   margin-bottom: 10px;
-  font-family: 'Vroom-Sans';
+  font-family: Vroom-Sans;
   font-size: 28px;
   line-height: 1.14;
   letter-spacing: 1px;
@@ -167,7 +167,7 @@ const VinExample = styled.span`
   line-height: 1.39;
   letter-spacing: 0.3px;
   font-size: 18px;
-  font-family: 'Calibre-Semibold';
+  font-family: Calibre-Semibold;
   margin: 20px 0;
   padding: 8px 39px;
   border: 1px solid #e7131a;
@@ -204,7 +204,7 @@ const VinLocationList = styled.div`
 `;
 
 const ListHeader = styled.span`
-  font-family: 'Calibre-Semibold';
+  font-family: Calibre-Semibold;
   font-size: 18px;
   line-height: 1.39;
   letter-spacing: 0.3px;
