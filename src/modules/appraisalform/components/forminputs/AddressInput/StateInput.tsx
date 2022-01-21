@@ -3,9 +3,15 @@ import React from 'react';
 import Dropdown from '../../Dropdown';
 import { FormFields } from '../Inputs.language';
 
-const StateInput = ({ field, className, onKeyPressEnter }) => {
+export interface Props {
+  field: any;
+  className: string;
+  onKeyPressEnter: (e: any) => void;
+}
+
+const StateInput: React.FC<Props> = ({ field, className, onKeyPressEnter }) => {
   const { onChange } = field;
-  const handleOnChange = (event) => {
+  const handleOnChange = (event: any) => {
     const value = event.target.value;
     const error = value === 'state';
     onChange({ ...field, value, error });

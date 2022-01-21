@@ -1,12 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import PrimaryButton from '../../../Button/PrimaryButton';
 import StateInput from '../../../forminputs/AddressInput/StateInput';
 import LicenseInput from '../../../forminputs/LicenseInput';
 import useForm from '../../../forminputs/useForm';
 import { buttonText, dataQa } from './language';
 import ViewModel from './ViewModel';
+
+import { Button } from 'src/core/Button';
 
 interface Props {
   viewModel: ViewModel;
@@ -45,7 +46,7 @@ const LicenseStateInput: React.FC<Props> = ({ viewModel }) => {
           onKeyPressEnter={handleOnKeyPressEnter}
         />
       </InputContainer>
-      <Button
+      <SubmitButton
         tabIndex={0}
         onKeyPress={handleOnKeyPressEnter}
         onClick={viewModel.handleLicenseStateSubmit}
@@ -53,7 +54,7 @@ const LicenseStateInput: React.FC<Props> = ({ viewModel }) => {
         data-qa={dataQa}
       >
         {buttonText}
-      </Button>
+      </SubmitButton>
     </Container>
   );
 };
@@ -89,7 +90,9 @@ const States = styled(StateInput)`
   }
 `;
 
-const Button = styled(PrimaryButton)`
+const SubmitButton = styled(({ ...restProps }) => (
+  <Button.Primary {...restProps} />
+))`
   width: 100%;
 `;
 

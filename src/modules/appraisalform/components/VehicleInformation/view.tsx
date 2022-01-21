@@ -12,7 +12,6 @@ import {
   VehicleInfoLeaseCopy,
   VehicleInfoText,
 } from '../../AppraisalForm.language';
-import PrimaryButton from '../Button/PrimaryButton';
 import CircleLoader from '../CircleLoader';
 import { lettersAndNumbersOnly } from '../formatting';
 import ExactMileageInput from '../forminputs/ExactMileageInput';
@@ -31,6 +30,8 @@ import {
   VROOM_VIN_SUBSTRING,
 } from '../validation';
 import VehicleInfoViewModel from './ViewModel';
+
+import { Button } from 'src/core/Button';
 
 export interface Props {
   form: any;
@@ -504,7 +505,7 @@ const VehicleInformation: React.FC<Props> = ({ form, fields, viewModel }) => {
               </License>
               <States field={state} onKeyPressEnter={handleOnKeyPressEnter} />
             </LicenseField>
-            <Button
+            <SubmitButton
               tabIndex={0}
               onKeyPress={handleOnKeyPressEnter}
               onClick={handleLicenseStateSubmit}
@@ -512,7 +513,7 @@ const VehicleInformation: React.FC<Props> = ({ form, fields, viewModel }) => {
               data-qa={VehicleInfoText.licenseButtonDataQa}
             >
               {VehicleInfoText.licenseButton}
-            </Button>
+            </SubmitButton>
           </LicenseContainer>
         )}
         {!vinUrl && (
@@ -527,7 +528,7 @@ const VehicleInformation: React.FC<Props> = ({ form, fields, viewModel }) => {
               </License>
               <States field={state} onKeyPressEnter={handleOnKeyPressEnter} />
             </LicenseField>
-            <Button
+            <SubmitButton
               tabIndex={0}
               onKeyPress={handleOnKeyPressEnter}
               onClick={handleLicenseStateSubmit}
@@ -535,7 +536,7 @@ const VehicleInformation: React.FC<Props> = ({ form, fields, viewModel }) => {
               data-qa={VehicleInfoText.licenseButtonDataQa}
             >
               {VehicleInfoText.licenseButton}
-            </Button>
+            </SubmitButton>
           </LicenseContainer>
         )}
         {vinDecoded && !vinLoader && (
@@ -673,7 +674,9 @@ const Loader = styled(CircleLoader)`
   margin: -5px 5px 5px 10px;
 `;
 
-const Button = styled(PrimaryButton)`
+const SubmitButton = styled(({ ...restProps }) => (
+  <Button.Primary {...restProps} />
+))`
   margin-top: 10px;
   width: 50%;
 `;
