@@ -596,7 +596,7 @@ const LeaseCopy = styled.div`
   font-size: 18px;
   line-height: 25px;
   letter-spacing: 0.25px;
-  font-weight: 600;
+  font-family: Calibre-Semibold;
 `;
 
 const InputContainer = styled.div`
@@ -605,6 +605,8 @@ const InputContainer = styled.div`
   margin-top: 10px;
   line-height: 18px;
   letter-spacing: 1px;
+  font-size: 18px;
+  font-family: Calibre-Regular;
   @media (max-width: 767px) {
     flex-direction: column;
     margin-bottom: 0px;
@@ -686,7 +688,7 @@ const YearMakeModel = styled.div`
   font-weight: bold;
   // https://stackoverflow.com/questions/37534254/flex-auto-margin-not-working-in-ie10-11
   align-self: center;
-  font-family: Calibre-Medium;
+  font-family: Calibre-Semibold;
   font-size: 18px;
   line-height: 18px;
   letter-spacing: 1px;
