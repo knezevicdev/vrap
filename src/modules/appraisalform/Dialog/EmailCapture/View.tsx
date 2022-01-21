@@ -1,5 +1,5 @@
 import { addStyleForMobile, Typography } from '@vroom-web/ui-lib';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
 import EmailInput from './components/EmailInput';
@@ -21,7 +21,11 @@ const EmailModalView: React.FC<Props> = ({
   viewModel,
 }) => {
   const [hasEmailSubmitted, changeHasEmailSubmitted] = useState(false);
-  const isMobile = window.innerWidth <= 768 ? 1 : 0;
+  const [isMobile, changeIsMobile] = useState(0);
+  useEffect(() => {
+    const isMobileWidth = window.innerWidth <= 767 ? 1 : 0;
+    changeIsMobile(isMobileWidth);
+  }, []);
 
   const handleEmailSubmit = async (email: string): Promise<void> => {
     viewModel.tracksEmailCapture(

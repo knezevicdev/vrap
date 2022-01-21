@@ -216,9 +216,12 @@ const AppraisalForm: React.FC<Props> = ({ viewModel }) => {
   const [emailModalShowed, changeEmailModalShowed] = useState(false);
   const [emailModal, changeEmailModal] = useState(false);
   const [checkSection, changeCheckSection] = useState(0);
+  const [isMobile, changeIsMobile] = useState(0);
 
   useEffect(() => {
     viewModel.isSignIn();
+    const isMobileWidth = window.innerWidth <= 767 ? 1 : 0;
+    changeIsMobile(isMobileWidth);
   }, []);
 
   useEffect(() => {
@@ -252,6 +255,13 @@ const AppraisalForm: React.FC<Props> = ({ viewModel }) => {
     // should add abtest in condition name : ac-email-capture isEmailCapture
     const emailCaptureLocal = localStorage.getItem('email_capture');
     const hasEmailCaptureLocal = emailCaptureLocal === 'true';
+    // console.log('hasEmailCaptureLocal ', hasEmailCaptureLocal);
+    // console.log('emailModalShowed ', emailModalShowed);
+    // console.log('checkSection ', checkSection);
+    // console.log(
+    //   'viewModel.isEmailCaptureExperiment() ',
+    //   viewModel.isEmailCaptureExperiment()
+    // );
     if (!viewModel.isEmailCaptureExperiment() || hasEmailCaptureLocal) {
       removeEvent();
     }
@@ -265,8 +275,6 @@ const AppraisalForm: React.FC<Props> = ({ viewModel }) => {
       handleClearEvent();
     }
   }, [inactive, emailModalShowed, checkSection]);
-
-  const isMobile = window.innerWidth <= 767 ? 1 : 0;
 
   const handleClearEvent = () => {
     changeEmailModalShowed(true);
@@ -375,13 +383,6 @@ const AppraisalForm: React.FC<Props> = ({ viewModel }) => {
 
   return (
     <AppraisalFormContainer data-qa="AppraisalFormPage">
-      {emailModal && (
-        <EmailCapture
-          handleClose={handleModalClose}
-          experimentUUID={viewModel.getAnonymousId()}
-          isUserLoggedIn={viewModel.getUserSignIn()}
-        />
-      )}
       <MultiStepForm
         formTitle={SellFormTitleText}
         sections={sections}
@@ -396,6 +397,13 @@ const AppraisalForm: React.FC<Props> = ({ viewModel }) => {
       />
       {showExactMilageDialog && (
         <Dialog closeModalHandler={closeModalHandler} {...exactMilageProps} />
+      )}
+      {emailModal && (
+        <EmailCapture
+          handleClose={handleModalClose}
+          experimentUUID={viewModel.getAnonymousId()}
+          isUserLoggedIn={viewModel.getUserSignIn()}
+        />
       )}
     </AppraisalFormContainer>
   );
