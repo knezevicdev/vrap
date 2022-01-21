@@ -153,7 +153,7 @@ const SubmitButton = styled.div`
 
 const Title = styled(Typography.Heading.Three)`
   font-style: 'italic';
-  font-family: 'Vroom Sans';
+  font-family: 'Vroom-Sans';
   font-weight: 800;
   padding: 30px 0;
 `;
