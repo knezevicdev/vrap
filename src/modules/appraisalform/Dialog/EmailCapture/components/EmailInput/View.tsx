@@ -86,6 +86,7 @@ const Input = styled.input`
 const SubmitButton = styled(Button.Primary)`
   display: flex;
   justify-content: center;
+  align-items: center;
   height: 45px;
   width: 168px;
   ${addStyleForMobile(`

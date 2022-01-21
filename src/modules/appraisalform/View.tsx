@@ -269,13 +269,13 @@ const AppraisalForm: React.FC<Props> = ({ viewModel }) => {
     // should add abtest in condition name : ac-email-capture isEmailCapture
     const emailCaptureLocal = localStorage.getItem('email_capture');
     const hasEmailCaptureLocal = emailCaptureLocal === 'true';
-    // console.log('hasEmailCaptureLocal ', hasEmailCaptureLocal);
-    // console.log('emailModalShowed ', emailModalShowed);
-    // console.log('checkSection ', checkSection);
-    // console.log(
-    //   'viewModel.isEmailCaptureExperiment() ',
-    //   viewModel.isEmailCaptureExperiment()
-    // );
+    console.log('hasEmailCaptureLocal ', hasEmailCaptureLocal);
+    console.log('emailModalShowed ', emailModalShowed);
+    console.log('checkSection ', checkSection);
+    console.log(
+      'viewModel.isEmailCaptureExperiment() ',
+      viewModel.isEmailCaptureExperiment()
+    );
     if (!viewModel.isEmailCaptureExperiment() || hasEmailCaptureLocal) {
       removeEvent();
     }
