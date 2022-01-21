@@ -74,7 +74,7 @@ const InfoTitle = styled.div`
 
 const InfoTitleText = styled(Typography.Title.One)`
   font-style: 'italic';
-  font-family: 'Vroom Sans';
+  font-family: Vroom-Sans;
   font-weight: 800;
   min-height: 30px;
   margin-bottom: 2px;

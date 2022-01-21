@@ -1,0 +1,28 @@
+query DECODE_VIN($vin: String!) {
+  decodeVIN(vin: $vin, colors: true, options: true) {
+    trimData {
+      source,
+      database,
+      trims {
+        Uid,
+        description,
+        long_description,
+        source,
+        doors,
+        options
+      }
+    },
+    basicData {
+      source,
+      database,
+      year,
+      make,
+      model,
+    },
+    colorData {
+      source,
+      colors
+    },
+    options
+  }
+}

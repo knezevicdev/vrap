@@ -7,12 +7,19 @@ import {
   Prices,
   VerificationRespData,
 } from './models/Price';
+import { checkAppraisalPayload, getDummyOfferResp } from './utils';
 
 import ACCEPT_REJECT_OFFER from 'src/graphql/mutations/acceptRejectOffer.graphql';
 import CREATE_USER_PAYMENT_ACCOUNT from 'src/graphql/mutations/createUserPaymentAccount.graphql';
+import GRADE_CHECK from 'src/graphql/mutations/gradeCheck.graphql';
 import GET_PLAID_TOKEN from 'src/graphql/queries/getLinkToken.graphql';
 import {
+  AppraisalResp,
+  GradeCheckResp,
+  LtoVPayload,
+  LtoVResp,
   MailingAddress,
+  MileageCheckResp,
   PaymentOverviewFormValues,
   PlaidData,
   PlaidTokenResp,
@@ -164,6 +171,87 @@ export const getDownloadUrl = async (
 
 export const getInstitutionLogo = async (id: string): Promise<any> => {
   const url = `${VROOM_URL}/mypayments/logo/${id}`;
+  return await client.httpRequest({
+    method: 'get',
+    url,
+  });
+};
+
+export const handleLicenseToVinApi = async (
+  data: LtoVPayload
+): Promise<Response<LtoVResp>> => {
+  const url = `${VROOM_URL}/suyc-api/v1/GetVinByLicencePlate`;
+  const payload = {
+    payload: data,
+  };
+
+  return await client.httpRequest({
+    method: 'post',
+    url,
+    data: payload,
+  });
+};
+
+export const postAppraisalReview = async (
+  data: any
+): Promise<Response<AppraisalResp>> => {
+  const appraisalRequestScore = checkAppraisalPayload(data);
+  const url = `${VROOM_URL}/suyc-api/v1/acquisition/appraisal`;
+
+  if (appraisalRequestScore >= 3) {
+    return getDummyOfferResp(data);
+  } else {
+    const payload = {
+      payload: data,
+    };
+
+    return await client.httpRequest({
+      method: 'post',
+      url,
+      data: payload,
+    });
+  }
+};
+
+export const getCarstoryVinDecode = async (vehicleId: string): Promise<any> => {
+  const url = `${VROOM_URL}/suyc-api/v1/details/${vehicleId}`;
+  return await client.httpRequest({
+    method: 'get',
+    url,
+  });
+};
+
+export const getCarstoryTrimFeatures = async (trimId: number): Promise<any> => {
+  const url = `${VROOM_URL}/suyc-api/v1/details/${trimId}`;
+  return await client.httpRequest({
+    method: 'get',
+    url,
+  });
+};
+
+export const getGradeCheck = async (
+  make: string,
+  model: string,
+  trim: string,
+  miles: number,
+  vin: string
+): Promise<Response<GradeCheckResp>> => {
+  const res = await client.gqlRequest<
+    GradeCheckResp,
+    GQLTypes.MutationGradeArgs
+  >({
+    document: GRADE_CHECK,
+    variables: { make, model, trim, miles, vin },
+  });
+
+  return res;
+};
+
+export const getMilageCheck = async (
+  vin: string
+): Promise<Response<MileageCheckResp>> => {
+  const url = `${VROOM_URL}/suyc-api/v1/mileage/${vin}`;
+
   return await client.httpRequest({
     method: 'get',
     url,
