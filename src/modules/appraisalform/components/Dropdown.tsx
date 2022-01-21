@@ -93,6 +93,8 @@ const SelectContainer = styled(({ ...restProps }) => <select {...restProps} />)`
   color: #041022;
   background-color: #ffffff;
   border: 1px solid #d6d7da;
+  box-shadow: none;
+  font-family: 'Calibre-Regular';
 
   ${(props) =>
     props.isEmpty &&

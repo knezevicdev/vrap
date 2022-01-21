@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 import StateInput from '../../../forminputs/AddressInput/StateInput';
 import LicenseInput from '../../../forminputs/LicenseInput';
-import useForm from '../../../forminputs/useForm';
+import useForm from '../../../useForm';
 import { buttonText, dataQa } from './language';
 import ViewModel from './ViewModel';
 

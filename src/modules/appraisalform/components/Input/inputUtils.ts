@@ -1,4 +1,4 @@
-export const removeLastNumber = (string) => {
+export const removeLastNumber = (string: string) => {
   let foundFirstNumber = false;
   return string
     .split('')
@@ -15,7 +15,7 @@ export const removeLastNumber = (string) => {
     .join('');
 };
 
-export function hiddenString(length) {
+export function hiddenString(length: number) {
   const dot = '\u2022';
   return new Array(length + 1).join(dot);
 }

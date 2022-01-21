@@ -72,6 +72,8 @@ const InputContainer = styled(({ height, ...restProps }) => (
   color: ${primaryBlack};
   outline: none;
   border-radius: 0;
+  box-shadow: none;
+  font-family: 'Calibre-Regular';
 
   &::placeholder {
     color: ${grayTwo};

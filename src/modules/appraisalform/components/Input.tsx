@@ -147,7 +147,8 @@ const InputContainer = styled(({ ...restProps }) => <input {...restProps} />)`
   appearance: none;
   border: solid 1px #d6d7da;
   border-radius: 0;
-  font-family: Calibre-Regular;
+  box-shadow: none;
+  font-family: 'Calibre-Regular';
   font-size: 18px;
   line-height: 18px;
   @include set-font(regular, 18px, 22px, 0.25px);
