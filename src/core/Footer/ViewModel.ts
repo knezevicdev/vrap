@@ -78,10 +78,6 @@ class FooterViewModel {
         title: 'About',
         links: [
           {
-            href: '/about',
-            name: 'About Us',
-          },
-          {
             href: '/protection',
             name: 'Vroom Protection',
           },

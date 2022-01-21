@@ -82,10 +82,6 @@ export class PaymentOverviewStore implements Store {
   }
 
   async init(priceId: string): Promise<void> {
-    const localPriceId = localStorage.getItem('priceId');
-
-    priceId = localPriceId || priceId;
-
     if (priceId === undefined) {
       return;
     }

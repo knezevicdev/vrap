@@ -133,6 +133,19 @@ class OptionsViewModel {
     }
     const mailingAddress = this.calcMailingAddress(values);
     this.appStore.payment.setValues(values, this.store.priceId, mailingAddress);
+    const submittedType =
+      values.paymentOption === 'Check by Mail' ? 'Check' : 'Manual ACH';
+    const reviewPaymentValue = {
+      values,
+      address: mailingAddress,
+      priceId: this.store.priceId,
+      submittedType,
+    };
+    localStorage.setItem('review_payment_type', 'manual');
+    localStorage.setItem(
+      'review_payment_values',
+      JSON.stringify(reviewPaymentValue)
+    );
     this.router.push(`/verification/review?priceId=${this.store.priceId}`);
   };
 

@@ -25,6 +25,7 @@ const VerificationReviewViewDetail: React.FC<Props> = ({
   const { store } = useAppStore();
 
   useEffect(() => {
+    viewModel.onPageLoad();
     const paymentValues = localStorage.getItem('review_payment_values');
     const paymentType = localStorage.getItem('review_payment_type') === 'ach';
     if (paymentValues) {
@@ -45,7 +46,6 @@ const VerificationReviewViewDetail: React.FC<Props> = ({
     const lastFourSSN =
       localStorage.getItem('lastFour') || store.verification.lastFourSSN;
     viewModel.setWhereIsVehicleRegistered(whereIsVehicleRegistered);
-    viewModel.onPageLoad();
     viewModel.getVerificationDetails(priceId, lastFourSSN);
   }, [priceId]);
 

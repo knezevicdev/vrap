@@ -201,7 +201,6 @@ export default class VerificationReviewSectionViewModel {
         this.store.verification.priceId || localStorage.getItem('priceId');
       if (this.isPaymentRequireExp()) {
         window.location.href = '/appraisal/congratulations';
-        this.store.verification.setLoading(false);
         return;
       }
 
@@ -218,7 +217,6 @@ export default class VerificationReviewSectionViewModel {
           window.location.href = '/appraisal/congratulations';
         }
       }
-      this.store.verification.setLoading(false);
     } catch (err) {
       this.store.verification.setLoading(false);
     }

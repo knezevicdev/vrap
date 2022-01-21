@@ -1,7 +1,11 @@
+import { isErrorResponse } from '@vroom-web/networking';
+
 import { displayCurrency, parseDate, parsedDateTime } from './Utils';
 
 import AnalyticsHandler from 'src/integrations/AnalyticsHandler';
 import { PriceStore } from 'src/modules/price/store';
+import client from 'src/networking/client';
+import Store from 'src/store';
 
 class InitialPriceViewModel {
   private analyticsHandler: AnalyticsHandler;
@@ -12,7 +16,7 @@ class InitialPriceViewModel {
   readonly continuePrice: string = 'continue';
   readonly offerExpPreDate: string = 'This price expires on ';
   readonly offerExpPostDate: string = ' or upon driving an additional ';
-  readonly miles: string = '250 miles.';
+  readonly miles: string = '250 miles, ';
   readonly the: string = 'The ';
   readonly titleName: string = 'vehicle title ';
   readonly yourName: string = 'must be in your name.';
@@ -30,8 +34,13 @@ class InitialPriceViewModel {
     'Vehicle registration',
     'Photo of your odometer',
   ];
+  readonly wicheverOccerFirst: string = 'whichever occurs first. ';
 
-  constructor(private store: PriceStore, analyticsHandler: AnalyticsHandler) {
+  constructor(
+    private store: PriceStore,
+    analyticsHandler: AnalyticsHandler,
+    private appStore: Store
+  ) {
     const price = store.price;
     this.price = displayCurrency(price.price);
     this.priceId = price.priceId;
@@ -40,10 +49,32 @@ class InitialPriceViewModel {
     this.analyticsHandler = analyticsHandler;
   }
 
+  checkSignInStatus = async (): Promise<boolean> => {
+    const signInStatusResp = await client.signInStatus();
+    if (isErrorResponse(signInStatusResp)) throw signInStatusResp;
+    return (
+      signInStatusResp &&
+      signInStatusResp.data &&
+      signInStatusResp.data.status === 'active'
+    );
+  };
+
   onContinueClick = async (): Promise<void> => {
     await this.store.submitPriceAccept();
     this.analyticsHandler.trackContinueClick();
-    const url = `/sell/verification/owner/${this.priceId}`;
+    const isAccountCreateAbTest = this.appStore.absmart.isInExperiment(
+      'ac-account-create'
+    );
+
+    let isSignInStatus;
+    if (isAccountCreateAbTest) {
+      isSignInStatus = await this.checkSignInStatus();
+    }
+
+    const url =
+      isAccountCreateAbTest && !isSignInStatus
+        ? `/myaccount/create/suyc?redirect=/sell/verification/owner/${this.priceId}`
+        : `/sell/verification/owner/${this.priceId}`;
     window.location.href = url;
   };
 

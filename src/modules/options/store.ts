@@ -121,10 +121,6 @@ export class OptionsStore implements Store {
   }
 
   async init(priceId: string): Promise<void> {
-    const localPriceId = localStorage.getItem('priceId');
-
-    priceId = localPriceId || priceId;
-
     if (priceId !== undefined) {
       this.priceId = priceId;
     } else {
