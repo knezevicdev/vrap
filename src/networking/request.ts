@@ -284,3 +284,22 @@ export const IsUserSignIn = async (): Promise<boolean> => {
     signInStatusResp.data.status === 'active'
   );
 };
+
+export const getUser = async (): Promise<GQLTypes.User> => {
+  const userResp = await client.gqlRequest<{ user: GQLTypes.User }>({
+    document: `
+      query {
+        user {
+          firstName,
+          lastName,
+          username,
+          phones {
+            number
+          }
+        }
+      }
+    `,
+  });
+  if (isErrorResponse(userResp)) throw userResp;
+  return userResp.data.user;
+};

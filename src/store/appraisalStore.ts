@@ -81,6 +81,7 @@ export class AppraisalStore {
   };
   showLicenseError = false;
   isUserLoggedIn = false;
+  user: any = {};
 
   constructor() {
     makeAutoObservable(this);
@@ -243,5 +244,9 @@ export class AppraisalStore {
 
   setIsLoggedIn(status: boolean): void {
     this.isUserLoggedIn = status;
+  }
+
+  setUser(user: any): void {
+    this.user = user;
   }
 }

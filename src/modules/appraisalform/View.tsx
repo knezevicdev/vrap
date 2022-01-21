@@ -28,18 +28,21 @@ import useTrackActive from './Dialog/EmailCapture/trackActive';
 import Dialog from './Dialog/ExactMilage';
 import AppraisalViewModel from './ViewModel';
 
+import { useAppStore } from 'src/context';
+
 export interface Props {
   viewModel: AppraisalViewModel;
 }
 
 const AppraisalForm: React.FC<Props> = ({ viewModel }) => {
   const router = useRouter();
+  const { store } = useAppStore();
   const vinForPath = router.query.vehicle as string;
   const pathname = router.pathname as string;
   const editMode = pathname.includes('#');
   const submitText = editMode ? SaveText : ReviewText;
 
-  const personalInfo = {}; //logged in users
+  // let personalInfo = {}; //logged in users
   const vehicleInfo = viewModel.appraisalStore.vehicleInfoForm;
   const yourInformation = viewModel.appraisalStore.personalInfoForm;
   const vehicleHistory = viewModel.appraisalStore.vehicleHistoryForm;
@@ -48,6 +51,7 @@ const AppraisalForm: React.FC<Props> = ({ viewModel }) => {
   const mechCondition = viewModel.appraisalStore.mechConditionForm;
   const [exactMilageProps, setExactMileageProps] = useState({} as any);
   const [showExactMilageDialog, setShowExactMilageDialog] = useState(false);
+  const [personalInfo, changePersonalInfo] = useState({});
 
   let activeSection = 0;
   useEffect(() => {
@@ -223,6 +227,16 @@ const AppraisalForm: React.FC<Props> = ({ viewModel }) => {
     const isMobileWidth = window.innerWidth <= 767 ? 1 : 0;
     changeIsMobile(isMobileWidth);
   }, []);
+
+  useEffect(() => {
+    if (store.appraisal.isUserLoggedIn) {
+      viewModel.getUser();
+    }
+  }, [store.appraisal.isUserLoggedIn]);
+
+  useEffect(() => {
+    changePersonalInfo({ ...store.appraisal.user });
+  }, [store.appraisal.user]);
 
   useEffect(() => {
     const emailCaptureLocal = localStorage.getItem('email_capture');
