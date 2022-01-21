@@ -15,9 +15,6 @@ import ScratchesInput from './forminputs/ScratchesInput';
 import ScratchesPanelsInput from './forminputs/ScratchesPanelsInput';
 import TireMilesInput from './forminputs/TireMilesInput';
 
-// import { selectExperiment } from 'src/store/absmartly/selectors';
-// import { APPRAISAL_DETAILED_CONDITION_QUESTIONS } from 'src/store/absmartly/types';
-
 interface Props {
   fields: any;
   disableExperiments: boolean;
