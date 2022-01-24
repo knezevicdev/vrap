@@ -20,7 +20,7 @@ const PanelsDialog: React.FC<Props> = ({ closeModalHandler }) => {
             data-qa="exact milage close"
           >
             <CloseButtonContainer>
-              <StyledIcon icon={Icons.ClOSE} />
+              <StyledIcon icon={Icons.ClOSE_LARGE} />
             </CloseButtonContainer>
           </CloseDialog>
           <div>

@@ -154,7 +154,7 @@ const DialogView: React.FC<Props> = ({
           data-qa="exact milage close"
         >
           <CloseButtonContainer>
-            <StyledIcon icon={Icons.ClOSE} />
+            <StyledIcon icon={Icons.ClOSE_LARGE} />
           </CloseButtonContainer>
         </CloseDialog>
         <ExactMileageContent>
