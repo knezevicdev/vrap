@@ -34,6 +34,15 @@ export interface Props {
   viewModel: AppraisalViewModel;
 }
 
+interface BuildForm {
+  extConditionForm?: any;
+  intConditionForm?: any;
+  mechConditionForm?: any;
+  personalInfoForm?: any;
+  vehicleHistoryForm?: any;
+  vehicleInfoForm?: any;
+}
+
 const AppraisalForm: React.FC<Props> = ({ viewModel }) => {
   const router = useRouter();
   const { store } = useAppStore();
@@ -312,7 +321,7 @@ const AppraisalForm: React.FC<Props> = ({ viewModel }) => {
     return targetObj;
   };
 
-  const buildFormForStore = () => {
+  const buildFormForStore = (): BuildForm => {
     return Object.entries(appraisalUseForm).reduce(
       (result, [formKey, formData]: any) => {
         let csTrimId;
