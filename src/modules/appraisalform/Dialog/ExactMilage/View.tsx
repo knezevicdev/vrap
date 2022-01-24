@@ -1,4 +1,4 @@
-import { addStyleForMobile, Button } from '@vroom-web/ui-lib';
+import { addStyleForMobile, Button, Link } from '@vroom-web/ui-lib';
 import { observer } from 'mobx-react';
 import getConfig from 'next/config';
 import React from 'react';
@@ -10,11 +10,9 @@ import { lang } from './ExactMilageDialog.language';
 const { publicRuntimeConfig } = getConfig();
 const BASE_PATH = publicRuntimeConfig.NEXT_PUBLIC_BASE_PATH;
 
-import Icon, { Icons } from 'src/core/Icon';
-
 const Container = styled.div`
   position: fixed;
-  z-index: 99;
+  z-index: 9999;
   top: 0;
   left: 0;
   background: rgba(4, 16, 34, 0.7);
@@ -24,13 +22,10 @@ const Container = styled.div`
 
 const Modal = styled.div`
   margin: 12.5% auto;
-  padding: 32px 64px;
-  max-width: 592px;
+  max-width: 580px;
   width: 100%;
-  max-height: 370px;
   background-color: #ffffff;
   border: 1px solid rgb(214, 215, 218);
-  border-bottom: 4px solid #e7131a;
   boxshadow: rgba(0, 0, 0, 0.2) 0px 0px 3px 0px;
   display: flex;
   flex-direction: column;
@@ -47,37 +42,15 @@ const Modal = styled.div`
     `)}
 `;
 
-const CloseDialog = styled.div`
-  position: absolute;
-  right: 30px;
-  top: 40px;
-  color: #041022;
-  cursor: pointer;
-`;
-
-const StyledIcon = styled(Icon)`
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 0;
-  bottom: 0;
-  margin: auto;
-`;
-
-const CloseButtonContainer = styled.div`
-  position: relative;
-`;
-
 const ExactMileageContent = styled.div`
   background: #fff;
   padding: 50px;
   width: 580px;
   text-align: center;
-  border: 1px solid #e0e0e0;
   position: relative;
 `;
 
-const carTimerIcon = `${BASE_PATH}/icons/car-timer.svg}`;
+const carTimerIcon = `${BASE_PATH}/icons/car-timer.svg`;
 
 const ExactMileageImage = styled.div`
   background-image: url(${carTimerIcon});
@@ -94,7 +67,7 @@ const ExactMileageTitle = styled.div`
 `;
 
 const Line = styled.hr`
-  border-color: '#d6d7da';
+  border-color: #d6d7da;
   margin: 15px 0;
 `;
 
@@ -106,15 +79,19 @@ const ExactMileageDesc = styled.div`
   margin-top: 30px;
 `;
 
-const CorrectMileageLink = styled(Button.Bare)`
-  color: '#e7131a';
+const CorrectMileageLink = styled(Link)`
+  color: #e7131a;
   cursor: pointer;
+  text-decoration: none;
 `;
 
 const UpdateMileageCTA = styled(Button.Primary)`
   width: 200px;
   display: flex;
-  margin: 25px auto 10px;
+  margin: 25px auto 15px;
+  justify-content: center;
+  align-items: center;
+  font-family: Calibre-Semibold;
 `;
 
 interface Props {
@@ -149,14 +126,6 @@ const DialogView: React.FC<Props> = ({
   return (
     <Container>
       <Modal>
-        <CloseDialog
-          onClick={(): void => closeModalHandler()}
-          data-qa="exact milage close"
-        >
-          <CloseButtonContainer>
-            <StyledIcon icon={Icons.ClOSE_LARGE} />
-          </CloseButtonContainer>
-        </CloseDialog>
         <ExactMileageContent>
           <ExactMileageTitle>
             <div>{lang.titleAreYouSure}</div>
