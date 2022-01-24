@@ -27,7 +27,6 @@ const VinInput: React.FC<Props> = ({ viewModel, router }) => {
 
   const handleOnKeyPressEnter = (e: any): void => {
     if (e.key === 'Enter' && isFormValid) {
-      const vinForPath = vin.value;
       viewModel.trackVinClicked();
     }
   };
