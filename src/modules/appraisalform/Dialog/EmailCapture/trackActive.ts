@@ -11,7 +11,7 @@ const useTrackActive = () => {
     if (!stopTrack) {
       track();
     }
-    return removeEvent;
+    return resetActive;
   }, [stopTrack]);
 
   useEffect(() => {
@@ -28,16 +28,16 @@ const useTrackActive = () => {
     changeActive(false);
   }, [active]);
 
+  const resetActive = useCallback(() => {
+    changeActive(true);
+    changeInactive(false);
+  }, []);
+
   const track = () => {
     eventKey.forEach((keys) => {
       window.addEventListener(keys, resetActive);
     });
   };
-
-  const resetActive = useCallback(() => {
-    changeActive(true);
-    changeInactive(false);
-  }, []);
 
   const removeEvent = () => {
     window.clearTimeout(timing);

@@ -242,8 +242,7 @@ const AppraisalForm: React.FC<Props> = ({ viewModel }) => {
     const emailCaptureLocal = localStorage.getItem('email_capture');
     const hasEmailCaptureLocal = emailCaptureLocal === 'true';
     if (viewModel.isEmailCaptureExperiment() && !hasEmailCaptureLocal) {
-      // const { vehicleInfoForm } = buildFormForStore();
-      const vehicleInfoForm = appraisalUseForm.vehicleInfoForm.fields;
+      const { vehicleInfoForm } = buildFormForStore();
       const isEmpty = !vehicleInfoForm.milage && !vehicleInfoForm.keysAmount;
 
       window.onscroll = () => {
@@ -269,7 +268,8 @@ const AppraisalForm: React.FC<Props> = ({ viewModel }) => {
     // should add abtest in condition name : ac-email-capture isEmailCapture
     const emailCaptureLocal = localStorage.getItem('email_capture');
     const hasEmailCaptureLocal = emailCaptureLocal === 'true';
-    if (!viewModel.isEmailCaptureExperiment() || hasEmailCaptureLocal) {
+
+    if (hasEmailCaptureLocal) {
       removeEvent();
     }
     if (
