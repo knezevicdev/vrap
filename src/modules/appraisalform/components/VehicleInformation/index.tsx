@@ -1,7 +1,7 @@
 import { observer } from 'mobx-react';
 import React from 'react';
 
-import VehicleInformationView from './view';
+import VehicleInformationView from './View';
 import ViewModel from './ViewModel';
 
 import { useAppStore } from 'src/context';

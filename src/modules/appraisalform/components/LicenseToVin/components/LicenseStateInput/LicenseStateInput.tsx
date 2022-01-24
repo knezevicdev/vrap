@@ -1,19 +1,20 @@
 import React from 'react';
 import styled from 'styled-components';
 
+import { lettersAndNumbersOnly } from '../../../formatting';
 import StateInput from '../../../forminputs/AddressInput/StateInput';
 import LicenseInput from '../../../forminputs/LicenseInput';
 import useForm from '../../../useForm';
-import { buttonText, dataQa } from './language';
-import ViewModel from './ViewModel';
+import { buttonText, dataQa, genericLPError } from './language';
 
 import { Button } from 'src/core/Button';
 
 interface Props {
-  viewModel: ViewModel;
+  router: any;
+  analyticsHandler: any;
 }
 
-const LicenseStateInput: React.FC<Props> = ({ viewModel }) => {
+const LicenseStateInput: React.FC<Props> = ({ router, analyticsHandler }) => {
   const form = useForm({
     defaultValues: {
       licensePlate: '',
@@ -28,7 +29,32 @@ const LicenseStateInput: React.FC<Props> = ({ viewModel }) => {
 
   const handleOnKeyPressEnter = (e: any): void => {
     if (e.key === 'Enter' && isFormValid) {
-      viewModel.handleLicenseStateSubmit(licensePlate, state);
+      handleLicenseStateSubmit();
+    }
+  };
+
+  const handleLicenseStateSubmit = (): void => {
+    const lpForPath = `${state.value}-${lettersAndNumbersOnly(
+      licensePlate.value
+    )}`;
+
+    const label = 'License Plate';
+    const category = 'Sell';
+
+    analyticsHandler.trackLicenseToVin(label, category);
+
+    if (!licensePlate.error) {
+      const appraisalPath = `/`;
+      router.push({
+        pathname: appraisalPath,
+        query: { vehicle: lpForPath },
+      });
+    } else {
+      licensePlate.onChange({
+        ...licensePlate,
+        error: true,
+        errorMessage: genericLPError,
+      });
     }
   };
 
@@ -49,7 +75,7 @@ const LicenseStateInput: React.FC<Props> = ({ viewModel }) => {
       <SubmitButton
         tabIndex={0}
         onKeyPress={handleOnKeyPressEnter}
-        onClick={viewModel.handleLicenseStateSubmit}
+        onClick={handleLicenseStateSubmit}
         disabled={!isFormValid}
         data-qa={dataQa}
       >

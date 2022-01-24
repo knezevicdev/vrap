@@ -14,7 +14,7 @@ interface Props {
   vin: string;
   vinLoader: boolean;
   handleUpdate: (vin: string) => void;
-  active: number;
+  active?: number;
 }
 
 const AppraisalLicenseToVin: React.FC<Props> = ({

@@ -14,6 +14,7 @@ import {
 } from '../../AppraisalForm.language';
 import CircleLoader from '../CircleLoader';
 import { lettersAndNumbersOnly } from '../formatting';
+import AppraisalLicenseToVin from '../forminputs/AppraisalLicenseToVin';
 import ExactMileageInput from '../forminputs/ExactMileageInput';
 import ExtColorInput from '../forminputs/ExtColorInput';
 import LicenseInput from '../forminputs/LicenseInput';
@@ -61,7 +62,7 @@ const VehicleInformation: React.FC<Props> = ({ form, fields, viewModel }) => {
   const router = useRouter();
   const pathname = router.pathname as string;
   const vinFromStore = pathname.includes('#top');
-  const vinUrl = viewModel.vehicleId;
+  //const vinUrl = viewModel.vehicleId;
 
   const [vinLoader, setVinLoader] = useState(false);
   const [lpLoader, setLpLoader] = useState(false);
@@ -79,7 +80,7 @@ const VehicleInformation: React.FC<Props> = ({ form, fields, viewModel }) => {
 
   const isHideHowManyKeysExperiment = viewModel.isHideHowManyKeysExperiment;
 
-  const [showVin, setShowVin] = useState(true);
+  const [showVin, setShowVin] = useState(false);
   const [showLicense, setShowLicense] = useState(false);
   const licenseForm = useForm({
     defaultValues: {
@@ -125,7 +126,7 @@ const VehicleInformation: React.FC<Props> = ({ form, fields, viewModel }) => {
       vehicleId.includes(VROOM_VIN_SUBSTRING) || isValidVin(vehicleId);
     const validLicense = isValidCSLicense(vehicleId);
     setShowVin(validVin);
-    setShowLicense(validLicense || !vinUrl);
+    setShowLicense(validLicense);
 
     if (validVin) {
       handleDecodeVin(vehicleId);
@@ -476,6 +477,10 @@ const VehicleInformation: React.FC<Props> = ({ form, fields, viewModel }) => {
     const licenseForDecode = `${state.value}-${lettersAndNumbersOnly(
       licensePlate.value
     )}`;
+    router.push({
+      pathname: '/',
+      query: { vehicle: licenseForDecode },
+    });
     handleDecodeLicense(licenseForDecode);
   };
 
@@ -483,7 +488,7 @@ const VehicleInformation: React.FC<Props> = ({ form, fields, viewModel }) => {
     <>
       <LeaseCopy>{VehicleInfoLeaseCopy}</LeaseCopy>
       <InputContainer>
-        {vinUrl && showVin && (
+        {showVin && (
           <VinField>
             <VinFormInput
               field={fields.vin}
@@ -493,7 +498,7 @@ const VehicleInformation: React.FC<Props> = ({ form, fields, viewModel }) => {
             />
           </VinField>
         )}
-        {vinUrl && showLicense && (
+        {showLicense && (
           <LicenseContainer>
             <LicenseField>
               <License>
@@ -516,28 +521,12 @@ const VehicleInformation: React.FC<Props> = ({ form, fields, viewModel }) => {
             </SubmitButton>
           </LicenseContainer>
         )}
-        {!vinUrl && (
-          <LicenseContainer>
-            <LicenseField>
-              <License>
-                <LicenseInputContainer
-                  field={licensePlate}
-                  onKeyPressEnter={handleOnKeyPressEnter}
-                />
-                {lpLoader && <Loader isLoading={lpLoader} />}
-              </License>
-              <States field={state} onKeyPressEnter={handleOnKeyPressEnter} />
-            </LicenseField>
-            <SubmitButton
-              tabIndex={0}
-              onKeyPress={handleOnKeyPressEnter}
-              onClick={handleLicenseStateSubmit}
-              disabled={!isFormValid}
-              data-qa={VehicleInfoText.licenseButtonDataQa}
-            >
-              {VehicleInfoText.licenseButton}
-            </SubmitButton>
-          </LicenseContainer>
+        {!showVin && !showLicense && (
+          <AppraisalLicenseToVin
+            vin={fields.vin}
+            vinLoader={vinLoader}
+            handleUpdate={handleDecodeVin}
+          />
         )}
         {vinDecoded && !vinLoader && (
           <YearMakeModel>
@@ -681,6 +670,10 @@ const SubmitButton = styled(({ ...restProps }) => (
 ))`
   margin-top: 10px;
   width: 50%;
+
+  ${addStyleForMobile(`
+    width: 100%;
+  `)}
 `;
 
 const YearMakeModel = styled.div`
