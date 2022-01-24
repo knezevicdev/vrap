@@ -2,17 +2,16 @@ import { useRouter } from 'next/router';
 import React from 'react';
 
 import LicenseStateInput from './LicenseStateInput';
-import ViewModel from './ViewModel';
 
-import { useAppStore } from 'src/context';
+import AnalyticsHandler from 'src/integrations/AnalyticsHandler';
 
 const LicenseToVin: React.FC = () => {
-  const { store } = useAppStore();
   const router = useRouter();
+  const analyticsHandler = new AnalyticsHandler();
 
-  const viewModel = new ViewModel(store, router);
-
-  return <LicenseStateInput viewModel={viewModel} />;
+  return (
+    <LicenseStateInput router={router} analyticsHandler={analyticsHandler} />
+  );
 };
 
 export default LicenseToVin;

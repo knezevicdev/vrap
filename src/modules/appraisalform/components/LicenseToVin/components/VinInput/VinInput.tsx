@@ -10,12 +10,10 @@ import { Button } from 'src/core/Button';
 
 interface Props {
   viewModel: ViewModel;
+  router: any;
 }
 
-//props
-//history, location, theme, buttonColor
-
-const VinInput: React.FC<Props> = ({ viewModel }) => {
+const VinInput: React.FC<Props> = ({ viewModel, router }) => {
   const form = useForm({
     defaultValues: {
       vin: '',
@@ -29,9 +27,18 @@ const VinInput: React.FC<Props> = ({ viewModel }) => {
 
   const handleOnKeyPressEnter = (e: any): void => {
     if (e.key === 'Enter' && isFormValid) {
-      const vinForPath = vin.value;
-      viewModel.trackVinClicked(vinForPath);
+      viewModel.trackVinClicked();
     }
+  };
+
+  const vinSubmit = (): void => {
+    const vinForPath = vin.value;
+    viewModel.trackVinClicked();
+
+    router.push({
+      pathname: '/',
+      query: { vehicle: vinForPath },
+    });
   };
 
   return (
@@ -41,7 +48,7 @@ const VinInput: React.FC<Props> = ({ viewModel }) => {
         tabIndex={0}
         onKeyPress={handleOnKeyPressEnter}
         disabled={!isFormValid}
-        onClick={viewModel.trackVinClicked}
+        onClick={vinSubmit}
         data-qa={dataQa}
       >
         {buttonText}
