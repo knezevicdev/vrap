@@ -52,12 +52,14 @@ const VehicleInfomrationView: React.FC<Props> = ({ viewModel, store }) => {
           <Label>{viewModel.vin}</Label>
           <Field>{appraisalDetail?.vehicleInfoForm?.vin}</Field>
         </Info>
-        <Info>
-          <Label>{viewModel.trim}</Label>
-          <Field title={appraisalDetail?.vehicleInfoForm?.trim}>
-            {addElipsesIfLong(appraisalDetail?.vehicleInfoForm?.trim)}
-          </Field>
-        </Info>
+        {appraisalDetail?.vehicleInfoForm?.trim && (
+          <Info>
+            <Label>{viewModel.trim}</Label>
+            <Field title={appraisalDetail?.vehicleInfoForm?.trim}>
+              {addElipsesIfLong(appraisalDetail?.vehicleInfoForm?.trim)}
+            </Field>
+          </Info>
+        )}
         <Info>
           <Label>{viewModel.mileage}</Label>
           <Field>
