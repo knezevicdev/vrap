@@ -1,4 +1,5 @@
 import { GQLTypes, Response } from '@vroom-web/networking';
+import { isErrorResponse } from '@vroom-web/networking';
 import getConfig from 'next/config';
 
 import client from './client';
@@ -256,4 +257,49 @@ export const getMilageCheck = async (
     method: 'get',
     url,
   });
+};
+
+export const postEmailCapture = async (
+  emailAddress: string,
+  marketingId: string
+): Promise<Response<any>> => {
+  // need to change response type
+  const searchParams = { searchall: '-' };
+  const contextData = { category: 'sell' };
+  const payload = { emailAddress, marketingId, searchParams, contextData };
+  const url = `${VROOM_URL}/horn/v2/email-capture`;
+  return await client.httpRequest({
+    method: 'post',
+    url,
+    data: payload,
+  });
+};
+
+export const IsUserSignIn = async (): Promise<boolean> => {
+  const signInStatusResp = await client.signInStatus();
+  if (isErrorResponse(signInStatusResp)) throw signInStatusResp;
+  return (
+    signInStatusResp &&
+    signInStatusResp.data &&
+    signInStatusResp.data.status === 'active'
+  );
+};
+
+export const getUser = async (): Promise<GQLTypes.User> => {
+  const userResp = await client.gqlRequest<{ user: GQLTypes.User }>({
+    document: `
+      query {
+        user {
+          firstName,
+          lastName,
+          username,
+          phones {
+            number
+          }
+        }
+      }
+    `,
+  });
+  if (isErrorResponse(userResp)) throw userResp;
+  return userResp.data.user;
 };

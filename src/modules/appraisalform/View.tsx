@@ -23,21 +23,34 @@ import PersonalInformation from './components/personalinformation';
 import useFormInit from './components/useFormInit';
 import VehicleHistory from './components/vehiclehistory';
 import VehicleInformation from './components/VehicleInformation';
+import EmailCapture from './Dialog/EmailCapture';
+import useTrackActive from './Dialog/EmailCapture/trackActive';
 import Dialog from './Dialog/ExactMilage';
 import AppraisalViewModel from './ViewModel';
+
+import { useAppStore } from 'src/context';
 
 export interface Props {
   viewModel: AppraisalViewModel;
 }
 
+interface BuildForm {
+  extConditionForm?: any;
+  intConditionForm?: any;
+  mechConditionForm?: any;
+  personalInfoForm?: any;
+  vehicleHistoryForm?: any;
+  vehicleInfoForm?: any;
+}
+
 const AppraisalForm: React.FC<Props> = ({ viewModel }) => {
   const router = useRouter();
+  const { store } = useAppStore();
   const vinForPath = router.query.vehicle as string;
   const pathname = router.pathname as string;
   const editMode = pathname.includes('#');
   const submitText = editMode ? SaveText : ReviewText;
 
-  const personalInfo = {}; //logged in users
   const vehicleInfo = viewModel.appraisalStore.vehicleInfoForm;
   const yourInformation = viewModel.appraisalStore.personalInfoForm;
   const vehicleHistory = viewModel.appraisalStore.vehicleHistoryForm;
@@ -46,6 +59,7 @@ const AppraisalForm: React.FC<Props> = ({ viewModel }) => {
   const mechCondition = viewModel.appraisalStore.mechConditionForm;
   const [exactMilageProps, setExactMileageProps] = useState({} as any);
   const [showExactMilageDialog, setShowExactMilageDialog] = useState(false);
+  const [personalInfo, changePersonalInfo] = useState({});
 
   let activeSection = 0;
   useEffect(() => {
@@ -207,6 +221,89 @@ const AppraisalForm: React.FC<Props> = ({ viewModel }) => {
     }
   }, [appraisalUseForm.mechConditionForm.fields.warningLights.value]);
 
+  const { inactive, removeEvent } = useTrackActive();
+  const [emailModalShowed, changeEmailModalShowed] = useState(false);
+  const [emailModal, changeEmailModal] = useState(false);
+  const [checkSection, changeCheckSection] = useState(0);
+  const [isMobile, changeIsMobile] = useState(0);
+
+  useEffect(() => {
+    viewModel.isSignIn();
+    const isMobileWidth = window.innerWidth <= 767 ? 1 : 0;
+    changeIsMobile(isMobileWidth);
+  }, []);
+
+  useEffect(() => {
+    if (store.appraisal.isUserLoggedIn) {
+      viewModel.getUser();
+    }
+  }, [store.appraisal.isUserLoggedIn]);
+
+  useEffect(() => {
+    changePersonalInfo({ ...store.appraisal.user });
+  }, [store.appraisal.user]);
+
+  useEffect(() => {
+    const emailCaptureLocal = localStorage.getItem('email_capture');
+    const hasEmailCaptureLocal = emailCaptureLocal === 'true';
+    if (viewModel.isEmailCaptureExperiment() && !hasEmailCaptureLocal) {
+      const { vehicleInfoForm } = buildFormForStore();
+      const isEmpty = !vehicleInfoForm.milage && !vehicleInfoForm.keysAmount;
+
+      window.onscroll = () => {
+        const currentHeight =
+          (window.scrollY + window.innerHeight) / document.body.clientHeight;
+
+        if (
+          window.scrollY &&
+          !emailModalShowed &&
+          checkSection === 0 &&
+          currentHeight > 0.75 &&
+          isEmpty
+        ) {
+          handleClearEvent();
+        }
+      };
+    }
+  }, [emailModalShowed, appraisalUseForm, checkSection]);
+
+  useEffect(() => {
+    const emailCaptureLocal = localStorage.getItem('email_capture');
+    const hasEmailCaptureLocal = emailCaptureLocal === 'true';
+
+    if (hasEmailCaptureLocal) {
+      removeEvent();
+    }
+    if (
+      inactive &&
+      !emailModalShowed &&
+      checkSection < 2 &&
+      viewModel.isEmailCaptureExperiment() &&
+      !hasEmailCaptureLocal
+    ) {
+      handleClearEvent();
+    }
+  }, [inactive, emailModalShowed, checkSection]);
+
+  const handleClearEvent = () => {
+    changeEmailModalShowed(true);
+    changeEmailModal(true);
+    removeEvent();
+    window.onscroll = null;
+    localStorage.setItem('email_capture', 'true');
+    viewModel.emailAnalytics(
+      'Remind Me Viewed',
+      viewModel.getUserSignIn(),
+      isMobile,
+      1,
+      false
+    );
+  };
+
+  const handleModalClose = () => {
+    changeEmailModal(false);
+  };
+
   const buildFormSectionValues = (form: any, targetObj: any) => {
     for (const [key, value] of Object.entries(form) as any) {
       targetObj[key] = value.value;
@@ -214,7 +311,7 @@ const AppraisalForm: React.FC<Props> = ({ viewModel }) => {
     return targetObj;
   };
 
-  const buildFormForStore = () => {
+  const buildFormForStore = (): BuildForm => {
     return Object.entries(appraisalUseForm).reduce(
       (result, [formKey, formData]: any) => {
         let csTrimId;
@@ -266,6 +363,11 @@ const AppraisalForm: React.FC<Props> = ({ viewModel }) => {
       viewModel.trackNextStepViewed(activeSection + 1);
     }
 
+    if (activeSection > 1) {
+      removeEvent();
+    }
+    changeCheckSection(activeSection + 1);
+
     if (clearForm) {
       await viewModel.clearAppraisal();
       router.push({ pathname: '/' });
@@ -300,6 +402,13 @@ const AppraisalForm: React.FC<Props> = ({ viewModel }) => {
       />
       {showExactMilageDialog && (
         <Dialog closeModalHandler={closeModalHandler} {...exactMilageProps} />
+      )}
+      {emailModal && (
+        <EmailCapture
+          handleClose={handleModalClose}
+          experimentUUID={viewModel.getAnonymousId()}
+          isUserLoggedIn={viewModel.getUserSignIn()}
+        />
       )}
     </AppraisalFormContainer>
   );

@@ -80,6 +80,8 @@ export class AppraisalStore {
     error: null,
   };
   showLicenseError = false;
+  isUserLoggedIn = false;
+  user: any = {};
 
   constructor() {
     makeAutoObservable(this);
@@ -238,5 +240,13 @@ export class AppraisalStore {
 
   setCarfaxOdoLast(mileage: any): void {
     this.carfaxOdoLast = mileage;
+  }
+
+  setIsLoggedIn(status: boolean): void {
+    this.isUserLoggedIn = status;
+  }
+
+  setUser(user: any): void {
+    this.user = user;
   }
 }

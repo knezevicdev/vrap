@@ -191,6 +191,20 @@ export class Icons {
     height: 44,
   });
 
+  static readonly EMAIL_MODAL_CLOSE = new Icons('EMAIL_MODAL_CLOSE', {
+    name: 'email-modal-close',
+    width: 12,
+    height: 12,
+    path: `${BASE_PATH}/icons/email-close.svg`,
+  });
+
+  static readonly EMAIL_All_SET = new Icons('EMAIL_All_SET', {
+    name: 'email-modal-close',
+    width: 48,
+    height: 48,
+    path: `${BASE_PATH}/icons/email-all-set.svg`,
+  });
+
   static readonly CHECKMARK_CIRCLE = new Icons('CHECKMARK_CIRCLE', {
     name: 'checkmark-circle',
     width: 13,
