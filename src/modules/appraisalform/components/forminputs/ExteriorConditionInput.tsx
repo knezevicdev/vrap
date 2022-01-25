@@ -38,7 +38,7 @@ const ExteriorConditionInput: React.FC<Props> = ({ field, className }) => {
         name: FormFields.extCondition.name,
         label: FormFields.extCondition.label,
         onClick: handleOnChange,
-        selected: field.value,
+        checked: field.value,
       }}
     />
   );

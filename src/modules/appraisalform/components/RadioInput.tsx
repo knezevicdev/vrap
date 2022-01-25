@@ -1,8 +1,12 @@
 import { Tooltip } from '@vroom-web/ui-lib';
+import getConfig from 'next/config';
 import React from 'react';
 import styled from 'styled-components';
 
 import { GenericObject } from '../../../interfaces.d';
+
+const { publicRuntimeConfig } = getConfig();
+const BASE_PATH = publicRuntimeConfig.NEXT_PUBLIC_BASE_PATH;
 
 interface Props {
   field: GenericObject;
@@ -10,7 +14,7 @@ interface Props {
 }
 
 const RadioInput: React.FC<Props> = ({
-  field: { options, onClick, label, name, selected, tooltipText = '' },
+  field: { options, onClick, label, name, checked, tooltipText = '' },
   className,
 }) => {
   return (
@@ -23,28 +27,33 @@ const RadioInput: React.FC<Props> = ({
         {options.map((item: any) => {
           return (
             <RadioContainer key={item.label}>
-              <HiddenNativeRadio
-                type="radio"
-                id={`${item.label}${name}`}
-                value={item.label}
-                name={name}
-                onClick={() => onClick(item.label)}
-                selected={selected}
-              />
-              <StyledRadio
-                type="radio"
-                id={`${item.label}${name}`}
-                value={item.label}
-                name={name}
-                onClick={() => onClick(item.label)}
-                selected={selected}
-              />
-              <RadioTextContainer>
-                <OptionLabel htmlFor={`${item.label}${name}`}>
+              <OptionLabel htmlFor={`${item.label}${name}`}>
+                <HiddenNativeRadio
+                  type="radio"
+                  id={`${item.label}${name}`}
+                  value={item.label}
+                  name={name}
+                  onClick={() => onClick(item.label)}
+                  checked={item.checked}
+                />
+                <CheckMark />
+
+                <StyledRadio
+                  id={`${item.label}${name}`}
+                  value={item.label}
+                  name={name}
+                  onClick={() => {
+                    console.log(item);
+                    onClick(item.label);
+                  }}
+                  checked={item.checked}
+                />
+
+                <RadioTextContainer>
                   {item.label}
                   <OptionDescription>{item.description}</OptionDescription>
-                </OptionLabel>
-              </RadioTextContainer>
+                </RadioTextContainer>
+              </OptionLabel>
             </RadioContainer>
           );
         })}
@@ -64,8 +73,29 @@ const Label = styled.h3`
 `;
 
 const RadioContainer = styled.div`
-  display: flex;
   margin-bottom: 10px;
+  position: relative;
+`;
+
+const CheckMark = styled.span`
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  height: 16px;
+  width: 16px;
+  background-color: #ffffff;
+  border: 1px solid #d6d7da;
+  border-radius: 50%;
+  &:hover {
+    background-color: #fafafa;
+  }
+  z-index: -1;
+
+  &:after {
+    content: '';
+    position: absolute;
+    display: none;
+  }
 `;
 
 const HiddenNativeRadio = styled(({ ...restProps }) => (
@@ -83,29 +113,11 @@ const HiddenNativeRadio = styled(({ ...restProps }) => (
   position: absolute;
   white-space: nowrap;
   width: 1px;
-`;
-
-const CheckMark = styled.span<{ disabled?: boolean }>`
-  position: absolute;
-  top: 3px;
-  left: 0;
-  height: 16px;
-  width: 16px;
-  background-color: ${({ disabled }): string =>
-    disabled ? '#f5f5f5' : '#fff'};
-  border: 1px solid
-    ${({ disabled }): string => (disabled ? '#999DA3' : '#D6D7DA')};
-
-  border-radius: 50%;
-
-  &:hover {
-    background-color: ${({ disabled }): string => (!disabled ? '#fafafa' : '')};
-  }
-
-  &:after {
-    content: '';
-    position: absolute;
-    display: none;
+  &:checked ~ ${CheckMark}{
+    background: url(${BASE_PATH}/icons/check-mark-red.svg);
+    background-size: cover;
+    border: 1px solid #E7131A;
+    z-index: 99;};
   }
 `;
 
@@ -116,17 +128,6 @@ const StyledRadio = styled(({ ...restProps }) => <div {...restProps} />)`
   width: 16px;
   height: 16px;
   margin: 5px;
-
-  &:checked ~ ${CheckMark} {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border: ${({ disabled }): string =>
-      disabled ? `1px solid #999DA3` : `1px solid #E7131A`};
-    div {
-      display: inline-block;
-    }
-  }
 `;
 
 const RadioTextContainer = styled.div`
@@ -141,6 +142,7 @@ const OptionLabel = styled.label`
   letter-spacing: 0.3px;
   margin-bottom: 0px;
   cursor: pointer;
+  display: flex;
 
   @media (max-width: 768px) {
     font-size: 16px;

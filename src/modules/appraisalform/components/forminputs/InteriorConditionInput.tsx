@@ -38,7 +38,7 @@ const InteriorConditionInput: React.FC<Props> = ({ field, className }) => {
         name: FormFields.interiorCondition.name,
         label: FormFields.interiorCondition.label,
         onClick: handleOnChange,
-        selected: field.value,
+        checked: field.value,
       }}
     />
   );

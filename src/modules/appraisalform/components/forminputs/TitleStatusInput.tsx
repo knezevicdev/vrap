@@ -42,7 +42,7 @@ const TitleStatusInput: React.FC<Props> = ({ field, className }) => {
         name: FormFields.titleStatus.name,
         label: FormFields.titleStatus.label,
         onClick: handleOnChange,
-        selected: field.value,
+        checked: field.value,
         tooltipText: FormFields.titleStatus.toolTip,
       }}
     />
