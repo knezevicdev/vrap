@@ -110,7 +110,7 @@ const AppraisalForm: React.FC<Props> = ({ viewModel }) => {
       inlineCarfaxOdoLast = await viewModel.handleCarfaxCall(vin);
 
       if (
-        exactMileageField.value < inlineCarfaxOdoLast.mileage - 1000 &&
+        exactMileageField.value < inlineCarfaxOdoLast.data.mileage - 1000 &&
         showExactMileageDialog &&
         activeSection === 0
       ) {

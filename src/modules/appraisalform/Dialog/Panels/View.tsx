@@ -20,7 +20,7 @@ const PanelsDialog: React.FC<Props> = ({ closeModalHandler }) => {
             data-qa="exact milage close"
           >
             <CloseButtonContainer>
-              <StyledIcon icon={Icons.ClOSE} />
+              <StyledIcon icon={Icons.ClOSE_LARGE} />
             </CloseButtonContainer>
           </CloseDialog>
           <div>
@@ -36,23 +36,21 @@ const PanelsDialog: React.FC<Props> = ({ closeModalHandler }) => {
 
 const Container = styled.div`
   position: fixed;
-  z-index: 99;
+  z-index: 9999;
   top: 0;
   left: 0;
   background: rgba(4, 16, 34, 0.7);
   width: 100%;
   height: 100%;
+  overflow-y: auto;
 `;
 
 const Modal = styled.div`
-  margin: 12.5% auto;
-  padding: 32px 64px;
+  margin: 5% auto;
   max-width: 592px;
   width: 100%;
-  max-height: 370px;
   background-color: #ffffff;
   border: 1px solid rgb(214, 215, 218);
-  border-bottom: 4px solid #e7131a;
   boxshadow: rgba(0, 0, 0, 0.2) 0px 0px 3px 0px;
   display: flex;
   flex-direction: column;
@@ -116,7 +114,7 @@ const CloseButtonContainer = styled.div`
 `;
 
 const SectionTitle = styled.h1`
-  padding: 25px 0 18px 0;
+  padding: 18px 0 18px 0;
   text-align: center;
   font-family: Vroom-Sans;
   font-size: 36px;

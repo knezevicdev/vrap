@@ -1,4 +1,4 @@
-import { addStyleForMobile, addStyleForTablet } from '@vroom-web/ui-lib';
+import { addStyleForMobile } from '@vroom-web/ui-lib';
 import getConfig from 'next/config';
 import React from 'react';
 import styled from 'styled-components';
@@ -30,7 +30,7 @@ interface Props {
 }
 
 const VinInformationDialog: React.FC<Props> = ({ closeModalHandler }) => {
-  const baseImg = `${BASE_PATH}/images/where-is-vin.png`;
+  const baseImg = `${BASE_PATH}/images/where-is-vin`;
 
   return (
     <Container data-qa="VinInformationDialog">
@@ -40,7 +40,7 @@ const VinInformationDialog: React.FC<Props> = ({ closeModalHandler }) => {
           data-qa="exact milage close"
         >
           <CloseButtonContainer>
-            <StyledIcon icon={Icons.ClOSE} />
+            <StyledIcon icon={Icons.ClOSE_LARGE} />
           </CloseButtonContainer>
         </CloseDialog>
         <Title>
@@ -88,20 +88,21 @@ const VinInformationDialog: React.FC<Props> = ({ closeModalHandler }) => {
 
 const Container = styled.div`
   position: fixed;
-  z-index: 99;
+  z-index: 9999;
   top: 0;
   left: 0;
   background: rgba(4, 16, 34, 0.7);
   width: 100%;
   height: 100%;
+  overflow-y: auto;
 `;
 
 const Modal = styled.div`
-  margin: 12.5% auto;
-  padding: 32px 64px;
+  margin: 40px auto;
+  padding: 30px;
   max-width: 592px;
   width: 100%;
-  max-height: 370px;
+  height: auto;
   background-color: #ffffff;
   border: 1px solid rgb(214, 215, 218);
   border-bottom: 4px solid #e7131a;
@@ -115,8 +116,6 @@ const Modal = styled.div`
         top: 20%;
         width: 100%;
         max-width: 363px;
-        height: 100%;
-        max-height: 409px;
         padding: 62px 16px;
     `)}
 `;
@@ -150,8 +149,10 @@ const Title = styled.h2`
   letter-spacing: 1px;
 
   br {
-    ${addStyleForTablet(`
-      display: none;
+    display: none;
+
+    ${addStyleForMobile(`
+      display: inline-block;
     `)}
   }
 `;
