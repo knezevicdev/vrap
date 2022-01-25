@@ -153,7 +153,7 @@ const Dropdown = (props: DropdownProps): JSX.Element => {
         onClick={disabled ? undefined : onValueClick}
         open={open}
         disabled={disabled}
-        showError={showError}
+        showerror={showError}
         tabIndex={0}
         onKeyDown={disabled ? undefined : onKeyDown}
       >
@@ -162,17 +162,17 @@ const Dropdown = (props: DropdownProps): JSX.Element => {
         <Arrow
           disabled={disabled}
           open={open}
-          showError={showError}
+          showerror={showError}
           icon={Icons.CHEVRON_DOWN}
         />
       </LabelContainer>
       {showError && !open && <Error>{error}</Error>}
       {open && (
-        <Divider showError={showError}>
+        <Divider showerror={showError}>
           <DividerBorder />
         </Divider>
       )}
-      <Menu open={open} showError={showError}>
+      <Menu open={open} showerror={showError}>
         {options.map((option, index) => {
           const { value, label } = option;
           const manualHover = index === labelPosition;
@@ -229,7 +229,7 @@ const Container = styled.div`
 
 const LabelContainer = styled.div<{
   open: boolean;
-  showError?: boolean;
+  showerror?: boolean;
   disabled?: boolean;
 }>`
   display: flex;
@@ -239,7 +239,7 @@ const LabelContainer = styled.div<{
   margin-top: 4px;
   border: 1px solid
     ${(props): string =>
-      props.showError ? secondaryError(props) : grayThree(props)};
+      props.showerror ? secondaryError(props) : grayThree(props)};
 
   ${(props): string | false | undefined =>
     props.disabled &&
@@ -273,13 +273,13 @@ const Label = styled(Body.Regular)<{ isShowingPlaceholder: boolean }>`
 
 const Arrow = styled(Icon)<{
   open: boolean;
-  showError?: boolean;
+  showerror?: boolean;
   disabled?: boolean;
 }>`
   transform: rotate(${(props): string => (props.open ? '180deg' : '0deg')});
   transition: transform 250ms;
   ${(props): string | false | undefined =>
-    !props.showError && 'margin-left: auto;'}
+    !props.showerror && 'margin-left: auto;'}
   ${(props): string | false | undefined =>
     props.disabled && `fill: ${grayThree(props)};`}
   margin-right: 16px;
@@ -294,7 +294,7 @@ const ErrorIcon = styled(Icon)`
 
 const Menu = styled.div<{
   open: boolean;
-  showError?: boolean;
+  showerror?: boolean;
 }>`
   display: ${(props): string => (props.open ? 'flex' : 'none')};
   flex-direction: column;
@@ -307,7 +307,7 @@ const Menu = styled.div<{
   right: 0px;
   border: 1px solid
     ${(props): string =>
-      props.showError ? secondaryError(props) : grayThree(props)};
+      props.showerror ? secondaryError(props) : grayThree(props)};
   border-top: none;
   padding-top: 8px;
   z-index: 1;
@@ -323,16 +323,16 @@ const Option = styled(Body.Regular)<{ manualHover: boolean }>`
   }
 `;
 
-const Divider = styled.div<{ showError?: boolean }>`
+const Divider = styled.div<{ showerror?: boolean }>`
   z-index: 1;
   height: 10px;
   background: ${primaryWhite};
   border-left: 1px solid
     ${(props): string =>
-      props.showError ? secondaryError(props) : grayThree(props)};
+      props.showerror ? secondaryError(props) : grayThree(props)};
   border-right: 1px solid
     ${(props): string =>
-      props.showError ? secondaryError(props) : grayThree(props)};
+      props.showerror ? secondaryError(props) : grayThree(props)};
 `;
 
 const DividerBorder = styled.div`

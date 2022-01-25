@@ -270,7 +270,7 @@ const MultiStepForm: React.FC<Props> = (props) => {
             )}
             {!showGreenCheck && numberIcon(idx, activeSection, 'title-icon')}
           </StepNumber>
-          <StepTitle isactive={isActive}>{title}</StepTitle>
+          <StepTitle isactive={isActive.toString()}>{title}</StepTitle>
           {showEditButton && (
             <EditStep onClick={() => handleEditSection(idx, activeSection)}>
               Edit
@@ -282,7 +282,7 @@ const MultiStepForm: React.FC<Props> = (props) => {
               <TimeEst>{formComponent.timeEst}</TimeEst>
             )}
         </SectionHeader>
-        <FormSection isactive={isActive}>
+        <FormSection isactive={isActive.toString()}>
           {formComponent.subTitle && <h3>{formComponent.subTitle}</h3>}
           <CurrentComponent
             fields={fields}
@@ -377,7 +377,7 @@ const FormSection = styled(({ ...restProps }) => <div {...restProps} />)`
 
   /* big max-height is used when animating variable height transitions */
   ${(props) =>
-    props.isactive === true &&
+    props.isactive === 'true' &&
     `
       max-height: 4500px;
 
@@ -409,7 +409,7 @@ const StepTitle = styled(({ ...restProps }) => <div {...restProps} />)`
   letter-spacing: 0.25px;
   color: #041022;
 
-  ${(props) => props.isactive === false && `color: #999da3;`}
+  ${(props) => props.isactive === 'false' && `color: #999da3;`}
   ${addStyleForMobile(`
     font-size: 18px;
   `)}
