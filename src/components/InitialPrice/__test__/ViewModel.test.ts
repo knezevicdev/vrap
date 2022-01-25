@@ -65,7 +65,7 @@ describe('InitialPrice Test', () => {
     await viewModel.onContinueClick();
     appStore.absmart.isInExperiment.mockImplementation(() => true);
     await clientRequest.mockResolvedValue(getIsSignIn());
-    const url = `/myaccount/create/suyc?redirect=/sell/verification/owner/${priceId}`;
+    const url = `/myaccount/create/suyc?redirect=/sell/verification/owner/${priceId}&action=suyc`;
     Object.defineProperty(window, 'location', {
       value: {
         href: url,

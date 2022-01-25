@@ -40,7 +40,7 @@ const MechanicalConditionInput: React.FC<Props> = ({ field, className }) => {
         name: FormFields.mechanicalCondition.name,
         label: FormFields.mechanicalCondition.label,
         onClick: handleOnChange,
-        selected: field.value,
+        checked: field.value,
       }}
     />
   );

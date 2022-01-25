@@ -71,8 +71,8 @@ const Input: React.FC<Props> = (props) => {
       <InputContainer
         id={id}
         type={type}
-        showError={showError}
-        isEmpty={!error && isEmpty(value)}
+        showerror={showError ? 'true' : 'false'}
+        isempty={!error && isEmpty(value) ? 'true' : 'false'}
         placeholder={placeholder}
         value={value}
         onChange={handleValidation(onChange)}
@@ -80,11 +80,11 @@ const Input: React.FC<Props> = (props) => {
         onFocus={onFocus}
         onKeyPress={onKeyPress}
         disabled={disabled}
-        displayCheck={displayCheck}
+        displaycheck={displayCheck ? 'true' : 'false'}
         autoFocus={autofocus}
         name={name}
         maxLength={maxlength}
-        autocomplete={autocomplete}
+        autoComplete={autocomplete}
         data-qa={dataQa}
         ref={innerRef}
       />
@@ -166,8 +166,8 @@ const InputContainer = styled(({ ...restProps }) => <input {...restProps} />)`
   line-height: 18px;
   @include set-font(regular, 18px, 22px, 0.25px);
   letter-spacing: 0.25px;
-  ${(props) => props.isEmpty && `background-color: #ffffff`}
-  ${(props) => props.showError && `border-color: #f26900`}
+  ${(props) => props.isempty === 'true' && `background-color: #ffffff`}
+  ${(props) => props.showerror === 'true' && `border-color: #f26900`}
 
   &:focus {
     border-color: #1960d0;

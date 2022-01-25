@@ -36,9 +36,9 @@ const Dropdown: React.FC<DropdownProps> = ({
     <Container className={className}>
       <Label>{label}</Label>
       <SelectContainer
-        error={error}
-        errorMessage={errorMessage}
-        isEmpty={!error && isEmpty(value)}
+        error={error.toString()}
+        errormessage={errorMessage}
+        isempty={!error && isEmpty(value) ? 'true' : 'false'}
         value={value}
         onChange={onChange}
         onBlur={onBlur}
@@ -98,11 +98,11 @@ const SelectContainer = styled(({ ...restProps }) => <select {...restProps} />)`
   appearance: none;
 
   ${(props) =>
-    props.isEmpty &&
+    props.isempty === 'true' &&
     `background-color: #ffffff;
     color: #999da3;
   `}
-  ${(props) => props.error && `border-color: #f26900;`}
+  ${(props) => props.error === 'true' && `border-color: #f26900;`}
 
   @media (max-width: 767px) {
     padding: 0 30px 0 10px;
