@@ -46,18 +46,21 @@ class VehicleInfoViewModel {
     try {
       const response = await getCarstoryVinDecode(vehicleId);
       if (isErrorResponse(response)) throw response;
-      let alternatives, features;
+      let alternatives, features, id;
       const { dataProviderInfo, vehicleInfo } = response.data;
 
       if (dataProviderInfo.carstory) {
         alternatives = dataProviderInfo.carstory.alternatives || [];
         features = dataProviderInfo.carstory.features || [];
+        id = dataProviderInfo.carstory.id || null;
       } else if (dataProviderInfo.nada) {
         alternatives = dataProviderInfo.nada.alternatives || [];
         features = dataProviderInfo.nada.features || [];
+        id = dataProviderInfo.nada.id || null;
       } else {
         alternatives = [];
         features = [];
+        id = null;
       }
 
       this.appraisalStore.setVehicleData({
@@ -75,6 +78,7 @@ class VehicleInfoViewModel {
         model: vehicleInfo.model,
         trim: vehicleInfo.trim,
         vin: vehicleInfo.vin,
+        id,
       };
     } catch (error) {
       return error;

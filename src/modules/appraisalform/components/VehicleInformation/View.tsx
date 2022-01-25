@@ -72,6 +72,7 @@ const VehicleInformation: React.FC<Props> = ({ form, fields, viewModel }) => {
   const [make, setMake] = useState(null as any);
   const [model, setModel] = useState(null as any);
   const [trims, setTrims] = useState([] as any[]);
+  const [csRespTrimId, setCsRespTrimId] = useState(null);
   const [options, setOptions] = useState([] as any[]);
   const [extColors, setExtColors] = useState(defaultColors);
   const [selectedExtColor, setSelectedExtColor] = useState(null as any);
@@ -186,6 +187,7 @@ const VehicleInformation: React.FC<Props> = ({ form, fields, viewModel }) => {
     const { value: trimValue, error } = fields.trim;
     const { value: trimIdValue } = fields.csTrimId;
     const trimData = trims.find((trim) => trim.value === trimValue);
+    const trimIdSelected = trims.find((trim) => trim.trimId === csRespTrimId);
 
     if (fields.vin.value !== '') {
       if (trims.length === 1) {
@@ -193,6 +195,8 @@ const VehicleInformation: React.FC<Props> = ({ form, fields, viewModel }) => {
       } else if (trims.length && trimValue !== '' && trimData) {
         handleTrimChange(trimValue, error);
         handleGetOptions(trimIdValue);
+      } else if (trimIdSelected) {
+        handleTrimChange(trimIdSelected, error);
       } else {
         handleTrimChange(trimValue, error);
       }
@@ -239,6 +243,7 @@ const VehicleInformation: React.FC<Props> = ({ form, fields, viewModel }) => {
             features,
             exteriorColor,
             trim,
+            id,
           } = response;
           const isError = Object.hasOwnProperty.bind(response)('error');
 
@@ -261,11 +266,12 @@ const VehicleInformation: React.FC<Props> = ({ form, fields, viewModel }) => {
             (color) => color.value === exteriorColor
           );
 
-          if (!foundColor) {
+          if (!foundColor && exteriorColor !== null) {
             setExtColors([csExtColor, ...extColors]);
           }
 
           if (alternatives.length > 1) {
+            setCsRespTrimId(id);
             alternatives.forEach((t: any) => {
               trimsArr.push({
                 ...t,
@@ -274,7 +280,7 @@ const VehicleInformation: React.FC<Props> = ({ form, fields, viewModel }) => {
                 trimId: t.id,
               });
             });
-          } else {
+          } else if (trim !== null) {
             trimsArr.push({ label: trim, value: trim });
           }
 
@@ -324,6 +330,7 @@ const VehicleInformation: React.FC<Props> = ({ form, fields, viewModel }) => {
           features,
           exteriorColor,
           trim,
+          id,
         } = response;
         const trimsArr = [];
         const isError = Object.hasOwnProperty.bind(response)('error');
@@ -361,11 +368,12 @@ const VehicleInformation: React.FC<Props> = ({ form, fields, viewModel }) => {
           (color) => color.value === exteriorColor
         );
 
-        if (!foundColor) {
+        if (!foundColor && exteriorColor !== null) {
           setExtColors([csExtColor, ...extColors]);
         }
 
         if (alternatives.length > 1) {
+          setCsRespTrimId(id);
           alternatives.forEach((t: any) => {
             trimsArr.push({
               ...t,
@@ -374,7 +382,7 @@ const VehicleInformation: React.FC<Props> = ({ form, fields, viewModel }) => {
               trimId: t.id,
             });
           });
-        } else {
+        } else if (trim !== null) {
           trimsArr.push({ label: trim, value: trim });
         }
 
@@ -403,10 +411,11 @@ const VehicleInformation: React.FC<Props> = ({ form, fields, viewModel }) => {
   const handleTrimChange = (value: any, error: boolean) => {
     const { trim, csTrimId, exteriorColor, vehicleOptions } = fields;
     const fieldsToUpdate: any = {};
+    const trimIdVal = value ? value.trimId : null;
 
     if (!vinFromStore) {
       fieldsToUpdate['trim'] = { ...trim, ...value, error };
-      fieldsToUpdate['csTrimId'] = { ...csTrimId, value: value.trimId };
+      fieldsToUpdate['csTrimId'] = { ...csTrimId, value: trimIdVal };
 
       if (trims.length === 1) {
         const defaultSelected: any[] = [];
