@@ -34,14 +34,13 @@ const RadioInput: React.FC<Props> = ({
                   value={item.label}
                   name={name}
                   onClick={() => onClick(item.label)}
-                  checked={item.checked}
+                  checked={checked === item.label}
                 />
                 <CheckMark />
                 <StyledRadio
                   value={item.label}
                   name={name}
                   onClick={() => onClick(item.label)}
-                  checked={item.checked}
                 />
                 <RadioTextContainer>
                   {item.label}
