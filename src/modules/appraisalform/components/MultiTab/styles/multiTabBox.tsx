@@ -25,7 +25,7 @@ const Body = styled.div`
 const TabContentSection = styled(({ ...restProps }) => <div {...restProps} />)`
   display: none;
 
-  ${(props) => props.isactive === true && `display: block;`}
+  ${(props) => props.isactive === 'true' && `display: block;`}
 `;
 
 const TabButton = styled(({ ...restProps }) => (
@@ -42,7 +42,7 @@ const TabButton = styled(({ ...restProps }) => (
   white-space: nowrap;
 
   ${(props) =>
-    props.isactive === true &&
+    props.isactive === 'true' &&
     `
       color: #343957;
       border-bottom: 2px solid #e7131a;
