@@ -51,7 +51,6 @@ const AppraisalForm: React.FC<Props> = ({ viewModel }) => {
   const editMode = pathname.includes('#');
   const submitText = editMode ? SaveText : ReviewText;
 
-  // let personalInfo = {}; //logged in users
   const vehicleInfo = viewModel.appraisalStore.vehicleInfoForm;
   const yourInformation = viewModel.appraisalStore.personalInfoForm;
   const vehicleHistory = viewModel.appraisalStore.vehicleHistoryForm;
@@ -222,9 +221,6 @@ const AppraisalForm: React.FC<Props> = ({ viewModel }) => {
     }
   }, [appraisalUseForm.mechConditionForm.fields.warningLights.value]);
 
-  /*
-    email capture logic
-  */
   const { inactive, removeEvent } = useTrackActive();
   const [emailModalShowed, changeEmailModalShowed] = useState(false);
   const [emailModal, changeEmailModal] = useState(false);
@@ -257,8 +253,7 @@ const AppraisalForm: React.FC<Props> = ({ viewModel }) => {
       window.onscroll = () => {
         const currentHeight =
           (window.scrollY + window.innerHeight) / document.body.clientHeight;
-        // this is when user scroll without adding any field in first section
-        // should add abtest in condition name : ac-email-capture
+
         if (
           window.scrollY &&
           !emailModalShowed &&
@@ -273,8 +268,6 @@ const AppraisalForm: React.FC<Props> = ({ viewModel }) => {
   }, [emailModalShowed, appraisalUseForm, checkSection]);
 
   useEffect(() => {
-    // this is when user is inactive 6 second in first 2 section
-    // should add abtest in condition name : ac-email-capture isEmailCapture
     const emailCaptureLocal = localStorage.getItem('email_capture');
     const hasEmailCaptureLocal = emailCaptureLocal === 'true';
 
@@ -311,9 +304,6 @@ const AppraisalForm: React.FC<Props> = ({ viewModel }) => {
     changeEmailModal(false);
   };
 
-  /*
-    end email capture logic
-  */
   const buildFormSectionValues = (form: any, targetObj: any) => {
     for (const [key, value] of Object.entries(form) as any) {
       targetObj[key] = value.value;
@@ -372,12 +362,11 @@ const AppraisalForm: React.FC<Props> = ({ viewModel }) => {
     if (activeSection < sections.length - 1) {
       viewModel.trackNextStepViewed(activeSection + 1);
     }
-    /* email capture logic */
+
     if (activeSection > 1) {
       removeEvent();
     }
     changeCheckSection(activeSection + 1);
-    /* end email capture logic */
 
     if (clearForm) {
       await viewModel.clearAppraisal();
