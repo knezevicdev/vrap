@@ -24,7 +24,7 @@ const LookingToAccomplishInput: React.FC<Props> = ({ field, className }) => {
         name: FormFields.lookingToAccomplish.name,
         label: FormFields.lookingToAccomplish.label,
         onClick: handleOnChange,
-        selected: field.value,
+        checked: field.value,
         options: [
           {
             label: FormFields.lookingToAccomplish.sellMyVehicle.label,

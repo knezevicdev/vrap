@@ -47,7 +47,7 @@ const TireMilesInput: React.FC<Props> = ({ field, className }) => {
         label: FormFields.tireMiles.label,
         onClick: handleOnChange,
         tooltipText: FormFields.tireMiles.toolTip,
-        selected: field.value,
+        checked: field.value,
       }}
     />
   );
