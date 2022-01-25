@@ -111,9 +111,9 @@ const InputContainer = styled(
   letter-spacing: 0.25px;
   border: solid 1px #D6D7DA;
 
-  ${(props): string => props.isEmpty && `background-color: #FFF;`}
+  ${(props): string => props.isempty && `background-color: #FFF;`}
 
-  ${(props): string => props.showError && `border-color: #F26900;`}
+  ${(props): string => props.showerror && `border-color: #F26900;`}
 
   &:active {
     border-color: #1960D0;
