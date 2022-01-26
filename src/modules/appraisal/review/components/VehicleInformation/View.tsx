@@ -5,23 +5,17 @@ import styled from 'styled-components';
 
 import ViewModel from './ViewModel';
 
-import Store from 'src/store';
-
 interface Props {
   viewModel: ViewModel;
-  store: Store;
 }
 
-const VehicleInfomrationView: React.FC<Props> = ({ viewModel, store }) => {
-  const appraisalDetail = store.appraisal;
+const VehicleInfomrationView: React.FC<Props> = ({ viewModel }) => {
   const OptionsList = () => {
     return (
       <>
-        {appraisalDetail?.vehicleInfoForm?.vehicleOptions?.map(
-          (element, index) => {
-            return <Field key={index}>{element}</Field>;
-          }
-        )}
+        {viewModel.vehicleFormInfoOptions.map((element: any, index: any) => {
+          return <Field key={index}>{element}</Field>;
+        })}
       </>
     );
   };
@@ -50,41 +44,39 @@ const VehicleInfomrationView: React.FC<Props> = ({ viewModel, store }) => {
       <Row>
         <Info>
           <Label>{viewModel.vin}</Label>
-          <Field>{appraisalDetail?.vehicleInfoForm?.vin}</Field>
+          <Field>{viewModel.vehicleFormInfoVin}</Field>
         </Info>
-        {appraisalDetail?.vehicleInfoForm?.trim && (
+        {viewModel.vehicleFormInfoTrim && (
           <Info>
             <Label>{viewModel.trim}</Label>
-            <Field title={appraisalDetail?.vehicleInfoForm?.trim}>
-              {addElipsesIfLong(appraisalDetail?.vehicleInfoForm?.trim)}
+            <Field title={viewModel.vehicleFormInfoTrim}>
+              {addElipsesIfLong(viewModel.vehicleFormInfoTrim)}
             </Field>
           </Info>
         )}
         <Info>
           <Label>{viewModel.mileage}</Label>
-          <Field>
-            {numberWithCommas(appraisalDetail?.vehicleInfoForm?.mileage)}
-          </Field>
+          <Field>{numberWithCommas(viewModel.vehicleFormInfoMileage)}</Field>
         </Info>
       </Row>
       <Row>
         <Info>
-          <Field>{`(${appraisalDetail?.vehicleInfoForm?.year} ${appraisalDetail?.vehicleInfoForm?.make} ${appraisalDetail?.vehicleInfoForm?.model})`}</Field>
+          <Field>{`(${viewModel.vehicleFormInfoYear} ${viewModel.vehicleFormInfoMake} ${viewModel.vehicleFormInfoModel})`}</Field>
         </Info>
       </Row>
       <Row>
         <Info>
           <Label>{viewModel.exteriorColor}</Label>
-          <Field>{appraisalDetail?.vehicleInfoForm?.exteriorColor}</Field>
+          <Field>{viewModel.vehicleFormInfoColor}</Field>
         </Info>
         <Info>
           <Label>{viewModel.keysAmount}</Label>
-          <Field>{appraisalDetail?.vehicleInfoForm?.keysAmount}</Field>
+          <Field>{viewModel.vehicleFormInfoKeys}</Field>
         </Info>
 
         <Info>
           <Label>{viewModel.vehicleOptions}</Label>
-          {appraisalDetail?.vehicleInfoForm?.vehicleOptions?.length !== 0 ? (
+          {viewModel.vehicleFormInfoOptions.length !== 0 ? (
             <OptionsList />
           ) : (
             <Field>N\A</Field>

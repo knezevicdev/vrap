@@ -104,6 +104,7 @@ const Label = styled.h3`
   line-height: 1.39;
   letter-spacing: 0.3px;
   font-weight: normal;
+  margin-bottom: 0;
 
   @media (max-width: 767px) {
     font-size: 16px;

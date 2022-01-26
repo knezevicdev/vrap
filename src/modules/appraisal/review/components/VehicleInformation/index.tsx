@@ -10,7 +10,7 @@ const VehicleInformation: React.FC = () => {
   const router = useRouter();
   const { store } = useAppStore();
   const viewModel = new ViewModel(store, router);
-  return <View viewModel={viewModel} store={store} />;
+  return <View viewModel={viewModel} />;
 };
 
 export default VehicleInformation;
