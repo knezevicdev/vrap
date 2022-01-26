@@ -138,7 +138,9 @@ const CloseButton = styled.div`
   cursor: pointer;
 `;
 
-const Title = styled(Typography.Body.Regular)`
+const Title = styled(Typography.Heading.Three)`
+  font-family: Vroom-Sans;
+  font-weight: 800;
   font-size: 36px;
   line-height: 36px;
   letter-spacing: 1px;
@@ -147,11 +149,15 @@ const Title = styled(Typography.Body.Regular)`
   align-items: center;
   margin-bottom: 16px;
   text-align: center;
+  color: #041022;
+
   ${addStyleForMobile(`padding: 0;`)}
 `;
 
 const Description = styled(Typography.Body.Regular)`
   font-size: 18px;
+  font-weight: 400;
+  color: #041022;
   padding: 0 112px;
   display: flex;
   align-items: center;
