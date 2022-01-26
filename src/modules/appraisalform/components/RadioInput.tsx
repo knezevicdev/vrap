@@ -63,6 +63,7 @@ const Label = styled.h3`
   font-size: 18px;
   line-height: 1.39;
   letter-spacing: 0.3px;
+  font-weight: normal;
 `;
 
 const RadioContainer = styled.div`
@@ -158,6 +159,11 @@ const OptionDescription = styled.div`
 const LabelContainer = styled.div`
   display: flex;
   cursor: pointer;
+
+  button {
+    margin-left: 5px;
+    height: auto;
+  }
 `;
 
 export default RadioInput;

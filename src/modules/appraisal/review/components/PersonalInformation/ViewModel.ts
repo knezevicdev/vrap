@@ -1,3 +1,5 @@
+import { NextRouter } from 'next/router';
+
 import Store from 'src/store';
 
 export default class PickupInfoReviewViewModel {
@@ -8,9 +10,14 @@ export default class PickupInfoReviewViewModel {
   readonly zipCode: string = 'Zip Code';
   readonly edit: string = 'Edit';
 
-  constructor(private _store: Store) {}
+  constructor(private _store: Store, private _router: NextRouter) {}
 
   handleEditClick(): void {
-    window.location.href = `/sell/vehicleInformation/${this._store.appraisal?.vehicleInfoForm?.vin}#personalinformation`;
+    this._router.push({
+      pathname: `/`,
+      query: {
+        vehicle: `${this._store.appraisal?.vehicleInfoForm?.vin}#personalinformation`,
+      },
+    });
   }
 }

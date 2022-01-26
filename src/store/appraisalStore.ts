@@ -87,21 +87,8 @@ export class AppraisalStore {
     makeAutoObservable(this);
   }
 
-  init(): boolean {
-    const appraisal = localStorage.getItem('appraisal');
-
-    if (appraisal !== null) {
-      const appraisalData = JSON.parse(appraisal);
-      this.vehicleInfoForm = appraisalData.vehicleInfoForm;
-      this.vehicleHistoryForm = appraisalData.vehicleHistoryForm;
-      this.personalInfoForm = appraisalData.personalInfoForm;
-      this.mechConditionForm = appraisalData.mechConditionForm;
-      this.intConditionForm = appraisalData.intConditionForm;
-      this.extConditionForm = appraisalData.extConditionForm;
-      return true;
-    } else {
-      return false;
-    }
+  hasData(): boolean {
+    return this.isEmpty;
   }
 
   setShowSpinner(value: boolean): void {

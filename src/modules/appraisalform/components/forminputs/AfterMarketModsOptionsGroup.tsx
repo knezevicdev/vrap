@@ -66,21 +66,14 @@ const AfterMarketModsOptionsGroup: React.FC<Props> = ({
   const checkboxes = Object.entries(optionsGroupForm.fields).map(
     ([key, option]) => {
       const typedOption: GenericObject = option as GenericObject;
-      const handleOnClick = (option: GenericObject) => {
-        option.onChange({ ...field, checked: !option.value });
-      };
 
       return (
-        <AfterMarketModsOption
-          key={key}
-          htmlFor={key + '-checkbox'}
-          onClick={() => handleOptionClick(key, typedOption)}
-        >
+        <AfterMarketModsOption key={key} htmlFor={key + '-checkbox'}>
           <Option
             name={key}
             id={key + '-checkbox'}
             label={key}
-            onChange={handleOnClick}
+            onChange={() => handleOptionClick(key, typedOption)}
             checked={!!typedOption.value}
             dataQa="aftermarketoptioncheck"
           />
@@ -110,6 +103,7 @@ const Label = styled.h3`
   font-size: 18px;
   line-height: 1.39;
   letter-spacing: 0.3px;
+  font-weight: normal;
 
   @media (max-width: 767px) {
     font-size: 16px;

@@ -1,5 +1,6 @@
 import { observer } from 'mobx-react';
 import { NextPage, NextPageContext } from 'next';
+import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
@@ -14,15 +15,16 @@ interface Prop {
 }
 
 const AppraisalReview: NextPage<Prop> = () => {
+  const router = useRouter();
   const { store } = useAppStore();
   const [hasData, setHasData] = useState(false);
   useEffect(() => {
-    setHasData(store.appraisal.init());
+    setHasData(store.appraisal.hasData());
   }, [store.appraisal]);
   useEffect(() => {
     if (!hasData) {
       const timeout = setTimeout(() => {
-        window.location.href = '/sell/vehicleInformation';
+        router.push('/');
       }, 5000);
       return () => {
         clearTimeout(timeout);
@@ -46,7 +48,7 @@ const AppraisalReview: NextPage<Prop> = () => {
                   form.
                 </p>
                 <p>
-                  <a href="/sell/vehicleInformation">Appraisal Form Link</a>
+                  <a href="/">Appraisal Form Link</a>
                 </p>
               </Container>
             )}
