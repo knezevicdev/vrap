@@ -106,5 +106,5 @@ export function makeRequestBody(appraisalData: any): AppraisalPayload {
     ...attributionData(appraisalData),
   };
 
-  return { payload: data };
+  return data;
 }

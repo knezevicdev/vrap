@@ -87,7 +87,7 @@ export class AppraisalStore {
     makeAutoObservable(this);
   }
 
-  hasData(): boolean {
+  isFormEmpty(): boolean {
     return this.isEmpty;
   }
 

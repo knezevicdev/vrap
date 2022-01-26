@@ -19,10 +19,10 @@ const AppraisalReview: NextPage<Prop> = () => {
   const router = useRouter();
   const { store } = useAppStore();
   useEffect(() => {
-    if (!store.appraisal.hasData()) {
+    if (store.appraisal.isFormEmpty()) {
       router.push('/');
     }
-  }, [store.appraisal]);
+  }, [store.appraisal, router]);
 
   return (
     <Page name="Review Your Appraisal">
