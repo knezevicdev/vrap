@@ -31,6 +31,8 @@ const TabContentSection = styled(({ ...restProps }) => <div {...restProps} />)`
 const TabButton = styled(({ ...restProps }) => (
   <Typography.Body.Regular {...restProps} />
 ))`
+  font-family: Calibre-Semibold;
+  font-size: 18px;
   line-height: 25px;
   letter-spacing: 0.25px;
   font-weight: 600;
