@@ -417,12 +417,6 @@ export interface WebLeadUserData {
   lastName: string;
   email: string;
   phone: string;
-  emailConsent: boolean;
-  anonId: string;
-  is3pa?: boolean;
-  authSrc?: string;
-  userState?: string;
-  userCity?: string;
   subsite?: string;
   correlationId: string;
 }

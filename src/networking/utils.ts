@@ -115,13 +115,9 @@ export const getDummyOfferResp = (reqBody: any): any => {
   };
 };
 
-export function getUTMParams(is3pa?: boolean, authSrc?: string): UTMParams {
-  let queryString = '';
-  if (is3pa && authSrc) {
-    queryString = decodeURIComponent(authSrc).split(/\?(.+)/)[1];
-  } else {
-    queryString = window.location.search;
-  }
+export function getUTMParams(): UTMParams {
+  const queryString = window.location.search;
+
   const urlParams = new URLSearchParams(queryString);
   const utmParamKeys: string[] = [
     'utm_campaign',
@@ -151,13 +147,8 @@ export function getUTMParams(is3pa?: boolean, authSrc?: string): UTMParams {
   return utmObj as UTMParams;
 }
 
-export function getMiscParams(is3pa?: boolean, authSrc?: string): MiscParams {
-  let queryString = '';
-  if (is3pa && authSrc) {
-    queryString = decodeURIComponent(authSrc).split(/\?(.+)/)[1];
-  } else {
-    queryString = window.location.search;
-  }
+export function getMiscParams(): MiscParams {
+  const queryString = window.location.search;
   const urlParams = new URLSearchParams(queryString);
   const utmParamKeys: string[] = ['gclid', 'subid'];
 
@@ -199,42 +190,27 @@ export function formWebLeadPayload({
   lastName,
   email,
   phone,
-  emailConsent,
-  anonId,
-  is3pa,
-  authSrc,
-  userState,
-  userCity,
   subsite,
   correlationId,
 }: WebLeadUserData): WebLeadsPayload {
-  let state;
-  let city;
-  let sessionid;
-  let site;
-  if (is3pa) {
-    state = userState || '';
-    city = userCity || '';
-    sessionid = anonId || '';
-    site = 'www.vroom.com';
-  } else {
-    // GEO DATA
-    const catGeoData: CatData = window['__CAT_DATA__'] || {};
-    state = catGeoData.geo.region || '';
-    city = catGeoData.geo.city || '';
-    sessionid = getUuid();
-    site = window.location.hostname;
-  }
+  const anonId = Cookies.get('ajs_anonymous_id') || '';
+
+  // GEO DATA
+  const catGeoData: CatData = window['__CAT_DATA__'] || {};
+  const state = catGeoData.geo.region || '';
+  const city = catGeoData.geo.city || '';
+  const sessionid = getUuid();
+  const site = window.location.hostname;
 
   // QUERY PARAMS
-  const utmParams = getUTMParams(is3pa, authSrc);
-  const { gclid = '', subid = '' } = getMiscParams(is3pa, authSrc);
+  const utmParams = getUTMParams();
+  const { gclid = '', subid = '' } = getMiscParams();
 
   return {
     type: 'Website',
     tradeIn: false,
     message: {
-      form: 'registration',
+      form: 'appraisal',
       brand: 'Vroom',
       site: site,
       subsite: subsite,
@@ -252,7 +228,7 @@ export function formWebLeadPayload({
         },
         {
           type: 'email',
-          granted: emailConsent,
+          granted: false,
         },
       ],
       state,
@@ -274,7 +250,7 @@ export function formWebLeadPayload({
       address: [{}],
     },
     weblead: {
-      webpage: 'registration',
+      webpage: 'appraisal',
       dealership: 'Vroom',
       subid,
       gclid,

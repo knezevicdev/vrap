@@ -1,8 +1,7 @@
 import { isErrorResponse } from '@vroom-web/networking';
 
 import AnalyticsHandler from 'src/integrations/AnalyticsHandler';
-import { getMilageCheck } from 'src/networking/request';
-import { getUser, IsUserSignIn } from 'src/networking/request';
+import { getMilageCheck, getUser, IsUserSignIn } from 'src/networking/request';
 import store from 'src/store';
 import { ABSmartStore } from 'src/store/abSmartStore';
 import { AppraisalStore } from 'src/store/appraisalStore';

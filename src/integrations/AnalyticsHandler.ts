@@ -1,4 +1,10 @@
 import { AnalyticsHandler as BaseAnalyticsHandler } from '@vroom-web/analytics-integration';
+import CryptoJS from 'crypto-js';
+import AES from 'crypto-js/aes';
+import getConfig from 'next/config';
+
+const { publicRuntimeConfig } = getConfig();
+const { ITERABLE_UNSUBSCRIBE_KEY } = publicRuntimeConfig;
 
 class AnalyticsHandler extends BaseAnalyticsHandler {
   trackPriceViewed(): void {
@@ -233,14 +239,13 @@ class AnalyticsHandler extends BaseAnalyticsHandler {
     this.track(event, properties);
   }
 
-  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
   tracksEmailCapture = (
     eventName: string,
     loggedIn: boolean,
     mobile: number,
     nonInteraction: number,
     result: string | boolean
-  ) => {
+  ): void => {
     const trackObj = result
       ? {
           eventName,
@@ -258,6 +263,39 @@ class AnalyticsHandler extends BaseAnalyticsHandler {
           nonInteraction,
         };
     this.track(eventName, trackObj);
+  };
+
+  trackLeadSubmitted = (label: string, leadData: any): void => {
+    const { email, phoneNumber, lead_id } = leadData;
+
+    const trackLeadObj = {
+      label,
+      email,
+      phone: phoneNumber,
+      lead_id,
+    };
+
+    this.track('Lead Submitted', trackLeadObj);
+
+    const trackingData = {
+      phone: phoneNumber,
+      emailEncrypted: '',
+    };
+
+    const parseEmail = CryptoJS.enc.Utf8.parse(email);
+    const key = CryptoJS.enc.Base64.parse(ITERABLE_UNSUBSCRIBE_KEY);
+    const iv = CryptoJS.enc.Utf8.parse('Example of IV123');
+
+    const emailEncrypted = AES.encrypt(parseEmail, key, {
+      iv: iv,
+      keySize: 256 / 32,
+      mode: CryptoJS.mode.CBC,
+      padding: CryptoJS.pad.Pkcs7,
+    });
+
+    trackingData.emailEncrypted = encodeURIComponent(emailEncrypted.toString());
+
+    this.track(`Appraisal Submitted`, trackingData);
   };
 }
 

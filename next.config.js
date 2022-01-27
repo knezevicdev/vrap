@@ -44,6 +44,7 @@ const config = {
     NEXT_PUBLIC_GEARBOX_REST_URL: process.env.NEXT_PUBLIC_GEARBOX_REST_URL,
     GQL_PROXY_URL: endPointSelector(),
     NEXT_PUBLIC_WEB_LEADS_URL: process.env.NEXT_PUBLIC_WEB_LEADS_URL,
+    ITERABLE_UNSUBSCRIBE_KEY: process.env.ITERABLE_UNSUBSCRIBE_KEY,
   },
   serverRuntimeConfig: {
     // Will only be available on the server side
