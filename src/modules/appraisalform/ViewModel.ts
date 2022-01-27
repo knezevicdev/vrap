@@ -21,8 +21,10 @@ class PriceViewModel {
     return this._analyticsHandler;
   }
 
-  get grade(): any {
-    return this.appraisalStore.gradeCheck.grade;
+  get grade(): boolean {
+    return this.appraisalStore.gradeCheck
+      ? this.appraisalStore.gradeCheck.grade
+      : false;
   }
 
   get carfaxOdoLast(): any {
