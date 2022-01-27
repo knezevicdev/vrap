@@ -404,7 +404,7 @@ const StepNumber = styled.div`
 
 const StepTitle = styled(({ ...restProps }) => <div {...restProps} />)`
   font-family: Calibre-Semibold;
-  font-size: 20px;
+  font-size: 18px;
   line-height: 26px;
   letter-spacing: 0.25px;
   color: #041022;
