@@ -11,6 +11,7 @@ const Container = styled.div`
   display: flex;
   background: #041022;
   padding: 48px 64px 32px 64px;
+  ${(props): string => (props.hasOverlay ? 'padding-bottom: 180px' : '')};
   @media (max-width: 599px) {
     flex-direction: column;
     padding: 24px;
@@ -55,9 +56,10 @@ const CustomA = styled.a`
 
 interface Props {
   viewModel: FooterViewModel;
+  hasOverlay: boolean;
 }
 
-const FooterView: React.FC<Props> = ({ viewModel }) => {
+const FooterView: React.FC<Props> = ({ viewModel, hasOverlay = false }) => {
   const { facebook, twitter, instagram } = viewModel.socialLinks;
   const { apple, google } = viewModel.appLinks;
 
