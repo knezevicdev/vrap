@@ -43,6 +43,7 @@ const config = {
     NEXT_PUBLIC_GQL_URL: process.env.NEXT_PUBLIC_GQL_URL,
     NEXT_PUBLIC_GEARBOX_REST_URL: process.env.NEXT_PUBLIC_GEARBOX_REST_URL,
     GQL_PROXY_URL: endPointSelector(),
+    NEXT_PUBLIC_WEB_LEADS_URL: process.env.NEXT_PUBLIC_WEB_LEADS_URL,
   },
   serverRuntimeConfig: {
     // Will only be available on the server side
@@ -50,6 +51,8 @@ const config = {
     INTERCHANGE_PROXY_TARGET: process.env.INTERCHANGE_PROXY_TARGET,
     GQL_PROXY_TARGET: process.env.GQL_PROXY_TARGET,
     CAT_DATA_PROXY_TARGET: process.env.CAT_DATA_PROXY_TARGET,
+    WEB_LEADS_PROXY_TARGET: process.env.WEB_LEADS_PROXY_TARGET,
+    WEBLEAD_API: process.env.WEBLEAD_API,
   },
   /* Custom webpack configuration. */
   webpack: (config) => {

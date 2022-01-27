@@ -1,4 +1,15 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { CatData } from '@vroom-web/cat-sdk';
+import crypto from 'crypto';
+import Cookies from 'js-cookie';
+
+import {
+  MiscParams,
+  UTMParams,
+  WebLeadsPayload,
+  WebLeadUserData,
+} from 'src/interfaces.d';
+
 export const checkAppraisalPayload = (req: any): number => {
   const {
     firstName,
@@ -103,3 +114,173 @@ export const getDummyOfferResp = (reqBody: any): any => {
     },
   };
 };
+
+export function getUTMParams(is3pa?: boolean, authSrc?: string): UTMParams {
+  let queryString = '';
+  if (is3pa && authSrc) {
+    queryString = decodeURIComponent(authSrc).split(/\?(.+)/)[1];
+  } else {
+    queryString = window.location.search;
+  }
+  const urlParams = new URLSearchParams(queryString);
+  const utmParamKeys: string[] = [
+    'utm_campaign',
+    'utm_content',
+    'utm_medium',
+    'utm_source',
+    'utm_term',
+    'utm_keyword',
+    'utm_subsource',
+  ];
+
+  const utmObj: UTMParams = {
+    utm_campaign: '',
+    utm_content: '',
+    utm_medium: '',
+    utm_source: '',
+    utm_term: '',
+    utm_keyword: '',
+    utm_subsource: '',
+  };
+
+  for (const key of utmParamKeys) {
+    const paramVal = urlParams.get(key);
+    if (paramVal) utmObj[key as keyof UTMParams] = paramVal;
+  }
+
+  return utmObj as UTMParams;
+}
+
+export function getMiscParams(is3pa?: boolean, authSrc?: string): MiscParams {
+  let queryString = '';
+  if (is3pa && authSrc) {
+    queryString = decodeURIComponent(authSrc).split(/\?(.+)/)[1];
+  } else {
+    queryString = window.location.search;
+  }
+  const urlParams = new URLSearchParams(queryString);
+  const utmParamKeys: string[] = ['gclid', 'subid'];
+
+  const paramObj: MiscParams = {
+    gclid: '',
+    subid: '',
+  };
+
+  for (const key of utmParamKeys) {
+    const paramVal = urlParams.get(key);
+    if (paramVal) paramObj[key as keyof MiscParams] = paramVal;
+  }
+
+  return paramObj as MiscParams;
+}
+
+export function generateUUID4(): string {
+  return crypto.randomBytes(16).toString('hex');
+}
+
+export function getUuid(): string {
+  const UUID_COOKIE_TIME = 730; // 2 years(days)
+  const uuidCookieName = 'uuid';
+  const uuidCookie = Cookies.get(uuidCookieName);
+
+  const uuid = !uuidCookie ? generateUUID4() : uuidCookie;
+
+  if (!uuidCookie) {
+    Cookies.set(uuidCookieName, uuid, {
+      expires: UUID_COOKIE_TIME,
+    });
+  }
+
+  return uuid;
+}
+
+export function formWebLeadPayload({
+  firstName,
+  lastName,
+  email,
+  phone,
+  emailConsent,
+  anonId,
+  is3pa,
+  authSrc,
+  userState,
+  userCity,
+  subsite,
+  correlationId,
+}: WebLeadUserData): WebLeadsPayload {
+  let state;
+  let city;
+  let sessionid;
+  let site;
+  if (is3pa) {
+    state = userState || '';
+    city = userCity || '';
+    sessionid = anonId || '';
+    site = 'www.vroom.com';
+  } else {
+    // GEO DATA
+    const catGeoData: CatData = window['__CAT_DATA__'] || {};
+    state = catGeoData.geo.region || '';
+    city = catGeoData.geo.city || '';
+    sessionid = getUuid();
+    site = window.location.hostname;
+  }
+
+  // QUERY PARAMS
+  const utmParams = getUTMParams(is3pa, authSrc);
+  const { gclid = '', subid = '' } = getMiscParams(is3pa, authSrc);
+
+  return {
+    type: 'Website',
+    tradeIn: false,
+    message: {
+      form: 'registration',
+      brand: 'Vroom',
+      site: site,
+      subsite: subsite,
+      ...utmParams,
+    },
+    person: {
+      consent: [
+        {
+          type: 'phone',
+          granted: true,
+        },
+        {
+          type: 'TCPA',
+          granted: true,
+        },
+        {
+          type: 'email',
+          granted: emailConsent,
+        },
+      ],
+      state,
+      city,
+      firstName,
+      lastName,
+      phone: [
+        {
+          type: null,
+          number: phone,
+        },
+      ],
+      email: [
+        {
+          type: null,
+          address: email,
+        },
+      ],
+      address: [{}],
+    },
+    weblead: {
+      webpage: 'registration',
+      dealership: 'Vroom',
+      subid,
+      gclid,
+      sessionid,
+      userid: anonId,
+    },
+    correlationId,
+  };
+}

@@ -8,6 +8,7 @@ const client = new Client(publicRuntimeConfig.GQL_PROXY_URL, {
   useMockServer: !!publicRuntimeConfig.mockServer,
   httpEndpoints: {
     interchangeUrl: publicRuntimeConfig.NEXT_PUBLIC_INTERCHANGE_URL,
+    webleadsUrl: publicRuntimeConfig.NEXT_PUBLIC_WEB_LEADS_URL || '',
   },
 });
 

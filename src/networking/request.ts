@@ -8,7 +8,11 @@ import {
   Prices,
   VerificationRespData,
 } from './models/Price';
-import { checkAppraisalPayload, getDummyOfferResp } from './utils';
+import {
+  checkAppraisalPayload,
+  formWebLeadPayload,
+  getDummyOfferResp,
+} from './utils';
 
 import ACCEPT_REJECT_OFFER from 'src/graphql/mutations/acceptRejectOffer.graphql';
 import CREATE_USER_PAYMENT_ACCOUNT from 'src/graphql/mutations/createUserPaymentAccount.graphql';
@@ -24,13 +28,15 @@ import {
   PaymentOverviewFormValues,
   PlaidData,
   PlaidTokenResp,
+  WebLeadsPayload,
+  WebLeadUserData,
 } from 'src/interfaces.d';
 import {
   DocumentResponse,
   PatchReviewData,
 } from 'src/networking/models/Verification';
 
-const { publicRuntimeConfig } = getConfig();
+const { publicRuntimeConfig, serverRuntimeConfig } = getConfig();
 const VROOM_URL = publicRuntimeConfig.NEXT_PUBLIC_VROOM_URL;
 
 export enum Status {
@@ -302,4 +308,17 @@ export const getUser = async (): Promise<GQLTypes.User> => {
   });
   if (isErrorResponse(userResp)) throw userResp;
   return userResp.data.user;
+};
+
+export const submitWeblead = async (
+  webleadUserData: WebLeadUserData
+): Promise<Response<any>> => {
+  const webleadPayload: WebLeadsPayload = formWebLeadPayload(webleadUserData);
+  const webleadResponse = await client.httpRequest({
+    method: 'POST',
+    url: serverRuntimeConfig.WEBLEAD_API,
+    data: webleadPayload,
+  });
+
+  return webleadResponse;
 };

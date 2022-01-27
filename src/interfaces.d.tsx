@@ -365,3 +365,79 @@ export interface MileageCheckResp {
   mileage: number;
   errorMessage: string | null;
 }
+
+export interface WebLeadsPayload {
+  type: string;
+  tradeIn: boolean;
+  message: {
+    form: string;
+    brand: string;
+    utm_campaign: string;
+    utm_content: string;
+    utm_medium: string;
+    utm_source: string;
+    utm_term: string;
+    utm_keyword: string;
+    utm_subsource: string;
+    site: string;
+    subsite?: string;
+  };
+  person: {
+    consent: {
+      type: string;
+      granted: boolean;
+    }[];
+    state: string;
+    city: string;
+    firstName: string;
+    lastName: string;
+    phone: {
+      type: null;
+      number: string;
+    }[];
+    email: {
+      type: null;
+      address: string;
+    }[];
+    address: any[];
+  };
+  weblead: {
+    webpage: string;
+    dealership: string;
+    subid: string;
+    gclid: string;
+    sessionid: string;
+    userid: string;
+  };
+  correlationId: string;
+}
+
+export interface WebLeadUserData {
+  firstName: string;
+  lastName: string;
+  email: string;
+  phone: string;
+  emailConsent: boolean;
+  anonId: string;
+  is3pa?: boolean;
+  authSrc?: string;
+  userState?: string;
+  userCity?: string;
+  subsite?: string;
+  correlationId: string;
+}
+
+export interface UTMParams {
+  utm_campaign: string;
+  utm_content: string;
+  utm_medium: string;
+  utm_source: string;
+  utm_term: string;
+  utm_keyword: string;
+  utm_subsource: string;
+}
+
+export interface MiscParams {
+  gclid: string;
+  subid: string;
+}
