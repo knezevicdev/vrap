@@ -24,7 +24,9 @@ const AppraisalFormPage: NextPage = () => {
 
   return (
     <Page name="Appraisal Form">
-      <Header />
+      <HeaderContainer>
+        <Header />
+      </HeaderContainer>
       <PageContent>
         <AppraisalForm />
       </PageContent>
@@ -32,6 +34,13 @@ const AppraisalFormPage: NextPage = () => {
     </Page>
   );
 };
+
+const HeaderContainer = styled.div`
+  position: sticky;
+  top: 0;
+  right: 0;
+  z-index: 5;
+`;
 
 const PageContent = styled.div`
   height: 100%;

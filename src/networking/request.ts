@@ -271,7 +271,7 @@ export const postEmailCapture = async (
   return await client.httpRequest({
     method: 'post',
     url,
-    data: payload,
+    data: { payload },
   });
 };
 
