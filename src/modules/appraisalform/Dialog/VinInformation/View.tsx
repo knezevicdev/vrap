@@ -113,10 +113,12 @@ const Modal = styled.div`
   justify-content: center;
   position: relative;
   ${addStyleForMobile(`
-        top: 20%;
+        top: 10%;
         width: 100%;
         max-width: 363px;
-        padding: 62px 16px;
+        height: auto;
+        max-height: none;
+        padding: 0px 16px;
     `)}
 `;
 
