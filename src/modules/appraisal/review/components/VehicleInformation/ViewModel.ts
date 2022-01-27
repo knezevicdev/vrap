@@ -1,4 +1,7 @@
+import { NextRouter } from 'next/router';
+
 import Store from 'src/store';
+import { AppraisalStore } from 'src/store/appraisalStore';
 
 export default class PickupInfoReviewViewModel {
   readonly vehicleInformationInfotitle: string = 'Vehicle Information';
@@ -9,10 +12,55 @@ export default class PickupInfoReviewViewModel {
   readonly keysAmount: string = 'Number of Keys';
   readonly vehicleOptions: string = 'Options';
   readonly edit: string = 'Edit';
+  appraisalStore: AppraisalStore;
 
-  constructor(private _store: Store) {}
+  constructor(store: Store, private _router: NextRouter) {
+    this.appraisalStore = store.appraisal;
+  }
+
+  get vehicleFormInfoVin(): string {
+    return this.appraisalStore.vehicleInfoForm.vin;
+  }
+
+  get vehicleFormInfoTrim(): string {
+    return this.appraisalStore.vehicleInfoForm.trim;
+  }
+
+  get vehicleFormInfoMileage(): number | null {
+    return this.appraisalStore.vehicleInfoForm.mileage;
+  }
+
+  get vehicleFormInfoYear(): number | null {
+    return this.appraisalStore.vehicleInfoForm.year;
+  }
+
+  get vehicleFormInfoMake(): string {
+    return this.appraisalStore.vehicleInfoForm.make;
+  }
+
+  get vehicleFormInfoModel(): string {
+    return this.appraisalStore.vehicleInfoForm.model;
+  }
+
+  get vehicleFormInfoColor(): string {
+    return this.appraisalStore.vehicleInfoForm.exteriorColor;
+  }
+
+  get vehicleFormInfoKeys(): string {
+    return this.appraisalStore.vehicleInfoForm.keysAmount;
+  }
+
+  get vehicleFormInfoOptions(): any {
+    return this.appraisalStore.vehicleInfoForm.vehicleOptions;
+  }
 
   handleEditClick(): void {
-    window.location.href = `/sell/vehicleInformation/${this._store.appraisal?.vehicleInfoForm?.vin}#top`;
+    this._router.push({
+      pathname: `/`,
+      query: {
+        vehicle: `${this.appraisalStore?.vehicleInfoForm?.vin}`,
+      },
+      hash: `#top`,
+    });
   }
 }

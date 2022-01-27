@@ -97,27 +97,20 @@ const WarningLightsOptionsGroup: React.FC<Props> = ({
   const checkboxes = Object.entries(optionsGroupForm.fields).map(
     ([key, option]) => {
       const typedOption: GenericObject = option as GenericObject;
-      const handleOnClick = (option: GenericObject) => {
-        option.onChange({ ...field, checked: !option.value });
-      };
 
       const checkboxProps = {
         name: key,
         id: key + '-checkbox',
-        onChange: handleOnClick,
+        onChange: () => handleOptionClick(key, typedOption),
         checked: !!typedOption.value,
       };
 
       return (
-        <WarningOption
-          key={key}
-          htmlFor={key + '-checkbox'}
-          onClick={() => handleOptionClick(key, typedOption)}
-        >
+        <WarningOption key={key} htmlFor={key + '-checkbox'}>
           <Checkbox {...checkboxProps} dataQa="warninglightsoptioncheck">
             <>
-              <ImgContainer src={typedOption.imgSrc} />
-              <Label>{typedOption.value}</Label>
+              {typedOption.imgSrc && <ImgContainer src={typedOption.imgSrc} />}
+              <Label>{key}</Label>
             </>
           </Checkbox>
         </WarningOption>
@@ -150,6 +143,7 @@ const ImgContainer = styled.img`
   width: 22px;
   margin-top: 2px;
   margin-right: 8px;
+  margin-left: 5px;
 `;
 
 const Label = styled.span`

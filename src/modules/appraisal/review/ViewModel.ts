@@ -1,4 +1,5 @@
 import { isErrorResponse } from '@vroom-web/networking';
+import { NextRouter } from 'next/router';
 
 import { makeRequestBody } from '../utils';
 
@@ -9,6 +10,8 @@ import { postAppraisalReview } from 'src/networking/request';
 export default class AppraisalReviewModel {
   readonly title: string = 'my appraisal review';
 
+  constructor(private _router: NextRouter) {}
+
   async submitAppraisal(data: any): Promise<void> {
     try {
       const requestPayload: AppraisalPayload = makeRequestBody(data);
@@ -16,7 +19,10 @@ export default class AppraisalReviewModel {
         if (isErrorResponse(resp)) throw resp;
         const returnData: AppraisalRespData = resp.data;
         localStorage.removeItem('appraisal');
-        window.location.href = `/appraisal/price?priceId=${returnData.data.ID}`;
+        this._router.push({
+          pathname: `/price`,
+          query: { priceId: returnData.data.ID },
+        });
       });
     } catch (err) {
       console.log(JSON.stringify(err));

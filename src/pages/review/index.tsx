@@ -1,6 +1,8 @@
+import { IncomingMessage } from 'http';
 import { observer } from 'mobx-react';
-import { NextPage, NextPageContext } from 'next';
-import React, { useEffect, useState } from 'react';
+import { GetServerSideProps, NextPage } from 'next';
+import { useRouter } from 'next/router';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
 
 import { Header } from 'src/components/Header';
@@ -14,21 +16,13 @@ interface Prop {
 }
 
 const AppraisalReview: NextPage<Prop> = () => {
+  const router = useRouter();
   const { store } = useAppStore();
-  const [hasData, setHasData] = useState(false);
   useEffect(() => {
-    setHasData(store.appraisal.init());
-  }, [store.appraisal]);
-  useEffect(() => {
-    if (!hasData) {
-      const timeout = setTimeout(() => {
-        window.location.href = '/sell/vehicleInformation';
-      }, 5000);
-      return () => {
-        clearTimeout(timeout);
-      };
+    if (store.appraisal.isFormEmpty()) {
+      router.push('/');
     }
-  }, [hasData]);
+  }, [store.appraisal, router]);
 
   return (
     <Page name="Review Your Appraisal">
@@ -36,20 +30,7 @@ const AppraisalReview: NextPage<Prop> = () => {
       <Contents>
         <AppraisalContainer>
           <ReviewContainer>
-            {hasData ? (
-              <AppraisalReviewViewDetail />
-            ) : (
-              <Container>
-                <p>
-                  No data found, if you are not automatically redirected in 5
-                  seconds please use the link below to go back to appraisal
-                  form.
-                </p>
-                <p>
-                  <a href="/sell/vehicleInformation">Appraisal Form Link</a>
-                </p>
-              </Container>
-            )}
+            <AppraisalReviewViewDetail />
           </ReviewContainer>
         </AppraisalContainer>
       </Contents>
@@ -75,26 +56,6 @@ const Contents = styled.div`
   }
 `;
 
-const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  background-color: #ffffff;
-  width: 100%;
-  max-width: 780px;
-  padding: 0 24px 30px 24px;
-  border: solid 1px #d6d7da;
-  margin-bottom: 20px;
-  @media (max-width: 1020px) {
-    max-width: 100%;
-    padding: 30px 24px;
-    margin: 0 10px;
-  }
-
-  @media (max-width: 720px) {
-    margin: 0;
-  }
-`;
-
 const AppraisalContainer = styled.div`
   display: flex;
   width: 100%;
@@ -117,12 +78,35 @@ const ReviewContainer = styled.div`
   }
 `;
 
-AppraisalReview.getInitialProps = async (
-  context: NextPageContext
-): Promise<Prop> => {
-  const { query } = context;
-  const priceId = query.priceId as string;
-  return { priceId };
+interface Cookie {
+  uuid: string;
+  ajs_anonymous_id: string;
+}
+
+const parseCookies = (req: IncomingMessage): Cookie => {
+  if (req && req.headers && req.headers.cookie) {
+    return Object.fromEntries(
+      req.headers.cookie.split('; ').map((v) => v.split(/=(.+)/))
+    );
+  } else {
+    return { uuid: '', ajs_anonymous_id: '' };
+  }
+};
+
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const { req } = context;
+  const cookies = parseCookies(req);
+
+  const loggerInfo = {
+    userAgent: req.headers['user-agent'],
+    fastlyClientIp: req.headers['fastly-client-ip'],
+    uuid: cookies['uuid'],
+    ajsAnonymousId: cookies['ajs_anonymous_id'],
+    ipAddress: req.headers['x-forwarded-for'] || req.connection.remoteAddress,
+    url: req.url,
+  };
+  console.log(JSON.stringify(loggerInfo));
+  return { props: {} };
 };
 
 export default observer(AppraisalReview);
