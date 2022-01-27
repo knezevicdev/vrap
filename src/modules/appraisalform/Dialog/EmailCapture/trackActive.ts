@@ -5,7 +5,7 @@ const useTrackActive = () => {
   const [inactive, changeInactive] = useState(false);
   const [stopTrack, changeStopTrack] = useState(false);
   const [timing, changeTiming] = useState<any>(null);
-  const eventKey = ['scroll', 'click', 'keydown', 'mousemove'];
+  const eventKey = ['scroll', 'click', 'mousemove'];
 
   useEffect(() => {
     if (!stopTrack) {
