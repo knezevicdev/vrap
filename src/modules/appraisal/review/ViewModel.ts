@@ -19,6 +19,14 @@ export default class AppraisalReviewModel {
     this.appraisalStore = store.appraisal;
   }
 
+  isAppraisalEmpty(): boolean {
+    return this.appraisalStore.isFormEmpty();
+  }
+
+  redirectToAppraisalForm(): void {
+    this._router.push('/');
+  }
+
   trackIdentify(): void {
     const data = this.appraisalStore;
     const requestPayload: AppraisalPayload = makeRequestBody(data);

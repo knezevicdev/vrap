@@ -1,12 +1,10 @@
 import { IncomingMessage } from 'http';
 import { observer } from 'mobx-react';
 import { GetServerSideProps, NextPage } from 'next';
-import { useRouter } from 'next/router';
-import React, { useEffect } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 
 import { Header } from 'src/components/Header';
-import { useAppStore } from 'src/context';
 import Footer from 'src/core/Footer';
 import AppraisalReviewViewDetail from 'src/modules/appraisal/review';
 import Page from 'src/Page';
@@ -16,14 +14,6 @@ interface Prop {
 }
 
 const AppraisalReview: NextPage<Prop> = () => {
-  const router = useRouter();
-  const { store } = useAppStore();
-  useEffect(() => {
-    if (store.appraisal.isFormEmpty()) {
-      router.push('/');
-    }
-  }, [store.appraisal, router]);
-
   return (
     <Page name="Review Your Appraisal">
       <Header />
