@@ -37,7 +37,7 @@ import {
   PatchReviewData,
 } from 'src/networking/models/Verification';
 
-const { publicRuntimeConfig, serverRuntimeConfig } = getConfig();
+const { publicRuntimeConfig } = getConfig();
 const VROOM_URL = publicRuntimeConfig.NEXT_PUBLIC_VROOM_URL;
 
 export enum Status {
