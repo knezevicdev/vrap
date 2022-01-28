@@ -5,10 +5,10 @@ import View from './View';
 import ViewModel from './ViewModel';
 
 interface Props {
-  hasOverlay: boolean;
+  hasOverlay?: boolean;
 }
 
-const Footer: React.FC<Props> = ({ hasOverlay }) => {
+const Footer: React.FC<Props> = ({ hasOverlay = false }) => {
   const [catSDK] = useState(new CatSDK());
   const [catData, setCatData] = useState<CatData | undefined>();
   useEffect(() => {
