@@ -22,7 +22,11 @@ const AppraisalReviewViewDetail: React.FC<Props> = ({ viewModel }) => {
   const canSubmit = !(isLoading || viewModel.appraisalStore ? true : false);
 
   useEffect(() => {
-    viewModel.trackIdentify();
+    if (viewModel.isAppraisalEmpty()) {
+      viewModel.redirectToAppraisalForm();
+    } else {
+      viewModel.trackIdentify();
+    }
   }, [viewModel]);
 
   if (isLoading) {
