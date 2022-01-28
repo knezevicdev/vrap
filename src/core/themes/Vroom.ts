@@ -37,7 +37,7 @@ export interface ThemeProps {
 export const theme: ThemeProps = {
   typography: {
     family: {
-      hero: 'Vroom Sans',
+      hero: 'Vroom-Sans',
       title: 'Calibre',
       body: 'Calibre',
     },
