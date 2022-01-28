@@ -1,4 +1,4 @@
-import { useRouter } from 'next/router';
+import Router from 'next/router';
 
 import ViewModel from '../ViewModel';
 
@@ -14,7 +14,7 @@ describe('Appraisal review index page test', () => {
 
   beforeEach(() => {
     const stores = new Store();
-    const router = useRouter();
+    const router = Router;
     viewModel = new ViewModel(stores, router);
   });
 
