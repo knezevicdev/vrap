@@ -41,6 +41,7 @@ const Modal = styled.div`
       width: 100%;
       height: 100%;
       max-height: 572px;
+      margin: auto;
   `)};
   @media (max-width: 350px) {
     max-height: 650px;

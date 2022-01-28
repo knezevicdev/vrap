@@ -16,8 +16,9 @@ export default class PickupInfoReviewViewModel {
     this._router.push({
       pathname: `/`,
       query: {
-        vehicle: `${this._store.appraisal?.vehicleInfoForm?.vin}#personalinformation`,
+        vehicle: `${this._store.appraisal?.vehicleInfoForm?.vin}`,
       },
+      hash: `#personalinformation`,
     });
   }
 }
