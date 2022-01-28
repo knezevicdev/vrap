@@ -18,6 +18,7 @@ const Container = styled.div`
   background: rgba(4, 16, 34, 0.7);
   width: 100%;
   height: 100%;
+  display: flex;
   ${addStyleForMobile(`
       display: flex;
       flex-direction: column;
@@ -26,8 +27,9 @@ const Container = styled.div`
 `;
 
 const Modal = styled.div`
-  margin: 12.5% auto;
+  margin: auto;
   max-width: 580px;
+  max-height: 100%;
   width: 100%;
   background-color: #ffffff;
   border: 1px solid rgb(214, 215, 218);
