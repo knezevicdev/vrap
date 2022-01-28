@@ -316,7 +316,7 @@ export const submitWeblead = async (
   const webleadPayload: WebLeadsPayload = formWebLeadPayload(webleadUserData);
   const webleadResponse = await client.httpRequest({
     method: 'POST',
-    url: serverRuntimeConfig.WEBLEAD_API,
+    url: client.httpEndpoints.webleadsUrl,
     data: webleadPayload,
   });
 
