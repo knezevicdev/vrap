@@ -314,6 +314,21 @@ const VehicleInformation: React.FC<Props> = ({ form, fields, viewModel }) => {
     const { vin } = fields;
     const errorMessage = VehicleInfoText.licenseError;
 
+    const [state, license] = lpToDecode.split('-');
+    const fieldsToUpdate = {
+      licensePlate: {
+        ...licenseForm.fields.licensePlate,
+        value: license,
+        error: true,
+        errorMessage,
+      },
+      state: {
+        ...licenseForm.fields.state,
+        value: state,
+      },
+    };
+    licenseForm.updateMultipleFields(fieldsToUpdate);
+
     resetLocalState();
 
     setVinLoader(true);
