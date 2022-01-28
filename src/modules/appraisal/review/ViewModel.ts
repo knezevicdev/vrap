@@ -7,15 +7,36 @@ import AnalyticsHandler from 'src/integrations/AnalyticsHandler';
 import { AppraisalPayload } from 'src/interfaces.d';
 import { AppraisalRespData } from 'src/networking/models/Appraisal';
 import { postAppraisalReview, submitWeblead } from 'src/networking/request';
+import Store from 'src/store';
+import { AppraisalStore } from 'src/store/appraisalStore';
 
 export default class AppraisalReviewModel {
   readonly title: string = 'my appraisal review';
   private _analyticsHandler: AnalyticsHandler = new AnalyticsHandler();
+  appraisalStore: AppraisalStore;
 
-  constructor(private _router: NextRouter) {}
+  constructor(public store: Store, private _router: NextRouter) {
+    this.appraisalStore = store.appraisal;
+  }
 
-  async submitAppraisal(data: any): Promise<void> {
+  trackIdentify(): void {
+    const data = this.appraisalStore;
+    const requestPayload: AppraisalPayload = makeRequestBody(data);
+
+    const identifyData = {
+      ...requestPayload,
+      phone: requestPayload.phoneNumber,
+    };
+
+    this._analyticsHandler.trackAppraisalIdentify(
+      data.user.externalUserID,
+      identifyData
+    );
+  }
+
+  async submitAppraisal(): Promise<void> {
     try {
+      const data = this.appraisalStore;
       const requestPayload: AppraisalPayload = makeRequestBody(data);
       const leadTrackingData = {
         email: requestPayload.email,

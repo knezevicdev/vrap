@@ -297,6 +297,50 @@ class AnalyticsHandler extends BaseAnalyticsHandler {
 
     this.track(`Appraisal Submitted`, trackingData);
   };
+
+  trackAppraisalIdentify = (userId: any, appraisalData: any): void => {
+    const {
+      firstName,
+      lastName,
+      email,
+      phone,
+      phoneNumber,
+      address: street,
+      city,
+      state,
+      zip,
+      zipCode,
+      subID,
+      username,
+    } = appraisalData;
+    const postalCode = zip || zipCode;
+    let address;
+
+    if (street || city || state || postalCode) {
+      address = {
+        street,
+        city,
+        postalCode,
+        state,
+        country: 'USA',
+      };
+    }
+
+    const pickedTraits = {
+      firstName,
+      lastName,
+      phone: phone || phoneNumber,
+      email: email || username,
+      address,
+      subID,
+    };
+
+    if (!userId) {
+      this.identify(pickedTraits);
+    } else {
+      this.identify(pickedTraits, userId);
+    }
+  };
 }
 
 export default AnalyticsHandler;
