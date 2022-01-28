@@ -7,10 +7,11 @@ import { DesktopLinks } from './Desktop/Links';
 import { MobileLinks } from './Mobile/Links';
 import FooterViewModel from './ViewModel';
 
-const Container = styled.div`
+const Container = styled(({ ...restProps }) => <div {...restProps} />)`
   display: flex;
   background: #041022;
   padding: 48px 64px 32px 64px;
+  ${(props): any => (props.hasOverlay === true ? 'padding-bottom: 180px' : '')};
   @media (max-width: 599px) {
     flex-direction: column;
     padding: 24px;
@@ -55,14 +56,15 @@ const CustomA = styled.a`
 
 interface Props {
   viewModel: FooterViewModel;
+  hasOverlay: boolean;
 }
 
-const FooterView: React.FC<Props> = ({ viewModel }) => {
+const FooterView: React.FC<Props> = ({ viewModel, hasOverlay }) => {
   const { facebook, twitter, instagram } = viewModel.socialLinks;
   const { apple, google } = viewModel.appLinks;
 
   return (
-    <Container>
+    <Container hasOverlay={hasOverlay}>
       <Information>
         <CustomA href={viewModel.vroomLink}>
           <Icon icon={Icons.VROOM} color="#FFFFFF" />

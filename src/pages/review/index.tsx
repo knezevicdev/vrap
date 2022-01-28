@@ -34,7 +34,7 @@ const AppraisalReview: NextPage<Prop> = () => {
           </ReviewContainer>
         </AppraisalContainer>
       </Contents>
-      <Footer />
+      <Footer hasOverlay={true} />
     </Page>
   );
 };
