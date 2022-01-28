@@ -18,6 +18,11 @@ const Container = styled.div`
   background: rgba(4, 16, 34, 0.7);
   width: 100%;
   height: 100%;
+  ${addStyleForMobile(`
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+  `)};
 `;
 
 const Modal = styled.div`
@@ -33,13 +38,14 @@ const Modal = styled.div`
   justify-content: center;
   position: relative;
   ${addStyleForMobile(`
-        top: 20%;
-        width: 100%;
-        max-width: 363px;
-        height: 100%;
-        max-height: 409px;
-        padding: 62px 16px;
-    `)}
+      width: 100%;
+      height: 100%;
+      max-height: 572px;
+  `)};
+  @media (max-width: 350px) {
+    max-height: 650px;
+    margin: 0;
+  }
 `;
 
 const ExactMileageContent = styled.div`
@@ -48,6 +54,13 @@ const ExactMileageContent = styled.div`
   width: 580px;
   text-align: center;
   position: relative;
+  ${addStyleForMobile(`
+      width: 100%;
+      height: 100%;
+  `)};
+  @media (max-width: 280px) {
+    padding: 40px;
+  }
 `;
 
 const carTimerIcon = `${BASE_PATH}/icons/car-timer.svg`;
