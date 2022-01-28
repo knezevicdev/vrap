@@ -67,13 +67,14 @@ const InputContainer = styled(({ height, ...restProps }) => (
   height: ${(props) => props.height || 'auto'};
   resize: none;
   padding: 5px 9px;
+  font-size: 18px;
   border: 1px solid ${grayThree};
   background-color: ${primaryWhite};
   color: ${primaryBlack};
   outline: none;
   border-radius: 0;
   box-shadow: none;
-  font-family: 'Calibre-Regular';
+  font-family: Calibre-Regular;
 
   &::placeholder {
     color: ${grayTwo};
