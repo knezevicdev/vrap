@@ -4,7 +4,11 @@ import React, { useEffect, useState } from 'react';
 import View from './View';
 import ViewModel from './ViewModel';
 
-const Footer: React.FC = () => {
+interface Props {
+  hasOverlay: boolean;
+}
+
+const Footer: React.FC<Props> = ({ hasOverlay }) => {
   const [catSDK] = useState(new CatSDK());
   const [catData, setCatData] = useState<CatData | undefined>();
   useEffect(() => {
@@ -16,7 +20,7 @@ const Footer: React.FC = () => {
       catSDK.unobserveCatData(catDataEventListener);
     };
   }, [catSDK]);
-  return <View viewModel={new ViewModel(catData)} />;
+  return <View viewModel={new ViewModel(catData)} hasOverlay={hasOverlay} />;
 };
 
 export default Footer;
