@@ -43,10 +43,6 @@ const Modal = styled.div`
       max-height: 572px;
       margin: auto;
   `)};
-  @media (max-width: 350px) {
-    max-height: 650px;
-    margin: 0;
-  }
 `;
 
 const ExactMileageContent = styled.div`
@@ -58,10 +54,8 @@ const ExactMileageContent = styled.div`
   ${addStyleForMobile(`
       width: 100%;
       height: 100%;
+      padding: 40px 30px;
   `)};
-  @media (max-width: 280px) {
-    padding: 40px;
-  }
 `;
 
 const carTimerIcon = `${BASE_PATH}/icons/car-timer.svg`;
