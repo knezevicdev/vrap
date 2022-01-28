@@ -18,6 +18,11 @@ const Container = styled.div`
   background: rgba(4, 16, 34, 0.7);
   width: 100%;
   height: 100%;
+  ${addStyleForMobile(`
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+  `)};
 `;
 
 const Modal = styled.div`
@@ -33,13 +38,11 @@ const Modal = styled.div`
   justify-content: center;
   position: relative;
   ${addStyleForMobile(`
-        top: 10%;
-        width: 100%;
-        max-width: 363px;
-        height: auto;
-        max-height: none;
-        padding: 0;
-    `)}
+      width: 100%;
+      height: 100%;
+      max-height: 572px;
+      margin: auto;
+  `)};
 `;
 
 const ExactMileageContent = styled.div`
@@ -48,6 +51,11 @@ const ExactMileageContent = styled.div`
   width: 580px;
   text-align: center;
   position: relative;
+  ${addStyleForMobile(`
+      width: 100%;
+      height: 100%;
+      padding: 40px 30px;
+  `)};
 `;
 
 const carTimerIcon = `${BASE_PATH}/icons/car-timer.svg`;
