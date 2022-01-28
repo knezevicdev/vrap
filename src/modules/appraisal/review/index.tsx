@@ -9,8 +9,8 @@ import { useAppStore } from 'src/context';
 const AppraisalReview: React.FC = () => {
   const router = useRouter();
   const { store } = useAppStore();
-  const viewModel = new ViewModel(router);
-  return <View viewModel={viewModel} store={store} />;
+  const viewModel = new ViewModel(store, router);
+  return <View viewModel={viewModel} />;
 };
 
 export default AppraisalReview;

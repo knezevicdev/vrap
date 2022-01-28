@@ -1,0 +1,11 @@
+query GET_USER {
+  user {
+    firstName,
+    lastName,
+    username,
+    externalUserID,
+    phones {
+      number
+    }
+  }
+}

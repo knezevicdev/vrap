@@ -1,8 +1,7 @@
 import { Typography } from '@vroom-web/ui-lib';
 import { VroomSpinner } from '@vroom-web/ui-lib';
-import { toJS } from 'mobx';
 import { observer } from 'mobx-react';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
 import ExteriorCondition from './components/ExteriorCondition';
@@ -13,17 +12,18 @@ import VehicleHistory from './components/VehicleHistory';
 import VehicleInformation from './components/VehicleInformation';
 import ViewModel from './ViewModel';
 
-import Store from 'src/store';
-
 interface Props {
   viewModel: ViewModel;
-  store: Store;
 }
 
-const AppraisalReviewViewDetail: React.FC<Props> = ({ viewModel, store }) => {
+const AppraisalReviewViewDetail: React.FC<Props> = ({ viewModel }) => {
   const [isLoading, setIsLoading] = useState(false);
   const submitButtonClasses = ['btn', 'btn-primary', 'finish-section-btn'];
-  const canSubmit = !(isLoading || store.appraisal ? true : false);
+  const canSubmit = !(isLoading || viewModel.appraisalStore ? true : false);
+
+  useEffect(() => {
+    viewModel.trackIdentify();
+  }, [viewModel]);
 
   if (isLoading) {
     submitButtonClasses.push('submitting');
@@ -31,7 +31,7 @@ const AppraisalReviewViewDetail: React.FC<Props> = ({ viewModel, store }) => {
 
   const handleSubmit = (): void => {
     setIsLoading(true);
-    viewModel.submitAppraisal(toJS(store.appraisal)).then(() => {
+    viewModel.submitAppraisal().then(() => {
       setIsLoading(false);
     });
   };

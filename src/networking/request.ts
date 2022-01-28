@@ -8,12 +8,17 @@ import {
   Prices,
   VerificationRespData,
 } from './models/Price';
-import { checkAppraisalPayload, getDummyOfferResp } from './utils';
+import {
+  checkAppraisalPayload,
+  formWebLeadPayload,
+  getDummyOfferResp,
+} from './utils';
 
 import ACCEPT_REJECT_OFFER from 'src/graphql/mutations/acceptRejectOffer.graphql';
 import CREATE_USER_PAYMENT_ACCOUNT from 'src/graphql/mutations/createUserPaymentAccount.graphql';
 import GRADE_CHECK from 'src/graphql/mutations/gradeCheck.graphql';
 import GET_PLAID_TOKEN from 'src/graphql/queries/getLinkToken.graphql';
+import GET_USER from 'src/graphql/queries/getUser.graphql';
 import {
   AppraisalResp,
   GradeCheckResp,
@@ -24,6 +29,8 @@ import {
   PaymentOverviewFormValues,
   PlaidData,
   PlaidTokenResp,
+  WebLeadsPayload,
+  WebLeadUserData,
 } from 'src/interfaces.d';
 import {
   DocumentResponse,
@@ -287,19 +294,21 @@ export const IsUserSignIn = async (): Promise<boolean> => {
 
 export const getUser = async (): Promise<GQLTypes.User> => {
   const userResp = await client.gqlRequest<{ user: GQLTypes.User }>({
-    document: `
-      query {
-        user {
-          firstName,
-          lastName,
-          username,
-          phones {
-            number
-          }
-        }
-      }
-    `,
+    document: GET_USER,
   });
   if (isErrorResponse(userResp)) throw userResp;
   return userResp.data.user;
+};
+
+export const submitWeblead = async (
+  webleadUserData: WebLeadUserData
+): Promise<Response<any>> => {
+  const webleadPayload: WebLeadsPayload = formWebLeadPayload(webleadUserData);
+  const webleadResponse = await client.httpRequest({
+    method: 'POST',
+    url: client.httpEndpoints.webleadsUrl,
+    data: webleadPayload,
+  });
+
+  return webleadResponse;
 };

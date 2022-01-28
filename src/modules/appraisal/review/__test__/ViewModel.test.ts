@@ -1,4 +1,8 @@
+import Router from 'next/router';
+
 import ViewModel from '../ViewModel';
+
+import Store from 'src/store';
 
 jest.mock('next/config', () => (): unknown => ({
   publicRuntimeConfig: {},
@@ -9,7 +13,9 @@ describe('Appraisal review index page test', () => {
   let viewModel: ViewModel;
 
   beforeEach(() => {
-    viewModel = new ViewModel();
+    const stores = new Store();
+    const router = Router;
+    viewModel = new ViewModel(stores, router);
   });
 
   it('check title', () => {

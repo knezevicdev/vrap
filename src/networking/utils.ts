@@ -1,4 +1,15 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { CatData } from '@vroom-web/cat-sdk';
+import crypto from 'crypto';
+import Cookies from 'js-cookie';
+
+import {
+  MiscParams,
+  UTMParams,
+  WebLeadsPayload,
+  WebLeadUserData,
+} from 'src/interfaces.d';
+
 export const checkAppraisalPayload = (req: any): number => {
   const {
     firstName,
@@ -103,3 +114,149 @@ export const getDummyOfferResp = (reqBody: any): any => {
     },
   };
 };
+
+export function getUTMParams(): UTMParams {
+  const queryString = window.location.search;
+
+  const urlParams = new URLSearchParams(queryString);
+  const utmParamKeys: string[] = [
+    'utm_campaign',
+    'utm_content',
+    'utm_medium',
+    'utm_source',
+    'utm_term',
+    'utm_keyword',
+    'utm_subsource',
+  ];
+
+  const utmObj: UTMParams = {
+    utm_campaign: '',
+    utm_content: '',
+    utm_medium: '',
+    utm_source: '',
+    utm_term: '',
+    utm_keyword: '',
+    utm_subsource: '',
+  };
+
+  for (const key of utmParamKeys) {
+    const paramVal = urlParams.get(key);
+    if (paramVal) utmObj[key as keyof UTMParams] = paramVal;
+  }
+
+  return utmObj as UTMParams;
+}
+
+export function getMiscParams(): MiscParams {
+  const queryString = window.location.search;
+  const urlParams = new URLSearchParams(queryString);
+  const utmParamKeys: string[] = ['gclid', 'subid'];
+
+  const paramObj: MiscParams = {
+    gclid: '',
+    subid: '',
+  };
+
+  for (const key of utmParamKeys) {
+    const paramVal = urlParams.get(key);
+    if (paramVal) paramObj[key as keyof MiscParams] = paramVal;
+  }
+
+  return paramObj as MiscParams;
+}
+
+export function generateUUID4(): string {
+  return crypto.randomBytes(16).toString('hex');
+}
+
+export function getUuid(): string {
+  const UUID_COOKIE_TIME = 730; // 2 years(days)
+  const uuidCookieName = 'uuid';
+  const uuidCookie = Cookies.get(uuidCookieName);
+
+  const uuid = !uuidCookie ? generateUUID4() : uuidCookie;
+
+  if (!uuidCookie) {
+    Cookies.set(uuidCookieName, uuid, {
+      expires: UUID_COOKIE_TIME,
+    });
+  }
+
+  return uuid;
+}
+
+export function formWebLeadPayload({
+  firstName,
+  lastName,
+  email,
+  phone,
+  subsite,
+  correlationId,
+}: WebLeadUserData): WebLeadsPayload {
+  const anonId = Cookies.get('ajs_anonymous_id') || '';
+
+  // GEO DATA
+  const catGeoData: CatData = window['__CAT_DATA__'] || {};
+  const state = catGeoData.geo.region || '';
+  const city = catGeoData.geo.city || '';
+  const sessionid = getUuid();
+  const site = window.location.hostname;
+
+  // QUERY PARAMS
+  const utmParams = getUTMParams();
+  const { gclid = '', subid = '' } = getMiscParams();
+
+  return {
+    type: 'Website',
+    tradeIn: false,
+    message: {
+      form: 'appraisal',
+      brand: 'Vroom',
+      site: site,
+      subsite: subsite,
+      ...utmParams,
+    },
+    person: {
+      consent: [
+        {
+          type: 'phone',
+          granted: true,
+        },
+        {
+          type: 'TCPA',
+          granted: true,
+        },
+        {
+          type: 'email',
+          granted: false,
+        },
+      ],
+      state,
+      city,
+      firstName,
+      lastName,
+      phone: [
+        {
+          type: null,
+          number: phone,
+        },
+      ],
+      email: [
+        {
+          type: null,
+          address: email,
+        },
+      ],
+      address: [{}],
+    },
+    weblead: {
+      webpage: 'appraisal',
+      dealership: 'Vroom',
+      subid,
+      gclid,
+      sessionid,
+      userid: anonId,
+    },
+    correlationId,
+  };
+}
