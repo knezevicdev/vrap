@@ -7,7 +7,7 @@ import { DesktopLinks } from './Desktop/Links';
 import { MobileLinks } from './Mobile/Links';
 import FooterViewModel from './ViewModel';
 
-const Container = styled.div`
+const Container = styled(({ ...restProps }) => <div {...restProps} />)`
   display: flex;
   background: #041022;
   padding: 48px 64px 32px 64px;
