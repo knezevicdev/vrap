@@ -84,16 +84,10 @@ const VehicleInformation: React.FC<Props> = ({ form, fields, viewModel }) => {
   const [showVin, setShowVin] = useState(false);
   const [showLicense, setShowLicense] = useState(false);
 
-  const vehicleQuery = router.query.vehicle;
-  const [stateFromUrl, licenseFromUrl] =
-    vehicleQuery && typeof vehicleQuery === 'string'
-      ? vehicleQuery.split('-')
-      : ['', ''];
-
   const licenseForm = useForm({
     defaultValues: {
-      licensePlate: licenseFromUrl,
-      state: stateFromUrl,
+      licensePlate: '',
+      state: '',
     },
   });
 
