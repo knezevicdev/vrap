@@ -393,6 +393,11 @@ const AppraisalForm: React.FC<Props> = ({ viewModel }) => {
     }
   };
 
+  useEffect(() => {
+    const overflow = showExactMilageDialog ? 'hidden' : '';
+    document.body.style.overflow = overflow;
+  }, [showExactMilageDialog]);
+
   const closeModalHandler = (): void => {
     setShowExactMilageDialog(false);
   };

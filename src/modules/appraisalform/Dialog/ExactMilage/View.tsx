@@ -53,6 +53,7 @@ const ExactMileageContent = styled.div`
   width: 580px;
   text-align: center;
   position: relative;
+  overflow-y: scroll;
   ${addStyleForMobile(`
       width: 100%;
       height: 100%;
