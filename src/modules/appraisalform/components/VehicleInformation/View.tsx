@@ -82,6 +82,7 @@ const VehicleInformation: React.FC<Props> = ({ form, fields, viewModel }) => {
 
   const [showVin, setShowVin] = useState(false);
   const [showLicense, setShowLicense] = useState(false);
+
   const licenseForm = useForm({
     defaultValues: {
       licensePlate: '',
@@ -322,9 +323,33 @@ const VehicleInformation: React.FC<Props> = ({ form, fields, viewModel }) => {
     setVinLoader(false);
   };
 
+  const updateField = (
+    state: string,
+    license: string,
+    errorMessage: string
+  ) => {
+    const fieldsToUpdate = {
+      licensePlate: {
+        ...licenseForm.fields.licensePlate,
+        value: license,
+        error: true,
+        errorMessage,
+      },
+      state: {
+        ...licenseForm.fields.state,
+        value: state,
+      },
+    };
+    return fieldsToUpdate;
+  };
+
   const handleDecodeLicense = (lpToDecode: string) => {
     const { vin } = fields;
     const errorMessage = VehicleInfoText.licenseError;
+
+    const [state, license] = lpToDecode.split('-');
+    const fieldsToUpdate = updateField(state, license, errorMessage);
+    licenseForm.updateMultipleFields(fieldsToUpdate);
 
     resetLocalState();
 
@@ -347,26 +372,14 @@ const VehicleInformation: React.FC<Props> = ({ form, fields, viewModel }) => {
         const trimsArr = [];
         const isError = Object.hasOwnProperty.bind(response)('error');
         if (isError) {
-          const [state, license] = lpToDecode.split('-');
-          const fieldsToUpdate = {
-            licensePlate: {
-              ...licenseForm.fields.licensePlate,
-              value: license,
-              error: true,
-              errorMessage,
-            },
-            state: {
-              ...licenseForm.fields.state,
-              value: state,
-            },
-          };
-          licenseForm.updateMultipleFields(fieldsToUpdate);
           setVinLoader(false);
           setLpLoader(false);
           return;
         } else {
           setShowVin(true);
           setShowLicense(false);
+          const successFieldsToUpdate = updateField('', '', errorMessage);
+          licenseForm.updateMultipleFields(successFieldsToUpdate);
           vin.onChange({
             ...vin,
             value: response.vin.toUpperCase(),

@@ -216,7 +216,7 @@ const AppraisalForm: React.FC<Props> = ({ viewModel }) => {
     }
   }, [appraisalUseForm.mechConditionForm.fields.warningLights.value]);
 
-  const { inactive, removeEvent } = useTrackActive();
+  const { inactive, removeEvent, track } = useTrackActive();
   const [emailModalShowed, changeEmailModalShowed] = useState(false);
   const [emailModal, changeEmailModal] = useState(false);
   const [checkSection, changeCheckSection] = useState(0);
@@ -279,6 +279,17 @@ const AppraisalForm: React.FC<Props> = ({ viewModel }) => {
       handleClearEvent();
     }
   }, [inactive, emailModalShowed, checkSection]);
+
+  useEffect(() => {
+    const emailCaptureLocal = localStorage.getItem('email_capture');
+    const hasEmailCaptureLocal = emailCaptureLocal === 'true';
+    if (!hasEmailCaptureLocal && viewModel.isEmailCaptureExperiment()) {
+      track();
+    }
+    if (!viewModel.isEmailCaptureExperiment()) {
+      removeEvent();
+    }
+  }, [viewModel.isEmailCaptureExperiment()]);
 
   const handleClearEvent = () => {
     changeEmailModalShowed(true);
@@ -376,6 +387,11 @@ const AppraisalForm: React.FC<Props> = ({ viewModel }) => {
       }
     }
   };
+
+  useEffect(() => {
+    const overflow = showExactMilageDialog ? 'hidden' : '';
+    document.body.style.overflow = overflow;
+  }, [showExactMilageDialog]);
 
   const closeModalHandler = (): void => {
     setShowExactMilageDialog(false);
