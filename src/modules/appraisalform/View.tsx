@@ -221,7 +221,7 @@ const AppraisalForm: React.FC<Props> = ({ viewModel }) => {
     }
   }, [appraisalUseForm.mechConditionForm.fields.warningLights.value]);
 
-  const { inactive, removeEvent } = useTrackActive();
+  const { inactive, removeEvent, track } = useTrackActive();
   const [emailModalShowed, changeEmailModalShowed] = useState(false);
   const [emailModal, changeEmailModal] = useState(false);
   const [checkSection, changeCheckSection] = useState(0);
@@ -284,6 +284,14 @@ const AppraisalForm: React.FC<Props> = ({ viewModel }) => {
       handleClearEvent();
     }
   }, [inactive, emailModalShowed, checkSection]);
+
+  useEffect(() => {
+    const emailCaptureLocal = localStorage.getItem('email_capture');
+    const hasEmailCaptureLocal = emailCaptureLocal === 'true';
+    if (!hasEmailCaptureLocal && viewModel.isEmailCaptureExperiment()) {
+      track();
+    }
+  }, [viewModel.isEmailCaptureExperiment()]);
 
   const handleClearEvent = () => {
     changeEmailModalShowed(true);

@@ -89,7 +89,6 @@ const VehicleInformation: React.FC<Props> = ({ form, fields, viewModel }) => {
       state: '',
     },
   });
-
   const {
     fields: { licensePlate, state },
     isFormValid,
