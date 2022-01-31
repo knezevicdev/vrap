@@ -15,6 +15,8 @@ const Container = styled(({ ...restProps }) => <div {...restProps} />)`
   @media (max-width: 599px) {
     flex-direction: column;
     padding: 24px;
+    ${(props): any =>
+      props.hasOverlay === true ? 'padding-bottom: 180px' : ''};
   }
 `;
 
