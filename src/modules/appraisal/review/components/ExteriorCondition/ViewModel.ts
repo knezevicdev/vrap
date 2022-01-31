@@ -16,6 +16,10 @@ export default class PickupInfoReviewViewModel {
 
   constructor(private _store: Store, private _router: NextRouter) {}
 
+  get afterMarketOptions(): any {
+    return this._store.appraisal.extConditionForm.afterMarket;
+  }
+
   handleEditClick(): void {
     this._router.push({
       pathname: `/`,

@@ -9,7 +9,7 @@ interface Props {
   viewModel: ViewModel;
 }
 
-const VehicleInfomrationView: React.FC<Props> = ({ viewModel }) => {
+const VehicleInformationView: React.FC<Props> = ({ viewModel }) => {
   const OptionsList = () => {
     return (
       <>
@@ -140,4 +140,4 @@ const Edit = styled(Typography.Body.Regular)`
   padding-top: 4px;
 `;
 
-export default observer(VehicleInfomrationView);
+export default observer(VehicleInformationView);

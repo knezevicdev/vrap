@@ -95,13 +95,16 @@ const MultiStepForm: React.FC<Props> = (props) => {
           activeSection as any
         );
         const headerOffset = 70;
-        const elementPosition = activeElement.offsetTop;
-        const offsetPosition = elementPosition - headerOffset;
 
-        window.scrollTo({
-          top: offsetPosition,
-          behavior: 'smooth',
-        });
+        if (activeElement) {
+          const elementPosition = activeElement.offsetTop;
+          const offsetPosition = elementPosition - headerOffset;
+
+          window.scrollTo({
+            top: offsetPosition,
+            behavior: 'smooth',
+          });
+        }
       }, 305);
     }
   }, [activeSection]);

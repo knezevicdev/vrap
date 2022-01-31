@@ -142,7 +142,7 @@ const ImgContainer = styled.img`
   height: 15px;
   width: 22px;
   margin-top: 2px;
-  margin-right: 8px;
+  margin-right: 3px;
   margin-left: 5px;
 `;
 
@@ -150,6 +150,7 @@ const Label = styled.span`
   font-size: 18px;
   line-height: 1;
   letter-spacing: 0.3px;
+  margin-left: 5px;
 `;
 
 const WarningOptionsLabel = styled.div`
