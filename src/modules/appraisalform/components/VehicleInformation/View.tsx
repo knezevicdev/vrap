@@ -77,7 +77,7 @@ const VehicleInformation: React.FC<Props> = ({ form, fields, viewModel }) => {
   const [extColors, setExtColors] = useState(defaultColors);
   const [selectedExtColor, setSelectedExtColor] = useState(null as any);
 
-  const showOptionsGroup = options.length > 0;
+  const [showOptionsGroup, setShowOptionsGroup] = useState(options.length > 0);
 
   const isHideHowManyKeysExperiment = viewModel.isHideHowManyKeysExperiment;
 
@@ -141,7 +141,10 @@ const VehicleInformation: React.FC<Props> = ({ form, fields, viewModel }) => {
   useEffect(() => {
     const fieldsToUpdate: any = {};
     const { vin } = fields;
-    if (!vinDecoded || vin.value === '') {
+    const vehicleId = vin.value;
+    const validVin =
+      vehicleId.includes(VROOM_VIN_SUBSTRING) || isValidVin(vehicleId);
+    if (!validVin) {
       resetLocalState();
     } else if (vin.value !== '' && year === 0 && make === '' && model === '') {
       resetLocalState();
@@ -173,14 +176,8 @@ const VehicleInformation: React.FC<Props> = ({ form, fields, viewModel }) => {
   }, [vinDecoded, fields.vin.value]);
 
   useEffect(() => {
-    if (fields.trim.value === '') {
-      setExtColors(defaultColors);
-      setTrims([]);
-      setOptions([]);
-    } else {
-      const { value: trimIdValue } = fields.csTrimId;
-      handleGetOptions(trimIdValue);
-    }
+    const { value: trimIdValue } = fields.csTrimId;
+    handleGetOptions(trimIdValue);
   }, [fields.trim.value]);
 
   useEffect(() => {
@@ -188,8 +185,12 @@ const VehicleInformation: React.FC<Props> = ({ form, fields, viewModel }) => {
     const { value: trimIdValue } = fields.csTrimId;
     const trimData = trims.find((trim) => trim.value === trimValue);
     const trimIdSelected = trims.find((trim) => trim.trimId === csRespTrimId);
+    const { vin } = fields;
+    const vehicleId = vin.value;
+    const validVin =
+      vehicleId.includes(VROOM_VIN_SUBSTRING) || isValidVin(vehicleId);
 
-    if (fields.vin.value !== '') {
+    if (validVin && vinDecoded) {
       if (trims.length === 1) {
         handleTrimChange(trims[0], error);
       } else if (trims.length && trimValue !== '' && trimData) {
@@ -201,7 +202,7 @@ const VehicleInformation: React.FC<Props> = ({ form, fields, viewModel }) => {
         handleTrimChange(trimValue, error);
       }
     }
-  }, [trims.length, fields.vin.value]);
+  }, [trims.length, fields.vin.value, vinDecoded]);
 
   const handleDecodeVin = (vinToDecode: string) => {
     const validVin =
@@ -227,6 +228,7 @@ const VehicleInformation: React.FC<Props> = ({ form, fields, viewModel }) => {
       });
       setTrims(trimTransform);
       setOptions([...viewModel.vehicleDecodeData.features]);
+      setShowOptionsGroup(viewModel.vehicleDecodeData.features.length > 0);
       setVinDecoded(true);
       setYear(viewModel.vehicleDecodeData.year);
       setMake(viewModel.vehicleDecodeData.make);
@@ -293,6 +295,7 @@ const VehicleInformation: React.FC<Props> = ({ form, fields, viewModel }) => {
           setModel(model);
           setSelectedExtColor(csExtColor);
           setTrims([...trimsArr]);
+          setShowOptionsGroup(features.length > 0);
           setVinDecoded(true);
         })
         .catch(() => {
@@ -395,6 +398,7 @@ const VehicleInformation: React.FC<Props> = ({ form, fields, viewModel }) => {
         setModel(model);
         setSelectedExtColor(csExtColor);
         setTrims([...trimsArr]);
+        setShowOptionsGroup(features.length > 0);
         setVinDecoded(true);
 
         setVinLoader(false);
@@ -417,7 +421,7 @@ const VehicleInformation: React.FC<Props> = ({ form, fields, viewModel }) => {
       fieldsToUpdate['trim'] = { ...trim, ...value, error };
       fieldsToUpdate['csTrimId'] = { ...csTrimId, value: trimIdVal };
 
-      if (trims.length === 1) {
+      if (trims.length <= 1) {
         const defaultSelected: any[] = [];
         options.forEach((opt) => {
           if (opt.selected) {
@@ -462,8 +466,13 @@ const VehicleInformation: React.FC<Props> = ({ form, fields, viewModel }) => {
         value: defaultSelected,
       });
       setOptions([...trimOptions]);
-    } else if (viewModel.vehicleDecodeData.features) {
+      setShowOptionsGroup(trimOptions.length > 0);
+    } else if (
+      viewModel.vehicleDecodeData &&
+      viewModel.vehicleDecodeData.features
+    ) {
       setOptions([...viewModel.vehicleDecodeData.features]);
+      setShowOptionsGroup(viewModel.vehicleDecodeData.features.length > 0);
     }
     setTrimLoader(false);
   };
