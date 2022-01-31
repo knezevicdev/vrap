@@ -291,6 +291,9 @@ const AppraisalForm: React.FC<Props> = ({ viewModel }) => {
     if (!hasEmailCaptureLocal && viewModel.isEmailCaptureExperiment()) {
       track();
     }
+    if (!viewModel.isEmailCaptureExperiment()) {
+      removeEvent();
+    }
   }, [viewModel.isEmailCaptureExperiment()]);
 
   const handleClearEvent = () => {
