@@ -12,20 +12,18 @@ interface Props {
   store: Store;
 }
 
-const VehicleInfomrationView: React.FC<Props> = ({ viewModel, store }) => {
+const ExteriorConditionView: React.FC<Props> = ({ viewModel, store }) => {
   const appraisalDetail = store.appraisal;
   const AfterMarketList = () => {
     return (
       <>
-        {appraisalDetail?.extConditionForm?.afterMarket?.map(
-          (element, index) => {
-            let value = element;
-            if (element === 'Other') {
-              value = `Other (${appraisalDetail?.extConditionForm?.otherAfterMarket})`;
-            }
-            return <Field key={index}>{value}</Field>;
+        {viewModel.afterMarketOptions.map((element: any, index: any) => {
+          let value = element;
+          if (element === 'Other') {
+            value = `Other (${appraisalDetail?.extConditionForm?.otherAfterMarket})`;
           }
-        )}
+          return <Field key={index}>{value}</Field>;
+        })}
       </>
     );
   };
@@ -52,7 +50,7 @@ const VehicleInfomrationView: React.FC<Props> = ({ viewModel, store }) => {
         </Info>
         <Info>
           <Label>{viewModel.afterMarket}</Label>
-          {appraisalDetail?.extConditionForm?.otherAfterMarket?.length !== 0 ? (
+          {appraisalDetail?.extConditionForm?.otherAfterMarket !== 'No' ? (
             <AfterMarketList />
           ) : (
             <Field>N\A</Field>
@@ -145,4 +143,4 @@ const Edit = styled(Typography.Body.Regular)`
   padding-top: 4px;
 `;
 
-export default observer(VehicleInfomrationView);
+export default observer(ExteriorConditionView);

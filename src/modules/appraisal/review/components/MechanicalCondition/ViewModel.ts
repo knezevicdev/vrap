@@ -13,6 +13,10 @@ export default class PickupInfoReviewViewModel {
 
   constructor(private _store: Store, private _router: NextRouter) {}
 
+  get warningLightsValues(): any {
+    return this._store.appraisal.mechConditionForm.warningLightsValues;
+  }
+
   handleEditClick(): void {
     this._router.push({
       pathname: `/`,

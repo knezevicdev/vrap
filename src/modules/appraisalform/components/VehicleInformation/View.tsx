@@ -60,9 +60,8 @@ const VehicleInformation: React.FC<Props> = ({ form, fields, viewModel }) => {
     { label: 'Yellow', value: 'Yellow' },
   ];
   const router = useRouter();
-  const pathname = router.pathname as string;
-  const vinFromStore = pathname.includes('#top');
-  //const vinUrl = viewModel.vehicleId;
+  const routerAsPath = router.asPath as string;
+  const isEditMode = routerAsPath.includes('#');
 
   const [vinLoader, setVinLoader] = useState(false);
   const [lpLoader, setLpLoader] = useState(false);
@@ -216,16 +215,26 @@ const VehicleInformation: React.FC<Props> = ({ form, fields, viewModel }) => {
     setShowVin(true);
     setShowLicense(false);
 
-    if (vinFromStore) {
+    if (isEditMode) {
       const altsFromStore = viewModel.vehicleDecodeData.alternatives;
-      const trimTransform = altsFromStore.map((t: any) => {
-        return {
-          ...t,
-          label: t.trim,
-          value: t.trim,
-          trimId: t.id,
-        };
-      });
+      let trimTransform;
+      if (altsFromStore.length) {
+        trimTransform = altsFromStore.map((t: any) => {
+          return {
+            ...t,
+            label: t.trim,
+            value: t.trim,
+            trimId: t.id,
+          };
+        });
+      } else if (fields.trim.value !== '') {
+        trimTransform = [
+          {
+            label: fields.trim.value,
+            value: fields.trim.value,
+          },
+        ];
+      }
       setTrims(trimTransform);
       setOptions([...viewModel.vehicleDecodeData.features]);
       setShowOptionsGroup(viewModel.vehicleDecodeData.features.length > 0);
@@ -417,7 +426,7 @@ const VehicleInformation: React.FC<Props> = ({ form, fields, viewModel }) => {
     const fieldsToUpdate: any = {};
     const trimIdVal = value ? value.trimId : null;
 
-    if (!vinFromStore) {
+    if (!isEditMode) {
       fieldsToUpdate['trim'] = { ...trim, ...value, error };
       fieldsToUpdate['csTrimId'] = { ...csTrimId, value: trimIdVal };
 
@@ -451,7 +460,7 @@ const VehicleInformation: React.FC<Props> = ({ form, fields, viewModel }) => {
     const { vehicleOptions } = fields;
     setTrimLoader(true);
 
-    if (trimId && !vinFromStore) {
+    if (trimId && !isEditMode) {
       const response = await viewModel.getTrimFeatures(trimId);
       const trimOptions = response.features;
       const defaultSelected: any[] = [];
@@ -512,7 +521,7 @@ const VehicleInformation: React.FC<Props> = ({ form, fields, viewModel }) => {
               field={fields.vin}
               vinLoader={vinLoader}
               handleUpdate={handleDecodeVin}
-              disabled={vinFromStore}
+              disabled={isEditMode}
             />
           </VinField>
         )}
