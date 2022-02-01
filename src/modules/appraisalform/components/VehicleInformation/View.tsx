@@ -102,6 +102,9 @@ const VehicleInformation: React.FC<Props> = ({ form, fields, viewModel }) => {
     setExtColors(defaultColors);
     setTrims([]);
     setOptions([]);
+    setSelectedExtColor(null);
+    setShowOptionsGroup(false);
+    setCsRespTrimId(null);
   };
 
   useEffect(() => {

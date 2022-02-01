@@ -1,8 +1,9 @@
-import { IncomingMessage } from 'http';
 import { observer } from 'mobx-react';
-import { GetServerSideProps, NextPage } from 'next';
+import { GetServerSideProps, GetServerSidePropsContext, NextPage } from 'next';
 import React from 'react';
 import styled from 'styled-components';
+
+import { returnBrandConfig } from '../utils/utils';
 
 import { Header } from 'src/components/Header';
 import Footer from 'src/core/Footer';
@@ -68,35 +69,25 @@ const ReviewContainer = styled.div`
   }
 `;
 
-interface Cookie {
-  uuid: string;
-  ajs_anonymous_id: string;
+interface Props {
+  title: string;
+  canonical: string;
+  description: string;
 }
 
-const parseCookies = (req: IncomingMessage): Cookie => {
-  if (req && req.headers && req.headers.cookie) {
-    return Object.fromEntries(
-      req.headers.cookie.split('; ').map((v) => v.split(/=(.+)/))
-    );
-  } else {
-    return { uuid: '', ajs_anonymous_id: '' };
-  }
-};
+export const getServerSideProps: GetServerSideProps<Props> = async (
+  ctx: GetServerSidePropsContext
+) => {
+  ctx.res.setHeader('Cache-Control', '');
+  const brandConfig = returnBrandConfig();
 
-export const getServerSideProps: GetServerSideProps = async (context) => {
-  const { req } = context;
-  const cookies = parseCookies(req);
-
-  const loggerInfo = {
-    userAgent: req.headers['user-agent'],
-    fastlyClientIp: req.headers['fastly-client-ip'],
-    uuid: cookies['uuid'],
-    ajsAnonymousId: cookies['ajs_anonymous_id'],
-    ipAddress: req.headers['x-forwarded-for'] || req.connection.remoteAddress,
-    url: req.url,
+  return {
+    props: {
+      description: brandConfig.description,
+      title: brandConfig.title,
+      canonical: brandConfig.canonical,
+    },
   };
-  console.log(JSON.stringify(loggerInfo));
-  return { props: {} };
 };
 
 export default observer(AppraisalReview);

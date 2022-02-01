@@ -98,16 +98,15 @@ const WarningLightsOptionsGroup: React.FC<Props> = ({
     ([key, option]) => {
       const typedOption: GenericObject = option as GenericObject;
 
-      const checkboxProps = {
-        name: key,
-        id: key + '-checkbox',
-        onChange: () => handleOptionClick(key, typedOption),
-        checked: !!typedOption.value,
-      };
-
       return (
         <WarningOption key={key} htmlFor={key + '-checkbox'}>
-          <Checkbox {...checkboxProps} dataQa="warninglightsoptioncheck">
+          <Checkbox
+            name={key}
+            id={key + '-checkbox'}
+            onChange={() => handleOptionClick(key, typedOption)}
+            checked={!!typedOption.value}
+            dataQa="warninglightsoptioncheck"
+          >
             <>
               {typedOption.imgSrc && <ImgContainer src={typedOption.imgSrc} />}
               <Label>{key}</Label>
@@ -159,6 +158,10 @@ const WarningOptionsLabel = styled.div`
 
 const WarningOption = styled(({ ...restProps }) => <li {...restProps} />)`
   padding: 0 0 5px;
+
+  span {
+    outline: none;
+  }
 `;
 
 export default WarningLightsOptionsGroup;
