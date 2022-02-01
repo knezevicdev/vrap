@@ -39,6 +39,7 @@ const Input: React.FC<Props> = (props) => {
       id = '',
       autocomplete = 'off',
       dataQa,
+      tabindex = 0,
     },
     className,
     footerMessage,
@@ -87,6 +88,7 @@ const Input: React.FC<Props> = (props) => {
         autoComplete={autocomplete}
         data-qa={dataQa}
         ref={innerRef}
+        tabindex={tabindex}
       />
       <FooterMessage>{footerMessage}</FooterMessage>
       {showError ? (

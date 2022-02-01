@@ -18,6 +18,18 @@ const MultiTab: React.FC<Props> = ({
   const MultiTabTheme = theme;
   const [activeTab, setActiveTab] = useState(active);
   const tabWidth = 100 / tabSections.length;
+  const [activeElement, setActiveElement] = useState();
+
+  useEffect(() => {
+    const handleFocusIn = (e) => {
+      setActiveElement(document.activeElement);
+    };
+
+    document.addEventListener('focusin', handleFocusIn);
+    return () => {
+      document.removeEventListener('focusin', handleFocusIn);
+    };
+  }, []);
 
   useEffect(() => {
     setActiveTab(active);
@@ -25,6 +37,13 @@ const MultiTab: React.FC<Props> = ({
 
   const handleTabClick = (tabToOpen: number) => {
     setActiveTab(tabToOpen);
+  };
+
+  const handleKeyPress = (event: GenericObject) => {
+    if (event.key === ' ' && activeElement === event.currentTarget) {
+      event.currentTarget.click();
+      event.preventDefault();
+    }
   };
 
   const tabs = tabSections.map((tab, idx) => {
@@ -37,6 +56,8 @@ const MultiTab: React.FC<Props> = ({
         tabWidth={tabWidth}
         onClick={() => handleTabClick(idx)}
         data-qa={tab.title}
+        tabIndex={0}
+        onKeyPress={handleKeyPress}
       >
         {tab.title}
       </MultiTabTheme.tabButton>

@@ -18,6 +18,7 @@ const VinFormInput: React.FC<any> = ({
   handleUpdate,
   onKeyPressEnter,
   disabled = false,
+  tabIndex = 0,
 }) => {
   const { onChange } = field;
   const [showVinDialog, setShowVinDialog] = useState(false);

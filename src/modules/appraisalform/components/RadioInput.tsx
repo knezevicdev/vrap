@@ -1,6 +1,6 @@
 import { Tooltip } from '@vroom-web/ui-lib';
 import getConfig from 'next/config';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
 import { GenericObject } from '../../../interfaces.d';
@@ -17,6 +17,25 @@ const RadioInput: React.FC<Props> = ({
   field: { options, onClick, label, name, checked, tooltipText = '' },
   className,
 }) => {
+  const [active, setActive] = useState();
+
+  useEffect(() => {
+    const handleFocusIn = (e) => {
+      setActive(document.activeElement);
+    };
+
+    document.addEventListener('focusin', handleFocusIn);
+    return () => {
+      document.removeEventListener('focusin', handleFocusIn);
+    };
+  }, []);
+
+  const handleKeyPress = (event: GenericObject) => {
+    if (event.key === ' ' && active === event.currentTarget) {
+      event.currentTarget.click();
+      event.preventDefault();
+    }
+  };
   return (
     <Container className={className}>
       <LabelContainer>
@@ -33,14 +52,17 @@ const RadioInput: React.FC<Props> = ({
                   id={`${item.label}${name}`}
                   value={item.label}
                   name={name}
+                  tabindex={-1}
                   onClick={() => onClick(item.label)}
-                  checked={checked === item.label}
+                  defaultChecked={checked === item.label}
                 />
                 <CheckMark />
                 <StyledRadio
                   value={item.label}
                   name={name}
+                  tabindex={0}
                   onClick={() => onClick(item.label)}
+                  onKeyPress={handleKeyPress}
                 />
                 <RadioTextContainer>
                   {item.label}
@@ -73,8 +95,8 @@ const RadioContainer = styled.div`
 
 const CheckMark = styled.span`
   position: absolute;
-  top: 5px;
-  left: 5px;
+  top: 6px;
+  left: 6px;
   height: 16px;
   width: 16px;
   background-color: #ffffff;
@@ -107,11 +129,11 @@ const HiddenNativeRadio = styled(({ ...restProps }) => (
   position: absolute;
   white-space: nowrap;
   width: 1px;
-  &:checked ~ ${CheckMark}{
+  &:checked ~ ${CheckMark} {
     background: url(${BASE_PATH}/icons/check-mark-red.svg);
     background-size: cover;
-    border: 1px solid #E7131A;
-    z-index: 99;};
+    border: 1px solid #e7131a;
+    z-index: 99;
   }
 `;
 
@@ -119,8 +141,8 @@ const StyledRadio = styled(({ ...restProps }) => <div {...restProps} />)`
   border: 1px solid #d6d7da;
   border-radius: 8px;
 
-  width: 16px;
-  height: 16px;
+  width: 18px;
+  height: 18px;
   margin: 5px;
 `;
 
