@@ -119,6 +119,14 @@ const MultiStepForm: React.FC<Props> = (props) => {
     onNext(activeSection, 'refreshed');
   };
 
+  useEffect(() => {
+    if (activeSection === sections.length - 1) {
+      setButtonText(submitText);
+    } else {
+      setButtonText(nextText);
+    }
+  }, [activeSection]);
+
   const handleOnNext = (_e: any, onNextIntercept: any) => {
     const nextStep = activeSection + 1;
     let currentSectionIsValid = sections[activeSection].form.isFormValid;
@@ -143,12 +151,6 @@ const MultiStepForm: React.FC<Props> = (props) => {
     }
 
     setIsSubmitting(true);
-
-    if (nextStep === sections.length - 1) {
-      setButtonText(submitText);
-    } else {
-      setButtonText(nextText);
-    }
 
     if (nextStep > maxSteps && currentSectionIsValid) {
       onDone();
