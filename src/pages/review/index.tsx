@@ -3,7 +3,7 @@ import { GetServerSideProps, GetServerSidePropsContext, NextPage } from 'next';
 import React from 'react';
 import styled from 'styled-components';
 
-import { returnBrandConfig } from '../utils/utils';
+import { returnBrandConfig } from '../../utils/pageheaders';
 
 import { Header } from 'src/components/Header';
 import Footer from 'src/core/Footer';
