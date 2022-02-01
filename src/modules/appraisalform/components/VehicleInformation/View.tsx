@@ -95,20 +95,6 @@ const VehicleInformation: React.FC<Props> = ({ form, fields, viewModel }) => {
     isFormValid,
   } = licenseForm;
 
-  useEffect(() => {
-    const vehicleQuery = router.query.vehicle;
-    if (vehicleQuery && typeof vehicleQuery === 'string') {
-      const vehicleQueryUrl = vehicleQuery.split('-');
-      const errorMessage = VehicleInfoText.licenseError;
-      const fieldsToUpdate = updateField(
-        vehicleQueryUrl[0],
-        vehicleQueryUrl[1],
-        errorMessage
-      );
-      licenseForm.updateMultipleFields(fieldsToUpdate);
-    }
-  }, [router.query.vehicle]);
-
   const resetLocalState = () => {
     setVinDecoded(false);
     setYear(null);
@@ -146,6 +132,14 @@ const VehicleInformation: React.FC<Props> = ({ form, fields, viewModel }) => {
     if (validVin) {
       handleDecodeVin(vehicleId);
     } else if (validLicense) {
+      const vehicleQueryUrl = vehicleId.split('-');
+      const errorMessage = VehicleInfoText.licenseError;
+      const fieldsToUpdate = updateField(
+        vehicleQueryUrl[0],
+        vehicleQueryUrl[1],
+        errorMessage
+      );
+      licenseForm.updateMultipleFields(fieldsToUpdate);
       handleDecodeLicense(vehicleId);
     } else {
       resetLocalState();
