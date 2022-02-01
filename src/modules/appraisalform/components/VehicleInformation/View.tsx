@@ -135,6 +135,14 @@ const VehicleInformation: React.FC<Props> = ({ form, fields, viewModel }) => {
     if (validVin) {
       handleDecodeVin(vehicleId);
     } else if (validLicense) {
+      const vehicleQueryUrl = vehicleId.split('-');
+      const errorMessage = VehicleInfoText.licenseError;
+      const fieldsToUpdate = updateField(
+        vehicleQueryUrl[0],
+        vehicleQueryUrl[1],
+        errorMessage
+      );
+      licenseForm.updateMultipleFields(fieldsToUpdate);
       handleDecodeLicense(vehicleId);
     } else {
       resetLocalState();
@@ -349,10 +357,6 @@ const VehicleInformation: React.FC<Props> = ({ form, fields, viewModel }) => {
   const handleDecodeLicense = (lpToDecode: string) => {
     const { vin } = fields;
     const errorMessage = VehicleInfoText.licenseError;
-
-    const [state, license] = lpToDecode.split('-');
-    const fieldsToUpdate = updateField(state, license, errorMessage);
-    licenseForm.updateMultipleFields(fieldsToUpdate);
 
     resetLocalState();
 

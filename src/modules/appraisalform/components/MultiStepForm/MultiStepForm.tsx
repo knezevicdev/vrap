@@ -81,8 +81,14 @@ const MultiStepForm: React.FC<Props> = (props) => {
   useEffect(() => {
     if (location.hash !== '') {
       setButtonText(submitText);
+    } else {
+      if (activeSection === sections.length - 1) {
+        setButtonText(submitText);
+      } else {
+        setButtonText(nextText);
+      }
     }
-  }, [active]);
+  }, [activeSection]);
 
   useEffect(() => {
     // SetTimeout is used here to make sure we're waiting to
@@ -143,12 +149,6 @@ const MultiStepForm: React.FC<Props> = (props) => {
     }
 
     setIsSubmitting(true);
-
-    if (nextStep === sections.length - 1) {
-      setButtonText(submitText);
-    } else {
-      setButtonText(nextText);
-    }
 
     if (nextStep > maxSteps && currentSectionIsValid) {
       onDone();
