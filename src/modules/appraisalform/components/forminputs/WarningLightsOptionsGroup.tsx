@@ -98,16 +98,15 @@ const WarningLightsOptionsGroup: React.FC<Props> = ({
     ([key, option]) => {
       const typedOption: GenericObject = option as GenericObject;
 
-      const checkboxProps = {
-        name: key,
-        id: key + '-checkbox',
-        onChange: () => handleOptionClick(key, typedOption),
-        checked: !!typedOption.value,
-      };
-
       return (
-        <WarningOption key={key} htmlFor={key + '-checkbox'}>
-          <Checkbox {...checkboxProps} dataQa="warninglightsoptioncheck">
+        <WarningOption key={key} htmlFor={key + '-warning-lights-checkbox'}>
+          <Checkbox
+            name={key}
+            id={key + '-warning-lights-checkbox'}
+            onChange={() => handleOptionClick(key, typedOption)}
+            checked={!!typedOption.value}
+            dataQa="warninglightsoptioncheck"
+          >
             <>
               {typedOption.imgSrc && <ImgContainer src={typedOption.imgSrc} />}
               <Label>{key}</Label>
@@ -142,7 +141,7 @@ const ImgContainer = styled.img`
   height: 15px;
   width: 22px;
   margin-top: 2px;
-  margin-right: 8px;
+  margin-right: 3px;
   margin-left: 5px;
 `;
 
@@ -150,6 +149,7 @@ const Label = styled.span`
   font-size: 18px;
   line-height: 1;
   letter-spacing: 0.3px;
+  margin-left: 5px;
 `;
 
 const WarningOptionsLabel = styled.div`
@@ -158,6 +158,10 @@ const WarningOptionsLabel = styled.div`
 
 const WarningOption = styled(({ ...restProps }) => <li {...restProps} />)`
   padding: 0 0 5px;
+
+  span {
+    outline: none;
+  }
 `;
 
 export default WarningLightsOptionsGroup;

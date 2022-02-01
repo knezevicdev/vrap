@@ -47,9 +47,10 @@ const AppraisalForm: React.FC<Props> = ({ viewModel }) => {
   const router = useRouter();
   const { store } = useAppStore();
   const vinForPath = router.query.vehicle as string;
-  const pathname = router.pathname as string;
-  const editMode = pathname.includes('#');
-  const submitText = editMode ? SaveText : ReviewText;
+  const routerAsPath = router.asPath as string;
+  const isEditMode = routerAsPath.includes('#');
+  const routerHash = routerAsPath.split('#')[1];
+  const submitText = isEditMode ? SaveText : ReviewText;
 
   const vehicleInfo = viewModel.appraisalStore.vehicleInfoForm;
   const yourInformation = viewModel.appraisalStore.personalInfoForm;
@@ -61,32 +62,26 @@ const AppraisalForm: React.FC<Props> = ({ viewModel }) => {
   const [showExactMilageDialog, setShowExactMilageDialog] = useState(false);
   const [personalInfo, changePersonalInfo] = useState({});
 
-  let activeSection = 0;
-  useEffect(() => {
-    switch (location.hash) {
-      case '#top':
-        activeSection = 0;
-        break;
-      case '#vehiclehistory':
-        activeSection = 1;
-        break;
-      case '#interiorcondition':
-        activeSection = 2;
-        break;
-      case '#exteriorcondition':
-        activeSection = 3;
-        break;
-      case '#mechanicalcondition':
-        activeSection = 4;
-        break;
-      case '#personalinformation':
-        activeSection = 5;
-        break;
+  const getActiveState = () => {
+    switch (routerHash) {
+      case 'top':
+        return 0;
+      case 'vehiclehistory':
+        return 1;
+      case 'interiorcondition':
+        return 2;
+      case 'exteriorcondition':
+        return 3;
+      case 'mechanicalcondition':
+        return 4;
+      case 'personalinformation':
+        return 5;
       default:
-        activeSection = 0;
-        break;
+        return 0;
     }
-  });
+  };
+
+  const activeSection = getActiveState();
 
   const appraisalUseForm = useFormInit(
     personalInfo,
@@ -221,7 +216,7 @@ const AppraisalForm: React.FC<Props> = ({ viewModel }) => {
     }
   }, [appraisalUseForm.mechConditionForm.fields.warningLights.value]);
 
-  const { inactive, removeEvent } = useTrackActive();
+  const { inactive, removeEvent, track } = useTrackActive();
   const [emailModalShowed, changeEmailModalShowed] = useState(false);
   const [emailModal, changeEmailModal] = useState(false);
   const [checkSection, changeCheckSection] = useState(0);
@@ -284,6 +279,17 @@ const AppraisalForm: React.FC<Props> = ({ viewModel }) => {
       handleClearEvent();
     }
   }, [inactive, emailModalShowed, checkSection]);
+
+  useEffect(() => {
+    const emailCaptureLocal = localStorage.getItem('email_capture');
+    const hasEmailCaptureLocal = emailCaptureLocal === 'true';
+    if (!hasEmailCaptureLocal && viewModel.isEmailCaptureExperiment()) {
+      track();
+    }
+    if (!viewModel.isEmailCaptureExperiment()) {
+      removeEvent();
+    }
+  }, [viewModel.isEmailCaptureExperiment()]);
 
   const handleClearEvent = () => {
     changeEmailModalShowed(true);
@@ -381,6 +387,11 @@ const AppraisalForm: React.FC<Props> = ({ viewModel }) => {
       }
     }
   };
+
+  useEffect(() => {
+    const overflow = showExactMilageDialog ? 'hidden' : '';
+    document.body.style.overflow = overflow;
+  }, [showExactMilageDialog]);
 
   const closeModalHandler = (): void => {
     setShowExactMilageDialog(false);

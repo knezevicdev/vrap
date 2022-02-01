@@ -68,6 +68,7 @@ export default class AppraisalReviewModel {
       const resp = await postAppraisalReview(requestPayload);
       if (isErrorResponse(resp)) throw resp;
       const returnData: AppraisalRespData = resp.data;
+      this.appraisalStore.clearAppraisal();
       this._router.push({
         pathname: `/price`,
         query: { priceId: returnData.data.ID },

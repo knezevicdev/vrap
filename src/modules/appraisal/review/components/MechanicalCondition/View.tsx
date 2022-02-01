@@ -12,16 +12,14 @@ interface Props {
   store: Store;
 }
 
-const VehicleInfomrationView: React.FC<Props> = ({ viewModel, store }) => {
+const MechanicalConditionView: React.FC<Props> = ({ viewModel, store }) => {
   const appraisalDetail = store.appraisal;
   const ActiveWarningLightsList = () => {
     return (
       <>
-        {appraisalDetail?.mechConditionForm?.warningLightsValues?.map(
-          (element, index) => {
-            return <Field key={index}>{element}</Field>;
-          }
-        )}
+        {viewModel.warningLightsValues.map((element: any, index: any) => {
+          return <Field key={index}>{element}</Field>;
+        })}
       </>
     );
   };
@@ -44,7 +42,7 @@ const VehicleInfomrationView: React.FC<Props> = ({ viewModel, store }) => {
             {appraisalDetail?.mechConditionForm?.mechanicalCondition}
           </Field>
         </Info>
-        {appraisalDetail?.mechConditionForm?.warningLightsValues && (
+        {viewModel.warningLightsValues && (
           <Info>
             <Label>{viewModel.warningLights}</Label>
             {appraisalDetail?.mechConditionForm?.warningLights === 'No' && (
@@ -130,4 +128,4 @@ const Edit = styled(Typography.Body.Regular)`
   padding-top: 4px;
 `;
 
-export default observer(VehicleInfomrationView);
+export default observer(MechanicalConditionView);

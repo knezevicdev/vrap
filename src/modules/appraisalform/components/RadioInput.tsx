@@ -135,7 +135,7 @@ const HiddenNativeRadio = styled(({ ...restProps }) => (
     background: url(${BASE_PATH}/icons/check-mark-red.svg);
     background-size: cover;
     border: 1px solid #e7131a;
-    z-index: 99;
+    z-index: 4;
   }
 `;
 

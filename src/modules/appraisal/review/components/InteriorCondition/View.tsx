@@ -12,7 +12,7 @@ interface Props {
   store: Store;
 }
 
-const VehicleInfomrationView: React.FC<Props> = ({ viewModel, store }) => {
+const InteriorConditionView: React.FC<Props> = ({ viewModel, store }) => {
   const appraisalDetail = store.appraisal;
   return (
     <Container>
@@ -92,4 +92,4 @@ const Edit = styled(Typography.Body.Regular)`
   padding-top: 4px;
 `;
 
-export default observer(VehicleInfomrationView);
+export default observer(InteriorConditionView);

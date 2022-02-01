@@ -60,9 +60,8 @@ const VehicleInformation: React.FC<Props> = ({ form, fields, viewModel }) => {
     { label: 'Yellow', value: 'Yellow' },
   ];
   const router = useRouter();
-  const pathname = router.pathname as string;
-  const vinFromStore = pathname.includes('#top');
-  //const vinUrl = viewModel.vehicleId;
+  const routerAsPath = router.asPath as string;
+  const isEditMode = routerAsPath.includes('#');
 
   const [vinLoader, setVinLoader] = useState(false);
   const [lpLoader, setLpLoader] = useState(false);
@@ -77,12 +76,13 @@ const VehicleInformation: React.FC<Props> = ({ form, fields, viewModel }) => {
   const [extColors, setExtColors] = useState(defaultColors);
   const [selectedExtColor, setSelectedExtColor] = useState(null as any);
 
-  const showOptionsGroup = options.length > 0;
+  const [showOptionsGroup, setShowOptionsGroup] = useState(options.length > 0);
 
   const isHideHowManyKeysExperiment = viewModel.isHideHowManyKeysExperiment;
 
   const [showVin, setShowVin] = useState(false);
   const [showLicense, setShowLicense] = useState(false);
+
   const licenseForm = useForm({
     defaultValues: {
       licensePlate: '',
@@ -103,6 +103,9 @@ const VehicleInformation: React.FC<Props> = ({ form, fields, viewModel }) => {
     setExtColors(defaultColors);
     setTrims([]);
     setOptions([]);
+    setSelectedExtColor(null);
+    setShowOptionsGroup(false);
+    setCsRespTrimId(null);
   };
 
   useEffect(() => {
@@ -132,6 +135,14 @@ const VehicleInformation: React.FC<Props> = ({ form, fields, viewModel }) => {
     if (validVin) {
       handleDecodeVin(vehicleId);
     } else if (validLicense) {
+      const vehicleQueryUrl = vehicleId.split('-');
+      const errorMessage = VehicleInfoText.licenseError;
+      const fieldsToUpdate = updateField(
+        vehicleQueryUrl[0],
+        vehicleQueryUrl[1],
+        errorMessage
+      );
+      licenseForm.updateMultipleFields(fieldsToUpdate);
       handleDecodeLicense(vehicleId);
     } else {
       resetLocalState();
@@ -141,7 +152,10 @@ const VehicleInformation: React.FC<Props> = ({ form, fields, viewModel }) => {
   useEffect(() => {
     const fieldsToUpdate: any = {};
     const { vin } = fields;
-    if (!vinDecoded || vin.value === '') {
+    const vehicleId = vin.value;
+    const validVin =
+      vehicleId.includes(VROOM_VIN_SUBSTRING) || isValidVin(vehicleId);
+    if (!validVin) {
       resetLocalState();
     } else if (vin.value !== '' && year === 0 && make === '' && model === '') {
       resetLocalState();
@@ -173,14 +187,8 @@ const VehicleInformation: React.FC<Props> = ({ form, fields, viewModel }) => {
   }, [vinDecoded, fields.vin.value]);
 
   useEffect(() => {
-    if (fields.trim.value === '') {
-      setExtColors(defaultColors);
-      setTrims([]);
-      setOptions([]);
-    } else {
-      const { value: trimIdValue } = fields.csTrimId;
-      handleGetOptions(trimIdValue);
-    }
+    const { value: trimIdValue } = fields.csTrimId;
+    handleGetOptions(trimIdValue);
   }, [fields.trim.value]);
 
   useEffect(() => {
@@ -188,8 +196,12 @@ const VehicleInformation: React.FC<Props> = ({ form, fields, viewModel }) => {
     const { value: trimIdValue } = fields.csTrimId;
     const trimData = trims.find((trim) => trim.value === trimValue);
     const trimIdSelected = trims.find((trim) => trim.trimId === csRespTrimId);
+    const { vin } = fields;
+    const vehicleId = vin.value;
+    const validVin =
+      vehicleId.includes(VROOM_VIN_SUBSTRING) || isValidVin(vehicleId);
 
-    if (fields.vin.value !== '') {
+    if (validVin && vinDecoded) {
       if (trims.length === 1) {
         handleTrimChange(trims[0], error);
       } else if (trims.length && trimValue !== '' && trimData) {
@@ -201,7 +213,7 @@ const VehicleInformation: React.FC<Props> = ({ form, fields, viewModel }) => {
         handleTrimChange(trimValue, error);
       }
     }
-  }, [trims.length, fields.vin.value]);
+  }, [trims.length, fields.vin.value, vinDecoded]);
 
   const handleDecodeVin = (vinToDecode: string) => {
     const validVin =
@@ -215,18 +227,29 @@ const VehicleInformation: React.FC<Props> = ({ form, fields, viewModel }) => {
     setShowVin(true);
     setShowLicense(false);
 
-    if (vinFromStore) {
+    if (isEditMode) {
       const altsFromStore = viewModel.vehicleDecodeData.alternatives;
-      const trimTransform = altsFromStore.map((t: any) => {
-        return {
-          ...t,
-          label: t.trim,
-          value: t.trim,
-          trimId: t.id,
-        };
-      });
+      let trimTransform;
+      if (altsFromStore.length) {
+        trimTransform = altsFromStore.map((t: any) => {
+          return {
+            ...t,
+            label: t.trim,
+            value: t.trim,
+            trimId: t.id,
+          };
+        });
+      } else if (fields.trim.value !== '') {
+        trimTransform = [
+          {
+            label: fields.trim.value,
+            value: fields.trim.value,
+          },
+        ];
+      }
       setTrims(trimTransform);
       setOptions([...viewModel.vehicleDecodeData.features]);
+      setShowOptionsGroup(viewModel.vehicleDecodeData.features.length > 0);
       setVinDecoded(true);
       setYear(viewModel.vehicleDecodeData.year);
       setMake(viewModel.vehicleDecodeData.make);
@@ -293,6 +316,7 @@ const VehicleInformation: React.FC<Props> = ({ form, fields, viewModel }) => {
           setModel(model);
           setSelectedExtColor(csExtColor);
           setTrims([...trimsArr]);
+          setShowOptionsGroup(features.length > 0);
           setVinDecoded(true);
         })
         .catch(() => {
@@ -308,6 +332,26 @@ const VehicleInformation: React.FC<Props> = ({ form, fields, viewModel }) => {
       resetLocalState();
     }
     setVinLoader(false);
+  };
+
+  const updateField = (
+    state: string,
+    license: string,
+    errorMessage: string
+  ) => {
+    const fieldsToUpdate = {
+      licensePlate: {
+        ...licenseForm.fields.licensePlate,
+        value: license,
+        error: true,
+        errorMessage,
+      },
+      state: {
+        ...licenseForm.fields.state,
+        value: state,
+      },
+    };
+    return fieldsToUpdate;
   };
 
   const handleDecodeLicense = (lpToDecode: string) => {
@@ -335,26 +379,14 @@ const VehicleInformation: React.FC<Props> = ({ form, fields, viewModel }) => {
         const trimsArr = [];
         const isError = Object.hasOwnProperty.bind(response)('error');
         if (isError) {
-          const [state, license] = lpToDecode.split('-');
-          const fieldsToUpdate = {
-            licensePlate: {
-              ...licenseForm.fields.licensePlate,
-              value: license,
-              error: true,
-              errorMessage,
-            },
-            state: {
-              ...licenseForm.fields.state,
-              value: state,
-            },
-          };
-          licenseForm.updateMultipleFields(fieldsToUpdate);
           setVinLoader(false);
           setLpLoader(false);
           return;
         } else {
           setShowVin(true);
           setShowLicense(false);
+          const successFieldsToUpdate = updateField('', '', errorMessage);
+          licenseForm.updateMultipleFields(successFieldsToUpdate);
           vin.onChange({
             ...vin,
             value: response.vin.toUpperCase(),
@@ -395,6 +427,7 @@ const VehicleInformation: React.FC<Props> = ({ form, fields, viewModel }) => {
         setModel(model);
         setSelectedExtColor(csExtColor);
         setTrims([...trimsArr]);
+        setShowOptionsGroup(features.length > 0);
         setVinDecoded(true);
 
         setVinLoader(false);
@@ -413,11 +446,11 @@ const VehicleInformation: React.FC<Props> = ({ form, fields, viewModel }) => {
     const fieldsToUpdate: any = {};
     const trimIdVal = value ? value.trimId : null;
 
-    if (!vinFromStore) {
+    if (!isEditMode) {
       fieldsToUpdate['trim'] = { ...trim, ...value, error };
       fieldsToUpdate['csTrimId'] = { ...csTrimId, value: trimIdVal };
 
-      if (trims.length === 1) {
+      if (trims.length <= 1) {
         const defaultSelected: any[] = [];
         options.forEach((opt) => {
           if (opt.selected) {
@@ -447,7 +480,7 @@ const VehicleInformation: React.FC<Props> = ({ form, fields, viewModel }) => {
     const { vehicleOptions } = fields;
     setTrimLoader(true);
 
-    if (trimId && !vinFromStore) {
+    if (trimId && !isEditMode) {
       const response = await viewModel.getTrimFeatures(trimId);
       const trimOptions = response.features;
       const defaultSelected: any[] = [];
@@ -462,8 +495,13 @@ const VehicleInformation: React.FC<Props> = ({ form, fields, viewModel }) => {
         value: defaultSelected,
       });
       setOptions([...trimOptions]);
-    } else if (viewModel.vehicleDecodeData.features) {
+      setShowOptionsGroup(trimOptions.length > 0);
+    } else if (
+      viewModel.vehicleDecodeData &&
+      viewModel.vehicleDecodeData.features
+    ) {
       setOptions([...viewModel.vehicleDecodeData.features]);
+      setShowOptionsGroup(viewModel.vehicleDecodeData.features.length > 0);
     }
     setTrimLoader(false);
   };
@@ -503,7 +541,7 @@ const VehicleInformation: React.FC<Props> = ({ form, fields, viewModel }) => {
               field={fields.vin}
               vinLoader={vinLoader}
               handleUpdate={handleDecodeVin}
-              disabled={vinFromStore}
+              disabled={isEditMode}
             />
           </VinField>
         )}
