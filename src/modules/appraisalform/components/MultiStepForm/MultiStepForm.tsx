@@ -81,8 +81,14 @@ const MultiStepForm: React.FC<Props> = (props) => {
   useEffect(() => {
     if (location.hash !== '') {
       setButtonText(submitText);
+    } else {
+      if (activeSection === sections.length - 1) {
+        setButtonText(submitText);
+      } else {
+        setButtonText(nextText);
+      }
     }
-  }, [active]);
+  }, [activeSection]);
 
   useEffect(() => {
     // SetTimeout is used here to make sure we're waiting to
@@ -118,14 +124,6 @@ const MultiStepForm: React.FC<Props> = (props) => {
     setButtonText(nextText);
     onNext(activeSection, 'refreshed');
   };
-
-  useEffect(() => {
-    if (activeSection === sections.length - 1) {
-      setButtonText(submitText);
-    } else {
-      setButtonText(nextText);
-    }
-  }, [activeSection]);
 
   const handleOnNext = (_e: any, onNextIntercept: any) => {
     const nextStep = activeSection + 1;
