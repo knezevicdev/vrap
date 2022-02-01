@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
 import { GenericObject } from '../../../interfaces.d';
@@ -21,6 +21,20 @@ const SelectBoxes: React.FC<Props> = ({
 }) => {
   const analyticsHandler: AnalyticsHandler = new AnalyticsHandler();
   const [showPanelsDialog, setShowPanelsDialog] = useState(false);
+  const [active, setActive] = useState<Element>();
+
+  useEffect(() => {
+    const handleFocusIn = () => {
+      if (document.activeElement !== null) {
+        setActive(document.activeElement);
+      }
+    };
+
+    document.addEventListener('focusin', handleFocusIn);
+    return () => {
+      document.removeEventListener('focusin', handleFocusIn);
+    };
+  }, []);
 
   const handleShowPanelsDialog = () => {
     analyticsHandler.trackPanelsTooltip(panelsTooltip);
@@ -29,6 +43,13 @@ const SelectBoxes: React.FC<Props> = ({
 
   const handleHidePanelsDialog = () => {
     setShowPanelsDialog(false);
+  };
+
+  const handleKeyPress = (event: GenericObject) => {
+    if (event.key === ' ' && active === event.currentTarget) {
+      event.currentTarget.click();
+      event.preventDefault();
+    }
   };
 
   return (
@@ -55,6 +76,7 @@ const SelectBoxes: React.FC<Props> = ({
               onClick={() => onClick(item)}
               optionsLength={options.length}
               data-qa={item}
+              onKeyPress={handleKeyPress}
             >
               {item}
             </Option>
@@ -97,7 +119,7 @@ const OptionsContainer = styled.div`
 `;
 
 const Option = styled(({ isSelected, optionsLength, ...restProps }) => (
-  <div {...restProps} />
+  <div tabIndex={0} {...restProps} />
 ))`
   display: flex;
   font-size: 18px;

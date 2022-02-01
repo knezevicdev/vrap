@@ -88,7 +88,6 @@ const SelectContainer = styled(({ ...restProps }) => <select {...restProps} />)`
   border-radius: 0;
   display: inline-block;
   cursor: pointer;
-  outline: 0;
   letter-spacing: -0.3px;
   color: #041022;
   background-color: #ffffff;
