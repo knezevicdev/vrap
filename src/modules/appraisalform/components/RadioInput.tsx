@@ -20,7 +20,7 @@ const RadioInput: React.FC<Props> = ({
   const [active, setActive] = useState();
 
   useEffect(() => {
-    const handleFocusIn = (e) => {
+    const handleFocusIn = () => {
       setActive(document.activeElement);
     };
 

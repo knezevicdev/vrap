@@ -21,7 +21,7 @@ const MultiTab: React.FC<Props> = ({
   const [activeElement, setActiveElement] = useState();
 
   useEffect(() => {
-    const handleFocusIn = (e) => {
+    const handleFocusIn = () => {
       setActiveElement(document.activeElement);
     };
 
