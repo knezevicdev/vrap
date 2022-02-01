@@ -18,11 +18,13 @@ const MultiTab: React.FC<Props> = ({
   const MultiTabTheme = theme;
   const [activeTab, setActiveTab] = useState(active);
   const tabWidth = 100 / tabSections.length;
-  const [activeElement, setActiveElement] = useState();
+  const [activeElement, setActiveElement] = useState<Element>();
 
   useEffect(() => {
     const handleFocusIn = () => {
-      setActiveElement(document.activeElement);
+      if (document.activeElement !== null) {
+        setActiveElement(document.activeElement);
+      }
     };
 
     document.addEventListener('focusin', handleFocusIn);

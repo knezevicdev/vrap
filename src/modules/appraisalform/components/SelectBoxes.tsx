@@ -21,11 +21,13 @@ const SelectBoxes: React.FC<Props> = ({
 }) => {
   const analyticsHandler: AnalyticsHandler = new AnalyticsHandler();
   const [showPanelsDialog, setShowPanelsDialog] = useState(false);
-  const [active, setActive] = useState();
+  const [active, setActive] = useState<Element>();
 
   useEffect(() => {
     const handleFocusIn = () => {
-      setActive(document.activeElement);
+      if (document.activeElement !== null) {
+        setActive(document.activeElement);
+      }
     };
 
     document.addEventListener('focusin', handleFocusIn);

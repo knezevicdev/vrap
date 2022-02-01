@@ -17,11 +17,13 @@ const RadioInput: React.FC<Props> = ({
   field: { options, onClick, label, name, checked, tooltipText = '' },
   className,
 }) => {
-  const [active, setActive] = useState();
+  const [active, setActive] = useState<Element>();
 
   useEffect(() => {
     const handleFocusIn = () => {
-      setActive(document.activeElement);
+      if (document.activeElement !== null) {
+        setActive(document.activeElement);
+      }
     };
 
     document.addEventListener('focusin', handleFocusIn);
@@ -52,7 +54,7 @@ const RadioInput: React.FC<Props> = ({
                   id={`${item.label}${name}`}
                   value={item.label}
                   name={name}
-                  tabindex={-1}
+                  tabIndex={-1}
                   onClick={() => onClick(item.label)}
                   defaultChecked={checked === item.label}
                 />
@@ -60,7 +62,7 @@ const RadioInput: React.FC<Props> = ({
                 <StyledRadio
                   value={item.label}
                   name={name}
-                  tabindex={0}
+                  tabIndex={0}
                   onClick={() => onClick(item.label)}
                   onKeyPress={handleKeyPress}
                 />
