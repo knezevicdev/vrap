@@ -99,10 +99,10 @@ const WarningLightsOptionsGroup: React.FC<Props> = ({
       const typedOption: GenericObject = option as GenericObject;
 
       return (
-        <WarningOption key={key} htmlFor={key + '-checkbox'}>
+        <WarningOption key={key} htmlFor={key + '-warning-lights-checkbox'}>
           <Checkbox
             name={key}
-            id={key + '-checkbox'}
+            id={key + '-warning-lights-checkbox'}
             onChange={() => handleOptionClick(key, typedOption)}
             checked={!!typedOption.value}
             dataQa="warninglightsoptioncheck"
