@@ -1,4 +1,4 @@
-import { Typography } from '@vroom-web/ui-lib';
+import { addStyleForMobile, Typography } from '@vroom-web/ui-lib';
 import { VroomSpinner } from '@vroom-web/ui-lib';
 import { observer } from 'mobx-react';
 import React, { useEffect, useState } from 'react';
@@ -195,6 +195,10 @@ const TextContainer = styled.p`
     text-decoration: none;
     padding: 0 2px;
   }
+  ${addStyleForMobile(`
+    width: 100%;
+    padding: 0 10px;
+  `)}
 `;
 
 const WhiteBox = styled.div`
