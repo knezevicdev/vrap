@@ -83,7 +83,7 @@ const StyledButton = styled(Button.Primary)`
   max-width: 300px;
 `;
 const NoPriceContainer = styled.div`
-  width: 428px;
+  width: 450px;
   display: flex;
   flex-direction: column;
 
@@ -99,7 +99,6 @@ const NoPricetitle = styled(Typography.Heading.Three)`
   line-height: 40px;
   text-align: center;
   letter-spacing: 1px;
-  font-style: italic;
   margin-bottom: 18px;
 
   ${addStyleForMobile(`
