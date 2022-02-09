@@ -60,11 +60,11 @@ class InitialPriceViewModel {
   };
 
   onContinueClick = async (): Promise<void> => {
-    await this.store.submitPriceAccept();
-    this.analyticsHandler.trackContinueClick();
-    const isAccountCreateAbTest = this.appStore.absmart.isInExperiment(
+    const isAccountCreateAbTest = await this.appStore.absmart.isInExperiment(
       'ac-account-create'
     );
+    await this.store.submitPriceAccept();
+    this.analyticsHandler.trackContinueClick();
 
     let isSignInStatus;
     if (isAccountCreateAbTest) {
