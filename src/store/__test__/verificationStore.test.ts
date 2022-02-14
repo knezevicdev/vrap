@@ -1,4 +1,4 @@
-import { VerificationStore } from './verificationStore';
+import { VerificationStore } from '../verificationStore';
 
 import { verificationResp } from 'src/networking/__mocks__/request';
 

@@ -1,4 +1,4 @@
-import { StepperStore } from './stepperStore';
+import { StepperStore } from '../stepperStore';
 
 describe('test stepper store', () => {
   let store: StepperStore;

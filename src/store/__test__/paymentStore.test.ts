@@ -1,4 +1,4 @@
-import { PaymentStore } from './paymentStore';
+import { PaymentStore } from '../paymentStore';
 
 describe('test payment store', () => {
   let store: PaymentStore;

@@ -1,4 +1,4 @@
-import { OfferStore } from './offerStore';
+import { OfferStore } from '../offerStore';
 
 describe('test offer store', () => {
   let store: OfferStore;
