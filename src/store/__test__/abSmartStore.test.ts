@@ -26,6 +26,18 @@ describe('test absmartly store', () => {
     expect(store.isABSmartlyLoading).toEqual(true);
   });
 
+  test('shoud loading return true when status initial', () => {
+    absmartModel.setStatus(Status.INITIAL);
+    store.setABSmartlyModel(absmartModel);
+    expect(store.isABSmartlyLoading).toEqual(true);
+  });
+
+  test('shoud loading return true when status loading', () => {
+    absmartModel.setStatus(Status.LOADING);
+    store.setABSmartlyModel(absmartModel);
+    expect(store.isABSmartlyLoading).toEqual(true);
+  });
+
   test('shoud loading return false', () => {
     absmartModel.setStatus(Status.SUCCESS);
     store.setABSmartlyModel(absmartModel);
@@ -37,8 +49,15 @@ describe('test absmartly store', () => {
   });
 
   test('should isInExperiment return true', () => {
-    absmartModel.getOverrides();
+    Object.defineProperty(window, 'location', {
+      value: {
+        href: 'https://test.vroom.com/appraisal',
+        search: 'experiment-ac-test=1',
+      },
+      writable: true,
+    });
+    absmartModel.inExperiment = jest.fn().mockReturnValueOnce(true);
     store.setABSmartlyModel(absmartModel);
-    expect(store.isInExperiment('test')).toEqual(false);
+    expect(store.isInExperiment('ac-test')).toEqual(true);
   });
 });
