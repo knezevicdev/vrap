@@ -1,9 +1,11 @@
 import { VerificationStore } from '../verificationStore';
 
 import { verificationResp } from 'src/networking/__mocks__/request';
+import * as Request from 'src/networking/request';
 
 describe('test verification store', () => {
   let store: VerificationStore;
+
   beforeEach(() => {
     store = new VerificationStore();
   });
@@ -106,5 +108,11 @@ describe('test verification store', () => {
   test('should change lastFourSSN when setLastFourSSN called', () => {
     store.setLastFourSSN('0000');
     expect(store.lastFourSSN).toEqual('0000');
+  });
+
+  test('should getDownloadUrl called ', async () => {
+    const spyRequest = jest.spyOn(Request, 'getDownloadUrl');
+    await store.processVerificationData(verificationResp.data);
+    expect(spyRequest).toHaveBeenCalledTimes(6);
   });
 });
