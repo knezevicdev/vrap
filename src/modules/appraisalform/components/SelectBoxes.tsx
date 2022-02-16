@@ -119,7 +119,7 @@ const OptionsContainer = styled.div`
 `;
 
 const Option = styled(({ isSelected, optionsLength, ...restProps }) => (
-  <div tabIndex={0} {...restProps} />
+  <div role="menuitem" tabIndex={0} {...restProps} />
 ))`
   display: flex;
   font-size: 18px;

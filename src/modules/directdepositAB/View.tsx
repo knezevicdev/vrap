@@ -20,7 +20,12 @@ const DirectDepositView: React.FC<Props> = ({ viewModel }) => {
     return (
       <DirectDepositCopy>
         {viewModel.ddToggleOrCopy}&nbsp;
-        <DDToggleLink onClick={(): void => viewModel.togglePlaidLink()}>
+        <DDToggleLink
+          role="button"
+          tabIndex={0}
+          onClick={(): void => viewModel.togglePlaidLink()}
+          onKeyDown={viewModel.togglePlaidLinkKeyDown}
+        >
           {lang}
         </DDToggleLink>
       </DirectDepositCopy>

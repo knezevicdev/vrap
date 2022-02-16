@@ -11,13 +11,23 @@ interface Props {
 }
 
 const PanelsDialog: React.FC<Props> = ({ closeModalHandler }) => {
+  const handleOnKeyDown = (e: any) => {
+    e.preventDefault();
+    if (e.key === 'Enter') {
+      closeModalHandler();
+    }
+  };
+
   return (
     <Container>
       <Modal>
         <DialogContent className="fs-unmask">
           <CloseDialog
             onClick={(): void => closeModalHandler()}
+            onKeyDown={handleOnKeyDown}
             data-qa="exact milage close"
+            role="button"
+            tabIndex={0}
           >
             <CloseButtonContainer>
               <StyledIcon icon={Icons.ClOSE_LARGE} />
@@ -26,7 +36,10 @@ const PanelsDialog: React.FC<Props> = ({ closeModalHandler }) => {
           <div>
             <SectionTitle>{lang.title}</SectionTitle>
             <SectionDesc>{lang.desc}</SectionDesc>
-            <PanelGuide src="https://www.vroom.com/static-assets/images/sell-us-your-car/body-panels-guide.jpg" />
+            <PanelGuide
+              alt=""
+              src="https://www.vroom.com/static-assets/images/sell-us-your-car/body-panels-guide.jpg"
+            />
           </div>
         </DialogContent>
       </Modal>

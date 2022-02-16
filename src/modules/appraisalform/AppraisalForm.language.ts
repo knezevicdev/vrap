@@ -7,7 +7,7 @@ export const VehicleInfoText = {
   noYearMakeModel: 'we could not find that vin. please try again.',
   licenseButton: `WHAT'S MY CAR WORTH?`,
   licenseError: 'Please enter a valid license plate number',
-  licenseButtonDataQa: 'appraisal license button'
+  licenseButtonDataQa: 'appraisal license button',
 };
 
 export const VehicleInfoLeaseCopy =
