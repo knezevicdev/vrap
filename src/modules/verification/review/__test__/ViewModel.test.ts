@@ -134,6 +134,37 @@ describe('Review component test', () => {
     expect(window.location.href).toEqual(url);
   });
 
+  it('test when verification submitted with isPaymentRequireExp and not deposit ', async () => {
+    const submitPayment = jest.spyOn(viewModel, 'submitPayment');
+    stores.absmart.isInExperiment = jest.fn().mockReturnValue(true);
+    await viewModel.verificationSubmit();
+    expect(submitPayment).toHaveBeenCalled();
+  });
+
+  it('test when verification submitted with isPaymentRequireExp and deposit ', async () => {
+    const handlePlaidSubmit = jest.spyOn(viewModel, 'handlePlaidSubmit');
+    stores.deposit.setMutationInput({
+      Account: {
+        Id: '123',
+        Name: 'name',
+        Type: 'checking',
+        Subtype: 'type',
+        Mask: 'mask',
+      },
+      Institution: {
+        Id: 'institute_id',
+        Name: 'institute_name',
+      },
+      PublicToken: 'token',
+      Source: 'acquisitions',
+      ReferenceId: 'referenceId',
+      Email: 'email@email.com',
+    });
+    stores.absmart.isInExperiment = jest.fn().mockReturnValue(true);
+    await viewModel.verificationSubmit();
+    expect(handlePlaidSubmit).toHaveBeenCalled();
+  });
+
   it('test handlePlaidSubmit ', async () => {
     const trackPaymentOptionsSubmitted = jest.spyOn(
       viewModel.getAnalyticHandler(),

@@ -73,4 +73,9 @@ describe('Stepper Test', () => {
     expect(viewModel.defaultSteps).toEqual(defaultSteps);
     expect(viewModel.paymentRequiredSteps).toEqual(paymentRequiredSteps);
   });
+
+  it('test absmart should return true', () => {
+    appStore.absmart.isInExperiment = jest.fn().mockReturnValue(true);
+    expect(viewModel.isPaymentRequireExp()).toEqual(true);
+  });
 });
