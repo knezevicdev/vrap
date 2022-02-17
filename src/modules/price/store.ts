@@ -106,6 +106,12 @@ export class PriceStore implements Store {
         // Just a heads up this can cause race conditions
         this.price = priceMapFromResponse;
         this.storeStatus = StoreStatus.Success;
+      } else {
+        const priceMapFromResponse = {} as PriceStoreState;
+        priceMapFromResponse.automatedAppraisal = false;
+
+        this.price = priceMapFromResponse;
+        this.storeStatus = StoreStatus.Success;
       }
     }
   };
