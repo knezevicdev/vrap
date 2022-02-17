@@ -35,7 +35,6 @@ const EmailInputView: React.FC<Props> = ({ handleEmailSubmit, viewModel }) => {
         <Input
           value={email.value}
           onChange={handleEmailChange}
-          autoFocus
           placeholder={'Email address'}
         />
         <SubmitButton onClick={onhandleEmailSubmit} disabled={email.error}>

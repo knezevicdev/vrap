@@ -155,6 +155,7 @@ const Dropdown = (props: DropdownProps): JSX.Element => {
         disabled={disabled}
         showerror={showError}
         tabIndex={0}
+        role="menuitem"
         onKeyDown={disabled ? undefined : onKeyDown}
       >
         <Label isShowingPlaceholder={isShowingPlaceholder}>{actualLabel}</Label>

@@ -32,12 +32,22 @@ interface Props {
 const VinInformationDialog: React.FC<Props> = ({ closeModalHandler }) => {
   const baseImg = `${BASE_PATH}/images/where-is-vin`;
 
+  const handleOnKeyDown = (e: any) => {
+    e.preventDefault();
+    if (e.key === 'Enter') {
+      closeModalHandler();
+    }
+  };
+
   return (
     <Container data-qa="VinInformationDialog">
       <Modal>
         <CloseDialog
           onClick={(): void => closeModalHandler()}
+          onKeyDown={handleOnKeyDown}
           data-qa="exact milage close"
+          role="button"
+          tabIndex={0}
         >
           <CloseButtonContainer>
             <StyledIcon icon={Icons.ClOSE_LARGE} />

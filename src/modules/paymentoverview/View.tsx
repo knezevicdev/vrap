@@ -83,13 +83,23 @@ const PaymentOverviewView: React.FC<Props> = ({ viewModel }) => {
   const [isExpanded, setIsExpanded] = useState<boolean>(isDesktop);
 
   const handleToggle = (): void => setIsExpanded((isExpanded) => !isExpanded);
+  const handleToggleKeyDown = (event: any): void => {
+    if (event.key === 'Enter') {
+      setIsExpanded((isExpanded) => !isExpanded);
+    }
+  };
 
   return (
     <PaymentOverview>
       <OverviewHeader>
         <StyledHero>{viewModel.hero}</StyledHero>
         {!isDesktop && (
-          <OverviewExpand onClick={handleToggle}>
+          <OverviewExpand
+            role="button"
+            tabIndex={0}
+            onClick={handleToggle}
+            onKeyDown={handleToggleKeyDown}
+          >
             {isExpanded ? (
               <ExpandArrowUp icon={Icons.CHEVRON_UP} />
             ) : (

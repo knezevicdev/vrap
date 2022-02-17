@@ -108,7 +108,9 @@ const WarningLightsOptionsGroup: React.FC<Props> = ({
             dataQa="warninglightsoptioncheck"
           >
             <>
-              {typedOption.imgSrc && <ImgContainer src={typedOption.imgSrc} />}
+              {typedOption.imgSrc && (
+                <ImgContainer alt={key} src={typedOption.imgSrc} />
+              )}
               <Label>{key}</Label>
             </>
           </Checkbox>

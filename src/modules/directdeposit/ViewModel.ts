@@ -55,6 +55,12 @@ class DirectDepositViewModel {
     this.store.togglePlaidLink();
   };
 
+  togglePlaidLinkKeyDown = (event: any): void => {
+    if (event.key === 'Enter') {
+      this.store.togglePlaidLink();
+    }
+  };
+
   onPlaidSuccess = (
     input: PlaidData,
     onPlaidSubmitting: (value: boolean) => void

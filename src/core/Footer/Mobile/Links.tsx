@@ -14,7 +14,7 @@ const Links = styled.div`
   }
 `;
 
-const SectionDiv = styled.div<{ visible: boolean }>`
+const SectionDiv = styled(({ ...restProps }) => <div {...restProps} />)`
   display: flex;
   flex-direction: column;
   cursor: pointer;
@@ -89,13 +89,32 @@ export const MobileLinks: React.FC<Props> = ({ sections }) => {
     setVisibleSection(section);
   };
 
+  const onKeyDown = (event: any) => (): void => {
+    const key = event.key;
+    const section =
+      event.currentTarget.title === visibleSection
+        ? ''
+        : event.currentTarget.title;
+
+    if (key === 'Enter') {
+      setVisibleSection(section);
+    }
+  };
+
   return (
     <Links>
       {sections.map((section: Section) => {
         const { title, links } = section;
         const visible = visibleSection === title;
         return (
-          <SectionDiv key={title} onClick={onClick(title)} visible={visible}>
+          <SectionDiv
+            key={title}
+            onClick={onClick(title)}
+            visible={visible}
+            onKeyDown={onKeyDown}
+            role="link"
+            tabindex={0}
+          >
             <TitleContainer>
               <Title>{title}</Title>
               <Arrow visible={visible} icon={Icons.ARROW_DOWN} />
