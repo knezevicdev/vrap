@@ -1,5 +1,6 @@
 import ViewModel from '../ViewModel';
 
+import * as Request from 'src/networking/request';
 import Store from 'src/store';
 
 jest.mock('next/config', () => (): unknown => ({
@@ -26,5 +27,28 @@ describe('Direct Deposit Review Test', () => {
     expect(AppStore.deposit.mutationInput).toBe(undefined);
     expect(AppStore.option.plaidSubmitting).toBe(true);
     expect(AppStore.deposit.plaidOpen).toBe(true);
+  });
+
+  it('test getLogo ', async () => {
+    const spyGetInstitutionLogo = jest.spyOn(Request, 'getInstitutionLogo');
+    spyGetInstitutionLogo.mockResolvedValueOnce({ data: 'abclogoabc' });
+    await viewModel.getLogo('123');
+    expect(spyGetInstitutionLogo).toHaveBeenCalled();
+    expect(AppStore.deposit.institutionLogo).toEqual('abclogoabc');
+  });
+
+  it('test getLogo with no logo ', async () => {
+    const spyGetInstitutionLogo = jest.spyOn(Request, 'getInstitutionLogo');
+    spyGetInstitutionLogo.mockResolvedValueOnce({ data: 'abclogoabc' });
+    await viewModel.getLogo('123');
+    expect(spyGetInstitutionLogo).toHaveBeenCalled();
+    expect(AppStore.deposit.institutionLogo).toEqual('abclogoabc');
+  });
+
+  it('test getLogo with no logo ', async () => {
+    const spyGetInstitutionLogo = jest.spyOn(Request, 'getInstitutionLogo');
+    spyGetInstitutionLogo.mockResolvedValueOnce({ data: '\n' });
+    await viewModel.getLogo('123');
+    expect(AppStore.deposit.institutionLogo).toEqual(null);
   });
 });
