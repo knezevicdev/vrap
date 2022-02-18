@@ -265,3 +265,13 @@ export const getIsSignInInValid = async (): Promise<
     data: { status: 'active', reason: '' },
   });
 };
+
+export const getinitialOptionDetails = async (): Promise<
+  Response<VerificationRespData>
+> => {
+  return Promise.resolve<Response<VerificationRespData>>({
+    headers: undefined,
+    error: undefined,
+    data: verificationResp,
+  });
+};
