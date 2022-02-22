@@ -275,3 +275,21 @@ export const getinitialOptionDetails = async (): Promise<
     data: verificationResp,
   });
 };
+
+export const getSubmitWeblead = async (): Promise<Response<any>> => {
+  return Promise.resolve<Response<any>>({
+    headers: undefined,
+    error: undefined,
+    data: {},
+  });
+};
+
+export const getPostAppraisalReview = async (): Promise<Response<any>> => {
+  return Promise.resolve<Response<any>>({
+    headers: undefined,
+    error: undefined,
+    data: {
+      ID: 'cb5b06d43cb95286ceeb50efc7a82e08',
+    },
+  });
+};

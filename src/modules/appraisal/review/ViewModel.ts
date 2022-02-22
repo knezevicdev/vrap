@@ -27,6 +27,10 @@ export default class AppraisalReviewModel {
     this._router.push('/');
   }
 
+  getAnalyticsHandler = (): AnalyticsHandler => {
+    return this._analyticsHandler;
+  };
+
   trackIdentify(): void {
     const data = this.appraisalStore;
     const requestPayload: AppraisalPayload = makeRequestBody(data);
