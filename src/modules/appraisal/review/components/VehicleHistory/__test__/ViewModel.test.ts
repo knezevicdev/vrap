@@ -1,3 +1,5 @@
+import { NextRouter } from 'next/router';
+
 import ViewModel from '../ViewModel';
 
 import store from 'src/store';
@@ -11,8 +13,12 @@ describe('Owner Infomation Review component test', () => {
   const stores = new store();
   let viewModel: ViewModel;
 
+  const router = ({
+    push: jest.fn(),
+  } as unknown) as NextRouter;
+
   beforeEach(() => {
-    viewModel = new ViewModel(stores);
+    viewModel = new ViewModel(stores, router);
   });
 
   it('test readonly initial values', () => {
@@ -20,5 +26,10 @@ describe('Owner Infomation Review component test', () => {
     expect(viewModel.accident).toEqual('Accident');
     expect(viewModel.title).toEqual('Title');
     expect(viewModel.edit).toEqual('Edit');
+  });
+
+  it('test handleEditClick, should router called ', () => {
+    viewModel.handleEditClick();
+    expect(router.push).toHaveBeenCalled();
   });
 });
