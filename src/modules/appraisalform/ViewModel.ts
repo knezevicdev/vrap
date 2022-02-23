@@ -2,7 +2,7 @@ import { isErrorResponse } from '@vroom-web/networking';
 
 import AnalyticsHandler from 'src/integrations/AnalyticsHandler';
 import { getMilageCheck, getUser, IsUserSignIn } from 'src/networking/request';
-import store from 'src/store';
+import Store from 'src/store';
 import { ABSmartStore } from 'src/store/abSmartStore';
 import { AppraisalStore } from 'src/store/appraisalStore';
 
@@ -11,7 +11,7 @@ class PriceViewModel {
   appraisalStore: AppraisalStore;
   absmartly: ABSmartStore;
 
-  constructor(public store: store) {
+  constructor(public store: Store) {
     this.appraisalStore = store.appraisal;
     this.absmartly = store.absmart;
   }

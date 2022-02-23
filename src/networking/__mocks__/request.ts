@@ -3,7 +3,7 @@ import { SignInStatusResponseData } from '@vroom-web/networking';
 
 import { Prices, VerificationRespData } from '../models/Price';
 
-import { PlaidTokenResp } from 'src/interfaces.d';
+import { MileageCheckResp, PlaidTokenResp } from 'src/interfaces.d';
 const offerbyIdResp: Prices = {
   data: [
     {
@@ -325,5 +325,12 @@ export const getCarstoryVinDecode = async (
     headers: undefined,
     error: undefined,
     data,
+  });
+};
+
+export const getMilageCheck = async (): Promise<MileageCheckResp> => {
+  return Promise.resolve<MileageCheckResp>({
+    mileage: 99999,
+    errorMessage: null,
   });
 };
