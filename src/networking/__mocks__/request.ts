@@ -293,3 +293,37 @@ export const getPostAppraisalReview = async (): Promise<Response<any>> => {
     },
   });
 };
+
+export const getCarstoryTrimFeatures = async (): Promise<Response<any>> => {
+  return Promise.resolve<Response<any>>({
+    headers: undefined,
+    error: undefined,
+    data: {
+      dataProviderInfo: {
+        carstory: {
+          features: ['feature_one', 'feature_two'],
+        },
+      },
+    },
+  });
+};
+
+export const gradeCheck = async (): Promise<Response<any>> => {
+  return Promise.resolve<Response<any>>({
+    headers: undefined,
+    error: undefined,
+    data: {
+      grade: true,
+    },
+  });
+};
+
+export const getCarstoryVinDecode = async (
+  data: any
+): Promise<Response<any>> => {
+  return Promise.resolve<Response<any>>({
+    headers: undefined,
+    error: undefined,
+    data,
+  });
+};
