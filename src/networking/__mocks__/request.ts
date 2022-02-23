@@ -3,7 +3,7 @@ import { SignInStatusResponseData } from '@vroom-web/networking';
 
 import { Prices, VerificationRespData } from '../models/Price';
 
-import { PlaidTokenResp } from 'src/interfaces.d';
+import { MileageCheckResp, PlaidTokenResp } from 'src/interfaces.d';
 const offerbyIdResp: Prices = {
   data: [
     {
@@ -263,5 +263,74 @@ export const getIsSignInInValid = async (): Promise<
     headers: undefined,
     error: undefined,
     data: { status: 'active', reason: '' },
+  });
+};
+
+export const getinitialOptionDetails = async (): Promise<
+  Response<VerificationRespData>
+> => {
+  return Promise.resolve<Response<VerificationRespData>>({
+    headers: undefined,
+    error: undefined,
+    data: verificationResp,
+  });
+};
+
+export const getSubmitWeblead = async (): Promise<Response<any>> => {
+  return Promise.resolve<Response<any>>({
+    headers: undefined,
+    error: undefined,
+    data: {},
+  });
+};
+
+export const getPostAppraisalReview = async (): Promise<Response<any>> => {
+  return Promise.resolve<Response<any>>({
+    headers: undefined,
+    error: undefined,
+    data: {
+      ID: 'cb5b06d43cb95286ceeb50efc7a82e08',
+    },
+  });
+};
+
+export const getCarstoryTrimFeatures = async (): Promise<Response<any>> => {
+  return Promise.resolve<Response<any>>({
+    headers: undefined,
+    error: undefined,
+    data: {
+      dataProviderInfo: {
+        carstory: {
+          features: ['feature_one', 'feature_two'],
+        },
+      },
+    },
+  });
+};
+
+export const gradeCheck = async (): Promise<Response<any>> => {
+  return Promise.resolve<Response<any>>({
+    headers: undefined,
+    error: undefined,
+    data: {
+      grade: true,
+    },
+  });
+};
+
+export const getCarstoryVinDecode = async (
+  data: any
+): Promise<Response<any>> => {
+  return Promise.resolve<Response<any>>({
+    headers: undefined,
+    error: undefined,
+    data,
+  });
+};
+
+export const getMilageCheck = async (): Promise<MileageCheckResp> => {
+  return Promise.resolve<MileageCheckResp>({
+    mileage: 99999,
+    errorMessage: null,
   });
 };
