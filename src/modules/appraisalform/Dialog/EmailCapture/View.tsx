@@ -62,10 +62,22 @@ const EmailModalView: React.FC<Props> = ({
     handleClose();
   };
 
+  const handleOnKeyDown = (e: any) => {
+    e.preventDefault();
+    if (e.key === 'Enter') {
+      handleClose();
+    }
+  };
+
   return (
     <Container>
       <Content className={hasEmailSubmitted ? 'allSet' : ''}>
-        <CloseButton onClick={handleModalClose}>
+        <CloseButton
+          role="button"
+          onClick={handleModalClose}
+          onKeyDown={handleOnKeyDown}
+          tabindex={0}
+        >
           <Icon icon={Icons.EMAIL_MODAL_CLOSE} />
         </CloseButton>
         {!hasEmailSubmitted && (
@@ -131,7 +143,7 @@ const Content = styled.div`
   }
 `;
 
-const CloseButton = styled.div`
+const CloseButton = styled(({ ...restProps }) => <div {...restProps} />)`
   position: absolute;
   top: 18px;
   right: 18px;

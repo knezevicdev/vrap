@@ -16,7 +16,7 @@ function numberIcon(index: number, activeSection: number, className: string) {
   } else {
     src = grayIcons[index];
   }
-  return <img src={src} className={className} />;
+  return <img alt="" src={src} className={className} />;
 }
 
 interface Props {
@@ -125,6 +125,18 @@ const MultiStepForm: React.FC<Props> = (props) => {
     onNext(activeSection, 'refreshed');
   };
 
+  const handleRefreshKeyDown = (e: any) => {
+    if (e.key === 'Enter') {
+      sections.forEach((section: GenericObject) => {
+        section.form.resetForm();
+      });
+
+      setActiveSection(0);
+      setButtonText(nextText);
+      onNext(activeSection, 'refreshed');
+    }
+  };
+
   const handleOnNext = (_e: any, onNextIntercept: any) => {
     const nextStep = activeSection + 1;
     let currentSectionIsValid = sections[activeSection].form.isFormValid;
@@ -170,6 +182,18 @@ const MultiStepForm: React.FC<Props> = (props) => {
     setButtonText(submitText);
     setActiveSection(sectionToOpen);
     setReturnSection(newReturnSection);
+  };
+
+  const handleEditKeyDown = (
+    event: any,
+    sectionToOpen: any,
+    newReturnSection: any
+  ) => {
+    if (event.key === 'Enter') {
+      setButtonText(submitText);
+      setActiveSection(sectionToOpen);
+      setReturnSection(newReturnSection);
+    }
   };
 
   const getNextButton = (
@@ -269,13 +293,20 @@ const MultiStepForm: React.FC<Props> = (props) => {
         <SectionHeader>
           <StepNumber>
             {showGreenCheck && (
-              <img src={greenCheckPath} className={'title-icon'} />
+              <img alt="" src={greenCheckPath} className={'title-icon'} />
             )}
             {!showGreenCheck && numberIcon(idx, activeSection, 'title-icon')}
           </StepNumber>
           <StepTitle isactive={isActive.toString()}>{title}</StepTitle>
           {showEditButton && (
-            <EditStep onClick={() => handleEditSection(idx, activeSection)}>
+            <EditStep
+              role="button"
+              tabIndex={0}
+              onClick={() => handleEditSection(idx, activeSection)}
+              onKeyDown={(event) =>
+                handleEditKeyDown(event, idx, activeSection)
+              }
+            >
               Edit
             </EditStep>
           )}
@@ -312,7 +343,14 @@ const MultiStepForm: React.FC<Props> = (props) => {
           {formSubtittleSection && formSubtittleSection()}
         </FormTitle>
         {refreshButton && (
-          <FormRefresh onClick={handleRefreshButton}>Refresh</FormRefresh>
+          <FormRefresh
+            role="button"
+            tabIndex={0}
+            onClick={handleRefreshButton}
+            onKeyDown={handleRefreshKeyDown}
+          >
+            Refresh
+          </FormRefresh>
         )}
       </FormHeader>
       {appraisalTitle && <FormWarning>{appraisalTitle}</FormWarning>}

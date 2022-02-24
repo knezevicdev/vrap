@@ -260,6 +260,14 @@ const Icon: React.FC<Props> = ({ icon, color, className, onClick }) => {
   const id = `#${name}`;
   const xlinkHref = `${file}${id}`;
 
+  const onKeyDown = (event: any) => (): void => {
+    const key = event.key;
+
+    if (key === 'Enter' && onClick) {
+      onClick();
+    }
+  };
+
   return (
     <>
       {path ? (
@@ -269,6 +277,9 @@ const Icon: React.FC<Props> = ({ icon, color, className, onClick }) => {
           height={height}
           src={path}
           onClick={onClick}
+          alt={name}
+          onKeyDown={onKeyDown}
+          role="presentation"
         />
       ) : (
         <svg

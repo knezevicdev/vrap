@@ -34,8 +34,21 @@ const DirectDepositReviewView: React.FC<Props> = ({ viewModel }) => {
     router.push(`/verification/review?priceId=${priceId}`);
   };
 
+  const handleReviewKeyDown = (event: any) => {
+    if (event.key === 'Enter') {
+      const priceId = store.deposit.priceId || localStorage.getItem('priceId');
+      router.push(`/verification/review?priceId=${priceId}`);
+    }
+  };
+
   const handleOpenLink = () => {
     viewModel.handleOpenLink();
+  };
+
+  const handleOpenLinkKeyDown = (event: any) => {
+    if (event.key === 'Enter') {
+      viewModel.handleOpenLink();
+    }
   };
 
   return (
@@ -44,6 +57,7 @@ const DirectDepositReviewView: React.FC<Props> = ({ viewModel }) => {
         {store.deposit.institutionLogo && (
           <LogoContainer>
             <LogoImg
+              alt=""
               src={`${VROOM_URL}/mypayments/logo/${store.deposit.institutionId}`}
             />
           </LogoContainer>
@@ -60,8 +74,20 @@ const DirectDepositReviewView: React.FC<Props> = ({ viewModel }) => {
           </AcctDetail>
         </Account>
       </AccountContainer>
-      <Link onClick={handleOpenLink}>{viewModel.linkADifferentAccount}</Link>
-      <SubmitButton onClick={handleReview}>{viewModel.review}</SubmitButton>
+      <LinkDiffAcct
+        tabIndex={0}
+        onClick={handleOpenLink}
+        onKeyDown={handleOpenLinkKeyDown}
+      >
+        {viewModel.linkADifferentAccount}
+      </LinkDiffAcct>
+      <SubmitButton
+        tabIndex={0}
+        onClick={handleReview}
+        onKeyDown={handleReviewKeyDown}
+      >
+        {viewModel.review}
+      </SubmitButton>
       <EncryptContainer>
         <StyledIcon icon={Icons.LOCK} />
         <EncryptText>{viewModel.infoEncrypted}</EncryptText>
@@ -98,7 +124,7 @@ const AcctTitle = styled(Typography.Title.Three)`
 
 const AcctDetail = styled(Typography.Body.Regular)``;
 
-const Link = styled(Typography.Body.Regular)`
+const LinkDiffAcct = styled(Typography.Body.Regular)`
   color: #e7131a;
   text-decoration: underline #e7131a;
   cursor: pointer;
