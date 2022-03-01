@@ -1,4 +1,5 @@
 import { Checkbox, Typography } from '@vroom-web/ui-lib';
+import { Button } from '@vroom-web/ui-lib';
 import { observer } from 'mobx-react';
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
@@ -11,7 +12,6 @@ import SellDocumentReview from './components/SellDocumentReview';
 import ViewModel from './ViewModel';
 
 import { useAppStore } from 'src/context';
-import { Button } from 'src/core/Button';
 interface Props {
   viewModel: ViewModel;
   priceId: string;

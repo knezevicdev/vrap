@@ -1,5 +1,6 @@
 import { useTheme } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
+import { Button } from '@vroom-web/ui-lib';
 import { Form, Formik } from 'formik';
 import { observer } from 'mobx-react';
 import React, { useEffect } from 'react';
@@ -9,7 +10,6 @@ import * as Yup from 'yup';
 import OptionsViewModel from './ViewModel';
 
 import PayOptions from 'src/components/PayOptionsAB';
-import { Button } from 'src/core/Button';
 import { Hero } from 'src/core/Typography';
 import { PaymentOverviewFormValues } from 'src/interfaces.d';
 import DirectDeposit from 'src/modules/directdepositAB';

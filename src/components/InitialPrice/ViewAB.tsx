@@ -1,10 +1,10 @@
+import { Button } from '@vroom-web/ui-lib';
 import { observer } from 'mobx-react';
 import React, { useEffect } from 'react';
 import styled from 'styled-components';
 
 import InitialPriceViewModel from './ViewModel';
 
-import { Button } from 'src/core/Button';
 import { Body, Hero, Title } from 'src/core/Typography';
 
 interface Props {
