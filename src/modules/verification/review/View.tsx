@@ -125,6 +125,9 @@ const Line = styled.div`
 
 const SubmitButton = styled(Button.Primary)`
   margin-top: 32px;
+  :disabled {
+    color: #ffffff;
+  }
   @media (max-width: 1020px) {
     margin-top: 20px;
     width: 100%;
