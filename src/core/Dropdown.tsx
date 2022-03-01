@@ -3,7 +3,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 interface DropdownProps extends SelectProps<SelectItem> {
-  className: string;
+  className?: string;
 }
 
 const Dropdown: React.FC<DropdownProps> = (props) => {
