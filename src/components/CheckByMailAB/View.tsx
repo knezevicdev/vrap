@@ -1,4 +1,4 @@
-import { SelectChanges, SelectItem } from '@vroom-web/ui-lib';
+import { Select, SelectChanges, SelectItem } from '@vroom-web/ui-lib';
 import React from 'react';
 import styled from 'styled-components';
 
@@ -6,7 +6,6 @@ import CheckByMailViewModel from './ViewModel';
 
 import { Props } from 'src/components/CheckByMailAB';
 import IsPrimaryAddress from 'src/components/IsPrimaryAddressAB';
-import Dropdown from 'src/core/Dropdown';
 import FormikInput from 'src/core/FormikInput';
 import { Body } from 'src/core/Typography';
 import { PaymentMethodContext } from 'src/modules/options/paymentMethodContext';
@@ -91,6 +90,20 @@ const City = styled(FormikInput)`
   }
 `;
 
+const State = styled.div`
+  button {
+    height: 40px;
+    border: 1px solid #d6d7da;
+  }
+
+  @media (max-width: 768px) {
+    button {
+      width: 70%;
+    }
+    width: 50%;
+  }
+`;
+
 const Zip = styled(FormikInput)`
   width: 50%;
   margin-left: 10px;
@@ -160,15 +173,16 @@ const CheckByMailView: React.FC<ViewProps> = ({
                   label={viewModel.cityLabel}
                 />
                 <ZipStateContainer>
-                  <Dropdown
-                    id="state"
-                    className="state"
-                    placeholder={viewModel.stateLabel}
-                    label={viewModel.stateLabel}
-                    items={states}
-                    onSelectedItemChange={handleSelectedItemChange}
-                    selectedItem={value}
-                  />
+                  <State>
+                    <Select
+                      id="state"
+                      placeholder={viewModel.stateLabel}
+                      label={viewModel.stateLabel}
+                      items={states}
+                      onSelectedItemChange={handleSelectedItemChange}
+                      selectedItem={value}
+                    />
+                  </State>
                   <Zip
                     id="zipcode"
                     name={'zipcode'}
