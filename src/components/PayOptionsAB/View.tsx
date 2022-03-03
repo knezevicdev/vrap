@@ -1,3 +1,4 @@
+import { Icon } from '@vroom-web/ui-lib';
 import { observer } from 'mobx-react';
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
@@ -6,7 +7,7 @@ import CheckByMail from '../CheckByMailAB';
 import ViewModel from './ViewModel';
 
 import DirectDeposit from 'src/components/DirectDepositAB';
-import Icon, { Icons } from 'src/core/Icon';
+import { Icons } from 'src/core/Icon';
 import RadioButton from 'src/core/Radio';
 import { Body, Title } from 'src/core/Typography';
 import { MailingAddress } from 'src/interfaces.d';

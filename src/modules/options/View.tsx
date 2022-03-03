@@ -1,4 +1,4 @@
-import { Button } from '@vroom-web/ui-lib';
+import { Button, Icon } from '@vroom-web/ui-lib';
 import { Form, Formik } from 'formik';
 import { observer } from 'mobx-react';
 import React, { useEffect } from 'react';
@@ -11,7 +11,7 @@ import OptionsViewModel from './ViewModel';
 import CheckByMail from 'src/components/CheckByMail';
 import PayOptions from 'src/components/PayOptions';
 import { useAppStore } from 'src/context';
-import Icon, { Icons } from 'src/core/Icon';
+import { Icons } from 'src/core/Icon';
 import { Body, Hero, Title } from 'src/core/Typography';
 import { PaymentOverviewFormValues } from 'src/interfaces.d';
 import DirectDeposit from 'src/modules/directdeposit';

@@ -1,9 +1,11 @@
+import { Icon } from '@vroom-web/ui-lib';
 import React from 'react';
 import styled from 'styled-components';
 
-import Icon, { Icons } from '../../core/Icon';
 import { Body, Link } from '../../core/Typography';
 import FooterViewModel from './ViewModel';
+
+import { Icons } from 'src/core/Icon';
 
 const Container = styled.div`
   display: flex;
@@ -51,7 +53,7 @@ const FooterView: React.FC<Props> = ({ viewModel }) => {
       <FooterBody>
         <div>
           <CustomA href={viewModel.vroomLink}>
-            <Icon icon={Icons.VROOM} color="#FFFFFF" />
+            <Icon icon={Icons.VROOM_WHITE} />
           </CustomA>
           <Copyright>{viewModel.copyrightMessage}</Copyright>
           <CustomLink href={viewModel.privacy.href}>

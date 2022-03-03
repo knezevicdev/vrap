@@ -1,9 +1,10 @@
+import { Icon } from '@vroom-web/ui-lib';
 import React from 'react';
 import styled from 'styled-components';
 
 import CongratsCardViewModel from './ViewModel';
 
-import Icon, { Icons } from 'src/core/Icon/Icon';
+import { Icons } from 'src/core/Icon/Icon';
 import { Body, Hero } from 'src/core/Typography';
 
 interface Props {

@@ -1,9 +1,10 @@
+import { Icon } from '@vroom-web/ui-lib';
 import React from 'react';
 import styled from 'styled-components';
 
-import ErrorIcon from './Icon/ErrorIcon';
-import SuccessIcon from './Icon/SuccessIcon';
 import { ThemeProps } from './themes/Vroom';
+
+import { Icons } from 'src/core/Icon';
 
 export interface CoreInputProps
   extends React.InputHTMLAttributes<HTMLInputElement> {
@@ -55,11 +56,11 @@ export const CoreInput: React.FC<CoreInputProps> = (props) => {
       />
       {_showError && (
         <>
-          <ErrorIcon label={label} />
+          <Icon icon={Icons.ERROR_ICON} />
           <ErrorMessage>{error}</ErrorMessage>
         </>
       )}
-      {_showSuccess && <SuccessIcon label={label} />}
+      {_showSuccess && <Icon icon={Icons.SUCCESS_ICON} />}
       {appendComponent && appendComponent}
     </Container>
   );

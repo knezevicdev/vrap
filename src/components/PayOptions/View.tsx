@@ -1,10 +1,11 @@
+import { Icon } from '@vroom-web/ui-lib';
 import { observer } from 'mobx-react';
 import React from 'react';
 import styled from 'styled-components';
 
 import ViewModel from './ViewModel';
 
-import Icon, { Icons } from 'src/core/Icon';
+import { Icons } from 'src/core/Icon';
 import RadioButton from 'src/core/Radio';
 
 export interface Props {

@@ -1,11 +1,13 @@
+import { Icon } from '@vroom-web/ui-lib';
 import React from 'react';
 import styled from 'styled-components';
 
-import Icon, { Icons } from '../../core/Icon';
 import { Body } from '../../core/Typography';
 import { DesktopLinks } from './Desktop/Links';
 import { MobileLinks } from './Mobile/Links';
 import FooterViewModel from './ViewModel';
+
+import { Icons } from 'src/core/Icon';
 
 const Container = styled(({ ...restProps }) => <div {...restProps} />)`
   display: flex;
@@ -69,7 +71,7 @@ const FooterView: React.FC<Props> = ({ viewModel, hasOverlay }) => {
     <Container hasOverlay={hasOverlay}>
       <Information>
         <CustomA href={viewModel.vroomLink}>
-          <Icon icon={Icons.VROOM} color="#FFFFFF" />
+          <Icon icon={Icons.VROOM_WHITE} />
         </CustomA>
         <Message>{viewModel.appMessage}</Message>
         <Apps>
