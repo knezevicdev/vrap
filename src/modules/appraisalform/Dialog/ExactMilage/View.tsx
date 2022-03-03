@@ -1,4 +1,4 @@
-import { addStyleForMobile, Button } from '@vroom-web/ui-lib';
+import { addStyleForMobile, Button, Link } from '@vroom-web/ui-lib';
 import { observer } from 'mobx-react';
 import getConfig from 'next/config';
 import React from 'react';
@@ -90,7 +90,7 @@ const ExactMileageDesc = styled.div`
   margin-top: 30px;
 `;
 
-const CorrectMileageLink = styled.div`
+const CorrectMileageLink = styled(Link.Primary)`
   color: #e7131a;
   cursor: pointer;
   text-decoration: none;
