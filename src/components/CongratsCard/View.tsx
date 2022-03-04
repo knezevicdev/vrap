@@ -4,7 +4,7 @@ import styled from 'styled-components';
 
 import CongratsCardViewModel from './ViewModel';
 
-import { Icons } from 'src/core/Icon/Icon';
+import { Icons } from 'src/core/Icon';
 import { Body, Hero } from 'src/core/Typography';
 
 interface Props {
