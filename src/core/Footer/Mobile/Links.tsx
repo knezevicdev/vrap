@@ -1,8 +1,8 @@
-import { Icon } from '@vroom-web/ui-lib';
+import { Icon, Link } from '@vroom-web/ui-lib';
 import React, { useState } from 'react';
 import styled from 'styled-components';
 
-import { Body, Link } from '../../../core/Typography';
+import { Body } from '../../../core/Typography';
 
 import { Icons } from 'src/core/Icon';
 

@@ -1,4 +1,4 @@
-import { Icon } from '@vroom-web/ui-lib';
+import { Icon, Link } from '@vroom-web/ui-lib';
 import { observer } from 'mobx-react';
 import React from 'react';
 import styled from 'styled-components';
@@ -6,7 +6,7 @@ import styled from 'styled-components';
 import QuestionsViewModel from './ViewModel';
 
 import { Icons } from 'src/core/Icon';
-import { Hero, Link, Title } from 'src/core/Typography';
+import { Hero, Title } from 'src/core/Typography';
 
 export interface Props {
   viewModel: QuestionsViewModel;
