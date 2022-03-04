@@ -240,8 +240,8 @@ export class Icons {
 
   static readonly CHECK_MARK_WHITE = {
     name: 'check-mark-white',
-    width: 16,
-    height: 16,
+    width: 20,
+    height: 20,
     getPath: (
       <g fill="none" fillRule="evenodd" stroke="#FFF">
         <path d="M18.715 10.174a8.796 8.796 0 0 1-8.796 8.797 8.797 8.797 0 1 1 8.796-8.796z" />
