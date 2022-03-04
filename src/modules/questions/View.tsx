@@ -43,7 +43,7 @@ const View: React.FC<Props> = ({ viewModel }) => {
   );
 };
 
-const StyledLink = styled(Link)`
+const StyledLink = styled(Link.Text)`
   text-decoration: none;
 
   :hover {

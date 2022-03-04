@@ -37,7 +37,7 @@ const Title = styled(Body.Regular)`
   margin: 8px 0;
 `;
 
-const CustomLink = styled(Link)<{ visible: boolean }>`
+const CustomLink = styled(Link.Text)<{ visible: boolean }>`
   width: max-content;
   :hover {
     text-decoration-color: red;

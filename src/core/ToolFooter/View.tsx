@@ -30,7 +30,7 @@ const CustomA = styled.a`
   line-height: 0;
 `;
 
-const CustomLink = styled(Link)`
+const CustomLink = styled(Link.Text)`
   padding-left: 10px;
 
   :hover {

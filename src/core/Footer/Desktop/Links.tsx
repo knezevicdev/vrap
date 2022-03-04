@@ -32,7 +32,7 @@ const Title = styled(Body.Regular)`
   margin-bottom: 8px;
 `;
 
-const CustomLink = styled(Link)`
+const CustomLink = styled(Link.Text)`
   :hover {
     text-decoration-color: red;
   }
