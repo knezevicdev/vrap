@@ -238,12 +238,17 @@ export class Icons {
     path: `${BASE_PATH}/icons/check-mark-red.svg`,
   });
 
-  static readonly CHECK_MARK_WHITE = new Icons('CHECK_MARK_WHITE', {
+  static readonly CHECK_MARK_WHITE = {
     name: 'check-mark-white',
     width: 16,
     height: 16,
-    path: `${BASE_PATH}/icons/check-mark-white.svg`,
-  });
+    getPath: (
+      <g fill="none" fillRule="evenodd" stroke="#FFF">
+        <path d="M18.715 10.174a8.796 8.796 0 0 1-8.796 8.797 8.797 8.797 0 1 1 8.796-8.796z" />
+        <path d="M14.317 7.975l-5.131 5.626-3.665-3.666" />
+      </g>
+    ),
+  };
 
   static readonly CHECK_MARK_GREEN = {
     name: 'check-mark-green',
@@ -376,12 +381,19 @@ export class Icons {
     ),
   };
 
-  static readonly CALL_US = new Icons('CALL_US', {
+  static readonly CALL_US = {
     name: 'call-us',
     width: 18,
     height: 18,
-    path: `${BASE_PATH}/icons/call-us.svg`,
-  });
+    getPath: (
+      <path
+        fillRule="evenodd"
+        clipRule="evenodd"
+        d="M2.83103 2.55602C3.1993 1.04981 4.46457 0 5.91165 0H12.7404L10.6167 6.85714H7.45792L6.32024 11.1429H9.86814L8.27538 18H3.18721C1.09856 18 -0.42496 15.8729 0.106588 13.6989L2.83103 2.55602ZM5.91165 1.71429C5.18811 1.71429 4.55548 2.23919 4.37134 2.9923L1.6469 14.1352C1.38112 15.2222 2.14288 16.2857 3.18721 16.2857H7.0318L7.82818 12.8571H4.20869L6.25651 5.14286H9.46873L10.5306 1.71429H5.91165ZM16.3218 10.0065C16.5978 7.87745 16.2217 5.66104 14.9887 3.95481L16.246 2.90234C17.8003 5.05325 18.2206 7.76541 17.8993 10.2435C17.5794 12.711 16.5102 15.0604 14.9411 16.5079L13.9045 15.2063C15.1227 14.0825 16.0444 12.1462 16.3218 10.0065ZM12.934 9.39241C13.0185 8.52833 12.8396 7.77489 12.5656 7.3326L13.8908 6.38168C14.4133 7.22511 14.6325 8.40024 14.518 9.57187C14.4017 10.7608 13.9354 12.0224 12.995 13.0347L11.8687 11.8225C12.521 11.1204 12.8511 10.2392 12.934 9.39241Z"
+        fill="#041022"
+      />
+    ),
+  };
 
   static readonly CALENDAR = {
     name: 'calendar',
@@ -490,12 +502,27 @@ export class Icons {
     ),
   };
 
-  static readonly CHECK_MARK_GREEN_DOCS = new Icons('CHECK_MARK_GREEN', {
+  static readonly CHECK_MARK_GREEN_DOCS = {
     name: 'check-mark-green',
     width: 15,
     height: 25,
-    path: `${BASE_PATH}/icons/check-mark-green.svg`,
-  });
+    getPath: (
+      <>
+        <rect
+          width="2.46726"
+          height="5.75693"
+          transform="matrix(0.729523 -0.683956 0.729523 0.683956 0 5.5625)"
+          fill="#308406"
+        />
+        <rect
+          width="10.6914"
+          height="2.46726"
+          transform="matrix(0.729523 -0.683956 0.729523 0.683956 2.40039 7.8125)"
+          fill="#308406"
+        />
+      </>
+    ),
+  };
 
   static readonly VROOM_TRUCK = {
     name: 'vroom-truck',
