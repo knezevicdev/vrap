@@ -1,11 +1,11 @@
-import { Typography } from '@vroom-web/ui-lib';
+import { Icon, Typography } from '@vroom-web/ui-lib';
 import React from 'react';
 import styled from 'styled-components';
 
 import { FormField } from './componentInterfaces.d';
 import { getCustomOptions, getOptions } from './selectUtils';
 
-import Icon, { Icons } from 'src/core/Icon';
+import { Icons } from 'src/core/Icon';
 import SuccessIcon from 'src/core/Icon/SuccessIcon';
 
 interface DropdownProps {
