@@ -7,8 +7,8 @@ const BASE_PATH = publicRuntimeConfig.NEXT_PUBLIC_BASE_PATH;
 export class Icons {
   static readonly EMAIL = {
     name: 'email',
-    width: 24,
-    height: 24,
+    width: 16,
+    height: 11,
     getPath: (
       <path
         fill="#E7131A"
@@ -20,8 +20,8 @@ export class Icons {
 
   static readonly FAQ = {
     name: 'faq',
-    width: 24,
-    height: 24,
+    width: 10,
+    height: 16,
     getPath: (
       <path
         fill="#E7131A"
@@ -33,8 +33,8 @@ export class Icons {
 
   static readonly PHONE = {
     name: 'phone',
-    width: 24,
-    height: 24,
+    width: 15,
+    height: 16,
     getPath: (
       <path
         fill="#E7131A"
@@ -252,8 +252,8 @@ export class Icons {
 
   static readonly CHECK_MARK_GREEN = {
     name: 'check-mark-green',
-    width: 13,
-    height: 13,
+    width: 12,
+    height: 10,
     getPath: (
       <>
         <rect
@@ -504,8 +504,8 @@ export class Icons {
 
   static readonly CHECK_MARK_GREEN_DOCS = {
     name: 'check-mark-green',
-    width: 15,
-    height: 25,
+    width: 12,
+    height: 10,
     getPath: (
       <>
         <rect

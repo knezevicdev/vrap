@@ -25,48 +25,62 @@ const SellDocumentsReview: React.FC<Props> = ({ viewModel, store }) => {
       <Row>
         {verificationDetail?.front_of_driver_license_file_id && (
           <Info>
-            <Icon icon={Icons.CHECK_MARK_GREEN_DOCS} />
+            <IconWrapper>
+              <Icon icon={Icons.CHECK_MARK_GREEN_DOCS} />
+            </IconWrapper>
             <Field>{viewModel.dlFront}</Field>
           </Info>
         )}
 
         {verificationDetail?.second_owner_front_of_driver_license_file_id && (
           <Info>
-            <Icon icon={Icons.CHECK_MARK_GREEN_DOCS} />
+            <IconWrapper>
+              <Icon icon={Icons.CHECK_MARK_GREEN_DOCS} />
+            </IconWrapper>{' '}
             <Field>{viewModel.secondDlFront}</Field>
           </Info>
         )}
 
         {verificationDetail?.front_of_title_lien_file_id && (
           <Info>
-            <Icon icon={Icons.CHECK_MARK_GREEN_DOCS} />
+            <IconWrapper>
+              <Icon icon={Icons.CHECK_MARK_GREEN_DOCS} />
+            </IconWrapper>{' '}
             <Field>{viewModel.tiFront}</Field>
           </Info>
         )}
         {verificationDetail?.back_of_title_lien_file_id && (
           <Info>
-            <Icon icon={Icons.CHECK_MARK_GREEN_DOCS} />
+            <IconWrapper>
+              <Icon icon={Icons.CHECK_MARK_GREEN_DOCS} />
+            </IconWrapper>{' '}
             <Field>{viewModel.tiBack}</Field>
           </Info>
         )}
 
         {verificationDetail?.current_registration_file_id && (
           <Info>
-            <Icon icon={Icons.CHECK_MARK_GREEN_DOCS} />
+            <IconWrapper>
+              <Icon icon={Icons.CHECK_MARK_GREEN_DOCS} />
+            </IconWrapper>{' '}
             <Field>{viewModel.registration}</Field>
           </Info>
         )}
 
         {verificationDetail?.lien_release_letter_file_id && (
           <Info>
-            <Icon icon={Icons.CHECK_MARK_GREEN_DOCS} />
+            <IconWrapper>
+              <Icon icon={Icons.CHECK_MARK_GREEN_DOCS} />
+            </IconWrapper>{' '}
             <Field>{viewModel.lienRelease}</Field>
           </Info>
         )}
 
         {verificationDetail?.mileage_file_id && (
           <Info>
-            <Icon icon={Icons.CHECK_MARK_GREEN_DOCS} />
+            <IconWrapper>
+              <Icon icon={Icons.CHECK_MARK_GREEN_DOCS} />
+            </IconWrapper>{' '}
             <Field>{viewModel.odometer}</Field>
           </Info>
         )}
@@ -138,6 +152,13 @@ const Edit = styled(Typography.Body.Regular)`
   line-height: 22px;
   color: #e7131a;
   padding-top: 4px;
+`;
+
+const IconWrapper = styled.div`
+  display: flex;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
 `;
 
 export default observer(SellDocumentsReview);

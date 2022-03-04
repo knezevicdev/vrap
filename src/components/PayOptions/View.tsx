@@ -44,7 +44,10 @@ const PayOptionsView: React.FC<Props> = ({ selected, viewModel }) => {
       child = (
         <>
           <Label>
-            Direct Deposit with <Icon icon={Icons.PLAID_LOGO} />
+            Direct Deposit with{' '}
+            <PlaidIconWrapper>
+              <Icon icon={Icons.PLAID_LOGO} />
+            </PlaidIconWrapper>
           </Label>
           <CheckItem>
             <Icon icon={Icons.CHECK_MARK_GREEN} /> Faster than check by mail
@@ -83,6 +86,13 @@ const CheckItem = styled.div`
 
 const Label = styled.div`
   display: flex;
+`;
+
+const PlaidIconWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  height: 100%;
+  margin-left: 5px;
 `;
 
 export default observer(PayOptionsView);
