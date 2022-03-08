@@ -1,3 +1,4 @@
+import { Icon } from '@vroom-web/ui-lib';
 import React from 'react';
 import styled from 'styled-components';
 
@@ -5,7 +6,7 @@ import PriceViewModel from './ViewModel';
 
 import NextSteps from 'src/components/NextSteps';
 import PriceDetail from 'src/components/PriceDetail';
-import Icon, { Icons } from 'src/core/Icon';
+import { Icons } from 'src/core/Icon';
 
 interface Props {
   viewModel: PriceViewModel;

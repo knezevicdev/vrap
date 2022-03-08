@@ -90,7 +90,7 @@ const ExactMileageDesc = styled.div`
   margin-top: 30px;
 `;
 
-const CorrectMileageLink = styled(Link)`
+const CorrectMileageLink = styled(Link.Primary)`
   color: #e7131a;
   cursor: pointer;
   text-decoration: none;

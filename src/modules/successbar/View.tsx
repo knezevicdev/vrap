@@ -1,9 +1,10 @@
+import { Icon } from '@vroom-web/ui-lib';
 import React from 'react';
 import styled from 'styled-components';
 
 import SuccessBarViewModel from './ViewModel';
 
-import Icon, { Icons } from 'src/core/Icon';
+import { Icons } from 'src/core/Icon';
 import { Body } from 'src/core/Typography';
 
 const SuccessBar = styled(Body.Regular)`

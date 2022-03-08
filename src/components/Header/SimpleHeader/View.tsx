@@ -1,10 +1,11 @@
 import { Logo } from '@vroom-web/legacy-header-components';
+import { Icon } from '@vroom-web/ui-lib';
 import React from 'react';
 import styled from 'styled-components';
 
 import ViewModel from './ViewModel';
 
-import Icon, { Icons } from 'src/core/Icon';
+import { Icons } from 'src/core/Icon';
 
 interface Prop {
   viewModel: ViewModel;

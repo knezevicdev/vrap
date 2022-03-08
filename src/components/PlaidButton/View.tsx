@@ -1,3 +1,4 @@
+import { Button } from '@vroom-web/ui-lib';
 import { observer } from 'mobx-react';
 import React, { useCallback, useEffect } from 'react';
 import { usePlaidLink } from 'react-plaid-link';
@@ -6,7 +7,6 @@ import styled from 'styled-components';
 import PlaidButtonViewModel from './ViewModel';
 
 import { useAppStore } from 'src/context';
-import { Button } from 'src/core/Button';
 import { PlaidData } from 'src/interfaces.d';
 
 const PlaidButtonContainer = styled('div')(() => ({

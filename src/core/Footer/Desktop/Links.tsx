@@ -1,7 +1,8 @@
+import { Link } from '@vroom-web/ui-lib';
 import React from 'react';
 import styled from 'styled-components';
 
-import { Body, Link } from '../../../core/Typography';
+import { Body } from '../../../core/Typography';
 
 const Links = styled.div`
   display: flex;
@@ -31,7 +32,7 @@ const Title = styled(Body.Regular)`
   margin-bottom: 8px;
 `;
 
-const CustomLink = styled(Link)`
+const CustomLink = styled(Link.Text)`
   :hover {
     text-decoration-color: red;
   }

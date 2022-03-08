@@ -1,3 +1,4 @@
+import { Select, SelectChanges, SelectItem } from '@vroom-web/ui-lib';
 import React from 'react';
 import styled from 'styled-components';
 
@@ -5,7 +6,6 @@ import CheckByMailViewModel from './ViewModel';
 
 import { Props } from 'src/components/CheckByMail';
 import IsPrimaryAddress from 'src/components/IsPrimaryAddress';
-import Dropdown from 'src/core/Dropdown';
 import FormikInput from 'src/core/FormikInput';
 import { Body } from 'src/core/Typography';
 import { PaymentMethodContext } from 'src/modules/options/paymentMethodContext';
@@ -90,18 +90,16 @@ const City = styled(FormikInput)`
   }
 `;
 
-const State = styled(Dropdown)`
-  width: 50%;
-  height: 40px;
-  margin-left: 10px;
-
-  @media (max-width: 768px) {
-    width: 100%;
-    margin-left: 0px;
-    margin-bottom: 40px;
+const State = styled.div`
+  button {
+    height: 40px;
+    border: 1px solid #d6d7da;
   }
 
   @media (max-width: 768px) {
+    button {
+      width: 70%;
+    }
     width: 50%;
   }
 `;
@@ -130,7 +128,9 @@ const CheckByMailView: React.FC<ViewProps> = ({
   state,
 }) => {
   const states = viewModel.getStates();
-
+  const value = states.find((item) => item.value === state) ?? null;
+  const handleSelectedItemChange = (value: SelectChanges<SelectItem>): void =>
+    setFieldValue('state', value?.selectedItem?.value ?? '');
   // {({ setStateDropdown }): React.ReactNode => (
   return (
     <PaymentMethodContext.Consumer>
@@ -177,17 +177,16 @@ const CheckByMailView: React.FC<ViewProps> = ({
                   label={viewModel.cityLabel}
                 />
                 <ZipStateContainer>
-                  <State
-                    id="state"
-                    className="fs-mask"
-                    placeholder={viewModel.stateLabel}
-                    label={viewModel.stateLabel}
-                    options={states}
-                    onSelectCallback={(value: string): void =>
-                      setFieldValue('state', value)
-                    }
-                    value={state}
-                  />
+                  <State>
+                    <Select
+                      id="state"
+                      placeholder={viewModel.stateLabel}
+                      label={viewModel.stateLabel}
+                      items={states}
+                      onSelectedItemChange={handleSelectedItemChange}
+                      selectedItem={value}
+                    />
+                  </State>
                   <Zip
                     id="zipcode"
                     name={'zipcode'}

@@ -1,12 +1,11 @@
-import { addStyleForMobile, Typography } from '@vroom-web/ui-lib';
+import { addStyleForMobile, Button, Icon, Typography } from '@vroom-web/ui-lib';
 import { observer } from 'mobx-react';
 import React, { useEffect } from 'react';
 import styled from 'styled-components';
 
 import PendingPriceViewModel from './ViewModel';
 
-import { Button } from 'src/core/Button';
-import Icon, { Icons } from 'src/core/Icon';
+import { Icons } from 'src/core/Icon';
 import { Body, Hero } from 'src/core/Typography';
 interface Props {
   viewModel: PendingPriceViewModel;
