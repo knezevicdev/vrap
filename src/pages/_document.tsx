@@ -63,10 +63,7 @@ export default class AppraisalDocument extends Document {
             staticAssetsHostUrl={STATIC_ASSETS_HOST_URL}
           />
           {segmentWriteKey && (
-            <AnalyticsSnippet
-              appName="Vroom Web - Appraisal"
-              segmentWriteKey={segmentWriteKey}
-            />
+            <AnalyticsSnippet segmentWriteKey={segmentWriteKey} />
           )}
           <script
             defer

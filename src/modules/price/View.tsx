@@ -1,6 +1,6 @@
 import { addStyleForMobile, addStyleForTablet } from '@vroom-web/ui-lib';
 import getConfig from 'next/config';
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
 
 import PriceViewModel from './ViewModel';
@@ -16,6 +16,10 @@ interface Props {
 }
 
 const PriceView: React.FC<Props> = ({ viewModel }) => {
+  useEffect(() => {
+    viewModel.onPageLoad();
+  }, []);
+
   return (
     <HeroContainer>
       <PriceContainer>
