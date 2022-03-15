@@ -62,7 +62,7 @@ describe('test AnalyticsHandler ', () => {
 
   it('test trackPriceViewed ', () => {
     analytics.trackPriceViewed();
-    expect(pageSpy).toHaveBeenCalledWith('Price Page', 'sell');
+    expect(pageSpy).toHaveBeenCalledWith('Price details', 'sell');
   });
 
   it('test trackCongratsViewed ', () => {
@@ -197,7 +197,6 @@ describe('test AnalyticsHandler ', () => {
   });
 
   it('test trackProcessStart ', () => {
-    const name = 'Sell Funnel';
     const category = 'Sell';
     const properties = { category };
     const event = 'Appraisal Started';
@@ -206,7 +205,6 @@ describe('test AnalyticsHandler ', () => {
     analytics.trackProcessStart();
 
     expect(trackSpy).toHaveBeenCalledWith(event, properties);
-    expect(pageSpy).toHaveBeenCalledWith(name, category);
     expect(pageSpy).toHaveBeenCalledWith(nameSection, category);
   });
 

@@ -8,7 +8,7 @@ const { ITERABLE_UNSUBSCRIBE_KEY } = publicRuntimeConfig;
 
 class AnalyticsHandler extends BaseAnalyticsHandler {
   trackPriceViewed(): void {
-    const name = 'Price Page';
+    const name = 'Price details';
     const category = 'sell';
     this.page(name, category);
   }
@@ -138,17 +138,13 @@ class AnalyticsHandler extends BaseAnalyticsHandler {
   }
 
   trackProcessStart(): void {
-    const name = 'Sell Funnel';
     const category = 'Sell';
     const properties = { category };
     const event = 'Appraisal Started';
     const nameSection = 'Vehicle Information';
 
-    this.page(name, category);
-
-    this.track(event, properties);
-
     this.page(nameSection, category);
+    this.track(event, properties);
   }
 
   trackStepComplete(step: any, formData: any): void {
