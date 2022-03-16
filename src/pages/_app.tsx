@@ -3,6 +3,7 @@ import 'firebase/remote-config';
 
 import { datadogRum } from '@datadog/browser-rum';
 import { IdProvider } from '@radix-ui/react-id';
+import { ABSmartlyProvider } from '@vroom-web/analytics-integration';
 import { CatSDK } from '@vroom-web/cat-sdk';
 import { CommonHandler } from '@vroom-web/shared-components';
 import { Brand, ThemeProvider } from '@vroom-web/ui';
@@ -38,6 +39,14 @@ configureMobx({
 });
 
 const { publicRuntimeConfig } = getConfig();
+
+const {
+  NEXT_PUBLIC_ABSMARTLY_URL,
+  ABSMARTLY_API_KEY,
+  ABSMARTLY_ENV,
+  ABSMARTLY_APP,
+} = publicRuntimeConfig;
+
 const NEXT_PUBLIC_INTERCHANGE_URL =
   publicRuntimeConfig.NEXT_PUBLIC_INTERCHANGE_URL;
 const DATA_DOG_RUM_APPLICATION = publicRuntimeConfig.DATA_DOG_RUM_APPLICATION;
@@ -102,21 +111,28 @@ class AppraisalApp extends App {
     return (
       <>
         <GlobalStyle />
-        <AnalyticsHandlerContext.Provider value={this.analyticsHandler}>
-          <CatSDKContext.Provider value={this.catSDK}>
-            <RemoteConfigContext.Provider value={this.remoteConfig}>
-              <IdProvider>
-                <ThemeProvider brand={Brand.VROOM}>
-                  <StyledComponentsThemeProvider theme={theme}>
-                    <AppProvider>
-                      <Component {...pageProps} />
-                    </AppProvider>
-                  </StyledComponentsThemeProvider>
-                </ThemeProvider>
-              </IdProvider>
-            </RemoteConfigContext.Provider>
-          </CatSDKContext.Provider>
-        </AnalyticsHandlerContext.Provider>
+        <ABSmartlyProvider
+          apiKey={ABSMARTLY_API_KEY}
+          application={ABSMARTLY_APP}
+          endpoint={NEXT_PUBLIC_ABSMARTLY_URL}
+          environment={ABSMARTLY_ENV}
+        >
+          <AnalyticsHandlerContext.Provider value={this.analyticsHandler}>
+            <CatSDKContext.Provider value={this.catSDK}>
+              <RemoteConfigContext.Provider value={this.remoteConfig}>
+                <IdProvider>
+                  <ThemeProvider brand={Brand.VROOM}>
+                    <StyledComponentsThemeProvider theme={theme}>
+                      <AppProvider>
+                        <Component {...pageProps} />
+                      </AppProvider>
+                    </StyledComponentsThemeProvider>
+                  </ThemeProvider>
+                </IdProvider>
+              </RemoteConfigContext.Provider>
+            </CatSDKContext.Provider>
+          </AnalyticsHandlerContext.Provider>
+        </ABSmartlyProvider>
       </>
     );
   }

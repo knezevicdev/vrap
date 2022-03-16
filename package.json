@@ -35,7 +35,7 @@
     "@vroom-web/deals-v2-networking": "^1.0.1",
     "@vroom-web/legacy-header-components": "^2.3.4",
     "@vroom-web/networking": "^0.6.9",
-    "@vroom-web/shared-components": "^4.0.0",
+    "@vroom-web/shared-components": "^5.0.0",
     "@vroom-web/ui": "^1.0.1",
     "@vroom-web/ui-lib": "^5.1.3",
     "axios": "^0.19.2",
