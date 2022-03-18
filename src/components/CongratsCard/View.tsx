@@ -28,7 +28,11 @@ const Information = styled.div`
 const CongratsCardView = ({ viewModel }: Props): JSX.Element => {
   return (
     <Container>
-      <Icon icon={Icons.CONGRATS_DOCUMENT} />
+      <Icon
+        icon={Icons.CONGRATS_DOCUMENT}
+        title="document"
+        aria-hidden="true"
+      />
       <Hero.Three>{viewModel.title}</Hero.Three>
       <Information>
         <Body.Regular>{viewModel.information1}</Body.Regular>
