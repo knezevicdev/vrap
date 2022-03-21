@@ -1,6 +1,6 @@
 import { Typography } from '@vroom-web/ui-lib';
 import { observer } from 'mobx-react';
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 
 import ViewModel from './ViewModel';
@@ -14,11 +14,30 @@ interface Props {
 
 const InteriorConditionView: React.FC<Props> = ({ viewModel, store }) => {
   const appraisalDetail = store.appraisal;
+  const [visibleSection, setVisibleSection] = useState('');
+
+  const onKeyDown = (event: any) => (): void => {
+    const key = event.key;
+    const section =
+      event.currentTarget.title === visibleSection
+        ? ''
+        : event.currentTarget.title;
+
+    if (key === 'Enter') {
+      setVisibleSection(section);
+    }
+  };
+
   return (
     <Container>
       <SubTitleContainer>
         <Subtitle>{viewModel.interiorConditionInfotitle}</Subtitle>
-        <Edit onClick={(): void => viewModel.handleEditClick()}>
+        <Edit
+          role="button"
+          tabIndex={0}
+          onClick={(): void => viewModel.handleEditClick()}
+          onKeyDown={onKeyDown}
+        >
           {viewModel.edit}
         </Edit>
       </SubTitleContainer>
