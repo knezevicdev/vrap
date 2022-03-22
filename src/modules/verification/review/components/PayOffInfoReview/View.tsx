@@ -1,4 +1,5 @@
 import { Typography } from '@vroom-web/ui-lib';
+import { Link } from '@vroom-web/ui-lib';
 import { observer } from 'mobx-react';
 import React from 'react';
 import styled from 'styled-components';
@@ -19,9 +20,15 @@ const PayoffInfoReview: React.FC<Props> = ({ viewModel, store }) => {
     <Container>
       <SubTitleContainer>
         <Subtitle>{viewModel.payOfftitle}</Subtitle>
-        <Edit onClick={(): void => viewModel.handleEditClick()}>
+        <Link.Text
+          href="/some-url"
+          onClick={(e): void => {
+            e.preventDefault();
+            viewModel.handleEditClick();
+          }}
+        >
           {viewModel.edit}
-        </Edit>
+        </Link.Text>
       </SubTitleContainer>
 
       <Row>
@@ -89,15 +96,6 @@ const Label = styled(Typography.Fine)`
 
 const Field = styled(Typography.Body.Regular)`
   word-wrap: break-word;
-`;
-
-const Edit = styled(Typography.Body.Regular)`
-  margin-left: 5px;
-  cursor: pointer;
-  font-size: 16px;
-  line-height: 22px;
-  color: #e7131a;
-  padding-top: 4px;
 `;
 
 export default observer(PayoffInfoReview);

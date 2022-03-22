@@ -83,6 +83,7 @@ describe('Pickup Infomation Review component test', () => {
     expect(viewModel.tiBack).toEqual('Back of Title Information');
     expect(viewModel.registration).toEqual('Registration');
     expect(viewModel.odometer).toEqual('Odometer Picture');
+    expect(viewModel.edit).toEqual('Edit');
   });
 
   it('when click handleEdit should call window location href', () => {

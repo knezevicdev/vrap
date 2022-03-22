@@ -1,4 +1,5 @@
 import { Icon, Typography } from '@vroom-web/ui-lib';
+import { Link } from '@vroom-web/ui-lib';
 import { observer } from 'mobx-react';
 import React from 'react';
 import styled from 'styled-components';
@@ -20,7 +21,15 @@ const SellDocumentsReview: React.FC<Props> = ({ viewModel, store }) => {
     <Container>
       <SubTitleContainer>
         <Subtitle>{viewModel.SellDoctitle}</Subtitle>
-        <Edit onClick={(): void => viewModel.handleEditClick()}>Edit</Edit>
+        <Link.Text
+          href="/some-url"
+          onClick={(e): void => {
+            e.preventDefault();
+            viewModel.handleEditClick();
+          }}
+        >
+          {viewModel.edit}
+        </Link.Text>
       </SubTitleContainer>
       <Row>
         {verificationDetail?.front_of_driver_license_file_id && (
@@ -143,15 +152,6 @@ const Info = styled.div`
 
 const Field = styled(Typography.Body.Regular)`
   word-wrap: break-word;
-`;
-
-const Edit = styled(Typography.Body.Regular)`
-  margin-left: 5px;
-  cursor: pointer;
-  font-size: 16px;
-  line-height: 22px;
-  color: #e7131a;
-  padding-top: 4px;
 `;
 
 const IconWrapper = styled.div`
