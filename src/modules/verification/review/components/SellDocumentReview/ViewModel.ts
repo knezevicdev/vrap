@@ -14,6 +14,7 @@ export default class SellDocumentReviewViewModel {
   readonly tiBack: string = 'Back of Title Information';
   readonly registration: string = 'Registration';
   readonly odometer: string = 'Odometer Picture';
+  readonly edit: string = 'Edit';
 
   constructor(private store: Store) {}
 
