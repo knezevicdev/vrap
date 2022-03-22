@@ -144,8 +144,4 @@ const CheckboxContainer = styled.div`
   }
 `;
 
-const ReviewText = styled(Typography.Body.Regular)`
-  margin-left: 8px;
-`;
-
 export default observer(VerificationReviewViewDetail);
