@@ -24,15 +24,13 @@ const PaymentInfoReviewView: React.FC<Props> = ({ viewModel, store }) => {
     <Container>
       <SubTitleContainer>
         <Subtitle>{viewModel.title}</Subtitle>
-        <Link.Text
-          href="/some-url"
-          onClick={(e): void => {
-            e.preventDefault();
-            viewModel.handleEditClick();
-          }}
-        >
-          {viewModel.edit}
-        </Link.Text>
+        <LinkWrap>
+          <Link.Text
+            href={`/appraisal/paymentmethod?priceId=${store.verification.offerId}`}
+          >
+            {viewModel.edit}
+          </Link.Text>
+        </LinkWrap>
       </SubTitleContainer>
       {values?.paymentOption === 'Check by Mail' && (
         <>
@@ -149,6 +147,10 @@ const Label = styled(Typography.Fine)`
 
 const Field = styled(Typography.Body.Regular)`
   word-wrap: break-word;
+`;
+
+const LinkWrap = styled.span`
+  margin-left: 5px;
 `;
 
 export default observer(PaymentInfoReviewView);

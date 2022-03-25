@@ -22,7 +22,7 @@ const SellDocumentsReview: React.FC<Props> = ({ viewModel, store }) => {
       <SubTitleContainer>
         <Subtitle>{viewModel.SellDoctitle}</Subtitle>
         <Link.Text
-          href="/some-url"
+          href={`/sell/verification/documents/${store.verification.offerId}`}
           onClick={(e): void => {
             e.preventDefault();
             viewModel.handleEditClick();
