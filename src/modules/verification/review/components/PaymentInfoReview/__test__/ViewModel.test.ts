@@ -25,16 +25,4 @@ describe('Payment Info Review component test', () => {
     expect(viewModel.bankRoutingNumber).toEqual('Bank Routing Number');
     expect(viewModel.directDeposit).toEqual('Direct Deposit');
   });
-
-  it('when call handleEditClick, should change url ', () => {
-    viewModel.handleEditClick();
-    const url = '/appraisal/paymentmethod?priceId=undefined';
-    Object.defineProperty(window, 'location', {
-      value: {
-        href: url,
-      },
-    });
-
-    expect(window.location.href).toEqual(url);
-  });
 });
