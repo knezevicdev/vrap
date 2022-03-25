@@ -37,7 +37,7 @@
     "@vroom-web/networking": "^0.6.9",
     "@vroom-web/shared-components": "^4.0.0",
     "@vroom-web/ui": "^1.0.1",
-    "@vroom-web/ui-lib": "^5.3.0",
+    "@vroom-web/ui-lib": "^5.4.2",
     "axios": "^0.19.2",
     "babel-plugin-import": "^1.13.0",
     "crypto-js": "4.0.0",
