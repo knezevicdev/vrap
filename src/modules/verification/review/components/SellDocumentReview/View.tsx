@@ -21,15 +21,17 @@ const SellDocumentsReview: React.FC<Props> = ({ viewModel, store }) => {
     <Container>
       <SubTitleContainer>
         <Subtitle>{viewModel.SellDoctitle}</Subtitle>
-        <Link.Text
-          href={`/sell/verification/documents/${store.verification.offerId}`}
-          onClick={(e): void => {
-            e.preventDefault();
-            viewModel.handleEditClick();
-          }}
-        >
-          {viewModel.edit}
-        </Link.Text>
+        <LinkWrap>
+          <Link.Text
+            href={`/sell/verification/documents/${store.verification.offerId}`}
+            onClick={(e): void => {
+              e.preventDefault();
+              viewModel.handleEditClick();
+            }}
+          >
+            {viewModel.edit}
+          </Link.Text>
+        </LinkWrap>
       </SubTitleContainer>
       <Row>
         {verificationDetail?.front_of_driver_license_file_id && (
@@ -159,6 +161,10 @@ const IconWrapper = styled.div`
   height: 100%;
   justify-content: center;
   align-items: center;
+`;
+
+const LinkWrap = styled.span`
+  margin-left: 5px;
 `;
 
 export default observer(SellDocumentsReview);
