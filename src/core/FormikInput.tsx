@@ -48,6 +48,7 @@ const FormikInput: React.FC<CoreInputProps> = (props) => {
           <Container className={className} fluid={fluid}>
             <Input
               {...rest}
+              {...field}
               label={label}
               value={value}
               error={meta.error}
