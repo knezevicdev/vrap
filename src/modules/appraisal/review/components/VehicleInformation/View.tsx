@@ -1,6 +1,6 @@
 import { Typography } from '@vroom-web/ui-lib';
 import { observer } from 'mobx-react';
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 
 import ViewModel from './ViewModel';
@@ -10,6 +10,8 @@ interface Props {
 }
 
 const VehicleInformationView: React.FC<Props> = ({ viewModel }) => {
+  const [visibleSection, setVisibleSection] = useState('');
+
   const OptionsList = () => {
     return (
       <>
@@ -19,6 +21,19 @@ const VehicleInformationView: React.FC<Props> = ({ viewModel }) => {
       </>
     );
   };
+
+  const onKeyDown = (event: any) => (): void => {
+    const key = event.key;
+    const section =
+      event.currentTarget.title === visibleSection
+        ? ''
+        : event.currentTarget.title;
+
+    if (key === 'Enter') {
+      setVisibleSection(section);
+    }
+  };
+
   function numberWithCommas(x: number | null) {
     if (x === null) {
       return '';
@@ -37,7 +52,12 @@ const VehicleInformationView: React.FC<Props> = ({ viewModel }) => {
     <Container>
       <SubTitleContainer>
         <Subtitle>{viewModel.vehicleInformationInfotitle}</Subtitle>
-        <Edit onClick={(): void => viewModel.handleEditClick()}>
+        <Edit
+          role="button"
+          tabIndex={0}
+          onClick={(): void => viewModel.handleEditClick()}
+          onKeyDown={onKeyDown}
+        >
           {viewModel.edit}
         </Edit>
       </SubTitleContainer>

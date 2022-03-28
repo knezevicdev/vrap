@@ -80,8 +80,8 @@ const VerificationReviewViewDetail: React.FC<Props> = ({
           id={'verification-agreement-checkbox'}
           onChange={(): void => setChecked(!checked)}
           dataQa={'verification-agreement-checkbox'}
+          label={viewModel.reviewVerification}
         />
-        <ReviewText>{viewModel.reviewVerification}</ReviewText>
       </CheckboxContainer>
       <SubmitButton disabled={!checked} onClick={handleSubmit}>
         {viewModel.submitBtn}
@@ -142,10 +142,6 @@ const CheckboxContainer = styled.div`
   > :first-child {
     margin-top: 5px;
   }
-`;
-
-const ReviewText = styled(Typography.Body.Regular)`
-  margin-left: 8px;
 `;
 
 export default observer(VerificationReviewViewDetail);

@@ -1,4 +1,5 @@
 import { Typography } from '@vroom-web/ui-lib';
+import { Link } from '@vroom-web/ui-lib';
 import { observer } from 'mobx-react';
 import React from 'react';
 import styled from 'styled-components';
@@ -18,9 +19,17 @@ const PickupInfoReviewView: React.FC<Props> = ({ viewModel, store }) => {
     <Container>
       <SubTitleContainer>
         <Subtitle>{viewModel.pickUpInfotitle}</Subtitle>
-        <Edit onClick={(): void => viewModel.handleEditClick()}>
-          {viewModel.edit}
-        </Edit>
+        <LinkWrap>
+          <Link.Text
+            href={`/sell/verification/owner/${store.verification.offerId}`}
+            onClick={(e): void => {
+              e.preventDefault();
+              viewModel.handleEditClick();
+            }}
+          >
+            {viewModel.edit}
+          </Link.Text>
+        </LinkWrap>
       </SubTitleContainer>
       <Row>
         <FullInfo>
@@ -114,13 +123,8 @@ const Field = styled(Typography.Body.Regular)`
   word-wrap: break-word;
 `;
 
-const Edit = styled(Typography.Body.Regular)`
+const LinkWrap = styled.span`
   margin-left: 5px;
-  cursor: pointer;
-  font-size: 16px;
-  line-height: 22px;
-  color: #e7131a;
-  padding-top: 4px;
 `;
 
 export default observer(PickupInfoReviewView);
