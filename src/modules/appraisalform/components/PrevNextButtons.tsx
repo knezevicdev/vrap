@@ -1,8 +1,6 @@
-import { addStyleForMobile } from '@vroom-web/ui-lib';
+import { addStyleForMobile, Button } from '@vroom-web/ui-lib';
 import React from 'react';
 import styled from 'styled-components';
-
-import { Button } from 'src/core/Button';
 
 export const BackText = 'Back';
 export const NextText = 'NEXT';

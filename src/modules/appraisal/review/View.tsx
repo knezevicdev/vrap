@@ -1,5 +1,6 @@
 import { addStyleForMobile, Typography } from '@vroom-web/ui-lib';
 import { VroomSpinner } from '@vroom-web/ui-lib';
+import { Button } from '@vroom-web/ui-lib';
 import { observer } from 'mobx-react';
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
@@ -64,13 +65,13 @@ const AppraisalReviewViewDetail: React.FC<Props> = ({ viewModel }) => {
       <PersonalInformation />
       <SubmitContainer>
         <SubmitButton>
-          <input
+          <Button.Primary
             className={submitButtonClasses.join(' ')}
-            type="submit"
-            value={isLoading ? 'Submitting' : 'Get My Price'}
             disabled={canSubmit}
             onClick={handleSubmit}
-          />
+          >
+            {isLoading ? 'Submitting' : 'Get My Price'}
+          </Button.Primary>
         </SubmitButton>
         <TextContainer>
           By clicking Get My Price, you consent to receive autodialed calls and

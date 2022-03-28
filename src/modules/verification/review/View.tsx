@@ -1,5 +1,4 @@
-import { Checkbox, Typography } from '@vroom-web/ui-lib';
-import { Button } from '@vroom-web/ui-lib';
+import { Button, Checkbox, Typography } from '@vroom-web/ui-lib';
 import { observer } from 'mobx-react';
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';

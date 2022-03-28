@@ -1,12 +1,11 @@
 import { addStyleForMobile, Tooltip } from '@vroom-web/ui-lib';
+import { Button } from '@vroom-web/ui-lib';
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
 import { GenericObject } from '../../../../interfaces.d';
 import PrevNextButtons from '../PrevNextButtons';
 import { blueIcons, grayIcons, greenCheckPath } from './utils';
-
-import { Button } from 'src/core/Button';
 
 function numberIcon(index: number, activeSection: number, className: string) {
   const isActive = activeSection === index;
