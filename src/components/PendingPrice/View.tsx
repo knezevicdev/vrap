@@ -36,7 +36,12 @@ const PendingPriceView: React.FC<Props> = ({ viewModel }) => {
       ) : (
         <>
           <Hero.Four>{viewModel.sitTight}</Hero.Four>
-          <StyledIcon icon={Icons.CAR_OFFER} />
+          <StyledIcon
+            title="Car"
+            titleId="heroIcon"
+            icon={Icons.CAR_OFFER}
+            aria-hidden="true"
+          />
 
           <StyledBody>
             <Body.Regular>{viewModel.takingALook}</Body.Regular>

@@ -45,7 +45,12 @@ const InitialPriceView: React.FC<Props> = ({ viewModel }) => {
     <StyledContainer>
       <Hero.Four>{viewModel.yourPrice}</Hero.Four>
       <Hero.One>{viewModel.price}</Hero.One>
-      <StyledIcon icon={Icons.CAR_OFFER} />
+      <StyledIcon
+        title="Car"
+        titleId="heroIcon"
+        icon={Icons.CAR_OFFER}
+        aria-hidden="true"
+      />
 
       <Content>
         <ContentText>
