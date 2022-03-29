@@ -1,3 +1,4 @@
+import { Button } from '@vroom-web/ui-lib';
 import React from 'react';
 import styled from 'styled-components';
 
@@ -6,8 +7,6 @@ import StateInput from '../../../forminputs/AddressInput/StateInput';
 import LicenseInput from '../../../forminputs/LicenseInput';
 import useForm from '../../../useForm';
 import { buttonText, dataQa, genericLPError } from './language';
-
-import { Button } from 'src/core/Button';
 
 interface Props {
   router: any;

@@ -4,6 +4,7 @@ import {
   addStyleForMobile,
   addStyleForTablet,
 } from '@vroom-web/ui-lib';
+import { Button } from '@vroom-web/ui-lib';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
@@ -31,8 +32,6 @@ import {
   VROOM_VIN_SUBSTRING,
 } from '../validation';
 import VehicleInfoViewModel from './ViewModel';
-
-import { Button } from 'src/core/Button';
 
 export interface Props {
   form: any;

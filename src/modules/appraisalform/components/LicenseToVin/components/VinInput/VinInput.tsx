@@ -1,3 +1,4 @@
+import { Button } from '@vroom-web/ui-lib';
 import React from 'react';
 import styled from 'styled-components';
 
@@ -5,8 +6,6 @@ import VinFormInput from '../../../forminputs/VinFormInput';
 import useForm from '../../../useForm';
 import { buttonText, dataQa } from './language';
 import ViewModel from './ViewModel';
-
-import { Button } from 'src/core/Button';
 
 interface Props {
   viewModel: ViewModel;
@@ -45,7 +44,6 @@ const VinInput: React.FC<Props> = ({ viewModel, router }) => {
     <Container>
       <Vin field={vin} onKeyPressEnter={handleOnKeyPressEnter} />
       <SubmitButton
-        tabIndex={0}
         onKeyPress={handleOnKeyPressEnter}
         disabled={!isFormValid}
         onClick={vinSubmit}

@@ -69,7 +69,7 @@ const AlternateAfterMarketModsOptionsGroup: React.FC<Props> = ({
 
       return (
         <AfterMarketModsOption key={key} htmlFor={key + '-checkbox'}>
-          <Option
+          <Checkbox
             name={key}
             id={key + '-checkbox'}
             label={key}
@@ -147,7 +147,5 @@ const AfterMarketModsOption = styled(({ ...restProps }) => (
 ))`
   padding: 0 0 5px;
 `;
-
-const Option = styled(Checkbox)``;
 
 export default AlternateAfterMarketModsOptionsGroup;

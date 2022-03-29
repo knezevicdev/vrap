@@ -92,7 +92,6 @@ const City = styled(FormikInput)`
 
 const State = styled.div`
   button {
-    height: 40px;
     border: 1px solid #d6d7da;
   }
 
