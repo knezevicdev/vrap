@@ -60,8 +60,8 @@ const VehicleInformation: React.FC<Props> = ({ form, fields, viewModel }) => {
   ];
   const router = useRouter();
   const routerAsPath = router.asPath as string;
-  const isEditMode = routerAsPath.includes('#');
-
+  const isEditMode =
+    routerAsPath.includes('#') && !routerAsPath.endsWith('#main-content');
   const [vinLoader, setVinLoader] = useState(false);
   const [lpLoader, setLpLoader] = useState(false);
   const [trimLoader, setTrimLoader] = useState(false);

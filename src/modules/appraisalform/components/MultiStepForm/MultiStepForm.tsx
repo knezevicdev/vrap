@@ -78,7 +78,7 @@ const MultiStepForm: React.FC<Props> = (props) => {
   }, [nextText, submitText]);
 
   useEffect(() => {
-    if (location.hash !== '') {
+    if (location.hash !== '' && location.hash !== '#main-content') {
       setButtonText(submitText);
     } else {
       if (activeSection === sections.length - 1) {

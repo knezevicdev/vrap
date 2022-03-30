@@ -1,4 +1,5 @@
 import { Brand, ThemeProvider } from '@vroom-web/ui';
+import { SkipNavigationLink } from '@vroom-web/ui-lib';
 import { IncomingMessage } from 'http';
 import { observer } from 'mobx-react';
 import { NextPage, NextPageContext } from 'next';
@@ -99,6 +100,9 @@ const EPayOptions: NextPage<Props> = ({ brand }) => {
         value={{ stateDropdownOpen, setStateDropdown }}
       >
         <Page name="Payment Method">
+          {!store.absmart.isABSmartlyLoading && (
+            <SkipNavigationLink mainContentId={'main-content'} />
+          )}
           <Header />
           {!store.absmart.isABSmartlyLoading && (
             <>
@@ -110,7 +114,10 @@ const EPayOptions: NextPage<Props> = ({ brand }) => {
                   activeStep={isPaymentRequireExp ? '3' : '4'}
                 />
               )}
-              <ColumnBody stateDropdownOpen={stateDropdownOpen}>
+              <ColumnBody
+                id="main-content"
+                stateDropdownOpen={stateDropdownOpen}
+              >
                 <OptionsStoreContext.Provider value={oStore}>
                   <PaymentOverviewStoreContext.Provider value={poStore}>
                     <DirectDepositStoreContext.Provider value={ddStore}>

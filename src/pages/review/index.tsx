@@ -1,3 +1,4 @@
+import { SkipNavigationLink } from '@vroom-web/ui-lib';
 import { observer } from 'mobx-react';
 import { GetServerSideProps, GetServerSidePropsContext, NextPage } from 'next';
 import React from 'react';
@@ -17,8 +18,9 @@ interface Prop {
 const AppraisalReview: NextPage<Prop> = () => {
   return (
     <Page name="Review Your Appraisal">
+      <SkipNavigationLink mainContentId={'main-content'} />
       <Header />
-      <Contents>
+      <Contents id="main-content">
         <AppraisalContainer>
           <ReviewContainer>
             <AppraisalReviewViewDetail />

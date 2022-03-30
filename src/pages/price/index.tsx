@@ -1,3 +1,4 @@
+import { SkipNavigationLink } from '@vroom-web/ui-lib';
 import { observer } from 'mobx-react';
 import { GetServerSideProps, GetServerSidePropsContext, NextPage } from 'next';
 import { useRouter } from 'next/router';
@@ -29,9 +30,12 @@ const Price: NextPage = () => {
 
   return (
     <Page name="Price">
+      {!appStore.store.absmart.isABSmartlyLoading && (
+        <SkipNavigationLink mainContentId={'main-content'} />
+      )}
       <Header />
       {!appStore.store.absmart.isABSmartlyLoading && (
-        <Contents>
+        <Contents id="main-content">
           <PriceInfo store={store} />
           <ProgressiveAd store={store} />
           <Questions />
