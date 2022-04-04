@@ -1,11 +1,15 @@
-import { Select, SelectChanges, SelectItem } from '@vroom-web/ui-lib';
+import {
+  HorizontalRadio,
+  Select,
+  SelectChanges,
+  SelectItem,
+} from '@vroom-web/ui-lib';
 import React from 'react';
 import styled from 'styled-components';
 
 import CheckByMailViewModel from './ViewModel';
 
 import { Props } from 'src/components/CheckByMailAB';
-import IsPrimaryAddress from 'src/components/IsPrimaryAddressAB';
 import FormikInput from 'src/core/FormikInput';
 import { Body } from 'src/core/Typography';
 import { PaymentMethodContext } from 'src/modules/options/paymentMethodContext';
@@ -125,9 +129,23 @@ const CheckByMailView: React.FC<ViewProps> = ({
 }) => {
   const states = viewModel.getStates();
   const value = states.find((item) => item.value === state) ?? null;
+  const [usePrimary, setUsePrimary] = useState<string>(isPrimaryAddress);
   const handleSelectedItemChange = (value: SelectChanges<SelectItem>): void =>
     setFieldValue('state', value?.selectedItem?.value ?? '');
-  // {({ setStateDropdown }): React.ReactNode => (
+  const OPTIONS = [
+    {
+      label: 'Yes',
+      value: 'Yes',
+    },
+    {
+      label: 'No',
+      value: 'No',
+    },
+  ];
+  const setIsPrimaryAddress = (value: string) => {
+    setUsePrimary(value);
+    isPrimaryAddress = value;
+  };
   return (
     <PaymentMethodContext.Consumer>
       {(): React.ReactNode => (
@@ -141,7 +159,12 @@ const CheckByMailView: React.FC<ViewProps> = ({
             </AddressLine>
           </CBMMailingAddress>
 
-          <IsPrimaryAddress selected={isPrimaryAddress} />
+          <HorizontalRadio
+            id="isPrimaryAddress"
+            options={OPTIONS}
+            value={usePrimary}
+            onChange={setIsPrimaryAddress}
+          />
 
           {isPrimaryAddress === 'No' && (
             <>
