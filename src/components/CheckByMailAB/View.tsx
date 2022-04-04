@@ -120,6 +120,13 @@ const Zip = styled(FormikInput)`
   }
 `;
 
+const OptionContainer = styled.div<{ selected?: boolean }>`
+  width: 25%;
+  @media (max-width: 420px) {
+    width: 100%;
+  }
+`;
+
 const CheckByMailView: React.FC<ViewProps> = ({
   mailingAddress,
   isPrimaryAddress,
@@ -159,12 +166,14 @@ const CheckByMailView: React.FC<ViewProps> = ({
             </AddressLine>
           </CBMMailingAddress>
 
-          <HorizontalRadio
-            id="isPrimaryAddress"
-            options={OPTIONS}
-            value={usePrimary}
-            onChange={setIsPrimaryAddress}
-          />
+          <OptionContainer>
+            <HorizontalRadio
+              id="isPrimaryAddress"
+              options={OPTIONS}
+              value={usePrimary}
+              onChange={setIsPrimaryAddress}
+            />
+          </OptionContainer>
 
           {isPrimaryAddress === 'No' && (
             <>
