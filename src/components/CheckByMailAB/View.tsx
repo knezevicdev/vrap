@@ -4,7 +4,7 @@ import {
   SelectChanges,
   SelectItem,
 } from '@vroom-web/ui-lib';
-import React { useState } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 
 import CheckByMailViewModel from './ViewModel';
