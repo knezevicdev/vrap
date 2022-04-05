@@ -1,4 +1,4 @@
-import { VroomSpinner } from '@vroom-web/ui-lib';
+import { SkipNavigationLink, VroomSpinner } from '@vroom-web/ui-lib';
 import { observer } from 'mobx-react';
 import { NextPage, NextPageContext } from 'next';
 import { useRouter } from 'next/router';
@@ -48,6 +48,7 @@ const VerificationReview: NextPage<Prop> = ({ priceId }) => {
 
   return (
     <Page name={'Sell Verification'} data-qa="SellVerificationContainer">
+      <SkipNavigationLink mainContentId={'main-content'} />
       <Header />
       <StepperWrapper>
         <StepperContainer>
@@ -60,7 +61,7 @@ const VerificationReview: NextPage<Prop> = ({ priceId }) => {
         </StepperContainer>
       </StepperWrapper>
       <>
-        <Contents>
+        <Contents id="main-content">
           {isLoading ||
           store.verification.formState === 5 ||
           store.verification.loading ? (

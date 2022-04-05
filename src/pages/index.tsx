@@ -1,3 +1,4 @@
+import { SkipNavigationLink } from '@vroom-web/ui-lib';
 import _ from 'lodash';
 import { observer } from 'mobx-react';
 import { GetServerSideProps, GetServerSidePropsContext, NextPage } from 'next';
@@ -21,10 +22,11 @@ const AppraisalFormPage: NextPage = () => {
 
   return (
     <Page name="Appraisal Form">
+      <SkipNavigationLink mainContentId={'main-content'} />
       <HeaderContainer>
         <Header />
       </HeaderContainer>
-      <PageContent>
+      <PageContent id="main-content">
         <AppraisalForm />
       </PageContent>
       <Footer />

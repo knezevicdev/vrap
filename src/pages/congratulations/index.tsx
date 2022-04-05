@@ -1,3 +1,4 @@
+import { SkipNavigationLink } from '@vroom-web/ui-lib';
 import { GetServerSideProps, GetServerSidePropsContext, NextPage } from 'next';
 import React, { useEffect } from 'react';
 import styled from 'styled-components';
@@ -15,8 +16,9 @@ const CongratulationPage: NextPage = () => {
 
   return (
     <Page name="Congrats! Document submitted">
+      <SkipNavigationLink mainContentId={'main-content'} />
       <Header />
-      <Contents>
+      <Contents id="main-content">
         <Congratulations />
         <Questions />
       </Contents>
