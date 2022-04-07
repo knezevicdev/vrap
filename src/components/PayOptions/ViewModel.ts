@@ -1,3 +1,5 @@
+import { ChangeEventHandler } from 'react';
+
 import { OptionsStore } from '../../modules/options/store';
 
 class PayOptionViewModel {
@@ -7,10 +9,8 @@ class PayOptionViewModel {
     this.oStore = oStore;
   }
 
-  onPayOptionClick = (
-    selectedOption: React.MouseEvent<HTMLInputElement, MouseEvent>
-  ): void => {
-    this.oStore.setPayOptionSelected(selectedOption.currentTarget.value);
+  onPayOptionClick: ChangeEventHandler<HTMLInputElement> = (event): void => {
+    this.oStore.setPayOptionSelected(event.target.value);
   };
 }
 

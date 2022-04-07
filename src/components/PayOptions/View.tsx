@@ -1,12 +1,11 @@
-import { Icon } from '@vroom-web/ui-lib';
+import { Icon, Radio, RadioGroup } from '@vroom-web/ui-lib';
 import { observer } from 'mobx-react';
-import React from 'react';
+import React, { ChangeEventHandler, useState } from 'react';
 import styled from 'styled-components';
 
 import ViewModel from './ViewModel';
 
 import { Icons } from 'src/core/Icon';
-import RadioButton from 'src/core/Radio';
 
 export interface Props {
   selected: string;
@@ -37,12 +36,16 @@ const OptionContainer = styled.div<{ selected?: boolean }>`
 `;
 
 const PayOptionsView: React.FC<Props> = ({ selected, viewModel }) => {
+  const [value, setValue] = useState(selected);
+  const handleChange: ChangeEventHandler<HTMLInputElement> = (event) => {
+    setValue(event.target.value);
+  };
+  console.log('rerender', selected);
   const radioOptions = viewModel.optionMeta.map((option) => {
-    const checked = selected === option;
     let child = <div>{option}</div>;
     if (option === 'Direct Deposit') {
       child = (
-        <>
+        <div>
           <Label>
             Direct Deposit with{' '}
             <PlaidIconWrapper>
@@ -56,27 +59,34 @@ const PayOptionsView: React.FC<Props> = ({ selected, viewModel }) => {
             <Icon icon={Icons.CHECK_MARK_GREEN} /> Most secure way to transfer
             funds
           </CheckItem>
-        </>
+        </div>
       );
     }
 
     return (
-      <OptionContainer selected={checked} key={option}>
-        <RadioButton
-          checked={checked}
-          disabled={false}
-          name={'paymentOption'}
-          value={option}
-          onClick={viewModel.onPayOptionClick}
-          type={''}
-        >
-          {child}
-        </RadioButton>
-      </OptionContainer>
+      <Radio
+        checked={selected === option}
+        disabled={false}
+        name={'paymentOption'}
+        value={option}
+        onChange={(event) => {
+          viewModel.onPayOptionClick(event);
+          handleChange(event);
+        }}
+        dataQa={''}
+        id={option.replaceAll(' ', '')}
+        key={option}
+      >
+        {child}
+      </Radio>
     );
   });
 
-  return <PayOptionsContainer>{radioOptions}</PayOptionsContainer>;
+  return (
+    <PayOptionsContainer>
+      <RadioGroup>{radioOptions}</RadioGroup>
+    </PayOptionsContainer>
+  );
 };
 
 const CheckItem = styled.div`
