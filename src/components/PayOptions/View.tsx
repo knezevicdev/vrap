@@ -1,6 +1,6 @@
 import { Icon, Radio, RadioGroup } from '@vroom-web/ui-lib';
 import { observer } from 'mobx-react';
-import React, { ChangeEventHandler, useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 
 import ViewModel from './ViewModel';
@@ -36,11 +36,6 @@ const OptionContainer = styled.div<{ selected?: boolean }>`
 `;
 
 const PayOptionsView: React.FC<Props> = ({ selected, viewModel }) => {
-  const [value, setValue] = useState(selected);
-  const handleChange: ChangeEventHandler<HTMLInputElement> = (event) => {
-    setValue(event.target.value);
-  };
-  console.log('rerender', selected);
   const radioOptions = viewModel.optionMeta.map((option) => {
     let child = <div>{option}</div>;
     if (option === 'Direct Deposit') {
@@ -70,12 +65,11 @@ const PayOptionsView: React.FC<Props> = ({ selected, viewModel }) => {
         name={'paymentOption'}
         value={option}
         onChange={(event) => {
-          viewModel.onPayOptionClick(event);
-          handleChange(event);
+          viewModel.handleAddressChange(event); //this should trigger a rerender
         }}
-        dataQa={''}
+        dataQa={'paymentOption-' + option.replaceAll(' ', '')}
         id={option.replaceAll(' ', '')}
-        key={option}
+        key={option.replaceAll(' ', '')}
       >
         {child}
       </Radio>

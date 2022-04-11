@@ -223,7 +223,7 @@ const OptionsView: React.FC<Props> = ({ viewModel }) => {
                   </OptionsTitle>
                   <OptionsBody>{viewModel.optionQuestion}</OptionsBody>
 
-                  <PayOptions selected={values.paymentOption} />
+                  <PayOptions selected={store.option.showDD} />
 
                   <OptionDisplay>
                     {showDirectDeposit ? (

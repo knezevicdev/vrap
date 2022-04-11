@@ -9,7 +9,7 @@ class PayOptionViewModel {
     this.oStore = oStore;
   }
 
-  onPayOptionClick: ChangeEventHandler<HTMLInputElement> = (event): void => {
+  handleAddressChange: ChangeEventHandler<HTMLInputElement> = (event): void => {
     this.oStore.setPayOptionSelected(event.target.value);
   };
 }

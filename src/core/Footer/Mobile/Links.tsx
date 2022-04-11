@@ -115,7 +115,7 @@ export const MobileLinks: React.FC<Props> = ({ sections }) => {
             visible={visible}
             onKeyDown={onKeyDown}
             role="link"
-            tabindex={0}
+            tabIndex={0}
           >
             <TitleContainer>
               <Title>{title}</Title>
