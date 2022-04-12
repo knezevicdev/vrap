@@ -1,3 +1,5 @@
+import { makeObservable, observable } from 'mobx';
+
 import { DirectDepositStore } from '../directdeposit/store';
 import { OptionsStore } from './store';
 
@@ -30,10 +32,23 @@ class OptionsViewModel {
   ) {
     this.store = store;
     this.ddStore = ddStore;
-    this.analyticsHandler = analyticsHandler;
     this.appStore = appStore;
+    this.analyticsHandler = analyticsHandler;
     this.router = router;
+    // makeObservable(this, {
+    //   store: observable,
+    //   ddStore: observable,
+    //   appStore: observable,
+    // });
   }
+
+  getShowDD = (): string => {
+    return this.store.showDD;
+  };
+
+  setShowDD = (value: string): void => {
+    this.store.setPayOptionSelected(value);
+  };
 
   onPageLoad = (): void => {
     this.analyticsHandler.trackPaymentOptionsViewed();

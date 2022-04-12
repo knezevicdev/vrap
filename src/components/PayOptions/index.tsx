@@ -6,13 +6,20 @@ import ViewModel from './ViewModel';
 
 interface Props {
   selected: string;
+  handleAddressChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
-const PayOptions: React.FC<Props> = ({ selected }) => {
+const PayOptions: React.FC<Props> = ({ selected, handleAddressChange }) => {
   const oStore = useOptionsStore();
   const viewModel = new ViewModel(oStore);
 
-  return <View viewModel={viewModel} selected={selected} />;
+  return (
+    <View
+      viewModel={viewModel}
+      selected={selected}
+      handleAddressChange={handleAddressChange}
+    />
+  );
 };
 
 export default PayOptions;

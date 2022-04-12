@@ -10,6 +10,7 @@ import { Icons } from 'src/core/Icon';
 export interface Props {
   selected: string;
   viewModel: ViewModel;
+  handleAddressChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 const PayOptionsContainer = styled.div`
@@ -35,7 +36,11 @@ const PayOptionsContainer = styled.div`
 //   }
 // `;
 
-const PayOptionsView: React.FC<Props> = ({ selected, viewModel }) => {
+const PayOptionsView: React.FC<Props> = ({
+  selected,
+  viewModel,
+  handleAddressChange,
+}) => {
   const radioOptions = viewModel.optionMeta.map((option) => {
     let child = <div>{option}</div>;
     if (option === 'Direct Deposit') {
@@ -64,9 +69,7 @@ const PayOptionsView: React.FC<Props> = ({ selected, viewModel }) => {
         disabled={false}
         name={'paymentOption'}
         value={option}
-        onChange={(event) => {
-          viewModel.handleAddressChange(event); //this should trigger a rerender
-        }}
+        onChange={handleAddressChange}
         dataQa={'paymentOption-' + option.replaceAll(' ', '')}
         id={option.replaceAll(' ', '')}
         key={option.replaceAll(' ', '')}

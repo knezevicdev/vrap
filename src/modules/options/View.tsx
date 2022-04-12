@@ -1,7 +1,7 @@
 import { Button, Icon } from '@vroom-web/ui-lib';
 import { Form, Formik } from 'formik';
 import { observer } from 'mobx-react';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import * as Yup from 'yup';
 
@@ -106,6 +106,7 @@ const InitialValues: PaymentOverviewFormValues = {
 
 const OptionsView: React.FC<Props> = ({ viewModel }) => {
   const { store } = useAppStore();
+  const [selectedState, setSelectedState] = useState(store.option.showDD);
   useEffect(() => {
     viewModel.onPageLoad();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -181,6 +182,12 @@ const OptionsView: React.FC<Props> = ({ viewModel }) => {
   const showDirectDepositReview =
     viewModel.isPaymentRequireExp() &&
     store.deposit.mutationInput !== undefined;
+  const handleAddressChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    store.option.setPayOptionSelected(event.target.value);
+    setSelectedState(event.target.value);
+    viewModel.setShowDD(event.target.value);
+  };
+  InitialValues.isPrimaryAddress = store.option.showDD;
   return (
     <Formik
       initialValues={InitialValues}
@@ -196,6 +203,9 @@ const OptionsView: React.FC<Props> = ({ viewModel }) => {
     >
       {({ isValid, values, isSubmitting, setFieldValue }): JSX.Element => {
         const showDirectDeposit = viewModel.showDirectDeposit();
+        console.log(showDirectDeposit);
+        console.log(store.option.showDD);
+        console.log(viewModel.getShowDD());
         const showSubmitButton =
           shouldShowSubmitButton ||
           !showDirectDeposit ||
@@ -223,7 +233,10 @@ const OptionsView: React.FC<Props> = ({ viewModel }) => {
                   </OptionsTitle>
                   <OptionsBody>{viewModel.optionQuestion}</OptionsBody>
 
-                  <PayOptions selected={store.option.showDD} />
+                  <PayOptions
+                    selected={selectedState}
+                    handleAddressChange={handleAddressChange}
+                  />
 
                   <OptionDisplay>
                     {showDirectDeposit ? (
