@@ -10,10 +10,10 @@ import { submitPaymentOption } from 'src/modules/options/store';
 import Store from 'src/store';
 
 class OptionsViewModel {
-  private readonly store: OptionsStore;
-  private readonly ddStore: DirectDepositStore;
+  ddStore: DirectDepositStore;
+  store: OptionsStore;
   private analyticsHandler: AnalyticsHandler;
-  private appStore: Store;
+  appStore: Store;
   readonly hero: string = `let's set up your payment method`;
   readonly desktopTitle: string = 'how would you like to get paid?';
   readonly optionTitle: string = 'Payment Method';
@@ -35,11 +35,11 @@ class OptionsViewModel {
     this.appStore = appStore;
     this.analyticsHandler = analyticsHandler;
     this.router = router;
-    // makeObservable(this, {
-    //   store: observable,
-    //   ddStore: observable,
-    //   appStore: observable,
-    // });
+    makeObservable(this, {
+      store: observable,
+      ddStore: observable,
+      appStore: observable,
+    });
   }
 
   getShowDD = (): string => {

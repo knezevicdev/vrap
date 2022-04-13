@@ -187,7 +187,6 @@ const OptionsView: React.FC<Props> = ({ viewModel }) => {
     setSelectedState(event.target.value);
     viewModel.setShowDD(event.target.value);
   };
-  InitialValues.isPrimaryAddress = store.option.showDD;
   return (
     <Formik
       initialValues={InitialValues}
@@ -203,9 +202,6 @@ const OptionsView: React.FC<Props> = ({ viewModel }) => {
     >
       {({ isValid, values, isSubmitting, setFieldValue }): JSX.Element => {
         const showDirectDeposit = viewModel.showDirectDeposit();
-        console.log(showDirectDeposit);
-        console.log(store.option.showDD);
-        console.log(viewModel.getShowDD());
         const showSubmitButton =
           shouldShowSubmitButton ||
           !showDirectDeposit ||
