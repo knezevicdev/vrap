@@ -7,9 +7,18 @@ import ViewModel from './ViewModel';
 interface Props {
   selected: string;
   handleAddressChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  setFieldValue: (
+    field: string,
+    value: any,
+    shouldValidate?: boolean | undefined
+  ) => void;
 }
 
-const PayOptions: React.FC<Props> = ({ selected, handleAddressChange }) => {
+const PayOptions: React.FC<Props> = ({
+  selected,
+  handleAddressChange,
+  setFieldValue,
+}) => {
   const oStore = useOptionsStore();
   const viewModel = new ViewModel(oStore);
 
@@ -18,6 +27,7 @@ const PayOptions: React.FC<Props> = ({ selected, handleAddressChange }) => {
       viewModel={viewModel}
       selected={selected}
       handleAddressChange={handleAddressChange}
+      setFieldValue={setFieldValue}
     />
   );
 };

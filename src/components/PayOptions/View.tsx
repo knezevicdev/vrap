@@ -11,6 +11,11 @@ export interface Props {
   selected: string;
   viewModel: ViewModel;
   handleAddressChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  setFieldValue: (
+    field: string,
+    value: any,
+    shouldValidate?: boolean | undefined
+  ) => void;
 }
 
 const PayOptionsContainer = styled.div`
@@ -40,6 +45,7 @@ const PayOptionsView: React.FC<Props> = ({
   selected,
   viewModel,
   handleAddressChange,
+  setFieldValue,
 }) => {
   const radioOptions = viewModel.optionMeta.map((option) => {
     let child = <div>{option}</div>;
@@ -69,7 +75,13 @@ const PayOptionsView: React.FC<Props> = ({
         disabled={false}
         name={'paymentOption'}
         value={option}
-        onChange={handleAddressChange}
+        onChange={(event) => {
+          handleAddressChange(event);
+          setFieldValue('paymentOption', option);
+          if (option !== 'Direct Deposit') {
+            setFieldValue('city', 'dujke city');
+          }
+        }}
         dataQa={'paymentOption-' + option.replaceAll(' ', '')}
         id={option.replaceAll(' ', '')}
         key={option.replaceAll(' ', '')}

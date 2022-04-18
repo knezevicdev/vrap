@@ -177,6 +177,8 @@ const OptionsView: React.FC<Props> = ({ viewModel }) => {
     }),
   });
 
+  console.log(PaymentOverviewSchema);
+
   const shouldShowSubmitButton = viewModel.getShowSubmitButton();
   const isPlaidSubmitting = viewModel.getPlaidSubmitting();
   const showDirectDepositReview =
@@ -200,8 +202,20 @@ const OptionsView: React.FC<Props> = ({ viewModel }) => {
       }}
       validateOnMount={true}
     >
-      {({ isValid, values, isSubmitting, setFieldValue }): JSX.Element => {
+      {({
+        isValid,
+        values,
+        isSubmitting,
+        setFieldValue,
+        errors,
+        validateForm,
+      }): JSX.Element => {
         const showDirectDeposit = viewModel.showDirectDeposit();
+        console.log(values);
+        console.log(errors);
+        console.log(isValid);
+        console.log(isSubmitting);
+        console.log(isPlaidSubmitting);
         const showSubmitButton =
           shouldShowSubmitButton ||
           !showDirectDeposit ||
@@ -215,6 +229,16 @@ const OptionsView: React.FC<Props> = ({ viewModel }) => {
         return (
           <FormContainer>
             <OptionsContainer>
+              <button
+                onClick={(event) => {
+                  event.stopPropagation();
+                  event.preventDefault();
+                  validateForm();
+                  console.log(PaymentOverviewSchema);
+                }}
+              >
+                Validate this form
+              </button>
               <StyledHero>{viewModel.hero}</StyledHero>
               <Line />
               {showDirectDepositReview ? (
@@ -232,6 +256,7 @@ const OptionsView: React.FC<Props> = ({ viewModel }) => {
                   <PayOptions
                     selected={selectedState}
                     handleAddressChange={handleAddressChange}
+                    setFieldValue={setFieldValue}
                   />
 
                   <OptionDisplay>
