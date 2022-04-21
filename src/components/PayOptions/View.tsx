@@ -26,20 +26,14 @@ const PayOptionsContainer = styled.div`
   }
 `;
 
-// const OptionContainer = styled.div<{ selected?: boolean }>`
-//   width: 50%;
-//   padding: 20px;
-//   outline: ${({ selected }): string =>
-//     selected ? '2px solid #E7131A' : 'none'};
-//   box-sizing: border-box;
-//   box-shadow: ${({ selected }): string =>
-//     selected ? '0px 0px 3px rgba(0, 0, 0, 0.2)' : ''};
-//   height: fit-content;
+const OptionContainer = styled.div`
+  padding: 20px;
+  height: fit-content;
 
-//   @media (max-width: 420px) {
-//     width: 100%;
-//   }
-// `;
+  @media (max-width: 420px) {
+    width: 100%;
+  }
+`;
 
 const PayOptionsView: React.FC<Props> = ({
   selected,
@@ -48,10 +42,10 @@ const PayOptionsView: React.FC<Props> = ({
   setFieldValue,
 }) => {
   const radioOptions = viewModel.optionMeta.map((option) => {
-    let child = <div>{option}</div>;
+    let child = <OptionContainer>{option}</OptionContainer>;
     if (option === 'Direct Deposit') {
       child = (
-        <div>
+        <OptionContainer>
           <Label>
             Direct Deposit with{' '}
             <PlaidIconWrapper>
@@ -65,7 +59,7 @@ const PayOptionsView: React.FC<Props> = ({
             <Icon icon={Icons.CHECK_MARK_GREEN} /> Most secure way to transfer
             funds
           </CheckItem>
-        </div>
+        </OptionContainer>
       );
     }
 
