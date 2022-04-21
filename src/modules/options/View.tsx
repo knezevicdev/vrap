@@ -200,14 +200,7 @@ const OptionsView: React.FC<Props> = ({ viewModel }) => {
       }}
       validateOnMount={true}
     >
-      {({
-        isValid,
-        values,
-        isSubmitting,
-        setFieldValue,
-        errors,
-        validateForm,
-      }): JSX.Element => {
+      {({ isValid, values, isSubmitting, setFieldValue }): JSX.Element => {
         const showDirectDeposit = viewModel.showDirectDeposit();
         const showSubmitButton =
           shouldShowSubmitButton ||
