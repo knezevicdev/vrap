@@ -1,5 +1,4 @@
 import { makeObservable, observable } from 'mobx';
-import { ChangeEventHandler } from 'react';
 
 import { OptionsStore } from '../../modules/options/store';
 
