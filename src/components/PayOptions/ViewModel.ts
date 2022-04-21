@@ -13,8 +13,8 @@ class PayOptionViewModel {
     });
   }
 
-  handleAddressChange: ChangeEventHandler<HTMLInputElement> = (event): void => {
-    this.oStore.setPayOptionSelected(event.target.value);
+  handleAddressChange = (value: string): void => {
+    this.oStore.setPayOptionSelected(value);
   };
 }
 

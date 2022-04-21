@@ -20,9 +20,7 @@ describe('PayOptions Test', () => {
   });
 
   it('should update payment option in store when choose', () => {
-    viewModel.handleAddressChange({
-      currentTarget: { value: 'Direct Deposit' },
-    });
+    viewModel.handleAddressChange('Direct Deposit');
     expect(oStore.showDD).toEqual('Direct Deposit');
   });
 });
