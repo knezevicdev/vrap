@@ -155,6 +155,7 @@ const CheckByMailView: React.FC<ViewProps> = ({
   const setIsPrimaryAddress = (value: string) => {
     setUsePrimary(value);
     isPrimaryAddress = value;
+    setFieldValue('isPrimaryAddress', value);
   };
   return (
     <PaymentMethodContext.Consumer>

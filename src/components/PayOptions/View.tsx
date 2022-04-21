@@ -78,9 +78,6 @@ const PayOptionsView: React.FC<Props> = ({
         onChange={(event) => {
           handleAddressChange(event);
           setFieldValue('paymentOption', option);
-          if (option !== 'Direct Deposit') {
-            setFieldValue('city', 'dujke city');
-          }
         }}
         dataQa={'paymentOption-' + option.replaceAll(' ', '')}
         id={option.replaceAll(' ', '')}

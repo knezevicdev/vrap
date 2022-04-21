@@ -79,7 +79,6 @@ class OptionsViewModel {
   };
 
   isValidRouting = (num: string | null | undefined): boolean => {
-    debugger;
     if (!num || num.length < 9) return false;
 
     // Run through each digit and calculate the total.
@@ -121,7 +120,6 @@ class OptionsViewModel {
   };
 
   isValidName = (str: string | null | undefined): boolean => {
-    debugger;
     const re = /^[a-zA-ZàâäôéèëêïîçùûüÿæœÀÂÄÔÉÈËÊÏÎŸÇÙÛÜÆŒäöüßÄÖÜẞąćęłńóśźżĄĆĘŁŃÓŚŹŻàèéìíîòóùúÀÈÉÌÍÎÒÓÙÚáéíñóúüÁÉÍÑÓÚÜ \-']{2,30}$/;
     console.log(!str || !re.test(str));
     if (!str || !re.test(str)) {
