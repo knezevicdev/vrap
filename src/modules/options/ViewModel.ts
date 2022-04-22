@@ -1,3 +1,5 @@
+import { makeObservable, observable } from 'mobx';
+
 import { DirectDepositStore } from '../directdeposit/store';
 import { OptionsStore } from './store';
 
@@ -8,10 +10,10 @@ import { submitPaymentOption } from 'src/modules/options/store';
 import Store from 'src/store';
 
 class OptionsViewModel {
-  private readonly store: OptionsStore;
-  private readonly ddStore: DirectDepositStore;
+  ddStore: DirectDepositStore;
+  store: OptionsStore;
   private analyticsHandler: AnalyticsHandler;
-  private appStore: Store;
+  appStore: Store;
   readonly hero: string = `let's set up your payment method`;
   readonly desktopTitle: string = 'how would you like to get paid?';
   readonly optionTitle: string = 'Payment Method';
@@ -30,10 +32,23 @@ class OptionsViewModel {
   ) {
     this.store = store;
     this.ddStore = ddStore;
-    this.analyticsHandler = analyticsHandler;
     this.appStore = appStore;
+    this.analyticsHandler = analyticsHandler;
     this.router = router;
+    makeObservable(this, {
+      store: observable,
+      ddStore: observable,
+      appStore: observable,
+    });
   }
+
+  getShowDD = (): string => {
+    return this.store.showDD;
+  };
+
+  setShowDD = (value: string): void => {
+    this.store.setPayOptionSelected(value);
+  };
 
   onPageLoad = (): void => {
     this.analyticsHandler.trackPaymentOptionsViewed();
@@ -106,6 +121,7 @@ class OptionsViewModel {
 
   isValidName = (str: string | null | undefined): boolean => {
     const re = /^[a-zA-ZàâäôéèëêïîçùûüÿæœÀÂÄÔÉÈËÊÏÎŸÇÙÛÜÆŒäöüßÄÖÜẞąćęłńóśźżĄĆĘŁŃÓŚŹŻàèéìíîòóùúÀÈÉÌÍÎÒÓÙÚáéíñóúüÁÉÍÑÓÚÜ \-']{2,30}$/;
+    console.log(!str || !re.test(str));
     if (!str || !re.test(str)) {
       return false;
     } else {

@@ -1,4 +1,4 @@
-import { Icon } from '@vroom-web/ui-lib';
+import { Icon, Radio, RadioGroup } from '@vroom-web/ui-lib';
 import { observer } from 'mobx-react';
 import React from 'react';
 import styled from 'styled-components';
@@ -6,11 +6,16 @@ import styled from 'styled-components';
 import ViewModel from './ViewModel';
 
 import { Icons } from 'src/core/Icon';
-import RadioButton from 'src/core/Radio';
 
 export interface Props {
   selected: string;
   viewModel: ViewModel;
+  handleAddressChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  setFieldValue: (
+    field: string,
+    value: any,
+    shouldValidate?: boolean | undefined
+  ) => void;
 }
 
 const PayOptionsContainer = styled.div`
@@ -21,14 +26,8 @@ const PayOptionsContainer = styled.div`
   }
 `;
 
-const OptionContainer = styled.div<{ selected?: boolean }>`
-  width: 50%;
+const OptionContainer = styled.div`
   padding: 20px;
-  outline: ${({ selected }): string =>
-    selected ? '2px solid #E7131A' : 'none'};
-  box-sizing: border-box;
-  box-shadow: ${({ selected }): string =>
-    selected ? '0px 0px 3px rgba(0, 0, 0, 0.2)' : ''};
   height: fit-content;
 
   @media (max-width: 420px) {
@@ -36,13 +35,17 @@ const OptionContainer = styled.div<{ selected?: boolean }>`
   }
 `;
 
-const PayOptionsView: React.FC<Props> = ({ selected, viewModel }) => {
+const PayOptionsView: React.FC<Props> = ({
+  selected,
+  viewModel,
+  handleAddressChange,
+  setFieldValue,
+}) => {
   const radioOptions = viewModel.optionMeta.map((option) => {
-    const checked = selected === option;
-    let child = <div>{option}</div>;
+    let child = <OptionContainer>{option}</OptionContainer>;
     if (option === 'Direct Deposit') {
       child = (
-        <>
+        <OptionContainer>
           <Label>
             Direct Deposit with{' '}
             <PlaidIconWrapper>
@@ -56,27 +59,34 @@ const PayOptionsView: React.FC<Props> = ({ selected, viewModel }) => {
             <Icon icon={Icons.CHECK_MARK_GREEN} /> Most secure way to transfer
             funds
           </CheckItem>
-        </>
+        </OptionContainer>
       );
     }
 
     return (
-      <OptionContainer selected={checked} key={option}>
-        <RadioButton
-          checked={checked}
-          disabled={false}
-          name={'paymentOption'}
-          value={option}
-          onClick={viewModel.onPayOptionClick}
-          type={''}
-        >
-          {child}
-        </RadioButton>
-      </OptionContainer>
+      <Radio
+        checked={selected === option}
+        disabled={false}
+        name={'paymentOption'}
+        value={option}
+        onChange={(event) => {
+          handleAddressChange(event);
+          setFieldValue('paymentOption', option);
+        }}
+        dataQa={'paymentOption-' + option.replaceAll(' ', '')}
+        id={option.replaceAll(' ', '')}
+        key={option.replaceAll(' ', '')}
+      >
+        {child}
+      </Radio>
     );
   });
 
-  return <PayOptionsContainer>{radioOptions}</PayOptionsContainer>;
+  return (
+    <PayOptionsContainer>
+      <RadioGroup>{radioOptions}</RadioGroup>
+    </PayOptionsContainer>
+  );
 };
 
 const CheckItem = styled.div`

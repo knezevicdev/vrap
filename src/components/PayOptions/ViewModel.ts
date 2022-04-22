@@ -1,16 +1,19 @@
+import { makeObservable, observable } from 'mobx';
+
 import { OptionsStore } from '../../modules/options/store';
 
 class PayOptionViewModel {
-  private readonly oStore: OptionsStore;
   readonly optionMeta: string[] = ['Direct Deposit', 'Check by Mail'];
+  oStore: OptionsStore;
   constructor(oStore: OptionsStore) {
     this.oStore = oStore;
+    makeObservable(this, {
+      oStore: observable,
+    });
   }
 
-  onPayOptionClick = (
-    selectedOption: React.MouseEvent<HTMLInputElement, MouseEvent>
-  ): void => {
-    this.oStore.setPayOptionSelected(selectedOption.currentTarget.value);
+  handleAddressChange = (value: string): void => {
+    this.oStore.setPayOptionSelected(value);
   };
 }
 

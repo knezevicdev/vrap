@@ -1,7 +1,7 @@
 import { Button, Icon } from '@vroom-web/ui-lib';
 import { Form, Formik } from 'formik';
 import { observer } from 'mobx-react';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import * as Yup from 'yup';
 
@@ -106,6 +106,7 @@ const InitialValues: PaymentOverviewFormValues = {
 
 const OptionsView: React.FC<Props> = ({ viewModel }) => {
   const { store } = useAppStore();
+  const [selectedState, setSelectedState] = useState(store.option.showDD);
   useEffect(() => {
     viewModel.onPageLoad();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -181,6 +182,11 @@ const OptionsView: React.FC<Props> = ({ viewModel }) => {
   const showDirectDepositReview =
     viewModel.isPaymentRequireExp() &&
     store.deposit.mutationInput !== undefined;
+  const handleAddressChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    store.option.setPayOptionSelected(event.target.value);
+    setSelectedState(event.target.value);
+    viewModel.setShowDD(event.target.value);
+  };
   return (
     <Formik
       initialValues={InitialValues}
@@ -223,7 +229,11 @@ const OptionsView: React.FC<Props> = ({ viewModel }) => {
                   </OptionsTitle>
                   <OptionsBody>{viewModel.optionQuestion}</OptionsBody>
 
-                  <PayOptions selected={values.paymentOption} />
+                  <PayOptions
+                    selected={selectedState}
+                    handleAddressChange={handleAddressChange}
+                    setFieldValue={setFieldValue}
+                  />
 
                   <OptionDisplay>
                     {showDirectDeposit ? (

@@ -37,5 +37,7 @@ RUN --mount=type=secret,id=auto-devops-build-secrets . /run/secrets/auto-devops-
 USER 1000
 # change to another user 
 
+RUN git config --global --add safe.directory /app
+
 CMD ["./node_modules/.bin/next","start","-p","8080"]
 # specificlally run the next command with no shell - see note 3
