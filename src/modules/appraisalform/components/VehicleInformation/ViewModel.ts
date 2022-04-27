@@ -46,37 +46,40 @@ class VehicleInfoViewModel {
     try {
       const response = await getCarstoryVinDecode(vehicleId);
       if (isErrorResponse(response)) throw response;
-      let alternatives, features, id;
+      let alternatives = [];
+      let features = [];
+      let id = null;
+      let style = null;
       const { dataProviderInfo, vehicleInfo } = response.data;
 
       if (dataProviderInfo.carstory) {
         alternatives = dataProviderInfo.carstory.alternatives || [];
         features = dataProviderInfo.carstory.features || [];
         id = dataProviderInfo.carstory.id || null;
+        style = dataProviderInfo.carstory.style || null;
       } else if (dataProviderInfo.nada) {
         alternatives = dataProviderInfo.nada.alternatives || [];
         features = dataProviderInfo.nada.features || [];
         id = dataProviderInfo.nada.id || null;
-      } else {
-        alternatives = [];
-        features = [];
-        id = null;
       }
 
       this.appraisalStore.setVehicleData({
         ...response.data.vehicleInfo,
         alternatives,
         features,
+        style,
       });
 
       return {
         alternatives,
         features,
+        style,
         exteriorColor: vehicleInfo.exteriorColor,
         year: vehicleInfo.year,
         make: vehicleInfo.make,
         model: vehicleInfo.model,
         trim: vehicleInfo.trim,
+        subTrim: vehicleInfo.subTrim,
         vin: vehicleInfo.vin,
         id,
       };
