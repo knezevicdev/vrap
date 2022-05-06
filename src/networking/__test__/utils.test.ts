@@ -144,13 +144,6 @@ describe('test functions in utils', () => {
         brand: 'Vroom',
         site: 'https',
         subsite: 'test.vroom.com',
-        utm_campaign: '',
-        utm_content: '',
-        utm_medium: '',
-        utm_source: '',
-        utm_term: '',
-        utm_keyword: '',
-        utm_subsource: '',
       },
       person: {
         consent: [

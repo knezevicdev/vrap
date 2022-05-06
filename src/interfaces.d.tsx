@@ -191,6 +191,13 @@ export interface AppraisalPayload {
   warningLightsValues: [];
   year: number;
   zipCode: string;
+  utm_campaign: string;
+  utm_content: string;
+  utm_medium: string;
+  utm_source: string;
+  utm_term: string;
+  utm_keyword: string;
+  utm_subsource: string;
 }
 
 export interface GenericObject {
@@ -372,13 +379,6 @@ export interface WebLeadsPayload {
   message: {
     form: string;
     brand: string;
-    utm_campaign: string;
-    utm_content: string;
-    utm_medium: string;
-    utm_source: string;
-    utm_term: string;
-    utm_keyword: string;
-    utm_subsource: string;
     site: string;
     subsite?: string;
   };
