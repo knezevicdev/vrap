@@ -203,7 +203,6 @@ export function formWebLeadPayload({
   const site = window.location.hostname;
 
   // QUERY PARAMS
-  const utmParams = getUTMParams();
   const { gclid = '', subid = '' } = getMiscParams();
 
   return {
@@ -214,7 +213,6 @@ export function formWebLeadPayload({
       brand: 'Vroom',
       site: site,
       subsite: subsite,
-      ...utmParams,
     },
     person: {
       consent: [

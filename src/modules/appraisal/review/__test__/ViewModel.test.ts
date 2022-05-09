@@ -148,6 +148,13 @@ describe('Appraisal review index page test', () => {
       warningLightsValues: [],
       year: 2016,
       zipCode: '12345',
+      utm_campaign: '',
+      utm_content: '',
+      utm_medium: '',
+      utm_source: '',
+      utm_term: '',
+      utm_keyword: '',
+      utm_subsource: '',
     });
     const trackAnalytics = jest.spyOn(analyticsHandler, 'trackLeadSubmitted');
     const submitWebleadSpy = jest.spyOn(Request, 'submitWeblead');

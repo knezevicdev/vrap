@@ -2,6 +2,7 @@ import crypto from 'crypto';
 
 export const uuidCookieName = 'uuid';
 import { AppraisalPayload } from 'src/interfaces.d';
+import { getUTMParams } from 'src/networking/utils';
 
 function generateUUID4() {
   return crypto.randomBytes(16).toString('hex');
@@ -104,6 +105,7 @@ export function makeRequestBody(appraisalData: any): AppraisalPayload {
     ...mechanicalConditionData(appraisalData.mechConditionForm),
     ...personalInformationData(appraisalData.personalInfoForm),
     ...attributionData(appraisalData),
+    ...getUTMParams(),
   };
 
   return data;
