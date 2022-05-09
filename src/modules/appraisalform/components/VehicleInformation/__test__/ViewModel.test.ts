@@ -27,6 +27,7 @@ const respCarStory = {
       alternatives: ['alternatives_one'],
       id: '123',
       features: ['features_one'],
+      style: 'carstory_style',
     },
   },
 };
@@ -38,11 +39,12 @@ const respNada = {
       alternatives: ['alternatives_one_nada'],
       id: '123_nada',
       features: ['features_one_nada'],
+      style: null,
     },
   },
 };
 
-const respwithEmpty = {
+const respWithEmpty = {
   vehicleInfo,
   dataProviderInfo: {},
 };
@@ -132,6 +134,7 @@ describe('AppraisalForm VehicleInformation component test', () => {
       ...vehicleInfo,
       alternatives: ['alternatives_one'],
       features: ['features_one'],
+      style: 'carstory_style',
     });
   });
 
@@ -151,6 +154,7 @@ describe('AppraisalForm VehicleInformation component test', () => {
       model: 'Murano',
       trim: 'Utility 4D SV 2WD V6',
       vin: 'abc123',
+      style: 'carstory_style',
     });
   });
 
@@ -164,19 +168,21 @@ describe('AppraisalForm VehicleInformation component test', () => {
       ...vehicleInfo,
       alternatives: ['alternatives_one_nada'],
       features: ['features_one_nada'],
+      style: null,
     });
   });
 
-  it('test getCarstoryVinDecode api resolve nada', async () => {
+  it('test getCarstoryVinDecode api resolve empty dataProviderInfo', async () => {
     const requestSpy = jest.spyOn(Request, 'getCarstoryVinDecode');
     const storeSpy = jest.spyOn(stores.appraisal, 'setVehicleData');
-    requestSpy.mockResolvedValueOnce(getCarstoryVinDecode(respwithEmpty));
+    requestSpy.mockResolvedValueOnce(getCarstoryVinDecode(respWithEmpty));
     await viewModel.getVinDecode('123');
     expect(requestSpy).toHaveBeenCalled();
     expect(storeSpy).toHaveBeenCalledWith({
       ...vehicleInfo,
       alternatives: [],
       features: [],
+      style: null,
     });
   });
 });

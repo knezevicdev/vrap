@@ -265,6 +265,8 @@ const VehicleInformation: React.FC<Props> = ({ form, fields, viewModel }) => {
             features,
             exteriorColor,
             trim,
+            subTrim,
+            style,
             id,
           } = response;
           const isError = Object.hasOwnProperty.bind(response)('error');
@@ -302,8 +304,11 @@ const VehicleInformation: React.FC<Props> = ({ form, fields, viewModel }) => {
                 trimId: t.id,
               });
             });
-          } else if (trim !== null) {
-            trimsArr.push({ label: trim, value: trim });
+          } else if (style) {
+            trimsArr.push({ label: style, value: style });
+          } else if (trim || subTrim) {
+            const concatTrim = `${trim || ''} ${subTrim || ''}`.trim();
+            trimsArr.push({ label: concatTrim, value: concatTrim });
           }
 
           if (alternatives.length === 0 && features.length) {
@@ -373,6 +378,8 @@ const VehicleInformation: React.FC<Props> = ({ form, fields, viewModel }) => {
           features,
           exteriorColor,
           trim,
+          subTrim,
+          style,
           id,
         } = response;
         const trimsArr = [];
@@ -413,8 +420,11 @@ const VehicleInformation: React.FC<Props> = ({ form, fields, viewModel }) => {
               trimId: t.id,
             });
           });
-        } else if (trim !== null) {
-          trimsArr.push({ label: trim, value: trim });
+        } else if (style) {
+          trimsArr.push({ label: style, value: style });
+        } else if (trim || subTrim) {
+          const concatTrim = `${trim || ''} ${subTrim || ''}`.trim();
+          trimsArr.push({ label: concatTrim, value: concatTrim });
         }
 
         if (alternatives.length === 0 && features.length) {
