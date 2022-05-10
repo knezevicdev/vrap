@@ -155,11 +155,11 @@ const Label = styled.span`
 `;
 
 const WarningOptionsLabel = styled.div`
-  padding: 0 0 10px;
+  padding: 0 0 8px;
 `;
 
 const WarningOption = styled(({ ...restProps }) => <li {...restProps} />)`
-  padding: 0 0 5px;
+  padding: 0 0 8px;
 
   span {
     outline: none;

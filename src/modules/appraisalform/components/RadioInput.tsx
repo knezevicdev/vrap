@@ -87,6 +87,7 @@ const Label = styled.h3`
   font-size: 18px;
   line-height: 1.39;
   letter-spacing: 0.3px;
+  margin: 0;
   font-weight: normal;
 `;
 
@@ -169,7 +170,6 @@ const OptionLabel = styled.label`
 
 const OptionDescription = styled.div`
   font-size: 14px;
-  font-weight: 500;
   text-align: left;
   line-height: 1.71;
   width: 355px;
@@ -183,6 +183,7 @@ const OptionDescription = styled.div`
 const LabelContainer = styled.div`
   display: flex;
   cursor: pointer;
+  margin: 0 0 8px;
 
   button {
     margin-left: 5px;

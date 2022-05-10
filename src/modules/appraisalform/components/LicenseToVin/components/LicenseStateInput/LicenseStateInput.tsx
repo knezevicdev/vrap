@@ -96,19 +96,11 @@ const InputContainer = styled.div`
 `;
 
 const LicenseInputContainer = styled(LicenseInput)`
-  @media (min-width: 768px) {
-    width: 70%;
-  }
+  width: 70%;
 `;
 
 const States = styled(StateInput)`
-  @media (min-width: 768px) {
-    width: 90px;
-  }
-
-  @media (min-width: 1024px) and (max-width: 1279px) {
-    width: 160px;
-  }
+  width: 90px;
 
   & select {
     padding: 10px;

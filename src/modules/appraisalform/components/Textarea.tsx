@@ -74,6 +74,7 @@ const InputContainer = styled(({ height, ...restProps }) => (
   outline: none;
   border-radius: 0;
   box-shadow: none;
+  line-height: 24px;
   font-family: Calibre-Regular;
 
   &::placeholder {

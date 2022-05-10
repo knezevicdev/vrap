@@ -444,7 +444,7 @@ const StepNumber = styled.div`
 
 const StepTitle = styled(({ ...restProps }) => <div {...restProps} />)`
   font-family: Calibre-Semibold;
-  font-size: 18px;
+  font-size: 20px;
   line-height: 26px;
   letter-spacing: 0.25px;
   color: #041022;
@@ -478,7 +478,10 @@ const NextButton = styled(({ ...restProps }) => (
   <Button.Primary {...restProps} />
 ))`
   width: auto;
+  font-family: Calibre-Semibold;
   min-width: 180px;
+  font-size: 16px;
+  color: #ffffff;
   margin: 20px 0;
 
   ${addStyleForMobile(`
