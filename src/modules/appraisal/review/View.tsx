@@ -1,6 +1,9 @@
-import { addStyleForMobile, Typography } from '@vroom-web/ui-lib';
-import { VroomSpinner } from '@vroom-web/ui-lib';
-import { Button } from '@vroom-web/ui-lib';
+import {
+  addStyleForMobile,
+  Button,
+  Typography,
+  VroomSpinner,
+} from '@vroom-web/ui-lib';
 import { observer } from 'mobx-react';
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
@@ -64,14 +67,12 @@ const AppraisalReviewViewDetail: React.FC<Props> = ({ viewModel }) => {
       <Line />
       <PersonalInformation />
       <SubmitContainer>
-        <SubmitButton>
-          <Button.Primary
-            className={submitButtonClasses.join(' ')}
-            disabled={canSubmit}
-            onClick={handleSubmit}
-          >
-            {isLoading ? 'Submitting' : 'Get My Price'}
-          </Button.Primary>
+        <SubmitButton
+          className={submitButtonClasses.join(' ')}
+          disabled={canSubmit}
+          onClick={handleSubmit}
+        >
+          {isLoading ? 'Submitting' : 'Get My Price'}
         </SubmitButton>
         <TextContainer>
           By clicking Get My Price, you consent to receive autodialed calls and
@@ -105,9 +106,8 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   background-color: #ffffff;
-  width: 100%;
-  max-width: 780px;
-  padding: 0 24px 30px 24px;
+  width: 768px;
+  padding: 40px;
   border: solid 1px #d6d7da;
   margin-bottom: 20px;
   @media (max-width: 1020px) {
@@ -121,37 +121,35 @@ const Container = styled.div`
   }
 `;
 
-const SubmitButton = styled.div`
-  margin: 10px 0 20px 0;
-  input.finish-section-btn {
-    padding: 6px 12px;
-    border: none;
-    border-radius: 0;
-    display: inline-block;
-    cursor: pointer;
-    width: 280px;
-    height: 40px;
-    margin-top: 15px;
-    background-color: #d6d7da;
-    font-size: 16px;
-    font-family: Calibre-Semibold;
-    font-weight: normal;
-    text-align: center;
-    line-height: 1;
-    letter-spacing: 1.8px;
-    min-width: 143px;
-    color: #fff !important;
-    text-transform: uppercase;
-    white-space: nowrap;
-    user-select: none;
-    transition: color 0.1s, background-color 0.1s;
-    box-shadow: none;
-    &:not([disabled]) {
-      background: #e7131a;
-      color: #fff;
-      &:hover {
-        background: #fc4349;
-      }
+const SubmitButton = styled(Button.Primary)`
+  margin: 24px 0 20px 0;
+  padding: 6px 12px;
+  border: none;
+  border-radius: 0;
+  display: inline-block;
+  cursor: pointer;
+  width: 280px;
+  height: 40px;
+  min-height: 40px;
+  background-color: #d6d7da;
+  font-size: 16px;
+  font-family: Calibre-Semibold;
+  font-weight: normal;
+  text-align: center;
+  line-height: 1;
+  letter-spacing: 1.8px;
+  min-width: 143px;
+  color: #fff !important;
+  text-transform: uppercase;
+  white-space: nowrap;
+  user-select: none;
+  transition: color 0.1s, background-color 0.1s;
+  box-shadow: none;
+  &:not([disabled]) {
+    background: #e7131a;
+    color: #fff;
+    &:hover {
+      background: #fc4349;
     }
   }
 `;
@@ -160,7 +158,14 @@ const Title = styled(Typography.Heading.Three)`
   font-style: 'italic';
   font-family: Vroom-Sans;
   font-weight: 800;
-  padding: 30px 0;
+  line-height: 36px;
+  padding: 0 0 24px 0;
+  @media (max-width: 767px) {
+    padding: 16px 0;
+    text-align: center;
+    font-size: 24px;
+    line-height: 24px;
+  }
 `;
 
 const Line = styled.div`
@@ -177,7 +182,6 @@ const SubmitContainer = styled.div`
   bottom: 0;
   left: 0;
   border-top: 1px solid #e0e0e0;
-}
 `;
 
 const TextContainer = styled.p`

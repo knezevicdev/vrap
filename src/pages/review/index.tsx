@@ -22,9 +22,7 @@ const AppraisalReview: NextPage<Prop> = () => {
       <Header />
       <Contents id="main-content">
         <AppraisalContainer>
-          <ReviewContainer>
-            <AppraisalReviewViewDetail />
-          </ReviewContainer>
+          <AppraisalReviewViewDetail />
         </AppraisalContainer>
       </Contents>
       <Footer hasOverlay={true} />
@@ -55,19 +53,8 @@ const AppraisalContainer = styled.div`
   max-width: 1280px;
   justify-content: center;
   @media (max-width: 1020px) {
-    flex-direction: column-reverse;
+    padding-top: 24px;
     justify-content: center;
-  }
-`;
-
-const ReviewContainer = styled.div`
-  width: 70%;
-  display: flex;
-  justify-content: flex-end;
-  margin: 0 10px;
-  @media (max-width: 1020px) {
-    width: 100%;
-    margin: 0;
   }
 `;
 
