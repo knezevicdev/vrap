@@ -1,18 +1,13 @@
-import { Tooltip } from '@vroom-web/ui-lib';
+import { Input as VroomInput, Tooltip } from '@vroom-web/ui-lib';
 import React, { useState } from 'react';
 import styled from 'styled-components';
 
 import { GenericObject } from '../../../interfaces.d';
 import { lang } from './Components.language';
 
-import ErrorIcon from 'src/core/Icon/ErrorIcon';
-import SuccessIcon from 'src/core/Icon/SuccessIcon';
-
 interface Props {
   field: GenericObject;
   className?: string;
-  IconStyle?: any;
-  footerMessage?: any;
   innerRef?: any;
 }
 
@@ -41,7 +36,6 @@ const Input: React.FC<Props> = (props) => {
       dataQa,
     },
     className,
-    footerMessage,
     innerRef,
   } = props;
 
@@ -71,8 +65,8 @@ const Input: React.FC<Props> = (props) => {
       <InputContainer
         id={id}
         type={type}
-        showerror={showError ? 'true' : 'false'}
-        isempty={!error && isEmpty(value) ? 'true' : 'false'}
+        error={showError ? errorMessage : undefined}
+        success={!isEmpty(value) && displayCheck}
         placeholder={placeholder}
         value={value}
         onChange={handleValidation(onChange)}
@@ -80,23 +74,15 @@ const Input: React.FC<Props> = (props) => {
         onFocus={onFocus}
         onKeyPress={onKeyPress}
         disabled={disabled}
-        displaycheck={displayCheck ? 'true' : 'false'}
         autoFocus={autofocus}
         name={name}
         maxLength={maxlength}
         autoComplete={autocomplete}
         data-qa={dataQa}
         ref={innerRef}
+        displaycheck={displayCheck ? 'true' : 'false'}
+        isempty={!error && isEmpty(value) ? 'true' : 'false'}
       />
-      <FooterMessage>{footerMessage}</FooterMessage>
-      {showError ? (
-        <>
-          <StyledErrorIcon label="error" />
-          <ErrorMessage>{errorMessage}</ErrorMessage>
-        </>
-      ) : (
-        !isEmpty(value) && displayCheck && <StyledSuccessIcon label="success" />
-      )}
     </Container>
   );
 };
@@ -106,24 +92,6 @@ const isEmpty = (value: any) => {
 };
 
 export default Input;
-
-const StyledErrorIcon = styled(({ ...restProps }) => (
-  <ErrorIcon {...restProps} />
-))`
-  position: absolute;
-  right: 10px;
-  top: ${(props) => props.top || '30px'};
-  fill: #308406;
-`;
-
-const StyledSuccessIcon = styled(({ ...restProps }) => (
-  <SuccessIcon {...restProps} />
-))`
-  position: absolute;
-  right: 10px;
-  top: ${(props) => props.top || '30px'};
-  fill: #308406;
-`;
 
 const Container = styled.div`
   display: flex;
@@ -153,51 +121,44 @@ const Label = styled.label`
   }
 `;
 
-const InputContainer = styled(({ ...restProps }) => <input {...restProps} />)`
-  height: 40px;
-  padding: 8px 10px;
-  outline: none;
-  appearance: none;
-  border: solid 1px #d6d7da;
-  border-radius: 0;
-  box-shadow: none;
-  font-family: Calibre-Regular;
-  font-size: 18px;
-  line-height: 18px;
-  @include set-font(regular, 18px, 22px, 0.25px);
-  letter-spacing: 0.25px;
-  ${(props) => props.isempty === 'true' && `background-color: #ffffff`}
-  ${(props) => props.showerror === 'true' && `border-color: #f26900`}
+const InputContainer = styled(VroomInput)`
+  & input {
+    height: 40px;
+    padding: 8px 10px;
+    border: solid 1px #d6d7da;
+    border-radius: 0;
+    box-shadow: none;
+    font-family: Calibre-Regular;
+    font-size: 18px;
+    line-height: 18px;
+    @include set-font(regular, 18px, 22px, 0.25px);
+    letter-spacing: 0.25px;
 
-  &:focus {
-    border-color: #1960d0;
-    background-color: #ffffff;
+    &:disabled {
+      background: #f5f5f5;
+      color: #041022;
+    }
+
+    &:focus {
+      outline: -webkit-focus-ring-color auto;
+      background-color: #ffffff;
+    }
+
+    &::placeholder {
+      color: #999da3;
+    }
+
+    &::-ms-clear {
+      display: none;
+    }
   }
 
-  &:disabled {
-    background: #f5f5f5;
-    color: #041022;
+  & svg {
+    top: 13px;
+    right: 13px;
+  } 
+
+  & div:first-child {
+    margin: 0;
   }
-
-  &::placeholder {
-    color: #999da3;
-  }
-
-  &::-ms-clear {
-    display: none;
-  }
-`;
-
-const ErrorMessage = styled.span`
-  font-family: Calibre-Semibold;
-  font-size: 10px;
-  line-height: 10px;
-  letter-spacing: 1px;
-  margin-top: 3px;
-  color: #f26900;
-  text-transform: uppercase;
-`;
-
-const FooterMessage = styled.div`
-  padding-top: 10px;
 `;
