@@ -36,7 +36,6 @@ const Input: React.FC<Props> = (props) => {
       dataQa,
     },
     className,
-    innerRef,
   } = props;
 
   const [validate, setValidate] = useState(false);
@@ -64,6 +63,7 @@ const Input: React.FC<Props> = (props) => {
       )}
       <BaseInput
         id={id}
+        label={''}
         type={type}
         error={showError ? errorMessage : undefined}
         success={!isEmpty(value) && displayCheck}
@@ -79,9 +79,6 @@ const Input: React.FC<Props> = (props) => {
         maxLength={maxlength}
         autoComplete={autocomplete}
         data-qa={dataQa}
-        ref={innerRef}
-        displaycheck={displayCheck ? 'true' : 'false'}
-        isempty={!error && isEmpty(value) ? 'true' : 'false'}
       />
     </Container>
   );

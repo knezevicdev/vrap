@@ -5,8 +5,10 @@ import styled from 'styled-components';
 
 import { FormField } from './componentInterfaces.d';
 
-interface SelectField extends Omit<FormField, 'onChange'> {
+interface SelectField extends Omit<FormField, 'onChange' | 'options'> {
   onChange: (change: SelectChanges<SelectItem>) => void;
+  options: any;
+  id?: any;
 }
 
 interface SelectProps {
@@ -21,8 +23,7 @@ const Select: React.FC<SelectProps> = ({
     error = false,
     errorMessage = `please select a ${label}`,
     onChange,
-    onBlur,
-    onKeyPress,
+    id,
     disabled,
     defaultLabel,
     options,
@@ -31,6 +32,7 @@ const Select: React.FC<SelectProps> = ({
 }) => {
   return (
     <BaseSelect
+      id={id}
       className={className}
       label={label}
       placeholder={defaultLabel}
@@ -38,11 +40,8 @@ const Select: React.FC<SelectProps> = ({
       error={error ? errorMessage : undefined}
       selectedItem={selectedOption(value, options)}
       items={options}
-      onBlur={onBlur}
-      onKeyPress={onKeyPress}
       disabled={disabled}
       onSelectedItemChange={onChange}
-      isempty={isEmpty(value)}
     />
   );
 };
