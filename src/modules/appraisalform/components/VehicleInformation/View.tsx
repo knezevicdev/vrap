@@ -750,7 +750,6 @@ const YearMakeModel = styled.div`
 
 const TrimField = styled(TrimInput)`
   width: 48%;
-  margin-bottom: 10px;
 
   @media (max-width: 767px) {
     width: 100%;

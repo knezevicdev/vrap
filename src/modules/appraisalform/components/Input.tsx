@@ -62,7 +62,7 @@ const Input: React.FC<Props> = (props) => {
           </>
         </Label>
       )}
-      <InputContainer
+      <BaseInput
         id={id}
         type={type}
         error={showError ? errorMessage : undefined}
@@ -103,7 +103,7 @@ const Label = styled.label`
   font-family: Calibre-Regular;
   font-size: 13px;
   line-height: 13px;
-  margin-bottom: 5px;
+  margin-bottom: 4px;
   letter-spacing: 0.35px;
   display: flex;
 
@@ -121,7 +121,8 @@ const Label = styled.label`
   }
 `;
 
-const InputContainer = styled(VroomInput)`
+const BaseInput = styled(VroomInput)`
+  margin-bottom: 10px;
   & input {
     height: 40px;
     padding: 8px 10px;
@@ -139,11 +140,6 @@ const InputContainer = styled(VroomInput)`
       color: #041022;
     }
 
-    &:focus {
-      outline: -webkit-focus-ring-color auto;
-      background-color: #ffffff;
-    }
-
     &::placeholder {
       color: #999da3;
     }
@@ -154,9 +150,9 @@ const InputContainer = styled(VroomInput)`
   }
 
   & svg {
-    top: 13px;
-    right: 13px;
-  } 
+    top: 12px;
+    right: 12px;
+  }
 
   & div:first-child {
     margin: 0;
