@@ -55,10 +55,9 @@ const VinFormInput: React.FC<any> = ({
           label: (
             <LabelSpan>
               {label}{' '}
-              <VinInfoIcon
-                icon={Icons.QUESTION_CIRCLE}
-                onClick={() => handleShowVinDialog()}
-              />
+              <InfoButton onClick={() => handleShowVinDialog()}>
+                <VinInfoIcon icon={Icons.INFO} />
+              </InfoButton>
             </LabelSpan>
           ),
           onChange: handleOnChange,
@@ -96,13 +95,21 @@ const LabelSpan = styled.span`
 `;
 
 const VinInfoIcon = styled(Icon)`
-  margin-left: 5px;
+  height: 13px;
+  width: 13px;
   cursor: pointer;
 `;
 
 const Loader = styled(CircleLoader)`
   position: relative;
   margin: -5px 5px 5px 10px;
+`;
+
+const InfoButton = styled.button`
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
 `;
 
 export default VinFormInput;

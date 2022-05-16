@@ -31,12 +31,13 @@ const SelectBoxes: React.FC<Props> = ({
       <LabelContainer>
         <Label>{label}</Label>
         {panelsTooltip && (
-          <RowTitleIcon
-            icon={Icons.QUESTION_CIRCLE}
+          <InfoButton
             onClick={() => {
               handleShowPanelsDialog();
             }}
-          />
+          >
+            <RowTitleIcon icon={Icons.INFO} />
+          </InfoButton>
         )}
       </LabelContainer>
       <HorizontalRadioContainer>
@@ -67,7 +68,8 @@ const LabelContainer = styled.div`
 `;
 
 const RowTitleIcon = styled(Icon)`
-  margin: 4px 0 0 5px;
+  height: 16px;
+  width: 16px;
 `;
 
 const Label = styled.label`
@@ -101,6 +103,16 @@ const HorizontalRadioContainer = styled.div`
   input:checked + span {
     border: 2px solid #e7131a !important;
   }
+`;
+
+const InfoButton = styled.button`
+  margin: 2px 0 0 5px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  height: 16px;
+  width: 16px;
+  padding: 0;
 `;
 
 export default SelectBoxes;
