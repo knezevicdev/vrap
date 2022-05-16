@@ -112,14 +112,14 @@ const ExteriorConditionView: React.FC<Props> = ({ viewModel, store }) => {
 };
 
 const Container = styled.div`
-  padding: 20px 0 30px 0;
+  padding: 15px 0 20px 0;
 `;
 
 const SubTitleContainer = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
-  height: 26px;
+  padding-bottom: 16px;
 `;
 
 const Subtitle = styled(Typography.Title.Three)`
@@ -128,9 +128,10 @@ const Subtitle = styled(Typography.Title.Three)`
 
 const Row = styled.div`
   display: flex;
-  margin-top: 15px;
+  :not(:last-child) {
+    margin-bottom: 32px;
+  }
   @media (max-width: 767px) {
-    flex-direction: column;
     margin-top: 0;
   }
 `;
@@ -138,16 +139,13 @@ const Row = styled.div`
 const Info = styled.div`
   display: flex;
   flex-direction: column;
-  width: 50%;
-  @media (max-width: 767px) {
-    width: 100%;
-    margin-bottom: 10px;
-  }
+  width: 33%;
 `;
 
 const Label = styled(Typography.Fine)`
   font-size: 13px;
   letter-spacing: 0.35px;
+  margin-bottom: 2px;
 `;
 
 const Field = styled(Typography.Body.Regular)`
