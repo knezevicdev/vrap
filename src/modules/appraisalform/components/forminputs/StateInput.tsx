@@ -4,7 +4,7 @@ import React from 'react';
 import { GenericObject } from '../../../../interfaces.d';
 import { STATES } from '../../constants/misc';
 import { FormField } from '../componentInterfaces.d';
-import Dropdown from '../Dropdown';
+import Select from '../Select';
 import { FormFields } from './Inputs.language';
 
 interface Props {
@@ -23,7 +23,7 @@ const StateInput: React.FC<Props> = ({ field, className, onKeyPressEnter }) => {
   };
 
   return (
-    <Dropdown
+    <Select
       className={className}
       field={{
         ...field,

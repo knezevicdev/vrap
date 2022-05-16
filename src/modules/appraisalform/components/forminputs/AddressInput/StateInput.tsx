@@ -2,7 +2,7 @@ import { SelectChanges, SelectItem } from '@vroom-web/ui-lib';
 import React from 'react';
 
 import { STATES } from '../../../constants/misc';
-import Dropdown from '../../Dropdown';
+import Select from '../../Select';
 import { FormFields } from '../Inputs.language';
 
 export interface Props {
@@ -19,7 +19,7 @@ const StateInput: React.FC<Props> = ({ field, className, onKeyPressEnter }) => {
   };
 
   return (
-    <Dropdown
+    <Select
       className={className}
       field={{
         ...field,

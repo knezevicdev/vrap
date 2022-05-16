@@ -4,7 +4,7 @@ import styled from 'styled-components';
 
 import { FormField, GenericObject } from '../../../../interfaces.d';
 import CircleLoader from '../CircleLoader';
-import Select from '../Dropdown';
+import Select from '../Select';
 import { FormFields } from './Inputs.language';
 
 import AnalyticsHandler from 'src/integrations/AnalyticsHandler';
