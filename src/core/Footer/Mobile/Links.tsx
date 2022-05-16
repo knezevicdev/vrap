@@ -16,7 +16,7 @@ const Links = styled.div`
   }
 `;
 
-const SectionDiv = styled(({ ...restProps }) => <div {...restProps} />)`
+const SectionDiv = styled.div<{ visible: boolean }>`
   display: flex;
   flex-direction: column;
   cursor: pointer;

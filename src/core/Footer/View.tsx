@@ -9,7 +9,7 @@ import FooterViewModel from './ViewModel';
 
 import { Icons } from 'src/core/Icon';
 
-const Container = styled(({ ...restProps }) => <div {...restProps} />)`
+const Container = styled.div<{ hasOverlay: boolean }>`
   display: flex;
   background: #041022;
   padding: 48px 64px 32px 64px;
