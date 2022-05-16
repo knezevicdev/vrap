@@ -83,6 +83,10 @@ const HorizontalRadioContainer = styled.div`
     text-transform: none;
     font-weight: 400;
     height: 40px;
+
+    &:hover {
+      background-color: unset !important;
+    }
   }
 
   div[role='radiogroup'] {
