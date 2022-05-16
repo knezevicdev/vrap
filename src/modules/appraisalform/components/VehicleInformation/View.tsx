@@ -616,7 +616,7 @@ const VehicleInformation: React.FC<Props> = ({ form, fields, viewModel }) => {
           </InputContainer>
           {!isHideHowManyKeysExperiment && (
             <InputContainer>
-              <NumberOfKeysField field={fields.keysAmount} />
+              <NumberOfKeysInput field={fields.keysAmount} />
             </InputContainer>
           )}
           {showOptionsGroup && (
@@ -770,14 +770,6 @@ const ExteriorColorField = styled(ExtColorInput)`
 
   @media (max-width: 767px) {
     width: 100%;
-  }
-`;
-
-const NumberOfKeysField = styled(NumberOfKeysInput)`
-  margin: 0 0 0 1px;
-
-  @media (max-width: 767px) {
-    width: 99%;
   }
 `;
 

@@ -14,8 +14,12 @@ const InteriorCondition: React.FC<Props> = ({ fields }) => {
     <>
       <InteriorConditionInput field={fields.interiorCondition} />
       <InteriorDetails>
-        <Seats field={fields.seats} />
-        <SmokedIn field={fields.smokedIn} />
+        <HorizontalRadioContainer>
+          <SeatsInput field={fields.seats} />
+        </HorizontalRadioContainer>
+        <HorizontalRadioContainer>
+          <SmokedInInput field={fields.smokedIn} />
+        </HorizontalRadioContainer>
       </InteriorDetails>
     </>
   );
@@ -29,16 +33,7 @@ const InteriorDetails = styled.div`
   }
 `;
 
-const Seats = styled(SeatsInput)`
-  width: 49%;
-  margin: 20px 0;
-  @media (max-width: 767px) {
-    width: 100%;
-    margin: 20px 0 0;
-  }
-`;
-
-const SmokedIn = styled(SmokedInInput)`
+const HorizontalRadioContainer = styled.div`
   width: 49%;
   margin: 20px 0;
   @media (max-width: 767px) {

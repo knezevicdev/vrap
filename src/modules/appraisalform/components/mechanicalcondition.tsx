@@ -17,14 +17,14 @@ const MechanicalCondition: React.FC<Props> = ({ fields }) => {
   return (
     <>
       <InputContainer>
-        <Runnable field={fields.runnable} />
+        <RunnableInput field={fields.runnable} />
       </InputContainer>
       <InputContainer>
         <MechanicalConditionRadios field={fields.mechanicalCondition} />
       </InputContainer>
       <InputContainer>
         <Left>
-          <WarningLights field={fields.warningLights} />
+          <WarningLightsInput field={fields.warningLights} />
           {showWarningLights && (
             <WarningLightsOptionsContainer
               field={fields.warningLightsValues}
@@ -32,7 +32,7 @@ const MechanicalCondition: React.FC<Props> = ({ fields }) => {
             />
           )}
         </Left>
-        <FloodFireDamage field={fields.floodFireDamage} />
+        <FloodFireDamageInput field={fields.floodFireDamage} />
       </InputContainer>
       <InputContainer>
         <AdditionalDetails field={fields.additionalDetails} />
@@ -62,32 +62,6 @@ const Left = styled.div`
 
 const WarningLightsOptionsContainer = styled(WarningLightsOptionsGroup)`
   margin-top: 10px;
-`;
-
-const Runnable = styled(RunnableInput)`
-  width: 50%;
-  margin-right: 10px;
-  @media (max-width: 768px) {
-    width: 100%;
-    margin-left: 0px;
-    margin-bottom: 16px;
-  }
-`;
-
-const WarningLights = styled(WarningLightsInput)`
-  margin-right: 10px;
-  @media (max-width: 768px) {
-    margin: 0 0 16px 0;
-  }
-`;
-
-const FloodFireDamage = styled(FloodFireDamageInput)`
-  width: 50%;
-  @media (max-width: 767px) {
-    width: 100%;
-    margin-left: 0px;
-    margin-bottom: 16px;
-  }
 `;
 
 const MechanicalConditionRadios = styled(MechanicalConditionInput)`

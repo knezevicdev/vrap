@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import { HorizontalRadio, HorizontalRadioOption } from '@vroom-web/ui-lib';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 
 import { GenericObject } from '../../../interfaces.d';
@@ -9,32 +10,13 @@ import AnalyticsHandler from 'src/integrations/AnalyticsHandler';
 
 interface Props {
   field: GenericObject;
-  className?: string;
-  externalLabel?: any;
-  panelsTooltip?: any;
 }
 
 const SelectBoxes: React.FC<Props> = ({
-  field: { options, onClick, value, label, panelsTooltip },
-  className,
-  externalLabel,
+  field: { options, onClick, value, label, panelsTooltip, id },
 }) => {
   const analyticsHandler: AnalyticsHandler = new AnalyticsHandler();
   const [showPanelsDialog, setShowPanelsDialog] = useState(false);
-  const [active, setActive] = useState<Element>();
-
-  useEffect(() => {
-    const handleFocusIn = () => {
-      if (document.activeElement !== null) {
-        setActive(document.activeElement);
-      }
-    };
-
-    document.addEventListener('focusin', handleFocusIn);
-    return () => {
-      document.removeEventListener('focusin', handleFocusIn);
-    };
-  }, []);
 
   const handleShowPanelsDialog = () => {
     analyticsHandler.trackPanelsTooltip(panelsTooltip);
@@ -44,45 +26,25 @@ const SelectBoxes: React.FC<Props> = ({
   const handleHidePanelsDialog = () => {
     setShowPanelsDialog(false);
   };
-
-  const handleKeyPress = (event: GenericObject) => {
-    if (event.key === ' ' && active === event.currentTarget) {
-      event.currentTarget.click();
-      event.preventDefault();
-    }
-  };
-
   return (
-    <Container className={className}>
-      {externalLabel || (
-        <LabelContainer>
-          <Label>{label}</Label>
-          {panelsTooltip && (
-            <RowTitleIcon
-              icon={Icons.QUESTION_CIRCLE}
-              onClick={() => {
-                handleShowPanelsDialog();
-              }}
-            />
-          )}
-        </LabelContainer>
-      )}
-      <OptionsContainer data-qa="SelectBoxesComponent">
-        {options.map((item: any) => {
-          return (
-            <Option
-              isSelected={value === item}
-              key={item}
-              onClick={() => onClick(item)}
-              optionsLength={options.length}
-              data-qa={item}
-              onKeyPress={handleKeyPress}
-            >
-              {item}
-            </Option>
-          );
-        })}
-      </OptionsContainer>
+    <Container>
+      <LabelContainer>
+        <Label>{label}</Label>
+        {panelsTooltip && (
+          <RowTitleIcon
+            icon={Icons.QUESTION_CIRCLE}
+            onClick={() => {
+              handleShowPanelsDialog();
+            }}
+          />
+        )}
+      </LabelContainer>
+      <HorizontalRadio
+        id={id}
+        options={mapOptions(options)}
+        onChange={onClick}
+        value={value}
+      />
       {showPanelsDialog && (
         <Dialog closeModalHandler={handleHidePanelsDialog} />
       )}
@@ -90,19 +52,20 @@ const SelectBoxes: React.FC<Props> = ({
   );
 };
 
+const mapOptions = (options: []): HorizontalRadioOption[] => {
+  return options.map((option) => ({ label: option, value: option }));
+};
+
 const Container = styled.div``;
 
 const LabelContainer = styled.div`
   display: flex;
   cursor: pointer;
+  font-size: 18px;
 `;
 
 const RowTitleIcon = styled(Icon)`
   margin: 4px 0 0 5px;
-
-  @media (max-width: 767px) {
-    margin: 4px 0 0 5px;
-  }
 `;
 
 const Label = styled.label`
@@ -110,35 +73,6 @@ const Label = styled.label`
   line-height: 1;
   letter-spacing: 0.3px;
   margin-bottom: 10px;
-`;
-
-const OptionsContainer = styled.div`
-  display: flex;
-  flex-direction: row;
-  height: 40px;
-`;
-
-const Option = styled(({ isSelected, optionsLength, ...restProps }) => (
-  <div role="menuitem" tabIndex={0} {...restProps} />
-))`
-  display: flex;
-  font-size: 18px;
-  align-items: center;
-  justify-content: center;
-  line-height: 1.39;
-  letter-spacing: 0.3px;
-  width: calc(100% / ${(props) => props.optionsLength});
-  border-left: none;
-  cursor: pointer;
-  color: ${(props) => (props.isSelected ? '#041022' : '#999da3')};
-  background-color: #ffffff;
-  border: 1px solid #d6d7da;
-
-  ${(props) =>
-    props.isSelected &&
-    `
-      border: 2px solid #e7131a;
-  `}
 `;
 
 export default SelectBoxes;

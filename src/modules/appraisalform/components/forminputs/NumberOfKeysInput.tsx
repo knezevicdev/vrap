@@ -11,7 +11,7 @@ interface Props {
   className?: string;
 }
 
-const NumberOfKeysInput: React.FC<Props> = ({ field, className }) => {
+const NumberOfKeysInput: React.FC<Props> = ({ field }) => {
   const { onChange, value } = field;
   const analyticsHandler = new AnalyticsHandler();
 
@@ -22,7 +22,6 @@ const NumberOfKeysInput: React.FC<Props> = ({ field, className }) => {
 
   return (
     <SelectBoxes
-      className={className}
       field={{
         ...field,
         options: ['1', '2+'],
