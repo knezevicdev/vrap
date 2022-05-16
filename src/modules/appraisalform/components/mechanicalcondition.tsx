@@ -77,14 +77,12 @@ const Runnable = styled(RunnableInput)`
 const WarningLights = styled(WarningLightsInput)`
   margin-right: 10px;
   @media (max-width: 768px) {
-    margin-left: 0px;
-    margin-bottom: 16px;
+    margin: 0 0 16px 0;
   }
 `;
 
 const FloodFireDamage = styled(FloodFireDamageInput)`
   width: 50%;
-  margin-right: 10px;
   @media (max-width: 767px) {
     width: 100%;
     margin-left: 0px;

@@ -109,7 +109,7 @@ const Label = styled.h3`
   line-height: 1.39;
   letter-spacing: 0.3px;
   font-weight: normal;
-  margin-bottom: 0;
+  margin: 0;
 
   @media (max-width: 767px) {
     font-size: 16px;
@@ -119,6 +119,7 @@ const Label = styled.h3`
 const LabelContainer = styled.div`
   display: flex;
   cursor: pointer;
+  margin: 0 0 8px;
 
   button {
     margin-left: 5px;
@@ -135,9 +136,9 @@ const CheckboxesContainer = styled.ul`
 `;
 
 const AfterMarketModsOptionsLabel = styled(Typography.Body.Regular)`
+  display: inline-block;
   font-size: 13px;
   line-height: 13px;
-  letter-spacing: 1px;
   margin-bottom: 10px;
   letter-spacing: 0.35px;
 `;
@@ -145,7 +146,7 @@ const AfterMarketModsOptionsLabel = styled(Typography.Body.Regular)`
 const AfterMarketModsOption = styled(({ ...restProps }) => (
   <li {...restProps} />
 ))`
-  padding: 0 0 5px;
+  padding: 0 0 8px;
 `;
 
 export default AlternateAfterMarketModsOptionsGroup;
