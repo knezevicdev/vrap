@@ -120,38 +120,8 @@ const Label = styled.label`
 
 const BaseInput = styled(VroomInput)`
   margin-bottom: 10px;
-  & input {
-    height: 40px;
-    padding: 8px 10px;
-    border: solid 1px #d6d7da;
-    border-radius: 0;
-    box-shadow: none;
-    font-family: Calibre-Regular;
-    font-size: 18px;
-    line-height: 18px;
-    @include set-font(regular, 18px, 22px, 0.25px);
-    letter-spacing: 0.25px;
 
-    &:disabled {
-      background: #f5f5f5;
-      color: #041022;
-    }
-
-    &::placeholder {
-      color: #999da3;
-    }
-
-    &::-ms-clear {
-      display: none;
-    }
-  }
-
-  & svg {
-    top: 12px;
-    right: 12px;
-  }
-
-  & div:first-child {
+  div:first-child {
     margin: 0;
   }
 `;

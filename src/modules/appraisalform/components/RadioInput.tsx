@@ -58,17 +58,20 @@ const Label = styled.h3`
 `;
 
 const Radio = styled(VroomRadio)`
-  @media (max-width: 768px) {
-    width: 90%;
-    font-size: 16px;
-  }
+  margin-bottom: 10px;
+
   label {
     align-items: baseline;
-    margin-bottom: 10px;
   }
+
   label:before {
     top: 3px;
     margin: 0 5px;
+  }
+
+  @media (max-width: 768px) {
+    width: 90%;
+    font-size: 16px;
   }
 `;
 

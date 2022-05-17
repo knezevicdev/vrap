@@ -58,35 +58,15 @@ export default Select;
 
 const BaseSelect = styled(VroomSelect)`
   margin-bottom: 10px;
-  button {
-    height: 40px;
-    padding: 8px 10px;
-    border-color: #d6d7da;
-
-    span {
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-      ${({ success, error }) => (success || error) && `padding-right: 25px`};
-    }
-  }
-
-  div:last-child > div:first-child {
-    bottom: 40px;
+  button span {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    ${({ success, error }) => (success || error) && `padding-right: 20px`};
   }
 
   svg {
-    top: 12px;
     right: 32px;
-  }
-
-  div[role='option'] {
-    height: 40px;
-    padding: 0 10px;
-  }
-
-  div[role='listbox'] {
-    border-color: #d6d7da;
   }
 
   label {

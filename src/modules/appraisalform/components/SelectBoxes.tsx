@@ -40,14 +40,12 @@ const SelectBoxes: React.FC<Props> = ({
           </InfoButton>
         )}
       </LabelContainer>
-      <HorizontalRadioContainer>
-        <HorizontalRadio
-          id={id}
-          options={mapOptions(options)}
-          onChange={onClick}
-          value={value}
-        />
-      </HorizontalRadioContainer>
+      <HorizontalRadio
+        id={id}
+        options={mapOptions(options)}
+        onChange={onClick}
+        value={value}
+      />
       {showPanelsDialog && (
         <Dialog closeModalHandler={handleHidePanelsDialog} />
       )}
@@ -77,32 +75,6 @@ const Label = styled.label`
   line-height: 1;
   letter-spacing: 0.3px;
   margin-bottom: 10px;
-`;
-
-const HorizontalRadioContainer = styled.div`
-  span {
-    border-color: #d6d7da;
-    text-transform: none;
-    font-weight: 400;
-    height: 40px;
-
-    &:hover {
-      background-color: unset !important;
-    }
-  }
-
-  div[role='radiogroup'] {
-    border: none;
-  }
-
-  input:not(:checked) + span {
-    border: 1px solid #d6d7da;
-    color: #999da3;
-  }
-
-  input:checked + span {
-    border: 2px solid #e7131a !important;
-  }
 `;
 
 const InfoButton = styled.button`
