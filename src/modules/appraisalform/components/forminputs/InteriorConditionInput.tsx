@@ -1,4 +1,5 @@
 import React from 'react';
+import styled from 'styled-components';
 
 import { FormField } from '../../../../interfaces.d';
 import RadioInput from '../RadioInput';
@@ -17,31 +18,39 @@ const InteriorConditionInput: React.FC<Props> = ({ field, className }) => {
   };
 
   return (
-    <RadioInput
-      className={className}
-      field={{
-        ...field,
-        options: [
-          {
-            label: FormFields.interiorCondition.aboveAverage.label,
-            description: FormFields.interiorCondition.aboveAverage.description,
-          },
-          {
-            label: FormFields.interiorCondition.average.label,
-            description: FormFields.interiorCondition.average.description,
-          },
-          {
-            label: FormFields.interiorCondition.belowAverage.label,
-            description: FormFields.interiorCondition.belowAverage.description,
-          },
-        ],
-        name: FormFields.interiorCondition.name,
-        label: FormFields.interiorCondition.label,
-        onClick: handleOnChange,
-        checked: field.value,
-      }}
-    />
+    <InteriorConditionInputWrapper>
+      <RadioInput
+        className={className}
+        field={{
+          ...field,
+          options: [
+            {
+              label: FormFields.interiorCondition.aboveAverage.label,
+              description:
+                FormFields.interiorCondition.aboveAverage.description,
+            },
+            {
+              label: FormFields.interiorCondition.average.label,
+              description: FormFields.interiorCondition.average.description,
+            },
+            {
+              label: FormFields.interiorCondition.belowAverage.label,
+              description:
+                FormFields.interiorCondition.belowAverage.description,
+            },
+          ],
+          name: FormFields.interiorCondition.name,
+          label: FormFields.interiorCondition.label,
+          onClick: handleOnChange,
+          checked: field.value,
+        }}
+      />
+    </InteriorConditionInputWrapper>
   );
 };
+
+const InteriorConditionInputWrapper = styled.div`
+  margin-top: 20px;
+`;
 
 export default InteriorConditionInput;

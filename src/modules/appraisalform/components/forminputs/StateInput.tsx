@@ -27,6 +27,7 @@ const StateInput: React.FC<Props> = ({ field, className, onKeyPressEnter }) => {
       className={className}
       field={{
         ...field,
+        defaultLabel: FormFields.state.placeholder,
         label: FormFields.state.label,
         type: FormFields.state.type,
         options: STATES,
