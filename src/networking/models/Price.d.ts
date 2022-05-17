@@ -116,3 +116,14 @@ export interface PaymentOption {
   account_number: string | null;
   routing_number: string | null;
 }
+
+export interface Caf {
+  lienholder_name: string;
+  route_one_fields: string[];
+  route_one_sfid: string;
+  sfapi_name: string;
+}
+
+export interface CafRespData {
+  data: Caf[];
+}

@@ -72,6 +72,9 @@ export default class AppraisalDocument extends Document {
             branch.init("${BRANCH_IO_KEY}");`,
             }}
           />
+          <script
+            src={`https://maps.googleapis.com/maps/api/js?key=${process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}&v=quarterly&libraries=places`}
+          />
         </Head>
         <body>
           <Main />

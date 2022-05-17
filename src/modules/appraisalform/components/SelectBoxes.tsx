@@ -28,18 +28,20 @@ const SelectBoxes: React.FC<Props> = ({
   };
   return (
     <Container>
-      <LabelContainer>
-        <Label>{label}</Label>
-        {panelsTooltip && (
-          <InfoButton
-            onClick={() => {
-              handleShowPanelsDialog();
-            }}
-          >
-            <RowTitleIcon icon={Icons.INFO} />
-          </InfoButton>
-        )}
-      </LabelContainer>
+      {label && (
+        <LabelContainer>
+          <Label>{label}</Label>
+          {panelsTooltip && (
+            <InfoButton
+              onClick={() => {
+                handleShowPanelsDialog();
+              }}
+            >
+              <RowTitleIcon icon={Icons.INFO} />
+            </InfoButton>
+          )}
+        </LabelContainer>
+      )}
       <HorizontalRadio
         id={id}
         options={mapOptions(options)}
@@ -59,7 +61,7 @@ const mapOptions = (options: []): HorizontalRadioOption[] => {
 
 const Container = styled.div``;
 
-const LabelContainer = styled.div`
+export const LabelContainer = styled.div`
   display: flex;
   cursor: pointer;
   font-size: 18px;
@@ -70,7 +72,7 @@ const RowTitleIcon = styled(Icon)`
   width: 16px;
 `;
 
-const Label = styled.label`
+export const Label = styled.label`
   font-size: 18px;
   line-height: 1;
   letter-spacing: 0.3px;

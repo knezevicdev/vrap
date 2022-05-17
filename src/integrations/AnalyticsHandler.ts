@@ -337,6 +337,33 @@ class AnalyticsHandler extends BaseAnalyticsHandler {
       this.identify(pickedTraits, userId);
     }
   };
+
+  trackVerificationOwnerViewed(): void {
+    const name = 'Verification';
+    const category = 'verification';
+    this.page(name, category);
+  }
+
+  trackContactInfoComplete(): void {
+    const event = 'Contact information completed';
+    const category = 'verification';
+    const properties = { category };
+    this.track(event, properties);
+  }
+
+  trackPickupInfoComplete(): void {
+    const event = 'Pickup Information completed';
+    const category = 'verification';
+    const properties = { category };
+    this.track(event, properties);
+  }
+
+  trackPayoffInfoComplete(): void {
+    const event = 'Payoff Information completed';
+    const category = 'verification';
+    const properties = { category };
+    this.track(event, properties);
+  }
 }
 
 export default AnalyticsHandler;

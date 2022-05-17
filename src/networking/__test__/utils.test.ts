@@ -64,7 +64,7 @@ describe('test functions in utils', () => {
         payment_method: null,
       },
     };
-    expect(getDummyOfferResp(reqBody)).toEqual(returnValue);
+    expect(getDummyOfferResp(reqBody, goodUntil, created)).toEqual(returnValue);
   });
 
   test('test getUTMParams in utils ', () => {

@@ -1,11 +1,12 @@
-import { GQLTypes, Response } from '@vroom-web/networking';
-import { isErrorResponse } from '@vroom-web/networking';
+import { GQLTypes, isErrorResponse, Response } from '@vroom-web/networking';
 import getConfig from 'next/config';
 
 import client from './client';
 import {
+  CafRespData,
   PaymentOptionsRespData,
   Prices,
+  Verification,
   VerificationRespData,
 } from './models/Price';
 import {
@@ -98,6 +99,23 @@ export const getVerificationDetails = async (
   });
 
   return res;
+};
+
+export const updateVerification = async (
+  payload: Partial<Verification>,
+  priceId: string
+): Promise<Response<VerificationRespData>> => {
+  const url = `${client.httpEndpoints.interchangeUrl}/suyc-api/v1/acquisition/verification/form`;
+  return client.httpRequest<VerificationRespData>({
+    method: 'patch',
+    url,
+    data: {
+      payload: {
+        ...payload,
+        offer_id: priceId,
+      },
+    },
+  });
 };
 
 export const submitPaymentOptionSelected = async (
@@ -207,7 +225,9 @@ export const postAppraisalReview = async (
   const url = `${VROOM_URL}/suyc-api/v1/acquisition/appraisal`;
 
   if (appraisalRequestScore >= 3) {
-    return getDummyOfferResp(data);
+    const goodUntil = new Date();
+    goodUntil.setDate(goodUntil.getDate() + 7);
+    return getDummyOfferResp(data, goodUntil, new Date().toISOString());
   } else {
     const payload = {
       payload: data,
@@ -311,4 +331,11 @@ export const submitWeblead = async (
   });
 
   return webleadResponse;
+};
+
+export const getCaf = async (): Promise<Response<CafRespData>> => {
+  return await client.httpRequest({
+    method: 'GET',
+    url: `${client.httpEndpoints.interchangeUrl}/suyc-api/v1/acquisition/verification/caf`,
+  });
 };
