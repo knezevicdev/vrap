@@ -1,6 +1,8 @@
+import { SelectChanges, SelectItem } from '@vroom-web/ui-lib';
 import React from 'react';
 
-import Dropdown from '../../Dropdown';
+import { STATES } from '../../../constants/misc';
+import Select from '../../Select';
 import { FormFields } from '../Inputs.language';
 
 export interface Props {
@@ -11,20 +13,20 @@ export interface Props {
 
 const StateInput: React.FC<Props> = ({ field, className, onKeyPressEnter }) => {
   const { onChange } = field;
-  const handleOnChange = (event: any) => {
-    const value = event.target.value;
-    const error = value === 'state';
-    onChange({ ...field, value, error });
+  const handleOnChange = (changes: SelectChanges<SelectItem>) => {
+    const value = changes.selectedItem?.value;
+    onChange({ ...field, value });
   };
 
   return (
-    <Dropdown
+    <Select
       className={className}
       field={{
         ...field,
         placeholder: FormFields.state.placeholder,
         label: FormFields.state.label,
         type: FormFields.state.type,
+        options: STATES,
         onChange: handleOnChange,
         onKeyPress: onKeyPressEnter,
       }}

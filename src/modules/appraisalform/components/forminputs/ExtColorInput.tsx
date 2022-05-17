@@ -1,7 +1,8 @@
+import { SelectChanges, SelectItem } from '@vroom-web/ui-lib';
 import React from 'react';
 
-import { FormField, GenericObject } from '../../../../interfaces.d';
-import Dropdown from '../Dropdown';
+import { FormField } from '../../../../interfaces.d';
+import Select from '../Select';
 import { FormFields } from './Inputs.language';
 
 import AnalyticsHandler from 'src/integrations/AnalyticsHandler';
@@ -20,21 +21,20 @@ const ExtColorInput: React.FC<Props> = ({
   const { onChange } = field;
   const analyticsHandler = new AnalyticsHandler();
 
-  const handleOnChange = (event: GenericObject) => {
+  const handleOnChange = (changes: SelectChanges<SelectItem>) => {
     analyticsHandler.trackColorChange();
-    const value = event.target.value;
-    const error = value === 'Exterior Color';
-    onChange({ ...field, value, error });
+    const value = changes.selectedItem?.value;
+    onChange({ ...field, value });
   };
 
   return (
-    <Dropdown
+    <Select
       className={className}
       field={{
         ...field,
         defaultLabel: FormFields.extColor.placeholder,
         label: FormFields.extColor.label,
-        customOptions,
+        options: customOptions,
         onChange: handleOnChange,
       }}
     />

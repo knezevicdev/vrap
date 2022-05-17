@@ -644,11 +644,13 @@ export class Icons {
     path: `${BASE_PATH}/icons/question-circle.svg`,
   });
 
-  static readonly TOOLTIP = new Icons('TOOLTIP', {
-    name: 'tooltip',
-    width: 13,
-    height: 13,
+  static readonly INFO = new Icons('INFO', {
+    name: 'info',
+    width: 16,
+    height: 16,
+    path: `${BASE_PATH}/icons/info.svg`,
   });
+
   static readonly SUCCESS_ICON = {
     name: 'checkmark-circle-success',
     width: 13,

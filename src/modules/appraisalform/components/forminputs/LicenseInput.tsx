@@ -1,5 +1,5 @@
 import { addStyleForTablet } from '@vroom-web/ui-lib';
-import React, { useEffect, useRef } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 
 import { FormField, GenericObject } from '../../../../interfaces.d';
@@ -19,15 +19,7 @@ const LicenseInput: React.FC<Props> = ({
   className,
   onKeyPressEnter,
 }) => {
-  const ref = useRef() as any;
   const { onChange } = field;
-
-  useEffect(() => {
-    // This is to prevent a bug for android https://tdalabs.atlassian.net/browse/CW-91
-    if (ref && ref.current) {
-      ref.current.blur();
-    }
-  }, []);
 
   const handleOnChange = (event: GenericObject) => {
     const value = formatLicensePlate(event.target.value);
@@ -41,7 +33,6 @@ const LicenseInput: React.FC<Props> = ({
   return (
     <LicenseField
       className={className}
-      innerRef={ref}
       field={{
         ...field,
         placeholder: placeholder,

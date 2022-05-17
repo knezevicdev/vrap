@@ -408,7 +408,7 @@ const FormSection = styled(({ ...restProps }) => <div {...restProps} />)`
   transition: max-height 300ms ease-in-out;
   height: auto;
   max-height: 0;
-  overflow: hidden;
+  overflow: ${(props) => (props.isactive === 'true' ? 'initial' : 'hidden')};
 
   > div {
     transition: max-height 300ms ease-in-out;

@@ -1,4 +1,5 @@
 import React from 'react';
+import styled from 'styled-components';
 
 import { FormField } from '../../../../interfaces.d';
 import SelectBoxes from '../SelectBoxes';
@@ -9,7 +10,7 @@ interface Props {
   className?: string;
 }
 
-const ScratchesInput: React.FC<Props> = ({ field, className }) => {
+const ScratchesInput: React.FC<Props> = ({ field }) => {
   const { onChange, value } = field;
 
   const handleOnChange = (value: string) => {
@@ -17,17 +18,23 @@ const ScratchesInput: React.FC<Props> = ({ field, className }) => {
   };
 
   return (
-    <SelectBoxes
-      className={className}
-      field={{
-        ...field,
-        options: [FormFields.scratches.yes, FormFields.scratches.no],
-        label: FormFields.scratches.label,
-        onClick: handleOnChange,
-        value,
-      }}
-    />
+    <ScratchesInputContainer>
+      <SelectBoxes
+        field={{
+          ...field,
+          options: [FormFields.scratches.yes, FormFields.scratches.no],
+          label: FormFields.scratches.label,
+          onClick: handleOnChange,
+          value,
+        }}
+      />
+    </ScratchesInputContainer>
   );
 };
+
+const ScratchesInputContainer = styled.div`
+  width: 100%;
+  margin: 16px 0;
+`;
 
 export default ScratchesInput;

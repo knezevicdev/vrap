@@ -80,7 +80,7 @@ const ExteriorConditionView: React.FC<Props> = ({
         </>
       )}
       <InputContainer>
-        <HailDamage field={fields.hailDamage} />
+        <HailDamageInput field={fields.hailDamage} />
       </InputContainer>
       {isDetailedConditionsExperiment && (
         <>
@@ -154,11 +154,6 @@ const Dents = styled(DentsInput)`
 `;
 
 const DentsPanels = styled(DentsPanelsInput)`
-  width: 100%;
-  margin: 16px 0;
-`;
-
-const HailDamage = styled(HailDamageInput)`
   width: 100%;
   margin: 16px 0;
 `;

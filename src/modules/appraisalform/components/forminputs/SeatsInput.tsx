@@ -9,7 +9,7 @@ interface Props {
   className?: string;
 }
 
-const SeatsInput: React.FC<Props> = ({ field, className }) => {
+const SeatsInput: React.FC<Props> = ({ field }) => {
   const { onChange, value } = field;
 
   const handleOnChange = (value: string) => {
@@ -18,7 +18,6 @@ const SeatsInput: React.FC<Props> = ({ field, className }) => {
 
   return (
     <SelectBoxes
-      className={className}
       field={{
         ...field,
         options: [FormFields.seats.leather, FormFields.seats.cloth],

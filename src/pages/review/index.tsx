@@ -52,6 +52,7 @@ const AppraisalContainer = styled.div`
   width: 100%;
   max-width: 1280px;
   justify-content: center;
+  padding: 20px 0;
   @media (max-width: 1020px) {
     padding-top: 24px;
     justify-content: center;
