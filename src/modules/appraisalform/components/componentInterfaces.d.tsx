@@ -20,13 +20,9 @@ export interface FormField {
 }
 
 export interface UseForm {
-  fields: Field;
+  fields: Record<string, FormField>;
   isFormValid: boolean;
   setFormFields: (value: GenericObject) => void;
   updateMultipleFields: (fields: GenericObject) => void;
   resetForm: () => void;
-}
-
-interface Field {
-  [key: string]: any;
 }

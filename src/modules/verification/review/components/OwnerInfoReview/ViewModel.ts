@@ -36,6 +36,6 @@ export default class OwnerInfoReviewViewModel {
       localStorage.setItem('review_payment_type', paymentType);
     }
     localStorage.setItem('review_edit_section', '0');
-    window.location.href = `/sell/verification/owner/${this.store.verification.offerId}`;
+    window.location.href = `/appraisal/verification/owner?priceId=${this.store.verification.offerId}`;
   }
 }

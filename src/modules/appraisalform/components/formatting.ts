@@ -80,6 +80,13 @@ export function lettersAndNumbersOnly(
   return acceptOnly(string, maxLength, /[^a-zA-Z0-9]/g);
 }
 
+export function lettersNumbersHyphensOnly(
+  string: string,
+  maxLength: number | null = null
+) {
+  return acceptOnly(string, maxLength, /[^0-9A-Za-z-]/g);
+}
+
 function acceptOnly(string: string, maxLength: number | null, validExp: any) {
   if (typeof string !== 'string') {
     return '';

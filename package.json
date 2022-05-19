@@ -27,6 +27,7 @@
     "@material-ui/icons": "^4.9.1",
     "@next/bundle-analyzer": "^9.4.4",
     "@radix-ui/react-id": "0.0.5",
+    "@react-google-maps/api": "^2.10.2",
     "@types/smoothscroll-polyfill": "^0.3.1",
     "@types/yup": "^0.29.11",
     "@vroom-web/absmartly-integration": "^2.0.3",
@@ -64,6 +65,7 @@
     "react-plaid-link": "^3.1.0",
     "smoothscroll-polyfill": "^0.4.4",
     "styled-components": "^5.3.0",
+    "type-fest": "^2.12.2",
     "vin-validator": "1.0.0",
     "yup": "^0.29.3"
   },

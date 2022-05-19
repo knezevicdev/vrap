@@ -30,11 +30,11 @@ interface Props {
     nextTitle: string | undefined,
     currentTitle: string
   ) => void;
-  refreshButton: boolean;
+  refreshButton?: boolean;
   showDialog?: () => void;
   nextText: string;
   submitText: string;
-  appraisalTitle: string;
+  appraisalTitle?: string;
   disableExperiments: boolean;
 }
 

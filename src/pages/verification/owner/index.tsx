@@ -2,7 +2,7 @@ import { observer } from 'mobx-react';
 import { NextPage } from 'next';
 import React from 'react';
 
-import VerificationReviewViewDetail from 'src/modules/verification/review';
+import VerificationOwnerViewDetail from 'src/modules/verification/owner';
 import VerificationWrapper, {
   getInitialProps,
   VerificationPageProps,
@@ -10,8 +10,8 @@ import VerificationWrapper, {
 
 const VerificationReview: NextPage<VerificationPageProps> = ({ priceId }) => {
   return (
-    <VerificationWrapper priceId={priceId} step={2}>
-      <VerificationReviewViewDetail priceId={priceId} />
+    <VerificationWrapper priceId={priceId} step={0}>
+      <VerificationOwnerViewDetail priceId={priceId} />
     </VerificationWrapper>
   );
 };

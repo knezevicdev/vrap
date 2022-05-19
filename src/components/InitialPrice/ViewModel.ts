@@ -73,8 +73,8 @@ class InitialPriceViewModel {
 
     const url =
       isAccountCreateAbTest && !isSignInStatus
-        ? `/myaccount/create/suyc?redirect=/sell/verification/owner/${this.priceId}&action=suyc`
-        : `/sell/verification/owner/${this.priceId}`;
+        ? `/myaccount/create/suyc?redirect=/appraisal/verification/owner?priceId=${this.priceId}&action=suyc`
+        : `/appraisal/verification/owner?priceId=${this.priceId}`;
     window.location.href = url;
   };
 

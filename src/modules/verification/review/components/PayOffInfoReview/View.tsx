@@ -22,7 +22,7 @@ const PayoffInfoReview: React.FC<Props> = ({ viewModel, store }) => {
         <Subtitle>{viewModel.payOfftitle}</Subtitle>
         <LinkWrap>
           <Link.Text
-            href={`/sell/verification/owner/${store.verification.offerId}`}
+            href={`/appraisal/verification/owner?priceId=${store.verification.offerId}`}
             onClick={(e): void => {
               e.preventDefault();
               viewModel.handleEditClick();

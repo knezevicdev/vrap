@@ -84,11 +84,11 @@ describe('Owner Infomation Review component test', () => {
 
   it('when click handleEdit should call window location href', () => {
     stores.verification.setOfferId('123');
-    const url = `/sell/verification/owner/${stores.verification.offerId}`;
+    const url = `/appraisal/verification/owner?priceId=${stores.verification.offerId}`;
     viewModel.handleEditClick();
     Object.defineProperty(window, 'location', {
       value: {
-        href: `/sell/verification/owner/123`,
+        href: `/appraisal/verification/owner?priceId=123`,
       },
     });
     expect(window.location.href).toEqual(url);

@@ -77,12 +77,20 @@ export const checkAppraisalPayload = (req: any): number => {
   return score;
 };
 
-export const getDummyOfferResp = (reqBody: any): any => {
+export const getDummyOfferResp = (
+  reqBody: {
+    year: number;
+    make: string;
+    model: string;
+    trim: string;
+    mileage: number;
+    vin: string;
+    email: string;
+  },
+  goodUntil: Date,
+  created: string
+): any => {
   const { year, make, model, trim, mileage, vin, email } = reqBody;
-  const date = new Date();
-  const created = date.toISOString();
-  const goodUntil = new Date();
-  goodUntil.setDate(goodUntil.getDate() + 7);
 
   const priceMin = Math.ceil(100);
   const priceMax = Math.floor(10000);
