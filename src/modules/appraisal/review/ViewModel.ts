@@ -66,8 +66,12 @@ export default class AppraisalReviewModel {
         correlationId: requestPayload.lead_id,
       };
 
-      const leadResp = await submitWeblead(webleadData);
-      if (isErrorResponse(leadResp)) throw leadResp;
+      try {
+        const leadResp = await submitWeblead(webleadData);
+        if (isErrorResponse(leadResp)) throw leadResp;
+      } catch (err) {
+        console.log(JSON.stringify(err));
+      }
 
       const resp = await postAppraisalReview(requestPayload);
       if (isErrorResponse(resp)) throw resp;
