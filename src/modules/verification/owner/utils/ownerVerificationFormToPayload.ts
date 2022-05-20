@@ -1,8 +1,9 @@
 import { mapValues } from 'lodash';
 
-import { Verification } from '../../../../networking/models/Price';
-import { UseForm } from '../../../appraisalform/components/componentInterfaces.d';
 import { UseOwnerReviewForms } from '../hooks/useOwnerReviewForms';
+
+import { UseForm } from 'src/modules/appraisalform/components/componentInterfaces.d';
+import { Verification } from 'src/networking/models/Price';
 
 const formValues = (form: UseForm): Record<string, any> => {
   return mapValues(form.fields, 'value');
@@ -53,6 +54,7 @@ export const ownerVerificationFormToPayload = (
     pickup_contact_last_name: pickupValues.pickupContactLastName,
     pickup_contact_phone_number: pickupValues.pickupContactPhone,
     pickup_contact_email: pickupValues.pickupContactEmail,
+    current_payments: pickupValues.activeLoan === 'Yes',
     lien_financial_institution_name:
       loanValues.bank === 'Other' ? loanValues.name : loanValues.bank,
     financial_institution_phone: loanValues.phoneNumber,

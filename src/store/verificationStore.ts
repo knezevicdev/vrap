@@ -219,6 +219,13 @@ export class VerificationStore {
       docIDs
         .filter((doc) => doc.id !== null && doc.id.length)
         .map(async (doc) => {
+          const existingDoc = this.documents?.find(
+            ({ fileType }) => fileType === doc.fileType
+          );
+          if (doc.id === existingDoc?.id) {
+            return existingDoc;
+          }
+
           const fileDownloadData = await getDownloadUrl(doc.id, data.offer_id);
           if (isErrorResponse(fileDownloadData)) throw fileDownloadData;
           const responseData = fileDownloadData.data;

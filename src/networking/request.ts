@@ -1,4 +1,5 @@
 import { GQLTypes, isErrorResponse, Response } from '@vroom-web/networking';
+import { ActualFileObject } from 'filepond';
 import getConfig from 'next/config';
 
 import client from './client';
@@ -40,6 +41,7 @@ import {
 
 const { publicRuntimeConfig } = getConfig();
 const VROOM_URL = publicRuntimeConfig.NEXT_PUBLIC_VROOM_URL;
+const ACQUISITIONS_URL = publicRuntimeConfig.NEXT_PUBLIC_ACQUISITIONS_URL;
 
 export enum Status {
   INITIAL = 'initial',
@@ -337,5 +339,59 @@ export const getCaf = async (): Promise<Response<CafRespData>> => {
   return await client.httpRequest({
     method: 'GET',
     url: `${client.httpEndpoints.interchangeUrl}/suyc-api/v1/acquisition/verification/caf`,
+  });
+};
+
+interface VerificationFileUploadUrlPayload {
+  file_extension: string;
+  file_type: string;
+  original_file_name: string;
+}
+
+interface VerificationFileUploadResponse {
+  data: {
+    // eslint-disable-next-line @typescript-eslint/naming-convention
+    FileUploadURL: string;
+    id: string;
+  };
+}
+
+export const getVerificationFileUploadUrl = async (
+  priceId: string,
+  payload: VerificationFileUploadUrlPayload
+): Promise<Response<VerificationFileUploadResponse>> => {
+  return await client.httpRequest({
+    method: 'POST',
+    url: `${client.httpEndpoints.interchangeUrl}/suyc-api/v1/acquisition/verification/getuploadurl`,
+    data: {
+      correlationId: priceId,
+      payload,
+    },
+  });
+};
+
+export const uploadVerificationFile = async (
+  url: string,
+  file: ActualFileObject
+): Promise<Response<any>> => {
+  return await client.httpRequest({
+    method: 'PUT',
+    url,
+    data: file,
+  });
+};
+
+export const deleteVerificationFile = async (
+  fileId: string
+): Promise<Response<any>> => {
+  return await client.httpRequest({
+    method: 'DELETE',
+    url: `${ACQUISITIONS_URL}/acquisition/verification/file?fid=${fileId}`,
+    data: {
+      source: 'vroom.com',
+      version: '1',
+      timestamp: new Date().toISOString(),
+      payload: {},
+    },
   });
 };

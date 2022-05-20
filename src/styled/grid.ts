@@ -24,7 +24,7 @@ export const Row = styled.div<RowProps>`
     ${responsiveStyledProp('flex-wrap', wrap)}
     ${responsiveStyledProp('justify-content', justify)}
     ${responsiveStyledProp('align-items', align)}
-    ${responsiveStyledProp('--gap', gap)}
+    ${responsiveStyledProp('--gap', gap || '0px')}
   `}
 `;
 

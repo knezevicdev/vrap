@@ -22,7 +22,7 @@ export const responsiveStyledProp = (
   if (prop.mobile)
     style += addStyleForMobile(`${cssPropName}: ${prop.mobile};`);
 
-  return style.replaceAll(',', '');
+  return style.replace(/,/g, '');
 };
 
 export type ResponsiveProp<T> =

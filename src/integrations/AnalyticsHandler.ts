@@ -364,6 +364,19 @@ class AnalyticsHandler extends BaseAnalyticsHandler {
     const properties = { category };
     this.track(event, properties);
   }
+
+  trackVerificationDocumentsViewed(): void {
+    const name = 'Doc Upload';
+    const category = 'verification';
+    this.page(name, category);
+  }
+
+  trackDocTypeUploaded(docType: string): void {
+    const event = `${docType} uploaded`;
+    const category = 'verification';
+    const properties = { category };
+    this.track(event, properties);
+  }
 }
 
 export default AnalyticsHandler;
