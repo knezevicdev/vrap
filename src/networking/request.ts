@@ -378,6 +378,10 @@ export const uploadVerificationFile = async (
     method: 'PUT',
     url,
     data: file,
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
   });
 };
 
