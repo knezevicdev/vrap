@@ -111,6 +111,7 @@ const LoanInformation = ({ fields, form }: Props): ReactElement => {
                 field={{
                   ...fields.name,
                   label: 'Lienholder Name',
+                  onChange: inputChange(fields.name),
                 }}
               />
             </Col>

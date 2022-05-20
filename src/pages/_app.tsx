@@ -1,5 +1,8 @@
 import 'firebase/analytics';
 import 'firebase/remote-config';
+import 'filepond/dist/filepond.min.css';
+import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css';
+import 'filepond-plugin-file-poster/dist/filepond-plugin-file-poster.css';
 
 import { datadogRum } from '@datadog/browser-rum';
 import { IdProvider } from '@radix-ui/react-id';

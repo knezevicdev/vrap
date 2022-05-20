@@ -2,11 +2,11 @@ import { isErrorResponse } from '@vroom-web/networking';
 import { observer } from 'mobx-react';
 import React, { useEffect, useRef, useState } from 'react';
 
+import { Container } from '../shared/Style.css';
 import ContactInformation from './components/ContactInformation';
 import LoanInformation from './components/LoanInformation';
 import PickUpInformation from './components/PickUpInformation';
 import useOwnerReviewForms from './hooks/useOwnerReviewForms';
-import { Container } from './Style.css';
 import { ownerVerificationFormToPayload } from './utils';
 import fetchVerificationDetails from './utils/fetchVerificationDetails';
 
@@ -27,6 +27,10 @@ const VerificationOwnerViewDetail: React.FC<Props> = ({ priceId }) => {
   const forms = useOwnerReviewForms();
   const { store } = useAppStore();
   const analyticsHandler = useRef(new AnalyticsHandler());
+
+  useEffect(() => {
+    analyticsHandler.current.trackVerificationOwnerViewed();
+  }, []);
 
   useEffect(() => {
     if (lastPriceId.current !== priceId) {
@@ -113,7 +117,7 @@ const VerificationOwnerViewDetail: React.FC<Props> = ({ priceId }) => {
       return;
     }
 
-    window.location.href = `/sell/verification/documents/${updateOfferId}`;
+    window.location.href = `/appraisal/verification/documents?priceId=${updateOfferId}`;
   };
 
   return (

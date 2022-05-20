@@ -78,9 +78,7 @@ const fetchVerificationDetails = async (
   });
 
   updateFormValues(forms.loanInfoForm, {
-    activeLoan: isEmpty(verificationDetails.lien_financial_institution_name)
-      ? 'No'
-      : 'Yes',
+    activeLoan: verificationDetails.current_payments ? 'Yes' : 'No',
     bank: verificationDetails.lien_financial_institution_name,
     name: verificationDetails.lien_financial_institution_name,
     phoneNumber: verificationDetails.financial_institution_phone,

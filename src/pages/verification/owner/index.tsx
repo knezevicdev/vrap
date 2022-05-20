@@ -8,7 +8,7 @@ import VerificationWrapper, {
   VerificationPageProps,
 } from 'src/modules/verification/shared/Wrapper';
 
-const VerificationReview: NextPage<VerificationPageProps> = ({ priceId }) => {
+const VerificationOwner: NextPage<VerificationPageProps> = ({ priceId }) => {
   return (
     <VerificationWrapper priceId={priceId} step={0}>
       <VerificationOwnerViewDetail priceId={priceId} />
@@ -16,6 +16,6 @@ const VerificationReview: NextPage<VerificationPageProps> = ({ priceId }) => {
   );
 };
 
-VerificationReview.getInitialProps = getInitialProps;
+VerificationOwner.getInitialProps = getInitialProps;
 
-export default observer(VerificationReview);
+export default observer(VerificationOwner);
