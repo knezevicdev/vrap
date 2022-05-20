@@ -21,17 +21,6 @@ const useHandlePlaceChanged = (
       zip: '',
     };
 
-    const resetAddress = () => {
-      address.streetNumber = '';
-      address.street = '';
-      address.city = '';
-      address.state = '';
-      address.stateLongName = '';
-      address.country = '';
-      address.addressLine = '';
-      address.zip = '';
-    };
-
     place.address_components?.forEach(
       ({ short_name: shortName, long_name: longName, types }) => {
         if (types.includes('locality')) {
@@ -58,8 +47,16 @@ const useHandlePlaceChanged = (
       address.addressLine.includes('undefined') ||
       ['AK', 'HI'].includes(address.state)
     ) {
-      resetAddress();
-      onAddressChange(address);
+      onAddressChange({
+        streetNumber: '',
+        street: '',
+        city: '',
+        state: '',
+        stateLongName: '',
+        country: '',
+        addressLine: '',
+        zip: '',
+      });
       return;
     }
 

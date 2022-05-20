@@ -3,6 +3,7 @@ import {
   addStyleForDesktop,
   addStyleForMobile,
   addStyleForTablet,
+  SelectItem,
 } from '@vroom-web/ui-lib';
 import { Button } from '@vroom-web/ui-lib';
 import { useRouter } from 'next/router';
@@ -32,6 +33,8 @@ import {
   VROOM_VIN_SUBSTRING,
 } from '../validation';
 import VehicleInfoViewModel from './ViewModel';
+
+import { GenericObject } from 'src/interfaces.d';
 
 export interface Props {
   form: any;
@@ -69,7 +72,7 @@ const VehicleInformation: React.FC<Props> = ({ form, fields, viewModel }) => {
   const [year, setYear] = useState(null as any);
   const [make, setMake] = useState(null as any);
   const [model, setModel] = useState(null as any);
-  const [trims, setTrims] = useState([] as any[]);
+  const [trims, setTrims] = useState<(SelectItem & GenericObject)[]>([]);
   const [csRespTrimId, setCsRespTrimId] = useState(null);
   const [options, setOptions] = useState([] as any[]);
   const [extColors, setExtColors] = useState(defaultColors);

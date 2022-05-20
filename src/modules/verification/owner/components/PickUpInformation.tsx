@@ -72,25 +72,27 @@ const PickUpInformation = ({
       </Col>
       <Col size={1 / 2} />
       {fields.sameAddress.value === 'No' && (
-        <Col size={1}>
-          <LabelContainer>
-            <Label>
-              Please provide the pick up information for this vehicle.
-            </Label>
-          </LabelContainer>
-        </Col>
+        <>
+          <Col size={1}>
+            <LabelContainer>
+              <Label>
+                Please provide the pick up information for this vehicle.
+              </Label>
+            </LabelContainer>
+          </Col>
+          <AddressSelector
+            fields={fields}
+            form={form}
+            fieldMap={{
+              addressLine: 'pickupAddressAddress',
+              state: 'pickupAddressState',
+              zip: 'pickupAddressZip',
+              city: 'pickupAddressCity',
+              streetNumber: 'pickupAddressApt',
+            }}
+          />
+        </>
       )}
-      <AddressSelector
-        fields={fields}
-        form={form}
-        fieldMap={{
-          addressLine: 'pickupAddressAddress',
-          state: 'pickupAddressState',
-          zip: 'pickupAddressZip',
-          city: 'pickupAddressCity',
-          streetNumber: 'pickupAddressApt',
-        }}
-      />
       <Col size={1}>
         <LabelContainer>
           <Label>

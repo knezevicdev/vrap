@@ -1,6 +1,6 @@
 import { ChangeEvent } from 'react';
 
-import { FormField } from '../../../appraisalform/components/componentInterfaces.d';
+import { FormField } from 'src/modules/appraisalform/components/componentInterfaces.d';
 
 export const inputChange = (field: FormField, required = false) => (
   event: ChangeEvent<HTMLInputElement | HTMLSelectElement> | string

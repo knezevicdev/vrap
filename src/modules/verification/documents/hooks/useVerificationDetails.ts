@@ -3,7 +3,7 @@ import { useEffect, useRef } from 'react';
 
 import calculateRequiredDocuments, {
   CalculateRequiredDocuments,
-} from '../utils/calculateRequiredDocuments';
+} from '../../shared/utils/calculateRequiredDocuments';
 
 import { useAppStore } from 'src/context';
 import { Verification } from 'src/networking/models/Price';

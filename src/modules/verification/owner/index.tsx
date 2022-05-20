@@ -3,12 +3,15 @@ import { observer } from 'mobx-react';
 import React, { useEffect, useRef, useState } from 'react';
 
 import { Container } from '../shared/Style.css';
+import { CalculateRequiredDocuments } from '../shared/utils/calculateRequiredDocuments';
 import ContactInformation from './components/ContactInformation';
 import LoanInformation from './components/LoanInformation';
 import PickUpInformation from './components/PickUpInformation';
 import useOwnerReviewForms from './hooks/useOwnerReviewForms';
 import { ownerVerificationFormToPayload } from './utils';
+import { doesRequireNewDocuments } from './utils/doesRequireNewDocuments';
 import fetchVerificationDetails from './utils/fetchVerificationDetails';
+import { ownerFormsToRequiredDocuments } from './utils/ownerFormsToRequiredDocuments';
 
 import { useAppStore } from 'src/context';
 import AnalyticsHandler from 'src/integrations/AnalyticsHandler';
@@ -24,9 +27,11 @@ const VerificationOwnerViewDetail: React.FC<Props> = ({ priceId }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [activeSection, setActiveSection] = useState(0);
   const lastPriceId = useRef<string>();
+  const lastPriceIdForEdit = useRef<string>();
   const forms = useOwnerReviewForms();
   const { store } = useAppStore();
   const analyticsHandler = useRef(new AnalyticsHandler());
+  const initialRequiredDocuments = useRef<CalculateRequiredDocuments>();
 
   useEffect(() => {
     analyticsHandler.current.trackVerificationOwnerViewed();
@@ -53,6 +58,20 @@ const VerificationOwnerViewDetail: React.FC<Props> = ({ priceId }) => {
     }
   }, [forms, priceId, store]);
 
+  useEffect(() => {
+    if (
+      lastPriceIdForEdit.current !== priceId &&
+      editForm.current &&
+      !isLoading
+    ) {
+      lastPriceIdForEdit.current = priceId;
+      initialRequiredDocuments.current = ownerFormsToRequiredDocuments(
+        forms,
+        activeSection
+      );
+    }
+  }, [isLoading, forms, priceId, activeSection]);
+
   const sections = [
     {
       component: ContactInformation,
@@ -74,6 +93,23 @@ const VerificationOwnerViewDetail: React.FC<Props> = ({ priceId }) => {
 
   if (isLoading) return null;
 
+  const onEditFinish = (priceId: string) => {
+    localStorage.removeItem('review_edit_section');
+
+    if (
+      initialRequiredDocuments.current &&
+      doesRequireNewDocuments(
+        initialRequiredDocuments.current,
+        ownerFormsToRequiredDocuments(forms, activeSection)
+      )
+    ) {
+      window.location.href = `/appraisal/verification/documents?priceId=${priceId}`;
+      return;
+    }
+
+    window.location.href = `/appraisal/verification/review?priceId=${priceId}`;
+  };
+
   const onNext = async (activeSection: number) => {
     store.verification.setLoading(true);
 
@@ -93,8 +129,7 @@ const VerificationOwnerViewDetail: React.FC<Props> = ({ priceId }) => {
     }
 
     if (editForm.current) {
-      localStorage.removeItem('review_edit_section');
-      window.location.href = `/appraisal/verification/review?priceId=${priceId}`;
+      onEditFinish(priceId);
     }
   };
 
@@ -112,8 +147,7 @@ const VerificationOwnerViewDetail: React.FC<Props> = ({ priceId }) => {
     localStorage.setItem('lastFour', payload.last_four_ssn || '');
 
     if (editForm.current) {
-      localStorage.removeItem('review_edit_section');
-      window.location.href = `/appraisal/verification/review?priceId=${priceId}`;
+      onEditFinish(updateOfferId);
       return;
     }
 

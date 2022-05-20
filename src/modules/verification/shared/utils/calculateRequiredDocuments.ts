@@ -9,7 +9,7 @@ export interface CalculateRequiredDocuments {
 }
 
 const calculateRequiredDocuments = (
-  verification: Verification | undefined,
+  verification: Partial<Verification> | undefined,
   state: string
 ): CalculateRequiredDocuments => {
   const requiredStatesForTitles = [

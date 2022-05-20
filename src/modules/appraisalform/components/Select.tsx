@@ -1,5 +1,6 @@
 import { Select as VroomSelect } from '@vroom-web/ui-lib';
 import { SelectChanges, SelectItem } from '@vroom-web/ui-lib';
+import { isEmpty } from 'lodash';
 import React from 'react';
 import styled from 'styled-components';
 
@@ -7,8 +8,8 @@ import { FormField } from './componentInterfaces.d';
 
 interface SelectField extends Omit<FormField, 'onChange' | 'options'> {
   onChange: (change: SelectChanges<SelectItem>) => void;
-  options: any;
-  id?: any;
+  options: SelectItem[];
+  id?: string;
 }
 
 interface SelectProps {
@@ -32,7 +33,7 @@ const Select: React.FC<SelectProps> = ({
 }) => {
   return (
     <BaseSelect
-      id={id}
+      id={id || ''}
       className={className}
       label={label}
       placeholder={defaultLabel}
@@ -46,12 +47,11 @@ const Select: React.FC<SelectProps> = ({
   );
 };
 
-const isEmpty = (value: any) => {
-  return !value || 0 === value.length;
-};
-
-const selectedOption = (value: any, options: any) => {
-  return options.find((t: any) => t.value === value);
+const selectedOption = (
+  value: string,
+  options: SelectItem[]
+): SelectItem | null => {
+  return options.find((t: SelectItem) => t.value === value) || null;
 };
 
 export default Select;
