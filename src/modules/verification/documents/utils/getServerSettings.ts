@@ -15,7 +15,7 @@ export const getServerSettings = (
 } => {
   return {
     url: './',
-    timeout: 7000,
+    timeout: 15000,
     process: async (_fieldName, file, _metadata, load, error) => {
       const isOk = await addDocument(file);
 

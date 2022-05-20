@@ -382,6 +382,7 @@ export const uploadVerificationFile = async (
       Accept: 'application/json',
       'Content-Type': 'application/json',
     },
+    timeout: 15000,
   });
 };
 
