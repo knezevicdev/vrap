@@ -111,7 +111,7 @@ const VerificationOwnerViewDetail: React.FC<Props> = ({ priceId }) => {
     analyticsHandler.current.trackPayoffInfoComplete();
     localStorage.setItem('lastFour', payload.last_four_ssn || '');
 
-    if (editForm) {
+    if (editForm.current) {
       localStorage.removeItem('review_edit_section');
       window.location.href = `/appraisal/verification/review?priceId=${priceId}`;
       return;
