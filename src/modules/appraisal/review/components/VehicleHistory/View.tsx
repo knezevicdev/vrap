@@ -1,9 +1,8 @@
 import { Typography } from '@vroom-web/ui-lib';
 import { observer } from 'mobx-react';
-import React, { useState } from 'react';
+import React, { KeyboardEventHandler } from 'react';
 import styled from 'styled-components';
 
-import { GenericObject } from '../../../../../interfaces.d';
 import ViewModel from './ViewModel';
 
 import Store from 'src/store';
@@ -15,17 +14,10 @@ interface Props {
 
 const VehicleHistoryView: React.FC<Props> = ({ viewModel, store }) => {
   const appraisalDetail = store.appraisal;
-  const [visibleSection, setVisibleSection] = useState('');
 
-  const onKeyDown = (event: GenericObject) => (): void => {
-    const key = event.key;
-    const section =
-      event.currentTarget.title === visibleSection
-        ? ''
-        : event.currentTarget.title;
-
-    if (key === 'Enter') {
-      setVisibleSection(section);
+  const onKeyDown: KeyboardEventHandler<HTMLSpanElement> = (event) => {
+    if (event.key === 'Enter') {
+      viewModel.handleEditClick();
     }
   };
 

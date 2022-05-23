@@ -1,6 +1,6 @@
 import { Typography } from '@vroom-web/ui-lib';
 import { observer } from 'mobx-react';
-import React, { useState } from 'react';
+import React, { KeyboardEventHandler } from 'react';
 import styled from 'styled-components';
 
 import ViewModel from './ViewModel';
@@ -10,8 +10,6 @@ interface Props {
 }
 
 const VehicleInformationView: React.FC<Props> = ({ viewModel }) => {
-  const [visibleSection, setVisibleSection] = useState('');
-
   const OptionsList = () => {
     return (
       <>
@@ -22,15 +20,9 @@ const VehicleInformationView: React.FC<Props> = ({ viewModel }) => {
     );
   };
 
-  const onKeyDown = (event: any) => (): void => {
-    const key = event.key;
-    const section =
-      event.currentTarget.title === visibleSection
-        ? ''
-        : event.currentTarget.title;
-
-    if (key === 'Enter') {
-      setVisibleSection(section);
+  const onKeyDown: KeyboardEventHandler<HTMLSpanElement> = (event) => {
+    if (event.key === 'Enter') {
+      viewModel.handleEditClick();
     }
   };
 
