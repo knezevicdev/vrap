@@ -3,6 +3,7 @@ import { observer } from 'mobx-react';
 import React, { useState } from 'react';
 import styled from 'styled-components';
 
+import { GenericObject } from '../../../../../interfaces.d';
 import ViewModel from './ViewModel';
 
 import Store from 'src/store';
@@ -16,7 +17,7 @@ const VehicleHistoryView: React.FC<Props> = ({ viewModel, store }) => {
   const appraisalDetail = store.appraisal;
   const [visibleSection, setVisibleSection] = useState('');
 
-  const onKeyDown = (event: any) => (): void => {
+  const onKeyDown = (event: GenericObject) => (): void => {
     const key = event.key;
     const section =
       event.currentTarget.title === visibleSection
@@ -51,6 +52,20 @@ const VehicleHistoryView: React.FC<Props> = ({ viewModel, store }) => {
           <Field>{appraisalDetail?.vehicleHistoryForm?.titleStatus}</Field>
         </Info>
       </Row>
+      {appraisalDetail?.vehicleHistoryForm?.lienholder && (
+        <Row>
+          <Info>
+            <Label>{viewModel.loanLease}</Label>
+            <Field>{appraisalDetail?.vehicleHistoryForm?.lienholder}</Field>
+          </Info>
+          {appraisalDetail?.vehicleHistoryForm?.lxBankName && (
+            <Info>
+              <Label>{viewModel.bankName}</Label>
+              <Field>{appraisalDetail?.vehicleHistoryForm?.lxBankName}</Field>
+            </Info>
+          )}
+        </Row>
+      )}
     </Container>
   );
 };

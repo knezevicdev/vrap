@@ -21,7 +21,7 @@ import MechanicalCondition from './components/mechanicalcondition';
 import MultiStepForm from './components/MultiStepForm';
 import PersonalInformation from './components/personalinformation';
 import useFormInit from './components/useFormInit';
-import VehicleHistory from './components/vehiclehistory';
+import VehicleHistory from './components/VehicleHistory';
 import VehicleInformation from './components/VehicleInformation';
 import EmailCapture from './Dialog/EmailCapture';
 import useTrackActive from './Dialog/EmailCapture/trackActive';

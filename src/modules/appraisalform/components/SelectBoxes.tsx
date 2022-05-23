@@ -10,10 +10,12 @@ import AnalyticsHandler from 'src/integrations/AnalyticsHandler';
 
 interface Props {
   field: GenericObject;
+  className?: string;
 }
 
 const SelectBoxes: React.FC<Props> = ({
   field: { options, onClick, value, label, panelsTooltip, id },
+  className,
 }) => {
   const analyticsHandler: AnalyticsHandler = new AnalyticsHandler();
   const [showPanelsDialog, setShowPanelsDialog] = useState(false);
@@ -27,7 +29,7 @@ const SelectBoxes: React.FC<Props> = ({
     setShowPanelsDialog(false);
   };
   return (
-    <Container>
+    <Container className={className}>
       {label && (
         <LabelContainer>
           <Label>{label}</Label>

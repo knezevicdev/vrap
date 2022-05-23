@@ -27,6 +27,8 @@ export class AppraisalStore {
   vehicleHistoryForm: VehicleHistoryForm = {
     hasAccident: '',
     titleStatus: '',
+    lienholder: '',
+    lxBankName: '',
     whichStatePurchase: '',
   };
   personalInfoForm: PersonalInfoForm = {
@@ -179,6 +181,8 @@ export class AppraisalStore {
     this.vehicleHistoryForm = {
       hasAccident: '',
       titleStatus: '',
+      lienholder: '',
+      lxBankName: '',
       whichStatePurchase: '',
     };
     this.personalInfoForm = {

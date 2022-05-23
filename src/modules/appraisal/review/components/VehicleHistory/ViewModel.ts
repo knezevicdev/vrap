@@ -5,6 +5,8 @@ import Store from 'src/store';
 export default class PickupInfoReviewViewModel {
   readonly vehicleHistoryInfotitle: string = 'Vehicle History';
   readonly accident: string = 'Accident';
+  readonly loanLease: string = 'Loan or lease on your vehicle?';
+  readonly bankName: string = 'Bank Name';
   readonly title: string = 'Title';
   readonly edit: string = 'Edit';
 

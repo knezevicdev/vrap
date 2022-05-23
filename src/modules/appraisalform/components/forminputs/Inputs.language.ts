@@ -368,6 +368,12 @@ export const FormFields = {
     },
     toolTip: `Title brands indicate whether a used vehicle has sustained damage or might be potentially unsafe to drive. If a vehicle's title has been "branded," it is an official designation made by a state agency and should appear on the vehicle's title paperwork.`,
   },
+  lienholder: {
+    label: 'Do you currently have a loan or lease on your vehicle?',
+    loan: 'Loan',
+    lease: 'Lease',
+    neither: 'Neither',
+  },
   interiorCondition: {
     label: 'Interior Condition',
     name: 'InteriorCondition',
@@ -413,8 +419,8 @@ export const FormFields = {
     placeholder: 'Select a lien financial institution',
     label: 'Name of Lien Financial Institution',
   },
-  LXbankName: {
-    placeholder: 'Enter you lien financial institution',
+  lXbankName: {
+    placeholder: 'Select you lien financial institution',
     label: 'Name of Lien Financial Institution',
   },
   bankPhoneNumber: {
