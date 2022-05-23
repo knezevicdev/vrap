@@ -217,7 +217,7 @@ export class VerificationStore {
 
     const documents = await Promise.all(
       docIDs
-        .filter((doc) => doc.id !== null && doc.id.length)
+        .filter((doc) => typeof doc.id === 'string' && doc.id.length)
         .map(async (doc) => {
           const existingDoc = this.documents?.find(
             ({ fileType }) => fileType === doc.fileType

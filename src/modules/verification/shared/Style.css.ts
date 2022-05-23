@@ -91,6 +91,7 @@ export const Container = styled.div`
   padding: 0 24px 30px 24px;
   border: solid 1px #d6d7da;
   margin-bottom: 20px;
+  height: max-content;
   @media (max-width: 1020px) {
     max-width: 100%;
     padding: 30px 24px;

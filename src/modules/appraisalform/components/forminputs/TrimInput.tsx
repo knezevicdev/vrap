@@ -2,17 +2,17 @@ import { SelectChanges, SelectItem } from '@vroom-web/ui-lib';
 import React from 'react';
 import styled from 'styled-components';
 
-import { FormField, GenericObject } from '../../../../interfaces.d';
 import CircleLoader from '../CircleLoader';
 import Select from '../Select';
 import { FormFields } from './Inputs.language';
 
 import AnalyticsHandler from 'src/integrations/AnalyticsHandler';
+import { FormField } from 'src/interfaces.d';
 
 interface Props {
   field: FormField;
   className?: string;
-  customOptions: GenericObject[];
+  customOptions: SelectItem[];
   onChange: (value: any, error: boolean) => void;
   trimLoader: boolean;
 }
