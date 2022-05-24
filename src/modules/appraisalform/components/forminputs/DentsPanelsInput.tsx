@@ -13,7 +13,7 @@ interface Props {
 const DentsPanelsInput: React.FC<Props> = ({ field }) => {
   const { onChange, value } = field;
 
-  const handleOnChange = (value: number) => {
+  const handleOnChange = (value: string) => {
     onChange({ ...field, value });
   };
 

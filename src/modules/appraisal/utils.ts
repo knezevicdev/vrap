@@ -45,6 +45,14 @@ function exteriorConditionData(data: any) {
     hailDamage: data.hailDamage,
     afterMarket: data.afterMarket,
     otherAfterMarket: data.otherAfterMarket,
+    rust: data.rust,
+    dents: data.dents,
+    dentsPanels: data.dentsPanels && parseInt(data.dentsPanels, 10),
+    paintChipping: data.paintChipping,
+    paintChippingPanels:
+      data.paintChippingPanels && parseInt(data.paintChippingPanels, 10),
+    scratches: data.scratches,
+    scratchesPanels: data.scratchesPanels && parseInt(data.scratchesPanels, 10),
   };
 }
 
