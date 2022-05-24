@@ -1,6 +1,6 @@
 import { Typography } from '@vroom-web/ui-lib';
 import { observer } from 'mobx-react';
-import React, { useState } from 'react';
+import React, { KeyboardEventHandler } from 'react';
 import styled from 'styled-components';
 
 import ViewModel from './ViewModel';
@@ -14,17 +14,10 @@ interface Props {
 
 const VehicleHistoryView: React.FC<Props> = ({ viewModel, store }) => {
   const appraisalDetail = store.appraisal;
-  const [visibleSection, setVisibleSection] = useState('');
 
-  const onKeyDown = (event: any) => (): void => {
-    const key = event.key;
-    const section =
-      event.currentTarget.title === visibleSection
-        ? ''
-        : event.currentTarget.title;
-
-    if (key === 'Enter') {
-      setVisibleSection(section);
+  const onKeyDown: KeyboardEventHandler<HTMLSpanElement> = (event) => {
+    if (event.key === 'Enter') {
+      viewModel.handleEditClick();
     }
   };
 
@@ -51,6 +44,20 @@ const VehicleHistoryView: React.FC<Props> = ({ viewModel, store }) => {
           <Field>{appraisalDetail?.vehicleHistoryForm?.titleStatus}</Field>
         </Info>
       </Row>
+      {appraisalDetail?.vehicleHistoryForm?.lienholder && (
+        <Row>
+          <Info>
+            <Label>{viewModel.loanLease}</Label>
+            <Field>{appraisalDetail?.vehicleHistoryForm?.lienholder}</Field>
+          </Info>
+          {appraisalDetail?.vehicleHistoryForm?.lxBankName && (
+            <Info>
+              <Label>{viewModel.bankName}</Label>
+              <Field>{appraisalDetail?.vehicleHistoryForm?.lxBankName}</Field>
+            </Info>
+          )}
+        </Row>
+      )}
     </Container>
   );
 };

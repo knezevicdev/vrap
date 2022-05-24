@@ -27,6 +27,8 @@ function vehicleHistoryData(data: any) {
   return {
     hasAccident: data.hasAccident,
     titleStatus: data.titleStatus,
+    lienholder: data.lienholder,
+    lxBankName: data.lxBankName,
   };
 }
 

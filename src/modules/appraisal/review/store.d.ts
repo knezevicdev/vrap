@@ -13,6 +13,8 @@ export interface VehicleInfoForm {
 export interface VehicleHistoryForm {
   hasAccident: string;
   titleStatus: string;
+  lienholder: string;
+  lxBankName: string;
   whichStatePurchase: string;
 }
 
