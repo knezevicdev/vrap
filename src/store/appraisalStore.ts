@@ -62,6 +62,8 @@ export class AppraisalStore {
     rust: '',
     scratches: '',
     scratchesPanels: null,
+    paintChippingPanels: 0,
+    dentsPanels: 0,
     tiresAndWheels: '',
   };
   brand = 'Vroom';
@@ -216,6 +218,8 @@ export class AppraisalStore {
       rust: '',
       scratches: '',
       scratchesPanels: null,
+      dentsPanels: 0,
+      paintChippingPanels: 0,
       tiresAndWheels: '',
     };
     this.isEmpty = true;
