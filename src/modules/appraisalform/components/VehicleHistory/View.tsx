@@ -3,9 +3,9 @@ import React, { useEffect, useRef } from 'react';
 import styled from 'styled-components';
 
 import { FormField } from '../../../../interfaces.d';
+import BankNameInput from '../forminputs/BankNameInput';
 import HasAccidentInput from '../forminputs/HasAccidentInput';
 import LienholderInput from '../forminputs/LienholderInput';
-import LXBankNameInput from '../forminputs/LXBankNameInput';
 import TitleStatusInput from '../forminputs/TitleStatusInput';
 import ViewModel from './ViewModel';
 
@@ -33,33 +33,27 @@ const VehicleHistoryView: React.FC<Props> = ({
       isLienholderQuestionExperiment
     ) {
       isLienholderQuestionExperimentRef.current = isLienholderQuestionExperiment;
-      fields.lienholder.onChange({
-        ...fields.lienholder,
-        isRequired: fields.lienholder && isLienholderQuestionExperiment,
+      fields.lienType.onChange({
+        ...fields.lienType,
+        isRequired: fields.lienType && isLienholderQuestionExperiment,
       });
     }
-  }, [fields.lienholder, isLienholderQuestionExperiment]);
+  }, [fields.lienType, isLienholderQuestionExperiment]);
 
   useEffect(() => {
-    if (lienholderRef.current !== fields.lienholder.value) {
-      lienholderRef.current = fields.lienholder.value;
-      fields.lxBankName.onChange({
-        ...fields.lxBankName,
+    if (lienholderRef.current !== fields.lienType.value) {
+      lienholderRef.current = fields.lienType.value;
+      fields.bankName.onChange({
+        ...fields.bankName,
         isRequired:
-          isLienholderQuestionExperiment &&
-          fields.lienholder.value !== 'Neither',
+          isLienholderQuestionExperiment && fields.lienType.value !== 'Neither',
         value:
-          isLienholderQuestionExperiment &&
-          fields.lienholder.value === 'Neither'
+          isLienholderQuestionExperiment && fields.lienType.value === 'Neither'
             ? ''
-            : fields.lxBankName.value,
+            : fields.bankName.value,
       });
     }
-  }, [
-    fields.lienholder.value,
-    fields.lxBankName,
-    isLienholderQuestionExperiment,
-  ]);
+  }, [fields.lienType.value, fields.bankName, isLienholderQuestionExperiment]);
 
   return (
     <>
@@ -67,10 +61,10 @@ const VehicleHistoryView: React.FC<Props> = ({
       <TitleStatusInput field={fields.titleStatus} />
       {isLienholderQuestionExperiment && (
         <>
-          <LienholderInput field={fields.lienholder} />
-          {['Lease', 'Loan'].includes(fields.lienholder.value) && (
+          <LienholderInput field={fields.lienType} />
+          {['Lease', 'Loan'].includes(fields.lienType.value) && (
             <LxInputContainer>
-              <LXBankNameInput field={fields.lxBankName} />
+              <BankNameInput field={fields.bankName} />
             </LxInputContainer>
           )}
         </>

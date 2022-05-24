@@ -44,16 +44,16 @@ const VehicleHistoryView: React.FC<Props> = ({ viewModel, store }) => {
           <Field>{appraisalDetail?.vehicleHistoryForm?.titleStatus}</Field>
         </Info>
       </Row>
-      {appraisalDetail?.vehicleHistoryForm?.lienholder && (
+      {appraisalDetail?.vehicleHistoryForm?.lienType && (
         <Row>
           <Info>
             <Label>{viewModel.loanLease}</Label>
-            <Field>{appraisalDetail?.vehicleHistoryForm?.lienholder}</Field>
+            <Field>{appraisalDetail?.vehicleHistoryForm?.lienType}</Field>
           </Info>
-          {appraisalDetail?.vehicleHistoryForm?.lxBankName && (
+          {appraisalDetail?.vehicleHistoryForm?.bankName && (
             <Info>
               <Label>{viewModel.bankName}</Label>
-              <Field>{appraisalDetail?.vehicleHistoryForm?.lxBankName}</Field>
+              <Field>{appraisalDetail?.vehicleHistoryForm?.bankName}</Field>
             </Info>
           )}
         </Row>

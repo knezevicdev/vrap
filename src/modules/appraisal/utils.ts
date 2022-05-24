@@ -27,8 +27,8 @@ function vehicleHistoryData(data: any) {
   return {
     hasAccident: data.hasAccident,
     titleStatus: data.titleStatus,
-    lienholder: data.lienholder,
-    lxBankName: data.lxBankName,
+    lienType: getLienType(data.lienType),
+    bankName: data.bankName,
   };
 }
 
@@ -92,6 +92,13 @@ function attributionData(data: any) {
   };
 }
 
+function getLienType(lienType: string) {
+  if (lienType === 'Neither') {
+    return 'none';
+  }
+  return lienType.toLowerCase();
+}
+
 export function makeRequestBody(appraisalData: any): AppraisalPayload {
   const now = new Date().toISOString();
   // eslint-disable-next-line @typescript-eslint/naming-convention
@@ -106,6 +113,7 @@ export function makeRequestBody(appraisalData: any): AppraisalPayload {
   const data = {
     // eslint-disable-next-line @typescript-eslint/naming-convention
     DateSubmitted: now,
+    form: 'sell',
     lead_id,
     anonymous_id,
     ...vehicleInformationData(appraisalData.vehicleInfoForm),

@@ -14,7 +14,7 @@ interface Props {
   className?: string;
 }
 
-const LXBankNameInput: React.FC<Props> = ({ field }) => {
+const BankNameInput: React.FC<Props> = ({ field }) => {
   const { onChange, value } = field;
 
   const [caf, setCaf] = useState<Caf[]>([]);
@@ -71,8 +71,8 @@ const LXBankNameInput: React.FC<Props> = ({ field }) => {
         field={{
           ...field,
           value: selectedBankName,
-          label: FormFields.lXbankName.label,
-          defaultLabel: FormFields.lXbankName.placeholder,
+          label: FormFields.bankName.label,
+          defaultLabel: FormFields.bankName.placeholder,
           options: [
             ...caf.map((caf) => ({
               label: caf.lienholder_name,
@@ -99,4 +99,4 @@ const LXBankNameInput: React.FC<Props> = ({ field }) => {
   );
 };
 
-export default LXBankNameInput;
+export default BankNameInput;

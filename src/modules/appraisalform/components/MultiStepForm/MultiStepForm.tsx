@@ -478,10 +478,7 @@ const NextButton = styled(({ ...restProps }) => (
   <Button.Primary {...restProps} />
 ))`
   width: auto;
-  font-family: Calibre-Semibold;
   min-width: 180px;
-  font-size: 16px;
-  color: #ffffff;
   margin: 20px 0;
 
   ${addStyleForMobile(`
