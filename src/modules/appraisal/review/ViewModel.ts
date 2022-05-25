@@ -8,15 +8,18 @@ import { AppraisalPayload } from 'src/interfaces.d';
 import { AppraisalRespData } from 'src/networking/models/Appraisal';
 import { postAppraisalReview, submitWeblead } from 'src/networking/request';
 import Store from 'src/store';
+import { ABSmartStore } from 'src/store/abSmartStore';
 import { AppraisalStore } from 'src/store/appraisalStore';
 
 export default class AppraisalReviewModel {
   readonly title: string = 'my appraisal review';
   private _analyticsHandler: AnalyticsHandler = new AnalyticsHandler();
   appraisalStore: AppraisalStore;
+  absmartStore: ABSmartStore;
 
   constructor(public store: Store, private _router: NextRouter) {
     this.appraisalStore = store.appraisal;
+    this.absmartStore = store.absmart;
   }
 
   isAppraisalEmpty(): boolean {
@@ -29,6 +32,10 @@ export default class AppraisalReviewModel {
 
   getAnalyticsHandler = (): AnalyticsHandler => {
     return this._analyticsHandler;
+  };
+
+  isLienholderQuestionExperiment = (): boolean => {
+    return this.absmartStore.isInExperiment('ac-lienholder-question');
   };
 
   trackIdentify(): void {
@@ -61,6 +68,11 @@ export default class AppraisalReviewModel {
       };
 
       this._analyticsHandler.trackLeadSubmitted('Appraisal', leadTrackingData);
+
+      if (!this.isLienholderQuestionExperiment()) {
+        delete requestPayload.lienType;
+        delete requestPayload.bankName;
+      }
 
       const webleadData = {
         firstName: requestPayload.firstName,
