@@ -46,6 +46,10 @@ export default class AppraisalReviewModel {
     );
   }
 
+  trackAppraisalReviewViewed(): void {
+    this._analyticsHandler.trackAppraisalReviewViewed();
+  }
+
   async submitAppraisal(): Promise<void> {
     try {
       const data = this.appraisalStore;

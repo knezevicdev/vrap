@@ -39,6 +39,8 @@ const AppProvider = ({ children }: Prop): JSX.Element => {
       } else {
         abSmartlyModel?.setStatus(NetworkingStatus.ERROR);
       }
+
+      analyticsHandler.trackWebAppViewed();
     });
   }, [appStore]);
 
