@@ -45,9 +45,6 @@ const primaryBlack = (props: { theme: ThemeProps }): string =>
 const grayTwo = (props: { theme: ThemeProps }): string =>
   props.theme.colors.gray.two;
 
-const grayThree = (props: { theme: ThemeProps }): string =>
-  props.theme.colors.gray.three;
-
 const Container = styled.div`
   display: flex;
   flex-direction: column;
@@ -68,7 +65,7 @@ const InputContainer = styled(({ height, ...restProps }) => (
   resize: none;
   padding: 5px 9px;
   font-size: 18px;
-  border: 1px solid ${grayThree};
+  border: 1px solid ${grayTwo};
   background-color: ${primaryWhite};
   color: ${primaryBlack};
   outline: none;

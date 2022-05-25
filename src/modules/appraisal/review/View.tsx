@@ -130,9 +130,7 @@ const SubmitButton = styled(Button.Primary)`
   cursor: pointer;
   width: 280px;
   height: 40px;
-  min-height: 40px;
   background-color: #d6d7da;
-  font-size: 16px;
   font-family: Calibre-Semibold;
   font-weight: normal;
   text-align: center;

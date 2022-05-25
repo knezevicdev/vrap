@@ -744,10 +744,11 @@ const YearMakeModel = styled.div`
   font-size: 18px;
   line-height: 18px;
   letter-spacing: 1px;
-  margin: auto auto 21px auto;
+  margin: auto;
 
   @media (max-width: 767px) {
     width: 100%;
+    margin-bottom: 21px;
   }
 `;
 

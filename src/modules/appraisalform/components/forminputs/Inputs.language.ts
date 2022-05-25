@@ -419,10 +419,6 @@ export const FormFields = {
     placeholder: 'Select a lien financial institution',
     label: 'Name of Lien Financial Institution',
   },
-  lXbankName: {
-    placeholder: 'Select you lien financial institution',
-    label: 'Name of Lien Financial Institution',
-  },
   bankPhoneNumber: {
     placeholder: '(xxx) - xxx - xxxx',
     label: 'Financial Institution Phone Number (optional)',

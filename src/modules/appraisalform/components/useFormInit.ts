@@ -39,12 +39,12 @@ const useAppraisalFormInit = (
   const vehicleHistoryFields = {
     hasAccident: vehicleHistory.hasAccident || '',
     titleStatus: vehicleHistory.titleStatus || '',
-    lienholder: {
-      value: vehicleHistory.lienholder || '',
+    lienType: {
+      value: vehicleHistory.lienType || '',
       isRequired: false,
     },
-    lxBankName: {
-      value: vehicleHistory.lxBankName || '',
+    bankName: {
+      value: vehicleHistory.bankName || '',
       isRequired: false,
     },
   };
