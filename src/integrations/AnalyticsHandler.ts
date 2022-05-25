@@ -7,6 +7,10 @@ const { publicRuntimeConfig } = getConfig();
 const { ITERABLE_UNSUBSCRIBE_KEY } = publicRuntimeConfig;
 
 class AnalyticsHandler extends BaseAnalyticsHandler {
+  trackWebAppViewed(): void {
+    this.page('Web App');
+  }
+
   trackPriceViewed(): void {
     const name = 'Price details';
     const category = 'sell';
@@ -143,6 +147,7 @@ class AnalyticsHandler extends BaseAnalyticsHandler {
     const event = 'Appraisal Started';
     const nameSection = 'Vehicle Information';
 
+    this.page('Sell Funnel');
     this.page(nameSection, category);
     this.track(event, properties);
   }

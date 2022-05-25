@@ -30,6 +30,7 @@ const AppraisalReviewViewDetail: React.FC<Props> = ({ viewModel }) => {
       viewModel.redirectToAppraisalForm();
     } else {
       viewModel.trackIdentify();
+      viewModel.trackAppraisalReviewViewed();
     }
   }, [viewModel]);
 

@@ -106,6 +106,16 @@ describe('Appraisal review index page test', () => {
     expect(trackAppraisalIdentify).toHaveBeenCalled();
   });
 
+  it('analyticHandler trackAppraisalReviewViewed should called', () => {
+    const trackAppraisalReviewViewed = jest.spyOn(
+      analyticsHandler,
+      'trackAppraisalReviewViewed'
+    );
+
+    viewModel.trackAppraisalReviewViewed();
+    expect(trackAppraisalReviewViewed).toHaveBeenCalled();
+  });
+
   it('should call analytric and router when success api call ', async () => {
     stores.appraisal.updateAppraisal(formData);
     const makeRequestBody = jest.spyOn(Utils, 'makeRequestBody');
