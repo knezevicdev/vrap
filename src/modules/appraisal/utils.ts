@@ -96,7 +96,7 @@ function getLienType(lienType: string) {
   if (lienType === 'Neither') {
     return 'none';
   }
-  return lienType.toLowerCase();
+  return lienType && lienType.toLowerCase();
 }
 
 export function makeRequestBody(appraisalData: any): AppraisalPayload {

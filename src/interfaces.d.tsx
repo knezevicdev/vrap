@@ -168,6 +168,8 @@ export interface AppraisalPayload {
   interiorCondition: string;
   keysAmount: string;
   lastName: string;
+  lienType?: string;
+  bankName?: string;
   lead_id: string;
   anonymous_id: string;
   make: string;
