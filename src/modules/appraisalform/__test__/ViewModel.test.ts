@@ -64,13 +64,6 @@ describe('test appraisalForm viewModel ', () => {
     viewModel = new ViewModel(stores);
   });
 
-  it('test get grade from store ', () => {
-    stores.appraisal.setGradeCheck({
-      grade: true,
-    });
-    expect(viewModel.grade).toEqual(true);
-  });
-
   it('test carfaxOdoLast', () => {
     stores.appraisal.setCarfaxOdoLast(10000);
     expect(viewModel.carfaxOdoLast).toEqual(10000);
