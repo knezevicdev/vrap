@@ -1,4 +1,4 @@
-import { addStyleForMobile, Button, Link } from '@vroom-web/ui-lib';
+import { addStyleForMobile, Button } from '@vroom-web/ui-lib';
 import { observer } from 'mobx-react';
 import getConfig from 'next/config';
 import React from 'react';
@@ -78,7 +78,8 @@ const ExactMileageTitle = styled.div`
 `;
 
 const Line = styled.hr`
-  border-color: #d6d7da;
+  border: 0;
+  border-top: 1px solid #0000001a;
   margin: 15px 0;
 `;
 
@@ -90,7 +91,7 @@ const ExactMileageDesc = styled.div`
   margin-top: 30px;
 `;
 
-const CorrectMileageLink = styled(Link.Primary)`
+const CorrectMileageLink = styled.a`
   color: #e7131a;
   cursor: pointer;
   text-decoration: none;
@@ -123,8 +124,8 @@ const DialogView: React.FC<Props> = ({
   const afterMilesDesc = strictDialog
     ? lang.strictDescAfterMiles
     : lang.descAfterMiles;
-
-  const hideExactMileageDialog = () => {
+  const hideExactMileageDialog = (e: React.MouseEvent<HTMLElement>) => {
+    e.preventDefault();
     mileageCorrect();
     closeModalHandler();
   };
@@ -152,7 +153,7 @@ const DialogView: React.FC<Props> = ({
             {lang.updateMileage}
           </UpdateMileageCTA>
           {!strictDialog && (
-            <CorrectMileageLink onClick={hideExactMileageDialog}>
+            <CorrectMileageLink onClick={hideExactMileageDialog} href="#">
               {lang.mileageIsCorrect}
             </CorrectMileageLink>
           )}

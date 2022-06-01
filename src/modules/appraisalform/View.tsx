@@ -97,7 +97,7 @@ const AppraisalForm: React.FC<Props> = ({ viewModel }) => {
 
   const onNextIntercept = async (proceedNext: any) => {
     const exactMileageField = appraisalUseForm.vehicleInfoForm.fields.mileage;
-    const strictDialog = viewModel.grade === false;
+    const strictDialog = false;
     const setMileageDialogDismiss = viewModel.setMileageDialogDismiss;
     const showExactMileageDialog = viewModel.showExactMileageDialog;
     let inlineCarfaxOdoLast;
