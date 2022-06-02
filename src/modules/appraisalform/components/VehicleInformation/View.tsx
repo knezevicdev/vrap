@@ -27,7 +27,6 @@ import VehicleOptionsGroup from '../forminputs/VehicleOptionsGroup';
 import VinFormInput from '../forminputs/VinFormInput';
 import useForm from '../useForm';
 import {
-  getVinErrors,
   isValidCSLicense,
   isValidVin,
   VROOM_VIN_SUBSTRING,
@@ -220,7 +219,7 @@ const VehicleInformation: React.FC<Props> = ({ form, fields, viewModel }) => {
   const handleDecodeVin = (vinToDecode: string) => {
     const validVin =
       vinToDecode.includes(VROOM_VIN_SUBSTRING) || isValidVin(vinToDecode);
-    const errorMessage = getVinErrors(vinToDecode);
+    const errorMessage = VehicleInfoText.vinError;
     const { vin } = fields;
 
     resetLocalState();
