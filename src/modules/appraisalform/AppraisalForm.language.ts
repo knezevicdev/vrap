@@ -8,6 +8,7 @@ export const VehicleInfoText = {
   licenseButton: `WHAT'S MY CAR WORTH?`,
   licenseError: 'Please enter a valid license plate number',
   licenseButtonDataQa: 'appraisal license button',
+  vinError: 'Please enter a valid vin'
 };
 
 export const VehicleInfoLeaseCopy =

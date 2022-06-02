@@ -1,12 +1,9 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-
-import { VROOM_VIN_SUBSTRING } from '../../../constants/misc';
 import Dialog from '../../../Dialog/VinInformation';
 import CircleLoader from '../../CircleLoader';
 import { lettersAndNumbersOnly } from '../../formatting';
 import Input from '../../Input';
-import { getVinErrors, isValidVin } from '../../validation';
 import { FormFields } from '../Inputs.language';
 
 import Icon, { Icons } from 'src/core/Icon';
@@ -24,14 +21,12 @@ const VinFormInput: React.FC<any> = ({
 
   const handleOnChange = (event: any) => {
     const value = lettersAndNumbersOnly(event.target.value, 17);
-    const error = !value.includes(VROOM_VIN_SUBSTRING) && !isValidVin(value);
-    const errorMessage = getVinErrors(value);
 
     // https://tdalabs.atlassian.net/browse/AC-241
     if (handleUpdate && field.value != value) {
       handleUpdate(value);
     } else {
-      onChange({ ...field, value, error, errorMessage });
+      onChange({ ...field, value });
     }
   };
 
