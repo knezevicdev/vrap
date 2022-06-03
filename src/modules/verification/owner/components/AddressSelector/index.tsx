@@ -83,6 +83,7 @@ const AddressSelector = ({ fields, form, fieldMap }: Props): ReactElement => {
           field={{
             ...fields[fieldMap.streetNumber],
             label: 'Apartment / Suite number (optional)',
+            onChange: inputChange(fields[fieldMap.streetNumber], false),
           }}
         />
       </Col>
