@@ -84,6 +84,7 @@ export class AppraisalStore {
     error: null,
   };
   showLicenseError = false;
+  showReviewError = false;
   isUserLoggedIn = false;
   user: any = {};
 
@@ -109,6 +110,10 @@ export class AppraisalStore {
 
   setVehicleId(vehicleId: string): void {
     this.vehicleId = vehicleId;
+  }
+
+  setShowReviewError(value: boolean): void {
+    this.showReviewError = value;
   }
 
   setVehicleError(value: any): void {

@@ -26,6 +26,10 @@ export default class AppraisalReviewModel {
     return this.appraisalStore.isFormEmpty();
   }
 
+  setShowReviewError(value: boolean): void {
+    this.appraisalStore.setShowReviewError(value);
+  }
+
   redirectToAppraisalForm(): void {
     this._router.push('/');
   }
@@ -59,6 +63,8 @@ export default class AppraisalReviewModel {
 
   async submitAppraisal(): Promise<void> {
     try {
+      this.setShowReviewError(false);
+
       const data = this.appraisalStore;
       const requestPayload: AppraisalPayload = makeRequestBody(data);
       const leadTrackingData = {
@@ -98,6 +104,7 @@ export default class AppraisalReviewModel {
         query: { priceId: returnData.data.ID },
       });
     } catch (err) {
+      this.setShowReviewError(true);
       console.log(JSON.stringify(err));
     }
   }

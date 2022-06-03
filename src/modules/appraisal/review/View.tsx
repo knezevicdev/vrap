@@ -34,13 +34,19 @@ const AppraisalReviewViewDetail: React.FC<Props> = ({ viewModel }) => {
     }
   }, [viewModel]);
 
+  useEffect(() => {
+    return () => {
+      viewModel.setShowReviewError(false);
+    };
+  }, []);
+
   if (isLoading) {
     submitButtonClasses.push('submitting');
   }
 
   const handleSubmit = (): void => {
     setIsLoading(true);
-    viewModel.submitAppraisal().then(() => {
+    viewModel.submitAppraisal().finally(() => {
       setIsLoading(false);
     });
   };
