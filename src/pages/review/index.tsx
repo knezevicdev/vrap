@@ -4,9 +4,11 @@ import { GetServerSideProps, GetServerSidePropsContext, NextPage } from 'next';
 import React from 'react';
 import styled from 'styled-components';
 
+import ErrorBanner from '../../components/ErrorBanner';
 import { returnBrandConfig } from '../../utils/pageheaders';
 
 import { Header } from 'src/components/Header';
+import { useAppStore } from 'src/context';
 import Footer from 'src/core/Footer';
 import AppraisalReviewViewDetail from 'src/modules/appraisal/review';
 import Page from 'src/Page';
@@ -16,10 +18,14 @@ interface Prop {
 }
 
 const AppraisalReview: NextPage<Prop> = () => {
+  const { store } = useAppStore();
+  const showReviewError = store?.appraisal?.showReviewError;
+
   return (
     <Page name="Review Your Appraisal">
       <SkipNavigationLink mainContentId={'main-content'} />
       <Header />
+      {showReviewError && <ErrorBanner />}
       <Contents id="main-content">
         <AppraisalContainer>
           <AppraisalReviewViewDetail />
