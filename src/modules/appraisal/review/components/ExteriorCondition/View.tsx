@@ -70,36 +70,38 @@ const ExteriorConditionView: React.FC<Props> = ({ viewModel, store }) => {
           )}
         </Info>
       </Row>
-      <Row>
-        {appraisalDetail?.extConditionForm?.rust && (
+      {viewModel.isDetailedConditionsExperiment && (
+        <Row>
           <Info>
             <Label>{viewModel.rust}</Label>
             <Field>{appraisalDetail?.extConditionForm?.rust}</Field>
           </Info>
-        )}
-        {appraisalDetail?.extConditionForm?.dentsPanels !== 0 && (
           <Info>
             <Label>{viewModel.dents}</Label>
             <Field>
-              {appraisalDetail?.extConditionForm?.dentsPanels} Panel(s)
+              {appraisalDetail?.extConditionForm?.dentsPanels
+                ? `${appraisalDetail?.extConditionForm?.dentsPanels} Panel(s)`
+                : appraisalDetail?.extConditionForm?.dents}
             </Field>
           </Info>
-        )}
-        {appraisalDetail?.extConditionForm?.paintChippingPanels !== 0 && (
           <Info>
             <Label>{viewModel.paintChipping}</Label>
             <Field>
-              {appraisalDetail?.extConditionForm?.paintChippingPanels} Panel(s)
+              {appraisalDetail?.extConditionForm?.paintChippingPanels
+                ? `${appraisalDetail?.extConditionForm?.paintChippingPanels} Panel(s)`
+                : appraisalDetail?.extConditionForm?.paintChipping}
             </Field>
           </Info>
-        )}
-        {appraisalDetail?.extConditionForm?.scratches && (
           <Info>
             <Label>{viewModel.scratches}</Label>
-            <Field>{appraisalDetail?.extConditionForm?.scratches}</Field>
+            <Field>
+              {appraisalDetail?.extConditionForm?.scratchesPanels
+                ? `${appraisalDetail?.extConditionForm?.scratchesPanels} Panel(s)`
+                : appraisalDetail?.extConditionForm?.scratches}
+            </Field>
           </Info>
-        )}
-      </Row>
+        </Row>
+      )}
     </Container>
   );
 };
