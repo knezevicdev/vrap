@@ -98,4 +98,10 @@ describe('Owner Infomation Review component test', () => {
       'Performance',
     ]);
   });
+
+  it('should call isInExperiment when called isDetailedConditionsExperiment', () => {
+    const spyIsInExperiment = jest.spyOn(stores.absmart, 'isInExperiment');
+    viewModel.isDetailedConditionsExperiment;
+    expect(spyIsInExperiment).toHaveBeenCalled();
+  });
 });
