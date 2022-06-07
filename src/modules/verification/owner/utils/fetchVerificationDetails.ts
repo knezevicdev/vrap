@@ -5,7 +5,10 @@ import { UseOwnerReviewForms } from '../hooks/useOwnerReviewForms';
 
 import { UseForm } from 'src/modules/appraisalform/components/componentInterfaces.d';
 import { Verification } from 'src/networking/models/Price';
-import { getVerificationDetails } from 'src/networking/request';
+import {
+  getVerificationDetails,
+  postVerification,
+} from 'src/networking/request';
 
 const updateFormValues = (form: UseForm, values: Record<string, any>): void => {
   form.updateMultipleFields(
@@ -30,6 +33,14 @@ const fetchVerificationDetails = async (
     const response = await getVerificationDetails(priceId);
     if (!isErrorResponse(response)) {
       verificationDetails = response.data.data;
+    } else {
+      const errorMessage =
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        response?.error?.response?.data?.error?.details[0]?.message;
+      if (errorMessage === 'form not found') {
+        await postVerification(priceId);
+      }
     }
   } catch (e) {
     // nothing

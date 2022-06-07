@@ -41,7 +41,6 @@ import {
 
 const { publicRuntimeConfig } = getConfig();
 const VROOM_URL = publicRuntimeConfig.NEXT_PUBLIC_VROOM_URL;
-const ACQUISITIONS_URL = publicRuntimeConfig.NEXT_PUBLIC_ACQUISITIONS_URL;
 
 export enum Status {
   INITIAL = 'initial',
@@ -101,6 +100,20 @@ export const getVerificationDetails = async (
   });
 
   return res;
+};
+
+export const postVerification = (
+  priceId: string
+): Promise<Response<VerificationRespData>> => {
+  const payload = { offer_id: priceId };
+  const url = `${VROOM_URL}/suyc-api/v1/acquisition/verification/form`;
+  return client.httpRequest<VerificationRespData>({
+    method: 'post',
+    url,
+    data: {
+      payload,
+    },
+  });
 };
 
 export const updateVerification = async (
@@ -391,7 +404,7 @@ export const deleteVerificationFile = async (
 ): Promise<Response<any>> => {
   return await client.httpRequest({
     method: 'DELETE',
-    url: `${ACQUISITIONS_URL}/acquisition/verification/file?fid=${fileId}`,
+    url: `${VROOM_URL}/suyc-api/v1/acquisition/verification/file?fid=${fileId}`,
     data: {
       source: 'vroom.com',
       version: '1',
