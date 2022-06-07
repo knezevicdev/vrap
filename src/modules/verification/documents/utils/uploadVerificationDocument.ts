@@ -55,7 +55,7 @@ export const uploadVerificationDocument = async (
   const verificationUrl = await getVerificationFileUploadUrl(priceId, {
     file_extension: file.name.split('.').pop() || '',
     file_type: fileType,
-    original_file_name: file.name,
+    original_file_name: `"${file.name}"`,
   });
   if (isErrorResponse(verificationUrl))
     throw new VerificationDocumentUploadError();
