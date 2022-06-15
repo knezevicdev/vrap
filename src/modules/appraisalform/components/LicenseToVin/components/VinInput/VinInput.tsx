@@ -35,7 +35,7 @@ const VinInput: React.FC<Props> = ({ viewModel, router }) => {
     viewModel.trackVinClicked();
 
     router.push({
-      pathname: '/',
+      pathname: '/sell/vehicleInformation',
       query: { vehicle: vinForPath },
     });
   };

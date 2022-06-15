@@ -162,7 +162,9 @@ class OptionsViewModel {
       'review_payment_values',
       JSON.stringify(reviewPaymentValue)
     );
-    this.router.push(`/verification/review?priceId=${this.store.priceId}`);
+    this.router.push(
+      `/appraisal/verification/review?priceId=${this.store.priceId}`
+    );
   };
 
   paymentOptionsSubmit = (values: PaymentOverviewFormValues): void => {

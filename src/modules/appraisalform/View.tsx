@@ -357,7 +357,7 @@ const AppraisalForm: React.FC<Props> = ({ viewModel }) => {
     viewModel.updateAppraisal(formInfo);
 
     router.push({
-      pathname: '/review',
+      pathname: '/appraisal/review',
     });
   };
 
@@ -377,13 +377,13 @@ const AppraisalForm: React.FC<Props> = ({ viewModel }) => {
 
     if (clearForm) {
       await viewModel.clearAppraisal();
-      router.push({ pathname: '/' });
+      router.push({ pathname: '/sell/vehicleInformation' });
     } else {
       viewModel.updateAppraisal(formInfo);
 
       if (location.hash.length) {
         router.push({
-          pathname: '/review',
+          pathname: '/appraisal/review',
         });
       }
     }

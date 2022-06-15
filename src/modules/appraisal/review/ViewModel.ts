@@ -31,7 +31,7 @@ export default class AppraisalReviewModel {
   }
 
   redirectToAppraisalForm(): void {
-    this._router.push('/');
+    this._router.push('/sell/vehicleInformation');
   }
 
   getAnalyticsHandler = (): AnalyticsHandler => {
@@ -100,7 +100,7 @@ export default class AppraisalReviewModel {
       const returnData: AppraisalRespData = resp.data;
       this.appraisalStore.clearAppraisal();
       this._router.push({
-        pathname: `/price`,
+        pathname: `/appraisal/price`,
         query: { priceId: returnData.data.ID },
       });
     } catch (err) {

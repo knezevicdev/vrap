@@ -10,9 +10,12 @@ export const config = {
   },
 };
 
-const proxy = createProxyMiddleware('/api/weblead/attribution', {
+const proxy = createProxyMiddleware('/appraisal/api/weblead/attribution', {
   changeOrigin: true,
   ignorePath: true,
+  pathRewrite: (path) => {
+    return path.replace('/appraisal', '');
+  },
   target: serverRuntimeConfig.WEB_LEADS_PROXY_TARGET,
 });
 
