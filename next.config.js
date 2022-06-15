@@ -3,6 +3,8 @@ const withBundleAnalyzer = require('@next/bundle-analyzer')({
   enabled: process.env.ANALYZE === 'true',
 });
 
+const { version } = require('./package.json');
+
 const childProcess = require('child_process');
 const shortHash = childProcess
   .execSync('git rev-parse --short=8 HEAD')
@@ -41,7 +43,24 @@ const config = {
       {
         source: '/sell/vehicleInformation/:vehicle',
         destination: '/sell/vehicleInformation?vehicle=:vehicle',
-        permanent: true,
+        permanent: false,
+      },
+    ];
+  },
+  async headers() {
+    return [
+      {
+        source: '/:path*',
+        headers: [
+          {
+            key: 'x-app-name',
+            value: 'appraisal',
+          },
+          {
+            key: 'x-version',
+            value: version,
+          },
+        ],
       },
     ];
   },
