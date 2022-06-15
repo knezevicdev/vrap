@@ -10,10 +10,10 @@ export const config = {
   },
 };
 
-const proxy = createProxyMiddleware('/api/interchange/**', {
+const proxy = createProxyMiddleware('/appraisal/api/interchange/**', {
   changeOrigin: true,
   pathRewrite: (path) => {
-    return path.replace('/api/interchange', '');
+    return path.replace('/appraisal/api/interchange', '');
   },
   ignorePath: false,
   target: serverRuntimeConfig.INTERCHANGE_PROXY_TARGET,

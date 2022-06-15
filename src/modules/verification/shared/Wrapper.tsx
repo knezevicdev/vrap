@@ -48,7 +48,7 @@ const VerificationWrapper: React.FC<Props> = ({ priceId, step, children }) => {
 
   useEffect(() => {
     if (store.verification.formState && store.verification.formState === 5) {
-      router.push('/congratulations');
+      router.push('/appraisal/congratulations');
     }
     setLoading(false);
   }, [store.verification.formState]);

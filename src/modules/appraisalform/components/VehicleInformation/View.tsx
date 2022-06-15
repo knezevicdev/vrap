@@ -536,7 +536,7 @@ const VehicleInformation: React.FC<Props> = ({ form, fields, viewModel }) => {
       licensePlate.value
     )}`;
     router.push({
-      pathname: '/',
+      pathname: '/sell/vehicleInformation',
       query: { vehicle: licenseForDecode },
     });
     handleDecodeLicense(licenseForDecode);

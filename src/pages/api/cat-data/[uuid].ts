@@ -10,10 +10,10 @@ export const config = {
   },
 };
 
-const proxy = createProxyMiddleware('/api/cat-data/**', {
+const proxy = createProxyMiddleware('/appraisal/api/cat-data/**', {
   changeOrigin: true,
   pathRewrite: (path) => {
-    return path.replace('/api/cat-data', '');
+    return path.replace('/appraisal/api/cat-data', '');
   },
   ignorePath: false,
   target: serverRuntimeConfig.CAT_DATA_PROXY_TARGET,

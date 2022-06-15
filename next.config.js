@@ -9,7 +9,7 @@ const shortHash = childProcess
   .toString()
   .trim();
 
-const basePath = '/appraisal';
+const basePath = '';
 
 const endPointSelector = () => {
   if (process.env.NODE_ENV === 'production') {
@@ -20,6 +20,22 @@ const endPointSelector = () => {
 
 const config = {
   basePath,
+  async rewrites() {
+    return [
+      {
+        source: '/sell/vehicleInformation',
+        destination: '/appraisal',
+      },
+      {
+        source: '/appraisal',
+        destination: '/',
+      },
+      {
+        source: '/appraisal/:slug*',
+        destination: '/:slug*',
+      },
+    ];
+  },
   distDir: `.next/${shortHash}`,
   generateBuildId: () => shortHash,
   publicRuntimeConfig: {

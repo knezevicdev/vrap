@@ -13,7 +13,7 @@ export default class PickupInfoReviewViewModel {
 
   handleEditClick(): void {
     this._router.push({
-      pathname: `/`,
+      pathname: `/sell/vehicleInformation`,
       query: {
         vehicle: `${this._store.appraisal?.vehicleInfoForm?.vin}`,
       },

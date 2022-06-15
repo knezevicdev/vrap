@@ -43,7 +43,7 @@ const LicenseStateInput: React.FC<Props> = ({ router, analyticsHandler }) => {
     analyticsHandler.trackLicenseToVin(label, category);
 
     if (!licensePlate.error) {
-      const appraisalPath = `/`;
+      const appraisalPath = `/sell/vehicleInformation`;
       router.push({
         pathname: appraisalPath,
         query: { vehicle: lpForPath },
