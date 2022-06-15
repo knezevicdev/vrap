@@ -36,6 +36,15 @@ const config = {
       },
     ];
   },
+  async redirects() {
+    return [
+      {
+        source: '/sell/vehicleInformation/:vehicle',
+        destination: '/sell/vehicleInformation?vehicle=:vehicle',
+        permanent: true,
+      },
+    ];
+  },
   distDir: `.next/${shortHash}`,
   generateBuildId: () => shortHash,
   publicRuntimeConfig: {
