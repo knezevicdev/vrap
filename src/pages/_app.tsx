@@ -48,6 +48,7 @@ const {
   ABSMARTLY_API_KEY,
   ABSMARTLY_ENV,
   ABSMARTLY_APP,
+  NEXT_PUBLIC_BASE_PATH,
 } = publicRuntimeConfig;
 
 const NEXT_PUBLIC_INTERCHANGE_URL =
@@ -63,6 +64,18 @@ class AppraisalApp extends App {
 
   constructor(props: AppProps) {
     super(props);
+
+    if (props.router.pageLoader) {
+      // Support serving _next/data/ assets with basePath prefix
+      const originalGetDataHref = props.router.pageLoader.getDataHref;
+      props.router.pageLoader.getDataHref = function (...args: any[]) {
+        const r = originalGetDataHref.call(props.router.pageLoader, ...args);
+        return r && r.startsWith('/_next/data')
+          ? `${NEXT_PUBLIC_BASE_PATH}${r}`
+          : r;
+      };
+    }
+
     this.analyticsHandler = new AnalyticsHandler();
     const serviceBasePath = NEXT_PUBLIC_INTERCHANGE_URL;
     this.catSDK = new CatSDK({
