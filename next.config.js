@@ -46,6 +46,10 @@ const config = {
         source: '/appraisal/:slug*',
         destination: '/:slug*',
       },
+      {
+        source: `/appraisal/_next/data/:path*`,
+        destination: '/_next/data/:path*',
+      },
     ];
   },
   async redirects() {
