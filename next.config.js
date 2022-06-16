@@ -20,7 +20,7 @@ const endPointSelector = () => {
   return `/api/gql`;
 };
 
-const assetsPrefixSelector = () => {
+const assetPrefixSelector = () => {
   if (process.env.NODE_ENV === 'production') {
     return basePath;
   }
@@ -76,7 +76,7 @@ const config = {
   },
   distDir: `.next/${shortHash}`,
   generateBuildId: () => shortHash,
-  assetsPrefix: assetsPrefixSelector(),
+  assetPrefix: assetPrefixSelector(),
   publicRuntimeConfig: {
     // Will be available on both server-side and client-side
     NEXT_PUBLIC_BASE_PATH: basePath,
