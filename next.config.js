@@ -11,22 +11,32 @@ const shortHash = childProcess
   .toString()
   .trim();
 
-const basePath = '';
+const basePath = '/appraisal';
 
 const endPointSelector = () => {
   if (process.env.NODE_ENV === 'production') {
     return '/gql';
   }
-  return `${basePath}/api/gql`;
+  return `/api/gql`;
+};
+
+const assetsPrefixSelector = () => {
+  if (process.env.NODE_ENV === 'production') {
+    return basePath;
+  }
+  return '';
 };
 
 const config = {
-  basePath,
   async rewrites() {
     return [
       {
         source: '/sell/vehicleInformation',
-        destination: '/appraisal',
+        destination: '/',
+      },
+      {
+        source: '/sell/:slug*',
+        destination: '/:slug*',
       },
       {
         source: '/appraisal',
@@ -66,6 +76,7 @@ const config = {
   },
   distDir: `.next/${shortHash}`,
   generateBuildId: () => shortHash,
+  assetsPrefix: assetsPrefixSelector(),
   publicRuntimeConfig: {
     // Will be available on both server-side and client-side
     NEXT_PUBLIC_BASE_PATH: basePath,
