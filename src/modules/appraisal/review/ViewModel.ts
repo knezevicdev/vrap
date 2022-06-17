@@ -38,10 +38,6 @@ export default class AppraisalReviewModel {
     return this._analyticsHandler;
   };
 
-  isLienholderQuestionExperiment = (): boolean => {
-    return this.absmartStore.isInExperiment('ac-lienholder-question');
-  };
-
   trackIdentify(): void {
     const data = this.appraisalStore;
     const requestPayload: AppraisalPayload = makeRequestBody(data);
@@ -74,11 +70,6 @@ export default class AppraisalReviewModel {
       };
 
       this._analyticsHandler.trackLeadSubmitted('Appraisal', leadTrackingData);
-
-      if (!this.isLienholderQuestionExperiment()) {
-        delete requestPayload.lienType;
-        delete requestPayload.bankName;
-      }
 
       const webleadData = {
         firstName: requestPayload.firstName,

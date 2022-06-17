@@ -8,8 +8,7 @@ const useAppraisalFormInit = (
   extCondition: any,
   mechCondition: any,
   yourInformation: any,
-  vinInPath: any,
-  isDetailedConditionsExperiment: any
+  vinInPath: any
 ) => {
   if (vinInPath !== vehicleInfo.vin) {
     vehicleInfo = {};
@@ -41,7 +40,7 @@ const useAppraisalFormInit = (
     titleStatus: vehicleHistory.titleStatus || '',
     lienType: {
       value: vehicleHistory.lienType || '',
-      isRequired: false,
+      isRequired: true,
     },
     bankName: {
       value: vehicleHistory.bankName || '',
@@ -66,19 +65,19 @@ const useAppraisalFormInit = (
     },
     rust: {
       value: extCondition.rust || '',
-      isRequired: isDetailedConditionsExperiment,
+      isRequired: true,
     },
     dents: {
       value: extCondition.dents || '',
-      isRequired: isDetailedConditionsExperiment,
+      isRequired: true,
     },
     paintChipping: {
       value: extCondition.paintChipping || '',
-      isRequired: isDetailedConditionsExperiment,
+      isRequired: true,
     },
     scratches: {
       value: extCondition.scratches || '',
-      isRequired: isDetailedConditionsExperiment,
+      isRequired: true,
     },
     dentsPanels: {
       value: extCondition.dentsPanels || 0,
