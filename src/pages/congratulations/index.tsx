@@ -17,7 +17,9 @@ const CongratulationPage: NextPage = () => {
   return (
     <Page name="Congrats! Document submitted">
       <SkipNavigationLink mainContentId={'main-content'} />
-      <Header />
+      <HeaderContainer>
+        <Header />
+      </HeaderContainer>
       <Contents id="main-content">
         <Congratulations />
         <Questions />
@@ -26,6 +28,13 @@ const CongratulationPage: NextPage = () => {
     </Page>
   );
 };
+
+const HeaderContainer = styled.div`
+  position: sticky;
+  top: 0;
+  right: 0;
+  z-index: 5;
+`;
 
 const Contents = styled.div`
   display: flex;

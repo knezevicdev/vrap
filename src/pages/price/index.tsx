@@ -33,7 +33,9 @@ const Price: NextPage = () => {
       {!appStore.store.absmart.isABSmartlyLoading && (
         <SkipNavigationLink mainContentId={'main-content'} />
       )}
-      <Header />
+      <HeaderContainer>
+        <Header />
+      </HeaderContainer>
       {!appStore.store.absmart.isABSmartlyLoading && (
         <Contents id="main-content">
           <PriceInfo store={store} />
@@ -46,6 +48,13 @@ const Price: NextPage = () => {
     </Page>
   );
 };
+
+const HeaderContainer = styled.div`
+  position: sticky;
+  top: 0;
+  right: 0;
+  z-index: 5;
+`;
 
 const Contents = styled.div`
   display: flex;

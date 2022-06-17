@@ -30,6 +30,13 @@ import PaymentOverviewAB from 'src/modules/paymentoverviewAB';
 import SuccessBar from 'src/modules/successbar';
 import Page from 'src/Page';
 
+const HeaderContainer = styled.div`
+  position: sticky;
+  top: 0;
+  right: 0;
+  z-index: 5;
+`;
+
 const ColumnBody = styled.div`
   display: flex;
   margin: 0 auto;
@@ -103,7 +110,9 @@ const EPayOptions: NextPage<Props> = ({ brand }) => {
           {!store.absmart.isABSmartlyLoading && (
             <SkipNavigationLink mainContentId={'main-content'} />
           )}
-          <Header />
+          <HeaderContainer>
+            <Header />
+          </HeaderContainer>
           {!store.absmart.isABSmartlyLoading && (
             <>
               {!store.absmart.abTestFacelift && !isPaymentRequireExp && (

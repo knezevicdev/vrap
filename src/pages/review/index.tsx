@@ -24,8 +24,10 @@ const AppraisalReview: NextPage<Prop> = () => {
   return (
     <Page name="Review Your Appraisal">
       <SkipNavigationLink mainContentId={'main-content'} />
-      <Header />
-      {showReviewError && <ErrorBanner />}
+      <HeaderContainer>
+        <Header />
+        {showReviewError && <ErrorBanner />}
+      </HeaderContainer>
       <Contents id="main-content">
         <AppraisalContainer>
           <AppraisalReviewViewDetail />
@@ -35,6 +37,13 @@ const AppraisalReview: NextPage<Prop> = () => {
     </Page>
   );
 };
+
+const HeaderContainer = styled.div`
+  position: sticky;
+  top: 0;
+  right: 0;
+  z-index: 5;
+`;
 
 const Contents = styled.div`
   display: flex;
