@@ -24,12 +24,6 @@ class PriceViewModel {
     return this.appraisalStore.carfaxOdoLast;
   }
 
-  get isDetailedConditionsExperiment(): boolean {
-    return this.absmartly.isInExperiment(
-      'appraisal-detailed-condition-questions'
-    );
-  }
-
   get showExactMileageDialog(): boolean {
     return this.appraisalStore.showExactMileageDialog;
   }

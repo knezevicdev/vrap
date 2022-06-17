@@ -69,12 +69,6 @@ describe('test appraisalForm viewModel ', () => {
     expect(viewModel.carfaxOdoLast).toEqual(10000);
   });
 
-  it('should call isInExperiment when called isDetailedConditionsExperiment', () => {
-    const spyIsInExperiment = jest.spyOn(stores.absmart, 'isInExperiment');
-    viewModel.isDetailedConditionsExperiment;
-    expect(spyIsInExperiment).toHaveBeenCalled();
-  });
-
   it('test showExactMileageDialog ', () => {
     stores.appraisal.dismissExactMileageDialog();
     expect(viewModel.showExactMileageDialog).toEqual(false);

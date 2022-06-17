@@ -91,8 +91,7 @@ const AppraisalForm: React.FC<Props> = ({ viewModel }) => {
     extCondition,
     mechCondition,
     yourInformation,
-    vinForPath,
-    viewModel.isDetailedConditionsExperiment
+    vinForPath
   );
 
   const onNextIntercept = async (proceedNext: any) => {

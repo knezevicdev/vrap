@@ -70,38 +70,36 @@ const ExteriorConditionView: React.FC<Props> = ({ viewModel, store }) => {
           )}
         </Info>
       </Row>
-      {viewModel.isDetailedConditionsExperiment && (
-        <Row>
-          <Info>
-            <Label>{viewModel.rust}</Label>
-            <Field>{appraisalDetail?.extConditionForm?.rust}</Field>
-          </Info>
-          <Info>
-            <Label>{viewModel.dents}</Label>
-            <Field>
-              {appraisalDetail?.extConditionForm?.dentsPanels
-                ? `${appraisalDetail?.extConditionForm?.dentsPanels} Panel(s)`
-                : appraisalDetail?.extConditionForm?.dents}
-            </Field>
-          </Info>
-          <Info>
-            <Label>{viewModel.paintChipping}</Label>
-            <Field>
-              {appraisalDetail?.extConditionForm?.paintChippingPanels
-                ? `${appraisalDetail?.extConditionForm?.paintChippingPanels} Panel(s)`
-                : appraisalDetail?.extConditionForm?.paintChipping}
-            </Field>
-          </Info>
-          <Info>
-            <Label>{viewModel.scratches}</Label>
-            <Field>
-              {appraisalDetail?.extConditionForm?.scratchesPanels
-                ? `${appraisalDetail?.extConditionForm?.scratchesPanels} Panel(s)`
-                : appraisalDetail?.extConditionForm?.scratches}
-            </Field>
-          </Info>
-        </Row>
-      )}
+      <Row>
+        <Info>
+          <Label>{viewModel.rust}</Label>
+          <Field>{appraisalDetail?.extConditionForm?.rust}</Field>
+        </Info>
+        <Info>
+          <Label>{viewModel.dents}</Label>
+          <Field>
+            {appraisalDetail?.extConditionForm?.dentsPanels
+              ? `${appraisalDetail?.extConditionForm?.dentsPanels} Panel(s)`
+              : appraisalDetail?.extConditionForm?.dents}
+          </Field>
+        </Info>
+        <Info>
+          <Label>{viewModel.paintChipping}</Label>
+          <Field>
+            {appraisalDetail?.extConditionForm?.paintChippingPanels
+              ? `${appraisalDetail?.extConditionForm?.paintChippingPanels} Panel(s)`
+              : appraisalDetail?.extConditionForm?.paintChipping}
+          </Field>
+        </Info>
+        <Info>
+          <Label>{viewModel.scratches}</Label>
+          <Field>
+            {appraisalDetail?.extConditionForm?.scratchesPanels
+              ? `${appraisalDetail?.extConditionForm?.scratchesPanels} Panel(s)`
+              : appraisalDetail?.extConditionForm?.scratches}
+          </Field>
+        </Info>
+      </Row>
     </Container>
   );
 };
