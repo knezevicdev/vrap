@@ -12,6 +12,8 @@ import {
   StepperContainer,
   StepperWrapper,
   VerificationContainer,
+  HeaderContainer,
+  SpinnerContainer,
 } from './Style.css';
 
 import DefaultStepper from 'src/components/DefaultStepper';
@@ -61,7 +63,9 @@ const VerificationWrapper: React.FC<Props> = ({ priceId, step, children }) => {
   return (
     <Page name={'Sell Verification'} data-qa="SellVerificationContainer">
       <SkipNavigationLink mainContentId={'main-content'} />
-      <Header />
+      <HeaderContainer>
+        <Header />
+      </HeaderContainer>
       <StepperWrapper>
         <StepperContainer>
           {!store.absmart.isABSmartlyLoading && !isStepperExp && (
@@ -76,7 +80,9 @@ const VerificationWrapper: React.FC<Props> = ({ priceId, step, children }) => {
         <Contents id="main-content">
           {isAnyloading && (
             <LoadingOverlay>
-              <VroomSpinner />
+              <SpinnerContainer>
+                <VroomSpinner />
+              </SpinnerContainer>
             </LoadingOverlay>
           )}
 

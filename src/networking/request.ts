@@ -251,6 +251,7 @@ export const postAppraisalReview = async (
     return await client.httpRequest({
       method: 'post',
       url,
+      timeout: 10000,
       data: payload,
     });
   }
