@@ -46,14 +46,25 @@ const config = {
         source: '/appraisal/:slug*',
         destination: '/:slug*',
       },
-      {
-        source: `/appraisal/_next/data/:path*`,
-        destination: '/_next/data/:path*',
-      },
     ];
   },
   async redirects() {
     return [
+      {
+        source: '/sell/vehicleInformation/:vehicle',
+        destination: '/sell/vehicleInformation?vehicle=:vehicle',
+        permanent: false,
+      },
+      {
+        source: '/sell/verification/owner/:priceId',
+        destination: '/sell/verification/owner?priceId=:priceId',
+        permanent: false,
+      },
+      {
+        source: '/sell/vehicleInformation/:vehicle',
+        destination: '/sell/vehicleInformation?vehicle=:vehicle',
+        permanent: false,
+      },
       {
         source: '/sell/vehicleInformation/:vehicle',
         destination: '/sell/vehicleInformation?vehicle=:vehicle',
