@@ -61,13 +61,13 @@ const config = {
         permanent: false,
       },
       {
-        source: '/sell/vehicleInformation/:vehicle',
-        destination: '/sell/vehicleInformation?vehicle=:vehicle',
+        source: '/sell/verification/documents/:priceId',
+        destination: '/sell/verification/documents?priceId=:priceId',
         permanent: false,
       },
       {
-        source: '/sell/vehicleInformation/:vehicle',
-        destination: '/sell/vehicleInformation?vehicle=:vehicle',
+        source: '/sell/verification/review/:priceId',
+        destination: '/sell/verification/review?priceId=:priceId',
         permanent: false,
       },
     ];
