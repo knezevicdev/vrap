@@ -23,7 +23,7 @@ const SellDocumentsReview: React.FC<Props> = ({ viewModel, store }) => {
         <Subtitle>{viewModel.SellDoctitle}</Subtitle>
         <LinkWrap>
           <Link.Text
-            href={`/appraisal/verification/documents?priceId=${store.verification.offerId}`}
+            href={`/sell/verification/documents?priceId=${store.verification.offerId}`}
             onClick={(e): void => {
               e.preventDefault();
               viewModel.handleEditClick();

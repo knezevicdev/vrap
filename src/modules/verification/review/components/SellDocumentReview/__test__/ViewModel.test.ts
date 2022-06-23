@@ -88,12 +88,12 @@ describe('Pickup Infomation Review component test', () => {
 
   it('when click handleEdit should call window location href', () => {
     stores.verification.setOfferId('123');
-    const url = `/appraisal/verification/documents?priceId=${stores.verification.offerId}`;
+    const url = `/sell/verification/documents?priceId=${stores.verification.offerId}`;
 
     viewModel.handleEditClick();
     Object.defineProperty(window, 'location', {
       value: {
-        href: `/appraisal/verification/documents?priceId=123`,
+        href: `/sell/verification/documents?priceId=123`,
       },
     });
     expect(window.location.href).toEqual(url);

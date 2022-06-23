@@ -103,7 +103,7 @@ const VerificationOwnerViewDetail: React.FC<Props> = ({ priceId }) => {
         ownerFormsToRequiredDocuments(forms, activeSection)
       )
     ) {
-      window.location.href = `/appraisal/verification/documents?priceId=${priceId}`;
+      window.location.href = `/sell/verification/documents?priceId=${priceId}`;
       return;
     }
 
@@ -151,7 +151,7 @@ const VerificationOwnerViewDetail: React.FC<Props> = ({ priceId }) => {
       return;
     }
 
-    window.location.href = `/appraisal/verification/documents?priceId=${updateOfferId}`;
+    window.location.href = `/sell/verification/documents?priceId=${updateOfferId}`;
   };
 
   return (

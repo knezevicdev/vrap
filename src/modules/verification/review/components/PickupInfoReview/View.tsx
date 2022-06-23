@@ -21,7 +21,7 @@ const PickupInfoReviewView: React.FC<Props> = ({ viewModel, store }) => {
         <Subtitle>{viewModel.pickUpInfotitle}</Subtitle>
         <LinkWrap>
           <Link.Text
-            href={`/appraisal/verification/owner?priceId=${store.verification.offerId}`}
+            href={`/sell/verification/owner?priceId=${store.verification.offerId}`}
             onClick={(e): void => {
               e.preventDefault();
               viewModel.handleEditClick();

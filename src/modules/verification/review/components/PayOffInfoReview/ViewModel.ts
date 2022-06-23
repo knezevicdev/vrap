@@ -34,7 +34,7 @@ export default class PayOffInfoReviewViewModel {
       localStorage.setItem('review_payment_type', paymentType);
     }
     localStorage.setItem('review_edit_section', '2');
-    window.location.href = `/appraisal/verification/owner?priceId=${this.store.verification.offerId}`;
+    window.location.href = `/sell/verification/owner?priceId=${this.store.verification.offerId}`;
   }
 
   getCurrentPayment(): string {
