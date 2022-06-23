@@ -1,5 +1,6 @@
 import 'firebase/analytics';
 import 'firebase/remote-config';
+import 'src/global.css';
 import 'filepond/dist/filepond.min.css';
 import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css';
 import 'filepond-plugin-file-poster/dist/filepond-plugin-file-poster.css';
@@ -19,7 +20,7 @@ import React from 'react';
 import smoothscroll from 'smoothscroll-polyfill';
 import { ThemeProvider as StyledComponentsThemeProvider } from 'styled-components';
 
-import { GlobalStyle, theme } from '../core/themes/Vroom';
+import { theme } from '../core/themes/Vroom';
 
 import AppProvider from 'src/context/AppContext';
 import { AnalyticsHandlerContext } from 'src/integrations/AnalyticHandlerContext';
@@ -126,7 +127,6 @@ class AppraisalApp extends App {
 
     return (
       <>
-        <GlobalStyle />
         <ABSmartlyProvider
           apiKey={ABSMARTLY_API_KEY}
           application={ABSMARTLY_APP}
