@@ -72,7 +72,6 @@ const VehicleInformation: React.FC<Props> = ({ form, fields, viewModel }) => {
   const [make, setMake] = useState(null as any);
   const [model, setModel] = useState(null as any);
   const [trims, setTrims] = useState<(SelectItem & GenericObject)[]>([]);
-  const [csRespTrimId, setCsRespTrimId] = useState(null);
   const [options, setOptions] = useState([] as any[]);
   const [extColors, setExtColors] = useState(defaultColors);
   const [selectedExtColor, setSelectedExtColor] = useState(null as any);
@@ -106,7 +105,6 @@ const VehicleInformation: React.FC<Props> = ({ form, fields, viewModel }) => {
     setOptions([]);
     setSelectedExtColor(null);
     setShowOptionsGroup(false);
-    setCsRespTrimId(null);
   };
 
   useEffect(() => {
@@ -167,7 +165,7 @@ const VehicleInformation: React.FC<Props> = ({ form, fields, viewModel }) => {
       });
     } else {
       // looks messy but trying to limit needless renders via useForm
-      if (trims.length === 0) {
+      if (vinDecoded && trims.length === 0) {
         fieldsToUpdate.trim = {
           ...fields.trim,
           isRequired: false,
@@ -196,7 +194,6 @@ const VehicleInformation: React.FC<Props> = ({ form, fields, viewModel }) => {
     const { value: trimValue, error } = fields.trim;
     const { value: trimIdValue } = fields.csTrimId;
     const trimData = trims.find((trim) => trim.value === trimValue);
-    const trimIdSelected = trims.find((trim) => trim.trimId === csRespTrimId);
     const { vin } = fields;
     const vehicleId = vin.value;
     const validVin =
@@ -206,10 +203,9 @@ const VehicleInformation: React.FC<Props> = ({ form, fields, viewModel }) => {
       if (trims.length === 1) {
         handleTrimChange(trims[0], error);
       } else if (trims.length && trimValue !== '' && trimData) {
-        handleTrimChange(trimValue, error);
+        const emptyTrim = { value: null, trim: null, label: null };
+        handleTrimChange(emptyTrim, error);
         handleGetOptions(trimIdValue);
-      } else if (trimIdSelected) {
-        handleTrimChange(trimIdSelected, error);
       } else {
         handleTrimChange(trimValue, error);
       }
@@ -269,7 +265,6 @@ const VehicleInformation: React.FC<Props> = ({ form, fields, viewModel }) => {
             trim,
             subTrim,
             style,
-            id,
           } = response;
           const isError = Object.hasOwnProperty.bind(response)('error');
 
@@ -297,7 +292,6 @@ const VehicleInformation: React.FC<Props> = ({ form, fields, viewModel }) => {
           }
 
           if (alternatives.length > 1) {
-            setCsRespTrimId(id);
             alternatives.forEach((t: any) => {
               trimsArr.push({
                 ...t,
@@ -382,7 +376,6 @@ const VehicleInformation: React.FC<Props> = ({ form, fields, viewModel }) => {
           trim,
           subTrim,
           style,
-          id,
         } = response;
         const trimsArr = [];
         const isError = Object.hasOwnProperty.bind(response)('error');
@@ -413,7 +406,6 @@ const VehicleInformation: React.FC<Props> = ({ form, fields, viewModel }) => {
         }
 
         if (alternatives.length > 1) {
-          setCsRespTrimId(id);
           alternatives.forEach((t: any) => {
             trimsArr.push({
               ...t,

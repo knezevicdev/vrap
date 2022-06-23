@@ -25,7 +25,6 @@ const TrimInput: React.FC<Props> = ({
   trimLoader,
 }) => {
   const analyticsHandler = new AnalyticsHandler();
-
   const handleOnChange = (changes: SelectChanges<SelectItem>) => {
     analyticsHandler.trackTrimChange();
     const trimOption: any = changes.selectedItem;
