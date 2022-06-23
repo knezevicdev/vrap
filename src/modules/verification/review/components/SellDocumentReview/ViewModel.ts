@@ -48,6 +48,6 @@ export default class SellDocumentReviewViewModel {
     if (this.isPaymentRequireExp()) {
       localStorage.setItem('review_doc_section', 'doc_upload');
     }
-    window.location.href = `/appraisal/verification/documents?priceId=${this.store.verification.offerId}`;
+    window.location.href = `/sell/verification/documents?priceId=${this.store.verification.offerId}`;
   }
 }
