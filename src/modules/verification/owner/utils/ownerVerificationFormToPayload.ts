@@ -17,6 +17,9 @@ export const ownerVerificationFormToPayload = (
   const pickupValues = formValues(form.pickupInfoForm);
   const loanValues = formValues(form.loanInfoForm);
 
+  const isSameContact = pickupValues.sameContact === 'Yes';
+  const isSameAddress = pickupValues.sameAddress === 'Yes';
+
   return {
     form_state: formState,
     is_owner: contactValues.youOwner === 'Yes',
@@ -43,12 +46,22 @@ export const ownerVerificationFormToPayload = (
     },
     second_owner_phone_number: contactValues.secondPhone,
     second_owner_email_address: contactValues.secondEmail,
+    same_contact_as_owner: isSameContact,
+    same_mailing_address: isSameAddress,
     pickup_address: {
-      city: pickupValues.pickupAddressCity,
-      state: pickupValues.pickupAddressState,
-      zipcode: pickupValues.pickupAddressZip,
-      address_1: pickupValues.pickupAddressAddress,
-      address_2: pickupValues.pickupAddressApt,
+      city: isSameContact ? contactValues.city : pickupValues.pickupAddressCity,
+      state: isSameContact
+        ? contactValues.state
+        : pickupValues.pickupAddressState,
+      zipcode: isSameContact
+        ? contactValues.zip
+        : pickupValues.pickupAddressZip,
+      address_1: isSameContact
+        ? contactValues.address
+        : pickupValues.pickupAddressAddress,
+      address_2: isSameContact
+        ? contactValues.apt
+        : pickupValues.pickupAddressApt,
     },
     pickup_contact_first_name: pickupValues.pickupContactFirstName,
     pickup_contact_last_name: pickupValues.pickupContactLastName,

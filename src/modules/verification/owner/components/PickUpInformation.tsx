@@ -88,7 +88,7 @@ const PickUpInformation = ({
               state: 'pickupAddressState',
               zip: 'pickupAddressZip',
               city: 'pickupAddressCity',
-              streetNumber: 'pickupAddressApt',
+              apt: 'pickupAddressApt',
             }}
           />
         </>
