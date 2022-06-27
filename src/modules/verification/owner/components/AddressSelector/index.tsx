@@ -30,8 +30,8 @@ interface Props {
   fields: Record<string, FormField>;
   form: UseForm;
   fieldMap: SetRequired<
-    Partial<Record<keyof Address, string>>,
-    'addressLine' | 'zip' | 'city' | 'state' | 'streetNumber'
+    Partial<Record<keyof Address | 'apt', string>>,
+    'addressLine' | 'zip' | 'city' | 'state' | 'apt'
   >;
 }
 
@@ -41,13 +41,26 @@ const AddressSelector = ({ fields, form, fieldMap }: Props): ReactElement => {
   const handlePlaceChanged = useHandlePlaceChanged(autocomplete, (address) => {
     form.updateMultipleFields(
       Object.fromEntries(
-        Object.entries(fieldMap).map(([field, key]) => [
-          key,
-          {
-            ...fields[key],
-            value: address[field as keyof Address],
-          },
-        ])
+        Object.entries(fieldMap)
+          .filter(([key]) =>
+            [
+              'streetNumber',
+              'street',
+              'city',
+              'state',
+              'stateLongName',
+              'country',
+              'addressLine',
+              'zip',
+            ].includes(key)
+          )
+          .map(([field, key]) => [
+            key,
+            {
+              ...fields[key],
+              value: address[field as keyof Address],
+            },
+          ])
       )
     );
   });
@@ -81,9 +94,9 @@ const AddressSelector = ({ fields, form, fieldMap }: Props): ReactElement => {
       >
         <Input
           field={{
-            ...fields[fieldMap.streetNumber],
+            ...fields[fieldMap.apt],
             label: 'Apartment / Suite number (optional)',
-            onChange: inputChange(fields[fieldMap.streetNumber], false),
+            onChange: inputChange(fields[fieldMap.apt], false),
           }}
         />
       </Col>

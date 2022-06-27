@@ -136,7 +136,7 @@ const VerificationOwnerViewDetail: React.FC<Props> = ({ priceId }) => {
   const onDone = async () => {
     store.verification.setLoading(true);
 
-    const payload = ownerVerificationFormToPayload(forms, activeSection + 1);
+    const payload = ownerVerificationFormToPayload(forms, 3);
     const updateResponse = await updateVerification(payload, priceId);
     if (isErrorResponse(updateResponse)) {
       store.verification.setLoading(false);

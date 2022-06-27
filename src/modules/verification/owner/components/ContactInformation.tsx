@@ -72,7 +72,7 @@ const ContactInformation = ({ fields, form }: Props): ReactElement => {
               state: 'state',
               zip: 'zip',
               city: 'city',
-              streetNumber: 'apt',
+              apt: 'apt',
             }}
           />
           <Col
@@ -135,7 +135,7 @@ const ContactInformation = ({ fields, form }: Props): ReactElement => {
               state: 'secondState',
               zip: 'secondZip',
               city: 'secondCity',
-              streetNumber: 'secondApt',
+              apt: 'secondApt',
             }}
           />
           <Col
