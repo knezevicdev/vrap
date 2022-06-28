@@ -73,6 +73,6 @@ export const ownerVerificationFormToPayload = (
     financial_institution_phone: loanValues.phoneNumber,
     lien_account_number: loanValues.accountNumber,
     last_four_ssn: loanValues.lastFour,
-    acknowledgement_of_terms: loanValues.agreement,
+    acknowledgement_of_terms: !!loanValues.agreement,
   };
 };
