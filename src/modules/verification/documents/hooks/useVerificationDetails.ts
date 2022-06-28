@@ -56,9 +56,6 @@ const useVerificationDetails = (priceId: string): UseVerificationDetails => {
       (requiredDocuments.titleInfo
         ? verificationDetails.front_of_title_lien_file_id &&
           verificationDetails.back_of_title_lien_file_id
-        : true) &&
-      (requiredDocuments.lienInfo
-        ? verificationDetails.lien_release_letter_file_id
         : true)
   );
 

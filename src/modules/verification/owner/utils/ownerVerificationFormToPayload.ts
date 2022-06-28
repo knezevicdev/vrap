@@ -67,7 +67,7 @@ export const ownerVerificationFormToPayload = (
     pickup_contact_last_name: pickupValues.pickupContactLastName,
     pickup_contact_phone_number: pickupValues.pickupContactPhone,
     pickup_contact_email: pickupValues.pickupContactEmail,
-    current_payments: pickupValues.activeLoan === 'Yes',
+    current_payments: loanValues.activeLoan === 'Yes',
     lien_financial_institution_name:
       loanValues.bank === 'Other' ? loanValues.name : loanValues.bank,
     financial_institution_phone: loanValues.phoneNumber,
