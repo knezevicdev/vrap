@@ -29,7 +29,7 @@ const calculateRequiredDocuments = (
     titleInfo:
       verification?.current_payments === false ||
       requiredStatesForTitles.includes(state),
-    lienInfo: !verification?.current_payments,
+    lienInfo: !!verification?.current_payments,
   };
 };
 
