@@ -97,7 +97,7 @@ const useOwnerReviewForms = (): UseOwnerReviewForms => {
         isRequired: false,
       },
       state: '',
-      agreement: false,
+      agreement: '',
     },
   });
 

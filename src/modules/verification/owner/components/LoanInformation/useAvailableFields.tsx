@@ -66,7 +66,7 @@ const useAvailableFields = (caf: Caf[], form: UseForm): LoanField[] => {
         agreement: {
           ...fields.agreement,
           isRequired: shouldEnableFields,
-          value: shouldEnableFields ? fields.agreement.value : false,
+          value: shouldEnableFields ? fields.agreement.value : '',
         },
         state: {
           ...fields.state,

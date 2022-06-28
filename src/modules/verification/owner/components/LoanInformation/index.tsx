@@ -187,7 +187,7 @@ const LoanInformation = ({ fields, form }: Props): ReactElement => {
               onChange={(): void =>
                 fields.agreement.onChange({
                   ...fields.agreement,
-                  value: !fields.agreement.value,
+                  value: fields.agreement.value ? '' : true,
                 })
               }
               label="I authorize Vroom to inquire and request any necessary information from my lienholder"
