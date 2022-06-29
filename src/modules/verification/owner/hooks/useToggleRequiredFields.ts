@@ -6,7 +6,7 @@ export const useToggleRequiredFields = (
   form: UseForm,
   prefix: string,
   isRequired: boolean,
-  excludeFields: string[] = []
+  optionalFields: string[] = []
 ): void => {
   const previousValue = useRef<boolean>();
 
@@ -16,19 +16,18 @@ export const useToggleRequiredFields = (
       form.updateMultipleFields(
         Object.fromEntries(
           Object.entries(form.fields)
-            .filter(
-              ([key]) => key.startsWith(prefix) && !excludeFields.includes(key)
-            )
+            .filter(([key]) => key.startsWith(prefix))
             .map(([key, field]) => [
               key,
               {
                 ...field,
-                isRequired,
+                isRequired: optionalFields.includes(key) ? false : isRequired,
                 value: !isRequired ? '' : field.value,
+                error: false,
               },
             ])
         )
       );
     }
-  }, [prefix, form, isRequired, excludeFields]);
+  }, [prefix, form, isRequired, optionalFields]);
 };
