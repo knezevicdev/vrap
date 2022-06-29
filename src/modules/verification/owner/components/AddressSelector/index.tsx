@@ -59,6 +59,7 @@ const AddressSelector = ({ fields, form, fieldMap }: Props): ReactElement => {
             {
               ...fields[key],
               value: address[field as keyof Address],
+              error: false,
             },
           ])
       )
