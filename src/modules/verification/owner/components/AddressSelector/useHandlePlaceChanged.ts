@@ -8,7 +8,8 @@ const useHandlePlaceChanged = (
 ) => {
   return (): void => {
     const place = autocomplete.current?.getPlace();
-    if (!place) return;
+
+    if (!place || (place.types && place.types[0] === 'route')) return;
 
     const address = {
       streetNumber: '',
