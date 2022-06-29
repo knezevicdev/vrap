@@ -50,23 +50,31 @@ export const ownerVerificationFormToPayload = (
     same_mailing_address: isSameAddress,
     pickup_address: {
       city: isSameContact ? contactValues.city : pickupValues.pickupAddressCity,
-      state: isSameContact
+      state: isSameAddress
         ? contactValues.state
         : pickupValues.pickupAddressState,
-      zipcode: isSameContact
+      zipcode: isSameAddress
         ? contactValues.zip
         : pickupValues.pickupAddressZip,
-      address_1: isSameContact
+      address_1: isSameAddress
         ? contactValues.address
         : pickupValues.pickupAddressAddress,
-      address_2: isSameContact
+      address_2: isSameAddress
         ? contactValues.apt
         : pickupValues.pickupAddressApt,
     },
-    pickup_contact_first_name: pickupValues.pickupContactFirstName,
-    pickup_contact_last_name: pickupValues.pickupContactLastName,
-    pickup_contact_phone_number: pickupValues.pickupContactPhone,
-    pickup_contact_email: pickupValues.pickupContactEmail,
+    pickup_contact_first_name: isSameContact
+      ? contactValues.firstName
+      : pickupValues.pickupContactFirstName,
+    pickup_contact_last_name: isSameContact
+      ? contactValues.lastName
+      : pickupValues.pickupContactLastName,
+    pickup_contact_phone_number: isSameContact
+      ? contactValues.phone
+      : pickupValues.pickupContactPhone,
+    pickup_contact_email: isSameContact
+      ? contactValues.email
+      : pickupValues.pickupContactEmail,
     current_payments: loanValues.activeLoan === 'Yes',
     lien_financial_institution_name:
       loanValues.bank === 'Other' ? loanValues.name : loanValues.bank,
