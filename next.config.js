@@ -115,6 +115,7 @@ const config = {
     GQL_PROXY_URL: endPointSelector(),
     NEXT_PUBLIC_WEB_LEADS_URL: process.env.NEXT_PUBLIC_WEB_LEADS_URL,
     ITERABLE_UNSUBSCRIBE_KEY: process.env.ITERABLE_UNSUBSCRIBE_KEY,
+    NEXT_PUBLIC_RECAPTCHA_SITE_KEY: process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY,
   },
   serverRuntimeConfig: {
     // Will only be available on the server side
@@ -124,6 +125,9 @@ const config = {
     CAT_DATA_PROXY_TARGET: process.env.CAT_DATA_PROXY_TARGET,
     WEB_LEADS_PROXY_TARGET: process.env.WEB_LEADS_PROXY_TARGET,
     WEBLEAD_API: process.env.WEBLEAD_API,
+    NEXT_PUBLIC_VROOM_URL: process.env.NEXT_PUBLIC_VROOM_URL,
+    RECAPTCHA_SECRET_KEY: process.env.RECAPTCHA_SECRET_KEY,
+    RECAPTCHA_VERIFICATION_URL: process.env.RECAPTCHA_VERIFICATION_URL,
   },
   /* Custom webpack configuration. */
   webpack: (config) => {

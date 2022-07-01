@@ -42,9 +42,10 @@ class VehicleInfoViewModel {
     this._analyticsHandler.trackMileageChange();
   };
 
-  async getVinDecode(vehicleId: string): Promise<any> {
+  async getVinDecode(vehicleId: string, captchaToken: string): Promise<any> {
     try {
-      const response = await getCarstoryVinDecode(vehicleId);
+      const response = await getCarstoryVinDecode(vehicleId, captchaToken);
+
       if (isErrorResponse(response)) throw response;
       let alternatives = [];
       let features = [];

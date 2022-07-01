@@ -259,11 +259,15 @@ export const postAppraisalReview = async (
   }
 };
 
-export const getCarstoryVinDecode = async (vehicleId: string): Promise<any> => {
-  const url = `${VROOM_URL}/suyc-api/v1/details/${vehicleId}`;
+export const getCarstoryVinDecode = async (
+  vehicleId: string,
+  captchaToken: string
+): Promise<any> => {
+  const url = `/appraisal/api/details`;
   return await client.httpRequest({
-    method: 'get',
+    method: 'post',
     url,
+    data: { vehicleId, token: captchaToken },
   });
 };
 

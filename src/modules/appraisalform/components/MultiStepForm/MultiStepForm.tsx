@@ -62,6 +62,7 @@ const MultiStepForm: React.FC<Props> = (props) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [activeSection, setActiveSection] = useState(active);
   const [returnSection, setReturnSection] = useState(null);
+  const [hideButton, setHideButton] = useState<boolean>(false);
 
   // using a static string here to swap values but this can easily be passed in props
   // this can also be handled by parent component if we don't like this
@@ -264,6 +265,10 @@ const MultiStepForm: React.FC<Props> = (props) => {
     }
   };
 
+  const hideButtonCallback = (hide: boolean): void => {
+    setHideButton(hide);
+  };
+
   const formComponents = sections.map((formComponent: any, idx: any) => {
     const {
       component,
@@ -324,10 +329,12 @@ const MultiStepForm: React.FC<Props> = (props) => {
             data={data}
             {...formComponent}
             disableExperiments={disableExperiments}
+            hideButtonCallback={hideButtonCallback}
           />
-          {prevStep
-            ? getPrevNextButtons(formComponent, formIsInvalid)
-            : getNextButton(formComponent, formIsInvalid, onNextIntercept)}
+          {!hideButton &&
+            (prevStep
+              ? getPrevNextButtons(formComponent, formIsInvalid)
+              : getNextButton(formComponent, formIsInvalid, onNextIntercept))}
         </FormSection>
       </FormStep>
     );

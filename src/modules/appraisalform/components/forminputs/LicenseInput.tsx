@@ -1,5 +1,5 @@
 import { addStyleForTablet } from '@vroom-web/ui-lib';
-import React from 'react';
+import React, { KeyboardEventHandler } from 'react';
 import styled from 'styled-components';
 
 import { FormField, GenericObject } from '../../../../interfaces.d';
@@ -11,7 +11,7 @@ import { FormFields } from './Inputs.language';
 interface Props {
   field: FormField;
   className?: string;
-  onKeyPressEnter: (event: GenericObject) => void;
+  onKeyPressEnter: () => void;
 }
 
 const LicenseInput: React.FC<Props> = ({
@@ -28,6 +28,14 @@ const LicenseInput: React.FC<Props> = ({
     onChange({ ...field, value, error, errorMessage });
   };
 
+  const handleOnKeyPressEnter: KeyboardEventHandler<HTMLSpanElement> = (
+    event
+  ) => {
+    if (event.key === 'Enter') {
+      onKeyPressEnter();
+    }
+  };
+
   const { placeholder, label } = FormFields.license;
 
   return (
@@ -38,7 +46,7 @@ const LicenseInput: React.FC<Props> = ({
         placeholder: placeholder,
         label: label,
         onChange: handleOnChange,
-        onKeyPress: onKeyPressEnter,
+        onKeyPress: handleOnKeyPressEnter,
       }}
     />
   );

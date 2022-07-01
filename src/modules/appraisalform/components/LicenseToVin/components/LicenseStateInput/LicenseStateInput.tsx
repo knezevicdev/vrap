@@ -1,61 +1,21 @@
-import { Button } from '@vroom-web/ui-lib';
 import React from 'react';
 import styled from 'styled-components';
 
-import { lettersAndNumbersOnly } from '../../../formatting';
 import StateInput from '../../../forminputs/AddressInput/StateInput';
 import LicenseInput from '../../../forminputs/LicenseInput';
-import useForm from '../../../useForm';
-import { buttonText, dataQa, genericLPError } from './language';
 
 interface Props {
-  router: any;
-  analyticsHandler: any;
+  licenseForm: any;
+  onKeyPressEnter: () => void;
 }
 
-const LicenseStateInput: React.FC<Props> = ({ router, analyticsHandler }) => {
-  const form = useForm({
-    defaultValues: {
-      licensePlate: '',
-      state: '',
-    },
-  });
-
+const LicenseStateInput: React.FC<Props> = ({
+  licenseForm,
+  onKeyPressEnter,
+}) => {
   const {
     fields: { licensePlate, state },
-    isFormValid,
-  } = form;
-
-  const handleOnKeyPressEnter = (e: any): void => {
-    if (e.key === 'Enter' && isFormValid) {
-      handleLicenseStateSubmit();
-    }
-  };
-
-  const handleLicenseStateSubmit = (): void => {
-    const lpForPath = `${state.value}-${lettersAndNumbersOnly(
-      licensePlate.value
-    )}`;
-
-    const label = 'License Plate';
-    const category = 'Sell';
-
-    analyticsHandler.trackLicenseToVin(label, category);
-
-    if (!licensePlate.error) {
-      const appraisalPath = `/sell/vehicleInformation`;
-      router.push({
-        pathname: appraisalPath,
-        query: { vehicle: lpForPath },
-      });
-    } else {
-      licensePlate.onChange({
-        ...licensePlate,
-        error: true,
-        errorMessage: genericLPError,
-      });
-    }
-  };
+  } = licenseForm;
 
   return (
     <Container>
@@ -63,23 +23,14 @@ const LicenseStateInput: React.FC<Props> = ({ router, analyticsHandler }) => {
         <LicenseInputContainer
           className={''}
           field={licensePlate}
-          onKeyPressEnter={handleOnKeyPressEnter}
+          onKeyPressEnter={onKeyPressEnter}
         />
         <States
           className={''}
           field={state}
-          onKeyPressEnter={handleOnKeyPressEnter}
+          onKeyPressEnter={onKeyPressEnter}
         />
       </InputContainer>
-      <SubmitButton
-        tabIndex={0}
-        onKeyPress={handleOnKeyPressEnter}
-        onClick={handleLicenseStateSubmit}
-        disabled={!isFormValid}
-        data-qa={dataQa}
-      >
-        {buttonText}
-      </SubmitButton>
     </Container>
   );
 };
@@ -92,7 +43,6 @@ const Container = styled.div`
 const InputContainer = styled.div`
   display: flex;
   justify-content: space-between;
-  margin-bottom: 25px;
 `;
 
 const LicenseInputContainer = styled(LicenseInput)`
@@ -105,12 +55,6 @@ const States = styled(StateInput)`
   & select {
     padding: 10px;
   }
-`;
-
-const SubmitButton = styled(({ ...restProps }) => (
-  <Button.Primary {...restProps} />
-))`
-  width: 100%;
 `;
 
 export default LicenseStateInput;

@@ -1,9 +1,11 @@
-import React, { useState } from 'react';
+import React, { KeyboardEventHandler, useState } from 'react';
 import styled from 'styled-components';
+
+import { VROOM_VIN_SUBSTRING } from '../../../constants/misc';
 import Dialog from '../../../Dialog/VinInformation';
-import CircleLoader from '../../CircleLoader';
 import { lettersAndNumbersOnly } from '../../formatting';
 import Input from '../../Input';
+import { getVinErrors, isValidVin } from '../../validation';
 import { FormFields } from '../Inputs.language';
 
 import Icon, { Icons } from 'src/core/Icon';
@@ -11,8 +13,6 @@ import Icon, { Icons } from 'src/core/Icon';
 const VinFormInput: React.FC<any> = ({
   field,
   className,
-  vinLoader,
-  handleUpdate,
   onKeyPressEnter,
   disabled = false,
 }) => {
@@ -21,13 +21,9 @@ const VinFormInput: React.FC<any> = ({
 
   const handleOnChange = (event: any) => {
     const value = lettersAndNumbersOnly(event.target.value, 17);
-
-    // https://tdalabs.atlassian.net/browse/AC-241
-    if (handleUpdate && field.value != value) {
-      handleUpdate(value);
-    } else {
-      onChange({ ...field, value });
-    }
+    const error = !value.includes(VROOM_VIN_SUBSTRING) && !isValidVin(value);
+    const errorMessage = getVinErrors(value);
+    onChange({ ...field, value, error, errorMessage });
   };
 
   const handleShowVinDialog = () => {
@@ -36,6 +32,14 @@ const VinFormInput: React.FC<any> = ({
 
   const handleHideVinDialog = () => {
     setShowVinDialog(false);
+  };
+
+  const handleOnKeyPressEnter: KeyboardEventHandler<HTMLSpanElement> = (
+    event
+  ) => {
+    if (event.key === 'Enter') {
+      onKeyPressEnter();
+    }
   };
 
   const { placeholder, label } = FormFields.vin;
@@ -56,12 +60,11 @@ const VinFormInput: React.FC<any> = ({
             </LabelSpan>
           ),
           onChange: handleOnChange,
-          onKeyPress: onKeyPressEnter,
+          onKeyPress: handleOnKeyPressEnter,
           dataQa: 'Vin Number',
           disabled,
         }}
       />
-      {vinLoader && <Loader isLoading={vinLoader} />}
       {showVinDialog && <Dialog closeModalHandler={handleHideVinDialog} />}
     </Container>
   );
@@ -93,11 +96,6 @@ const VinInfoIcon = styled(Icon)`
   height: 13px;
   width: 13px;
   cursor: pointer;
-`;
-
-const Loader = styled(CircleLoader)`
-  position: relative;
-  margin: -5px 5px 5px 10px;
 `;
 
 const InfoButton = styled.button`

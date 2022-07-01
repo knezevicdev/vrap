@@ -1,16 +1,18 @@
-import { useRouter } from 'next/router';
 import React from 'react';
 
 import LicenseStateInput from './LicenseStateInput';
 
-import AnalyticsHandler from 'src/integrations/AnalyticsHandler';
+interface Props {
+  licenseForm: any;
+  onKeyPressEnter: () => void;
+}
 
-const LicenseToVin: React.FC = () => {
-  const router = useRouter();
-  const analyticsHandler = new AnalyticsHandler();
-
+const LicenseToVin: React.FC<Props> = ({ licenseForm, onKeyPressEnter }) => {
   return (
-    <LicenseStateInput router={router} analyticsHandler={analyticsHandler} />
+    <LicenseStateInput
+      licenseForm={licenseForm}
+      onKeyPressEnter={onKeyPressEnter}
+    />
   );
 };
 

@@ -9,14 +9,24 @@ import { useAppStore } from 'src/context';
 interface Props {
   form: any;
   fields: any;
+  hideButtonCallback: (hide: boolean) => void;
 }
 
-const VehicleInformation: React.FC<Props> = ({ form, fields }) => {
+const VehicleInformation: React.FC<Props> = ({
+  form,
+  fields,
+  hideButtonCallback,
+}) => {
   const { store } = useAppStore();
   const viewModel = new ViewModel(store);
 
   return (
-    <VehicleInformationView form={form} fields={fields} viewModel={viewModel} />
+    <VehicleInformationView
+      form={form}
+      fields={fields}
+      viewModel={viewModel}
+      hideButtonCallback={hideButtonCallback}
+    />
   );
 };
 
