@@ -1,5 +1,6 @@
 import React, { ReactElement } from 'react';
 
+import { usePreventSameSecondOwnerData } from '../hooks/usePreventSameSecondOwnerData';
 import { FormStepWrapper } from '../Style.css';
 import { inputChange, useToggleRequiredFields } from '../utils';
 import AddressSelector from './AddressSelector';
@@ -27,6 +28,8 @@ const ContactInformation = ({ fields, form }: Props): ReactElement => {
     fields.hasSecondOwner.value === 'Yes',
     ['secondApt']
   );
+
+  usePreventSameSecondOwnerData(fields);
 
   return (
     <FormStepWrapper wrap="wrap" gap="20px">
