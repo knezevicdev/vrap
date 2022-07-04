@@ -58,7 +58,11 @@ const SelectBoxes: React.FC<Props> = ({
 };
 
 const mapOptions = (options: []): HorizontalRadioOption[] => {
-  return options.map((option) => ({ label: option, value: option }));
+  return options.map((option) => ({
+    label: option,
+    value: option,
+    'data-qa': option,
+  }));
 };
 
 const Container = styled.div``;
