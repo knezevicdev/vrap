@@ -26,6 +26,7 @@ import { AnalyticsHandlerContext } from 'src/integrations/AnalyticHandlerContext
 import AnalyticsHandler from 'src/integrations/AnalyticsHandler';
 import { CatSDKContext } from 'src/integrations/CatSDKContext';
 import { RemoteConfigContext } from 'src/integrations/RemoteConfigContext';
+import { saveUTMParams } from 'src/networking/utils';
 
 const firebaseConfig = {
   apiKey: 'AIzaSyAf2yVhnnxthUA5C4RqIqeDkIhk74EBkAA',
@@ -119,6 +120,7 @@ class AppraisalApp extends App {
 
     this.catSDK.initCatData();
     this.commonHandler.check3rdPartyAuth();
+    saveUTMParams();
   }
 
   render(): JSX.Element {

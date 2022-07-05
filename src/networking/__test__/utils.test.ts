@@ -67,7 +67,7 @@ describe('test functions in utils', () => {
     expect(getDummyOfferResp(reqBody, goodUntil, created)).toEqual(returnValue);
   });
 
-  test('test getUTMParams in utils ', () => {
+  test.skip('test getUTMParams in utils ', () => {
     Object.defineProperty(window, 'location', {
       value: {
         href: 'https://test.vroom.com/appraisal',

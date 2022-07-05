@@ -3,12 +3,7 @@ import { CatData } from '@vroom-web/cat-sdk';
 import crypto from 'crypto';
 import Cookies from 'js-cookie';
 
-import {
-  MiscParams,
-  UTMParams,
-  WebLeadsPayload,
-  WebLeadUserData,
-} from 'src/interfaces.d';
+import { MiscParams, UTMParams, WebLeadsPayload, WebLeadUserData } from 'src/interfaces.d';
 
 export const checkAppraisalPayload = (req: any): number => {
   const {
@@ -123,7 +118,7 @@ export const getDummyOfferResp = (
   };
 };
 
-export function getUTMParams(): UTMParams {
+export function saveUTMParams(): void {
   const queryString = window.location.search;
 
   const urlParams = new URLSearchParams(queryString);
@@ -147,12 +142,46 @@ export function getUTMParams(): UTMParams {
     utm_subsource: '',
   };
 
+  let hasParams = false;
   for (const key of utmParamKeys) {
     const paramVal = urlParams.get(key);
-    if (paramVal) utmObj[key as keyof UTMParams] = paramVal;
+    if (paramVal && paramVal.length) {
+      utmObj[key as keyof UTMParams] = paramVal;
+      hasParams = true;
+    }
   }
 
-  return utmObj as UTMParams;
+  if (hasParams) {
+    window.sessionStorage.setItem(
+      'VROOM_APPRAISAL_UTM_PARAMS',
+      JSON.stringify(utmObj)
+    );
+  }
+}
+
+export function getUTMParams(): UTMParams {
+  const utmParamsString = window.sessionStorage.getItem(
+    'VROOM_APPRAISAL_UTM_PARAMS'
+  );
+
+  const utmObj: UTMParams = {
+    utm_campaign: '',
+    utm_content: '',
+    utm_medium: '',
+    utm_source: '',
+    utm_term: '',
+    utm_keyword: '',
+    utm_subsource: '',
+  };
+
+  if (!utmParamsString) return utmObj;
+
+  try {
+    return JSON.parse(utmParamsString);
+  } catch (e) {
+    // ignore error
+    return utmObj;
+  }
 }
 
 export function getMiscParams(): MiscParams {
