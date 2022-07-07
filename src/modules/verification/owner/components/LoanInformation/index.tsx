@@ -1,3 +1,4 @@
+import { useABSmartly } from '@vroom-web/analytics-integration';
 import { Checkbox, SelectChanges, SelectItem } from '@vroom-web/ui-lib';
 import { noop } from 'lodash';
 import React, { ReactElement, useEffect, useState } from 'react';
@@ -8,6 +9,7 @@ import {
   SecurityMessage,
 } from '../../Style.css';
 import { inputChange } from '../../utils';
+import LxBank from '../LxBank';
 import useAvailableFields, { LoanField } from './useAvailableFields';
 
 import { Icons } from 'src/core/Icon';
@@ -38,6 +40,10 @@ interface Props {
 const LoanInformation = ({ fields, form }: Props): ReactElement => {
   const [caf, setCaf] = useState<Caf[]>([]);
   const availableFields = useAvailableFields(caf, form);
+  const absmartly = useABSmartly();
+  const isVerificationLossExpressExp = absmartly.isInExperiment(
+    'ac-verification-loss-express'
+  );
 
   useEffect(() => {
     getCaf()
@@ -82,29 +88,48 @@ const LoanInformation = ({ fields, form }: Props): ReactElement => {
               </Label>
             </LabelContainer>
           </Col>
-          <Col>
-            <Select
-              field={{
-                ...fields.bank,
-                label: 'Name of Lien Financial Institution',
-                defaultLabel: 'Select your lien financial institution',
-                options: [
-                  ...caf.map((caf) => ({
-                    label: caf.lienholder_name,
-                    value: caf.lienholder_name,
-                  })),
-                  {
-                    label: 'Other',
-                    value: 'Other',
+          {!isVerificationLossExpressExp && (
+            <Col>
+              <Select
+                field={{
+                  ...fields.bank,
+                  label: 'Name of Lien Financial Institution',
+                  defaultLabel: 'Select your lien financial institution',
+                  options: [
+                    ...caf.map((caf) => ({
+                      label: caf.lienholder_name,
+                      value: caf.lienholder_name,
+                    })),
+                    {
+                      label: 'Other',
+                      value: 'Other',
+                    },
+                  ],
+                  onChange: (changes: SelectChanges<SelectItem>) => {
+                    const value = changes.selectedItem?.value;
+                    fields.bank.onChange({ ...fields.bank, value });
                   },
-                ],
-                onChange: (changes: SelectChanges<SelectItem>) => {
-                  const value = changes.selectedItem?.value;
-                  fields.bank.onChange({ ...fields.bank, value });
-                },
-              }}
-            />
-          </Col>
+                }}
+              />
+            </Col>
+          )}
+          {isVerificationLossExpressExp && (
+            <Col>
+              <LxBank
+                field={{
+                  ...fields.bank,
+                  label: 'Name of Lien Financial Institution',
+                  onChange: (bankName: string, lenderId: string) => {
+                    fields.bank.onChange({
+                      ...fields.bank,
+                      value: bankName,
+                      lenderId,
+                    });
+                  },
+                }}
+              />
+            </Col>
+          )}
           {availableFields.includes(LoanField.LIEN_NAME) && (
             <Col>
               <Input

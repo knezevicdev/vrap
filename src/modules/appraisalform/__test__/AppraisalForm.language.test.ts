@@ -13,8 +13,8 @@ describe('appraisal form language test', () => {
       licenseButton: `WHAT'S MY CAR WORTH?`,
       licenseError: 'Please enter a valid license plate number',
       licenseButtonDataQa: 'appraisal license button',
-      vinError: 'Please enter a valid vin'
-    });``
+      vinError: 'Please enter a valid vin',
+    });
 
     expect(lang.VehicleInfoLeaseCopy).toEqual(
       'Please note: we do not purchase leased vehicles.'

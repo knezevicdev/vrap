@@ -20,6 +20,9 @@ export const ownerVerificationFormToPayload = (
   const isSameContact = pickupValues.sameContact === 'Yes';
   const isSameAddress = pickupValues.sameAddress === 'Yes';
 
+  const bankName =
+    loanValues.bank === 'Other' ? loanValues.name : loanValues.bank;
+
   return {
     form_state: formState,
     is_owner: contactValues.youOwner === 'Yes',
@@ -76,8 +79,9 @@ export const ownerVerificationFormToPayload = (
       ? contactValues.email
       : pickupValues.pickupContactEmail,
     current_payments: loanValues.activeLoan === 'Yes',
-    lien_financial_institution_name:
-      loanValues.bank === 'Other' ? loanValues.name : loanValues.bank,
+    lien_financial_institution_name: loanValues.bank,
+    lender_id: form.loanInfoForm.fields.bank.lenderId,
+    lender_name: bankName,
     financial_institution_phone: loanValues.phoneNumber,
     lien_account_number: loanValues.accountNumber,
     last_four_ssn: loanValues.lastFour,

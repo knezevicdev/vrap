@@ -1,0 +1,8 @@
+query LENDERS_BY_NAME($name: String!) {
+  lendersByName(name: $name) {
+    lenders {
+      lenderId,
+      lenderName
+    }
+  }
+}

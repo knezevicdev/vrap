@@ -3,7 +3,12 @@ import { CatData } from '@vroom-web/cat-sdk';
 import crypto from 'crypto';
 import Cookies from 'js-cookie';
 
-import { MiscParams, UTMParams, WebLeadsPayload, WebLeadUserData } from 'src/interfaces.d';
+import {
+  MiscParams,
+  UTMParams,
+  WebLeadsPayload,
+  WebLeadUserData,
+} from 'src/interfaces.d';
 
 export const checkAppraisalPayload = (req: any): number => {
   const {

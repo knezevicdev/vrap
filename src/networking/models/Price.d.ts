@@ -80,6 +80,8 @@ export interface Verification {
   pickup_contact_email: string;
   current_payments: boolean;
   lien_financial_institution_name: string;
+  lender_id: string;
+  lender_name: string;
   financial_institution_phone: string;
   lien_account_number: string;
   acknowledgement_of_terms: boolean;

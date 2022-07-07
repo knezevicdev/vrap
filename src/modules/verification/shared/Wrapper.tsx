@@ -6,14 +6,14 @@ import React, { useEffect, useState } from 'react';
 
 import {
   Contents,
+  HeaderContainer,
   LoadingOverlay,
   OverviewContainer,
   ReviewContainer,
+  SpinnerContainer,
   StepperContainer,
   StepperWrapper,
   VerificationContainer,
-  HeaderContainer,
-  SpinnerContainer,
 } from './Style.css';
 
 import DefaultStepper from 'src/components/DefaultStepper';

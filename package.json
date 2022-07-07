@@ -71,6 +71,7 @@
     "react-dom": "17.0.1",
     "react-filepond": "^7.1.2",
     "react-plaid-link": "^3.1.0",
+    "react-select": "^5.4.0",
     "smoothscroll-polyfill": "^0.4.4",
     "styled-components": "^5.3.0",
     "type-fest": "^2.12.2",

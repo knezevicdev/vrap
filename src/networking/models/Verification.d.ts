@@ -126,3 +126,8 @@ export interface PatchReviewData {
   timestamp: string;
   payload: PatchReview;
 }
+
+export interface Lender {
+  lenderId: string;
+  lenderName: string;
+}
