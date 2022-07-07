@@ -21,6 +21,7 @@ import CREATE_USER_PAYMENT_ACCOUNT from 'src/graphql/mutations/createUserPayment
 import GRADE_CHECK from 'src/graphql/mutations/gradeCheck.graphql';
 import GET_PLAID_TOKEN from 'src/graphql/queries/getLinkToken.graphql';
 import GET_USER from 'src/graphql/queries/getUser.graphql';
+import LENDERS_BY_NAME from 'src/graphql/queries/lendersByName.graphql';
 import {
   AppraisalResp,
   GradeCheckResp,
@@ -36,6 +37,7 @@ import {
 } from 'src/interfaces.d';
 import {
   DocumentResponse,
+  Lender,
   PatchReviewData,
 } from 'src/networking/models/Verification';
 
@@ -354,6 +356,17 @@ export const getCaf = async (): Promise<Response<CafRespData>> => {
     method: 'GET',
     url: `${client.httpEndpoints.interchangeUrl}/suyc-api/v1/acquisition/verification/caf`,
   });
+};
+
+export const lendersByName = async (name: string): Promise<Lender[]> => {
+  const lendersResp = await client.gqlRequest<{
+    lendersByName: { lenders: Lender[] };
+  }>({
+    document: LENDERS_BY_NAME,
+    variables: { name },
+  });
+  if (isErrorResponse(lendersResp)) throw lendersResp;
+  return lendersResp.data.lendersByName.lenders;
 };
 
 interface VerificationFileUploadUrlPayload {
