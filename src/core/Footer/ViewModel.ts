@@ -100,7 +100,7 @@ class FooterViewModel {
             name: 'FAQ',
           },
           {
-            href: '/contact',
+            href: '/myaccount/customer-support',
             name: 'Contact Us',
           },
         ],
