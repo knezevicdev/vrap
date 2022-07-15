@@ -78,6 +78,12 @@ const VehicleInformationView: React.FC<Props> = ({ viewModel }) => {
       </Row>
       <Row>
         <Info>
+          <Label>{viewModel.zipCode}</Label>
+          <Field>{viewModel.vehicleFormInfoZipCode}</Field>
+        </Info>
+      </Row>
+      <Row>
+        <Info>
           <Label>{viewModel.exteriorColor}</Label>
           <Field>{viewModel.vehicleFormInfoColor}</Field>
         </Info>

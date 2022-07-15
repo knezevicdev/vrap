@@ -15,6 +15,7 @@ const formData = {
     trim: 'Utility 4D SV 2WD V6',
     vehicleOptions: ['manual', 'window'],
     year: 2016,
+    zipCode: '99999',
   },
   vehicleHistoryForm: {
     hasAccident: '',
@@ -26,7 +27,6 @@ const formData = {
     firstName: '',
     lastName: '',
     phoneNumber: '',
-    zipCode: '',
   },
   mechConditionForm: {
     additionalDetails: '',
@@ -87,6 +87,7 @@ describe('test appraisalForm viewModel ', () => {
       trim: 'Utility 4D SV 2WD V6',
       vehicleOptions: ['manual', 'window'],
       year: 2016,
+      zipCode: '99999',
     });
   });
 
@@ -104,6 +105,7 @@ describe('test appraisalForm viewModel ', () => {
       trim: '',
       vehicleOptions: [],
       year: null,
+      zipCode: '',
     });
   });
 

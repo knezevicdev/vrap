@@ -25,7 +25,8 @@ import VehicleHistory from './components/VehicleHistory';
 import VehicleInformation from './components/VehicleInformation';
 import EmailCapture from './Dialog/EmailCapture';
 import useTrackActive from './Dialog/EmailCapture/trackActive';
-import Dialog from './Dialog/ExactMilage';
+import ExactMilageDialog from './Dialog/ExactMilage';
+import InvalidStateDialog from './Dialog/InvalidState';
 import AppraisalViewModel from './ViewModel';
 
 import { useAppStore } from 'src/context';
@@ -58,8 +59,12 @@ const AppraisalForm: React.FC<Props> = ({ viewModel }) => {
   const intCondition = viewModel.appraisalStore.intConditionForm;
   const extCondition = viewModel.appraisalStore.extConditionForm;
   const mechCondition = viewModel.appraisalStore.mechConditionForm;
-  const [exactMilageProps, setExactMileageProps] = useState({} as any);
-  const [showExactMilageDialog, setShowExactMilageDialog] = useState(false);
+  const [exactMileageProps, setExactMileageProps] = useState({} as any);
+  const [showExactMileageDialog, setShowExactMileageDialog] = useState<boolean>(
+    false
+  );
+  const [showInvalidStateDialog, setShowInvalidStateDialog] = useState(false);
+  const [state, setState] = useState('');
   const [personalInfo, changePersonalInfo] = useState({});
 
   const getActiveState = () => {
@@ -94,24 +99,10 @@ const AppraisalForm: React.FC<Props> = ({ viewModel }) => {
     vinForPath
   );
 
-  const onNextIntercept = async (proceedNext: any) => {
+  const checkOdometer = async (): Promise<boolean | void> => {
     const exactMileageField = appraisalUseForm.vehicleInfoForm.fields.mileage;
-    const strictDialog = false;
-    const setMileageDialogDismiss = viewModel.setMileageDialogDismiss;
     const showExactMileageDialog = viewModel.showExactMileageDialog;
     let inlineCarfaxOdoLast;
-
-    setExactMileageProps({
-      strictDialog: strictDialog,
-      enteredMiles: exactMileageField.value,
-      mileageCorrect: () => {
-        setMileageDialogDismiss();
-        proceedNext();
-      },
-      updateMileage: () => {
-        exactMileageField.element.focus();
-      },
-    });
 
     if (!viewModel.carfaxOdoLast) {
       const vin = appraisalUseForm.vehicleInfoForm.fields.vin.value;
@@ -123,9 +114,9 @@ const AppraisalForm: React.FC<Props> = ({ viewModel }) => {
         showExactMileageDialog &&
         activeSection === 0
       ) {
-        setShowExactMilageDialog(true);
+        setShowExactMileageDialog(true);
       } else {
-        proceedNext();
+        return true;
       }
     } else {
       if (
@@ -133,10 +124,43 @@ const AppraisalForm: React.FC<Props> = ({ viewModel }) => {
         showExactMileageDialog &&
         activeSection === 0
       ) {
-        setShowExactMilageDialog(true);
+        setShowExactMileageDialog(true);
       } else {
-        proceedNext();
+        return true;
       }
+    }
+  };
+
+  const onNextIntercept = async (proceedNext: any) => {
+    const exactMileageField = appraisalUseForm.vehicleInfoForm.fields.mileage;
+    const setMileageDialogDismiss = viewModel.setMileageDialogDismiss;
+    const zipCode = appraisalUseForm.vehicleInfoForm.fields.zipCode.value;
+    const state = viewModel.getStateFromZip(zipCode);
+    const isStateValid = !state;
+
+    setExactMileageProps({
+      strictDialog: false,
+      enteredMiles: exactMileageField.value,
+      mileageCorrect: () => {
+        setMileageDialogDismiss();
+        if (isStateValid) {
+          proceedNext();
+        }
+      },
+      updateMileage: () => {
+        exactMileageField.element.focus();
+      },
+    });
+
+    const isOdometerValid = await checkOdometer();
+
+    if (isOdometerValid && !isStateValid) {
+      setState(state);
+      setShowInvalidStateDialog(true);
+    }
+
+    if (isOdometerValid && isStateValid) {
+      proceedNext();
     }
   };
 
@@ -389,12 +413,16 @@ const AppraisalForm: React.FC<Props> = ({ viewModel }) => {
   };
 
   useEffect(() => {
-    const overflow = showExactMilageDialog ? 'hidden' : '';
+    const overflow = showExactMileageDialog ? 'hidden' : '';
     document.body.style.overflow = overflow;
-  }, [showExactMilageDialog]);
+  }, [showExactMileageDialog]);
 
   const closeModalHandler = (): void => {
-    setShowExactMilageDialog(false);
+    setShowExactMileageDialog(false);
+  };
+
+  const closeInvalidStateDialogHandler = (): void => {
+    setShowInvalidStateDialog(false);
   };
 
   return (
@@ -411,8 +439,17 @@ const AppraisalForm: React.FC<Props> = ({ viewModel }) => {
         appraisalTitle={AppraisalTitle}
         disableExperiments={false}
       />
-      {showExactMilageDialog && (
-        <Dialog closeModalHandler={closeModalHandler} {...exactMilageProps} />
+      {showExactMileageDialog && (
+        <ExactMilageDialog
+          closeModalHandler={closeModalHandler}
+          {...exactMileageProps}
+        />
+      )}
+      {showInvalidStateDialog && (
+        <InvalidStateDialog
+          state={state}
+          closeModalHandler={closeInvalidStateDialogHandler}
+        />
       )}
       {emailModal && (
         <EmailCapture

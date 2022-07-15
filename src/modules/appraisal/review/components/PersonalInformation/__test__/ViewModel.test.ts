@@ -26,7 +26,6 @@ describe('Owner Infomation Review component test', () => {
     expect(viewModel.name).toEqual('Name');
     expect(viewModel.email).toEqual('Email Address');
     expect(viewModel.phoneNumber).toEqual('Phone Number');
-    expect(viewModel.zipCode).toEqual('Zip Code');
     expect(viewModel.edit).toEqual('Edit');
   });
 

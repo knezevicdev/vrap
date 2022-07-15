@@ -11,6 +11,7 @@ export default class PickupInfoReviewViewModel {
   readonly exteriorColor: string = 'Exterior Color';
   readonly keysAmount: string = 'Number of Keys';
   readonly vehicleOptions: string = 'Options';
+  readonly zipCode: string = 'Zip Code';
   readonly edit: string = 'Edit';
   appraisalStore: AppraisalStore;
 
@@ -28,6 +29,10 @@ export default class PickupInfoReviewViewModel {
 
   get vehicleFormInfoMileage(): number | null {
     return this.appraisalStore.vehicleInfoForm.mileage;
+  }
+
+  get vehicleFormInfoZipCode(): string {
+    return this.appraisalStore.vehicleInfoForm.zipCode;
   }
 
   get vehicleFormInfoYear(): number | null {
