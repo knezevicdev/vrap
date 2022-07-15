@@ -52,7 +52,7 @@ export const ownerVerificationFormToPayload = (
     same_contact_as_owner: isSameContact,
     same_mailing_address: isSameAddress,
     pickup_address: {
-      city: isSameContact ? contactValues.city : pickupValues.pickupAddressCity,
+      city: isSameAddress ? contactValues.city : pickupValues.pickupAddressCity,
       state: isSameAddress
         ? contactValues.state
         : pickupValues.pickupAddressState,
