@@ -12,6 +12,7 @@ describe('test appraisal store methods', () => {
       trim: 'yes',
       vehicleOptions: ['option1', 'option2'],
       year: 1985,
+      zipCode: '12345',
     },
     vehicleHistoryForm: {
       hasAccident: 'No accident',
@@ -49,7 +50,6 @@ describe('test appraisal store methods', () => {
       firstName: 'Guy',
       lastName: 'Fieri',
       phoneNumber: '1234567890',
-      zipCode: '12345',
     },
   };
   let store: AppraisalStore;
@@ -119,7 +119,12 @@ describe('test appraisal store methods', () => {
   });
 
   test('check if vehicle info form is being set', () => {
-    store.setVehicleData({ year: 1985, model: 'Volvo', make: 'Best one' });
+    store.setVehicleData({
+      year: 1985,
+      model: 'Volvo',
+      make: 'Best one',
+      zipCode: '12345',
+    });
 
     expect(store.vehicleInfoForm).toEqual({
       year: 1985,
@@ -131,6 +136,7 @@ describe('test appraisal store methods', () => {
       mileage: null,
       trim: '',
       vehicleOptions: [],
+      zipCode: '12345',
     });
   });
 
@@ -197,6 +203,7 @@ describe('test appraisal store methods', () => {
       trim: '',
       vehicleOptions: [],
       year: null,
+      zipCode: '',
     });
 
     expect(store.vehicleHistoryForm).toMatchObject({
@@ -210,7 +217,6 @@ describe('test appraisal store methods', () => {
       firstName: '',
       lastName: '',
       phoneNumber: '',
-      zipCode: '',
     });
     expect(store.mechConditionForm).toMatchObject({
       additionalDetails: '',

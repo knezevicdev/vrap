@@ -1,5 +1,7 @@
 import { isErrorResponse } from '@vroom-web/networking';
 
+import { getStateFromZip } from './components/validation';
+
 import AnalyticsHandler from 'src/integrations/AnalyticsHandler';
 import { getMilageCheck, getUser, IsUserSignIn } from 'src/networking/request';
 import Store from 'src/store';
@@ -26,6 +28,10 @@ class PriceViewModel {
 
   get showExactMileageDialog(): boolean {
     return this.appraisalStore.showExactMileageDialog;
+  }
+
+  getStateFromZip(zipCode: string): string {
+    return getStateFromZip(zipCode);
   }
 
   updateAppraisal(formInfo: any): void {

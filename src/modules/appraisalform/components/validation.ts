@@ -77,3 +77,21 @@ export function isValidZipCode(zipCode: number): boolean {
   }
   return true;
 }
+
+export function getStateFromZip(zipCode: string): string {
+  const zipcode = parseInt(zipCode, 10);
+
+  if (zipcode >= 83200 && zipcode <= 83999) {
+    return 'Idaho';
+  } else if (zipcode >= 59000 && zipcode <= 59999) {
+    return 'Montana';
+  } else if (zipcode >= 58000 && zipcode <= 58999) {
+    return 'North Dakota';
+  } else if (zipcode >= 57000 && zipcode <= 57999) {
+    return 'South Dakota';
+  } else if (zipcode >= 82000 && zipcode <= 83199) {
+    return 'Wyoming';
+  }
+
+  return '';
+}

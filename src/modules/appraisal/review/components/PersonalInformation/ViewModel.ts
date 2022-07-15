@@ -7,7 +7,6 @@ export default class PickupInfoReviewViewModel {
   readonly name: string = 'Name';
   readonly email: string = 'Email Address';
   readonly phoneNumber: string = 'Phone Number';
-  readonly zipCode: string = 'Zip Code';
   readonly edit: string = 'Edit';
 
   constructor(private _store: Store, private _router: NextRouter) {}

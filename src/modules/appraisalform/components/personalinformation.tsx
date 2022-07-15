@@ -5,7 +5,6 @@ import EmailInput from './forminputs/EmailInput';
 import FirstNameInput from './forminputs/FirstNameInput';
 import LastNameInput from './forminputs/LastNameInput';
 import PhoneInput from './forminputs/PhoneInput';
-import ZipCodeInput from './forminputs/ZipCodeInput';
 
 export interface Props {
   fields: any;
@@ -20,10 +19,7 @@ const PersonalInformation: React.FC<Props> = ({ fields }) => {
       </InputContainer>
       <InputContainer>
         <Email field={fields.email} className="fs-mask" />
-      </InputContainer>
-      <InputContainer>
         <Phone field={fields.phoneNumber} className="fs-mask" optional={true} />
-        <Zip field={fields.zipCode} />
       </InputContainer>
     </>
   );
@@ -64,17 +60,6 @@ const Last = styled(LastNameInput)`
 `;
 
 const Phone = styled(PhoneInput)`
-  width: 50%;
-  margin-right: 10px;
-
-  @media (max-width: 767px) {
-    width: 100%;
-    margin-right: 0px;
-    margin-bottom: 16px;
-  }
-`;
-
-const Zip = styled(ZipCodeInput)`
   margin-left: 10px;
   width: 50%;
 
@@ -86,9 +71,12 @@ const Zip = styled(ZipCodeInput)`
 `;
 
 const Email = styled(EmailInput)`
-  width: 100%;
+  width: 50%;
+  margin-right: 10px;
 
   @media (max-width: 767px) {
+    width: 100%;
+    margin-right: 0px;
     margin-bottom: 16px;
   }
 `;

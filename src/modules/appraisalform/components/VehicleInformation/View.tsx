@@ -25,6 +25,7 @@ import StateInput from '../forminputs/StateInput';
 import TrimInput from '../forminputs/TrimInput';
 import VehicleOptionsGroup from '../forminputs/VehicleOptionsGroup';
 import VinFormInput from '../forminputs/VinFormInput';
+import ZipCodeInput from '../forminputs/ZipCodeInput';
 import useForm from '../useForm';
 import {
   isValidCSLicense,
@@ -608,6 +609,9 @@ const VehicleInformation: React.FC<Props> = ({ form, fields, viewModel }) => {
               />
             )}
           </InputContainer>
+          <InputContainer>
+            <ZipCodeField field={fields.zipCode} />
+          </InputContainer>
           {!isHideHowManyKeysExperiment && (
             <InputContainer>
               <NumberOfKeysInput field={fields.keysAmount} />
@@ -771,6 +775,14 @@ const ExteriorColorField = styled(ExtColorInput)`
 const VehicleOptionsField = styled(VehicleOptionsGroup)`
   width: 100%;
   padding-top: 10px;
+`;
+
+const ZipCodeField = styled(ZipCodeInput)`
+  width: 48%;
+
+  @media (max-width: 767px) {
+    width: 100%;
+  }
 `;
 
 export default VehicleInformation;

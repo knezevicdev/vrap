@@ -19,6 +19,7 @@ export class AppraisalStore {
     keysAmount: '',
     make: '',
     mileage: null,
+    zipCode: '',
     model: '',
     trim: '',
     vehicleOptions: [],
@@ -36,7 +37,6 @@ export class AppraisalStore {
     firstName: '',
     lastName: '',
     phoneNumber: '',
-    zipCode: '',
   };
   mechConditionForm: MechConditionForm = {
     additionalDetails: '',
@@ -142,6 +142,7 @@ export class AppraisalStore {
       year: data.year,
       model: data.model,
       make: data.make,
+      zipCode: data.zipCode,
     };
   }
 
@@ -184,6 +185,7 @@ export class AppraisalStore {
       trim: '',
       vehicleOptions: [],
       year: null,
+      zipCode: '',
     };
     this.vehicleHistoryForm = {
       hasAccident: '',
@@ -197,7 +199,6 @@ export class AppraisalStore {
       firstName: '',
       lastName: '',
       phoneNumber: '',
-      zipCode: '',
     };
     this.mechConditionForm = {
       additionalDetails: '',

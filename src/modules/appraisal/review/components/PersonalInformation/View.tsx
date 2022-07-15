@@ -50,12 +50,6 @@ const PersonalInformationView: React.FC<Props> = ({ viewModel, store }) => {
           )}
         </Info>
       </Row>
-      <Row>
-        <Info>
-          <Label>{viewModel.zipCode}</Label>
-          <Field>{appraisalDetail?.personalInfoForm?.zipCode}</Field>
-        </Info>
-      </Row>
     </Container>
   );
 };

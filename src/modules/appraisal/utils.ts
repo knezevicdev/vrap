@@ -20,6 +20,7 @@ function vehicleInformationData(data: any) {
     exteriorColor: data.exteriorColor,
     keysAmount: data.keysAmount,
     options: data.vehicleOptions,
+    zipCode: data.zipCode,
   };
 }
 
@@ -76,7 +77,6 @@ function personalInformationData(data: any) {
     lastName: data.lastName,
     email: data.email,
     phoneNumber: data.phoneNumber,
-    zipCode: data.zipCode,
   };
 }
 

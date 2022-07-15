@@ -6,6 +6,7 @@ export interface VehicleInfoForm {
   mileage: number | null;
   model: string;
   trim: string;
+  zipCode: string;
   vehicleOptions: string[];
   year: number | null;
 }
@@ -23,7 +24,6 @@ export interface PersonalInfoForm {
   firstName: string;
   lastName: string;
   phoneNumber: string;
-  zipCode: string;
 }
 
 export interface MechConditionForm {

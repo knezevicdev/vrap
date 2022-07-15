@@ -15,6 +15,7 @@ const formData = {
     trim: 'Utility 4D SV 2WD V6',
     vehicleOptions: ['manual', 'window'],
     year: 2016,
+    zipCode: '99999',
   },
   vehicleHistoryForm: {
     hasAccident: '',
@@ -26,7 +27,6 @@ const formData = {
     firstName: '',
     lastName: '',
     phoneNumber: '',
-    zipCode: '',
   },
   mechConditionForm: {
     additionalDetails: '',
@@ -81,6 +81,7 @@ describe('Owner Infomation Review component test', () => {
     expect(viewModel.vin).toEqual('VIN');
     expect(viewModel.trim).toEqual('Trim');
     expect(viewModel.mileage).toEqual('Mileage');
+    expect(viewModel.zipCode).toEqual('Zip Code');
     expect(viewModel.exteriorColor).toEqual('Exterior Color');
     expect(viewModel.keysAmount).toEqual('Number of Keys');
     expect(viewModel.vehicleOptions).toEqual('Options');
@@ -102,6 +103,10 @@ describe('Owner Infomation Review component test', () => {
 
   it('test get vehicle milage ', () => {
     expect(viewModel.vehicleFormInfoMileage).toEqual(999999);
+  });
+
+  it('test get vehicle Zip Code ', () => {
+    expect(viewModel.vehicleFormInfoZipCode).toEqual('99999');
   });
 
   it('test get vehicle year ', () => {

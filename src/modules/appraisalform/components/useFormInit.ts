@@ -26,6 +26,7 @@ const useAppraisalFormInit = (
       value: vehicleInfo.csTrimId || null,
       isRequired: false,
     },
+    zipCode: vehicleInfo.zipCode || '',
     mileage: vehicleInfo.mileage || null,
     exteriorColor: vehicleInfo.exteriorColor || '',
     vehicleOptions: {
@@ -120,7 +121,6 @@ const useAppraisalFormInit = (
     firstName: yourFirstName || '',
     lastName: yourLastName || '',
     email: yourEmail || '',
-    zipCode: yourInformation.zipCode || '',
     phoneNumber: {
       value: yourInformation.phoneNumber || '',
       isRequired: false,
