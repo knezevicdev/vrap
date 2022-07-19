@@ -6,7 +6,6 @@ import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css';
 import 'filepond-plugin-file-poster/dist/filepond-plugin-file-poster.css';
 
 import { datadogRum } from '@datadog/browser-rum';
-import { IdProvider } from '@radix-ui/react-id';
 import { ABSmartlyProvider } from '@vroom-web/analytics-integration';
 import { CatSDK } from '@vroom-web/cat-sdk';
 import { CommonHandler } from '@vroom-web/shared-components';
@@ -138,15 +137,13 @@ class AppraisalApp extends App {
           <AnalyticsHandlerContext.Provider value={this.analyticsHandler}>
             <CatSDKContext.Provider value={this.catSDK}>
               <RemoteConfigContext.Provider value={this.remoteConfig}>
-                <IdProvider>
-                  <ThemeProvider brand={Brand.VROOM}>
-                    <StyledComponentsThemeProvider theme={theme}>
-                      <AppProvider>
-                        <Component {...pageProps} />
-                      </AppProvider>
-                    </StyledComponentsThemeProvider>
-                  </ThemeProvider>
-                </IdProvider>
+                <ThemeProvider brand={Brand.VROOM}>
+                  <StyledComponentsThemeProvider theme={theme}>
+                    <AppProvider>
+                      <Component {...pageProps} />
+                    </AppProvider>
+                  </StyledComponentsThemeProvider>
+                </ThemeProvider>
               </RemoteConfigContext.Provider>
             </CatSDKContext.Provider>
           </AnalyticsHandlerContext.Provider>
