@@ -7,6 +7,7 @@ import DocumentUpload, {
   DocumentUploadProps,
 } from './components/DocumentUpload';
 import useHandleDelete from './hooks/useHandleDelete';
+import useHandleError from './hooks/useHandleError';
 import useHandleUpload from './hooks/useHandleUpload';
 import useVerificationDetails from './hooks/useVerificationDetails';
 import {
@@ -40,6 +41,7 @@ const VerificationDocumentsViewDetail: React.FC<Props> = ({ priceId }) => {
   const [mileage, setMileage] = useState<number | ''>('');
   const { handleUpload } = useHandleUpload(priceId);
   const { handleDelete } = useHandleDelete(priceId);
+  const { handleError } = useHandleError(priceId);
   const {
     verificationDetails,
     verificationDocuments,
@@ -67,6 +69,7 @@ const VerificationDocumentsViewDetail: React.FC<Props> = ({ priceId }) => {
     fileType,
     handleUpload: handleUpload(fileType),
     handleDelete: handleDelete(fileType),
+    handleError: handleError(fileType),
     title,
     verificationDocuments,
   });

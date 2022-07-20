@@ -1,4 +1,8 @@
-import { ActualFileObject, FilePondInitialFile } from 'filepond';
+import {
+  ActualFileObject,
+  FilePondErrorDescription,
+  FilePondInitialFile,
+} from 'filepond';
 import FilePondPluginFilePoster from 'filepond-plugin-file-poster';
 import FilePondPluginFileValidateSize from 'filepond-plugin-file-validate-size';
 import FilePondPluginFileValidateType from 'filepond-plugin-file-validate-type';
@@ -38,6 +42,7 @@ export interface DocumentUploadProps {
   fileType: DocumentFileType;
   handleUpload: (file: ActualFileObject) => Promise<boolean>;
   handleDelete: () => Promise<boolean>;
+  handleError: (e: FilePondErrorDescription) => void;
 }
 
 const DocumentUpload = ({
@@ -46,6 +51,7 @@ const DocumentUpload = ({
   fileType,
   handleUpload,
   handleDelete,
+  handleError,
 }: DocumentUploadProps): ReactElement => {
   const [showImage, setShowImage] = useState(false);
   const [files, setFiles] = useState<FilePondInitialFile[]>([]);
@@ -79,6 +85,7 @@ const DocumentUpload = ({
           labelIdle={`Choose a file or drag it here <div class="filepond--label-action"></div>`}
           labelFileLoadError="The file type is not a supported."
           maxFileSize="25MB"
+          onerror={handleError}
           labelMaxFileSizeExceeded="The uploaded file is too large."
           labelMaxFileSize="Max file size 25MB."
           imageValidateSizeMinResolution={100000}

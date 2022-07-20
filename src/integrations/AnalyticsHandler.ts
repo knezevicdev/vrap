@@ -376,10 +376,21 @@ class AnalyticsHandler extends BaseAnalyticsHandler {
     this.page(name, category);
   }
 
-  trackDocTypeUploaded(docType: string): void {
+  trackDocTypeUploaded(docType: string, priceId: string, fileId: string): void {
     const event = `${docType} uploaded`;
     const category = 'verification';
-    const properties = { category };
+    const properties = { category, priceId, fileId, docType };
+    this.track(event, properties);
+  }
+
+  trackDocTypeUploadError(
+    docType: string,
+    priceId: string,
+    errorMessage: string
+  ): void {
+    const event = `${docType} Doc Upload Failed`;
+    const category = 'verification';
+    const properties = { category, priceId, errorMessage, docType };
     this.track(event, properties);
   }
 }
