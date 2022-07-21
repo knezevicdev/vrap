@@ -5,4 +5,6 @@ export interface OfferDetail {
   trim: string;
   year: number;
   miles: number;
+  offerExpiration: string;
+  vin: string;
 }

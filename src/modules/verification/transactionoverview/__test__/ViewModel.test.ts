@@ -34,6 +34,8 @@ describe('Review component test', () => {
       trim: 'Utility 4D SV 2WD V6',
       year: 2016,
       miles: 999999,
+      offerExpiration: '2021-09-03T00:00:00Z',
+      vin: '5N1AZ2MG9GN133457',
     };
 
     expect(JSON.stringify(stores.offer.offerDetail)).toEqual(
@@ -51,6 +53,8 @@ describe('Review component test', () => {
       trim: '',
       year: 0,
       miles: 0,
+      offerExpiration: '',
+      vin: '',
     };
 
     expect(JSON.stringify(stores.offer.offerDetail)).toEqual(
