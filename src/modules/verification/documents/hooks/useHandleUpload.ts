@@ -36,10 +36,12 @@ const useHandleUpload = (priceId: string): UseHandleUpload => {
         },
         store.verification.lastFourSSN
       );
-      analyticsHandler.current.trackDocTypeUploaded(type);
+      analyticsHandler.current.trackDocTypeUploaded(type, priceId, fileId);
       return true;
     } catch (e) {
-      console.log(e);
+      let message = 'Document upload failed';
+      if (e instanceof Error) message = e.message;
+      analyticsHandler.current.trackDocTypeUploadError(type, priceId, message);
       return false;
     }
   };
