@@ -11,6 +11,8 @@ const defaultOfferData = {
   trim: '',
   year: 0,
   miles: 0,
+  offerExpiration: '',
+  vin: '',
 };
 
 export default class TransactionOverviewViewModel {
@@ -33,7 +35,10 @@ export default class TransactionOverviewViewModel {
         trim: offerDetail.Trim__c,
         year: offerDetail.Year__c,
         miles: offerDetail.miles,
+        offerExpiration: offerDetail.Good_Until__c,
+        vin: offerDetail.VIN__c,
       };
+
       this.store.offer.getOfferDetail(offerDetailData);
       this.store.offer.setLoading(false);
     } catch (e) {

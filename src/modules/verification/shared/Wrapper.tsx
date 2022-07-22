@@ -4,6 +4,7 @@ import { NextPageContext } from 'next';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 
+import OfferExpiredDialog from '../Dialog/OfferExpiredDialog';
 import {
   Contents,
   HeaderContainer,
@@ -34,11 +35,35 @@ const VerificationWrapper: React.FC<Props> = ({ priceId, step, children }) => {
   const router = useRouter();
 
   const [isLoading, setLoading] = useState(true);
+  const [isOfferExpired, setIsOfferExpired] = useState(false);
+  const vin = store.offer?.offerDetail?.vin || '';
 
   useEffect(() => {
     store.stepper.setStep(step);
     store.verification.setPriceId(priceId);
   }, []);
+
+  useEffect(() => {
+    showOfferExpiredModal();
+  }, [store.offer.offerDetail]);
+
+  useEffect(
+    () => () => {
+      document.body.style.overflow = '';
+    },
+    []
+  );
+
+  const showOfferExpiredModal = () => {
+    const offerExpiration = store.offer?.offerDetail?.offerExpiration;
+    const offerExpirationTime =
+      offerExpiration && new Date(offerExpiration).getTime();
+
+    if (offerExpirationTime && offerExpirationTime < new Date().getTime()) {
+      setIsOfferExpired(true);
+      document.body.style.overflow = 'hidden';
+    }
+  };
 
   const isStepperExp = store.absmart.isInExperiment(
     'ac-appraisal-stepper-verification'
@@ -92,6 +117,7 @@ const VerificationWrapper: React.FC<Props> = ({ priceId, step, children }) => {
               <TransactionOverview priceId={priceId} />
             </OverviewContainer>
           </VerificationContainer>
+          {isOfferExpired && <OfferExpiredDialog vin={vin} />}
         </Contents>
       </>
       <Footer />
