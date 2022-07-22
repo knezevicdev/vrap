@@ -1,6 +1,7 @@
 import { addStyleForMobile, Button } from '@vroom-web/ui-lib';
 import { observer } from 'mobx-react';
 import getConfig from 'next/config';
+import { useRouter } from 'next/router';
 import React from 'react';
 import styled from 'styled-components';
 
@@ -90,8 +91,7 @@ const InvalidStateDesc = styled.div`
   margin-top: 30px;
 `;
 
-const UpdateStateCTA = styled(Button.Primary)`
-  width: 200px;
+const BrowseInventoryCTA = styled(Button.Primary)`
   display: flex;
   margin: 25px auto 15px;
   justify-content: center;
@@ -104,9 +104,13 @@ interface Props {
   closeModalHandler: any;
 }
 const DialogView: React.FC<Props> = ({ state, closeModalHandler }) => {
+  const router = useRouter();
+
   const hideInvalidStateDialog = (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault();
     closeModalHandler();
+
+    router.push({ pathname: '/cars' });
   };
 
   return (
@@ -122,9 +126,9 @@ const DialogView: React.FC<Props> = ({ state, closeModalHandler }) => {
             {lang.desc(state)}
             &nbsp;
           </InvalidStateDesc>
-          <UpdateStateCTA onClick={hideInvalidStateDialog}>
-            {lang.updateState}
-          </UpdateStateCTA>
+          <BrowseInventoryCTA onClick={hideInvalidStateDialog}>
+            {lang.browseInventory}
+          </BrowseInventoryCTA>
         </InvalidStateContent>
       </Modal>
     </Container>

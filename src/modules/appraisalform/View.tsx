@@ -164,6 +164,10 @@ const AppraisalForm: React.FC<Props> = ({ viewModel }) => {
     }
   };
 
+  useEffect(() => {
+    document.body.style.overflow = showInvalidStateDialog ? 'hidden' : '';
+  }, [showInvalidStateDialog]);
+
   const sections = [
     {
       component: VehicleInformation,
