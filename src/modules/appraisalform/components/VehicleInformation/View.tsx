@@ -7,8 +7,14 @@ import {
 } from '@vroom-web/ui-lib';
 import { Button } from '@vroom-web/ui-lib';
 import { useRouter } from 'next/router';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
+import ReCAPTCHA from 'react-google-recaptcha';
 import styled from 'styled-components';
+
+const { publicRuntimeConfig } = getConfig();
+const { NEXT_PUBLIC_RECAPTCHA_SITE_KEY } = publicRuntimeConfig;
+
+import getConfig from 'next/config';
 
 import {
   VehicleInfoLeaseCopy,
@@ -40,9 +46,15 @@ export interface Props {
   form: any;
   fields: any;
   viewModel: VehicleInfoViewModel;
+  hideButtonCallback: (hide: boolean) => void;
 }
 
-const VehicleInformation: React.FC<Props> = ({ form, fields, viewModel }) => {
+const VehicleInformation: React.FC<Props> = ({
+  form,
+  fields,
+  viewModel,
+  hideButtonCallback,
+}) => {
   const defaultColors = [
     { label: 'Beige', value: 'Beige' },
     { label: 'Black', value: 'Black' },
@@ -76,6 +88,7 @@ const VehicleInformation: React.FC<Props> = ({ form, fields, viewModel }) => {
   const [options, setOptions] = useState([] as any[]);
   const [extColors, setExtColors] = useState(defaultColors);
   const [selectedExtColor, setSelectedExtColor] = useState(null as any);
+  const [showSubmitError, setShowSubmitError] = useState(false);
 
   const [showOptionsGroup, setShowOptionsGroup] = useState(options.length > 0);
 
@@ -96,6 +109,8 @@ const VehicleInformation: React.FC<Props> = ({ form, fields, viewModel }) => {
     isFormValid,
   } = licenseForm;
 
+  const recaptchaRef = useRef<any>();
+
   const resetLocalState = () => {
     setVinDecoded(false);
     setYear(null);
@@ -107,6 +122,10 @@ const VehicleInformation: React.FC<Props> = ({ form, fields, viewModel }) => {
     setSelectedExtColor(null);
     setShowOptionsGroup(false);
   };
+
+  useEffect(() => {
+    hideButtonCallback(true);
+  }, []);
 
   useEffect(() => {
     const keysAmount = fields.keysAmount;
@@ -133,7 +152,39 @@ const VehicleInformation: React.FC<Props> = ({ form, fields, viewModel }) => {
     setShowLicense(validLicense);
 
     if (validVin) {
-      handleDecodeVin(vehicleId);
+      if (isEditMode) {
+        const altsFromStore = viewModel.vehicleDecodeData.alternatives;
+        let trimTransform;
+        if (altsFromStore.length) {
+          trimTransform = altsFromStore.map((t: any) => {
+            return {
+              ...t,
+              label: t.trim,
+              value: t.trim,
+              trimId: t.id,
+            };
+          });
+        } else if (fields.trim.value !== '') {
+          trimTransform = [
+            {
+              label: fields.trim.value,
+              value: fields.trim.value,
+            },
+          ];
+        }
+        setTrims(trimTransform);
+        setOptions([...viewModel.vehicleDecodeData.features]);
+        setShowOptionsGroup(viewModel.vehicleDecodeData.features.length > 0);
+        setVinDecoded(true);
+        setYear(viewModel.vehicleDecodeData.year);
+        setMake(viewModel.vehicleDecodeData.make);
+        setModel(viewModel.vehicleDecodeData.model);
+      }
+      const { vin } = fields;
+      vin.onChange({
+        ...vin,
+        value: vehicleId.toUpperCase(),
+      });
     } else if (validLicense) {
       const vehicleQueryUrl = vehicleId.split('-');
       const errorMessage = VehicleInfoText.licenseError;
@@ -143,7 +194,6 @@ const VehicleInformation: React.FC<Props> = ({ form, fields, viewModel }) => {
         errorMessage
       );
       licenseForm.updateMultipleFields(fieldsToUpdate);
-      handleDecodeLicense(vehicleId);
     } else {
       resetLocalState();
     }
@@ -184,6 +234,8 @@ const VehicleInformation: React.FC<Props> = ({ form, fields, viewModel }) => {
         form.updateMultipleFields(fieldsToUpdate);
       }
     }
+
+    hideButtonCallback(!isEditMode && !vinDecoded);
   }, [vinDecoded, fields.vin.value]);
 
   useEffect(() => {
@@ -213,48 +265,20 @@ const VehicleInformation: React.FC<Props> = ({ form, fields, viewModel }) => {
     }
   }, [trims.length, fields.vin.value, vinDecoded]);
 
-  const handleDecodeVin = (vinToDecode: string) => {
+  const handleDecodeVin = (vinToDecode: string, captchaToken: string) => {
     const validVin =
       vinToDecode.includes(VROOM_VIN_SUBSTRING) || isValidVin(vinToDecode);
     const errorMessage = VehicleInfoText.vinError;
     const { vin } = fields;
-
     resetLocalState();
 
     setVinLoader(true);
     setShowVin(true);
     setShowLicense(false);
 
-    if (isEditMode) {
-      const altsFromStore = viewModel.vehicleDecodeData.alternatives;
-      let trimTransform;
-      if (altsFromStore.length) {
-        trimTransform = altsFromStore.map((t: any) => {
-          return {
-            ...t,
-            label: t.trim,
-            value: t.trim,
-            trimId: t.id,
-          };
-        });
-      } else if (fields.trim.value !== '') {
-        trimTransform = [
-          {
-            label: fields.trim.value,
-            value: fields.trim.value,
-          },
-        ];
-      }
-      setTrims(trimTransform);
-      setOptions([...viewModel.vehicleDecodeData.features]);
-      setShowOptionsGroup(viewModel.vehicleDecodeData.features.length > 0);
-      setVinDecoded(true);
-      setYear(viewModel.vehicleDecodeData.year);
-      setMake(viewModel.vehicleDecodeData.make);
-      setModel(viewModel.vehicleDecodeData.model);
-    } else if (validVin) {
+    if (validVin) {
       viewModel
-        .getVinDecode(vinToDecode)
+        .getVinDecode(vinToDecode, captchaToken)
         .then((response) => {
           const {
             year,
@@ -277,7 +301,6 @@ const VehicleInformation: React.FC<Props> = ({ form, fields, viewModel }) => {
           });
 
           if (isError) {
-            setVinLoader(false);
             return;
           }
 
@@ -322,6 +345,9 @@ const VehicleInformation: React.FC<Props> = ({ form, fields, viewModel }) => {
         })
         .catch(() => {
           resetLocalState();
+        })
+        .finally(() => {
+          setVinLoader(false);
         });
     } else {
       vin.onChange({
@@ -331,8 +357,8 @@ const VehicleInformation: React.FC<Props> = ({ form, fields, viewModel }) => {
         errorMessage,
       });
       resetLocalState();
+      setVinLoader(false);
     }
-    setVinLoader(false);
   };
 
   const updateField = (
@@ -344,7 +370,6 @@ const VehicleInformation: React.FC<Props> = ({ form, fields, viewModel }) => {
       licensePlate: {
         ...licenseForm.fields.licensePlate,
         value: license,
-        error: true,
         errorMessage,
       },
       state: {
@@ -355,7 +380,7 @@ const VehicleInformation: React.FC<Props> = ({ form, fields, viewModel }) => {
     return fieldsToUpdate;
   };
 
-  const handleDecodeLicense = (lpToDecode: string) => {
+  const handleDecodeLicense = (lpToDecode: string, captchaToken: string) => {
     const { vin } = fields;
     const errorMessage = VehicleInfoText.licenseError;
 
@@ -365,7 +390,7 @@ const VehicleInformation: React.FC<Props> = ({ form, fields, viewModel }) => {
     setLpLoader(true);
 
     viewModel
-      .getVinDecode(lpToDecode)
+      .getVinDecode(lpToDecode, captchaToken)
       .then((response) => {
         const {
           year,
@@ -381,8 +406,14 @@ const VehicleInformation: React.FC<Props> = ({ form, fields, viewModel }) => {
         const trimsArr = [];
         const isError = Object.hasOwnProperty.bind(response)('error');
         if (isError) {
-          setVinLoader(false);
           setLpLoader(false);
+          licenseForm.updateMultipleFields({
+            licensePlate: {
+              ...licenseForm.fields.licensePlate,
+              error: true,
+              errorMessage,
+            },
+          });
           return;
         } else {
           setShowVin(true);
@@ -433,16 +464,29 @@ const VehicleInformation: React.FC<Props> = ({ form, fields, viewModel }) => {
         setTrims([...trimsArr]);
         setShowOptionsGroup(features.length > 0);
         setVinDecoded(true);
-
-        setVinLoader(false);
-        setLpLoader(false);
       })
       .catch((e) => {
         console.log(e);
         resetLocalState();
+      })
+      .finally(() => {
         setVinLoader(false);
         setLpLoader(false);
       });
+  };
+
+  const isSubmitDisabled = (): boolean => {
+    const vin = fields.vin.value;
+    const validVin = vin.includes(VROOM_VIN_SUBSTRING) || isValidVin(vin);
+
+    if (showVin) {
+      return !validVin;
+    }
+
+    if (showLicense) {
+      return !licenseForm.isFormValid;
+    }
+    return !(validVin || licenseForm.isFormValid);
   };
 
   const handleTrimChange = (value: any, error: boolean) => {
@@ -518,21 +562,83 @@ const VehicleInformation: React.FC<Props> = ({ form, fields, viewModel }) => {
     viewModel.trackMileageChange();
   };
 
-  const handleOnKeyPressEnter = (e: any) => {
+  const handleOnKeyPressEnter = async (e: any) => {
     if (e.key === 'Enter' && isFormValid) {
-      handleLicenseStateSubmit();
+      await handleVehicleSubmit();
     }
   };
 
-  const handleLicenseStateSubmit = () => {
-    const licenseForDecode = `${state.value}-${lettersAndNumbersOnly(
-      licensePlate.value
-    )}`;
-    router.push({
-      pathname: '/sell/vehicleInformation',
-      query: { vehicle: licenseForDecode },
+  const handleLicenseStateSubmit = async (license = '') => {
+    const licenseForDecode =
+      license || `${state.value}-${lettersAndNumbersOnly(licensePlate.value)}`;
+
+    const token = await getCaptchaToken();
+
+    if (token) {
+      router.push({
+        pathname: '/sell/vehicleInformation',
+        query: { vehicle: licenseForDecode },
+      });
+      handleDecodeLicense(licenseForDecode, token);
+    } else {
+      setShowSubmitError(true);
+      setVinLoader(false);
+    }
+  };
+
+  const handleVinKeyPressSubmit = () => {
+    if (!isSubmitDisabled()) {
+      handleVehicleSubmit(fields.vin.value);
+    }
+  };
+
+  const handleLicensePlateKeyPressSubmit = () => {
+    if (!isSubmitDisabled()) {
+      handleVehicleSubmit(fields.vin.value);
+    }
+  };
+
+  const handleVehicleSubmit = async (vehicle = '') => {
+    const isVin =
+      /^[A-HJ-NPR-Za-hj-npr-z\d]{8}[\dX][A-HJ-NPR-Za-hj-npr-z\d]{2}\d{6}$/.test(
+        vehicle
+      ) || fields.vin.value;
+
+    setShowSubmitError(false);
+
+    if (isVin) {
+      await handleVinSubmit();
+    } else {
+      await handleLicenseStateSubmit();
+    }
+  };
+
+  const handleVinChange = async (vin: string) => {
+    fields.vin.onChange({
+      ...fields.vin,
+      value: vin,
     });
-    handleDecodeLicense(licenseForDecode);
+    setVinDecoded(false);
+  };
+
+  const handleVinSubmit = async (vin = '') => {
+    const token = await getCaptchaToken();
+    if (token) {
+      handleDecodeVin(vin || fields.vin.value, token);
+    } else {
+      setShowSubmitError(true);
+      setVinLoader(false);
+    }
+  };
+
+  const getCaptchaToken = async () => {
+    try {
+      return await recaptchaRef.current.executeAsync();
+    } catch (e) {
+      return null;
+    } finally {
+      recaptchaRef.current.reset();
+    }
   };
 
   return (
@@ -540,14 +646,17 @@ const VehicleInformation: React.FC<Props> = ({ form, fields, viewModel }) => {
       <LeaseCopy>{VehicleInfoLeaseCopy}</LeaseCopy>
       <InputContainer>
         {showVin && (
-          <VinField>
-            <VinFormInput
-              field={fields.vin}
-              vinLoader={vinLoader}
-              handleUpdate={handleDecodeVin}
-              disabled={isEditMode}
-            />
-          </VinField>
+          <>
+            <VinField>
+              <VinFormInput
+                field={fields.vin}
+                handleUpdate={handleVinChange}
+                disabled={isEditMode}
+                onKeyPressEnter={handleVinKeyPressSubmit}
+              />
+            </VinField>
+            {vinLoader && <Loader isLoading={vinLoader} />}
+          </>
         )}
         {showLicense && (
           <LicenseContainer>
@@ -555,28 +664,23 @@ const VehicleInformation: React.FC<Props> = ({ form, fields, viewModel }) => {
               <License>
                 <LicenseInputContainer
                   field={licensePlate}
-                  onKeyPressEnter={handleOnKeyPressEnter}
+                  onKeyPressEnter={handleLicensePlateKeyPressSubmit}
                 />
                 {lpLoader && <Loader isLoading={lpLoader} />}
               </License>
-              <States field={state} onKeyPressEnter={handleOnKeyPressEnter} />
+              <States
+                field={state}
+                onKeyPressEnter={handleLicensePlateKeyPressSubmit}
+              />
             </LicenseField>
-            <SubmitButton
-              tabIndex={0}
-              onKeyPress={handleOnKeyPressEnter}
-              onClick={handleLicenseStateSubmit}
-              disabled={!isFormValid}
-              data-qa={VehicleInfoText.licenseButtonDataQa}
-            >
-              {VehicleInfoText.licenseButton}
-            </SubmitButton>
           </LicenseContainer>
         )}
         {!showVin && !showLicense && (
           <AppraisalLicenseToVin
             vin={fields.vin}
-            vinLoader={vinLoader}
-            handleUpdate={handleDecodeVin}
+            licenseForm={licenseForm}
+            onVinKeyPressEnter={handleVinKeyPressSubmit}
+            onLicensePlateKeyPressEnter={handleLicensePlateKeyPressSubmit}
           />
         )}
         {vinDecoded && !vinLoader && (
@@ -585,6 +689,29 @@ const VehicleInformation: React.FC<Props> = ({ form, fields, viewModel }) => {
           </YearMakeModel>
         )}
       </InputContainer>
+      {!isEditMode && !vinDecoded && (
+        <>
+          <SubmitButton
+            tabIndex={0}
+            onKeyPress={handleOnKeyPressEnter}
+            onClick={handleVehicleSubmit}
+            disabled={isSubmitDisabled()}
+            data-qa={VehicleInfoText.licenseButtonDataQa}
+          >
+            {VehicleInfoText.licenseButton}
+          </SubmitButton>
+          {showSubmitError && (
+            <SubmitError>Something went wrong. Please, try again.</SubmitError>
+          )}
+        </>
+      )}
+      {!isEditMode && !vinDecoded && (
+        <ReCAPTCHA
+          ref={recaptchaRef}
+          size="invisible"
+          sitekey={NEXT_PUBLIC_RECAPTCHA_SITE_KEY}
+        />
+      )}
       {vinDecoded && (
         <>
           {trims.length > 0 && (
@@ -723,11 +850,11 @@ const SubmitButton = styled(({ ...restProps }) => (
   <Button.Primary {...restProps} />
 ))`
   margin-top: 10px;
-  width: 50%;
+  width: 48%;
 
-  ${addStyleForMobile(`
+  @media (max-width: 767px) {
     width: 100%;
-  `)}
+  }
 `;
 
 const YearMakeModel = styled.div`
@@ -745,6 +872,12 @@ const YearMakeModel = styled.div`
     width: 100%;
     margin-bottom: 21px;
   }
+`;
+
+const SubmitError = styled.span`
+  color: #e7131a;
+  display: block;
+  margin-top: 6px;
 `;
 
 const TrimField = styled(TrimInput)`

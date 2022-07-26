@@ -12,25 +12,28 @@ import VinFormInput from './VinFormInput';
 
 interface Props {
   vin: string;
-  vinLoader: boolean;
-  handleUpdate: (vin: string) => void;
+  licenseForm: any;
+  onLicensePlateKeyPressEnter: () => void;
+  onVinKeyPressEnter: () => void;
   active?: number;
 }
 
 const AppraisalLicenseToVin: React.FC<Props> = ({
   vin,
-  vinLoader,
-  handleUpdate,
+  licenseForm,
+  onVinKeyPressEnter,
+  onLicensePlateKeyPressEnter,
   active,
 }) => {
   const tabSections = [
     {
       component: LicenseStateInput,
+      props: { licenseForm, onKeyPressEnter: onLicensePlateKeyPressEnter },
       title: licensePlateTabText,
     },
     {
       component: VinFormInput,
-      props: { field: vin, vinLoader, handleUpdate },
+      props: { field: vin, onKeyPressEnter: onVinKeyPressEnter },
       title: vinTabText,
     },
   ];
