@@ -660,7 +660,9 @@ const VehicleInformation: React.FC<Props> = ({
                 onKeyPressEnter={handleVinKeyPressSubmit}
               />
             </VinField>
-            {vinLoader && <Loader isLoading={vinLoader} />}
+            <LoaderContainer>
+              {vinLoader && <Loader isLoading={vinLoader} />}
+            </LoaderContainer>
           </>
         )}
         {showLicense && (
@@ -671,12 +673,14 @@ const VehicleInformation: React.FC<Props> = ({
                   field={licensePlate}
                   onKeyPressEnter={handleLicensePlateKeyPressSubmit}
                 />
-                {lpLoader && <Loader isLoading={lpLoader} />}
               </License>
               <States
                 field={state}
                 onKeyPressEnter={handleLicensePlateKeyPressSubmit}
               />
+              <LoaderContainer>
+                {lpLoader && <Loader isLoading={lpLoader} />}
+              </LoaderContainer>
             </LicenseField>
           </LicenseContainer>
         )}
@@ -825,6 +829,10 @@ const LicenseInputContainer = styled(LicenseInput)`
   ${addStyleForTablet(`
     width: 70%;
   `)}
+
+  ${addStyleForMobile(`
+    margin-right: 0 !important;
+  `)}
 `;
 
 const States = styled(StateInput)`
@@ -849,6 +857,9 @@ const States = styled(StateInput)`
 const Loader = styled(CircleLoader)`
   position: relative;
   margin: -5px 5px 5px 10px;
+  @media (max-width: 767px) {
+    top: 0;
+  }
 `;
 
 const SubmitButton = styled(({ ...restProps }) => (
@@ -920,6 +931,15 @@ const ZipCodeField = styled(ZipCodeInput)`
 
   @media (max-width: 767px) {
     width: 100%;
+  }
+`;
+
+const LoaderContainer = styled.span`
+  display: inline;
+  @media (max-width: 767px) {
+    display: block;
+    text-align: center;
+    margin-top: 6px;
   }
 `;
 

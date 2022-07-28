@@ -268,44 +268,6 @@ interface Carstory {
   year: number;
 }
 
-export interface LicencePlateToVinResp {
-  vehicleInfo: {
-    bedStyle: string | null;
-    bodyStyle: string;
-    cabStyle: string | null;
-    condition: string | null;
-    conditionTimestamp: null;
-    confidenceScore4: string;
-    doors: 4;
-    driveType: string;
-    engine: string;
-    engineDescription: string;
-    engineDisplacement: string;
-    exteriorColor: string | null;
-    features: string[];
-    fuel: string;
-    generation: number | null;
-    interiorColor: string | null;
-    make: string;
-    mileage: number;
-    mileageTimestamp: number | null;
-    model: string;
-    mpg: number;
-    mpgCity: number;
-    mpgHighway: number;
-    subGeneration: number;
-    subModel: string | null;
-    subTrim: string | null;
-    transmission: string;
-    transmissionDetails: string;
-    trim: string;
-    vin: string;
-    wheelbase: string;
-    year: number;
-  };
-  dataProviderInfo: Carstory | null;
-}
-
 export interface NewVinDecodeResp {
   vehicleInfo: {
     bedStyle: string | null;
@@ -341,33 +303,22 @@ export interface NewVinDecodeResp {
     wheelbase: string;
     year: number;
   };
-  dataProviderInfo: Carstory | null;
+  dataProviderInfo?: { carstory: Carstory } | null;
 }
 
-export interface DisambiguationResp {
+export interface DetailsResponse {
   vehicleInfo: {
-    bodyStyle: string;
-    doors: number;
-    driveType: string;
-    engine: string;
-    engineDescription: string;
-    engineDisplacement: string;
-    features: {
-      name: string;
-      price: number;
-      selected: boolean;
-    }[];
-    fuel: string;
-    generation: number;
+    exteriorColor: string;
     make: string;
-    mileage: number;
     model: string;
-    subGeneration: number;
-    transmission: string;
+    subTrim: string | null;
     trim: string;
+    vin: string;
     year: number;
   };
-  dataProviderInfo: Carstory;
+  dataProviderInfo: {
+    carstory?: Pick<Carstory, 'alternatives' | 'features' | 'id' | 'style'>;
+  } | null;
 }
 
 export interface MileageCheckResp {

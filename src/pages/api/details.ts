@@ -3,6 +3,8 @@ import getConfig from 'next/config';
 const { serverRuntimeConfig } = getConfig();
 import axios from 'axios';
 
+import { DetailsResponse, NewVinDecodeResp } from '../../interfaces.d';
+
 export default async (
   req: NextApiRequest,
   res: NextApiResponse
@@ -15,7 +17,8 @@ export default async (
 
       if (captchaResponse.success) {
         const { data: details } = await getDetails(vehicleId);
-        res.status(200).json(details);
+        const response = mapDetailsToResponse(details);
+        res.status(200).json(response);
       } else {
         res.status(400).json({
           status: 'error',
@@ -47,4 +50,33 @@ async function getDetails(vehicleId: string) {
   return await axios.get(
     `${serverRuntimeConfig.NEXT_PUBLIC_VROOM_URL}/suyc-api/v1/details/${vehicleId}`
   );
+}
+
+function mapDetailsToResponse(details: NewVinDecodeResp): DetailsResponse {
+  const { dataProviderInfo, vehicleInfo } = details;
+  const response: DetailsResponse = {
+    vehicleInfo: {
+      exteriorColor: vehicleInfo.exteriorColor,
+      make: vehicleInfo.make,
+      model: vehicleInfo.model,
+      subTrim: vehicleInfo.subTrim,
+      trim: vehicleInfo.trim,
+      vin: vehicleInfo.vin,
+      year: vehicleInfo.year,
+    },
+    dataProviderInfo: {},
+  };
+
+  if (dataProviderInfo) {
+    response.dataProviderInfo = {
+      carstory: {
+        alternatives: dataProviderInfo?.carstory.alternatives || [],
+        features: dataProviderInfo?.carstory.features || [],
+        id: dataProviderInfo?.carstory.id || '',
+        style: dataProviderInfo?.carstory.style || '',
+      },
+    };
+  }
+
+  return response;
 }
