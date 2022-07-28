@@ -3,19 +3,22 @@ import getConfig from 'next/config';
 const { serverRuntimeConfig } = getConfig();
 import axios from 'axios';
 
+import { AppraisalPayload } from '../../interfaces.d';
+
 export default async (
   req: NextApiRequest,
   res: NextApiResponse
 ): Promise<void> => {
   if (req.method === 'POST') {
-    const { token, vehicleId } = req.body;
+    const { payload, token } = req.body;
 
     try {
       const { data: captchaResponse } = await verifyReCaptcha(token);
 
       if (captchaResponse.success) {
-        const { data: details } = await getDetails(vehicleId);
-        res.status(200).json(details);
+        const { data } = await postAppraisal(payload);
+
+        res.status(200).json(data);
       } else {
         res.status(400).json({
           status: 'error',
@@ -43,8 +46,9 @@ async function verifyReCaptcha(token: string) {
   );
 }
 
-async function getDetails(vehicleId: string) {
-  return await axios.get(
-    `${serverRuntimeConfig.NEXT_PUBLIC_VROOM_URL}/suyc-api/v1/details/${vehicleId}`
+async function postAppraisal(payload: AppraisalPayload) {
+  return await axios.post(
+    `${serverRuntimeConfig.NEXT_PUBLIC_VROOM_URL}/suyc-api/v1/acquisition/appraisal`,
+    { payload }
   );
 }

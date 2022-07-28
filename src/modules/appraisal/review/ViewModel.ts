@@ -57,7 +57,7 @@ export default class AppraisalReviewModel {
     this._analyticsHandler.trackAppraisalReviewViewed();
   }
 
-  async submitAppraisal(): Promise<void> {
+  async submitAppraisal(token: string): Promise<void> {
     try {
       this.setShowReviewError(false);
 
@@ -86,7 +86,7 @@ export default class AppraisalReviewModel {
         console.log(JSON.stringify(err));
       }
 
-      const resp = await postAppraisalReview(requestPayload);
+      const resp = await postAppraisalReview(requestPayload, token);
       if (isErrorResponse(resp)) throw resp;
       const returnData: AppraisalRespData = resp.data;
       this.appraisalStore.clearAppraisal();
