@@ -479,6 +479,10 @@ const VehicleInformation: React.FC<Props> = ({
     const vin = fields.vin.value;
     const validVin = vin.includes(VROOM_VIN_SUBSTRING) || isValidVin(vin);
 
+    if (vinLoader || lpLoader) {
+      return true;
+    }
+
     if (showVin) {
       return !validVin;
     }
@@ -486,6 +490,7 @@ const VehicleInformation: React.FC<Props> = ({
     if (showLicense) {
       return !licenseForm.isFormValid;
     }
+
     return !(validVin || licenseForm.isFormValid);
   };
 

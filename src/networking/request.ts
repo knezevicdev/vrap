@@ -236,10 +236,11 @@ export const handleLicenseToVinApi = async (
 };
 
 export const postAppraisalReview = async (
-  data: any
+  data: any,
+  captchaToken: string
 ): Promise<Response<AppraisalResp>> => {
   const appraisalRequestScore = checkAppraisalPayload(data);
-  const url = `${VROOM_URL}/suyc-api/v1/acquisition/appraisal`;
+  const url = `${VROOM_URL}/appraisal/api/appraisal`;
 
   if (appraisalRequestScore >= 3) {
     const goodUntil = new Date();
@@ -248,6 +249,7 @@ export const postAppraisalReview = async (
   } else {
     const payload = {
       payload: data,
+      token: captchaToken,
     };
 
     return await client.httpRequest({
@@ -263,7 +265,7 @@ export const getCarstoryVinDecode = async (
   vehicleId: string,
   captchaToken: string
 ): Promise<any> => {
-  const url = `/appraisal/api/details`;
+  const url = `${VROOM_URL}/appraisal/api/details`;
   return await client.httpRequest({
     method: 'post',
     url,
