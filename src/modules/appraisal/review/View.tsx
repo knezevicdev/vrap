@@ -50,14 +50,13 @@ const AppraisalReviewViewDetail: React.FC<Props> = ({ viewModel }) => {
   }
 
   const handleSubmit = async (): Promise<void> => {
-    setIsLoading(true);
     const token = await getCaptchaToken();
     if (token) {
+      setIsLoading(true);
       viewModel.submitAppraisal(token).finally(() => {
         setIsLoading(false);
       });
     } else {
-      setIsLoading(false);
       viewModel.setShowReviewError(true);
     }
   };
