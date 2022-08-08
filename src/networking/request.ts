@@ -433,3 +433,11 @@ export const deleteVerificationFile = async (
     },
   });
 };
+
+export const getZipCodeValidation = async (zipCode: string): Promise<any> => {
+  const url = `${VROOM_URL}/appraisal/api/validation/${zipCode}`;
+  return await client.httpRequest({
+    method: 'get',
+    url,
+  });
+};

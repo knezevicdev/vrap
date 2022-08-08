@@ -67,15 +67,7 @@ export function getLicenseErrors(license: string): string | null {
 }
 
 export function isValidZipCode(zipCode: number): boolean {
-  if (zipCode == null) {
-    return false;
-  }
-
-  const length = zipCode.toString().length;
-  if (length !== 5) {
-    return false;
-  }
-  return true;
+  return !!zipCode && /^\d{5}$/.test(zipCode.toString());
 }
 
 export function getStateFromZip(zipCode: string): string {
