@@ -15,7 +15,7 @@ interface Props {
   className?: string;
 }
 
-const ZipCodeInput: React.FC<Props> = ({ field, className }) => {
+const VerificationZipCodeInput: React.FC<Props> = ({ field, className }) => {
   const { value, onChange } = field;
   const number = numbersOnlyString(value);
   const zip = displayZipCode(number);
@@ -40,7 +40,7 @@ const ZipCodeInput: React.FC<Props> = ({ field, className }) => {
   };
 
   return (
-    <>
+    <ZipCodeContainer>
       <Input
         className={className}
         field={{
@@ -52,27 +52,19 @@ const ZipCodeInput: React.FC<Props> = ({ field, className }) => {
           maxlength: '5',
         }}
       />
-      {isLoading && (
-        <LoaderContainer>
-          <Loader isLoading={isLoading} />
-        </LoaderContainer>
-      )}
-    </>
+      {isLoading && <Loader isLoading={isLoading} />}
+    </ZipCodeContainer>
   );
 };
 
 const Loader = styled(CircleLoader)`
+  position: absolute;
+  top: 32px;
+  right: -30px;
+`;
+
+const ZipCodeContainer = styled.div`
   position: relative;
-  margin: -5px 5px 5px 10px;
-  @media (max-width: 768px) {
-    top: 5px;
-  }
 `;
 
-const LoaderContainer = styled.div`
-  @media (max-width: 768px) {
-    text-align: center;
-  }
-`;
-
-export default ZipCodeInput;
+export default VerificationZipCodeInput;

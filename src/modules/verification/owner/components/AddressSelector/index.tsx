@@ -11,7 +11,7 @@ import {
   UseForm,
 } from 'src/modules/appraisalform/components/componentInterfaces.d';
 import StateInput from 'src/modules/appraisalform/components/forminputs/StateInput';
-import ZipCodeInput from 'src/modules/appraisalform/components/forminputs/ZipCodeInput';
+import VerificationZipCodeInput from 'src/modules/appraisalform/components/forminputs/VerificationZipCodeInput';
 import Input from 'src/modules/appraisalform/components/Input';
 import { Col, Row } from 'src/styled/grid';
 
@@ -119,7 +119,7 @@ const AddressSelector = ({ fields, form, fieldMap }: Props): ReactElement => {
         <StateInput field={fields[fieldMap.state]} onKeyPressEnter={noop} />
       </Col>
       <Col size={1 / 2}>
-        <ZipCodeInput field={fields[fieldMap.zip]} />
+        <VerificationZipCodeInput field={fields[fieldMap.zip]} />
       </Col>
     </Row>
   );
