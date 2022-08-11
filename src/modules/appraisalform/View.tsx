@@ -11,7 +11,6 @@ import {
   PersonalInfoText,
   ReviewText,
   SaveText,
-  SellFormTitleText,
   VehicleHistoryText,
   VehicleInfoText,
 } from './AppraisalForm.language';
@@ -432,7 +431,7 @@ const AppraisalForm: React.FC<Props> = ({ viewModel }) => {
   return (
     <AppraisalFormContainer data-qa="AppraisalFormPage">
       <MultiStepForm
-        formTitle={SellFormTitleText}
+        formTitle={viewModel.titleText}
         sections={sections}
         onDone={onSubmit}
         onNext={onNext}

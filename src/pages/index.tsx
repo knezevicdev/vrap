@@ -20,6 +20,10 @@ const AppraisalFormPage: NextPage = () => {
   const { store } = useAppStore();
   store.appraisal.setVehicleId(vehicle);
 
+  if (router.asPath === '/tradeIn-selfService') {
+    store.appraisal.setIsTradeIn(true);
+  }
+
   return (
     <Page name="Appraisal Form">
       <SkipNavigationLink mainContentId={'main-content'} />

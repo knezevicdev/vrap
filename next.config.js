@@ -46,6 +46,14 @@ const config = {
         source: '/appraisal/:slug*',
         destination: '/:slug*',
       },
+      {
+        source: '/tradeIn-selfService',
+        destination: '/',
+      },
+      {
+        source: '/tradeIn-selfService-Review',
+        destination: '/review',
+      },
     ];
   },
   async redirects() {
@@ -68,6 +76,11 @@ const config = {
       {
         source: '/sell/verification/review/:priceId',
         destination: '/sell/verification/review?priceId=:priceId',
+        permanent: false,
+      },
+      {
+        source: '/tradeIn-selfService/:vehicle',
+        destination: '/tradeIn-selfService?vehicle=:vehicle',
         permanent: false,
       },
     ];
