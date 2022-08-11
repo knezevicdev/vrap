@@ -1,3 +1,4 @@
+import { SellFormTitleText } from '../AppraisalForm.language';
 import ViewModel from '../ViewModel';
 
 import { getMilageCheck } from 'src/networking/__mocks__/request';
@@ -89,6 +90,16 @@ describe('test appraisalForm viewModel ', () => {
       year: 2016,
       zipCode: '99999',
     });
+  });
+
+  it('test titleText when on Trade in form', () => {
+    stores.appraisal.setIsTradeIn(true);
+    expect(viewModel.titleText).toEqual('');
+  });
+
+  it('test titleText when on Sell form', () => {
+    stores.appraisal.setIsTradeIn(false);
+    expect(viewModel.titleText).toEqual(SellFormTitleText);
   });
 
   it('test clear appraisal ', () => {

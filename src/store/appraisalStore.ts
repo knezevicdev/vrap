@@ -87,6 +87,7 @@ export class AppraisalStore {
   showReviewError = false;
   isUserLoggedIn = false;
   user: any = {};
+  isTradeIn = false;
 
   constructor() {
     makeAutoObservable(this);
@@ -249,5 +250,9 @@ export class AppraisalStore {
 
   setUser(user: any): void {
     this.user = user;
+  }
+
+  setIsTradeIn(value: any): void {
+    this.isTradeIn = value;
   }
 }
