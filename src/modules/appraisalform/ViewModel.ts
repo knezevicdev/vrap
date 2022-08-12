@@ -1,5 +1,6 @@
 import { isErrorResponse } from '@vroom-web/networking';
 
+import { SellFormTitleText } from './AppraisalForm.language';
 import { getStateFromZip } from './components/validation';
 
 import AnalyticsHandler from 'src/integrations/AnalyticsHandler';
@@ -7,7 +8,6 @@ import { getMilageCheck, getUser, IsUserSignIn } from 'src/networking/request';
 import Store from 'src/store';
 import { ABSmartStore } from 'src/store/abSmartStore';
 import { AppraisalStore } from 'src/store/appraisalStore';
-import { SellFormTitleText } from './AppraisalForm.language';
 
 class PriceViewModel {
   private _analyticsHandler: AnalyticsHandler = new AnalyticsHandler();

@@ -31,7 +31,11 @@ export default class AppraisalReviewModel {
   }
 
   redirectToAppraisalForm(): void {
-    this._router.push('/sell/vehicleInformation');
+    if (this._router.asPath.startsWith('/tradeIn-selfService-Review')) {
+      this._router.push('/tradeIn-selfService');
+    } else {
+      this._router.push('/sell/vehicleInformation');
+    }
   }
 
   getAnalyticsHandler = (): AnalyticsHandler => {
