@@ -73,11 +73,13 @@ describe('Appraisal review index page test', () => {
   const stores = new Store();
   const router = ({
     push: jest.fn(),
+    asPath: '',
   } as unknown) as NextRouter;
   let analyticsHandler: AnalyticsHandler;
 
   beforeEach(() => {
     viewModel = new ViewModel(stores, router);
+    router.asPath = '';
     analyticsHandler = viewModel.getAnalyticsHandler();
   });
 
@@ -91,9 +93,15 @@ describe('Appraisal review index page test', () => {
     expect(isFormEmpty).toHaveBeenCalled();
   });
 
-  it('router push should called ', () => {
+  it('should redirect to /sell/vehicleInformation if Appraisal is empty', () => {
     viewModel.redirectToAppraisalForm();
-    expect(router.push).toHaveBeenCalled();
+    expect(router.push).toHaveBeenCalledWith('/sell/vehicleInformation');
+  });
+
+  it('should redirect to /tradeIn-selfService if Appraisal is empty and user is on /tradeIn-selfService-Review', () => {
+    router.asPath = '/tradeIn-selfService-Review';
+    viewModel.redirectToAppraisalForm();
+    expect(router.push).toBeCalledWith('/tradeIn-selfService');
   });
 
   it('analyticHandler trackAppraisalIdentify should called', () => {

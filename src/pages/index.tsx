@@ -1,11 +1,11 @@
 import { SkipNavigationLink } from '@vroom-web/ui-lib';
-import _ from 'lodash';
 import { observer } from 'mobx-react';
 import { GetServerSideProps, GetServerSidePropsContext, NextPage } from 'next';
 import { useRouter } from 'next/router';
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
 
+import useHandleAppraisalRoutes from '../modules/appraisal/hooks/useHandleAppraisalRoutes';
 import { returnBrandConfig } from '../utils/pageheaders';
 
 import { Header } from 'src/components/Header';
@@ -18,11 +18,12 @@ const AppraisalFormPage: NextPage = () => {
   const router = useRouter();
   const vehicle = router.query.vehicle as string;
   const { store } = useAppStore();
-  store.appraisal.setVehicleId(vehicle);
 
-  if (router.asPath === '/tradeIn-selfService') {
-    store.appraisal.setIsTradeIn(true);
-  }
+  useHandleAppraisalRoutes();
+
+  useEffect(() => {
+    store.appraisal.setVehicleId(vehicle);
+  }, [store.appraisal, vehicle]);
 
   return (
     <Page name="Appraisal Form">
