@@ -5,7 +5,6 @@ import React from 'react';
 import styled from 'styled-components';
 
 import ErrorBanner from '../../components/ErrorBanner';
-import useHandleAppraisalRoutes from '../../modules/appraisal/hooks/useHandleAppraisalRoutes';
 import { returnBrandConfig } from '../../utils/pageheaders';
 
 import { Header } from 'src/components/Header';
@@ -21,8 +20,6 @@ interface Prop {
 const AppraisalReview: NextPage<Prop> = () => {
   const { store } = useAppStore();
   const showReviewError = store?.appraisal?.showReviewError;
-
-  useHandleAppraisalRoutes();
 
   return (
     <Page name="Review Your Appraisal">
