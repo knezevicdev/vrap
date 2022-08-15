@@ -5,6 +5,7 @@ import { useRouter } from 'next/router';
 import React from 'react';
 import styled from 'styled-components';
 
+import { useAppStore } from '../../../../context';
 import { lang } from './OfferExpiredDialog.language';
 
 const { publicRuntimeConfig } = getConfig();
@@ -15,10 +16,11 @@ interface Props {
 }
 const DialogView: React.FC<Props> = ({ vin }) => {
   const router = useRouter();
+  const { store } = useAppStore();
 
   const handleGetUpdatedCTA = () => {
     router.push({
-      pathname: '/sell/vehicleInformation',
+      pathname: store.appraisal.appraisalPath,
       query: { vehicle: vin },
     });
   };

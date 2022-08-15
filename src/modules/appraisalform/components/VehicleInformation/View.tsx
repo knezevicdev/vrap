@@ -16,6 +16,7 @@ const { NEXT_PUBLIC_RECAPTCHA_SITE_KEY } = publicRuntimeConfig;
 
 import getConfig from 'next/config';
 
+import { useAppStore } from '../../../../context';
 import {
   VehicleInfoLeaseCopy,
   VehicleInfoText,
@@ -74,6 +75,9 @@ const VehicleInformation: React.FC<Props> = ({
     { label: 'Yellow', value: 'Yellow' },
   ];
   const router = useRouter();
+  const { store } = useAppStore();
+
+  const appraisalPath = store.appraisal.appraisalPath;
   const routerAsPath = router.asPath as string;
   const isEditMode = routerAsPath.includes('#');
 
@@ -581,7 +585,7 @@ const VehicleInformation: React.FC<Props> = ({
 
     if (token) {
       router.push({
-        pathname: '/sell/vehicleInformation',
+        pathname: appraisalPath,
         query: { vehicle: licenseForDecode },
       });
       handleDecodeLicense(licenseForDecode, token);
