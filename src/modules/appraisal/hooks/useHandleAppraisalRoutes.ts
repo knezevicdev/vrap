@@ -8,7 +8,7 @@ const useHandleAppraisalRoutes = (): void => {
   const router = useRouter();
   const { store } = useAppStore();
 
-  const isTradeIn = store.appraisal.isTradeIn;
+  const { isTradeIn } = store.appraisal;
 
   const redirectToLogin = (): void => {
     window.location.href = `/myaccount/login?redirect=${encodeURIComponent(

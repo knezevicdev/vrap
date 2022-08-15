@@ -2,6 +2,7 @@ import { addStyleForMobile } from '@vroom-web/ui-lib';
 import React, { useEffect, useRef } from 'react';
 import styled from 'styled-components';
 
+import { useAppStore } from '../../../../context';
 import { FormField } from '../../../../interfaces.d';
 import BankNameInput from '../forminputs/BankNameInput';
 import HasAccidentInput from '../forminputs/HasAccidentInput';
@@ -13,28 +14,47 @@ interface Props {
 }
 
 const VehicleHistoryView: React.FC<Props> = ({ fields }) => {
-  const lienholderRef = useRef<boolean>();
+  const lienholderRef = useRef<string>();
+  const { store } = useAppStore();
+  const { isTradeIn } = store.appraisal;
+  const isTradeInRef = useRef<boolean>(isTradeIn);
 
   useEffect(() => {
-    if (lienholderRef.current !== fields.lienType.value) {
+    if (
+      lienholderRef.current !== fields.lienType.value ||
+      isTradeInRef.current !== isTradeIn
+    ) {
       lienholderRef.current = fields.lienType.value;
+      isTradeInRef.current = isTradeIn;
+
       fields.bankName.onChange({
         ...fields.bankName,
-        isRequired: fields.lienType.value !== 'Neither',
+        isRequired: !isTradeIn && fields.lienType.value !== 'Neither',
         value: fields.lienType.value === 'Neither' ? '' : fields.bankName.value,
       });
     }
-  }, [fields.lienType.value, fields.bankName]);
+  }, [fields.lienType.value, fields.bankName, isTradeIn]);
+
+  useEffect(() => {
+    fields.lienType.onChange({
+      ...fields.lienType,
+      isRequired: !isTradeIn,
+    });
+  }, [isTradeIn]);
 
   return (
     <>
       <HasAccidentInput field={fields.hasAccident} />
       <TitleStatusInput field={fields.titleStatus} />
-      <LienholderInput field={fields.lienType} />
-      {['Lease', 'Loan'].includes(fields.lienType.value) && (
-        <LxInputContainer>
-          <BankNameInput field={fields.bankName} />
-        </LxInputContainer>
+      {!isTradeIn && (
+        <>
+          <LienholderInput field={fields.lienType} />
+          {['Lease', 'Loan'].includes(fields.lienType.value) && (
+            <LxInputContainer>
+              <BankNameInput field={fields.bankName} />
+            </LxInputContainer>
+          )}
+        </>
       )}
     </>
   );

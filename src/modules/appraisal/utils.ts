@@ -24,12 +24,12 @@ function vehicleInformationData(data: any) {
   };
 }
 
-function vehicleHistoryData(data: any) {
+function vehicleHistoryData(data: any, isTradeIn: boolean) {
   return {
     hasAccident: data.hasAccident,
     titleStatus: data.titleStatus,
-    lienType: getLienType(data.lienType),
-    bankName: data.bankName,
+    ...(!isTradeIn && { lienType: getLienType(data.lienType) }),
+    ...(!isTradeIn && { bankName: data.bankName }),
   };
 }
 
@@ -113,11 +113,14 @@ export function makeRequestBody(appraisalData: any): AppraisalPayload {
   const data = {
     // eslint-disable-next-line @typescript-eslint/naming-convention
     DateSubmitted: now,
-    form: 'sell',
+    form: appraisalData.isTradeIn ? 'trade' : 'sell',
     lead_id,
     anonymous_id,
     ...vehicleInformationData(appraisalData.vehicleInfoForm),
-    ...vehicleHistoryData(appraisalData.vehicleHistoryForm),
+    ...vehicleHistoryData(
+      appraisalData.vehicleHistoryForm,
+      appraisalData.isTradeIn
+    ),
     ...interiorConditionData(appraisalData.intConditionForm),
     ...exteriorConditionData(appraisalData.extConditionForm),
     ...mechanicalConditionData(appraisalData.mechConditionForm),
