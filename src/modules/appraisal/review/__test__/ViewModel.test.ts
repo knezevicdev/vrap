@@ -26,7 +26,7 @@ const formData = {
   vehicleHistoryForm: {
     hasAccident: '',
     titleStatus: '',
-    whichStatePurchase: '',
+    state: '',
   },
   personalInfoForm: {
     email: '',

@@ -17,7 +17,7 @@ describe('test appraisal store methods', () => {
     vehicleHistoryForm: {
       hasAccident: 'No accident',
       titleStatus: 'Title status',
-      whichStatePurchase: 'Texas',
+      state: 'Texas',
     },
     intConditionForm: {
       interiorCondition: 'Mint',
@@ -209,7 +209,7 @@ describe('test appraisal store methods', () => {
     expect(store.vehicleHistoryForm).toMatchObject({
       hasAccident: '',
       titleStatus: '',
-      whichStatePurchase: '',
+      state: '',
     });
 
     expect(store.personalInfoForm).toMatchObject({

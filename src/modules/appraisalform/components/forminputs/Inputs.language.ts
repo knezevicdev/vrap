@@ -40,6 +40,11 @@ export const FormFields = {
     label: 'State',
     type: 'state',
   },
+  stateOfPurchase: {
+    label: 'In which state did you purchase your vehicle?',
+    placeholder: 'State of purchase',
+    type: 'tradeInState',
+  },
   zip: {
     placeholder: 'Zip code',
     label: 'Zip Code',

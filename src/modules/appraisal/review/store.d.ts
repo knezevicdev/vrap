@@ -9,6 +9,7 @@ export interface VehicleInfoForm {
   zipCode: string;
   vehicleOptions: string[];
   year: number | null;
+  csTrimId?: number;
 }
 
 export interface VehicleHistoryForm {
@@ -16,7 +17,7 @@ export interface VehicleHistoryForm {
   titleStatus: string;
   lienType: string;
   bankName: string;
-  whichStatePurchase: string;
+  state: string;
 }
 
 export interface PersonalInfoForm {
