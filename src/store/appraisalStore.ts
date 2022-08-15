@@ -89,6 +89,14 @@ export class AppraisalStore {
   user: any = {};
   isTradeIn = false;
 
+  get appraisalPath() {
+    return this.isTradeIn ? '/tradeIn-selfService' : '/sell/vehicleInformation';
+  }
+
+  get reviewPath() {
+    return this.isTradeIn ? '/tradeIn-selfService-Review' : '/sell/review';
+  }
+
   constructor() {
     makeAutoObservable(this);
   }

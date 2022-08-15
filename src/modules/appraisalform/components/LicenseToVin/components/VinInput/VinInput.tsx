@@ -2,6 +2,7 @@ import { Button } from '@vroom-web/ui-lib';
 import React from 'react';
 import styled from 'styled-components';
 
+import { useAppStore } from '../../../../../../context';
 import VinFormInput from '../../../forminputs/VinFormInput';
 import useForm from '../../../useForm';
 import { buttonText, dataQa } from './language';
@@ -13,6 +14,8 @@ interface Props {
 }
 
 const VinInput: React.FC<Props> = ({ viewModel, router }) => {
+  const { store } = useAppStore();
+  const appraisalPath = store.appraisal.appraisalPath;
   const form = useForm({
     defaultValues: {
       vin: '',
@@ -35,7 +38,7 @@ const VinInput: React.FC<Props> = ({ viewModel, router }) => {
     viewModel.trackVinClicked();
 
     router.push({
-      pathname: '/sell/vehicleInformation',
+      pathname: appraisalPath,
       query: { vehicle: vinForPath },
     });
   };
