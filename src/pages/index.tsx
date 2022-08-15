@@ -2,7 +2,7 @@ import { SkipNavigationLink } from '@vroom-web/ui-lib';
 import { observer } from 'mobx-react';
 import { GetServerSideProps, GetServerSidePropsContext, NextPage } from 'next';
 import { useRouter } from 'next/router';
-import React, { useEffect } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import styled from 'styled-components';
 
 import useHandleAppraisalRoutes from '../modules/appraisal/hooks/useHandleAppraisalRoutes';
@@ -21,12 +21,18 @@ const AppraisalFormPage: NextPage = () => {
 
   useHandleAppraisalRoutes();
 
+  const title = useMemo(
+    () =>
+      store.appraisal.isTradeIn ? 'Checkout Appraisal Form' : 'Appraisal Form',
+    [store.appraisal.isTradeIn]
+  );
+
   useEffect(() => {
     store.appraisal.setVehicleId(vehicle);
   }, [store.appraisal, vehicle]);
 
   return (
-    <Page name="Appraisal Form">
+    <Page name={title}>
       <SkipNavigationLink mainContentId={'main-content'} />
       <HeaderContainer>
         <Header />
