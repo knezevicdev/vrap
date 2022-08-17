@@ -25,11 +25,11 @@ export default async (
           message: `Google reCAPTCHA token failed validation.`,
         });
       }
-    } catch (err) {
-      res.status(500);
+    } catch (err: any) {
+      res.status(500).json({ status: 'error', message: err?.message });
     }
   } else {
-    res.status(405);
+    res.status(405).json({ status: 'error', message: 'Unsupported method.' });
   }
 };
 

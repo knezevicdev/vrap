@@ -25,12 +25,12 @@ export default async (
           message: `Google reCAPTCHA token failed validation.`,
         });
       }
-    } catch (err) {
+    } catch (err: any) {
       console.error(err);
-      res.status(500).end();
+      res.status(500).json({ status: 'error', message: err?.message });
     }
   } else {
-    res.status(405).end();
+    res.status(405).json({ status: 'error', message: 'Unsupported method.' });
   }
 };
 
@@ -57,24 +57,24 @@ function mapDetailsToResponse(details: NewVinDecodeResp): DetailsResponse {
   const { dataProviderInfo, vehicleInfo } = details;
   const response: DetailsResponse = {
     vehicleInfo: {
-      exteriorColor: vehicleInfo.exteriorColor,
-      make: vehicleInfo.make,
-      model: vehicleInfo.model,
-      subTrim: vehicleInfo.subTrim,
-      trim: vehicleInfo.trim,
-      vin: vehicleInfo.vin,
-      year: vehicleInfo.year,
+      exteriorColor: vehicleInfo?.exteriorColor,
+      make: vehicleInfo?.make,
+      model: vehicleInfo?.model,
+      subTrim: vehicleInfo?.subTrim,
+      trim: vehicleInfo?.trim,
+      vin: vehicleInfo?.vin,
+      year: vehicleInfo?.year,
     },
     dataProviderInfo: {},
   };
 
-  if (dataProviderInfo) {
+  if (dataProviderInfo && Object.keys(dataProviderInfo).length) {
     response.dataProviderInfo = {
       carstory: {
-        alternatives: dataProviderInfo?.carstory.alternatives || [],
-        features: dataProviderInfo?.carstory.features || [],
-        id: dataProviderInfo?.carstory.id || '',
-        style: dataProviderInfo?.carstory.style || '',
+        alternatives: dataProviderInfo?.carstory?.alternatives || [],
+        features: dataProviderInfo?.carstory?.features || [],
+        id: dataProviderInfo?.carstory?.id || '',
+        style: dataProviderInfo?.carstory?.style || '',
       },
     };
   }
