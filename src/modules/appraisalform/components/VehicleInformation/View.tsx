@@ -190,13 +190,10 @@ const VehicleInformation: React.FC<Props> = ({
         value: vehicleId.toUpperCase(),
       });
     } else if (validLicense) {
-      const vehicleQueryUrl = vehicleId.split('-');
+      const [state, ...rest] = vehicleId.split('-');
+      const license = rest.join('-');
       const errorMessage = VehicleInfoText.licenseError;
-      const fieldsToUpdate = updateField(
-        vehicleQueryUrl[0],
-        vehicleQueryUrl[1],
-        errorMessage
-      );
+      const fieldsToUpdate = updateField(state, license, errorMessage);
       licenseForm.updateMultipleFields(fieldsToUpdate);
     } else {
       resetLocalState();
