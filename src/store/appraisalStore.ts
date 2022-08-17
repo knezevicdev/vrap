@@ -30,7 +30,7 @@ export class AppraisalStore {
     titleStatus: '',
     lienType: '',
     bankName: '',
-    whichStatePurchase: '',
+    state: '',
   };
   personalInfoForm: PersonalInfoForm = {
     email: '',
@@ -201,7 +201,7 @@ export class AppraisalStore {
       titleStatus: '',
       lienType: '',
       bankName: '',
-      whichStatePurchase: '',
+      state: '',
     };
     this.personalInfoForm = {
       email: '',

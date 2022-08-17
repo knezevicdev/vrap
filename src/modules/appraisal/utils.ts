@@ -1,14 +1,24 @@
 import crypto from 'crypto';
 
 export const uuidCookieName = 'uuid';
+import { AppraisalStore } from '../../store/appraisalStore';
+
 import { AppraisalPayload } from 'src/interfaces.d';
+import {
+  ExtConditionForm,
+  IntConditionForm,
+  MechConditionForm,
+  PersonalInfoForm,
+  VehicleHistoryForm,
+  VehicleInfoForm,
+} from 'src/modules/appraisal/review/store';
 import { getUTMParams } from 'src/networking/utils';
 
 function generateUUID4() {
   return crypto.randomBytes(16).toString('hex');
 }
 
-function vehicleInformationData(data: any) {
+function vehicleInformationData(data: VehicleInfoForm) {
   return {
     vin: data.vin,
     year: data.year,
@@ -24,16 +34,17 @@ function vehicleInformationData(data: any) {
   };
 }
 
-function vehicleHistoryData(data: any, isTradeIn: boolean) {
+function vehicleHistoryData(data: VehicleHistoryForm, isTradeIn: boolean) {
   return {
     hasAccident: data.hasAccident,
     titleStatus: data.titleStatus,
     ...(!isTradeIn && { lienType: getLienType(data.lienType) }),
     ...(!isTradeIn && { bankName: data.bankName }),
+    ...(isTradeIn && { state: data.state }),
   };
 }
 
-function interiorConditionData(data: any) {
+function interiorConditionData(data: IntConditionForm) {
   return {
     interiorCondition: data.interiorCondition,
     seats: data.seats,
@@ -41,7 +52,7 @@ function interiorConditionData(data: any) {
   };
 }
 
-function exteriorConditionData(data: any) {
+function exteriorConditionData(data: ExtConditionForm) {
   return {
     exteriorCondition: data.exteriorCondition,
     tiresAndWheels: data.tiresAndWheels,
@@ -50,16 +61,17 @@ function exteriorConditionData(data: any) {
     otherAfterMarket: data.otherAfterMarket,
     rust: data.rust,
     dents: data.dents,
-    dentsPanels: data.dentsPanels && parseInt(data.dentsPanels, 10),
+    dentsPanels: data.dentsPanels && parseInt(String(data.dentsPanels), 10),
     paintChipping: data.paintChipping,
     paintChippingPanels:
-      data.paintChippingPanels && parseInt(data.paintChippingPanels, 10),
+      data.paintChippingPanels &&
+      parseInt(String(data.paintChippingPanels), 10),
     scratches: data.scratches,
     scratchesPanels: data.scratchesPanels && parseInt(data.scratchesPanels, 10),
   };
 }
 
-function mechanicalConditionData(data: any) {
+function mechanicalConditionData(data: MechConditionForm) {
   return {
     mechanicalCondition: data.mechanicalCondition,
     runnable: data.runnable,
@@ -71,7 +83,7 @@ function mechanicalConditionData(data: any) {
   };
 }
 
-function personalInformationData(data: any) {
+function personalInformationData(data: PersonalInfoForm) {
   return {
     firstName: data.firstName,
     lastName: data.lastName,
@@ -99,7 +111,9 @@ function getLienType(lienType: string) {
   return lienType && lienType.toLowerCase();
 }
 
-export function makeRequestBody(appraisalData: any): AppraisalPayload {
+export function makeRequestBody(
+  appraisalData: AppraisalStore
+): AppraisalPayload {
   const now = new Date().toISOString();
   // eslint-disable-next-line @typescript-eslint/naming-convention
   const lead_id = generateUUID4();

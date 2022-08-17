@@ -155,7 +155,7 @@ export interface AppraisalResp {
 export interface AppraisalPayload {
   DateSubmitted: string;
   additionalDetails: string;
-  afterMarket: [];
+  afterMarket: [] | string[];
   brand: string;
   dealership: string;
   email: string;
@@ -174,9 +174,9 @@ export interface AppraisalPayload {
   anonymous_id: string;
   make: string;
   mechanicalCondition: string;
-  mileage: number;
+  mileage: number | null;
   model: string;
-  options: [];
+  options: [] | string[];
   otherAfterMarket: string;
   otherWarning: string;
   phoneNumber: string;
@@ -186,12 +186,12 @@ export interface AppraisalPayload {
   tiresAndWheels: string;
   titleStatus: string;
   trim: string;
-  csTrimId: number;
+  csTrimId: number | undefined;
   type: string;
   vin: string;
   warningLights: string;
-  warningLightsValues: [];
-  year: number;
+  warningLightsValues: [] | string[];
+  year: number | null;
   zipCode: string;
   utm_campaign: string;
   utm_content: string;
