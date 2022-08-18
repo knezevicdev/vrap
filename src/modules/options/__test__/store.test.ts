@@ -1,3 +1,5 @@
+jest.mock('src/networking/request');
+
 import { OptionsStore, submitPaymentOption } from '../store';
 
 import {
@@ -5,9 +7,9 @@ import {
   PaymentOverviewFormValues,
   StoreStatus,
 } from 'src/interfaces.d';
-import { getinitialOptionDetails } from 'src/networking/__mocks__/request';
 import { submitPaymentOptionSelected } from 'src/networking/request';
 import * as Request from 'src/networking/request';
+import { getinitialOptionDetails } from 'src/networking/request/__mocks__';
 
 jest.mock('next/config', () => {
   return (): unknown => {

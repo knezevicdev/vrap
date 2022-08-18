@@ -19,14 +19,14 @@ interface Prop {
 
 const AppraisalReview: NextPage<Prop> = () => {
   const { store } = useAppStore();
-  const showReviewError = store?.appraisal?.showReviewError;
+  const reviewError = store.appraisal.reviewError;
 
   return (
     <Page name="Review Your Appraisal">
       <SkipNavigationLink mainContentId={'main-content'} />
       <HeaderContainer>
         <Header />
-        {showReviewError && <ErrorBanner />}
+        {reviewError && <ErrorBanner errorMessage={reviewError} />}
       </HeaderContainer>
       <Contents id="main-content">
         <AppraisalContainer>

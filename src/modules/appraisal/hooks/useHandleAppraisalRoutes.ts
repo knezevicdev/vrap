@@ -2,7 +2,7 @@ import { useRouter } from 'next/router';
 import { useCallback, useEffect } from 'react';
 
 import { useAppStore } from 'src/context';
-import { IsUserSignIn } from 'src/networking/request';
+import { isUserSignedIn } from 'src/networking/request';
 
 const useHandleAppraisalRoutes = (): void => {
   const router = useRouter();
@@ -18,7 +18,7 @@ const useHandleAppraisalRoutes = (): void => {
 
   const redirectIfNotLoggedIn = useCallback(async (): Promise<void> => {
     try {
-      const isLoggedIn = await IsUserSignIn();
+      const isLoggedIn = await isUserSignedIn();
       if (!isLoggedIn) {
         redirectToLogin();
       }

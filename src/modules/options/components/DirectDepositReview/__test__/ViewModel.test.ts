@@ -1,3 +1,5 @@
+jest.mock('src/networking/request');
+
 import ViewModel from '../ViewModel';
 
 import * as Request from 'src/networking/request';

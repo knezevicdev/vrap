@@ -13,6 +13,9 @@ const defaultOfferData = {
   miles: 0,
   offerExpiration: '',
   vin: '',
+  id: '',
+  offerId: 0,
+  offerStatus: '',
 };
 
 export default class TransactionOverviewViewModel {
@@ -37,6 +40,9 @@ export default class TransactionOverviewViewModel {
         miles: offerDetail.miles,
         offerExpiration: offerDetail.Good_Until__c,
         vin: offerDetail.VIN__c,
+        id: offerDetail.ID,
+        offerId: offerDetail.offer_id,
+        offerStatus: offerDetail.offer_status,
       };
 
       this.store.offer.getOfferDetail(offerDetailData);

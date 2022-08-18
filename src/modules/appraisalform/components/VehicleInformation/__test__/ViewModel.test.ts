@@ -1,11 +1,13 @@
+jest.mock('src/networking/request');
+
 import ViewModel from '../ViewModel';
 
+import * as Request from 'src/networking/request';
 import {
   getCarstoryTrimFeatures,
   getCarstoryVinDecode,
   gradeCheck,
-} from 'src/networking/__mocks__/request';
-import * as Request from 'src/networking/request';
+} from 'src/networking/request/__mocks__';
 import store from 'src/store';
 
 const vehicleInfo = {

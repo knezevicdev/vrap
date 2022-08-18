@@ -22,16 +22,24 @@ export default class AppraisalReviewModel {
     this.absmartStore = store.absmart;
   }
 
+  get isTradeIn(): boolean {
+    return this._router.asPath.startsWith('/tradeIn-selfService-Review');
+  }
+
   isAppraisalEmpty(): boolean {
     return this.appraisalStore.isFormEmpty();
   }
 
   setShowReviewError(value: boolean): void {
-    this.appraisalStore.setShowReviewError(value);
+    if (value) {
+      this.appraisalStore.setReviewError();
+    } else {
+      this.appraisalStore.clearReviewError();
+    }
   }
 
   redirectToAppraisalForm(): void {
-    if (this._router.asPath.startsWith('/tradeIn-selfService-Review')) {
+    if (this.isTradeIn) {
       this._router.push('/tradeIn-selfService');
     } else {
       this._router.push('/sell/vehicleInformation');
@@ -93,14 +101,41 @@ export default class AppraisalReviewModel {
       const resp = await postAppraisalReview(requestPayload, token);
       if (isErrorResponse(resp)) throw resp;
       const returnData: AppraisalRespData = resp.data;
-      this.appraisalStore.clearAppraisal();
-      this._router.push({
-        pathname: `/appraisal/price`,
-        query: { priceId: returnData.data.ID },
-      });
+
+      if (this.isTradeIn) {
+        const offerDetailData = {
+          make: returnData.data.Make__c,
+          model: returnData.data.Model__c,
+          price: returnData.data.Price__c,
+          trim: returnData.data.Trim__c,
+          year: returnData.data.Year__c,
+          miles: returnData.data.miles,
+          offerExpiration: returnData.data.Good_Until__c,
+          vin: returnData.data.VIN__c,
+          id: returnData.data.ID,
+          offerId: returnData.data.offer_id,
+          offerStatus: returnData.data.offer_status,
+        };
+        this.store.offer.getOfferDetail(offerDetailData);
+        this.store.offer.setShowOfferDialog(true);
+      } else {
+        this.appraisalStore.clearAppraisal();
+        this._router.push({
+          pathname: `/appraisal/price`,
+          query: { priceId: returnData.data.ID },
+        });
+      }
     } catch (err) {
       this.setShowReviewError(true);
       console.log(JSON.stringify(err));
     }
+  }
+
+  get isDealLoading(): boolean {
+    return this.store.deal.loading;
+  }
+
+  get showOfferDialog(): boolean {
+    return this.store.offer.showOfferDialog;
   }
 }

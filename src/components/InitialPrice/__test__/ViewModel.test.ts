@@ -5,11 +5,11 @@ import ViewModel from '../ViewModel';
 
 import AnalyticsHandler from 'src/integrations/AnalyticsHandler';
 import { PriceStore } from 'src/modules/price/store';
+import client from 'src/networking/client';
 import {
   getIsSignIn,
   getIsSignInInValid,
-} from 'src/networking/__mocks__/request';
-import client from 'src/networking/client';
+} from 'src/networking/request/__mocks__';
 import Store from 'src/store';
 
 describe('InitialPrice Test', () => {

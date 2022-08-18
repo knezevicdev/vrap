@@ -13,6 +13,7 @@ import styled from 'styled-components';
 import ExteriorCondition from './components/ExteriorCondition';
 import InteriorCondition from './components/InteriorCondition';
 import MechanicalCondition from './components/MechanicalCondition';
+import OfferDialog from './components/OfferDialog';
 import PersonalInformation from './components/PersonalInformation';
 import VehicleHistory from './components/VehicleHistory';
 import VehicleInformation from './components/VehicleInformation';
@@ -71,9 +72,11 @@ const AppraisalReviewViewDetail: React.FC<Props> = ({ viewModel }) => {
     }
   };
 
+  const isAnyLoading = isLoading || viewModel.isDealLoading;
+
   return (
     <Container>
-      {isLoading && (
+      {isAnyLoading && (
         <WhiteBox>
           <SpinnerContainer>
             <VroomSpinner />
@@ -130,6 +133,7 @@ const AppraisalReviewViewDetail: React.FC<Props> = ({ viewModel }) => {
           </a>
         </TextContainer>
       </SubmitContainer>
+      {viewModel.showOfferDialog && <OfferDialog />}
     </Container>
   );
 };
