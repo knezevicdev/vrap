@@ -1,9 +1,15 @@
-import { Response } from '@vroom-web/networking';
+import { GQLTypes, Response } from '@vroom-web/networking';
 import { SignInStatusResponseData } from '@vroom-web/networking';
 
-import { Prices, VerificationRespData } from '../models/Price';
+import { Prices, VerificationRespData } from '../../models/Price';
+import { DocumentResponse } from '../../models/Verification';
 
-import { MileageCheckResp, PlaidTokenResp } from 'src/interfaces.d';
+import {
+  AppraisalResp,
+  GradeCheckResp,
+  MileageCheckResp,
+  PlaidTokenResp,
+} from 'src/interfaces.d';
 const offerbyIdResp: Prices = {
   data: [
     {
@@ -332,5 +338,86 @@ export const getMilageCheck = async (): Promise<MileageCheckResp> => {
   return Promise.resolve<MileageCheckResp>({
     mileage: 99999,
     errorMessage: null,
+  });
+};
+
+export const getInstitutionLogo = async (): Promise<Response<any>> => {
+  return Promise.resolve({
+    headers: undefined,
+    error: undefined,
+    data: {
+      data: {
+        logo: 'testlogo.jpg',
+      },
+    },
+  });
+};
+
+export const getDownloadUrl = async (): Promise<Response<DocumentResponse>> => {
+  return Promise.resolve({
+    headers: undefined,
+    error: undefined,
+    data: {
+      data: [],
+    },
+  });
+};
+
+export const getGradeCheck = async (): Promise<Response<GradeCheckResp>> => {
+  return Promise.resolve({
+    headers: undefined,
+    error: undefined,
+    data: {
+      grade: true,
+    },
+  });
+};
+
+export const isUserSignedIn = async (): Promise<boolean> => {
+  return Promise.resolve(true);
+};
+
+export const getUser = async (): Promise<GQLTypes.User> => {
+  return Promise.resolve({
+    username: 'testuser',
+    firstName: 'vroomuser',
+    consents: {
+      emailMarketing: 'yes',
+      smsMarketing: 'yes',
+    },
+  });
+};
+
+export const submitWeblead = async (): Promise<Response<any>> => {
+  return Promise.resolve({
+    headers: undefined,
+    error: undefined,
+    data: {
+      data: true,
+    },
+  });
+};
+
+export const postAppraisalReview = async (): Promise<
+  Response<AppraisalResp>
+> => {
+  return Promise.resolve({
+    headers: undefined,
+    error: undefined,
+    data: {
+      data: {
+        Price__c: 4555,
+        Year__c: 2010,
+        Make__c: 'Nissan',
+        Model__c: 'Rogue',
+        Trim__c: 'sport',
+        miles: 11111,
+        Good_Until__c: new Date().toISOString(),
+        VIN__c: 'vin123',
+        ID: '584824b4-d392-43ff-be3a-b38885ee50f4',
+        offer_id: 534,
+        offer_status: 'Pending',
+      },
+    },
   });
 };

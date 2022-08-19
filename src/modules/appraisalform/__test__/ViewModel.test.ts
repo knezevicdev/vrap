@@ -1,8 +1,10 @@
+jest.mock('src/networking/request');
+
 import { SellFormTitleText } from '../AppraisalForm.language';
 import ViewModel from '../ViewModel';
 
-import { getMilageCheck } from 'src/networking/__mocks__/request';
 import * as Request from 'src/networking/request';
+import { getMilageCheck } from 'src/networking/request/__mocks__';
 import store from 'src/store';
 
 const formData = {
@@ -186,7 +188,7 @@ describe('test appraisalForm viewModel ', () => {
   });
 
   it('test userLogin api ', async () => {
-    const spyRequest = jest.spyOn(Request, 'IsUserSignIn');
+    const spyRequest = jest.spyOn(Request, 'isUserSignedIn');
     const spyStore = jest.spyOn(stores.appraisal, 'setIsLoggedIn');
     spyRequest.mockResolvedValue(true);
     await viewModel.isSignIn();

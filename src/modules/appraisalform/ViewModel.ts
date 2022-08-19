@@ -1,10 +1,15 @@
 import { isErrorResponse } from '@vroom-web/networking';
 
+import { getInProgressDeal } from '../../networking/request';
 import { SellFormTitleText } from './AppraisalForm.language';
 import { getStateFromZip } from './components/validation';
 
 import AnalyticsHandler from 'src/integrations/AnalyticsHandler';
-import { getMilageCheck, getUser, IsUserSignIn } from 'src/networking/request';
+import {
+  getMilageCheck,
+  getUser,
+  isUserSignedIn,
+} from 'src/networking/request';
 import Store from 'src/store';
 import { ABSmartStore } from 'src/store/abSmartStore';
 import { AppraisalStore } from 'src/store/appraisalStore';
@@ -85,7 +90,7 @@ class PriceViewModel {
   };
 
   isSignIn = async (): Promise<void> => {
-    const isLoggedIn = await IsUserSignIn();
+    const isLoggedIn = await isUserSignedIn();
     this.appraisalStore.setIsLoggedIn(isLoggedIn);
   };
 
@@ -117,6 +122,15 @@ class PriceViewModel {
     const user = await getUser();
     this.appraisalStore.setUser(user);
   };
+
+  async initialize(): Promise<void> {
+    try {
+      const deal = await getInProgressDeal();
+      this.store.deal.setDeal(deal);
+    } catch (e) {
+      console.log('Error while fetching deal');
+    }
+  }
 }
 
 export default PriceViewModel;

@@ -1,7 +1,7 @@
 import ViewModel from '../ViewModel';
 
-import { getOfferDetails } from 'src/networking/__mocks__/request';
 import * as Request from 'src/networking/request';
+import { getOfferDetails } from 'src/networking/request/__mocks__';
 import store from 'src/store';
 
 jest.mock('src/networking/request');
@@ -36,6 +36,9 @@ describe('Review component test', () => {
       miles: 999999,
       offerExpiration: '2021-09-03T00:00:00Z',
       vin: '5N1AZ2MG9GN133457',
+      id: 'cb5b06d43cb95286ceeb50efc7a82e08',
+      offerId: 26300,
+      offerStatus: 'Pending',
     };
 
     expect(JSON.stringify(stores.offer.offerDetail)).toEqual(
@@ -55,6 +58,9 @@ describe('Review component test', () => {
       miles: 0,
       offerExpiration: '',
       vin: '',
+      id: '',
+      offerId: 0,
+      offerStatus: '',
     };
 
     expect(JSON.stringify(stores.offer.offerDetail)).toEqual(

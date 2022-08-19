@@ -84,7 +84,7 @@ export class AppraisalStore {
     error: null,
   };
   showLicenseError = false;
-  showReviewError = false;
+  reviewError: string | undefined = undefined;
   isUserLoggedIn = false;
   user: any = {};
   isTradeIn = false;
@@ -121,8 +121,14 @@ export class AppraisalStore {
     this.vehicleId = vehicleId;
   }
 
-  setShowReviewError(value: boolean): void {
-    this.showReviewError = value;
+  setReviewError(
+    message = 'Oops! Something went wrong. Please try to submit again.'
+  ): void {
+    this.reviewError = message;
+  }
+
+  clearReviewError(): void {
+    this.reviewError = undefined;
   }
 
   setVehicleError(value: any): void {

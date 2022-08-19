@@ -26,10 +26,11 @@ export default async (
         });
       }
     } catch (err) {
-      res.status(500);
+      console.error(err);
+      res.status(500).end();
     }
   } else {
-    res.status(405);
+    res.status(405).end();
   }
 };
 

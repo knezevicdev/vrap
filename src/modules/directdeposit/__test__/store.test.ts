@@ -1,3 +1,5 @@
+jest.mock('src/networking/request');
+
 import router from 'next/router';
 
 import { DirectDepositStore } from '../store';
@@ -5,8 +7,8 @@ import { DirectDepositStore } from '../store';
 import AnalyticsHandler from 'src/integrations/AnalyticsHandler';
 import { OptionsStore } from 'src/modules/options/store';
 import ViewModel from 'src/modules/options/ViewModel';
-import { getPlaidToken } from 'src/networking/__mocks__/request';
 import * as Request from 'src/networking/request';
+import { getPlaidToken } from 'src/networking/request/__mocks__';
 import AppStore from 'src/store';
 
 describe('test direct deposit store', () => {

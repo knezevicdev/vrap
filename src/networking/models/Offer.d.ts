@@ -1,4 +1,7 @@
 export interface OfferDetail {
+  id: string;
+  offerId: number;
+  offerStatus: string;
   make: string;
   model: string;
   price: number;

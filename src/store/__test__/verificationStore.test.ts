@@ -1,7 +1,9 @@
+jest.mock('src/networking/request');
+
 import { VerificationStore } from '../verificationStore';
 
-import { verificationResp } from 'src/networking/__mocks__/request';
 import * as Request from 'src/networking/request';
+import { verificationResp } from 'src/networking/request/__mocks__';
 
 describe('test verification store', () => {
   let store: VerificationStore;

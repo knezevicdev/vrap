@@ -428,6 +428,10 @@ const AppraisalForm: React.FC<Props> = ({ viewModel }) => {
     setShowInvalidStateDialog(false);
   };
 
+  useEffect(() => {
+    viewModel.initialize();
+  }, []);
+
   return (
     <AppraisalFormContainer data-qa="AppraisalFormPage">
       <MultiStepForm

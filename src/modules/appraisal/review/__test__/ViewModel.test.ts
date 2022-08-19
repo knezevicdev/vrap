@@ -1,14 +1,16 @@
+jest.mock('src/networking/request');
+
 import { NextRouter } from 'next/router';
 
 import * as Utils from '../../utils';
 import ViewModel from '../ViewModel';
 
 import AnalyticsHandler from 'src/integrations/AnalyticsHandler';
+import * as Request from 'src/networking/request';
 import {
   getPostAppraisalReview,
   getSubmitWeblead,
-} from 'src/networking/__mocks__/request';
-import * as Request from 'src/networking/request';
+} from 'src/networking/request/__mocks__';
 import Store from 'src/store';
 
 const formData = {

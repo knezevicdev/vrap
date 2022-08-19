@@ -4,6 +4,7 @@ import { OfferDetail } from 'src/networking/models/Offer';
 
 export class OfferStore {
   offerDetail?: OfferDetail;
+  showOfferDialog = false;
   loading = true;
 
   constructor() {
@@ -16,5 +17,9 @@ export class OfferStore {
 
   setLoading(value: boolean): void {
     this.loading = value;
+  }
+
+  setShowOfferDialog(value: boolean): void {
+    this.showOfferDialog = value;
   }
 }
