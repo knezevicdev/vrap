@@ -7,12 +7,13 @@ import client from '../client';
 
 const { publicRuntimeConfig } = getConfig();
 const VROOM_URL = publicRuntimeConfig.NEXT_PUBLIC_VROOM_URL;
+const { NEXT_PUBLIC_INTERCHANGE_URL } = publicRuntimeConfig;
 
 export const getCarstoryVinDecode = async (
   vehicleId: string,
   captchaToken: string
 ): Promise<any> => {
-  const url = `/appraisal/api/details`;
+  const url = `${NEXT_PUBLIC_INTERCHANGE_URL}/appraisal/api/details`;
   return await client.httpRequest({
     method: 'post',
     url,

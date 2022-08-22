@@ -45,3 +45,5 @@ export const AppraisalTitle =
 
 export const SaveText = 'Save';
 export const ReviewText = 'Review';
+export const TradeInError =
+  'Your changes were unable to be saved because your transaction has new updates. Please try submitting again.';

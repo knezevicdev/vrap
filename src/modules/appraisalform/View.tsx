@@ -1,10 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { Body } from '@vroom-web/ui-lib';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
 import {
   AppraisalTitle,
+  CancelTradeText,
   ExtConditionText,
   IntConditionText,
   MechConditionText,
@@ -415,6 +417,10 @@ const AppraisalForm: React.FC<Props> = ({ viewModel }) => {
     }
   };
 
+  const cancelOffer = async () => {
+    await viewModel.cancelOffer();
+  };
+
   useEffect(() => {
     const overflow = showExactMileageDialog ? 'hidden' : '';
     document.body.style.overflow = overflow;
@@ -446,6 +452,9 @@ const AppraisalForm: React.FC<Props> = ({ viewModel }) => {
         appraisalTitle={AppraisalTitle}
         disableExperiments={false}
       />
+      {store.appraisal.isTradeIn && (
+        <Cancel onClick={cancelOffer}>{CancelTradeText}</Cancel>
+      )}
       {showExactMileageDialog && (
         <ExactMilageDialog
           closeModalHandler={closeModalHandler}
@@ -468,6 +477,15 @@ const AppraisalForm: React.FC<Props> = ({ viewModel }) => {
     </AppraisalFormContainer>
   );
 };
+
+const Cancel = styled(Body.Regular)`
+  display: block;
+  color: #e7131a;
+  cursor: pointer;
+  border-top: 1px solid #e0e0e0;
+  padding: 40px 0px;
+  text-transform: uppercase;
+`;
 
 const AppraisalFormContainer = styled.div`
   padding: 20px 60px;

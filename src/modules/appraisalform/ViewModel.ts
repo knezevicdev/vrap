@@ -1,7 +1,11 @@
 import { isErrorResponse } from '@vroom-web/networking';
 
-import { getInProgressDeal } from '../../networking/request';
-import { SellFormTitleText } from './AppraisalForm.language';
+import {
+  declineDeal,
+  getInProgressDeal,
+  UpdateDeal,
+} from '../../networking/request';
+import { SellFormTitleText, TradeInError } from './AppraisalForm.language';
 import { getStateFromZip } from './components/validation';
 
 import AnalyticsHandler from 'src/integrations/AnalyticsHandler';
@@ -121,6 +125,25 @@ class PriceViewModel {
   getUser = async (): Promise<void> => {
     const user = await getUser();
     this.appraisalStore.setUser(user);
+  };
+
+  handleUpdateDeal(response: UpdateDeal): void {
+    if (!response.isError) {
+      window.location.href = response.redirect;
+      return;
+    }
+
+    this.store.deal.setTradeInError(TradeInError);
+  }
+
+  cancelOffer = async (): Promise<void> => {
+    if (!this.store.deal.deal) return;
+
+    this.store.deal.setTradeInError('');
+    this.store.deal.setLoading(true);
+    const response = await declineDeal(this.store.deal.deal);
+    this.store.deal.setLoading(false);
+    this.handleUpdateDeal(response);
   };
 
   async initialize(): Promise<void> {
