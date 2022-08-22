@@ -1,10 +1,11 @@
-import { SkipNavigationLink } from '@vroom-web/ui-lib';
+import { SkipNavigationLink, VroomSpinner } from '@vroom-web/ui-lib';
 import { observer } from 'mobx-react';
 import { GetServerSideProps, GetServerSidePropsContext, NextPage } from 'next';
 import { useRouter } from 'next/router';
 import React, { useEffect, useMemo } from 'react';
 import styled from 'styled-components';
 
+import ErrorBanner from '../components/ErrorBanner';
 import useHandleAppraisalRoutes from '../modules/appraisal/hooks/useHandleAppraisalRoutes';
 import { returnBrandConfig } from '../utils/pageheaders';
 
@@ -18,6 +19,7 @@ const AppraisalFormPage: NextPage = () => {
   const router = useRouter();
   const vehicle = router.query.vehicle as string;
   const { store } = useAppStore();
+  const isLoading = store.deal.loading;
 
   useHandleAppraisalRoutes();
 
@@ -27,15 +29,25 @@ const AppraisalFormPage: NextPage = () => {
     [store.appraisal.isTradeIn]
   );
 
+  const { tradeInError } = store.deal;
+
   useEffect(() => {
     store.appraisal.setVehicleId(vehicle);
   }, [store.appraisal, vehicle]);
 
   return (
     <Page name={title}>
+      {isLoading && (
+        <WhiteBox>
+          <SpinnerContainer>
+            <VroomSpinner />
+          </SpinnerContainer>
+        </WhiteBox>
+      )}
       <SkipNavigationLink mainContentId={'main-content'} />
       <HeaderContainer>
         <Header />
+        {tradeInError && <ErrorBanner errorMessage={tradeInError} />}
       </HeaderContainer>
       <PageContent id="main-content">
         <AppraisalForm />
@@ -83,5 +95,26 @@ export const getServerSideProps: GetServerSideProps<Props> = async (
     },
   };
 };
+
+const WhiteBox = styled.div`
+  position: fixed;
+  display: block;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  text-align: center;
+  opacity: 0.7;
+  background-color: #fff;
+  z-index: 99;
+`;
+
+const SpinnerContainer = styled.div`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  z-index: 100;
+  transform: translate(-50%, -50%);
+`;
 
 export default observer(AppraisalFormPage);
