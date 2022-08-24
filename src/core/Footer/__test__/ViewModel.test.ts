@@ -65,16 +65,16 @@ describe('testing Simple Footer Viewmodel', () => {
         title: 'Contact',
         links: [
           {
-            name: '(855) 524-1300',
-            href: 'tel:+18555241300',
-          },
-          {
             href: '/contact',
             name: 'FAQ',
           },
           {
+            name: '(855) 524-1300',
+            href: 'tel:+18555241300',
+          },
+          {
             href: '/myaccount/customer-support',
-            name: 'Contact Us',
+            name: 'Customer Support',
           },
         ],
       },
