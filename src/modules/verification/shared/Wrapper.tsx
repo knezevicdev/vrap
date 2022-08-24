@@ -117,7 +117,9 @@ const VerificationWrapper: React.FC<Props> = ({ priceId, step, children }) => {
               <TransactionOverview priceId={priceId} />
             </OverviewContainer>
           </VerificationContainer>
-          {isOfferExpired && <OfferExpiredDialog vin={vin} />}
+          {(isOfferExpired || store.verification.isExpiredOrErrored) && (
+            <OfferExpiredDialog vin={vin} />
+          )}
         </Contents>
       </>
       <Footer />

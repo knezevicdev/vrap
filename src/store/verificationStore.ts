@@ -149,6 +149,7 @@ export class VerificationStore {
   bankOptions = BankOptions;
   whereIsVehicleRegistered = '';
   lastFourSSN = '';
+  isExpiredOrErrored = false;
 
   constructor() {
     makeAutoObservable(this);
@@ -328,5 +329,9 @@ export class VerificationStore {
 
   setOfferId(value: string): void {
     this.offerId = value;
+  }
+
+  setIsExpiredOrErrored(value: boolean): void {
+    this.isExpiredOrErrored = value;
   }
 }

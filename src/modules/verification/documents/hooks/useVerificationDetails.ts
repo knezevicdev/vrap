@@ -27,7 +27,10 @@ const useVerificationDetails = (priceId: string): UseVerificationDetails => {
       lastPriceId.current = priceId;
       getVerificationDetails(priceId)
         .then((response) => {
-          if (isErrorResponse(response)) return;
+          if (isErrorResponse(response)) {
+            store.verification.setIsExpiredOrErrored(true);
+            return;
+          }
           store.verification.getVerificationDetail(
             response.data.data,
             localStorage.getItem('lastFour') || store.verification.lastFourSSN
