@@ -1,4 +1,4 @@
-import { Link } from '@vroom-web/ui-lib';
+import { addStyleForDesktop, Link } from '@vroom-web/ui-lib';
 import React from 'react';
 import styled from 'styled-components';
 
@@ -17,6 +17,11 @@ const SectionDiv = styled.div`
   display: flex;
   flex-direction: column;
   width: 25%;
+  ${addStyleForDesktop(`
+    a[href^='tel:'] {
+      pointer-events: none;
+    }
+  `)}
   :not(:last-child) {
     padding-right: 16px;
 

@@ -94,14 +94,14 @@ class FooterViewModel {
       {
         title: 'Contact',
         links: [
-          this.getPhoneNumber(),
           {
             href: '/contact',
             name: 'FAQ',
           },
+          this.getPhoneNumber(),
           {
             href: '/myaccount/customer-support',
-            name: 'Contact Us',
+            name: 'Customer Support',
           },
         ],
       },
