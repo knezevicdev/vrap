@@ -28,7 +28,7 @@ const useHandleAppraisalRoutes = (): void => {
   }, []);
 
   useEffect(() => {
-    if (!isTradeIn && router.asPath.startsWith('/tradeIn-selfService')) {
+    if (!isTradeIn && router.asPath.includes('/tradeIn-selfService')) {
       store.appraisal.setIsTradeIn(true);
       redirectIfNotLoggedIn();
     }

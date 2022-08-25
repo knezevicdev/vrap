@@ -90,11 +90,15 @@ export class AppraisalStore {
   isTradeIn = false;
 
   get appraisalPath() {
-    return this.isTradeIn ? '/tradeIn-selfService' : '/sell/vehicleInformation';
+    return this.isTradeIn
+      ? '/appraisal/tradeIn-selfService'
+      : '/sell/vehicleInformation';
   }
 
   get reviewPath() {
-    return this.isTradeIn ? '/tradeIn-selfService-Review' : '/sell/review';
+    return this.isTradeIn
+      ? '/appraisal/tradeIn-selfService-Review'
+      : '/sell/review';
   }
 
   constructor() {

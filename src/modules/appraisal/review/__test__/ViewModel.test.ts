@@ -100,10 +100,10 @@ describe('Appraisal review index page test', () => {
     expect(router.push).toHaveBeenCalledWith('/sell/vehicleInformation');
   });
 
-  it('should redirect to /tradeIn-selfService if Appraisal is empty and user is on /tradeIn-selfService-Review', () => {
-    router.asPath = '/tradeIn-selfService-Review';
+  it('should redirect to /appraisal/tradeIn-selfService if Appraisal is empty and user is on /appraisal/tradeIn-selfService-Review', () => {
+    router.asPath = '/appraisal/tradeIn-selfService-Review';
     viewModel.redirectToAppraisalForm();
-    expect(router.push).toBeCalledWith('/tradeIn-selfService');
+    expect(router.push).toBeCalledWith('/appraisal/tradeIn-selfService');
   });
 
   it('analyticHandler trackAppraisalIdentify should called', () => {
