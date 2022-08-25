@@ -137,7 +137,7 @@ const AppraisalForm: React.FC<Props> = ({ viewModel }) => {
     const setMileageDialogDismiss = viewModel.setMileageDialogDismiss;
     const zipCode = appraisalUseForm.vehicleInfoForm.fields.zipCode.value;
     const state = viewModel.getStateFromZip(zipCode);
-    const isStateValid = !state;
+    const isStateValid = store.appraisal.isTradeIn || !state;
 
     setExactMileageProps({
       strictDialog: false,
