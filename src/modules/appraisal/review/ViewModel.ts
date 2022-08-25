@@ -23,7 +23,7 @@ export default class AppraisalReviewModel {
   }
 
   get isTradeIn(): boolean {
-    return this._router.asPath.startsWith('/tradeIn-selfService-Review');
+    return this._router.asPath.includes('/tradeIn-selfService-Review');
   }
 
   isAppraisalEmpty(): boolean {
@@ -40,7 +40,7 @@ export default class AppraisalReviewModel {
 
   redirectToAppraisalForm(): void {
     if (this.isTradeIn) {
-      this._router.push('/tradeIn-selfService');
+      this._router.push('/appraisal/tradeIn-selfService');
     } else {
       this._router.push('/sell/vehicleInformation');
     }
