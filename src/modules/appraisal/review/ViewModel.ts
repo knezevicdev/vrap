@@ -42,7 +42,10 @@ export default class AppraisalReviewModel {
     if (this.isTradeIn) {
       this._router.push('/appraisal/tradeIn-selfService');
     } else {
-      this._router.push('/sell/vehicleInformation');
+      this._router.push({
+        pathname: '/sell/vehicleInformation',
+        query: { ...this._router.query },
+      });
     }
   }
 
@@ -63,6 +66,12 @@ export default class AppraisalReviewModel {
       data.user.externalUserID,
       identifyData
     );
+  }
+
+  setTradeFormType(): void {
+    if (this._router.query.type === 'trade') {
+      this.appraisalStore.setForm('trade');
+    }
   }
 
   trackAppraisalReviewViewed(): void {

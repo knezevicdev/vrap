@@ -583,7 +583,7 @@ const VehicleInformation: React.FC<Props> = ({
     if (token) {
       router.push({
         pathname: appraisalPath,
-        query: { vehicle: licenseForDecode },
+        query: { vehicle: licenseForDecode, ...router.query },
       });
       handleDecodeLicense(licenseForDecode, token);
     } else {

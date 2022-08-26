@@ -64,6 +64,7 @@ export default class PickupInfoReviewViewModel {
       pathname: this.appraisalStore.appraisalPath,
       query: {
         vehicle: `${this.appraisalStore?.vehicleInfoForm?.vin}`,
+        ...this._router.query,
       },
       hash: `#top`,
     });

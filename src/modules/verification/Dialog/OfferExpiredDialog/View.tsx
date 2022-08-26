@@ -21,7 +21,7 @@ const DialogView: React.FC<Props> = ({ vin }) => {
   const handleGetUpdatedCTA = () => {
     router.push({
       pathname: store.appraisal.appraisalPath,
-      query: { vehicle: vin },
+      query: { vehicle: vin, ...router.query },
     });
   };
 

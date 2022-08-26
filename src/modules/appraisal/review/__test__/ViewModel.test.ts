@@ -97,13 +97,31 @@ describe('Appraisal review index page test', () => {
 
   it('should redirect to /sell/vehicleInformation if Appraisal is empty', () => {
     viewModel.redirectToAppraisalForm();
-    expect(router.push).toHaveBeenCalledWith('/sell/vehicleInformation');
+    expect(router.push).toHaveBeenCalledWith({
+      pathname: '/sell/vehicleInformation',
+      query: {},
+    });
+  });
+
+  it('should preserve type=trade query parameter while redirecting to /sell/vehicleInformation', () => {
+    router.query = { type: 'trade' };
+    viewModel.redirectToAppraisalForm();
+    expect(router.push).toHaveBeenCalledWith({
+      pathname: '/sell/vehicleInformation',
+      query: { type: 'trade' },
+    });
   });
 
   it('should redirect to /appraisal/tradeIn-selfService if Appraisal is empty and user is on /appraisal/tradeIn-selfService-Review', () => {
     router.asPath = '/appraisal/tradeIn-selfService-Review';
     viewModel.redirectToAppraisalForm();
     expect(router.push).toBeCalledWith('/appraisal/tradeIn-selfService');
+  });
+
+  it('should set form in appraisal store if type exists in query string', () => {
+    router.query = { type: 'trade' };
+    viewModel.setTradeFormType();
+    expect(stores.appraisal.form).toEqual('trade');
   });
 
   it('analyticHandler trackAppraisalIdentify should called', () => {
