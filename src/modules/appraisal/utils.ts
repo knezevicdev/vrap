@@ -127,7 +127,7 @@ export function makeRequestBody(
   const data = {
     // eslint-disable-next-line @typescript-eslint/naming-convention
     DateSubmitted: now,
-    form: appraisalData.isTradeIn ? 'trade' : 'sell',
+    form: appraisalData.isTradeIn ? 'trade' : appraisalData.form,
     lead_id,
     anonymous_id,
     ...vehicleInformationData(appraisalData.vehicleInfoForm),

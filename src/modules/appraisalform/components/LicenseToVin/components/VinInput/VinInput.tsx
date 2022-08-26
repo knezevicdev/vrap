@@ -39,7 +39,7 @@ const VinInput: React.FC<Props> = ({ viewModel, router }) => {
 
     router.push({
       pathname: appraisalPath,
-      query: { vehicle: vinForPath },
+      query: { vehicle: vinForPath, ...router.query.type },
     });
   };
 

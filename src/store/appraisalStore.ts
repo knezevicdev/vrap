@@ -109,6 +109,10 @@ export class AppraisalStore {
     return this.isEmpty;
   }
 
+  setForm(value: string): void {
+    this.form = value;
+  }
+
   setShowSpinner(value: boolean): void {
     this.showSpinner = value;
   }

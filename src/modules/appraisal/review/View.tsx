@@ -32,6 +32,7 @@ const AppraisalReviewViewDetail: React.FC<Props> = ({ viewModel }) => {
   const recaptchaRef = useRef<any>();
 
   useEffect(() => {
+    viewModel.setTradeFormType();
     if (viewModel.isAppraisalEmpty()) {
       viewModel.redirectToAppraisalForm();
     } else {
