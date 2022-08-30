@@ -1,0 +1,65 @@
+mutation ADD_TRADE_INS(
+  $dealID: Int!
+  $source: String!
+  $appraisalID: String!
+  $offerID: Int!
+  $offerPrice: Float!
+  $vin: String!
+  $make: String!
+  $carModel: String!
+  $year: Int!
+  $email: String!
+  $makingLoanPayoff: Boolean
+  $loanPayoff: Float
+  $offerStatus: String!
+  $expirationDate: Time
+) {
+  dealPutTradeIn(
+    dealID: $dealID
+    source: $source
+    appraisalID: $appraisalID
+    offerID: $offerID
+    offerPrice: $offerPrice
+    vin: $vin
+    make: $make
+    carModel: $carModel
+    year: $year
+    email: $email
+    makingLoanPayoff: $makingLoanPayoff
+    loanPayoff: $loanPayoff
+    offerStatus: $offerStatus
+    expirationDate: $expirationDate
+  ) {
+    __typename
+    ... on Deal {
+      dealSummary {
+        dealStatus {
+          step
+        }
+        inventory {
+          vehicle {
+            vin
+          }
+        }
+      }
+      TradeIns {
+        appraisalID
+        offerID
+        offerStatus
+        year
+        make
+        model
+        vin
+        offerPrice
+        loanPayoff
+        makingLoanPayoff
+        expirationDate
+      }
+    }
+    ... on APIError {
+      errorType
+      errorTitle
+      errorDetail
+    }
+  }
+}

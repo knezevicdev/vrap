@@ -1,18 +1,14 @@
-import { isSuccessResponse } from '@vroom-web/networking';
+import { GQLTypes, isSuccessResponse, Response } from '@vroom-web/networking';
+import {
+  ApiError,
+  MutationDealAddStatusArgs,
+} from '@vroom-web/networking/dist/generated/graphql-types';
 import { get as _get } from 'lodash';
-const { publicRuntimeConfig } = getConfig();
 
-import getConfig from 'next/config';
-
-import AnalyticsHandler from '../../integrations/AnalyticsHandler';
+import DEAL_ADD_TRADE_INS from '../../graphql/mutations/dealAddTradeIns.graphql';
+import UPDATE_DEAL_STATUS from '../../graphql/mutations/updateDealStatus.graphql';
+import GET_USER_DEAL from '../../graphql/queries/getUserDeal.graphql';
 import client from '../client';
-import { Deal, DealTradePayload } from '../models/Deal';
-import { getUTMParams } from '../utils';
-
-const NEXT_PUBLIC_INTERCHANGE_URL =
-  publicRuntimeConfig.NEXT_PUBLIC_INTERCHANGE_URL;
-
-const analyticsHandler = new AnalyticsHandler();
 
 const getResumeStep = (nextStep: string, vin: string): string | undefined => {
   switch (nextStep) {
@@ -51,39 +47,20 @@ const getResumeStep = (nextStep: string, vin: string): string | undefined => {
   }
 };
 
-const getErrorMessage = (response: unknown): string => {
-  const errorMessage = _get(
-    response,
-    'error.response.data.error.details.0.message'
-  );
-  switch (errorMessage) {
-    case 'deal version number is out of sync':
-      analyticsHandler.track('Transaction Has New Updates Error', {
-        category: 'Ecommerce',
-        label: 'Transaction Has New Updates Error',
-      });
-      return 'Your changes were unable to be saved because your transaction has new updates. Please try submitting again.';
-    case 'cannot update MA deal':
-      return 'Thank you for your interest in buying a car from Vroom. Unfortunately, due to state regulations, Vroom does not sell vehicles to customers residing in Massachusetts (MA) at this time.';
-    case 'trying to update a deal status to in-progress from status Pending is not allowed':
-      return 'You are currently in the process of purchasing another vehicle. Once that purchase is complete, you’ll be able to make another purchase.';
-    default:
-      return 'Oops! Something went wrong. Please try again or give us a call at (855) 524-1300 to reserve this vehicle';
-  }
-};
-
-export const getInProgressDeal = async (): Promise<Deal> => {
-  const response = await client.httpRequest<{ data: Deal[] }>({
-    url: `${NEXT_PUBLIC_INTERCHANGE_URL}/api/deal/my-deals`,
-    method: 'GET',
+export const getInProgressDeal = async (): Promise<GQLTypes.Deal> => {
+  const res = await client.gqlRequest<
+    { user: GQLTypes.User },
+    GQLTypes.UserDealsArgs
+  >({
+    document: GET_USER_DEAL,
+    variables: {
+      dealStatus: ['In-Progress'],
+    },
   });
 
-  if (isSuccessResponse(response)) {
-    const deal = response.data.data.find(
-      (deal) => deal.summary.dealStatus.status === 'In-Progress'
-    );
-
-    if (deal) return deal;
+  const deal = _get(res, 'data.user.deals.0');
+  if (isSuccessResponse(res) && deal) {
+    return deal;
   }
 
   throw new Error('Deal not found');
@@ -101,35 +78,14 @@ type UpdateDealError = {
 
 export type UpdateDeal = UpdateDealResponse | UpdateDealError;
 
-const updateDeal = async (deal: Deal): Promise<UpdateDeal> => {
-  const attribution = {
-    brand: 'Vroom',
-    segment_user_id:
-      window && window.analytics && window.analytics.user
-        ? window.analytics.user().anonymousId()
-        : '',
-    site: (window && window.location && window.location.hostname) || '',
-    type: 'Website',
-    ...getUTMParams(),
-  };
-
-  const response = await client.httpRequest<{ data: Deal }>({
-    url: `${NEXT_PUBLIC_INTERCHANGE_URL}/api/deal/my-deals/update`,
-    method: 'PUT',
-    data: {
-      ...deal,
-      attribution,
-    },
-    headers: {
-      'supported-steps':
-        'SelectTradeIn,TradeInVehicle,TradeInLoanInfo,Address,PaymentType,Financing,FinancingPending,FinancingOption,FinancingDeclined,BackendProducts,DepositPaymentInfo,DocumentUpload,Contracting,DealSummary',
-    },
-  });
-
-  if (isSuccessResponse(response)) {
+const handleUpdateDealResponse = (
+  res: Response<Record<string, GQLTypes.Deal>>,
+  key: string
+): UpdateDeal => {
+  if (isSuccessResponse(res)) {
     const redirect = getResumeStep(
-      response.data.data.summary.dealStatus.step,
-      deal.vin
+      res.data[key].dealSummary.dealStatus.step,
+      res.data[key].dealSummary.inventory?.vehicle?.vin || ''
     );
 
     if (redirect) {
@@ -142,33 +98,66 @@ const updateDeal = async (deal: Deal): Promise<UpdateDeal> => {
 
   return {
     isError: true,
-    error: getErrorMessage(response),
+    error:
+      ((res as unknown) as { data: Record<string, ApiError> })?.data?.[key]
+        ?.errorDetail ||
+      'Oops! Something went wrong. Please try again or give us a call at (855) 524-1300 to reserve this vehicle',
   };
 };
 
 export const acceptDeal = async (
-  deal: Deal,
-  dealTradePayload: DealTradePayload
+  payload: GQLTypes.MutationDealPutTradeInArgs
 ): Promise<UpdateDeal> => {
-  return updateDeal({
-    ...deal,
-    deal_trades: [
-      {
-        payload: dealTradePayload,
-      },
-    ],
-  });
-};
-
-export const declineDeal = async (deal: Deal): Promise<UpdateDeal> => {
-  return updateDeal({
-    ...deal,
-    summary: {
-      ...deal.summary,
-      dealStatus: {
-        ...deal.summary.dealStatus,
-        tradeInStepDone: true,
-      },
+  const {
+    dealID,
+    appraisalID,
+    offerID,
+    offerPrice,
+    vin,
+    make,
+    carModel,
+    year,
+    email,
+    offerStatus,
+    expirationDate,
+    source,
+  } = payload;
+  const res = await client.gqlRequest<
+    Record<string, GQLTypes.Deal>,
+    GQLTypes.MutationDealPutTradeInArgs
+  >({
+    document: DEAL_ADD_TRADE_INS,
+    variables: {
+      dealID,
+      source,
+      appraisalID,
+      offerID,
+      offerPrice,
+      vin,
+      make,
+      carModel,
+      year,
+      email,
+      offerStatus,
+      expirationDate,
     },
   });
+
+  return handleUpdateDealResponse(res, 'dealPutTradeIn');
+};
+
+export const declineDeal = async (deal: GQLTypes.Deal): Promise<UpdateDeal> => {
+  const res = await client.gqlRequest<
+    Record<string, GQLTypes.Deal>,
+    MutationDealAddStatusArgs
+  >({
+    document: UPDATE_DEAL_STATUS,
+    variables: {
+      dealID: deal.dealID,
+      source: 'web',
+      tradeInStepDone: true,
+    },
+  });
+
+  return handleUpdateDealResponse(res, 'dealAddStatus');
 };

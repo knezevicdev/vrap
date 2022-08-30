@@ -1,0 +1,9 @@
+#import "src/graphql/fragments/dealFragment.graphql"
+
+query GET_USER_DEAL($dealID: Int, $dealStatus: [String!]) {
+  user {
+    deals(dealID: $dealID, dealStatus: $dealStatus) {
+      ...DealDetails
+    }
+  }
+}

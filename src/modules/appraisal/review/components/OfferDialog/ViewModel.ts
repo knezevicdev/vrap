@@ -78,18 +78,20 @@ export default class OfferDialogViewModel {
     if (!this._store.deal.deal || !offer) return;
 
     this._store.deal.setLoading(true);
-    const response = await acceptDeal(this._store.deal.deal, {
-      appraisalId: offer.id,
-      email: this._store.appraisal.personalInfoForm.email,
-      expirationDate: offer.offerExpiration,
-      make: offer.make,
-      mileage: offer.miles,
-      model: offer.model,
-      offerId: offer.offerId,
+
+    const response = await acceptDeal({
+      dealID: this._store.deal.deal.dealID,
+      appraisalID: offer.id,
+      offerID: offer.offerId,
       offerPrice: offer.price,
-      offerStatus: offer.offerStatus,
       vin: offer.vin,
+      make: offer.make,
+      carModel: offer.model,
       year: offer.year,
+      email: this._store.appraisal.personalInfoForm.email,
+      offerStatus: offer.offerStatus,
+      expirationDate: offer.offerExpiration,
+      source: 'web',
     });
     this._store.deal.setLoading(false);
 

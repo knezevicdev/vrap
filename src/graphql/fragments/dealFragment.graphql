@@ -1,0 +1,165 @@
+fragment DealDetails on Deal {
+  accountID
+  dealID
+  createdAt
+  TradeIns {
+    appraisalID
+    offerID
+    offerStatus
+    year
+    make
+    model
+    vin
+    offerPrice
+    loanPayoff
+    makingLoanPayoff
+    expirationDate
+  }
+  dealSummary {
+    accountInfo {
+      userName
+      firstName
+      middleName
+      lastName
+      phone
+    }
+    dealStatus {
+      step
+      status
+      interestedInTrade
+      canBeCancelled
+      pastSteps
+      docUploadStepDone
+      contractingStepDone
+      backendProductsStepDone
+      plateWillBeTransferred
+    }
+    paymentType
+    deliveryAddress {
+      firstName
+      lastName
+      streetLine1
+      streetLine2
+      city
+      state
+      postCode
+    }
+    amountDue {
+      subTotal
+      totalBalanceDue
+      cashDownPayment
+      taxableAmount
+      totalTaxesAndFees
+      shippingFee
+      tradeIn {
+        value
+        loanPayoff
+        netBalance
+        totalDownPayment
+      }
+    }
+    dateCompleted
+    deliveryDetails {
+      wheelerTruck
+      availableForDelivery
+      additionalDetails
+      unavailableDates
+      alternateContact {
+        first
+        last
+        phone
+      }
+      wheelerTruck
+    }
+    inventory {
+      id
+      miles
+      leadPhotoURL
+      pricing {
+        listPrice
+      }
+      vehicle {
+        vin
+        year
+        make
+        model
+        trim
+        fuelType {
+          key
+        }
+      }
+      basicWarrantyMiles
+      basicWarrantyExpirationDate
+    }
+    depositPaymentInfo {
+      HoldPlaced
+      LastFourDigits
+      ChargeAmount
+    }
+    registrationAddress {
+      firstName
+      lastName
+      streetLine1
+      streetLine2
+      city
+      state
+      postCode
+    }
+    billingAddress {
+      firstName
+      lastName
+      streetLine1
+      streetLine2
+      city
+      state
+      postCode
+    }
+    uaccOffers {
+      amountFinanced
+      term
+      monthlyPayment
+      status
+      lenderName
+      rate
+      downPayment
+      netCheck
+      referenceID
+      financeCharge
+      TotalOfPayments
+    }
+    financing {
+      decisions {
+        name
+        state
+        isAccepted
+        pricing {
+          apr
+          amountFinanced
+          downPayment
+          monthlyPayment
+          termMonths
+        }
+      }
+      pricingStack {
+        downPayment
+        lenderName
+        apr
+        termMonths
+        monthlyPayment
+        financeCharge
+        amountFinanced
+      }
+    }
+    additionalProducts
+    autoFiResponse {
+      url
+    }
+  }
+  stips {
+    stipsCode
+    fileID
+    status
+    name
+    rejectedReason
+  }
+}

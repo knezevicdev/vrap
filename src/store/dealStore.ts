@@ -1,9 +1,8 @@
+import { GQLTypes } from '@vroom-web/networking';
 import { makeAutoObservable } from 'mobx';
 
-import { Deal } from '../networking/models/Deal';
-
 export class DealStore {
-  deal?: Deal;
+  deal?: GQLTypes.Deal;
   loading = false;
   tradeInError = '';
 
@@ -11,7 +10,7 @@ export class DealStore {
     makeAutoObservable(this);
   }
 
-  setDeal(deal: Deal): void {
+  setDeal(deal: GQLTypes.Deal): void {
     this.deal = deal;
   }
 
