@@ -1,0 +1,30 @@
+mutation UPDATE_DEAL_STATUS(
+  $dealID: Int!
+  $source: String!
+  $tradeInStepDone: Boolean!
+) {
+  dealAddStatus(
+    dealID: $dealID
+    source: $source
+    tradeInStepDone: $tradeInStepDone
+  ) {
+    __typename
+    ... on Deal {
+      dealSummary {
+        dealStatus {
+          step
+        }
+        inventory {
+          vehicle {
+            vin
+          }
+        }
+      }
+    }
+    ... on APIError {
+      errorType
+      errorTitle
+      errorDetail
+    }
+  }
+}
