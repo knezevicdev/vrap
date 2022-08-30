@@ -112,10 +112,10 @@ describe('Appraisal review index page test', () => {
     });
   });
 
-  it('should redirect to /appraisal/tradeIn-selfService if Appraisal is empty and user is on /appraisal/tradeIn-selfService-Review', () => {
-    router.asPath = '/appraisal/tradeIn-selfService-Review';
+  it('should redirect to /sell/tradeIn-selfService if Appraisal is empty and user is on /sell/tradeIn-selfService-Review', () => {
+    router.asPath = '/sell/tradeIn-selfService-Review';
     viewModel.redirectToAppraisalForm();
-    expect(router.push).toBeCalledWith('/appraisal/tradeIn-selfService');
+    expect(router.push).toBeCalledWith('/sell/tradeIn-selfService');
   });
 
   it('should set form in appraisal store if type exists in query string', () => {

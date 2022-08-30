@@ -137,13 +137,17 @@ class PriceViewModel {
   }
 
   cancelOffer = async (): Promise<void> => {
-    if (!this.store.deal.deal) return;
-
     this.store.deal.setTradeInError('');
     this.store.deal.setLoading(true);
-    const response = await declineDeal(this.store.deal.deal);
+
+    if (this.store.deal.deal) {
+      const response = await declineDeal(this.store.deal.deal);
+      this.handleUpdateDeal(response);
+    } else {
+      this.store.deal.setTradeInError(TradeInError);
+    }
+
     this.store.deal.setLoading(false);
-    this.handleUpdateDeal(response);
   };
 
   async initialize(): Promise<void> {

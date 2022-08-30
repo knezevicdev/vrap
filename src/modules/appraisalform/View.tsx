@@ -418,10 +418,6 @@ const AppraisalForm: React.FC<Props> = ({ viewModel }) => {
     }
   };
 
-  const cancelOffer = async () => {
-    await viewModel.cancelOffer();
-  };
-
   useEffect(() => {
     const overflow = showExactMileageDialog ? 'hidden' : '';
     document.body.style.overflow = overflow;
@@ -454,7 +450,7 @@ const AppraisalForm: React.FC<Props> = ({ viewModel }) => {
         disableExperiments={false}
       />
       {store.appraisal.isTradeIn && (
-        <Cancel onClick={cancelOffer}>{CancelTradeText}</Cancel>
+        <Cancel onClick={viewModel.cancelOffer}>{CancelTradeText}</Cancel>
       )}
       {showExactMileageDialog && (
         <ExactMilageDialog
