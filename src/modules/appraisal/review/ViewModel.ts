@@ -40,7 +40,7 @@ export default class AppraisalReviewModel {
 
   redirectToAppraisalForm(): void {
     if (this.isTradeIn) {
-      this._router.push('/appraisal/tradeIn-selfService');
+      this._router.push('/sell/tradeIn-selfService');
     } else {
       this._router.push({
         pathname: '/sell/vehicleInformation',

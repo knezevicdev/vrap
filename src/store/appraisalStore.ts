@@ -91,14 +91,12 @@ export class AppraisalStore {
 
   get appraisalPath() {
     return this.isTradeIn
-      ? '/appraisal/tradeIn-selfService'
+      ? '/sell/tradeIn-selfService'
       : '/sell/vehicleInformation';
   }
 
   get reviewPath() {
-    return this.isTradeIn
-      ? '/appraisal/tradeIn-selfService-Review'
-      : '/sell/review';
+    return this.isTradeIn ? '/sell/tradeIn-selfService-Review' : '/sell/review';
   }
 
   constructor() {

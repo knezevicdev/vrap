@@ -1,5 +1,5 @@
 import { observer } from 'mobx-react';
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import {
   AcceptButton,
@@ -19,6 +19,13 @@ interface Props {
 }
 
 const OfferDialogView: React.FC<Props> = ({ viewModel }) => {
+  useEffect(() => {
+    document.body.style.overflow = 'hidden';
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, []);
+
   return (
     <Overlay>
       <DialogContainer data-qa="AppraisalOfferDialog" className="fs-unmask">

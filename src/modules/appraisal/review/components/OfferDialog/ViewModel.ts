@@ -1,3 +1,5 @@
+import { NoDealErrorText } from './OfferDialog.language';
+
 import { acceptDeal, declineDeal, UpdateDeal } from 'src/networking/request';
 import Store from 'src/store';
 import { displayCurrency } from 'src/utils';
@@ -54,7 +56,6 @@ export default class OfferDialogViewModel {
 
   get hasValidPrice(): boolean {
     const expirationDate = this._store.offer.offerDetail?.offerExpiration;
-
     return !!expirationDate && new Date(expirationDate) > new Date();
   }
 
@@ -75,7 +76,10 @@ export default class OfferDialogViewModel {
     }
 
     const offer = this._store.offer.offerDetail;
-    if (!this._store.deal.deal || !offer) return;
+    if (!this._store.deal.deal || !offer) {
+      this.showDealError();
+      return;
+    }
 
     this._store.deal.setLoading(true);
 
@@ -99,12 +103,20 @@ export default class OfferDialogViewModel {
   };
 
   declinePrice = async (): Promise<void> => {
-    if (!this._store.deal.deal) return;
+    if (!this._store.deal.deal) {
+      this.showDealError();
+      return;
+    }
 
     this._store.deal.setLoading(true);
     const response = await declineDeal(this._store.deal.deal);
     this._store.deal.setLoading(false);
 
     this.handleUpdateDeal(response);
+  };
+
+  showDealError = (): void => {
+    this._store.offer.setShowOfferDialog(false);
+    this._store.appraisal.setReviewError(NoDealErrorText);
   };
 }
