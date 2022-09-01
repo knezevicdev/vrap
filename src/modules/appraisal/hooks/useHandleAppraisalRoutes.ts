@@ -8,7 +8,7 @@ const useHandleAppraisalRoutes = (): void => {
   const router = useRouter();
   const { store } = useAppStore();
 
-  const { isTradeIn } = store.appraisal;
+  store.appraisal.setIsTradeIn(router.asPath.includes('/tradeIn-selfService'));
 
   const redirectToLogin = (): void => {
     window.location.href = `/myaccount/login?redirect=${encodeURIComponent(
@@ -28,11 +28,8 @@ const useHandleAppraisalRoutes = (): void => {
   }, []);
 
   useEffect(() => {
-    if (!isTradeIn && router.asPath.includes('/tradeIn-selfService')) {
-      store.appraisal.setIsTradeIn(true);
-      redirectIfNotLoggedIn();
-    }
-  }, [isTradeIn, redirectIfNotLoggedIn, router.asPath, store.appraisal]);
+    redirectIfNotLoggedIn();
+  }, []);
 };
 
 export default useHandleAppraisalRoutes;
