@@ -28,8 +28,10 @@ const useHandleAppraisalRoutes = (): void => {
   }, []);
 
   useEffect(() => {
-    redirectIfNotLoggedIn();
-  }, []);
+    if (store.appraisal.isTradeIn) {
+      redirectIfNotLoggedIn();
+    }
+  }, [redirectIfNotLoggedIn, store.appraisal.isTradeIn]);
 };
 
 export default useHandleAppraisalRoutes;
