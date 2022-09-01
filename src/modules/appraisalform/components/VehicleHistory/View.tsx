@@ -46,7 +46,7 @@ const VehicleHistoryView: React.FC<Props> = ({ fields, form }) => {
         },
         bankName: {
           ...fields.bankName,
-          isRequired: !isTradeIn,
+          isRequired: !isTradeIn && fields.lienType.value !== 'Neither',
         },
         state: {
           ...fields.state,
