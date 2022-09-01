@@ -406,7 +406,10 @@ const AppraisalForm: React.FC<Props> = ({ viewModel }) => {
 
     if (clearForm) {
       await viewModel.clearAppraisal();
-      router.push({ pathname: store.appraisal.appraisalPath });
+      router.push({
+        pathname: store.appraisal.appraisalPath,
+        query: { ...router.query },
+      });
     } else {
       viewModel.updateAppraisal(formInfo);
 
