@@ -138,7 +138,7 @@ const AppraisalForm: React.FC<Props> = ({ viewModel }) => {
     const zipCode = appraisalUseForm.vehicleInfoForm.fields.zipCode.value;
     const state = viewModel.getStateFromZip(zipCode);
     const isStateValid =
-      store.appraisal.isTradeIn || router.query.type === 'trade' || !state;
+      store.appraisal.isTradeIn || router.query.form === 'trade' || !state;
 
     setExactMileageProps({
       strictDialog: false,
@@ -386,7 +386,7 @@ const AppraisalForm: React.FC<Props> = ({ viewModel }) => {
     viewModel.updateAppraisal(formInfo);
     router.push({
       pathname: store.appraisal.reviewPath,
-      query: { ...(router.query.type && { type: router.query.type }) },
+      query: { ...(router.query.form && { form: router.query.form }) },
     });
   };
 

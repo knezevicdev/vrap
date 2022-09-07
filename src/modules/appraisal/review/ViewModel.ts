@@ -69,7 +69,7 @@ export default class AppraisalReviewModel {
   }
 
   setTradeFormType(): void {
-    if (this._router.query.type === 'trade') {
+    if (this._router.query.form === 'trade') {
       this.appraisalStore.setForm('trade');
     }
   }

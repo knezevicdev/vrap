@@ -103,12 +103,12 @@ describe('Appraisal review index page test', () => {
     });
   });
 
-  it('should preserve type=trade query parameter while redirecting to /sell/vehicleInformation', () => {
-    router.query = { type: 'trade' };
+  it('should preserve form=trade query parameter while redirecting to /sell/vehicleInformation', () => {
+    router.query = { form: 'trade' };
     viewModel.redirectToAppraisalForm();
     expect(router.push).toHaveBeenCalledWith({
       pathname: '/sell/vehicleInformation',
-      query: { type: 'trade' },
+      query: { form: 'trade' },
     });
   });
 
@@ -118,8 +118,8 @@ describe('Appraisal review index page test', () => {
     expect(router.push).toBeCalledWith('/sell/tradeIn-selfService');
   });
 
-  it('should set form in appraisal store if type exists in query string', () => {
-    router.query = { type: 'trade' };
+  it('should set form in appraisal store if form exists in query string', () => {
+    router.query = { form: 'trade' };
     viewModel.setTradeFormType();
     expect(stores.appraisal.form).toEqual('trade');
   });
