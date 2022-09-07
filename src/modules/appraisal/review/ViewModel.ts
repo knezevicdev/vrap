@@ -75,7 +75,9 @@ export default class AppraisalReviewModel {
   }
 
   trackAppraisalReviewViewed(): void {
-    this._analyticsHandler.trackAppraisalReviewViewed();
+    this._analyticsHandler.trackAppraisalReviewViewed(
+      this.appraisalStore.eventCategory
+    );
   }
 
   async submitAppraisal(token: string): Promise<void> {

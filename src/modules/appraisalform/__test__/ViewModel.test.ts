@@ -145,7 +145,7 @@ describe('test appraisalForm viewModel ', () => {
     const analyticHandler = viewModel.getAnalyticHandler;
     const trackSpy = jest.spyOn(analyticHandler, 'trackStepComplete');
     viewModel.trackStepComplete(1, formData.vehicleInfoForm);
-    expect(trackSpy).toHaveBeenCalledWith(1, formData.vehicleInfoForm);
+    expect(trackSpy).toHaveBeenCalledWith(1, formData.vehicleInfoForm, 'Sell');
   });
 
   it('analytics should called when called trackNextStepViewed ', () => {

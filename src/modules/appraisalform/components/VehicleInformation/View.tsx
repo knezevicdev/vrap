@@ -594,12 +594,14 @@ const VehicleInformation: React.FC<Props> = ({
 
   const handleVinKeyPressSubmit = () => {
     if (!isSubmitDisabled()) {
+      viewModel.trackSubmit('Vin');
       handleVehicleSubmit(fields.vin.value);
     }
   };
 
   const handleLicensePlateKeyPressSubmit = () => {
     if (!isSubmitDisabled()) {
+      viewModel.trackSubmit('License Plate');
       handleVehicleSubmit(fields.vin.value);
     }
   };
@@ -630,6 +632,10 @@ const VehicleInformation: React.FC<Props> = ({
   const handleVinSubmit = async (vin = '') => {
     const token = await getCaptchaToken();
     if (token) {
+      router.push({
+        pathname: appraisalPath,
+        query: { vehicle: vin || fields.vin.value, ...router.query },
+      });
       handleDecodeVin(vin || fields.vin.value, token);
     } else {
       setShowSubmitError(true);

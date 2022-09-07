@@ -105,44 +105,39 @@ class AnalyticsHandler extends BaseAnalyticsHandler {
     this.track(event, properties);
   }
 
-  trackMileageChange(): void {
+  trackMileageChange(category: string): void {
     const event = 'Mileage Entered';
-    const category = 'Sell';
     const action = 'Click';
     const properties = { action, category };
 
     this.track(event, properties);
   }
 
-  trackColorChange(): void {
+  trackColorChange(category: string): void {
     const event = 'Color Selected';
-    const category = 'Sell';
     const action = 'Click';
     const properties = { action, category };
 
     this.track(event, properties);
   }
 
-  trackNumberOfKeysChange(): void {
+  trackNumberOfKeysChange(category: string): void {
     const event = 'Keys Selected';
-    const category = 'Sell';
     const action = 'Click';
     const properties = { action, category };
 
     this.track(event, properties);
   }
 
-  trackTrimChange(): void {
+  trackTrimChange(category: string): void {
     const event = 'Trim Selected';
-    const category = 'Sell';
     const action = 'Click';
     const properties = { action, category };
 
     this.track(event, properties);
   }
 
-  trackProcessStart(): void {
-    const category = 'Sell';
+  trackProcessStart(category: string): void {
     const properties = { category };
     const event = 'Appraisal Started';
     const nameSection = 'Vehicle Information';
@@ -152,7 +147,7 @@ class AnalyticsHandler extends BaseAnalyticsHandler {
     this.track(event, properties);
   }
 
-  trackStepComplete(step: any, formData: any): void {
+  trackStepComplete(step: any, formData: any, category: string): void {
     const sections: any = {
       0: 'Vehicle Information',
       1: 'Vehicle History',
@@ -179,7 +174,6 @@ class AnalyticsHandler extends BaseAnalyticsHandler {
         : {};
 
     const event = `${stepName} Completed`;
-    const category = 'Sell';
     const properties = {
       category,
       ...details,
@@ -204,16 +198,8 @@ class AnalyticsHandler extends BaseAnalyticsHandler {
     this.page(pageName, category);
   }
 
-  trackAppraisalReviewViewed(): void {
+  trackAppraisalReviewViewed(category: string): void {
     const pageName = 'Appraisal Review';
-    const category = 'Sell';
-
-    this.page(pageName, category);
-  }
-
-  trackAppraisalSubmitted(): void {
-    const pageName = 'Congratulations';
-    const category = 'Sell';
 
     this.page(pageName, category);
   }
@@ -229,8 +215,7 @@ class AnalyticsHandler extends BaseAnalyticsHandler {
     this.track(event, properties);
   }
 
-  trackPanelsTooltip(damageType: string): void {
-    const category = 'Sell';
+  trackPanelsTooltip(damageType: string, category: string): void {
     const event = `Tool Tip Clicked`;
     const properties = {
       category,

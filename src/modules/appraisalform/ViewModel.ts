@@ -61,11 +61,15 @@ class PriceViewModel {
   }
 
   trackProcessStart = (): void => {
-    this._analyticsHandler.trackProcessStart();
+    this._analyticsHandler.trackProcessStart(this.appraisalStore.eventCategory);
   };
 
   trackStepComplete = (activeSection: number, formInfo: any): void => {
-    this._analyticsHandler.trackStepComplete(activeSection, formInfo);
+    this._analyticsHandler.trackStepComplete(
+      activeSection,
+      formInfo,
+      this.appraisalStore.eventCategory
+    );
   };
 
   trackNextStepViewed = (nextStep: number): void => {

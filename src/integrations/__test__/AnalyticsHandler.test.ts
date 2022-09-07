@@ -159,7 +159,7 @@ describe('test AnalyticsHandler ', () => {
     const event = 'Mileage Entered';
     const category = 'Sell';
     const action = 'Click';
-    analytics.trackMileageChange();
+    analytics.trackMileageChange(category);
     const properties = { action, category };
     expect(trackSpy).toHaveBeenCalledWith(event, properties);
   });
@@ -169,7 +169,7 @@ describe('test AnalyticsHandler ', () => {
     const category = 'Sell';
     const action = 'Click';
     const properties = { action, category };
-    analytics.trackColorChange();
+    analytics.trackColorChange(category);
 
     expect(trackSpy).toHaveBeenCalledWith(event, properties);
   });
@@ -180,7 +180,7 @@ describe('test AnalyticsHandler ', () => {
     const action = 'Click';
     const properties = { action, category };
 
-    analytics.trackNumberOfKeysChange();
+    analytics.trackNumberOfKeysChange(category);
 
     expect(trackSpy).toHaveBeenCalledWith(event, properties);
   });
@@ -191,7 +191,7 @@ describe('test AnalyticsHandler ', () => {
     const action = 'Click';
     const properties = { action, category };
 
-    analytics.trackTrimChange();
+    analytics.trackTrimChange(category);
 
     expect(trackSpy).toHaveBeenCalledWith(event, properties);
   });
@@ -202,7 +202,7 @@ describe('test AnalyticsHandler ', () => {
     const event = 'Appraisal Started';
     const nameSection = 'Vehicle Information';
 
-    analytics.trackProcessStart();
+    analytics.trackProcessStart(category);
 
     expect(trackSpy).toHaveBeenCalledWith(event, properties);
     expect(pageSpy).toHaveBeenCalledWith(nameSection, category);
@@ -227,7 +227,7 @@ describe('test AnalyticsHandler ', () => {
       ...details,
     };
 
-    analytics.trackStepComplete(3, formData);
+    analytics.trackStepComplete(3, formData, category);
 
     expect(trackSpy).toHaveBeenCalledWith(event, properties);
   });
@@ -241,7 +241,7 @@ describe('test AnalyticsHandler ', () => {
       ...details,
     };
 
-    analytics.trackStepComplete(2, formData);
+    analytics.trackStepComplete(2, formData, category);
 
     expect(trackSpy).toHaveBeenCalledWith(event, properties);
   });
@@ -258,15 +258,7 @@ describe('test AnalyticsHandler ', () => {
   it('trackAppraisalReviewViewed', () => {
     const pageName = 'Appraisal Review';
     const category = 'Sell';
-    analytics.trackAppraisalReviewViewed();
-
-    expect(pageSpy).toHaveBeenCalledWith(pageName, category);
-  });
-
-  it('trackAppraisalSubmitted', () => {
-    const pageName = 'Congratulations';
-    const category = 'Sell';
-    analytics.trackAppraisalSubmitted();
+    analytics.trackAppraisalReviewViewed(category);
 
     expect(pageSpy).toHaveBeenCalledWith(pageName, category);
   });
@@ -291,7 +283,7 @@ describe('test AnalyticsHandler ', () => {
       category,
       label: damageType,
     };
-    analytics.trackPanelsTooltip(damageType);
+    analytics.trackPanelsTooltip(damageType, category);
 
     expect(trackSpy).toHaveBeenCalledWith(event, properties);
   });

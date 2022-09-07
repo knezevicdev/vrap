@@ -2,6 +2,7 @@ import { HorizontalRadio, HorizontalRadioOption } from '@vroom-web/ui-lib';
 import React, { useState } from 'react';
 import styled from 'styled-components';
 
+import { useAppStore } from '../../../context';
 import { GenericObject } from '../../../interfaces.d';
 import Dialog from '../Dialog/Panels';
 
@@ -18,10 +19,14 @@ const SelectBoxes: React.FC<Props> = ({
   className,
 }) => {
   const analyticsHandler: AnalyticsHandler = new AnalyticsHandler();
+  const { store } = useAppStore();
   const [showPanelsDialog, setShowPanelsDialog] = useState(false);
 
   const handleShowPanelsDialog = () => {
-    analyticsHandler.trackPanelsTooltip(panelsTooltip);
+    analyticsHandler.trackPanelsTooltip(
+      panelsTooltip,
+      store.appraisal.eventCategory
+    );
     setShowPanelsDialog(true);
   };
 
