@@ -99,6 +99,10 @@ export class AppraisalStore {
     return this.isTradeIn ? '/sell/tradeIn-selfService-Review' : '/sell/review';
   }
 
+  get eventCategory() {
+    return this.isTradeIn ? 'Trade' : 'Sell';
+  }
+
   constructor() {
     makeAutoObservable(this);
   }

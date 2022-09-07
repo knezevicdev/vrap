@@ -1,5 +1,6 @@
 import React from 'react';
 
+import { useAppStore } from '../../../../context';
 import { FormField } from '../../../../interfaces.d';
 import SelectBoxes from '../SelectBoxes';
 import { FormFields } from './Inputs.language';
@@ -12,11 +13,12 @@ interface Props {
 }
 
 const NumberOfKeysInput: React.FC<Props> = ({ field }) => {
+  const { store } = useAppStore();
   const { onChange, value } = field;
   const analyticsHandler = new AnalyticsHandler();
 
   const handleOnChange = (value: string) => {
-    analyticsHandler.trackNumberOfKeysChange();
+    analyticsHandler.trackNumberOfKeysChange(store.appraisal.eventCategory);
     onChange({ ...field, value });
   };
 

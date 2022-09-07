@@ -39,7 +39,9 @@ class VehicleInfoViewModel {
   }
 
   trackMileageChange = (): void => {
-    this._analyticsHandler.trackMileageChange();
+    this._analyticsHandler.trackMileageChange(
+      this.appraisalStore.eventCategory
+    );
   };
 
   async getVinDecode(vehicleId: string, captchaToken: string): Promise<any> {
@@ -87,6 +89,13 @@ class VehicleInfoViewModel {
     } catch (error) {
       return error;
     }
+  }
+
+  trackSubmit(label: string) {
+    this._analyticsHandler.trackLicenseToVin(
+      label,
+      this.appraisalStore.eventCategory
+    );
   }
 
   async getTrimFeatures(trimId: number): Promise<any> {

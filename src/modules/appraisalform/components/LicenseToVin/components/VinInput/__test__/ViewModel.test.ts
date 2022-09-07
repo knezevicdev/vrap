@@ -1,10 +1,13 @@
 import ViewModel from '../ViewModel';
 
+import Store from 'src/store';
+
 describe('AppraisalForm Exterior condition component test', () => {
   let viewModel: ViewModel;
 
   beforeEach(() => {
-    viewModel = new ViewModel();
+    const store = new Store();
+    viewModel = new ViewModel(store);
   });
 
   it('should trackLicenseToVin called', () => {

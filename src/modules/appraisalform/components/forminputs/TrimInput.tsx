@@ -2,6 +2,7 @@ import { SelectChanges, SelectItem } from '@vroom-web/ui-lib';
 import React from 'react';
 import styled from 'styled-components';
 
+import { useAppStore } from '../../../../context';
 import CircleLoader from '../CircleLoader';
 import Select from '../Select';
 import { FormFields } from './Inputs.language';
@@ -24,9 +25,10 @@ const TrimInput: React.FC<Props> = ({
   onChange,
   trimLoader,
 }) => {
+  const { store } = useAppStore();
   const analyticsHandler = new AnalyticsHandler();
   const handleOnChange = (changes: SelectChanges<SelectItem>) => {
-    analyticsHandler.trackTrimChange();
+    analyticsHandler.trackTrimChange(store.appraisal.eventCategory);
     const trimOption: any = changes.selectedItem;
     const { value, id, tOptions } = trimOption;
     onChange({ ...field, value, trimId: id, tOptions }, false);
