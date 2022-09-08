@@ -25,6 +25,11 @@ const Information = styled.div`
   flex-direction: column;
 `;
 
+const InformationAccent = styled(Body.Regular)`
+  color: #e7131a;
+  font-weight: 600;
+`;
+
 const CongratsCardView = ({ viewModel }: Props): JSX.Element => {
   return (
     <Container>
@@ -36,7 +41,16 @@ const CongratsCardView = ({ viewModel }: Props): JSX.Element => {
       <Hero.Three>{viewModel.title}</Hero.Three>
       <Information>
         <Body.Regular>{viewModel.information1}</Body.Regular>
-        <Body.Regular>{viewModel.information2}</Body.Regular>
+        <InformationAccent>{viewModel.information2}</InformationAccent>
+      </Information>
+      <Information>
+        <Body.Regular>{viewModel.loanInformation1}</Body.Regular>
+        <Body.Regular>
+          {viewModel.loanInformation2}
+          <InformationAccent>
+            {viewModel.loanInformationPhone}
+          </InformationAccent>
+        </Body.Regular>
       </Information>
     </Container>
   );
