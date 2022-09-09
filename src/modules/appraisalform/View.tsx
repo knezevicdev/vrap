@@ -27,6 +27,7 @@ import VehicleInformation from './components/VehicleInformation';
 import EmailCapture from './Dialog/EmailCapture';
 import useTrackActive from './Dialog/EmailCapture/trackActive';
 import ExactMilageDialog from './Dialog/ExactMilage';
+import InvalidMakeDialog from './Dialog/InvalidMake';
 import InvalidStateDialog from './Dialog/InvalidState';
 import AppraisalViewModel from './ViewModel';
 
@@ -65,6 +66,7 @@ const AppraisalForm: React.FC<Props> = ({ viewModel }) => {
     false
   );
   const [showInvalidStateDialog, setShowInvalidStateDialog] = useState(false);
+  const [showInvalidMakeDialog, setShowInvalidMakeDialog] = useState(false);
   const [state, setState] = useState('');
   const [personalInfo, changePersonalInfo] = useState({});
 
@@ -139,6 +141,7 @@ const AppraisalForm: React.FC<Props> = ({ viewModel }) => {
     const state = viewModel.getStateFromZip(zipCode);
     const isStateValid =
       store.appraisal.isTradeIn || router.query.form === 'trade' || !state;
+    const isMakeValid = vehicleInfo.make.toLowerCase() !== 'maserati';
 
     setExactMileageProps({
       strictDialog: false,
@@ -154,21 +157,23 @@ const AppraisalForm: React.FC<Props> = ({ viewModel }) => {
       },
     });
 
-    const isOdometerValid = await checkOdometer();
-
-    if (isOdometerValid && !isStateValid) {
-      setState(state);
-      setShowInvalidStateDialog(true);
+    if (!isMakeValid) {
+      setShowInvalidMakeDialog(true);
+      return;
     }
 
-    if (isOdometerValid && isStateValid) {
+    if (!isStateValid) {
+      setState(state);
+      setShowInvalidStateDialog(true);
+      return;
+    }
+
+    const isOdometerValid = await checkOdometer();
+
+    if (isOdometerValid && isStateValid && isMakeValid) {
       proceedNext();
     }
   };
-
-  useEffect(() => {
-    document.body.style.overflow = showInvalidStateDialog ? 'hidden' : '';
-  }, [showInvalidStateDialog]);
 
   const sections = [
     {
@@ -422,16 +427,11 @@ const AppraisalForm: React.FC<Props> = ({ viewModel }) => {
   };
 
   useEffect(() => {
-    const overflow = showExactMileageDialog ? 'hidden' : '';
-    document.body.style.overflow = overflow;
+    document.body.style.overflow = showExactMileageDialog ? 'hidden' : '';
   }, [showExactMileageDialog]);
 
   const closeModalHandler = (): void => {
     setShowExactMileageDialog(false);
-  };
-
-  const closeInvalidStateDialogHandler = (): void => {
-    setShowInvalidStateDialog(false);
   };
 
   useEffect(() => {
@@ -461,12 +461,8 @@ const AppraisalForm: React.FC<Props> = ({ viewModel }) => {
           {...exactMileageProps}
         />
       )}
-      {showInvalidStateDialog && (
-        <InvalidStateDialog
-          state={state}
-          closeModalHandler={closeInvalidStateDialogHandler}
-        />
-      )}
+      {showInvalidStateDialog && <InvalidStateDialog state={state} />}
+      {showInvalidMakeDialog && <InvalidMakeDialog />}
       {emailModal && (
         <EmailCapture
           handleClose={handleModalClose}

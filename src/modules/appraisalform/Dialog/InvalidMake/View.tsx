@@ -5,7 +5,7 @@ import { useRouter } from 'next/router';
 import React, { useEffect } from 'react';
 import styled from 'styled-components';
 
-import { lang } from './InvalidStateDialog.language';
+import { lang } from './InvalidMakeDialog.language';
 
 const { publicRuntimeConfig } = getConfig();
 const BASE_PATH = publicRuntimeConfig.NEXT_PUBLIC_BASE_PATH;
@@ -61,13 +61,13 @@ const ModalContent = styled.div`
   `)};
 `;
 
-const locationIcon = `${BASE_PATH}/icons/location.svg`;
+const locationIcon = `${BASE_PATH}/icons/car.svg`;
 
 const ModalImage = styled.div`
   background: url(${locationIcon}) center no-repeat;
-  width: 75px;
-  height: 66px;
-  margin: 0 auto 20px;
+  width: 100px;
+  height: 80px;
+  margin: 0 auto;
 `;
 
 const ModalTitle = styled.div`
@@ -99,10 +99,7 @@ const BrowseInventoryCTA = styled(Button.Primary)`
   font-family: Calibre-Semibold;
 `;
 
-interface Props {
-  state: string;
-}
-const DialogView: React.FC<Props> = ({ state }) => {
+const DialogView: React.FC = () => {
   const router = useRouter();
 
   useEffect(() => {
@@ -126,10 +123,7 @@ const DialogView: React.FC<Props> = ({ state }) => {
           </ModalTitle>
           <Line />
           <ModalImage />
-          <ModalDesc>
-            {lang.desc(state)}
-            &nbsp;
-          </ModalDesc>
+          <ModalDesc>{lang.desc}</ModalDesc>
           <BrowseInventoryCTA onClick={goToInventory}>
             {lang.browseInventory}
           </BrowseInventoryCTA>
