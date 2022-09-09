@@ -255,6 +255,32 @@ describe('test AnalyticsHandler ', () => {
     expect(pageSpy).toHaveBeenCalledWith(pageName, category);
   });
 
+  it('calls trackInvalidStateShown', () => {
+    const category = 'Sell';
+    const event = 'Show State Prohibited Modal';
+    const vin = 'ZN661YUS3LX349214';
+    const properties = {
+      category,
+      vin,
+    };
+    analytics.trackInvalidStateShown(vin, category);
+
+    expect(trackSpy).toHaveBeenCalledWith(event, properties);
+  });
+
+  it('calls trackInvalidMakeShown', () => {
+    const category = 'Sell';
+    const event = 'Show Make Prohibited Modal';
+    const vin = 'ZN661YUS3LX349214';
+    const properties = {
+      category,
+      vin,
+    };
+    analytics.trackInvalidMakeShown(vin, category);
+
+    expect(trackSpy).toHaveBeenCalledWith(event, properties);
+  });
+
   it('trackAppraisalReviewViewed', () => {
     const pageName = 'Appraisal Review';
     const category = 'Sell';
