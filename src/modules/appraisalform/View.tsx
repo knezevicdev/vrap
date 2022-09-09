@@ -139,6 +139,7 @@ const AppraisalForm: React.FC<Props> = ({ viewModel }) => {
     const setMileageDialogDismiss = viewModel.setMileageDialogDismiss;
     const zipCode = appraisalUseForm.vehicleInfoForm.fields.zipCode.value;
     const state = viewModel.getStateFromZip(zipCode);
+    const vin = appraisalUseForm.vehicleInfoForm.fields.vin.value;
     const isStateValid =
       store.appraisal.isTradeIn || router.query.form === 'trade' || !state;
     const isMakeValid = vehicleInfo.make.toLowerCase() !== 'maserati';
@@ -159,12 +160,14 @@ const AppraisalForm: React.FC<Props> = ({ viewModel }) => {
 
     if (!isMakeValid) {
       setShowInvalidMakeDialog(true);
+      viewModel.trackInvalidMakeShown(vin);
       return;
     }
 
     if (!isStateValid) {
       setState(state);
       setShowInvalidStateDialog(true);
+      viewModel.trackInvalidStateShown(vin);
       return;
     }
 

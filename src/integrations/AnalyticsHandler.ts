@@ -198,6 +198,24 @@ class AnalyticsHandler extends BaseAnalyticsHandler {
     this.page(pageName, category);
   }
 
+  trackInvalidStateShown(vin: string, category: string): void {
+    const event = 'Show State Prohibited Modal';
+    const properties = {
+      category,
+      vin,
+    };
+    this.track(event, properties);
+  }
+
+  trackInvalidMakeShown(vin: string, category: string): void {
+    const event = 'Show Make Prohibited Modal';
+    const properties = {
+      category,
+      vin,
+    };
+    this.track(event, properties);
+  }
+
   trackAppraisalReviewViewed(category: string): void {
     const pageName = 'Appraisal Review';
 

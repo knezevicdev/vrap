@@ -76,6 +76,20 @@ class PriceViewModel {
     this._analyticsHandler.trackNextStepViewed(nextStep);
   };
 
+  trackInvalidStateShown = (vin: string): void => {
+    this._analyticsHandler.trackInvalidStateShown(
+      vin,
+      this.appraisalStore.eventCategory
+    );
+  };
+
+  trackInvalidMakeShown = (vin: string): void => {
+    this._analyticsHandler.trackInvalidMakeShown(
+      vin,
+      this.appraisalStore.eventCategory
+    );
+  };
+
   setMileageDialogDismiss = (): void => {
     this.appraisalStore.dismissExactMileageDialog();
   };
