@@ -50,7 +50,7 @@ export const getGradeCheck = async (
 export const getMilageCheck = async (
   vin: string
 ): Promise<Response<MileageCheckResp>> => {
-  const url = `${VROOM_URL}/suyc-api/v1/mileage/${vin}`;
+  const url = `${NEXT_PUBLIC_INTERCHANGE_URL}/suyc-api/v1/mileage/${vin}`;
 
   return await client.httpRequest({
     method: 'get',

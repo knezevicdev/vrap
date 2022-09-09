@@ -4,11 +4,10 @@ import View from './View';
 
 interface Props {
   state: string;
-  closeModalHandler: any;
 }
 
-const Dialog: React.FC<Props> = ({ state, closeModalHandler }) => {
-  return <View state={state} closeModalHandler={closeModalHandler} />;
+const Dialog: React.FC<Props> = ({ state }) => {
+  return <View state={state} />;
 };
 
 export default Dialog;
