@@ -59,6 +59,12 @@ class InitialPriceViewModel {
     );
   };
 
+  isContinueColorExp = (): boolean => {
+    return this.appStore.absmart.isInExperiment(
+      'appraisal-form-continue-button-color'
+    );
+  };
+
   onContinueClick = async (): Promise<void> => {
     const isAccountCreateAbTest = await this.appStore.absmart.isInExperiment(
       'ac-account-create'
