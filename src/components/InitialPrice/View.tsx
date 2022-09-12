@@ -64,7 +64,11 @@ const InitialPriceView: React.FC<Props> = ({ viewModel }) => {
         </ContentText>
       </Content>
 
-      <StyledButton id="priceDetails" onClick={viewModel.onContinueClick}>
+      <StyledButton
+        id="priceDetails"
+        onClick={viewModel.onContinueClick}
+        isColorExp={viewModel.isContinueColorExp()}
+      >
         {viewModel.continuePrice}
       </StyledButton>
 
@@ -96,11 +100,16 @@ const StyledIcon = styled(Icon)`
   padding: 20px;
 `;
 
-const StyledButton = styled(Button.Primary)`
+const StyledButton = styled(Button.Primary)<{ isColorExp: boolean }>`
   margin: 30px 0;
   max-width: 300px;
+  background-color: ${(props) => (props.isColorExp ? '#308406' : '#E7131A')};
   white-space: normal;
   width: 100%;
+
+  &:hover {
+    background-color: ${(props) => (props.isColorExp ? '#309706' : '#d01118')};
+  }
 `;
 
 const FullButton = styled(Button.Primary)`
