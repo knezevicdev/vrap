@@ -4,6 +4,9 @@ const { serverRuntimeConfig } = getConfig();
 import axios from 'axios';
 
 import { DetailsResponse, NewVinDecodeResp } from '../../interfaces.d';
+import logger from '../../utils/logger';
+
+const appraisalApiRoute = '/api/details';
 
 export default async (
   req: NextApiRequest,
@@ -12,25 +15,45 @@ export default async (
   if (req.method === 'POST') {
     const { token, vehicleId } = req.body;
 
+    logger.info(`Request to /appraisal/api/details started`, {
+      appraisalApiRoute,
+      request_payload: req.body,
+    });
+
     try {
       const { data: captchaResponse } = await verifyReCaptcha(token);
 
       if (captchaResponse.success) {
         const { data: details } = await getDetails(vehicleId);
+
+        logger.info(
+          `Successful response from /suyc-api/v1/details/${vehicleId}`,
+          { appraisalApiRoute, vehicleId, response: details }
+        );
+
         const response = mapDetailsToResponse(details);
-        res.status(200).json(response);
+
+        return res.status(200).json(response);
       } else {
-        res.status(400).json({
-          status: 'error',
-          message: `Google reCAPTCHA token failed validation.`,
+        const message = `Google reCAPTCHA token ${token} failed validation.`;
+
+        logger.error(message, {
+          appraisalApiRoute,
+          vehicleId,
+          captcha_token: token,
         });
+        return res.status(400).json({ status: 'error', message });
       }
     } catch (err: any) {
-      console.error(err);
-      res.status(500).json({ status: 'error', message: err?.message });
+      const message = `Request to /suyc-api/v1/details/${vehicleId} failed.`;
+
+      logger.error(message, { appraisalApiRoute, error: err });
+      return res.status(500).json({ status: 'error', message });
     }
   } else {
-    res.status(405).json({ status: 'error', message: 'Unsupported method.' });
+    return res
+      .status(405)
+      .json({ status: 'error', message: 'Unsupported method.' });
   }
 };
 
