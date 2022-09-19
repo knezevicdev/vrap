@@ -50,12 +50,13 @@ const {
   ABSMARTLY_ENV,
   ABSMARTLY_APP,
   NEXT_PUBLIC_BASE_PATH,
+  NEXT_PUBLIC_INTERCHANGE_URL,
+  DATA_DOG_RUM_APPLICATION,
+  DATA_DOG_RUM_TOKEN,
+  NEXT_PUBLIC_CAT_SERVICE_URL,
+  GQL_PROXY_URL,
+  NEXT_PUBLIC_WEB_LEADS_URL,
 } = publicRuntimeConfig;
-
-const NEXT_PUBLIC_INTERCHANGE_URL =
-  publicRuntimeConfig.NEXT_PUBLIC_INTERCHANGE_URL;
-const DATA_DOG_RUM_APPLICATION = publicRuntimeConfig.DATA_DOG_RUM_APPLICATION;
-const DATA_DOG_RUM_TOKEN = publicRuntimeConfig.DATA_DOG_RUM_TOKEN;
 
 class AppraisalApp extends App {
   private readonly remoteConfig: firebase.remoteConfig.RemoteConfig;
@@ -78,17 +79,14 @@ class AppraisalApp extends App {
     }
 
     this.analyticsHandler = new AnalyticsHandler();
-    const serviceBasePath = NEXT_PUBLIC_INTERCHANGE_URL;
     this.catSDK = new CatSDK({
-      serviceBasePath: publicRuntimeConfig.NEXT_PUBLIC_CAT_SERVICE_URL || '',
+      serviceBasePath: NEXT_PUBLIC_CAT_SERVICE_URL || '',
     });
 
-    const gqlUrl = serviceBasePath !== '' ? `${serviceBasePath}/gql` : '';
-    const webLeadUrl =
-      serviceBasePath !== ''
-        ? `${serviceBasePath}/api/weblead/attribution`
-        : '';
-    this.commonHandler = new CommonHandler(gqlUrl, webLeadUrl);
+    this.commonHandler = new CommonHandler(
+      GQL_PROXY_URL || '',
+      NEXT_PUBLIC_WEB_LEADS_URL || ''
+    );
 
     if (firebase.apps.length == 0) {
       firebase.initializeApp(firebaseConfig);
@@ -131,7 +129,9 @@ class AppraisalApp extends App {
         <ABSmartlyProvider
           apiKey={ABSMARTLY_API_KEY}
           application={ABSMARTLY_APP}
-          endpoint={NEXT_PUBLIC_ABSMARTLY_URL}
+          endpoint={`${
+            NEXT_PUBLIC_INTERCHANGE_URL || ''
+          }${NEXT_PUBLIC_ABSMARTLY_URL}`}
           environment={ABSMARTLY_ENV}
         >
           <AnalyticsHandlerContext.Provider value={this.analyticsHandler}>

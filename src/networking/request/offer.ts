@@ -9,7 +9,6 @@ import { checkAppraisalPayload, getDummyOfferResp } from '../utils';
 
 const { publicRuntimeConfig } = getConfig();
 const VROOM_URL = publicRuntimeConfig.NEXT_PUBLIC_VROOM_URL;
-const { NEXT_PUBLIC_INTERCHANGE_URL } = publicRuntimeConfig;
 
 export interface PriceData {
   priceId: string;
@@ -49,7 +48,7 @@ export const postAppraisalReview = async (
   captchaToken: string
 ): Promise<Response<AppraisalResp>> => {
   const appraisalRequestScore = checkAppraisalPayload(data);
-  const url = `${NEXT_PUBLIC_INTERCHANGE_URL}/appraisal/api/appraisal`;
+  const url = `${client.httpEndpoints.interchangeUrl}/appraisal/api/appraisal`;
 
   if (appraisalRequestScore >= 3) {
     const goodUntil = new Date();
