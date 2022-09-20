@@ -12,5 +12,6 @@ export interface AppraisalRespData {
     ID: string;
     offer_id: number;
     offer_status: string;
+    user_email: string;
   };
 }

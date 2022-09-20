@@ -39,6 +39,7 @@ describe('Review component test', () => {
       id: 'cb5b06d43cb95286ceeb50efc7a82e08',
       offerId: 26300,
       offerStatus: 'Pending',
+      email: 'doyouliketesting@testvroom.com',
     };
 
     expect(JSON.stringify(stores.offer.offerDetail)).toEqual(
@@ -46,7 +47,7 @@ describe('Review component test', () => {
     );
   });
 
-  it('test api call faile ', async () => {
+  it('test api call failed ', async () => {
     spyRequest.mockRejectedValue(getOfferDetails());
     await viewModel.getOfferDetail('26400');
     const response = {
@@ -61,6 +62,7 @@ describe('Review component test', () => {
       id: '',
       offerId: 0,
       offerStatus: '',
+      email: '',
     };
 
     expect(JSON.stringify(stores.offer.offerDetail)).toEqual(

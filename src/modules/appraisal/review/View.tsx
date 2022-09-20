@@ -95,8 +95,12 @@ const AppraisalReviewViewDetail: React.FC<Props> = ({ viewModel }) => {
       <ExteriorCondition />
       <Line />
       <MechanicalCondition />
-      <Line />
-      <PersonalInformation />
+      {!viewModel.isTradeIn && (
+        <>
+          <Line />
+          <PersonalInformation />
+        </>
+      )}
       <SubmitContainer>
         <SubmitButton
           className={submitButtonClasses.join(' ')}

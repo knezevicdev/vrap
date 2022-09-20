@@ -8,7 +8,6 @@ import {
   ExtConditionForm,
   IntConditionForm,
   MechConditionForm,
-  PersonalInfoForm,
   VehicleHistoryForm,
   VehicleInfoForm,
 } from 'src/modules/appraisal/review/store';
@@ -83,16 +82,20 @@ function mechanicalConditionData(data: MechConditionForm) {
   };
 }
 
-function personalInformationData(data: PersonalInfoForm) {
+function personalInformationData(data: AppraisalStore) {
+  const { isTradeIn, personalInfoForm } = data;
+  const userPhone =
+    (data.user?.phones?.length && data.user?.phones[0]?.number) || '';
+
   return {
-    firstName: data.firstName,
-    lastName: data.lastName,
-    email: data.email,
-    phoneNumber: data.phoneNumber,
+    firstName: isTradeIn ? data.user?.firstName : personalInfoForm.firstName,
+    lastName: isTradeIn ? data.user?.lastName : personalInfoForm.lastName,
+    email: isTradeIn ? data.user?.username : personalInfoForm.email,
+    phoneNumber: isTradeIn ? userPhone : personalInfoForm.phoneNumber,
   };
 }
 
-function attributionData(data: any) {
+function attributionData(data: AppraisalStore) {
   const dealership = (data.dealership || '').toLowerCase();
   const brand = (data.brand || '').toLowerCase();
   const type = (data.type || '').toLowerCase();
@@ -138,7 +141,7 @@ export function makeRequestBody(
     ...interiorConditionData(appraisalData.intConditionForm),
     ...exteriorConditionData(appraisalData.extConditionForm),
     ...mechanicalConditionData(appraisalData.mechConditionForm),
-    ...personalInformationData(appraisalData.personalInfoForm),
+    ...personalInformationData(appraisalData),
     ...attributionData(appraisalData),
     ...getUTMParams(),
   };

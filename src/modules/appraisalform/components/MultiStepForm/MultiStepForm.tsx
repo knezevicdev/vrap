@@ -36,6 +36,7 @@ interface Props {
   submitText: string;
   appraisalTitle?: string;
   disableExperiments: boolean;
+  showSteps?: boolean;
 }
 
 const MultiStepForm: React.FC<Props> = (props) => {
@@ -52,6 +53,7 @@ const MultiStepForm: React.FC<Props> = (props) => {
     submitText = 'Review',
     appraisalTitle,
     disableExperiments,
+    showSteps = false,
   } = props;
 
   useEffect(() => {
@@ -314,11 +316,11 @@ const MultiStepForm: React.FC<Props> = (props) => {
               Edit
             </EditStep>
           )}
-          {!showEditButton &&
-            formComponent.timeEst &&
-            formComponent.timeEst.length && (
-              <TimeEst>{formComponent.timeEst}</TimeEst>
-            )}
+          {!showEditButton && showSteps && (
+            <TimeEst>
+              (Step {idx + 1} of {sections.length})
+            </TimeEst>
+          )}
         </SectionHeader>
         <FormSection isactive={isActive.toString()}>
           {formComponent.subTitle && <h3>{formComponent.subTitle}</h3>}

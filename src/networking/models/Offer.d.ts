@@ -10,4 +10,5 @@ export interface OfferDetail {
   miles: number;
   offerExpiration: string;
   vin: string;
+  email: string;
 }

@@ -1,16 +1,53 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
 
+import { useAppStore } from '../../../context';
+import { FormField } from '../../../interfaces.d';
+import { UseForm } from './componentInterfaces.d';
 import EmailInput from './forminputs/EmailInput';
 import FirstNameInput from './forminputs/FirstNameInput';
 import LastNameInput from './forminputs/LastNameInput';
 import PhoneInput from './forminputs/PhoneInput';
 
 export interface Props {
-  fields: any;
+  fields: Record<string, FormField>;
+  form: UseForm;
 }
 
-const PersonalInformation: React.FC<Props> = ({ fields }) => {
+const PersonalInformation: React.FC<Props> = ({ fields, form }) => {
+  const { store } = useAppStore();
+
+  const prepopulateUserData = () => {
+    form.updateMultipleFields({
+      firstName: {
+        ...fields.firstName,
+        value: fields.firstName.value || store.appraisal?.user?.firstName,
+      },
+      lastName: {
+        ...fields.lastName,
+        value: fields.lastName.value || store.appraisal?.user?.lastName,
+      },
+      email: {
+        ...fields.email,
+        value: fields.email.value || store.appraisal?.user?.username,
+      },
+      phoneNumber: {
+        ...fields.phoneNumber,
+        value:
+          fields.phoneNumber.value ||
+          (store.appraisal?.user?.phones?.length &&
+            store.appraisal.user.phones[0]?.number) ||
+          '',
+      },
+    });
+  };
+
+  useEffect(() => {
+    if (Object.keys(store.appraisal.user).length) {
+      prepopulateUserData();
+    }
+  }, [store.appraisal.user]);
+
   return (
     <>
       <InputContainer>
