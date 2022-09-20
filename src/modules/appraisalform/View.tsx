@@ -183,40 +183,38 @@ const AppraisalForm: React.FC<Props> = ({ viewModel }) => {
       component: VehicleInformation,
       form: appraisalUseForm.vehicleInfoForm,
       title: VehicleInfoText.title,
-      timeEst: VehicleInfoText.timeEst,
       onNextIntercept: onNextIntercept,
     },
     {
       component: VehicleHistory,
       form: appraisalUseForm.vehicleHistoryForm,
       title: VehicleHistoryText.title,
-      timeEst: VehicleHistoryText.timeEst,
       subTitle: VehicleHistoryText.subTitle,
     },
     {
       component: InteriorCondition,
       form: appraisalUseForm.intConditionForm,
       title: IntConditionText.title,
-      timeEst: IntConditionText.timeEst,
     },
     {
       component: ExteriorCondition,
       form: appraisalUseForm.extConditionForm,
       title: ExtConditionText.title,
-      timeEst: ExtConditionText.timeEst,
     },
     {
       component: MechanicalCondition,
       form: appraisalUseForm.mechConditionForm,
       title: MechConditionText.title,
-      timeEst: MechConditionText.timeEst,
     },
-    {
-      component: PersonalInformation,
-      form: appraisalUseForm.personalInfoForm,
-      title: PersonalInfoText.title,
-      timeEst: PersonalInfoText.timeEst,
-    },
+    ...(!viewModel.isTradeIn
+      ? [
+          {
+            component: PersonalInformation,
+            form: appraisalUseForm.personalInfoForm,
+            title: PersonalInfoText.title,
+          },
+        ]
+      : []),
   ];
 
   useEffect(() => {
@@ -448,6 +446,7 @@ const AppraisalForm: React.FC<Props> = ({ viewModel }) => {
         sections={sections}
         onDone={onSubmit}
         onNext={onNext}
+        showSteps={true}
         active={activeSection}
         refreshButton={true}
         nextText={'Continue'}

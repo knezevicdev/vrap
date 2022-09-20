@@ -28,8 +28,12 @@ class PriceViewModel {
     this.absmartly = store.absmart;
   }
 
+  get isTradeIn(): boolean {
+    return this.store.appraisal.isTradeIn;
+  }
+
   get titleText(): string {
-    return this.store.appraisal.isTradeIn ? '' : SellFormTitleText;
+    return this.isTradeIn ? '' : SellFormTitleText;
   }
 
   get getAnalyticHandler(): AnalyticsHandler {

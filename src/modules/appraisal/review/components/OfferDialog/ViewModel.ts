@@ -92,7 +92,7 @@ export default class OfferDialogViewModel {
       make: offer.make,
       carModel: offer.model,
       year: offer.year,
-      email: this._store.appraisal.personalInfoForm.email,
+      email: offer.email,
       offerStatus: offer.offerStatus,
       expirationDate: offer.offerExpiration,
       source: 'web',

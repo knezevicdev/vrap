@@ -1,4 +1,4 @@
-import { GQLTypes, isSuccessResponse, Response } from '@vroom-web/networking';
+import { GQLTypes, isErrorResponse, Response } from '@vroom-web/networking';
 import {
   ApiError,
   MutationDealAddStatusArgs,
@@ -59,7 +59,7 @@ export const getInProgressDeal = async (): Promise<GQLTypes.Deal> => {
   });
 
   const deal = _get(res, 'data.user.deals.0');
-  if (isSuccessResponse(res) && deal) {
+  if (!isErrorResponse(res) && deal) {
     return deal;
   }
 
@@ -82,7 +82,7 @@ const handleUpdateDealResponse = (
   res: Response<Record<string, GQLTypes.Deal>>,
   key: string
 ): UpdateDeal => {
-  if (isSuccessResponse(res)) {
+  if (!isErrorResponse(res)) {
     const redirect = getResumeStep(
       res.data[key].dealSummary.dealStatus.step,
       res.data[key].dealSummary.inventory?.vehicle?.vin || ''

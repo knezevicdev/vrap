@@ -126,6 +126,7 @@ export default class AppraisalReviewModel {
           id: returnData.data.ID,
           offerId: returnData.data.offer_id,
           offerStatus: returnData.data.offer_status,
+          email: returnData.data.user_email,
         };
         this.store.offer.getOfferDetail(offerDetailData);
         this.store.offer.setShowOfferDialog(true);

@@ -45,9 +45,9 @@ const PersonalInformationView: React.FC<Props> = ({ viewModel, store }) => {
         </Info>
         <Info>
           <Label>{viewModel.phoneNumber}</Label>
-          {appraisalDetail?.personalInfoForm?.phoneNumber && (
-            <Field>{appraisalDetail?.personalInfoForm?.phoneNumber}</Field>
-          )}
+          <Field>
+            {appraisalDetail?.personalInfoForm?.phoneNumber || 'N\\A'}
+          </Field>
         </Info>
       </Row>
     </Container>

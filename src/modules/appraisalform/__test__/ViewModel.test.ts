@@ -104,6 +104,11 @@ describe('test appraisalForm viewModel ', () => {
     expect(viewModel.titleText).toEqual(SellFormTitleText);
   });
 
+  it('test isTradeIn', () => {
+    stores.appraisal.setIsTradeIn(true);
+    expect(viewModel.isTradeIn).toEqual(true);
+  });
+
   it('test clear appraisal ', () => {
     viewModel.updateAppraisal(formData);
     viewModel.clearAppraisal();
@@ -145,7 +150,11 @@ describe('test appraisalForm viewModel ', () => {
     const analyticHandler = viewModel.getAnalyticHandler;
     const trackSpy = jest.spyOn(analyticHandler, 'trackStepComplete');
     viewModel.trackStepComplete(1, formData.vehicleInfoForm);
-    expect(trackSpy).toHaveBeenCalledWith(1, formData.vehicleInfoForm, 'Sell');
+    expect(trackSpy).toHaveBeenCalledWith(
+      1,
+      formData.vehicleInfoForm,
+      stores.appraisal.eventCategory
+    );
   });
 
   it('analytics should called when called trackNextStepViewed ', () => {
