@@ -39,7 +39,9 @@ class VehicleInfoViewModel {
   }
 
   get isCTAColorExp(): boolean {
-    return this.store.absmart.isInExperiment('ac-verification-loss-express');
+    return this.store.absmart.isInExperiment(
+      'appraisal-form-all-cta-buttons-color'
+    );
   }
 
   get vehicleDecodeData(): any {
