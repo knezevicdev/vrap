@@ -442,6 +442,7 @@ const AppraisalForm: React.FC<Props> = ({ viewModel }) => {
   return (
     <AppraisalFormContainer data-qa="AppraisalFormPage">
       <MultiStepForm
+        isCTAColorExp={viewModel.isCTAColorExp()}
         formTitle={viewModel.titleText}
         sections={sections}
         onDone={onSubmit}

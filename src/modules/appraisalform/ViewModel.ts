@@ -115,6 +115,12 @@ class PriceViewModel {
     return this.store.absmart.isInExperiment('ac-email-capture');
   };
 
+  isCTAColorExp = (): boolean => {
+    return this.store.absmart.isInExperiment(
+      'appraisal-form-all-cta-buttons-color'
+    );
+  };
+
   isSignIn = async (): Promise<void> => {
     const isLoggedIn = await isUserSignedIn();
     this.appraisalStore.setIsLoggedIn(isLoggedIn);

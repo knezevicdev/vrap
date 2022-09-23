@@ -26,6 +26,12 @@ export default class AppraisalReviewModel {
     return this._router.asPath.includes('/tradeIn-selfService-Review');
   }
 
+  get isCTAColorExp(): boolean {
+    return this.store.absmart.isInExperiment(
+      'appraisal-form-all-cta-buttons-color'
+    );
+  }
+
   isAppraisalEmpty(): boolean {
     return this.appraisalStore.isFormEmpty();
   }
