@@ -103,6 +103,7 @@ const AppraisalReviewViewDetail: React.FC<Props> = ({ viewModel }) => {
       )}
       <SubmitContainer>
         <SubmitButton
+          isCTAColorExp={viewModel.isCTAColorExp}
           className={submitButtonClasses.join(' ')}
           disabled={canSubmit}
           onClick={handleSubmit}
@@ -162,7 +163,7 @@ const Container = styled.div`
   }
 `;
 
-const SubmitButton = styled(Button.Primary)`
+const SubmitButton = styled(Button.Primary)<{ isCTAColorExp: boolean }>`
   margin: 24px 0 20px 0;
   padding: 6px 12px;
   border: none;
@@ -189,6 +190,15 @@ const SubmitButton = styled(Button.Primary)`
     color: #fff;
     &:hover {
       background: #fc4349;
+    }
+  }
+
+  :enabled {
+    background-color: ${(props) =>
+      props.isCTAColorExp ? '#308406' : '#E7131A'};
+    &:hover {
+      background-color: ${(props) =>
+        props.isCTAColorExp ? '#309706' : '#d01118'};
     }
   }
 `;

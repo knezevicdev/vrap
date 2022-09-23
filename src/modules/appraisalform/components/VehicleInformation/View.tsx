@@ -712,6 +712,7 @@ const VehicleInformation: React.FC<Props> = ({
             onKeyPress={handleOnKeyPressEnter}
             onClick={handleVehicleSubmit}
             disabled={isSubmitDisabled()}
+            isCTAColorExp={viewModel.isCTAColorExp}
             data-qa={VehicleInfoText.licenseButtonDataQa}
           >
             {VehicleInfoText.licenseButton}
@@ -872,6 +873,14 @@ const Loader = styled(CircleLoader)`
 const SubmitButton = styled(({ ...restProps }) => (
   <Button.Primary {...restProps} />
 ))`
+  :enabled {
+    background-color: ${(props) =>
+      props.isCTAColorExp ? '#308406' : '#E7131A'};
+    &:hover {
+      background-color: ${(props) =>
+        props.isCTAColorExp ? '#309706' : '#d01118'};
+    }
+  }
   margin-top: 10px;
   width: 48%;
 
