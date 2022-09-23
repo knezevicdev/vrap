@@ -20,6 +20,12 @@ export default class PickupInfoReviewViewModel {
     return this._store.appraisal.extConditionForm.afterMarket;
   }
 
+  get isRemoveMilesOnTiresExperiment(): boolean {
+    return this._store.absmart.isInExperiment(
+      'appraisal-form-continue-button-color'
+    );
+  }
+
   handleEditClick(): void {
     this._router.push({
       pathname: this._store.appraisal.appraisalPath,
