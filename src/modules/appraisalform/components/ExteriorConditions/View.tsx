@@ -13,12 +13,14 @@ import RustInput from '../forminputs/RustInput';
 import ScratchesInput from '../forminputs/ScratchesInput';
 import ScratchesPanelsInput from '../forminputs/ScratchesPanelsInput';
 import TireMilesInput from '../forminputs/TireMilesInput';
+import ViewModel from './ViewModel';
 
 interface Props {
   fields: any;
+  viewModel: ViewModel;
 }
 
-const ExteriorConditionView: React.FC<Props> = ({ fields }) => {
+const ExteriorConditionView: React.FC<Props> = ({ fields, viewModel }) => {
   const showDentsPanels = fields.dents && fields.dents.value === 'Yes';
   const showPaintChippingPanels =
     fields.paintChipping && fields.paintChipping.value === 'Yes';
@@ -45,6 +47,15 @@ const ExteriorConditionView: React.FC<Props> = ({ fields }) => {
       }
     }, [fields[damageType] && fields[damageType].value]);
   });
+
+  useEffect(() => {
+    if (viewModel.isRemoveMilesOnTiresExperiment) {
+      fields.tiresAndWheels.onChange({
+        ...fields.tiresAndWheels,
+        value: 'Under 5K',
+      });
+    }
+  }, [viewModel.isRemoveMilesOnTiresExperiment]);
 
   return (
     <>
@@ -85,9 +96,11 @@ const ExteriorConditionView: React.FC<Props> = ({ fields }) => {
           <ScratchesPanels field={fields.scratchesPanels} />
         </InputContainer>
       )}
-      <InputContainer>
-        <TireMilesInput field={fields.tiresAndWheels} />
-      </InputContainer>
+      {!viewModel.isRemoveMilesOnTiresExperiment && (
+        <InputContainer>
+          <TireMilesInput field={fields.tiresAndWheels} />
+        </InputContainer>
+      )}
       <InputContainer>
         <AlternateAfterMarketModsOptionsGroup
           field={fields.afterMarket}

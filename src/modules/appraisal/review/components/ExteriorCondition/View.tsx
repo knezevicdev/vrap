@@ -57,10 +57,12 @@ const ExteriorConditionView: React.FC<Props> = ({ viewModel, store }) => {
           <Label>{viewModel.hailDamage}</Label>
           <Field>{appraisalDetail?.extConditionForm?.hailDamage}</Field>
         </Info>
-        <Info>
-          <Label>{viewModel.tiresAndWheels}</Label>
-          <Field>{appraisalDetail?.extConditionForm?.tiresAndWheels}</Field>
-        </Info>
+        {!viewModel.isRemoveMilesOnTiresExperiment && (
+          <Info>
+            <Label>{viewModel.tiresAndWheels}</Label>
+            <Field>{appraisalDetail?.extConditionForm?.tiresAndWheels}</Field>
+          </Info>
+        )}
         <Info>
           <Label>{viewModel.afterMarket}</Label>
           {appraisalDetail?.extConditionForm?.afterMarket.length > 0 ? (
@@ -132,7 +134,7 @@ const Row = styled.div`
 const Info = styled.div`
   display: flex;
   flex-direction: column;
-  width: 33%;
+  width: 25%;
 `;
 
 const Label = styled(Typography.Fine)`
