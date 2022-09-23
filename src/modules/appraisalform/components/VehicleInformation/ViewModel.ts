@@ -28,6 +28,10 @@ class VehicleInfoViewModel {
     return this.appraisalStore.vehicleId;
   }
 
+  get isABSmartlyLoading(): boolean {
+    return this.absmartly.isABSmartlyLoading;
+  }
+
   get isHideHowManyKeysExperiment(): boolean {
     return this.absmartly.isInExperiment(
       'appraisal-hide-how-many-keys-question'
@@ -35,9 +39,7 @@ class VehicleInfoViewModel {
   }
 
   get isCTAColorExp(): boolean {
-    return this.store.absmart.isInExperiment(
-      'appraisal-form-all-cta-buttons-color'
-    );
+    return this.store.absmart.isInExperiment('ac-verification-loss-express');
   }
 
   get vehicleDecodeData(): any {

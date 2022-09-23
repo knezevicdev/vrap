@@ -705,7 +705,7 @@ const VehicleInformation: React.FC<Props> = ({
           </YearMakeModel>
         )}
       </InputContainer>
-      {!isEditMode && !vinDecoded && (
+      {!viewModel.isABSmartlyLoading && !isEditMode && !vinDecoded && (
         <>
           <SubmitButton
             tabIndex={0}
