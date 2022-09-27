@@ -5,7 +5,7 @@ export default class PickupInfoReviewViewModel {
 
   get isRemoveMilesOnTiresExperiment(): boolean {
     return this._store.absmart.isInExperiment(
-      'appraisal-form-continue-button-color'
+      'appraisal-form-miles-on-tires-removed'
     );
   }
 }
