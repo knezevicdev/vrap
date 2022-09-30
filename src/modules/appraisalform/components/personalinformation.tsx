@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
 import { useAppStore } from '../../../context';
@@ -16,6 +16,7 @@ export interface Props {
 
 const PersonalInformation: React.FC<Props> = ({ fields, form }) => {
   const { store } = useAppStore();
+  const [isEmailDisabled, setIsEmailDisabled] = useState(false);
 
   const prepopulateUserData = () => {
     form.updateMultipleFields({
@@ -43,6 +44,12 @@ const PersonalInformation: React.FC<Props> = ({ fields, form }) => {
   };
 
   useEffect(() => {
+    if (store.appraisal.isTradeIn && store.appraisal.user?.username) {
+      setIsEmailDisabled(true);
+    }
+  }, [store.appraisal.isTradeIn, store.appraisal.user?.username]);
+
+  useEffect(() => {
     if (Object.keys(store.appraisal.user).length) {
       prepopulateUserData();
     }
@@ -55,7 +62,11 @@ const PersonalInformation: React.FC<Props> = ({ fields, form }) => {
         <Last field={fields.lastName} className="fs-mask" />
       </InputContainer>
       <InputContainer>
-        <Email field={fields.email} className="fs-mask" />
+        <Email
+          disabled={isEmailDisabled}
+          field={fields.email}
+          className="fs-mask"
+        />
         <Phone field={fields.phoneNumber} className="fs-mask" optional={true} />
       </InputContainer>
     </>
@@ -107,7 +118,7 @@ const Phone = styled(PhoneInput)`
   }
 `;
 
-const Email = styled(EmailInput)`
+const Email = styled(EmailInput)<{ disabled: boolean }>`
   width: 50%;
   margin-right: 10px;
 
