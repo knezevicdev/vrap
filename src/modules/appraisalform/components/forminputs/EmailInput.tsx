@@ -8,9 +8,14 @@ import { FormFields } from './Inputs.language';
 interface Props {
   field: FormField;
   className?: string;
+  disabled?: boolean;
 }
 
-const EmailInput: React.FC<Props> = ({ field, className }) => {
+const EmailInput: React.FC<Props> = ({
+  field,
+  className,
+  disabled = false,
+}) => {
   const { onChange } = field;
 
   const handleOnChange = (event: GenericObject) => {
@@ -26,6 +31,7 @@ const EmailInput: React.FC<Props> = ({ field, className }) => {
         ...field,
         placeholder: FormFields.email.placeholder,
         label: FormFields.email.label,
+        disabled: disabled,
         onChange: handleOnChange,
         maxlength: '100',
       }}

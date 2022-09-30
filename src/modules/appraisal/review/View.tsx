@@ -95,12 +95,8 @@ const AppraisalReviewViewDetail: React.FC<Props> = ({ viewModel }) => {
       <ExteriorCondition />
       <Line />
       <MechanicalCondition />
-      {!viewModel.isTradeIn && (
-        <>
-          <Line />
-          <PersonalInformation />
-        </>
-      )}
+      <Line />
+      <PersonalInformation />
       <SubmitContainer>
         <SubmitButton
           isCTAColorExp={viewModel.isCTAColorExp}

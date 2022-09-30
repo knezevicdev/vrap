@@ -206,15 +206,11 @@ const AppraisalForm: React.FC<Props> = ({ viewModel }) => {
       form: appraisalUseForm.mechConditionForm,
       title: MechConditionText.title,
     },
-    ...(!viewModel.isTradeIn
-      ? [
-          {
-            component: PersonalInformation,
-            form: appraisalUseForm.personalInfoForm,
-            title: PersonalInfoText.title,
-          },
-        ]
-      : []),
+    {
+      component: PersonalInformation,
+      form: appraisalUseForm.personalInfoForm,
+      title: PersonalInfoText.title,
+    },
   ];
 
   useEffect(() => {
