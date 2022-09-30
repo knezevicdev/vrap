@@ -67,7 +67,6 @@ const AppraisalForm: React.FC<Props> = ({ viewModel }) => {
   );
   const [showInvalidStateDialog, setShowInvalidStateDialog] = useState(false);
   const [showInvalidMakeDialog, setShowInvalidMakeDialog] = useState(false);
-  const [state, setState] = useState('');
   const [personalInfo, changePersonalInfo] = useState({});
 
   const getActiveState = () => {
@@ -138,10 +137,10 @@ const AppraisalForm: React.FC<Props> = ({ viewModel }) => {
     const exactMileageField = appraisalUseForm.vehicleInfoForm.fields.mileage;
     const setMileageDialogDismiss = viewModel.setMileageDialogDismiss;
     const zipCode = appraisalUseForm.vehicleInfoForm.fields.zipCode.value;
-    const state = viewModel.getStateFromZip(zipCode);
+    const isZipValid = viewModel.validateZipCode(zipCode);
     const vin = appraisalUseForm.vehicleInfoForm.fields.vin.value;
     const isStateValid =
-      store.appraisal.isTradeIn || router.query.form === 'trade' || !state;
+      store.appraisal.isTradeIn || router.query.form === 'trade' || isZipValid;
     const isMakeValid = vehicleInfo.make.toLowerCase() !== 'maserati';
 
     setExactMileageProps({
@@ -165,7 +164,6 @@ const AppraisalForm: React.FC<Props> = ({ viewModel }) => {
     }
 
     if (!isStateValid) {
-      setState(state);
       setShowInvalidStateDialog(true);
       viewModel.trackInvalidStateShown(vin);
       return;
@@ -460,7 +458,7 @@ const AppraisalForm: React.FC<Props> = ({ viewModel }) => {
           {...exactMileageProps}
         />
       )}
-      {showInvalidStateDialog && <InvalidStateDialog state={state} />}
+      {showInvalidStateDialog && <InvalidStateDialog />}
       {showInvalidMakeDialog && <InvalidMakeDialog />}
       {emailModal && (
         <EmailCapture

@@ -6,7 +6,7 @@ import {
   UpdateDeal,
 } from '../../networking/request';
 import { SellFormTitleText, TradeInError } from './AppraisalForm.language';
-import { getStateFromZip } from './components/validation';
+import { validateZipCode } from './components/validation';
 
 import AnalyticsHandler from 'src/integrations/AnalyticsHandler';
 import {
@@ -48,8 +48,8 @@ class PriceViewModel {
     return this.appraisalStore.showExactMileageDialog;
   }
 
-  getStateFromZip(zipCode: string): string {
-    return getStateFromZip(zipCode);
+  validateZipCode(zipCode: string): boolean {
+    return validateZipCode(zipCode);
   }
 
   updateAppraisal(formInfo: any): void {

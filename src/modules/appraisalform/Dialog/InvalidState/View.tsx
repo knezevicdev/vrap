@@ -99,10 +99,7 @@ const BrowseInventoryCTA = styled(Button.Primary)`
   font-family: Calibre-Semibold;
 `;
 
-interface Props {
-  state: string;
-}
-const DialogView: React.FC<Props> = ({ state }) => {
+const DialogView: React.FC = () => {
   const router = useRouter();
 
   useEffect(() => {
@@ -127,7 +124,7 @@ const DialogView: React.FC<Props> = ({ state }) => {
           <Line />
           <ModalImage />
           <ModalDesc>
-            {lang.desc(state)}
+            {lang.desc}
             &nbsp;
           </ModalDesc>
           <BrowseInventoryCTA onClick={goToInventory}>
