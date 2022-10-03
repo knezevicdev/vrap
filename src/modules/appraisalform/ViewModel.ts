@@ -48,8 +48,8 @@ class PriceViewModel {
     return this.appraisalStore.showExactMileageDialog;
   }
 
-  validateZipCode(zipCode: string): boolean {
-    return validateZipCode(zipCode);
+  validateZipCode(isTradeIn: boolean, zipCode: string): boolean {
+    return validateZipCode(isTradeIn, zipCode);
   }
 
   updateAppraisal(formInfo: any): void {
