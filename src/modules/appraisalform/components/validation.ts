@@ -63,8 +63,10 @@ export function isValidZipCode(zipCode: number): boolean {
   return !!zipCode && /^\d{5}$/.test(zipCode.toString());
 }
 
-export function validateZipCode(zipCode: string): boolean {
+export function validateZipCode(isTradeIn: boolean, zipCode: string): boolean {
   const zipcode = parseInt(zipCode, 10);
+
+  if (isTradeIn) return !bannedZips.includes(zipcode);
 
   return !(
     (zipcode >= 83200 && zipcode <= 83999) ||
