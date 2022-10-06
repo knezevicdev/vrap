@@ -1,6 +1,6 @@
 {
   "name": "@vroom-web/appraisal",
-  "version": "4.1.11",
+  "version": "4.1.12",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -30,7 +30,7 @@
     "@types/smoothscroll-polyfill": "^0.3.1",
     "@types/yup": "^0.29.11",
     "@vroom-web/absmartly-integration": "^2.0.3",
-    "@vroom-web/analytics-integration": "^3.3.1",
+    "@vroom-web/analytics-integration": "^3.4.0",
     "@vroom-web/cat-sdk": "^1.0.5",
     "@vroom-web/deals-v2-networking": "^1.0.1",
     "@vroom-web/legacy-header-components": "^2.3.4",
