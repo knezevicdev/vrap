@@ -13,6 +13,7 @@ import styled from 'styled-components';
 import ExteriorCondition from './components/ExteriorCondition';
 import InteriorCondition from './components/InteriorCondition';
 import MechanicalCondition from './components/MechanicalCondition';
+import NewVehicleHistory from './components/NewVehicleHistory';
 import OfferDialog from './components/OfferDialog';
 import PersonalInformation from './components/PersonalInformation';
 import VehicleHistory from './components/VehicleHistory';
@@ -30,6 +31,7 @@ const AppraisalReviewViewDetail: React.FC<Props> = ({ viewModel }) => {
   const submitButtonClasses = ['btn', 'btn-primary', 'finish-section-btn'];
   const canSubmit = !(isLoading || viewModel.appraisalStore ? true : false);
   const recaptchaRef = useRef<any>();
+  const isNewForm = viewModel.isNewFormExperimentActive();
 
   useEffect(() => {
     viewModel.setTradeFormType();
@@ -88,13 +90,19 @@ const AppraisalReviewViewDetail: React.FC<Props> = ({ viewModel }) => {
       <Line />
       <VehicleInformation />
       <Line />
-      <VehicleHistory />
-      <Line />
-      <InteriorCondition />
-      <Line />
-      <ExteriorCondition />
-      <Line />
-      <MechanicalCondition />
+      {isNewForm ? (
+        <NewVehicleHistory />
+      ) : (
+        <>
+          <VehicleHistory />
+          <Line />
+          <InteriorCondition />
+          <Line />
+          <ExteriorCondition />
+          <Line />
+          <MechanicalCondition />
+        </>
+      )}
       <Line />
       <PersonalInformation />
       <SubmitContainer>

@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Body } from '@vroom-web/ui-lib';
 import { useRouter } from 'next/router';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 
 import {
@@ -16,6 +16,7 @@ import {
   VehicleHistoryText,
   VehicleInfoText,
 } from './AppraisalForm.language';
+import CombinedVehicleInfoForms from './components/CombinedVehicleInfoForm';
 import ExteriorCondition from './components/ExteriorConditions';
 import InteriorCondition from './components/interiorcondition';
 import MechanicalCondition from './components/mechanicalcondition';
@@ -29,6 +30,10 @@ import useTrackActive from './Dialog/EmailCapture/trackActive';
 import ExactMilageDialog from './Dialog/ExactMilage';
 import InvalidMakeDialog from './Dialog/InvalidMake';
 import InvalidStateDialog from './Dialog/InvalidState';
+import combinedFormNextIntercept from './utils/combinedFormNextIntercept';
+import combineForms from './utils/combineForms';
+import valueOrNo from './utils/valueOrNo';
+import valueOrYes from './utils/valueOrYes';
 import AppraisalViewModel from './ViewModel';
 
 import { useAppStore } from 'src/context';
@@ -54,6 +59,7 @@ const AppraisalForm: React.FC<Props> = ({ viewModel }) => {
   const isEditMode = routerAsPath.includes('#');
   const routerHash = routerAsPath.split('#')[1];
   const submitText = isEditMode ? SaveText : ReviewText;
+  const isNewForm = viewModel.isNewFormExperimentActive();
 
   const vehicleInfo = viewModel.appraisalStore.vehicleInfoForm;
   const yourInformation = viewModel.appraisalStore.personalInfoForm;
@@ -68,6 +74,7 @@ const AppraisalForm: React.FC<Props> = ({ viewModel }) => {
   const [showInvalidStateDialog, setShowInvalidStateDialog] = useState(false);
   const [showInvalidMakeDialog, setShowInvalidMakeDialog] = useState(false);
   const [personalInfo, changePersonalInfo] = useState({});
+  const isNewFormRef = useRef<boolean>();
 
   const getActiveState = () => {
     switch (routerHash) {
@@ -177,40 +184,130 @@ const AppraisalForm: React.FC<Props> = ({ viewModel }) => {
     }
   };
 
-  const sections = [
-    {
-      component: VehicleInformation,
-      form: appraisalUseForm.vehicleInfoForm,
-      title: VehicleInfoText.title,
-      onNextIntercept: onNextIntercept,
-    },
-    {
-      component: VehicleHistory,
-      form: appraisalUseForm.vehicleHistoryForm,
-      title: VehicleHistoryText.title,
-      subTitle: VehicleHistoryText.subTitle,
-    },
-    {
-      component: InteriorCondition,
-      form: appraisalUseForm.intConditionForm,
-      title: IntConditionText.title,
-    },
-    {
-      component: ExteriorCondition,
-      form: appraisalUseForm.extConditionForm,
-      title: ExtConditionText.title,
-    },
-    {
-      component: MechanicalCondition,
-      form: appraisalUseForm.mechConditionForm,
-      title: MechConditionText.title,
-    },
-    {
-      component: PersonalInformation,
-      form: appraisalUseForm.personalInfoForm,
-      title: PersonalInfoText.title,
-    },
-  ];
+  const combinedVehicleInformationForm = combineForms(
+    appraisalUseForm.vehicleHistoryForm,
+    appraisalUseForm.intConditionForm,
+    appraisalUseForm.extConditionForm,
+    appraisalUseForm.mechConditionForm
+  );
+
+  useEffect(() => {
+    if (isNewForm === isNewFormRef.current) return;
+    isNewFormRef.current = isNewForm;
+
+    if (isNewForm) {
+      appraisalUseForm.intConditionForm.updateMultipleFields({
+        interiorCondition: {
+          ...appraisalUseForm.intConditionForm.fields.interiorCondition,
+          isRequired: false,
+        },
+        seats: {
+          ...appraisalUseForm.intConditionForm.fields.seats,
+          value: 'Cloth',
+        },
+        smokedIn: valueOrNo(appraisalUseForm.intConditionForm.fields.smokedIn),
+      });
+      appraisalUseForm.extConditionForm.updateMultipleFields({
+        exteriorCondition: {
+          ...appraisalUseForm.extConditionForm.fields.exteriorCondition,
+          isRequired: false,
+        },
+        tiresAndWheels: {
+          ...appraisalUseForm.extConditionForm.fields.tiresAndWheels,
+          isRequired: false,
+        },
+        dents: valueOrNo(appraisalUseForm.extConditionForm.fields.dents),
+        rust: valueOrNo(appraisalUseForm.extConditionForm.fields.rust),
+        hailDamage: valueOrNo(
+          appraisalUseForm.extConditionForm.fields.hailDamage
+        ),
+        paintChipping: valueOrNo(
+          appraisalUseForm.extConditionForm.fields.paintChipping
+        ),
+        scratches: valueOrNo(
+          appraisalUseForm.extConditionForm.fields.scratches
+        ),
+      });
+      appraisalUseForm.mechConditionForm.updateMultipleFields({
+        runnable: valueOrYes(
+          appraisalUseForm.mechConditionForm.fields.runnable
+        ),
+        floodFireDamage: {
+          ...appraisalUseForm.mechConditionForm.fields.floodFireDamage,
+          isRequired: false,
+        },
+        mechanicalCondition: {
+          ...appraisalUseForm.mechConditionForm.fields.mechanicalCondition,
+          isRequired: false,
+        },
+        warningLights: valueOrNo(
+          appraisalUseForm.mechConditionForm.fields.warningLights
+        ),
+      });
+    }
+  }, [
+    appraisalUseForm,
+    appraisalUseForm.extConditionForm,
+    appraisalUseForm.intConditionForm,
+    appraisalUseForm.mechConditionForm,
+    isNewForm,
+  ]);
+
+  const sections = isNewForm
+    ? [
+        {
+          component: VehicleInformation,
+          form: appraisalUseForm.vehicleInfoForm,
+          title: VehicleInfoText.title,
+          onNextIntercept: onNextIntercept,
+        },
+        {
+          component: CombinedVehicleInfoForms,
+          form: combinedVehicleInformationForm,
+          title: 'Vehicle History & Condition',
+          subTitle: VehicleHistoryText.subTitle,
+          onNextIntercept: combinedFormNextIntercept(appraisalUseForm),
+        },
+        {
+          component: PersonalInformation,
+          form: appraisalUseForm.personalInfoForm,
+          title: PersonalInfoText.title,
+        },
+      ]
+    : [
+        {
+          component: VehicleInformation,
+          form: appraisalUseForm.vehicleInfoForm,
+          title: VehicleInfoText.title,
+          onNextIntercept: onNextIntercept,
+        },
+        {
+          component: VehicleHistory,
+          form: appraisalUseForm.vehicleHistoryForm,
+          title: VehicleHistoryText.title,
+          subTitle: VehicleHistoryText.subTitle,
+        },
+        {
+          component: InteriorCondition,
+          form: appraisalUseForm.intConditionForm,
+          title: IntConditionText.title,
+        },
+        {
+          component: ExteriorCondition,
+          form: appraisalUseForm.extConditionForm,
+          title: ExtConditionText.title,
+        },
+        {
+          component: MechanicalCondition,
+          form: appraisalUseForm.mechConditionForm,
+          title: MechConditionText.title,
+        },
+        {
+          component: PersonalInformation,
+          form: appraisalUseForm.personalInfoForm,
+          title: PersonalInfoText.title,
+        },
+      ];
 
   useEffect(() => {
     const query = router.query;
@@ -487,8 +584,7 @@ const AppraisalFormContainer = styled.div`
   border: 1px solid #d6d7da;
   width: 100%;
   max-width: 768px;
-
-  (max-width: 1024px) {
+  (max-width: 1024 px) {
     padding: 0 60px;
   }
 

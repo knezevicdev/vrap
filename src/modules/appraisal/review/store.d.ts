@@ -35,12 +35,19 @@ export interface MechConditionForm {
   runnable: string;
   warningLights: string;
   warningLightsValues: string[];
+  transmissionIssue: string;
+  engineIssue: string;
+  noMechanicalIssues: string;
 }
 
 export interface IntConditionForm {
   interiorCondition: string;
   seats: string;
   smokedIn: string;
+  ripsOrTearsInSeats: string;
+  damagedElectronic: string;
+  damagedDashboardOrPanels: string;
+  noInteriorDamage: string;
 }
 
 export interface ExtConditionForm {
@@ -56,4 +63,8 @@ export interface ExtConditionForm {
   scratches: string;
   scratchesPanels: null;
   tiresAndWheels: string;
+  floodDamage: string;
+  fireDamage: string;
+  wornTires: string;
+  noExteriorDamage: string;
 }
