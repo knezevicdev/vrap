@@ -16,6 +16,7 @@ const { NEXT_PUBLIC_RECAPTCHA_SITE_KEY } = publicRuntimeConfig;
 
 import getConfig from 'next/config';
 
+import Spinner from '../../../../components/Spinner';
 import { useAppStore } from '../../../../context';
 import {
   VehicleInfoLeaseCopy,
@@ -705,17 +706,21 @@ const VehicleInformation: React.FC<Props> = ({
           </YearMakeModel>
         )}
       </InputContainer>
-      {!viewModel.isABSmartlyLoading && !isEditMode && !vinDecoded && (
+      {!isEditMode && !vinDecoded && (
         <>
           <SubmitButton
             tabIndex={0}
             onKeyPress={handleOnKeyPressEnter}
             onClick={handleVehicleSubmit}
-            disabled={isSubmitDisabled()}
+            disabled={isSubmitDisabled() || viewModel.isABSmartlyLoading}
             isCTAColorExp={viewModel.isCTAColorExp}
             data-qa={VehicleInfoText.licenseButtonDataQa}
           >
-            {VehicleInfoText.licenseButton}
+            {viewModel.isABSmartlyLoading ? (
+              <LoadingSpinner />
+            ) : (
+              VehicleInfoText.licenseButton
+            )}
           </SubmitButton>
           {showSubmitError && (
             <SubmitError>Something went wrong. Please, try again.</SubmitError>
@@ -774,6 +779,10 @@ const VehicleInformation: React.FC<Props> = ({
     </>
   );
 };
+
+const LoadingSpinner = styled(Spinner)`
+  margin-top: 5px;
+`;
 
 const LeaseCopy = styled.div`
   padding-left: 8px;
