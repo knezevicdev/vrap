@@ -1,4 +1,3 @@
-import bannedTradeInZips from './bannedTradeInZips.json';
 import bannedZips from './bannedZips.json';
 
 export const VROOM_VIN_SUBSTRING = '1VR00M004L';
@@ -67,7 +66,7 @@ export function isValidZipCode(zipCode: number): boolean {
 export function validateZipCode(isTradeIn: boolean, zipCode: string): boolean {
   const zipcode = parseInt(zipCode, 10);
 
-  if (isTradeIn) return !bannedTradeInZips.includes(zipcode);
+  if (isTradeIn) return !bannedZips.includes(zipcode);
 
   return !(
     (zipcode >= 83200 && zipcode <= 83999) ||
