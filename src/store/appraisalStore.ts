@@ -46,11 +46,18 @@ export class AppraisalStore {
     runnable: '',
     warningLights: '',
     warningLightsValues: [],
+    transmissionIssue: '',
+    engineIssue: '',
+    noMechanicalIssues: '',
   };
   intConditionForm: IntConditionForm = {
     interiorCondition: '',
     seats: '',
     smokedIn: '',
+    ripsOrTearsInSeats: '',
+    damagedElectronic: '',
+    damagedDashboardOrPanels: '',
+    noInteriorDamage: '',
   };
   extConditionForm: ExtConditionForm = {
     afterMarket: [],
@@ -65,6 +72,10 @@ export class AppraisalStore {
     paintChippingPanels: 0,
     dentsPanels: 0,
     tiresAndWheels: '',
+    floodDamage: '',
+    fireDamage: '',
+    wornTires: '',
+    noExteriorDamage: '',
   };
   brand = 'Vroom';
   dealership = 'Vroom';
@@ -233,11 +244,18 @@ export class AppraisalStore {
       runnable: '',
       warningLights: '',
       warningLightsValues: [],
+      transmissionIssue: '',
+      engineIssue: '',
+      noMechanicalIssues: '',
     };
     this.intConditionForm = {
       interiorCondition: '',
       seats: '',
       smokedIn: '',
+      ripsOrTearsInSeats: '',
+      damagedElectronic: '',
+      damagedDashboardOrPanels: '',
+      noInteriorDamage: '',
     };
     this.extConditionForm = {
       afterMarket: [],
@@ -252,6 +270,10 @@ export class AppraisalStore {
       dentsPanels: 0,
       paintChippingPanels: 0,
       tiresAndWheels: '',
+      floodDamage: '',
+      fireDamage: '',
+      wornTires: '',
+      noExteriorDamage: '',
     };
     this.isEmpty = true;
   }

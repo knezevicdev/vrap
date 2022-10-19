@@ -179,6 +179,7 @@ export const FormFields = {
   warningLights: {
     placeholder: '',
     label: 'Are there any active warning lights?',
+    newLabel: 'Warning lights',
     yes: commonLangInput.yes,
     no: commonLangInput.no,
   },
@@ -256,12 +257,14 @@ export const FormFields = {
   rust: {
     placeholder: '',
     label: 'Does your vehicle have any signs of rust?',
+    newLabel: 'Rust',
     yes: commonLangInput.yes,
     no: commonLangInput.no,
   },
   dents: {
     placeholder: '',
     label: 'Does your vehicle have any dents?',
+    newLabel: 'Dents',
     yes: commonLangInput.yes,
     no: commonLangInput.no,
   },
@@ -272,12 +275,14 @@ export const FormFields = {
   hailDamage: {
     placeholder: '',
     label: 'Does your car have hail damage?',
+    newLabel: 'Hail damage',
     yes: commonLangInput.yes,
     no: commonLangInput.no,
   },
   paintChipping: {
     placeholder: '',
     label: 'Does your vehicle have any paint chipping?',
+    newLabel: 'Paint Damage/Imperfections',
     yes: commonLangInput.yes,
     no: commonLangInput.no,
   },
@@ -288,6 +293,7 @@ export const FormFields = {
   scratches: {
     placeholder: '',
     label: 'Does your vehicle have any scratches?',
+    newLabel: 'Scratches',
     yes: commonLangInput.yes,
     no: commonLangInput.no,
   },

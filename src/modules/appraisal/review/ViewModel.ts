@@ -156,4 +156,11 @@ export default class AppraisalReviewModel {
   get showOfferDialog(): boolean {
     return this.store.offer.showOfferDialog;
   }
+
+  isNewFormExperimentActive = (): boolean => {
+    return (
+      !this.isTradeIn &&
+      this.store.absmart.isInExperiment('appraisal-form-miles-on-tires-removed')
+    );
+  };
 }

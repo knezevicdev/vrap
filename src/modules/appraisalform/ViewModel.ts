@@ -115,6 +115,13 @@ class PriceViewModel {
     return this.store.absmart.isInExperiment('ac-email-capture');
   };
 
+  isNewFormExperimentActive = (): boolean => {
+    return (
+      !this.isTradeIn &&
+      this.store.absmart.isInExperiment('appraisal-form-miles-on-tires-removed')
+    );
+  };
+
   isCTAColorExp = (): boolean => {
     return this.store.absmart.isInExperiment(
       'appraisal-form-all-cta-buttons-color'

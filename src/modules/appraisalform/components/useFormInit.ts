@@ -57,6 +57,13 @@ const useAppraisalFormInit = (
     interiorCondition: intCondition.interiorCondition || '',
     seats: intCondition.seats || '',
     smokedIn: intCondition.smokedIn || '',
+    ripsOrTearsInSeats: {
+      value: intCondition.ripsOrTearsInSeats || 'No',
+      isRequired: false,
+    },
+    damagedElectronic: intCondition.damagedElectronic || 'No',
+    damagedDashboardOrPanels: intCondition.damagedDashboardOrPanels || 'No',
+    noInteriorDamage: intCondition.noInteriorDamage || 'No',
   };
 
   const extConditionFields = {
@@ -96,6 +103,10 @@ const useAppraisalFormInit = (
       value: extCondition.scratchesPanels || 0,
       isRequired: false,
     },
+    floodDamage: extCondition.floodDamage || 'No',
+    fireDamage: extCondition.fireDamage || 'No',
+    wornTires: extCondition.wornTires || 'No',
+    noExteriorDamage: extCondition.noExteriorDamage || 'No',
   };
 
   const mechConditionFields = {
@@ -115,6 +126,9 @@ const useAppraisalFormInit = (
       value: mechCondition.additionalDetails || '',
       isRequired: false,
     },
+    transmissionIssue: mechCondition.transmissionIssue || 'No',
+    engineIssue: mechCondition.engineIssue || 'No',
+    noMechanicalIssues: mechCondition.noMechanicalIssues || 'No',
   };
 
   const yourFirstName = yourInformation.firstName || personalInfo.firstName;

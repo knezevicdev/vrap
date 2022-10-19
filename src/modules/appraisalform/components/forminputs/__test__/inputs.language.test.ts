@@ -183,6 +183,7 @@ describe('form input in appraisal form language test', () => {
       warningLights: {
         placeholder: '',
         label: 'Are there any active warning lights?',
+        newLabel: 'Warning lights',
         yes: 'Yes',
         no: 'No',
       },
@@ -260,12 +261,14 @@ describe('form input in appraisal form language test', () => {
       rust: {
         placeholder: '',
         label: 'Does your vehicle have any signs of rust?',
+        newLabel: 'Rust',
         yes: 'Yes',
         no: 'No',
       },
       dents: {
         placeholder: '',
         label: 'Does your vehicle have any dents?',
+        newLabel: 'Dents',
         yes: 'Yes',
         no: 'No',
       },
@@ -276,12 +279,14 @@ describe('form input in appraisal form language test', () => {
       hailDamage: {
         placeholder: '',
         label: 'Does your car have hail damage?',
+        newLabel: 'Hail damage',
         yes: 'Yes',
         no: 'No',
       },
       paintChipping: {
         placeholder: '',
         label: 'Does your vehicle have any paint chipping?',
+        newLabel: 'Paint Damage/Imperfections',
         yes: 'Yes',
         no: 'No',
       },
@@ -292,6 +297,7 @@ describe('form input in appraisal form language test', () => {
       scratches: {
         placeholder: '',
         label: 'Does your vehicle have any scratches?',
+        newLabel: 'Scratches',
         yes: 'Yes',
         no: 'No',
       },
