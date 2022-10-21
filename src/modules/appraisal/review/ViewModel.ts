@@ -160,7 +160,9 @@ export default class AppraisalReviewModel {
   isNewFormExperimentActive = (): boolean => {
     return (
       !this.isTradeIn &&
-      this.store.absmart.isInExperiment('appraisal-form-miles-on-tires-removed')
+      this.store.absmart.isInExperiment(
+        'appraisal-form-update-condition-question'
+      )
     );
   };
 }

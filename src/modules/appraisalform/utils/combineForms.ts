@@ -12,7 +12,10 @@ const applyFunctionToFormWithFields = (
   });
 };
 
-const combineForms = (...forms: UseForm[]): UseForm => {
+const combineForms = (
+  isFormValid: () => boolean,
+  ...forms: UseForm[]
+): UseForm => {
   return {
     fields: forms.reduce(
       (fields, form) => ({
@@ -21,7 +24,7 @@ const combineForms = (...forms: UseForm[]): UseForm => {
       }),
       {}
     ),
-    isFormValid: forms.every((form) => form.isFormValid),
+    isFormValid: isFormValid(),
     setFormFields: (fieldsToUpdate) =>
       applyFunctionToFormWithFields(fieldsToUpdate, forms, 'setFormFields'),
     updateMultipleFields: (fieldsToUpdate) =>
