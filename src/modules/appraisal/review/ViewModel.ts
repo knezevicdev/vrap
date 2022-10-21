@@ -92,6 +92,14 @@ export default class AppraisalReviewModel {
 
       const data = this.appraisalStore;
       const requestPayload: AppraisalPayload = makeRequestBody(data);
+
+      // temporary solution for adding flag for active test
+      if (requestPayload.additionalDetails.length)
+        requestPayload.additionalDetails += ' ';
+      requestPayload.additionalDetails += `suyc-condition-category-questions: ${String(
+        this.isNewFormExperimentActive()
+      )}`;
+
       const leadTrackingData = {
         email: requestPayload.email,
         phone: requestPayload.phoneNumber,
