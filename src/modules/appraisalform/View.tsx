@@ -30,6 +30,7 @@ import useTrackActive from './Dialog/EmailCapture/trackActive';
 import ExactMilageDialog from './Dialog/ExactMilage';
 import InvalidMakeDialog from './Dialog/InvalidMake';
 import InvalidStateDialog from './Dialog/InvalidState';
+import anyFieldSelected from './utils/anyFieldSelected';
 import combinedFormNextIntercept from './utils/combinedFormNextIntercept';
 import combineForms from './utils/combineForms';
 import valueOrNo from './utils/valueOrNo';
@@ -184,11 +185,67 @@ const AppraisalForm: React.FC<Props> = ({ viewModel }) => {
     }
   };
 
-  const combinedVehicleInformationForm = combineForms(
+  const historyAndConditionForms = [
     appraisalUseForm.vehicleHistoryForm,
     appraisalUseForm.intConditionForm,
     appraisalUseForm.extConditionForm,
-    appraisalUseForm.mechConditionForm
+    appraisalUseForm.mechConditionForm,
+  ];
+
+  const isFormValid = () => {
+    const isOriginalValid = historyAndConditionForms.reduce(
+      (isValid, form) => isValid && form.isFormValid,
+      true
+    );
+
+    const isMechanicalSelected = anyFieldSelected(
+      appraisalUseForm.mechConditionForm,
+      [
+        'warningLights',
+        'transmissionIssue',
+        'engineIssue',
+        'noMechanicalIssues',
+      ],
+      ['runnable']
+    );
+
+    const isExteriorSelected = anyFieldSelected(
+      appraisalUseForm.extConditionForm,
+      [
+        'wornTires',
+        'fireDamage',
+        'floodDamage',
+        'hailDamage',
+        'rust',
+        'scratches',
+        'dents',
+        'paintChipping',
+        'noExteriorDamage',
+      ]
+    );
+
+    const isInteriorSelected = anyFieldSelected(
+      appraisalUseForm.intConditionForm,
+      [
+        'damagedDashboardOrPanels',
+        'damagedElectronic',
+        'smokedIn',
+        'ripsOrTearsInSeats',
+        'noInteriorDamage',
+      ]
+    );
+
+    return (
+      isOriginalValid &&
+      isMechanicalSelected &&
+      isExteriorSelected &&
+      isInteriorSelected
+    );
+  };
+
+  const combinedVehicleInformationForm = combineForms(
+    isFormValid,
+    ...historyAndConditionForms
   );
 
   useEffect(() => {
