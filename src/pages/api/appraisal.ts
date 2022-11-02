@@ -26,10 +26,10 @@ export default async (
       if (captchaResponse.success) {
         const { data } = await postAppraisal(payload);
 
-        logger.info(
-          `Successful response from /suyc-api/v1/acquisition/appraisal`,
-          { appraisalApiRoute, response: data }
-        );
+        logger.info(`Successful response from /v1/acquisition/appraisal`, {
+          appraisalApiRoute,
+          response: data,
+        });
         res.status(200).json(data);
       } else {
         const message = `Google reCAPTCHA token ${token} failed validation.`;
@@ -38,7 +38,7 @@ export default async (
         res.status(400).json({ status: 'error', message });
       }
     } catch (err: any) {
-      const message = `Request to /suyc-api/v1/acquisition/appraisal failed.`;
+      const message = `Request to /v1/acquisition/appraisal failed.`;
 
       logger.error(message, { appraisalApiRoute, error: err });
       res.status(500).json({ status: 'error', message: err?.message });
@@ -63,7 +63,7 @@ async function verifyReCaptcha(token: string) {
 
 async function postAppraisal(payload: AppraisalPayload) {
   return await axios.post(
-    `${serverRuntimeConfig.NEXT_PUBLIC_VROOM_URL}/suyc-api/v1/acquisition/appraisal`,
+    `${serverRuntimeConfig.NEXT_PUBLIC_ACQUISITIONS_URL}/acquisition/appraisal`,
     { payload }
   );
 }

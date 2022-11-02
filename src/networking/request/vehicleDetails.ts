@@ -1,12 +1,8 @@
 import { GQLTypes, Response } from '@vroom-web/networking';
-import getConfig from 'next/config';
 
 import GRADE_CHECK from '../../graphql/mutations/gradeCheck.graphql';
 import { GradeCheckResp, MileageCheckResp } from '../../interfaces.d';
 import client from '../client';
-
-const { publicRuntimeConfig } = getConfig();
-const VROOM_URL = publicRuntimeConfig.NEXT_PUBLIC_VROOM_URL;
 
 export const getCarstoryVinDecode = async (
   vehicleId: string,
@@ -20,11 +16,15 @@ export const getCarstoryVinDecode = async (
   });
 };
 
-export const getCarstoryTrimFeatures = async (trimId: number): Promise<any> => {
-  const url = `${VROOM_URL}/suyc-api/v1/details/${trimId}`;
+export const getCarstoryTrimFeatures = async (
+  trimId: number,
+  captchaToken: string
+): Promise<any> => {
+  const url = `${client.httpEndpoints.interchangeUrl}/appraisal/api/details`;
   return await client.httpRequest({
-    method: 'get',
+    method: 'post',
     url,
+    data: { vehicleId: trimId, token: captchaToken },
   });
 };
 

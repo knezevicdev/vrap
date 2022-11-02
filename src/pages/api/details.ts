@@ -26,10 +26,11 @@ export default async (
       if (captchaResponse.success) {
         const { data: details } = await getDetails(vehicleId);
 
-        logger.info(
-          `Successful response from /suyc-api/v1/details/${vehicleId}`,
-          { appraisalApiRoute, vehicleId, response: details }
-        );
+        logger.info(`Successful response from /v1/details/${vehicleId}`, {
+          appraisalApiRoute,
+          vehicleId,
+          response: details,
+        });
 
         const response = mapDetailsToResponse(details);
 
@@ -45,7 +46,7 @@ export default async (
         return res.status(400).json({ status: 'error', message });
       }
     } catch (err: any) {
-      const message = `Request to /suyc-api/v1/details/${vehicleId} failed.`;
+      const message = `Request to /v1/details/${vehicleId} failed.`;
 
       logger.error(message, { appraisalApiRoute, error: err });
       return res.status(500).json({ status: 'error', message });
@@ -72,7 +73,7 @@ async function verifyReCaptcha(token: string) {
 
 async function getDetails(vehicleId: string) {
   return await axios.get(
-    `${serverRuntimeConfig.NEXT_PUBLIC_VROOM_URL}/suyc-api/v1/details/${vehicleId}`
+    `${serverRuntimeConfig.NEXT_PUBLIC_ACQUISITIONS_URL}/details/${vehicleId}`
   );
 }
 
