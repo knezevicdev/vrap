@@ -536,7 +536,8 @@ const VehicleInformation: React.FC<Props> = ({
     setTrimLoader(true);
 
     if (trimId && !isEditMode) {
-      const response = await viewModel.getTrimFeatures(trimId);
+      const token = await getCaptchaToken();
+      const response = await viewModel.getTrimFeatures(trimId, token);
       const trimOptions = response.features;
       const defaultSelected: any[] = [];
       trimOptions.forEach((opt: any) => {
@@ -727,13 +728,11 @@ const VehicleInformation: React.FC<Props> = ({
           )}
         </>
       )}
-      {!isEditMode && !vinDecoded && (
-        <ReCAPTCHA
-          ref={recaptchaRef}
-          size="invisible"
-          sitekey={NEXT_PUBLIC_RECAPTCHA_SITE_KEY}
-        />
-      )}
+      <ReCAPTCHA
+        ref={recaptchaRef}
+        size="invisible"
+        sitekey={NEXT_PUBLIC_RECAPTCHA_SITE_KEY}
+      />
       {vinDecoded && (
         <>
           {trims.length > 0 && (
