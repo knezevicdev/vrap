@@ -142,6 +142,7 @@ const config = {
     NEXT_PUBLIC_ACQUISITIONS_URL: process.env.NEXT_PUBLIC_ACQUISITIONS_URL,
     RECAPTCHA_SECRET_KEY: process.env.RECAPTCHA_SECRET_KEY,
     RECAPTCHA_VERIFICATION_URL: process.env.RECAPTCHA_VERIFICATION_URL,
+    VIS_URL: process.env.VIS_URL,
   },
   /* Custom webpack configuration. */
   webpack: (config) => {

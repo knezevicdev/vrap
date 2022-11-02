@@ -73,7 +73,7 @@ async function verifyReCaptcha(token: string) {
 
 async function getDetails(vehicleId: string) {
   return await axios.get(
-    `${serverRuntimeConfig.NEXT_PUBLIC_ACQUISITIONS_URL}/details/${vehicleId}`
+    `${serverRuntimeConfig.VIS_URL}v1/carstory/details/${vehicleId}?cacheCarfax=true&cacheAutocheck=true`
   );
 }
 

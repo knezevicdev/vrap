@@ -8,7 +8,7 @@ export const getCarstoryVinDecode = async (
   vehicleId: string,
   captchaToken: string
 ): Promise<any> => {
-  const url = `${client.httpEndpoints.interchangeUrl}/appraisal/api/details`;
+  const url = `/appraisal/api/details`;
   return await client.httpRequest({
     method: 'post',
     url,
@@ -20,7 +20,7 @@ export const getCarstoryTrimFeatures = async (
   trimId: number,
   captchaToken: string
 ): Promise<any> => {
-  const url = `${client.httpEndpoints.interchangeUrl}/appraisal/api/details`;
+  const url = `/appraisal/api/details`;
   return await client.httpRequest({
     method: 'post',
     url,
