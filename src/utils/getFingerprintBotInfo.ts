@@ -1,8 +1,12 @@
 import axios from 'axios';
 import { get } from 'lodash';
+import getConfig from 'next/config';
 
-const fingerprintPublicKey = process.env.NEXT_PUBLIC_FINGERPRINT_PUBLIC_KEY;
-const fingerprintSecretKey = process.env.FINGERPRINT_SECRET_KEY;
+const { serverRuntimeConfig } = getConfig();
+
+const fingerprintPublicKey =
+  serverRuntimeConfig.NEXT_PUBLIC_FINGERPRINT_PUBLIC_KEY;
+const fingerprintSecretKey = serverRuntimeConfig.FINGERPRINT_SECRET_KEY;
 
 const getFingerprintBotInfo = async (requestId: string): Promise<string> => {
   try {
