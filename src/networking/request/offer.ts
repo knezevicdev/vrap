@@ -50,7 +50,7 @@ export const postAppraisalReview = async (
   fingerprintResult: FingerprintResult
 ): Promise<Response<AppraisalResp>> => {
   const appraisalRequestScore = checkAppraisalPayload(data);
-  const url = `${client.httpEndpoints.interchangeUrl}/appraisal/api/appraisal`;
+  const url = `/appraisal/api/appraisal`;
 
   if (appraisalRequestScore >= 3) {
     const goodUntil = new Date();
@@ -65,7 +65,7 @@ export const postAppraisalReview = async (
     return await client.httpRequest({
       method: 'post',
       url,
-      timeout: 10000,
+      timeout: 30000,
       data: payload,
       params: fingerprintResult,
     });
