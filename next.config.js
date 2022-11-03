@@ -129,6 +129,8 @@ const config = {
     NEXT_PUBLIC_WEB_LEADS_URL: process.env.NEXT_PUBLIC_WEB_LEADS_URL,
     ITERABLE_UNSUBSCRIBE_KEY: process.env.ITERABLE_UNSUBSCRIBE_KEY,
     NEXT_PUBLIC_RECAPTCHA_SITE_KEY: process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY,
+    NEXT_PUBLIC_FINGERPRINT_PUBLIC_KEY:
+      process.env.NEXT_PUBLIC_FINGERPRINT_PUBLIC_KEY,
   },
   serverRuntimeConfig: {
     // Will only be available on the server side
@@ -143,6 +145,9 @@ const config = {
     RECAPTCHA_SECRET_KEY: process.env.RECAPTCHA_SECRET_KEY,
     RECAPTCHA_VERIFICATION_URL: process.env.RECAPTCHA_VERIFICATION_URL,
     VIS_URL: process.env.VIS_URL,
+    NEXT_PUBLIC_FINGERPRINT_PUBLIC_KEY:
+      process.env.NEXT_PUBLIC_FINGERPRINT_PUBLIC_KEY,
+    FINGERPRINT_SECRET_KEY: process.env.FINGERPRINT_SECRET_KEY,
   },
   /* Custom webpack configuration. */
   webpack: (config) => {
