@@ -20,6 +20,7 @@ export default async (
 
   const { token, vehicleId } = req.body;
   const { requestId = 'unknown', visitorId = 'unknown' } = req.query;
+  const { fpid, ajs_anonymous_id } = req.cookies; // eslint-disable-line @typescript-eslint/naming-convention
 
   const [isRecaptchaValid, fingerprintBotResult] = await Promise.all([
     verifyReCaptcha(token, appraisalApiRoute),
@@ -35,6 +36,8 @@ export default async (
       requestId,
       visitorId,
     },
+    fpid,
+    ajs_anonymous_id,
   });
 
   if (!isRecaptchaValid) {
