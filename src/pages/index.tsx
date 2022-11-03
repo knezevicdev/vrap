@@ -6,6 +6,9 @@ import React, { useEffect, useMemo } from 'react';
 import styled from 'styled-components';
 
 import ErrorBanner from '../components/ErrorBanner';
+import FingerprintContext, {
+  useInitFingerprint,
+} from '../context/FigerprintContext';
 import useHandleAppraisalRoutes from '../modules/appraisal/hooks/useHandleAppraisalRoutes';
 import { returnBrandConfig } from '../utils/pageheaders';
 
@@ -18,6 +21,7 @@ import Page from 'src/Page';
 const AppraisalFormPage: NextPage = () => {
   const router = useRouter();
   const vehicle = router.query.vehicle as string;
+  const { result: fingerprintValue } = useInitFingerprint();
   const { store } = useAppStore();
   const isLoading = store.deal.loading;
 
@@ -36,24 +40,26 @@ const AppraisalFormPage: NextPage = () => {
   }, [store.appraisal, vehicle]);
 
   return (
-    <Page name={title}>
-      {isLoading && (
-        <WhiteBox>
-          <SpinnerContainer>
-            <VroomSpinner />
-          </SpinnerContainer>
-        </WhiteBox>
-      )}
-      <SkipNavigationLink mainContentId={'main-content'} />
-      <HeaderContainer>
-        <Header />
-        {tradeInError && <ErrorBanner errorMessage={tradeInError} />}
-      </HeaderContainer>
-      <PageContent id="main-content">
-        <AppraisalForm />
-      </PageContent>
-      <Footer />
-    </Page>
+    <FingerprintContext.Provider value={fingerprintValue}>
+      <Page name={title}>
+        {isLoading && (
+          <WhiteBox>
+            <SpinnerContainer>
+              <VroomSpinner />
+            </SpinnerContainer>
+          </WhiteBox>
+        )}
+        <SkipNavigationLink mainContentId={'main-content'} />
+        <HeaderContainer>
+          <Header />
+          {tradeInError && <ErrorBanner errorMessage={tradeInError} />}
+        </HeaderContainer>
+        <PageContent id="main-content">
+          <AppraisalForm />
+        </PageContent>
+        <Footer />
+      </Page>
+    </FingerprintContext.Provider>
   );
 };
 

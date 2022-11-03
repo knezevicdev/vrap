@@ -1,6 +1,7 @@
 import { observer } from 'mobx-react';
 import React from 'react';
 
+import { useFingerprint } from '../../../../context/FigerprintContext';
 import VehicleInformationView from './View';
 import ViewModel from './ViewModel';
 
@@ -17,8 +18,9 @@ const VehicleInformation: React.FC<Props> = ({
   fields,
   hideButtonCallback,
 }) => {
+  const fingerprintResult = useFingerprint();
   const { store } = useAppStore();
-  const viewModel = new ViewModel(store);
+  const viewModel = new ViewModel(store, fingerprintResult);
 
   return (
     <VehicleInformationView

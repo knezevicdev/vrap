@@ -4,7 +4,9 @@ const { serverRuntimeConfig } = getConfig();
 import axios from 'axios';
 
 import { DetailsResponse, NewVinDecodeResp } from '../../interfaces.d';
+import getFingerprintBotInfo from '../../utils/getFingerprintBotInfo';
 import logger from '../../utils/logger';
+import { verifyReCaptcha } from '../../utils/verifyReCaptcha';
 
 const appraisalApiRoute = '/api/details';
 
@@ -12,64 +14,56 @@ export default async (
   req: NextApiRequest,
   res: NextApiResponse
 ): Promise<void> => {
-  if (req.method === 'POST') {
-    const { token, vehicleId } = req.body;
+  if (req.method !== 'POST') {
+    res.status(405).json({ status: 'error', message: 'Unsupported method.' });
+  }
 
-    logger.info(`Request to /appraisal/api/details started`, {
+  const { token, vehicleId } = req.body;
+  const { requestId = 'unknown', visitorId = 'unknown' } = req.query;
+
+  const [isRecaptchaValid, fingerprintBotResult] = await Promise.all([
+    verifyReCaptcha(token, appraisalApiRoute),
+    getFingerprintBotInfo(requestId as string),
+  ]);
+
+  logger.info(`Request to /appraisal/api/details started`, {
+    appraisalApiRoute,
+    request_payload: req.body,
+    isRecaptchaValid,
+    fingerprintBotResult,
+    fingerprintMeta: {
+      requestId,
+      visitorId,
+    },
+  });
+
+  if (!isRecaptchaValid) {
+    res.status(400).json({
+      status: 'error',
+      message: `Google reCAPTCHA token ${token} failed validation.`,
+    });
+    return;
+  }
+
+  try {
+    const { data: details } = await getDetails(vehicleId);
+
+    logger.info(`Successful response from /v1/details/${vehicleId}`, {
       appraisalApiRoute,
-      request_payload: req.body,
+      vehicleId,
+      response: details,
     });
 
-    try {
-      const { data: captchaResponse } = await verifyReCaptcha(token);
+    const response = mapDetailsToResponse(details);
 
-      if (captchaResponse.success) {
-        const { data: details } = await getDetails(vehicleId);
+    res.status(200).json(response);
+  } catch (err: any) {
+    const message = `Request to /v1/details/${vehicleId} failed.`;
 
-        logger.info(`Successful response from /v1/details/${vehicleId}`, {
-          appraisalApiRoute,
-          vehicleId,
-          response: details,
-        });
-
-        const response = mapDetailsToResponse(details);
-
-        return res.status(200).json(response);
-      } else {
-        const message = `Google reCAPTCHA token ${token} failed validation.`;
-
-        logger.error(message, {
-          appraisalApiRoute,
-          vehicleId,
-          captcha_token: token,
-        });
-        return res.status(400).json({ status: 'error', message });
-      }
-    } catch (err: any) {
-      const message = `Request to /v1/details/${vehicleId} failed.`;
-
-      logger.error(message, { appraisalApiRoute, error: err });
-      return res.status(500).json({ status: 'error', message });
-    }
-  } else {
-    return res
-      .status(405)
-      .json({ status: 'error', message: 'Unsupported method.' });
+    logger.error(message, { appraisalApiRoute, error: err });
+    res.status(500).json({ status: 'error', message });
   }
 };
-
-async function verifyReCaptcha(token: string) {
-  return await axios.post(
-    serverRuntimeConfig.RECAPTCHA_VERIFICATION_URL,
-    null,
-    {
-      params: {
-        secret: serverRuntimeConfig.RECAPTCHA_SECRET_KEY,
-        response: token,
-      },
-    }
-  );
-}
 
 async function getDetails(vehicleId: string) {
   return await axios.get(

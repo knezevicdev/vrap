@@ -168,6 +168,8 @@ export const verificationResp: VerificationRespData = {
     user_id: 25289,
     vin: '',
     xke_offer_id: 26300,
+    lender_id: '1',
+    lender_name: 'Vroom',
   },
 };
 
@@ -381,6 +383,7 @@ export const getUser = async (): Promise<GQLTypes.User> => {
   return Promise.resolve({
     username: 'testuser',
     firstName: 'vroomuser',
+    externalUserID: '123',
     consents: {
       emailMarketing: 'yes',
       smsMarketing: 'yes',
@@ -417,6 +420,7 @@ export const postAppraisalReview = async (): Promise<
         ID: '584824b4-d392-43ff-be3a-b38885ee50f4',
         offer_id: 534,
         offer_status: 'Pending',
+        user_email: 'fake@mail.com',
       },
     },
   });
