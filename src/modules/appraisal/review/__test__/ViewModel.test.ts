@@ -80,7 +80,10 @@ describe('Appraisal review index page test', () => {
   let analyticsHandler: AnalyticsHandler;
 
   beforeEach(() => {
-    viewModel = new ViewModel(stores, router);
+    viewModel = new ViewModel(stores, router, {
+      requestId: 'unknown',
+      visitorId: 'unknown',
+    });
     router.asPath = '';
     analyticsHandler = viewModel.getAnalyticsHandler();
   });
@@ -179,7 +182,7 @@ describe('Appraisal review index page test', () => {
       tiresAndWheels: '',
       titleStatus: '',
       trim: 'Utility 4D SV 2WD V6',
-      csTrimId: '12345',
+      csTrimId: 12345,
       type: '',
       vin: 'abc123',
       warningLights: '',
@@ -198,10 +201,10 @@ describe('Appraisal review index page test', () => {
     const submitWebleadSpy = jest.spyOn(Request, 'submitWeblead');
     const postAppraisalReview = jest.spyOn(Request, 'postAppraisalReview');
     const clearAppraisal = jest.spyOn(stores.appraisal, 'clearAppraisal');
-    trackAnalytics.mockReturnValue({});
+    trackAnalytics.mockReturnValue({} as any);
     submitWebleadSpy.mockResolvedValue(getSubmitWeblead());
     postAppraisalReview.mockResolvedValue(getPostAppraisalReview());
-    await viewModel.submitAppraisal();
+    await viewModel.submitAppraisal('fake_captcha_token');
     expect(makeRequestBody).toHaveBeenCalled();
     expect(makeRequestBody).toHaveBeenCalledWith(stores.appraisal);
     expect(trackAnalytics).toHaveBeenCalled();

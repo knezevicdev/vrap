@@ -2,29 +2,34 @@ import { GQLTypes, Response } from '@vroom-web/networking';
 
 import GRADE_CHECK from '../../graphql/mutations/gradeCheck.graphql';
 import { GradeCheckResp, MileageCheckResp } from '../../interfaces.d';
+import { FingerprintResult } from '../../utils/initFingerprint';
 import client from '../client';
 
 export const getCarstoryVinDecode = async (
   vehicleId: string,
-  captchaToken: string
+  captchaToken: string,
+  fingerprintResult: FingerprintResult
 ): Promise<any> => {
   const url = `/appraisal/api/details`;
   return await client.httpRequest({
     method: 'post',
     url,
     data: { vehicleId, token: captchaToken },
+    params: fingerprintResult,
   });
 };
 
 export const getCarstoryTrimFeatures = async (
   trimId: number,
-  captchaToken: string
+  captchaToken: string,
+  fingerprintResult: FingerprintResult
 ): Promise<any> => {
   const url = `/appraisal/api/details`;
   return await client.httpRequest({
     method: 'post',
     url,
     data: { vehicleId: trimId, token: captchaToken },
+    params: fingerprintResult,
   });
 };
 

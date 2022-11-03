@@ -54,9 +54,13 @@ const respWithEmpty = {
 describe('AppraisalForm VehicleInformation component test', () => {
   const stores = new store();
   let viewModel: ViewModel;
+  const captchaToken = 'fake_captcha_token';
 
   beforeEach(() => {
-    viewModel = new ViewModel(stores);
+    viewModel = new ViewModel(stores, {
+      requestId: 'unknown',
+      visitorId: 'unknown',
+    });
   });
 
   it('test vehicleId', () => {
@@ -86,7 +90,7 @@ describe('AppraisalForm VehicleInformation component test', () => {
     const requestSpy = jest.spyOn(Request, 'getCarstoryTrimFeatures');
     const spyStore = jest.spyOn(stores.appraisal, 'setVehicleFeatureData');
     requestSpy.mockResolvedValueOnce(getCarstoryTrimFeatures());
-    await viewModel.getTrimFeatures(123);
+    await viewModel.getTrimFeatures(123, captchaToken);
     expect(requestSpy).toHaveBeenCalled();
     expect(spyStore).toHaveBeenCalledWith({
       features: ['feature_one', 'feature_two'],
@@ -96,7 +100,7 @@ describe('AppraisalForm VehicleInformation component test', () => {
   it('test getTrimFeatures return value ', async () => {
     const requestSpy = jest.spyOn(Request, 'getCarstoryTrimFeatures');
     requestSpy.mockResolvedValueOnce(getCarstoryTrimFeatures());
-    const resp = await viewModel.getTrimFeatures(123);
+    const resp = await viewModel.getTrimFeatures(123, captchaToken);
     expect(resp).toEqual({
       features: ['feature_one', 'feature_two'],
     });
@@ -130,7 +134,7 @@ describe('AppraisalForm VehicleInformation component test', () => {
     const requestSpy = jest.spyOn(Request, 'getCarstoryVinDecode');
     const storeSpy = jest.spyOn(stores.appraisal, 'setVehicleData');
     requestSpy.mockResolvedValueOnce(getCarstoryVinDecode(respCarStory));
-    await viewModel.getVinDecode('123');
+    await viewModel.getVinDecode('123', captchaToken);
     expect(requestSpy).toHaveBeenCalled();
     expect(storeSpy).toHaveBeenCalledWith({
       ...vehicleInfo,
@@ -142,9 +146,9 @@ describe('AppraisalForm VehicleInformation component test', () => {
 
   it('test getCarstoryVinDecode api resolve carstory return value', async () => {
     const requestSpy = jest.spyOn(Request, 'getCarstoryVinDecode');
-    const storeSpy = jest.spyOn(stores.appraisal, 'setVehicleData');
+    jest.spyOn(stores.appraisal, 'setVehicleData');
     requestSpy.mockResolvedValueOnce(getCarstoryVinDecode(respCarStory));
-    const resp = await viewModel.getVinDecode('123');
+    const resp = await viewModel.getVinDecode('123', captchaToken);
 
     expect(resp).toEqual({
       alternatives: ['alternatives_one'],
@@ -164,7 +168,7 @@ describe('AppraisalForm VehicleInformation component test', () => {
     const requestSpy = jest.spyOn(Request, 'getCarstoryVinDecode');
     const storeSpy = jest.spyOn(stores.appraisal, 'setVehicleData');
     requestSpy.mockResolvedValueOnce(getCarstoryVinDecode(respNada));
-    await viewModel.getVinDecode('123');
+    await viewModel.getVinDecode('123', captchaToken);
     expect(requestSpy).toHaveBeenCalled();
     expect(storeSpy).toHaveBeenCalledWith({
       ...vehicleInfo,
@@ -178,7 +182,7 @@ describe('AppraisalForm VehicleInformation component test', () => {
     const requestSpy = jest.spyOn(Request, 'getCarstoryVinDecode');
     const storeSpy = jest.spyOn(stores.appraisal, 'setVehicleData');
     requestSpy.mockResolvedValueOnce(getCarstoryVinDecode(respWithEmpty));
-    await viewModel.getVinDecode('123');
+    await viewModel.getVinDecode('123', captchaToken);
     expect(requestSpy).toHaveBeenCalled();
     expect(storeSpy).toHaveBeenCalledWith({
       ...vehicleInfo,
