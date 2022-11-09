@@ -50,6 +50,16 @@ const VerificationDocumentsViewDetail: React.FC<Props> = ({ priceId }) => {
   } = useVerificationDetails(priceId);
   const analyticsHandler = useRef(new AnalyticsHandler());
   const mileageSet = useRef(false);
+  const lastPriceId = useRef<undefined | string>();
+
+  useEffect(() => {
+    if (lastPriceId.current !== priceId) {
+      lastPriceId.current = priceId;
+      store.verification.setWhereIsVehicleRegistered(
+        localStorage.getItem('whereIsVehicleRegistered') || ''
+      );
+    }
+  }, [priceId, store]);
 
   useEffect(() => {
     if (!mileageSet.current && verificationDetails) {
