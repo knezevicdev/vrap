@@ -146,6 +146,11 @@ const VerificationOwnerViewDetail: React.FC<Props> = ({ priceId }) => {
     analyticsHandler.current.trackPayoffInfoComplete();
     localStorage.setItem('lastFour', payload.last_four_ssn || '');
 
+    const whereIsVehicleRegistered = payload.current_payments
+      ? forms.loanInfoForm.fields.state.value
+      : '';
+    localStorage.setItem('whereIsVehicleRegistered', whereIsVehicleRegistered);
+
     if (editForm.current) {
       onEditFinish(updateOfferId);
       return;
