@@ -15,7 +15,6 @@ const calculateRequiredDocuments = (
   const requiredStatesForTitles = [
     'KY',
     'MD',
-    'MI',
     'MO',
     'MN',
     'MT',
