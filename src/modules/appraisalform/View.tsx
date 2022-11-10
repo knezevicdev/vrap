@@ -73,7 +73,9 @@ const AppraisalForm: React.FC<Props> = ({ viewModel }) => {
     false
   );
   const [showInvalidStateDialog, setShowInvalidStateDialog] = useState(false);
-  const [showInvalidMakeDialog, setShowInvalidMakeDialog] = useState(false);
+  const [invalidMakeDialogMake, setInvalidMakeDialogMake] = useState<
+    false | string
+  >(false);
   const [personalInfo, changePersonalInfo] = useState({});
   const isNewFormRef = useRef<boolean>();
 
@@ -150,7 +152,16 @@ const AppraisalForm: React.FC<Props> = ({ viewModel }) => {
       zipCode
     );
     const vin = appraisalUseForm.vehicleInfoForm.fields.vin.value;
-    const isMakeValid = vehicleInfo.make.toLowerCase() !== 'maserati';
+    const isMakeValid = ![
+      'maserati',
+      'ferrari',
+      'bentley',
+      'lamborghini',
+      'bugatti',
+      'aston martin',
+      'mclaren',
+      'rolls-royce',
+    ].includes(vehicleInfo.make.toLowerCase());
 
     setExactMileageProps({
       strictDialog: false,
@@ -167,7 +178,7 @@ const AppraisalForm: React.FC<Props> = ({ viewModel }) => {
     });
 
     if (!isMakeValid) {
-      setShowInvalidMakeDialog(true);
+      setInvalidMakeDialogMake(vehicleInfo.make);
       viewModel.trackInvalidMakeShown(vin);
       return;
     }
@@ -614,7 +625,9 @@ const AppraisalForm: React.FC<Props> = ({ viewModel }) => {
         />
       )}
       {showInvalidStateDialog && <InvalidStateDialog />}
-      {showInvalidMakeDialog && <InvalidMakeDialog />}
+      {invalidMakeDialogMake && (
+        <InvalidMakeDialog make={invalidMakeDialogMake} />
+      )}
       {emailModal && (
         <EmailCapture
           handleClose={handleModalClose}
