@@ -30,6 +30,7 @@ const CombinedVehicleInfoForms = (props: Props): ReactNode => {
       <AftermarketInput
         field={props.fields.afterMarket}
         otherAfterMarketField={props.fields.otherAfterMarket}
+        newForm={true}
       />
       <br />
       <AdditionalDetailsInput field={props.fields.additionalDetails} />
