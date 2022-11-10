@@ -1,6 +1,7 @@
 import { Checkbox, Tooltip, Typography } from '@vroom-web/ui-lib';
+import { omit } from 'lodash';
 import React, { useState } from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 import { FormField, GenericObject } from '../../../../interfaces.d';
 import useForm from '../useForm';
@@ -11,12 +12,14 @@ interface Props {
   field: FormField;
   className?: string;
   otherAfterMarketField: FormField;
+  newForm?: boolean;
 }
 
 const AlternateAfterMarketModsOptionsGroup: React.FC<Props> = ({
   field,
   className,
   otherAfterMarketField,
+  newForm,
 }) => {
   const [checkedValuesForParent, setCheckedValuesForParent] = useState(
     [] as string[]
@@ -68,7 +71,7 @@ const AlternateAfterMarketModsOptionsGroup: React.FC<Props> = ({
       const typedOption: GenericObject = option as GenericObject;
 
       return (
-        <AfterMarketModsOption key={key} htmlFor={key + '-checkbox'}>
+        <AfterMarketModsOption key={key} htmlFor={key + '-checkbox'} checked={!!typedOption.value} newForm={newForm}>
           <Checkbox
             name={key}
             id={key + '-checkbox'}
@@ -143,10 +146,29 @@ const AfterMarketModsOptionsLabel = styled(Typography.Body.Regular)`
   letter-spacing: 0.35px;
 `;
 
-const AfterMarketModsOption = styled(({ ...restProps }) => (
-  <li {...restProps} />
-))`
+interface AfterMarketModsOptionProps {
+  newForm?: boolean;
+  checked?: boolean;
+}
+
+const AfterMarketModsOption = styled((props) => (
+  <li {...omit(props, ['checked', 'newForm'])} />
+))<AfterMarketModsOptionProps>`
   padding: 0 0 8px;
+
+  ${({ newForm }) =>
+    newForm &&
+    css<AfterMarketModsOptionProps>`
+      label::before {
+        background-color: ${({ checked }) => (checked ? '#E71321' : '#f5f5f5')};
+        border-color: #979797;
+        border-radius: 4px;
+        min-width: 22px;
+        min-height: 22px;
+        max-width: 22px;
+        max-height: 22px;
+      }
+    `}
 `;
 
 export default AlternateAfterMarketModsOptionsGroup;

@@ -1,16 +1,16 @@
-import { Checkbox } from '@vroom-web/ui-lib';
 import React from 'react';
 import styled from 'styled-components';
 
 import handleCheckChange from '../utils/handleCheckChange';
+import CheckboxesContainer from './CheckboxesContainer';
 import { FormField, UseForm } from './componentInterfaces.d';
 import AdditionalDetailsInput from './forminputs/AdditionalDetailsInput';
 import FloodFireDamageInput from './forminputs/FloodFireDamageInput';
-import { FormFields } from './forminputs/Inputs.language';
 import MechanicalConditionInput from './forminputs/MechanicalConditionInput';
 import RunnableInput from './forminputs/RunnableInput';
 import WarningLightsInput from './forminputs/WarningLightsInput';
 import WarningLightsOptionsGroup from './forminputs/WarningLightsOptionsGroup';
+import StyledCheckbox from './StyledCheckbox';
 
 export interface Props {
   fields: Record<string, FormField>;
@@ -22,92 +22,86 @@ const MechanicalCondition: React.FC<Props> = ({ fields, newForm, form }) => {
   const showWarningLights = fields.warningLights.value === 'Yes';
 
   return newForm ? (
-    <>
-      <InputContainer modernSpacing>
-        <Left>
-          <Checkbox
-            label={FormFields.warningLights.newLabel}
-            onChange={handleCheckChange(
-              fields,
-              'warningLights',
-              form.updateMultipleFields,
-              ['noMechanicalIssues']
-            )}
-            checked={fields.warningLights?.value === 'Yes'}
-            id="warningLights"
-            dataQa="warningLights"
+    <CheckboxesContainer>
+      <StyledCheckbox
+        label="Engine"
+        onChange={handleCheckChange(
+          fields,
+          'engineIssue',
+          form.updateMultipleFields,
+          ['noMechanicalIssues']
+        )}
+        checked={fields.engineIssue?.value === 'Yes'}
+        id="engineIssue"
+        dataQa="engineIssue"
+        description="Leaks, smoke, noise or knocking"
+      />
+      <StyledCheckbox
+        label="Transmission"
+        onChange={handleCheckChange(
+          fields,
+          'transmissionIssue',
+          form.updateMultipleFields,
+          ['noMechanicalIssues']
+        )}
+        checked={fields.transmissionIssue?.value === 'Yes'}
+        id="transmissionIssue"
+        dataQa="transmissionIssue"
+        description="Drivetrain issues, shifts poorly, etc."
+      />
+      <div>
+        <StyledCheckbox
+          label="Warning Lights"
+          onChange={handleCheckChange(
+            fields,
+            'warningLights',
+            form.updateMultipleFields,
+            ['noMechanicalIssues']
+          )}
+          checked={fields.warningLights?.value === 'Yes'}
+          id="warningLights"
+          dataQa="warningLights"
+          description="Check engine light, other warnings"
+        />
+        {showWarningLights && (
+          <WarningLightsOptionsContainer
+            field={fields.warningLightsValues}
+            otherWarningField={fields.otherWarning}
+            newForm
           />
-          {showWarningLights && (
-            <WarningLightsOptionsContainer
-              field={fields.warningLightsValues}
-              otherWarningField={fields.otherWarning}
-            />
-          )}
-        </Left>
-      </InputContainer>
-      <InputContainer modernSpacing>
-        <Checkbox
-          label="Transmission"
-          onChange={handleCheckChange(
-            fields,
-            'transmissionIssue',
-            form.updateMultipleFields,
-            ['noMechanicalIssues']
-          )}
-          checked={fields.transmissionIssue?.value === 'Yes'}
-          id="transmissionIssue"
-          dataQa="transmissionIssue"
-        />
-      </InputContainer>
-      <InputContainer modernSpacing>
-        <Checkbox
-          label="Engine"
-          onChange={handleCheckChange(
-            fields,
+        )}
+      </div>
+      <StyledCheckbox
+        label="Does Not Run/Not Drivable"
+        onChange={handleCheckChange(
+          fields,
+          'runnable',
+          form.updateMultipleFields,
+          ['noMechanicalIssues'],
+          true
+        )}
+        checked={fields.runnable?.value === 'No'}
+        id="runnable"
+        dataQa="runnable"
+      />
+      <StyledCheckbox
+        label="No Mechanical or Electrical Issues"
+        onChange={handleCheckChange(
+          fields,
+          'noMechanicalIssues',
+          form.updateMultipleFields,
+          [
             'engineIssue',
-            form.updateMultipleFields,
-            ['noMechanicalIssues']
-          )}
-          checked={fields.engineIssue?.value === 'Yes'}
-          id="engineIssue"
-          dataQa="engineIssue"
-        />
-      </InputContainer>
-      <InputContainer modernSpacing>
-        <Checkbox
-          label="Does Not Run/Not Drivable"
-          onChange={handleCheckChange(
-            fields,
-            'runnable',
-            form.updateMultipleFields,
-            ['noMechanicalIssues'],
-            true
-          )}
-          checked={fields.runnable?.value === 'No'}
-          id="runnable"
-          dataQa="runnable"
-        />
-      </InputContainer>
-      <InputContainer modernSpacing>
-        <Checkbox
-          label="No Mechanical or Electrical Issues"
-          onChange={handleCheckChange(
-            fields,
-            'noMechanicalIssues',
-            form.updateMultipleFields,
-            [
-              'engineIssue',
-              'transmissionIssue',
-              'warningLights',
-              { field: 'runnable', invert: true },
-            ]
-          )}
-          checked={fields.noMechanicalIssues?.value === 'Yes'}
-          id="noMechanicalIssues"
-          dataQa="noMechanicalIssues"
-        />
-      </InputContainer>
-    </>
+            'transmissionIssue',
+            'warningLights',
+            { field: 'runnable', invert: true },
+          ]
+        )}
+        checked={fields.noMechanicalIssues?.value === 'Yes'}
+        id="noMechanicalIssues"
+        dataQa="noMechanicalIssues"
+      />
+    </CheckboxesContainer>
   ) : (
     <>
       <InputContainer>
@@ -135,15 +129,10 @@ const MechanicalCondition: React.FC<Props> = ({ fields, newForm, form }) => {
   );
 };
 
-type InputContainerProps = {
-  modernSpacing?: boolean;
-};
-
-const InputContainer = styled.div<InputContainerProps>`
+const InputContainer = styled.div`
   display: flex;
   text-align: left;
-  margin-bottom: ${({ modernSpacing }) =>
-    modernSpacing ? '16px !important' : `20px`};
+  margin-bottom: 20px;
 
   justify-content: space-between;
   @media (max-width: 768px) {
@@ -160,8 +149,20 @@ const Left = styled.div`
   }
 `;
 
-const WarningLightsOptionsContainer = styled(WarningLightsOptionsGroup)`
+interface WarningLightsOptionsContainerProps {
+  newForm?: boolean;
+}
+
+const WarningLightsOptionsContainer = styled(
+  WarningLightsOptionsGroup
+)<WarningLightsOptionsContainerProps>`
   margin-top: 10px;
+
+  ${({ newForm }) =>
+    newForm &&
+    `
+    margin-left: 15px;
+  `}
 `;
 
 const MechanicalConditionRadios = styled(MechanicalConditionInput)`

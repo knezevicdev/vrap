@@ -1,6 +1,7 @@
 import { Checkbox } from '@vroom-web/ui-lib';
+import { omit } from 'lodash';
 import React, { useState } from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 import { FormField, GenericObject } from '../../../../interfaces.d';
 import useForm from '../useForm';
@@ -11,6 +12,7 @@ interface Props {
   field: FormField;
   className?: string;
   otherWarningField: FormField;
+  newForm?: boolean;
 }
 
 const STATIC_URL = 'https://assets.vroomcdn.com/static-rebrand';
@@ -19,6 +21,7 @@ const WarningLightsOptionsGroup: React.FC<Props> = ({
   field,
   className,
   otherWarningField,
+  newForm,
 }) => {
   const [checkedValuesForParent, setCheckedValuesForParent] = useState(
     [] as string[]
@@ -99,7 +102,12 @@ const WarningLightsOptionsGroup: React.FC<Props> = ({
       const typedOption: GenericObject = option as GenericObject;
 
       return (
-        <WarningOption key={key} htmlFor={key + '-warning-lights-checkbox'}>
+        <WarningOption
+          key={key}
+          htmlFor={key + '-warning-lights-checkbox'}
+          newForm={newForm}
+          checked={!!typedOption.value}
+        >
           <Checkbox
             name={key}
             id={key + '-warning-lights-checkbox'}
@@ -121,8 +129,10 @@ const WarningLightsOptionsGroup: React.FC<Props> = ({
 
   return (
     <div className={className}>
-      <WarningOptionsLabel>
-        {FormFields.warningLightOptions.label}
+      <WarningOptionsLabel newForm={newForm}>
+        {newForm
+          ? 'Select active warning lights:'
+          : FormFields.warningLightOptions.label}
       </WarningOptionsLabel>
       <CheckboxesContainer>{checkboxes}</CheckboxesContainer>
       {optionsGroupForm.fields.Other.value && (
@@ -154,16 +164,47 @@ const Label = styled.span`
   margin-left: 5px;
 `;
 
-const WarningOptionsLabel = styled.div`
+interface WarningOptionsLabelProps {
+  newForm?: boolean;
+}
+
+const WarningOptionsLabel = styled.div<WarningOptionsLabelProps>`
   padding: 0 0 8px;
+
+  ${({ newForm }) =>
+    newForm &&
+    css`
+      color: #737373;
+    `}
 `;
 
-const WarningOption = styled(({ ...restProps }) => <li {...restProps} />)`
+interface WarningOptionProps {
+  newForm?: boolean;
+  checked?: boolean;
+}
+
+const WarningOption = styled((props) => (
+  <li {...omit(props, ['checked', 'newForm'])} />
+))<WarningOptionProps>`
   padding: 0 0 8px;
 
   span {
     outline: none;
   }
+
+  ${({ newForm }) =>
+    newForm &&
+    css<WarningOptionProps>`
+      label::before {
+        background-color: ${({ checked }) => (checked ? '#E71321' : '#f5f5f5')};
+        border-color: #979797;
+        border-radius: 4px;
+        min-width: 22px;
+        min-height: 22px;
+        max-width: 22px;
+        max-height: 22px;
+      }
+    `}
 `;
 
 export default WarningLightsOptionsGroup;
