@@ -12,8 +12,6 @@ import client from '../client';
 
 const getResumeStep = (nextStep: string, vin: string): string | undefined => {
   switch (nextStep) {
-    case 'TradeIn':
-      return `/e2e/${vin}/checkoutTradeIn`;
     case 'SelectTradeIn':
       return `/checkout/select-trade-in?vin=${vin}`;
     case 'TradeInLoanInfo':
@@ -23,7 +21,7 @@ const getResumeStep = (nextStep: string, vin: string): string | undefined => {
     case 'DeliveryDetails':
       return `/checkout/delivery-details?vin=${vin}`;
     case 'Financing':
-      return `/e2e/${vin}/vroomFinancing`;
+      return `/checkout/vroom-financing?vin=${vin}`;
     case 'PaymentType':
       return `/checkout/payment-options?vin=${vin}`;
     case 'DepositPaymentInfo':
@@ -45,6 +43,8 @@ const getResumeStep = (nextStep: string, vin: string): string | undefined => {
     case 'TradeInVehicle':
       return `/checkout/${vin}/vehicleTradeIn`;
   }
+
+  return '/checkout/resume';
 };
 
 export const getInProgressDeal = async (): Promise<GQLTypes.Deal> => {
