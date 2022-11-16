@@ -3,7 +3,6 @@ import getConfig from 'next/config';
 
 import ACCEPT_REJECT_OFFER from '../../graphql/mutations/acceptRejectOffer.graphql';
 import { AppraisalResp } from '../../interfaces.d';
-import { FingerprintResult } from '../../utils/initFingerprint';
 import client from '../client';
 import { Prices } from '../models/Price';
 import { checkAppraisalPayload, getDummyOfferResp } from '../utils';
@@ -46,8 +45,7 @@ export const submitPriceResponse = async (
 
 export const postAppraisalReview = async (
   data: any,
-  captchaToken: string,
-  fingerprintResult: FingerprintResult
+  captchaToken: string
 ): Promise<Response<AppraisalResp>> => {
   const appraisalRequestScore = checkAppraisalPayload(data);
   const url = `/appraisal/api/appraisal`;
@@ -67,7 +65,6 @@ export const postAppraisalReview = async (
       url,
       timeout: 30000,
       data: payload,
-      params: fingerprintResult,
     });
   }
 };

@@ -1,7 +1,5 @@
 import { isErrorResponse } from '@vroom-web/networking';
 
-import { FingerprintResult } from '../../../../utils/initFingerprint';
-
 import AnalyticsHandler from 'src/integrations/AnalyticsHandler';
 import {
   getCarstoryTrimFeatures,
@@ -17,10 +15,7 @@ class VehicleInfoViewModel {
   appraisalStore: AppraisalStore;
   absmartly: ABSmartStore;
 
-  constructor(
-    public store: Store,
-    private _fingerprintResult: FingerprintResult
-  ) {
+  constructor(public store: Store) {
     this.appraisalStore = store.appraisal;
     this.absmartly = store.absmart;
   }
@@ -61,11 +56,7 @@ class VehicleInfoViewModel {
 
   async getVinDecode(vehicleId: string, captchaToken: string): Promise<any> {
     try {
-      const response = await getCarstoryVinDecode(
-        vehicleId,
-        captchaToken,
-        this._fingerprintResult
-      );
+      const response = await getCarstoryVinDecode(vehicleId, captchaToken);
 
       if (isErrorResponse(response)) throw response;
       let alternatives = [];
@@ -119,11 +110,7 @@ class VehicleInfoViewModel {
 
   async getTrimFeatures(trimId: number, captchaToken: string): Promise<any> {
     try {
-      const response = await getCarstoryTrimFeatures(
-        trimId,
-        captchaToken,
-        this._fingerprintResult
-      );
+      const response = await getCarstoryTrimFeatures(trimId, captchaToken);
       if (isErrorResponse(response)) throw response;
       const { dataProviderInfo } = response.data;
 

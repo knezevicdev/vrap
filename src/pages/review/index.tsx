@@ -5,9 +5,6 @@ import React from 'react';
 import styled from 'styled-components';
 
 import ErrorBanner from '../../components/ErrorBanner';
-import FingerprintContext, {
-  useInitFingerprint,
-} from '../../context/FigerprintContext';
 import { returnBrandConfig } from '../../utils/pageheaders';
 
 import { Header } from 'src/components/Header';
@@ -22,25 +19,22 @@ interface Prop {
 
 const AppraisalReview: NextPage<Prop> = () => {
   const { store } = useAppStore();
-  const { result: fingerprintValue } = useInitFingerprint();
   const reviewError = store.appraisal.reviewError;
 
   return (
-    <FingerprintContext.Provider value={fingerprintValue}>
-      <Page name="Review Your Appraisal">
-        <SkipNavigationLink mainContentId={'main-content'} />
-        <HeaderContainer>
-          <Header />
-          {reviewError && <ErrorBanner errorMessage={reviewError} />}
-        </HeaderContainer>
-        <Contents id="main-content">
-          <AppraisalContainer>
-            <AppraisalReviewViewDetail />
-          </AppraisalContainer>
-        </Contents>
-        <Footer hasOverlay={true} />
-      </Page>
-    </FingerprintContext.Provider>
+    <Page name="Review Your Appraisal">
+      <SkipNavigationLink mainContentId={'main-content'} />
+      <HeaderContainer>
+        <Header />
+        {reviewError && <ErrorBanner errorMessage={reviewError} />}
+      </HeaderContainer>
+      <Contents id="main-content">
+        <AppraisalContainer>
+          <AppraisalReviewViewDetail />
+        </AppraisalContainer>
+      </Contents>
+      <Footer hasOverlay={true} />
+    </Page>
   );
 };
 

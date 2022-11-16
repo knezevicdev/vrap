@@ -71,7 +71,12 @@ const AlternateAfterMarketModsOptionsGroup: React.FC<Props> = ({
       const typedOption: GenericObject = option as GenericObject;
 
       return (
-        <AfterMarketModsOption key={key} htmlFor={key + '-checkbox'} checked={!!typedOption.value} newForm={newForm}>
+        <AfterMarketModsOption
+          key={key}
+          htmlFor={key + '-checkbox'}
+          checked={!!typedOption.value}
+          newForm={newForm}
+        >
           <Checkbox
             name={key}
             id={key + '-checkbox'}

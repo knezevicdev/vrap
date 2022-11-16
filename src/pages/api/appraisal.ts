@@ -4,7 +4,6 @@ const { serverRuntimeConfig } = getConfig();
 import axios from 'axios';
 
 import { AppraisalPayload } from '../../interfaces.d';
-import getFingerprintBotInfo from '../../utils/getFingerprintBotInfo';
 import logger from '../../utils/logger';
 import { verifyReCaptcha } from '../../utils/verifyReCaptcha';
 
@@ -19,23 +18,14 @@ export default async (
   }
 
   const { payload, token } = req.body;
-  const { requestId = 'unknown', visitorId = 'unknown' } = req.query;
   const { fpid, ajs_anonymous_id } = req.cookies; // eslint-disable-line @typescript-eslint/naming-convention
 
-  const [isRecaptchaValid, fingerprintBotResult] = await Promise.all([
-    verifyReCaptcha(token, appraisalApiRoute),
-    getFingerprintBotInfo(requestId as string),
-  ]);
+  const isRecaptchaValid = await verifyReCaptcha(token, appraisalApiRoute);
 
   logger.info(`Request to /appraisal/api/appraisal started`, {
     appraisalApiRoute,
     request_payload: req.body,
     isRecaptchaValid,
-    fingerprintBotResult,
-    fingerprintMeta: {
-      requestId,
-      visitorId,
-    },
     fpid,
     ajs_anonymous_id,
   });

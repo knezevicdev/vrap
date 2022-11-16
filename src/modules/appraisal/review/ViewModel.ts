@@ -1,7 +1,6 @@
 import { isErrorResponse } from '@vroom-web/networking';
 import { NextRouter } from 'next/router';
 
-import { FingerprintResult } from '../../../utils/initFingerprint';
 import { makeRequestBody } from '../utils';
 
 import AnalyticsHandler from 'src/integrations/AnalyticsHandler';
@@ -18,11 +17,7 @@ export default class AppraisalReviewModel {
   appraisalStore: AppraisalStore;
   absmartStore: ABSmartStore;
 
-  constructor(
-    public store: Store,
-    private _router: NextRouter,
-    private _fingerprintResult: FingerprintResult
-  ) {
+  constructor(public store: Store, private _router: NextRouter) {
     this.appraisalStore = store.appraisal;
     this.absmartStore = store.absmart;
   }
@@ -128,11 +123,7 @@ export default class AppraisalReviewModel {
         console.log(JSON.stringify(err));
       }
 
-      const resp = await postAppraisalReview(
-        requestPayload,
-        token,
-        this._fingerprintResult
-      );
+      const resp = await postAppraisalReview(requestPayload, token);
       if (isErrorResponse(resp)) throw resp;
       const returnData: AppraisalRespData = resp.data;
 
