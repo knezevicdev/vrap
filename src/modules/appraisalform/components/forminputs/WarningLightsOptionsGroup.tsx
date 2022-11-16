@@ -136,7 +136,7 @@ const WarningLightsOptionsGroup: React.FC<Props> = ({
       </WarningOptionsLabel>
       <CheckboxesContainer>{checkboxes}</CheckboxesContainer>
       {optionsGroupForm.fields.Other.value && (
-        <OtherOptionInput className={className} field={otherWarningField} />
+        <OtherOptionInput className={newForm ? '' : className} field={otherWarningField} />
       )}
     </div>
   );
