@@ -164,6 +164,9 @@ const AfterMarketModsOption = styled((props) => (
   ${({ newForm }) =>
     newForm &&
     css<AfterMarketModsOptionProps>`
+      padding: 1px 0 9px;
+      display: flex;
+
       label::before {
         background-color: ${({ checked }) => (checked ? '#E71321' : '#f5f5f5')};
         border-color: #979797;
@@ -172,6 +175,8 @@ const AfterMarketModsOption = styled((props) => (
         min-height: 22px;
         max-width: 22px;
         max-height: 22px;
+        height: 22px;
+        width: 22px;
       }
     `}
 `;
