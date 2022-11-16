@@ -191,8 +191,7 @@ interface WarningOptionProps {
 const WarningOption = styled((props) => (
   <li {...omit(props, ['checked', 'newForm'])} />
 ))<WarningOptionProps>`
-  padding: 1px 0 9px;
-  display: flex;
+  padding: 0 0 8px;
 
   span {
     outline: none;
@@ -201,6 +200,9 @@ const WarningOption = styled((props) => (
   ${({ newForm }) =>
     newForm &&
     css<WarningOptionProps>`
+      padding: 1px 0 9px;
+      display: flex;
+
       label::before {
         background-color: ${({ checked }) => (checked ? '#E71321' : '#f5f5f5')};
         border-color: #979797;
@@ -209,6 +211,8 @@ const WarningOption = styled((props) => (
         min-height: 22px;
         max-width: 22px;
         max-height: 22px;
+        height: 22px;
+        width: 22px;
       }
     `}
 `;

@@ -28,7 +28,6 @@ export const Wrapper = styled.div<WrapperProps>`
       `
       top: -7px;
     `}
-    z-index: 1;
   }
 
   label::before {
@@ -39,6 +38,8 @@ export const Wrapper = styled.div<WrapperProps>`
     min-height: 22px;
     max-width: 22px;
     max-height: 22px;
+    height: 22px;
+    width: 22px;
   }
 `;
 
