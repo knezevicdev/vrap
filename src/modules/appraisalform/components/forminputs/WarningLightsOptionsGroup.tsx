@@ -136,7 +136,10 @@ const WarningLightsOptionsGroup: React.FC<Props> = ({
       </WarningOptionsLabel>
       <CheckboxesContainer>{checkboxes}</CheckboxesContainer>
       {optionsGroupForm.fields.Other.value && (
-        <OtherOptionInput className={newForm ? '' : className} field={otherWarningField} />
+        <OtherOptionInput
+          className={newForm ? '' : className}
+          field={otherWarningField}
+        />
       )}
     </div>
   );
@@ -155,6 +158,8 @@ const ImgContainer = styled.img`
   margin-top: 2px;
   margin-right: 3px;
   margin-left: 5px;
+  object-fit: contain;
+  object-position: center;
 `;
 
 const Label = styled.span`
