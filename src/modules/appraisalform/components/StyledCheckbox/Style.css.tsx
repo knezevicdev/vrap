@@ -26,7 +26,7 @@ export const Wrapper = styled.div<WrapperProps>`
     ${({ hasDescription }) =>
       hasDescription &&
       `
-      top: -6.5px;
+      top: -7px;
     `}
     z-index: 1;
   }
@@ -52,7 +52,7 @@ export const Description = styled.p`
   letter-spacing: 0.3px;
   position: absolute;
   left: 44px;
-  bottom: 7.5px;
+  bottom: 6px;
   z-index: 0;
   user-select: none;
 `;
