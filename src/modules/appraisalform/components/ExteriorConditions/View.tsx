@@ -2,6 +2,7 @@ import { addStyleForMobile } from '@vroom-web/ui-lib';
 import React, { useEffect } from 'react';
 import styled from 'styled-components';
 
+import useIsMobile from '../../../../hooks/useIsMobile';
 import handleCheckChange from '../../utils/handleCheckChange';
 import CheckboxesContainer from '../CheckboxesContainer';
 import { UseForm } from '../componentInterfaces.d';
@@ -33,6 +34,7 @@ const ExteriorConditionView: React.FC<Props> = ({
   newForm,
   form,
 }) => {
+  const isMobile = useIsMobile();
   const showDentsPanels = fields.dents && fields.dents.value === 'Yes';
   const showPaintChippingPanels =
     fields.paintChipping && fields.paintChipping.value === 'Yes';
@@ -85,6 +87,11 @@ const ExteriorConditionView: React.FC<Props> = ({
           dataQa="paintChipping"
           description="Visibly faded, rough, or peeling"
         />
+        {showPaintChippingPanels && isMobile && (
+          <PanelsWrapper>
+            <PaintChippingPanels field={fields.paintChippingPanels} />
+          </PanelsWrapper>
+        )}
         <StyledCheckbox
           label={FormFields.hailDamage.newLabel}
           onChange={handleCheckChange(
@@ -97,7 +104,7 @@ const ExteriorConditionView: React.FC<Props> = ({
           id="hailDamage"
           dataQa="hailDamage"
         />
-        {showPaintChippingPanels && (
+        {showPaintChippingPanels && !isMobile && (
           <PanelsWrapper>
             <PaintChippingPanels field={fields.paintChippingPanels} />
           </PanelsWrapper>
@@ -114,6 +121,11 @@ const ExteriorConditionView: React.FC<Props> = ({
           id="scratches"
           dataQa="scratches"
         />
+        {showScratchesPanels && isMobile && (
+          <PanelsWrapper>
+            <ScratchesPanels field={fields.scratchesPanels} />
+          </PanelsWrapper>
+        )}
         <StyledCheckbox
           label={FormFields.rust.newLabel}
           onChange={handleCheckChange(
@@ -126,7 +138,7 @@ const ExteriorConditionView: React.FC<Props> = ({
           id="rust"
           dataQa="rust"
         />
-        {showScratchesPanels && (
+        {showScratchesPanels && !isMobile && (
           <PanelsWrapper>
             <ScratchesPanels field={fields.scratchesPanels} />
           </PanelsWrapper>
@@ -143,6 +155,11 @@ const ExteriorConditionView: React.FC<Props> = ({
           id="dents"
           dataQa="dents"
         />
+        {showDentsPanels && isMobile && (
+          <PanelsWrapper>
+            <DentsPanels field={fields.dentsPanels} />
+          </PanelsWrapper>
+        )}
         <StyledCheckbox
           label="Water Damage"
           onChange={handleCheckChange(
@@ -156,7 +173,7 @@ const ExteriorConditionView: React.FC<Props> = ({
           dataQa="floodDamage"
           description="Flood or saltwater damage"
         />
-        {showDentsPanels && (
+        {showDentsPanels && !isMobile && (
           <PanelsWrapper>
             <DentsPanels field={fields.dentsPanels} />
           </PanelsWrapper>
