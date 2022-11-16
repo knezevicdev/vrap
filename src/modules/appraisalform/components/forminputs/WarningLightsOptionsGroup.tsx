@@ -186,7 +186,8 @@ interface WarningOptionProps {
 const WarningOption = styled((props) => (
   <li {...omit(props, ['checked', 'newForm'])} />
 ))<WarningOptionProps>`
-  padding: 0 0 8px;
+  padding: 1px 0 9px;
+  display: flex;
 
   span {
     outline: none;
