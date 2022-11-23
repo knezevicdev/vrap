@@ -91,6 +91,7 @@ export const getServerSideProps: GetServerSideProps<Props> = async (
       description: brandConfig.description,
       title: brandConfig.title,
       canonical: brandConfig.canonical,
+      allowUnauthenticated: true,
     },
   };
 };

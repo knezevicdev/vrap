@@ -73,6 +73,7 @@ export const getServerSideProps: GetServerSideProps<Props> = async (
   return {
     props: {
       title: 'Price | Vroom',
+      allowUnauthenticated: true,
     },
   };
 };

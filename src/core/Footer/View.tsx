@@ -13,6 +13,7 @@ const Container = styled.div<{ hasOverlay: boolean }>`
   display: flex;
   background: #041022;
   padding: 48px 64px 32px 64px;
+  margin-top: auto;
   ${(props): any => (props.hasOverlay === true ? 'padding-bottom: 180px' : '')};
   @media (max-width: 599px) {
     flex-direction: column;
