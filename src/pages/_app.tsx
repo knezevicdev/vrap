@@ -8,6 +8,7 @@ import 'filepond-plugin-file-poster/dist/filepond-plugin-file-poster.css';
 import { datadogRum } from '@datadog/browser-rum';
 import { ABSmartlyProvider } from '@vroom-web/analytics-integration';
 import { CatSDK } from '@vroom-web/cat-sdk';
+import { isErrorResponse } from '@vroom-web/networking';
 import { CommonHandler } from '@vroom-web/shared-components';
 import { Brand, ThemeProvider } from '@vroom-web/ui';
 import firebase from 'firebase/app';
@@ -19,7 +20,9 @@ import React from 'react';
 import smoothscroll from 'smoothscroll-polyfill';
 import { ThemeProvider as StyledComponentsThemeProvider } from 'styled-components';
 
+import LoggedOutDialog from '../components/LoggedOutDialog';
 import { theme } from '../core/themes/Vroom';
+import client from '../networking/client';
 
 import AppProvider from 'src/context/AppContext';
 import { AnalyticsHandlerContext } from 'src/integrations/AnalyticHandlerContext';
@@ -58,7 +61,16 @@ const {
   NEXT_PUBLIC_WEB_LEADS_URL,
 } = publicRuntimeConfig;
 
-class AppraisalApp extends App {
+class AppraisalApp extends App<
+  Record<string, unknown>,
+  Record<string, unknown>,
+  {
+    isSignedIn: boolean;
+    isSignedInLoaded: boolean;
+    isInSignedInTest: boolean;
+    isSignedInTestLoaded: boolean;
+  }
+> {
   private readonly remoteConfig: firebase.remoteConfig.RemoteConfig;
   private readonly catSDK: CatSDK;
   private readonly analyticsHandler: AnalyticsHandler;
@@ -100,7 +112,36 @@ class AppraisalApp extends App {
     if (typeof window !== 'undefined') {
       this.remoteConfig.settings.minimumFetchIntervalMillis = 300000;
     }
+
+    this.state = {
+      isSignedIn: false,
+      isSignedInLoaded: false,
+      isInSignedInTest: false,
+      isSignedInTestLoaded: false,
+    };
   }
+
+  checkSignInStatus = async (): Promise<void> => {
+    const signInStatusResp = await client.signInStatus();
+
+    if (isErrorResponse(signInStatusResp)) {
+      this.setState({
+        ...this.state,
+        isSignedIn: false,
+        isSignedInLoaded: true,
+      });
+      return;
+    }
+
+    this.setState({
+      ...this.state,
+      isSignedIn:
+        signInStatusResp &&
+        signInStatusResp.data &&
+        signInStatusResp.data.status === 'active',
+      isSignedInLoaded: true,
+    });
+  };
 
   componentDidMount(): void {
     smoothscroll.polyfill(); // needs access to the window
@@ -119,10 +160,38 @@ class AppraisalApp extends App {
     this.catSDK.initCatData();
     this.commonHandler.check3rdPartyAuth();
     saveUTMParams();
+
+    if (!this.props.pageProps.allowUnauthenticated) {
+      this.checkSignInStatus();
+    }
   }
 
   render(): JSX.Element {
     const { Component, pageProps } = this.props;
+    const {
+      isSignedIn,
+      isSignedInLoaded,
+      isSignedInTestLoaded,
+      isInSignedInTest,
+    } = this.state;
+
+    const component =
+      pageProps.allowUnauthenticated ||
+      (isSignedInTestLoaded && !isInSignedInTest) ||
+      isSignedIn ? (
+        <Component {...pageProps} />
+      ) : (
+        <LoggedOutDialog
+          isLoading={!isSignedInLoaded || !isSignedInTestLoaded}
+          onSignedInExperimentLoaded={(isInSignedInTest) => {
+            this.setState({
+              ...this.state,
+              isSignedInTestLoaded: true,
+              isInSignedInTest,
+            });
+          }}
+        />
+      );
 
     return (
       <>
@@ -139,9 +208,7 @@ class AppraisalApp extends App {
               <RemoteConfigContext.Provider value={this.remoteConfig}>
                 <ThemeProvider brand={Brand.VROOM}>
                   <StyledComponentsThemeProvider theme={theme}>
-                    <AppProvider>
-                      <Component {...pageProps} />
-                    </AppProvider>
+                    <AppProvider>{component}</AppProvider>
                   </StyledComponentsThemeProvider>
                 </ThemeProvider>
               </RemoteConfigContext.Provider>
