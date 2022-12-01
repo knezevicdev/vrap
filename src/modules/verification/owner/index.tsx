@@ -1,6 +1,6 @@
 import { isErrorResponse } from '@vroom-web/networking';
 import { observer } from 'mobx-react';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 
 import { Container } from '../shared/Style.css';
 import { CalculateRequiredDocuments } from '../shared/utils/calculateRequiredDocuments';
@@ -16,7 +16,7 @@ import { ownerFormsToRequiredDocuments } from './utils/ownerFormsToRequiredDocum
 import { useAppStore } from 'src/context';
 import AnalyticsHandler from 'src/integrations/AnalyticsHandler';
 import MultiStepForm from 'src/modules/appraisalform/components/MultiStepForm';
-import { updateVerification } from 'src/networking/request';
+import { acceptPriceOffer, updateVerification } from 'src/networking/request';
 
 interface Props {
   priceId: string;
@@ -32,6 +32,14 @@ const VerificationOwnerViewDetail: React.FC<Props> = ({ priceId }) => {
   const { store } = useAppStore();
   const analyticsHandler = useRef(new AnalyticsHandler());
   const initialRequiredDocuments = useRef<CalculateRequiredDocuments>();
+
+  const acceptPrice = useCallback(async () => {
+    await acceptPriceOffer(priceId);
+  }, [priceId]);
+
+  useEffect(() => {
+    acceptPrice();
+  }, [acceptPrice]);
 
   useEffect(() => {
     analyticsHandler.current.trackVerificationOwnerViewed();
