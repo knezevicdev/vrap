@@ -200,12 +200,8 @@ export const getOfferDetails = async (): Promise<Response<Prices>> => {
   });
 };
 
-export const submitPriceResponse = async (): Promise<Response<boolean>> => {
-  return Promise.resolve<Response<boolean>>({
-    headers: undefined,
-    error: undefined,
-    data: true,
-  } as Response<boolean>);
+export const acceptPriceOffer = async (): Promise<void> => {
+  // nothing
 };
 
 export const getVerificationDetails = async (): Promise<

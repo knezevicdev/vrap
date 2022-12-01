@@ -5,8 +5,7 @@ import { AsyncStatus, Store, StoreStatus } from 'src/interfaces.d';
 import { Price } from 'src/networking/models/Price';
 import {
   getOfferDetails,
-  PriceData,
-  submitPriceResponse,
+  acceptPriceOffer,
 } from 'src/networking/request';
 
 type Nullable<T> = T | null;
@@ -117,17 +116,8 @@ export class PriceStore implements Store {
   };
 
   submitPriceAccept = async (): Promise<void> => {
-    const priceData: PriceData = {
-      priceId: this.price.priceId,
-      accepted: true,
-    };
-
     this.asyncStatus = AsyncStatus.Fetching;
 
-    try {
-      await submitPriceResponse(priceData);
-    } catch (err) {
-      console.log(JSON.stringify(err));
-    }
+    await acceptPriceOffer(this.price.priceId);
   };
 }

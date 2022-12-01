@@ -10,11 +10,6 @@ import { checkAppraisalPayload, getDummyOfferResp } from '../utils';
 const { publicRuntimeConfig } = getConfig();
 const VROOM_URL = publicRuntimeConfig.NEXT_PUBLIC_VROOM_URL;
 
-export interface PriceData {
-  priceId: string;
-  accepted: boolean;
-}
-
 export const getOfferDetails = async (
   priceId: string
 ): Promise<Response<Prices>> => {
@@ -28,19 +23,21 @@ export const getOfferDetails = async (
   return res;
 };
 
-export const submitPriceResponse = async (
-  priceData: PriceData
-): Promise<Response<any>> => {
-  const { priceId: offerId, accepted } = priceData;
-  const res = await client.gqlRequest<
-    any,
-    GQLTypes.MutationAcceptRejectOfferArgs
-  >({
-    document: ACCEPT_REJECT_OFFER,
-    variables: { offerId, accepted },
-  });
+export const acceptPriceOffer = async (offerId: string): Promise<void> => {
+  const key = 'APPRAISAL_ACCEPTED_OFFER';
 
-  return res;
+  const acceptedOfferId = localStorage.getItem(key);
+  if (acceptedOfferId === offerId) return;
+
+  try {
+    await client.gqlRequest<unknown, GQLTypes.MutationAcceptRejectOfferArgs>({
+      document: ACCEPT_REJECT_OFFER,
+      variables: { offerId, accepted: true },
+    });
+    localStorage.setItem(key, offerId);
+  } catch (err) {
+    console.warn('Error while submitting price response');
+  }
 };
 
 export const postAppraisalReview = async (
