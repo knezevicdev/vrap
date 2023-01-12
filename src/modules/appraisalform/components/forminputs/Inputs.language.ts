@@ -275,7 +275,7 @@ export const FormFields = {
   hailDamage: {
     placeholder: '',
     label: 'Does your car have hail damage?',
-    newLabel: 'Hail damage',
+    newLabel: 'Hail Damage',
     yes: commonLangInput.yes,
     no: commonLangInput.no,
   },

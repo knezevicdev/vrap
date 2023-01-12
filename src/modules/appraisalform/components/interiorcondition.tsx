@@ -55,6 +55,7 @@ const InteriorCondition: React.FC<Props> = ({ fields, newForm, form }) => {
           checked={fields.damagedElectronic?.value === 'Yes'}
           id="damagedElectronic"
           dataQa="damagedElectronic"
+          description="Infotainment screens, Dash cluster, etc."
         />
         <StyledCheckbox
           label="Damaged Dash/Interior Panels"
@@ -67,6 +68,7 @@ const InteriorCondition: React.FC<Props> = ({ fields, newForm, form }) => {
           checked={fields.damagedDashboardOrPanels?.value === 'Yes'}
           id="damagedDashboardOrPanels"
           dataQa="damagedDashboardOrPanels"
+          description="Peerling/cracked dash, headliner stains/tears"
         />
         <StyledCheckbox
           label="No Interior Damage"

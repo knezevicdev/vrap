@@ -83,6 +83,7 @@ const MechanicalCondition: React.FC<Props> = ({ fields, newForm, form }) => {
         checked={fields.runnable?.value === 'No'}
         id="runnable"
         dataQa="runnable"
+        description="Including dead batteries"
       />
       <StyledCheckbox
         label="No Mechanical or Electrical Issues"

@@ -279,7 +279,7 @@ describe('form input in appraisal form language test', () => {
       hailDamage: {
         placeholder: '',
         label: 'Does your car have hail damage?',
-        newLabel: 'Hail damage',
+        newLabel: 'Hail Damage',
         yes: 'Yes',
         no: 'No',
       },
