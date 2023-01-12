@@ -103,6 +103,7 @@ const ExteriorConditionView: React.FC<Props> = ({
           checked={fields.hailDamage?.value === FormFields.hailDamage.yes}
           id="hailDamage"
           dataQa="hailDamage"
+          description="5 or more dents to any panel"
         />
         {showPaintChippingPanels && !isMobile && (
           <PanelsWrapper>
@@ -120,6 +121,7 @@ const ExteriorConditionView: React.FC<Props> = ({
           checked={fields.scratches?.value === FormFields.scratches.yes}
           id="scratches"
           dataQa="scratches"
+          description="Visible scratches"
         />
         {showScratchesPanels && isMobile && (
           <PanelsWrapper>
@@ -137,6 +139,7 @@ const ExteriorConditionView: React.FC<Props> = ({
           checked={fields.rust?.value === FormFields.rust.yes}
           id="rust"
           dataQa="rust"
+          description="Visible signs of rust on any panels"
         />
         {showScratchesPanels && !isMobile && (
           <PanelsWrapper>
@@ -171,7 +174,7 @@ const ExteriorConditionView: React.FC<Props> = ({
           checked={fields.floodDamage?.value === 'Yes'}
           id="floodDamage"
           dataQa="floodDamage"
-          description="Flood or saltwater damage"
+          description="Flood or water damage"
         />
         {showDentsPanels && !isMobile && (
           <PanelsWrapper>
