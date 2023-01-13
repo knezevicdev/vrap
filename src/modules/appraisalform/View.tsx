@@ -164,6 +164,10 @@ const AppraisalForm: React.FC<Props> = ({ viewModel }) => {
       'tesla',
     ].includes(vehicleInfo.make.toLowerCase());
 
+    const isModelInvalid = ![
+      'mustang mach-e'
+    ].includes(vehicleInfo.model.toLowerCase())
+
     setExactMileageProps({
       strictDialog: false,
       enteredMiles: exactMileageField.value,
@@ -180,6 +184,12 @@ const AppraisalForm: React.FC<Props> = ({ viewModel }) => {
 
     if (!isMakeValid) {
       setInvalidMakeDialogMake(vehicleInfo.make);
+      viewModel.trackInvalidMakeShown(vin);
+      return;
+    }
+
+    if (!isModelInvalid) {
+      setInvalidMakeDialogMake(`${vehicleInfo.make} ${vehicleInfo.model}`);
       viewModel.trackInvalidMakeShown(vin);
       return;
     }
