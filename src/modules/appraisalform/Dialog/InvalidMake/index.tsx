@@ -37,13 +37,13 @@ const DialogView: React.FC<Props> = ({ make }) => {
       <Modal>
         <ModalContent>
           <ModalTitle>
-            <div>Make not supported</div>
+            <div>Sorry...</div>
           </ModalTitle>
           <Line />
           <ModalImage />
           <ModalDesc>
-            Sorry, we are not purchasing {make} vehicles at this time, and are
-            unable to provide a price for you.
+            We are not purchasing {make} vehicles at this time, and are unable
+            to provide a price for you.
           </ModalDesc>
           <BrowseInventoryCTA onClick={goToInventory}>
             Browse Inventory
