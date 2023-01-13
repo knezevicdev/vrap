@@ -161,6 +161,7 @@ const AppraisalForm: React.FC<Props> = ({ viewModel }) => {
       'aston martin',
       'mclaren',
       'rolls-royce',
+      'tesla',
     ].includes(vehicleInfo.make.toLowerCase());
 
     setExactMileageProps({
