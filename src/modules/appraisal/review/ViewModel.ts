@@ -166,11 +166,6 @@ export default class AppraisalReviewModel {
   }
 
   isNewFormExperimentActive = (): boolean => {
-    return (
-      !this.isTradeIn &&
-      this.store.absmart.isInExperiment(
-        'appraisal-form-update-condition-question'
-      )
-    );
+    return !this.isTradeIn;
   };
 }

@@ -52,7 +52,7 @@ const formData = {
     rust: '',
     scratches: '',
     scratchesPanels: null,
-    tiresAndWheels: '',
+    tiresAndWheels: 'Under 5K',
   },
 };
 

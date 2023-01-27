@@ -17,20 +17,16 @@ import PaintChippingPanelsInput from '../forminputs/PaintChippingPanelsInput';
 import RustInput from '../forminputs/RustInput';
 import ScratchesInput from '../forminputs/ScratchesInput';
 import ScratchesPanelsInput from '../forminputs/ScratchesPanelsInput';
-import TireMilesInput from '../forminputs/TireMilesInput';
 import StyledCheckbox from '../StyledCheckbox';
-import ViewModel from './ViewModel';
 
 interface Props {
   fields: any;
-  viewModel: ViewModel;
   newForm?: boolean;
   form: UseForm;
 }
 
 const ExteriorConditionView: React.FC<Props> = ({
   fields,
-  viewModel,
   newForm,
   form,
 }) => {
@@ -61,15 +57,6 @@ const ExteriorConditionView: React.FC<Props> = ({
       }
     }, [fields[damageType] && fields[damageType].value]);
   });
-
-  useEffect(() => {
-    if (viewModel.isRemoveMilesOnTiresExperiment) {
-      fields.tiresAndWheels.onChange({
-        ...fields.tiresAndWheels,
-        value: 'Under 5K',
-      });
-    }
-  }, [viewModel.isRemoveMilesOnTiresExperiment]);
 
   if (newForm) {
     return (
@@ -268,11 +255,6 @@ const ExteriorConditionView: React.FC<Props> = ({
       {showScratchesPanels && (
         <InputContainer>
           <ScratchesPanels field={fields.scratchesPanels} />
-        </InputContainer>
-      )}
-      {!newForm && !viewModel.isRemoveMilesOnTiresExperiment && (
-        <InputContainer>
-          <TireMilesInput field={fields.tiresAndWheels} />
         </InputContainer>
       )}
       <InputContainer>
