@@ -61,7 +61,7 @@ const formData = {
     rust: '',
     scratches: '',
     scratchesPanels: null,
-    tiresAndWheels: '',
+    tiresAndWheels: 'Under 5K',
   },
 };
 
@@ -179,7 +179,7 @@ describe('Appraisal review index page test', () => {
       runnable: '',
       seats: '',
       smokedIn: '',
-      tiresAndWheels: '',
+      tiresAndWheels: 'Under 5K',
       titleStatus: '',
       trim: 'Utility 4D SV 2WD V6',
       csTrimId: 12345,

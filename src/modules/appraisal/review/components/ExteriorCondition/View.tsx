@@ -57,12 +57,6 @@ const ExteriorConditionView: React.FC<Props> = ({ viewModel, store }) => {
           <Label>{viewModel.hailDamage}</Label>
           <Field>{appraisalDetail?.extConditionForm?.hailDamage}</Field>
         </Info>
-        {!viewModel.isRemoveMilesOnTiresExperiment && (
-          <Info>
-            <Label>{viewModel.tiresAndWheels}</Label>
-            <Field>{appraisalDetail?.extConditionForm?.tiresAndWheels}</Field>
-          </Info>
-        )}
         <Info>
           <Label>{viewModel.afterMarket}</Label>
           {appraisalDetail?.extConditionForm?.afterMarket.length > 0 ? (

@@ -34,7 +34,7 @@ describe('test appraisal store methods', () => {
       rust: 'yes',
       scratches: 'yes',
       scratchesPanels: null,
-      tiresAndWheels: '5k',
+      tiresAndWheels: 'Under 5K',
     },
     mechConditionForm: {
       additionalDetails: 'Additional details',
@@ -242,7 +242,7 @@ describe('test appraisal store methods', () => {
       rust: '',
       scratches: '',
       scratchesPanels: null,
-      tiresAndWheels: '',
+      tiresAndWheels: 'Under 5K',
     });
     expect(store.isEmpty).toEqual(true);
   });

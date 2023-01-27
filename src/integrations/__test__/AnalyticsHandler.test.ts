@@ -32,7 +32,7 @@ const formData = {
     rust: 'yes',
     scratches: 'yes',
     scratchesPanels: null,
-    tiresAndWheels: '5k',
+    tiresAndWheels: 'Under 5K',
     dentPanels: '2',
     paintChippingPanels: '3',
   },
