@@ -67,8 +67,6 @@ class AppraisalApp extends App<
   {
     isSignedIn: boolean;
     isSignedInLoaded: boolean;
-    isInSignedInTest: boolean;
-    isSignedInTestLoaded: boolean;
   }
 > {
   private readonly remoteConfig: firebase.remoteConfig.RemoteConfig;
@@ -116,8 +114,6 @@ class AppraisalApp extends App<
     this.state = {
       isSignedIn: false,
       isSignedInLoaded: false,
-      isInSignedInTest: false,
-      isSignedInTestLoaded: false,
     };
   }
 
@@ -168,29 +164,13 @@ class AppraisalApp extends App<
 
   render(): JSX.Element {
     const { Component, pageProps } = this.props;
-    const {
-      isSignedIn,
-      isSignedInLoaded,
-      isSignedInTestLoaded,
-      isInSignedInTest,
-    } = this.state;
+    const { isSignedIn, isSignedInLoaded } = this.state;
 
     const component =
-      pageProps.allowUnauthenticated ||
-      (isSignedInTestLoaded && !isInSignedInTest) ||
-      isSignedIn ? (
+      pageProps.allowUnauthenticated || isSignedIn ? (
         <Component {...pageProps} />
       ) : (
-        <LoggedOutDialog
-          isLoading={!isSignedInLoaded || !isSignedInTestLoaded}
-          onSignedInExperimentLoaded={(isInSignedInTest) => {
-            this.setState({
-              ...this.state,
-              isSignedInTestLoaded: true,
-              isInSignedInTest,
-            });
-          }}
-        />
+        <LoggedOutDialog isLoading={!isSignedInLoaded} />
       );
 
     return (
