@@ -1,8 +1,8 @@
 #import "src/graphql/fragments/dealFragment.graphql"
 
-query GET_USER_DEAL($dealID: Int, $dealStatus: [String!]) {
+query GET_USER_DEAL($externalDealID: String, $dealStatus: [String!]) {
   user {
-    deals(dealID: $dealID, dealStatus: $dealStatus) {
+    dealsV3(externalDealID: $externalDealID, dealStatus: $dealStatus) {
       ...DealDetails
     }
   }

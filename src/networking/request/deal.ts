@@ -1,7 +1,7 @@
 import { GQLTypes, isErrorResponse, Response } from '@vroom-web/networking';
 import {
   ApiError,
-  MutationDealAddStatusArgs,
+  MutationDealV3AddStatusArgs,
 } from '@vroom-web/networking/dist/generated/graphql-types';
 import { get as _get } from 'lodash';
 
@@ -47,10 +47,10 @@ const getResumeStep = (nextStep: string, vin: string): string | undefined => {
   return '/checkout/resume';
 };
 
-export const getInProgressDeal = async (): Promise<GQLTypes.Deal> => {
+export const getInProgressDeal = async (): Promise<GQLTypes.DealV3> => {
   const res = await client.gqlRequest<
     { user: GQLTypes.User },
-    GQLTypes.UserDealsArgs
+    GQLTypes.UserDealsV3Args
   >({
     document: GET_USER_DEAL,
     variables: {
@@ -58,7 +58,7 @@ export const getInProgressDeal = async (): Promise<GQLTypes.Deal> => {
     },
   });
 
-  const deal = _get(res, 'data.user.deals.0');
+  const deal = _get(res, 'data.user.dealsV3.0');
   if (!isErrorResponse(res) && deal) {
     return deal;
   }
@@ -79,7 +79,7 @@ type UpdateDealError = {
 export type UpdateDeal = UpdateDealResponse | UpdateDealError;
 
 const handleUpdateDealResponse = (
-  res: Response<Record<string, GQLTypes.Deal>>,
+  res: Response<Record<string, GQLTypes.DealV3>>,
   key: string
 ): UpdateDeal => {
   if (!isErrorResponse(res)) {
@@ -106,10 +106,10 @@ const handleUpdateDealResponse = (
 };
 
 export const acceptDeal = async (
-  payload: GQLTypes.MutationDealPutTradeInArgs
+  payload: GQLTypes.MutationDealV3PutTradeInArgs
 ): Promise<UpdateDeal> => {
   const {
-    dealID,
+    externalDealID,
     appraisalID,
     offerID,
     offerPrice,
@@ -123,12 +123,12 @@ export const acceptDeal = async (
     source,
   } = payload;
   const res = await client.gqlRequest<
-    Record<string, GQLTypes.Deal>,
-    GQLTypes.MutationDealPutTradeInArgs
+    Record<string, GQLTypes.DealV3>,
+    GQLTypes.MutationDealV3PutTradeInArgs
   >({
     document: DEAL_ADD_TRADE_INS,
     variables: {
-      dealID,
+      externalDealID,
       source,
       appraisalID,
       offerID,
@@ -146,14 +146,16 @@ export const acceptDeal = async (
   return handleUpdateDealResponse(res, 'dealPutTradeIn');
 };
 
-export const declineDeal = async (deal: GQLTypes.Deal): Promise<UpdateDeal> => {
+export const declineDeal = async (
+  deal: GQLTypes.DealV3
+): Promise<UpdateDeal> => {
   const res = await client.gqlRequest<
-    Record<string, GQLTypes.Deal>,
-    MutationDealAddStatusArgs
+    Record<string, GQLTypes.DealV3>,
+    MutationDealV3AddStatusArgs
   >({
     document: UPDATE_DEAL_STATUS,
     variables: {
-      dealID: deal.dealID,
+      externalDealID: deal.externalDealID,
       source: 'web',
       tradeInStepDone: true,
     },
