@@ -116,7 +116,7 @@ class PriceViewModel {
   };
 
   isNewFormExperimentActive = (): boolean => {
-    return !this.isTradeIn;
+    return true;
   };
 
   isCTAColorExp = (): boolean => {

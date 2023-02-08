@@ -166,6 +166,6 @@ export default class AppraisalReviewModel {
   }
 
   isNewFormExperimentActive = (): boolean => {
-    return !this.isTradeIn;
+    return true;
   };
 }
