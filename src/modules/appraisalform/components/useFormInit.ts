@@ -70,7 +70,7 @@ const useAppraisalFormInit = (
     exteriorCondition: extCondition.exteriorCondition || '',
     hailDamage: extCondition.hailDamage || '',
     tiresAndWheels: extCondition.tiresAndWheels || '',
-    afterMarket: { value: extCondition.afterMarket || [], isRequired: false },
+    afterMarket: { value: extCondition.afterMarket || [], isRequired: true },
     otherAfterMarket: {
       value: extCondition.otherAfterMarket || '',
       isRequired: false,
