@@ -68,7 +68,7 @@ const InteriorCondition: React.FC<Props> = ({ fields, newForm, form }) => {
           checked={fields.damagedDashboardOrPanels?.value === 'Yes'}
           id="damagedDashboardOrPanels"
           dataQa="damagedDashboardOrPanels"
-          description="Peerling/cracked dash, headliner stains/tears"
+          description="Peeling/cracked dash, headliner stains/tears"
         />
         <StyledCheckbox
           label="No Interior Damage"
