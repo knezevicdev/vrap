@@ -341,6 +341,7 @@ describe('form input in appraisal form language test', () => {
         placeholder:
           'Does your vehicle have any custom alterations or modifications? (select all that apply)',
         label: 'Aftermarket Modifications',
+        noModification: 'No Aftermarket Modifications',
         stereo: 'Stereo System',
         wheels: 'Wheels and tires',
         exhaust: 'Exhaust',
