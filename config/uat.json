@@ -1,0 +1,10 @@
+{
+  "firebaseConfig": {
+    "apiKey": "AIzaSyCKrs5d9BF4FgF34LADYefRO8CnM7auPVY",
+    "authDomain": "vroom-acquisitions-v2.firebaseapp.com",
+    "projectId": "vroom-acquisitions-v2",
+    "storageBucket": "vroom-acquisitions-v2.appspot.com",
+    "messagingSenderId": "92531755729",
+    "appId": "1:92531755729:web:f869148d30a3036d0253f0"
+  }
+}

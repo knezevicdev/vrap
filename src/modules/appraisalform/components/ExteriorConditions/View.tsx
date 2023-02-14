@@ -25,11 +25,7 @@ interface Props {
   form: UseForm;
 }
 
-const ExteriorConditionView: React.FC<Props> = ({
-  fields,
-  newForm,
-  form,
-}) => {
+const ExteriorConditionView: React.FC<Props> = ({ fields, newForm, form }) => {
   const isMobile = useIsMobile();
   const showDentsPanels = fields.dents && fields.dents.value === 'Yes';
   const showPaintChippingPanels =

@@ -22,6 +22,12 @@ import { ThemeProvider as StyledComponentsThemeProvider } from 'styled-component
 
 import LoggedOutDialog from '../components/LoggedOutDialog';
 import { theme } from '../core/themes/Vroom';
+import {
+  defaultRestrictedContextValue,
+  getRestrictedAppraisalContext,
+  RestrictedAppraisalContext,
+  RestrictedAppraisalContextType,
+} from '../integrations/RestrictedAppraisalContext';
 import client from '../networking/client';
 
 import AppProvider from 'src/context/AppContext';
@@ -67,6 +73,8 @@ class AppraisalApp extends App<
   {
     isSignedIn: boolean;
     isSignedInLoaded: boolean;
+    restrictedContextValue: RestrictedAppraisalContextType;
+    restrictedContextValueLoaded: boolean;
   }
 > {
   private readonly remoteConfig: firebase.remoteConfig.RemoteConfig;
@@ -114,6 +122,8 @@ class AppraisalApp extends App<
     this.state = {
       isSignedIn: false,
       isSignedInLoaded: false,
+      restrictedContextValue: defaultRestrictedContextValue,
+      restrictedContextValueLoaded: false,
     };
   }
 
@@ -121,22 +131,34 @@ class AppraisalApp extends App<
     const signInStatusResp = await client.signInStatus();
 
     if (isErrorResponse(signInStatusResp)) {
-      this.setState({
-        ...this.state,
+      this.setState((currentState) => ({
+        ...currentState,
         isSignedIn: false,
         isSignedInLoaded: true,
-      });
+      }));
       return;
     }
 
-    this.setState({
-      ...this.state,
+    this.setState((currentState) => ({
+      ...currentState,
       isSignedIn:
         signInStatusResp &&
         signInStatusResp.data &&
         signInStatusResp.data.status === 'active',
       isSignedInLoaded: true,
-    });
+    }));
+  };
+
+  fetchRestrictedAppraisalContext = async () => {
+    const restrictedContextValue = await getRestrictedAppraisalContext(
+      publicRuntimeConfig.FIREBASE_CONFIG
+    );
+
+    this.setState((currentState) => ({
+      ...currentState,
+      restrictedContextValue,
+      restrictedContextValueLoaded: true,
+    }));
   };
 
   componentDidMount(): void {
@@ -156,6 +178,7 @@ class AppraisalApp extends App<
     this.catSDK.initCatData();
     this.commonHandler.check3rdPartyAuth();
     saveUTMParams();
+    this.fetchRestrictedAppraisalContext();
 
     if (!this.props.pageProps.allowUnauthenticated) {
       this.checkSignInStatus();
@@ -186,11 +209,18 @@ class AppraisalApp extends App<
           <AnalyticsHandlerContext.Provider value={this.analyticsHandler}>
             <CatSDKContext.Provider value={this.catSDK}>
               <RemoteConfigContext.Provider value={this.remoteConfig}>
-                <ThemeProvider brand={Brand.VROOM}>
-                  <StyledComponentsThemeProvider theme={theme}>
-                    <AppProvider>{component}</AppProvider>
-                  </StyledComponentsThemeProvider>
-                </ThemeProvider>
+                <RestrictedAppraisalContext.Provider
+                  value={{
+                    value: this.state.restrictedContextValue,
+                    loaded: this.state.restrictedContextValueLoaded,
+                  }}
+                >
+                  <ThemeProvider brand={Brand.VROOM}>
+                    <StyledComponentsThemeProvider theme={theme}>
+                      <AppProvider>{component}</AppProvider>
+                    </StyledComponentsThemeProvider>
+                  </ThemeProvider>
+                </RestrictedAppraisalContext.Provider>
               </RemoteConfigContext.Provider>
             </CatSDKContext.Provider>
           </AnalyticsHandlerContext.Provider>

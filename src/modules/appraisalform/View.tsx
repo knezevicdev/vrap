@@ -4,6 +4,7 @@ import { useRouter } from 'next/router';
 import React, { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 
+import { useRestrictedAppraisal } from '../../integrations/RestrictedAppraisalContext';
 import {
   AppraisalTitle,
   CancelTradeText,
@@ -53,6 +54,7 @@ interface BuildForm {
 }
 
 const AppraisalForm: React.FC<Props> = ({ viewModel }) => {
+  const { value: restrictedAppraisal } = useRestrictedAppraisal();
   const router = useRouter();
   const { store } = useAppStore();
   const vinForPath = router.query.vehicle as string;
@@ -149,24 +151,24 @@ const AppraisalForm: React.FC<Props> = ({ viewModel }) => {
     const zipCode = appraisalUseForm.vehicleInfoForm.fields.zipCode.value;
     const isStateValid = viewModel.validateZipCode(
       store.appraisal.isTradeIn || router.query.form === 'trade',
-      zipCode
+      zipCode,
+      restrictedAppraisal.restrictedZipCodes,
+      restrictedAppraisal.restrictedStates
     );
     const vin = appraisalUseForm.vehicleInfoForm.fields.vin.value;
-    const isMakeValid = ![
-      'maserati',
-      'ferrari',
-      'bentley',
-      'lamborghini',
-      'bugatti',
-      'aston martin',
-      'mclaren',
-      'rolls-royce',
-      'tesla',
-    ].includes(vehicleInfo.make.toLowerCase());
+    const isMakeValid = !restrictedAppraisal.restrictedMakes
+      .map((restrictedMake) => restrictedMake.toLowerCase())
+      .includes(vehicleInfo.make.toLowerCase());
 
-    const isModelInvalid = ![
-      'mustang mach-e'
-    ].includes(vehicleInfo.model.toLowerCase())
+    const isModelInvalid = !restrictedAppraisal.restrictedModels.find(
+      (restrictedModel) =>
+        Boolean(
+          vehicleInfo.make.toLowerCase() ===
+            restrictedModel.make.toLowerCase() &&
+            vehicleInfo.model.toLowerCase() ===
+              restrictedModel.model.toLowerCase()
+        )
+    );
 
     setExactMileageProps({
       strictDialog: false,

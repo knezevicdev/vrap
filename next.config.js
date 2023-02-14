@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/naming-convention */
+const appConfig = require('./config');
 const withBundleAnalyzer = require('@next/bundle-analyzer')({
   enabled: process.env.ANALYZE === 'true',
 });
@@ -10,6 +11,11 @@ const shortHash = childProcess
   .execSync('git rev-parse --short=8 HEAD')
   .toString()
   .trim();
+
+if (!Object.keys(appConfig).includes(process.env.CURRENT_ENV))
+  throw new Error('ENV variable not set properly');
+
+const currentConfig = appConfig[process.env.CURRENT_ENV];
 
 const basePath = '/appraisal';
 
@@ -129,6 +135,7 @@ const config = {
     NEXT_PUBLIC_WEB_LEADS_URL: process.env.NEXT_PUBLIC_WEB_LEADS_URL,
     ITERABLE_UNSUBSCRIBE_KEY: process.env.ITERABLE_UNSUBSCRIBE_KEY,
     NEXT_PUBLIC_RECAPTCHA_SITE_KEY: process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY,
+    FIREBASE_CONFIG: currentConfig.firebaseConfig,
   },
   serverRuntimeConfig: {
     // Will only be available on the server side

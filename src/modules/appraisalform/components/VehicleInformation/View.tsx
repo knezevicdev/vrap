@@ -18,6 +18,7 @@ import getConfig from 'next/config';
 
 import Spinner from '../../../../components/Spinner';
 import { useAppStore } from '../../../../context';
+import { useRestrictedAppraisal } from '../../../../integrations/RestrictedAppraisalContext';
 import {
   VehicleInfoLeaseCopy,
   VehicleInfoText,
@@ -75,6 +76,7 @@ const VehicleInformation: React.FC<Props> = ({
     { label: 'White', value: 'White' },
     { label: 'Yellow', value: 'Yellow' },
   ];
+  const { loaded: isRestrictedAppraisalLoaded } = useRestrictedAppraisal();
   const router = useRouter();
   const { store } = useAppStore();
 
@@ -713,11 +715,15 @@ const VehicleInformation: React.FC<Props> = ({
             tabIndex={0}
             onKeyPress={handleOnKeyPressEnter}
             onClick={handleVehicleSubmit}
-            disabled={isSubmitDisabled() || viewModel.isABSmartlyLoading}
+            disabled={
+              isSubmitDisabled() ||
+              viewModel.isABSmartlyLoading ||
+              !isRestrictedAppraisalLoaded
+            }
             isCTAColorExp={viewModel.isCTAColorExp}
             data-qa={VehicleInfoText.licenseButtonDataQa}
           >
-            {viewModel.isABSmartlyLoading ? (
+            {viewModel.isABSmartlyLoading || !isRestrictedAppraisalLoaded ? (
               <LoadingSpinner />
             ) : (
               VehicleInfoText.licenseButton

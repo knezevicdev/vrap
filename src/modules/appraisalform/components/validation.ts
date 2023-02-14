@@ -1,5 +1,3 @@
-import bannedZips from './bannedZips.json';
-
 export const VROOM_VIN_SUBSTRING = '1VR00M004L';
 
 function isNumberOfLength(string: string, length: number) {
@@ -63,17 +61,35 @@ export function isValidZipCode(zipCode: number): boolean {
   return !!zipCode && /^\d{5}$/.test(zipCode.toString());
 }
 
-export function validateZipCode(isTradeIn: boolean, zipCode: string): boolean {
+export function validateZipCode(
+  isTradeIn: boolean,
+  zipCode: string,
+  restrictedZipCodes: { zipCode: string }[],
+  restrictedStates: {
+    state: string;
+    zipCodeMin: number;
+    zipCodeMax: number;
+  }[]
+): boolean {
   const zipcode = parseInt(zipCode, 10);
 
-  if (isTradeIn) return !bannedZips.includes(zipcode);
+  if (isTradeIn)
+    return !restrictedZipCodes.find(
+      (restrictedZipCode) => restrictedZipCode.zipCode === zipCode
+    );
 
   return !(
-    (zipcode >= 83200 && zipcode <= 83999) ||
-    (zipcode >= 59000 && zipcode <= 59999) ||
-    (zipcode >= 58000 && zipcode <= 58999) ||
-    (zipcode >= 57000 && zipcode <= 57999) ||
-    (zipcode >= 82000 && zipcode <= 83199) ||
-    bannedZips.includes(zipcode)
+    Boolean(
+      restrictedStates.find(
+        (restrictedState) =>
+          restrictedState.zipCodeMin >= zipcode &&
+          restrictedState.zipCodeMax <= zipcode
+      )
+    ) ||
+    Boolean(
+      restrictedZipCodes.find(
+        (restrictedZipCode) => restrictedZipCode.zipCode === zipCode
+      )
+    )
   );
 }
