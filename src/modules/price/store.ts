@@ -3,10 +3,7 @@ import { action, makeObservable, observable } from 'mobx';
 
 import { AsyncStatus, Store, StoreStatus } from 'src/interfaces.d';
 import { Price } from 'src/networking/models/Price';
-import {
-  getOfferDetails,
-  acceptPriceOffer,
-} from 'src/networking/request';
+import { acceptPriceOffer, getOfferDetails } from 'src/networking/request';
 
 type Nullable<T> = T | null;
 

@@ -5,10 +5,10 @@ variables:
   SECRET_DETECTION_DISABLED: 'true'
   SAST_DISABLED: "true"
 
-  AUTO_DEVOPS_BUILD_IMAGE_FORWARDED_CI_VARIABLES: CI_JOB_TOKEN
+  AUTO_DEVOPS_BUILD_IMAGE_FORWARDED_CI_VARIABLES: CI_JOB_TOKEN,CURRENT_ENV
 
-  SONARQUBE_KEY: "" 
-  
+  SONARQUBE_KEY: ""
+
 stages:
   - build
   - test
@@ -30,7 +30,7 @@ workflow:
 
 include:
   - project: devops/template-jobs
-    file: deployments-kubernetes/build-push-ecr.yml 
+    file: deployments-kubernetes/build-push-ecr.yml
   - project: devops/template-jobs
     file: deployments-kubernetes/review-environments.yml
   - project: devops/template-jobs
@@ -38,7 +38,7 @@ include:
   - project: devops/template-jobs
     file: deployments-kubernetes/vroom-web-githubflow.yml
   - project: devops/template-jobs
-    file: deployments-kubernetes/fastly-purge.yml 
+    file: deployments-kubernetes/fastly-purge.yml
 
   - template: Jobs/Code-Quality.gitlab-ci.yml
   - template: Jobs/Code-Intelligence.gitlab-ci.yml
