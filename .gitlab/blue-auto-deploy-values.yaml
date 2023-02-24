@@ -5,11 +5,11 @@ ingress:
 
 resources:
   limits:
-    cpu: 1500m
-    memory: 1000Mi
+    cpu: "1"
+    memory: 1G
   requests:
-    cpu: 500m
-    memory: 500Mi
+    cpu: "1"
+    memory: 1G
 
 service:
   externalPort: 8080
