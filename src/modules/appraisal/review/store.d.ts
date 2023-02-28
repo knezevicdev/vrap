@@ -10,6 +10,7 @@ export interface VehicleInfoForm {
   vehicleOptions: string[];
   year: number | null;
   csTrimId?: number;
+  sellOrTradeIn: string;
 }
 
 export interface VehicleHistoryForm {

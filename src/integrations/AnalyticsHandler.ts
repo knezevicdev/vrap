@@ -396,6 +396,20 @@ class AnalyticsHandler extends BaseAnalyticsHandler {
     const properties = { category, priceId, errorMessage, docType };
     this.track(event, properties);
   }
+
+  trackSellOrTradeIn(
+    vin: string,
+    category: string,
+    sellOrTradeIn: string
+  ): void {
+    const event = 'Select Sell Or Trade In';
+    const properties = {
+      category,
+      vin,
+      sellOrTradeIn,
+    };
+    this.track(event, properties);
+  }
 }
 
 export default AnalyticsHandler;

@@ -1,4 +1,5 @@
 import { isErrorResponse } from '@vroom-web/networking';
+import { NextRouter } from 'next/router';
 
 import AnalyticsHandler from 'src/integrations/AnalyticsHandler';
 import {
@@ -15,9 +16,13 @@ class VehicleInfoViewModel {
   appraisalStore: AppraisalStore;
   absmartly: ABSmartStore;
 
-  constructor(public store: Store) {
+  constructor(public store: Store, private router: NextRouter) {
     this.appraisalStore = store.appraisal;
     this.absmartly = store.absmart;
+  }
+
+  get isTradeIn(): boolean {
+    return this.store.appraisal.isTradeIn || this.router.query.form === 'trade';
   }
 
   get getAnalyticHandler(): AnalyticsHandler {
