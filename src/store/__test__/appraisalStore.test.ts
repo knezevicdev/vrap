@@ -129,6 +129,7 @@ describe('test appraisal store methods', () => {
     expect(store.vehicleInfoForm).toEqual({
       year: 1985,
       model: 'Volvo',
+      sellOrTradeIn: '',
       make: 'Best one',
       vin: '',
       exteriorColor: '',

@@ -34,6 +34,7 @@ const useAppraisalFormInit = (
       isRequired: false,
     },
     keysAmount: vehicleInfo.keysAmount || '',
+    sellOrTradeIn: '',
   };
 
   const vehicleHistoryFields = {

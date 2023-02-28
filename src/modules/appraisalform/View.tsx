@@ -63,6 +63,7 @@ const AppraisalForm: React.FC<Props> = ({ viewModel }) => {
   const routerHash = routerAsPath.split('#')[1];
   const submitText = isEditMode ? SaveText : ReviewText;
   const isNewForm = viewModel.isNewFormExperimentActive();
+  const isTradeIn = store.appraisal.isTradeIn || router.query.form === 'trade';
 
   const vehicleInfo = viewModel.appraisalStore.vehicleInfoForm;
   const yourInformation = viewModel.appraisalStore.personalInfoForm;
@@ -150,7 +151,7 @@ const AppraisalForm: React.FC<Props> = ({ viewModel }) => {
     const setMileageDialogDismiss = viewModel.setMileageDialogDismiss;
     const zipCode = appraisalUseForm.vehicleInfoForm.fields.zipCode.value;
     const isStateValid = viewModel.validateZipCode(
-      store.appraisal.isTradeIn || router.query.form === 'trade',
+      isTradeIn,
       zipCode,
       restrictedAppraisal.restrictedZipCodes,
       restrictedAppraisal.restrictedStates
@@ -206,6 +207,13 @@ const AppraisalForm: React.FC<Props> = ({ viewModel }) => {
 
     if (isOdometerValid && isStateValid && isMakeValid) {
       proceedNext();
+    }
+
+    if (!isTradeIn) {
+      viewModel.trackSellOrTradeIn(
+        vin,
+        appraisalUseForm.vehicleInfoForm.fields.sellOrTradeIn.value
+      );
     }
   };
 
@@ -271,6 +279,21 @@ const AppraisalForm: React.FC<Props> = ({ viewModel }) => {
     isFormValid,
     ...historyAndConditionForms
   );
+
+  useEffect(() => {
+    if (
+      !isTradeIn ||
+      !appraisalUseForm.vehicleInfoForm.fields.sellOrTradeIn.isRequired
+    )
+      return;
+
+    appraisalUseForm.vehicleInfoForm.updateMultipleFields({
+      sellOrTradeIn: {
+        ...appraisalUseForm.vehicleInfoForm.fields.sellOrTradeIn,
+        isRequired: false,
+      },
+    });
+  }, [appraisalUseForm.vehicleInfoForm, isTradeIn]);
 
   useEffect(() => {
     if (isNewForm === isNewFormRef.current) return;
@@ -628,7 +651,7 @@ const AppraisalForm: React.FC<Props> = ({ viewModel }) => {
         appraisalTitle={AppraisalTitle}
         disableExperiments={false}
       />
-      {store.appraisal.isTradeIn && (
+      {isTradeIn && (
         <Cancel onClick={viewModel.cancelOffer}>{CancelTradeText}</Cancel>
       )}
       {showExactMileageDialog && (

@@ -1,4 +1,5 @@
 import { observer } from 'mobx-react';
+import { useRouter } from 'next/router';
 import React from 'react';
 
 import VehicleInformationView from './View';
@@ -18,7 +19,8 @@ const VehicleInformation: React.FC<Props> = ({
   hideButtonCallback,
 }) => {
   const { store } = useAppStore();
-  const viewModel = new ViewModel(store);
+  const router = useRouter();
+  const viewModel = new ViewModel(store, router);
 
   return (
     <VehicleInformationView

@@ -108,6 +108,14 @@ class PriceViewModel {
     );
   };
 
+  trackSellOrTradeIn = (vin: string, sellOrTradeIn: string): void => {
+    this._analyticsHandler.trackSellOrTradeIn(
+      vin,
+      this.appraisalStore.eventCategory,
+      sellOrTradeIn
+    );
+  };
+
   setMileageDialogDismiss = (): void => {
     this.appraisalStore.dismissExactMileageDialog();
   };

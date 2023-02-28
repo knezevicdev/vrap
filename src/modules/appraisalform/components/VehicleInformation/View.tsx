@@ -30,6 +30,7 @@ import ExactMileageInput from '../forminputs/ExactMileageInput';
 import ExtColorInput from '../forminputs/ExtColorInput';
 import LicenseInput from '../forminputs/LicenseInput';
 import NumberOfKeysInput from '../forminputs/NumberOfKeysInput';
+import SellOrTradeInInput from '../forminputs/SellOrTradeInInput';
 import StateInput from '../forminputs/StateInput';
 import TrimInput from '../forminputs/TrimInput';
 import VehicleOptionsGroup from '../forminputs/VehicleOptionsGroup';
@@ -778,6 +779,9 @@ const VehicleInformation: React.FC<Props> = ({
                 options={options}
               />
             </InputContainer>
+          )}
+          {!viewModel.isTradeIn && (
+            <SellOrTradeInInput field={fields.sellOrTradeIn} />
           )}
         </>
       )}

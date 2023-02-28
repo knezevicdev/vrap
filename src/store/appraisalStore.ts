@@ -24,6 +24,7 @@ export class AppraisalStore {
     trim: '',
     vehicleOptions: [],
     year: null,
+    sellOrTradeIn: '',
   };
   vehicleHistoryForm: VehicleHistoryForm = {
     hasAccident: '',
@@ -222,6 +223,7 @@ export class AppraisalStore {
       vehicleOptions: [],
       year: null,
       zipCode: '',
+      sellOrTradeIn: '',
     };
     this.vehicleHistoryForm = {
       hasAccident: '',
