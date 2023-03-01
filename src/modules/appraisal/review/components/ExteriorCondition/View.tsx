@@ -62,7 +62,7 @@ const ExteriorConditionView: React.FC<Props> = ({ viewModel, store }) => {
           {appraisalDetail?.extConditionForm?.afterMarket.length > 0 ? (
             <AfterMarketList />
           ) : (
-            <Field>N\A</Field>
+            <Field>No</Field>
           )}
         </Info>
       </Row>
