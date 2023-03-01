@@ -104,7 +104,11 @@ const AlternateAfterMarketModsOptionsGroup: React.FC<Props> = ({
     }
 
     setCheckedValuesForParent([...localCheckedValuesForParent]);
-    onChange({ ...field, value: localCheckedValuesForParent });
+    onChange({
+      ...field,
+      value: localCheckedValuesForParent,
+      isRequired: key !== FormFields.alternateAfterMarket.noModification,
+    });
   };
 
   const checkboxes = Object.entries(optionsGroupForm.fields).map(
