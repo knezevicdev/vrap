@@ -3,7 +3,7 @@ import { action, makeObservable, observable } from 'mobx';
 
 import { AsyncStatus, Store, StoreStatus } from 'src/interfaces.d';
 import { Price } from 'src/networking/models/Price';
-import { acceptPriceOffer, getOfferDetails } from 'src/networking/request';
+import { getOfferDetails } from 'src/networking/request';
 
 type Nullable<T> = T | null;
 
@@ -60,7 +60,6 @@ export class PriceStore implements Store {
       storeStatus: observable,
       asyncStatus: observable,
       getOfferDetails: action,
-      submitPriceAccept: action,
     });
     this.getOfferDetails(priceId);
   }
@@ -110,11 +109,5 @@ export class PriceStore implements Store {
         this.storeStatus = StoreStatus.Success;
       }
     }
-  };
-
-  submitPriceAccept = async (): Promise<void> => {
-    this.asyncStatus = AsyncStatus.Fetching;
-
-    await acceptPriceOffer(this.price.priceId);
   };
 }
