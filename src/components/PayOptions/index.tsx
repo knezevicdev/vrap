@@ -3,6 +3,7 @@ import React from 'react';
 import { useOptionsStore } from '../../modules/options/store';
 import View from './View';
 import ViewModel from './ViewModel';
+import { useAppStore } from '../../context';
 
 interface Props {
   selected: string;
@@ -19,8 +20,9 @@ const PayOptions: React.FC<Props> = ({
   handleAddressChange,
   setFieldValue,
 }) => {
+  const { store } = useAppStore();
   const oStore = useOptionsStore();
-  const viewModel = new ViewModel(oStore);
+  const viewModel = new ViewModel(oStore, store);
 
   return (
     <View

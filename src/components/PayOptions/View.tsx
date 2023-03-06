@@ -41,6 +41,10 @@ const PayOptionsView: React.FC<Props> = ({
   handleAddressChange,
   setFieldValue,
 }) => {
+  if (viewModel.isAbsmartlyLoading) {
+    return <Spinner src="assets/gifs/vroom-spinner.gif" alt="Loading..." />;
+  }
+
   const radioOptions = viewModel.optionMeta.map((option) => {
     let child = <OptionContainer>{option}</OptionContainer>;
     if (option === 'Direct Deposit') {
@@ -58,6 +62,21 @@ const PayOptionsView: React.FC<Props> = ({
           <CheckItem>
             <Icon icon={Icons.CHECK_MARK_GREEN} /> Most secure way to transfer
             funds
+          </CheckItem>
+        </OptionContainer>
+      );
+    }
+    if (viewModel.isSuycPaymentCheckFeeTest && option === 'Check by Mail') {
+      child = (
+        <OptionContainer>
+          <Label>Check by Mail</Label>
+          <CheckItem>
+            <Icon icon={Icons.ERROR_ICON} /> We charge a $39 fee to send a check
+            by mail
+          </CheckItem>
+          <CheckItem>
+            <Icon icon={Icons.ERROR_ICON} /> Check by mail may take up to 14
+            days
           </CheckItem>
         </OptionContainer>
       );
@@ -103,6 +122,11 @@ const PlaidIconWrapper = styled.div`
   align-items: center;
   height: 100%;
   margin-left: 5px;
+`;
+
+const Spinner = styled.img`
+  min-width: 80px;
+  max-width: 80px;
 `;
 
 export default observer(PayOptionsView);
