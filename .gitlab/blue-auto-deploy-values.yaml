@@ -27,4 +27,4 @@ podAnnotations:
   ad.datadoghq.com/auto-deploy-app.check_names: '["auto-deploy-app"]'
   ad.datadoghq.com/auto-deploy-app.init_configs: '[{}]'
   ad.datadoghq.com/auto-deploy-app.instances: '[{"host": "%%host%%", "port": "%%port%%"}]'
-  ad.datadoghq.com/auto-deploy-app.logs: '[{"source": "REPO_NAME", "service": "REPO_NAME"}]'
+  ad.datadoghq.com/auto-deploy-app.logs: '[{"source": "appraisal", "service": "appraisal"}]'
