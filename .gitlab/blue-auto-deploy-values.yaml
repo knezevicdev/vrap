@@ -13,10 +13,10 @@ resources:
     memory: 1G
 
 livenessProbe:
-  path: '/health'
+  path: '/appraisal/api/version'
 
 readinessProbe:
-  path: '/health'
+  path: '/appraisal/api/version'
 
 service:
   enabled: true
