@@ -1,4 +1,5 @@
 import { SkipNavigationLink, VroomSpinner } from '@vroom-web/ui-lib';
+import { IncomingMessage } from 'http';
 import { observer } from 'mobx-react';
 import { NextPageContext } from 'next';
 import { useRouter } from 'next/router';
@@ -129,14 +130,30 @@ const VerificationWrapper: React.FC<Props> = ({ priceId, step, children }) => {
 
 export interface VerificationPageProps {
   priceId: string;
+  ajsUserId: string;
 }
+
+interface Cookie {
+  ajs_user_id: string;
+}
+const parseCookies = (req?: IncomingMessage): Cookie => {
+  if (req && req.headers && req.headers.cookie) {
+    return Object.fromEntries(
+      req.headers.cookie.split('; ').map((v) => v.split(/=(.+)/))
+    );
+  } else {
+    return { ajs_user_id: '' };
+  }
+};
 
 export const getInitialProps = async (
   context: NextPageContext
 ): Promise<VerificationPageProps> => {
-  const { query } = context;
+  const { query, req } = context;
   const priceId = query.priceId as string;
-  return { priceId };
+  const cookies = parseCookies(req);
+
+  return { priceId, ajsUserId: cookies.ajs_user_id };
 };
 
 export default observer(VerificationWrapper);

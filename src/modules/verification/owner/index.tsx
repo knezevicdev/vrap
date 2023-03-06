@@ -20,9 +20,13 @@ import { acceptPriceOffer, updateVerification } from 'src/networking/request';
 
 interface Props {
   priceId: string;
+  ajsUserId: string;
 }
 
-const VerificationOwnerViewDetail: React.FC<Props> = ({ priceId }) => {
+const VerificationOwnerViewDetail: React.FC<Props> = ({
+  priceId,
+  ajsUserId,
+}) => {
   const editForm = useRef(false);
   const [isLoading, setIsLoading] = useState(true);
   const [activeSection, setActiveSection] = useState(0);
@@ -34,8 +38,8 @@ const VerificationOwnerViewDetail: React.FC<Props> = ({ priceId }) => {
   const initialRequiredDocuments = useRef<CalculateRequiredDocuments>();
 
   const acceptPrice = useCallback(async () => {
-    await acceptPriceOffer(priceId);
-  }, [priceId]);
+    await acceptPriceOffer(priceId, ajsUserId);
+  }, [priceId, ajsUserId]);
 
   useEffect(() => {
     acceptPrice();
