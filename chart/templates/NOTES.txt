@@ -1,0 +1,17 @@
+{{- if and .Values.ingress.enabled .Values.service.enabled }}
+Application should be accessible internally at
+
+{{- with (first .Values.ingress.additionalHosts ) }}
+    {{ . }}
+{{- end }}
+    
+{{- end -}}
+
+{{- if and .Values.ingress_ext.enabled .Values.service.enabled }}
+Application should be accessible externally at
+
+{{- with (first .Values.ingress_ext.additionalHosts ) }}
+    {{ . }}
+{{- end }}
+    
+{{- end -}}
