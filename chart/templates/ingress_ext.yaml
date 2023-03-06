@@ -1,0 +1,93 @@
+{{- if and (.Values.service.enabled) (or (.Values.ingress_ext.enabled) (not (hasKey .Values.ingress_ext "enabled"))) -}}
+{{- if .Capabilities.APIVersions.Has "networking.k8s.io/v1/Ingress" }}
+apiVersion: networking.k8s.io/v1
+{{- else if .Capabilities.APIVersions.Has "networking.k8s.io/v1beta1/Ingress"}}
+apiVersion: networking.k8s.io/v1beta1
+{{ else }}
+apiVersion: extensions/v1beta1
+{{- end }}
+kind: Ingress
+metadata:
+  name: {{ template "fullname" . }}-ext
+  labels:
+{{ include "sharedlabels" . | indent 4 }}
+  annotations:
+{{- if .Values.ingress_ext.annotations }}
+{{ toYaml .Values.ingress_ext.annotations | indent 4 }}
+{{- end }}
+{{- if .Values.ingress_ext.tls.enabled }}
+    kubernetes.io/tls-acme: {{ .Values.ingress_ext.tls.acme | quote }}
+{{- end }}
+{{- if eq .Values.application.track "canary" }}
+    nginx.ingress.kubernetes.io/canary: "true"
+    nginx.ingress.kubernetes.io/canary-by-header: "canary"
+{{- if .Values.ingress_ext.canary.weight }}
+    nginx.ingress.kubernetes.io/canary-weight: {{ .Values.ingress_ext.canary.weight | quote }}
+{{- end }}
+{{- end }}
+{{- with .Values.ingress_ext.modSecurity }}
+{{- if .enabled }}
+    nginx.ingress.kubernetes.io/modsecurity-transaction-id: "$server_name-$request_id"
+    nginx.ingress.kubernetes.io/modsecurity-snippet: |
+      SecRuleEngine {{ .secRuleEngine | default "DetectionOnly" | title }}
+{{- range $rule := .secRules }}
+{{ (include "secrule" $rule) | indent 6 }}
+{{- end }}
+{{- end }}
+{{- end }}
+{{- if .Values.prometheus.metrics }}
+    nginx.ingress.kubernetes.io/server-snippet: |-
+      location /metrics {
+          deny all;
+      }
+
+{{- end }}
+spec:
+{{- if .Values.ingress_ext.tls.enabled }}
+  tls:
+  - hosts:
+{{- if .Values.service.commonName }}
+    - {{ template "hostname" .Values.service.commonName }}
+{{- end }}
+    - {{ template "hostname" .Values.service.url }}
+{{- if .Values.service.additionalHosts }}
+{{- range $host := .Values.ingress_ext.additionalHosts }}
+    - {{ template "hostname" $host }}
+{{- end -}}
+{{- end }}
+{{- if not .Values.ingress_ext.tls.useDefaultSecret }}
+    secretName: {{ .Values.ingress_ext.tls.secretName | default (printf "%s-tls" (include "fullname" .)) }}
+{{- end }}
+{{- end }}
+  rules:
+  - host: {{ template "hostname" .Values.service.url }}
+    http:
+      &httpRuleExt
+      paths:
+      - path: {{ .Values.ingress_ext.path | default "/" | quote }}
+        {{- if .Capabilities.APIVersions.Has "networking.k8s.io/v1/Ingress" }}
+        pathType: Prefix
+        {{- end }}
+        backend:
+          {{- if .Capabilities.APIVersions.Has "networking.k8s.io/v1/Ingress" }}
+          service:
+            name: {{ template "fullname" . }}
+            port:
+              number: {{ .Values.service.externalPort }}
+          {{ else }}
+          serviceName: {{ template "fullname" . }}
+          servicePort: {{ .Values.service.externalPort }}
+          {{- end }}
+{{- if .Values.service.commonName }}
+  - host: {{ template "hostname" .Values.service.commonName }}
+    http:
+      <<: *httpRuleExt
+{{- end -}}
+{{- if .Values.ingress_ext.additionalHosts }}
+{{- range $host := .Values.ingress_ext.additionalHosts }}
+  - host: {{ template "hostname" $host }}
+    http:
+      <<: *httpRuleExt
+{{- end -}}
+{{- end -}}
+{{- end -}}
