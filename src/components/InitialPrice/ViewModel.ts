@@ -37,7 +37,7 @@ class InitialPriceViewModel {
   readonly wicheverOccerFirst: string = 'whichever occurs first. ';
 
   constructor(
-    private store: PriceStore,
+    store: PriceStore,
     analyticsHandler: AnalyticsHandler,
     private appStore: Store
   ) {
@@ -69,7 +69,6 @@ class InitialPriceViewModel {
     const isAccountCreateAbTest = await this.appStore.absmart.isInExperiment(
       'ac-account-create'
     );
-    await this.store.submitPriceAccept();
     this.analyticsHandler.trackContinueClick();
 
     let isSignInStatus;

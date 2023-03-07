@@ -1,4 +1,4 @@
-import { GQLTypes, Response } from '@vroom-web/networking';
+import { Response } from '@vroom-web/networking';
 import getConfig from 'next/config';
 
 import ACCEPT_REJECT_OFFER from '../../graphql/mutations/acceptRejectOffer.graphql';
@@ -9,6 +9,16 @@ import { checkAppraisalPayload, getDummyOfferResp } from '../utils';
 
 const { publicRuntimeConfig } = getConfig();
 const VROOM_URL = publicRuntimeConfig.NEXT_PUBLIC_VROOM_URL;
+
+type MutationAcceptRejectOfferArgs = {
+  offerId: string;
+  accepted: boolean;
+  reason?: string | null;
+  reasonOther?: string | null;
+  success?: boolean | null;
+  detail?: string | null;
+  externalUserId?: string | null;
+};
 
 export const getOfferDetails = async (
   priceId: string
@@ -23,16 +33,19 @@ export const getOfferDetails = async (
   return res;
 };
 
-export const acceptPriceOffer = async (offerId: string): Promise<void> => {
+export const acceptPriceOffer = async (
+  offerId: string,
+  externalUserId: string
+): Promise<void> => {
   const key = 'APPRAISAL_ACCEPTED_OFFER';
 
   const acceptedOfferId = localStorage.getItem(key);
   if (acceptedOfferId === offerId) return;
 
   try {
-    await client.gqlRequest<unknown, GQLTypes.MutationAcceptRejectOfferArgs>({
+    await client.gqlRequest<unknown, MutationAcceptRejectOfferArgs>({
       document: ACCEPT_REJECT_OFFER,
-      variables: { offerId, accepted: true },
+      variables: { offerId, externalUserId, accepted: true },
     });
     localStorage.setItem(key, offerId);
   } catch (err) {

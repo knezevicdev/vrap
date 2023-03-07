@@ -8,10 +8,13 @@ import VerificationWrapper, {
   VerificationPageProps,
 } from 'src/modules/verification/shared/Wrapper';
 
-const VerificationOwner: NextPage<VerificationPageProps> = ({ priceId }) => {
+const VerificationOwner: NextPage<VerificationPageProps> = ({
+  priceId,
+  ajsUserId,
+}) => {
   return (
     <VerificationWrapper priceId={priceId} step={0}>
-      <VerificationOwnerViewDetail priceId={priceId} />
+      <VerificationOwnerViewDetail priceId={priceId} ajsUserId={ajsUserId} />
     </VerificationWrapper>
   );
 };
