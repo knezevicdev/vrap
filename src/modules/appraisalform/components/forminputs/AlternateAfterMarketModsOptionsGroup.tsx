@@ -29,10 +29,9 @@ const AlternateAfterMarketModsOptionsGroup: React.FC<Props> = ({
     // FormFields.alternateAfterMarket.sunroof,
     FormFields.alternateAfterMarket.wheels,
     FormFields.alternateAfterMarket.exhaust,
-    FormFields.alternateAfterMarket.other,
     FormFields.alternateAfterMarket.suspension,
     FormFields.alternateAfterMarket.performance,
-    FormFields.alternateAfterMarket.noModification,
+    FormFields.alternateAfterMarket.other,
   ];
 
   const { onChange } = field;
@@ -47,7 +46,7 @@ const AlternateAfterMarketModsOptionsGroup: React.FC<Props> = ({
   const optionsGroupForm = useForm({ defaultValues: optionsDefaultVals });
 
   const handleOptionClick = (key: string, clickedCheckbox: GenericObject) => {
-    let localCheckedValuesForParent = [...checkedValuesForParent];
+    const localCheckedValuesForParent = [...checkedValuesForParent];
 
     if (
       !clickedCheckbox.value &&
@@ -55,39 +54,12 @@ const AlternateAfterMarketModsOptionsGroup: React.FC<Props> = ({
     ) {
       // if checkbox is checked and not yet in the checked array push it
       localCheckedValuesForParent.push(key);
-      if (key === FormFields.alternateAfterMarket.noModification) {
-        optionsGroupForm.updateMultipleFields(
-          Object.fromEntries(
-            Object.entries(optionsGroupForm.fields).map(([key, field]) => {
-              return [
-                key,
-                {
-                  ...(field as GenericObject),
-                  value: key === FormFields.alternateAfterMarket.noModification,
-                },
-              ];
-            })
-          )
-        );
-        localCheckedValuesForParent = [];
-      } else {
-        const noModificationField = optionsGroupForm.fields[
-          FormFields.alternateAfterMarket.noModification
-        ] as GenericObject;
-        optionsGroupForm.updateMultipleFields({
-          [key]: {
-            ...clickedCheckbox,
-            value: true,
-          },
-          [FormFields.alternateAfterMarket.noModification]: {
-            ...noModificationField,
-            value: false,
-          },
-        });
-        localCheckedValuesForParent = localCheckedValuesForParent.filter(
-          (field) => field !== FormFields.alternateAfterMarket.noModification
-        );
-      }
+      optionsGroupForm.updateMultipleFields({
+        [key]: {
+          ...clickedCheckbox,
+          value: true,
+        },
+      });
     } else if (
       !clickedCheckbox.value === false &&
       localCheckedValuesForParent.indexOf(key) > -1
@@ -107,7 +79,6 @@ const AlternateAfterMarketModsOptionsGroup: React.FC<Props> = ({
     onChange({
       ...field,
       value: localCheckedValuesForParent,
-      isRequired: key !== FormFields.alternateAfterMarket.noModification,
     });
   };
 
