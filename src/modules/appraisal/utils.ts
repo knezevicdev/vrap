@@ -2,7 +2,6 @@ import crypto from 'crypto';
 
 export const uuidCookieName = 'uuid';
 import { AppraisalStore } from '../../store/appraisalStore';
-import { FormFields } from '../appraisalform/components/forminputs/Inputs.language';
 
 import { AppraisalPayload } from 'src/interfaces.d';
 import {
@@ -58,10 +57,7 @@ function exteriorConditionData(data: ExtConditionForm) {
     exteriorCondition: data.exteriorCondition,
     tiresAndWheels: data.tiresAndWheels,
     hailDamage: data.hailDamage,
-    afterMarket: data.afterMarket.filter(
-      (modification) =>
-        modification !== FormFields.alternateAfterMarket.noModification
-    ),
+    afterMarket: data.afterMarket,
     otherAfterMarket: data.otherAfterMarket,
     rust: data.rust,
     dents: data.dents,
