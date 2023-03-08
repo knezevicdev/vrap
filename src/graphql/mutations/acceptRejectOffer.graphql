@@ -1,5 +1,5 @@
-mutation ACCEPT_REJECT_OFFER($offerId: String!, $accepted: Boolean!, $externalUserId: String) {
-  acceptRejectOffer(offerId: $offerId, accepted: $accepted, externalUserId: $externalUserId) {
+mutation ACCEPT_REJECT_OFFER($offerId: String!, $accepted: Boolean!, $externalUserId: String!, $reason: String!, $reasonOther: String!, $success: Boolean!, $detail: String!) {
+  acceptRejectOffer(offerId: $offerId, accepted: $accepted,  reason: $reason, reasonOther: $reasonOther, success: $success, detail: $detail, externalUserId: $externalUserId) {
     offerStatus
   }
 }
