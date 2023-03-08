@@ -96,12 +96,18 @@ const VerificationDocumentsViewDetail: React.FC<Props> = ({ priceId }) => {
 
     let url;
     if (
+      !localStorage.getItem('review_doc_section') &&
+      store.absmart.isInExperiment('ac-payment-required') &&
+      !store.absmart.isInExperiment('verification-form-vehicle-photo-upload')
+    ) {
+      url = `/appraisal/paymentmethod?priceId=${priceId}`;
+    } else if (
       localStorage.getItem('review_doc_section') ||
-      !store.absmart.isInExperiment('ac-payment-required')
+      !store.absmart.isInExperiment('verification-form-vehicle-photo-upload')
     ) {
       url = `/appraisal/verification/review?priceId=${priceId}`;
     } else {
-      url = `/appraisal/paymentmethod?priceId=${priceId}`;
+      url = `/appraisal/verification/photos?priceId=${priceId}`;
     }
 
     if (localStorage.getItem('review_doc_section')) {
@@ -248,7 +254,7 @@ const VerificationDocumentsViewDetail: React.FC<Props> = ({ priceId }) => {
       </Row>
       <Line />
       <Button disabled={!documentsValid || mileage === ''} onClick={onSubmit}>
-        Review
+        Next
       </Button>
     </Container>
   );

@@ -136,6 +136,7 @@ const config = {
     ITERABLE_UNSUBSCRIBE_KEY: process.env.ITERABLE_UNSUBSCRIBE_KEY,
     NEXT_PUBLIC_RECAPTCHA_SITE_KEY: process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY,
     FIREBASE_CONFIG: currentConfig.firebaseConfig,
+    VAST_IMAGE_PROXY_URL: process.env.VAST_IMAGE_PROXY_URL,
   },
   serverRuntimeConfig: {
     // Will only be available on the server side
@@ -150,6 +151,8 @@ const config = {
     RECAPTCHA_SECRET_KEY: process.env.RECAPTCHA_SECRET_KEY,
     RECAPTCHA_VERIFICATION_URL: process.env.RECAPTCHA_VERIFICATION_URL,
     VIS_URL: process.env.VIS_URL,
+    APPRAISAL_API_URL: process.env.APPRAISAL_API_URL,
+    APPRAISAL_API_API_KEY: process.env.APPRAISAL_API_API_KEY,
   },
   /* Custom webpack configuration. */
   webpack: (config) => {

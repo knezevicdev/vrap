@@ -1,9 +1,9 @@
 import React from 'react';
 
+import { useAppStore } from '../../context';
 import { useOptionsStore } from '../../modules/options/store';
 import View from './View';
 import ViewModel from './ViewModel';
-import { useAppStore } from '../../context';
 
 interface Props {
   selected: string;

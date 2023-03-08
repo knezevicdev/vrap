@@ -4,6 +4,7 @@ import AnalyticsHandler from 'src/integrations/AnalyticsHandler';
 import { submitPaymentOption } from 'src/modules/options/store';
 import { PatchReview } from 'src/networking/models/Verification';
 import {
+  getOfferDetails,
   getVerificationDetails,
   postPlaidPayment,
 } from 'src/networking/request';
@@ -230,16 +231,33 @@ export default class VerificationReviewSectionViewModel {
     return this.store.absmart.isInExperiment('ac-payment-required');
   };
 
+  isVehiclePhotosExp = (): boolean => {
+    return this.store.absmart.isInExperiment(
+      'verification-form-vehicle-photo-upload'
+    );
+  };
+
   async getVerificationDetails(
     priceId: string,
     lastFourSSN: string
   ): Promise<void> {
     try {
-      const response = await getVerificationDetails(priceId);
-      if (isErrorResponse(response)) throw response;
+      const [
+        verificationDetailsResponse,
+        offerDetailsResponse,
+      ] = await Promise.all([
+        getVerificationDetails(priceId),
+        getOfferDetails(priceId),
+      ]);
+      if (isErrorResponse(verificationDetailsResponse))
+        throw verificationDetailsResponse;
+      if (isErrorResponse(offerDetailsResponse)) throw offerDetailsResponse;
       this.store.verification.setLastFourSSN(lastFourSSN);
       this.store.verification.getVerificationDetail(
-        response.data.data,
+        {
+          ...verificationDetailsResponse.data.data,
+          vin: offerDetailsResponse.data.data[0].VIN__c,
+        },
         lastFourSSN
       );
     } catch (e) {

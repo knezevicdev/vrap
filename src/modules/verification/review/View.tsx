@@ -9,6 +9,7 @@ import PaymentInfoReview from './components/PaymentInfoReview';
 import PayOffInfoReview from './components/PayOffInfoReview';
 import PickupInfoReview from './components/PickupInfoReview';
 import SellDocumentReview from './components/SellDocumentReview';
+import VehiclePhotosReview from './components/VehiclePhotosReview';
 import ViewModel from './ViewModel';
 
 import { useAppStore } from 'src/context';
@@ -66,6 +67,15 @@ const VerificationReviewViewDetail: React.FC<Props> = ({
       <PayOffInfoReview />
       <Line />
       <SellDocumentReview />
+      {viewModel.isVehiclePhotosExp() && (
+        <>
+          <Line />
+          <VehiclePhotosReview
+            priceId={priceId}
+            vin={store.verification.verificationDetail?.vin || ''}
+          />
+        </>
+      )}
       {(viewModel.isPaymentRequireExp() ||
         (typeof window !== 'undefined'
           ? localStorage.getItem('review_payment_values')
