@@ -13,11 +13,11 @@ const VROOM_URL = publicRuntimeConfig.NEXT_PUBLIC_VROOM_URL;
 type MutationAcceptRejectOfferArgs = {
   offerId: string;
   accepted: boolean;
-  reason?: string | null;
-  reasonOther?: string | null;
-  success?: boolean | null;
-  detail?: string | null;
-  externalUserId?: string | null;
+  reason: string;
+  reasonOther: string;
+  success: boolean;
+  detail: string;
+  externalUserId: string;
 };
 
 export const getOfferDetails = async (
@@ -45,7 +45,15 @@ export const acceptPriceOffer = async (
   try {
     await client.gqlRequest<unknown, MutationAcceptRejectOfferArgs>({
       document: ACCEPT_REJECT_OFFER,
-      variables: { offerId, externalUserId, accepted: true },
+      variables: {
+        offerId,
+        externalUserId,
+        accepted: true,
+        reason: '',
+        reasonOther: '',
+        success: true,
+        detail: '',
+      },
     });
     localStorage.setItem(key, offerId);
   } catch (err) {
