@@ -101,6 +101,17 @@ const EPayOptions: NextPage<Props> = ({ brand }) => {
     'ac-payment-required'
   );
 
+  const isPhotosUploadExp = store.absmart.isInExperiment(
+    'verification-form-vehicle-photo-upload'
+  );
+
+  let activeStep = '4';
+  if (isPhotosUploadExp && !isPaymentRequireExp) {
+    activeStep = '5';
+  } else if (isPaymentRequireExp) {
+    activeStep = '3';
+  }
+
   return (
     <ThemeProvider brand={brand}>
       <PaymentMethodContext.Provider
@@ -118,11 +129,7 @@ const EPayOptions: NextPage<Props> = ({ brand }) => {
               {!store.absmart.abTestFacelift && !isPaymentRequireExp && (
                 <SuccessBar />
               )}
-              {isStepperExp && (
-                <VerificationStepper
-                  activeStep={isPaymentRequireExp ? '3' : '4'}
-                />
-              )}
+              {isStepperExp && <VerificationStepper activeStep={activeStep} />}
               <ColumnBody
                 id="main-content"
                 stateDropdownOpen={stateDropdownOpen}

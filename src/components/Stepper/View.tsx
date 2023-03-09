@@ -17,9 +17,15 @@ const VerificationStepperView: React.FC<Props> = ({
   const [stepper, changeStepper] = useState(viewModel.defaultSteps);
 
   useEffect(() => {
-    viewModel.isPaymentRequireExp()
-      ? changeStepper(viewModel.paymentRequiredSteps)
-      : changeStepper(viewModel.defaultSteps);
+    if (viewModel.isPaymentRequireExp() && viewModel.isVehiclePhotosExp()) {
+      changeStepper(viewModel.paymentRequiredVehiclePhotosSteps);
+    } else if (viewModel.isPaymentRequireExp()) {
+      changeStepper(viewModel.paymentRequiredSteps);
+    } else if (viewModel.isVehiclePhotosExp()) {
+      changeStepper(viewModel.vehiclePhotosSteps);
+    } else {
+      changeStepper(viewModel.defaultSteps);
+    }
   }, [viewModel]);
 
   return (

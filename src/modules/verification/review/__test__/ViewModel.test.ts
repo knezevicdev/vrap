@@ -55,6 +55,7 @@ describe('Review component test', () => {
     const response = {
       ...verificationResp.data,
       last_four_ssn: '1234',
+      vin: '5N1AZ2MG9GN133457',
     };
     expect(JSON.stringify(stores.verification.verificationDetail)).toEqual(
       JSON.stringify(response)
