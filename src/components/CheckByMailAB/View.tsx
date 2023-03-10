@@ -158,7 +158,7 @@ const CheckByMailView: React.FC<ViewProps> = ({
       {(): React.ReactNode => (
         <CBMContainer>
           <CBMMessage>{viewModel.mailingAddressMsg}</CBMMessage>
-          <CBMMailingAddress className="fs-mask">
+          <CBMMailingAddress>
             <AddressLine>{mailingAddress['address_1']}</AddressLine>
             <AddressLine>
               {mailingAddress.city} {mailingAddress.state}{' '}
@@ -182,7 +182,6 @@ const CheckByMailView: React.FC<ViewProps> = ({
                   id="address"
                   name={'address'}
                   type="text"
-                  className="fs-mask"
                   placeholder={viewModel.addressLabel}
                   label={viewModel.addressLabel}
                 />
@@ -190,7 +189,6 @@ const CheckByMailView: React.FC<ViewProps> = ({
                   id="apartment"
                   name={'apartment'}
                   type="text"
-                  className="fs-mask"
                   placeholder={viewModel.apartmentPlaceholder}
                   label={viewModel.apartmentLabel}
                 />
@@ -200,7 +198,6 @@ const CheckByMailView: React.FC<ViewProps> = ({
                   id="city"
                   name={'city'}
                   type="text"
-                  className="fs-mask"
                   placeholder={viewModel.cityLabel}
                   label={viewModel.cityLabel}
                 />
@@ -219,7 +216,6 @@ const CheckByMailView: React.FC<ViewProps> = ({
                     id="zipcode"
                     name={'zipcode'}
                     type="text"
-                    className="fs-mask"
                     placeholder={viewModel.zipLabel}
                     label={viewModel.zipLabel}
                     fluid={true}

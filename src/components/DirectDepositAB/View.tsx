@@ -51,7 +51,6 @@ const DirectDepositView: React.FC<Props> = ({ viewModel }) => {
       <RoutingNumber
         id="routingNumber"
         name={'routingNumber'}
-        className="fs-mask"
         label={viewModel.routingLabel}
         placeholder={viewModel.routingLabel}
         fluid={true}
@@ -60,7 +59,6 @@ const DirectDepositView: React.FC<Props> = ({ viewModel }) => {
       <AccountNumber
         id="bankAccountNumber"
         name={'bankAccountNumber'}
-        className="fs-mask"
         label={viewModel.bankAccountLabel}
         placeholder={viewModel.bankAccountLabel}
         fluid={true}

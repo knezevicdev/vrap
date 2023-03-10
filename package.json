@@ -22,7 +22,6 @@
   "dependencies": {
     "@absmartly/javascript-sdk": "^1.6.0",
     "@datadog/browser-rum": "^1.16.0",
-    "@fullstory/babel-plugin-annotate-react": "^2.0.1",
     "@material-ui/core": "^4.9.4",
     "@material-ui/icons": "^4.9.1",
     "@next/bundle-analyzer": "^9.4.4",
@@ -35,7 +34,7 @@
     "@vroom-web/deals-v2-networking": "^1.0.1",
     "@vroom-web/legacy-header-components": "^2.3.4",
     "@vroom-web/networking": "^1.10.0",
-    "@vroom-web/shared-components": "^5.10.5",
+    "@vroom-web/shared-components": "^5.11.0",
     "@vroom-web/ui": "^1.0.2",
     "@vroom-web/ui-lib": "^6.6.0",
     "axios": "^1.1.3",
