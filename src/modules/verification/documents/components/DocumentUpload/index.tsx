@@ -72,7 +72,6 @@ const DocumentUpload = ({
           )}
         </TitleWrapper>
         <FilePondContainer
-          className="fs-mask"
           files={files}
           allowMultiple={false}
           allowFilePoster={true}

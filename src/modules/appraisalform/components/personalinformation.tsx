@@ -58,16 +58,12 @@ const PersonalInformation: React.FC<Props> = ({ fields, form }) => {
   return (
     <>
       <InputContainer>
-        <First field={fields.firstName} className="fs-mask" />
-        <Last field={fields.lastName} className="fs-mask" />
+        <First field={fields.firstName} />
+        <Last field={fields.lastName} />
       </InputContainer>
       <InputContainer>
-        <Email
-          disabled={isEmailDisabled}
-          field={fields.email}
-          className="fs-mask"
-        />
-        <Phone field={fields.phoneNumber} className="fs-mask" optional={true} />
+        <Email disabled={isEmailDisabled} field={fields.email} />
+        <Phone field={fields.phoneNumber} optional={true} />
       </InputContainer>
     </>
   );

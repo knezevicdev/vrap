@@ -28,7 +28,7 @@ const OfferDialogView: React.FC<Props> = ({ viewModel }) => {
 
   return (
     <Overlay>
-      <DialogContainer data-qa="AppraisalOfferDialog" className="fs-unmask">
+      <DialogContainer data-qa="AppraisalOfferDialog">
         <DialogTitle hasValidPrice={viewModel.hasValidPrice}>
           {viewModel.hasValidPrice
             ? 'Your offer'

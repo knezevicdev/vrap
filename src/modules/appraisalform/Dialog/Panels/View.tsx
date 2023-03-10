@@ -21,7 +21,7 @@ const PanelsDialog: React.FC<Props> = ({ closeModalHandler }) => {
   return (
     <Container>
       <Modal>
-        <DialogContent className="fs-unmask">
+        <DialogContent>
           <CloseDialog
             onClick={(): void => closeModalHandler()}
             onKeyDown={handleOnKeyDown}
