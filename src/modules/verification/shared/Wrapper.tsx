@@ -153,7 +153,7 @@ export const getInitialProps = async (
   const priceId = query.priceId as string;
   const cookies = parseCookies(req);
 
-  return { priceId, ajsUserId: cookies.ajs_user_id };
+  return { priceId, ajsUserId: cookies.ajs_user_id || '' };
 };
 
 export default observer(VerificationWrapper);
