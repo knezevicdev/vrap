@@ -11,7 +11,7 @@ const requestHandler = <T = unknown>(
   return async (req, res) => {
     if (req.method?.toUpperCase() !== config.method.toUpperCase()) {
       res.setHeader('Allow', config.method.toUpperCase());
-      res.status(405);
+      res.status(405).end();
       return;
     }
 

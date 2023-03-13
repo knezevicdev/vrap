@@ -115,7 +115,7 @@ const MultiStepForm: React.FC<Props> = (props) => {
             behavior: 'smooth',
           });
         }
-      }, 305);
+      }, 500);
     }
   }, [activeSection]);
 
