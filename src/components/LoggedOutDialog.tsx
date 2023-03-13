@@ -1,7 +1,9 @@
-import Dialog from '@material-ui/core/Dialog';
-import { styled as muiStyled } from '@material-ui/core/styles';
-import { Typography } from '@vroom-web/ui';
-import { Button, SkipNavigationLink, VroomSpinner } from '@vroom-web/ui-lib';
+import {
+  Button,
+  SkipNavigationLink,
+  Typography,
+  VroomSpinner,
+} from '@vroom-web/ui-lib';
 import { observer } from 'mobx-react';
 import React from 'react';
 import styled from 'styled-components';
@@ -10,31 +12,98 @@ import Footer from '../core/Footer';
 import Page from '../Page';
 import { Header } from './Header';
 
-const DialogTitle = muiStyled(Typography)(({ theme }) => ({
-  padding: theme.spacing(4),
-  fontFamily: 'Vroom-Sans',
-}));
+const DialogOverlay = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.3);
+  display: grid;
+  place-items: center;
+  z-index: 9999999;
+`;
 
-const DialogContent = muiStyled('div')(({ theme }) => ({
-  display: 'flex',
-  flexDirection: 'column',
-  alignItems: 'center',
-  paddingBottom: theme.spacing(4),
-}));
+const Dialog = styled.div`
+  width: calc(100% - 64px);
+  max-width: 600px;
+  display: flex;
+  max-height: calc(100% - 64px);
+  flex-direction: column;
+  margin: 32px;
+  position: relative;
+  overflow-y: auto;
+  box-shadow: 0px 11px 15px -7px rgb(0 0 0 / 20%),
+    0px 24px 38px 3px rgb(0 0 0 / 14%), 0px 9px 46px 8px rgb(0 0 0 / 12%);
+  border-radius: 4px;
+  color: #041022;
+  transition: box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+  background-color: #fff;
+`;
 
-const DialogBody = muiStyled(Typography)(({ theme }) => ({
-  padding: theme.spacing(0, 8, 4, 8),
-}));
+const DialogTitle = styled(Typography.Title.Two)`
+  padding: 2rem;
+  font-size: 2.5rem;
+  text-align: center;
+  font-family: Vroom-Sans, sans-serif;
 
-const CreateAccountButton = muiStyled(Button.Primary)(({ theme }) => ({
-  width: '50%',
-  marginBottom: theme.spacing(2),
-}));
+  @media (max-width: 600px) {
+    padding: 1rem;
+    font-size: 1.5rem;
+  }
+`;
 
-const LoginButton = muiStyled(Button.Outline)(({ theme }) => ({
-  width: '50%',
-  marginBottom: theme.spacing(2),
-}));
+const DialogContent = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-bottom: 1rem;
+`;
+
+const DialogBody = styled.p`
+  padding: 0px 64px 32px;
+  font-size: 18px;
+  font-family: Calibre, Arial, sans-serif;
+  font-weight: 400;
+  line-height: 1;
+  letter-spacing: normal;
+  margin: 0;
+
+  @media (max-width: 600px) {
+    padding-left: 1rem;
+    padding-right: 1rem;
+    font-size: 1rem;
+    text-align: center;
+  }
+`;
+
+const CreateAccountButton = styled(Button.Primary)`
+  width: 50%;
+  margin-bottom: 1rem;
+  font-size: 16px;
+  font-family: Calibre, Arial, sans-serif;
+  font-weight: 600;
+  letter-spacing: 1.75px;
+  text-transform: uppercase;
+
+  @media (max-width: 600px) {
+    width: 80%;
+  }
+`;
+
+const LoginButton = styled(Button.Outline)`
+  width: 50%;
+  margin-bottom: 1rem;
+  font-size: 16px;
+  font-family: Calibre, Arial, sans-serif;
+  font-weight: 600;
+  letter-spacing: 1.75px;
+  text-transform: uppercase;
+
+  @media (max-width: 600px) {
+    width: 80%;
+  }
+`;
 
 const HeaderContainer = styled.div`
   position: sticky;
@@ -105,30 +174,26 @@ const LoggedOutDialog: React.FC<Props> = ({ isLoading }) => {
       </HeaderContainer>
       <PageContent id="main-content">
         {!isLoading && (
-          <Dialog fullWidth={true} maxWidth={'sm'} open={true}>
-            <DialogContent>
-              <DialogTitle variant="h2" fontWeight="fontWeightMedium">
-                {DialogTitleText}
-              </DialogTitle>
-              <DialogBody>{DialogBodyText}</DialogBody>
-              <CreateAccountButton
-                aria-label="create-account-button"
-                onClick={handleDialogActions('create')}
-              >
-                <Typography variant="button" fontWeight={600}>
+          <DialogOverlay>
+            <Dialog>
+              <DialogContent>
+                <DialogTitle>{DialogTitleText}</DialogTitle>
+                <DialogBody>{DialogBodyText}</DialogBody>
+                <CreateAccountButton
+                  aria-label="create-account-button"
+                  onClick={handleDialogActions('create')}
+                >
                   {CreateAccountButtonText}
-                </Typography>
-              </CreateAccountButton>
-              <LoginButton
-                aria-label="login-button"
-                onClick={handleDialogActions('login')}
-              >
-                <Typography variant="button" fontWeight={600}>
+                </CreateAccountButton>
+                <LoginButton
+                  aria-label="login-button"
+                  onClick={handleDialogActions('login')}
+                >
                   {LogInButtonText}
-                </Typography>
-              </LoginButton>
-            </DialogContent>
-          </Dialog>
+                </LoginButton>
+              </DialogContent>
+            </Dialog>
+          </DialogOverlay>
         )}
       </PageContent>
       <Footer />

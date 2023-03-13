@@ -31,13 +31,21 @@ const DirectDepositReviewView: React.FC<Props> = ({ viewModel }) => {
 
   const handleReview = () => {
     const priceId = store.deposit.priceId || localStorage.getItem('priceId');
-    router.push(`/appraisal/verification/review?priceId=${priceId}`);
+    router
+      .push(`/appraisal/verification/review?priceId=${priceId}`)
+      .catch((e) => {
+        console.error(e);
+      });
   };
 
   const handleReviewKeyDown = (event: any) => {
     if (event.key === 'Enter') {
       const priceId = store.deposit.priceId || localStorage.getItem('priceId');
-      router.push(`/appraisal/verification/review?priceId=${priceId}`);
+      router
+        .push(`/appraisal/verification/review?priceId=${priceId}`)
+        .catch((e) => {
+          console.error(e);
+        });
     }
   };
 

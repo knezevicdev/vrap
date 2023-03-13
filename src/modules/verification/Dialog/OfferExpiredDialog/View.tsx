@@ -19,10 +19,14 @@ const DialogView: React.FC<Props> = ({ vin }) => {
   const { store } = useAppStore();
 
   const handleGetUpdatedCTA = () => {
-    router.push({
-      pathname: store.appraisal.appraisalPath,
-      query: { vehicle: vin, ...router.query },
-    });
+    router
+      .push({
+        pathname: store.appraisal.appraisalPath,
+        query: { vehicle: vin, ...router.query },
+      })
+      .catch((e) => {
+        console.error(e);
+      });
   };
 
   return (

@@ -1,4 +1,8 @@
+import { ABSmartlyContextValue } from '@vroom-web/analytics-integration/dist/absmartly/types';
+
 jest.mock('src/networking/request');
+
+import { NextRouter } from 'next/router';
 
 import { DirectDepositStore } from '../../directdeposit/store';
 import { OptionsStore } from '../../options/store';
@@ -23,7 +27,17 @@ describe('Options Test', () => {
   beforeEach(async () => {
     await oStore.init('12345');
     await ddStore.initClientSide('12345');
-    viewModel = new ViewModel(oStore, ddStore, analyticsHandler, appStore, '');
+    viewModel = new ViewModel(
+      oStore,
+      ddStore,
+      analyticsHandler,
+      appStore,
+      {} as any as NextRouter,
+      {
+        isInExperiment: () => false,
+        isLoading: false,
+      } as any as ABSmartlyContextValue
+    );
   });
 
   afterEach(() => {

@@ -1,3 +1,4 @@
+import { useABSmartly } from '@vroom-web/analytics-integration';
 import React from 'react';
 
 import { useOptionsStore } from '../../modules/options/store';
@@ -27,7 +28,8 @@ const PlaidButton: React.FC<Props> = ({
 }) => {
   const oStore = useOptionsStore();
   const { store } = useAppStore();
-  const viewModel = new ViewModel(oStore, store);
+  const absmartly = useABSmartly();
+  const viewModel = new ViewModel(oStore, store, absmartly);
 
   return (
     <View

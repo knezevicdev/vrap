@@ -1,14 +1,13 @@
+import { useABSmartly } from '@vroom-web/analytics-integration';
 import React from 'react';
 
 import View from './View';
 import ViewModel from './ViewModel';
 
-import { useAppStore } from 'src/context';
-
 const Questions: React.FC = () => {
-  const { store } = useAppStore();
+  const absmartly = useABSmartly();
 
-  const viewModel = new ViewModel(store);
+  const viewModel = new ViewModel(absmartly);
   return <View viewModel={viewModel} />;
 };
 

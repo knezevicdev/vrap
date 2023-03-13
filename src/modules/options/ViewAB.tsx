@@ -1,5 +1,3 @@
-import { useTheme } from '@material-ui/core/styles';
-import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { Button } from '@vroom-web/ui-lib';
 import { Form, Formik } from 'formik';
 import { observer } from 'mobx-react';
@@ -7,6 +5,7 @@ import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import * as Yup from 'yup';
 
+import useMediaQuery from '../../hooks/useMediaQuery';
 import OptionsViewModel from './ViewModel';
 
 import PayOptions from 'src/components/PayOptionsAB';
@@ -160,8 +159,7 @@ const OptionsView: React.FC<Props> = ({ viewModel }) => {
   });
 
   const isPlaidSubmitting = viewModel.getPlaidSubmitting();
-  const theme = useTheme();
-  const isDesktop = useMediaQuery(theme.breakpoints.up('lg'), { noSsr: false });
+  const isDesktop = useMediaQuery('desktop');
 
   return (
     <Formik

@@ -1,4 +1,6 @@
+import { ABSmartlyContextValue } from '@vroom-web/analytics-integration/dist/absmartly/types';
 import { makeObservable, observable } from 'mobx';
+import { NextRouter } from 'next/router';
 
 import { DirectDepositStore } from '../directdeposit/store';
 import { OptionsStore } from './store';
@@ -21,14 +23,15 @@ class OptionsViewModel {
   readonly submit: string = 'submit';
   readonly submitting: string = 'submitting';
   readonly review: string = 'REVIEW';
-  private router: any;
+  private router: NextRouter;
 
   constructor(
     store: OptionsStore,
     ddStore: DirectDepositStore,
     analyticsHandler: AnalyticsHandler,
     appStore: Store,
-    router: any
+    router: NextRouter,
+    private absmartly: ABSmartlyContextValue
   ) {
     this.store = store;
     this.ddStore = ddStore;
@@ -120,8 +123,8 @@ class OptionsViewModel {
   };
 
   isValidName = (str: string | null | undefined): boolean => {
-    const re = /^[a-zA-ZàâäôéèëêïîçùûüÿæœÀÂÄÔÉÈËÊÏÎŸÇÙÛÜÆŒäöüßÄÖÜẞąćęłńóśźżĄĆĘŁŃÓŚŹŻàèéìíîòóùúÀÈÉÌÍÎÒÓÙÚáéíñóúüÁÉÍÑÓÚÜ \-']{2,30}$/;
-    console.log(!str || !re.test(str));
+    const re =
+      /^[a-zA-ZàâäôéèëêïîçùûüÿæœÀÂÄÔÉÈËÊÏÎŸÇÙÛÜÆŒäöüßÄÖÜẞąćęłńóśźżĄĆĘŁŃÓŚŹŻàèéìíîòóùúÀÈÉÌÍÎÒÓÙÚáéíñóúüÁÉÍÑÓÚÜ \-']{2,30}$/;
     if (!str || !re.test(str)) {
       return false;
     } else {
@@ -162,9 +165,11 @@ class OptionsViewModel {
       'review_payment_values',
       JSON.stringify(reviewPaymentValue)
     );
-    this.router.push(
-      `/appraisal/verification/review?priceId=${this.store.priceId}`
-    );
+    this.router
+      .push(`/appraisal/verification/review?priceId=${this.store.priceId}`)
+      .catch((e) => {
+        console.error(e);
+      });
   };
 
   paymentOptionsSubmit = (values: PaymentOverviewFormValues): void => {
@@ -193,9 +198,7 @@ class OptionsViewModel {
   };
 
   inFaceliftTest(): boolean {
-    return (
-      this.store.abSmartlyModel?.inExperiment('ac-payment-facelift') || false
-    );
+    return this.absmartly.isInExperiment('ac-payment-facelift');
   }
 
   setPaymentOption = (value: string): void => {
@@ -203,7 +206,7 @@ class OptionsViewModel {
   };
 
   isPaymentRequireExp = (): boolean => {
-    return this.appStore.absmart.isInExperiment('ac-payment-required');
+    return this.absmartly.isInExperiment('ac-payment-required');
   };
 }
 

@@ -1,13 +1,12 @@
+import { useABSmartly } from '@vroom-web/analytics-integration';
 import React from 'react';
 
 import View from './View';
 import PendingPriceViewModel from './ViewModel';
 
-import { useAppStore } from 'src/context';
-
 const PendingPrice: React.FC = () => {
-  const { store } = useAppStore();
-  const viewModel = new PendingPriceViewModel(store);
+  const absmartly = useABSmartly();
+  const viewModel = new PendingPriceViewModel(absmartly);
   return <View viewModel={viewModel} />;
 };
 

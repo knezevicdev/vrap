@@ -1,15 +1,13 @@
+import { ABSmartlyContextValue } from '@vroom-web/analytics-integration/dist/absmartly/types';
 import { makeObservable, observable } from 'mobx';
 
 import { OptionsStore } from '../../modules/options/store';
-import Store from '../../store';
 
 class PayOptionViewModel {
   readonly optionMeta: string[] = ['Direct Deposit', 'Check by Mail'];
   oStore: OptionsStore;
-  appStore: Store;
-  constructor(oStore: OptionsStore, appStore: Store) {
+  constructor(oStore: OptionsStore, private absmartly: ABSmartlyContextValue) {
     this.oStore = oStore;
-    this.appStore = appStore;
     makeObservable(this, {
       oStore: observable,
     });
@@ -20,11 +18,11 @@ class PayOptionViewModel {
   };
 
   get isAbsmartlyLoading(): boolean {
-    return this.appStore.absmart.isABSmartlyLoading;
+    return this.absmartly.isLoading;
   }
 
   get isSuycPaymentCheckFeeTest(): boolean {
-    return this.appStore.absmart.isInExperiment('suyc-payment-check-fee');
+    return this.absmartly.isInExperiment('suyc-payment-check-fee');
   }
 }
 

@@ -35,7 +35,11 @@ const LxBank = ({ field: { label, onChange } }: Props): ReactElement => {
             return;
           }
 
-          const { label, value, __isNew__: isNew } = option as Option & {
+          const {
+            label,
+            value,
+            __isNew__: isNew,
+          } = option as Option & {
             __isNew__?: boolean;
           };
 

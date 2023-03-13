@@ -1,8 +1,7 @@
+import { useABSmartly } from '@vroom-web/analytics-integration';
 import { observer } from 'mobx-react';
 import { NextPage } from 'next';
 import React from 'react';
-
-import { useAppStore } from '../../../context';
 
 import VerificationReviewViewDetail from 'src/modules/verification/review';
 import VerificationWrapper, {
@@ -11,9 +10,9 @@ import VerificationWrapper, {
 } from 'src/modules/verification/shared/Wrapper';
 
 const VerificationReview: NextPage<VerificationPageProps> = ({ priceId }) => {
-  const { store } = useAppStore();
+  const absmartly = useABSmartly();
 
-  const isPhotosUploadExp = store.absmart.isInExperiment(
+  const isPhotosUploadExp = absmartly.isInExperiment(
     'verification-form-vehicle-photo-upload'
   );
 

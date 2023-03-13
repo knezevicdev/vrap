@@ -14,13 +14,17 @@ export default class PickupInfoReviewViewModel {
   constructor(private _store: Store, private _router: NextRouter) {}
 
   handleEditClick(): void {
-    this._router.push({
-      pathname: this._store.appraisal.appraisalPath,
-      query: {
-        vehicle: `${this._store.appraisal?.vehicleInfoForm?.vin}`,
-        ...this._router.query,
-      },
-      hash: `#vehiclehistory`,
-    });
+    this._router
+      .push({
+        pathname: this._store.appraisal.appraisalPath,
+        query: {
+          vehicle: `${this._store.appraisal?.vehicleInfoForm?.vin}`,
+          ...this._router.query,
+        },
+        hash: `#vehiclehistory`,
+      })
+      .catch((e) => {
+        console.error(e);
+      });
   }
 }

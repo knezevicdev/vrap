@@ -1,3 +1,4 @@
+import { ABSmartlyContextValue } from '@vroom-web/analytics-integration/dist/absmartly/types';
 import { isErrorResponse } from '@vroom-web/networking';
 import { NextRouter } from 'next/router';
 
@@ -8,17 +9,20 @@ import {
   getGradeCheck,
 } from 'src/networking/request';
 import Store from 'src/store';
-import { ABSmartStore } from 'src/store/abSmartStore';
 import { AppraisalStore } from 'src/store/appraisalStore';
 
 class VehicleInfoViewModel {
   private _analyticsHandler: AnalyticsHandler = new AnalyticsHandler();
   appraisalStore: AppraisalStore;
-  absmartly: ABSmartStore;
+  absmartly: ABSmartlyContextValue;
 
-  constructor(public store: Store, private router: NextRouter) {
+  constructor(
+    public store: Store,
+    private router: NextRouter,
+    absmartly: ABSmartlyContextValue
+  ) {
     this.appraisalStore = store.appraisal;
-    this.absmartly = store.absmart;
+    this.absmartly = absmartly;
   }
 
   get isTradeIn(): boolean {
@@ -34,7 +38,7 @@ class VehicleInfoViewModel {
   }
 
   get isABSmartlyLoading(): boolean {
-    return this.absmartly.isABSmartlyLoading;
+    return this.absmartly.isLoading;
   }
 
   get isHideHowManyKeysExperiment(): boolean {
@@ -44,7 +48,7 @@ class VehicleInfoViewModel {
   }
 
   get isCTAColorExp(): boolean {
-    return this.store.absmart.isInExperiment(
+    return this.absmartly.isInExperiment(
       'appraisal-form-all-cta-buttons-color'
     );
   }

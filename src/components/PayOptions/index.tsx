@@ -1,6 +1,6 @@
+import { useABSmartly } from '@vroom-web/analytics-integration';
 import React from 'react';
 
-import { useAppStore } from '../../context';
 import { useOptionsStore } from '../../modules/options/store';
 import View from './View';
 import ViewModel from './ViewModel';
@@ -20,9 +20,9 @@ const PayOptions: React.FC<Props> = ({
   handleAddressChange,
   setFieldValue,
 }) => {
-  const { store } = useAppStore();
   const oStore = useOptionsStore();
-  const viewModel = new ViewModel(oStore, store);
+  const absmartly = useABSmartly();
+  const viewModel = new ViewModel(oStore, absmartly);
 
   return (
     <View

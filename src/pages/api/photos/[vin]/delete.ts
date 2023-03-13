@@ -18,7 +18,8 @@ export default async (
   }
 
   if (typeof req.body.image !== 'string') {
-    return res.status(403).end();
+    res.status(403).end();
+    return;
   }
 
   try {

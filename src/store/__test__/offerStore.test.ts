@@ -1,3 +1,4 @@
+import { OfferDetail } from '../../networking/models/Offer';
 import { OfferStore } from '../offerStore';
 
 describe('test offer store', () => {
@@ -19,7 +20,7 @@ describe('test offer store', () => {
       trim: 'Utility 4D SV 2WD V6',
       year: 2016,
       price: 7000,
-    };
+    } as any as OfferDetail;
     store.getOfferDetail(mockOfferModel);
     expect(store.offerDetail).toEqual(mockOfferModel);
   });

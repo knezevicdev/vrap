@@ -1,4 +1,4 @@
-import { makeAutoObservable } from 'mobx';
+import { makeAutoObservable, runInAction } from 'mobx';
 
 import {
   ExtConditionForm,
@@ -300,7 +300,9 @@ export class AppraisalStore {
     this.user = user;
   }
 
-  setIsTradeIn(value: any): void {
-    this.isTradeIn = value;
+  setIsTradeIn(value: boolean): void {
+    runInAction(() => {
+      this.isTradeIn = value;
+    });
   }
 }

@@ -1,3 +1,5 @@
+import { ABSmartlyContextValue } from '@vroom-web/analytics-integration/dist/absmartly/types';
+
 jest.mock('src/networking/request');
 
 import ViewModel from '../ViewModel';
@@ -17,13 +19,18 @@ jest.mock('next/config', () => (): unknown => ({
   serverRuntimeConfig: {},
 }));
 
+const absmartly = {
+  isInExperiment: () => false,
+  isLoading: false,
+} as any as ABSmartlyContextValue;
+
 describe('Review component test', () => {
   const stores = new store();
   let viewModel: ViewModel;
   const spyRequest = jest.spyOn(Request, 'getVerificationDetails');
   global.window = Object.create(window);
   beforeEach(() => {
-    viewModel = new ViewModel(stores);
+    viewModel = new ViewModel(stores, absmartly);
   });
 
   it('test readonly initial values', () => {
@@ -139,7 +146,7 @@ describe('Review component test', () => {
 
   it('test when verification submitted with isPaymentRequireExp and not deposit ', async () => {
     const submitPayment = jest.spyOn(viewModel, 'submitPayment');
-    stores.absmart.isInExperiment = jest.fn().mockReturnValue(true);
+    absmartly.isInExperiment = jest.fn().mockReturnValue(true);
     await viewModel.verificationSubmit();
     expect(submitPayment).toHaveBeenCalled();
   });
@@ -163,7 +170,7 @@ describe('Review component test', () => {
       ReferenceId: 'referenceId',
       Email: 'email@email.com',
     });
-    stores.absmart.isInExperiment = jest.fn().mockReturnValue(true);
+    absmartly.isInExperiment = jest.fn().mockReturnValue(true);
     await viewModel.verificationSubmit();
     expect(handlePlaidSubmit).toHaveBeenCalled();
   });
@@ -182,12 +189,16 @@ describe('Review component test', () => {
     expect(trackPlaidACHSelected).toHaveBeenCalled();
   });
 
-  test('test error on handlePlaidSubmit ', () => {
+  test('test error on handlePlaidSubmit ', async () => {
     const mockError = jest
       .fn(() => viewModel.handlePlaidSubmit())
-      .mockRejectedValue({ message: '' });
+      .mockRejectedValueOnce({ message: '' });
 
-    mockError();
+    try {
+      await mockError();
+    } catch (e) {
+      // nothing
+    }
     expect(stores.option.plaidSubmitting).toEqual(false);
   });
 });

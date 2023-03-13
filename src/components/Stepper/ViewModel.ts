@@ -1,8 +1,9 @@
+import { ABSmartlyContextValue } from '@vroom-web/analytics-integration/dist/absmartly/types';
+
 import { Stepper } from 'src/interfaces.d';
-import Store from 'src/store';
 
 class VerificationStepperViewModel {
-  constructor(private store: Store) {}
+  constructor(private absmartly: ABSmartlyContextValue) {}
   readonly defaultSteps: Stepper[] = [
     {
       step: '1',
@@ -46,7 +47,7 @@ class VerificationStepperViewModel {
       step: '3',
       progress: '60',
       next: 'Review your information',
-      title: 'Upload Your Vehicle Photos',
+      title: 'Upload Vehicle Photos',
     },
     {
       step: '4',
@@ -123,11 +124,11 @@ class VerificationStepperViewModel {
   ];
 
   isPaymentRequireExp = (): boolean => {
-    return this.store.absmart.isInExperiment('ac-payment-required');
+    return this.absmartly.isInExperiment('ac-payment-required');
   };
 
   isVehiclePhotosExp = (): boolean => {
-    return this.store.absmart.isInExperiment(
+    return this.absmartly.isInExperiment(
       'verification-form-vehicle-photo-upload'
     );
   };

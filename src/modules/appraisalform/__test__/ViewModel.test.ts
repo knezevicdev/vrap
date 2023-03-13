@@ -1,5 +1,11 @@
+import { ABSmartlyContextValue } from '@vroom-web/analytics-integration/dist/absmartly/types';
+
 jest.mock('src/networking/request');
 
+import { GQLTypes } from '@vroom-web/networking';
+import { Response } from '@vroom-web/networking/dist/types';
+
+import { MileageCheckResp } from '../../../interfaces.d';
 import { SellFormTitleText } from '../AppraisalForm.language';
 import ViewModel from '../ViewModel';
 
@@ -59,12 +65,17 @@ const formData = {
   },
 };
 
+const absmartly = {
+  isInExperiment: () => false,
+  isLoading: false,
+} as any as ABSmartlyContextValue;
+
 describe('test appraisalForm viewModel ', () => {
   const stores = new store();
   let viewModel: ViewModel;
 
   beforeEach(() => {
-    viewModel = new ViewModel(stores);
+    viewModel = new ViewModel(stores, absmartly);
   });
 
   it('test carfaxOdoLast', () => {
@@ -174,7 +185,9 @@ describe('test appraisalForm viewModel ', () => {
   it('test getMilageCheck api ', async () => {
     const spyRequest = jest.spyOn(Request, 'getMilageCheck');
     const storeSpy = jest.spyOn(stores.appraisal, 'setCarfaxOdoLast');
-    spyRequest.mockResolvedValueOnce(getMilageCheck());
+    spyRequest.mockResolvedValueOnce(
+      getMilageCheck() as any as Response<MileageCheckResp>
+    );
     await viewModel.handleCarfaxCall('123');
     expect(spyRequest).toHaveBeenCalled();
     expect(storeSpy).toHaveBeenCalledWith(99999);
@@ -182,13 +195,15 @@ describe('test appraisalForm viewModel ', () => {
 
   it('test getMilageCheck api return value', async () => {
     const spyRequest = jest.spyOn(Request, 'getMilageCheck');
-    spyRequest.mockResolvedValueOnce(getMilageCheck());
+    spyRequest.mockResolvedValueOnce(
+      getMilageCheck() as any as Response<MileageCheckResp>
+    );
     const resp = await viewModel.handleCarfaxCall('123');
     expect(resp).toEqual({ mileage: 99999, errorMessage: null });
   });
 
   it('should call isInExperiment when called isEmailCaptureExperiment', () => {
-    const spyIsInExperiment = jest.spyOn(stores.absmart, 'isInExperiment');
+    const spyIsInExperiment = jest.spyOn(absmartly, 'isInExperiment');
     viewModel.isEmailCaptureExperiment();
     expect(spyIsInExperiment).toHaveBeenCalled();
   });
@@ -231,7 +246,7 @@ describe('test appraisalForm viewModel ', () => {
         emailMarketing: '',
         smsMarketing: '',
       },
-    });
+    } as any as GQLTypes.User);
     await viewModel.getUser();
     expect(spyRequest).toHaveBeenCalled();
     expect(spyStore).toHaveBeenCalledWith({

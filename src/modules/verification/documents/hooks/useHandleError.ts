@@ -18,12 +18,12 @@ interface FilepondError {
 const useHandleError = (priceId: string): UseHandleError => {
   const analyticsHandler = useRef(new AnalyticsHandler());
 
-  const handleError = (type: DocumentFileType) => (
-    err: FilePondErrorDescription
-  ): void => {
-    const e = (err as unknown) as FilepondError;
-    analyticsHandler.current.trackDocTypeUploadError(type, priceId, e.main);
-  };
+  const handleError =
+    (type: DocumentFileType) =>
+    (err: FilePondErrorDescription): void => {
+      const e = err as unknown as FilepondError;
+      analyticsHandler.current.trackDocTypeUploadError(type, priceId, e.main);
+    };
 
   return {
     handleError,

@@ -1,7 +1,7 @@
+import { useABSmartly } from '@vroom-web/analytics-integration';
 import { observer } from 'mobx-react';
 import React, { useState } from 'react';
 
-import { useAppStore } from '../../../context';
 import { Container, Title } from '../shared/Style.css';
 import DocumentUpload, {
   DocumentUploadProps,
@@ -27,7 +27,7 @@ interface Props {
 }
 
 const VerificationPhotosViewDetail: React.FC<Props> = ({ priceId }) => {
-  const { store } = useAppStore();
+  const absmartly = useABSmartly();
   const vin = useFetchVerificationData(priceId);
   const { data: vehiclePhotos } = useGetVehiclePhotos(priceId, vin);
   const [localVehiclePhotos, setLocalVehiclePhotos] = useState<
@@ -76,12 +76,10 @@ const VerificationPhotosViewDetail: React.FC<Props> = ({ priceId }) => {
     key: fileType,
   });
 
-  console.log(localVehiclePhotos, vehiclePhotos);
-
   const onSubmit = async (): Promise<void> => {
     if (
       localStorage.getItem('review_edit_photos') ||
-      !store.absmart.isInExperiment('ac-payment-required')
+      !absmartly.isInExperiment('ac-payment-required')
     ) {
       localStorage.removeItem('review_edit_photos');
       window.location.href = `/appraisal/verification/review?priceId=${priceId}`;

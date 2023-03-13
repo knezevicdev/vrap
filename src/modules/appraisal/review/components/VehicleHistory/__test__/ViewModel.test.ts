@@ -13,9 +13,9 @@ describe('Owner Infomation Review component test', () => {
   const stores = new store();
   let viewModel: ViewModel;
 
-  const router = ({
-    push: jest.fn(),
-  } as unknown) as NextRouter;
+  const router = {
+    push: jest.fn().mockImplementation(async () => true),
+  } as unknown as NextRouter;
 
   beforeEach(() => {
     viewModel = new ViewModel(stores, router);

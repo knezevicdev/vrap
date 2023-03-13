@@ -1,7 +1,12 @@
+import { ABSmartlyContextValue } from '@vroom-web/analytics-integration/dist/absmartly/types';
+
 import ViewModel from '../ViewModel';
 
 describe('PayOptions Test', () => {
-  const viewModel = new ViewModel();
+  const viewModel = new ViewModel({
+    isInExperiment: () => false,
+    isLoading: false,
+  } as any as ABSmartlyContextValue);
   const analyticsHandler = viewModel.getAnalyticsHandler;
 
   const trackNoPriceSpy = jest

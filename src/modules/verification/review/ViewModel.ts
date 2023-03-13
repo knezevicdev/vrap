@@ -1,3 +1,4 @@
+import { ABSmartlyContextValue } from '@vroom-web/analytics-integration/dist/absmartly/types';
 import { isErrorResponse } from '@vroom-web/networking';
 
 import AnalyticsHandler from 'src/integrations/AnalyticsHandler';
@@ -38,7 +39,7 @@ export default class VerificationReviewSectionViewModel {
   };
   private analyticsHandler: AnalyticsHandler = new AnalyticsHandler();
 
-  constructor(private store: Store) {}
+  constructor(private store: Store, private absmartly: ABSmartlyContextValue) {}
 
   onPageLoad(): void {
     this.analyticsHandler.trackVerificationReviewViewed();
@@ -180,12 +181,8 @@ export default class VerificationReviewSectionViewModel {
       }
 
       const responseData = verificationResponse.data.data;
-      const {
-        owner_email_address,
-        owner_first_name,
-        offer_price,
-        poq,
-      } = responseData;
+      const { owner_email_address, owner_first_name, offer_price, poq } =
+        responseData;
 
       const finalPayment =
         poq !== null && poq.final_payment ? poq.final_payment : null;
@@ -228,11 +225,11 @@ export default class VerificationReviewSectionViewModel {
   }
 
   isPaymentRequireExp = (): boolean => {
-    return this.store.absmart.isInExperiment('ac-payment-required');
+    return this.absmartly.isInExperiment('ac-payment-required');
   };
 
   isVehiclePhotosExp = (): boolean => {
-    return this.store.absmart.isInExperiment(
+    return this.absmartly.isInExperiment(
       'verification-form-vehicle-photo-upload'
     );
   };
@@ -242,13 +239,11 @@ export default class VerificationReviewSectionViewModel {
     lastFourSSN: string
   ): Promise<void> {
     try {
-      const [
-        verificationDetailsResponse,
-        offerDetailsResponse,
-      ] = await Promise.all([
-        getVerificationDetails(priceId),
-        getOfferDetails(priceId),
-      ]);
+      const [verificationDetailsResponse, offerDetailsResponse] =
+        await Promise.all([
+          getVerificationDetails(priceId),
+          getOfferDetails(priceId),
+        ]);
       if (isErrorResponse(verificationDetailsResponse))
         throw verificationDetailsResponse;
       if (isErrorResponse(offerDetailsResponse)) throw offerDetailsResponse;

@@ -1,3 +1,5 @@
+import { ABSmartlyContextValue } from '@vroom-web/analytics-integration/dist/absmartly/types';
+
 jest.mock('src/networking/request');
 
 import router from 'next/router';
@@ -50,6 +52,10 @@ describe('test direct deposit store', () => {
   beforeEach(() => {
     const oStore = new OptionsStore();
     const appStore = new AppStore();
+    const absmartly = {
+      isInExperiment: () => false,
+      isLoading: false,
+    } as any as ABSmartlyContextValue;
 
     store = new DirectDepositStore();
     viewModel = new ViewModel(
@@ -57,7 +63,8 @@ describe('test direct deposit store', () => {
       store,
       analyticsHandler,
       appStore,
-      router
+      router,
+      absmartly
     );
   });
 

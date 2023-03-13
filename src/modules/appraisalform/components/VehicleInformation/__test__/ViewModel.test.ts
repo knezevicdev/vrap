@@ -1,4 +1,8 @@
+import { ABSmartlyContextValue } from '@vroom-web/analytics-integration/dist/absmartly/types';
+
 jest.mock('src/networking/request');
+
+import { NextRouter } from 'next/router';
 
 import ViewModel from '../ViewModel';
 
@@ -51,16 +55,25 @@ const respWithEmpty = {
   dataProviderInfo: {},
 };
 
+const absmartly = {
+  isInExperiment: () => false,
+  isLoading: false,
+} as any as ABSmartlyContextValue;
+
 describe('AppraisalForm VehicleInformation component test', () => {
   const stores = new store();
   let viewModel: ViewModel;
   const captchaToken = 'fake_captcha_token';
 
   beforeEach(() => {
-    viewModel = new ViewModel(stores, {
-      requestId: 'unknown',
-      visitorId: 'unknown',
-    });
+    viewModel = new ViewModel(
+      stores,
+      {
+        requestId: 'unknown',
+        visitorId: 'unknown',
+      } as any as NextRouter,
+      absmartly
+    );
   });
 
   it('test vehicleId', () => {
@@ -69,7 +82,7 @@ describe('AppraisalForm VehicleInformation component test', () => {
   });
 
   it('should isInExperiment called ', () => {
-    const isInExperimentSpy = jest.spyOn(stores.absmart, 'isInExperiment');
+    const isInExperimentSpy = jest.spyOn(absmartly, 'isInExperiment');
     viewModel.isHideHowManyKeysExperiment;
     expect(isInExperimentSpy).toHaveBeenCalled();
   });

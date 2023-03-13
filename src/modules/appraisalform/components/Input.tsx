@@ -8,7 +8,6 @@ import { lang } from './Components.language';
 interface Props {
   field: GenericObject;
   className?: string;
-  innerRef?: any;
 }
 
 const Input: React.FC<Props> = (props) => {
@@ -84,8 +83,8 @@ const Input: React.FC<Props> = (props) => {
   );
 };
 
-const isEmpty = (value: any) => {
-  return !value || 0 === value.length;
+const isEmpty = (value: unknown) => {
+  return !value || (Array.isArray(value) && 0 === value.length);
 };
 
 export default Input;

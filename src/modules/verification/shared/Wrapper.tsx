@@ -1,3 +1,4 @@
+import { useABSmartly } from '@vroom-web/analytics-integration';
 import { SkipNavigationLink, VroomSpinner } from '@vroom-web/ui-lib';
 import { IncomingMessage } from 'http';
 import { observer } from 'mobx-react';
@@ -33,6 +34,7 @@ interface Props {
 
 const VerificationWrapper: React.FC<Props> = ({ priceId, step, children }) => {
   const { store } = useAppStore();
+  const absmartly = useABSmartly();
   const router = useRouter();
 
   const [isLoading, setLoading] = useState(true);
@@ -66,17 +68,15 @@ const VerificationWrapper: React.FC<Props> = ({ priceId, step, children }) => {
     }
   };
 
-  const isStepperExp = store.absmart.isInExperiment(
+  const isStepperExp = absmartly.isInExperiment(
     'ac-appraisal-stepper-verification'
-  );
-
-  const isPaymentRequireExp = store.absmart.isInExperiment(
-    'ac-payment-required'
   );
 
   useEffect(() => {
     if (store.verification.formState && store.verification.formState === 5) {
-      router.push('/appraisal/congratulations');
+      router.push('/appraisal/congratulations').catch((e) => {
+        console.error(e);
+      });
     }
     setLoading(false);
   }, [store.verification.formState]);
@@ -94,11 +94,11 @@ const VerificationWrapper: React.FC<Props> = ({ priceId, step, children }) => {
       </HeaderContainer>
       <StepperWrapper>
         <StepperContainer>
-          {!store.absmart.isABSmartlyLoading && !isStepperExp && (
+          {!absmartly.isLoading && !isStepperExp && (
             <DefaultStepper activeStep={store.stepper.currentStep} />
           )}
-          {!store.absmart.isABSmartlyLoading && isStepperExp && (
-            <VerificationStepper activeStep={isPaymentRequireExp ? '4' : '3'} />
+          {!absmartly.isLoading && isStepperExp && (
+            <VerificationStepper activeStep={String(step + 1)} />
           )}
         </StepperContainer>
       </StepperWrapper>
@@ -153,7 +153,10 @@ export const getInitialProps = async (
   const priceId = query.priceId as string;
   const cookies = parseCookies(req);
 
-  return { priceId, ajsUserId: cookies.ajs_user_id || '' };
+  return {
+    priceId,
+    ajsUserId: cookies.ajs_user_id || '',
+  };
 };
 
 export default observer(VerificationWrapper);

@@ -54,10 +54,10 @@ export class DirectDepositStore implements Store {
   storeStatus = StoreStatus.Initial;
   asyncStatus = AsyncStatus.Idle;
   tokenIsLocal = false;
-  mutationInput?: MutationInput;
-  onPlaidSubmitting?: OnPlaidSubmitting;
+  mutationInput?: MutationInput = undefined;
+  onPlaidSubmitting?: OnPlaidSubmitting = undefined;
   plaidOpen = false;
-  institutionLogo: string | undefined | null;
+  institutionLogo: string | undefined | null = undefined;
   institutionId = '';
 
   constructor() {
