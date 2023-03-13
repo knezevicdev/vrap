@@ -55,6 +55,7 @@ export const DialogContent = styled.div`
 
 export const DialogText = styled.p`
   margin: 0 0 0.5rem;
+  text-align: center;
 `;
 
 export const Link = styled(UILink.Text)`
