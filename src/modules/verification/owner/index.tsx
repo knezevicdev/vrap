@@ -6,10 +6,12 @@ import { Container } from '../shared/Style.css';
 import { CalculateRequiredDocuments } from '../shared/utils/calculateRequiredDocuments';
 import ContactInformation from './components/ContactInformation';
 import LoanInformation from './components/LoanInformation';
+import NearSuycLocation from './components/NearSuycLocation';
 import PickUpInformation from './components/PickUpInformation';
 import useOwnerReviewForms from './hooks/useOwnerReviewForms';
 import { ownerVerificationFormToPayload } from './utils';
 import { doesRequireNewDocuments } from './utils/doesRequireNewDocuments';
+import fetchSuycLocation, { SuycLocation } from './utils/fetchSuycLocation';
 import fetchVerificationDetails from './utils/fetchVerificationDetails';
 import { ownerFormsToRequiredDocuments } from './utils/ownerFormsToRequiredDocuments';
 
@@ -36,6 +38,7 @@ const VerificationOwnerViewDetail: React.FC<Props> = ({
   const { store } = useAppStore();
   const analyticsHandler = useRef(new AnalyticsHandler());
   const initialRequiredDocuments = useRef<CalculateRequiredDocuments>();
+  const [suycLocation, setSuycLocation] = useState<SuycLocation>();
 
   const acceptPrice = useCallback(async () => {
     await acceptPriceOffer(priceId, ajsUserId);
@@ -127,17 +130,43 @@ const VerificationOwnerViewDetail: React.FC<Props> = ({
 
     const payload = ownerVerificationFormToPayload(forms, activeSection + 1);
     await updateVerification(payload, priceId);
-    store.verification.setLoading(false);
 
     switch (activeSection) {
-      case 0:
+      case 1:
         analyticsHandler.current.trackContactInfoComplete();
         break;
-      case 1:
+      case 2:
         analyticsHandler.current.trackPickupInfoComplete();
         break;
       default:
         break;
+    }
+
+    console.log(activeSection);
+    if (activeSection === 2 && payload.pickup_address) {
+      const { city, state, zipcode, address_1, address_2 } =
+        payload.pickup_address;
+
+      const addressLines = [address_1];
+
+      if (address_2) {
+        addressLines.push(address_2);
+      }
+
+      const fullAddress = `${addressLines.join(
+        ', '
+      )} ${city}, ${state} ${zipcode}`;
+
+      try {
+        const suycLocation = await fetchSuycLocation(fullAddress);
+        if (suycLocation) setSuycLocation(suycLocation);
+      } catch (e) {
+        console.warn('Failed to fetch SUYC location', e);
+      } finally {
+        store.verification.setLoading(false);
+      }
+    } else {
+      store.verification.setLoading(false);
     }
 
     if (editForm.current) {
@@ -183,6 +212,17 @@ const VerificationOwnerViewDetail: React.FC<Props> = ({
         submitText={'Save and Continue'}
         disableExperiments={false}
       />
+      {suycLocation && (
+        <NearSuycLocation
+          location={{
+            address: '1551 E Silver Star Rd, Ocoee, FL 34761',
+            maps: 'https://goo.gl/maps/YqwGVkVFmdUNBp4V7',
+            hours: '10 AM - 7 PM, Monday - Saturday',
+            number: '(407) 955-4714',
+          }}
+          onContinue={() => setSuycLocation(undefined)}
+        />
+      )}
     </Container>
   );
 };
