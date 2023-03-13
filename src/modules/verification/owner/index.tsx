@@ -214,12 +214,7 @@ const VerificationOwnerViewDetail: React.FC<Props> = ({
       />
       {suycLocation && (
         <NearSuycLocation
-          location={{
-            address: '1551 E Silver Star Rd, Ocoee, FL 34761',
-            maps: 'https://goo.gl/maps/YqwGVkVFmdUNBp4V7',
-            hours: '10 AM - 7 PM, Monday - Saturday',
-            number: '(407) 955-4714',
-          }}
+          location={suycLocation}
           onContinue={() => setSuycLocation(undefined)}
         />
       )}
