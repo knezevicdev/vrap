@@ -170,18 +170,24 @@ class AppraisalApp extends App<
         site: 'datadoghq.com',
         service: packageInfo.name,
         version: packageInfo.version,
-        sampleRate: 100,
-        trackInteractions: true,
+        sessionSampleRate: 100,
+        trackUserInteractions: true,
       });
     }
 
-    this.catSDK.initCatData();
+    this.catSDK.initCatData().catch((e) => {
+      console.error('Failed to initialize cat data', e);
+    });
     this.commonHandler.check3rdPartyAuth();
     saveUTMParams();
-    this.fetchRestrictedAppraisalContext();
+    this.fetchRestrictedAppraisalContext().catch((e) => {
+      console.error('Failed to fetch appraisal context', e);
+    });
 
     if (!this.props.pageProps.allowUnauthenticated) {
-      this.checkSignInStatus();
+      this.checkSignInStatus().catch((e) => {
+        console.error('Failed to check sign-in status', e);
+      });
     }
   }
 
@@ -198,7 +204,7 @@ class AppraisalApp extends App<
 
     return (
       <>
-        <GlobalStyle baseUrl={publicRuntimeConfig.BASE_PATH} />
+        <GlobalStyle baseUrl={publicRuntimeConfig.NEXT_PUBLIC_BASE_PATH} />
         <ABSmartlyProvider
           apiKey={ABSMARTLY_API_KEY}
           application={ABSMARTLY_APP}
