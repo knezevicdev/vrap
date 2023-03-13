@@ -5,58 +5,57 @@ import axios from 'axios';
 
 import { DetailsResponse, NewVinDecodeResp } from '../../interfaces.d';
 import logger from '../../utils/logger';
+import requestHandler from '../../utils/requestHandler';
 import { verifyReCaptcha } from '../../utils/verifyReCaptcha';
 
 const appraisalApiRoute = '/api/details';
 
-export default async (
-  req: NextApiRequest,
-  res: NextApiResponse
-): Promise<void> => {
-  if (req.method !== 'POST') {
-    res.status(405).json({ status: 'error', message: 'Unsupported method.' });
-  }
+export default requestHandler(
+  async (req: NextApiRequest, res: NextApiResponse): Promise<void> => {
+    const { token, vehicleId } = req.body;
+    const { fpid, ajs_anonymous_id } = req.cookies; // eslint-disable-line @typescript-eslint/naming-convention
 
-  const { token, vehicleId } = req.body;
-  const { fpid, ajs_anonymous_id } = req.cookies; // eslint-disable-line @typescript-eslint/naming-convention
+    const isRecaptchaValid = await verifyReCaptcha(token, appraisalApiRoute);
 
-  const isRecaptchaValid = await verifyReCaptcha(token, appraisalApiRoute);
-
-  logger.info(`Request to /appraisal/api/details started`, {
-    appraisalApiRoute,
-    request_payload: req.body,
-    isRecaptchaValid,
-    fpid,
-    ajs_anonymous_id,
-  });
-
-  if (!isRecaptchaValid) {
-    res.status(400).json({
-      status: 'error',
-      message: `Google reCAPTCHA token ${token} failed validation.`,
-    });
-    return;
-  }
-
-  try {
-    const { data: details } = await getDetails(vehicleId);
-
-    logger.info(`Successful response from /v1/details/${vehicleId}`, {
+    logger.info(`Request to /appraisal/api/details started`, {
       appraisalApiRoute,
-      vehicleId,
-      response: details,
+      request_payload: req.body,
+      isRecaptchaValid,
+      fpid,
+      ajs_anonymous_id,
     });
 
-    const response = mapDetailsToResponse(details);
+    if (!isRecaptchaValid) {
+      res.status(400).json({
+        status: 'error',
+        message: `Google reCAPTCHA token ${token} failed validation.`,
+      });
+      return;
+    }
 
-    res.status(200).json(response);
-  } catch (err: any) {
-    const message = `Request to /v1/details/${vehicleId} failed.`;
+    try {
+      const { data: details } = await getDetails(vehicleId);
 
-    logger.error(message, { appraisalApiRoute, error: err });
-    res.status(500).json({ status: 'error', message });
+      logger.info(`Successful response from /v1/details/${vehicleId}`, {
+        appraisalApiRoute,
+        vehicleId,
+        response: details,
+      });
+
+      const response = mapDetailsToResponse(details);
+
+      res.status(200).json(response);
+    } catch (err: any) {
+      const message = `Request to /v1/details/${vehicleId} failed.`;
+
+      logger.error(message, { appraisalApiRoute, error: err });
+      res.status(500).json({ status: 'error', message });
+    }
+  },
+  {
+    method: 'GET',
   }
-};
+);
 
 async function getDetails(vehicleId: string) {
   return await axios.get(

@@ -1,6 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 
 import zips from '../../../data/zipCodes.json';
+import requestHandler from '../../../utils/requestHandler';
 
 interface Zips {
   [key: number | string]: {
@@ -11,11 +12,8 @@ interface Zips {
   };
 }
 
-export default async (
-  req: NextApiRequest,
-  res: NextApiResponse
-): Promise<void> => {
-  if (req.method === 'GET') {
+export default requestHandler(
+  async (req: NextApiRequest, res: NextApiResponse): Promise<void> => {
     const zipCode = req.query.zipCode as string;
 
     const allZipCodes: Zips = zips;
@@ -30,7 +28,8 @@ export default async (
         message: 'Invalid zipCode parameter.',
       });
     }
-  } else {
-    res.status(405);
+  },
+  {
+    method: 'GET',
   }
-};
+);

@@ -1,5 +1,5 @@
 import { isErrorResponse } from '@vroom-web/networking';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import { useAppStore } from 'src/context';
 import {
@@ -10,6 +10,7 @@ import {
 const useFetchVerificationData = (priceId: string): string | undefined => {
   const { store } = useAppStore();
   const lastPriceId = useRef<string>();
+  const [vin, setVin] = useState('');
 
   useEffect(() => {
     if (lastPriceId.current !== priceId) {
@@ -31,6 +32,7 @@ const useFetchVerificationData = (priceId: string): string | undefined => {
             },
             localStorage.getItem('lastFour') || store.verification.lastFourSSN
           );
+          setVin(getOfferDetailsResponse.data.data[0].VIN__c);
         })
         .catch((e) => {
           store.verification.setIsExpiredOrErrored(true);
@@ -42,7 +44,7 @@ const useFetchVerificationData = (priceId: string): string | undefined => {
     }
   }, [priceId, store.verification]);
 
-  return store.verification.verificationDetail?.vin;
+  return vin;
 };
 
 export default useFetchVerificationData;
