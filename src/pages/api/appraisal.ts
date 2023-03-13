@@ -5,54 +5,53 @@ import axios from 'axios';
 
 import { AppraisalPayload } from '../../interfaces.d';
 import logger from '../../utils/logger';
+import requestHandler from '../../utils/requestHandler';
 import { verifyReCaptcha } from '../../utils/verifyReCaptcha';
 
 const appraisalApiRoute = '/api/appraisal';
 
-export default async (
-  req: NextApiRequest,
-  res: NextApiResponse
-): Promise<void> => {
-  if (req.method !== 'POST') {
-    res.status(405).json({ status: 'error', message: 'Unsupported method.' });
-  }
+export default requestHandler(
+  async (req: NextApiRequest, res: NextApiResponse): Promise<void> => {
+    const { payload, token } = req.body;
+    const { fpid, ajs_anonymous_id } = req.cookies; // eslint-disable-line @typescript-eslint/naming-convention
 
-  const { payload, token } = req.body;
-  const { fpid, ajs_anonymous_id } = req.cookies; // eslint-disable-line @typescript-eslint/naming-convention
+    const isRecaptchaValid = await verifyReCaptcha(token, appraisalApiRoute);
 
-  const isRecaptchaValid = await verifyReCaptcha(token, appraisalApiRoute);
-
-  logger.info(`Request to /appraisal/api/appraisal started`, {
-    appraisalApiRoute,
-    request_payload: req.body,
-    isRecaptchaValid,
-    fpid,
-    ajs_anonymous_id,
-  });
-
-  if (!isRecaptchaValid) {
-    res.status(400).json({
-      status: 'error',
-      message: `Google reCAPTCHA token ${token} failed validation.`,
-    });
-    return;
-  }
-
-  try {
-    const { data } = await postAppraisal(payload);
-
-    logger.info(`Successful response from /v1/acquisition/appraisal`, {
+    logger.info(`Request to /appraisal/api/appraisal started`, {
       appraisalApiRoute,
-      response: data,
+      request_payload: req.body,
+      isRecaptchaValid,
+      fpid,
+      ajs_anonymous_id,
     });
-    res.status(200).json(data);
-  } catch (err: any) {
-    const message = `Request to /v1/acquisition/appraisal failed.`;
 
-    logger.error(message, { appraisalApiRoute, error: err });
-    res.status(500).json({ status: 'error', message: err?.message });
+    if (!isRecaptchaValid) {
+      res.status(400).json({
+        status: 'error',
+        message: `Google reCAPTCHA token ${token} failed validation.`,
+      });
+      return;
+    }
+
+    try {
+      const { data } = await postAppraisal(payload);
+
+      logger.info(`Successful response from /v1/acquisition/appraisal`, {
+        appraisalApiRoute,
+        response: data,
+      });
+      res.status(200).json(data);
+    } catch (err: any) {
+      const message = `Request to /v1/acquisition/appraisal failed.`;
+
+      logger.error(message, { appraisalApiRoute, error: err });
+      res.status(500).json({ status: 'error', message: err?.message });
+    }
+  },
+  {
+    method: 'POST',
   }
-};
+);
 
 async function postAppraisal(payload: AppraisalPayload) {
   return await axios.post(
