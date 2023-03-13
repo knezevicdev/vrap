@@ -72,9 +72,8 @@ const AppraisalForm: React.FC<Props> = ({ viewModel }) => {
   const extCondition = viewModel.appraisalStore.extConditionForm;
   const mechCondition = viewModel.appraisalStore.mechConditionForm;
   const [exactMileageProps, setExactMileageProps] = useState({} as any);
-  const [showExactMileageDialog, setShowExactMileageDialog] = useState<boolean>(
-    false
-  );
+  const [showExactMileageDialog, setShowExactMileageDialog] =
+    useState<boolean>(false);
   const [showInvalidStateDialog, setShowInvalidStateDialog] = useState(false);
   const [invalidMakeDialogMake, setInvalidMakeDialogMake] = useState<
     false | string
@@ -582,14 +581,16 @@ const AppraisalForm: React.FC<Props> = ({ viewModel }) => {
     );
   };
 
-  const onSubmit = () => {
+  const onSubmit = async () => {
     const formInfo = buildFormForStore();
 
     viewModel.updateAppraisal(formInfo);
-    router.push({
-      pathname: store.appraisal.reviewPath,
-      query: { ...(router.query.form && { form: router.query.form }) },
-    });
+    router
+      .push({
+        pathname: store.appraisal.reviewPath,
+        query: { ...(router.query.form && { form: router.query.form }) },
+      })
+      .catch((e) => console.error(e));
   };
 
   const onNext = async (activeSection: number, clearForm?: string) => {
@@ -608,17 +609,25 @@ const AppraisalForm: React.FC<Props> = ({ viewModel }) => {
 
     if (clearForm) {
       await viewModel.clearAppraisal();
-      router.push({
-        pathname: store.appraisal.appraisalPath,
-        query: { ...router.query },
-      });
+      router
+        .push({
+          pathname: store.appraisal.appraisalPath,
+          query: { ...router.query },
+        })
+        .catch((e) => {
+          console.error(e);
+        });
     } else {
       viewModel.updateAppraisal(formInfo);
 
       if (location.hash.length) {
-        router.push({
-          pathname: store.appraisal.reviewPath,
-        });
+        router
+          .push({
+            pathname: store.appraisal.reviewPath,
+          })
+          .catch((e) => {
+            console.error(e);
+          });
       }
     }
   };

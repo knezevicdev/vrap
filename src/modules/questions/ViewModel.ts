@@ -1,4 +1,4 @@
-import Store from 'src/store';
+import { ABSmartlyContextValue } from '@vroom-web/analytics-integration/dist/absmartly/types';
 
 class ViewModel {
   readonly questions: string = 'Questions?';
@@ -10,10 +10,10 @@ class ViewModel {
   readonly emailLink: string = '/contact';
   readonly phoneLink: string = `tel:1-${this.phoneNumber.split(' ').join('-')}`;
 
-  constructor(private store: Store) {}
+  constructor(private absmartly: ABSmartlyContextValue) {}
 
   isFaceliftExp = (): boolean => {
-    return this.store.absmart.isInExperiment('ac-appraisal-offer-facelift');
+    return this.absmartly.isInExperiment('ac-appraisal-offer-facelift');
   };
 }
 

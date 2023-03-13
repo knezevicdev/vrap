@@ -1,3 +1,4 @@
+import { useABSmartly } from '@vroom-web/analytics-integration';
 import React from 'react';
 
 import View from './View';
@@ -11,7 +12,8 @@ interface Props {
 
 const VerificationReview: React.FC<Props> = ({ priceId }) => {
   const { store } = useAppStore();
-  const viewModel = new ViewModel(store);
+  const absmartly = useABSmartly();
+  const viewModel = new ViewModel(store, absmartly);
 
   return <View viewModel={viewModel} priceId={priceId} />;
 };

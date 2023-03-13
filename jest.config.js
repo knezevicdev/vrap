@@ -23,7 +23,7 @@ module.exports = {
   testPathIgnorePatterns: ['/node_modules/'],
   transform: {
     '\\.(gql|graphql)$': 'jest-transform-graphql',
-    '^.+\\.(js|jsx|ts|tsx)$': 'babel-jest',
+    '^.+\\.(js|jsx|ts|tsx)$': 'ts-jest',
   },
   coverageReporters: [
     'clover',

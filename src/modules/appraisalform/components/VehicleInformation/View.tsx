@@ -586,10 +586,12 @@ const VehicleInformation: React.FC<Props> = ({
     const token = await getCaptchaToken();
 
     if (token) {
-      router.push({
-        pathname: appraisalPath,
-        query: { vehicle: licenseForDecode, ...router.query },
-      });
+      router
+        .push({
+          pathname: appraisalPath,
+          query: { vehicle: licenseForDecode, ...router.query },
+        })
+        .catch((e) => console.error(e));
       handleDecodeLicense(licenseForDecode, token);
     } else {
       setShowSubmitError(true);
@@ -637,10 +639,18 @@ const VehicleInformation: React.FC<Props> = ({
   const handleVinSubmit = async (vin = '') => {
     const token = await getCaptchaToken();
     if (token) {
-      router.push({
-        pathname: appraisalPath,
-        query: { vehicle: vin || fields.vin.value, ...router.query },
-      });
+      router
+        .push(
+          {
+            pathname: appraisalPath,
+            query: { vehicle: vin || fields.vin.value, ...router.query },
+          },
+          undefined,
+          { shallow: true }
+        )
+        .catch((e) => {
+          console.error(e);
+        });
       handleDecodeVin(vin || fields.vin.value, token);
     } else {
       setShowSubmitError(true);

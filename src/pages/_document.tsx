@@ -1,6 +1,4 @@
-import { ServerStyleSheets } from '@material-ui/core/styles';
 import { AnalyticsSnippet } from '@vroom-web/analytics-integration';
-import { Brand, UISnippet } from '@vroom-web/ui';
 import getConfig from 'next/config';
 import Document, {
   DocumentContext,
@@ -14,8 +12,6 @@ import React from 'react';
 import { ServerStyleSheet } from 'styled-components';
 
 const { publicRuntimeConfig, serverRuntimeConfig } = getConfig();
-const STATIC_ASSETS_HOST_URL =
-  publicRuntimeConfig.NEXT_PUBLIC_STATIC_ASSETS_HOST_URL;
 const BRANCH_IO_KEY = publicRuntimeConfig.BRANCH_IO_KEY;
 const SEGMENT_WRITE_KEY = serverRuntimeConfig.SEGMENT_WRITE_KEY;
 
@@ -24,16 +20,15 @@ export default class AppraisalDocument extends Document {
     ctx: DocumentContext
   ): Promise<DocumentInitialProps> {
     const styledComponentsSheet = new ServerStyleSheet();
-    const materialSheets = new ServerStyleSheets();
     const originalRenderPage = ctx.renderPage;
 
     try {
       ctx.renderPage = (): ReturnType<typeof ctx.renderPage> =>
         originalRenderPage({
-          enhanceApp: (App) => (props): JSX.Element =>
-            styledComponentsSheet.collectStyles(
-              materialSheets.collect(<App {...props} />)
-            ),
+          enhanceApp:
+            (App) =>
+            (props): JSX.Element =>
+              styledComponentsSheet.collectStyles(<App {...props} />),
         });
 
       const initialProps = await Document.getInitialProps(ctx);
@@ -43,7 +38,6 @@ export default class AppraisalDocument extends Document {
           <>
             {initialProps.styles}
             {styledComponentsSheet.getStyleElement()}
-            {materialSheets.getStyleElement()}
           </>
         ),
       };
@@ -58,10 +52,6 @@ export default class AppraisalDocument extends Document {
     return (
       <Html lang="en">
         <Head>
-          <UISnippet
-            brand={Brand.VROOM}
-            staticAssetsHostUrl={STATIC_ASSETS_HOST_URL}
-          />
           {segmentWriteKey && (
             <AnalyticsSnippet
               segmentWriteKey={segmentWriteKey}

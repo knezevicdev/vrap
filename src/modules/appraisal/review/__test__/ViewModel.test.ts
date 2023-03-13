@@ -1,3 +1,5 @@
+import { ABSmartlyContextValue } from '@vroom-web/analytics-integration/dist/absmartly/types';
+
 jest.mock('src/networking/request');
 
 import { NextRouter } from 'next/router';
@@ -73,17 +75,17 @@ jest.mock('next/config', () => (): unknown => ({
 describe('Appraisal review index page test', () => {
   let viewModel: ViewModel;
   const stores = new Store();
-  const router = ({
-    push: jest.fn(),
+  const router = {
+    push: jest.fn().mockImplementation(async () => true),
     asPath: '',
-  } as unknown) as NextRouter;
+  } as unknown as NextRouter;
   let analyticsHandler: AnalyticsHandler;
 
   beforeEach(() => {
     viewModel = new ViewModel(stores, router, {
-      requestId: 'unknown',
-      visitorId: 'unknown',
-    });
+      isInExperiment: () => false,
+      isLoading: false,
+    } as any as ABSmartlyContextValue);
     router.asPath = '';
     analyticsHandler = viewModel.getAnalyticsHandler();
   });
@@ -98,7 +100,7 @@ describe('Appraisal review index page test', () => {
     expect(isFormEmpty).toHaveBeenCalled();
   });
 
-  it('should redirect to /sell/vehicleInformation if Appraisal is empty', () => {
+  it('should redirect to /sell/vehicleInformation if Appraisal is empty', async () => {
     viewModel.redirectToAppraisalForm();
     expect(router.push).toHaveBeenCalledWith({
       pathname: '/sell/vehicleInformation',
@@ -106,7 +108,7 @@ describe('Appraisal review index page test', () => {
     });
   });
 
-  it('should preserve form=trade query parameter while redirecting to /sell/vehicleInformation', () => {
+  it('should preserve form=trade query parameter while redirecting to /sell/vehicleInformation', async () => {
     router.query = { form: 'trade' };
     viewModel.redirectToAppraisalForm();
     expect(router.push).toHaveBeenCalledWith({
@@ -115,7 +117,7 @@ describe('Appraisal review index page test', () => {
     });
   });
 
-  it('should redirect to /sell/tradeIn-selfService if Appraisal is empty and user is on /sell/tradeIn-selfService-Review', () => {
+  it('should redirect to /sell/tradeIn-selfService if Appraisal is empty and user is on /sell/tradeIn-selfService-Review', async () => {
     router.asPath = '/sell/tradeIn-selfService-Review';
     viewModel.redirectToAppraisalForm();
     expect(router.push).toBeCalledWith('/sell/tradeIn-selfService');

@@ -29,7 +29,9 @@ const DialogView: React.FC<Props> = ({ make }) => {
 
   const goToInventory = (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault();
-    router.push({ pathname: '/cars' });
+    router.push({ pathname: '/cars' }).catch((e) => {
+      console.error(e);
+    });
   };
 
   return (

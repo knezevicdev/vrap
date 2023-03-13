@@ -1,18 +1,22 @@
-import ViewModel from '../ViewModel';
+import { ABSmartlyContextValue } from '@vroom-web/analytics-integration/dist/absmartly/types';
 
-import store from 'src/store';
+import ViewModel from '../ViewModel';
 
 jest.mock('next/config', () => (): unknown => ({
   publicRuntimeConfig: {},
   serverRuntimeConfig: {},
 }));
 
+const absmartly = {
+  isInExperiment: () => false,
+  isLoading: false,
+} as any as ABSmartlyContextValue;
+
 describe('Stepper Test', () => {
-  const appStore = new store();
   let viewModel: ViewModel;
 
   beforeEach(() => {
-    viewModel = new ViewModel(appStore);
+    viewModel = new ViewModel(absmartly);
   });
 
   const defaultSteps = [
@@ -75,7 +79,7 @@ describe('Stepper Test', () => {
   });
 
   it('test absmart should return true', () => {
-    appStore.absmart.isInExperiment = jest.fn().mockReturnValue(true);
+    absmartly.isInExperiment = jest.fn().mockReturnValue(true);
     expect(viewModel.isPaymentRequireExp()).toEqual(true);
   });
 });

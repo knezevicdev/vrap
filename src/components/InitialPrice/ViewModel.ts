@@ -1,3 +1,4 @@
+import { ABSmartlyContextValue } from '@vroom-web/analytics-integration/dist/absmartly/types';
 import { isErrorResponse } from '@vroom-web/networking';
 
 import { displayCurrency, parseDate, parsedDateTime } from './Utils';
@@ -5,7 +6,6 @@ import { displayCurrency, parseDate, parsedDateTime } from './Utils';
 import AnalyticsHandler from 'src/integrations/AnalyticsHandler';
 import { PriceStore } from 'src/modules/price/store';
 import client from 'src/networking/client';
-import Store from 'src/store';
 
 class InitialPriceViewModel {
   private analyticsHandler: AnalyticsHandler;
@@ -39,7 +39,7 @@ class InitialPriceViewModel {
   constructor(
     store: PriceStore,
     analyticsHandler: AnalyticsHandler,
-    private appStore: Store
+    private absmartly: ABSmartlyContextValue
   ) {
     const price = store.price;
     this.price = displayCurrency(price.price);
@@ -60,13 +60,13 @@ class InitialPriceViewModel {
   };
 
   isContinueColorExp = (): boolean => {
-    return this.appStore.absmart.isInExperiment(
+    return this.absmartly.isInExperiment(
       'appraisal-form-continue-button-color'
     );
   };
 
   onContinueClick = async (): Promise<void> => {
-    const isAccountCreateAbTest = await this.appStore.absmart.isInExperiment(
+    const isAccountCreateAbTest = await this.absmartly.isInExperiment(
       'ac-account-create'
     );
     this.analyticsHandler.trackContinueClick();

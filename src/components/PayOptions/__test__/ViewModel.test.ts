@@ -1,3 +1,5 @@
+import { ABSmartlyContextValue } from '@vroom-web/analytics-integration/dist/absmartly/types';
+
 jest.mock('src/networking/request');
 import ViewModel from '../ViewModel';
 
@@ -5,7 +7,10 @@ import { OptionsStore } from 'src/modules/options/store';
 
 describe('PayOptions Test', () => {
   const oStore = new OptionsStore();
-  const viewModel = new ViewModel(oStore);
+  const viewModel = new ViewModel(oStore, {
+    isInExperiment: () => false,
+    isLoading: false,
+  } as any as ABSmartlyContextValue);
 
   beforeEach(async () => {
     await oStore.init('12345');

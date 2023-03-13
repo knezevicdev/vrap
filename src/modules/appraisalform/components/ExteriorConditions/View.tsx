@@ -2,7 +2,7 @@ import { addStyleForMobile } from '@vroom-web/ui-lib';
 import React, { useEffect } from 'react';
 import styled from 'styled-components';
 
-import useIsMobile from '../../../../hooks/useIsMobile';
+import useMediaQuery from '../../../../hooks/useMediaQuery';
 import handleCheckChange from '../../utils/handleCheckChange';
 import CheckboxesContainer from '../CheckboxesContainer';
 import { UseForm } from '../componentInterfaces.d';
@@ -26,7 +26,7 @@ interface Props {
 }
 
 const ExteriorConditionView: React.FC<Props> = ({ fields, newForm, form }) => {
-  const isMobile = useIsMobile();
+  const isMobile = useMediaQuery('mobile');
   const showDentsPanels = fields.dents && fields.dents.value === 'Yes';
   const showPaintChippingPanels =
     fields.paintChipping && fields.paintChipping.value === 'Yes';

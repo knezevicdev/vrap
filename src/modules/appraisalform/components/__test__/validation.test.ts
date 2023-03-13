@@ -20,7 +20,7 @@ describe('testing validation ', () => {
   });
 
   it('test isValidPhoneNumber ', () => {
-    const numberPhone = Validation.isValidPhoneNumber(12345);
+    const numberPhone = Validation.isValidPhoneNumber('12345');
     expect(numberPhone).toEqual(false);
     const longPhoneNum = Validation.isValidPhoneNumber('1234598766521');
     expect(longPhoneNum).toEqual(false);
@@ -64,9 +64,6 @@ describe('testing validation ', () => {
 
   it('test isValidZipCode ', () => {
     const inValidZip = Validation.isValidZipCode(123);
-    expect(inValidZip).toEqual(false);
-
-    const inValidZipWithNull = Validation.isValidZipCode(null);
     expect(inValidZip).toEqual(false);
 
     const validZip = Validation.isValidZipCode(11101);

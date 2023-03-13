@@ -1,5 +1,5 @@
 
-FROM node:fermium-alpine as BUILD_IMAGE
+FROM node:hydrogen-alpine as BUILD_IMAGE
 
 ARG CI_JOB_TOKEN
 

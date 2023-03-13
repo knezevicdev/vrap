@@ -1,3 +1,4 @@
+import { ABSmartlyContextValue } from '@vroom-web/analytics-integration/dist/absmartly/types';
 import { isErrorResponse } from '@vroom-web/networking';
 import { NextRouter } from 'next/router';
 
@@ -8,18 +9,21 @@ import { AppraisalPayload } from 'src/interfaces.d';
 import { AppraisalRespData } from 'src/networking/models/Appraisal';
 import { postAppraisalReview, submitWeblead } from 'src/networking/request';
 import Store from 'src/store';
-import { ABSmartStore } from 'src/store/abSmartStore';
 import { AppraisalStore } from 'src/store/appraisalStore';
 
 export default class AppraisalReviewModel {
   readonly title: string = 'my appraisal review';
   private _analyticsHandler: AnalyticsHandler = new AnalyticsHandler();
   appraisalStore: AppraisalStore;
-  absmartStore: ABSmartStore;
+  absmartly: ABSmartlyContextValue;
 
-  constructor(public store: Store, private _router: NextRouter) {
+  constructor(
+    public store: Store,
+    private _router: NextRouter,
+    absmartly: ABSmartlyContextValue
+  ) {
     this.appraisalStore = store.appraisal;
-    this.absmartStore = store.absmart;
+    this.absmartly = absmartly;
   }
 
   get isTradeIn(): boolean {
@@ -27,7 +31,7 @@ export default class AppraisalReviewModel {
   }
 
   get isCTAColorExp(): boolean {
-    return this.store.absmart.isInExperiment(
+    return this.absmartly.isInExperiment(
       'appraisal-form-all-cta-buttons-color'
     );
   }
@@ -46,12 +50,18 @@ export default class AppraisalReviewModel {
 
   redirectToAppraisalForm(): void {
     if (this.isTradeIn) {
-      this._router.push('/sell/tradeIn-selfService');
-    } else {
-      this._router.push({
-        pathname: '/sell/vehicleInformation',
-        query: { ...this._router.query },
+      this._router.push('/sell/tradeIn-selfService').catch((e) => {
+        console.error(e);
       });
+    } else {
+      this._router
+        .push({
+          pathname: '/sell/vehicleInformation',
+          query: { ...this._router.query },
+        })
+        .catch((e) => {
+          console.error(e);
+        });
     }
   }
 
@@ -69,7 +79,7 @@ export default class AppraisalReviewModel {
     };
 
     this._analyticsHandler.trackAppraisalIdentify(
-      data.user.externalUserID,
+      data.user?.externalUserID,
       identifyData
     );
   }
@@ -146,10 +156,14 @@ export default class AppraisalReviewModel {
         this.store.offer.setShowOfferDialog(true);
       } else {
         this.appraisalStore.clearAppraisal();
-        this._router.push({
-          pathname: `/appraisal/price`,
-          query: { priceId: returnData.data.ID },
-        });
+        this._router
+          .push({
+            pathname: `/appraisal/price`,
+            query: { priceId: returnData.data.ID },
+          })
+          .catch((e) => {
+            console.error(e);
+          });
       }
     } catch (err) {
       this.setShowReviewError(true);

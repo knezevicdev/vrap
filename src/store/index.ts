@@ -1,4 +1,3 @@
-import { ABSmartStore } from './abSmartStore';
 import { AppraisalStore } from './appraisalStore';
 import { DealStore } from './dealStore';
 import { OfferStore } from './offerStore';
@@ -10,7 +9,6 @@ import { DirectDepositStore } from 'src/modules/directdeposit/store';
 import { OptionsStore } from 'src/modules/options/store';
 
 export default class Store {
-  absmart = new ABSmartStore();
   verification = new VerificationStore();
   offer = new OfferStore();
   stepper = new StepperStore();

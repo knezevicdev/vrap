@@ -20,20 +20,19 @@ const useHandleUpload = (
     ) => Partial<Record<DocumentFileType, boolean>>
   ) => void
 ): UseHandleUpload => {
-  const handleUpload = (type: DocumentFileType) => async (
-    file: ActualFileObject
-  ) => {
-    try {
-      await uploadVehiclePhoto(file, type, vin, priceId);
-      setLocalVehiclePhotos((localVehiclePhotos) => ({
-        ...localVehiclePhotos,
-        [type]: true,
-      }));
-      return true;
-    } catch (e) {
-      return false;
-    }
-  };
+  const handleUpload =
+    (type: DocumentFileType) => async (file: ActualFileObject) => {
+      try {
+        await uploadVehiclePhoto(file, type, vin, priceId);
+        setLocalVehiclePhotos((localVehiclePhotos) => ({
+          ...localVehiclePhotos,
+          [type]: true,
+        }));
+        return true;
+      } catch (e) {
+        return false;
+      }
+    };
 
   return {
     handleUpload,

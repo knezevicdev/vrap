@@ -1,3 +1,5 @@
+import { ABSmartlyContextValue } from '@vroom-web/analytics-integration/dist/absmartly/types';
+
 import Store from 'src/store';
 
 export default class SellDocumentReviewViewModel {
@@ -16,10 +18,10 @@ export default class SellDocumentReviewViewModel {
   readonly odometer: string = 'Odometer Picture';
   readonly edit: string = 'Edit';
 
-  constructor(private store: Store) {}
+  constructor(private store: Store, private absmartly: ABSmartlyContextValue) {}
 
   isPaymentRequireExp = (): boolean => {
-    return this.store.absmart.isInExperiment('ac-payment-required');
+    return this.absmartly.isInExperiment('ac-payment-required');
   };
 
   handleEditClick(): void {
@@ -28,7 +30,7 @@ export default class SellDocumentReviewViewModel {
     const localPaymentValue = localStorage.getItem('review_payment_values');
     const hasValue =
       !localPaymentValue &&
-      this.store.absmart.isInExperiment('ac-payment-required');
+      this.absmartly.isInExperiment('ac-payment-required');
     if ((mutationInput || values) && hasValue) {
       const reviewPaymentValue = mutationInput
         ? mutationInput

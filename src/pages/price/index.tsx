@@ -1,3 +1,4 @@
+import { useABSmartly } from '@vroom-web/analytics-integration';
 import { SkipNavigationLink } from '@vroom-web/ui-lib';
 import { observer } from 'mobx-react';
 import { GetServerSideProps, GetServerSidePropsContext, NextPage } from 'next';
@@ -7,7 +8,6 @@ import styled from 'styled-components';
 
 import AsyncIndicator from 'src/components/AsyncIndicator';
 import { Header } from 'src/components/Header';
-import { useAppStore } from 'src/context';
 import Footer from 'src/core/Footer';
 import PriceInfo from 'src/modules/price';
 import { PriceStore } from 'src/modules/price/store';
@@ -19,7 +19,7 @@ const Price: NextPage = () => {
   const router = useRouter();
   const priceId = router.query.priceId as string;
   const store = new PriceStore(priceId);
-  const appStore = useAppStore();
+  const absmartly = useABSmartly();
 
   useEffect(() => {
     const storedId = localStorage.getItem('priceId');
@@ -30,13 +30,13 @@ const Price: NextPage = () => {
 
   return (
     <Page name="Price">
-      {!appStore.store.absmart.isABSmartlyLoading && (
+      {!absmartly.isLoading && (
         <SkipNavigationLink mainContentId={'main-content'} />
       )}
       <HeaderContainer>
         <Header />
       </HeaderContainer>
-      {!appStore.store.absmart.isABSmartlyLoading && (
+      {!absmartly.isLoading && (
         <Contents id="main-content">
           <PriceInfo store={store} />
           <ProgressiveAd store={store} />

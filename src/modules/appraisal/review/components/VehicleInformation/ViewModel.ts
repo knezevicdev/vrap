@@ -60,13 +60,17 @@ export default class PickupInfoReviewViewModel {
   }
 
   handleEditClick(): void {
-    this._router.push({
-      pathname: this.appraisalStore.appraisalPath,
-      query: {
-        vehicle: `${this.appraisalStore?.vehicleInfoForm?.vin}`,
-        ...this._router.query,
-      },
-      hash: `#top`,
-    });
+    this._router
+      .push({
+        pathname: this.appraisalStore.appraisalPath,
+        query: {
+          vehicle: `${this.appraisalStore?.vehicleInfoForm?.vin}`,
+          ...this._router.query,
+        },
+        hash: `#top`,
+      })
+      .catch((e) => {
+        console.error(e);
+      });
   }
 }

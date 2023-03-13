@@ -1,13 +1,13 @@
-import { OptionsStore } from '../../modules/options/store';
+import { ABSmartlyContextValue } from '@vroom-web/analytics-integration/dist/absmartly/types';
 
-import AppStore from 'src/store';
+import { OptionsStore } from '../../modules/options/store';
 
 class PlaidButtonViewModel {
   private readonly store: OptionsStore;
   readonly buttonCopy: string = 'Link bank account';
   readonly buttonStartCopy: string = 'Start direct deposit';
 
-  constructor(private appStore: AppStore, store: OptionsStore) {
+  constructor(private absmartly: ABSmartlyContextValue, store: OptionsStore) {
     this.store = store;
   }
 
@@ -36,7 +36,7 @@ class PlaidButtonViewModel {
   };
 
   isPaymentRequireExp = (): boolean => {
-    return this.appStore.absmart.isInExperiment('ac-payment-required');
+    return this.absmartly.isInExperiment('ac-payment-required');
   };
 }
 

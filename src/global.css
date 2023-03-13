@@ -4,24 +4,24 @@ body {
 @font-face {
   font-family: Calibre;
   font-weight: normal;
-  src: url(../public/fonts/Vroom/Calibre-Regular.woff2) format('woff2');
+  src: url(../public/assets/fonts/Vroom/Calibre-Regular.woff2) format('woff2');
   font-display: swap;
 }
 @font-face {
   font-family: Calibre-Regular;
   font-weight: normal;
-  src: url(../public/fonts/Vroom/Calibre-Regular.woff2) format('woff2');
+  src: url(../public/assets/fonts/Vroom/Calibre-Regular.woff2) format('woff2');
   font-display: swap;
 }
 @font-face {
   font-family: Calibre-Semibold;
   font-weight: 600;
-  src: url(../public/fonts/Vroom/Calibre-Semibold.woff2) format('woff2');
+  src: url(../public/assets/fonts/Vroom/Calibre-Semibold.woff2) format('woff2');
   font-display: swap;
 }
 @font-face {
   font-family: Vroom-Sans;
   font-weight: normal;
-  src: url(../public/fonts/Vroom/Vroom-Sans.woff2) format('woff2');
+  src: url(../public/assets/fonts/Vroom/Vroom-Sans.woff2) format('woff2');
   font-display: swap;
 }

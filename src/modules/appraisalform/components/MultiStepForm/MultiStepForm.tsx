@@ -22,7 +22,7 @@ interface Props {
   formTitle: string;
   formSubtittleSection?: () => void;
   sections: any[];
-  onDone: () => void;
+  onDone: () => void | Promise<void>;
   onNext: (arg1: number, arg2?: string) => void;
   onNextIntercept?: () => void;
   active: number;

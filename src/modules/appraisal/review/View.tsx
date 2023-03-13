@@ -30,7 +30,7 @@ const AppraisalReviewViewDetail: React.FC<Props> = ({ viewModel }) => {
   const [isLoading, setIsLoading] = useState(false);
   const submitButtonClasses = ['btn', 'btn-primary', 'finish-section-btn'];
   const canSubmit = !(isLoading || viewModel.appraisalStore ? true : false);
-  const recaptchaRef = useRef<any>();
+  const recaptchaRef = useRef<ReCAPTCHA>(null);
   const isNewForm = viewModel.isNewFormExperimentActive();
 
   useEffect(() => {
@@ -66,6 +66,8 @@ const AppraisalReviewViewDetail: React.FC<Props> = ({ viewModel }) => {
   };
 
   const getCaptchaToken = async () => {
+    if (!recaptchaRef.current) return null;
+
     try {
       return await recaptchaRef.current.executeAsync();
     } catch (e) {
@@ -208,7 +210,7 @@ const SubmitButton = styled(Button.Primary)<{ isCTAColorExp: boolean }>`
 `;
 
 const Title = styled(Typography.Heading.Three)`
-  font-style: 'italic';
+  font-style: italic;
   font-family: Vroom-Sans;
   font-weight: 800;
   line-height: 36px;

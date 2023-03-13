@@ -206,7 +206,7 @@ export class Icons {
       <>
         <mask
           id="mask0"
-          mask-type="alpha"
+          mask="alpha"
           maskUnits="userSpaceOnUse"
           x="0"
           y="0"
@@ -366,7 +366,7 @@ export class Icons {
         />
         <mask
           id="mask0"
-          mask-type="alpha"
+          mask="alpha"
           maskUnits="userSpaceOnUse"
           x="0"
           y="0"
@@ -524,7 +524,7 @@ export class Icons {
         />
         <mask
           id="mask0"
-          mask-type="alpha"
+          mask="alpha"
           maskUnits="userSpaceOnUse"
           x="0"
           y="0"

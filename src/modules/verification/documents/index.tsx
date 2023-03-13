@@ -1,3 +1,4 @@
+import { useABSmartly } from '@vroom-web/analytics-integration';
 import { noop } from 'lodash';
 import { observer } from 'mobx-react';
 import React, { useEffect, useRef, useState } from 'react';
@@ -38,6 +39,7 @@ interface Props {
 
 const VerificationDocumentsViewDetail: React.FC<Props> = ({ priceId }) => {
   const { store } = useAppStore();
+  const absmartly = useABSmartly();
   const [mileage, setMileage] = useState<number | ''>('');
   const { handleUpload } = useHandleUpload(priceId);
   const { handleDelete } = useHandleDelete(priceId);
@@ -97,13 +99,13 @@ const VerificationDocumentsViewDetail: React.FC<Props> = ({ priceId }) => {
     let url;
     if (
       !localStorage.getItem('review_doc_section') &&
-      store.absmart.isInExperiment('ac-payment-required') &&
-      !store.absmart.isInExperiment('verification-form-vehicle-photo-upload')
+      absmartly.isInExperiment('ac-payment-required') &&
+      !absmartly.isInExperiment('verification-form-vehicle-photo-upload')
     ) {
       url = `/appraisal/paymentmethod?priceId=${priceId}`;
     } else if (
       localStorage.getItem('review_doc_section') ||
-      !store.absmart.isInExperiment('verification-form-vehicle-photo-upload')
+      !absmartly.isInExperiment('verification-form-vehicle-photo-upload')
     ) {
       url = `/appraisal/verification/review?priceId=${priceId}`;
     } else {

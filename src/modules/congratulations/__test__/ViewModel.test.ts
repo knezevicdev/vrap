@@ -10,9 +10,9 @@ jest.mock('next/config', () => (): unknown => ({
 }));
 
 describe('Congratulations Test', () => {
-  const analyticsHandler = mocked(({
+  const analyticsHandler = mocked({
     trackCongratsViewed: jest.fn(),
-  } as unknown) as AnalyticsHandler);
+  } as unknown as AnalyticsHandler);
 
   const viewModel = new ViewModel(analyticsHandler);
 

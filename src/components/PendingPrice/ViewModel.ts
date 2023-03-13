@@ -1,5 +1,6 @@
+import { ABSmartlyContextValue } from '@vroom-web/analytics-integration/dist/absmartly/types';
+
 import AnalyticsHandler from 'src/integrations/AnalyticsHandler';
-import Store from 'src/store';
 
 class PendingPriceViewModel {
   private analyticsHandler: AnalyticsHandler;
@@ -18,7 +19,7 @@ class PendingPriceViewModel {
     'If you do not see our offer in your inbox later, please check your spam folder.',
   ];
 
-  constructor(public store: Store) {
+  constructor(private absmartly: ABSmartlyContextValue) {
     this.analyticsHandler = new AnalyticsHandler();
   }
 
@@ -36,7 +37,7 @@ class PendingPriceViewModel {
   }
 
   isNoPriceExp = (): boolean => {
-    return this.store.absmart.isInExperiment('ac-no-price-page');
+    return this.absmartly.isInExperiment('ac-no-price-page');
   };
 }
 

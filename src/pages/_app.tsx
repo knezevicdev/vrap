@@ -10,12 +10,12 @@ import { ABSmartlyProvider } from '@vroom-web/analytics-integration';
 import { CatSDK } from '@vroom-web/cat-sdk';
 import { isErrorResponse } from '@vroom-web/networking';
 import { CommonHandler } from '@vroom-web/shared-components';
-import { Brand, ThemeProvider } from '@vroom-web/ui';
+import { GlobalStyle } from '@vroom-web/ui-lib';
 import firebase from 'firebase/app';
 import { configure as configureMobx } from 'mobx';
 import App, { AppProps } from 'next/app';
 import getConfig from 'next/config';
-import { name, version } from 'package.json';
+import packageInfo from 'package.json';
 import React from 'react';
 import smoothscroll from 'smoothscroll-polyfill';
 import { ThemeProvider as StyledComponentsThemeProvider } from 'styled-components';
@@ -88,8 +88,8 @@ class AppraisalApp extends App<
     if (props.router.pageLoader) {
       // Support serving _next/data/ assets with basePath prefix
       const originalGetDataHref = props.router.pageLoader.getDataHref;
-      props.router.pageLoader.getDataHref = function (...args: any[]) {
-        const r = originalGetDataHref.call(props.router.pageLoader, ...args);
+      props.router.pageLoader.getDataHref = function (params) {
+        const r = originalGetDataHref.call(props.router.pageLoader, params);
         return r && r.startsWith('/_next/data')
           ? `${NEXT_PUBLIC_BASE_PATH}${r}`
           : r;
@@ -168,8 +168,8 @@ class AppraisalApp extends App<
         applicationId: DATA_DOG_RUM_APPLICATION,
         clientToken: DATA_DOG_RUM_TOKEN,
         site: 'datadoghq.com',
-        service: name,
-        version: version,
+        service: packageInfo.name,
+        version: packageInfo.version,
         sampleRate: 100,
         trackInteractions: true,
       });
@@ -198,6 +198,7 @@ class AppraisalApp extends App<
 
     return (
       <>
+        <GlobalStyle baseUrl={publicRuntimeConfig.BASE_PATH} />
         <ABSmartlyProvider
           apiKey={ABSMARTLY_API_KEY}
           application={ABSMARTLY_APP}
@@ -215,11 +216,9 @@ class AppraisalApp extends App<
                     loaded: this.state.restrictedContextValueLoaded,
                   }}
                 >
-                  <ThemeProvider brand={Brand.VROOM}>
-                    <StyledComponentsThemeProvider theme={theme}>
-                      <AppProvider>{component}</AppProvider>
-                    </StyledComponentsThemeProvider>
-                  </ThemeProvider>
+                  <StyledComponentsThemeProvider theme={theme}>
+                    <AppProvider>{component}</AppProvider>
+                  </StyledComponentsThemeProvider>
                 </RestrictedAppraisalContext.Provider>
               </RemoteConfigContext.Provider>
             </CatSDKContext.Provider>

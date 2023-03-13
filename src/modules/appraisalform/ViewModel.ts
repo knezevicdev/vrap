@@ -1,3 +1,4 @@
+import { ABSmartlyContextValue } from '@vroom-web/analytics-integration/dist/absmartly/types';
 import { isErrorResponse } from '@vroom-web/networking';
 
 import {
@@ -15,17 +16,16 @@ import {
   isUserSignedIn,
 } from 'src/networking/request';
 import Store from 'src/store';
-import { ABSmartStore } from 'src/store/abSmartStore';
 import { AppraisalStore } from 'src/store/appraisalStore';
 
 class PriceViewModel {
   private _analyticsHandler: AnalyticsHandler = new AnalyticsHandler();
   appraisalStore: AppraisalStore;
-  absmartly: ABSmartStore;
+  absmartly: ABSmartlyContextValue;
 
-  constructor(public store: Store) {
+  constructor(public store: Store, absmartly: ABSmartlyContextValue) {
     this.appraisalStore = store.appraisal;
-    this.absmartly = store.absmart;
+    this.absmartly = absmartly;
   }
 
   get isTradeIn(): boolean {
@@ -134,7 +134,7 @@ class PriceViewModel {
   }
 
   isEmailCaptureExperiment = (): boolean => {
-    return this.store.absmart.isInExperiment('ac-email-capture');
+    return this.absmartly.isInExperiment('ac-email-capture');
   };
 
   isNewFormExperimentActive = (): boolean => {
@@ -142,7 +142,7 @@ class PriceViewModel {
   };
 
   isCTAColorExp = (): boolean => {
-    return this.store.absmart.isInExperiment(
+    return this.absmartly.isInExperiment(
       'appraisal-form-all-cta-buttons-color'
     );
   };

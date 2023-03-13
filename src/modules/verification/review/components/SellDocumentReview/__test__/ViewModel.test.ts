@@ -1,3 +1,5 @@
+import { ABSmartlyContextValue } from '@vroom-web/analytics-integration/dist/absmartly/types';
+
 import ViewModel from '../ViewModel';
 
 import store from 'src/store';
@@ -7,6 +9,10 @@ jest.mock('next/config', () => (): unknown => ({
   serverRuntimeConfig: {},
 }));
 
+const absmartly = {
+  isInExperiment: () => false,
+  isLoading: false,
+} as any as ABSmartlyContextValue;
 describe('Pickup Infomation Review component test', () => {
   const stores = new store();
   let viewModel: ViewModel;
@@ -62,7 +68,7 @@ describe('Pickup Infomation Review component test', () => {
     };
   };
   beforeEach(() => {
-    viewModel = new ViewModel(stores);
+    viewModel = new ViewModel(stores, absmartly);
   });
 
   it('test readonly initial values', () => {
@@ -103,7 +109,7 @@ describe('Pickup Infomation Review component test', () => {
     Object.defineProperty(window, 'localStorage', {
       value: mockLocalStorage(),
     });
-    stores.absmart.isInExperiment = jest.fn().mockReturnValue(true);
+    absmartly.isInExperiment = jest.fn().mockReturnValue(true);
     jest.spyOn(window.localStorage, 'getItem').mockReturnValueOnce(null);
     stores.deposit.setMutationInput(mutationInput);
     stores.payment.setValues(

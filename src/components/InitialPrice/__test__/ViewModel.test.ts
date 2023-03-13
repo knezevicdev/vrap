@@ -1,5 +1,6 @@
+import { ABSmartlyContextValue } from '@vroom-web/analytics-integration/dist/absmartly/types';
+
 jest.mock('src/networking/request');
-import { mocked } from 'ts-jest/utils';
 
 import ViewModel from '../ViewModel';
 
@@ -10,26 +11,15 @@ import {
   getIsSignIn,
   getIsSignInInValid,
 } from 'src/networking/request/__mocks__';
-import Store from 'src/store';
 
 describe('InitialPrice Test', () => {
   const analyticsHandler = new AnalyticsHandler();
   const priceId = '12345';
   const store = new PriceStore(priceId);
-  const stores = new Store();
-  const appStore = mocked({
-    ...stores,
-    absmart: {
-      ...stores.absmart,
-      isInExperiment: jest.fn(),
-      setABSmartlyModel: jest.fn(),
-      isABSmartlyLoading: false,
-      abTestFacelift: false,
-      inProgressiveTest: false,
-      inPriceProgressiveTest: false,
-      inCongratsProgressiveTest: false,
-    },
-  });
+  const absmartly = {
+    isInExperiment: () => false,
+    isLoading: false,
+  } as any as ABSmartlyContextValue;
   let viewModel: ViewModel;
 
   const ContinueClickSpy = jest
@@ -41,7 +31,7 @@ describe('InitialPrice Test', () => {
   const clientRequest = jest.spyOn(client, 'signInStatus');
 
   beforeEach(() => {
-    viewModel = new ViewModel(store, analyticsHandler, appStore);
+    viewModel = new ViewModel(store, analyticsHandler, absmartly);
   });
 
   it('readonly values', () => {
@@ -63,7 +53,7 @@ describe('InitialPrice Test', () => {
 
   it('when called onContinueClick and abTest is true ', async () => {
     await viewModel.onContinueClick();
-    appStore.absmart.isInExperiment.mockImplementation(() => true);
+    jest.spyOn(absmartly, 'isInExperiment').mockImplementation(() => true);
     await clientRequest.mockResolvedValue(getIsSignIn());
     const url = `/myaccount/create/suyc?redirect=/sell/verification/owner/${priceId}&action=suyc`;
     Object.defineProperty(window, 'location', {
@@ -75,7 +65,7 @@ describe('InitialPrice Test', () => {
   });
 
   it('when called onContinueClick ', async () => {
-    appStore.absmart.isInExperiment.mockImplementation(() => false);
+    jest.spyOn(absmartly, 'isInExperiment').mockImplementation(() => false);
     await viewModel.onContinueClick();
     await clientRequest.mockResolvedValue(getIsSignInInValid());
     const url = `/sell/verification/owner/cb5b06d43cb95286ceeb50efc7a82e08`;

@@ -1,10 +1,7 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 const appConfig = require('./config');
-const withBundleAnalyzer = require('@next/bundle-analyzer')({
-  enabled: process.env.ANALYZE === 'true',
-});
 
-const { version } = require('./package.json');
+const packageInfo = require('./package.json');
 
 const childProcess = require('child_process');
 const shortHash = childProcess
@@ -17,7 +14,7 @@ if (!Object.keys(appConfig).includes(process.env.CURRENT_ENV))
 
 const currentConfig = appConfig[process.env.CURRENT_ENV];
 
-const basePath = '/appraisal';
+const basePath = process.env.NODE_ENV === 'production' ? '/appraisal' : '';
 
 const endPointSelector = () => {
   if (process.env.NODE_ENV === 'production') {
@@ -102,7 +99,7 @@ const config = {
           },
           {
             key: 'x-version',
-            value: version,
+            value: packageInfo.version,
           },
         ],
       },
@@ -110,7 +107,6 @@ const config = {
   },
   distDir: `.next/${shortHash}`,
   generateBuildId: () => shortHash,
-  assetPrefix: assetPrefixSelector(),
   publicRuntimeConfig: {
     // Will be available on both server-side and client-side
     NEXT_PUBLIC_BASE_PATH: basePath,
@@ -171,6 +167,12 @@ const config = {
     config.resolve.modules.push(__dirname);
     return config;
   },
+  compiler: {
+    styledComponents: true,
+  },
 };
 
-module.exports = withBundleAnalyzer(config);
+const assetPrefix = assetPrefixSelector();
+if (assetPrefix) config.assetPrefix = assetPrefix;
+
+module.exports = config;

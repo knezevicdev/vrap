@@ -1,4 +1,5 @@
 import { Button } from '@vroom-web/ui-lib';
+import { NextRouter } from 'next/router';
 import React from 'react';
 import styled from 'styled-components';
 
@@ -10,7 +11,7 @@ import ViewModel from './ViewModel';
 
 interface Props {
   viewModel: ViewModel;
-  router: any;
+  router: NextRouter;
 }
 
 const VinInput: React.FC<Props> = ({ viewModel, router }) => {
@@ -37,10 +38,14 @@ const VinInput: React.FC<Props> = ({ viewModel, router }) => {
     const vinForPath = vin.value;
     viewModel.trackVinClicked();
 
-    router.push({
-      pathname: appraisalPath,
-      query: { vehicle: vinForPath, ...router.query.form },
-    });
+    router
+      .push({
+        pathname: appraisalPath,
+        query: { vehicle: vinForPath, form: router.query.form },
+      })
+      .catch((e) => {
+        console.error(e);
+      });
   };
 
   return (

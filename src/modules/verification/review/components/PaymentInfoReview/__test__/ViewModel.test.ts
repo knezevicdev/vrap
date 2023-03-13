@@ -1,18 +1,15 @@
 import ViewModel from '../ViewModel';
 
-import store from 'src/store';
-
 jest.mock('next/config', () => (): unknown => ({
   publicRuntimeConfig: {},
   serverRuntimeConfig: {},
 }));
 
 describe('Payment Info Review component test', () => {
-  const stores = new store();
   let viewModel: ViewModel;
 
   beforeEach(() => {
-    viewModel = new ViewModel(stores);
+    viewModel = new ViewModel();
   });
 
   it('test readonly initial values', () => {

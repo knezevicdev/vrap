@@ -1,10 +1,9 @@
-import { useTheme } from '@material-ui/core/styles';
-import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { Icon } from '@vroom-web/ui-lib';
 import { observer } from 'mobx-react';
 import React, { useState } from 'react';
 import styled from 'styled-components';
 
+import useMediaQuery from '../../hooks/useMediaQuery';
 import PaymentOverviewViewModel from './ViewModel';
 
 import { Icons } from 'src/core/Icon';
@@ -79,8 +78,7 @@ export interface Props {
 }
 
 const PaymentOverviewView: React.FC<Props> = ({ viewModel }) => {
-  const theme = useTheme();
-  const isDesktop = useMediaQuery(theme.breakpoints.up('lg'), { noSsr: false });
+  const isDesktop = useMediaQuery('desktop');
   const [isExpanded, setIsExpanded] = useState<boolean>(isDesktop);
 
   const handleToggle = (): void => setIsExpanded((isExpanded) => !isExpanded);
