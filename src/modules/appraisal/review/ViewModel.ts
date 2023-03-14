@@ -20,7 +20,8 @@ export default class AppraisalReviewModel {
   constructor(
     public store: Store,
     private _router: NextRouter,
-    absmartly: ABSmartlyContextValue
+    absmartly: ABSmartlyContextValue,
+    private token: string
   ) {
     this.appraisalStore = store.appraisal;
     this.absmartly = absmartly;
@@ -133,7 +134,7 @@ export default class AppraisalReviewModel {
         console.log(JSON.stringify(err));
       }
 
-      const resp = await postAppraisalReview(requestPayload, token);
+      const resp = await postAppraisalReview(requestPayload, token, this.token);
       if (isErrorResponse(resp)) throw resp;
       const returnData: AppraisalRespData = resp.data;
 

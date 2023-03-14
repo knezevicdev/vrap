@@ -1,4 +1,5 @@
 import { Response } from '@vroom-web/networking';
+import { enc, HmacSHA256 } from 'crypto-js';
 import getConfig from 'next/config';
 
 import ACCEPT_REJECT_OFFER from '../../graphql/mutations/acceptRejectOffer.graphql';
@@ -63,7 +64,8 @@ export const acceptPriceOffer = async (
 
 export const postAppraisalReview = async (
   data: any,
-  captchaToken: string
+  captchaToken: string,
+  signatureSecret: string
 ): Promise<Response<AppraisalResp>> => {
   const appraisalRequestScore = checkAppraisalPayload(data);
   const url = `/appraisal/api/appraisal`;
@@ -78,11 +80,18 @@ export const postAppraisalReview = async (
       token: captchaToken,
     };
 
+    const hmac = HmacSHA256(JSON.stringify(payload), signatureSecret);
+    const signature = hmac.toString(enc.Hex);
+
     return await client.httpRequest({
       method: 'post',
       url,
       timeout: 30000,
       data: payload,
+      headers: {
+        'X-Signature': signature,
+        'X-Token': signatureSecret,
+      },
     });
   }
 };

@@ -1,4 +1,5 @@
 import { SkipNavigationLink } from '@vroom-web/ui-lib';
+import jwt from 'jsonwebtoken';
 import { observer } from 'mobx-react';
 import { GetServerSideProps, GetServerSidePropsContext, NextPage } from 'next';
 import React from 'react';
@@ -14,10 +15,10 @@ import AppraisalReviewViewDetail from 'src/modules/appraisal/review';
 import Page from 'src/Page';
 
 interface Prop {
-  priceId: string;
+  token: string;
 }
 
-const AppraisalReview: NextPage<Prop> = () => {
+const AppraisalReview: NextPage<Prop> = ({ token }) => {
   const { store } = useAppStore();
   const reviewError = store.appraisal.reviewError;
 
@@ -30,7 +31,7 @@ const AppraisalReview: NextPage<Prop> = () => {
       </HeaderContainer>
       <Contents id="main-content">
         <AppraisalContainer>
-          <AppraisalReviewViewDetail />
+          <AppraisalReviewViewDetail token={token} />
         </AppraisalContainer>
       </Contents>
       <Footer hasOverlay={true} />
@@ -85,6 +86,17 @@ export const getServerSideProps: GetServerSideProps<Props> = async (
 ) => {
   ctx.res.setHeader('Cache-Control', '');
   const brandConfig = returnBrandConfig();
+  const vin = ctx.query.vin;
+
+  if (!vin || !process.env.JWT_SECRET_KEY) {
+    return {
+      notFound: true,
+    };
+  }
+
+  const token = jwt.sign({ vin }, process.env.JWT_SECRET_KEY, {
+    expiresIn: '10m',
+  });
 
   return {
     props: {
@@ -92,6 +104,7 @@ export const getServerSideProps: GetServerSideProps<Props> = async (
       title: brandConfig.title,
       canonical: brandConfig.canonical,
       allowUnauthenticated: true,
+      token,
     },
   };
 };
