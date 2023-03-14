@@ -14,6 +14,8 @@ import { ServerStyleSheet } from 'styled-components';
 const { publicRuntimeConfig, serverRuntimeConfig } = getConfig();
 const BRANCH_IO_KEY = publicRuntimeConfig.BRANCH_IO_KEY;
 const SEGMENT_WRITE_KEY = serverRuntimeConfig.SEGMENT_WRITE_KEY;
+const NEXT_PUBLIC_ANALYTICS_DISABLE_PII_PERSISTENCE =
+  publicRuntimeConfig.NEXT_PUBLIC_ANALYTICS_DISABLE_PII_PERSISTENCE;
 
 export default class AppraisalDocument extends Document {
   static async getInitialProps(
@@ -55,7 +57,9 @@ export default class AppraisalDocument extends Document {
           {segmentWriteKey && (
             <AnalyticsSnippet
               segmentWriteKey={segmentWriteKey}
-              disableClientPersistence
+              disableClientPersistence={Boolean(
+                parseInt(NEXT_PUBLIC_ANALYTICS_DISABLE_PII_PERSISTENCE)
+              )}
             />
           )}
           <script
