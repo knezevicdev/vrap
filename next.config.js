@@ -14,7 +14,7 @@ if (!Object.keys(appConfig).includes(process.env.CURRENT_ENV))
 
 const currentConfig = appConfig[process.env.CURRENT_ENV];
 
-const basePath = process.env.NODE_ENV === 'production' ? '/appraisal' : '';
+const basePath = '/appraisal';
 
 const endPointSelector = () => {
   if (process.env.NODE_ENV === 'production') {
@@ -32,32 +32,40 @@ const assetPrefixSelector = () => {
 
 const config = {
   async rewrites() {
-    return [
-      {
-        source: '/sell/vehicleInformation',
-        destination: '/',
-      },
-      {
-        source: '/sell/:slug*',
-        destination: '/:slug*',
-      },
-      {
-        source: '/appraisal',
-        destination: '/',
-      },
-      {
-        source: '/appraisal/:slug*',
-        destination: '/:slug*',
-      },
-      {
-        source: '/tradeIn-selfService',
-        destination: '/',
-      },
-      {
-        source: '/tradeIn-selfService-Review',
-        destination: '/review',
-      },
-    ];
+    return {
+      beforeFiles: [
+        {
+          source: `${basePath}/_next/data/:path*`,
+          destination: '/_next/data/:path*',
+        },
+      ],
+      afterFiles: [
+        {
+          source: '/sell/vehicleInformation',
+          destination: '/',
+        },
+        {
+          source: '/sell/:slug*',
+          destination: '/:slug*',
+        },
+        {
+          source: '/appraisal',
+          destination: '/',
+        },
+        {
+          source: '/appraisal/:slug*',
+          destination: '/:slug*',
+        },
+        {
+          source: '/tradeIn-selfService',
+          destination: '/',
+        },
+        {
+          source: '/tradeIn-selfService-Review',
+          destination: '/review',
+        },
+      ],
+    };
   },
   async redirects() {
     return [
