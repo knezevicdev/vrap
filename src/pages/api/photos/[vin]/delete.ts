@@ -2,6 +2,7 @@ import axios from 'axios';
 import { NextApiRequest, NextApiResponse } from 'next';
 import getConfig from 'next/config';
 
+import logger from '../../../../utils/logger';
 import requestHandler from '../../../../utils/requestHandler';
 
 const { serverRuntimeConfig } = getConfig();
@@ -25,7 +26,8 @@ export default requestHandler(
       );
 
       res.json(response.data);
-    } catch {
+    } catch (error) {
+      logger.error('Error while deleting photo', { error });
       res.status(403).end();
     }
   },

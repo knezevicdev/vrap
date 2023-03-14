@@ -6,6 +6,7 @@ import getConfig from 'next/config';
 import sharp from 'sharp';
 import { Readable } from 'stream';
 
+import logger from '../../../../utils/logger';
 import requestHandler from '../../../../utils/requestHandler';
 
 const { serverRuntimeConfig } = getConfig();
@@ -38,6 +39,7 @@ export default requestHandler(
     await new Promise((resolve) => {
       upload.single('image')(req as any, res as any, async function (err) {
         if (err) {
+          logger.error('Error while multer processing', { error: err });
           return res.status(403).end();
         }
 
@@ -72,7 +74,8 @@ export default requestHandler(
             res.json(dataRes.data);
             resolve(null);
           })
-          .catch(() => {
+          .catch((e) => {
+            logger.error('Error while uploading photo', { error: e });
             res.status(403).end();
             resolve(null);
           });
