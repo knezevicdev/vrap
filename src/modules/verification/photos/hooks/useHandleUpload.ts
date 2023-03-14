@@ -1,4 +1,5 @@
 import { ActualFileObject } from 'filepond';
+import { MutableRefObject } from 'react';
 
 import {
   DocumentFileType,
@@ -14,20 +15,18 @@ interface UseHandleUpload {
 const useHandleUpload = (
   vin: string,
   priceId: string,
-  setLocalVehiclePhotos: (
-    setter: (
-      localVehiclePhotos: Partial<Record<DocumentFileType, boolean>>
-    ) => Partial<Record<DocumentFileType, boolean>>
-  ) => void
+  processingFiles: MutableRefObject<DocumentFileType[]>,
+  refetchImages: () => void
 ): UseHandleUpload => {
   const handleUpload =
     (type: DocumentFileType) => async (file: ActualFileObject) => {
+      processingFiles.current = [...processingFiles.current, type];
       try {
         await uploadVehiclePhoto(file, type, vin, priceId);
-        setLocalVehiclePhotos((localVehiclePhotos) => ({
-          ...localVehiclePhotos,
-          [type]: true,
-        }));
+        processingFiles.current = processingFiles.current.filter(
+          (fileType) => fileType !== type
+        );
+        refetchImages();
         return true;
       } catch (e) {
         return false;

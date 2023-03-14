@@ -1,6 +1,6 @@
 import { useABSmartly } from '@vroom-web/analytics-integration';
 import { observer } from 'mobx-react';
-import React, { useState } from 'react';
+import React, { useCallback, useRef } from 'react';
 
 import { Container, Title } from '../shared/Style.css';
 import DocumentUpload, {
@@ -29,14 +29,19 @@ interface Props {
 const VerificationPhotosViewDetail: React.FC<Props> = ({ priceId }) => {
   const absmartly = useABSmartly();
   const vin = useFetchVerificationData(priceId);
-  const { data: vehiclePhotos } = useGetVehiclePhotos(priceId, vin);
-  const [localVehiclePhotos, setLocalVehiclePhotos] = useState<
-    Partial<Record<DocumentFileType, boolean>>
-  >({});
+  const { data: vehiclePhotos, refetch } = useGetVehiclePhotos(priceId, vin);
+  const processingFiles = useRef<DocumentFileType[]>([]);
+
+  const refetchImages = useCallback(() => {
+    if (processingFiles.current?.length) return;
+    refetch();
+  }, [refetch]);
+
   const { handleUpload } = useHandleUpload(
     vin || '',
     priceId,
-    setLocalVehiclePhotos
+    processingFiles,
+    refetchImages
   );
 
   const photosValid = [
@@ -47,9 +52,6 @@ const VerificationPhotosViewDetail: React.FC<Props> = ({ priceId }) => {
     DocumentFileType.FRONT,
     DocumentFileType.PASSENGER_SIDE_EXTERIOR,
   ].reduce((res, key) => {
-    // eslint-disable-next-line no-prototype-builtins
-    if (localVehiclePhotos.hasOwnProperty(key))
-      return Boolean(res && localVehiclePhotos[key]);
     return Boolean(res && vehiclePhotos[key]);
   }, true);
 
@@ -62,17 +64,11 @@ const VerificationPhotosViewDetail: React.FC<Props> = ({ priceId }) => {
     handleDelete: async () => {
       if (!vin) return false;
       if (!(await deleteVehiclePhoto(vin, priceId, fileType))) return false;
-      setLocalVehiclePhotos((localVehiclePhotos) => ({
-        ...localVehiclePhotos,
-        [fileType]: false,
-      }));
+      refetchImages();
       return true;
     },
     title,
-    vehiclePhoto:
-      typeof localVehiclePhotos[fileType] !== 'undefined'
-        ? undefined
-        : vehiclePhotos[fileType],
+    vehiclePhoto: vehiclePhotos[fileType],
     key: fileType,
   });
 
