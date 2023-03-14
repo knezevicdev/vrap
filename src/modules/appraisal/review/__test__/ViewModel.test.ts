@@ -82,10 +82,15 @@ describe('Appraisal review index page test', () => {
   let analyticsHandler: AnalyticsHandler;
 
   beforeEach(() => {
-    viewModel = new ViewModel(stores, router, {
-      isInExperiment: () => false,
-      isLoading: false,
-    } as any as ABSmartlyContextValue);
+    viewModel = new ViewModel(
+      stores,
+      router,
+      {
+        isInExperiment: () => false,
+        isLoading: false,
+      } as any as ABSmartlyContextValue,
+      'supersecret'
+    );
     router.asPath = '';
     analyticsHandler = viewModel.getAnalyticsHandler();
   });

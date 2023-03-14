@@ -7,11 +7,15 @@ import ViewModel from './ViewModel';
 
 import { useAppStore } from 'src/context';
 
-const AppraisalReview: React.FC = () => {
+interface Props {
+  token: string;
+}
+
+const AppraisalReview: React.FC<Props> = ({ token }) => {
   const router = useRouter();
   const { store } = useAppStore();
   const absmartly = useABSmartly();
-  const viewModel = new ViewModel(store, router, absmartly);
+  const viewModel = new ViewModel(store, router, absmartly, token);
   return <View viewModel={viewModel} />;
 };
 

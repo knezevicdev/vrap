@@ -1,12 +1,14 @@
+import axios from 'axios';
 import { NextApiRequest, NextApiResponse } from 'next';
 import getConfig from 'next/config';
-const { serverRuntimeConfig } = getConfig();
-import axios from 'axios';
 
 import { AppraisalPayload } from '../../interfaces.d';
+import checkBotActivity from '../../utils/checkBotActivity';
 import logger from '../../utils/logger';
 import requestHandler from '../../utils/requestHandler';
 import { verifyReCaptcha } from '../../utils/verifyReCaptcha';
+
+const { serverRuntimeConfig } = getConfig();
 
 const appraisalApiRoute = '/api/appraisal';
 
@@ -30,6 +32,11 @@ export default requestHandler(
         status: 'error',
         message: `Google reCAPTCHA token ${token} failed validation.`,
       });
+      return;
+    }
+
+    if (!checkBotActivity(req)) {
+      res.status(400).end();
       return;
     }
 

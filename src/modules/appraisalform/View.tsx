@@ -588,7 +588,10 @@ const AppraisalForm: React.FC<Props> = ({ viewModel }) => {
     router
       .push({
         pathname: store.appraisal.reviewPath,
-        query: { ...(router.query.form && { form: router.query.form }) },
+        query: {
+          ...(router.query.form && { form: router.query.form }),
+          vin: store.appraisal.vehicleInfoForm.vin,
+        },
       })
       .catch((e) => console.error(e));
   };
@@ -624,6 +627,9 @@ const AppraisalForm: React.FC<Props> = ({ viewModel }) => {
         router
           .push({
             pathname: store.appraisal.reviewPath,
+            query: {
+              vin: store.appraisal.vehicleInfoForm.vin,
+            },
           })
           .catch((e) => {
             console.error(e);
