@@ -133,6 +133,8 @@ const config = {
     NEXT_PUBLIC_RECAPTCHA_SITE_KEY: process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY,
     FIREBASE_CONFIG: currentConfig.firebaseConfig,
     VAST_IMAGE_PROXY_URL: process.env.VAST_IMAGE_PROXY_URL,
+    NEXT_PUBLIC_ANALYTICS_DISABLE_PII_PERSISTENCE:
+      process.env.NEXT_PUBLIC_ANALYTICS_DISABLE_PII_PERSISTENCE,
   },
   serverRuntimeConfig: {
     // Will only be available on the server side
