@@ -157,7 +157,7 @@ const parseCookies = (req: IncomingMessage): Cookie => {
 
 EPayOptions.getInitialProps = async (
   context: NextPageContext
-): Promise<void> => {
+): Promise<Record<string, unknown>> => {
   const { req, query } = context;
   const priceId = query.priceId as string;
   if (req) {
@@ -174,6 +174,8 @@ EPayOptions.getInitialProps = async (
     };
     console.log(JSON.stringify(loggerInfo));
   }
+
+  return {};
 };
 
 export default observer(EPayOptions);
