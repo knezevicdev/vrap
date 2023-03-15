@@ -83,7 +83,9 @@ const VerificationDocumentsViewDetail: React.FC<Props> = ({ priceId }) => {
     handleDelete: handleDelete(fileType),
     handleError: handleError(fileType),
     title,
-    verificationDocuments,
+    verificationDocument: verificationDocuments?.find(
+      (verificationDocument) => verificationDocument.fileType === fileType
+    ),
   });
 
   const onSubmit = async (): Promise<void> => {
@@ -147,6 +149,7 @@ const VerificationDocumentsViewDetail: React.FC<Props> = ({ priceId }) => {
           DocumentFileType.DRIVERS_LICENSE_FRONT,
           'Front of Photo ID'
         )}
+        key={DocumentFileType.DRIVERS_LICENSE_FRONT}
       />
       <Line />
       {requiredDocuments.secondDriverLicense && (
@@ -161,6 +164,7 @@ const VerificationDocumentsViewDetail: React.FC<Props> = ({ priceId }) => {
               DocumentFileType.CO_BUYER_FRONT,
               'Front of Photo ID'
             )}
+            key={DocumentFileType.CO_BUYER_FRONT}
           />
           <Line />
         </>
@@ -175,6 +179,7 @@ const VerificationDocumentsViewDetail: React.FC<Props> = ({ priceId }) => {
           DocumentFileType.VEHICLE_REGISTRATION,
           'Current Registration'
         )}
+        key={DocumentFileType.VEHICLE_REGISTRATION}
       />
       <Line />
       {requiredDocuments.titleInfo && (
@@ -196,6 +201,7 @@ const VerificationDocumentsViewDetail: React.FC<Props> = ({ priceId }) => {
                   DocumentFileType.TRADE_TITLE_FRONT,
                   'Front of Title'
                 )}
+                key={DocumentFileType.TRADE_TITLE_FRONT}
               />
             </Col>
             <Col
@@ -209,6 +215,7 @@ const VerificationDocumentsViewDetail: React.FC<Props> = ({ priceId }) => {
                   DocumentFileType.TRADE_TITLE_BACK,
                   'Back of Title'
                 )}
+                key={DocumentFileType.TRADE_TITLE_BACK}
               />
             </Col>
           </Row>
@@ -224,6 +231,7 @@ const VerificationDocumentsViewDetail: React.FC<Props> = ({ priceId }) => {
           </Info>
           <DocumentUpload
             {...docUploadProps(DocumentFileType.LETTER, 'Letter')}
+            key={DocumentFileType.LETTER}
           />
           <Line />
         </>
@@ -232,6 +240,7 @@ const VerificationDocumentsViewDetail: React.FC<Props> = ({ priceId }) => {
       <Info>Please upload a picture of your odometer.</Info>
       <DocumentUpload
         {...docUploadProps(DocumentFileType.TRADE_ODOMETER, 'Exact Mileage')}
+        key={DocumentFileType.TRADE_ODOMETER}
       />
       <DocUploadDesc>
         What is your exact mileage as shown on the odometer?

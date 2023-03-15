@@ -2,16 +2,10 @@ import { FilePondInitialFile } from 'filepond';
 
 import { DocumentInfo } from 'src/networking/models/Verification';
 
-export const getUploaded = (
-  documents: DocumentInfo[],
-  currentFileType: string
-): FilePondInitialFile[] => {
-  return documents
-    .filter(
-      ({ fileType, fileURL }) =>
-        fileType === currentFileType && fileURL !== 'None'
-    )
-    .map(({ originalFileName, fileExtension, fileSize, fileURL }) => ({
+export const getUploaded = (document: DocumentInfo): FilePondInitialFile[] => {
+  const { originalFileName, fileExtension, fileSize, fileURL } = document;
+  return [
+    {
       source: fileURL,
       options: {
         type: 'local',
@@ -24,5 +18,6 @@ export const getUploaded = (
           poster: fileURL,
         },
       },
-    }));
+    },
+  ];
 };

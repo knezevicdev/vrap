@@ -38,7 +38,7 @@ registerPlugin(
 
 export interface DocumentUploadProps {
   title: string;
-  verificationDocuments?: DocumentInfo[];
+  verificationDocument?: DocumentInfo;
   fileType: DocumentFileType;
   handleUpload: (file: ActualFileObject) => Promise<boolean>;
   handleDelete: () => Promise<boolean>;
@@ -47,8 +47,7 @@ export interface DocumentUploadProps {
 
 const DocumentUpload = ({
   title,
-  verificationDocuments,
-  fileType,
+  verificationDocument,
   handleUpload,
   handleDelete,
   handleError,
@@ -57,8 +56,12 @@ const DocumentUpload = ({
   const [files, setFiles] = useState<FilePondInitialFile[]>([]);
 
   useEffect(() => {
-    setFiles(getUploaded(verificationDocuments || [], fileType));
-  }, [fileType, verificationDocuments]);
+    if (verificationDocument) {
+      setFiles(getUploaded(verificationDocument));
+    } else {
+      setFiles([]);
+    }
+  }, [verificationDocument]);
 
   return (
     <>

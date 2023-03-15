@@ -1,5 +1,5 @@
 import { isErrorResponse } from '@vroom-web/networking';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import calculateRequiredDocuments, {
   CalculateRequiredDocuments,
@@ -20,6 +20,13 @@ interface UseVerificationDetails {
 const useVerificationDetails = (priceId: string): UseVerificationDetails => {
   const { store } = useAppStore();
   const lastPriceId = useRef<string>();
+  const [, setLastUpdatedVerificationTime] = useState<number>();
+
+  useEffect(() => {
+    store.verification.setOnVerificationUpdated(() => {
+      setLastUpdatedVerificationTime(new Date().getTime());
+    });
+  }, [store.verification]);
 
   useEffect(() => {
     if (lastPriceId.current !== priceId) {
