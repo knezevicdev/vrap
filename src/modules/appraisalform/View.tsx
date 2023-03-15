@@ -596,7 +596,11 @@ const AppraisalForm: React.FC<Props> = ({ viewModel }) => {
       .catch((e) => console.error(e));
   };
 
-  const onNext = async (activeSection: number, clearForm?: string) => {
+  const onNext = async (
+    activeSection: number,
+    _nextSection: number,
+    clearForm?: boolean
+  ) => {
     const formInfo = buildFormForStore();
 
     viewModel.trackStepComplete(activeSection, formInfo);
