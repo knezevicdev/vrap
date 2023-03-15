@@ -151,6 +151,8 @@ export class VerificationStore {
   lastFourSSN = '';
   isExpiredOrErrored = false;
 
+  onVerificationUpdated?: () => void;
+
   constructor() {
     makeAutoObservable(this);
   }
@@ -317,6 +319,8 @@ export class VerificationStore {
     this.pickupInfo = pickupInfo;
     this.payoffInfo = payoffInfo;
     this.documents = documents;
+
+    if (this.onVerificationUpdated) this.onVerificationUpdated();
   }
 
   setLoading(value: boolean): void {
@@ -333,5 +337,9 @@ export class VerificationStore {
 
   setIsExpiredOrErrored(value: boolean): void {
     this.isExpiredOrErrored = value;
+  }
+
+  setOnVerificationUpdated(onVerificationUpdated: () => void) {
+    this.onVerificationUpdated = onVerificationUpdated;
   }
 }

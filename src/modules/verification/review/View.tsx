@@ -22,8 +22,15 @@ const VerificationReviewViewDetail: React.FC<Props> = ({
   viewModel,
   priceId,
 }) => {
+  const [, setLastUpdatedVerificationTime] = useState<number>();
   const [checked, setChecked] = useState(false);
   const { store } = useAppStore();
+
+  useEffect(() => {
+    store.verification.setOnVerificationUpdated(() => {
+      setLastUpdatedVerificationTime(new Date().getTime());
+    });
+  }, [store.verification]);
 
   useEffect(() => {
     viewModel.onPageLoad();
@@ -39,7 +46,7 @@ const VerificationReviewViewDetail: React.FC<Props> = ({
         store.payment.setSubmitType(submittedType);
       }
     }
-  }, []);
+  }, [store.deposit, store.payment, viewModel]);
 
   useEffect(() => {
     const whereIsVehicleRegistered =
@@ -48,7 +55,7 @@ const VerificationReviewViewDetail: React.FC<Props> = ({
       localStorage.getItem('lastFour') || store.verification.lastFourSSN;
     viewModel.setWhereIsVehicleRegistered(whereIsVehicleRegistered);
     viewModel.getVerificationDetails(priceId, lastFourSSN);
-  }, [priceId]);
+  }, [priceId, store.verification.lastFourSSN, viewModel]);
 
   const handleSubmit = (): void => {
     localStorage.removeItem('lastFour');
