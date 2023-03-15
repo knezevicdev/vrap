@@ -1,6 +1,6 @@
 {
   "name": "@vroom-web/appraisal",
-  "version": "4.3.2",
+  "version": "4.4.2",
   "private": true,
   "scripts": {
     "dev": "next dev",
