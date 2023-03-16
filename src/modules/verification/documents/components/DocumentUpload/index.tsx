@@ -40,71 +40,79 @@ export interface DocumentUploadProps {
   title: string;
   verificationDocument?: DocumentInfo;
   fileType: DocumentFileType;
-  handleUpload: (file: ActualFileObject) => Promise<boolean>;
-  handleDelete: () => Promise<boolean>;
-  handleError: (e: FilePondErrorDescription) => void;
+  handleUpload: (
+    file: ActualFileObject,
+    type: DocumentFileType
+  ) => Promise<boolean>;
+  handleDelete: (type: DocumentFileType) => Promise<boolean>;
+  handleError: (e: FilePondErrorDescription, type: DocumentFileType) => void;
 }
 
-const DocumentUpload = ({
-  title,
-  verificationDocument,
-  handleUpload,
-  handleDelete,
-  handleError,
-}: DocumentUploadProps): ReactElement => {
-  const [showImage, setShowImage] = useState(false);
-  const [files, setFiles] = useState<FilePondInitialFile[]>([]);
+const DocumentUpload = React.memo(
+  ({
+    fileType,
+    title,
+    verificationDocument,
+    handleUpload,
+    handleDelete,
+    handleError,
+  }: DocumentUploadProps): ReactElement => {
+    const [showImage, setShowImage] = useState(false);
+    const [files, setFiles] = useState<FilePondInitialFile[]>([]);
 
-  useEffect(() => {
-    if (verificationDocument) {
-      setFiles(getUploaded(verificationDocument));
-    } else {
-      setFiles([]);
-    }
-  }, [verificationDocument]);
+    useEffect(() => {
+      if (verificationDocument) {
+        setFiles(getUploaded(verificationDocument));
+      } else {
+        setFiles([]);
+      }
+    }, [verificationDocument]);
 
-  return (
-    <>
-      <Wrapper>
-        <TitleWrapper>
-          <Title>{title}</Title>
-          {files.length > 0 && (
-            <ViewImageButton onClick={() => setShowImage(!showImage)}>
-              View Image
-            </ViewImageButton>
-          )}
-        </TitleWrapper>
-        <FilePondContainer
-          files={files}
-          allowMultiple={false}
-          allowFilePoster={true}
-          maxParallelUploads={1}
-          maxFiles={1}
-          checkValidity={true}
-          allowImageExifOrientation={true}
-          imagePreviewMaxHeight={1024}
-          server={getServerSettings(handleUpload, handleDelete)}
-          labelIdle={`Choose a file or drag it here <div class="filepond--label-action"></div>`}
-          labelFileLoadError="The file type is not a supported."
-          maxFileSize="25MB"
-          onerror={handleError}
-          labelMaxFileSizeExceeded="The uploaded file is too large."
-          labelMaxFileSize="Max file size 25MB."
-          imageValidateSizeMinResolution={100000}
-          imageValidateSizeLabelImageResolutionTooLow="The file resolution is too low."
-          imageValidateSizeLabelExpectedMinResolution="Min file resolution 300 x 300px."
-          acceptedFileTypes={['image/png', 'image/jpeg', 'application/pdf']}
-          labelFileTypeNotAllowed="The file type is not a supported."
-          fileValidateTypeLabelExpectedTypes="Please upload a {allButLastType}"
-        />
-      </Wrapper>
-      {showImage && (
-        <ImageOverlay onClick={() => setShowImage(false)}>
-          <Image src={files[0].source} alt="document image" />
-        </ImageOverlay>
-      )}
-    </>
-  );
-};
+    return (
+      <>
+        <Wrapper>
+          <TitleWrapper>
+            <Title>{title}</Title>
+            {files.length > 0 && (
+              <ViewImageButton onClick={() => setShowImage(!showImage)}>
+                View Image
+              </ViewImageButton>
+            )}
+          </TitleWrapper>
+          <FilePondContainer
+            files={files}
+            allowMultiple={false}
+            allowFilePoster={true}
+            maxParallelUploads={1}
+            maxFiles={1}
+            checkValidity={true}
+            allowImageExifOrientation={true}
+            imagePreviewMaxHeight={1024}
+            server={getServerSettings(handleUpload, handleDelete, fileType)}
+            labelIdle={`Choose a file or drag it here <div class="filepond--label-action"></div>`}
+            labelFileLoadError="The file type is not a supported."
+            maxFileSize="25MB"
+            onerror={(e: FilePondErrorDescription) => handleError(e, fileType)}
+            labelMaxFileSizeExceeded="The uploaded file is too large."
+            labelMaxFileSize="Max file size 25MB."
+            imageValidateSizeMinResolution={100000}
+            imageValidateSizeLabelImageResolutionTooLow="The file resolution is too low."
+            imageValidateSizeLabelExpectedMinResolution="Min file resolution 300 x 300px."
+            acceptedFileTypes={['image/png', 'image/jpeg', 'application/pdf']}
+            labelFileTypeNotAllowed="The file type is not a supported."
+            fileValidateTypeLabelExpectedTypes="Please upload a {allButLastType}"
+          />
+        </Wrapper>
+        {showImage && (
+          <ImageOverlay onClick={() => setShowImage(false)}>
+            <Image src={files[0].source} alt="document image" />
+          </ImageOverlay>
+        )}
+      </>
+    );
+  }
+);
+
+DocumentUpload.displayName = 'DocumentUpload';
 
 export default DocumentUpload;
