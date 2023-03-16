@@ -23,7 +23,11 @@ interface Props {
   formSubtittleSection?: () => void;
   sections: any[];
   onDone: () => void | Promise<void>;
-  onNext: (arg1: number, arg2?: string) => void;
+  onNext: (
+    currentSection: number,
+    nextSection: number,
+    clear?: boolean
+  ) => void;
   onNextIntercept?: () => void;
   active: number;
   customAnalyticsFunc?: (
@@ -126,7 +130,7 @@ const MultiStepForm: React.FC<Props> = (props) => {
 
     setActiveSection(0);
     setButtonText(nextText);
-    onNext(activeSection, 'refreshed');
+    onNext(activeSection, 0, true);
   };
 
   const handleRefreshKeyDown = (e: any) => {
@@ -137,7 +141,7 @@ const MultiStepForm: React.FC<Props> = (props) => {
 
       setActiveSection(0);
       setButtonText(nextText);
-      onNext(activeSection, 'refreshed');
+      onNext(activeSection, 0, true);
     }
   };
 
@@ -170,12 +174,12 @@ const MultiStepForm: React.FC<Props> = (props) => {
       onDone();
       setIsSubmitting(false);
     } else if (returnSection) {
-      onNext && onNext(returnSection);
+      onNext && onNext(activeSection, returnSection);
       setActiveSection(returnSection);
       setReturnSection(null);
       setIsSubmitting(false);
     } else {
-      onNext && onNext(activeSection);
+      onNext && onNext(activeSection, nextStep);
       setActiveSection(nextStep);
       setIsSubmitting(false);
     }

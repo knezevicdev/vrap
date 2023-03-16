@@ -132,18 +132,17 @@ const VerificationOwnerViewDetail: React.FC<Props> = ({
     await updateVerification(payload, priceId);
 
     switch (activeSection) {
-      case 1:
+      case 0:
         analyticsHandler.current.trackContactInfoComplete();
         break;
-      case 2:
+      case 1:
         analyticsHandler.current.trackPickupInfoComplete();
         break;
       default:
         break;
     }
 
-    console.log(activeSection);
-    if (activeSection === 2 && payload.pickup_address) {
+    if (activeSection === 1 && payload.pickup_address) {
       const { city, state, zipcode, address_1, address_2 } =
         payload.pickup_address;
 
