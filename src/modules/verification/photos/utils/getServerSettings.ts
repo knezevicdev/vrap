@@ -4,9 +4,15 @@ import {
   RemoveServerConfigFunction,
 } from 'filepond';
 
+import { DocumentFileType } from './uploadVehiclePhoto';
+
 export const getServerSettings = (
-  addDocument: (file: ActualFileObject) => Promise<boolean>,
-  deleteDocument: () => Promise<boolean>
+  addDocument: (
+    file: ActualFileObject,
+    type: DocumentFileType
+  ) => Promise<boolean>,
+  deleteDocument: (type: DocumentFileType) => Promise<boolean>,
+  fileType: DocumentFileType
 ): {
   url: string;
   timeout: number;
@@ -17,7 +23,7 @@ export const getServerSettings = (
     url: './',
     timeout: 15000,
     process: async (_fieldName, file, _metadata, load, error) => {
-      const isOk = await addDocument(file);
+      const isOk = await addDocument(file, fileType);
 
       if (!isOk) {
         error('Failed to upload photo');
@@ -26,7 +32,7 @@ export const getServerSettings = (
       }
     },
     remove: async (_uniqueFileId, load, error) => {
-      const isOk = await deleteDocument();
+      const isOk = await deleteDocument(fileType);
 
       if (!isOk) {
         error('Failed to delete photo');

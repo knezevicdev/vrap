@@ -55,18 +55,23 @@ const VerificationPhotosViewDetail: React.FC<Props> = ({ priceId }) => {
     return Boolean(res && vehiclePhotos[key]);
   }, true);
 
-  const docUploadProps = (
-    fileType: DocumentFileType,
-    title: string
-  ): DocumentUploadProps & { key: string } => ({
-    fileType,
-    handleUpload: handleUpload(fileType),
-    handleDelete: async () => {
+  const handleDelete = useCallback(
+    async (fileType: DocumentFileType) => {
       if (!vin) return false;
       if (!(await deleteVehiclePhoto(vin, priceId, fileType))) return false;
       refetchImages();
       return true;
     },
+    [priceId, refetchImages, vin]
+  );
+
+  const docUploadProps = (
+    fileType: DocumentFileType,
+    title: string
+  ): DocumentUploadProps & { key: string } => ({
+    fileType,
+    handleUpload,
+    handleDelete,
     title,
     vehiclePhoto: vehiclePhotos[fileType],
     key: fileType,
