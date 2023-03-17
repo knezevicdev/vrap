@@ -28,6 +28,7 @@ export class AppraisalStore {
   };
   vehicleHistoryForm: VehicleHistoryForm = {
     hasAccident: '',
+    repairedAfterAccident: '',
     titleStatus: '',
     lienType: '',
     bankName: '',
@@ -59,6 +60,7 @@ export class AppraisalStore {
     damagedElectronic: '',
     damagedDashboardOrPanels: '',
     noInteriorDamage: '',
+    majorDamageInterior: '',
   };
   extConditionForm: ExtConditionForm = {
     afterMarket: [],
@@ -77,6 +79,11 @@ export class AppraisalStore {
     fireDamage: '',
     wornTires: '',
     noExteriorDamage: '',
+    majorDamageExterior: '',
+    panelsWithMajorDamage: 0,
+    frameOrStructuralDamage: '',
+    passStateEmissionStandards: '',
+    windshieldCrackedChipped: '',
   };
   brand = 'Vroom';
   dealership = 'Vroom';
@@ -227,6 +234,7 @@ export class AppraisalStore {
     };
     this.vehicleHistoryForm = {
       hasAccident: '',
+      repairedAfterAccident: '',
       titleStatus: '',
       lienType: '',
       bankName: '',
@@ -258,10 +266,13 @@ export class AppraisalStore {
       damagedElectronic: '',
       damagedDashboardOrPanels: '',
       noInteriorDamage: '',
+      majorDamageInterior: '',
     };
     this.extConditionForm = {
       afterMarket: [],
       dents: '',
+      majorDamageExterior: '',
+      panelsWithMajorDamage: 0,
       exteriorCondition: '',
       hailDamage: '',
       otherAfterMarket: '',
@@ -276,6 +287,9 @@ export class AppraisalStore {
       fireDamage: '',
       wornTires: '',
       noExteriorDamage: '',
+      frameOrStructuralDamage: '',
+      passStateEmissionStandards: '',
+      windshieldCrackedChipped: '',
     };
     this.isEmpty = true;
   }

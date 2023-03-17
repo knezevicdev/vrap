@@ -39,6 +39,10 @@ const useAppraisalFormInit = (
 
   const vehicleHistoryFields = {
     hasAccident: vehicleHistory.hasAccident || '',
+    repairedAfterAccident: {
+      value: vehicleHistory.repairedAfterAccident || '',
+      isRequired: false,
+    },
     titleStatus: vehicleHistory.titleStatus || '',
     state: {
       value: vehicleHistory.state || '',
@@ -65,6 +69,7 @@ const useAppraisalFormInit = (
     damagedElectronic: intCondition.damagedElectronic || 'No',
     damagedDashboardOrPanels: intCondition.damagedDashboardOrPanels || 'No',
     noInteriorDamage: intCondition.noInteriorDamage || 'No',
+    majorDamageInterior: intCondition.majorDamageInterior || 'No',
   };
 
   const extConditionFields = {
@@ -72,6 +77,10 @@ const useAppraisalFormInit = (
     hailDamage: extCondition.hailDamage || '',
     tiresAndWheels: extCondition.tiresAndWheels || '',
     afterMarket: { value: extCondition.afterMarket || [], isRequired: false },
+    passStateEmissionStandards: {
+      value: extCondition.passStateEmissionStandards || '',
+      isRequired: false,
+    },
     otherAfterMarket: {
       value: extCondition.otherAfterMarket || '',
       isRequired: false,
@@ -80,8 +89,16 @@ const useAppraisalFormInit = (
       value: extCondition.rust || '',
       isRequired: true,
     },
+    windshieldCrackedChipped: {
+      value: extCondition.windshieldCrackedChipped || 'No',
+      isRequired: true,
+    },
     dents: {
       value: extCondition.dents || '',
+      isRequired: true,
+    },
+    majorDamageExterior: {
+      value: extCondition.majorDamageExterior || 'No',
       isRequired: true,
     },
     paintChipping: {
@@ -104,10 +121,15 @@ const useAppraisalFormInit = (
       value: extCondition.scratchesPanels || 0,
       isRequired: false,
     },
+    panelsWithMajorDamage: {
+      value: extCondition.panelsWithMajorDamage || 0,
+      isRequired: false,
+    },
     floodDamage: extCondition.floodDamage || 'No',
     fireDamage: extCondition.fireDamage || 'No',
     wornTires: extCondition.wornTires || 'No',
     noExteriorDamage: extCondition.noExteriorDamage || 'No',
+    frameOrStructuralDamage: extCondition.frameOrStructuralDamage || 'No',
   };
 
   const mechConditionFields = {

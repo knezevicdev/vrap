@@ -15,6 +15,7 @@ export interface VehicleInfoForm {
 
 export interface VehicleHistoryForm {
   hasAccident: string;
+  repairedAfterAccident: string;
   titleStatus: string;
   lienType: string;
   bankName: string;
@@ -49,6 +50,7 @@ export interface IntConditionForm {
   damagedElectronic: string;
   damagedDashboardOrPanels: string;
   noInteriorDamage: string;
+  majorDamageInterior: string;
 }
 
 export interface ExtConditionForm {
@@ -68,4 +70,9 @@ export interface ExtConditionForm {
   fireDamage: string;
   wornTires: string;
   noExteriorDamage: string;
+  majorDamageExterior: string;
+  panelsWithMajorDamage: number;
+  frameOrStructuralDamage: string;
+  passStateEmissionStandards: string;
+  windshieldCrackedChipped: string;
 }

@@ -37,6 +37,7 @@ function vehicleInformationData(data: VehicleInfoForm) {
 function vehicleHistoryData(data: VehicleHistoryForm, isTradeIn: boolean) {
   return {
     hasAccident: data.hasAccident,
+    repairedAfterAccident: data.repairedAfterAccident,
     titleStatus: data.titleStatus,
     ...(!isTradeIn && { lienType: getLienType(data.lienType) }),
     ...(!isTradeIn && { bankName: data.bankName }),
@@ -49,6 +50,11 @@ function interiorConditionData(data: IntConditionForm) {
     interiorCondition: data.interiorCondition,
     seats: data.seats,
     smokedIn: data.smokedIn,
+    persistentOdors: data.smokedIn,
+    ripsOrTearsInSeats: data.ripsOrTearsInSeats,
+    damagedElectronic: data.damagedElectronic,
+    noInteriorDamage: data.noInteriorDamage,
+    damagedDashboardOrPanels: data.damagedDashboardOrPanels,
   };
 }
 
@@ -68,6 +74,17 @@ function exteriorConditionData(data: ExtConditionForm) {
       parseInt(String(data.paintChippingPanels), 10),
     scratches: data.scratches,
     scratchesPanels: data.scratchesPanels && parseInt(data.scratchesPanels, 10),
+    majorDamageExterior: data.majorDamageExterior,
+    panelsWithMajorDamage:
+      data.panelsWithMajorDamage &&
+      parseInt(String(data.panelsWithMajorDamage), 10),
+    frameOrStructuralDamage: data.frameOrStructuralDamage,
+    passStateEmissionStandards: data.passStateEmissionStandards,
+    wornTires: data.wornTires,
+    noExteriorDamage: data.noExteriorDamage,
+    fireDamage: data.fireDamage,
+    floodDamage: data.floodDamage,
+    windshieldCrackedChipped: data.windshieldCrackedChipped,
   };
 }
 
@@ -80,6 +97,9 @@ function mechanicalConditionData(data: MechConditionForm) {
     otherWarning: data.otherWarning,
     floodFireDamage: data.floodFireDamage,
     additionalDetails: data.additionalDetails,
+    noMechanicalIssues: data.noMechanicalIssues,
+    engineIssue: data.engineIssue,
+    transmissionIssue: data.transmissionIssue,
   };
 }
 
