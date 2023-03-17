@@ -117,6 +117,7 @@ const useAppraisalFormInit = (
     fireDamage: extCondition.fireDamage || 'No',
     wornTires: extCondition.wornTires || 'No',
     noExteriorDamage: extCondition.noExteriorDamage || 'No',
+    frameOrStructuralDamage: extCondition.frameOrStructuralDamage || 'No',
   };
 
   const mechConditionFields = {

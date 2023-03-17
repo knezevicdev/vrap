@@ -206,6 +206,23 @@ const ExteriorConditionView: React.FC<Props> = ({ fields, form }) => {
         </PanelsWrapper>
       )}
       <StyledCheckbox
+        label="Frame or Structural Damage"
+        onChange={handleCheckChange(
+          fields,
+          'frameOrStructuralDamage',
+          form.updateMultipleFields,
+          ['noExteriorDamage']
+        )}
+        checked={fields.frameOrStructuralDamage?.value === 'Yes'}
+        id="frameOrStructuralDamage"
+        dataQa="frameOrStructuralDamage"
+      />
+      {showMajorDamagePanels && !isMobile && (
+        <PanelsWrapper>
+          <MajorExteriorPanels field={fields.panelsWithMajorDamage} />
+        </PanelsWrapper>
+      )}
+      <StyledCheckbox
         label="No Exterior Damage"
         onChange={handleCheckChange(
           fields,
@@ -221,17 +238,13 @@ const ExteriorConditionView: React.FC<Props> = ({ fields, form }) => {
             'dents',
             'paintChipping',
             'majorDamageExterior',
+            'frameOrStructuralDamage',
           ]
         )}
         checked={fields.noExteriorDamage?.value === 'Yes'}
         id="noExteriorDamage"
         dataQa="noExteriorDamage"
       />
-      {showMajorDamagePanels && !isMobile && (
-        <PanelsWrapper>
-          <MajorExteriorPanels field={fields.panelsWithMajorDamage} />
-        </PanelsWrapper>
-      )}
     </CheckboxesContainer>
   );
 };

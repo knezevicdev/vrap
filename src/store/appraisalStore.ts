@@ -79,7 +79,8 @@ export class AppraisalStore {
     wornTires: '',
     noExteriorDamage: '',
     majorDamageExterior: '',
-    panelsWithMajorDamage: "0",
+    panelsWithMajorDamage: 0,
+    frameOrStructuralDamage: '',
   };
   brand = 'Vroom';
   dealership = 'Vroom';
@@ -282,6 +283,7 @@ export class AppraisalStore {
       fireDamage: '',
       wornTires: '',
       noExteriorDamage: '',
+      frameOrStructuralDamage: '',
     };
     this.isEmpty = true;
   }

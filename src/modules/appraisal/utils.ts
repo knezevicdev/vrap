@@ -72,6 +72,7 @@ function exteriorConditionData(data: ExtConditionForm) {
     panelsWithMajorDamage:
       data.panelsWithMajorDamage &&
       parseInt(String(data.panelsWithMajorDamage), 10),
+    frameOrStructuralDamage: data.frameOrStructuralDamage,
   };
 }
 

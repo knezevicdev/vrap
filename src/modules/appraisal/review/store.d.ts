@@ -71,4 +71,5 @@ export interface ExtConditionForm {
   noExteriorDamage: string;
   majorDamageExterior: string;
   panelsWithMajorDamage: number;
+  frameOrStructuralDamage: string;
 }
