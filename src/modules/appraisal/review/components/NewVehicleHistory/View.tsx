@@ -50,6 +50,16 @@ const NewVehicleHistoryView: React.FC<Props> = ({ viewModel, store }) => {
           <Field>{appraisalDetail?.vehicleHistoryForm?.titleStatus}</Field>
         </Info>
       </Row>
+      {appraisalDetail?.vehicleHistoryForm?.hasAccident === 'Yes' && (
+        <Row>
+          <Info>
+            <Label>Repaired damage</Label>
+            <Field>
+              {appraisalDetail?.vehicleHistoryForm?.repairedAfterAccident}
+            </Field>
+          </Info>
+        </Row>
+      )}
       {appraisalDetail?.vehicleHistoryForm?.lienType && (
         <Row>
           <Info>
@@ -148,6 +158,26 @@ const NewVehicleHistoryView: React.FC<Props> = ({ viewModel, store }) => {
       </Row>
       <Row>
         <Info>
+          <Label>Frame or structural damage</Label>
+          <Field>
+            {appraisalDetail?.extConditionForm?.frameOrStructuralDamage}
+          </Field>
+        </Info>
+        <Info>
+          <Label>Windshield cracked</Label>
+          <Field>
+            {appraisalDetail?.extConditionForm?.windshieldCrackedChipped}
+          </Field>
+        </Info>
+        <Info>
+          <Label>Major damage</Label>
+          <Field>
+            {appraisalDetail?.extConditionForm?.majorDamageExterior}
+          </Field>
+        </Info>
+      </Row>
+      <Row>
+        <Info>
           <Label>Fire Damage</Label>
           <Field>{appraisalDetail?.extConditionForm?.fireDamage}</Field>
         </Info>
@@ -183,6 +213,12 @@ const NewVehicleHistoryView: React.FC<Props> = ({ viewModel, store }) => {
           </Field>
         </Info>
         <Info>
+          <Label>Major damage</Label>
+          <Field>
+            {appraisalDetail?.intConditionForm?.majorDamageInterior}
+          </Field>
+        </Info>
+        <Info>
           <Label>No Interior Damage</Label>
           <Field>{appraisalDetail?.intConditionForm?.noInteriorDamage}</Field>
         </Info>
@@ -215,6 +251,20 @@ const NewVehicleHistoryView: React.FC<Props> = ({ viewModel, store }) => {
           )}
         </Info>
       </Row>
+      {(appraisalDetail?.extConditionForm?.afterMarket.includes('Exhaust') ||
+        appraisalDetail?.extConditionForm?.afterMarket.includes(
+          'Performance'
+        ) ||
+        appraisalDetail?.extConditionForm?.afterMarket.includes('Other')) && (
+        <Row>
+          <Info>
+            <Label>Pass emission standards</Label>
+            <Field>
+              {appraisalDetail?.extConditionForm?.passStateEmissionStandards}
+            </Field>
+          </Info>
+        </Row>
+      )}
     </Container>
   );
 };
