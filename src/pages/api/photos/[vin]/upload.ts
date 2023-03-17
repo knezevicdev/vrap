@@ -1,10 +1,8 @@
 import axios from 'axios';
 import FormData from 'form-data';
-import multer from 'multer';
 import { NextApiRequest, NextApiResponse } from 'next';
 import getConfig from 'next/config';
 import sharp from 'sharp';
-import { Readable } from 'stream';
 
 import logger from '../../../../utils/logger';
 import requestHandler from '../../../../utils/requestHandler';
@@ -17,48 +15,70 @@ export const config = {
   },
 };
 
-const upload = multer({
-  storage: multer.memoryStorage(),
-});
+const chunksMap = new Map();
+const uploadTimeouts = new Map();
 
-interface MulterFile {
-  fieldname: string;
-  originalname: string;
-  encoding: string;
-  mimetype: string;
-  size: number;
-  stream: Readable;
-  destination: string;
-  filename: string;
-  path: string;
-  buffer: Buffer;
-}
+const clearUploadData = (uploadId: string) => {
+  chunksMap.delete(uploadId);
+  uploadTimeouts.delete(uploadId);
+};
 
 export default requestHandler(
   async (req: NextApiRequest, res: NextApiResponse): Promise<void> => {
-    await new Promise((resolve) => {
-      upload.single('image')(req as any, res as any, async function (err) {
-        if (err) {
-          logger.error('Error while multer processing', { error: err });
-          return res.status(403).end();
-        }
+    const { uploadId, chunkIndex, totalChunks, fileType, priceId } = req.query;
+    if (
+      !uploadId ||
+      !chunkIndex ||
+      !totalChunks ||
+      !fileType ||
+      !priceId ||
+      typeof uploadId !== 'string' ||
+      typeof chunkIndex !== 'string' ||
+      typeof totalChunks !== 'string' ||
+      typeof fileType !== 'string' ||
+      typeof priceId !== 'string'
+    ) {
+      res.status(400).end();
+      return;
+    }
 
-        const file = (req as any).file as MulterFile;
-        if (!file) {
-          return res.status(403).end();
-        }
+    clearTimeout(uploadTimeouts.get(uploadId));
+    const timeout = setTimeout(() => clearUploadData(uploadId), 10 * 60 * 1000); // 10 minutes
+    uploadTimeouts.set(uploadId, timeout);
 
-        const imageBuffer = await sharp(file.buffer).jpeg().toBuffer();
+    const chunksArray: any[] = [];
+    req.on('data', (chunk) => {
+      chunksArray.push(chunk);
+    });
 
-        const form = new FormData();
-        form.append(
-          'image',
-          imageBuffer,
-          file.originalname.replace(/\.[^/.]+$/, '') + '.jpeg'
+    req.on('end', async () => {
+      const chunkBuffer = Buffer.concat(chunksArray);
+
+      if (!chunksMap.has(uploadId)) {
+        chunksMap.set(uploadId, []);
+      }
+
+      chunksMap.get(uploadId)[chunkIndex] = chunkBuffer;
+
+      if (chunksMap.get(uploadId).length === parseInt(totalChunks)) {
+        const fileBuffer = Buffer.concat(
+          chunksMap.get(uploadId).filter(Boolean)
         );
 
-        axios
-          .post(
+        let imageBuffer;
+        try {
+          imageBuffer = await sharp(fileBuffer).jpeg().toBuffer();
+        } catch (e) {
+          logger.error('Error while transforming photo', { error: e });
+          res.status(400).end();
+          return;
+        }
+
+        const form = new FormData();
+        form.append('image', imageBuffer, `${priceId}-${fileType}.jpeg`);
+
+        try {
+          const { data } = await axios.post(
             `${serverRuntimeConfig.APPRAISAL_API_URL}/api/v2.0/images/${req.query.vin}?uploaderType=verification`,
             form,
             {
@@ -69,17 +89,17 @@ export default requestHandler(
                 APIKEY: serverRuntimeConfig.APPRAISAL_API_API_KEY,
               },
             }
-          )
-          .then((dataRes) => {
-            res.json(dataRes.data);
-            resolve(null);
-          })
-          .catch((e) => {
-            logger.error('Error while uploading photo', { error: e });
-            res.status(403).end();
-            resolve(null);
-          });
-      });
+          );
+          res.json(data);
+        } catch (e) {
+          logger.error('Error while uploading photo', { error: e });
+          res.status(403).end();
+        }
+
+        clearUploadData(uploadId);
+      } else {
+        res.status(200).end(`Chunk ${chunkIndex} uploaded`);
+      }
     });
   },
   {

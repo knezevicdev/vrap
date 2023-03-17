@@ -1,13 +1,11 @@
 import { FilePondErrorDescription } from 'filepond';
-import { useRef } from 'react';
+import { useCallback, useRef } from 'react';
 
 import AnalyticsHandler from '../../../../integrations/AnalyticsHandler';
 import { DocumentFileType } from '../utils/uploadVerificationDocument';
 
 interface UseHandleError {
-  handleError: (
-    type: DocumentFileType
-  ) => (e: FilePondErrorDescription) => void;
+  handleError: (e: FilePondErrorDescription, type: DocumentFileType) => void;
 }
 
 interface FilepondError {
@@ -18,12 +16,13 @@ interface FilepondError {
 const useHandleError = (priceId: string): UseHandleError => {
   const analyticsHandler = useRef(new AnalyticsHandler());
 
-  const handleError =
-    (type: DocumentFileType) =>
-    (err: FilePondErrorDescription): void => {
+  const handleError = useCallback(
+    (err: FilePondErrorDescription, type: DocumentFileType): void => {
       const e = err as unknown as FilepondError;
       analyticsHandler.current.trackDocTypeUploadError(type, priceId, e.main);
-    };
+    },
+    [priceId]
+  );
 
   return {
     handleError,

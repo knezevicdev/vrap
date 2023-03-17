@@ -79,9 +79,9 @@ const VerificationDocumentsViewDetail: React.FC<Props> = ({ priceId }) => {
     title: string
   ): DocumentUploadProps => ({
     fileType,
-    handleUpload: handleUpload(fileType),
-    handleDelete: handleDelete(fileType),
-    handleError: handleError(fileType),
+    handleUpload,
+    handleDelete,
+    handleError,
     title,
     verificationDocument: verificationDocuments?.find(
       (verificationDocument) => verificationDocument.fileType === fileType

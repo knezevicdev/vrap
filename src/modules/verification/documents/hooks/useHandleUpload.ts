@@ -1,5 +1,5 @@
 import { ActualFileObject } from 'filepond';
-import { useRef } from 'react';
+import { useCallback, useRef } from 'react';
 
 import {
   DocumentFileType,
@@ -11,16 +11,17 @@ import AnalyticsHandler from 'src/integrations/AnalyticsHandler';
 
 interface UseHandleUpload {
   handleUpload: (
+    file: ActualFileObject,
     type: DocumentFileType
-  ) => (file: ActualFileObject) => Promise<boolean>;
+  ) => Promise<boolean>;
 }
 
 const useHandleUpload = (priceId: string): UseHandleUpload => {
   const { store } = useAppStore();
   const analyticsHandler = useRef(new AnalyticsHandler());
 
-  const handleUpload =
-    (type: DocumentFileType) => async (file: ActualFileObject) => {
+  const handleUpload = useCallback(
+    async (file: ActualFileObject, type: DocumentFileType) => {
       try {
         const { verificationKey, fileId } = await uploadVerificationDocument(
           file,
@@ -47,7 +48,9 @@ const useHandleUpload = (priceId: string): UseHandleUpload => {
         );
         return false;
       }
-    };
+    },
+    [priceId, store.verification]
+  );
 
   return {
     handleUpload,
