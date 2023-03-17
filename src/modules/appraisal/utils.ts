@@ -50,6 +50,11 @@ function interiorConditionData(data: IntConditionForm) {
     interiorCondition: data.interiorCondition,
     seats: data.seats,
     smokedIn: data.smokedIn,
+    persistentOdors: data.smokedIn,
+    ripsOrTearsInSeats: data.ripsOrTearsInSeats,
+    damagedElectronic: data.damagedElectronic,
+    noInteriorDamage: data.noInteriorDamage,
+    damagedDashboardOrPanels: data.damagedDashboardOrPanels,
   };
 }
 
@@ -75,6 +80,10 @@ function exteriorConditionData(data: ExtConditionForm) {
       parseInt(String(data.panelsWithMajorDamage), 10),
     frameOrStructuralDamage: data.frameOrStructuralDamage,
     passStateEmissionStandards: data.passStateEmissionStandards,
+    wornTires: data.wornTires,
+    noExteriorDamage: data.noExteriorDamage,
+    fireDamage: data.fireDamage,
+    floodDamage: data.floodDamage,
   };
 }
 
@@ -87,6 +96,9 @@ function mechanicalConditionData(data: MechConditionForm) {
     otherWarning: data.otherWarning,
     floodFireDamage: data.floodFireDamage,
     additionalDetails: data.additionalDetails,
+    noMechanicalIssues: data.noMechanicalIssues,
+    engineIssue: data.engineIssue,
+    transmissionIssue: data.transmissionIssue,
   };
 }
 
