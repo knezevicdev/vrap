@@ -84,6 +84,7 @@ function exteriorConditionData(data: ExtConditionForm) {
     noExteriorDamage: data.noExteriorDamage,
     fireDamage: data.fireDamage,
     floodDamage: data.floodDamage,
+    windshieldCrackedChipped: data.windshieldCrackedChipped,
   };
 }
 

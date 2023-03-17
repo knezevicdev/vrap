@@ -74,4 +74,5 @@ export interface ExtConditionForm {
   panelsWithMajorDamage: number;
   frameOrStructuralDamage: string;
   passStateEmissionStandards: string;
+  windshieldCrackedChipped: string;
 }

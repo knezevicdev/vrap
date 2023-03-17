@@ -89,6 +89,10 @@ const useAppraisalFormInit = (
       value: extCondition.rust || '',
       isRequired: true,
     },
+    windshieldCrackedChipped: {
+      value: extCondition.windshieldCrackedChipped || 'No',
+      isRequired: true,
+    },
     dents: {
       value: extCondition.dents || '',
       isRequired: true,

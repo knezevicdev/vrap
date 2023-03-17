@@ -189,22 +189,17 @@ const ExteriorConditionView: React.FC<Props> = ({ fields, form }) => {
         description="At least one tire needing replacement"
       />
       <StyledCheckbox
-        label="Major Damage"
+        label="Windshield is cracked/chipped"
         onChange={handleCheckChange(
           fields,
-          'majorDamageExterior',
+          'windshieldCrackedChipped',
           form.updateMultipleFields,
           ['noExteriorDamage']
         )}
-        checked={fields.majorDamageExterior.value === 'Yes'}
-        id="majorDamageExterior"
-        dataQa="majorDamageExterior"
+        checked={fields.windshieldCrackedChipped?.value === 'Yes'}
+        id="windshieldCrackedChipped"
+        dataQa="windshieldCrackedChipped"
       />
-      {showMajorDamagePanels && isMobile && (
-        <PanelsWrapper>
-          <MajorExteriorPanels field={fields.panelsWithMajorDamage} />
-        </PanelsWrapper>
-      )}
       <StyledCheckbox
         label="Frame or Structural Damage"
         onChange={handleCheckChange(
@@ -217,7 +212,19 @@ const ExteriorConditionView: React.FC<Props> = ({ fields, form }) => {
         id="frameOrStructuralDamage"
         dataQa="frameOrStructuralDamage"
       />
-      {showMajorDamagePanels && !isMobile && (
+      <StyledCheckbox
+        label="Major Damage"
+        onChange={handleCheckChange(
+          fields,
+          'majorDamageExterior',
+          form.updateMultipleFields,
+          ['noExteriorDamage']
+        )}
+        checked={fields.majorDamageExterior.value === 'Yes'}
+        id="majorDamageExterior"
+        dataQa="majorDamageExterior"
+      />
+      {showMajorDamagePanels && isMobile && (
         <PanelsWrapper>
           <MajorExteriorPanels field={fields.panelsWithMajorDamage} />
         </PanelsWrapper>
@@ -239,12 +246,18 @@ const ExteriorConditionView: React.FC<Props> = ({ fields, form }) => {
             'paintChipping',
             'majorDamageExterior',
             'frameOrStructuralDamage',
+            'windshieldCrackedChipped',
           ]
         )}
         checked={fields.noExteriorDamage?.value === 'Yes'}
         id="noExteriorDamage"
         dataQa="noExteriorDamage"
       />
+      {showMajorDamagePanels && !isMobile && (
+        <PanelsWrapper>
+          <MajorExteriorPanels field={fields.panelsWithMajorDamage} />
+        </PanelsWrapper>
+      )}
     </CheckboxesContainer>
   );
 };

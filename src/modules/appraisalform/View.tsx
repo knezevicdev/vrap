@@ -254,6 +254,7 @@ const AppraisalForm: React.FC<Props> = ({ viewModel }) => {
         'majorDamageExterior',
         'frameOrStructuralDamage',
         'noExteriorDamage',
+        'windshieldCrackedChipped',
       ]
     );
 

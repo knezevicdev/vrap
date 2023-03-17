@@ -83,6 +83,7 @@ export class AppraisalStore {
     panelsWithMajorDamage: 0,
     frameOrStructuralDamage: '',
     passStateEmissionStandards: '',
+    windshieldCrackedChipped: '',
   };
   brand = 'Vroom';
   dealership = 'Vroom';
@@ -287,7 +288,8 @@ export class AppraisalStore {
       wornTires: '',
       noExteriorDamage: '',
       frameOrStructuralDamage: '',
-      passStateEmissionStandards: ''
+      passStateEmissionStandards: '',
+      windshieldCrackedChipped: '',
     };
     this.isEmpty = true;
   }
