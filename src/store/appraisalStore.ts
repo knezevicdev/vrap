@@ -28,6 +28,7 @@ export class AppraisalStore {
   };
   vehicleHistoryForm: VehicleHistoryForm = {
     hasAccident: '',
+    repairedAfterAccident: '',
     titleStatus: '',
     lienType: '',
     bankName: '',
@@ -231,6 +232,7 @@ export class AppraisalStore {
     };
     this.vehicleHistoryForm = {
       hasAccident: '',
+      repairedAfterAccident: '',
       titleStatus: '',
       lienType: '',
       bankName: '',

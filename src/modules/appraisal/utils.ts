@@ -37,6 +37,7 @@ function vehicleInformationData(data: VehicleInfoForm) {
 function vehicleHistoryData(data: VehicleHistoryForm, isTradeIn: boolean) {
   return {
     hasAccident: data.hasAccident,
+    repairedAfterAccident: data.repairedAfterAccident,
     titleStatus: data.titleStatus,
     ...(!isTradeIn && { lienType: getLienType(data.lienType) }),
     ...(!isTradeIn && { bankName: data.bankName }),

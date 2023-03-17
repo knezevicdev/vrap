@@ -39,6 +39,10 @@ const useAppraisalFormInit = (
 
   const vehicleHistoryFields = {
     hasAccident: vehicleHistory.hasAccident || '',
+    repairedAfterAccident: {
+      value: vehicleHistory.repairedAfterAccident || '',
+      isRequired: false,
+    },
     titleStatus: vehicleHistory.titleStatus || '',
     state: {
       value: vehicleHistory.state || '',

@@ -9,6 +9,7 @@ import { UseForm } from '../componentInterfaces.d';
 import BankNameInput from '../forminputs/BankNameInput';
 import HasAccidentInput from '../forminputs/HasAccidentInput';
 import LienholderInput from '../forminputs/LienholderInput';
+import RepairedDamageInput from '../forminputs/RepairedDamageInput';
 import StateOfPurchaseInput from '../forminputs/StateOfPurchaseInput';
 import TitleStatusInput from '../forminputs/TitleStatusInput';
 
@@ -20,6 +21,7 @@ interface Props {
 const VehicleHistoryView: React.FC<Props> = ({ fields, form }) => {
   const lienholderRef = useRef<string>();
   const isTradeInRef = useRef<boolean>();
+  const hasAccidentRef = useRef<string>();
   const { store } = useAppStore();
   const { isTradeIn } = store.appraisal;
 
@@ -56,9 +58,27 @@ const VehicleHistoryView: React.FC<Props> = ({ fields, form }) => {
     }
   }, [fields.bankName, fields.lienType, fields.state, form, isTradeIn]);
 
+  useEffect(() => {
+    if (hasAccidentRef.current !== fields.hasAccident.value) {
+      hasAccidentRef.current = fields.hasAccident.value;
+
+      fields.repairedAfterAccident.onChange({
+        ...fields.repairedAfterAccident,
+        isRequired: fields.hasAccident.value === 'Yes',
+        value:
+          fields.hasAccident.value === 'Yes'
+            ? fields.repairedAfterAccident.value
+            : '',
+      });
+    }
+  }, [fields.hasAccident.value, fields.repairedAfterAccident]);
+
   return (
     <>
       <HasAccidentInput field={fields.hasAccident} />
+      {fields.hasAccident.value === 'Yes' ? (
+        <RepairedDamageInput field={fields.repairedAfterAccident} />
+      ) : null}
       {isTradeIn && (
         <StateOfPurchaseInput field={fields.state} onKeyPressEnter={noop} />
       )}
