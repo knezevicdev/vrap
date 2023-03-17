@@ -55,6 +55,7 @@ function interiorConditionData(data: IntConditionForm) {
     damagedElectronic: data.damagedElectronic,
     noInteriorDamage: data.noInteriorDamage,
     damagedDashboardOrPanels: data.damagedDashboardOrPanels,
+    majorDamageInterior: data.majorDamageInterior,
   };
 }
 
