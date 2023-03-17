@@ -1,26 +1,28 @@
 import { Checkbox, Tooltip, Typography } from '@vroom-web/ui-lib';
 import { omit } from 'lodash';
-import React, { useState } from 'react';
-import styled, { css } from 'styled-components';
+import React, { useEffect, useRef, useState } from 'react';
+import styled from 'styled-components';
 
 import { FormField, GenericObject } from '../../../../interfaces.d';
 import useForm from '../useForm';
+import EmissionStandardInput from './EmissionStandardInput';
 import { FormFields } from './Inputs.language';
 import OtherAfterMarketInput from './OtherAfterMarketInput';
 
 interface Props {
   field: FormField;
+  emissionField: FormField;
   className?: string;
   otherAfterMarketField: FormField;
-  newForm?: boolean;
 }
 
 const AlternateAfterMarketModsOptionsGroup: React.FC<Props> = ({
   field,
   className,
   otherAfterMarketField,
-  newForm,
+  emissionField,
 }) => {
+  const lastEnabledEmissionRef = useRef<boolean>();
   const [checkedValuesForParent, setCheckedValuesForParent] = useState(
     [] as string[]
   );
@@ -33,6 +35,23 @@ const AlternateAfterMarketModsOptionsGroup: React.FC<Props> = ({
     FormFields.alternateAfterMarket.performance,
     FormFields.alternateAfterMarket.other,
   ];
+
+  const showEmissionField =
+    field.value.includes(FormFields.alternateAfterMarket.exhaust) ||
+    field.value.includes(FormFields.alternateAfterMarket.performance) ||
+    field.value.includes(FormFields.alternateAfterMarket.other);
+
+  useEffect(() => {
+    if (lastEnabledEmissionRef.current !== showEmissionField) {
+      lastEnabledEmissionRef.current = showEmissionField;
+
+      emissionField.onChange({
+        ...emissionField,
+        isRequired: showEmissionField,
+        value: showEmissionField ? emissionField.value : '',
+      });
+    }
+  }, [emissionField, showEmissionField]);
 
   const { onChange } = field;
   const optionsDefaultVals = options.reduce((result, opt) => {
@@ -91,7 +110,6 @@ const AlternateAfterMarketModsOptionsGroup: React.FC<Props> = ({
           key={key}
           htmlFor={key + '-checkbox'}
           checked={!!typedOption.value}
-          newForm={newForm}
         >
           <Checkbox
             name={key}
@@ -124,6 +142,9 @@ const AlternateAfterMarketModsOptionsGroup: React.FC<Props> = ({
           field={otherAfterMarketField}
         />
       )}
+      {showEmissionField ? (
+        <EmissionStandardInput field={emissionField} />
+      ) : null}
     </div>
   );
 };
@@ -168,33 +189,26 @@ const AfterMarketModsOptionsLabel = styled(Typography.Body.Regular)`
 `;
 
 interface AfterMarketModsOptionProps {
-  newForm?: boolean;
   checked?: boolean;
 }
 
 const AfterMarketModsOption = styled((props) => (
-  <li {...omit(props, ['checked', 'newForm'])} />
+  <li {...omit(props, ['checked'])} />
 ))<AfterMarketModsOptionProps>`
-  padding: 0 0 8px;
+  padding: 1px 0 9px;
+  display: flex;
 
-  ${({ newForm }) =>
-    newForm &&
-    css<AfterMarketModsOptionProps>`
-      padding: 1px 0 9px;
-      display: flex;
-
-      label::before {
-        background-color: ${({ checked }) => (checked ? '#E71321' : '#f5f5f5')};
-        border-color: #979797;
-        border-radius: 4px;
-        min-width: 22px;
-        min-height: 22px;
-        max-width: 22px;
-        max-height: 22px;
-        height: 22px;
-        width: 22px;
-      }
-    `}
+  label::before {
+    background-color: ${({ checked }) => (checked ? '#E71321' : '#f5f5f5')};
+    border-color: #979797;
+    border-radius: 4px;
+    min-width: 22px;
+    min-height: 22px;
+    max-width: 22px;
+    max-height: 22px;
+    height: 22px;
+    width: 22px;
+  }
 `;
 
 export default AlternateAfterMarketModsOptionsGroup;

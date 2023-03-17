@@ -74,6 +74,7 @@ function exteriorConditionData(data: ExtConditionForm) {
       data.panelsWithMajorDamage &&
       parseInt(String(data.panelsWithMajorDamage), 10),
     frameOrStructuralDamage: data.frameOrStructuralDamage,
+    passStateEmissionStandards: data.passStateEmissionStandards,
   };
 }
 
