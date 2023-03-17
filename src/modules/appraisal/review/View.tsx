@@ -10,13 +10,9 @@ import React, { useEffect, useRef, useState } from 'react';
 import ReCAPTCHA from 'react-google-recaptcha';
 import styled from 'styled-components';
 
-import ExteriorCondition from './components/ExteriorCondition';
-import InteriorCondition from './components/InteriorCondition';
-import MechanicalCondition from './components/MechanicalCondition';
 import NewVehicleHistory from './components/NewVehicleHistory';
 import OfferDialog from './components/OfferDialog';
 import PersonalInformation from './components/PersonalInformation';
-import VehicleHistory from './components/VehicleHistory';
 import VehicleInformation from './components/VehicleInformation';
 import ViewModel from './ViewModel';
 const { publicRuntimeConfig } = getConfig();
@@ -31,7 +27,6 @@ const AppraisalReviewViewDetail: React.FC<Props> = ({ viewModel }) => {
   const submitButtonClasses = ['btn', 'btn-primary', 'finish-section-btn'];
   const canSubmit = !(isLoading || viewModel.appraisalStore ? true : false);
   const recaptchaRef = useRef<ReCAPTCHA>(null);
-  const isNewForm = viewModel.isNewFormExperimentActive();
 
   useEffect(() => {
     viewModel.setTradeFormType();
@@ -92,19 +87,7 @@ const AppraisalReviewViewDetail: React.FC<Props> = ({ viewModel }) => {
       <Line />
       <VehicleInformation />
       <Line />
-      {isNewForm ? (
-        <NewVehicleHistory />
-      ) : (
-        <>
-          <VehicleHistory />
-          <Line />
-          <InteriorCondition />
-          <Line />
-          <ExteriorCondition />
-          <Line />
-          <MechanicalCondition />
-        </>
-      )}
+      <NewVehicleHistory />
       <Line />
       <PersonalInformation />
       <SubmitContainer>

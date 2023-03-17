@@ -59,6 +59,7 @@ export class AppraisalStore {
     damagedElectronic: '',
     damagedDashboardOrPanels: '',
     noInteriorDamage: '',
+    majorDamageInterior: '',
   };
   extConditionForm: ExtConditionForm = {
     afterMarket: [],
@@ -77,6 +78,8 @@ export class AppraisalStore {
     fireDamage: '',
     wornTires: '',
     noExteriorDamage: '',
+    majorDamageExterior: '',
+    panelsWithMajorDamage: "0",
   };
   brand = 'Vroom';
   dealership = 'Vroom';
@@ -258,10 +261,13 @@ export class AppraisalStore {
       damagedElectronic: '',
       damagedDashboardOrPanels: '',
       noInteriorDamage: '',
+      majorDamageInterior: '',
     };
     this.extConditionForm = {
       afterMarket: [],
       dents: '',
+      majorDamageExterior: '',
+      panelsWithMajorDamage: 0,
       exteriorCondition: '',
       hailDamage: '',
       otherAfterMarket: '',

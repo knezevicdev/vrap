@@ -68,6 +68,10 @@ function exteriorConditionData(data: ExtConditionForm) {
       parseInt(String(data.paintChippingPanels), 10),
     scratches: data.scratches,
     scratchesPanels: data.scratchesPanels && parseInt(data.scratchesPanels, 10),
+    majorDamageExterior: data.majorDamageExterior,
+    panelsWithMajorDamage:
+      data.panelsWithMajorDamage &&
+      parseInt(String(data.panelsWithMajorDamage), 10),
   };
 }
 

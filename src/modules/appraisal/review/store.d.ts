@@ -49,6 +49,7 @@ export interface IntConditionForm {
   damagedElectronic: string;
   damagedDashboardOrPanels: string;
   noInteriorDamage: string;
+  majorDamageInterior: string;
 }
 
 export interface ExtConditionForm {
@@ -68,4 +69,6 @@ export interface ExtConditionForm {
   fireDamage: string;
   wornTires: string;
   noExteriorDamage: string;
+  majorDamageExterior: string;
+  panelsWithMajorDamage: number;
 }

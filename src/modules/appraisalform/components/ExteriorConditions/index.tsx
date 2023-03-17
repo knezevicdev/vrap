@@ -6,12 +6,11 @@ import View from './View';
 
 interface Props {
   fields: any;
-  newForm?: boolean;
   form: UseForm;
 }
 
-const ExteriorConditions: React.FC<Props> = ({ fields, newForm, form }) => {
-  return <View fields={fields} newForm={newForm} form={form} />;
+const ExteriorConditions: React.FC<Props> = ({ fields, form }) => {
+  return <View fields={fields} form={form} />;
 };
 
 export default observer(ExteriorConditions);

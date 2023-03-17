@@ -65,6 +65,7 @@ const useAppraisalFormInit = (
     damagedElectronic: intCondition.damagedElectronic || 'No',
     damagedDashboardOrPanels: intCondition.damagedDashboardOrPanels || 'No',
     noInteriorDamage: intCondition.noInteriorDamage || 'No',
+    majorDamageInterior: intCondition.majorDamageInterior || 'No',
   };
 
   const extConditionFields = {
@@ -82,6 +83,10 @@ const useAppraisalFormInit = (
     },
     dents: {
       value: extCondition.dents || '',
+      isRequired: true,
+    },
+    majorDamageExterior: {
+      value: extCondition.majorDamageExterior || 'No',
       isRequired: true,
     },
     paintChipping: {
@@ -102,6 +107,10 @@ const useAppraisalFormInit = (
     },
     scratchesPanels: {
       value: extCondition.scratchesPanels || 0,
+      isRequired: false,
+    },
+    panelsWithMajorDamage: {
+      value: extCondition.panelsWithMajorDamage || 0,
       isRequired: false,
     },
     floodDamage: extCondition.floodDamage || 'No',

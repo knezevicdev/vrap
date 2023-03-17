@@ -251,6 +251,7 @@ const AppraisalForm: React.FC<Props> = ({ viewModel }) => {
         'scratches',
         'dents',
         'paintChipping',
+        'majorDamageExterior',
         'noExteriorDamage',
       ]
     );
@@ -262,6 +263,7 @@ const AppraisalForm: React.FC<Props> = ({ viewModel }) => {
         'damagedElectronic',
         'smokedIn',
         'ripsOrTearsInSeats',
+        'majorDamageInterior',
         'noInteriorDamage',
       ]
     );

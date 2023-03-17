@@ -24,7 +24,7 @@ const CombinedVehicleInfoForms = (props: Props): ReactNode => {
       <Heading>Mechanical & Electrical Issues</Heading>
       <MechanicalCondition {...props} newForm />
       <Heading>Exterior Damage</Heading>
-      <ExteriorCondition {...props} newForm />
+      <ExteriorCondition {...props} />
       <Heading>Interior Damage</Heading>
       <InteriorCondition {...props} newForm />
       <AftermarketInput
