@@ -33,6 +33,13 @@ const combinedFormNextIntercept =
     ) {
       exteriorCondition = FormFields.extCondition.aboveAverage.label;
     }
+    if (
+      appraisalUseForm.vehicleHistoryForm.fields.hasAccident.value === 'Yes' &&
+      appraisalUseForm.vehicleHistoryForm.fields.repairedAfterAccident.value ===
+        'No'
+    ) {
+      exteriorCondition = FormFields.extCondition.belowAverage.label;
+    }
     // tiresAndWheels
     let tiresAndWheels = FormFields.tireMiles.underFive.label;
     if (appraisalUseForm.extConditionForm.fields.wornTires.value === 'Yes') {
