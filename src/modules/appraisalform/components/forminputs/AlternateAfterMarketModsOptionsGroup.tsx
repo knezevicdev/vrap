@@ -1,6 +1,6 @@
 import { Checkbox, Tooltip, Typography } from '@vroom-web/ui-lib';
 import { omit } from 'lodash';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef } from 'react';
 import styled from 'styled-components';
 
 import { FormField, GenericObject } from '../../../../interfaces.d';
@@ -23,9 +23,6 @@ const AlternateAfterMarketModsOptionsGroup: React.FC<Props> = ({
   emissionField,
 }) => {
   const lastEnabledEmissionRef = useRef<boolean>();
-  const [checkedValuesForParent, setCheckedValuesForParent] = useState(
-    [] as string[]
-  );
   const options = [
     FormFields.alternateAfterMarket.stereo,
     // FormFields.alternateAfterMarket.sunroof,
@@ -65,7 +62,9 @@ const AlternateAfterMarketModsOptionsGroup: React.FC<Props> = ({
   const optionsGroupForm = useForm({ defaultValues: optionsDefaultVals });
 
   const handleOptionClick = (key: string, clickedCheckbox: GenericObject) => {
-    const localCheckedValuesForParent = [...checkedValuesForParent];
+    const localCheckedValuesForParent = Object.entries(optionsGroupForm.fields)
+      .filter(([, field]) => (field as FormField).value)
+      .map(([key]) => key);
 
     if (
       !clickedCheckbox.value &&
@@ -94,7 +93,6 @@ const AlternateAfterMarketModsOptionsGroup: React.FC<Props> = ({
       });
     }
 
-    setCheckedValuesForParent([...localCheckedValuesForParent]);
     onChange({
       ...field,
       value: localCheckedValuesForParent,
