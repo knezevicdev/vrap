@@ -15,26 +15,12 @@ export const config = {
   },
 };
 
-const chunksMap = new Map();
-const uploadTimeouts = new Map();
-
-const clearUploadData = (uploadId: string) => {
-  chunksMap.delete(uploadId);
-  uploadTimeouts.delete(uploadId);
-};
-
 export default requestHandler(
   async (req: NextApiRequest, res: NextApiResponse): Promise<void> => {
-    const { uploadId, chunkIndex, totalChunks, fileType, priceId } = req.query;
+    const { fileType, priceId } = req.query;
     if (
-      !uploadId ||
-      !chunkIndex ||
-      !totalChunks ||
       !fileType ||
       !priceId ||
-      typeof uploadId !== 'string' ||
-      typeof chunkIndex !== 'string' ||
-      typeof totalChunks !== 'string' ||
       typeof fileType !== 'string' ||
       typeof priceId !== 'string'
     ) {
@@ -42,63 +28,44 @@ export default requestHandler(
       return;
     }
 
-    clearTimeout(uploadTimeouts.get(uploadId));
-    const timeout = setTimeout(() => clearUploadData(uploadId), 10 * 60 * 1000); // 10 minutes
-    uploadTimeouts.set(uploadId, timeout);
-
     const chunksArray: any[] = [];
     req.on('data', (chunk) => {
       chunksArray.push(chunk);
     });
 
     req.on('end', async () => {
-      const chunkBuffer = Buffer.concat(chunksArray);
+      const combinedChunks = Buffer.concat(chunksArray);
 
-      if (!chunksMap.has(uploadId)) {
-        chunksMap.set(uploadId, []);
+      let imageBuffer;
+      try {
+        imageBuffer = await sharp(combinedChunks).jpeg().toBuffer();
+      } catch (e) {
+        logger.error('Error while transforming photo', { error: e });
+        res.status(400).end();
+        return;
       }
 
-      chunksMap.get(uploadId)[chunkIndex] = chunkBuffer;
+      const form = new FormData();
+      form.append('image', imageBuffer, `${priceId}-${fileType}.jpeg`);
 
-      if (chunksMap.get(uploadId).length === parseInt(totalChunks)) {
-        const fileBuffer = Buffer.concat(
-          chunksMap.get(uploadId).filter(Boolean)
+      try {
+        const { data } = await axios.post(
+          `${serverRuntimeConfig.APPRAISAL_API_URL}/api/v2.0/images/${req.query.vin}?uploaderType=verification`,
+          form,
+          {
+            headers: {
+              // eslint-disable-next-line @typescript-eslint/naming-convention
+              'Content-Type': `multipart/form-data; boundary=${
+                (form as any)._boundary
+              }`,
+              APIKEY: serverRuntimeConfig.APPRAISAL_API_API_KEY,
+            },
+          }
         );
-
-        let imageBuffer;
-        try {
-          imageBuffer = await sharp(fileBuffer).jpeg().toBuffer();
-        } catch (e) {
-          logger.error('Error while transforming photo', { error: e });
-          res.status(400).end();
-          return;
-        }
-
-        const form = new FormData();
-        form.append('image', imageBuffer, `${priceId}-${fileType}.jpeg`);
-
-        try {
-          const { data } = await axios.post(
-            `${serverRuntimeConfig.APPRAISAL_API_URL}/api/v2.0/images/${req.query.vin}?uploaderType=verification`,
-            form,
-            {
-              headers: {
-                'Content-Type': `multipart/form-data; boundary=${
-                  (form as any)._boundary
-                }`,
-                APIKEY: serverRuntimeConfig.APPRAISAL_API_API_KEY,
-              },
-            }
-          );
-          res.json(data);
-        } catch (e) {
-          logger.error('Error while uploading photo', { error: e });
-          res.status(403).end();
-        }
-
-        clearUploadData(uploadId);
-      } else {
-        res.status(200).end(`Chunk ${chunkIndex} uploaded`);
+        res.json(data);
+      } catch (e) {
+        logger.error('Error while uploading photo', { error: e });
+        res.status(403).end();
       }
     });
   },
