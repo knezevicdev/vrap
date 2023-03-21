@@ -1,5 +1,6 @@
 import { addStyleForMobile } from '@vroom-web/ui-lib';
 import { noop } from 'lodash';
+import { observer } from 'mobx-react';
 import React, { useEffect, useRef } from 'react';
 import styled from 'styled-components';
 
@@ -18,9 +19,8 @@ interface Props {
   form: UseForm;
 }
 
-const VehicleHistoryView: React.FC<Props> = ({ fields, form }) => {
+const VehicleHistoryView: React.FC<Props> = ({ fields }) => {
   const lienholderRef = useRef<string>();
-  const isTradeInRef = useRef<boolean>();
   const hasAccidentRef = useRef<string>();
   const { store } = useAppStore();
   const { isTradeIn } = store.appraisal;
@@ -36,27 +36,6 @@ const VehicleHistoryView: React.FC<Props> = ({ fields, form }) => {
       });
     }
   }, [fields.lienType.value, fields.bankName, isTradeIn]);
-
-  useEffect(() => {
-    if (isTradeInRef.current !== isTradeIn) {
-      isTradeInRef.current = isTradeIn;
-
-      form.updateMultipleFields({
-        lienType: {
-          ...fields.lienType,
-          isRequired: !isTradeIn,
-        },
-        bankName: {
-          ...fields.bankName,
-          isRequired: !isTradeIn && fields.lienType.value !== 'Neither',
-        },
-        state: {
-          ...fields.state,
-          isRequired: isTradeIn,
-        },
-      });
-    }
-  }, [fields.bankName, fields.lienType, fields.state, form, isTradeIn]);
 
   useEffect(() => {
     if (hasAccidentRef.current !== fields.hasAccident.value) {
@@ -106,4 +85,4 @@ const LxInputContainer = styled.div`
   `)}
 `;
 
-export default VehicleHistoryView;
+export default observer(VehicleHistoryView);

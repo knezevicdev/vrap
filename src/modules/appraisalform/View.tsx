@@ -8,9 +8,6 @@ import { useRestrictedAppraisal } from '../../integrations/RestrictedAppraisalCo
 import {
   AppraisalTitle,
   CancelTradeText,
-  ExtConditionText,
-  IntConditionText,
-  MechConditionText,
   PersonalInfoText,
   ReviewText,
   SaveText,
@@ -18,13 +15,9 @@ import {
   VehicleInfoText,
 } from './AppraisalForm.language';
 import CombinedVehicleInfoForms from './components/CombinedVehicleInfoForm';
-import ExteriorCondition from './components/ExteriorConditions';
-import InteriorCondition from './components/interiorcondition';
-import MechanicalCondition from './components/mechanicalcondition';
 import MultiStepForm from './components/MultiStepForm';
 import PersonalInformation from './components/personalinformation';
 import useFormInit from './components/useFormInit';
-import VehicleHistory from './components/VehicleHistory';
 import VehicleInformation from './components/VehicleInformation';
 import EmailCapture from './Dialog/EmailCapture';
 import useTrackActive from './Dialog/EmailCapture/trackActive';
@@ -110,7 +103,8 @@ const AppraisalForm: React.FC<Props> = ({ viewModel }) => {
     extCondition,
     mechCondition,
     yourInformation,
-    vinForPath
+    vinForPath,
+    isTradeIn
   );
 
   const checkOdometer = async (): Promise<boolean | void> => {
@@ -360,61 +354,26 @@ const AppraisalForm: React.FC<Props> = ({ viewModel }) => {
     isNewForm,
   ]);
 
-  const sections = isNewForm
-    ? [
-        {
-          component: VehicleInformation,
-          form: appraisalUseForm.vehicleInfoForm,
-          title: VehicleInfoText.title,
-          onNextIntercept: onNextIntercept,
-        },
-        {
-          component: CombinedVehicleInfoForms,
-          form: combinedVehicleInformationForm,
-          title: 'Vehicle History & Condition',
-          subTitle: VehicleHistoryText.subTitle,
-          onNextIntercept: combinedFormNextIntercept(appraisalUseForm),
-        },
-        {
-          component: PersonalInformation,
-          form: appraisalUseForm.personalInfoForm,
-          title: PersonalInfoText.title,
-        },
-      ]
-    : [
-        {
-          component: VehicleInformation,
-          form: appraisalUseForm.vehicleInfoForm,
-          title: VehicleInfoText.title,
-          onNextIntercept: onNextIntercept,
-        },
-        {
-          component: VehicleHistory,
-          form: appraisalUseForm.vehicleHistoryForm,
-          title: VehicleHistoryText.title,
-          subTitle: VehicleHistoryText.subTitle,
-        },
-        {
-          component: InteriorCondition,
-          form: appraisalUseForm.intConditionForm,
-          title: IntConditionText.title,
-        },
-        {
-          component: ExteriorCondition,
-          form: appraisalUseForm.extConditionForm,
-          title: ExtConditionText.title,
-        },
-        {
-          component: MechanicalCondition,
-          form: appraisalUseForm.mechConditionForm,
-          title: MechConditionText.title,
-        },
-        {
-          component: PersonalInformation,
-          form: appraisalUseForm.personalInfoForm,
-          title: PersonalInfoText.title,
-        },
-      ];
+  const sections = [
+    {
+      component: VehicleInformation,
+      form: appraisalUseForm.vehicleInfoForm,
+      title: VehicleInfoText.title,
+      onNextIntercept: onNextIntercept,
+    },
+    {
+      component: CombinedVehicleInfoForms,
+      form: combinedVehicleInformationForm,
+      title: 'Vehicle History & Condition',
+      subTitle: VehicleHistoryText.subTitle,
+      onNextIntercept: combinedFormNextIntercept(appraisalUseForm),
+    },
+    {
+      component: PersonalInformation,
+      form: appraisalUseForm.personalInfoForm,
+      title: PersonalInfoText.title,
+    },
+  ];
 
   useEffect(() => {
     const query = router.query;

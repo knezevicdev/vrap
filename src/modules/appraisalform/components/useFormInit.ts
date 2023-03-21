@@ -8,7 +8,8 @@ const useAppraisalFormInit = (
   extCondition: any,
   mechCondition: any,
   yourInformation: any,
-  vinInPath: any
+  vinInPath: any,
+  isTradeIn: boolean
 ) => {
   if (vinInPath !== vehicleInfo.vin) {
     vehicleInfo = {};
@@ -46,15 +47,15 @@ const useAppraisalFormInit = (
     titleStatus: vehicleHistory.titleStatus || '',
     state: {
       value: vehicleHistory.state || '',
-      isRequired: false,
+      isRequired: isTradeIn,
     },
     lienType: {
       value: vehicleHistory.lienType || '',
-      isRequired: true,
+      isRequired: !isTradeIn,
     },
     bankName: {
       value: vehicleHistory.bankName || '',
-      isRequired: false,
+      isRequired: !isTradeIn,
     },
   };
 
