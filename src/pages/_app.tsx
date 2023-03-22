@@ -173,6 +173,8 @@ class AppraisalApp extends App<
         sessionSampleRate: 100,
         trackUserInteractions: true,
       });
+
+      datadogRum.startSessionReplayRecording();
     }
 
     this.catSDK.initCatData().catch((e) => {
