@@ -25,8 +25,6 @@ import {
   PaymentOverviewStore,
   PaymentOverviewStoreContext,
 } from 'src/modules/paymentoverview/store';
-import PaymentOverviewAB from 'src/modules/paymentoverviewAB';
-import SuccessBar from 'src/modules/successbar';
 import Page from 'src/Page';
 
 const HeaderContainer = styled.div`
@@ -98,8 +96,6 @@ const EPayOptions: NextPage = () => {
     'verification-form-vehicle-photo-upload'
   );
 
-  const isFaceLiftExp = absmartly.isInExperiment('ac-appraisal-offer-facelift');
-
   let activeStep = '4';
   if (isPhotosUploadExp && !isPaymentRequireExp) {
     activeStep = '5';
@@ -120,15 +116,14 @@ const EPayOptions: NextPage = () => {
         </HeaderContainer>
         {!absmartly.isLoading && (
           <>
-            {!isFaceLiftExp && !isPaymentRequireExp && <SuccessBar />}
             {isStepperExp && <VerificationStepper activeStep={activeStep} />}
             <ColumnBody id="main-content" stateDropdownOpen={stateDropdownOpen}>
               <OptionsStoreContext.Provider value={oStore}>
                 <PaymentOverviewStoreContext.Provider value={poStore}>
                   <DirectDepositStoreContext.Provider value={ddStore}>
-                    <Options abTest={isFaceLiftExp} />
+                    <Options />
                   </DirectDepositStoreContext.Provider>
-                  {isFaceLiftExp ? <PaymentOverviewAB /> : <PaymentOverview />}
+                  <PaymentOverview />
                 </PaymentOverviewStoreContext.Provider>
               </OptionsStoreContext.Provider>
             </ColumnBody>
