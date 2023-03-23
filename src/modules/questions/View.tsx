@@ -13,26 +13,25 @@ export interface Props {
 }
 
 const View: React.FC<Props> = ({ viewModel }) => {
-  const className = viewModel.isFaceliftExp() ? 'abtest' : '';
   return (
     <div>
       <StyledHero>{viewModel.questions}</StyledHero>
       <StyledContainer>
-        <IconSection className={className}>
+        <IconSection>
           <Icon icon={Icons.FAQ} />
           <StyledLink href={viewModel.faqLink}>
             <StyledTitle>{viewModel.helpCenter}</StyledTitle>
           </StyledLink>
         </IconSection>
         <VerticalDivider />
-        <IconSection className={className}>
+        <IconSection>
           <Icon icon={Icons.EMAIL} />
           <StyledLink href={viewModel.emailLink}>
             <StyledTitle>{viewModel.sendMessage}</StyledTitle>
           </StyledLink>
         </IconSection>
         <VerticalDivider />
-        <IconSection className={className}>
+        <IconSection>
           <Icon icon={Icons.PHONE} />
           <StyledLink href={viewModel.phoneLink}>
             <StyledTitle>{viewModel.phoneNumber}</StyledTitle>
@@ -75,14 +74,6 @@ const IconSection = styled.div`
   align-items: center;
   display: flex;
   padding: 0 30px;
-  &.abtest {
-    @media (max-width: 599px) {
-      margin-bottom: 32px;
-      :last-child {
-        margin-bottom: 0;
-      }
-    }
-  }
 `;
 
 const VerticalDivider = styled.div`
