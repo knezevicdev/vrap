@@ -25,23 +25,16 @@ export default class AppraisalDocument extends Document {
     const originalRenderPage = ctx.renderPage;
 
     try {
-      ctx.renderPage = (): ReturnType<typeof ctx.renderPage> =>
+      ctx.renderPage = () =>
         originalRenderPage({
-          enhanceApp:
-            (App) =>
-            (props): JSX.Element =>
-              styledComponentsSheet.collectStyles(<App {...props} />),
+          enhanceApp: (App) => (props) =>
+            styledComponentsSheet.collectStyles(<App {...props} />),
         });
 
       const initialProps = await Document.getInitialProps(ctx);
       return {
         ...initialProps,
-        styles: (
-          <>
-            {initialProps.styles}
-            {styledComponentsSheet.getStyleElement()}
-          </>
-        ),
+        styles: [initialProps.styles, styledComponentsSheet.getStyleElement()],
       };
     } finally {
       styledComponentsSheet.seal();
