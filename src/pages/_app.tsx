@@ -201,7 +201,10 @@ class AppraisalApp extends App<
       pageProps.allowUnauthenticated || isSignedIn ? (
         <Component {...pageProps} />
       ) : (
-        <LoggedOutDialog isLoading={!isSignedInLoaded} />
+        <LoggedOutDialog
+          isLoading={!isSignedInLoaded}
+          onSuccessfulLogin={this.checkSignInStatus}
+        />
       );
 
     return (

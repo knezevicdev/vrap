@@ -1,8 +1,10 @@
 import { Button, Icon } from '@vroom-web/ui-lib';
 import { observer } from 'mobx-react';
-import React, { useEffect } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import styled from 'styled-components';
 
+import AuthModal from '../AuthModal/AuthModal';
+import Spinner from '../Spinner';
 import InitialPriceViewModel from './ViewModel';
 
 import { Icons } from 'src/core/Icon';
@@ -41,53 +43,83 @@ const InitialPriceView: React.FC<Props> = ({ viewModel }) => {
     return (): void => document.removeEventListener('scroll', handleScroll);
   }, [viewModel]);
 
+  const [showAuthModal, setShowAuthModal] = useState(false);
+
+  const onSuccessfulLogin = useCallback(() => {
+    window.location.href = viewModel.verificationUrl;
+  }, [viewModel.verificationUrl]);
+
   return (
-    <StyledContainer>
-      <Hero.Four>{viewModel.yourPrice}</Hero.Four>
-      <Hero.One>{viewModel.price}</Hero.One>
-      <StyledIcon
-        title="Car"
-        titleId="heroIcon"
-        icon={Icons.CAR_OFFER}
-        aria-hidden="true"
-      />
+    <>
+      <StyledContainer>
+        <Hero.Four>{viewModel.yourPrice}</Hero.Four>
+        <Hero.One>{viewModel.price}</Hero.One>
+        <StyledIcon
+          title="Car"
+          titleId="heroIcon"
+          icon={Icons.CAR_OFFER}
+          aria-hidden="true"
+        />
 
-      <Content>
-        <ContentText>
-          {viewModel.offerExpPreDate}
-          <b>{viewModel.goodUntil}</b>
-          {viewModel.offerExpPostDate}
-          <b>{viewModel.miles}</b>
-          {viewModel.wicheverOccerFirst} {viewModel.the}
-          <b>{viewModel.titleName}</b>
-          {viewModel.yourName}
-        </ContentText>
-      </Content>
+        <Content>
+          <ContentText>
+            {viewModel.offerExpPreDate}
+            <b>{viewModel.goodUntil}</b>
+            {viewModel.offerExpPostDate}
+            <b>{viewModel.miles}</b>
+            {viewModel.wicheverOccerFirst} {viewModel.the}
+            <b>{viewModel.titleName}</b>
+            {viewModel.yourName}
+          </ContentText>
+        </Content>
 
-      <StyledButton
-        id="priceDetails"
-        onClick={viewModel.onContinueClick}
-        isColorExp={viewModel.isContinueColorExp()}
-      >
-        {viewModel.continuePrice}
-      </StyledButton>
+        <StyledButton
+          id="priceDetails"
+          onClick={async () => {
+            const isSignedIn = await viewModel.onContinueClick();
 
-      <StyledLegal>
-        <Body.Small>{viewModel.legalDocumentation}</Body.Small>
-      </StyledLegal>
+            if (!isSignedIn) {
+              setShowAuthModal(true);
+            }
+          }}
+          isColorExp={viewModel.isContinueColorExp()}
+          disabled={viewModel.acceptingPrice}
+        >
+          {viewModel.acceptingPrice ? <Spinner /> : viewModel.continuePrice}
+        </StyledButton>
 
-      <StickyFooter id="stickyFooter">
-        <StickyContent>
-          <StickyDetails>
-            <Title.Four>{viewModel.yourPriceCamel}</Title.Four>
-            <Hero.Four>{viewModel.price}</Hero.Four>
-          </StickyDetails>
-          <FullButton onClick={viewModel.onContinueClick}>
-            {viewModel.continuePrice}
-          </FullButton>
-        </StickyContent>
-      </StickyFooter>
-    </StyledContainer>
+        <StyledLegal>
+          <Body.Small>{viewModel.legalDocumentation}</Body.Small>
+        </StyledLegal>
+
+        <StickyFooter id="stickyFooter">
+          <StickyContent>
+            <StickyDetails>
+              <Title.Four>{viewModel.yourPriceCamel}</Title.Four>
+              <Hero.Four>{viewModel.price}</Hero.Four>
+            </StickyDetails>
+            <FullButton
+              onClick={async () => {
+                const isSignedIn = await viewModel.onContinueClick();
+
+                if (!isSignedIn) {
+                  setShowAuthModal(true);
+                }
+              }}
+              disabled={viewModel.acceptingPrice}
+            >
+              {viewModel.acceptingPrice ? <Spinner /> : viewModel.continuePrice}
+            </FullButton>
+          </StickyContent>
+        </StickyFooter>
+      </StyledContainer>
+      {showAuthModal && (
+        <AuthModal
+          onSuccessfulLogin={onSuccessfulLogin}
+          redirectUrl={viewModel.verificationUrl}
+        />
+      )}
+    </>
   );
 };
 

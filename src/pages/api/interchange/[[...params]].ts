@@ -35,10 +35,24 @@ const proxy = async (
     maxRedirects: 0,
     validateStatus: (status: number) => status >= 200 && status < 500,
     httpsAgent,
+    headers: {
+      Cookie: req.headers.cookie,
+    },
   });
   res.status(status);
-  for (const header in headers) {
-    const headerValue = headers[header];
+
+  const modifiedHeaders = { ...headers };
+  if (modifiedHeaders['set-cookie']) {
+    modifiedHeaders['set-cookie'] = modifiedHeaders['set-cookie'].map(
+      (cookie: string) =>
+        cookie
+          .replace(/; secure/gi, '')
+          .replace('SameSite=Strict', 'SameSite=Lax')
+    );
+  }
+
+  for (const header in modifiedHeaders) {
+    const headerValue = modifiedHeaders[header];
     if (headerValue) {
       res.setHeader(header, headerValue);
     }
