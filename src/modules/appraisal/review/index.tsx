@@ -2,6 +2,7 @@ import { useABSmartly } from '@vroom-web/analytics-integration';
 import { useRouter } from 'next/router';
 import React from 'react';
 
+import useIsTradeIn from '../../../hooks/useIsTradeIn';
 import View from './View';
 import ViewModel from './ViewModel';
 
@@ -15,7 +16,8 @@ const AppraisalReview: React.FC<Props> = ({ token }) => {
   const router = useRouter();
   const { store } = useAppStore();
   const absmartly = useABSmartly();
-  const viewModel = new ViewModel(store, router, absmartly, token);
+  const isTradeIn = useIsTradeIn();
+  const viewModel = new ViewModel(store, router, absmartly, token, isTradeIn);
   return <View viewModel={viewModel} />;
 };
 

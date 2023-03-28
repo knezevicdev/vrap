@@ -1,6 +1,5 @@
 import { useABSmartly } from '@vroom-web/analytics-integration';
 import { observer } from 'mobx-react';
-import { useRouter } from 'next/router';
 import React from 'react';
 
 import VehicleInformationView from './View';
@@ -20,9 +19,8 @@ const VehicleInformation: React.FC<Props> = ({
   hideButtonCallback,
 }) => {
   const { store } = useAppStore();
-  const router = useRouter();
   const absmartly = useABSmartly();
-  const viewModel = new ViewModel(store, router, absmartly);
+  const viewModel = new ViewModel(store, absmartly);
 
   return (
     <VehicleInformationView

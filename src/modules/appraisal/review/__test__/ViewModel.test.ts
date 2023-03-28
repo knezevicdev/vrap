@@ -89,7 +89,8 @@ describe('Appraisal review index page test', () => {
         isInExperiment: () => false,
         isLoading: false,
       } as any as ABSmartlyContextValue,
-      'supersecret'
+      'supersecret',
+      false
     );
     router.asPath = '';
     analyticsHandler = viewModel.getAnalyticsHandler();
@@ -123,7 +124,16 @@ describe('Appraisal review index page test', () => {
   });
 
   it('should redirect to /sell/tradeIn-selfService if Appraisal is empty and user is on /sell/tradeIn-selfService-Review', async () => {
-    router.asPath = '/sell/tradeIn-selfService-Review';
+    viewModel = new ViewModel(
+      stores,
+      router,
+      {
+        isInExperiment: () => false,
+        isLoading: false,
+      } as any as ABSmartlyContextValue,
+      'supersecret',
+      true
+    );
     viewModel.redirectToAppraisalForm();
     expect(router.push).toBeCalledWith('/sell/tradeIn-selfService');
   });

@@ -21,14 +21,11 @@ export default class AppraisalReviewModel {
     public store: Store,
     private _router: NextRouter,
     absmartly: ABSmartlyContextValue,
-    private token: string
+    private token: string,
+    public isTradeIn: boolean
   ) {
     this.appraisalStore = store.appraisal;
     this.absmartly = absmartly;
-  }
-
-  get isTradeIn(): boolean {
-    return this._router.asPath.includes('/tradeIn-selfService-Review');
   }
 
   get isCTAColorExp(): boolean {

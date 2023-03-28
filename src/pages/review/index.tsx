@@ -6,6 +6,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 import ErrorBanner from '../../components/ErrorBanner';
+import useHandleAppraisalRoutes from '../../modules/appraisal/hooks/useHandleAppraisalRoutes';
 import { returnBrandConfig } from '../../utils/pageheaders';
 
 import { Header } from 'src/components/Header';
@@ -21,6 +22,8 @@ interface Prop {
 const AppraisalReview: NextPage<Prop> = ({ token }) => {
   const { store } = useAppStore();
   const reviewError = store.appraisal.reviewError;
+
+  useHandleAppraisalRoutes();
 
   return (
     <Page name="Review Your Appraisal">
@@ -97,13 +100,14 @@ export const getServerSideProps: GetServerSideProps<Props> = async (
   const token = jwt.sign({ vin }, process.env.JWT_SECRET_KEY, {
     expiresIn: '10m',
   });
+  const requireAuth = ctx.req.url?.includes('/sell/tradeIn-selfService-Review');
 
   return {
     props: {
       description: brandConfig.description,
       title: brandConfig.title,
       canonical: brandConfig.canonical,
-      allowUnauthenticated: true,
+      allowUnauthenticated: !requireAuth,
       token,
     },
   };
