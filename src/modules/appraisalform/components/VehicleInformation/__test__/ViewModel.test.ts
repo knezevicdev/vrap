@@ -2,8 +2,6 @@ import { ABSmartlyContextValue } from '@vroom-web/analytics-integration/dist/abs
 
 jest.mock('src/networking/request');
 
-import { NextRouter } from 'next/router';
-
 import ViewModel from '../ViewModel';
 
 import * as Request from 'src/networking/request';
@@ -66,14 +64,7 @@ describe('AppraisalForm VehicleInformation component test', () => {
   const captchaToken = 'fake_captcha_token';
 
   beforeEach(() => {
-    viewModel = new ViewModel(
-      stores,
-      {
-        requestId: 'unknown',
-        visitorId: 'unknown',
-      } as any as NextRouter,
-      absmartly
-    );
+    viewModel = new ViewModel(stores, absmartly);
   });
 
   it('test vehicleId', () => {

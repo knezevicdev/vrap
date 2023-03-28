@@ -56,7 +56,7 @@ const AppraisalForm: React.FC<Props> = ({ viewModel }) => {
   const routerHash = routerAsPath.split('#')[1];
   const submitText = isEditMode ? SaveText : ReviewText;
   const isNewForm = viewModel.isNewFormExperimentActive();
-  const isTradeIn = store.appraisal.isTradeIn || router.query.form === 'trade';
+  const isTradeIn = store.appraisal.isTradeIn;
 
   const vehicleInfo = viewModel.appraisalStore.vehicleInfoForm;
   const yourInformation = viewModel.appraisalStore.personalInfoForm;

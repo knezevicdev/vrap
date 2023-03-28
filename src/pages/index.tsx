@@ -86,13 +86,14 @@ export const getServerSideProps: GetServerSideProps<Props> = async (
 ) => {
   ctx.res.setHeader('Cache-Control', '');
   const brandConfig = returnBrandConfig();
+  const requireAuth = ctx.req.url?.includes('/tradeIn-selfService');
 
   return {
     props: {
       description: brandConfig.description,
       title: brandConfig.title,
       canonical: brandConfig.canonical,
-      allowUnauthenticated: true,
+      allowUnauthenticated: !requireAuth,
     },
   };
 };

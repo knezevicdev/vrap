@@ -1,6 +1,5 @@
 import { ABSmartlyContextValue } from '@vroom-web/analytics-integration/dist/absmartly/types';
 import { isErrorResponse } from '@vroom-web/networking';
-import { NextRouter } from 'next/router';
 
 import AnalyticsHandler from 'src/integrations/AnalyticsHandler';
 import {
@@ -16,17 +15,13 @@ class VehicleInfoViewModel {
   appraisalStore: AppraisalStore;
   absmartly: ABSmartlyContextValue;
 
-  constructor(
-    public store: Store,
-    private router: NextRouter,
-    absmartly: ABSmartlyContextValue
-  ) {
+  constructor(public store: Store, absmartly: ABSmartlyContextValue) {
     this.appraisalStore = store.appraisal;
     this.absmartly = absmartly;
   }
 
   get isTradeIn(): boolean {
-    return this.store.appraisal.isTradeIn || this.router.query.form === 'trade';
+    return this.store.appraisal.isTradeIn;
   }
 
   get getAnalyticHandler(): AnalyticsHandler {
