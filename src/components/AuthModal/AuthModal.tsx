@@ -1,5 +1,6 @@
 import Cookies from 'js-cookie';
 import React, { useCallback, useState } from 'react';
+import ReactDOM from 'react-dom';
 
 import Login from './components/Login';
 import Register from './components/Register';
@@ -21,7 +22,11 @@ const AuthModal = ({ onSuccessfulLogin, redirectUrl }: Props) => {
     onSuccessfulLogin();
   }, [onSuccessfulLogin]);
 
-  return (
+  const authModalRoot =
+    typeof document !== 'undefined'
+      ? document.getElementById('auth-modal-root')
+      : null;
+  const modal = (
     <Overlay>
       <OverlayInner>
         <Modal>
@@ -41,6 +46,10 @@ const AuthModal = ({ onSuccessfulLogin, redirectUrl }: Props) => {
         </Modal>
       </OverlayInner>
     </Overlay>
+  );
+
+  return (
+    <>{authModalRoot ? ReactDOM.createPortal(modal, authModalRoot) : modal}</>
   );
 };
 

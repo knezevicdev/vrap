@@ -228,7 +228,10 @@ class AppraisalApp extends App<
                   }}
                 >
                   <StyledComponentsThemeProvider theme={theme}>
-                    <AppProvider>{component}</AppProvider>
+                    <AppProvider>
+                      {component}
+                      <div id="auth-modal-root" />
+                    </AppProvider>
                   </StyledComponentsThemeProvider>
                 </RestrictedAppraisalContext.Provider>
               </RemoteConfigContext.Provider>
