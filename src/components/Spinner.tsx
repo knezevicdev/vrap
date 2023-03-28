@@ -20,7 +20,6 @@ const Spinner = ({ className }: Props): ReactElement => (
 
 const StyledSpinner = styled.svg`
   animation: rotate 2s linear infinite;
-  margin: -25px 0 0 -25px;
   width: 25px;
   height: 25px;
 

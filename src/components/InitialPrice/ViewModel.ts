@@ -1,5 +1,6 @@
 import { ABSmartlyContextValue } from '@vroom-web/analytics-integration/dist/absmartly/types';
 import { isErrorResponse } from '@vroom-web/networking';
+import { makeAutoObservable, runInAction } from 'mobx';
 
 import { displayCurrency, parseDate, parsedDateTime } from './Utils';
 
@@ -36,6 +37,8 @@ class InitialPriceViewModel {
   ];
   readonly wicheverOccerFirst: string = 'whichever occurs first. ';
 
+  acceptingPrice = false;
+
   constructor(
     store: PriceStore,
     analyticsHandler: AnalyticsHandler,
@@ -47,6 +50,12 @@ class InitialPriceViewModel {
     this.goodUntil = parsedDateTime(price.goodUntil);
     this.goodUntilMonthDay = parseDate(price.goodUntil);
     this.analyticsHandler = analyticsHandler;
+
+    makeAutoObservable(this);
+  }
+
+  get verificationUrl() {
+    return `/sell/verification/owner/${this.priceId}`;
   }
 
   checkSignInStatus = async (): Promise<boolean> => {
@@ -65,22 +74,22 @@ class InitialPriceViewModel {
     );
   };
 
-  onContinueClick = async (): Promise<void> => {
-    const isAccountCreateAbTest = await this.absmartly.isInExperiment(
-      'ac-account-create'
-    );
+  onContinueClick = async (): Promise<boolean> => {
+    runInAction(() => {
+      this.acceptingPrice = true;
+    });
     this.analyticsHandler.trackContinueClick();
 
-    let isSignInStatus;
-    if (isAccountCreateAbTest) {
-      isSignInStatus = await this.checkSignInStatus();
-    }
+    const isSignedIn = await this.checkSignInStatus();
 
-    const url =
-      isAccountCreateAbTest && !isSignInStatus
-        ? `/myaccount/create/suyc?redirect=/sell/verification/owner/${this.priceId}&action=suyc`
-        : `/sell/verification/owner/${this.priceId}`;
-    window.location.href = url;
+    if (isSignedIn) {
+      window.location.href = this.verificationUrl;
+    }
+    runInAction(() => {
+      this.acceptingPrice = false;
+    });
+
+    return isSignedIn;
   };
 
   onPageLoad = (): void => {

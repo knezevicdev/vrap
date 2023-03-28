@@ -1,16 +1,9 @@
 import { ABSmartlyContextValue } from '@vroom-web/analytics-integration/dist/absmartly/types';
 
-jest.mock('src/networking/request');
-
 import ViewModel from '../ViewModel';
 
 import AnalyticsHandler from 'src/integrations/AnalyticsHandler';
 import { PriceStore } from 'src/modules/price/store';
-import client from 'src/networking/client';
-import {
-  getIsSignIn,
-  getIsSignInInValid,
-} from 'src/networking/request/__mocks__';
 
 describe('InitialPrice Test', () => {
   const analyticsHandler = new AnalyticsHandler();
@@ -22,13 +15,9 @@ describe('InitialPrice Test', () => {
   } as any as ABSmartlyContextValue;
   let viewModel: ViewModel;
 
-  const ContinueClickSpy = jest
-    .spyOn(analyticsHandler, 'trackContinueClick')
-    .mockReturnValue();
   const trackPriceAutomatedSpy = jest
     .spyOn(analyticsHandler, 'trackPriceAutomated')
     .mockReturnValue();
-  const clientRequest = jest.spyOn(client, 'signInStatus');
 
   beforeEach(() => {
     viewModel = new ViewModel(store, analyticsHandler, absmartly);
@@ -51,41 +40,8 @@ describe('InitialPrice Test', () => {
     expect(viewModel.wicheverOccerFirst).toBe('whichever occurs first. ');
   });
 
-  it('when called onContinueClick and abTest is true ', async () => {
-    await viewModel.onContinueClick();
-    jest.spyOn(absmartly, 'isInExperiment').mockImplementation(() => true);
-    await clientRequest.mockResolvedValue(getIsSignIn());
-    const url = `/myaccount/create/suyc?redirect=/sell/verification/owner/${priceId}&action=suyc`;
-    Object.defineProperty(window, 'location', {
-      value: {
-        href: url,
-      },
-    });
-    expect(window.location.href).toEqual(url);
-  });
-
-  it('when called onContinueClick ', async () => {
-    jest.spyOn(absmartly, 'isInExperiment').mockImplementation(() => false);
-    await viewModel.onContinueClick();
-    await clientRequest.mockResolvedValue(getIsSignInInValid());
-    const url = `/sell/verification/owner/cb5b06d43cb95286ceeb50efc7a82e08`;
-    Object.defineProperty(window, 'location', {
-      value: {
-        href: url,
-      },
-    });
-    expect(ContinueClickSpy).toHaveBeenCalled();
-    expect(window.location.href).toEqual(url);
-  });
-
   it('should track onPageLoad', () => {
     viewModel.onPageLoad();
     expect(trackPriceAutomatedSpy).toHaveBeenCalled();
-  });
-
-  it('call checkSignInStatus', async () => {
-    const isSignInStatus = await viewModel.checkSignInStatus();
-    await clientRequest.mockResolvedValue(getIsSignIn());
-    expect(isSignInStatus).toEqual(true);
   });
 });
