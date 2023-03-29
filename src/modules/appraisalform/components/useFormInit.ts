@@ -35,7 +35,7 @@ const useAppraisalFormInit = (
       isRequired: false,
     },
     keysAmount: vehicleInfo.keysAmount || '',
-    sellOrTradeIn: '',
+    sellOrTradeIn: vehicleInfo.sellOrTradeIn || '',
   };
 
   const vehicleHistoryFields = {
@@ -55,7 +55,7 @@ const useAppraisalFormInit = (
     },
     bankName: {
       value: vehicleHistory.bankName || '',
-      isRequired: !isTradeIn,
+      isRequired: !isTradeIn && vehicleHistory.lienType !== 'Neither',
     },
   };
 
