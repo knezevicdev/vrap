@@ -159,6 +159,7 @@ const config = {
     VIS_URL: process.env.VIS_URL,
     APPRAISAL_API_URL: process.env.APPRAISAL_API_URL,
     APPRAISAL_API_API_KEY: process.env.APPRAISAL_API_API_KEY,
+    ACCOUNT_MANAGEMENT_URL: currentConfig.accountManagementUrl,
   },
   /* Custom webpack configuration. */
   webpack: (config) => {

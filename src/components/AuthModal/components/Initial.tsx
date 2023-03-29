@@ -1,76 +1,60 @@
 import { isErrorResponse } from '@vroom-web/networking';
-import React, { useState } from 'react';
+import React from 'react';
 import { useForm } from 'react-hook-form';
 
 import Spinner from '../../Spinner';
 import {
-  ButtonLink,
   Divider,
-  ErrorMessage,
-  ErrorWrapper,
   FooterContent,
   Form,
   LegalContent,
   LegalList,
   LegalListItem,
   Link,
-  LinkSecondary,
   ModalTitle,
   PrimaryButton,
   SecondaryButton,
   SocialIcon,
 } from '../Style.css';
-import loginResolver from '../utils/loginResolver';
-import loginUser from '../utils/loginUser';
+import checkAccount from '../utils/checkAccount';
+import checkAccountResolver from '../utils/checkAccountResolver';
 import redirectToThirdParty from '../utils/redirectToThirdParty';
-import trackLogin from '../utils/trackLogin';
 import Input from './Input';
 
 interface Props {
-  onRegister: () => void;
-  onSuccess: () => void;
-  initialEmail: string;
+  onEmailProcessed: (email: string, hasAccount: boolean) => void;
   redirectUrl?: string;
 }
 
-const Login = ({ onRegister, onSuccess, initialEmail, redirectUrl }: Props) => {
-  const [errorMessage, setErrorMessage] = useState('');
-
+const Initial = ({ onEmailProcessed, redirectUrl }: Props) => {
   const {
     handleSubmit,
     formState: { isSubmitting },
     control,
   } = useForm({
     defaultValues: {
-      email: initialEmail,
-      password: '',
+      email: '',
     },
-    resolver: loginResolver,
+    resolver: checkAccountResolver,
   });
 
   const onSubmit = handleSubmit(async (data) => {
-    setErrorMessage('');
-    const response = await loginUser(data.email, data.password);
+    const response = await checkAccount(data.email);
     if (isErrorResponse(response)) {
-      setErrorMessage(
-        'The email address or password is invalid. Please try a different email address or password.'
-      );
+      onEmailProcessed(data.email, false);
       return;
     }
 
-    trackLogin(data.email, response.data.externalUserID);
-    onSuccess();
+    onEmailProcessed(data.email, response.data.exists);
   });
 
   return (
     <>
       <Form onSubmit={onSubmit}>
-        <ModalTitle>Welcome back</ModalTitle>
-        {errorMessage && (
-          <ErrorWrapper>
-            <ErrorMessage>{errorMessage}</ErrorMessage>
-          </ErrorWrapper>
-        )}
+        <ModalTitle>sign in or sign up</ModalTitle>
+        <FooterContent>
+          Enter your email to log in or create new account.
+        </FooterContent>
         <Input
           placeholder="Email"
           label="Email address"
@@ -78,18 +62,8 @@ const Login = ({ onRegister, onSuccess, initialEmail, redirectUrl }: Props) => {
           id="email"
           control={control}
         />
-        <Input
-          placeholder="Password (min 8 characters)"
-          label="Password"
-          type="password"
-          id="password"
-          control={control}
-        />
-        <LinkSecondary href="/myaccount/forgot-password">
-          Forgot Password?
-        </LinkSecondary>
         <PrimaryButton disabled={isSubmitting}>
-          {isSubmitting ? <Spinner /> : 'Log In'}
+          {isSubmitting ? <Spinner /> : 'Continue'}
         </PrimaryButton>
       </Form>
       <Divider />
@@ -131,14 +105,8 @@ const Login = ({ onRegister, onSuccess, initialEmail, redirectUrl }: Props) => {
           </LegalListItem>
         </LegalList>
       </LegalContent>
-      <FooterContent>
-        Don&apos;t have a Vroom account?{' '}
-        <ButtonLink onClick={onRegister} disabled={isSubmitting}>
-          Join.
-        </ButtonLink>
-      </FooterContent>
     </>
   );
 };
 
-export default Login;
+export default Initial;
