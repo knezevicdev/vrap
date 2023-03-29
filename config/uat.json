@@ -1,4 +1,5 @@
 {
+  "accountManagementUrl": "https://accountmanagement-int.uat.vroom.cloud",
   "firebaseConfig": {
     "apiKey": "AIzaSyCKrs5d9BF4FgF34LADYefRO8CnM7auPVY",
     "authDomain": "vroom-acquisitions-v2.firebaseapp.com",

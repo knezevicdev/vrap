@@ -30,10 +30,11 @@ import Input from './Input';
 interface Props {
   onLogin: () => void;
   onSuccess: () => void;
+  initialEmail: string;
   redirectUrl?: string;
 }
 
-const Register = ({ onLogin, onSuccess, redirectUrl }: Props) => {
+const Register = ({ onLogin, onSuccess, initialEmail, redirectUrl }: Props) => {
   const [errorMessage, setErrorMessage] = useState('');
 
   const {
@@ -45,7 +46,7 @@ const Register = ({ onLogin, onSuccess, redirectUrl }: Props) => {
       firstName: '',
       lastName: '',
       phoneNumber: '',
-      email: '',
+      email: initialEmail,
       password: '',
       passwordConfirmation: '',
     },
