@@ -80,14 +80,8 @@ const AppraisalForm: React.FC<Props> = ({ viewModel }) => {
         return 0;
       case 'vehiclehistory':
         return 1;
-      case 'interiorcondition':
-        return 2;
-      case 'exteriorcondition':
-        return 3;
-      case 'mechanicalcondition':
-        return 4;
       case 'personalinformation':
-        return 5;
+        return 2;
       default:
         return 0;
     }
