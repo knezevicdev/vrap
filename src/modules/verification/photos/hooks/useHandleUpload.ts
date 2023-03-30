@@ -22,14 +22,19 @@ const useHandleUpload = (
   const handleUpload = useCallback(
     async (file: ActualFileObject, type: DocumentFileType) => {
       processingFiles.current = [...processingFiles.current, type];
-      try {
-        await uploadVehiclePhoto(file, type, vin, priceId);
+      const cleanupAndRefetch = () => {
         processingFiles.current = processingFiles.current.filter(
           (fileType) => fileType !== type
         );
         refetchImages();
+      };
+
+      try {
+        await uploadVehiclePhoto(file, type, vin, priceId);
+        cleanupAndRefetch();
         return true;
       } catch (e) {
+        cleanupAndRefetch();
         return false;
       }
     },
