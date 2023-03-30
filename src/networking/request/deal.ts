@@ -143,7 +143,7 @@ export const acceptDeal = async (
     },
   });
 
-  return handleUpdateDealResponse(res, 'dealPutTradeIn');
+  return handleUpdateDealResponse(res, 'dealV3PutTradeIn');
 };
 
 export const declineDeal = async (
@@ -161,5 +161,5 @@ export const declineDeal = async (
     },
   });
 
-  return handleUpdateDealResponse(res, 'dealAddStatus');
+  return handleUpdateDealResponse(res, 'dealV3AddStatus');
 };
