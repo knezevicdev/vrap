@@ -52,7 +52,7 @@ function useGetVehiclePhotos(
     if (!vin) return;
     async function fetchData() {
       try {
-        const response = await axios.get<ImagesResponse>(url);
+        const response = await axios.post<ImagesResponse>(url);
         processAndSetData(response.data);
       } catch (error) {
         setError(error);
@@ -66,7 +66,7 @@ function useGetVehiclePhotos(
   const refetch = useCallback(async () => {
     setLoading(true);
     try {
-      const response = await axios.get<ImagesResponse>(url);
+      const response = await axios.post<ImagesResponse>(url);
       processAndSetData(response.data);
     } catch (error) {
       setError(error);

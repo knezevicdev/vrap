@@ -24,6 +24,6 @@ export default requestHandler(
     }
   },
   {
-    method: 'GET',
+    method: 'POST',
   }
 );
