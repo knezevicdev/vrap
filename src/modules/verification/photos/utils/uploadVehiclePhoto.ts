@@ -1,6 +1,8 @@
 import axios from 'axios';
 import { ActualFileObject } from 'filepond';
 
+import removeFileMetadataAndGenerateBuffer from './removeFileMetadataAndGenerateBuffer';
+
 export enum DocumentFileType {
   DRIVER_SIDE_EXTERIOR = 'driverSideExterior',
   PASSENGER_SIDE_EXTERIOR = 'passengerSideExterior',
@@ -16,7 +18,7 @@ export const uploadVehiclePhoto = async (
   vin: string,
   priceId: string
 ): Promise<boolean> => {
-  const fileBuffer = await file.arrayBuffer();
+  const fileBuffer = await removeFileMetadataAndGenerateBuffer(file);
 
   await axios.post(
     `/appraisal/api/photos/${vin}/upload?priceId=${priceId}&fileType=${fileType}`,
