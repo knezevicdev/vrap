@@ -84,7 +84,7 @@ export default class OfferDialogViewModel {
     this._store.deal.setLoading(true);
 
     const response = await acceptDeal({
-      dealID: this._store.deal.deal.dealID,
+      externalDealID: this._store.deal.deal.externalDealID,
       appraisalID: offer.id,
       offerID: offer.offerId,
       offerPrice: offer.price,

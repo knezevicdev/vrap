@@ -1,6 +1,6 @@
-fragment DealDetails on Deal {
+fragment DealDetails on DealV3 {
   accountID
-  dealID
+  externalDealID
   createdAt
   TradeIns {
     appraisalID

@@ -1,5 +1,5 @@
 mutation ADD_TRADE_INS(
-  $dealID: Int!
+  $externalDealID: String!
   $source: String!
   $appraisalID: String!
   $offerID: Int!
@@ -14,8 +14,8 @@ mutation ADD_TRADE_INS(
   $offerStatus: String!
   $expirationDate: Time
 ) {
-  dealPutTradeIn(
-    dealID: $dealID
+  dealV3PutTradeIn(
+    externalDealID: $externalDealID
     source: $source
     appraisalID: $appraisalID
     offerID: $offerID
@@ -31,7 +31,7 @@ mutation ADD_TRADE_INS(
     expirationDate: $expirationDate
   ) {
     __typename
-    ... on Deal {
+    ... on DealV3 {
       dealSummary {
         dealStatus {
           step

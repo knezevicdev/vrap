@@ -1,15 +1,15 @@
 mutation UPDATE_DEAL_STATUS(
-  $dealID: Int!
+  $externalDealID: String!
   $source: String!
   $tradeInStepDone: Boolean!
 ) {
-  dealAddStatus(
-    dealID: $dealID
+  dealV3AddStatus(
+    externalDealID: $externalDealID
     source: $source
     tradeInStepDone: $tradeInStepDone
   ) {
     __typename
-    ... on Deal {
+    ... on DealV3 {
       dealSummary {
         dealStatus {
           step

@@ -2,7 +2,7 @@ import { GQLTypes } from '@vroom-web/networking';
 import { makeAutoObservable } from 'mobx';
 
 export class DealStore {
-  deal?: GQLTypes.Deal;
+  deal?: GQLTypes.DealV3;
   loading = false;
   tradeInError = '';
 
@@ -10,7 +10,7 @@ export class DealStore {
     makeAutoObservable(this);
   }
 
-  setDeal(deal: GQLTypes.Deal): void {
+  setDeal(deal: GQLTypes.DealV3): void {
     this.deal = deal;
   }
 
