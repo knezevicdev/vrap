@@ -40,7 +40,7 @@
     "@vroom-web/cat-sdk": "^1.0.5",
     "@vroom-web/deals-v2-networking": "^1.0.1",
     "@vroom-web/networking": "^1.10.0",
-    "@vroom-web/shared-components": "^6.0.1",
+    "@vroom-web/shared-components": "^6.2.0",
     "@vroom-web/ui-lib": "^6.7.0",
     "axios": "^1.3.4",
     "crypto-js": "^4.1.1",
