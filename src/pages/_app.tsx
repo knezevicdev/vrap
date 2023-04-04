@@ -1,5 +1,4 @@
 import 'firebase/analytics';
-import 'firebase/remote-config';
 import 'src/global.css';
 import 'filepond/dist/filepond.min.css';
 import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css';
@@ -11,7 +10,6 @@ import { CatSDK } from '@vroom-web/cat-sdk';
 import { isErrorResponse } from '@vroom-web/networking';
 import { CommonHandler } from '@vroom-web/shared-components';
 import { GlobalStyle } from '@vroom-web/ui-lib';
-import firebase from 'firebase/app';
 import { configure as configureMobx } from 'mobx';
 import App, { AppProps } from 'next/app';
 import getConfig from 'next/config';
@@ -34,18 +32,7 @@ import AppProvider from 'src/context/AppContext';
 import { AnalyticsHandlerContext } from 'src/integrations/AnalyticHandlerContext';
 import AnalyticsHandler from 'src/integrations/AnalyticsHandler';
 import { CatSDKContext } from 'src/integrations/CatSDKContext';
-import { RemoteConfigContext } from 'src/integrations/RemoteConfigContext';
 import { saveUTMParams } from 'src/networking/utils';
-
-const firebaseConfig = {
-  apiKey: 'AIzaSyAf2yVhnnxthUA5C4RqIqeDkIhk74EBkAA',
-  authDomain: 'vroom-web.firebaseapp.com',
-  projectId: 'vroom-web',
-  storageBucket: 'vroom-web.appspot.com',
-  messagingSenderId: '972016380498',
-  appId: '1:972016380498:web:bcef1f06e28ad2911f8d8b',
-  measurementId: 'G-RKV8HM65P9',
-};
 
 configureMobx({
   enforceActions: 'observed', // don't allow state modifications outside actions
@@ -77,7 +64,6 @@ class AppraisalApp extends App<
     restrictedContextValueLoaded: boolean;
   }
 > {
-  private readonly remoteConfig: firebase.remoteConfig.RemoteConfig;
   private readonly catSDK: CatSDK;
   private readonly analyticsHandler: AnalyticsHandler;
   private readonly commonHandler: CommonHandler;
@@ -105,19 +91,6 @@ class AppraisalApp extends App<
       GQL_PROXY_URL || '',
       NEXT_PUBLIC_WEB_LEADS_URL || ''
     );
-
-    if (firebase.apps.length == 0) {
-      firebase.initializeApp(firebaseConfig);
-    }
-
-    this.remoteConfig =
-      typeof window !== 'undefined'
-        ? firebase.remoteConfig()
-        : ({} as firebase.remoteConfig.RemoteConfig);
-
-    if (typeof window !== 'undefined') {
-      this.remoteConfig.settings.minimumFetchIntervalMillis = 300000;
-    }
 
     this.state = {
       isSignedIn: false,
@@ -220,21 +193,19 @@ class AppraisalApp extends App<
         >
           <AnalyticsHandlerContext.Provider value={this.analyticsHandler}>
             <CatSDKContext.Provider value={this.catSDK}>
-              <RemoteConfigContext.Provider value={this.remoteConfig}>
-                <RestrictedAppraisalContext.Provider
-                  value={{
-                    value: this.state.restrictedContextValue,
-                    loaded: this.state.restrictedContextValueLoaded,
-                  }}
-                >
-                  <StyledComponentsThemeProvider theme={theme}>
-                    <AppProvider>
-                      {component}
-                      <div id="auth-modal-root" />
-                    </AppProvider>
-                  </StyledComponentsThemeProvider>
-                </RestrictedAppraisalContext.Provider>
-              </RemoteConfigContext.Provider>
+              <RestrictedAppraisalContext.Provider
+                value={{
+                  value: this.state.restrictedContextValue,
+                  loaded: this.state.restrictedContextValueLoaded,
+                }}
+              >
+                <StyledComponentsThemeProvider theme={theme}>
+                  <AppProvider>
+                    {component}
+                    <div id="auth-modal-root" />
+                  </AppProvider>
+                </StyledComponentsThemeProvider>
+              </RestrictedAppraisalContext.Provider>
             </CatSDKContext.Provider>
           </AnalyticsHandlerContext.Provider>
         </ABSmartlyProvider>
