@@ -5,28 +5,25 @@ import {
   VroomSpinner,
 } from '@vroom-web/ui-lib';
 import { observer } from 'mobx-react';
-import getConfig from 'next/config';
-import React, { useEffect, useRef, useState } from 'react';
-import ReCAPTCHA from 'react-google-recaptcha';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
+import { useRecaptcha } from '../../../context/Recaptcha';
 import NewVehicleHistory from './components/NewVehicleHistory';
 import OfferDialog from './components/OfferDialog';
 import PersonalInformation from './components/PersonalInformation';
 import VehicleInformation from './components/VehicleInformation';
 import ViewModel from './ViewModel';
-const { publicRuntimeConfig } = getConfig();
-const { NEXT_PUBLIC_RECAPTCHA_SITE_KEY } = publicRuntimeConfig;
 
 interface Props {
   viewModel: ViewModel;
 }
 
 const AppraisalReviewViewDetail: React.FC<Props> = ({ viewModel }) => {
+  const recaptcha = useRecaptcha();
   const [isLoading, setIsLoading] = useState(false);
   const submitButtonClasses = ['btn', 'btn-primary', 'finish-section-btn'];
   const canSubmit = !(isLoading || viewModel.appraisalStore ? true : false);
-  const recaptchaRef = useRef<ReCAPTCHA>(null);
 
   useEffect(() => {
     viewModel.setTradeFormType();
@@ -49,7 +46,7 @@ const AppraisalReviewViewDetail: React.FC<Props> = ({ viewModel }) => {
   }
 
   const handleSubmit = async (): Promise<void> => {
-    const token = await getCaptchaToken();
+    const token = await recaptcha.getToken();
     if (token) {
       setIsLoading(true);
       viewModel.submitAppraisal(token).finally(() => {
@@ -57,18 +54,6 @@ const AppraisalReviewViewDetail: React.FC<Props> = ({ viewModel }) => {
       });
     } else {
       viewModel.setShowReviewError(true);
-    }
-  };
-
-  const getCaptchaToken = async () => {
-    if (!recaptchaRef.current) return null;
-
-    try {
-      return await recaptchaRef.current.executeAsync();
-    } catch (e) {
-      return null;
-    } finally {
-      recaptchaRef.current.reset();
     }
   };
 
@@ -99,11 +84,6 @@ const AppraisalReviewViewDetail: React.FC<Props> = ({ viewModel }) => {
         >
           {isLoading ? 'Submitting' : 'Get My Price'}
         </SubmitButton>
-        <ReCAPTCHA
-          ref={recaptchaRef}
-          size="invisible"
-          sitekey={NEXT_PUBLIC_RECAPTCHA_SITE_KEY}
-        />
         <TextContainer>
           By clicking Get My Price, you consent to receive autodialed calls and
           text messages from or on behalf of Vroom at the telephone numbers(s)

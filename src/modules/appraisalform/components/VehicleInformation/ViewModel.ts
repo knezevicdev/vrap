@@ -112,7 +112,10 @@ class VehicleInfoViewModel {
     );
   }
 
-  async getTrimFeatures(trimId: number, captchaToken: string): Promise<any> {
+  async getTrimFeatures(
+    trimId: number,
+    captchaToken: string | null
+  ): Promise<any> {
     try {
       const response = await getCarstoryTrimFeatures(trimId, captchaToken);
       if (isErrorResponse(response)) throw response;

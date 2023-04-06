@@ -3,6 +3,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 const Container = styled.div<{ hasOverlay: boolean }>`
+  margin-top: auto;
   ${(props): any => (props.hasOverlay === true ? 'padding-bottom: 180px' : '')};
 `;
 

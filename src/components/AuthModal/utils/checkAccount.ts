@@ -4,12 +4,13 @@ interface CheckAccountResponse {
   exists: boolean;
 }
 
-const checkAccount = (username: string) => {
+const checkAccount = (username: string, token: string | null) => {
   return client.httpRequest<CheckAccountResponse>({
     method: 'POST',
     url: `/appraisal/api/check-account`,
     data: {
       username,
+      token,
     },
   });
 };
