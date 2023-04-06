@@ -115,64 +115,69 @@ const OptionsView: React.FC<Props> = ({ viewModel }) => {
     paymentOption: Yup.string().required('Required'),
     routingNumber: Yup.string().when('paymentOption', {
       is: 'Direct Deposit',
-      then: Yup.string()
-        .required('Field is required')
-        .test(
-          'valid-routing-number',
-          'Please enter a valid routing number',
-          (value) => {
-            return viewModel.isValidRouting(value);
-          }
-        ),
+      then: (schema) =>
+        schema
+          .required('Field is required')
+          .test(
+            'valid-routing-number',
+            'Please enter a valid routing number',
+            (value) => {
+              return viewModel.isValidRouting(value);
+            }
+          ),
     }),
     bankAccountNumber: Yup.string().when('paymentOption', {
       is: 'Direct Deposit',
-      then: Yup.string()
-        .required('Field is required')
-        .matches(
-          /^[a-zA-Z0-9]{4,17}$/,
-          'Please enter a valid account number without spaces or hyphens'
-        ),
+      then: (schema) =>
+        schema
+          .required('Field is required')
+          .matches(
+            /^[a-zA-Z0-9]{4,17}$/,
+            'Please enter a valid account number without spaces or hyphens'
+          ),
     }),
     isPrimaryAddress: Yup.string().when('paymentOption', {
       is: 'Check by Mail',
-      then: Yup.string().required('Field is required'),
+      then: (schema) => schema.required('Field is required'),
     }),
     address: Yup.string().when('isPrimaryAddress', {
       is: 'No',
-      then: Yup.string()
-        .required('Field is required')
-        .test(
-          'valid-street-address',
-          'Please enter a valid street address',
-          (value) => {
-            return viewModel.isValidStreetAddress(value);
-          }
-        ),
+      then: (schema) =>
+        schema
+          .required('Field is required')
+          .test(
+            'valid-street-address',
+            'Please enter a valid street address',
+            (value) => {
+              return viewModel.isValidStreetAddress(value);
+            }
+          ),
     }),
     apartment: Yup.string().when('isPrimaryAddress', {
       is: 'No',
-      then: Yup.string(),
+      then: (schema) => schema,
     }),
     city: Yup.string().when('isPrimaryAddress', {
       is: 'No',
-      then: Yup.string()
-        .required('Field is required')
-        .test('valid-city', 'Please enter a valid city', (value) => {
-          return viewModel.isValidName(value);
-        }),
+      then: (schema) =>
+        schema
+          .required('Field is required')
+          .test('valid-city', 'Please enter a valid city', (value) => {
+            return viewModel.isValidName(value);
+          }),
     }),
     state: Yup.string().when('isPrimaryAddress', {
       is: 'No',
-      then: Yup.string().required('Field is required'),
+      then: (schema) => schema.required('Field is required'),
     }),
     zipcode: Yup.string().when('isPrimaryAddress', {
       is: 'No',
-      then: Yup.string()
-        .required('Field is required')
-        .test('valid-zip-code', 'Please enter a valid zip code', (value) => {
-          return viewModel.isValidZipCode(value);
-        }),
+      then: (schema) =>
+        schema
+          .required('Field is required')
+          .test('valid-zip-code', 'Please enter a valid zip code', (value) => {
+            return viewModel.isValidZipCode(value);
+          }),
     }),
   });
 
