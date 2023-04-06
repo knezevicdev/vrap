@@ -688,7 +688,7 @@ const VehicleInformation: React.FC<Props> = ({
           </>
         )}
         {showLicense && (
-          <LicenseContainer>
+          <>
             <LicenseField>
               <License>
                 <LicenseInputContainer
@@ -700,11 +700,11 @@ const VehicleInformation: React.FC<Props> = ({
                 field={state}
                 onKeyPressEnter={handleLicensePlateKeyPressSubmit}
               />
-              <LoaderContainer>
-                {lpLoader && <Loader isLoading={lpLoader} />}
-              </LoaderContainer>
             </LicenseField>
-          </LicenseContainer>
+            <LoaderContainer>
+              {lpLoader && <Loader isLoading={lpLoader} />}
+            </LoaderContainer>
+          </>
         )}
         {!showVin && !showLicense && (
           <AppraisalLicenseToVin
@@ -835,15 +835,9 @@ const VinField = styled.div`
   }
 `;
 
-const LicenseContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-`;
-
 const LicenseField = styled.div`
   display: flex;
-  width: 100%;
+  width: 48%;
   ${addStyleForMobile(`
     flex-direction: column;
     width: 100%;
@@ -852,27 +846,22 @@ const LicenseField = styled.div`
 
 const License = styled.div`
   display: flex;
-  width: 50%;
+  width: 100%;
   ${addStyleForMobile(`
     width: 100%;
   `)}
 `;
 
 const LicenseInputContainer = styled(LicenseInput)`
-  width: 90%;
-  margin-right: 0;
-
-  ${addStyleForTablet(`
-    width: 70%;
-  `)}
+  width: 100%;
+  margin-right: 15px;
 
   ${addStyleForMobile(`
-    margin-right: 0 !important;
+    margin-right: 0;
   `)}
 `;
 
 const States = styled(StateInput)`
-  margin-left: 20px;
   ${addStyleForTablet(`
     width: 90px;
   `)}

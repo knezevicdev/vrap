@@ -1,7 +1,11 @@
-import { addStyleForMobile, Body, Button, Typography } from '@vroom-web/ui-lib';
+import {
+  addStyleForMobile,
+  Body,
+  Button,
+  ThemeProps,
+  Typography,
+} from '@vroom-web/ui-lib';
 import styled from 'styled-components';
-
-import { ThemeProps } from '../../core/themes/Vroom';
 
 const primaryWhite = (props: { theme: ThemeProps }): string =>
   props.theme.colors.primary.white;

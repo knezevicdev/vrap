@@ -1,11 +1,10 @@
-import { Icon } from '@vroom-web/ui-lib';
+import { Icon, Typography } from '@vroom-web/ui-lib';
 import React from 'react';
 import styled from 'styled-components';
 
 import CongratsCardViewModel from './ViewModel';
 
 import { Icons } from 'src/core/Icon';
-import { Body, Hero } from 'src/core/Typography';
 
 interface Props {
   viewModel: CongratsCardViewModel;
@@ -25,7 +24,7 @@ const Information = styled.div`
   flex-direction: column;
 `;
 
-const InformationAccent = styled(Body.Regular)`
+const InformationAccent = styled(Typography.Body.Regular)`
   color: #e7131a;
   font-weight: 600;
 `;
@@ -38,19 +37,23 @@ const CongratsCardView = ({ viewModel }: Props): JSX.Element => {
         title="document"
         aria-hidden="true"
       />
-      <Hero.Three>{viewModel.title}</Hero.Three>
+      <Typography.Heading.Three>{viewModel.title}</Typography.Heading.Three>
       <Information>
-        <Body.Regular>{viewModel.information1}</Body.Regular>
+        <Typography.Body.Regular>
+          {viewModel.information1}
+        </Typography.Body.Regular>
         <InformationAccent>{viewModel.information2}</InformationAccent>
       </Information>
       <Information>
-        <Body.Regular>{viewModel.loanInformation1}</Body.Regular>
-        <Body.Regular>
+        <Typography.Body.Regular>
+          {viewModel.loanInformation1}
+        </Typography.Body.Regular>
+        <Typography.Body.Regular>
           {viewModel.loanInformation2}
           <InformationAccent>
             {viewModel.loanInformationPhone}
           </InformationAccent>
-        </Body.Regular>
+        </Typography.Body.Regular>
       </Information>
     </Container>
   );

@@ -1,4 +1,4 @@
-import { Icon } from '@vroom-web/ui-lib';
+import { Icon, Typography } from '@vroom-web/ui-lib';
 import { observer } from 'mobx-react';
 import React, { useState } from 'react';
 import styled from 'styled-components';
@@ -7,7 +7,6 @@ import useMediaQuery from '../../hooks/useMediaQuery';
 import PaymentOverviewViewModel from './ViewModel';
 
 import { Icons } from 'src/core/Icon';
-import { Body, Hero, Title } from 'src/core/Typography';
 
 const PaymentOverview = styled.div`
   background: white;
@@ -30,7 +29,8 @@ const PaymentOverview = styled.div`
   }
 `;
 
-const StyledHero = styled(Hero.Five)`
+const StyledHero = styled(Typography.Heading.Four)`
+  font-size: 28px;
   padding: 0 0 8px 0;
   text-align: left;
 `;
@@ -59,17 +59,17 @@ const OverviewRow = styled.div`
   padding-bottom: 8px;
 `;
 
-const PaymentOverviewBody = styled(Body.Regular)``;
+const PaymentOverviewBody = styled(Typography.Body.Regular)``;
 
-const PaymentOverviewPrice = styled(Body.Regular)`
+const PaymentOverviewPrice = styled(Typography.Body.Regular)`
   font-weight: 600;
 `;
 
-const TotalBody = styled(Title.Two)`
+const TotalBody = styled(Typography.Title.Two)`
   font-weight: 600;
 `;
 
-const TotalPrice = styled(Title.Two)`
+const TotalPrice = styled(Typography.Title.Two)`
   font-weight: 600;
 `;
 

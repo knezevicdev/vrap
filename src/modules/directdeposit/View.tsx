@@ -1,4 +1,4 @@
-import { Icon } from '@vroom-web/ui-lib';
+import { Icon, Typography } from '@vroom-web/ui-lib';
 import { observer } from 'mobx-react';
 import React from 'react';
 import styled from 'styled-components';
@@ -8,7 +8,6 @@ import DirectDepositViewModel from './ViewModel';
 import DirectDeposit from 'src/components/DirectDeposit';
 import PlaidButton from 'src/components/PlaidButton';
 import { Icons } from 'src/core/Icon';
-import { Body } from 'src/core/Typography';
 
 export interface Props {
   viewModel: DirectDepositViewModel;
@@ -71,12 +70,12 @@ const DirectDepositContainer = styled('div')`
   width: 100%;
 `;
 
-const DirectDepositCopy = styled(Body.Regular)`
+const DirectDepositCopy = styled(Typography.Body.Regular)`
   display: flex;
   padding: 20px 0 15px;
 `;
 
-const LockText = styled(Body.Small)`
+const LockText = styled(Typography.Body.Small)`
   align-items: center;
   display: flex;
   justify-content: center;

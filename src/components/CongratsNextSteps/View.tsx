@@ -1,9 +1,8 @@
+import { Typography } from '@vroom-web/ui-lib';
 import React from 'react';
 import styled from 'styled-components';
 
 import CongratsNextStepsViewModel from './ViewModel';
-
-import { Body, Hero, Title } from 'src/core/Typography';
 
 export interface Props {
   viewModel: CongratsNextStepsViewModel;
@@ -18,10 +17,12 @@ const CongratsNextStepsView: React.FC<Props> = ({ viewModel }) => {
           <ColoredBullet key={step.id}>
             <StyledTitle>
               <StepNumber>{step.id}</StepNumber>
-              <Title.Three>{step.title}</Title.Three>
+              <Typography.Title.Three>{step.title}</Typography.Title.Three>
             </StyledTitle>
             <StyledDiv>
-              <Body.Regular>{step.description}</Body.Regular>
+              <Typography.Body.Regular>
+                {step.description}
+              </Typography.Body.Regular>
             </StyledDiv>
           </ColoredBullet>
         ))}
@@ -37,7 +38,7 @@ const StyledContainer = styled.div`
   padding: 40px 16px;
 `;
 
-const StyledHero = styled(Hero.Three)`
+const StyledHero = styled(Typography.Heading.Three)`
   padding: 0 0 35px 0;
   text-align: center;
 `;

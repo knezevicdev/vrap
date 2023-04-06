@@ -6,7 +6,6 @@ import styled from 'styled-components';
 import PendingPriceViewModel from './ViewModel';
 
 import { Icons } from 'src/core/Icon';
-import { Body, Hero } from 'src/core/Typography';
 interface Props {
   viewModel: PendingPriceViewModel;
 }
@@ -35,7 +34,9 @@ const PendingPriceView: React.FC<Props> = ({ viewModel }) => {
         </NoPriceContainer>
       ) : (
         <>
-          <Hero.Four>{viewModel.sitTight}</Hero.Four>
+          <Typography.Heading.Four>
+            {viewModel.sitTight}
+          </Typography.Heading.Four>
           <StyledIcon
             title="Car"
             titleId="heroIcon"
@@ -44,12 +45,14 @@ const PendingPriceView: React.FC<Props> = ({ viewModel }) => {
           />
 
           <StyledBody>
-            <Body.Regular>{viewModel.takingALook}</Body.Regular>
+            <Typography.Body.Regular>
+              {viewModel.takingALook}
+            </Typography.Body.Regular>
           </StyledBody>
           <StyledBody>
-            <Body.Regular>
+            <Typography.Body.Regular>
               <i>{viewModel.spamFolder}</i>
-            </Body.Regular>
+            </Typography.Body.Regular>
           </StyledBody>
         </>
       )}
