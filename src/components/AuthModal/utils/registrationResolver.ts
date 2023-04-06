@@ -113,7 +113,7 @@ const schema = yup
     passwordConfirmation: yup
       .string()
       .required('Passwords do not match')
-      .oneOf([yup.ref('password'), null], 'Passwords do not match'),
+      .oneOf([yup.ref('password')], 'Passwords do not match'),
   })
   .required();
 
