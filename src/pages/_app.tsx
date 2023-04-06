@@ -19,6 +19,7 @@ import smoothscroll from 'smoothscroll-polyfill';
 import { ThemeProvider as StyledComponentsThemeProvider } from 'styled-components';
 
 import LoggedOutDialog from '../components/LoggedOutDialog';
+import { RecaptchaProvider } from '../context/Recaptcha';
 import {
   defaultRestrictedContextValue,
   getRestrictedAppraisalContext,
@@ -199,10 +200,12 @@ class AppraisalApp extends App<
                 }}
               >
                 <StyledComponentsThemeProvider theme={getVroomTheme()}>
-                  <AppProvider>
-                    {component}
-                    <div id="auth-modal-root" />
-                  </AppProvider>
+                  <RecaptchaProvider>
+                    <AppProvider>
+                      {component}
+                      <div id="auth-modal-root" />
+                    </AppProvider>
+                  </RecaptchaProvider>
                 </StyledComponentsThemeProvider>
               </RestrictedAppraisalContext.Provider>
             </CatSDKContext.Provider>

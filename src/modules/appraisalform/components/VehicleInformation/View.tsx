@@ -7,17 +7,12 @@ import {
 } from '@vroom-web/ui-lib';
 import { Button } from '@vroom-web/ui-lib';
 import { useRouter } from 'next/router';
-import React, { useEffect, useRef, useState } from 'react';
-import ReCAPTCHA from 'react-google-recaptcha';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-
-const { publicRuntimeConfig } = getConfig();
-const { NEXT_PUBLIC_RECAPTCHA_SITE_KEY } = publicRuntimeConfig;
-
-import getConfig from 'next/config';
 
 import Spinner from '../../../../components/Spinner';
 import { useAppStore } from '../../../../context';
+import { useRecaptcha } from '../../../../context/Recaptcha';
 import { useRestrictedAppraisal } from '../../../../integrations/RestrictedAppraisalContext';
 import {
   VehicleInfoLeaseCopy,
@@ -59,6 +54,7 @@ const VehicleInformation: React.FC<Props> = ({
   viewModel,
   hideButtonCallback,
 }) => {
+  const recaptcha = useRecaptcha();
   const defaultColors = [
     { label: 'Beige', value: 'Beige' },
     { label: 'Black', value: 'Black' },
@@ -116,8 +112,6 @@ const VehicleInformation: React.FC<Props> = ({
     fields: { licensePlate, state },
     isFormValid,
   } = licenseForm;
-
-  const recaptchaRef = useRef<any>();
 
   const resetLocalState = () => {
     setVinDecoded(false);
@@ -539,7 +533,7 @@ const VehicleInformation: React.FC<Props> = ({
     setTrimLoader(true);
 
     if (trimId && !isEditMode) {
-      const token = await getCaptchaToken();
+      const token = await recaptcha.getToken();
       const response = await viewModel.getTrimFeatures(trimId, token);
       const trimOptions = response.features;
       const defaultSelected: any[] = [];
@@ -583,7 +577,7 @@ const VehicleInformation: React.FC<Props> = ({
     const licenseForDecode =
       license || `${state.value}-${lettersAndNumbersOnly(licensePlate.value)}`;
 
-    const token = await getCaptchaToken();
+    const token = await recaptcha.getToken();
 
     if (token) {
       router
@@ -637,7 +631,7 @@ const VehicleInformation: React.FC<Props> = ({
   };
 
   const handleVinSubmit = async (vin = '') => {
-    const token = await getCaptchaToken();
+    const token = await recaptcha.getToken();
     if (token) {
       router
         .push(
@@ -655,16 +649,6 @@ const VehicleInformation: React.FC<Props> = ({
     } else {
       setShowSubmitError(true);
       setVinLoader(false);
-    }
-  };
-
-  const getCaptchaToken = async () => {
-    try {
-      return await recaptchaRef.current.executeAsync();
-    } catch (e) {
-      return null;
-    } finally {
-      recaptchaRef.current.reset();
     }
   };
 
@@ -745,11 +729,6 @@ const VehicleInformation: React.FC<Props> = ({
           )}
         </>
       )}
-      <ReCAPTCHA
-        ref={recaptchaRef}
-        size="invisible"
-        sitekey={NEXT_PUBLIC_RECAPTCHA_SITE_KEY}
-      />
       {vinDecoded && (
         <>
           {trims.length > 0 && (

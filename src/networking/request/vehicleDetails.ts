@@ -18,7 +18,7 @@ export const getCarstoryVinDecode = async (
 
 export const getCarstoryTrimFeatures = async (
   trimId: number,
-  captchaToken: string
+  captchaToken: string | null
 ): Promise<any> => {
   const url = `/appraisal/api/details`;
   return await client.httpRequest({

@@ -2,6 +2,7 @@ import { isErrorResponse } from '@vroom-web/networking';
 import React from 'react';
 import { useForm } from 'react-hook-form';
 
+import { useRecaptcha } from '../../../context/Recaptcha';
 import Spinner from '../../Spinner';
 import {
   Divider,
@@ -27,6 +28,7 @@ interface Props {
 }
 
 const Initial = ({ onEmailProcessed, redirectUrl }: Props) => {
+  const recaptcha = useRecaptcha();
   const {
     handleSubmit,
     formState: { isSubmitting },
@@ -39,7 +41,8 @@ const Initial = ({ onEmailProcessed, redirectUrl }: Props) => {
   });
 
   const onSubmit = handleSubmit(async (data) => {
-    const response = await checkAccount(data.email);
+    const token = await recaptcha.getToken();
+    const response = await checkAccount(data.email, token);
     if (isErrorResponse(response)) {
       onEmailProcessed(data.email, false);
       return;
