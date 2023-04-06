@@ -1,9 +1,9 @@
+import { Typography } from '@vroom-web/ui-lib';
 import React from 'react';
 import styled from 'styled-components';
 
 import LoadingPriceViewModel from './ViewModel';
 
-import { Body, Hero } from 'src/core/Typography';
 interface Props {
   viewModel: LoadingPriceViewModel;
 }
@@ -11,10 +11,12 @@ interface Props {
 const LoadingPriceView: React.FC<Props> = ({ viewModel }) => {
   return (
     <StyledContainer>
-      <Hero.Four>{viewModel.loading}</Hero.Four>
+      <Typography.Heading.Four>{viewModel.loading}</Typography.Heading.Four>
 
       <StyledBody>
-        <Body.Regular>{viewModel.pleaseWait}</Body.Regular>
+        <Typography.Body.Regular>
+          {viewModel.pleaseWait}
+        </Typography.Body.Regular>
       </StyledBody>
     </StyledContainer>
   );

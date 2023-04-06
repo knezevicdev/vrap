@@ -9,7 +9,7 @@ import { ABSmartlyProvider } from '@vroom-web/analytics-integration';
 import { CatSDK } from '@vroom-web/cat-sdk';
 import { isErrorResponse } from '@vroom-web/networking';
 import { CommonHandler } from '@vroom-web/shared-components';
-import { GlobalStyle } from '@vroom-web/ui-lib';
+import { getVroomTheme, GlobalStyle } from '@vroom-web/ui-lib';
 import { configure as configureMobx } from 'mobx';
 import App, { AppProps } from 'next/app';
 import getConfig from 'next/config';
@@ -19,7 +19,6 @@ import smoothscroll from 'smoothscroll-polyfill';
 import { ThemeProvider as StyledComponentsThemeProvider } from 'styled-components';
 
 import LoggedOutDialog from '../components/LoggedOutDialog';
-import { theme } from '../core/themes/Vroom';
 import {
   defaultRestrictedContextValue,
   getRestrictedAppraisalContext,
@@ -199,7 +198,7 @@ class AppraisalApp extends App<
                   loaded: this.state.restrictedContextValueLoaded,
                 }}
               >
-                <StyledComponentsThemeProvider theme={theme}>
+                <StyledComponentsThemeProvider theme={getVroomTheme()}>
                   <AppProvider>
                     {component}
                     <div id="auth-modal-root" />

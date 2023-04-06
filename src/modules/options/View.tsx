@@ -1,4 +1,4 @@
-import { Button, Icon } from '@vroom-web/ui-lib';
+import { Button, Icon, Typography } from '@vroom-web/ui-lib';
 import { Form, Formik } from 'formik';
 import { observer } from 'mobx-react';
 import React, { useEffect, useState } from 'react';
@@ -12,7 +12,6 @@ import CheckByMail from 'src/components/CheckByMail';
 import PayOptions from 'src/components/PayOptions';
 import { useAppStore } from 'src/context';
 import { Icons } from 'src/core/Icon';
-import { Body, Hero, Title } from 'src/core/Typography';
 import { PaymentOverviewFormValues } from 'src/interfaces.d';
 import DirectDeposit from 'src/modules/directdeposit';
 
@@ -46,7 +45,7 @@ const OptionsContainer = styled.div`
   }
 `;
 
-const StyledHero = styled(Hero.Three)`
+const StyledHero = styled(Typography.Heading.Three)`
   padding: 0 35px 0 0;
   text-align: center;
 `;
@@ -55,12 +54,12 @@ const Line = styled.hr`
   margin: 30px 0 20px;
 `;
 
-const OptionsTitle = styled(Title.Three)`
+const OptionsTitle = styled(Typography.Title.Three)`
   font-weight: 600;
   display: flex;
 `;
 
-const OptionsBody = styled(Body.Regular)`
+const OptionsBody = styled(Typography.Body.Regular)`
   display: flex;
   padding: 15px 0;
 `;

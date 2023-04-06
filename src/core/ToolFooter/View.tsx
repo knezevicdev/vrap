@@ -1,11 +1,12 @@
-import { Icon, Link } from '@vroom-web/ui-lib';
+import { Icon, Link, Typography } from '@vroom-web/ui-lib';
 import React from 'react';
 import styled from 'styled-components';
 
-import { Body } from '../../core/Typography';
 import FooterViewModel from './ViewModel';
 
 import { Icons } from 'src/core/Icon';
+
+const { Fine, Body } = Typography;
 
 const Container = styled.div`
   display: flex;
@@ -21,7 +22,7 @@ const FooterBody = styled.div`
   margin: 0 auto;
 `;
 
-const Copyright = styled(Body.Fine)`
+const Copyright = styled(Fine)`
   color: #ffffff;
   padding-left: 30px;
 `;

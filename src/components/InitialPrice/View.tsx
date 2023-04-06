@@ -1,4 +1,4 @@
-import { Button, Icon } from '@vroom-web/ui-lib';
+import { Button, Icon, Typography } from '@vroom-web/ui-lib';
 import { observer } from 'mobx-react';
 import React, { useCallback, useEffect, useState } from 'react';
 import styled from 'styled-components';
@@ -8,7 +8,6 @@ import Spinner from '../Spinner';
 import InitialPriceViewModel from './ViewModel';
 
 import { Icons } from 'src/core/Icon';
-import { Body, Hero, Title } from 'src/core/Typography';
 interface Props {
   viewModel: InitialPriceViewModel;
 }
@@ -52,8 +51,8 @@ const InitialPriceView: React.FC<Props> = ({ viewModel }) => {
   return (
     <>
       <StyledContainer>
-        <Hero.Four>{viewModel.yourPrice}</Hero.Four>
-        <Hero.One>{viewModel.price}</Hero.One>
+        <Typography.Heading.Four>{viewModel.yourPrice}</Typography.Heading.Four>
+        <Typography.Heading.One>{viewModel.price}</Typography.Heading.One>
         <StyledIcon
           title="Car"
           titleId="heroIcon"
@@ -89,14 +88,20 @@ const InitialPriceView: React.FC<Props> = ({ viewModel }) => {
         </StyledButton>
 
         <StyledLegal>
-          <Body.Small>{viewModel.legalDocumentation}</Body.Small>
+          <Typography.Body.Small>
+            {viewModel.legalDocumentation}
+          </Typography.Body.Small>
         </StyledLegal>
 
         <StickyFooter id="stickyFooter">
           <StickyContent>
             <StickyDetails>
-              <Title.Four>{viewModel.yourPriceCamel}</Title.Four>
-              <Hero.Four>{viewModel.price}</Hero.Four>
+              <Typography.Title.Three>
+                {viewModel.yourPriceCamel}
+              </Typography.Title.Three>
+              <Typography.Heading.Four>
+                {viewModel.price}
+              </Typography.Heading.Four>
             </StickyDetails>
             <FullButton
               onClick={async () => {
@@ -185,7 +190,7 @@ const Content = styled.div`
   justify-content: center;
 `;
 
-const ContentText = styled(Body.Regular)`
+const ContentText = styled(Typography.Body.Regular)`
   width: 100%;
   display: flex;
   flex-direction: row;

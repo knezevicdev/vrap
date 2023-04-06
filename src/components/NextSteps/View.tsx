@@ -1,9 +1,8 @@
+import { Typography } from '@vroom-web/ui-lib';
 import React from 'react';
 import styled from 'styled-components';
 
 import NextStepsViewModel from './ViewModel';
-
-import { Body, Hero, Title } from 'src/core/Typography';
 
 export interface Props {
   viewModel: NextStepsViewModel;
@@ -15,26 +14,36 @@ const NextStepsView: React.FC<Props> = ({ viewModel }) => {
       <StyledHero>{viewModel.nextSteps}</StyledHero>
       <ColoredBullet>
         <StyledTitle>
-          <Title.Three>{viewModel.verifyOwnership}</Title.Three>
+          <Typography.Title.Three>
+            {viewModel.verifyOwnership}
+          </Typography.Title.Three>
         </StyledTitle>
         <StyledDiv>
-          <Body.Regular>{viewModel.requestDocuments}</Body.Regular>
+          <Typography.Body.Regular>
+            {viewModel.requestDocuments}
+          </Typography.Body.Regular>
         </StyledDiv>
       </ColoredBullet>
       <ColoredBullet>
         <StyledTitle>
-          <Title.Three>{viewModel.signContracts}</Title.Three>
+          <Typography.Title.Three>
+            {viewModel.signContracts}
+          </Typography.Title.Three>
         </StyledTitle>
         <StyledDiv>
-          <Body.Regular>{viewModel.sendAnEmail}</Body.Regular>
+          <Typography.Body.Regular>
+            {viewModel.sendAnEmail}
+          </Typography.Body.Regular>
         </StyledDiv>
       </ColoredBullet>
       <ColoredBullet>
         <StyledTitle>
-          <Title.Three>{viewModel.wePickUp}</Title.Three>
+          <Typography.Title.Three>{viewModel.wePickUp}</Typography.Title.Three>
         </StyledTitle>
         <StyledDiv>
-          <Body.Regular>{viewModel.scheduleATime}</Body.Regular>
+          <Typography.Body.Regular>
+            {viewModel.scheduleATime}
+          </Typography.Body.Regular>
         </StyledDiv>
       </ColoredBullet>
     </StyledContainer>
@@ -45,7 +54,7 @@ const StyledContainer = styled.div`
   height: 100%;
 `;
 
-const StyledHero = styled(Hero.Three)`
+const StyledHero = styled(Typography.Heading.Three)`
   padding: 0 0 35px 0;
   text-align: center;
 `;

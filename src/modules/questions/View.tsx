@@ -1,4 +1,4 @@
-import { Icon, Link } from '@vroom-web/ui-lib';
+import { Icon, Link, Typography } from '@vroom-web/ui-lib';
 import { observer } from 'mobx-react';
 import React from 'react';
 import styled from 'styled-components';
@@ -6,7 +6,6 @@ import styled from 'styled-components';
 import QuestionsViewModel from './ViewModel';
 
 import { Icons } from 'src/core/Icon';
-import { Hero, Title } from 'src/core/Typography';
 
 export interface Props {
   viewModel: QuestionsViewModel;
@@ -61,11 +60,12 @@ const StyledContainer = styled.div`
   }
 `;
 
-const StyledTitle = styled(Title.Four)`
+const StyledTitle = styled(Typography.Title.Three)`
+  font-size: 16px;
   padding: 10px;
 `;
 
-const StyledHero = styled(Hero.Three)`
+const StyledHero = styled(Typography.Heading.Three)`
   padding-top: 40px;
   text-align: center;
 `;

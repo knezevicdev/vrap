@@ -1,7 +1,6 @@
+import { Typography } from '@vroom-web/ui-lib';
 import React from 'react';
 import styled from 'styled-components';
-
-import { Title } from 'src/core/Typography';
 
 interface Props {
   message?: string;
@@ -53,7 +52,7 @@ const Spinner = styled.img`
   max-width: 80px;
 `;
 
-const Message = styled(Title.Three)`
+const Message = styled(Typography.Title.Three)`
   color: #e7131a;
   margin-top: 16px;
   text-align: center;

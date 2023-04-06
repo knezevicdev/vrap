@@ -1,4 +1,4 @@
-import { Button, Icon, Typography } from '@vroom-web/ui-lib';
+import { Button, Icon, Icons, Typography } from '@vroom-web/ui-lib';
 import { observer } from 'mobx-react';
 import getConfig from 'next/config';
 import { useRouter } from 'next/router';
@@ -8,7 +8,6 @@ import styled from 'styled-components';
 import ViewModel from './ViewModel';
 
 import { useAppStore } from 'src/context';
-import { Icons } from 'src/core/Icon';
 import { displayFirstTextUpper, displayPaymentAccount } from 'src/utils';
 const { publicRuntimeConfig } = getConfig();
 

@@ -3,6 +3,7 @@ import {
   Select,
   SelectChanges,
   SelectItem,
+  Typography,
 } from '@vroom-web/ui-lib';
 import React, { useState } from 'react';
 import styled from 'styled-components';
@@ -11,7 +12,6 @@ import CheckByMailViewModel from './ViewModel';
 
 import { Props } from 'src/components/CheckByMail';
 import FormikInput from 'src/core/FormikInput';
-import { Body } from 'src/core/Typography';
 import { PaymentMethodContext } from 'src/modules/options/paymentMethodContext';
 
 type ViewProps = Props & { viewModel: CheckByMailViewModel };
@@ -20,12 +20,12 @@ const CBMContainer = styled.div`
   width: 100%;
 `;
 
-const CBMMessage = styled(Body.Regular)`
+const CBMMessage = styled(Typography.Body.Regular)`
   display: flex;
   padding: 25px 0 10px;
 `;
 
-const CBMMailingAddress = styled(Body.Regular)`
+const CBMMailingAddress = styled(Typography.Body.Regular)`
   display: flex;
   flex-direction: column;
   padding-bottom: 5px;
