@@ -3,6 +3,7 @@ import { observer } from 'mobx-react';
 import React, { useCallback, useRef } from 'react';
 
 import { Container, Title } from '../shared/Style.css';
+import useVerificationRedesignRedirect from '../shared/useVerificationRedesignRedirect';
 import DocumentUpload, {
   DocumentUploadProps,
 } from './components/DocumentUpload';
@@ -27,6 +28,7 @@ interface Props {
 }
 
 const VerificationPhotosViewDetail: React.FC<Props> = ({ priceId }) => {
+  useVerificationRedesignRedirect();
   const absmartly = useABSmartly();
   const vin = useFetchVerificationData(priceId);
   const { data: vehiclePhotos, refetch } = useGetVehiclePhotos(priceId, vin);

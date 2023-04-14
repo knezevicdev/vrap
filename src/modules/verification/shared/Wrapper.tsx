@@ -136,7 +136,7 @@ export interface VerificationPageProps {
 interface Cookie {
   ajs_user_id: string;
 }
-const parseCookies = (req?: IncomingMessage): Cookie => {
+export const parseCookies = (req?: IncomingMessage): Cookie => {
   if (req && req.headers && req.headers.cookie) {
     return Object.fromEntries(
       req.headers.cookie.split('; ').map((v) => v.split(/=(.+)/))

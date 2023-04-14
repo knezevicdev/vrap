@@ -203,7 +203,7 @@ class AppraisalApp extends App<
                   <RecaptchaProvider>
                     <AppProvider>
                       {component}
-                      <div id="auth-modal-root" />
+                      <div id="modals-root" />
                     </AppProvider>
                   </RecaptchaProvider>
                 </StyledComponentsThemeProvider>

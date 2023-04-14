@@ -31,7 +31,7 @@ const AuthModal = ({ onSuccessfulLogin, redirectUrl }: Props) => {
 
   const authModalRoot =
     typeof document !== 'undefined'
-      ? document.getElementById('auth-modal-root')
+      ? document.getElementById('modals-root')
       : null;
   const modal = (
     <Overlay>

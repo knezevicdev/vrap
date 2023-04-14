@@ -4,6 +4,7 @@ import { observer } from 'mobx-react';
 import React, { useEffect, useRef, useState } from 'react';
 
 import { Container, Title } from '../shared/Style.css';
+import useVerificationRedesignRedirect from '../shared/useVerificationRedesignRedirect';
 import DocumentUpload, {
   DocumentUploadProps,
 } from './components/DocumentUpload';
@@ -38,6 +39,7 @@ interface Props {
 }
 
 const VerificationDocumentsViewDetail: React.FC<Props> = ({ priceId }) => {
+  useVerificationRedesignRedirect();
   const { store } = useAppStore();
   const absmartly = useABSmartly();
   const [mileage, setMileage] = useState<number | ''>('');

@@ -84,17 +84,15 @@ const LoanInformation = ({ fields, form }: Props): ReactElement => {
           </Col>
           <Col>
             <LxBank
-              field={{
-                ...fields.bank,
-                label: 'Name of Lien Financial Institution',
-                onChange: (bankName: string, lenderId: string) => {
-                  fields.bank.onChange({
-                    ...fields.bank,
-                    value: bankName,
-                    lenderId,
-                  });
-                },
+              label="Name of Lien Financial Institution"
+              onChange={(bankName: string, lenderId: string) => {
+                fields.bank.onChange({
+                  ...fields.bank,
+                  value: bankName,
+                  lenderId,
+                });
               }}
+              defaultValue={fields.bank.value}
             />
           </Col>
           {availableFields.includes(LoanField.LIEN_NAME) && (

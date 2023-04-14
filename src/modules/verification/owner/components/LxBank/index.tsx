@@ -3,15 +3,13 @@ import React, { ReactElement, useState } from 'react';
 import loadOptions, { Option } from './loadOptions';
 import { Autocomplete, Label, Tooltip, TooltipBold } from './Style.css';
 
-import { FormField } from 'src/modules/appraisalform/components/componentInterfaces.d';
-
 interface Props {
-  field: Omit<FormField, 'onChange'> & {
-    onChange: (bankName: string, lenderId: string) => void;
-  };
+  label: string;
+  onChange: (bankName: string, lenderId: string) => void;
+  defaultValue: string;
 }
 
-const LxBank = ({ field: { label, onChange } }: Props): ReactElement => {
+const LxBank = ({ label, onChange, defaultValue }: Props): ReactElement => {
   const [, setInputValue] = useState('');
 
   return (
@@ -22,6 +20,7 @@ const LxBank = ({ field: { label, onChange } }: Props): ReactElement => {
         placeholder="Enter your lien financial institution"
         classNamePrefix="rs"
         cacheOptions
+        defaultInputValue={defaultValue}
         loadOptions={loadOptions}
         onInputChange={(inputVal: string) => {
           setInputValue(inputVal);

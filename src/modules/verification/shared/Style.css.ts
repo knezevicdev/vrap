@@ -108,8 +108,9 @@ export const Container = styled.div`
   border: solid 1px #d6d7da;
   margin-bottom: 20px;
   height: max-content;
+  overflow: hidden;
+
   @media (max-width: 1020px) {
-    max-width: 100%;
     padding: 30px 24px;
     margin: 0 10px;
   }

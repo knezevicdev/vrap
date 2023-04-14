@@ -55,6 +55,9 @@ class InitialPriceViewModel {
   }
 
   get verificationUrl() {
+    if (this.isVerificationRedesignTest) {
+      return `/sell/verification?priceId=${this.priceId}`;
+    }
     return `/sell/verification/owner/${this.priceId}`;
   }
 
@@ -73,6 +76,10 @@ class InitialPriceViewModel {
       'appraisal-form-continue-button-color'
     );
   };
+
+  get isVerificationRedesignTest(): boolean {
+    return this.absmartly.isInExperiment('verification-form-redesign');
+  }
 
   onContinueClick = async (): Promise<boolean> => {
     runInAction(() => {
