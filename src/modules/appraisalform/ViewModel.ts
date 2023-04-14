@@ -137,10 +137,6 @@ class PriceViewModel {
     return this.absmartly.isInExperiment('ac-email-capture');
   };
 
-  isNewFormExperimentActive = (): boolean => {
-    return true;
-  };
-
   isCTAColorExp = (): boolean => {
     return this.absmartly.isInExperiment(
       'appraisal-form-all-cta-buttons-color'

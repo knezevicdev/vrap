@@ -48,7 +48,7 @@ function vehicleHistoryData(data: VehicleHistoryForm, isTradeIn: boolean) {
 function interiorConditionData(data: IntConditionForm) {
   return {
     interiorCondition: data.interiorCondition,
-    seats: data.seats,
+    seats: data.seats || 'Cloth',
     smokedIn: data.smokedIn,
     persistentOdors: data.smokedIn,
     ripsOrTearsInSeats: data.ripsOrTearsInSeats,

@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Body } from '@vroom-web/ui-lib';
 import { useRouter } from 'next/router';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
 import { useRestrictedAppraisal } from '../../integrations/RestrictedAppraisalContext';
@@ -27,8 +27,6 @@ import InvalidStateDialog from './Dialog/InvalidState';
 import anyFieldSelected from './utils/anyFieldSelected';
 import combinedFormNextIntercept from './utils/combinedFormNextIntercept';
 import combineForms from './utils/combineForms';
-import valueOrNo from './utils/valueOrNo';
-import valueOrYes from './utils/valueOrYes';
 import AppraisalViewModel from './ViewModel';
 
 import { useAppStore } from 'src/context';
@@ -55,7 +53,6 @@ const AppraisalForm: React.FC<Props> = ({ viewModel }) => {
   const isEditMode = routerAsPath.includes('#');
   const routerHash = routerAsPath.split('#')[1];
   const submitText = isEditMode ? SaveText : ReviewText;
-  const isNewForm = viewModel.isNewFormExperimentActive();
   const isTradeIn = store.appraisal.isTradeIn;
 
   const vehicleInfo = viewModel.appraisalStore.vehicleInfoForm;
@@ -72,7 +69,6 @@ const AppraisalForm: React.FC<Props> = ({ viewModel }) => {
     false | string
   >(false);
   const [personalInfo, changePersonalInfo] = useState({});
-  const isNewFormRef = useRef<boolean>();
 
   const getActiveState = () => {
     switch (routerHash) {
@@ -285,68 +281,6 @@ const AppraisalForm: React.FC<Props> = ({ viewModel }) => {
       },
     });
   }, [appraisalUseForm.vehicleInfoForm, isTradeIn]);
-
-  useEffect(() => {
-    if (isNewForm === isNewFormRef.current) return;
-    isNewFormRef.current = isNewForm;
-
-    if (isNewForm) {
-      appraisalUseForm.intConditionForm.updateMultipleFields({
-        interiorCondition: {
-          ...appraisalUseForm.intConditionForm.fields.interiorCondition,
-          isRequired: false,
-        },
-        seats: {
-          ...appraisalUseForm.intConditionForm.fields.seats,
-          value: 'Cloth',
-        },
-        smokedIn: valueOrNo(appraisalUseForm.intConditionForm.fields.smokedIn),
-      });
-      appraisalUseForm.extConditionForm.updateMultipleFields({
-        exteriorCondition: {
-          ...appraisalUseForm.extConditionForm.fields.exteriorCondition,
-          isRequired: false,
-        },
-        tiresAndWheels: {
-          ...appraisalUseForm.extConditionForm.fields.tiresAndWheels,
-          isRequired: false,
-        },
-        dents: valueOrNo(appraisalUseForm.extConditionForm.fields.dents),
-        rust: valueOrNo(appraisalUseForm.extConditionForm.fields.rust),
-        hailDamage: valueOrNo(
-          appraisalUseForm.extConditionForm.fields.hailDamage
-        ),
-        paintChipping: valueOrNo(
-          appraisalUseForm.extConditionForm.fields.paintChipping
-        ),
-        scratches: valueOrNo(
-          appraisalUseForm.extConditionForm.fields.scratches
-        ),
-      });
-      appraisalUseForm.mechConditionForm.updateMultipleFields({
-        runnable: valueOrYes(
-          appraisalUseForm.mechConditionForm.fields.runnable
-        ),
-        floodFireDamage: {
-          ...appraisalUseForm.mechConditionForm.fields.floodFireDamage,
-          isRequired: false,
-        },
-        mechanicalCondition: {
-          ...appraisalUseForm.mechConditionForm.fields.mechanicalCondition,
-          isRequired: false,
-        },
-        warningLights: valueOrNo(
-          appraisalUseForm.mechConditionForm.fields.warningLights
-        ),
-      });
-    }
-  }, [
-    appraisalUseForm,
-    appraisalUseForm.extConditionForm,
-    appraisalUseForm.intConditionForm,
-    appraisalUseForm.mechConditionForm,
-    isNewForm,
-  ]);
 
   const sections = [
     {

@@ -60,9 +60,15 @@ const useAppraisalFormInit = (
   };
 
   const intConditionFields = {
-    interiorCondition: intCondition.interiorCondition || '',
-    seats: intCondition.seats || '',
-    smokedIn: intCondition.smokedIn || '',
+    interiorCondition: {
+      value: intCondition.interiorCondition || '',
+      isRequired: false,
+    },
+    seats: {
+      value: intCondition.seats || 'Cloth',
+      isRequired: false,
+    },
+    smokedIn: intCondition.smokedIn || 'No',
     ripsOrTearsInSeats: {
       value: intCondition.ripsOrTearsInSeats || 'No',
       isRequired: false,
@@ -74,9 +80,15 @@ const useAppraisalFormInit = (
   };
 
   const extConditionFields = {
-    exteriorCondition: extCondition.exteriorCondition || '',
-    hailDamage: extCondition.hailDamage || '',
-    tiresAndWheels: extCondition.tiresAndWheels || '',
+    exteriorCondition: {
+      value: extCondition.exteriorCondition || '',
+      isRequired: false,
+    },
+    hailDamage: extCondition.hailDamage || 'No',
+    tiresAndWheels: {
+      value: extCondition.tiresAndWheels || '',
+      isRequired: false,
+    },
     afterMarket: { value: extCondition.afterMarket || [], isRequired: false },
     passStateEmissionStandards: {
       value: extCondition.passStateEmissionStandards || '',
@@ -87,7 +99,7 @@ const useAppraisalFormInit = (
       isRequired: false,
     },
     rust: {
-      value: extCondition.rust || '',
+      value: extCondition.rust || 'No',
       isRequired: true,
     },
     windshieldCrackedChipped: {
@@ -95,7 +107,7 @@ const useAppraisalFormInit = (
       isRequired: true,
     },
     dents: {
-      value: extCondition.dents || '',
+      value: extCondition.dents || 'No',
       isRequired: true,
     },
     majorDamageExterior: {
@@ -103,11 +115,11 @@ const useAppraisalFormInit = (
       isRequired: true,
     },
     paintChipping: {
-      value: extCondition.paintChipping || '',
+      value: extCondition.paintChipping || 'No',
       isRequired: true,
     },
     scratches: {
-      value: extCondition.scratches || '',
+      value: extCondition.scratches || 'No',
       isRequired: true,
     },
     dentsPanels: {
@@ -134,10 +146,16 @@ const useAppraisalFormInit = (
   };
 
   const mechConditionFields = {
-    runnable: mechCondition.runnable || '',
-    mechanicalCondition: mechCondition.mechanicalCondition || '',
-    warningLights: mechCondition.warningLights || '',
-    floodFireDamage: mechCondition.floodFireDamage || '',
+    runnable: mechCondition.runnable || 'Yes',
+    mechanicalCondition: {
+      value: mechCondition.mechanicalCondition || '',
+      isRequired: false,
+    },
+    warningLights: mechCondition.warningLights || 'No',
+    floodFireDamage: {
+      value: mechCondition.floodFireDamage || '',
+      isRequired: false,
+    },
     warningLightsValues: {
       value: mechCondition.warningLightsValues || [],
       isRequired: false,
