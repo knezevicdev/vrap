@@ -104,9 +104,7 @@ export default class AppraisalReviewModel {
       // temporary solution for adding flag for active test
       if (requestPayload.additionalDetails.length)
         requestPayload.additionalDetails += ' ';
-      requestPayload.additionalDetails += `suyc-condition-category-questions: ${String(
-        this.isNewFormExperimentActive()
-      )}`;
+      requestPayload.additionalDetails += `suyc-condition-category-questions: true`;
 
       const leadTrackingData = {
         email: requestPayload.email,
@@ -176,8 +174,4 @@ export default class AppraisalReviewModel {
   get showOfferDialog(): boolean {
     return this.store.offer.showOfferDialog;
   }
-
-  isNewFormExperimentActive = (): boolean => {
-    return true;
-  };
 }
