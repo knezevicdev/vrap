@@ -74,13 +74,15 @@
     "react-hook-form": "^7.43.8",
     "react-plaid-link": "^3.1.0",
     "react-select": "^5.4.0",
+    "react-step-wizard": "^5.3.11",
     "sharp": "^0.31.3",
     "smoothscroll-polyfill": "^0.4.4",
     "styled-components": "^5.3.8",
     "type-fest": "^2.12.2",
     "useragent": "^2.3.0",
     "winston": "^3.8.2",
-    "yup": "^1.0.2"
+    "yup": "^1.0.2",
+    "zustand": "^4.3.7"
   },
   "devDependencies": {
     "@svgr/webpack": "^5.2.0",

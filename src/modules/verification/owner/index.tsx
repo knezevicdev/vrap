@@ -3,6 +3,7 @@ import { observer } from 'mobx-react';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 
 import { Container } from '../shared/Style.css';
+import useVerificationRedesignRedirect from '../shared/useVerificationRedesignRedirect';
 import { CalculateRequiredDocuments } from '../shared/utils/calculateRequiredDocuments';
 import ContactInformation from './components/ContactInformation';
 import LoanInformation from './components/LoanInformation';
@@ -29,6 +30,7 @@ const VerificationOwnerViewDetail: React.FC<Props> = ({
   priceId,
   ajsUserId,
 }) => {
+  useVerificationRedesignRedirect();
   const editForm = useRef(false);
   const [isLoading, setIsLoading] = useState(true);
   const [activeSection, setActiveSection] = useState(0);
