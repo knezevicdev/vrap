@@ -69,12 +69,6 @@ const DocumentsVerificationStep = () => {
           <DocumentUpload {...getUploadProps('documentVehicleRegistration')} />
         </Col>
         <Col size={{ default: 2 / 5, mobile: 1 }}>
-          <DocumentUpload {...getUploadProps('documentTitleFront')} />
-        </Col>
-        <Col size={{ default: 2 / 5, mobile: 1 }}>
-          <DocumentUpload {...getUploadProps('documentTitleBack')} />
-        </Col>
-        <Col size={{ default: 2 / 5, mobile: 1 }}>
           <DocumentUpload {...getUploadProps('documentOdometer')} />
         </Col>
         <Col size={1}>

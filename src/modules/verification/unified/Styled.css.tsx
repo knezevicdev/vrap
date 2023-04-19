@@ -47,6 +47,7 @@ export const StepperWrapper = styled.div`
   justify-content: center;
   position: sticky;
   top: 74px;
+  z-index: 5;
 
   @media (max-width: 959px) {
     margin-bottom: 20px;
@@ -79,4 +80,17 @@ export const StepperContainer = styled.div`
 export const ModuleWrapper = styled.div`
   display: flex;
   flex-direction: column;
+`;
+
+export const DialogTitle = styled(Typography.Heading.Three)`
+  margin-bottom: 20px;
+`;
+
+export const DialogText = styled(Typography.Body.Regular)`
+  text-align: center;
+`;
+
+export const ButtonWrapper = styled.div`
+  text-align: center;
+  margin-top: 20px;
 `;
