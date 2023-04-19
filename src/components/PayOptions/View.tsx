@@ -71,10 +71,6 @@ const PayOptionsView: React.FC<Props> = ({
         <OptionContainer>
           <Label>Check by Mail</Label>
           <CheckItem>
-            <Icon icon={Icons.ERROR_ICON} /> We charge a $39 fee to send a check
-            by mail
-          </CheckItem>
-          <CheckItem>
             <Icon icon={Icons.ERROR_ICON} /> Check by mail may take up to 14
             days
           </CheckItem>
