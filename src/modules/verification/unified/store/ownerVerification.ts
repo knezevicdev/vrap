@@ -93,7 +93,7 @@ const createOwnerVerificationSlice: StateCreator<
       firstOwnerState: firstOwnerInfoValues.state,
       firstOwnerZip: firstOwnerInfoValues.zip,
       firstOwnerCity: firstOwnerInfoValues.city,
-      firstOwnerApt: firstOwnerInfoValues.apt,
+      firstOwnerApt: firstOwnerInfoValues.apt || '',
       firstOwnerEmail: firstOwnerInfoValues.email,
       firstOwnerPhoneNumber: firstOwnerInfoValues.phoneNumber,
       secondOwnerConfirmation:
@@ -104,7 +104,7 @@ const createOwnerVerificationSlice: StateCreator<
       secondOwnerState: secondOwnerInfoValue('state'),
       secondOwnerZip: secondOwnerInfoValue('zip'),
       secondOwnerCity: secondOwnerInfoValue('city'),
-      secondOwnerApt: secondOwnerInfoValue('apt'),
+      secondOwnerApt: secondOwnerInfoValue('apt') || '',
       secondOwnerEmail: secondOwnerInfoValue('email'),
       secondOwnerPhoneNumber: secondOwnerInfoValue('phoneNumber'),
     }));

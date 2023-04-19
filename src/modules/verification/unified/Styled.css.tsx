@@ -47,6 +47,7 @@ export const StepperWrapper = styled.div`
   justify-content: center;
   position: sticky;
   top: 74px;
+  z-index: 5;
 
   @media (max-width: 959px) {
     margin-bottom: 20px;

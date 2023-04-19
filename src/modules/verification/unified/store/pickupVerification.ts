@@ -108,7 +108,7 @@ const createPickupVerificationSlice: StateCreator<
       pickupState: pickupInfo('state'),
       pickupZip: pickupInfo('zip'),
       pickupCity: pickupInfo('city'),
-      pickupApt: pickupInfo('apt'),
+      pickupApt: pickupInfo('apt') || '',
       pickupContactConfirmation:
         contactInfoConfirmationValues.contactInfoConfirmation,
       pickupContactFirstName: contactInfo('firstName'),
