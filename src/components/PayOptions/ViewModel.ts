@@ -22,7 +22,7 @@ class PayOptionViewModel {
   }
 
   get isSuycPaymentCheckFeeTest(): boolean {
-    return this.absmartly.isInExperiment('suyc-payment-check-fee');
+    return this.absmartly.isInExperiment('suyc-payment-check-fee-v2');
   }
 }
 
