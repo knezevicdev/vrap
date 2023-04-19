@@ -1,4 +1,4 @@
-import { VroomSpinner } from '@vroom-web/ui-lib';
+import { Button, VroomSpinner } from '@vroom-web/ui-lib';
 import { observer } from 'mobx-react';
 import { useRouter } from 'next/router';
 import React, {
@@ -8,6 +8,7 @@ import React, {
   useRef,
   useState,
 } from 'react';
+import { shallow } from 'zustand/shallow';
 
 import useIsInExperiment from '../../../hooks/useIsInExperiment';
 import AnalyticsHandler from '../../../integrations/AnalyticsHandler';
@@ -18,6 +19,7 @@ import {
   LoadingOverlay,
   SpinnerContainer,
 } from '../shared/Style.css';
+import Dialog from './components/Dialog';
 import MultiStepForm, { FormSection } from './components/MultiStepForm';
 import VerificationStepper from './components/Stepper';
 import DocumentsVerificationStep from './steps/DocumentsVerification/DocumentsVerification';
@@ -32,7 +34,14 @@ import Review from './steps/Review/Review';
 import PhotosVerificationStep from './steps/VehiclePhotos/VehiclePhotos';
 import VehiclePhotosReview from './steps/VehiclePhotos/VehiclePhotosReview';
 import useVerificationStore from './store/store';
-import { ModuleWrapper, StepperContainer, StepperWrapper } from './Styled.css';
+import {
+  ButtonWrapper,
+  DialogText,
+  DialogTitle,
+  ModuleWrapper,
+  StepperContainer,
+  StepperWrapper,
+} from './Styled.css';
 import calculateInitialSection from './utils/calculateInitialSection';
 import handleVerificationCompleted from './utils/handleVerificationCompleted';
 import updateVerification from './utils/updateVerification';
@@ -50,6 +59,14 @@ const UnifiedVerification = ({ ajsUserId }: Props) => {
   const router = useRouter();
   const loadState = useVerificationStore((state) => state.loadState);
   const vin = useVerificationStore((state) => state.vin);
+  const completedInfo = useVerificationStore(
+    (state) => ({
+      completed: state.completed,
+      finalPayment: state.finalPayment,
+      offerPrice: state.offerPrice,
+    }),
+    shallow
+  );
   const [state, setState] = useState('loading');
   const sectionChanged = useRef(false);
 
@@ -105,6 +122,30 @@ const UnifiedVerification = ({ ajsUserId }: Props) => {
 
   if (state === 'error') {
     return <OfferExpiredDialog vin={vin} />;
+  }
+
+  if (completedInfo.completed) {
+    return (
+      <Dialog>
+        <DialogTitle>Congratulations!</DialogTitle>
+        <DialogText>
+          Your verification has been completed successfully.
+        </DialogText>
+        <ButtonWrapper>
+          <Button.Primary
+            onClick={() => {
+              handleVerificationCompleted(
+                completedInfo.finalPayment,
+                completedInfo.offerPrice,
+                priceId
+              );
+            }}
+          >
+            Continue
+          </Button.Primary>
+        </ButtonWrapper>
+      </Dialog>
+    );
   }
 
   const sections: FormSection[] = [

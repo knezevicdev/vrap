@@ -81,3 +81,16 @@ export const ModuleWrapper = styled.div`
   display: flex;
   flex-direction: column;
 `;
+
+export const DialogTitle = styled(Typography.Heading.Three)`
+  margin-bottom: 20px;
+`;
+
+export const DialogText = styled(Typography.Body.Regular)`
+  text-align: center;
+`;
+
+export const ButtonWrapper = styled.div`
+  text-align: center;
+  margin-top: 20px;
+`;

@@ -8,7 +8,6 @@ import {
   postVerification,
 } from '../../../../networking/request';
 import getVehiclePhotos from '../utils/getVehiclePhotos';
-import handleVerificationCompleted from '../utils/handleVerificationCompleted';
 import createDocumentsVerificationSlice, {
   DocumentsVerificationState,
 } from './documentsVerification';
@@ -33,6 +32,9 @@ export type VerificationState = OwnerVerificationState &
     priceId: string;
     vin: string;
     formState: number;
+    completed: boolean;
+    finalPayment: number | null;
+    offerPrice: number;
     loadState: (priceId: string) => Promise<boolean>;
   };
 
@@ -50,6 +52,9 @@ const useVerificationStore = create<VerificationState>()((...a) => ({
   priceId: '',
   vin: '',
   formState: 0,
+  completed: false,
+  finalPayment: null,
+  offerPrice: 0,
   loadState: async (priceId: string) => {
     const set = a[0];
 
@@ -105,11 +110,12 @@ const useVerificationStore = create<VerificationState>()((...a) => ({
     if (!verificationDetails) return true;
 
     if (verificationDetails.form_state === 5) {
-      handleVerificationCompleted(
-        verificationDetails.poq?.final_payment || null,
-        verificationDetails.offer_price,
-        priceId
-      );
+      set((state) => ({
+        ...state,
+        completed: true,
+        finalPayment: verificationDetails?.poq?.final_payment || null,
+        offerPrice: verificationDetails?.offer_price || 0,
+      }));
       return true;
     }
 
