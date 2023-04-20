@@ -20,6 +20,7 @@ const OwnerVerificationStep = ({
   nextStep,
   goToStep,
   editRef,
+  returnStep,
 }: FormStepProps) => {
   const wizardFormInstance = React.useRef<WizardFormInstance>();
 
@@ -49,7 +50,7 @@ const OwnerVerificationStep = ({
       secondOwnerInfoForm
     );
 
-    if (editRef && !calculateDocumentsValid()) {
+    if (editRef && returnStep > 3 && !calculateDocumentsValid()) {
       goToStep(3);
       return;
     }

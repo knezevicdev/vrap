@@ -16,6 +16,7 @@ const LoanInformationStep = ({
   nextStep,
   goToStep,
   editRef,
+  returnStep,
 }: FormStepProps) => {
   const wizardFormInstance = React.useRef<WizardFormInstance>();
 
@@ -32,13 +33,13 @@ const LoanInformationStep = ({
   const loanConfirmationForm = useLoanConfirmationForm();
   const loanInformationForm = useLoanInformationForm();
 
-  const isLoanConfirmed =
-    loanConfirmationForm.watch('loanConfirmation') === 'Yes';
+  const isLoanNonConfirmed =
+    loanConfirmationForm.watch('loanConfirmation') === 'No';
 
   const onDone = () => {
     loadStateFromForms(loanConfirmationForm, loanInformationForm);
 
-    if (editRef && !calculateDocumentsValid()) {
+    if (editRef && returnStep > 3 && !calculateDocumentsValid()) {
       goToStep(3);
       return;
     }
@@ -51,14 +52,14 @@ const LoanInformationStep = ({
       component: LoanConfirmation,
       form: loanConfirmationForm,
       onNext: () => {
-        if (!isLoanConfirmed) {
+        if (isLoanNonConfirmed) {
           onDone();
           return 0;
         }
 
         return 2;
       },
-      nextText: isLoanConfirmed ? 'Next' : 'Continue',
+      nextText: isLoanNonConfirmed ? 'Continue' : 'Next',
     },
     {
       component: LoanInformation,
@@ -66,6 +67,8 @@ const LoanInformationStep = ({
       nextText: 'Continue',
     }
   );
+
+  console.log(loanConfirmationForm);
 
   return (
     <div>
