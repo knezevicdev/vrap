@@ -34,9 +34,14 @@ const combinedFormNextIntercept =
       exteriorCondition = FormFields.extCondition.aboveAverage.label;
     }
     if (
-      appraisalUseForm.vehicleHistoryForm.fields.hasAccident.value === 'Yes' &&
-      appraisalUseForm.vehicleHistoryForm.fields.repairedAfterAccident.value ===
-        'No'
+      (appraisalUseForm.vehicleHistoryForm.fields.hasAccident.value === 'Yes' &&
+        appraisalUseForm.vehicleHistoryForm.fields.repairedAfterAccident
+          .value === 'No') ||
+      (appraisalUseForm.extConditionForm.fields.majorDamageExterior.value ===
+        'Yes' &&
+        [3, 4, 5, '3', '4', '5'].includes(
+          appraisalUseForm.extConditionForm.fields.panelsWithMajorDamage.value
+        ))
     ) {
       exteriorCondition = FormFields.extCondition.belowAverage.label;
     }
