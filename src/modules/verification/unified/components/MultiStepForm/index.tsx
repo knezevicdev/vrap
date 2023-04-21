@@ -44,6 +44,7 @@ interface Props {
   active: number;
   nextText: string;
   submitText: string;
+  extraOffset?: number;
 }
 
 const MultiStepForm: React.FC<Props> = (props) => {
@@ -55,6 +56,7 @@ const MultiStepForm: React.FC<Props> = (props) => {
     onSectionChange,
     active = 0,
     nextText = 'Next',
+    extraOffset = 0,
   } = props;
 
   useEffect(() => {
@@ -72,11 +74,10 @@ const MultiStepForm: React.FC<Props> = (props) => {
       setTimeout(() => {
         const activeElement = document.getElementById(String(activeSection));
         const headerOffset = 70;
-        const stepperOffset = 88;
 
         if (activeElement) {
           const elementPosition = activeElement.offsetTop;
-          const offsetPosition = elementPosition - headerOffset - stepperOffset;
+          const offsetPosition = elementPosition - headerOffset - extraOffset;
 
           window.scrollTo({
             top: offsetPosition,

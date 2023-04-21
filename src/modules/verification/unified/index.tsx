@@ -277,6 +277,7 @@ const UnifiedVerification = ({ ajsUserId }: Props) => {
           }}
           nextText={'Save and Continue'}
           submitText={'Save and Continue'}
+          extraOffset={88} // stepper height
         />
       </Container>
     </ModuleWrapper>
