@@ -8,7 +8,6 @@ import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
 import { Header } from 'src/components/Header';
-import VerificationStepper from 'src/components/Stepper';
 import ToolFooter from 'src/core/ToolFooter';
 import {
   DirectDepositStore,
@@ -83,22 +82,6 @@ const EPayOptions: NextPage = () => {
     poStore.init(priceId);
   }, [oStore, ddStore, poStore, priceId]);
 
-  // TODO: this used to be used with <State isOpenCallback={setStateDropdown} />
-  // It caused the page to rerender and mobx would lose its state
-  // Ideally we would like to extend the page to accomodate the long dropdown
-  const isStepperExp = absmartly.isInExperiment(
-    'ac-appraisal-stepper-verification'
-  );
-
-  const isPhotosUploadExp = absmartly.isInExperiment(
-    'verification-form-vehicle-photo-upload'
-  );
-
-  let activeStep = '4';
-  if (isPhotosUploadExp) {
-    activeStep = '5';
-  }
-
   return (
     <PaymentMethodContext.Provider
       value={{ stateDropdownOpen, setStateDropdown }}
@@ -112,7 +95,6 @@ const EPayOptions: NextPage = () => {
         </HeaderContainer>
         {!absmartly.isLoading && (
           <>
-            {isStepperExp && <VerificationStepper activeStep={activeStep} />}
             <ColumnBody id="main-content" stateDropdownOpen={stateDropdownOpen}>
               <OptionsStoreContext.Provider value={oStore}>
                 <PaymentOverviewStoreContext.Provider value={poStore}>
