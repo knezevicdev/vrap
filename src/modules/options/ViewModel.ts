@@ -1,4 +1,3 @@
-import { ABSmartlyContextValue } from '@vroom-web/analytics-integration/dist/absmartly/types';
 import { makeObservable, observable } from 'mobx';
 
 import { DirectDepositStore } from '../directdeposit/store';
@@ -27,8 +26,7 @@ class OptionsViewModel {
     store: OptionsStore,
     ddStore: DirectDepositStore,
     analyticsHandler: AnalyticsHandler,
-    appStore: Store,
-    private absmartly: ABSmartlyContextValue
+    appStore: Store
   ) {
     this.store = store;
     this.ddStore = ddStore;
@@ -165,10 +163,6 @@ class OptionsViewModel {
   getInstitutionNotFound = (): boolean => {
     return this.store.institutionFound === false;
   };
-
-  inFaceliftTest(): boolean {
-    return this.absmartly.isInExperiment('ac-payment-facelift');
-  }
 
   setPaymentOption = (value: string): void => {
     this.store.setPayOptionSelected(value);

@@ -1,5 +1,3 @@
-import { ABSmartlyContextValue } from '@vroom-web/analytics-integration/dist/absmartly/types';
-
 jest.mock('src/networking/request');
 
 import { DirectDepositStore } from '../../directdeposit/store';
@@ -25,10 +23,7 @@ describe('Options Test', () => {
   beforeEach(async () => {
     await oStore.init('12345');
     await ddStore.initClientSide('12345');
-    viewModel = new ViewModel(oStore, ddStore, analyticsHandler, appStore, {
-      isInExperiment: () => false,
-      isLoading: false,
-    } as any as ABSmartlyContextValue);
+    viewModel = new ViewModel(oStore, ddStore, analyticsHandler, appStore);
   });
 
   afterEach(() => {
@@ -133,10 +128,6 @@ describe('Options Test', () => {
 
   it('getInstitutionNotFound', () => {
     expect(viewModel.getInstitutionNotFound()).toBe(false);
-  });
-
-  it('inFaceliftTest', () => {
-    expect(viewModel.inFaceliftTest()).toBe(false);
   });
 
   it('setPaymentOption', () => {

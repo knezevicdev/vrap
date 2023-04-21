@@ -1,5 +1,3 @@
-import { ABSmartlyContextValue } from '@vroom-web/analytics-integration/dist/absmartly/types';
-
 jest.mock('src/networking/request');
 
 import { DirectDepositStore } from '../store';
@@ -50,19 +48,9 @@ describe('test direct deposit store', () => {
   beforeEach(() => {
     const oStore = new OptionsStore();
     const appStore = new AppStore();
-    const absmartly = {
-      isInExperiment: () => false,
-      isLoading: false,
-    } as any as ABSmartlyContextValue;
 
     store = new DirectDepositStore();
-    viewModel = new ViewModel(
-      oStore,
-      store,
-      analyticsHandler,
-      appStore,
-      absmartly
-    );
+    viewModel = new ViewModel(oStore, store, analyticsHandler, appStore);
   });
 
   it('test initClientSide func ', async () => {

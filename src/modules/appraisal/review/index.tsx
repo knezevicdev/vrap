@@ -1,4 +1,3 @@
-import { useABSmartly } from '@vroom-web/analytics-integration';
 import { useRouter } from 'next/router';
 import React from 'react';
 
@@ -15,9 +14,8 @@ interface Props {
 const AppraisalReview: React.FC<Props> = ({ token }) => {
   const router = useRouter();
   const { store } = useAppStore();
-  const absmartly = useABSmartly();
   const isTradeIn = useIsTradeIn();
-  const viewModel = new ViewModel(store, router, absmartly, token, isTradeIn);
+  const viewModel = new ViewModel(store, router, token, isTradeIn);
   return <View viewModel={viewModel} />;
 };
 
