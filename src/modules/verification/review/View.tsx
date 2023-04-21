@@ -5,7 +5,6 @@ import styled from 'styled-components';
 
 import { Container, Line, Title } from '../shared/Style.css';
 import OwnerInfoReview from './components/OwnerInfoReview';
-import PaymentInfoReview from './components/PaymentInfoReview';
 import PayOffInfoReview from './components/PayOffInfoReview';
 import PickupInfoReview from './components/PickupInfoReview';
 import SellDocumentReview from './components/SellDocumentReview';
@@ -81,15 +80,6 @@ const VerificationReviewViewDetail: React.FC<Props> = ({
             priceId={priceId}
             vin={store.verification.verificationDetail?.vin || ''}
           />
-        </>
-      )}
-      {(viewModel.isPaymentRequireExp() ||
-        (typeof window !== 'undefined'
-          ? localStorage.getItem('review_payment_values')
-          : false)) && (
-        <>
-          <Line />
-          <PaymentInfoReview />
         </>
       )}
       <Line />

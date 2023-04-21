@@ -1,4 +1,3 @@
-import { ABSmartlyContextValue } from '@vroom-web/analytics-integration/dist/absmartly/types';
 import { isErrorResponse } from '@vroom-web/networking';
 
 import { OptionsStore } from '../../modules/options/store';
@@ -10,11 +9,7 @@ class PlaidButtonViewModel {
   readonly buttonCopy: string = 'Link bank account';
   readonly buttonStartCopy: string = 'Start direct deposit';
 
-  constructor(
-    private oStore: OptionsStore,
-    private store: Store,
-    private absmartly: ABSmartlyContextValue
-  ) {}
+  constructor(private oStore: OptionsStore, private store: Store) {}
 
   onPlaidSubmitting = (value: boolean): void => {
     this.oStore.setPlaidSubmitting(value);
@@ -46,10 +41,6 @@ class PlaidButtonViewModel {
       throw resp;
     }
     this.store.deposit.setInstitutionLogo(resp.data.data.logo);
-  };
-
-  isPaymentRequireExp = (): boolean => {
-    return this.absmartly.isInExperiment('ac-payment-required');
   };
 }
 

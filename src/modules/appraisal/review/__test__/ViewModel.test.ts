@@ -1,5 +1,3 @@
-import { ABSmartlyContextValue } from '@vroom-web/analytics-integration/dist/absmartly/types';
-
 jest.mock('src/networking/request');
 
 import { NextRouter } from 'next/router';
@@ -82,16 +80,7 @@ describe('Appraisal review index page test', () => {
   let analyticsHandler: AnalyticsHandler;
 
   beforeEach(() => {
-    viewModel = new ViewModel(
-      stores,
-      router,
-      {
-        isInExperiment: () => false,
-        isLoading: false,
-      } as any as ABSmartlyContextValue,
-      'supersecret',
-      false
-    );
+    viewModel = new ViewModel(stores, router, 'supersecret', false);
     router.asPath = '';
     analyticsHandler = viewModel.getAnalyticsHandler();
   });
@@ -124,16 +113,7 @@ describe('Appraisal review index page test', () => {
   });
 
   it('should redirect to /sell/tradeIn-selfService if Appraisal is empty and user is on /sell/tradeIn-selfService-Review', async () => {
-    viewModel = new ViewModel(
-      stores,
-      router,
-      {
-        isInExperiment: () => false,
-        isLoading: false,
-      } as any as ABSmartlyContextValue,
-      'supersecret',
-      true
-    );
+    viewModel = new ViewModel(stores, router, 'supersecret', true);
     viewModel.redirectToAppraisalForm();
     expect(router.push).toBeCalledWith('/sell/tradeIn-selfService');
   });

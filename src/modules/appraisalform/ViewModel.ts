@@ -1,4 +1,3 @@
-import { ABSmartlyContextValue } from '@vroom-web/analytics-integration/dist/absmartly/types';
 import { isErrorResponse } from '@vroom-web/networking';
 
 import {
@@ -21,11 +20,9 @@ import { AppraisalStore } from 'src/store/appraisalStore';
 class PriceViewModel {
   private _analyticsHandler: AnalyticsHandler = new AnalyticsHandler();
   appraisalStore: AppraisalStore;
-  absmartly: ABSmartlyContextValue;
 
-  constructor(public store: Store, absmartly: ABSmartlyContextValue) {
+  constructor(public store: Store) {
     this.appraisalStore = store.appraisal;
-    this.absmartly = absmartly;
   }
 
   get isTradeIn(): boolean {
@@ -132,16 +129,6 @@ class PriceViewModel {
       console.log('error in carfax');
     }
   }
-
-  isEmailCaptureExperiment = (): boolean => {
-    return this.absmartly.isInExperiment('ac-email-capture');
-  };
-
-  isCTAColorExp = (): boolean => {
-    return this.absmartly.isInExperiment(
-      'appraisal-form-all-cta-buttons-color'
-    );
-  };
 
   isSignIn = async (): Promise<void> => {
     const isLoggedIn = await isUserSignedIn();

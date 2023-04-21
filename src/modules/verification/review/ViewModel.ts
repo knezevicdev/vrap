@@ -2,12 +2,10 @@ import { ABSmartlyContextValue } from '@vroom-web/analytics-integration/dist/abs
 import { isErrorResponse } from '@vroom-web/networking';
 
 import AnalyticsHandler from 'src/integrations/AnalyticsHandler';
-import { submitPaymentOption } from 'src/modules/options/store';
 import { PatchReview } from 'src/networking/models/Verification';
 import {
   getOfferDetails,
   getVerificationDetails,
-  postPlaidPayment,
 } from 'src/networking/request';
 import { patchVerification } from 'src/networking/request';
 import Store from 'src/store';
@@ -108,60 +106,7 @@ export default class VerificationReviewSectionViewModel {
     return payload;
   };
 
-  async submitPayment(): Promise<void> {
-    const { payment } = this.store;
-    const values = payment.values || this.defaultValues;
-    const priceId = payment.priceId || '';
-    const address = payment.address || this.mailAddress;
-    await submitPaymentOption(values, priceId, address);
-
-    if (payment.values?.paymentOption !== 'Check by Mail') {
-      payment.setSubmitType('Manual ACH');
-      this.analyticsHandler.trackManualACHSelected();
-    } else {
-      payment.setSubmitType('Check');
-      this.analyticsHandler.trackCheckSelected();
-    }
-    const submittedType = payment.submittedType || '';
-    this.analyticsHandler.trackPaymentOptionsSubmitted(submittedType);
-  }
-
-  async handlePlaidSubmit(): Promise<void> {
-    const mutationInput = this.store.deposit.mutationInput || {
-      Account: {
-        Id: '',
-        Mask: '',
-        Name: '',
-        Subtype: '',
-        Type: '',
-      },
-      Email: '',
-      Institution: {
-        Id: '',
-        Name: '',
-      },
-      PublicToken: '',
-      ReferenceId: '',
-      Source: '',
-    };
-    try {
-      const plaidPaymentRes = await postPlaidPayment(mutationInput);
-      if (isErrorResponse(plaidPaymentRes)) {
-        this.store.option.setPlaidSubmitting(false);
-        throw plaidPaymentRes;
-      }
-      this.analyticsHandler.trackPaymentOptionsSubmitted('Plaid ACH');
-      this.analyticsHandler.trackPlaidACHSelected();
-      localStorage.removeItem('linkToken');
-      localStorage.removeItem('priceId');
-    } catch (err) {
-      this.store.option.setPlaidSubmitting(false);
-      console.log(JSON.stringify(err));
-    }
-  }
-
   async verificationSubmit(): Promise<void> {
-    const { deposit } = this.store;
     const payload = this.createVerificationPayload();
     const data = {
       source: 'vroom.com',
@@ -172,13 +117,6 @@ export default class VerificationReviewSectionViewModel {
     try {
       const verificationResponse = await patchVerification(data);
       if (isErrorResponse(verificationResponse)) throw verificationResponse;
-
-      if (this.isPaymentRequireExp() && deposit.mutationInput) {
-        await this.handlePlaidSubmit();
-      }
-      if (this.isPaymentRequireExp() && !deposit.mutationInput) {
-        await this.submitPayment();
-      }
 
       const responseData = verificationResponse.data.data;
       const { owner_email_address, owner_first_name, offer_price, poq } =
@@ -197,10 +135,6 @@ export default class VerificationReviewSectionViewModel {
 
       const priceId =
         this.store.verification.priceId || localStorage.getItem('priceId');
-      if (this.isPaymentRequireExp()) {
-        window.location.href = '/appraisal/congratulations';
-        return;
-      }
 
       if (finalPayment !== null) {
         if (finalPayment > 0) {
@@ -223,10 +157,6 @@ export default class VerificationReviewSectionViewModel {
   setWhereIsVehicleRegistered(value: string): void {
     this.store.verification.setWhereIsVehicleRegistered(value);
   }
-
-  isPaymentRequireExp = (): boolean => {
-    return this.absmartly.isInExperiment('ac-payment-required');
-  };
 
   isVehiclePhotosExp = (): boolean => {
     return this.absmartly.isInExperiment(

@@ -19,8 +19,6 @@ import MultiStepForm from './components/MultiStepForm';
 import PersonalInformation from './components/personalinformation';
 import useFormInit from './components/useFormInit';
 import VehicleInformation from './components/VehicleInformation';
-import EmailCapture from './Dialog/EmailCapture';
-import useTrackActive from './Dialog/EmailCapture/trackActive';
 import ExactMilageDialog from './Dialog/ExactMilage';
 import InvalidMakeDialog from './Dialog/InvalidMake';
 import InvalidStateDialog from './Dialog/InvalidState';
@@ -338,16 +336,8 @@ const AppraisalForm: React.FC<Props> = ({ viewModel }) => {
     }
   }, [appraisalUseForm.mechConditionForm.fields.warningLights.value]);
 
-  const { inactive, removeEvent, track } = useTrackActive();
-  const [emailModalShowed, changeEmailModalShowed] = useState(false);
-  const [emailModal, changeEmailModal] = useState(false);
-  const [checkSection, changeCheckSection] = useState(0);
-  const [isMobile, changeIsMobile] = useState(0);
-
   useEffect(() => {
     viewModel.isSignIn();
-    const isMobileWidth = window.innerWidth <= 767 ? 1 : 0;
-    changeIsMobile(isMobileWidth);
   }, []);
 
   useEffect(() => {
@@ -359,78 +349,6 @@ const AppraisalForm: React.FC<Props> = ({ viewModel }) => {
   useEffect(() => {
     changePersonalInfo({ ...store.appraisal.user });
   }, [store.appraisal.user]);
-
-  useEffect(() => {
-    const emailCaptureLocal = localStorage.getItem('email_capture');
-    const hasEmailCaptureLocal = emailCaptureLocal === 'true';
-    if (viewModel.isEmailCaptureExperiment() && !hasEmailCaptureLocal) {
-      const { vehicleInfoForm } = buildFormForStore();
-      const isEmpty = !vehicleInfoForm.milage && !vehicleInfoForm.keysAmount;
-
-      window.onscroll = () => {
-        const currentHeight =
-          (window.scrollY + window.innerHeight) / document.body.clientHeight;
-
-        if (
-          window.scrollY &&
-          !emailModalShowed &&
-          checkSection === 0 &&
-          currentHeight > 0.75 &&
-          isEmpty
-        ) {
-          handleClearEvent();
-        }
-      };
-    }
-  }, [emailModalShowed, appraisalUseForm, checkSection]);
-
-  useEffect(() => {
-    const emailCaptureLocal = localStorage.getItem('email_capture');
-    const hasEmailCaptureLocal = emailCaptureLocal === 'true';
-
-    if (hasEmailCaptureLocal) {
-      removeEvent();
-    }
-    if (
-      inactive &&
-      !emailModalShowed &&
-      checkSection < 2 &&
-      viewModel.isEmailCaptureExperiment() &&
-      !hasEmailCaptureLocal
-    ) {
-      handleClearEvent();
-    }
-  }, [inactive, emailModalShowed, checkSection]);
-
-  useEffect(() => {
-    const emailCaptureLocal = localStorage.getItem('email_capture');
-    const hasEmailCaptureLocal = emailCaptureLocal === 'true';
-    if (!hasEmailCaptureLocal && viewModel.isEmailCaptureExperiment()) {
-      track();
-    }
-    if (!viewModel.isEmailCaptureExperiment()) {
-      removeEvent();
-    }
-  }, [viewModel.isEmailCaptureExperiment()]);
-
-  const handleClearEvent = () => {
-    changeEmailModalShowed(true);
-    changeEmailModal(true);
-    removeEvent();
-    window.onscroll = null;
-    localStorage.setItem('email_capture', 'true');
-    viewModel.emailAnalytics(
-      'Remind Me Viewed',
-      viewModel.getUserSignIn(),
-      isMobile,
-      1,
-      false
-    );
-  };
-
-  const handleModalClose = () => {
-    changeEmailModal(false);
-  };
 
   const buildFormSectionValues = (form: any, targetObj: any) => {
     for (const [key, value] of Object.entries(form) as any) {
@@ -500,11 +418,6 @@ const AppraisalForm: React.FC<Props> = ({ viewModel }) => {
       viewModel.trackNextStepViewed(activeSection + 1);
     }
 
-    if (activeSection > 1) {
-      removeEvent();
-    }
-    changeCheckSection(activeSection + 1);
-
     if (clearForm) {
       await viewModel.clearAppraisal();
       router
@@ -548,7 +461,6 @@ const AppraisalForm: React.FC<Props> = ({ viewModel }) => {
   return (
     <AppraisalFormContainer data-qa="AppraisalFormPage">
       <MultiStepForm
-        isCTAColorExp={viewModel.isCTAColorExp()}
         formTitle={viewModel.titleText}
         sections={sections}
         onDone={onSubmit}
@@ -573,13 +485,6 @@ const AppraisalForm: React.FC<Props> = ({ viewModel }) => {
       {showInvalidStateDialog && <InvalidStateDialog />}
       {invalidMakeDialogMake && (
         <InvalidMakeDialog make={invalidMakeDialogMake} />
-      )}
-      {emailModal && (
-        <EmailCapture
-          handleClose={handleModalClose}
-          experimentUUID={viewModel.getAnonymousId()}
-          isUserLoggedIn={viewModel.getUserSignIn()}
-        />
       )}
     </AppraisalFormContainer>
   );

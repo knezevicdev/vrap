@@ -1,4 +1,3 @@
-import { useABSmartly } from '@vroom-web/analytics-integration';
 import { SkipNavigationLink, VroomSpinner } from '@vroom-web/ui-lib';
 import { IncomingMessage } from 'http';
 import { observer } from 'mobx-react';
@@ -21,7 +20,6 @@ import {
 
 import DefaultStepper from 'src/components/DefaultStepper';
 import { Header } from 'src/components/Header';
-import VerificationStepper from 'src/components/Stepper';
 import { useAppStore } from 'src/context';
 import Footer from 'src/core/Footer';
 import TransactionOverview from 'src/modules/verification/transactionoverview';
@@ -34,7 +32,6 @@ interface Props {
 
 const VerificationWrapper: React.FC<Props> = ({ priceId, step, children }) => {
   const { store } = useAppStore();
-  const absmartly = useABSmartly();
   const router = useRouter();
 
   const [isLoading, setLoading] = useState(true);
@@ -68,10 +65,6 @@ const VerificationWrapper: React.FC<Props> = ({ priceId, step, children }) => {
     }
   };
 
-  const isStepperExp = absmartly.isInExperiment(
-    'ac-appraisal-stepper-verification'
-  );
-
   useEffect(() => {
     if (store.verification.formState && store.verification.formState === 5) {
       router.push('/appraisal/congratulations').catch((e) => {
@@ -94,12 +87,7 @@ const VerificationWrapper: React.FC<Props> = ({ priceId, step, children }) => {
       </HeaderContainer>
       <StepperWrapper>
         <StepperContainer>
-          {!absmartly.isLoading && !isStepperExp && (
-            <DefaultStepper activeStep={store.stepper.currentStep} />
-          )}
-          {!absmartly.isLoading && isStepperExp && (
-            <VerificationStepper activeStep={String(step + 1)} />
-          )}
+          <DefaultStepper activeStep={store.stepper.currentStep} />
         </StepperContainer>
       </StepperWrapper>
       <>

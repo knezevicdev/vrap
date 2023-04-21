@@ -1,4 +1,3 @@
-import { ABSmartlyContextValue } from '@vroom-web/analytics-integration/dist/absmartly/types';
 import { isErrorResponse } from '@vroom-web/networking';
 import { NextRouter } from 'next/router';
 
@@ -15,23 +14,14 @@ export default class AppraisalReviewModel {
   readonly title: string = 'my appraisal review';
   private _analyticsHandler: AnalyticsHandler = new AnalyticsHandler();
   appraisalStore: AppraisalStore;
-  absmartly: ABSmartlyContextValue;
 
   constructor(
     public store: Store,
     private _router: NextRouter,
-    absmartly: ABSmartlyContextValue,
     private token: string,
     public isTradeIn: boolean
   ) {
     this.appraisalStore = store.appraisal;
-    this.absmartly = absmartly;
-  }
-
-  get isCTAColorExp(): boolean {
-    return this.absmartly.isInExperiment(
-      'appraisal-form-all-cta-buttons-color'
-    );
   }
 
   isAppraisalEmpty(): boolean {

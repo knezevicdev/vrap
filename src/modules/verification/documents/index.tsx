@@ -103,7 +103,6 @@ const VerificationDocumentsViewDetail: React.FC<Props> = ({ priceId }) => {
     let url;
     if (
       !localStorage.getItem('review_doc_section') &&
-      absmartly.isInExperiment('ac-payment-required') &&
       !absmartly.isInExperiment('verification-form-vehicle-photo-upload')
     ) {
       url = `/appraisal/paymentmethod?priceId=${priceId}`;

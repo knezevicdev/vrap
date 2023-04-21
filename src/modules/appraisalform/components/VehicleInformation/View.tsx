@@ -24,7 +24,6 @@ import AppraisalLicenseToVin from '../forminputs/AppraisalLicenseToVin';
 import ExactMileageInput from '../forminputs/ExactMileageInput';
 import ExtColorInput from '../forminputs/ExtColorInput';
 import LicenseInput from '../forminputs/LicenseInput';
-import NumberOfKeysInput from '../forminputs/NumberOfKeysInput';
 import SellOrTradeInInput from '../forminputs/SellOrTradeInInput';
 import StateInput from '../forminputs/StateInput';
 import TrimInput from '../forminputs/TrimInput';
@@ -96,8 +95,6 @@ const VehicleInformation: React.FC<Props> = ({
 
   const [showOptionsGroup, setShowOptionsGroup] = useState(options.length > 0);
 
-  const isHideHowManyKeysExperiment = viewModel.isHideHowManyKeysExperiment;
-
   const [showVin, setShowVin] = useState(false);
   const [showLicense, setShowLicense] = useState(false);
 
@@ -128,22 +125,6 @@ const VehicleInformation: React.FC<Props> = ({
   useEffect(() => {
     hideButtonCallback(true);
   }, []);
-
-  useEffect(() => {
-    const keysAmount = fields.keysAmount;
-    if (isHideHowManyKeysExperiment) {
-      keysAmount.onChange({
-        ...keysAmount,
-        value: '1',
-        isRequired: false,
-      });
-    } else {
-      keysAmount.onChange({
-        ...keysAmount,
-        isRequired: true,
-      });
-    }
-  }, [isHideHowManyKeysExperiment]);
 
   useEffect(() => {
     const vehicleId = router.query.vehicle || fields.vin.value;
@@ -710,15 +691,10 @@ const VehicleInformation: React.FC<Props> = ({
             tabIndex={0}
             onKeyPress={handleOnKeyPressEnter}
             onClick={handleVehicleSubmit}
-            disabled={
-              isSubmitDisabled() ||
-              viewModel.isABSmartlyLoading ||
-              !isRestrictedAppraisalLoaded
-            }
-            isCTAColorExp={viewModel.isCTAColorExp}
+            disabled={isSubmitDisabled() || !isRestrictedAppraisalLoaded}
             data-qa={VehicleInfoText.licenseButtonDataQa}
           >
-            {viewModel.isABSmartlyLoading || !isRestrictedAppraisalLoaded ? (
+            {!isRestrictedAppraisalLoaded ? (
               <LoadingSpinner />
             ) : (
               VehicleInfoText.licenseButton
@@ -756,11 +732,6 @@ const VehicleInformation: React.FC<Props> = ({
           <InputContainer>
             <ZipCodeField field={fields.zipCode} />
           </InputContainer>
-          {!isHideHowManyKeysExperiment && (
-            <InputContainer>
-              <NumberOfKeysInput field={fields.keysAmount} />
-            </InputContainer>
-          )}
           {showOptionsGroup && (
             <InputContainer>
               <VehicleOptionsField
@@ -870,12 +841,9 @@ const SubmitButton = styled(({ ...restProps }) => (
   <Button.Primary {...restProps} />
 ))`
   :enabled {
-    background-color: ${(props) =>
-      props.isCTAColorExp ? '#308406' : '#E7131A'};
+    background-color: #E7131A;
     &:hover {
-      background-color: ${(props) =>
-        props.isCTAColorExp ? '#309706' : '#d01118'};
-    }
+      background-color: #d01118
   }
   margin-top: 10px;
   width: 48%;

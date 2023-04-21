@@ -1,5 +1,3 @@
-import { ABSmartlyContextValue } from '@vroom-web/analytics-integration/dist/absmartly/types';
-
 jest.mock('src/networking/request');
 
 import ViewModel from '../ViewModel';
@@ -53,29 +51,18 @@ const respWithEmpty = {
   dataProviderInfo: {},
 };
 
-const absmartly = {
-  isInExperiment: () => false,
-  isLoading: false,
-} as any as ABSmartlyContextValue;
-
 describe('AppraisalForm VehicleInformation component test', () => {
   const stores = new store();
   let viewModel: ViewModel;
   const captchaToken = 'fake_captcha_token';
 
   beforeEach(() => {
-    viewModel = new ViewModel(stores, absmartly);
+    viewModel = new ViewModel(stores);
   });
 
   it('test vehicleId', () => {
     stores.appraisal.setVehicleId('123');
     expect(viewModel.vehicleId).toEqual('123');
-  });
-
-  it('should isInExperiment called ', () => {
-    const isInExperimentSpy = jest.spyOn(absmartly, 'isInExperiment');
-    viewModel.isHideHowManyKeysExperiment;
-    expect(isInExperimentSpy).toHaveBeenCalled();
   });
 
   it('test vehicleDecodeData', () => {

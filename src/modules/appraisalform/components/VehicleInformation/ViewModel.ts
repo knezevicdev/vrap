@@ -1,4 +1,3 @@
-import { ABSmartlyContextValue } from '@vroom-web/analytics-integration/dist/absmartly/types';
 import { isErrorResponse } from '@vroom-web/networking';
 
 import AnalyticsHandler from 'src/integrations/AnalyticsHandler';
@@ -13,11 +12,9 @@ import { AppraisalStore } from 'src/store/appraisalStore';
 class VehicleInfoViewModel {
   private _analyticsHandler: AnalyticsHandler = new AnalyticsHandler();
   appraisalStore: AppraisalStore;
-  absmartly: ABSmartlyContextValue;
 
-  constructor(public store: Store, absmartly: ABSmartlyContextValue) {
+  constructor(public store: Store) {
     this.appraisalStore = store.appraisal;
-    this.absmartly = absmartly;
   }
 
   get isTradeIn(): boolean {
@@ -30,22 +27,6 @@ class VehicleInfoViewModel {
 
   get vehicleId(): string {
     return this.appraisalStore.vehicleId;
-  }
-
-  get isABSmartlyLoading(): boolean {
-    return this.absmartly.isLoading;
-  }
-
-  get isHideHowManyKeysExperiment(): boolean {
-    return this.absmartly.isInExperiment(
-      'appraisal-hide-how-many-keys-question'
-    );
-  }
-
-  get isCTAColorExp(): boolean {
-    return this.absmartly.isInExperiment(
-      'appraisal-form-all-cta-buttons-color'
-    );
   }
 
   get vehicleDecodeData(): any {

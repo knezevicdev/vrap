@@ -5,7 +5,6 @@ import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import * as Yup from 'yup';
 
-import DirectDepositReview from './components/DirectDepositReview';
 import OptionsViewModel from './ViewModel';
 
 import CheckByMail from 'src/components/CheckByMail';
@@ -183,9 +182,6 @@ const OptionsView: React.FC<Props> = ({ viewModel }) => {
 
   const shouldShowSubmitButton = viewModel.getShowSubmitButton();
   const isPlaidSubmitting = viewModel.getPlaidSubmitting();
-  const showDirectDepositReview =
-    viewModel.isPaymentRequireExp() &&
-    store.deposit.mutationInput !== undefined;
   const handleAddressChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     store.option.setPayOptionSelected(event.target.value);
     setSelectedState(event.target.value);
@@ -200,7 +196,7 @@ const OptionsView: React.FC<Props> = ({ viewModel }) => {
         { setSubmitting }
       ): void => {
         setSubmitting(true);
-        viewModel.isSubmitPaymentRequired(values);
+        viewModel.paymentOptionsSubmit(values);
       }}
       validateOnMount={true}
     >
@@ -210,49 +206,38 @@ const OptionsView: React.FC<Props> = ({ viewModel }) => {
           shouldShowSubmitButton ||
           !showDirectDeposit ||
           viewModel.getInstitutionNotFound();
-        const submitText = isSubmitting
+        const buttonText = isSubmitting
           ? viewModel.submitting
           : viewModel.submit;
-        const buttonText = viewModel.isPaymentRequireExp()
-          ? viewModel.review
-          : submitText;
         return (
           <FormContainer>
             <OptionsContainer>
               <StyledHero>{viewModel.hero}</StyledHero>
               <Line />
-              {showDirectDepositReview ? (
-                <>
-                  <DirectDepositReview />
-                </>
-              ) : (
-                <>
-                  <OptionsTitle>
-                    <OptionTitleIcon icon={Icons.RED_ONE} />
-                    {viewModel.optionTitle}
-                  </OptionsTitle>
-                  <OptionsBody>{viewModel.optionQuestion}</OptionsBody>
+              <OptionsTitle>
+                <OptionTitleIcon icon={Icons.RED_ONE} />
+                {viewModel.optionTitle}
+              </OptionsTitle>
+              <OptionsBody>{viewModel.optionQuestion}</OptionsBody>
 
-                  <PayOptions
-                    selected={selectedState}
-                    handleAddressChange={handleAddressChange}
+              <PayOptions
+                selected={selectedState}
+                handleAddressChange={handleAddressChange}
+                setFieldValue={setFieldValue}
+              />
+
+              <OptionDisplay>
+                {showDirectDeposit ? (
+                  <DirectDeposit />
+                ) : (
+                  <CheckByMail
+                    mailingAddress={viewModel.getMailiingAddress()}
+                    isPrimaryAddress={values.isPrimaryAddress}
                     setFieldValue={setFieldValue}
+                    state={values.state}
                   />
-
-                  <OptionDisplay>
-                    {showDirectDeposit ? (
-                      <DirectDeposit />
-                    ) : (
-                      <CheckByMail
-                        mailingAddress={viewModel.getMailiingAddress()}
-                        isPrimaryAddress={values.isPrimaryAddress}
-                        setFieldValue={setFieldValue}
-                        state={values.state}
-                      />
-                    )}
-                  </OptionDisplay>
-                </>
-              )}
+                )}
+              </OptionDisplay>
 
               {showSubmitButton && (
                 <SubmitButton

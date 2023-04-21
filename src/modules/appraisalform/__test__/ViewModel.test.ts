@@ -1,5 +1,3 @@
-import { ABSmartlyContextValue } from '@vroom-web/analytics-integration/dist/absmartly/types';
-
 jest.mock('src/networking/request');
 
 import { GQLTypes } from '@vroom-web/networking';
@@ -65,17 +63,12 @@ const formData = {
   },
 };
 
-const absmartly = {
-  isInExperiment: () => false,
-  isLoading: false,
-} as any as ABSmartlyContextValue;
-
 describe('test appraisalForm viewModel ', () => {
   const stores = new store();
   let viewModel: ViewModel;
 
   beforeEach(() => {
-    viewModel = new ViewModel(stores, absmartly);
+    viewModel = new ViewModel(stores);
   });
 
   it('test carfaxOdoLast', () => {
@@ -200,12 +193,6 @@ describe('test appraisalForm viewModel ', () => {
     );
     const resp = await viewModel.handleCarfaxCall('123');
     expect(resp).toEqual({ mileage: 99999, errorMessage: null });
-  });
-
-  it('should call isInExperiment when called isEmailCaptureExperiment', () => {
-    const spyIsInExperiment = jest.spyOn(absmartly, 'isInExperiment');
-    viewModel.isEmailCaptureExperiment();
-    expect(spyIsInExperiment).toHaveBeenCalled();
   });
 
   it('test getUserSignIn ', () => {
