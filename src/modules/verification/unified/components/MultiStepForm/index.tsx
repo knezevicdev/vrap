@@ -24,6 +24,7 @@ export interface FormStepProps {
   nextStep: () => void;
   goToStep: (step: number) => void;
   editRef?: number;
+  returnStep: number;
 }
 
 export interface FormSection {
@@ -71,10 +72,11 @@ const MultiStepForm: React.FC<Props> = (props) => {
       setTimeout(() => {
         const activeElement = document.getElementById(String(activeSection));
         const headerOffset = 70;
+        const stepperOffset = 88;
 
         if (activeElement) {
           const elementPosition = activeElement.offsetTop;
-          const offsetPosition = elementPosition - headerOffset;
+          const offsetPosition = elementPosition - headerOffset - stepperOffset;
 
           window.scrollTo({
             top: offsetPosition,
@@ -183,6 +185,7 @@ const MultiStepForm: React.FC<Props> = (props) => {
               nextStep={handleOnNext}
               goToStep={handleGoToStep}
               editRef={editRefs.current[idx]}
+              returnStep={returnSection}
             />
             {!disableNext && (
               <NextButton
