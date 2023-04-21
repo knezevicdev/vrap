@@ -23,6 +23,7 @@ export interface DocumentUploadProps {
   handleUpload: (file: File) => Promise<boolean>;
   disallowPdf?: boolean;
   uploaded: boolean;
+  buttonLabel?: string;
 }
 
 const DocumentUpload = ({
@@ -32,6 +33,7 @@ const DocumentUpload = ({
   disallowPdf,
   handleUpload,
   uploaded,
+  buttonLabel = 'Upload document',
 }: DocumentUploadProps) => {
   const [showModal, setShowModal] = useState(false);
   const [error, setError] = useState<string>();
@@ -93,7 +95,7 @@ const DocumentUpload = ({
                   .join(',')}
                 disabled={isLoading}
               />
-              {isLoading ? <Spinner /> : 'Upload document'}
+              {isLoading ? <Spinner /> : buttonLabel}
             </UploadButton>
           </DialogContent>
         </Dialog>

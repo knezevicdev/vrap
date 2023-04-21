@@ -99,6 +99,7 @@ const useGetPhotosUploadProps = () => {
           uploadPhoto(file, photosKeyToDocumentFileType[photosKey], photosKey),
         uploaded: !!photos[photosKey],
         disallowPdf: true,
+        buttonLabel: 'Upload photo',
       };
     },
     [photos, uploadPhoto]

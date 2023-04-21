@@ -68,8 +68,6 @@ const LoanInformationStep = ({
     }
   );
 
-  console.log(loanConfirmationForm);
-
   return (
     <div>
       <WizardForm
