@@ -1,4 +1,3 @@
-import { useABSmartly } from '@vroom-web/analytics-integration';
 import { observer } from 'mobx-react';
 import React, { useCallback, useRef } from 'react';
 
@@ -29,7 +28,6 @@ interface Props {
 
 const VerificationPhotosViewDetail: React.FC<Props> = ({ priceId }) => {
   useVerificationRedesignRedirect();
-  const absmartly = useABSmartly();
   const vin = useFetchVerificationData(priceId);
   const { data: vehiclePhotos, refetch } = useGetVehiclePhotos(priceId, vin);
   const processingFiles = useRef<DocumentFileType[]>([]);
@@ -80,15 +78,11 @@ const VerificationPhotosViewDetail: React.FC<Props> = ({ priceId }) => {
   });
 
   const onSubmit = async (): Promise<void> => {
-    if (
-      localStorage.getItem('review_edit_photos') ||
-      !absmartly.isInExperiment('ac-payment-required')
-    ) {
+    if (localStorage.getItem('review_edit_photos')) {
       localStorage.removeItem('review_edit_photos');
-      window.location.href = `/appraisal/verification/review?priceId=${priceId}`;
-    } else {
-      window.location.href = `/appraisal/paymentmethod?priceId=${priceId}`;
     }
+
+    window.location.href = `/appraisal/verification/review?priceId=${priceId}`;
   };
 
   return (

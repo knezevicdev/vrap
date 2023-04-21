@@ -1,4 +1,3 @@
-import { useABSmartly } from '@vroom-web/analytics-integration';
 import React from 'react';
 
 import View from './View';
@@ -8,8 +7,7 @@ import { useAppStore } from 'src/context';
 
 const SellDocumentReview: React.FC = () => {
   const { store } = useAppStore();
-  const absmartly = useABSmartly();
-  const viewModel = new ViewModel(store, absmartly);
+  const viewModel = new ViewModel(store);
   return <View viewModel={viewModel} store={store} />;
 };
 

@@ -90,17 +90,13 @@ const EPayOptions: NextPage = () => {
     'ac-appraisal-stepper-verification'
   );
 
-  const isPaymentRequireExp = absmartly.isInExperiment('ac-payment-required');
-
   const isPhotosUploadExp = absmartly.isInExperiment(
     'verification-form-vehicle-photo-upload'
   );
 
   let activeStep = '4';
-  if (isPhotosUploadExp && !isPaymentRequireExp) {
+  if (isPhotosUploadExp) {
     activeStep = '5';
-  } else if (isPaymentRequireExp) {
-    activeStep = '3';
   }
 
   return (

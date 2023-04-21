@@ -1,6 +1,5 @@
 import { ABSmartlyContextValue } from '@vroom-web/analytics-integration/dist/absmartly/types';
 import { makeObservable, observable } from 'mobx';
-import { NextRouter } from 'next/router';
 
 import { DirectDepositStore } from '../directdeposit/store';
 import { OptionsStore } from './store';
@@ -23,21 +22,18 @@ class OptionsViewModel {
   readonly submit: string = 'submit';
   readonly submitting: string = 'submitting';
   readonly review: string = 'REVIEW';
-  private router: NextRouter;
 
   constructor(
     store: OptionsStore,
     ddStore: DirectDepositStore,
     analyticsHandler: AnalyticsHandler,
     appStore: Store,
-    router: NextRouter,
     private absmartly: ABSmartlyContextValue
   ) {
     this.store = store;
     this.ddStore = ddStore;
     this.appStore = appStore;
     this.analyticsHandler = analyticsHandler;
-    this.router = router;
     makeObservable(this, {
       store: observable,
       ddStore: observable,
@@ -145,33 +141,6 @@ class OptionsViewModel {
     return this.store.mailingAddress;
   };
 
-  isSubmitPaymentRequired = (values: PaymentOverviewFormValues): void => {
-    if (!this.isPaymentRequireExp()) {
-      this.paymentOptionsSubmit(values);
-      return;
-    }
-    const mailingAddress = this.calcMailingAddress(values);
-    this.appStore.payment.setValues(values, this.store.priceId, mailingAddress);
-    const submittedType =
-      values.paymentOption === 'Check by Mail' ? 'Check' : 'Manual ACH';
-    const reviewPaymentValue = {
-      values,
-      address: mailingAddress,
-      priceId: this.store.priceId,
-      submittedType,
-    };
-    localStorage.setItem('review_payment_type', 'manual');
-    localStorage.setItem(
-      'review_payment_values',
-      JSON.stringify(reviewPaymentValue)
-    );
-    this.router
-      .push(`/appraisal/verification/review?priceId=${this.store.priceId}`)
-      .catch((e) => {
-        console.error(e);
-      });
-  };
-
   paymentOptionsSubmit = (values: PaymentOverviewFormValues): void => {
     let submittedType;
 
@@ -203,10 +172,6 @@ class OptionsViewModel {
 
   setPaymentOption = (value: string): void => {
     this.store.setPayOptionSelected(value);
-  };
-
-  isPaymentRequireExp = (): boolean => {
-    return this.absmartly.isInExperiment('ac-payment-required');
   };
 }
 
