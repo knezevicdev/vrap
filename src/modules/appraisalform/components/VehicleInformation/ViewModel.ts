@@ -42,12 +42,6 @@ class VehicleInfoViewModel {
     );
   }
 
-  get isCTAColorExp(): boolean {
-    return this.absmartly.isInExperiment(
-      'appraisal-form-all-cta-buttons-color'
-    );
-  }
-
   get vehicleDecodeData(): any {
     return this.appraisalStore.vehicleDecodeData;
   }

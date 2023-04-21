@@ -715,7 +715,6 @@ const VehicleInformation: React.FC<Props> = ({
               viewModel.isABSmartlyLoading ||
               !isRestrictedAppraisalLoaded
             }
-            isCTAColorExp={viewModel.isCTAColorExp}
             data-qa={VehicleInfoText.licenseButtonDataQa}
           >
             {viewModel.isABSmartlyLoading || !isRestrictedAppraisalLoaded ? (
@@ -870,12 +869,9 @@ const SubmitButton = styled(({ ...restProps }) => (
   <Button.Primary {...restProps} />
 ))`
   :enabled {
-    background-color: ${(props) =>
-      props.isCTAColorExp ? '#308406' : '#E7131A'};
+    background-color: #E7131A;
     &:hover {
-      background-color: ${(props) =>
-        props.isCTAColorExp ? '#309706' : '#d01118'};
-    }
+      background-color: #d01118
   }
   margin-top: 10px;
   width: 48%;

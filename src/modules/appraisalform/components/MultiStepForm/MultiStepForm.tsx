@@ -41,7 +41,6 @@ interface Props {
   appraisalTitle?: string;
   disableExperiments: boolean;
   showSteps?: boolean;
-  isCTAColorExp?: boolean;
 }
 
 const MultiStepForm: React.FC<Props> = (props) => {
@@ -59,7 +58,6 @@ const MultiStepForm: React.FC<Props> = (props) => {
     appraisalTitle,
     disableExperiments,
     showSteps = false,
-    isCTAColorExp = false,
   } = props;
 
   useEffect(() => {
@@ -219,7 +217,6 @@ const MultiStepForm: React.FC<Props> = (props) => {
           <Tooltip content={<span>{formComponent.toolTip.content}</span>} />
           <NextButtonWrapper>
             <NextButton
-              isCTAColorExp={isCTAColorExp}
               onClick={handleOnNext}
               disabled={formIsInvalid}
               data-qa={'Continue'}
@@ -235,7 +232,6 @@ const MultiStepForm: React.FC<Props> = (props) => {
           onClick={(e: GenericObject) => handleOnNext(e, onNextIntercept)}
           disabled={formIsInvalid}
           data-qa={'Continue'}
-          isCTAColorExp={isCTAColorExp}
         >
           {buttonText}
         </NextButton>
@@ -495,11 +491,10 @@ const NextButton = styled(({ ...restProps }) => (
   <Button.Primary {...restProps} />
 ))`
   :enabled {
-    background-color: ${(props) =>
-      props.isCTAColorExp ? '#308406' : '#E7131A'};
+    background-color: #e7131a;
+
     &:hover {
-      background-color: ${(props) =>
-        props.isCTAColorExp ? '#309706' : '#d01118'};
+      background-color: #d01118;
     }
   }
   width: auto;
