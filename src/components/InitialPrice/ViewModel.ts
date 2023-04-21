@@ -71,12 +71,6 @@ class InitialPriceViewModel {
     );
   };
 
-  isContinueColorExp = (): boolean => {
-    return this.absmartly.isInExperiment(
-      'appraisal-form-continue-button-color'
-    );
-  };
-
   get isVerificationRedesignTest(): boolean {
     return this.absmartly.isInExperiment('verification-form-redesign');
   }

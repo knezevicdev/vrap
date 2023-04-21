@@ -81,7 +81,6 @@ const InitialPriceView: React.FC<Props> = ({ viewModel }) => {
               setShowAuthModal(true);
             }
           }}
-          isColorExp={viewModel.isContinueColorExp()}
           disabled={viewModel.acceptingPrice}
         >
           {viewModel.acceptingPrice ? <Spinner /> : viewModel.continuePrice}
@@ -137,15 +136,15 @@ const StyledIcon = styled(Icon)`
   padding: 20px;
 `;
 
-const StyledButton = styled(Button.Primary)<{ isColorExp: boolean }>`
+const StyledButton = styled(Button.Primary)`
   margin: 30px 0;
   max-width: 300px;
-  background-color: ${(props) => (props.isColorExp ? '#308406' : '#E7131A')};
+  background-color: #308406;
   white-space: normal;
   width: 100%;
 
   &:hover {
-    background-color: ${(props) => (props.isColorExp ? '#309706' : '#d01118')};
+    background-color: #309706;
   }
 `;
 
