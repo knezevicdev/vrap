@@ -2,8 +2,6 @@ import { ABSmartlyContextValue } from '@vroom-web/analytics-integration/dist/abs
 
 jest.mock('src/networking/request');
 
-import router from 'next/router';
-
 import { DirectDepositStore } from '../store';
 
 import AnalyticsHandler from 'src/integrations/AnalyticsHandler';
@@ -63,7 +61,6 @@ describe('test direct deposit store', () => {
       store,
       analyticsHandler,
       appStore,
-      router,
       absmartly
     );
   });
