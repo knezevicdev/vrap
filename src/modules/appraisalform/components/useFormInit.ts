@@ -35,7 +35,7 @@ const useAppraisalFormInit = (
       isRequired: false,
     },
     keysAmount: {
-      value: vehicleInfo.keysAmount || '',
+      value: vehicleInfo.keysAmount || '1',
       isRequired: false,
     },
     sellOrTradeIn: vehicleInfo.sellOrTradeIn || '',
