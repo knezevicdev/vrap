@@ -121,7 +121,7 @@ describe('test appraisalForm viewModel ', () => {
     expect(stores.appraisal.vehicleInfoForm).toEqual({
       vin: '',
       exteriorColor: '',
-      keysAmount: '',
+      keysAmount: '1',
       make: '',
       mileage: null,
       model: '',

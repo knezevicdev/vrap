@@ -16,7 +16,7 @@ export class AppraisalStore {
   vehicleInfoForm: VehicleInfoForm = {
     vin: '',
     exteriorColor: '',
-    keysAmount: '',
+    keysAmount: '1',
     make: '',
     mileage: null,
     zipCode: '',
@@ -222,7 +222,7 @@ export class AppraisalStore {
     this.vehicleInfoForm = {
       vin: '',
       exteriorColor: '',
-      keysAmount: '',
+      keysAmount: '1',
       make: '',
       mileage: null,
       model: '',

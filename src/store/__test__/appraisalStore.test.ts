@@ -133,7 +133,7 @@ describe('test appraisal store methods', () => {
       make: 'Best one',
       vin: '',
       exteriorColor: '',
-      keysAmount: '',
+      keysAmount: '1',
       mileage: null,
       trim: '',
       vehicleOptions: [],
@@ -197,7 +197,7 @@ describe('test appraisal store methods', () => {
     expect(store.vehicleInfoForm).toMatchObject({
       vin: '',
       exteriorColor: '',
-      keysAmount: '',
+      keysAmount: '1',
       make: '',
       mileage: null,
       model: '',
