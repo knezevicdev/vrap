@@ -25,9 +25,10 @@ import Input from './Input';
 interface Props {
   onEmailProcessed: (email: string, hasAccount: boolean) => void;
   redirectUrl?: string;
+  initialEmail?: string;
 }
 
-const Initial = ({ onEmailProcessed, redirectUrl }: Props) => {
+const Initial = ({ onEmailProcessed, redirectUrl, initialEmail }: Props) => {
   const recaptcha = useRecaptcha();
   const {
     handleSubmit,
@@ -35,7 +36,7 @@ const Initial = ({ onEmailProcessed, redirectUrl }: Props) => {
     control,
   } = useForm({
     defaultValues: {
-      email: '',
+      email: initialEmail || '',
     },
     resolver: checkAccountResolver,
   });

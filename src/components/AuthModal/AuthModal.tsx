@@ -11,13 +11,14 @@ import { useScrollLock } from './utils/useScrollLock';
 interface Props {
   onSuccessfulLogin: () => void;
   redirectUrl?: string;
+  email?: string;
 }
 
-const AuthModal = ({ onSuccessfulLogin, redirectUrl }: Props) => {
+const AuthModal = ({ onSuccessfulLogin, redirectUrl, email }: Props) => {
   useScrollLock();
 
   const [mode, setMode] = useState('initial');
-  const [initialEmail, setInitialEmail] = useState('');
+  const [initialEmail, setInitialEmail] = useState(email || '');
 
   const onSuccess = useCallback(() => {
     Cookies.set('mrt', Date.now().toString());
@@ -41,6 +42,7 @@ const AuthModal = ({ onSuccessfulLogin, redirectUrl }: Props) => {
             <Initial
               onEmailProcessed={onEmailProcessed}
               redirectUrl={redirectUrl}
+              initialEmail={initialEmail}
             />
           )}
           {mode === 'login' && (
