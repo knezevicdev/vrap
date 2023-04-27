@@ -121,6 +121,7 @@ const InitialPriceView: React.FC<Props> = ({ viewModel }) => {
         <AuthModal
           onSuccessfulLogin={onSuccessfulLogin}
           redirectUrl={viewModel.verificationUrl}
+          email={viewModel.userEmail}
         />
       )}
     </>
