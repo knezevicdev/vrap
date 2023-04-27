@@ -7,7 +7,9 @@ const calculateDocumentsValid = () => {
 
   const {
     documentDriverLicenseFront,
+    documentDriverLicenseBack,
     documentSecondDriverLicenseFront,
+    documentSecondDriverLicenseBack,
     documentVehicleRegistration,
     documentTitleFront,
     documentTitleBack,
@@ -25,6 +27,12 @@ const calculateDocumentsValid = () => {
         : true) &&
       (requiredDocuments.secondDriverLicense
         ? documentSecondDriverLicenseFront
+        : true) &&
+      (requiredDocuments.firstDriverLicenseBack
+        ? documentDriverLicenseBack
+        : true) &&
+      (requiredDocuments.secondDriverLicenseBack
+        ? documentSecondDriverLicenseBack
         : true)
   );
 };

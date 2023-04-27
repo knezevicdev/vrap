@@ -16,16 +16,26 @@ export const documentUploadProps: Record<
   Pick<DocumentUploadProps, 'label' | 'description' | 'example'>
 > = {
   documentDriverLicenseFront: {
-    label: 'Primary Owner ID',
+    label: 'Front of Primary Owner ID',
     description:
       "Upload the primary owner's government-issued photo ID (such as a driver's license or passport)",
     example: '/appraisal/images/driver-license.jpeg',
   },
+  documentDriverLicenseBack: {
+    label: 'Back of Primary Owner ID',
+    description:
+      "Upload the primary owner's government-issued photo ID (such as a driver's license or passport)",
+  },
   documentSecondDriverLicenseFront: {
-    label: 'Second Owner ID',
+    label: 'Front of Second Owner ID',
     description:
       "Upload the second owner's government-issued photo ID (such as a driver's license or passport)",
     example: '/appraisal/images/driver-license.jpeg',
+  },
+  documentSecondDriverLicenseBack: {
+    label: 'Back of Second Owner ID',
+    description:
+      "Upload the second owner's government-issued photo ID (such as a driver's license or passport)",
   },
   documentVehicleRegistration: {
     label: 'Vehicle Registration',
@@ -60,7 +70,9 @@ const documentKeyToDocumentFileType: Record<
   DocumentFileType
 > = {
   documentDriverLicenseFront: DocumentFileType.DRIVERS_LICENSE_FRONT,
+  documentDriverLicenseBack: DocumentFileType.DRIVERS_LICENSE_BACK,
   documentSecondDriverLicenseFront: DocumentFileType.CO_BUYER_FRONT,
+  documentSecondDriverLicenseBack: DocumentFileType.CO_BUYER_BACK,
   documentVehicleRegistration: DocumentFileType.VEHICLE_REGISTRATION,
   documentTitleFront: DocumentFileType.TRADE_TITLE_FRONT,
   documentTitleBack: DocumentFileType.TRADE_TITLE_BACK,
@@ -75,7 +87,9 @@ const useGetDocumentUploadProps = () => {
   const documents = useVerificationStore(
     (state) => ({
       documentDriverLicenseFront: state.documentDriverLicenseFront,
+      documentDriverLicenseBack: state.documentDriverLicenseBack,
       documentSecondDriverLicenseFront: state.documentSecondDriverLicenseFront,
+      documentSecondDriverLicenseBack: state.documentSecondDriverLicenseBack,
       documentVehicleRegistration: state.documentVehicleRegistration,
       documentTitleFront: state.documentTitleFront,
       documentTitleBack: state.documentTitleBack,

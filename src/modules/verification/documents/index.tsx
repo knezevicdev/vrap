@@ -145,13 +145,38 @@ const VerificationDocumentsViewDetail: React.FC<Props> = ({ priceId }) => {
         Upload the primary owner&apos;s government-issued photo ID (such as a
         driver&apos;s license or passport)
       </Info>
-      <DocumentUpload
-        {...docUploadProps(
-          DocumentFileType.DRIVERS_LICENSE_FRONT,
-          'Front of Photo ID'
-        )}
-        key={DocumentFileType.DRIVERS_LICENSE_FRONT}
-      />
+      <Row gap="15px" wrap="wrap">
+        <Col
+          size={{
+            default: 1 / 2,
+            mobile: 1,
+          }}
+        >
+          <DocumentUpload
+            {...docUploadProps(
+              DocumentFileType.DRIVERS_LICENSE_FRONT,
+              'Front of Photo ID'
+            )}
+            key={DocumentFileType.DRIVERS_LICENSE_FRONT}
+          />
+        </Col>
+        <Col
+          size={{
+            default: 1 / 2,
+            mobile: 1,
+          }}
+        >
+          {requiredDocuments.firstDriverLicenseBack && (
+            <DocumentUpload
+              {...docUploadProps(
+                DocumentFileType.DRIVERS_LICENSE_BACK,
+                'Back of Photo ID'
+              )}
+              key={DocumentFileType.DRIVERS_LICENSE_BACK}
+            />
+          )}
+        </Col>
+      </Row>
       <Line />
       {requiredDocuments.secondDriverLicense && (
         <>
@@ -160,13 +185,38 @@ const VerificationDocumentsViewDetail: React.FC<Props> = ({ priceId }) => {
             Upload the second owner&apos;s government-issued photo ID (such as a
             driver&apos;s license or passport)
           </Info>
-          <DocumentUpload
-            {...docUploadProps(
-              DocumentFileType.CO_BUYER_FRONT,
-              'Front of Photo ID'
-            )}
-            key={DocumentFileType.CO_BUYER_FRONT}
-          />
+          <Row gap="15px" wrap="wrap">
+            <Col
+              size={{
+                default: 1 / 2,
+                mobile: 1,
+              }}
+            >
+              <DocumentUpload
+                {...docUploadProps(
+                  DocumentFileType.CO_BUYER_FRONT,
+                  'Front of Photo ID'
+                )}
+                key={DocumentFileType.CO_BUYER_FRONT}
+              />
+            </Col>
+            <Col
+              size={{
+                default: 1 / 2,
+                mobile: 1,
+              }}
+            >
+              {requiredDocuments.secondDriverLicenseBack && (
+                <DocumentUpload
+                  {...docUploadProps(
+                    DocumentFileType.CO_BUYER_BACK,
+                    'Back of Photo ID'
+                  )}
+                  key={DocumentFileType.CO_BUYER_BACK}
+                />
+              )}
+            </Col>
+          </Row>
           <Line />
         </>
       )}

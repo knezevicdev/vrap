@@ -10,6 +10,8 @@ const useRequiredDocuments = () => {
       loanConfirmation: state.loanConfirmation,
       secondOwnerConfirmation: state.secondOwnerConfirmation,
       loanState: state.loanState,
+      firstOwnerState: state.firstOwnerState,
+      secondOwnerState: state.secondOwnerState,
     }),
     shallow
   );

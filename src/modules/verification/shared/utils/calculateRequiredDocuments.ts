@@ -3,7 +3,9 @@ import { isEmpty } from 'lodash';
 import { Verification } from 'src/networking/models/Price';
 
 export interface CalculateRequiredDocuments {
+  firstDriverLicenseBack: boolean;
   secondDriverLicense: boolean;
+  secondDriverLicenseBack: boolean;
   titleInfo: boolean;
   lienInfo: boolean;
 }
@@ -23,8 +25,14 @@ const calculateRequiredDocuments = (
     'WY',
   ];
 
+  const hasSecondOwner = !isEmpty(verification?.second_owner_first_name);
+
   return {
-    secondDriverLicense: !isEmpty(verification?.second_owner_first_name),
+    firstDriverLicenseBack: verification?.owner_mailing_address?.state === 'NJ',
+    secondDriverLicense: hasSecondOwner,
+    secondDriverLicenseBack:
+      hasSecondOwner &&
+      verification?.second_owner_mailing_address?.state === 'NJ',
     titleInfo:
       verification?.current_payments === false ||
       requiredStatesForTitles.includes(state),

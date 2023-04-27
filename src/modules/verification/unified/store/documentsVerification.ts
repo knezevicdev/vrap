@@ -4,7 +4,9 @@ import { VerificationState } from './store';
 
 export interface DocumentsVerificationState {
   documentDriverLicenseFront: string;
+  documentDriverLicenseBack: string;
   documentSecondDriverLicenseFront: string;
+  documentSecondDriverLicenseBack: string;
   documentVehicleRegistration: string;
   documentTitleFront: string;
   documentTitleBack: string;
@@ -27,7 +29,9 @@ const createDocumentsVerificationSlice: StateCreator<
   DocumentsVerificationState
 > = (set) => ({
   documentDriverLicenseFront: '',
+  documentDriverLicenseBack: '',
   documentSecondDriverLicenseFront: '',
+  documentSecondDriverLicenseBack: '',
   documentVehicleRegistration: '',
   documentTitleFront: '',
   documentTitleBack: '',

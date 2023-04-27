@@ -20,7 +20,9 @@ import { displayNumber } from 'src/utils';
 const DocumentsVerificationReview = () => {
   const { documentMileageValue, ...state } = useVerificationStore((store) => ({
     documentDriverLicenseFront: store.documentDriverLicenseFront,
+    documentDriverLicenseBack: store.documentDriverLicenseBack,
     documentSecondDriverLicenseFront: store.documentSecondDriverLicenseFront,
+    documentSecondDriverLicenseBack: store.documentSecondDriverLicenseBack,
     documentVehicleRegistration: store.documentVehicleRegistration,
     documentTitleFront: store.documentTitleFront,
     documentTitleBack: store.documentTitleBack,
@@ -35,7 +37,9 @@ const DocumentsVerificationReview = () => {
         {(
           [
             'documentDriverLicenseFront',
+            'documentDriverLicenseBack',
             'documentSecondDriverLicenseFront',
+            'documentSecondDriverLicenseBack',
             'documentVehicleRegistration',
             'documentTitleFront',
             'documentTitleBack',

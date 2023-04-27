@@ -7,7 +7,9 @@ import useRequiredDocuments from './useRequiredDocuments';
 const useDocumentsValid = () => {
   const {
     documentDriverLicenseFront,
+    documentDriverLicenseBack,
     documentSecondDriverLicenseFront,
+    documentSecondDriverLicenseBack,
     documentVehicleRegistration,
     documentTitleFront,
     documentTitleBack,
@@ -16,7 +18,9 @@ const useDocumentsValid = () => {
   } = useVerificationStore(
     (store) => ({
       documentDriverLicenseFront: store.documentDriverLicenseFront,
+      documentDriverLicenseBack: store.documentDriverLicenseBack,
       documentSecondDriverLicenseFront: store.documentSecondDriverLicenseFront,
+      documentSecondDriverLicenseBack: store.documentSecondDriverLicenseBack,
       documentVehicleRegistration: store.documentVehicleRegistration,
       documentTitleFront: store.documentTitleFront,
       documentTitleBack: store.documentTitleBack,
@@ -38,17 +42,27 @@ const useDocumentsValid = () => {
           : true) &&
         (requiredDocuments.secondDriverLicense
           ? documentSecondDriverLicenseFront
+          : true) &&
+        (requiredDocuments.firstDriverLicenseBack
+          ? documentDriverLicenseBack
+          : true) &&
+        (requiredDocuments.secondDriverLicenseBack
+          ? documentSecondDriverLicenseBack
           : true)
     );
   }, [
+    documentDriverLicenseBack,
     documentDriverLicenseFront,
     documentMileageValue,
     documentOdometer,
+    documentSecondDriverLicenseBack,
     documentSecondDriverLicenseFront,
     documentTitleBack,
     documentTitleFront,
     documentVehicleRegistration,
+    requiredDocuments.firstDriverLicenseBack,
     requiredDocuments.secondDriverLicense,
+    requiredDocuments.secondDriverLicenseBack,
     requiredDocuments.titleInfo,
   ]);
 };
