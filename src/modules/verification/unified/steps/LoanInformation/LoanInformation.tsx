@@ -74,6 +74,7 @@ const LoanInformationStep = ({
         instance={(instance) => (wizardFormInstance.current = instance)}
         steps={steps}
         onDone={onDone}
+        extraOffset={160} // stepper height + question title
       />
     </div>
   );

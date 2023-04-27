@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { MutableRefObject, useEffect, useRef } from 'react';
 import { FieldValues, UseFormReturn } from 'react-hook-form';
 import { StepWizardChildProps, StepWizardProps } from 'react-step-wizard';
 
@@ -28,7 +28,14 @@ interface WizardFormProps<T extends FieldValues[]> {
   };
   onDone?: () => void | Promise<void>;
   instance?: (instance: WizardFormInstance) => void;
+  extraOffset?: number;
 }
+
+type WizardFormNavProps<T extends FieldValues[]> =
+  Partial<StepWizardChildProps> &
+    WizardFormProps<T> & {
+      rootElementRef: MutableRefObject<HTMLDivElement | null>;
+    };
 
 const WizardFormNav = <T extends FieldValues[]>({
   currentStep,
@@ -37,10 +44,33 @@ const WizardFormNav = <T extends FieldValues[]>({
   goToStep,
   steps,
   onDone,
-}: Partial<StepWizardChildProps> & WizardFormProps<T>) => {
+  rootElementRef,
+  extraOffset = 0,
+}: WizardFormNavProps<T>) => {
   const step = steps[(currentStep || 1) - 1];
   const isNextDisabled = !step.form.formState.isValid;
   const nextText = step.nextText || 'Next';
+  const initialScrollSkip = useRef(false);
+
+  useEffect(() => {
+    setTimeout(() => {
+      if (!initialScrollSkip.current) {
+        initialScrollSkip.current = true;
+        return;
+      }
+      const headerOffset = 70;
+
+      if (rootElementRef.current) {
+        const elementPosition = rootElementRef.current.offsetTop;
+        const offsetPosition = elementPosition - headerOffset - extraOffset;
+
+        window.scrollTo({
+          top: offsetPosition,
+          behavior: 'smooth',
+        });
+      }
+    }, 500);
+  }, [currentStep, extraOffset, rootElementRef]);
 
   return (
     <ButtonsWrapper>
@@ -91,11 +121,19 @@ const WizardForm = <T extends FieldValues[]>({
   instance,
   ...props
 }: WizardFormProps<T>) => {
+  const rootElementRef = useRef<HTMLDivElement | null>(null);
+
   return (
-    <div>
+    <div ref={rootElementRef}>
       <Wizard
         instance={instance as (i: StepWizardProps) => void}
-        nav={<WizardFormNav steps={steps} {...props} />}
+        nav={
+          <WizardFormNav
+            steps={steps}
+            rootElementRef={rootElementRef}
+            {...props}
+          />
+        }
       >
         {/* eslint-disable-next-line @typescript-eslint/naming-convention */}
         {steps.map(({ component: Step, form }, index) => (
