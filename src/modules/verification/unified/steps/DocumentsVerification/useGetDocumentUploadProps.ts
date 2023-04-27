@@ -33,12 +33,12 @@ export const documentUploadProps: Record<
       'Registration must be in your name for us to be able to purchase the vehicle.',
   },
   documentTitleFront: {
-    label: 'Front of Trade Title',
+    label: 'Front of Title',
     description:
       'Title must be in your name for us to be able to purchase the vehicle.',
   },
   documentTitleBack: {
-    label: 'Back of Trade Title',
+    label: 'Back of Title',
     description:
       'Title must be in your name for us to be able to purchase the vehicle.',
   },
