@@ -66,6 +66,12 @@ const useVerificationDetails = (priceId: string): UseVerificationDetails => {
       (requiredDocuments.titleInfo
         ? verificationDetails.front_of_title_lien_file_id &&
           verificationDetails.back_of_title_lien_file_id
+        : true) &&
+      (requiredDocuments.firstDriverLicenseBack
+        ? verificationDetails.back_of_driver_license_file_id
+        : true) &&
+      (requiredDocuments.secondDriverLicenseBack
+        ? verificationDetails.second_owner_back_of_driver_license_file_id
         : true)
   );
 

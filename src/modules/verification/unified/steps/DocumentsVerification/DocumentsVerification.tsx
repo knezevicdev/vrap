@@ -43,10 +43,22 @@ const DocumentsVerificationStep = () => {
         <Col size={{ default: 2 / 5, mobile: 1 }}>
           <DocumentUpload {...getUploadProps('documentDriverLicenseFront')} />
         </Col>
+        {requiredDocuments.firstDriverLicenseBack && (
+          <Col size={{ default: 2 / 5, mobile: 1 }}>
+            <DocumentUpload {...getUploadProps('documentDriverLicenseBack')} />
+          </Col>
+        )}
         {requiredDocuments.secondDriverLicense && (
           <Col size={{ default: 2 / 5, mobile: 1 }}>
             <DocumentUpload
               {...getUploadProps('documentSecondDriverLicenseFront')}
+            />
+          </Col>
+        )}
+        {requiredDocuments.secondDriverLicenseBack && (
+          <Col size={{ default: 2 / 5, mobile: 1 }}>
+            <DocumentUpload
+              {...getUploadProps('documentSecondDriverLicenseBack')}
             />
           </Col>
         )}
