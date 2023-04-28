@@ -1,7 +1,11 @@
-import { uniqueId } from 'lodash';
-import { useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 
-const getInitialState = (defaultValues: any, autofocus?: any) => {
+import { FormField } from './componentInterfaces.d';
+
+const getInitialState = (
+  defaultValues: any,
+  autofocus?: any
+): Record<string, FormField> => {
   return Object.keys(defaultValues).reduce((result, key, idx) => {
     let value,
       imgSrc,
@@ -56,21 +60,7 @@ const initResetForm = (fields: any) => {
   }, {});
 };
 
-const addEvents = (fields: any, events: any, customEvents: any) => {
-  return Object.keys(fields).reduce((result, key) => {
-    return {
-      ...result,
-      [key]: {
-        ...result[key],
-        onChange: events.onChange(key),
-        id: uniqueId(),
-        ...customEvents,
-      },
-    };
-  }, fields);
-};
-
-const isFormValid = (fields: any, customValidationFunction: any) => {
+const calcIsFormValid = (fields: any) => {
   const fieldsHaveAnEmptyValue = Object.keys(fields).some((key) => {
     // check if check boxes are false and required
     // check if string is empty and required
@@ -94,50 +84,72 @@ const isFormValid = (fields: any, customValidationFunction: any) => {
 
   if (fieldsHaveAnEmptyValue) return false;
 
-  if (customValidationFunction) {
-    const isValid = customValidationFunction(fields);
-    return !fieldsHaveErrors && !isValid;
-  } else {
-    return !fieldsHaveErrors;
-  }
+  return !fieldsHaveErrors;
 };
 
 const useForm = (props: any) => {
-  const {
-    defaultValues,
-    autofocus = true,
-    customEvents,
-    customValidationFunction,
-  } = props;
+  const { defaultValues, autofocus = true, formKey } = props;
 
   const [fields, setFields] = useState(
     getInitialState(defaultValues, autofocus)
   );
 
-  const onChange = (key: any) => (field: any) => {
-    setFields({ ...fields, [key]: field });
-  };
+  const onChange = useCallback(
+    (key: any) => (field: Record<string, any>) => {
+      const errorChanged = fields[key] && fields[key].error !== field.error;
+      const setForceValidate = field.setForceValidate;
+      delete field.setForceValidate;
 
-  const setFormFields = (value: any) => {
+      let error = field.isRequired ? !field.value : false;
+      if (errorChanged) error = field.error;
+
+      setFields({
+        ...fields,
+        [key]: {
+          ...field,
+          forceValidate: !!setForceValidate,
+          error,
+        },
+      });
+    },
+    [fields]
+  );
+
+  const setFormFields = useCallback((value: any) => {
     setFields(getInitialState(value));
-  };
+  }, []);
 
-  const updateMultipleFields = (fieldsToUpdate: any) => {
-    setFields({ ...fields, ...fieldsToUpdate });
-  };
+  const updateMultipleFields = useCallback(
+    (fieldsToUpdate: any) => {
+      setFields({ ...fields, ...fieldsToUpdate });
+    },
+    [fields]
+  );
 
-  const resetForm = () => {
+  const resetForm = useCallback(() => {
     setFields(initResetForm(fields));
-  };
+  }, [fields]);
 
-  // customEvents structure - { event: function }
-  // ex: { onBlur: handleOnBlur }
-  // TODO: extend useForm to take any event type and allow it to execute setFields
-  const fieldsWithEvents = addEvents(fields, { onChange }, customEvents);
+  const fieldsWithEvents = useMemo(() => {
+    return Object.fromEntries(
+      Object.entries(fields).map(([key, field]) => {
+        return [
+          key,
+          {
+            ...field,
+            onChange: onChange(key),
+            id: `${formKey}-${key}`,
+          },
+        ];
+      })
+    );
+  }, [fields, onChange]);
+
+  const isFormValid = useMemo(() => calcIsFormValid(fields), [fields]);
 
   return {
     fields: fieldsWithEvents,
-    isFormValid: isFormValid(fields, customValidationFunction),
+    isFormValid,
     setFormFields,
     updateMultipleFields,
     resetForm,

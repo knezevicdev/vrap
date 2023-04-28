@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
 import { GenericObject } from '../../../../interfaces.d';
-import PrevNextButtons from '../PrevNextButtons';
+import { UseForm } from '../componentInterfaces.d';
 import { blueIcons, grayIcons, greenCheckPath } from './utils';
 
 function numberIcon(index: number, activeSection: number, className: string) {
@@ -39,7 +39,6 @@ interface Props {
   nextText: string;
   submitText: string;
   appraisalTitle?: string;
-  disableExperiments: boolean;
   showSteps?: boolean;
 }
 
@@ -56,7 +55,6 @@ const MultiStepForm: React.FC<Props> = (props) => {
     nextText = 'Next',
     submitText = 'Review',
     appraisalTitle,
-    disableExperiments,
     showSteps = false,
   } = props;
 
@@ -144,6 +142,42 @@ const MultiStepForm: React.FC<Props> = (props) => {
   };
 
   const handleOnNext = (_e: any, onNextIntercept: any) => {
+    const currentForm: UseForm = sections[activeSection].form;
+
+    if (!currentForm.isFormValid) {
+      const invalidField = Object.values(currentForm.fields).find(
+        (field) => field.isRequired && !field.value
+      );
+      if (!invalidField) {
+        sections[activeSection].onInvalidFormUnresolved?.();
+        return;
+      }
+
+      invalidField.onChange({
+        ...invalidField,
+        error: true,
+        setForceValidate: true,
+      });
+
+      if (invalidField.id) {
+        const invalidInput = document.getElementById(invalidField.id);
+        const headerAndLabelOffset = 120;
+
+        if (invalidInput) {
+          const elementPosition =
+            window.scrollY + invalidInput.getBoundingClientRect().y;
+          const offsetPosition = elementPosition - headerAndLabelOffset;
+
+          window.scrollTo({
+            top: offsetPosition,
+            behavior: 'smooth',
+          });
+        }
+      }
+
+      return;
+    }
+
     const nextStep = activeSection + 1;
     let currentSectionIsValid = sections[activeSection].form.isFormValid;
     //const nextSection = sections[nextStep];
@@ -216,11 +250,7 @@ const MultiStepForm: React.FC<Props> = (props) => {
         <>
           <Tooltip content={<span>{formComponent.toolTip.content}</span>} />
           <NextButtonWrapper>
-            <NextButton
-              onClick={handleOnNext}
-              disabled={formIsInvalid}
-              data-qa={'Continue'}
-            >
+            <NextButton onClick={handleOnNext} data-qa={'Continue'}>
               {buttonText}
             </NextButton>
           </NextButtonWrapper>
@@ -230,43 +260,10 @@ const MultiStepForm: React.FC<Props> = (props) => {
       return (
         <NextButton
           onClick={(e: GenericObject) => handleOnNext(e, onNextIntercept)}
-          disabled={formIsInvalid}
           data-qa={'Continue'}
         >
           {buttonText}
         </NextButton>
-      );
-    }
-  };
-
-  const getPrevNextButtons = (formComponent: any, formIsInvalid: any) => {
-    const { prevStep } = formComponent;
-    if (
-      formComponent.toolTip &&
-      formIsInvalid &&
-      formComponent.toolTip.showTooltip
-    ) {
-      return (
-        <>
-          <Tooltip content={<span>{formComponent.toolTip.content}</span>} />
-          <NextButtonWrapper>
-            <PrevNextButtons
-              goToPrevStep={prevStep}
-              goToNextStep={handleOnNext}
-              nextDisabled={formIsInvalid}
-              nextButtonLabel={buttonText}
-            />
-          </NextButtonWrapper>
-        </>
-      );
-    } else {
-      return (
-        <PrevNextButtons
-          goToPrevStep={prevStep}
-          goToNextStep={handleOnNext}
-          nextDisabled={formIsInvalid}
-          nextButtonLabel={buttonText}
-        />
       );
     }
   };
@@ -279,10 +276,7 @@ const MultiStepForm: React.FC<Props> = (props) => {
     const {
       component,
       form: { fields },
-      prevStep,
-      showDialog,
       title,
-      data,
       onNextIntercept,
     } = formComponent;
     const CurrentComponent = component;
@@ -330,17 +324,12 @@ const MultiStepForm: React.FC<Props> = (props) => {
           {formComponent.subTitle && <h3>{formComponent.subTitle}</h3>}
           <CurrentComponent
             fields={fields}
-            showDialog={showDialog}
             form={formComponent.form}
-            data={data}
             {...formComponent}
-            disableExperiments={disableExperiments}
             hideButtonCallback={hideButtonCallback}
           />
           {!hideButton &&
-            (prevStep
-              ? getPrevNextButtons(formComponent, formIsInvalid)
-              : getNextButton(formComponent, formIsInvalid, onNextIntercept))}
+            getNextButton(formComponent, formIsInvalid, onNextIntercept)}
         </FormSection>
       </FormStep>
     );

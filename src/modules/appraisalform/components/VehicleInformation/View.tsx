@@ -103,6 +103,7 @@ const VehicleInformation: React.FC<Props> = ({
       licensePlate: '',
       state: '',
     },
+    formKey: 'licenseForm',
   });
 
   const {

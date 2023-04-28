@@ -10,11 +10,23 @@ interface Props {
 }
 
 const RadioInput: React.FC<Props> = ({
-  field: { options, onClick, label, name, checked, tooltipText = '' },
+  field: {
+    options,
+    onClick,
+    label,
+    name,
+    checked,
+    tooltipText = '',
+    id,
+    value,
+    forceValidate,
+  },
   className,
 }) => {
+  const error = forceValidate && !value ? 'Please select one option' : '';
+
   return (
-    <Container className={className}>
+    <Container className={className} id={id}>
       <LabelContainer>
         <Label>{label}</Label>
         {tooltipText && <Tooltip content={<span>{tooltipText}</span>} />}
@@ -41,9 +53,21 @@ const RadioInput: React.FC<Props> = ({
           })}
         </RadioGroup>
       </div>
+      {error && <ErrorFeedback>{error}</ErrorFeedback>}
     </Container>
   );
 };
+
+const ErrorFeedback = styled.div`
+  font-family: Calibre, sans-serif;
+  font-weight: normal;
+  font-size: 10px;
+  line-height: 16px;
+  margin-top: 4px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #f26900;
+`;
 
 const Container = styled.div`
   cursor: pointer;

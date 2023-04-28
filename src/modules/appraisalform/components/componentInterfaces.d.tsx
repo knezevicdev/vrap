@@ -4,6 +4,10 @@ export interface GenericObject {
 
 export interface FormField {
   onChange: (event: GenericObject) => void;
+  isRequired?: boolean;
+  id?: string;
+  forceValidate?: boolean;
+  element?: HTMLElement;
   value: any; // => this is an example of a real any type
   error?: boolean;
   errorMessage?: string;

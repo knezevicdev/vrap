@@ -29,7 +29,10 @@ const VehicleOptionsGroup: React.FC<Props> = ({
     };
   }, {});
 
-  const optionsGroupForm = useForm({ defaultValues: optionsDefaultVals });
+  const optionsGroupForm = useForm({
+    defaultValues: optionsDefaultVals,
+    formKey: 'vehicleOptions',
+  });
 
   useEffect(() => {
     optionsGroupForm.setFormFields(optionsDefaultVals);

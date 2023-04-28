@@ -211,7 +211,6 @@ const VerificationOwnerViewDetail: React.FC<Props> = ({
         active={activeSection}
         nextText={'Save and Continue'}
         submitText={'Save and Continue'}
-        disableExperiments={false}
       />
       {suycLocation && (
         <NearSuycLocation

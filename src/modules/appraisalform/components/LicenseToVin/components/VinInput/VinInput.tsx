@@ -21,6 +21,7 @@ const VinInput: React.FC<Props> = ({ viewModel, router }) => {
     defaultValues: {
       vin: '',
     },
+    formKey: 'vinInputForm',
   });
 
   const {

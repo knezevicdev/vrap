@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Body } from '@vroom-web/ui-lib';
 import { useRouter } from 'next/router';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 
 import { useRestrictedAppraisal } from '../../integrations/RestrictedAppraisalContext';
@@ -162,7 +162,7 @@ const AppraisalForm: React.FC<Props> = ({ viewModel }) => {
         }
       },
       updateMileage: () => {
-        exactMileageField.element.focus();
+        exactMileageField.element?.focus();
       },
     });
 
@@ -205,12 +205,7 @@ const AppraisalForm: React.FC<Props> = ({ viewModel }) => {
     appraisalUseForm.mechConditionForm,
   ];
 
-  const isFormValid = () => {
-    const isOriginalValid = historyAndConditionForms.reduce(
-      (isValid, form) => isValid && form.isFormValid,
-      true
-    );
-
+  const calculateSelectedSections = () => {
     const isMechanicalSelected = anyFieldSelected(
       appraisalUseForm.mechConditionForm,
       [
@@ -252,6 +247,22 @@ const AppraisalForm: React.FC<Props> = ({ viewModel }) => {
       ]
     );
 
+    return {
+      isMechanicalSelected,
+      isExteriorSelected,
+      isInteriorSelected,
+    };
+  };
+
+  const isFormValid = () => {
+    const isOriginalValid = historyAndConditionForms.reduce(
+      (isValid, form) => isValid && form.isFormValid,
+      true
+    );
+
+    const { isMechanicalSelected, isExteriorSelected, isInteriorSelected } =
+      calculateSelectedSections();
+
     return (
       isOriginalValid &&
       isMechanicalSelected &&
@@ -280,6 +291,27 @@ const AppraisalForm: React.FC<Props> = ({ viewModel }) => {
     });
   }, [appraisalUseForm.vehicleInfoForm, isTradeIn]);
 
+  const [combinedFormInvalidSections, setCombinedFormInvalidSections] =
+    useState({});
+
+  const combinedFormValues = Object.fromEntries(
+    Object.entries(combinedVehicleInformationForm.fields).map(
+      ([key, field]) => [key, field.value]
+    )
+  );
+  const lastCombinedFormValues = useRef(combinedFormValues);
+
+  useEffect(() => {
+    if (
+      JSON.stringify(combinedFormValues) ===
+      JSON.stringify(lastCombinedFormValues.current)
+    )
+      return;
+    lastCombinedFormValues.current = combinedFormValues;
+
+    setCombinedFormInvalidSections({});
+  }, [combinedFormValues]);
+
   const sections = [
     {
       component: VehicleInformation,
@@ -293,6 +325,36 @@ const AppraisalForm: React.FC<Props> = ({ viewModel }) => {
       title: 'Vehicle History & Condition',
       subTitle: VehicleHistoryText.subTitle,
       onNextIntercept: combinedFormNextIntercept(appraisalUseForm),
+      combinedFormInvalidSections,
+      onInvalidFormUnresolved: () => {
+        const selectedSections = calculateSelectedSections();
+        let scrollId = '';
+
+        if (!selectedSections.isMechanicalSelected)
+          scrollId = 'mechanical-issues-h';
+        else if (!selectedSections.isExteriorSelected)
+          scrollId = 'exterior-damage-h';
+        else if (!selectedSections.isInteriorSelected)
+          scrollId = 'interior-damage-h';
+
+        if (scrollId) {
+          const invalidSectionElement = document.getElementById(scrollId);
+          const headerOffset = 100;
+
+          if (invalidSectionElement) {
+            const elementPosition =
+              window.scrollY + invalidSectionElement.getBoundingClientRect().y;
+            const offsetPosition = elementPosition - headerOffset;
+
+            window.scrollTo({
+              top: offsetPosition,
+              behavior: 'smooth',
+            });
+          }
+        }
+
+        setCombinedFormInvalidSections(selectedSections);
+      },
     },
     {
       component: PersonalInformation,
@@ -471,7 +533,6 @@ const AppraisalForm: React.FC<Props> = ({ viewModel }) => {
         nextText={'Continue'}
         submitText={submitText}
         appraisalTitle={AppraisalTitle}
-        disableExperiments={false}
       />
       {isTradeIn && (
         <Cancel onClick={viewModel.cancelOffer}>{CancelTradeText}</Cancel>

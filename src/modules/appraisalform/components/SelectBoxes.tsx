@@ -15,7 +15,7 @@ interface Props {
 }
 
 const SelectBoxes: React.FC<Props> = ({
-  field: { options, onClick, value, label, panelsTooltip, id },
+  field: { options, onClick, value, label, panelsTooltip, id, forceValidate },
   className,
 }) => {
   const analyticsHandler: AnalyticsHandler = new AnalyticsHandler();
@@ -33,6 +33,9 @@ const SelectBoxes: React.FC<Props> = ({
   const handleHidePanelsDialog = () => {
     setShowPanelsDialog(false);
   };
+
+  const error = forceValidate && !value ? 'Please select one option' : '';
+
   return (
     <Container className={className}>
       {label && (
@@ -54,6 +57,8 @@ const SelectBoxes: React.FC<Props> = ({
         options={mapOptions(options)}
         onChange={onClick}
         value={value}
+        error={error}
+        required={true}
       />
       {showPanelsDialog && (
         <Dialog closeModalHandler={handleHidePanelsDialog} />

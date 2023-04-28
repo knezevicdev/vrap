@@ -59,7 +59,10 @@ const AlternateAfterMarketModsOptionsGroup: React.FC<Props> = ({
     };
   }, {});
 
-  const optionsGroupForm = useForm({ defaultValues: optionsDefaultVals });
+  const optionsGroupForm = useForm({
+    defaultValues: optionsDefaultVals,
+    formKey: 'alternate',
+  });
 
   const handleOptionClick = (key: string, clickedCheckbox: GenericObject) => {
     const localCheckedValuesForParent = Object.entries(optionsGroupForm.fields)
