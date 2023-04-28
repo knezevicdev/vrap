@@ -39,7 +39,6 @@ const VerificationWrapper: React.FC<Props> = ({ priceId, step, children }) => {
   const vin = store.offer?.offerDetail?.vin || '';
 
   useEffect(() => {
-    store.stepper.setStep(step);
     store.verification.setPriceId(priceId);
   }, []);
 
@@ -87,7 +86,7 @@ const VerificationWrapper: React.FC<Props> = ({ priceId, step, children }) => {
       </HeaderContainer>
       <StepperWrapper>
         <StepperContainer>
-          <DefaultStepper activeStep={store.stepper.currentStep} />
+          <DefaultStepper activeStep={step} />
         </StepperContainer>
       </StepperWrapper>
       <>
