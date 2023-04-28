@@ -37,17 +37,7 @@ class FooterViewModel {
     return defaultNumber;
   };
 
-  readonly vroomLink = 'https://www.vroom.com/';
-  readonly copyrightMessage = '©2020 VROOM. ALL RIGHTS RESERVED.';
   readonly phoneNumber = this.getPhoneNumber();
-  readonly privacy = {
-    href: '/legal/privacy-policy',
-    name: 'Privacy Policy',
-  };
-  readonly terms = {
-    href: '/legal/terms-of-use',
-    name: 'Terms of use',
-  };
 }
 
 export default FooterViewModel;

@@ -206,19 +206,17 @@ const OptionsView: React.FC<Props> = ({ viewModel }) => {
           shouldShowSubmitButton ||
           !showDirectDeposit ||
           viewModel.getInstitutionNotFound();
-        const buttonText = isSubmitting
-          ? viewModel.submitting
-          : viewModel.submit;
+        const buttonText = isSubmitting ? 'submitting' : 'submit';
         return (
           <FormContainer>
             <OptionsContainer>
-              <StyledHero>{viewModel.hero}</StyledHero>
+              <StyledHero>let&apos;s set up your payment method</StyledHero>
               <Line />
               <OptionsTitle>
                 <OptionTitleIcon icon={Icons.RED_ONE} />
-                {viewModel.optionTitle}
+                Payment Method
               </OptionsTitle>
-              <OptionsBody>{viewModel.optionQuestion}</OptionsBody>
+              <OptionsBody>How would you like to get paid?</OptionsBody>
 
               <PayOptions
                 selected={selectedState}

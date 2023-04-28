@@ -18,7 +18,7 @@ const PickupInfoReviewView: React.FC<Props> = ({ viewModel, store }) => {
   return (
     <Container>
       <SubTitleContainer>
-        <Subtitle>{viewModel.pickUpInfotitle}</Subtitle>
+        <Subtitle>Pick Up Information</Subtitle>
         <LinkWrap>
           <Link.Text
             href={`/sell/verification/owner/${store.verification.offerId}`}
@@ -27,13 +27,13 @@ const PickupInfoReviewView: React.FC<Props> = ({ viewModel, store }) => {
               viewModel.handleEditClick();
             }}
           >
-            {viewModel.edit}
+            Edit
           </Link.Text>
         </LinkWrap>
       </SubTitleContainer>
       <Row>
         <FullInfo>
-          <Label>{viewModel.pickUpAddress}</Label>
+          <Label>Pick up address</Label>
           <Field>
             {verificationDetail?.pickup_address.address_1}{' '}
             {verificationDetail?.pickup_address.address_2}{' '}
@@ -44,10 +44,10 @@ const PickupInfoReviewView: React.FC<Props> = ({ viewModel, store }) => {
         </FullInfo>
       </Row>
 
-      <SectionTitle>{viewModel.contactInformation}</SectionTitle>
+      <SectionTitle>Contact Information</SectionTitle>
       <Row>
         <Info>
-          <Label>{viewModel.name}</Label>
+          <Label>Name</Label>
           <Field>
             {verificationDetail?.pickup_contact_first_name}{' '}
             {verificationDetail?.pickup_contact_last_name}
@@ -56,11 +56,11 @@ const PickupInfoReviewView: React.FC<Props> = ({ viewModel, store }) => {
       </Row>
       <Row>
         <Info>
-          <Label>{viewModel.phoneNumber}</Label>
+          <Label>Phone Number</Label>
           <Field>{verificationDetail?.pickup_contact_phone_number}</Field>
         </Info>
         <Info>
-          <Label>{viewModel.email}</Label>
+          <Label>Email</Label>
           <Field>{verificationDetail?.pickup_contact_email}</Field>
         </Info>
       </Row>

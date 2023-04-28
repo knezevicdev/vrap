@@ -91,7 +91,7 @@ const PaymentOverviewView: React.FC<Props> = ({ viewModel }) => {
   return (
     <PaymentOverview>
       <OverviewHeader>
-        <StyledHero>{viewModel.hero}</StyledHero>
+        <StyledHero>transaction overview</StyledHero>
         {!isDesktop && (
           <OverviewExpand
             role="button"
@@ -111,20 +111,20 @@ const PaymentOverviewView: React.FC<Props> = ({ viewModel }) => {
         <OverviewBody>
           <Line />
           <OverviewRow>
-            <PaymentOverviewBody>{viewModel.carWorth}</PaymentOverviewBody>
+            <PaymentOverviewBody>Your car is worth</PaymentOverviewBody>
             <PaymentOverviewPrice>
               {viewModel.carWorthPrice}
             </PaymentOverviewPrice>
           </OverviewRow>
           <OverviewRow>
-            <PaymentOverviewBody>{viewModel.remainingLoan}</PaymentOverviewBody>
+            <PaymentOverviewBody>Remaining Loan</PaymentOverviewBody>
             <PaymentOverviewPrice>
               {viewModel.remainingLoanBalance}
             </PaymentOverviewPrice>
           </OverviewRow>
           <Line />
           <OverviewRow>
-            <TotalBody>{viewModel.total}</TotalBody>
+            <TotalBody>Total</TotalBody>
             <TotalPrice>{viewModel.totalPrice}</TotalPrice>
           </OverviewRow>
         </OverviewBody>

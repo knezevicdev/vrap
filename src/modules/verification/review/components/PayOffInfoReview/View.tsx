@@ -19,7 +19,7 @@ const PayoffInfoReview: React.FC<Props> = ({ viewModel, store }) => {
   return (
     <Container>
       <SubTitleContainer>
-        <Subtitle>{viewModel.payOfftitle}</Subtitle>
+        <Subtitle>Auto Loan Information</Subtitle>
         <LinkWrap>
           <Link.Text
             href={`/sell/verification/owner/${store.verification.offerId}`}
@@ -28,28 +28,28 @@ const PayoffInfoReview: React.FC<Props> = ({ viewModel, store }) => {
               viewModel.handleEditClick();
             }}
           >
-            {viewModel.edit}
+            Edit
           </Link.Text>
         </LinkWrap>
       </SubTitleContainer>
 
       <Row>
         <Info>
-          <Label>{viewModel.carPayment}</Label>
+          <Label>Are you making car payments?</Label>
           <Field>{viewModel.getCurrentPayment()}</Field>
         </Info>
         <Info>
-          <Label>{viewModel.whereCarPayment}</Label>
+          <Label>Where do you make your car payments?</Label>
           <Field>{verificationDetail?.lien_financial_institution_name}</Field>
         </Info>
       </Row>
       <Row>
         <Info>
-          <Label>{viewModel.loanAccountNumber}</Label>
+          <Label>Loan Account Number</Label>
           <Field>{verificationDetail?.lien_account_number}</Field>
         </Info>
         <Info>
-          <Label>{viewModel.ssnLastFour}</Label>
+          <Label>Last Four Digits of Social Security Number</Label>
           <Field>{displaySecureSSN(verificationDetail?.last_four_ssn)}</Field>
         </Info>
       </Row>

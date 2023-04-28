@@ -1,7 +1,6 @@
 import React from 'react';
 
 import View from './View';
-import ViewModel from './ViewModel';
 
 import { MailingAddress } from 'src/interfaces.d';
 
@@ -13,8 +12,7 @@ export type Props = {
 };
 
 const CheckByMail: React.FC<Props> = (props) => {
-  const viewModel = new ViewModel();
-  return <View viewModel={viewModel} {...props} />;
+  return <View {...props} />;
 };
 
 export default CheckByMail;

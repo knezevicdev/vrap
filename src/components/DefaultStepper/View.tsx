@@ -4,9 +4,7 @@ import React from 'react';
 import { buildStyles, CircularProgressbar } from 'react-circular-progressbar';
 import styled from 'styled-components';
 
-import ViewModel from './ViewModel';
 export interface Props {
-  viewModel: ViewModel;
   activeStep: number;
 }
 
@@ -37,7 +35,7 @@ const steps = [
   },
 ];
 
-const Stepper: React.FC<Props> = ({ viewModel, activeStep }) => {
+const Stepper: React.FC<Props> = ({ activeStep }) => {
   const { step, progress, next, title } = steps[activeStep];
 
   return (
@@ -57,7 +55,7 @@ const Stepper: React.FC<Props> = ({ viewModel, activeStep }) => {
       <StepperText>
         <Title>{title}</Title>
         <SubTitle>
-          {viewModel.nextTitle}
+          Next:&nbsp;
           {next}
         </SubTitle>
       </StepperText>

@@ -1,8 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import DirectDepositViewModel from './ViewModel';
-
 import FormikInput from 'src/core/FormikInput';
 
 const DirectDepositContainer = styled('div')(() => ({
@@ -13,19 +11,15 @@ const InputContainer = styled.div`
   width: 50%;
 `;
 
-export interface Props {
-  viewModel: DirectDepositViewModel;
-}
-
-const DirectDepositView: React.FC<Props> = ({ viewModel }) => {
+const DirectDepositView = () => {
   return (
     <DirectDepositContainer>
       <InputContainer>
         <FormikInput
           id="routingNumber"
-          name={'routingNumber'}
-          label={viewModel.routingLabel}
-          placeholder={viewModel.routingLabel}
+          name="routingNumber"
+          label="Routing Number"
+          placeholder="Routing Number"
           fluid={true}
           maxLength={9}
         />
@@ -33,9 +27,9 @@ const DirectDepositView: React.FC<Props> = ({ viewModel }) => {
       <InputContainer>
         <FormikInput
           id="bankAccountNumber"
-          name={'bankAccountNumber'}
-          label={viewModel.bankAccountLabel}
-          placeholder={viewModel.bankAccountLabel}
+          name="bankAccountNumber"
+          label="Bank Account Number"
+          placeholder="Bank Account Number"
           fluid={true}
           maxLength={17}
         />

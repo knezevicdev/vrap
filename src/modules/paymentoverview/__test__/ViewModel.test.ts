@@ -23,10 +23,6 @@ describe('Payment Overview Test', () => {
 
   it('test readonly initial values', () => {
     viewModel = new ViewModel(poStore, oStore);
-    expect(viewModel.hero).toEqual('transaction overview');
-    expect(viewModel.carWorth).toEqual('Your car is worth');
-    expect(viewModel.remainingLoan).toEqual('Remaining Loan');
-    expect(viewModel.total).toEqual('Total');
     expect(viewModel.tbd).toEqual('To be determined');
     expect(viewModel.pricePlaceholder).toEqual('--');
   });

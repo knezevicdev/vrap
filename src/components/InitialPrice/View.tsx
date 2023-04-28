@@ -51,7 +51,7 @@ const InitialPriceView: React.FC<Props> = ({ viewModel }) => {
   return (
     <>
       <StyledContainer>
-        <Typography.Heading.Four>{viewModel.yourPrice}</Typography.Heading.Four>
+        <Typography.Heading.Four>your price</Typography.Heading.Four>
         <Typography.Heading.One>{viewModel.price}</Typography.Heading.One>
         <StyledIcon
           title="Car"
@@ -62,13 +62,13 @@ const InitialPriceView: React.FC<Props> = ({ viewModel }) => {
 
         <Content>
           <ContentText>
-            {viewModel.offerExpPreDate}
+            This price expires on&nbsp;
             <b>{viewModel.goodUntil}</b>
-            {viewModel.offerExpPostDate}
-            <b>{viewModel.miles}</b>
-            {viewModel.wicheverOccerFirst} {viewModel.the}
-            <b>{viewModel.titleName}</b>
-            {viewModel.yourName}
+            &nbsp;or upon driving an additional&nbsp;
+            <b>250 miles, </b>
+            whichever occurs first. The&nbsp;
+            <b>vehicle title </b>
+            must be in your name.
           </ContentText>
         </Content>
 
@@ -83,21 +83,24 @@ const InitialPriceView: React.FC<Props> = ({ viewModel }) => {
           }}
           disabled={viewModel.acceptingPrice}
         >
-          {viewModel.acceptingPrice ? <Spinner /> : viewModel.continuePrice}
+          {viewModel.acceptingPrice ? <Spinner /> : 'continue'}
         </StyledButton>
 
         <StyledLegal>
           <Typography.Body.Small>
-            {viewModel.legalDocumentation}
+            This price is based on data from thousands of similar market
+            transactions, as well as the information you provided. Vroom may
+            modify or revoke this price if the information you provided is
+            inaccurate or if there is a significant present or prospective
+            change in the used vehicle market beyond Vroom&apos;s control. Other
+            terms and restrictions apply.
           </Typography.Body.Small>
         </StyledLegal>
 
         <StickyFooter id="stickyFooter">
           <StickyContent>
             <StickyDetails>
-              <Typography.Title.Three>
-                {viewModel.yourPriceCamel}
-              </Typography.Title.Three>
+              <Typography.Title.Three>Your Price:</Typography.Title.Three>
               <Typography.Heading.Four>
                 {viewModel.price}
               </Typography.Heading.Four>
@@ -112,7 +115,7 @@ const InitialPriceView: React.FC<Props> = ({ viewModel }) => {
               }}
               disabled={viewModel.acceptingPrice}
             >
-              {viewModel.acceptingPrice ? <Spinner /> : viewModel.continuePrice}
+              {viewModel.acceptingPrice ? <Spinner /> : 'continue'}
             </FullButton>
           </StickyContent>
         </StickyFooter>

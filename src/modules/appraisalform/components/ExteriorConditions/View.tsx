@@ -6,7 +6,6 @@ import handleCheckChange from '../../utils/handleCheckChange';
 import CheckboxesContainer from '../CheckboxesContainer';
 import { UseForm } from '../componentInterfaces.d';
 import DentsPanelsInput from '../forminputs/DentsPanelsInput';
-import { FormFields } from '../forminputs/Inputs.language';
 import MajorExteriorPanelsInput from '../forminputs/MajorExteriorPanelsInput';
 import PaintChippingPanelsInput from '../forminputs/PaintChippingPanelsInput';
 import ScratchesPanelsInput from '../forminputs/ScratchesPanelsInput';
@@ -60,7 +59,7 @@ const ExteriorConditionView: React.FC<Props> = ({ fields, form }) => {
   return (
     <CheckboxesContainer>
       <StyledCheckbox
-        label={FormFields.paintChipping.newLabel}
+        label="Paint Damage/Imperfections"
         onChange={handleCheckChange(
           fields,
           'paintChipping',
@@ -78,14 +77,14 @@ const ExteriorConditionView: React.FC<Props> = ({ fields, form }) => {
         </PanelsWrapper>
       )}
       <StyledCheckbox
-        label={FormFields.hailDamage.newLabel}
+        label="Hail Damage"
         onChange={handleCheckChange(
           fields,
           'hailDamage',
           form.updateMultipleFields,
           ['noExteriorDamage']
         )}
-        checked={fields.hailDamage?.value === FormFields.hailDamage.yes}
+        checked={fields.hailDamage?.value === 'Yes'}
         id="hailDamage"
         dataQa="hailDamage"
         description="5 or more dents to any panel"
@@ -96,14 +95,14 @@ const ExteriorConditionView: React.FC<Props> = ({ fields, form }) => {
         </PanelsWrapper>
       )}
       <StyledCheckbox
-        label={FormFields.scratches.newLabel}
+        label="Scratches"
         onChange={handleCheckChange(
           fields,
           'scratches',
           form.updateMultipleFields,
           ['noExteriorDamage']
         )}
-        checked={fields.scratches?.value === FormFields.scratches.yes}
+        checked={fields.scratches?.value === 'Yes'}
         id="scratches"
         dataQa="scratches"
         description="Visible scratches"
@@ -114,11 +113,11 @@ const ExteriorConditionView: React.FC<Props> = ({ fields, form }) => {
         </PanelsWrapper>
       )}
       <StyledCheckbox
-        label={FormFields.rust.newLabel}
+        label="Rust"
         onChange={handleCheckChange(fields, 'rust', form.updateMultipleFields, [
           'noExteriorDamage',
         ])}
-        checked={fields.rust?.value === FormFields.rust.yes}
+        checked={fields.rust?.value === 'Yes'}
         id="rust"
         dataQa="rust"
         description="Visible signs of rust on any panels"
@@ -136,7 +135,7 @@ const ExteriorConditionView: React.FC<Props> = ({ fields, form }) => {
           form.updateMultipleFields,
           ['noExteriorDamage']
         )}
-        checked={fields.dents?.value === FormFields.dents.yes}
+        checked={fields.dents?.value === 'Yes'}
         id="dents"
         dataQa="dents"
       />

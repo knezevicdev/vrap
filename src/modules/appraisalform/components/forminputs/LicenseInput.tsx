@@ -6,7 +6,6 @@ import { FormField, GenericObject } from '../../../../interfaces.d';
 import { formatLicensePlate } from '../formatting';
 import Input from '../Input';
 import { getLicenseErrors, isValidLicense } from '../validation';
-import { FormFields } from './Inputs.language';
 
 interface Props {
   field: FormField;
@@ -36,15 +35,13 @@ const LicenseInput: React.FC<Props> = ({
     }
   };
 
-  const { placeholder, label } = FormFields.license;
-
   return (
     <LicenseField
       className={className}
       field={{
         ...field,
-        placeholder: placeholder,
-        label: label,
+        placeholder: 'License plate',
+        label: 'License plate',
         onChange: handleOnChange,
         onKeyPress: handleOnKeyPressEnter,
       }}

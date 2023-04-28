@@ -5,7 +5,6 @@ import React from 'react';
 import styled from 'styled-components';
 
 import { displayNumber } from '../../components/formatting';
-import { lang } from './ExactMilageDialog.language';
 
 const { publicRuntimeConfig } = getConfig();
 const BASE_PATH = publicRuntimeConfig.NEXT_PUBLIC_BASE_PATH;
@@ -122,8 +121,8 @@ const DialogView: React.FC<Props> = ({
 }) => {
   const displayEnteredMiles = displayNumber(enteredMiles);
   const afterMilesDesc = strictDialog
-    ? lang.strictDescAfterMiles
-    : lang.descAfterMiles;
+    ? 'you entered is lower than our partner’s records indicate. If you\'re sure your mileage is correct, please get in touch with Carfax to correct this discrepancy."'
+    : 'you entered is lower than our partner’s records indicate. Please check to see if the mileage you entered is correct.';
   const hideExactMileageDialog = (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault();
     mileageCorrect();
@@ -140,21 +139,21 @@ const DialogView: React.FC<Props> = ({
       <Modal>
         <ExactMileageContent>
           <ExactMileageTitle>
-            <div>{lang.titleAreYouSure}</div>
+            <div>are you sure your mileage is correct?</div>
           </ExactMileageTitle>
           <Line />
           <ExactMileageImage />
           <ExactMileageDesc>
-            {lang.descBeforeMiles}&nbsp;
+            The mileage of&nbsp;
             {displayEnteredMiles}&nbsp;
             {afterMilesDesc}
           </ExactMileageDesc>
           <UpdateMileageCTA onClick={handleUpdateMiles}>
-            {lang.updateMileage}
+            My mileage is correct
           </UpdateMileageCTA>
           {!strictDialog && (
             <CorrectMileageLink onClick={hideExactMileageDialog} href="#">
-              {lang.mileageIsCorrect}
+              Update Mileage
             </CorrectMileageLink>
           )}
         </ExactMileageContent>

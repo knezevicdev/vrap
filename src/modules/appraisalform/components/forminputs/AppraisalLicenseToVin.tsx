@@ -2,10 +2,6 @@ import React from 'react';
 import styled from 'styled-components';
 
 import LicenseStateInput from '../LicenseToVin/components/LicenseStateInput';
-import {
-  licensePlateTabText,
-  vinTabText,
-} from '../LicenseToVin/LicenseToVinMain.language';
 import MultiTab from '../MultiTab/MultiTab';
 import MultiTabTheme from '../MultiTab/styles/multiTabSlider';
 import VinFormInput from './VinFormInput';
@@ -29,12 +25,12 @@ const AppraisalLicenseToVin: React.FC<Props> = ({
     {
       component: LicenseStateInput,
       props: { licenseForm, onKeyPressEnter: onLicensePlateKeyPressEnter },
-      title: licensePlateTabText,
+      title: 'License Plate',
     },
     {
       component: VinFormInput,
       props: { field: vin, onKeyPressEnter: onVinKeyPressEnter },
-      title: vinTabText,
+      title: 'Vin',
     },
   ];
 

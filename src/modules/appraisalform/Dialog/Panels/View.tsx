@@ -2,8 +2,6 @@ import { addStyleForMobile, addStyleForTablet } from '@vroom-web/ui-lib';
 import React from 'react';
 import styled from 'styled-components';
 
-import { lang } from './PanelsDialog.language';
-
 import Icon, { Icons } from 'src/core/Icon';
 
 interface Props {
@@ -34,8 +32,12 @@ const PanelsDialog: React.FC<Props> = ({ closeModalHandler }) => {
             </CloseButtonContainer>
           </CloseDialog>
           <div>
-            <SectionTitle>{lang.title}</SectionTitle>
-            <SectionDesc>{lang.desc}</SectionDesc>
+            <SectionTitle>body panels</SectionTitle>
+            <SectionDesc>
+              The individual pieces that make up the exterior of your vehicle
+              are body panels. Bumpers, doors, fenders, grills, and trunks are
+              examples of panels.
+            </SectionDesc>
             <PanelGuide
               alt=""
               src="https://www.vroom.com/static-assets/images/sell-us-your-car/body-panels-guide.jpg"

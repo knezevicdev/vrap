@@ -6,7 +6,6 @@ import React from 'react';
 import styled from 'styled-components';
 
 import { useAppStore } from '../../../../context';
-import { lang } from './OfferExpiredDialog.language';
 
 const { publicRuntimeConfig } = getConfig();
 const BASE_PATH = publicRuntimeConfig.NEXT_PUBLIC_BASE_PATH;
@@ -35,12 +34,15 @@ const DialogView: React.FC<Props> = ({ vin }) => {
         <PriceExpiredContent>
           <PriceExpiredImage />
           <PriceExpiredTitle>
-            <div>{lang.yourPriceHasExpired}</div>
+            <div>your price has expired</div>
           </PriceExpiredTitle>
           <Line />
-          <PriceExpiredDesc>{lang.noNeedToWorry}</PriceExpiredDesc>
+          <PriceExpiredDesc>
+            No need to worry! You can always get an updated price by clicking
+            the link below.
+          </PriceExpiredDesc>
           <GetUpdatedCTA onClick={handleGetUpdatedCTA}>
-            {lang.getUpdatedPrice}
+            get updated price
           </GetUpdatedCTA>
         </PriceExpiredContent>
       </Modal>

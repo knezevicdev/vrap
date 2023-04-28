@@ -2,18 +2,32 @@ import { Typography } from '@vroom-web/ui-lib';
 import React from 'react';
 import styled from 'styled-components';
 
-import CongratsNextStepsViewModel from './ViewModel';
+const steps = [
+  {
+    id: 1,
+    description:
+      'Expect to receive an email or a physical package by mail with contracts to sign.',
+    title: 'Sign documents',
+  },
+  {
+    id: 2,
+    description:
+      'Our shipping specialists will schedule a time to come pick up your car.',
+    title: 'We pick up',
+  },
+  {
+    id: 3,
+    description: `Once we have your car, we'll process your payment within 2-3 business days.`,
+    title: 'You get paid',
+  },
+];
 
-export interface Props {
-  viewModel: CongratsNextStepsViewModel;
-}
-
-const CongratsNextStepsView: React.FC<Props> = ({ viewModel }) => {
+const CongratsNextStepsView = () => {
   return (
     <StyledContainer>
-      <StyledHero>{viewModel.nextSteps}</StyledHero>
+      <StyledHero>what to expect next...</StyledHero>
       <StepsWrapper>
-        {viewModel.steps.map((step) => (
+        {steps.map((step) => (
           <ColoredBullet key={step.id}>
             <StyledTitle>
               <StepNumber>{step.id}</StepNumber>

@@ -146,7 +146,7 @@ const PlaidButtonView: React.FC<Props> = ({
   return (
     <PlaidButtonContainer>
       <PlaidButton onClick={handlePlaidButtonClick} disabled={disableButton}>
-        {viewModel.buttonStartCopy}
+        Start direct deposit
       </PlaidButton>
     </PlaidButtonContainer>
   );

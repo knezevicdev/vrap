@@ -18,7 +18,7 @@ const OwnerInfoReviewView: React.FC<Props> = ({ viewModel, store }) => {
   return (
     <Container>
       <SubTitleContainer>
-        <Subtitle>{viewModel.title}</Subtitle>
+        <Subtitle>Contact Information</Subtitle>
         <LinkWrap>
           <Link.Text
             href={`/sell/verification/owner/${store.verification.offerId}`}
@@ -27,26 +27,26 @@ const OwnerInfoReviewView: React.FC<Props> = ({ viewModel, store }) => {
               viewModel.handleEditClick();
             }}
           >
-            {viewModel.edit}
+            Edit
           </Link.Text>
         </LinkWrap>
       </SubTitleContainer>
 
-      <SectionTitle>{viewModel.primarySectionTitle}</SectionTitle>
+      <SectionTitle>Primary Owner&apos;s Information</SectionTitle>
       <Row>
         <Info>
-          <Label>{viewModel.name}</Label>
+          <Label>Name</Label>
           <Field>
             {verificationDetail?.owner_first_name}{' '}
             {verificationDetail?.owner_last_name}
           </Field>
         </Info>
         <Info>
-          <Label>{viewModel.email}</Label>
+          <Label>Email</Label>
           <Field>{verificationDetail?.owner_email_address}</Field>
         </Info>
         <Info>
-          <Label>{viewModel.phone}</Label>
+          <Label>Phone</Label>
           <Field>
             {displayPhoneNumber(verificationDetail?.owner_phone_number)}
           </Field>
@@ -54,7 +54,7 @@ const OwnerInfoReviewView: React.FC<Props> = ({ viewModel, store }) => {
       </Row>
       <Row>
         <FullInfo>
-          <Label>{viewModel.address}</Label>
+          <Label>Address</Label>
           <Field>
             {verificationDetail?.owner_mailing_address.address_1}{' '}
             {verificationDetail?.owner_mailing_address.address_2}{' '}
@@ -67,21 +67,21 @@ const OwnerInfoReviewView: React.FC<Props> = ({ viewModel, store }) => {
 
       {verificationDetail?.second_owner_first_name && (
         <>
-          <SectionTitle>{viewModel.secondarySectionTitle}</SectionTitle>
+          <SectionTitle>Secondary Owner&apos;s Information</SectionTitle>
           <Row>
             <Info>
-              <Label>{viewModel.name}</Label>
+              <Label>Name</Label>
               <Field>
                 {verificationDetail?.second_owner_first_name}{' '}
                 {verificationDetail.second_owner_last_name}
               </Field>
             </Info>
             <Info>
-              <Label>{viewModel.email}</Label>
+              <Label>Email</Label>
               <Field>{verificationDetail.second_owner_email_address}</Field>
             </Info>
             <Info>
-              <Label>{viewModel.phone}</Label>
+              <Label>Phone</Label>
               <Field>
                 {displayPhoneNumber(
                   verificationDetail.second_owner_phone_number
@@ -91,7 +91,7 @@ const OwnerInfoReviewView: React.FC<Props> = ({ viewModel, store }) => {
           </Row>
           <Row>
             <FullInfo>
-              <Label>{viewModel.address}</Label>
+              <Label>Address</Label>
               <Field>
                 {verificationDetail.second_owner_mailing_address.address_1}{' '}
                 {verificationDetail.second_owner_mailing_address.address_2}{' '}

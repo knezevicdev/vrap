@@ -28,7 +28,7 @@ const TransactionOverviewView: React.FC<Props> = ({
   return (
     <InfoContainer data-qa="OfferInfoCardContainer">
       <InfoTitle>
-        <InfoTitleText>{viewModel.title}</InfoTitleText>
+        <InfoTitleText>transaction summary</InfoTitleText>
       </InfoTitle>
       {!loading && (
         <InfoContent>

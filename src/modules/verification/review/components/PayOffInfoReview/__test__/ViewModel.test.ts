@@ -16,19 +16,6 @@ describe('Pay Off Review component test', () => {
     viewModel = new ViewModel(stores);
   });
 
-  it('test readonly initial values', () => {
-    expect(viewModel.payOfftitle).toEqual('Auto Loan Information');
-    expect(viewModel.carPayment).toEqual('Are you making car payments?');
-    expect(viewModel.whereCarPayment).toEqual(
-      'Where do you make your car payments?'
-    );
-    expect(viewModel.loanAccountNumber).toEqual('Loan Account Number');
-    expect(viewModel.ssnLastFour).toEqual(
-      'Last Four Digits of Social Security Number'
-    );
-    expect(viewModel.edit).toEqual('Edit');
-  });
-
   it('test call getCurrentPayment should return No', () => {
     const fn = jest.fn(() => viewModel.getCurrentPayment());
     fn();

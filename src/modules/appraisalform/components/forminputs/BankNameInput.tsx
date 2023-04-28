@@ -4,7 +4,6 @@ import React, { useEffect, useRef, useState } from 'react';
 import { FormField, GenericObject } from '../../../../interfaces.d';
 import Input from '../Input';
 import Select from '../Select';
-import { FormFields } from './Inputs.language';
 
 import { Caf } from 'src/networking/models/Price';
 import { getCaf } from 'src/networking/request';
@@ -71,8 +70,8 @@ const BankNameInput: React.FC<Props> = ({ field }) => {
         field={{
           ...field,
           value: selectedBankName,
-          label: FormFields.bankName.label,
-          defaultLabel: FormFields.bankName.placeholder,
+          label: 'Name of Lien Financial Institution',
+          defaultLabel: 'Select a lien financial institution',
           options: [
             ...caf.map((caf) => ({
               label: caf.lienholder_name,
@@ -91,7 +90,7 @@ const BankNameInput: React.FC<Props> = ({ field }) => {
           field={{
             value: customBankName,
             onChange: handleCustomBankNameChange,
-            label: FormFields.lienFinancialInstitutionName.label,
+            label: 'Lienholder Name',
           }}
         />
       )}

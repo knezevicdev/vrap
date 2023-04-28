@@ -35,10 +35,10 @@ const CongratulationsView = ({ viewModel }: Props): JSX.Element => {
       <CongratsContainer>
         <ProgressiveWrapper>
           <ProgressiveAd
-            placementName={viewModel.placementName}
-            placementCode={viewModel.placementCode}
-            category={viewModel.category}
-            headline={viewModel.headline}
+            placementName="SUYC Congrats"
+            placementCode={2871300002}
+            category="sell"
+            headline="Switch Today and Save!"
             version={2}
           />
         </ProgressiveWrapper>

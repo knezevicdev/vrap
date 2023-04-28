@@ -35,6 +35,8 @@ const OptionContainer = styled.div`
   }
 `;
 
+const options = ['Direct Deposit', 'Check by Mail'];
+
 const PayOptionsView: React.FC<Props> = ({
   selected,
   viewModel,
@@ -45,7 +47,7 @@ const PayOptionsView: React.FC<Props> = ({
     return <Spinner src="assets/gifs/vroom-spinner.gif" alt="Loading..." />;
   }
 
-  const radioOptions = viewModel.optionMeta.map((option) => {
+  const radioOptions = options.map((option) => {
     let child = <OptionContainer>{option}</OptionContainer>;
     if (option === 'Direct Deposit') {
       child = (

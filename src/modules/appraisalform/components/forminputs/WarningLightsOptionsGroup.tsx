@@ -5,7 +5,6 @@ import styled from 'styled-components';
 
 import { FormField, GenericObject } from '../../../../interfaces.d';
 import useForm from '../useForm';
-import { FormFields } from './Inputs.language';
 import OtherOptionInput from './OtherOptionInput';
 
 interface Props {
@@ -28,39 +27,39 @@ const WarningLightsOptionsGroup: React.FC<Props> = ({
 
   const options = [
     {
-      value: FormFields.warningLightOptions.abs,
+      value: 'ABS/Anti-Lock Brakes',
       imgSrc: `${STATIC_URL}/icons/vehicle-icons/abs-icon.png`,
     },
     {
-      value: FormFields.warningLightOptions.airbag,
+      value: 'Air Bag',
       imgSrc: `${STATIC_URL}/icons/vehicle-icons/air-bag-icon.png`,
     },
     {
-      value: FormFields.warningLightOptions.checkEngine,
+      value: 'Check Engine',
       imgSrc: `${STATIC_URL}/icons/vehicle-icons/check-engine-icon.png`,
     },
     {
-      value: FormFields.warningLightOptions.transmission,
+      value: 'Transmission',
       imgSrc: `${STATIC_URL}/icons/vehicle-icons/transmission-icon.png`,
     },
     {
-      value: FormFields.warningLightOptions.airConditioner,
+      value: 'Air Conditioner',
       imgSrc: `${STATIC_URL}/icons/vehicle-icons/air-conditioner-icon.png`,
     },
     {
-      value: FormFields.warningLightOptions.fluid,
+      value: 'Fluid',
       imgSrc: `${STATIC_URL}/icons/vehicle-icons/fluid-icon.png`,
     },
     {
-      value: FormFields.warningLightOptions.serviceEngine,
+      value: 'Service Engine',
       imgSrc: `${STATIC_URL}/icons/vehicle-icons/service-engine-icon.png`,
     },
     {
-      value: FormFields.warningLightOptions.lowCoolant,
+      value: 'Low Coolant',
       imgSrc: `${STATIC_URL}/icons/vehicle-icons/low-coolant-icon.png`,
     },
     {
-      value: FormFields.warningLightOptions.other,
+      value: 'Other',
     },
   ];
 

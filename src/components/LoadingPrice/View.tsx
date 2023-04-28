@@ -2,20 +2,15 @@ import { Typography } from '@vroom-web/ui-lib';
 import React from 'react';
 import styled from 'styled-components';
 
-import LoadingPriceViewModel from './ViewModel';
-
-interface Props {
-  viewModel: LoadingPriceViewModel;
-}
-
-const LoadingPriceView: React.FC<Props> = ({ viewModel }) => {
+const LoadingPriceView = () => {
   return (
     <StyledContainer>
-      <Typography.Heading.Four>{viewModel.loading}</Typography.Heading.Four>
+      <Typography.Heading.Four>Loading</Typography.Heading.Four>
 
       <StyledBody>
         <Typography.Body.Regular>
-          {viewModel.pleaseWait}
+          We&apos;re grabbing your data fresh out the oven. Thanks for your
+          patience.
         </Typography.Body.Regular>
       </StyledBody>
     </StyledContainer>

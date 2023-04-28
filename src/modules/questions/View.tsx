@@ -3,37 +3,31 @@ import { observer } from 'mobx-react';
 import React from 'react';
 import styled from 'styled-components';
 
-import QuestionsViewModel from './ViewModel';
-
 import { Icons } from 'src/core/Icon';
 
-export interface Props {
-  viewModel: QuestionsViewModel;
-}
-
-const View: React.FC<Props> = ({ viewModel }) => {
+const View = () => {
   return (
     <div>
-      <StyledHero>{viewModel.questions}</StyledHero>
+      <StyledHero>Questions?</StyledHero>
       <StyledContainer>
         <IconSection>
           <Icon icon={Icons.FAQ} />
-          <StyledLink href={viewModel.faqLink}>
-            <StyledTitle>{viewModel.helpCenter}</StyledTitle>
+          <StyledLink href="/contact">
+            <StyledTitle>VISIT OUR HELP CENTER</StyledTitle>
           </StyledLink>
         </IconSection>
         <VerticalDivider />
         <IconSection>
           <Icon icon={Icons.EMAIL} />
-          <StyledLink href={viewModel.emailLink}>
-            <StyledTitle>{viewModel.sendMessage}</StyledTitle>
+          <StyledLink href="/contact">
+            <StyledTitle>SEND A MESSAGE</StyledTitle>
           </StyledLink>
         </IconSection>
         <VerticalDivider />
         <IconSection>
           <Icon icon={Icons.PHONE} />
-          <StyledLink href={viewModel.phoneLink}>
-            <StyledTitle>{viewModel.phoneNumber}</StyledTitle>
+          <StyledLink href="tel:1-(855)-524-1300">
+            <StyledTitle>(855) 524-1300</StyledTitle>
           </StyledLink>
         </IconSection>
       </StyledContainer>

@@ -5,8 +5,6 @@ import { useRouter } from 'next/router';
 import React, { useEffect } from 'react';
 import styled from 'styled-components';
 
-import { lang } from './InvalidStateDialog.language';
-
 const { publicRuntimeConfig } = getConfig();
 const BASE_PATH = publicRuntimeConfig.NEXT_PUBLIC_BASE_PATH;
 
@@ -121,16 +119,17 @@ const DialogView: React.FC = () => {
       <Modal>
         <ModalContent>
           <ModalTitle>
-            <div>{lang.title}</div>
+            <div>We apologize</div>
           </ModalTitle>
           <Line />
           <ModalImage />
           <ModalDesc>
-            {lang.desc}
-            &nbsp;
+            Sorry, we are not pricing or purchasing vehicles from your area at
+            this time. We apologize for the inconvenience. Thanks for your
+            interest. &nbsp;
           </ModalDesc>
           <BrowseInventoryCTA onClick={goToInventory}>
-            {lang.browseInventory}
+            Browse Inventory
           </BrowseInventoryCTA>
         </ModalContent>
       </Modal>

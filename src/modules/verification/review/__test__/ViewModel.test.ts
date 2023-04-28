@@ -33,17 +33,6 @@ describe('Review component test', () => {
     viewModel = new ViewModel(stores, absmartly);
   });
 
-  it('test readonly initial values', () => {
-    expect(viewModel.title).toEqual('review your information');
-    expect(viewModel.submitBtn).toEqual('SUBMIT MY INFORMATION');
-    expect(viewModel.reviewVerification).toEqual(
-      'I acknowledge that all information provided is accurate. Vroom reserves the right to modify or revoke your price if any information provided is inaccurate.'
-    );
-    expect(viewModel.verificationWarning).toEqual(
-      'By clicking "Submit My Information," you acknowledge that all the information you provided is accurate. Vroom reserves the right to modify or revoke your price if any information provided is inaccurate.'
-    );
-  });
-
   it('tracker should called when pageLoad called', () => {
     const pageViewd = jest.spyOn(
       viewModel.getAnalyticHandler(),

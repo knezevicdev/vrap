@@ -8,13 +8,13 @@ import {
 import React, { useState } from 'react';
 import styled from 'styled-components';
 
-import CheckByMailViewModel from './ViewModel';
+import { STATES } from '../../modules/appraisalform/constants/misc';
 
 import { Props } from 'src/components/CheckByMail';
 import FormikInput from 'src/core/FormikInput';
 import { PaymentMethodContext } from 'src/modules/options/paymentMethodContext';
 
-type ViewProps = Props & { viewModel: CheckByMailViewModel };
+type ViewProps = Props;
 
 const CBMContainer = styled.div`
   width: 100%;
@@ -133,12 +133,10 @@ const OptionContainer = styled.div<{ selected?: boolean }>`
 const CheckByMailView: React.FC<ViewProps> = ({
   mailingAddress,
   isPrimaryAddress,
-  viewModel,
   setFieldValue,
   state,
 }) => {
-  const states = viewModel.getStates();
-  const value = states.find((item) => item.value === state) ?? null;
+  const value = STATES.find((item) => item.value === state) ?? null;
   const [usePrimary, setUsePrimary] = useState<string>(isPrimaryAddress);
   const handleSelectedItemChange = (value: SelectChanges<SelectItem>): void =>
     setFieldValue('state', value?.selectedItem?.value ?? '');
@@ -161,7 +159,9 @@ const CheckByMailView: React.FC<ViewProps> = ({
     <PaymentMethodContext.Consumer>
       {(): React.ReactNode => (
         <CBMContainer>
-          <CBMMessage>{viewModel.mailingAddressMsg}</CBMMessage>
+          <CBMMessage>
+            Should we send the check to the primary owner&apos;s address?
+          </CBMMessage>
           <CBMMailingAddress>
             <AddressLine>{mailingAddress['address_1']}</AddressLine>
             <AddressLine>
@@ -186,15 +186,15 @@ const CheckByMailView: React.FC<ViewProps> = ({
                   id="address"
                   name={'address'}
                   type="text"
-                  placeholder={viewModel.addressLabel}
-                  label={viewModel.addressLabel}
+                  placeholder="Address"
+                  label="Address"
                 />
                 <Apartment
                   id="apartment"
                   name={'apartment'}
                   type="text"
-                  placeholder={viewModel.apartmentPlaceholder}
-                  label={viewModel.apartmentLabel}
+                  placeholder="Apt/Suite"
+                  label="Apartment / Suite Number (optional)"
                 />
               </InputContainer>
               <InputContainer>
@@ -202,16 +202,16 @@ const CheckByMailView: React.FC<ViewProps> = ({
                   id="city"
                   name={'city'}
                   type="text"
-                  placeholder={viewModel.cityLabel}
-                  label={viewModel.cityLabel}
+                  placeholder="City"
+                  label="City"
                 />
                 <ZipStateContainer>
                   <State>
                     <Select
                       id="state"
-                      placeholder={viewModel.stateLabel}
-                      label={viewModel.stateLabel}
-                      items={states}
+                      placeholder="State"
+                      label="State"
+                      items={STATES}
                       onSelectedItemChange={handleSelectedItemChange}
                       selectedItem={value}
                     />
@@ -220,8 +220,8 @@ const CheckByMailView: React.FC<ViewProps> = ({
                     id="zipcode"
                     name={'zipcode'}
                     type="text"
-                    placeholder={viewModel.zipLabel}
-                    label={viewModel.zipLabel}
+                    placeholder="Zip Code"
+                    label="Zip Code"
                     fluid={true}
                     maxLength={5}
                   />

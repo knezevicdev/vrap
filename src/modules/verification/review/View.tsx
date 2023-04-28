@@ -64,7 +64,7 @@ const VerificationReviewViewDetail: React.FC<Props> = ({
 
   return (
     <Container>
-      <Title>{viewModel.title}</Title>
+      <Title>review your information</Title>
       <Line />
       <OwnerInfoReview />
       <Line />
@@ -89,11 +89,11 @@ const VerificationReviewViewDetail: React.FC<Props> = ({
           id={'verification-agreement-checkbox'}
           onChange={(): void => setChecked(!checked)}
           dataQa={'verification-agreement-checkbox'}
-          label={viewModel.reviewVerification}
+          label="I acknowledge that all information provided is accurate. Vroom reserves the right to modify or revoke your price if any information provided is inaccurate."
         />
       </CheckboxContainer>
       <SubmitButton disabled={!checked} onClick={handleSubmit}>
-        {viewModel.submitBtn}
+        SUBMIT MY INFORMATION
       </SubmitButton>
     </Container>
   );

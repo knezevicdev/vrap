@@ -5,15 +5,6 @@ import React, { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 
 import { useRestrictedAppraisal } from '../../integrations/RestrictedAppraisalContext';
-import {
-  AppraisalTitle,
-  CancelTradeText,
-  PersonalInfoText,
-  ReviewText,
-  SaveText,
-  VehicleHistoryText,
-  VehicleInfoText,
-} from './AppraisalForm.language';
 import CombinedVehicleInfoForms from './components/CombinedVehicleInfoForm';
 import MultiStepForm from './components/MultiStepForm';
 import PersonalInformation from './components/personalinformation';
@@ -50,7 +41,7 @@ const AppraisalForm: React.FC<Props> = ({ viewModel }) => {
   const routerAsPath = router.asPath as string;
   const isEditMode = routerAsPath.includes('#');
   const routerHash = routerAsPath.split('#')[1];
-  const submitText = isEditMode ? SaveText : ReviewText;
+  const submitText = isEditMode ? 'Save' : 'Review';
   const isTradeIn = store.appraisal.isTradeIn;
 
   const vehicleInfo = viewModel.appraisalStore.vehicleInfoForm;
@@ -316,14 +307,13 @@ const AppraisalForm: React.FC<Props> = ({ viewModel }) => {
     {
       component: VehicleInformation,
       form: appraisalUseForm.vehicleInfoForm,
-      title: VehicleInfoText.title,
+      title: 'Vehicle Information',
       onNextIntercept: onNextIntercept,
     },
     {
       component: CombinedVehicleInfoForms,
       form: combinedVehicleInformationForm,
       title: 'Vehicle History & Condition',
-      subTitle: VehicleHistoryText.subTitle,
       onNextIntercept: combinedFormNextIntercept(appraisalUseForm),
       combinedFormInvalidSections,
       onInvalidFormUnresolved: () => {
@@ -359,7 +349,7 @@ const AppraisalForm: React.FC<Props> = ({ viewModel }) => {
     {
       component: PersonalInformation,
       form: appraisalUseForm.personalInfoForm,
-      title: PersonalInfoText.title,
+      title: 'Your Information',
     },
   ];
 
@@ -532,10 +522,12 @@ const AppraisalForm: React.FC<Props> = ({ viewModel }) => {
         refreshButton={true}
         nextText={'Continue'}
         submitText={submitText}
-        appraisalTitle={AppraisalTitle}
+        appraisalTitle="Vroom will verify that the vehicle information you provide is accurate during pickup. Inaccurate information may result in a reduced price or canceled appraisal."
       />
       {isTradeIn && (
-        <Cancel onClick={viewModel.cancelOffer}>{CancelTradeText}</Cancel>
+        <Cancel onClick={viewModel.cancelOffer}>
+          CANCEL TRADE-IN, CONTINUE PURCHASE
+        </Cancel>
       )}
       {showExactMileageDialog && (
         <ExactMilageDialog

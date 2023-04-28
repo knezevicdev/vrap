@@ -2,13 +2,7 @@ import { Icon, Typography } from '@vroom-web/ui-lib';
 import React from 'react';
 import styled from 'styled-components';
 
-import CongratsCardViewModel from './ViewModel';
-
 import { Icons } from 'src/core/Icon';
-
-interface Props {
-  viewModel: CongratsCardViewModel;
-}
 
 const Container = styled.div`
   display: grid;
@@ -29,7 +23,7 @@ const InformationAccent = styled(Typography.Body.Regular)`
   font-weight: 600;
 `;
 
-const CongratsCardView = ({ viewModel }: Props): JSX.Element => {
+const CongratsCardView = (): JSX.Element => {
   return (
     <Container>
       <Icon
@@ -37,22 +31,24 @@ const CongratsCardView = ({ viewModel }: Props): JSX.Element => {
         title="document"
         aria-hidden="true"
       />
-      <Typography.Heading.Three>{viewModel.title}</Typography.Heading.Three>
+      <Typography.Heading.Three>
+        thank you for submitting
+      </Typography.Heading.Three>
       <Information>
         <Typography.Body.Regular>
-          {viewModel.information1}
+          Don&apos;t hesitate to contact us if you have questions.
         </Typography.Body.Regular>
-        <InformationAccent>{viewModel.information2}</InformationAccent>
+        <InformationAccent>
+          paperwork@vroom.com or (855) 534-3755.
+        </InformationAccent>
       </Information>
       <Information>
         <Typography.Body.Regular>
-          {viewModel.loanInformation1}
+          We may contact you to confirm your loan information.
         </Typography.Body.Regular>
         <Typography.Body.Regular>
-          {viewModel.loanInformation2}
-          <InformationAccent>
-            {viewModel.loanInformationPhone}
-          </InformationAccent>
+          Look out for a phone call from&nbsp;
+          <InformationAccent>+1 (214) 817-2271.</InformationAccent>
         </Typography.Body.Regular>
       </Information>
     </Container>

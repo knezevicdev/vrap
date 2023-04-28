@@ -5,7 +5,6 @@ import styled from 'styled-components';
 import { useAppStore } from '../../../../context';
 import CircleLoader from '../CircleLoader';
 import Select from '../Select';
-import { FormFields } from './Inputs.language';
 
 import AnalyticsHandler from 'src/integrations/AnalyticsHandler';
 import { FormField } from 'src/interfaces.d';
@@ -40,8 +39,8 @@ const TrimInput: React.FC<Props> = ({
         className={className}
         field={{
           ...field,
-          defaultLabel: FormFields.trim.placeholder,
-          label: FormFields.trim.label,
+          defaultLabel: 'Trim',
+          label: 'Trim',
           options: customOptions,
           onChange: handleOnChange,
         }}

@@ -3,7 +3,6 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 
 import { GenericObject } from '../../../interfaces.d';
-import { lang } from './Components.language';
 
 interface Props {
   field: GenericObject;
@@ -17,7 +16,7 @@ const Input: React.FC<Props> = (props) => {
       placeholder,
       value = '',
       error = false,
-      errorMessage = lang.errorMessage(label),
+      errorMessage = `please enter a valid ${label}`,
       onChange,
       onBlur,
       onKeyPress,

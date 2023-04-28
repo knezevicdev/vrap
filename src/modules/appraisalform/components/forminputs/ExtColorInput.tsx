@@ -4,7 +4,6 @@ import React from 'react';
 import { useAppStore } from '../../../../context';
 import { FormField } from '../../../../interfaces.d';
 import Select from '../Select';
-import { FormFields } from './Inputs.language';
 
 import AnalyticsHandler from 'src/integrations/AnalyticsHandler';
 
@@ -34,8 +33,8 @@ const ExtColorInput: React.FC<Props> = ({
       className={className}
       field={{
         ...field,
-        defaultLabel: FormFields.extColor.placeholder,
-        label: FormFields.extColor.label,
+        defaultLabel: 'Exterior Color',
+        label: 'Exterior Color (outside of the car)',
         options: customOptions,
         onChange: handleOnChange,
       }}

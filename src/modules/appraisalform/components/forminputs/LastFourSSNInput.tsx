@@ -2,7 +2,6 @@ import React, { ChangeEvent, useState } from 'react';
 
 import { FormField } from '../componentInterfaces.d';
 import Input from '../Input';
-import { FormFields } from './Inputs.language';
 
 import { displaySecureSSN } from 'src/utils';
 
@@ -47,8 +46,8 @@ const LastFourSSNInput: React.FC<InputProps> = ({
       className={className}
       field={{
         ...field,
-        placeholder: FormFields.lastFourSSN.placeholder,
-        label: FormFields.lastFourSSN.label,
+        placeholder: '____',
+        label: 'Last Four Digits of Social Security Number (optional)',
         value: ssn.display,
         onChange: handleOnChange,
         onBlur: handleOnBlur,

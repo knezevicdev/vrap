@@ -20,7 +20,7 @@ const SellDocumentsReview: React.FC<Props> = ({ viewModel, store }) => {
   return (
     <Container>
       <SubTitleContainer>
-        <Subtitle>{viewModel.SellDoctitle}</Subtitle>
+        <Subtitle>Document Upload</Subtitle>
         <LinkWrap>
           <Link.Text
             href={`/sell/verification/documents/${store.verification.offerId}`}
@@ -29,7 +29,7 @@ const SellDocumentsReview: React.FC<Props> = ({ viewModel, store }) => {
               viewModel.handleEditClick();
             }}
           >
-            {viewModel.edit}
+            Edit
           </Link.Text>
         </LinkWrap>
       </SubTitleContainer>
@@ -39,7 +39,15 @@ const SellDocumentsReview: React.FC<Props> = ({ viewModel, store }) => {
             <IconWrapper>
               <Icon icon={Icons.CHECK_MARK_GREEN_DOCS} />
             </IconWrapper>
-            <Field>{viewModel.dlFront}</Field>
+            <Field>Front of Driver&apos;s License</Field>
+          </Info>
+        )}
+        {verificationDetail?.back_of_driver_license_file_id && (
+          <Info>
+            <IconWrapper>
+              <Icon icon={Icons.CHECK_MARK_GREEN_DOCS} />
+            </IconWrapper>
+            <Field>Back of Driver&apos;s License</Field>
           </Info>
         )}
 
@@ -48,7 +56,16 @@ const SellDocumentsReview: React.FC<Props> = ({ viewModel, store }) => {
             <IconWrapper>
               <Icon icon={Icons.CHECK_MARK_GREEN_DOCS} />
             </IconWrapper>{' '}
-            <Field>{viewModel.secondDlFront}</Field>
+            <Field>Front of Second Owner&apos;s Driver&apos;s License</Field>
+          </Info>
+        )}
+
+        {verificationDetail?.second_owner_back_of_driver_license_file_id && (
+          <Info>
+            <IconWrapper>
+              <Icon icon={Icons.CHECK_MARK_GREEN_DOCS} />
+            </IconWrapper>{' '}
+            <Field>Back of Second Owner&apos;s Driver&apos;s License</Field>
           </Info>
         )}
 
@@ -57,7 +74,7 @@ const SellDocumentsReview: React.FC<Props> = ({ viewModel, store }) => {
             <IconWrapper>
               <Icon icon={Icons.CHECK_MARK_GREEN_DOCS} />
             </IconWrapper>{' '}
-            <Field>{viewModel.tiFront}</Field>
+            <Field>Front of Title Information</Field>
           </Info>
         )}
         {verificationDetail?.back_of_title_lien_file_id && (
@@ -65,7 +82,7 @@ const SellDocumentsReview: React.FC<Props> = ({ viewModel, store }) => {
             <IconWrapper>
               <Icon icon={Icons.CHECK_MARK_GREEN_DOCS} />
             </IconWrapper>{' '}
-            <Field>{viewModel.tiBack}</Field>
+            <Field>Back of Title Information</Field>
           </Info>
         )}
 
@@ -74,7 +91,7 @@ const SellDocumentsReview: React.FC<Props> = ({ viewModel, store }) => {
             <IconWrapper>
               <Icon icon={Icons.CHECK_MARK_GREEN_DOCS} />
             </IconWrapper>{' '}
-            <Field>{viewModel.registration}</Field>
+            <Field>Registration</Field>
           </Info>
         )}
 
@@ -83,7 +100,7 @@ const SellDocumentsReview: React.FC<Props> = ({ viewModel, store }) => {
             <IconWrapper>
               <Icon icon={Icons.CHECK_MARK_GREEN_DOCS} />
             </IconWrapper>{' '}
-            <Field>{viewModel.lienRelease}</Field>
+            <Field>Lien Release Letter</Field>
           </Info>
         )}
 
@@ -92,13 +109,13 @@ const SellDocumentsReview: React.FC<Props> = ({ viewModel, store }) => {
             <IconWrapper>
               <Icon icon={Icons.CHECK_MARK_GREEN_DOCS} />
             </IconWrapper>{' '}
-            <Field>{viewModel.odometer}</Field>
+            <Field>Odometer Picture</Field>
           </Info>
         )}
       </Row>
 
       <MileContainer>
-        <Label>{viewModel.exactMileage}</Label>
+        <Label>Exact Mileage</Label>
         <Field>{displayNumber(verificationDetail?.exact_mileage)}</Field>
       </MileContainer>
     </Container>

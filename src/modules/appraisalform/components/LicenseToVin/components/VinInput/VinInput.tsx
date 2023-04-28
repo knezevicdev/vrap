@@ -6,7 +6,6 @@ import styled from 'styled-components';
 import { useAppStore } from '../../../../../../context';
 import VinFormInput from '../../../forminputs/VinFormInput';
 import useForm from '../../../useForm';
-import { buttonText, dataQa } from './language';
 import ViewModel from './ViewModel';
 
 interface Props {
@@ -56,9 +55,9 @@ const VinInput: React.FC<Props> = ({ viewModel, router }) => {
         onKeyPress={handleOnKeyPressEnter}
         disabled={!isFormValid}
         onClick={vinSubmit}
-        data-qa={dataQa}
+        data-qa="Submit"
       >
-        {buttonText}
+        WHAT&apos;S MY CAR WORTH?
       </SubmitButton>
     </Container>
   );

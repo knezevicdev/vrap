@@ -12,7 +12,7 @@ describe('Direct Deposit Test', () => {
 
   const onPlaidSuccessSpy = jest.spyOn(ddStore, 'plaidSuccess');
   const onPlaidExitSpy = jest.spyOn(ddStore, 'plaidExit');
-  let viewModel: ViewModel;
+  const viewModel: ViewModel = new ViewModel(ddStore, oStore, poStore);
 
   beforeEach(async () => {
     await oStore.init('12345');
@@ -22,16 +22,6 @@ describe('Direct Deposit Test', () => {
 
   afterEach(() => {
     localStorage.removeItem('priceId');
-  });
-
-  it('test readonly initial values', () => {
-    viewModel = new ViewModel(ddStore, oStore, poStore);
-
-    expect(viewModel.ddToggleOrCopy).toEqual('Or,');
-    expect(viewModel.ddTogglePlaidCopy).toEqual('link bank account');
-    expect(viewModel.cantFind).toEqual(
-      "Can't find your bank? Enter bank information manually"
-    );
   });
 
   it('getPlaidLinkToken', () => {
