@@ -4,24 +4,18 @@ import styled from 'styled-components';
 import handleCheckChange from '../utils/handleCheckChange';
 import CheckboxesContainer from './CheckboxesContainer';
 import { FormField, UseForm } from './componentInterfaces.d';
-import AdditionalDetailsInput from './forminputs/AdditionalDetailsInput';
-import FloodFireDamageInput from './forminputs/FloodFireDamageInput';
-import MechanicalConditionInput from './forminputs/MechanicalConditionInput';
-import RunnableInput from './forminputs/RunnableInput';
-import WarningLightsInput from './forminputs/WarningLightsInput';
 import WarningLightsOptionsGroup from './forminputs/WarningLightsOptionsGroup';
 import StyledCheckbox from './StyledCheckbox';
 
 export interface Props {
   fields: Record<string, FormField>;
   form: UseForm;
-  newForm?: boolean;
 }
 
-const MechanicalCondition: React.FC<Props> = ({ fields, newForm, form }) => {
+const MechanicalCondition: React.FC<Props> = ({ fields, form }) => {
   const showWarningLights = fields.warningLights.value === 'Yes';
 
-  return newForm ? (
+  return (
     <CheckboxesContainer>
       <StyledCheckbox
         label="Engine"
@@ -67,7 +61,6 @@ const MechanicalCondition: React.FC<Props> = ({ fields, newForm, form }) => {
           <WarningLightsOptionsContainer
             field={fields.warningLightsValues}
             otherWarningField={fields.otherWarning}
-            newForm
           />
         )}
       </div>
@@ -103,86 +96,12 @@ const MechanicalCondition: React.FC<Props> = ({ fields, newForm, form }) => {
         dataQa="noMechanicalIssues"
       />
     </CheckboxesContainer>
-  ) : (
-    <>
-      <InputContainer>
-        <RunnableInput field={fields.runnable} />
-      </InputContainer>
-      <InputContainer>
-        <MechanicalConditionRadios field={fields.mechanicalCondition} />
-      </InputContainer>
-      <InputContainer>
-        <Left>
-          <WarningLightsInput field={fields.warningLights} />
-          {showWarningLights && (
-            <WarningLightsOptionsContainer
-              field={fields.warningLightsValues}
-              otherWarningField={fields.otherWarning}
-            />
-          )}
-        </Left>
-        <FloodFireDamageInput field={fields.floodFireDamage} />
-      </InputContainer>
-      <InputContainer>
-        <AdditionalDetails field={fields.additionalDetails} />
-      </InputContainer>
-    </>
   );
 };
 
-const InputContainer = styled.div`
-  display: flex;
-  text-align: left;
-  margin-bottom: 20px;
-
-  justify-content: space-between;
-  @media (max-width: 768px) {
-    flex-direction: column;
-    margin-bottom: 0px;
-  }
-`;
-
-const Left = styled.div`
-  width: 50%;
-
-  @media (max-width: 767px) {
-    width: 100%;
-  }
-`;
-
-interface WarningLightsOptionsContainerProps {
-  newForm?: boolean;
-}
-
-const WarningLightsOptionsContainer = styled(
-  WarningLightsOptionsGroup
-)<WarningLightsOptionsContainerProps>`
+const WarningLightsOptionsContainer = styled(WarningLightsOptionsGroup)`
   margin-top: 10px;
-
-  ${({ newForm }) =>
-    newForm &&
-    `
-    margin-left: 15px;
-  `}
-`;
-
-const MechanicalConditionRadios = styled(MechanicalConditionInput)`
-  margin-right: 10px;
-  @media (max-width: 767px) {
-    width: 100%;
-    margin-left: 0px;
-    margin-bottom: 16px;
-  }
-`;
-
-const AdditionalDetails = styled(AdditionalDetailsInput)`
-  width: 100%;
-
-  @media (max-width: 767px) {
-    width: 100%;
-    margin-left: 0px;
-    margin-bottom: 16px;
-  }
+  margin-left: 15px;
 `;
 
 export default MechanicalCondition;

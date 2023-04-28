@@ -33,6 +33,7 @@ const Input: React.FC<Props> = (props) => {
       id = '',
       autocomplete = 'off',
       dataQa,
+      forceValidate,
     },
     className,
   } = props;
@@ -48,7 +49,7 @@ const Input: React.FC<Props> = (props) => {
     }
   };
 
-  const showError = validate && error;
+  const showError = (validate || forceValidate) && error;
 
   return (
     <Container className={className}>

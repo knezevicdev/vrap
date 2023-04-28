@@ -10,39 +10,51 @@ export type UseOwnerReviewForms = {
 const useOwnerReviewForms = (): UseOwnerReviewForms => {
   const contactInfoForm = useForm({
     defaultValues: {
-      state: '',
-      zip: '',
-      city: '',
+      youOwner: '',
+      firstName: '',
+      lastName: '',
+      address: '',
       apt: {
         value: '',
         isRequired: false,
       },
-      address: '',
-      firstName: '',
-      lastName: '',
-      phone: '',
+      city: '',
+      state: '',
+      zip: '',
       email: '',
-      youOwner: '',
+      phone: '',
       hasSecondOwner: '',
-      secondState: '',
-      secondZip: '',
-      secondCity: '',
+      secondFirstName: '',
+      secondLastName: '',
+      secondAddress: '',
       secondApt: {
         value: '',
         isRequired: false,
       },
-      secondAddress: '',
-      secondFirstName: '',
-      secondLastName: '',
-      secondPhone: '',
+      secondCity: '',
+      secondState: '',
+      secondZip: '',
       secondEmail: '',
+      secondPhone: '',
     },
+    formKey: 'contactInfo',
   });
 
   const pickupInfoForm = useForm({
     defaultValues: {
       sameAddress: 'Yes',
-      sameContact: 'Yes',
+      pickupAddressAddress: {
+        value: '',
+        isRequired: false,
+      },
+      pickupAddressApt: {
+        value: '',
+        isRequired: false,
+      },
+      pickupAddressCity: {
+        value: '',
+        isRequired: false,
+      },
       pickupAddressState: {
         value: '',
         isRequired: false,
@@ -51,18 +63,7 @@ const useOwnerReviewForms = (): UseOwnerReviewForms => {
         value: '',
         isRequired: false,
       },
-      pickupAddressCity: {
-        value: '',
-        isRequired: false,
-      },
-      pickupAddressApt: {
-        value: '',
-        isRequired: false,
-      },
-      pickupAddressAddress: {
-        value: '',
-        isRequired: false,
-      },
+      sameContact: 'Yes',
       pickupContactFirstName: {
         value: '',
         isRequired: false,
@@ -71,15 +72,16 @@ const useOwnerReviewForms = (): UseOwnerReviewForms => {
         value: '',
         isRequired: false,
       },
-      pickupContactPhone: {
-        value: '',
-        isRequired: false,
-      },
       pickupContactEmail: {
         value: '',
         isRequired: false,
       },
+      pickupContactPhone: {
+        value: '',
+        isRequired: false,
+      },
     },
+    formKey: 'pickupInfo',
   });
 
   const loanInfoForm = useForm({
@@ -99,6 +101,7 @@ const useOwnerReviewForms = (): UseOwnerReviewForms => {
       state: '',
       agreement: '',
     },
+    formKey: 'loanInfo',
   });
 
   return {

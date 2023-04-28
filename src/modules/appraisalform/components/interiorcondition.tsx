@@ -7,7 +7,6 @@ import StyledCheckbox from './StyledCheckbox';
 
 export interface Props {
   fields: any;
-  newForm?: boolean;
   form: UseForm;
 }
 
