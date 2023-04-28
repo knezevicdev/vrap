@@ -1,4 +1,7 @@
-import { AnalyticsSnippet } from '@vroom-web/analytics-integration';
+import {
+  AnalyticsSnippet,
+  getRestrictedAdvertising,
+} from '@vroom-web/analytics-integration';
 import getConfig from 'next/config';
 import Document, {
   DocumentContext,
@@ -17,10 +20,12 @@ const SEGMENT_WRITE_KEY = serverRuntimeConfig.SEGMENT_WRITE_KEY;
 const NEXT_PUBLIC_ANALYTICS_DISABLE_PII_PERSISTENCE =
   publicRuntimeConfig.NEXT_PUBLIC_ANALYTICS_DISABLE_PII_PERSISTENCE;
 
-export default class AppraisalDocument extends Document {
+export default class AppraisalDocument extends Document<
+  DocumentInitialProps & { restrictedAdvertising: boolean }
+> {
   static async getInitialProps(
     ctx: DocumentContext
-  ): Promise<DocumentInitialProps> {
+  ): Promise<DocumentInitialProps & { restrictedAdvertising: boolean }> {
     const styledComponentsSheet = new ServerStyleSheet();
     const originalRenderPage = ctx.renderPage;
 
@@ -32,15 +37,18 @@ export default class AppraisalDocument extends Document {
         });
 
       const initialProps = await Document.getInitialProps(ctx);
+      const isRestrictedAdvertising = getRestrictedAdvertising(
+        ctx.req?.headers.cookie
+      );
       return {
         ...initialProps,
+        restrictedAdvertising: isRestrictedAdvertising,
         styles: [initialProps.styles, styledComponentsSheet.getStyleElement()],
       };
     } finally {
       styledComponentsSheet.seal();
     }
   }
-
   render(): JSX.Element {
     const segmentWriteKey = SEGMENT_WRITE_KEY;
 
@@ -50,6 +58,7 @@ export default class AppraisalDocument extends Document {
           {segmentWriteKey && (
             <AnalyticsSnippet
               segmentWriteKey={segmentWriteKey}
+              restrictedAdvertising={this.props.restrictedAdvertising}
               disableClientPersistence={Boolean(
                 parseInt(NEXT_PUBLIC_ANALYTICS_DISABLE_PII_PERSISTENCE)
               )}
