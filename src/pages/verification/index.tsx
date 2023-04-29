@@ -7,7 +7,7 @@ import styled from 'styled-components';
 import { parseCookies } from '../../modules/verification/shared/Wrapper';
 import UnifiedVerification from '../../modules/verification/unified';
 
-import { Header } from 'src/components/Header';
+import Header from 'src/components/Header';
 import Footer from 'src/core/Footer';
 import Page from 'src/Page';
 

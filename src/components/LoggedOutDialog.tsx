@@ -6,7 +6,7 @@ import styled from 'styled-components';
 import Footer from '../core/Footer';
 import Page from '../Page';
 import AuthModal from './AuthModal/AuthModal';
-import { Header } from './Header';
+import Header from './Header';
 
 const HeaderContainer = styled.div`
   position: sticky;

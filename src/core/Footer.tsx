@@ -8,10 +8,10 @@ const Container = styled.div<{ hasOverlay: boolean }>`
 `;
 
 interface Props {
-  hasOverlay: boolean;
+  hasOverlay?: boolean;
 }
 
-const FooterView: React.FC<Props> = ({ hasOverlay }) => {
+const Footer: React.FC<Props> = ({ hasOverlay = false }) => {
   return (
     <Container hasOverlay={hasOverlay}>
       <VroomFooter />
@@ -19,4 +19,4 @@ const FooterView: React.FC<Props> = ({ hasOverlay }) => {
   );
 };
 
-export default FooterView;
+export default Footer;

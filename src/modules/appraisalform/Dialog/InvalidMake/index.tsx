@@ -17,7 +17,7 @@ interface Props {
   make: string;
 }
 
-const DialogView: React.FC<Props> = ({ make }) => {
+const InvalidMakeDialog: React.FC<Props> = ({ make }) => {
   const router = useRouter();
 
   useEffect(() => {
@@ -56,4 +56,4 @@ const DialogView: React.FC<Props> = ({ make }) => {
   );
 };
 
-export default observer(DialogView);
+export default observer(InvalidMakeDialog);
