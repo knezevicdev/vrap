@@ -20,7 +20,8 @@ const SecondOwnerConfirmation = ({
         }}
       >
         <SelectBoxes
-          label="Is there a second owner of this vehicle?"
+          label="Is there a second owner of this vehicle? You can check by seeing if there is a second person listed on your title."
+          tooltip="If you co-own the vehicle with someone else, please make sure to provide their information. Not doing so will delay the purchase of your vehicle and your payment."
           options={['Yes', 'No']}
           control={form.control}
           id={'secondOwnerConfirmation'}
