@@ -8,11 +8,8 @@ import LxBank from '../../../../../owner/components/LxBank';
 import { SecurityLogo, SecurityMessage } from '../../../../../owner/Style.css';
 import Input from '../../../../components/Input';
 import Select from '../../../../components/Select';
-import {
-  Label,
-  LabelContainer,
-} from '../../../../components/SelectBoxes/Style.css';
 import { WizardStepProps } from '../../../../components/WizardForm';
+import { Label, LabelContainer } from './Style.css';
 import useAvailableFields, { LoanField } from './useAvailableFields';
 import useCaf from './useCaf';
 

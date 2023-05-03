@@ -1,4 +1,8 @@
-import { HorizontalRadio, HorizontalRadioOption } from '@vroom-web/ui-lib';
+import {
+  HorizontalRadio,
+  HorizontalRadioOption,
+  Tooltip,
+} from '@vroom-web/ui-lib';
 import React, { useState } from 'react';
 import styled from 'styled-components';
 
@@ -15,7 +19,16 @@ interface Props {
 }
 
 const SelectBoxes: React.FC<Props> = ({
-  field: { options, onClick, value, label, panelsTooltip, id, forceValidate },
+  field: {
+    options,
+    onClick,
+    value,
+    label,
+    tooltip,
+    panelsTooltip,
+    id,
+    forceValidate,
+  },
   className,
 }) => {
   const analyticsHandler: AnalyticsHandler = new AnalyticsHandler();
@@ -41,6 +54,7 @@ const SelectBoxes: React.FC<Props> = ({
       {label && (
         <LabelContainer>
           <Label>{label}</Label>
+          {tooltip && <Tooltip content={tooltip} />}
           {panelsTooltip && (
             <InfoButton
               onClick={() => {
@@ -81,6 +95,7 @@ export const LabelContainer = styled.div`
   display: flex;
   cursor: pointer;
   font-size: 18px;
+  align-items: center;
 `;
 
 const RowTitleIcon = styled(Icon)`
