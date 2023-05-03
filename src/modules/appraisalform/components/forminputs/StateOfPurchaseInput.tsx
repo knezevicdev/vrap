@@ -6,7 +6,6 @@ import { GenericObject } from '../../../../interfaces.d';
 import { STATES } from '../../constants/misc';
 import { FormField } from '../componentInterfaces.d';
 import BaseSelect from '../Select';
-import { FormFields } from './Inputs.language';
 
 interface Props {
   field: FormField;
@@ -25,13 +24,15 @@ const StateInput: React.FC<Props> = ({ field, className, onKeyPressEnter }) => {
 
   return (
     <>
-      <Label>{FormFields.stateOfPurchase.label}</Label>
+      <Label htmlFor={field.id}>
+        In which state did you purchase your vehicle?
+      </Label>
       <Select
         className={className}
         field={{
           ...field,
-          defaultLabel: FormFields.stateOfPurchase.placeholder,
-          type: FormFields.stateOfPurchase.type,
+          defaultLabel: 'State of purchase',
+          type: 'tradeInState',
           options: STATES,
           onChange: handleOnChange,
           onKeyPress: onKeyPressEnter,

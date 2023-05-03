@@ -1,23 +1,22 @@
-import { FormFields } from '../components/forminputs/Inputs.language';
 import useAppraisalFormInit from '../components/useFormInit';
 
 const combinedFormNextIntercept =
   (appraisalUseForm: ReturnType<typeof useAppraisalFormInit>) =>
   (proceedToNextStep: () => void) => {
     // mechanicalCondition
-    let mechanicalCondition = FormFields.mechanicalCondition.average.label;
+    let mechanicalCondition = 'Average';
     if (
       [
         appraisalUseForm.mechConditionForm.fields.transmissionIssue.value,
         appraisalUseForm.mechConditionForm.fields.engineIssue.value,
       ].includes('Yes')
     ) {
-      mechanicalCondition = FormFields.mechanicalCondition.belowAverage.label;
+      mechanicalCondition = 'Below Average';
     } else if (
       appraisalUseForm.mechConditionForm.fields.noMechanicalIssues.value ===
       'Yes'
     ) {
-      mechanicalCondition = FormFields.mechanicalCondition.aboveAverage.label;
+      mechanicalCondition = 'Above Average';
     }
     // floodFireDamage
     const floodFireDamage = [
@@ -27,11 +26,11 @@ const combinedFormNextIntercept =
       ? 'Yes'
       : 'No';
     // exteriorCondition
-    let exteriorCondition = FormFields.extCondition.average.label;
+    let exteriorCondition = 'Average';
     if (
       appraisalUseForm.extConditionForm.fields.noExteriorDamage.value === 'Yes'
     ) {
-      exteriorCondition = FormFields.extCondition.aboveAverage.label;
+      exteriorCondition = 'Above Average';
     }
     if (
       (appraisalUseForm.vehicleHistoryForm.fields.hasAccident.value === 'Yes' &&
@@ -43,15 +42,15 @@ const combinedFormNextIntercept =
           appraisalUseForm.extConditionForm.fields.panelsWithMajorDamage.value
         ))
     ) {
-      exteriorCondition = FormFields.extCondition.belowAverage.label;
+      exteriorCondition = 'Below Average';
     }
     // tiresAndWheels
-    let tiresAndWheels = FormFields.tireMiles.underFive.label;
+    let tiresAndWheels = 'Under 5K';
     if (appraisalUseForm.extConditionForm.fields.wornTires.value === 'Yes') {
-      tiresAndWheels = FormFields.tireMiles.overThirty.label;
+      tiresAndWheels = 'Over 30K';
     }
     // interiorCondition
-    let interiorCondition = FormFields.interiorCondition.average.label;
+    let interiorCondition = 'Average';
     if (
       [
         appraisalUseForm.intConditionForm.fields.ripsOrTearsInSeats.value,
@@ -60,11 +59,11 @@ const combinedFormNextIntercept =
         appraisalUseForm.intConditionForm.fields.majorDamageInterior.value,
       ].includes('Yes')
     ) {
-      interiorCondition = FormFields.interiorCondition.belowAverage.label;
+      interiorCondition = 'Below Average';
     } else if (
       appraisalUseForm.intConditionForm.fields.noInteriorDamage.value === 'Yes'
     ) {
-      interiorCondition = FormFields.interiorCondition.aboveAverage.label;
+      interiorCondition = 'Above Average';
     }
 
     appraisalUseForm.mechConditionForm.updateMultipleFields({

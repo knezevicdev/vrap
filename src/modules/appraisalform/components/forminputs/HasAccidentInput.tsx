@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 import { FormField } from '../../../../interfaces.d';
 import SelectBoxes from '../SelectBoxes';
-import { FormFields } from './Inputs.language';
+
 interface Props {
   field: FormField;
   className?: string;
@@ -21,8 +21,8 @@ const HasAccidentInput: React.FC<Props> = ({ field }) => {
       <SelectBoxes
         field={{
           ...field,
-          options: [FormFields.hasAccident.yes, FormFields.hasAccident.no],
-          label: FormFields.hasAccident.label,
+          options: ['Yes', 'No'],
+          label: 'Has your vehicle been in an accident?',
           onClick: handleOnChange,
           value,
         }}

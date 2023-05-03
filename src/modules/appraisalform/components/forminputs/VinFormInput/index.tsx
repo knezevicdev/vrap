@@ -6,7 +6,6 @@ import Dialog from '../../../Dialog/VinInformation';
 import { lettersAndNumbersOnly } from '../../formatting';
 import Input from '../../Input';
 import { getVinErrors, isValidVin } from '../../validation';
-import { FormFields } from '../Inputs.language';
 
 import Icon, { Icons } from 'src/core/Icon';
 
@@ -42,18 +41,16 @@ const VinFormInput: React.FC<any> = ({
     }
   };
 
-  const { placeholder, label } = FormFields.vin;
-
   return (
     <Container>
       <VinField
         className={className}
         field={{
           ...field,
-          placeholder: placeholder,
+          placeholder: 'VIN Number',
           label: (
             <LabelSpan>
-              {label}{' '}
+              Vehicle Identification Number (VIN){' '}
               <InfoButton onClick={() => handleShowVinDialog()}>
                 <VinInfoIcon icon={Icons.INFO} />
               </InfoButton>

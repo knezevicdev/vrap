@@ -3,7 +3,6 @@ import styled from 'styled-components';
 
 import { FormField } from '../../../../interfaces.d';
 import SelectBoxes from '../SelectBoxes';
-import { FormFields } from './Inputs.language';
 
 interface Props {
   field: FormField;
@@ -23,7 +22,7 @@ const ScratchesPanelsInput: React.FC<Props> = ({ field }) => {
         field={{
           ...field,
           options: ['1', '2', '3', '4', '5'],
-          label: FormFields.scratchesPanels.label,
+          label: 'How many panels have scratches?',
           onClick: handleOnChange,
           value,
           panelsTooltip: 'scratches',

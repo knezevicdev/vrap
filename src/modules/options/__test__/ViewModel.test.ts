@@ -30,15 +30,6 @@ describe('Options Test', () => {
     localStorage.removeItem('priceId');
   });
 
-  it('test readonly initial values', () => {
-    expect(viewModel.hero).toBe(`let's set up your payment method`);
-    expect(viewModel.desktopTitle).toBe('how would you like to get paid?');
-    expect(viewModel.optionTitle).toBe('Payment Method');
-    expect(viewModel.optionQuestion).toBe('How would you like to get paid?');
-    expect(viewModel.submit).toBe('submit');
-    expect(viewModel.submitting).toBe('submitting');
-  });
-
   it('tracks a page view on load', () => {
     viewModel.onPageLoad();
     expect(paymentOptionsViewedSpy).toHaveBeenCalled();

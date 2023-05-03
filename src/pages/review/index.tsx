@@ -9,7 +9,7 @@ import ErrorBanner from '../../components/ErrorBanner';
 import useHandleAppraisalRoutes from '../../modules/appraisal/hooks/useHandleAppraisalRoutes';
 import { returnBrandConfig } from '../../utils/pageheaders';
 
-import { Header } from 'src/components/Header';
+import Header from 'src/components/Header';
 import { useAppStore } from 'src/context';
 import Footer from 'src/core/Footer';
 import AppraisalReviewViewDetail from 'src/modules/appraisal/review';

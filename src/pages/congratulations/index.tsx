@@ -3,7 +3,7 @@ import { GetServerSideProps, GetServerSidePropsContext, NextPage } from 'next';
 import React, { useEffect } from 'react';
 import styled from 'styled-components';
 
-import { Header } from 'src/components/Header';
+import Header from 'src/components/Header';
 import Footer from 'src/core/Footer';
 import Congratulations from 'src/modules/congratulations';
 import Questions from 'src/modules/questions';

@@ -6,7 +6,6 @@ import styled from 'styled-components';
 import { FormField, GenericObject } from '../../../../interfaces.d';
 import useForm from '../useForm';
 import EmissionStandardInput from './EmissionStandardInput';
-import { FormFields } from './Inputs.language';
 import OtherAfterMarketInput from './OtherAfterMarketInput';
 
 interface Props {
@@ -24,19 +23,18 @@ const AlternateAfterMarketModsOptionsGroup: React.FC<Props> = ({
 }) => {
   const lastEnabledEmissionRef = useRef<boolean>();
   const options = [
-    FormFields.alternateAfterMarket.stereo,
-    // FormFields.alternateAfterMarket.sunroof,
-    FormFields.alternateAfterMarket.wheels,
-    FormFields.alternateAfterMarket.exhaust,
-    FormFields.alternateAfterMarket.suspension,
-    FormFields.alternateAfterMarket.performance,
-    FormFields.alternateAfterMarket.other,
+    'Stereo System',
+    'Wheels and tires',
+    'Exhaust',
+    'Suspension',
+    'Performance',
+    'Other',
   ];
 
   const showEmissionField =
-    field.value.includes(FormFields.alternateAfterMarket.exhaust) ||
-    field.value.includes(FormFields.alternateAfterMarket.performance) ||
-    field.value.includes(FormFields.alternateAfterMarket.other);
+    field.value.includes('Exhaust') ||
+    field.value.includes('Performance') ||
+    field.value.includes('Other');
 
   useEffect(() => {
     if (lastEnabledEmissionRef.current !== showEmissionField) {
@@ -128,13 +126,19 @@ const AlternateAfterMarketModsOptionsGroup: React.FC<Props> = ({
   return (
     <div className={className}>
       <LabelContainer>
-        <Label>{FormFields.alternateAfterMarket.label}</Label>
+        <Label>Aftermarket Modifications</Label>
         <Tooltip
-          content={<span>{FormFields.alternateAfterMarket.toolTip}</span>}
+          content={
+            <span>
+              Does your vehicle have any custom alterations or modifications?
+              (select all that apply)
+            </span>
+          }
         />
       </LabelContainer>
       <AfterMarketModsOptionsLabel>
-        {FormFields.afterMarket.placeholder}
+        Does your vehicle have any custom alterations or modifications? (select
+        all that apply)
       </AfterMarketModsOptionsLabel>
       <CheckboxesContainer>{checkboxes}</CheckboxesContainer>
       {optionsGroupForm.fields.Other.value && (

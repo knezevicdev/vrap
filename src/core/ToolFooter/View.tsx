@@ -53,15 +53,15 @@ const FooterView: React.FC<Props> = ({ viewModel }) => {
     <Container>
       <FooterBody>
         <div>
-          <CustomA href={viewModel.vroomLink}>
+          <CustomA href="https://www.vroom.com/">
             <Icon icon={Icons.VROOM_WHITE} />
           </CustomA>
-          <Copyright>{viewModel.copyrightMessage}</Copyright>
-          <CustomLink href={viewModel.privacy.href}>
-            <LinkText>{viewModel.privacy.name}</LinkText>
+          <Copyright>©2020 VROOM. ALL RIGHTS RESERVED.</Copyright>
+          <CustomLink href="/legal/privacy-policy">
+            <LinkText>Privacy Policy</LinkText>
           </CustomLink>
-          <CustomLink href={viewModel.terms.href}>
-            <LinkText>{viewModel.terms.name}</LinkText>
+          <CustomLink href="/legal/terms-of-use">
+            <LinkText>Terms of use</LinkText>
           </CustomLink>
           <CustomLink href={viewModel.phoneNumber.href}>
             <LinkText>{viewModel.phoneNumber.name}</LinkText>

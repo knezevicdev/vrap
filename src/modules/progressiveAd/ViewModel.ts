@@ -3,11 +3,6 @@ import { PriceStore } from '../price/store';
 import { StoreStatus } from 'src/interfaces.d';
 
 class PriceViewModel {
-  readonly placementCode = 2871300002;
-  readonly category = 'sell';
-  readonly placementName = 'SUYC Price';
-  readonly headline = 'Switch Today and Save!';
-
   constructor(public store: PriceStore) {}
 
   private get isManualPricing(): boolean {

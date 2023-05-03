@@ -4,7 +4,6 @@ import { GQLTypes } from '@vroom-web/networking';
 import { Response } from '@vroom-web/networking/dist/types';
 
 import { MileageCheckResp } from '../../../interfaces.d';
-import { SellFormTitleText } from '../AppraisalForm.language';
 import ViewModel from '../ViewModel';
 
 import * as Request from 'src/networking/request';
@@ -106,7 +105,7 @@ describe('test appraisalForm viewModel ', () => {
 
   it('test titleText when on Sell form', () => {
     stores.appraisal.setIsTradeIn(false);
-    expect(viewModel.titleText).toEqual(SellFormTitleText);
+    expect(viewModel.titleText).toEqual('My Appraisal');
   });
 
   it('test isTradeIn', () => {

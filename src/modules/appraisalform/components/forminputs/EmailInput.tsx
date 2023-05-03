@@ -3,7 +3,6 @@ import React from 'react';
 import { FormField, GenericObject } from '../../../../interfaces.d';
 import Input from '../Input';
 import { isValidEmail } from '../validation';
-import { FormFields } from './Inputs.language';
 
 interface Props {
   field: FormField;
@@ -29,8 +28,8 @@ const EmailInput: React.FC<Props> = ({
       className={className}
       field={{
         ...field,
-        placeholder: FormFields.email.placeholder,
-        label: FormFields.email.label,
+        placeholder: 'example@example.com',
+        label: 'Email address',
         disabled: disabled,
         onChange: handleOnChange,
         maxlength: '100',

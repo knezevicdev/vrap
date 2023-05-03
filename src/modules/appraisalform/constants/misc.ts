@@ -52,10 +52,4 @@ export const STATES = [
   { value: 'WY', label: 'WY' },
 ];
 
-export const DD_PREFIX = 'vroom.website';
-export const VROOM_SUPPORT_EMAIL = 'support@vroom.com';
-export const VROOM_APPRAISALS_EMAIL = 'appraisals@vroom.com';
-export const VROOM_PRIVACY_EMAIL = 'privacy@vroom.com';
-export const VROOM_BUSINESS_HOURS = '11am-7pm EST, Mon-Sat';
-
 export const VROOM_VIN_SUBSTRING = '1VR00M004L';

@@ -14,13 +14,6 @@ class OptionsViewModel {
   store: OptionsStore;
   private analyticsHandler: AnalyticsHandler;
   appStore: Store;
-  readonly hero: string = `let's set up your payment method`;
-  readonly desktopTitle: string = 'how would you like to get paid?';
-  readonly optionTitle: string = 'Payment Method';
-  readonly optionQuestion: string = 'How would you like to get paid?';
-  readonly submit: string = 'submit';
-  readonly submitting: string = 'submitting';
-  readonly review: string = 'REVIEW';
 
   constructor(
     store: OptionsStore,

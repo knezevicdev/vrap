@@ -18,7 +18,7 @@ const PendingPriceView: React.FC<Props> = ({ viewModel }) => {
 
   return (
     <StyledContainer>
-      <Typography.Heading.Four>{viewModel.sitTight}</Typography.Heading.Four>
+      <Typography.Heading.Four>sit tight</Typography.Heading.Four>
       <StyledIcon
         title="Car"
         titleId="heroIcon"
@@ -28,16 +28,17 @@ const PendingPriceView: React.FC<Props> = ({ viewModel }) => {
 
       <StyledBody>
         <Typography.Body.Regular>
-          {viewModel.takingALook}
+          Our buying specialists are taking a closer look and will send your
+          price by email in one business day.
         </Typography.Body.Regular>
       </StyledBody>
       <StyledBody>
         <Typography.Body.Regular>
-          <i>{viewModel.spamFolder}</i>
+          <i>Please be sure to check your spam folder.</i>
         </Typography.Body.Regular>
       </StyledBody>
       <StyledButton onClick={viewModel.handleFindCar}>
-        {viewModel.findCar}
+        find your next car
       </StyledButton>
     </StyledContainer>
   );

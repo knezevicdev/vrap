@@ -5,7 +5,6 @@ import {
   getInProgressDeal,
   UpdateDeal,
 } from '../../networking/request';
-import { SellFormTitleText, TradeInError } from './AppraisalForm.language';
 import { validateZipCode } from './components/validation';
 
 import AnalyticsHandler from 'src/integrations/AnalyticsHandler';
@@ -30,7 +29,7 @@ class PriceViewModel {
   }
 
   get titleText(): string {
-    return this.isTradeIn ? '' : SellFormTitleText;
+    return this.isTradeIn ? '' : 'My Appraisal';
   }
 
   get getAnalyticHandler(): AnalyticsHandler {
@@ -163,6 +162,11 @@ class PriceViewModel {
     const user = await getUser();
     this.appraisalStore.setUser(user);
   };
+  tradeInErrored() {
+    this.store.deal.setTradeInError(
+      'Your changes were unable to be saved because your transaction has new updates. Please try submitting again.'
+    );
+  }
 
   handleUpdateDeal(response: UpdateDeal): void {
     if (!response.isError) {
@@ -170,7 +174,7 @@ class PriceViewModel {
       return;
     }
 
-    this.store.deal.setTradeInError(TradeInError);
+    this.tradeInErrored();
   }
 
   cancelOffer = async (): Promise<void> => {
@@ -181,7 +185,7 @@ class PriceViewModel {
       const response = await declineDeal(this.store.deal.deal);
       this.handleUpdateDeal(response);
     } else {
-      this.store.deal.setTradeInError(TradeInError);
+      this.tradeInErrored();
     }
 
     this.store.deal.setLoading(false);

@@ -4,7 +4,6 @@ import { makeObservable, observable } from 'mobx';
 import { OptionsStore } from '../../modules/options/store';
 
 class PayOptionViewModel {
-  readonly optionMeta: string[] = ['Direct Deposit', 'Check by Mail'];
   oStore: OptionsStore;
   constructor(oStore: OptionsStore, private absmartly: ABSmartlyContextValue) {
     this.oStore = oStore;

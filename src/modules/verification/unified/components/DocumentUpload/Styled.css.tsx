@@ -66,6 +66,7 @@ export const UploadButton = styled.label`
   max-height: 48px;
   padding: 0 32px;
   border: none;
+  border-radius: 8px;
   cursor: pointer;
   font-family: Calibre, sans-serif;
   display: flex;

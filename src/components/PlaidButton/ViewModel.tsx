@@ -6,9 +6,6 @@ import { getInstitutionLogo } from 'src/networking/request';
 import Store from 'src/store';
 
 class PlaidButtonViewModel {
-  readonly buttonCopy: string = 'Link bank account';
-  readonly buttonStartCopy: string = 'Start direct deposit';
-
   constructor(private oStore: OptionsStore, private store: Store) {}
 
   onPlaidSubmitting = (value: boolean): void => {

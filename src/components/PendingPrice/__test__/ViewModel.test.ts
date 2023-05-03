@@ -7,16 +7,6 @@ describe('PayOptions Test', () => {
   const trackNoPriceSpy = jest
     .spyOn(analyticsHandler, 'trackNoPrice')
     .mockReturnValue();
-  it('readonly values', () => {
-    expect(viewModel.sitTight).toEqual('sit tight');
-    expect(viewModel.findCar).toEqual('find your next car');
-    expect(viewModel.takingALook).toEqual(
-      'Our buying specialists are taking a closer look and will send your price by email in one business day.'
-    );
-    expect(viewModel.spamFolder).toEqual(
-      'Please be sure to check your spam folder.'
-    );
-  });
 
   it('analytics trackNoPrice should called when pageload', () => {
     viewModel.onPageLoad();

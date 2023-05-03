@@ -20,10 +20,6 @@ describe('Review component test', () => {
     viewModel = new ViewModel(stores);
   });
 
-  it('test readonly initial values', () => {
-    expect(viewModel.title).toEqual('transaction summary');
-  });
-
   it('test api call getOfferDetail', async () => {
     spyRequest.mockResolvedValue(getOfferDetails());
     await viewModel.getOfferDetail('26300');

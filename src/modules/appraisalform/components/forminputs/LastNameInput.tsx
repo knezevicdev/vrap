@@ -3,15 +3,13 @@ import React from 'react';
 import { FormField, GenericObject } from '../../../../interfaces.d';
 import Input from '../Input';
 import { isValidName } from '../validation';
-import { FormFields } from './Inputs.language';
 
 interface Props {
   field: FormField;
   className?: string;
-  isLegal?: boolean;
 }
 
-const LastNameInput: React.FC<Props> = ({ field, className, isLegal }) => {
+const LastNameInput: React.FC<Props> = ({ field, className }) => {
   const { onChange } = field;
 
   const handleOnChange = (event: GenericObject) => {
@@ -20,15 +18,13 @@ const LastNameInput: React.FC<Props> = ({ field, className, isLegal }) => {
     onChange({ ...field, value, error });
   };
 
-  const label = isLegal ? FormFields.last.legalLabel : FormFields.last.label;
-
   return (
     <Input
       className={className}
       field={{
         ...field,
-        placeholder: FormFields.last.placeholder,
-        label: label,
+        placeholder: 'Last name',
+        label: 'Last name',
         onChange: handleOnChange,
         dataQa: 'Last Name',
       }}

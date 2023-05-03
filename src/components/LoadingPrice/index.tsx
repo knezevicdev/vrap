@@ -1,11 +1,21 @@
+import { Typography } from '@vroom-web/ui-lib';
 import React from 'react';
 
-import View from './View';
-import LoadingPriceViewModel from './ViewModel';
+import { StyledBody, StyledContainer } from './Style.css';
 
-const LoadingPrice: React.FC = () => {
-  const viewModel = new LoadingPriceViewModel();
-  return <View viewModel={viewModel} />;
+const LoadingPrice = () => {
+  return (
+    <StyledContainer>
+      <Typography.Heading.Four>Loading</Typography.Heading.Four>
+
+      <StyledBody>
+        <Typography.Body.Regular>
+          We&apos;re grabbing your data fresh out the oven. Thanks for your
+          patience.
+        </Typography.Body.Regular>
+      </StyledBody>
+    </StyledContainer>
+  );
 };
 
 export default LoadingPrice;

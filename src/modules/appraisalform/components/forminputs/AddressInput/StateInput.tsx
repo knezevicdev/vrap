@@ -3,7 +3,6 @@ import React from 'react';
 
 import { STATES } from '../../../constants/misc';
 import Select from '../../Select';
-import { FormFields } from '../Inputs.language';
 
 export interface Props {
   field: any;
@@ -23,9 +22,9 @@ const StateInput: React.FC<Props> = ({ field, className, onKeyPressEnter }) => {
       className={className}
       field={{
         ...field,
-        defaultLabel: FormFields.state.placeholder,
-        label: FormFields.state.label,
-        type: FormFields.state.type,
+        defaultLabel: 'State',
+        label: 'State',
+        type: 'state',
         options: STATES,
         onChange: handleOnChange,
         onKeyPress: onKeyPressEnter,

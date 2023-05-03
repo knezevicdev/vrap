@@ -3,7 +3,6 @@ import React, { ChangeEvent } from 'react';
 import { FormField } from '../componentInterfaces.d';
 import { lettersNumbersHyphensOnly } from '../formatting';
 import Input from '../Input';
-import { FormFields } from './Inputs.language';
 
 interface Props {
   field: FormField;
@@ -18,14 +17,14 @@ const LoanAccountNumberInput: React.FC<Props> = ({ field, className }) => {
     onChange({ ...field, value });
   };
 
-  const label = field.label || FormFields.loanAccountNumber.label;
+  const label = field.label || 'Lien Account Number';
 
   return (
     <Input
       className={className}
       field={{
         ...field,
-        placeholder: FormFields.loanAccountNumber.placeholder,
+        placeholder: 'xxxxxxxxxxxx',
         label: label,
         error: error,
         value,

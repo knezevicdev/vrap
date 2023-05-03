@@ -1,5 +1,3 @@
-import { NoDealErrorText } from './OfferDialog.language';
-
 import { acceptDeal, declineDeal, UpdateDeal } from 'src/networking/request';
 import Store from 'src/store';
 import { displayCurrency } from 'src/utils';
@@ -117,6 +115,8 @@ export default class OfferDialogViewModel {
 
   showDealError = (): void => {
     this._store.offer.setShowOfferDialog(false);
-    this._store.appraisal.setReviewError(NoDealErrorText);
+    this._store.appraisal.setReviewError(
+      'Oops! Something went wrong. Please try again or give us a call at (855) 524-1300 to reserve this vehicle.'
+    );
   };
 }

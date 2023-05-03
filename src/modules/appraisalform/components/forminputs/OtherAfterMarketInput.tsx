@@ -2,7 +2,6 @@ import React from 'react';
 
 import { FormField, GenericObject } from '../../../../interfaces.d';
 import Textarea from '../Textarea';
-import { FormFields } from './Inputs.language';
 
 interface Props {
   field: FormField;
@@ -22,8 +21,8 @@ const OtherAfterMarketInput: React.FC<Props> = ({ field, className }) => {
       className={className}
       field={{
         ...field,
-        placeholder: FormFields.otherAfterMarket.placeholder,
-        label: FormFields.otherAfterMarket.label,
+        placeholder: 'Please Explain',
+        label: '',
         onChange: handleOnChange,
         maxlength: '255',
       }}

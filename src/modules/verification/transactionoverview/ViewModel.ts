@@ -20,7 +20,6 @@ const defaultOfferData = {
 };
 
 export default class TransactionOverviewViewModel {
-  readonly title: string = 'transaction summary';
   constructor(private store: Store) {}
 
   async getOfferDetail(priceId: string): Promise<void> {

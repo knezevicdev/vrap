@@ -5,7 +5,6 @@ import MultiTab from '../MultiTab/MultiTab';
 import MultiTabTheme from '../MultiTab/styles/multiTabBox';
 import LicenseStateInput from './components/LicenseStateInput';
 import VinInput from './components/VinInput';
-import { licensePlateTabText, vinTabText } from './LicenseToVinMain.language';
 
 interface Props {
   className: string;
@@ -15,11 +14,11 @@ const LicenseToVinMain: React.FC<Props> = ({ className }) => {
   const tabSections = [
     {
       component: LicenseStateInput,
-      title: licensePlateTabText,
+      title: 'License Plate',
     },
     {
       component: VinInput,
-      title: vinTabText,
+      title: 'Vin',
     },
   ];
 

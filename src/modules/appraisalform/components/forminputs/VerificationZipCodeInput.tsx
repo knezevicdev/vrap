@@ -8,7 +8,6 @@ import CircleLoader from '../CircleLoader';
 import { displayZipCode, numbersOnlyString } from '../formatting';
 import Input from '../Input';
 import { isValidZipCode } from '../validation';
-import { FormFields } from './Inputs.language';
 
 interface Props {
   field: FormField;
@@ -45,8 +44,8 @@ const VerificationZipCodeInput: React.FC<Props> = ({ field, className }) => {
         className={className}
         field={{
           ...field,
-          placeholder: FormFields.zip.placeholder,
-          label: FormFields.zip.label,
+          placeholder: 'Zip code',
+          label: 'Zip Code',
           value: zip,
           onChange: handleOnChange,
           maxlength: '5',

@@ -2,7 +2,6 @@ import React from 'react';
 
 import { FormField } from '../../../../interfaces.d';
 import RadioInput from '../RadioInput';
-import { FormFields } from './Inputs.language';
 
 interface Props {
   field: FormField;
@@ -23,27 +22,31 @@ const TitleStatusInput: React.FC<Props> = ({ field, className }) => {
         ...field,
         options: [
           {
-            label: FormFields.titleStatus.clean.label,
-            description: FormFields.titleStatus.clean.description,
+            label: 'Clean',
+            description:
+              'No history of salvage or automaker defects listed on the title,  may or may not have money borrowed on the vehicle.',
           },
           {
-            label: FormFields.titleStatus.lemon.label,
-            description: FormFields.titleStatus.lemon.description,
+            label: 'Lemon',
+            description:
+              'The vehicle has been previously acquired by the manufacturer  due to a warranty defect that impaired use or safety.',
           },
           {
-            label: FormFields.titleStatus.salvage.label,
-            description: FormFields.titleStatus.salvage.description,
+            label: 'Rebuilt Salvage',
+            description:
+              'Vehicle is a salvage vehicle but has now been repaired and restored to operation.',
           },
           {
-            label: FormFields.titleStatus.unknown.label,
-            description: FormFields.titleStatus.unknown.description,
+            label: 'True Miles Unknown',
+            description: 'Vehicle has an odometer reading that is inaccurate.',
           },
         ],
-        name: FormFields.titleStatus.name,
-        label: FormFields.titleStatus.label,
+        name: 'TitleStatus',
+        label: 'What type of title does the vehicle have?',
         onClick: handleOnChange,
         checked: field.value,
-        tooltipText: FormFields.titleStatus.toolTip,
+        tooltipText:
+          'Title brands indicate whether a used vehicle has sustained damage or might be potentially unsafe to drive. If a vehicle\'s title has been "branded," it is an official designation made by a state agency and should appear on the vehicle\'s title paperwork.',
       }}
     />
   );

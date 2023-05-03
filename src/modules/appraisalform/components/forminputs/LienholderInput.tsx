@@ -3,7 +3,6 @@ import styled from 'styled-components';
 
 import { FormField } from '../../../../interfaces.d';
 import SelectBoxes from '../SelectBoxes';
-import { FormFields } from './Inputs.language';
 
 interface Props {
   field: FormField;
@@ -22,12 +21,8 @@ const LienholderInput: React.FC<Props> = ({ field, className }) => {
       className={className}
       field={{
         ...field,
-        options: [
-          FormFields.lienholder.loan,
-          FormFields.lienholder.lease,
-          FormFields.lienholder.neither,
-        ],
-        label: FormFields.lienholder.label,
+        options: ['Loan', 'Lease', 'Neither'],
+        label: 'Do you currently have a loan or lease on your vehicle?',
         onClick: handleOnChange,
         value,
       }}

@@ -14,10 +14,6 @@ import Spinner from '../../../../components/Spinner';
 import { useAppStore } from '../../../../context';
 import { useRecaptcha } from '../../../../context/Recaptcha';
 import { useRestrictedAppraisal } from '../../../../integrations/RestrictedAppraisalContext';
-import {
-  VehicleInfoLeaseCopy,
-  VehicleInfoText,
-} from '../../AppraisalForm.language';
 import CircleLoader from '../CircleLoader';
 import { lettersAndNumbersOnly } from '../formatting';
 import AppraisalLicenseToVin from '../forminputs/AppraisalLicenseToVin';
@@ -172,7 +168,7 @@ const VehicleInformation: React.FC<Props> = ({
     } else if (validLicense) {
       const [state, ...rest] = vehicleId.split('-');
       const license = rest.join('-');
-      const errorMessage = VehicleInfoText.licenseError;
+      const errorMessage = 'Please enter a valid license plate number';
       const fieldsToUpdate = updateField(state, license, errorMessage);
       licenseForm.updateMultipleFields(fieldsToUpdate);
     } else {
@@ -193,7 +189,7 @@ const VehicleInformation: React.FC<Props> = ({
       vin.onChange({
         ...vin,
         error: true,
-        errorMessage: VehicleInfoText.noYearMakeModel,
+        errorMessage: 'we could not find that vin. please try again.',
       });
     } else {
       // looks messy but trying to limit needless renders via useForm
@@ -249,7 +245,7 @@ const VehicleInformation: React.FC<Props> = ({
   const handleDecodeVin = (vinToDecode: string, captchaToken: string) => {
     const validVin =
       vinToDecode.includes(VROOM_VIN_SUBSTRING) || isValidVin(vinToDecode);
-    const errorMessage = VehicleInfoText.vinError;
+    const errorMessage = 'Please enter a valid vin';
     const { vin } = fields;
     resetLocalState();
 
@@ -363,7 +359,7 @@ const VehicleInformation: React.FC<Props> = ({
 
   const handleDecodeLicense = (lpToDecode: string, captchaToken: string) => {
     const { vin } = fields;
-    const errorMessage = VehicleInfoText.licenseError;
+    const errorMessage = 'Please enter a valid license plate number';
 
     resetLocalState();
 
@@ -636,7 +632,7 @@ const VehicleInformation: React.FC<Props> = ({
 
   return (
     <>
-      <LeaseCopy>{VehicleInfoLeaseCopy}</LeaseCopy>
+      <LeaseCopy>Please note: we do not purchase leased vehicles.</LeaseCopy>
       <InputContainer>
         {showVin && (
           <>
@@ -693,12 +689,12 @@ const VehicleInformation: React.FC<Props> = ({
             onKeyPress={handleOnKeyPressEnter}
             onClick={handleVehicleSubmit}
             disabled={isSubmitDisabled() || !isRestrictedAppraisalLoaded}
-            data-qa={VehicleInfoText.licenseButtonDataQa}
+            data-qa="appraisal license button"
           >
             {!isRestrictedAppraisalLoaded ? (
               <LoadingSpinner />
             ) : (
-              VehicleInfoText.licenseButton
+              "WHAT'S MY CAR WORTH?"
             )}
           </SubmitButton>
           {showSubmitError && (

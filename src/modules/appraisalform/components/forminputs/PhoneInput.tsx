@@ -4,7 +4,6 @@ import React from 'react';
 import { displayPhoneNumber, numbersOnlyString } from '../formatting';
 import Input from '../Input';
 import { isValidPhoneNumber } from '../validation';
-import { FormFields } from './Inputs.language';
 
 interface Props {
   field: any;
@@ -34,15 +33,15 @@ const PhoneInput: React.FC<Props> = ({
   };
 
   const label = optional
-    ? FormFields.optionalPhoneNumber.label
-    : field.label || FormFields.phoneNumber.label;
+    ? 'Phone number (optional)'
+    : field.label || 'Phone number';
 
   return (
     <Input
       className={className}
       field={{
         ...field,
-        placeholder: FormFields.phoneNumber.placeholder,
+        placeholder: '(  ) ___-____',
         label: label,
         error: error,
         value: phone,

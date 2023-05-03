@@ -8,9 +8,6 @@ class DirectDepositViewModel {
   private readonly store: DirectDepositStore;
   private readonly oStore: OptionsStore;
   private readonly poStore: PaymentOverviewStore;
-  readonly ddToggleOrCopy: string = 'Or,';
-  readonly ddTogglePlaidCopy: string = 'link bank account';
-  readonly cantFind: string = `Can't find your bank? Enter bank information manually`;
 
   constructor(
     store: DirectDepositStore,

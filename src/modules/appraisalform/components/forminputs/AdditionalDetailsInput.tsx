@@ -2,7 +2,6 @@ import React from 'react';
 
 import { FormField, GenericObject } from '../../../../interfaces.d';
 import Textarea from '../Textarea';
-import { FormFields } from './Inputs.language';
 
 interface Props {
   field: FormField;
@@ -27,8 +26,10 @@ const AdditionalDetailsInput: React.FC<Props> = ({
       className={className}
       field={{
         ...field,
-        placeholder: FormFields.additionalDetails.placeholder,
-        label: label || FormFields.additionalDetails.label,
+        placeholder: '',
+        label:
+          label ||
+          'Is there anything else we should know about this vehicle that might affect its value?',
         onChange: handleOnChange,
         maxlength: '255',
         dataQa: 'AdditionalDetails',

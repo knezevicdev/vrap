@@ -4,7 +4,6 @@ import styled from 'styled-components';
 
 import { FormField, GenericObject } from '../../../../interfaces.d';
 import useForm from '../useForm';
-import { FormFields } from './Inputs.language';
 
 interface Props {
   field: FormField;
@@ -80,9 +79,7 @@ const VehicleOptionsGroup: React.FC<Props> = ({
 
   return (
     <div className={className}>
-      <VehicleOptionsLabel>
-        {FormFields.vehicleOptions.label}
-      </VehicleOptionsLabel>
+      <VehicleOptionsLabel>Options (select all that apply)</VehicleOptionsLabel>
       <CheckboxesContainer>{checkboxes}</CheckboxesContainer>
     </div>
   );

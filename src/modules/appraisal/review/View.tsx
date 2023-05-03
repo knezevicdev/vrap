@@ -135,7 +135,6 @@ const SubmitButton = styled(Button.Primary)`
   margin: 24px 0 20px 0;
   padding: 6px 12px;
   border: none;
-  border-radius: 0;
   display: inline-block;
   cursor: pointer;
   width: 280px;

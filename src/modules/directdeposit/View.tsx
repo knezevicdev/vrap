@@ -20,7 +20,7 @@ const DirectDepositView: React.FC<Props> = ({ viewModel }) => {
   const DirectDepositLink = ({ lang }: { lang: string }): JSX.Element => {
     return (
       <DirectDepositCopy>
-        {viewModel.ddToggleOrCopy}&nbsp;
+        Or,&nbsp;
         <DDToggleLink
           role="button"
           tabIndex={0}
@@ -51,7 +51,9 @@ const DirectDepositView: React.FC<Props> = ({ viewModel }) => {
 
           {showNotFound && viewModel.getPrice() <= 10000 && (
             <>
-              <DirectDepositCopy>{viewModel.cantFind}</DirectDepositCopy>
+              <DirectDepositCopy>
+                Can&apos;t find your bank? Enter bank information manually
+              </DirectDepositCopy>
               <DirectDeposit />
             </>
           )}
@@ -59,7 +61,7 @@ const DirectDepositView: React.FC<Props> = ({ viewModel }) => {
       ) : (
         <>
           <DirectDeposit />
-          <DirectDepositLink lang={viewModel.ddTogglePlaidCopy} />
+          <DirectDepositLink lang="link bank account" />
         </>
       )}
     </DirectDepositContainer>
