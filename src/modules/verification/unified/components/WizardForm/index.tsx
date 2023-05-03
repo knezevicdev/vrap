@@ -16,6 +16,7 @@ type StepWithFormType<T extends FieldValues> = {
   nextText?: string;
   onNext?: () => number;
   onPrev?: () => number;
+  onActive?: () => void;
 };
 
 export interface WizardFormInstance {
@@ -134,6 +135,10 @@ const WizardForm = <T extends FieldValues[]>({
             {...props}
           />
         }
+        onStepChange={({ activeStep }) => {
+          const step = steps[activeStep - 1];
+          step.onActive?.();
+        }}
       >
         {/* eslint-disable-next-line @typescript-eslint/naming-convention */}
         {steps.map(({ component: Step, form }, index) => (

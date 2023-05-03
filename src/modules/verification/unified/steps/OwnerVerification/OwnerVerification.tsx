@@ -30,6 +30,13 @@ const OwnerVerificationStep = ({
     }
   }, [editRef]);
 
+  const offerDetails = useVerificationStore((state) => ({
+    offerFirstName: state.offerFirstName,
+    offerLastName: state.offerLastName,
+    offerPhone: state.offerPhone,
+    offerEmail: state.offerEmail,
+  }));
+
   const loadStateFromForms = useVerificationStore(
     (state) => state.loadOwnerStateFromForms
   );
@@ -66,6 +73,18 @@ const OwnerVerificationStep = ({
     {
       component: FirstOwnerInfo,
       form: firstOwnerInfoForm,
+      onActive: () => {
+        if (
+          firstOwnerConfirmationForm.getValues().firstOwnerConfirmation ===
+            'Yes' &&
+          !firstOwnerInfoForm.getValues().firstName
+        ) {
+          firstOwnerInfoForm.setValue('firstName', offerDetails.offerFirstName);
+          firstOwnerInfoForm.setValue('lastName', offerDetails.offerLastName);
+          firstOwnerInfoForm.setValue('phoneNumber', offerDetails.offerPhone);
+          firstOwnerInfoForm.setValue('email', offerDetails.offerEmail);
+        }
+      },
     },
     {
       component: SecondOwnerConfirmation,
