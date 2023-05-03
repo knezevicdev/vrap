@@ -31,6 +31,10 @@ export type VerificationState = OwnerVerificationState &
   PhotosVerificationState & {
     priceId: string;
     vin: string;
+    offerFirstName: string;
+    offerLastName: string;
+    offerPhone: string;
+    offerEmail: string;
     formState: number;
     completed: boolean;
     finalPayment: number | null;
@@ -51,6 +55,10 @@ const useVerificationStore = create<VerificationState>()((...a) => ({
   ...createPhotosVerificationSlice(...a),
   priceId: '',
   vin: '',
+  offerFirstName: '',
+  offerLastName: '',
+  offerPhone: '',
+  offerEmail: '',
   formState: 0,
   completed: false,
   finalPayment: null,
@@ -58,35 +66,42 @@ const useVerificationStore = create<VerificationState>()((...a) => ({
   loadState: async (priceId: string) => {
     const set = a[0];
 
-    const response = await getOfferDetails(priceId);
-    if (isErrorResponse(response)) return false;
+    const offerDetailsResponse = await getOfferDetails(priceId);
+    if (isErrorResponse(offerDetailsResponse)) return false;
+    const offerDetails = offerDetailsResponse.data.data?.[0];
+    if (!offerDetails) return false;
 
-    const offerExpirationTime = new Date(
-      response.data.data?.[0].Good_Until__c
-    ).getTime();
+    const offerExpirationTime = new Date(offerDetails.Good_Until__c).getTime();
     if (offerExpirationTime < new Date().getTime()) return false;
 
     let verificationDetails: Verification | undefined;
-    const vin = response.data.data?.[0].VIN__c;
+    const vin = offerDetails?.VIN__c;
 
     set((state) => ({
       ...state,
       priceId,
       vin,
+      offerFirstName: offerDetails.first_name,
+      offerLastName: offerDetails.last_name,
+      offerPhone: offerDetails.phone,
+      offerEmail: offerDetails.user_email,
     }));
 
     try {
-      const [response, vehiclePhotos] = await Promise.all([
+      const [verificationDetailsResponse, vehiclePhotos] = await Promise.all([
         getVerificationDetails(priceId),
         getVehiclePhotos(vin, priceId),
       ]);
-      if (!isErrorResponse(response)) {
-        verificationDetails = response.data.data;
+      if (!isErrorResponse(verificationDetailsResponse)) {
+        verificationDetails = verificationDetailsResponse.data.data;
       } else {
         const errorMessage =
           // eslint-disable-next-line @typescript-eslint/ban-ts-comment
           // @ts-ignore
-          response?.error?.response?.data?.error?.details[0]?.message;
+          verificationDetailsResponse?.error?.response?.data?.error?.details[0]
+            ?.message;
+
+        console.log(verificationDetailsResponse, errorMessage);
         if (errorMessage === 'form not found') {
           const postRes = await postVerification(priceId);
           if (!isErrorResponse(postRes)) return true;
