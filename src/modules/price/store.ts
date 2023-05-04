@@ -22,6 +22,9 @@ export interface PriceStoreState {
   taxCreditSavings: Nullable<number>;
   trim: string;
   userEmail: string;
+  userFirstName: string;
+  userLastName: string;
+  userPhone: string;
   verificationUrl: Nullable<string>;
   vin: string;
   xkeId: number;
@@ -43,6 +46,9 @@ export const defaultPriceState: PriceStoreState = {
   taxCreditSavings: null,
   trim: '',
   userEmail: '',
+  userFirstName: '',
+  userLastName: '',
+  userPhone: '',
   verificationUrl: '',
   vin: '',
   xkeId: 0,
@@ -90,6 +96,9 @@ export class PriceStore implements Store {
         priceMapFromResponse.taxCreditSavings = price.tax_credit_savings;
         priceMapFromResponse.trim = price.Trim__c;
         priceMapFromResponse.userEmail = price.user_email;
+        priceMapFromResponse.userFirstName = price.first_name;
+        priceMapFromResponse.userLastName = price.last_name;
+        priceMapFromResponse.userPhone = price.phone;
         priceMapFromResponse.verificationUrl = price.verification_url;
         priceMapFromResponse.vin = price.VIN__c;
         priceMapFromResponse.xkeId = price.offer_id;

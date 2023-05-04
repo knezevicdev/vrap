@@ -4,7 +4,7 @@ import ReactDOM from 'react-dom';
 
 import Initial from './components/Initial';
 import Login from './components/Login';
-import Register from './components/Register';
+import Register, { RegistrationData } from './components/Register';
 import { Modal, Overlay, OverlayInner } from './Style.css';
 import { useScrollLock } from './utils/useScrollLock';
 
@@ -12,9 +12,15 @@ interface Props {
   onSuccessfulLogin: () => void;
   redirectUrl?: string;
   email?: string;
+  initialRegistrationData?: Partial<RegistrationData>;
 }
 
-const AuthModal = ({ onSuccessfulLogin, redirectUrl, email }: Props) => {
+const AuthModal = ({
+  onSuccessfulLogin,
+  redirectUrl,
+  email,
+  initialRegistrationData,
+}: Props) => {
   useScrollLock();
 
   const [mode, setMode] = useState('initial');
@@ -59,6 +65,7 @@ const AuthModal = ({ onSuccessfulLogin, redirectUrl, email }: Props) => {
               onSuccess={onSuccess}
               initialEmail={initialEmail}
               redirectUrl={redirectUrl}
+              initialRegistrationData={initialRegistrationData}
             />
           )}
         </Modal>
