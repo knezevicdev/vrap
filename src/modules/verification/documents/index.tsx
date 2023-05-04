@@ -101,15 +101,7 @@ const VerificationDocumentsViewDetail: React.FC<Props> = ({ priceId }) => {
     store.verification.setLoading(false);
 
     let url;
-    if (
-      !localStorage.getItem('review_doc_section') &&
-      !absmartly.isInExperiment('verification-form-vehicle-photo-upload')
-    ) {
-      url = `/appraisal/paymentmethod?priceId=${priceId}`;
-    } else if (
-      localStorage.getItem('review_doc_section') ||
-      !absmartly.isInExperiment('verification-form-vehicle-photo-upload')
-    ) {
+    if (!absmartly.isInExperiment('verification-form-vehicle-photo-upload')) {
       url = `/appraisal/verification/review?priceId=${priceId}`;
     } else {
       url = `/appraisal/verification/photos?priceId=${priceId}`;

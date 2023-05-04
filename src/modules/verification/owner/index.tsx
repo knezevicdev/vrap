@@ -59,7 +59,7 @@ const VerificationOwnerViewDetail: React.FC<Props> = ({
       lastPriceId.current = priceId;
       store.verification.setLoading(true);
       setIsLoading(true);
-      fetchVerificationDetails(priceId, forms).then((activeSection) => {
+      fetchVerificationDetails(priceId, forms, store).then((activeSection) => {
         const editSection =
           localStorage.getItem('review_edit_section') || false;
         let newActiveSection = activeSection > 2 ? 2 : activeSection;

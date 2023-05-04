@@ -1,6 +1,7 @@
 import { isErrorResponse } from '@vroom-web/networking';
 import { isEmpty, mapValues } from 'lodash';
 
+import Store from '../../../../store';
 import { UseOwnerReviewForms } from '../hooks/useOwnerReviewForms';
 
 import { UseForm } from 'src/modules/appraisalform/components/componentInterfaces.d';
@@ -25,7 +26,8 @@ const updateFormValues = (form: UseForm, values: Record<string, any>): void => {
 
 const fetchVerificationDetails = async (
   priceId: string,
-  forms: UseOwnerReviewForms
+  forms: UseOwnerReviewForms,
+  store: Store
 ): Promise<number> => {
   let verificationDetails: Verification | undefined;
 
@@ -33,6 +35,10 @@ const fetchVerificationDetails = async (
     const response = await getVerificationDetails(priceId);
     if (!isErrorResponse(response)) {
       verificationDetails = response.data.data;
+      store.verification.getVerificationDetail(
+        verificationDetails,
+        localStorage.getItem('lastFour') || ''
+      );
     } else {
       const errorMessage =
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
