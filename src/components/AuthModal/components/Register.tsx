@@ -1,5 +1,5 @@
 import { isErrorResponse } from '@vroom-web/networking';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 
 import { displayPhoneNumber } from '../../../utils';
@@ -27,20 +27,34 @@ import registrationResolver from '../utils/registrationResolver';
 import trackRegistrationAndSubmitWebLead from '../utils/trackRegistrationAndSubmitWebLead';
 import Input from './Input';
 
+export interface RegistrationData {
+  firstName: string;
+  lastName: string;
+  phoneNumber: string;
+}
+
 interface Props {
   onLogin: () => void;
   onSuccess: () => void;
   initialEmail: string;
   redirectUrl?: string;
+  initialRegistrationData?: Partial<RegistrationData>;
 }
 
-const Register = ({ onLogin, onSuccess, initialEmail, redirectUrl }: Props) => {
+const Register = ({
+  onLogin,
+  onSuccess,
+  initialEmail,
+  redirectUrl,
+  initialRegistrationData,
+}: Props) => {
   const [errorMessage, setErrorMessage] = useState('');
 
   const {
     handleSubmit,
     formState: { isSubmitting },
     control,
+    setValue,
   } = useForm({
     defaultValues: {
       firstName: '',
@@ -52,6 +66,15 @@ const Register = ({ onLogin, onSuccess, initialEmail, redirectUrl }: Props) => {
     },
     resolver: registrationResolver,
   });
+
+  useEffect(() => {
+    if (initialRegistrationData?.firstName)
+      setValue('firstName', initialRegistrationData.firstName);
+    if (initialRegistrationData?.lastName)
+      setValue('lastName', initialRegistrationData.lastName);
+    if (initialRegistrationData?.phoneNumber)
+      setValue('phoneNumber', initialRegistrationData.phoneNumber);
+  }, [initialRegistrationData, setValue]);
 
   const onSubmit = handleSubmit(async (data) => {
     setErrorMessage('');
