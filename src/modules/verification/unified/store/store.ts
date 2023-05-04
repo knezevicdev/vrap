@@ -203,9 +203,13 @@ const useVerificationStore = create<VerificationState>()((...a) => ({
         loanAcknowledgement: verificationDetails.acknowledgement_of_terms,
         documentDriverLicenseFront:
           verificationDetails.front_of_driver_license_file_id || '',
+        documentDriverLicenseBack:
+          verificationDetails.back_of_driver_license_file_id || '',
         documentSecondDriverLicenseFront:
           verificationDetails.second_owner_front_of_driver_license_file_id ||
           '',
+        documentSecondDriverLicenseBack:
+          verificationDetails.second_owner_back_of_driver_license_file_id || '',
         documentVehicleRegistration:
           verificationDetails.current_registration_file_id || '',
         documentTitleFront:
