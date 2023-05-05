@@ -35,6 +35,8 @@ export type VerificationState = OwnerVerificationState &
     offerLastName: string;
     offerPhone: string;
     offerEmail: string;
+    offer: number;
+    offerZip: string;
     formState: number;
     completed: boolean;
     finalPayment: number | null;
@@ -59,6 +61,8 @@ const useVerificationStore = create<VerificationState>()((...a) => ({
   offerLastName: '',
   offerPhone: '',
   offerEmail: '',
+  offer: 0,
+  offerZip: '',
   formState: 0,
   completed: false,
   finalPayment: null,
@@ -85,6 +89,8 @@ const useVerificationStore = create<VerificationState>()((...a) => ({
       offerLastName: offerDetails.last_name,
       offerPhone: offerDetails.phone,
       offerEmail: offerDetails.user_email,
+      offer: offerDetails.Price__c,
+      offerZip: offerDetails.zipcode,
     }));
 
     try {
@@ -101,7 +107,6 @@ const useVerificationStore = create<VerificationState>()((...a) => ({
           verificationDetailsResponse?.error?.response?.data?.error?.details[0]
             ?.message;
 
-        console.log(verificationDetailsResponse, errorMessage);
         if (errorMessage === 'form not found') {
           const postRes = await postVerification(priceId);
           if (!isErrorResponse(postRes)) return true;

@@ -3,6 +3,9 @@ import { observer } from 'mobx-react';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 
 import { Icons } from '../../core/Icon';
+import TaxSavingsDialog from '../../modules/verification/unified/components/TaxSavingsDialog';
+import useTaxSavings from '../../modules/verification/unified/utils/useTaxSavings';
+import { displayCurrency } from '../../utils';
 import AuthModal from '../AuthModal/AuthModal';
 import Spinner from '../Spinner';
 import {
@@ -16,6 +19,9 @@ import {
   StyledContainer,
   StyledIcon,
   StyledLegal,
+  TaxImportant,
+  TaxLink,
+  TaxSavings,
 } from './Style.css';
 import useInitialRegistrationData from './utils/useInitialRegistrationData';
 import useOnContinueClick from './utils/useOnContinueClick';
@@ -47,6 +53,12 @@ const InitialPrice: React.FC<{ store: PriceStore }> = ({ store }) => {
     window.location.href = verificationUrl;
   }, [verificationUrl]);
 
+  const [showDialog, setShowDialog] = useState(false);
+  const { taxState, taxSavings } = useTaxSavings(
+    store.price.price,
+    store.price.zipcode
+  );
+
   return (
     <>
       <StyledContainer>
@@ -70,6 +82,17 @@ const InitialPrice: React.FC<{ store: PriceStore }> = ({ store }) => {
             must be in your name.
           </ContentText>
         </Content>
+
+        {taxSavings ? (
+          <TaxSavings>
+            You may be eligible to{' '}
+            <TaxImportant>
+              save {displayCurrency(taxSavings)} in sales tax
+            </TaxImportant>{' '}
+            by trading in.{' '}
+            <TaxLink onClick={() => setShowDialog(true)}>Details</TaxLink>
+          </TaxSavings>
+        ) : null}
 
         <StyledButton
           id="priceDetails"
@@ -125,6 +148,13 @@ const InitialPrice: React.FC<{ store: PriceStore }> = ({ store }) => {
           redirectUrl={verificationUrl}
           email={priceData.userEmail}
           initialRegistrationData={initialRegistrationData}
+        />
+      )}
+      {showDialog && (
+        <TaxSavingsDialog
+          taxSavings={taxSavings}
+          taxState={taxState}
+          onClose={() => setShowDialog(false)}
         />
       )}
     </>

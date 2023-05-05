@@ -1,4 +1,8 @@
-import { Typography } from '@vroom-web/ui-lib';
+import {
+  addStyleForMobile,
+  addStyleForTablet,
+  Typography,
+} from '@vroom-web/ui-lib';
 import styled from 'styled-components';
 
 export const SectionTitle = styled(Typography.Title.Three)`
@@ -78,6 +82,22 @@ export const StepperContainer = styled.div`
 `;
 
 export const ModuleWrapper = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+
+  ${addStyleForTablet(`
+    flex-direction: column-reverse;
+    align-items: center;
+  `)}
+
+  ${addStyleForMobile(`
+    flex-direction: column-reverse;
+    align-items: center;
+  `)}
+`;
+
+export const MainContent = styled.main`
   display: flex;
   flex-direction: column;
 `;

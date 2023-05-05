@@ -38,5 +38,5 @@ export const CloseButton = styled.button`
   min-height: 44px;
   border: none;
   cursor: pointer;
-  background: white;
+  background: transparent;
 `;

@@ -1,4 +1,4 @@
-import { isErrorResponse, Response } from '@vroom-web/networking';
+import { Response } from '@vroom-web/networking';
 import { enc, HmacSHA256 } from 'crypto-js';
 import getConfig from 'next/config';
 
@@ -95,41 +95,3 @@ export const postAppraisalReview = async (
     });
   }
 };
-
-const noZipFoundResponse = { data: { isZipValid: false } };
-
-export const getZipCodeValidation = (() => {
-  const cachedZipCodes: Record<string, { isZipValid: boolean }> = {};
-  const requestQueue: Record<
-    string,
-    Promise<Response<{ isZipValid: boolean }>> | undefined
-  > = {};
-
-  return async (zipCode: string) => {
-    if (!/^[0-9]{5}$/.test(zipCode)) return noZipFoundResponse;
-
-    if (cachedZipCodes[zipCode]) return { data: cachedZipCodes[zipCode] };
-
-    const queuedRequest = requestQueue[zipCode];
-    if (queuedRequest) {
-      const res = await queuedRequest;
-      if (isErrorResponse(res)) return noZipFoundResponse;
-      return res;
-    }
-
-    const url = `/appraisal/api/validation/${zipCode}`;
-    const resPromise = client.httpRequest<{ isZipValid: boolean }>({
-      method: 'get',
-      url,
-    });
-
-    requestQueue[zipCode] = resPromise;
-
-    const res = await resPromise;
-    if (isErrorResponse(res)) return noZipFoundResponse;
-    cachedZipCodes[zipCode] = res.data;
-    delete requestQueue[zipCode];
-
-    return res;
-  };
-})();

@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 
-import zips from '../../../data/zipCodes.json';
-import requestHandler from '../../../utils/requestHandler';
+import zips from '../../../../data/zipCodes.json';
+import requestHandler from '../../../../utils/requestHandler';
 
 interface Zips {
   [key: number | string]: {
