@@ -4,8 +4,9 @@ import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import { shallow } from 'zustand/shallow';
 
-import { getZipCodeValidation } from '../../../../../../../networking/request';
 import useVerificationStore from '../../../../store/store';
+
+import { getZipCodeValidation } from 'src/networking/request';
 
 const pickupAddressSchema = yup.object().shape({
   address: yup.string().required('Address is required'),

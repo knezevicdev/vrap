@@ -1,4 +1,4 @@
-import { Button, Icon, Typography } from '@vroom-web/ui-lib';
+import { Button, Icon, Link, Typography } from '@vroom-web/ui-lib';
 import styled from 'styled-components';
 
 export const StyledContainer = styled.div`
@@ -73,4 +73,23 @@ export const ContentText = styled(Typography.Body.Regular)`
   > b {
     margin: 0 3px;
   }
+`;
+
+export const TaxSavings = styled.div`
+  background-color: rgb(48, 132, 6, 0.1);
+  padding: 8px;
+  border-radius: 8px;
+  color: rgb(48, 132, 6);
+  margin-top: 20px;
+  font-family: Calibre, sans-serif;
+`;
+
+export const TaxImportant = styled.span`
+  font-family: Calibre-Semibold, sans-serif;
+`;
+
+export const TaxLink = styled(Link.Text)`
+  cursor: pointer;
+  color: rgb(48, 132, 6);
+  font-family: Calibre-Semibold, sans-serif;
 `;

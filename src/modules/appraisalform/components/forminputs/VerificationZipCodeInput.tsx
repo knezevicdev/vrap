@@ -3,11 +3,12 @@ import { useState } from 'react';
 import styled from 'styled-components';
 
 import { FormField, GenericObject } from '../../../../interfaces.d';
-import { getZipCodeValidation } from '../../../../networking/request';
 import CircleLoader from '../CircleLoader';
 import { displayZipCode, numbersOnlyString } from '../formatting';
 import Input from '../Input';
 import { isValidZipCode } from '../validation';
+
+import { getZipCodeValidation } from 'src/networking/request';
 
 interface Props {
   field: FormField;

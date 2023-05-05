@@ -21,6 +21,7 @@ import {
 } from '../shared/Style.css';
 import Dialog from './components/Dialog';
 import MultiStepForm, { FormSection } from './components/MultiStepForm';
+import VerificationSidebar from './components/Sidebar';
 import VerificationStepper from './components/Stepper';
 import DocumentsVerificationStep from './steps/DocumentsVerification/DocumentsVerification';
 import DocumentsVerificationReview from './steps/DocumentsVerification/DocumentsVerificationReview';
@@ -38,6 +39,7 @@ import {
   ButtonWrapper,
   DialogText,
   DialogTitle,
+  MainContent,
   ModuleWrapper,
   StepperContainer,
   StepperWrapper,
@@ -196,90 +198,99 @@ const UnifiedVerification = ({ ajsUserId }: Props) => {
 
   return (
     <ModuleWrapper>
-      <StepperWrapper>
-        <StepperContainer>
-          <VerificationStepper
-            activeStep={sectionChanged.current ? activeSection : initialSection}
+      <MainContent>
+        <StepperWrapper>
+          <StepperContainer>
+            <VerificationStepper
+              activeStep={
+                sectionChanged.current ? activeSection : initialSection
+              }
+            />
+          </StepperContainer>
+        </StepperWrapper>
+        <Container>
+          <MultiStepForm
+            formTitle="Let's verify your information"
+            sections={sections}
+            onDone={async () => {
+              const response = await updateVerification(5);
+              if (!response) return;
+
+              const {
+                owner_email_address,
+                owner_first_name,
+                offer_price,
+                poq,
+              } = response.data.data;
+
+              analyticsHandler.current.trackVerificationSubmitted(
+                owner_email_address,
+                owner_first_name
+              );
+
+              handleVerificationCompleted(
+                poq?.final_payment || null,
+                offer_price,
+                priceId
+              );
+            }}
+            onNext={(currentSection, nextSection) => {
+              if (currentSection < 4) {
+                updateVerification(currentSection + 1);
+              }
+
+              if (
+                nextSection === 3 &&
+                !trackedEvents.current.includes('documentsViewed')
+              ) {
+                trackedEvents.current.push('documentsViewed');
+                analyticsHandler.current.trackVerificationDocumentsViewed();
+              }
+
+              if (
+                nextSection === sections.length - 1 &&
+                !trackedEvents.current.includes('reviewViewed')
+              ) {
+                trackedEvents.current.push('reviewViewed');
+                analyticsHandler.current.trackVerificationReviewViewed();
+              }
+
+              if (
+                currentSection === 0 &&
+                !trackedEvents.current.includes('contactCompleted')
+              ) {
+                trackedEvents.current.push('contactCompleted');
+                analyticsHandler.current.trackContactInfoComplete();
+              }
+
+              if (
+                currentSection === 1 &&
+                !trackedEvents.current.includes('pickupCompleted')
+              ) {
+                trackedEvents.current.push('pickupCompleted');
+                analyticsHandler.current.trackPickupInfoComplete();
+              }
+
+              if (
+                currentSection === 2 &&
+                !trackedEvents.current.includes('payoffCompleted')
+              ) {
+                trackedEvents.current.push('payoffCompleted');
+                analyticsHandler.current.trackPayoffInfoComplete();
+              }
+            }}
+            active={initialSection}
+            onSectionChange={(section) => {
+              if (!sectionChanged.current) sectionChanged.current = true;
+              setActiveSection(section);
+            }}
+            nextText={'Save and Continue'}
+            submitText={'Save and Continue'}
+            extraOffset={88} // stepper height
           />
-        </StepperContainer>
-      </StepperWrapper>
-      <Container>
-        <MultiStepForm
-          formTitle="Let's verify your information"
-          sections={sections}
-          onDone={async () => {
-            const response = await updateVerification(5);
-            if (!response) return;
-
-            const { owner_email_address, owner_first_name, offer_price, poq } =
-              response.data.data;
-
-            analyticsHandler.current.trackVerificationSubmitted(
-              owner_email_address,
-              owner_first_name
-            );
-
-            handleVerificationCompleted(
-              poq?.final_payment || null,
-              offer_price,
-              priceId
-            );
-          }}
-          onNext={(currentSection, nextSection) => {
-            if (currentSection < 4) {
-              updateVerification(currentSection + 1);
-            }
-
-            if (
-              nextSection === 3 &&
-              !trackedEvents.current.includes('documentsViewed')
-            ) {
-              trackedEvents.current.push('documentsViewed');
-              analyticsHandler.current.trackVerificationDocumentsViewed();
-            }
-
-            if (
-              nextSection === sections.length - 1 &&
-              !trackedEvents.current.includes('reviewViewed')
-            ) {
-              trackedEvents.current.push('reviewViewed');
-              analyticsHandler.current.trackVerificationReviewViewed();
-            }
-
-            if (
-              currentSection === 0 &&
-              !trackedEvents.current.includes('contactCompleted')
-            ) {
-              trackedEvents.current.push('contactCompleted');
-              analyticsHandler.current.trackContactInfoComplete();
-            }
-
-            if (
-              currentSection === 1 &&
-              !trackedEvents.current.includes('pickupCompleted')
-            ) {
-              trackedEvents.current.push('pickupCompleted');
-              analyticsHandler.current.trackPickupInfoComplete();
-            }
-
-            if (
-              currentSection === 2 &&
-              !trackedEvents.current.includes('payoffCompleted')
-            ) {
-              trackedEvents.current.push('payoffCompleted');
-              analyticsHandler.current.trackPayoffInfoComplete();
-            }
-          }}
-          active={initialSection}
-          onSectionChange={(section) => {
-            if (!sectionChanged.current) sectionChanged.current = true;
-            setActiveSection(section);
-          }}
-          nextText={'Save and Continue'}
-          submitText={'Save and Continue'}
-          extraOffset={88} // stepper height
-        />
-      </Container>
+        </Container>
+      </MainContent>
+      <VerificationSidebar />
     </ModuleWrapper>
   );
 };

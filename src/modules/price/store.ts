@@ -29,6 +29,7 @@ export interface PriceStoreState {
   vin: string;
   xkeId: number;
   year: number;
+  zipcode: string;
 }
 
 export const defaultPriceState: PriceStoreState = {
@@ -53,6 +54,7 @@ export const defaultPriceState: PriceStoreState = {
   vin: '',
   xkeId: 0,
   year: 0,
+  zipcode: '',
 };
 
 export class PriceStore implements Store {
@@ -103,6 +105,7 @@ export class PriceStore implements Store {
         priceMapFromResponse.vin = price.VIN__c;
         priceMapFromResponse.xkeId = price.offer_id;
         priceMapFromResponse.year = price.Year__c;
+        priceMapFromResponse.zipcode = price.zipcode;
 
         // This actually creates "separate" updates
         // - Price updates and refreshes views
