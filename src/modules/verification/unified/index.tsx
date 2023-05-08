@@ -167,7 +167,7 @@ const UnifiedVerification = ({ ajsUserId }: Props) => {
     },
     {
       component: LoanInformationStep,
-      title: 'Auto Loan Information',
+      title: 'Payment Details',
       isValid: true,
       disableNext: true,
       completedAfterComponent: LoanInformationReview,
