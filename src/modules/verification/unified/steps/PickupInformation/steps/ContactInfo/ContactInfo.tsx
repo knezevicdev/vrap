@@ -17,7 +17,7 @@ const ContactInfo = ({
   return (
     <>
       <Typography.Title.Three>
-        Second owner contact information
+        Pickup contact information
       </Typography.Title.Three>
       <Row wrap="wrap" gap="20px">
         <Col size={1 / 2}>
