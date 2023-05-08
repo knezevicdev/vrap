@@ -1,6 +1,6 @@
 import { Button, Checkbox } from '@vroom-web/ui-lib';
 import { observer } from 'mobx-react';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 
 import { Container, Line, Title } from '../shared/Style.css';
@@ -21,7 +21,9 @@ const VerificationReviewViewDetail: React.FC<Props> = ({
   viewModel,
   priceId,
 }) => {
-  const [, setLastUpdatedVerificationTime] = useState<number>();
+  const lastPriceId = useRef('');
+  const [lastUpdatedVerificationTime, setLastUpdatedVerificationTime] =
+    useState<number>(new Date().getTime());
   const [checked, setChecked] = useState(false);
   const { store } = useAppStore();
 
@@ -48,12 +50,15 @@ const VerificationReviewViewDetail: React.FC<Props> = ({
   }, [store.deposit, store.payment, viewModel]);
 
   useEffect(() => {
-    const whereIsVehicleRegistered =
-      localStorage.getItem('whereIsVehicleRegistered') || '';
-    const lastFourSSN =
-      localStorage.getItem('lastFour') || store.verification.lastFourSSN;
-    viewModel.setWhereIsVehicleRegistered(whereIsVehicleRegistered);
-    viewModel.getVerificationDetails(priceId, lastFourSSN);
+    if (priceId !== lastPriceId.current) {
+      lastPriceId.current = priceId;
+      const whereIsVehicleRegistered =
+        localStorage.getItem('whereIsVehicleRegistered') || '';
+      const lastFourSSN =
+        localStorage.getItem('lastFour') || store.verification.lastFourSSN;
+      viewModel.setWhereIsVehicleRegistered(whereIsVehicleRegistered);
+      viewModel.getVerificationDetails(priceId, lastFourSSN);
+    }
   }, [priceId, store.verification.lastFourSSN, viewModel]);
 
   const handleSubmit = (): void => {
@@ -66,19 +71,28 @@ const VerificationReviewViewDetail: React.FC<Props> = ({
     <Container>
       <Title>review your information</Title>
       <Line />
-      <OwnerInfoReview />
+      {/* not very good solution with the key to force rerender, but this component is deprecated,
+        new unified verification flow will replace whole module */}
+      <OwnerInfoReview key={`OwnerInfoReview-${lastUpdatedVerificationTime}`} />
       <Line />
-      <PickupInfoReview />
+      <PickupInfoReview
+        key={`PickupInfoReview-${lastUpdatedVerificationTime}`}
+      />
       <Line />
-      <PayOffInfoReview />
+      <PayOffInfoReview
+        key={`PayOffInfoReview-${lastUpdatedVerificationTime}`}
+      />
       <Line />
-      <SellDocumentReview />
+      <SellDocumentReview
+        key={`SellDocumentReview-${lastUpdatedVerificationTime}`}
+      />
       {viewModel.isVehiclePhotosExp() && (
         <>
           <Line />
           <VehiclePhotosReview
             priceId={priceId}
             vin={store.verification.verificationDetail?.vin || ''}
+            key={`VehiclePhotosReview-${lastUpdatedVerificationTime}`}
           />
         </>
       )}
