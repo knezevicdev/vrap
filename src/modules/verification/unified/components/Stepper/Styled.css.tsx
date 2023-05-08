@@ -6,6 +6,10 @@ export const Container = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+
+  @media (max-width: 720px) {
+    width: 100%;
+  }
 `;
 
 export const Row = styled.div`
@@ -18,10 +22,15 @@ export const ProgressContainer = styled(Row)`
   align-items: center;
   width: 80%;
   max-width: 775px;
+
+  @media (max-width: 720px) {
+    width: 85%;
+  }
 `;
 
 export const Circle = styled.div`
   width: 12px;
+  min-width: 12px;
   height: 12px;
   border-radius: 50%;
   background-color: #979797;
@@ -59,9 +68,6 @@ export const TextContainer = styled(Row)`
   width: 100%;
   max-width: 900px;
   margin-top: 8px;
-  @media (max-width: 420px) {
-    width: 90%;
-  }
 `;
 
 export const StepTitle = styled.span`
@@ -74,6 +80,7 @@ export const StepTitle = styled.span`
   width: 145px;
   display: flex;
   justify-content: center;
+  text-align: center;
   &:last-child {
     margin-right: 0;
   }
@@ -83,7 +90,6 @@ export const StepTitle = styled.span`
 
   @media (max-width: 720px) {
     line-height: 16px;
-    text-align: center;
     width: 130px;
     font-size: 14px;
   }
