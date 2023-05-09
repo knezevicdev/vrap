@@ -2,6 +2,7 @@ import { SkipNavigationLink } from '@vroom-web/ui-lib';
 import jwt from 'jsonwebtoken';
 import { observer } from 'mobx-react';
 import { GetServerSideProps, GetServerSidePropsContext, NextPage } from 'next';
+import getConfig from 'next/config';
 import React from 'react';
 import styled from 'styled-components';
 
@@ -14,6 +15,8 @@ import { useAppStore } from 'src/context';
 import Footer from 'src/core/Footer';
 import AppraisalReviewViewDetail from 'src/modules/appraisal/review';
 import Page from 'src/Page';
+
+const { serverRuntimeConfig } = getConfig();
 
 interface Prop {
   token: string;
@@ -91,13 +94,13 @@ export const getServerSideProps: GetServerSideProps<Props> = async (
   const brandConfig = returnBrandConfig();
   const vin = ctx.query.vin;
 
-  if (!vin || !process.env.JWT_SECRET_KEY) {
+  if (!vin || !serverRuntimeConfig.JWT_SECRET_KEY) {
     return {
       notFound: true,
     };
   }
 
-  const token = jwt.sign({ vin }, process.env.JWT_SECRET_KEY, {
+  const token = jwt.sign({ vin }, serverRuntimeConfig.JWT_SECRET_KEY, {
     expiresIn: '10m',
   });
   const requireAuth = ctx.req.url?.includes('/sell/tradeIn-selfService-Review');

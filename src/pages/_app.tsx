@@ -41,17 +41,17 @@ configureMobx({
 const { publicRuntimeConfig } = getConfig();
 
 const {
-  NEXT_PUBLIC_ABSMARTLY_URL,
+  ABSMARTLY_URL,
   ABSMARTLY_API_KEY,
   ABSMARTLY_ENV,
   ABSMARTLY_APP,
-  NEXT_PUBLIC_BASE_PATH,
-  NEXT_PUBLIC_INTERCHANGE_URL,
+  BASE_PATH,
+  INTERCHANGE_URL,
   DATA_DOG_RUM_APPLICATION,
   DATA_DOG_RUM_TOKEN,
-  NEXT_PUBLIC_CAT_SERVICE_URL,
+  CAT_SERVICE_URL,
   GQL_PROXY_URL,
-  NEXT_PUBLIC_WEB_LEADS_URL,
+  WEB_LEADS_URL,
 } = publicRuntimeConfig;
 
 class AppraisalApp extends App<
@@ -76,20 +76,18 @@ class AppraisalApp extends App<
       const originalGetDataHref = props.router.pageLoader.getDataHref;
       props.router.pageLoader.getDataHref = function (params) {
         const r = originalGetDataHref.call(props.router.pageLoader, params);
-        return r && r.startsWith('/_next/data')
-          ? `${NEXT_PUBLIC_BASE_PATH}${r}`
-          : r;
+        return r && r.startsWith('/_next/data') ? `${BASE_PATH}${r}` : r;
       };
     }
 
     this.analyticsHandler = new AnalyticsHandler();
     this.catSDK = new CatSDK({
-      serviceBasePath: NEXT_PUBLIC_CAT_SERVICE_URL || '',
+      serviceBasePath: CAT_SERVICE_URL || '',
     });
 
     this.commonHandler = new CommonHandler(
       GQL_PROXY_URL || '',
-      NEXT_PUBLIC_WEB_LEADS_URL || ''
+      WEB_LEADS_URL || ''
     );
 
     this.state = {
@@ -182,13 +180,11 @@ class AppraisalApp extends App<
 
     return (
       <>
-        <GlobalStyle baseUrl={publicRuntimeConfig.NEXT_PUBLIC_BASE_PATH} />
+        <GlobalStyle baseUrl={publicRuntimeConfig.BASE_PATH} />
         <ABSmartlyProvider
           apiKey={ABSMARTLY_API_KEY}
           application={ABSMARTLY_APP}
-          endpoint={`${
-            NEXT_PUBLIC_INTERCHANGE_URL || ''
-          }${NEXT_PUBLIC_ABSMARTLY_URL}`}
+          endpoint={`${INTERCHANGE_URL || ''}${ABSMARTLY_URL}`}
           environment={ABSMARTLY_ENV}
         >
           <AnalyticsHandlerContext.Provider value={this.analyticsHandler}>
