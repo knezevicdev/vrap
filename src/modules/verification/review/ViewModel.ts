@@ -162,6 +162,8 @@ export default class VerificationReviewSectionViewModel {
     priceId: string,
     lastFourSSN: string
   ): Promise<void> {
+    if (this.store.verification.loading) return;
+    this.store.verification.setLoading(true);
     try {
       const [verificationDetailsResponse, offerDetailsResponse] =
         await Promise.all([
@@ -181,6 +183,8 @@ export default class VerificationReviewSectionViewModel {
       );
     } catch (e) {
       console.log('error in verfication');
+    } finally {
+      this.store.verification.setLoading(false);
     }
   }
 }
