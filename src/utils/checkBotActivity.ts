@@ -1,7 +1,10 @@
 import crypto from 'crypto';
 import jwt from 'jsonwebtoken';
 import { NextApiRequest } from 'next';
+import getConfig from 'next/config';
 import useragent from 'useragent';
+
+const { serverRuntimeConfig } = getConfig();
 
 function removeQueryStringFromUrl(inputUrl: string) {
   const queryStringIndex = inputUrl.indexOf('?');
@@ -73,12 +76,15 @@ function checkSignature(req: NextApiRequest) {
     !signatureSecret ||
     typeof signature !== 'string' ||
     typeof signatureSecret !== 'string' ||
-    !process.env.JWT_SECRET_KEY
+    !serverRuntimeConfig.JWT_SECRET_KEY
   )
     return false;
 
   try {
-    const decoded = jwt.verify(signatureSecret, process.env.JWT_SECRET_KEY);
+    const decoded = jwt.verify(
+      signatureSecret,
+      serverRuntimeConfig.JWT_SECRET_KEY
+    );
     if (typeof decoded === 'string') return false;
     if (decoded.vin !== req.body.payload.vin) return false;
   } catch (err) {

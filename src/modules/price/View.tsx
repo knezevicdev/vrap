@@ -9,7 +9,7 @@ import NextSteps from 'src/components/NextSteps';
 import PriceDetail from 'src/components/PriceDetail';
 
 const { publicRuntimeConfig } = getConfig();
-const BASE_PATH = publicRuntimeConfig.NEXT_PUBLIC_BASE_PATH;
+const BASE_PATH = publicRuntimeConfig.BASE_PATH;
 
 interface Props {
   viewModel: PriceViewModel;

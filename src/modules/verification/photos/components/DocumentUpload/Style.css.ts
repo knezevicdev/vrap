@@ -3,7 +3,7 @@ import { FilePond } from 'react-filepond';
 import styled from 'styled-components';
 
 const { publicRuntimeConfig } = getConfig();
-const BASE_PATH = publicRuntimeConfig.NEXT_PUBLIC_BASE_PATH;
+const BASE_PATH = publicRuntimeConfig.BASE_PATH;
 
 export const Wrapper = styled.div`
   display: flex;

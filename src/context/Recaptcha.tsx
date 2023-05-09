@@ -4,7 +4,7 @@ import ReCAPTCHA from 'react-google-recaptcha';
 
 const { publicRuntimeConfig } = getConfig();
 
-const { NEXT_PUBLIC_RECAPTCHA_SITE_KEY } = publicRuntimeConfig;
+const { RECAPTCHA_SITE_KEY } = publicRuntimeConfig;
 
 interface RecaptchaContextValue {
   recaptchaRef: MutableRefObject<ReCAPTCHA | null>;
@@ -25,7 +25,7 @@ export const RecaptchaProvider = ({
     <RecaptchaContext.Provider value={{ recaptchaRef }}>
       {children}
       <ReCAPTCHA
-        sitekey={NEXT_PUBLIC_RECAPTCHA_SITE_KEY}
+        sitekey={RECAPTCHA_SITE_KEY}
         ref={recaptchaRef}
         size="invisible"
       />

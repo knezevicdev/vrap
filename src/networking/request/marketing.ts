@@ -6,7 +6,7 @@ import client from '../client';
 import { formWebLeadPayload } from '../utils';
 
 const { publicRuntimeConfig } = getConfig();
-const VROOM_URL = publicRuntimeConfig.NEXT_PUBLIC_VROOM_URL;
+const VROOM_URL = publicRuntimeConfig.VROOM_URL;
 
 export const postEmailCapture = async (
   emailAddress: string,

@@ -1,11 +1,17 @@
 {
-  "accountManagementUrl": "https://accountmanagement-int.uat.vroom.cloud",
-  "firebaseConfig": {
+  "ACCOUNT_MANAGEMENT_URL": "https://accountmanagement-int.uat.vroom.cloud",
+  "FIREBASE_CONFIG": {
     "apiKey": "AIzaSyCKrs5d9BF4FgF34LADYefRO8CnM7auPVY",
     "authDomain": "vroom-acquisitions-v2.firebaseapp.com",
     "projectId": "vroom-acquisitions-v2",
     "storageBucket": "vroom-acquisitions-v2.appspot.com",
     "messagingSenderId": "92531755729",
     "appId": "1:92531755729:web:f869148d30a3036d0253f0"
-  }
+  },
+  "VIS_URL": "https://vis-int.uat.vroom.cloud/",
+  "SEGMENT_WRITE_KEY": "HoOMdOEbnzWKYfDahFunvFtz6FuxRXlT",
+  "VROOM_URL": "https://uat.vroom.com",
+  "ACQUISITIONS_URL": "https://acquisition-int.uat.vroom.cloud/v1",
+  "INTERCHANGE_PROXY_TARGET": "https://uat.vroom.com",
+  "ABSMARTLY_ENV": "uat"
 }

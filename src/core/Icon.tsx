@@ -2,7 +2,7 @@ import getConfig from 'next/config';
 import React from 'react';
 
 const { publicRuntimeConfig } = getConfig();
-const BASE_PATH = publicRuntimeConfig.NEXT_PUBLIC_BASE_PATH;
+const BASE_PATH = publicRuntimeConfig.BASE_PATH;
 
 export class Icons {
   static readonly CONGRATS_DOCUMENT = {

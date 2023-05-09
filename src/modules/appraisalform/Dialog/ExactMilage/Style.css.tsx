@@ -3,7 +3,7 @@ import getConfig from 'next/config';
 import styled from 'styled-components';
 
 const { publicRuntimeConfig } = getConfig();
-const BASE_PATH = publicRuntimeConfig.NEXT_PUBLIC_BASE_PATH;
+const BASE_PATH = publicRuntimeConfig.BASE_PATH;
 
 export const Container = styled.div`
   position: fixed;

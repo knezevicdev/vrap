@@ -62,7 +62,7 @@ export default requestHandler(
 
 async function postAppraisal(payload: AppraisalPayload) {
   return await axios.post(
-    `${serverRuntimeConfig.NEXT_PUBLIC_ACQUISITIONS_URL}/acquisition/appraisal`,
+    `${serverRuntimeConfig.ACQUISITIONS_URL}/acquisition/appraisal`,
     { payload }
   );
 }

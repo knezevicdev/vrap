@@ -17,8 +17,9 @@ import { ServerStyleSheet } from 'styled-components';
 const { publicRuntimeConfig, serverRuntimeConfig } = getConfig();
 const BRANCH_IO_KEY = publicRuntimeConfig.BRANCH_IO_KEY;
 const SEGMENT_WRITE_KEY = serverRuntimeConfig.SEGMENT_WRITE_KEY;
-const NEXT_PUBLIC_ANALYTICS_DISABLE_PII_PERSISTENCE =
-  publicRuntimeConfig.NEXT_PUBLIC_ANALYTICS_DISABLE_PII_PERSISTENCE;
+const ANALYTICS_DISABLE_PII_PERSISTENCE =
+  publicRuntimeConfig.ANALYTICS_DISABLE_PII_PERSISTENCE;
+const GOOGLE_MAPS_API_KEY = publicRuntimeConfig.GOOGLE_MAPS_API_KEY;
 
 export default class AppraisalDocument extends Document<
   DocumentInitialProps & { restrictedAdvertising: boolean }
@@ -60,7 +61,7 @@ export default class AppraisalDocument extends Document<
               segmentWriteKey={segmentWriteKey}
               restrictedAdvertising={this.props.restrictedAdvertising}
               disableClientPersistence={Boolean(
-                parseInt(NEXT_PUBLIC_ANALYTICS_DISABLE_PII_PERSISTENCE)
+                parseInt(ANALYTICS_DISABLE_PII_PERSISTENCE)
               )}
             />
           )}
@@ -72,7 +73,7 @@ export default class AppraisalDocument extends Document<
             }}
           />
           <script
-            src={`https://maps.googleapis.com/maps/api/js?key=${process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}&v=quarterly&libraries=places`}
+            src={`https://maps.googleapis.com/maps/api/js?key=${GOOGLE_MAPS_API_KEY}&v=quarterly&libraries=places`}
           />
         </Head>
         <body>
