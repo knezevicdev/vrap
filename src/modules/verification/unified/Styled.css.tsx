@@ -114,3 +114,26 @@ export const ButtonWrapper = styled.div`
   text-align: center;
   margin-top: 20px;
 `;
+
+export const SidebarWrapper = styled.div`
+  margin-left: 20px;
+  max-width: 30%;
+
+  @media (max-width: 1020px) {
+    padding-top: 0;
+  }
+
+  ${addStyleForTablet(`
+    max-width: calc(100% - 20px);
+    margin: 0;
+    margin-bottom: 20px;
+    position: static;
+  `)}
+
+  ${addStyleForMobile(`
+    max-width: 100%;
+    margin: 0;
+    margin-bottom: 20px;
+    position: static;
+  `)}
+`;

@@ -11,4 +11,5 @@ export interface OfferDetail {
   offerExpiration: string;
   vin: string;
   email: string;
+  offerZip: string;
 }

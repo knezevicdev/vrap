@@ -1,36 +1,12 @@
-import {
-  addStyleForMobile,
-  addStyleForTablet,
-  Link,
-  Typography,
-} from '@vroom-web/ui-lib';
+import { addStyleForMobile, Link, Typography } from '@vroom-web/ui-lib';
 import styled from 'styled-components';
 
 import { Container } from '../../../shared/Style.css';
 
 export const Sidebar = styled(Container)`
-  margin-left: 20px;
-  max-width: 30%;
+  max-width: 100%;
   position: sticky;
   top: 94px;
-
-  @media (max-width: 1020px) {
-    padding-top: 0;
-  }
-
-  ${addStyleForTablet(`
-    max-width: calc(100% - 20px);
-    margin: 0;
-    margin-bottom: 20px;
-    position: static;
-  `)}
-
-  ${addStyleForMobile(`
-    max-width: 100%;
-    margin: 0;
-    margin-bottom: 20px;
-    position: static;
-  `)}
 `;
 
 export const SidebarTitle = styled(Typography.Heading.Four)`

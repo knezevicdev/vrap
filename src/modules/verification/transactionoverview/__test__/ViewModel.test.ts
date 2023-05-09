@@ -36,6 +36,7 @@ describe('Review component test', () => {
       offerId: 26300,
       offerStatus: 'Pending',
       email: 'doyouliketesting@testvroom.com',
+      offerZip: '12345',
     };
 
     expect(JSON.stringify(stores.offer.offerDetail)).toEqual(
@@ -59,6 +60,7 @@ describe('Review component test', () => {
       offerId: 0,
       offerStatus: '',
       email: '',
+      offerZip: '',
     };
 
     expect(JSON.stringify(stores.offer.offerDetail)).toEqual(

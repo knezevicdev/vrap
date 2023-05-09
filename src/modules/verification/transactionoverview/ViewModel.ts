@@ -17,6 +17,7 @@ const defaultOfferData = {
   offerId: 0,
   offerStatus: '',
   email: '',
+  offerZip: '',
 };
 
 export default class TransactionOverviewViewModel {
@@ -44,6 +45,7 @@ export default class TransactionOverviewViewModel {
         offerId: offerDetail.offer_id,
         offerStatus: offerDetail.offer_status,
         email: offerDetail.user_email,
+        offerZip: offerDetail.zipcode,
       };
 
       this.store.offer.getOfferDetail(offerDetailData);
