@@ -57,7 +57,7 @@ export const OverviewContainer = styled.div`
   margin: 0 10px;
   @media (max-width: 1020px) {
     width: 100%;
-    margin: 0;
+    margin: 0 0 20px;
   }
 `;
 
@@ -66,6 +66,7 @@ export const StepperWrapper = styled.div`
   display: flex;
   justify-content: center;
   margin: 20px 0 0 10px;
+  max-width: calc(100vw - 10px);
   @media (max-width: 1020px) {
     margin-bottom: 20px;
   }

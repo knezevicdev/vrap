@@ -57,13 +57,15 @@ const InfoContainer = styled.div`
   box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.08);
   border: solid 1px #d6d7da;
   padding: 20px;
+  margin-bottom: 20px;
+
   @media (max-width: 1020px) {
     max-width: calc(100% - 20px);
-    margin: 0 10px;
+    margin: 0 10px 20px;
   }
   @media (max-width: 720px) {
     max-width: 100%;
-    margin: 0;
+    margin: 0 0 20px;
   }
 `;
 

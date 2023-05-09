@@ -6,6 +6,7 @@ import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 
 import OfferExpiredDialog from '../Dialog/OfferExpiredDialog';
+import VerificationSidebar from '../unified/components/Sidebar';
 import {
   Contents,
   HeaderContainer,
@@ -103,6 +104,10 @@ const VerificationWrapper: React.FC<Props> = ({ priceId, step, children }) => {
             <ReviewContainer>{children}</ReviewContainer>
             <OverviewContainer>
               <TransactionOverview priceId={priceId} />
+              <VerificationSidebar
+                offer={store.offer.offerDetail?.price || 0}
+                offerZip={store.offer.offerDetail?.offerZip || ''}
+              />
             </OverviewContainer>
           </VerificationContainer>
           {(isOfferExpired || store.verification.isExpiredOrErrored) && (

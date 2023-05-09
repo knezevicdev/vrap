@@ -417,6 +417,7 @@ export const postAppraisalReview = async (): Promise<
         offer_id: 534,
         offer_status: 'Pending',
         user_email: 'fake@mail.com',
+        zipcode: '12345',
       },
     },
   });

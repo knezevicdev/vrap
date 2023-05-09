@@ -41,6 +41,7 @@ import {
   DialogTitle,
   MainContent,
   ModuleWrapper,
+  SidebarWrapper,
   StepperContainer,
   StepperWrapper,
 } from './Styled.css';
@@ -59,6 +60,10 @@ const UnifiedVerification = ({ ajsUserId }: Props) => {
   const trackedEvents = useRef<string[]>([]);
   const priceAccepted = useRef(false);
   const router = useRouter();
+  const sidebarProps = useVerificationStore((state) => ({
+    offer: state.offer,
+    offerZip: state.offerZip,
+  }));
   const loadState = useVerificationStore((state) => state.loadState);
   const vin = useVerificationStore((state) => state.vin);
   const completedInfo = useVerificationStore(
@@ -291,7 +296,9 @@ const UnifiedVerification = ({ ajsUserId }: Props) => {
           />
         </Container>
       </MainContent>
-      <VerificationSidebar />
+      <SidebarWrapper>
+        <VerificationSidebar {...sidebarProps} />
+      </SidebarWrapper>
     </ModuleWrapper>
   );
 };
