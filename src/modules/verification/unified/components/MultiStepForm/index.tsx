@@ -6,6 +6,7 @@ import {
   FormHeader,
   FormSection,
   FormStep,
+  FormSubtitle,
   FormTitle,
   NextButton,
   SectionHeader,
@@ -36,7 +37,8 @@ export interface FormSection {
 }
 
 interface Props {
-  formTitle: string;
+  title: string;
+  subtitle?: string;
   sections: FormSection[];
   onDone: () => void | Promise<void>;
   onNext: (currentSection: number, nextSection: number) => void | Promise<void>;
@@ -49,7 +51,8 @@ interface Props {
 
 const MultiStepForm: React.FC<Props> = (props) => {
   const {
-    formTitle,
+    title,
+    subtitle,
     sections,
     onDone,
     onNext,
@@ -208,8 +211,9 @@ const MultiStepForm: React.FC<Props> = (props) => {
       <FormHeader>
         <Block />
         <FormTitle>
-          <span>{formTitle}</span>
+          <span>{title}</span>
         </FormTitle>
+        {subtitle && <FormSubtitle>{subtitle}</FormSubtitle>}
       </FormHeader>
       {formComponents}
     </div>

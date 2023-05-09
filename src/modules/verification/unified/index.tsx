@@ -167,7 +167,7 @@ const UnifiedVerification = ({ ajsUserId }: Props) => {
     },
     {
       component: LoanInformationStep,
-      title: 'Auto Loan Information',
+      title: 'Payment Details',
       isValid: true,
       disableNext: true,
       completedAfterComponent: LoanInformationReview,
@@ -210,7 +210,8 @@ const UnifiedVerification = ({ ajsUserId }: Props) => {
         </StepperWrapper>
         <Container>
           <MultiStepForm
-            formTitle="Let's verify your information"
+            title="Let's verify your information"
+            subtitle="We need a few details to make a quick and easy transaction"
             sections={sections}
             onDone={async () => {
               const response = await updateVerification(5);

@@ -1,8 +1,13 @@
-export const defaultSteps = ['Owner', 'Pick Up', 'Auto Loan', 'Documents'];
+export const defaultSteps = [
+  'Ownership Information',
+  'Pick Up Address',
+  'Payment Details',
+  'Documents',
+];
 export const photosExpSteps = [
-  'Owner',
-  'Pick Up',
-  'Auto Loan',
+  'Ownership Information',
+  'Pick Up Address',
+  'Payment Details',
   'Documents',
   'Photos',
 ];

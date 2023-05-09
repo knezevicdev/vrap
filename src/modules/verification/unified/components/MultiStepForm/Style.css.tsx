@@ -5,6 +5,7 @@ import styled from 'styled-components';
 export const FormHeader = styled.div`
   display: flex;
   justify-content: space-between;
+  flex-direction: column;
 `;
 
 export const Block = styled.div`
@@ -15,7 +16,7 @@ export const Block = styled.div`
 `;
 
 export const FormTitle = styled.h1`
-  padding: 20px 0;
+  padding: 20px 0 0;
   font-family: Vroom-Sans, sans-serif;
   font-size: 36px;
   line-height: 40px;
@@ -25,12 +26,23 @@ export const FormTitle = styled.h1`
 
   ${addStyleForMobile(`
       text-align: center;
-      padding-bottom: 16px;
       padding-top: 15px;
       font-family: Vroom-Sans;
       font-size: 28px;
       line-height: 28px;
       letter-spacing: 1px;
+    `)}
+`;
+
+export const FormSubtitle = styled.span`
+  font-size: 20px;
+  font-family: Calibre-Regular, sans-serif;
+  margin-bottom: 28px;
+
+  ${addStyleForMobile(`
+      text-align: center;
+      margin-bottom: 24px;
+      font-size: 16px;
     `)}
 `;
 
