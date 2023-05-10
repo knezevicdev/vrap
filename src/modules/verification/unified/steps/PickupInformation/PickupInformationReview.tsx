@@ -28,7 +28,7 @@ const PickupInformationReview = () => {
       pickupState: state.pickupState,
       pickupZip: state.pickupZip,
       pickupCity: state.pickupCity,
-      pickupApt: state.pickupApt,
+      pickupApt: state.pickupApt || '',
       pickupContactFirstName: state.pickupContactFirstName,
       pickupContactLastName: state.pickupContactLastName,
       pickupContactEmail: state.pickupContactEmail,

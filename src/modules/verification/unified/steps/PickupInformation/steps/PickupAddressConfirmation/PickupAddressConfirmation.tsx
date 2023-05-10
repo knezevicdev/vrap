@@ -14,17 +14,22 @@ const PickupAddressConfirmation = ({
 }: WizardStepProps<{
   pickupAddressConfirmation: string;
 }>) => {
-  const { pickupAddress, pickupState, pickupZip, pickupCity, pickupApt } =
-    useVerificationStore(
-      (state) => ({
-        pickupAddress: state.pickupAddress,
-        pickupState: state.pickupState,
-        pickupZip: state.pickupZip,
-        pickupCity: state.pickupCity,
-        pickupApt: state.pickupApt,
-      }),
-      shallow
-    );
+  const {
+    firstOwnerAddress,
+    firstOwnerState,
+    firstOwnerZip,
+    firstOwnerCity,
+    firstOwnerApt,
+  } = useVerificationStore(
+    (state) => ({
+      firstOwnerAddress: state.firstOwnerAddress,
+      firstOwnerState: state.firstOwnerState,
+      firstOwnerZip: state.firstOwnerZip,
+      firstOwnerCity: state.firstOwnerCity,
+      firstOwnerApt: state.firstOwnerApt || '',
+    }),
+    shallow
+  );
 
   return (
     <div>
@@ -32,7 +37,7 @@ const PickupAddressConfirmation = ({
       <Row>
         <FullInfo>
           <Field>
-            {`${pickupApt} ${pickupAddress} ${pickupCity}, ${pickupState} ${pickupZip}`.trim()}
+            {`${firstOwnerApt} ${firstOwnerAddress} ${firstOwnerCity}, ${firstOwnerState} ${firstOwnerZip}`.trim()}
           </Field>
         </FullInfo>
       </Row>
