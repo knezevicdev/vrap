@@ -19,6 +19,8 @@ const SecondOwnerInfo = ({
   apt: string;
   email: string;
   phoneNumber: string;
+  firstOwnerEmail: string;
+  firstOwnerPhoneNumber: string;
 }>) => {
   return (
     <>
