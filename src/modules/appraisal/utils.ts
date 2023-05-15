@@ -31,6 +31,7 @@ function vehicleInformationData(data: VehicleInfoForm) {
     keysAmount: data.keysAmount,
     options: data.vehicleOptions,
     zipCode: data.zipCode,
+    appraisalIntent: data.sellOrTradeIn.toLowerCase(),
   };
 }
 
