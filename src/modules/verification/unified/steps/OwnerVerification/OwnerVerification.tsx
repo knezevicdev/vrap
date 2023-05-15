@@ -85,6 +85,26 @@ const OwnerVerificationStep = ({
           firstOwnerInfoForm.setValue('email', offerDetails.offerEmail);
         }
       },
+      onNext: () => {
+        const firstOwnerInfoFormValues = firstOwnerInfoForm.getValues();
+        const secondOwnerInfoFormValues = secondOwnerInfoForm.getValues();
+
+        secondOwnerInfoForm.setValue(
+          'firstOwnerEmail',
+          firstOwnerInfoFormValues.email
+        );
+        secondOwnerInfoForm.setValue(
+          'firstOwnerPhoneNumber',
+          firstOwnerInfoFormValues.phoneNumber
+        );
+
+        if (secondOwnerInfoFormValues.email)
+          secondOwnerInfoForm.trigger('email');
+        if (secondOwnerInfoFormValues.phoneNumber)
+          secondOwnerInfoForm.trigger('phoneNumber');
+
+        return 3;
+      },
     },
     {
       component: SecondOwnerConfirmation,
