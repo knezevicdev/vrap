@@ -105,7 +105,7 @@ const InitialPrice: React.FC<{ store: PriceStore }> = ({ store }) => {
           }}
           disabled={isAcceptingPrice}
         >
-          {isAcceptingPrice ? <Spinner /> : 'continue'}
+          {isAcceptingPrice ? <Spinner /> : 'save and continue'}
         </StyledButton>
 
         <StyledLegal>
