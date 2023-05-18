@@ -67,7 +67,9 @@ const updateVerification = async (formState: number) => {
     lien_account_number: verificationState.loanAccountNumber,
     last_four_ssn: verificationState.loanLastFourDigits,
     acknowledgement_of_terms: verificationState.loanAcknowledgement,
-    exact_mileage: verificationState.documentMileageValue,
+    exact_mileage: Number(
+      String(verificationState.documentMileageValue).replace(/\D/g, '')
+    ),
     mileage_file_id: verificationState.documentOdometer,
     front_of_title_lien_file_id: verificationState.documentTitleFront,
     back_of_title_lien_file_id: verificationState.documentTitleBack,
