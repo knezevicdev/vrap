@@ -5,7 +5,7 @@
   "ABSMARTLY_URL": "/absmartly/v1",
   "ACCOUNT_MANAGEMENT_URL": "https://accountmanagement-int.dev.vroom.cloud",
   "ACQUISITIONS_URL": "https://acquisition-int.dev.vroom.cloud/v1",
-  "APPRAISAL_API_URL": "http://carstory-appraisal-api.auto-beta.vast.com",
+  "APPRAISAL_API_URL": "https://carstory-appraisal-beta.api.vast.com",
   "BRANCH_IO_KEY": "key_live_kcLYw3YkcZ81GfwRZ84cBcgmusnd6ysn",
   "CAT_DATA_PROXY_TARGET": "/cat-data",
   "CAT_SERVICE_URL": "",
