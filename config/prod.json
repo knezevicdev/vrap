@@ -14,5 +14,6 @@
   "SEGMENT_WRITE_KEY": "7HuADUm47c18c2eCfItrske3d6wshZ2g",
   "VAST_IMAGE_PROXY_URL": "https://img.vast.com/caABSMARTLY_URLrstory-appraisal/beta",
   "VIS_URL": "https://vis-int.prod.vroom.cloud/",
-  "VROOM_URL": "https://www.vroom.com"
+  "VROOM_URL": "https://www.vroom.com",
+  "RECAPTCHA_SITE_KEY": "6Le6wLMgAAAAALm7gYrofvWVwOPFm2YVO0gTSsdQ"
 }

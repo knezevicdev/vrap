@@ -92,7 +92,7 @@ const DocumentsVerificationStep = () => {
                 type="number"
                 value={mileage || ''}
                 onChange={(e) => {
-                  setMileage(Number(e.target.value) || 0);
+                  setMileage(Number(e.target.value.replace(/\D/g, '')) || 0);
                 }}
               />
             </Col>
