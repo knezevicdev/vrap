@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 
 import useTaxSavings from '../../utils/useTaxSavings';
 import TaxSavingsDialog from '../TaxSavingsDialog';
@@ -13,6 +13,7 @@ import {
 } from './Style.css';
 
 import useIsInExperiment from 'src/hooks/useIsInExperiment';
+import AnalyticsHandler from 'src/integrations/AnalyticsHandler';
 import { displayCurrency } from 'src/utils';
 
 interface Props {
@@ -21,6 +22,7 @@ interface Props {
 }
 
 const VerificationSidebar = ({ offer, offerZip }: Props) => {
+  const analyticsHandler = useRef(new AnalyticsHandler());
   const [showDialog, setShowDialog] = useState(false);
   const { taxState, taxSavings } = useTaxSavings(offer, offerZip);
 
@@ -44,13 +46,26 @@ const VerificationSidebar = ({ offer, offerZip }: Props) => {
                 save {displayCurrency(taxSavings)} in sales tax
               </SidebarImportant>{' '}
               by trading in.{' '}
-              <SidebarLink onClick={() => setShowDialog(true)}>
+              <SidebarLink
+                onClick={() => {
+                  analyticsHandler.current.trackVerificationTaxSidebarDetailsClicked();
+                  setShowDialog(true);
+                }}
+              >
                 Details
               </SidebarLink>
             </ListItem>
           ) : null}
         </List>
-        <SidebarButton href="/cars" target="_blank">
+        <SidebarButton
+          href="/cars"
+          target="_blank"
+          onClick={(e) => {
+            e.preventDefault();
+            analyticsHandler.current.trackVerificationTaxSidebarCTAClicked();
+            window.open('/cars', '_blank');
+          }}
+        >
           Find your car
         </SidebarButton>
       </Sidebar>

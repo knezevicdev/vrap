@@ -1,5 +1,5 @@
 import { Link } from '@vroom-web/ui-lib';
-import React from 'react';
+import React, { useRef } from 'react';
 
 import Dialog from '.././Dialog';
 import {
@@ -9,6 +9,7 @@ import {
   DialogTitle,
 } from './Style.css';
 
+import AnalyticsHandler from 'src/integrations/AnalyticsHandler';
 import { displayCurrency } from 'src/utils';
 
 const TaxSavingsDialog: React.FC<{
@@ -16,6 +17,8 @@ const TaxSavingsDialog: React.FC<{
   taxState: string;
   onClose: () => void;
 }> = ({ taxSavings, taxState, onClose }) => {
+  const analyticsHandler = useRef(new AnalyticsHandler());
+
   return (
     <Dialog onClose={onClose}>
       <DialogTitle>How you can save?</DialogTitle>
@@ -32,7 +35,15 @@ const TaxSavingsDialog: React.FC<{
         .
       </DialogText>
       <ButtonWrapper>
-        <Link.Primary href="/cars" target="_blank">
+        <Link.Primary
+          href="/cars"
+          target="_blank"
+          onClick={(e) => {
+            e.preventDefault();
+            analyticsHandler.current.trackVerificationTaxModalCTAClicked();
+            window.open('/cars', '_blank');
+          }}
+        >
           Find your car
         </Link.Primary>
       </ButtonWrapper>
