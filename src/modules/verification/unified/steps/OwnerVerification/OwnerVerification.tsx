@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 
+import { displayPhoneNumber } from '../../../../../utils';
 import { FormStepProps } from '../../components/MultiStepForm';
 import WizardForm, {
   createSteps,
@@ -81,8 +82,16 @@ const OwnerVerificationStep = ({
         ) {
           firstOwnerInfoForm.setValue('firstName', offerDetails.offerFirstName);
           firstOwnerInfoForm.setValue('lastName', offerDetails.offerLastName);
-          firstOwnerInfoForm.setValue('phoneNumber', offerDetails.offerPhone);
+          firstOwnerInfoForm.setValue(
+            'phoneNumber',
+            displayPhoneNumber(offerDetails.offerPhone)
+          );
           firstOwnerInfoForm.setValue('email', offerDetails.offerEmail);
+
+          firstOwnerInfoForm.trigger('firstName');
+          firstOwnerInfoForm.trigger('lastName');
+          firstOwnerInfoForm.trigger('phoneNumber');
+          firstOwnerInfoForm.trigger('email');
         }
       },
       onNext: () => {

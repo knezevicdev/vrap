@@ -26,7 +26,8 @@ const FirstOwnerInfo = ({
       <Row wrap="wrap" gap="20px">
         <Col size={1 / 2}>
           <Input
-            id="firstName"
+            id="firstOwnerFirstName"
+            name="firstName"
             control={form.control}
             placeholder="First name"
             label="First name"
@@ -34,13 +35,15 @@ const FirstOwnerInfo = ({
         </Col>
         <Col size={1 / 2}>
           <Input
-            id="lastName"
+            id="firstOwnerLastName"
+            name="lastName"
             control={form.control}
             placeholder="Last name"
             label="Last name"
           />
         </Col>
         <AddressSelector
+          idPrefix="firstOwner"
           form={form}
           fieldMap={{
             addressLine: 'address',
@@ -55,7 +58,8 @@ const FirstOwnerInfo = ({
             placeholder="Email"
             label="Email address"
             type="email"
-            id="email"
+            id="firstOwnerEmail"
+            name="email"
             control={form.control}
           />
         </Col>
@@ -63,7 +67,8 @@ const FirstOwnerInfo = ({
           <Input
             placeholder="(  ) ___-____"
             label="Phone number"
-            id="phoneNumber"
+            id="firstOwnerPhoneNumber"
+            name="phoneNumber"
             control={form.control}
             valueFormatter={displayPhoneNumber}
           />

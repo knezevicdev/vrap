@@ -17,6 +17,7 @@ const PickupAddressInfo = ({
     <>
       <Typography.Title.Three>Pickup address</Typography.Title.Three>
       <AddressSelector
+        idPrefix="pickup"
         form={form}
         fieldMap={{
           addressLine: 'address',

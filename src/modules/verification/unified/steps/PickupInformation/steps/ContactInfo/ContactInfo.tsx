@@ -22,7 +22,8 @@ const ContactInfo = ({
       <Row wrap="wrap" gap="20px">
         <Col size={1 / 2}>
           <Input
-            id="firstName"
+            id="pickupContactFirstName"
+            name="firstName"
             control={form.control}
             placeholder="First name"
             label="First name"
@@ -30,7 +31,8 @@ const ContactInfo = ({
         </Col>
         <Col size={1 / 2}>
           <Input
-            id="lastName"
+            id="pickupContactLastName"
+            name="lastName"
             control={form.control}
             placeholder="Last name"
             label="Last name"
@@ -41,7 +43,8 @@ const ContactInfo = ({
             placeholder="Email"
             label="Email address"
             type="email"
-            id="email"
+            id="pickupContactEmail"
+            name="email"
             control={form.control}
           />
         </Col>
@@ -49,7 +52,8 @@ const ContactInfo = ({
           <Input
             placeholder="(  ) ___-____"
             label="Phone number"
-            id="phoneNumber"
+            id="pickupContactPhoneNumber"
+            name="phoneNumber"
             control={form.control}
             valueFormatter={displayPhoneNumber}
           />

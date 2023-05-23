@@ -9,7 +9,8 @@ import styled from 'styled-components';
 interface Props<T extends FieldValues> {
   placeholder: string;
   label: string;
-  id: Path<T>;
+  id: string;
+  name: Path<T>;
   control: Control<T>;
   type?: string;
   valueFormatter?: (value: string) => string;
@@ -21,6 +22,7 @@ const Select = <T extends FieldValues>({
   placeholder,
   label,
   id,
+  name,
   control,
   options,
   className,
@@ -30,7 +32,7 @@ const Select = <T extends FieldValues>({
     fieldState: { error },
     formState: { isSubmitting },
   } = useController({
-    name: id,
+    name,
     control,
   });
 
