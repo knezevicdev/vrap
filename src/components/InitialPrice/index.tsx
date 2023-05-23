@@ -90,7 +90,14 @@ const InitialPrice: React.FC<{ store: PriceStore }> = ({ store }) => {
               save {displayCurrency(taxSavings)} in sales tax
             </TaxImportant>{' '}
             by trading in.{' '}
-            <TaxLink onClick={() => setShowDialog(true)}>Details</TaxLink>
+            <TaxLink
+              onClick={() => {
+                analyticsHandler.current.trackVerificationTaxPricePageDetailsClicked();
+                setShowDialog(true);
+              }}
+            >
+              Details
+            </TaxLink>
           </TaxSavings>
         ) : null}
 

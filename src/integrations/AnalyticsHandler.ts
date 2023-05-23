@@ -410,6 +410,34 @@ class AnalyticsHandler extends BaseAnalyticsHandler {
     };
     this.track(event, properties);
   }
+
+  trackVerificationTaxSidebarCTAClicked(): void {
+    const event = 'Tax Sidebar CTA Clicked';
+    const category = 'verification';
+    const properties = { category };
+    this.track(event, properties);
+  }
+
+  trackVerificationTaxSidebarDetailsClicked(): void {
+    const event = 'Tax Details Clicked';
+    const category = 'verification';
+    const properties = { category };
+    this.track(event, properties);
+  }
+
+  trackVerificationTaxPricePageDetailsClicked(): void {
+    const event = 'Tax Price Page Details Clicked';
+    const category = 'verification';
+    const properties = { category };
+    this.track(event, properties);
+  }
+
+  trackVerificationTaxModalCTAClicked(): void {
+    const event = 'Tax Modal CTA Clicked';
+    const category = 'verification';
+    const properties = { category };
+    this.track(event, properties);
+  }
 }
 
 export default AnalyticsHandler;
