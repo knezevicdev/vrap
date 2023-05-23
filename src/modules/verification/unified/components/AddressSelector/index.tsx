@@ -22,6 +22,7 @@ export interface Address {
 }
 
 interface Props<T extends FieldValues> {
+  idPrefix: string;
   form: UseFormReturn<T>;
   fieldMap: SetRequired<
     Partial<Record<keyof Address | 'apt', Path<T>>>,
@@ -30,6 +31,7 @@ interface Props<T extends FieldValues> {
 }
 
 const AddressSelector = <T extends FieldValues>({
+  idPrefix,
   form,
   fieldMap,
 }: Props<T>): ReactElement => {
@@ -74,7 +76,8 @@ const AddressSelector = <T extends FieldValues>({
             label="Address"
             placeholder="Address"
             control={form.control}
-            id={fieldMap.addressLine}
+            id={`${idPrefix}${fieldMap.addressLine}`}
+            name={fieldMap.addressLine}
           />
         </Autocomplete>
       </Col>
@@ -88,7 +91,8 @@ const AddressSelector = <T extends FieldValues>({
           label="Apartment / Suite number (optional)"
           placeholder="Apartment / Suite number (optional)"
           control={form.control}
-          id={fieldMap.apt}
+          id={`${idPrefix}${fieldMap.apt}`}
+          name={fieldMap.apt}
         />
       </Col>
       <Col
@@ -101,7 +105,8 @@ const AddressSelector = <T extends FieldValues>({
           label="City"
           placeholder="City"
           control={form.control}
-          id={fieldMap.city}
+          id={`${idPrefix}${fieldMap.city}`}
+          name={fieldMap.city}
         />
       </Col>
       <Col size={1 / 2}>
@@ -109,7 +114,8 @@ const AddressSelector = <T extends FieldValues>({
           label="State"
           placeholder="State"
           control={form.control}
-          id={fieldMap.state}
+          id={`${idPrefix}${fieldMap.state}`}
+          name={fieldMap.state}
           options={STATES}
         />
       </Col>
@@ -118,7 +124,8 @@ const AddressSelector = <T extends FieldValues>({
           label="Zip Code"
           placeholder="Zip Code"
           control={form.control}
-          id={fieldMap.zip}
+          id={`${idPrefix}${fieldMap.zip}`}
+          name={fieldMap.zip}
         />
       </Col>
     </Row>

@@ -92,7 +92,7 @@ const OwnerInfoReview = () => {
               <Label>Phone</Label>
               <Field>
                 {displayPhoneNumber(
-                  verificationDetail.second_owner_phone_number
+                  verificationDetail.second_owner_phone_number || ''
                 )}
               </Field>
             </Info>

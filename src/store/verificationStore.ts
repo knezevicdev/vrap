@@ -248,11 +248,11 @@ export class VerificationStore {
       primaryOwner: data.is_owner ? 'Yes' : 'No',
       primaryFirst: data.owner_first_name,
       primaryLast: data.owner_last_name,
-      primaryCity: data.owner_mailing_address.city,
-      primaryState: data.owner_mailing_address.state,
-      primaryZip: data.owner_mailing_address.zipcode,
-      primaryAddress: data.owner_mailing_address.address_1,
-      primaryApartment: data.owner_mailing_address.address_2,
+      primaryCity: data.owner_mailing_address.city || '',
+      primaryState: data.owner_mailing_address.state || '',
+      primaryZip: data.owner_mailing_address.zipcode || '',
+      primaryAddress: data.owner_mailing_address.address_1 || '',
+      primaryApartment: data.owner_mailing_address.address_2 || '',
       primaryPhone: data.owner_phone_number,
       primaryEmail: data.owner_email_address,
       secondaryOwner:
@@ -262,15 +262,15 @@ export class VerificationStore {
           : data.owners_on_title === 1
           ? 'No'
           : undefined,
-      secondaryFirst: data.second_owner_first_name,
-      secondaryLast: data.second_owner_last_name,
-      secondaryCity: data.second_owner_mailing_address.city,
-      secondaryState: data.second_owner_mailing_address.state,
-      secondaryZip: data.second_owner_mailing_address.zipcode,
-      secondaryAddress: data.second_owner_mailing_address.address_1,
-      secondaryApartment: data.second_owner_mailing_address.address_2,
-      secondaryPhone: data.second_owner_phone_number,
-      secondaryEmail: data.second_owner_email_address,
+      secondaryFirst: data.second_owner_first_name || '',
+      secondaryLast: data.second_owner_last_name || '',
+      secondaryCity: data.second_owner_mailing_address.city || '',
+      secondaryState: data.second_owner_mailing_address.state || '',
+      secondaryZip: data.second_owner_mailing_address.zipcode || '',
+      secondaryAddress: data.second_owner_mailing_address.address_1 || '',
+      secondaryApartment: data.second_owner_mailing_address.address_2 || '',
+      secondaryPhone: data.second_owner_phone_number || '',
+      secondaryEmail: data.second_owner_email_address || '',
     };
 
     const pickupInfo = {
@@ -281,11 +281,11 @@ export class VerificationStore {
             ? 'Yes'
             : 'No'
           : undefined,
-      pickupCity: data.pickup_address.city,
-      pickupState: data.pickup_address.state,
-      pickupZip: data.pickup_address.zipcode,
-      pickupAddress: data.pickup_address.address_1,
-      pickupApartment: data.pickup_address.address_2,
+      pickupCity: data.pickup_address.city || '',
+      pickupState: data.pickup_address.state || '',
+      pickupZip: data.pickup_address.zipcode || '',
+      pickupAddress: data.pickup_address.address_1 || '',
+      pickupApartment: data.pickup_address.address_2 || '',
       poc:
         // eslint-disable-next-line no-nested-ternary
         data.same_contact_as_owner !== null

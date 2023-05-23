@@ -74,6 +74,7 @@ const LoanInformation = ({
             placeholder="Lienholder Name"
             label="Lienholder Name"
             id="manualBankName"
+            name="manualBankName"
             control={form.control}
           />
         </Col>
@@ -89,6 +90,7 @@ const LoanInformation = ({
             placeholder="(  ) ___-____"
             label="Phone number"
             id="phoneNumber"
+            name="phoneNumber"
             control={form.control}
             valueFormatter={displayPhoneNumber}
           />
@@ -104,6 +106,7 @@ const LoanInformation = ({
           placeholder="xxxxxxxxxxxx"
           label="Lien Account Number"
           id="accountNumber"
+          name="accountNumber"
           control={form.control}
           valueFormatter={(value: string) =>
             lettersNumbersHyphensOnly(value, 25)
@@ -122,6 +125,7 @@ const LoanInformation = ({
               placeholder="____"
               label="Last Four Digits of Social Security Number (optional)"
               id="lastFourDigits"
+              name="lastFourDigits"
               control={form.control}
               type="password"
             />
@@ -157,7 +161,8 @@ const LoanInformation = ({
           label="State"
           placeholder="State"
           control={form.control}
-          id="state"
+          id="loanState"
+          name="state"
           options={STATES}
         />
       </Col>

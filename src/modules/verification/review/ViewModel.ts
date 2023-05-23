@@ -54,13 +54,15 @@ export default class VerificationReviewSectionViewModel {
       owner_phone_number: verificationDetail?.owner_phone_number,
       owner_email_address: verificationDetail?.owner_email_address,
       owners_on_title: verificationDetail?.owners_on_title,
-      second_owner_first_name: verificationDetail?.second_owner_first_name,
-      second_owner_last_name: verificationDetail?.second_owner_last_name,
+      second_owner_first_name:
+        verificationDetail?.second_owner_first_name || '',
+      second_owner_last_name: verificationDetail?.second_owner_last_name || '',
       second_owner_mailing_address:
         verificationDetail?.second_owner_mailing_address,
-      second_owner_phone_number: verificationDetail?.second_owner_phone_number,
+      second_owner_phone_number:
+        verificationDetail?.second_owner_phone_number || '',
       second_owner_email_address:
-        verificationDetail?.second_owner_email_address,
+        verificationDetail?.second_owner_email_address || '',
       same_mailing_address: verificationDetail?.same_mailing_address,
       pickup_address: verificationDetail?.pickup_address,
       same_contact_as_owner: verificationDetail?.same_contact_as_owner,

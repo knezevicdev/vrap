@@ -53,7 +53,13 @@ export async function getInitialOptionsStoreState(
 
     const verificationData: Verification = verifyResponse.data.data;
     const optionState = {
-      mailingAddress: verificationData.owner_mailing_address,
+      mailingAddress: {
+        address_1: verificationData.owner_mailing_address.address_1 || '',
+        address_2: verificationData.owner_mailing_address.address_2 || '',
+        city: verificationData.owner_mailing_address.city || '',
+        state: verificationData.owner_mailing_address.state || '',
+        zipcode: verificationData.owner_mailing_address.zipcode || '',
+      },
       email: verificationData.email,
       currentPayments: verificationData.current_payments,
       poq: verificationData.poq,

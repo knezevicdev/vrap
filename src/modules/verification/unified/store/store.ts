@@ -153,11 +153,13 @@ const useVerificationStore = create<VerificationState>()((...a) => ({
       return {
         ...state,
         formState: verificationDetails.form_state,
-        firstOwnerState: verificationDetails.owner_mailing_address.state,
-        firstOwnerZip: verificationDetails.owner_mailing_address.zipcode,
-        firstOwnerCity: verificationDetails.owner_mailing_address.city,
-        firstOwnerApt: verificationDetails.owner_mailing_address.address_2,
-        firstOwnerAddress: verificationDetails.owner_mailing_address.address_1,
+        firstOwnerState: verificationDetails.owner_mailing_address.state || '',
+        firstOwnerZip: verificationDetails.owner_mailing_address.zipcode || '',
+        firstOwnerCity: verificationDetails.owner_mailing_address.city || '',
+        firstOwnerApt:
+          verificationDetails.owner_mailing_address.address_2 || '',
+        firstOwnerAddress:
+          verificationDetails.owner_mailing_address.address_1 || '',
         firstOwnerFirstName: verificationDetails.owner_first_name,
         firstOwnerLastName: verificationDetails.owner_last_name,
         firstOwnerPhoneNumber: verificationDetails.owner_phone_number,
@@ -167,29 +169,31 @@ const useVerificationStore = create<VerificationState>()((...a) => ({
         ),
         secondOwnerConfirmation,
         secondOwnerState:
-          verificationDetails.second_owner_mailing_address.state,
+          verificationDetails.second_owner_mailing_address.state || '',
         secondOwnerZip:
-          verificationDetails.second_owner_mailing_address.zipcode,
-        secondOwnerCity: verificationDetails.second_owner_mailing_address.city,
+          verificationDetails.second_owner_mailing_address.zipcode || '',
+        secondOwnerCity:
+          verificationDetails.second_owner_mailing_address.city || '',
         secondOwnerApt:
-          verificationDetails.second_owner_mailing_address.address_2,
+          verificationDetails.second_owner_mailing_address.address_2 || '',
         secondOwnerAddress:
-          verificationDetails.second_owner_mailing_address.address_1,
-        secondOwnerFirstName: verificationDetails.second_owner_first_name,
-        secondOwnerLastName: verificationDetails.second_owner_last_name,
-        secondOwnerPhoneNumber: verificationDetails.second_owner_phone_number,
-        secondOwnerEmail: verificationDetails.second_owner_email_address,
+          verificationDetails.second_owner_mailing_address.address_1 || '',
+        secondOwnerFirstName: verificationDetails.second_owner_first_name || '',
+        secondOwnerLastName: verificationDetails.second_owner_last_name || '',
+        secondOwnerPhoneNumber:
+          verificationDetails.second_owner_phone_number || '',
+        secondOwnerEmail: verificationDetails.second_owner_email_address || '',
         pickupAddressConfirmation: yesNoOrEmptyString(
           verificationDetails.same_mailing_address
         ),
         pickupContactConfirmation: yesNoOrEmptyString(
           verificationDetails.same_contact_as_owner
         ),
-        pickupState: verificationDetails.pickup_address.state,
-        pickupZip: verificationDetails.pickup_address.zipcode,
-        pickupCity: verificationDetails.pickup_address.city,
-        pickupApt: verificationDetails.pickup_address.address_2,
-        pickupAddress: verificationDetails.pickup_address.address_1,
+        pickupState: verificationDetails.pickup_address.state || '',
+        pickupZip: verificationDetails.pickup_address.zipcode || '',
+        pickupCity: verificationDetails.pickup_address.city || '',
+        pickupApt: verificationDetails.pickup_address.address_2 || '',
+        pickupAddress: verificationDetails.pickup_address.address_1 || '',
         pickupContactFirstName: verificationDetails.pickup_contact_first_name,
         pickupContactLastName: verificationDetails.pickup_contact_last_name,
         pickupContactPhoneNumber:

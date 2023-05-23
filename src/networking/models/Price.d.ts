@@ -44,35 +44,35 @@ export interface Verification {
   is_owner: boolean;
   owner_first_name: string;
   owner_last_name: string;
-  owner_mailing_address: {
+  owner_mailing_address: Partial<{
     address_1: string;
     address_2: string;
     city: string;
     state: string;
     zipcode: string;
-  };
+  }>;
   owner_phone_number: string;
   owner_email_address: string;
   owners_on_title: number;
-  second_owner_first_name: string;
-  second_owner_last_name: string;
-  second_owner_mailing_address: {
+  second_owner_first_name: string | null;
+  second_owner_last_name: string | null;
+  second_owner_mailing_address: Partial<{
     address_1: string;
     address_2: string;
     city: string;
     state: string;
     zipcode: string;
-  };
-  second_owner_phone_number: string;
-  second_owner_email_address: string;
+  }>;
+  second_owner_phone_number: string | null;
+  second_owner_email_address: string | null;
   same_mailing_address: boolean | null;
-  pickup_address: {
+  pickup_address: Partial<{
     address_1: string;
     address_2: string;
     city: string;
     state: string;
     zipcode: string;
-  };
+  }>;
   same_contact_as_owner: boolean | null;
   pickup_contact_first_name: string;
   pickup_contact_last_name: string;

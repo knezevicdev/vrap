@@ -3,10 +3,12 @@ import React from 'react';
 import { FieldValues, Path, useController } from 'react-hook-form';
 import { Control } from 'react-hook-form/dist/types';
 
-interface Props<T extends FieldValues> {
+interface Props<T extends FieldValues>
+  extends React.InputHTMLAttributes<HTMLInputElement> {
   placeholder: string;
   label: string;
-  id: Path<T>;
+  id: string;
+  name: Path<T>;
   control: Control<T>;
   type?: string;
   valueFormatter?: (value: string) => string;
@@ -16,16 +18,18 @@ const Input = <T extends FieldValues>({
   placeholder,
   label,
   id,
+  name,
   control,
   type = 'text',
   valueFormatter,
+  ...props
 }: Props<T>) => {
   const {
     field: { onChange, onBlur, value },
     fieldState: { error },
     formState: { isSubmitting },
   } = useController({
-    name: id,
+    name,
     control,
   });
 
@@ -34,6 +38,7 @@ const Input = <T extends FieldValues>({
       placeholder={placeholder}
       label={label}
       id={id}
+      name={name}
       type={type}
       error={error?.message}
       onChange={(event) => {
@@ -45,6 +50,7 @@ const Input = <T extends FieldValues>({
       onBlur={onBlur}
       value={value}
       disabled={isSubmitting}
+      {...props}
     />
   );
 };
