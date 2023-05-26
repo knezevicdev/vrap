@@ -1,6 +1,4 @@
-import {
-  AnalyticsSnippet,
-} from '@vroom-web/analytics-integration';
+import { AnalyticsSnippet } from '@vroom-web/analytics-integration';
 import getConfig from 'next/config';
 import Document, {
   DocumentContext,
