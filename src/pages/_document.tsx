@@ -1,7 +1,4 @@
-import {
-  AnalyticsSnippet,
-  getRestrictedAdvertising,
-} from '@vroom-web/analytics-integration';
+import { AnalyticsSnippet } from '@vroom-web/analytics-integration';
 import getConfig from 'next/config';
 import Document, {
   DocumentContext,
@@ -21,12 +18,10 @@ const ANALYTICS_DISABLE_PII_PERSISTENCE =
   publicRuntimeConfig.ANALYTICS_DISABLE_PII_PERSISTENCE;
 const GOOGLE_MAPS_API_KEY = publicRuntimeConfig.GOOGLE_MAPS_API_KEY;
 
-export default class AppraisalDocument extends Document<
-  DocumentInitialProps & { restrictedAdvertising: boolean }
-> {
+export default class AppraisalDocument extends Document {
   static async getInitialProps(
     ctx: DocumentContext
-  ): Promise<DocumentInitialProps & { restrictedAdvertising: boolean }> {
+  ): Promise<DocumentInitialProps> {
     const styledComponentsSheet = new ServerStyleSheet();
     const originalRenderPage = ctx.renderPage;
 
@@ -38,12 +33,8 @@ export default class AppraisalDocument extends Document<
         });
 
       const initialProps = await Document.getInitialProps(ctx);
-      const isRestrictedAdvertising = getRestrictedAdvertising(
-        ctx.req?.headers.cookie
-      );
       return {
         ...initialProps,
-        restrictedAdvertising: isRestrictedAdvertising,
         styles: [initialProps.styles, styledComponentsSheet.getStyleElement()],
       };
     } finally {
@@ -59,7 +50,6 @@ export default class AppraisalDocument extends Document<
           {segmentWriteKey && (
             <AnalyticsSnippet
               segmentWriteKey={segmentWriteKey}
-              restrictedAdvertising={this.props.restrictedAdvertising}
               disableClientPersistence={Boolean(
                 parseInt(ANALYTICS_DISABLE_PII_PERSISTENCE)
               )}
