@@ -28,6 +28,12 @@ export default requestHandler(
     });
 
     if (!isRecaptchaValid) {
+      logger.warn(`Google reCAPTCHA token ${token} failed validation.`, {
+        appraisalApiRoute,
+        request_payload: req.body,
+        fpid,
+        ajs_anonymous_id,
+      });
       res.status(400).json({
         status: 'error',
         message: `Google reCAPTCHA token ${token} failed validation.`,
@@ -36,6 +42,16 @@ export default requestHandler(
     }
 
     if (!checkBotActivity(req)) {
+      logger.warn(`Bot activity detected.`, {
+        appraisalApiRoute,
+        request_payload: req.body,
+        fpid,
+        ajs_anonymous_id,
+        referrer: req.headers.referer || req.headers.referrer,
+        user_agent: req.headers['user-agent'],
+        signature: req.headers['x-signature'],
+        token: req.headers['x-token'],
+      });
       res.status(400).end();
       return;
     }
