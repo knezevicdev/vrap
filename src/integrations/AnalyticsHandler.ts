@@ -389,11 +389,18 @@ class AnalyticsHandler extends BaseAnalyticsHandler {
   trackDocTypeUploadError(
     docType: string,
     priceId: string,
-    errorMessage: string
+    errorMessage: string,
+    errorObject: Record<string, unknown> = {}
   ): void {
     const event = `${docType} Doc Upload Failed`;
     const category = 'verification';
-    const properties = { category, priceId, errorMessage, docType };
+    const properties = {
+      category,
+      priceId,
+      errorMessage,
+      docType,
+      ...errorObject,
+    };
     this.track(event, properties);
   }
 

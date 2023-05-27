@@ -57,18 +57,19 @@ export const uploadVerificationDocument = async (
     file_type: fileType,
     original_file_name: encodeURIComponent(file.name),
   });
-  if (isErrorResponse(verificationUrl))
-    throw new VerificationDocumentUploadError();
+  if (isErrorResponse(verificationUrl)) throw verificationUrl.error;
 
   const uploadFileResponse = await uploadVerificationFile(
     verificationUrl.data.data.FileUploadURL,
     file
   );
-  if (isErrorResponse(uploadFileResponse))
-    throw new VerificationDocumentUploadError();
+  if (isErrorResponse(uploadFileResponse)) throw uploadFileResponse;
 
   const verificationKey = fileTypeVerificationFieldMap[fileType];
-  if (!verificationKey) throw new VerificationDocumentUploadError();
+  if (!verificationKey)
+    throw new VerificationDocumentUploadError(
+      `Unknown document file type ${fileType}`
+    );
   const updateVerificationResponse = await updateVerification(
     {
       [verificationKey]: verificationUrl.data.data.id,
@@ -76,7 +77,7 @@ export const uploadVerificationDocument = async (
     priceId
   );
   if (isErrorResponse(updateVerificationResponse))
-    throw new VerificationDocumentUploadError();
+    throw updateVerificationResponse;
 
   return {
     verificationKey,
