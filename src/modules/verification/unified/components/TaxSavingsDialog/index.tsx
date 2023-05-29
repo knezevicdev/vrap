@@ -30,7 +30,8 @@ const TaxSavingsDialog: React.FC<{
         <br />
         We estimate that{' '}
         <DialogImportnat>
-          you can save {displayCurrency(taxSavings)} in {taxState} sales tax
+          you can save appx. {displayCurrency(taxSavings)} in {taxState} sales
+          tax
         </DialogImportnat>
         .
       </DialogText>
