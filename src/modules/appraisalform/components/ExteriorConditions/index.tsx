@@ -128,7 +128,8 @@ const ExteriorConditions: React.FC<Props> = ({ fields, form }) => {
         </PanelsWrapper>
       )}
       <StyledCheckbox
-        label="Dents or Dings"
+        label="Minor Dents or Dings"
+        description="Larger than ½″ in size"
         onChange={handleCheckChange(
           fields,
           'dents',
@@ -175,7 +176,7 @@ const ExteriorConditions: React.FC<Props> = ({ fields, form }) => {
         dataQa="fireDamage"
       />
       <StyledCheckbox
-        label="Worn Tires"
+        label="Tire(s) requiring replacement"
         onChange={handleCheckChange(
           fields,
           'wornTires',
@@ -185,7 +186,7 @@ const ExteriorConditions: React.FC<Props> = ({ fields, form }) => {
         checked={fields.wornTires?.value === 'Yes'}
         id="wornTires"
         dataQa="wornTires"
-        description="At least one tire needing replacement"
+        description="1 or more mismatched or worn tires"
       />
       <StyledCheckbox
         label="Windshield is cracked/chipped"
@@ -213,6 +214,7 @@ const ExteriorConditions: React.FC<Props> = ({ fields, form }) => {
       />
       <StyledCheckbox
         label="Major Damage"
+        description="Panel(s) requiring repair or replacement"
         onChange={handleCheckChange(
           fields,
           'majorDamageExterior',

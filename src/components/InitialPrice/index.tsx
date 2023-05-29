@@ -87,7 +87,7 @@ const InitialPrice: React.FC<{ store: PriceStore }> = ({ store }) => {
           <TaxSavings>
             You may be eligible to{' '}
             <TaxImportant>
-              save {displayCurrency(taxSavings)} in sales tax
+              save appx. {displayCurrency(taxSavings)} in sales tax
             </TaxImportant>{' '}
             by trading in.{' '}
             <TaxLink

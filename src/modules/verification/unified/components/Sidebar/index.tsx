@@ -43,7 +43,7 @@ const VerificationSidebar = ({ offer, offerZip }: Props) => {
             <ListItem>
               You may be eligible to{' '}
               <SidebarImportant>
-                save {displayCurrency(taxSavings)} in sales tax
+                save appx. {displayCurrency(taxSavings)} in sales tax
               </SidebarImportant>{' '}
               by trading in.{' '}
               <SidebarLink
