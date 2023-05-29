@@ -10,6 +10,7 @@ import { VerificationDocumentKey } from '../../store/documentsVerification';
 import useVerificationStore from '../../store/store';
 
 import AnalyticsHandler from 'src/integrations/AnalyticsHandler';
+import serializeError from 'src/utils/serializeError';
 
 export const documentUploadProps: Record<
   VerificationDocumentKey,
@@ -121,7 +122,8 @@ const useGetDocumentUploadProps = () => {
         analyticsHandler.current.trackDocTypeUploadError(
           type,
           priceId,
-          message
+          message,
+          serializeError(e)
         );
         return false;
       }

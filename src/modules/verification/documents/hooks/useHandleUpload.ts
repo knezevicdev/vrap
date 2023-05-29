@@ -8,6 +8,7 @@ import {
 
 import { useAppStore } from 'src/context';
 import AnalyticsHandler from 'src/integrations/AnalyticsHandler';
+import serializeError from 'src/utils/serializeError';
 
 interface UseHandleUpload {
   handleUpload: (
@@ -44,7 +45,8 @@ const useHandleUpload = (priceId: string): UseHandleUpload => {
         analyticsHandler.current.trackDocTypeUploadError(
           type,
           priceId,
-          message
+          message,
+          serializeError(e)
         );
         return false;
       }
