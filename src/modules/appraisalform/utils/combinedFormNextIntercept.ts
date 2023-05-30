@@ -55,7 +55,6 @@ const combinedFormNextIntercept =
       [
         appraisalUseForm.intConditionForm.fields.ripsOrTearsInSeats.value,
         appraisalUseForm.intConditionForm.fields.damagedElectronic.value,
-        appraisalUseForm.intConditionForm.fields.damagedDashboardOrPanels.value,
         appraisalUseForm.intConditionForm.fields.majorDamageInterior.value,
       ].includes('Yes')
     ) {
