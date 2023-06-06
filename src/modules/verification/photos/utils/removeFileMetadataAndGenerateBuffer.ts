@@ -28,7 +28,7 @@ const removeFileMetadataAndGenerateBuffer = async (
         resolve(null);
         return;
       }
-      canvas.toBlob(resolve, file.type);
+      canvas.toBlob(resolve, 'image/jpeg', 1);
     })) as Blob | null;
     if (!newBlob) throw new Error('Could not generate new blob');
 
