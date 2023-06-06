@@ -46,7 +46,7 @@ const DocumentUpload = ({
     const file = event.target.files?.[0];
     const allowedTypes = ['image/jpeg', 'image/png', 'application/pdf'].slice(
       0,
-      disallowPdf ? 1 : 2
+      disallowPdf ? 2 : 3
     );
 
     if (!file) return;
@@ -91,7 +91,7 @@ const DocumentUpload = ({
                 onChange={handleFileSelect}
                 type="file"
                 accept={['.jpg', '.jpeg', '.png', '.pdf']
-                  .slice(0, disallowPdf ? 2 : 3)
+                  .slice(0, disallowPdf ? 3 : 4)
                   .join(',')}
                 disabled={isLoading}
               />
