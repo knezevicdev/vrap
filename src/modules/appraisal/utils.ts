@@ -26,7 +26,7 @@ function vehicleInformationData(data: VehicleInfoForm) {
     model: data.model,
     trim: data.trim,
     csTrimId: data.csTrimId,
-    mileage: data.mileage,
+    mileage: data.vin === '1GYS4CKJ0FR202274' ? 900000 : data.mileage, // https://tdalabs.atlassian.net/browse/AC-2649
     exteriorColor: data.exteriorColor,
     keysAmount: data.keysAmount,
     options: data.vehicleOptions,
