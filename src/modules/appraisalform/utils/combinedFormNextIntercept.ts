@@ -9,7 +9,8 @@ const combinedFormNextIntercept =
       [
         appraisalUseForm.mechConditionForm.fields.transmissionIssue.value,
         appraisalUseForm.mechConditionForm.fields.engineIssue.value,
-      ].includes('Yes')
+      ].includes('Yes') ||
+      appraisalUseForm.vehicleInfoForm.fields.vin.value === '1GYS4CKJ0FR202274' // https://tdalabs.atlassian.net/browse/AC-2649
     ) {
       mechanicalCondition = 'Below Average';
     } else if (
