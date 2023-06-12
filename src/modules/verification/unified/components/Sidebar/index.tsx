@@ -12,7 +12,6 @@ import {
   SidebarTitle,
 } from './Style.css';
 
-import useIsInExperiment from 'src/hooks/useIsInExperiment';
 import AnalyticsHandler from 'src/integrations/AnalyticsHandler';
 import { displayCurrency } from 'src/utils';
 
@@ -25,9 +24,6 @@ const VerificationSidebar = ({ offer, offerZip }: Props) => {
   const analyticsHandler = useRef(new AnalyticsHandler());
   const [showDialog, setShowDialog] = useState(false);
   const { taxState, taxSavings } = useTaxSavings(offer, offerZip);
-
-  const { isInExperiment } = useIsInExperiment('suyc-sales-tax');
-  if (!isInExperiment) return null;
 
   return (
     <>
