@@ -32,7 +32,7 @@ const VerificationSidebar = ({ offer, offerZip }: Props) => {
   return (
     <>
       <Sidebar>
-        <SidebarTitle>Trade-in and save</SidebarTitle>
+        <SidebarTitle id="tradein">Trade-in and save</SidebarTitle>
         <List>
           <ListItem>
             Lower down and monthly payments with {displayCurrency(offer)}{' '}

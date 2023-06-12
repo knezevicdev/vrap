@@ -16,7 +16,7 @@ import { Icons } from 'src/core/Icon';
 const Questions = () => {
   return (
     <div>
-      <StyledHero>Questions?</StyledHero>
+      <StyledHero id="faq">Questions?</StyledHero>
       <StyledContainer>
         <IconSection>
           <Icon icon={Icons.FAQ} />
