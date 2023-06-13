@@ -8,6 +8,9 @@ const { serverRuntimeConfig } = getConfig();
 
 export default requestHandler(
   async (req: NextApiRequest, res: NextApiResponse): Promise<void> => {
+    res.json([]);
+    return;
+
     try {
       const response = await axios.get(
         `${serverRuntimeConfig.APPRAISAL_API_URL}/api/v2.0/images/${req.query.vin}?uploaderType=verification`,

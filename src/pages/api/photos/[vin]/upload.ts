@@ -17,6 +17,9 @@ export const config = {
 
 export default requestHandler(
   async (req: NextApiRequest, res: NextApiResponse): Promise<void> => {
+    return res.json([]);
+    return;
+
     const { fileType, priceId } = req.query;
     if (
       !fileType ||
