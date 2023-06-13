@@ -84,8 +84,8 @@ export function validateZipCode(
     Boolean(
       restrictedStates.find(
         (restrictedState) =>
-          restrictedState.zipCodeMin >= zipcode &&
-          restrictedState.zipCodeMax <= zipcode
+          restrictedState.zipCodeMin <= zipcode &&
+          restrictedState.zipCodeMax >= zipcode
       )
     ) ||
     Boolean(
