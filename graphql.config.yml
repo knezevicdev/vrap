@@ -1,0 +1,8 @@
+schema: src/graphql/schema.graphql
+extensions:
+  endpoints:
+    Gearbox GraphQL Endpoint:
+      url: https://dev.vroom.com/gql
+      headers:
+        user-agent: JS GraphQL
+      introspect: true

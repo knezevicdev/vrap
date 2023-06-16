@@ -1,0 +1,2224 @@
+# This file was generated. Do not edit manually.
+
+schema {
+    query: Query
+    mutation: Mutation
+}
+
+directive @hasAccepetedSteps on FIELD_DEFINITION
+
+directive @hasRole(role: Role!) on FIELD_DEFINITION
+
+union ActiveLoginsResponseResult = APIError | ActiveLoginsResponse
+
+union CarriersResult = APIError | CarriersArray
+
+union CheckSubscriptionResult = Check | ValidationError
+
+union CreateDeviceResult = Device | ValidationError
+
+union CreateSubscriptionResult = DuplicateSubscriptionError | SubjectSubscription | ValidationError
+
+union DealDeleteResult = APIError | DeleteDeal
+
+union DealResult = APIError | Deal
+
+union DealV3Result = APIError | DealV3
+
+union DepositResult = APIError | DepositResponse
+
+union GetTokensResponseResult = APIError | GetTokensResponse
+
+union LeadApiResponse = APIError | LeadResponseData
+
+union MetadataResult = APIError | MetadataArray
+
+union OrderTrackingResult = APIError | OrderTracking
+
+union PortalShipmentsResult = APIError | PortalShipmentsArray
+
+union PortalUserStatusResult = APIError | StringArray
+
+union PortalUsersResult = APIError | PortalUsersArray
+
+union PreSignupResponseResult = APIError | PreSignupResponse
+
+union PrequalResponses = CreditRecordNotFoundError | PrequalResponse | ValidationError
+
+union ShippingResult = APIError | ShippingArray
+
+union StringArrayResult = APIError | StringArray
+
+union SubscriptionResponse = IterableSubscription
+
+union SubscriptionUpdateResult = IterableSourceData
+
+union UserCreateResult = APIError | PortalUser
+
+union UserSessionResponseResult = APIError | UserSessionResponse
+
+union UserUpdateResult = APIError | PortalUser
+
+type APIError {
+    errorDetail: String!
+    errorTitle: String!
+    errorType: ErrorType!
+}
+
+type Account {
+    firstName: String!
+    lastName: String!
+    middleName: String!
+    phone: String!
+    userName: String!
+}
+
+type AccountDS {
+    firstName: String!
+}
+
+type AccountResponse {
+    active: String!
+    external_user_id: String!
+    ip_address: String!
+    person: PersonResponse
+    user_agent: String!
+    username: String!
+}
+
+type ActiveLogins {
+    account_id: Int!
+    account_login_id: String!
+    active: Boolean!
+    client_ip: String
+    created: String!
+    fpid: String
+    fsid: String
+    geoip_city: String
+    geoip_country: String
+    geoip_dma: String
+    geoip_lat: String
+    geoip_lon: String
+    geoip_postal_code: String
+    geoip_province: String
+    identity_provider: String!
+    segment_anonimous_id: String
+    user_agent: String
+}
+
+type ActiveLoginsResponse {
+    activeLogins: [ActiveLogins]
+}
+
+type AdditionalProduct {
+    childProductCodes: [String!]
+    cost: Float!
+    dealerCost: Float!
+    deductible: Float!
+    id: String
+    isBundled: Boolean!
+    maxTerm: Int!
+    miles: Int!
+    monthlyCost: Float!
+    months: Int!
+    name: String!
+    planCode: String!
+    planSku: String!
+    productCode: String!
+    retailRate: Float!
+    selected: Boolean!
+    summary: String!
+}
+
+type Address {
+    city: String!
+    country: String!
+    firstName: String!
+    id: ID!
+    lastName: String!
+    postCode: String!
+    state: String!
+    streetLine1: String!
+    streetLine2: String!
+    type: String!
+}
+
+type AddressDTO {
+    city: String!
+    country: String
+    county: String!
+    firstName: String!
+    id: Int!
+    lastName: String!
+    postCode: String!
+    state: String!
+    streetLine1: String!
+    streetLine2: String!
+    type: String!
+}
+
+type AddressItem {
+    addressLine1: String!
+    addressLine2: String
+    city: String!
+    country: String
+    county: String
+    fullAddress: String
+    latitude: Float
+    locationType: String
+    longitude: Float
+    matchType: String
+    neighborhood: String
+    partialMatch: Boolean
+    postCodeLocalities: [String]
+    state: String!
+    zipCode: String!
+    zipCodeSuffix: String
+}
+
+type AmountDue {
+    cashDownPayment: Float!
+    documentationFee: Float!
+    duplicateTitleFee: Float!
+    inspectionFee: Float!
+    inventoryTaxFee: Float!
+    inventoryTaxRate: Float!
+    licenseAndRegistrationFee: Float!
+    otherStateTaxes: Float!
+    salesTaxAmount: Float!
+    salesTaxPercentage: Float!
+    shippingFee: Float
+    shippingFeeEstimate: Float!
+    subTotal: Float!
+    taxableAmount: Float!
+    titleFee: Float!
+    titlingCompanyFee: Float!
+    totalBalanceDue: Float!
+    totalStateFees: Float!
+    totalTaxes: Float!
+    totalTaxesAndFees: Float!
+    tradeIn: AmountDueTradeIn
+}
+
+type AmountDueTradeIn {
+    loanPayoff: Float!
+    netBalance: Float!
+    totalDownPayment: Float!
+    value: Float!
+}
+
+type Appraisal {
+    appraisaloffer: [AppraisalOffer]
+    conditionData: ConditionData
+    created: Time!
+    dsUUID: String
+    expectedOffer: Int
+    exteriorColor: String
+    offerStatus: String!
+    options: [String!]
+    otherAfterMarket: String
+    price: Float
+    sellTiming: String
+    sfid: String!
+    source: String!
+    vehicle: Vehicle!
+    xkeAppraisalId: Int!
+    zipcode: String
+}
+
+type AppraisalOffer {
+    automatedAppraisal: Boolean!
+    created: Time!
+    email: String!
+    goodUntil: String
+    id: String!
+    isPaymentPast7days: Boolean!
+    lastPaymentSentDate: Time
+    offerEmail: Email!
+    offerStatus: String!
+    paymentType: String
+    price: Float
+    sfOfferId: String
+    vehicle: Vehicle!
+    xkeOfferId: Int!
+}
+
+type AutoFiResponse {
+    customerProfile: String!
+    loanApplicationExpires: String!
+    loanApplicationID: String!
+    referenceID: String!
+    url: String!
+}
+
+type BasicData {
+    database: String
+    make: String!
+    model: String!
+    source: String!
+    year: Int!
+}
+
+type Bracket {
+    fee: Float!
+    maxDistanceInMiles: Int!
+}
+
+type Carrier {
+    carrier: String!
+    carrier_code: String!
+    carrier_id: Int!
+}
+
+type CarrierTracker {
+    isTrackingAvailable: Boolean!
+    trackingNumber: String!
+    trackingUrl: String!
+}
+
+type CarriersArray {
+    carriers: [Carrier!]!
+}
+
+type CaseQuestion {
+    action: String!
+    descriptions: String!
+    order: Int!
+    questionId: String!
+}
+
+type CaseResponse {
+    status: String!
+}
+
+type CaseTopic {
+    name: String!
+    order: Int!
+    questions: [CaseQuestion]
+    topicId: String!
+}
+
+type CentralizedHoldResponse {
+    depositAmount: Float!
+    display: String!
+    isNonRefundable: Boolean!
+}
+
+type Check {
+    exists: Boolean!
+}
+
+type ColorData {
+    colors: [String]
+    source: String
+}
+
+type ConditionData {
+    additionalDetails: String
+    afterMarket: [String!]
+    exteriorCondition: String!
+    floodFireDamage: String!
+    hailDamage: String!
+    hasAccident: String!
+    interiorCondiotn: String!
+    keysAmount: Int!
+    mechanicalCondition: String!
+    otherWarning: String
+    runnable: String!
+    seats: String!
+    smokedIn: String!
+    tiresAndWheels: String!
+    titleStatus: String!
+    warningLights: String!
+    warningLightsValues: [String!]
+}
+
+type Consents {
+    emailMarketing: String!
+    smsMarketing: String!
+}
+
+type ConsumerReports {
+    consumerReportsText: String!
+    creditHistoryLink: String!
+}
+
+type ContractInfo {
+    url: String!
+}
+
+type ContractSummary {
+    docusignEnvelopeId: String!
+    docusignStatus: String!
+    referenceId: String!
+    status: String!
+}
+
+type CoordinatePair {
+    lat: Float!
+    lon: Float!
+}
+
+type CreatePaymentResponse {
+    OfferId: String!
+    PaymentMethod: String!
+}
+
+type CreateUserPaymentAccountResponse {
+    PaymentAccountId: String!
+}
+
+type CreditApplication {
+    offerPreferences: CreditOfferPreferences!
+}
+
+type CreditOffer {
+    TotalOfPayments: Float!
+    amountFinanced: Float!
+    downPayment: Float!
+    financeCharge: Float!
+    lenderName: String!
+    monthlyPayment: Float!
+    netCheck: Int!
+    rate: Float!
+    reasonDeclined: String
+    referenceID: String!
+    status: String!
+    term: Int!
+}
+
+type CreditOfferPreferences {
+    annualMileage: Int!
+    apr: Float!
+    downPayment: Int!
+    requestedOfferType: String!
+    term: Int!
+}
+
+type CreditRecordNotFoundError {
+    beItFound: String
+}
+
+type CreditResponse {
+    agentUrl: String!
+    customerProfile: String!
+    loanApplicationExpires: String!
+    loanApplicationId: String!
+    referenceId: String!
+    url: String!
+}
+
+type Customer {
+    customer_id: Int!
+    email: String
+    name: String
+    phone: String
+}
+
+type Deal {
+    TradeIns: [TradeIn!]
+    accountID: Int!
+    businessName: String
+    createdAt: Time!
+    dealID: Int!
+    dealSummary: DealSummary!
+    dealType: String!
+    externalDealID: String!
+    payments: [Payment!]
+    registrationDmv: registrationDmv
+    stips: [DealStip!]
+    updatedAt: Time!
+    versionNumber: Int!
+}
+
+type DealState {
+    created: Time
+    mappings: Map!
+    status: String!
+    value: String!
+}
+
+type DealStatus {
+    awaitingContracting: Boolean!
+    backendProductsStepDone: Boolean!
+    canBeCancelled: Boolean!
+    contractingStepDone: Boolean!
+    docUploadStepDone: Boolean!
+    errorDetail: String
+    frozen: Boolean! @deprecated(reason: "Use `supportNeeded`.")
+    interestedInTrade: Boolean!
+    isDeliveryDetailsTest: Boolean!
+    licenseState: String
+    pastSteps: [String]
+    plateWillBeTransferred: Boolean!
+    reason: String
+    status: String!
+    step: String!
+    supportNeeded: Boolean!
+}
+
+type DealStatusSummary {
+    account: AccountDS!
+    documentUploadRequested: Boolean!
+    payments: PaymentDS!
+    vehicle: VehicleDS!
+    vin: String!
+}
+
+type DealStip {
+    approved: Time
+    approvedBy: String
+    createdBy: String
+    description: String
+    fileID: String
+    isWet: Boolean!
+    lastRejected: Time
+    name: String
+    rejectedReason: String
+    stage: String
+    status: DocumentMetadataStatus!
+    stipsCode: String!
+}
+
+type DealStipPropertyUpdate {
+    newValue: String!
+    oldValue: String!
+    property: String!
+}
+
+type DealStipUpdateResponse {
+    dealStipUpdates: [DealStipPropertyUpdate]!
+    emailsTriggered: [String]!
+}
+
+type DealSummary {
+    accountInfo: Account
+    additionalProducts: Map
+    amountDue: AmountDue
+    autoFiResponse: AutoFiResponse
+    billingAddress: AddressDTO
+    calculateEstimatedDeliveryDuration: Boolean!
+    credit: CreditApplication
+    dateCompleted: Time
+    dealStatus: DealStatus!
+    deliveryAddress: AddressDTO
+    deliveryDays: String
+    deliveryDetails: DeliveryDetails
+    depositPaymentInfo: DepositPayment
+    documents: [DocumentMetadata!]
+    estimatedDeliveryDuration: String
+    financing: Financing
+    installFrontPlate: Boolean
+    inventory: Inventory
+    militaryServiceMember: Boolean
+    paymentType: String!
+    progressiveDisclosureInformation: DisclosureInformationResponse
+    progressiveRateInformation: RateInformation
+    registrationAddress: AddressDTO
+    searchedInventory: InvSearchVehicleData
+    taxesAndFees: TaxesAndFees
+    uaccOffers: [CreditOffer!]
+}
+
+type DealV3 {
+    Payments: [PaymentV3!]
+    TradeIns: [TradeIn!]
+    accountID: Int!
+    businessName: String
+    contract: GetContractJobResponse
+    createdAt: Time!
+    dealSummary: DealSummary!
+    dealType: String!
+    externalDealID: String!
+    registrationDmv: registrationDmv
+    stips: [DealStip!]
+    updatedAt: Time!
+    versionNumber: Int!
+}
+
+type DefectPhotos {
+    defectType: String!
+    location: String!
+    url: String!
+}
+
+type DeleteDeal {
+    result: Boolean!
+}
+
+type DeliveryDetails {
+    additionalDetails: String
+    alternateContact: PointOfContact
+    availableForDelivery: Boolean!
+    unavailableDates: [Time!]
+    wheelerTruck: Boolean!
+}
+
+type DepositPayment {
+    ChargeAmount: Float!
+    DepositCaptured: Boolean!
+    DepositDate: Time
+    HoldID: String!
+    HoldPlaced: Boolean!
+    IsNonRefundable: Boolean!
+    LastFourDigits: Int!
+    NameOnCard: String!
+    StripeAuthChargeID: String!
+}
+
+type DepositResponse {
+    data: String!
+}
+
+type Device {
+    id: String!
+    type: DeviceType!
+}
+
+type DisclosureInformationResponse {
+    advertisingSourceCode: String
+    disclosureId: String!
+    embeddedDisclosurePages: [EmbeddedDisclosurePage]
+    errorViewModel: ErrorViewModel!
+    infoDisclosure: InfoDisclosure!
+    partnerCode: String
+}
+
+type DocumentMetadata {
+    approved: Time
+    approvedBy: String
+    description: String
+    fileID: String
+    fileType: String!
+    isWet: Boolean!
+    lastRejectedTS: Time
+    name: String
+    rejectedReason: String
+    requested: Time
+    status: DocumentMetadataStatus!
+    uploaded: Time
+}
+
+type DuplicateSubscriptionError {
+    message: String!
+}
+
+type Email {
+    email: String!
+    type: String!
+}
+
+type EmbeddedDisclosurePage {
+    buttonText: String!
+    headerText: String!
+    pageType: String!
+    subHeaderText: String
+}
+
+type ErrorDetail {
+    message: String!
+    path: String!
+    property: String!
+}
+
+type ErrorViewModel {
+    errorCallbackURL: String
+    errorReason: String
+}
+
+type FavoriteVehicles {
+    vin: String!
+}
+
+type Fee {
+    amount: String!
+    code: String!
+    description: String!
+}
+
+type File {
+    downloadURL: String!
+    extension: String!
+    fileExtension: String!
+    fileSize: Int!
+    id: ID!
+    isThumbnail: String!
+    originalFileName: String!
+    type: String!
+}
+
+type FileUploadURL {
+    fileExtension: String!
+    fileID: String!
+    fileType: String!
+    originalFileName: String!
+    uploadURL: String!
+}
+
+type Financing {
+    decisions: [LoanDecision!]
+    loanApplicationId: String!
+    pricingStack: LoanPricingStack
+    referenceId: String!
+    state: String!
+}
+
+type GetContractJobResponse {
+    Created: Time!
+    DocusignEnvelopeId: String
+    DocusignStatus: String
+    Id: String!
+    ReferenceId: String!
+    RunId: String!
+    Status: String
+    Updated: Time!
+}
+
+type GetDocuSignUrlResponse {
+    isContractAvailable: Boolean!
+    isContractSigned: Boolean!
+    url: String!
+}
+
+type GetLocalDocuSignContractResponse {
+    fileDownloadURL: String!
+}
+
+type GetTokensResponse {
+    accessToken: String!
+    accountID: Int!
+    externalUserID: String!
+    idToken: String!
+    refreshToken: String!
+}
+
+type ImageURL {
+    image: String!
+    thumbnail: String!
+}
+
+type InfoDisclosure {
+    condensedInfoDisclosure: String!
+    consumerReports: ConsumerReports
+    expandedInfoDisclosure: String!
+    extraordinaryLifeCircumstanceText: String!
+    privacyPolicyLink: String!
+    sixMonthPolicyDisclosure: String!
+}
+
+type InvSearchCounterData {
+    count: Int!
+    key: String!
+}
+
+type InvSearchCounterMakeModelData {
+    count: Int!
+    make: String!
+    models: [InvSearchCounterData!]!
+}
+
+type InvSearchCounters {
+    bodyType: [InvSearchCounterData!]
+    driveTrain: [InvSearchCounterData!]
+    makesModels: [InvSearchCounterMakeModelData!]
+    trans: [InvSearchCounterData!]
+}
+
+type InvSearchResult {
+    counts: InvSearchCounters
+    hits: Int!
+    vehicles: [InvSearchVehicleData!]
+}
+
+type InvSearchVehicleData {
+    basicWarrantyExpirationDate: String!
+    basicWarrantyMiles: Int!
+    basicWarrantyRemainingMiles: Int!
+    bodyType: String!
+    carStatus: Int!
+    cityMpg: Int!
+    color: String!
+    combinedMpg: Int!
+    cylinders: Int!
+    defectPhotos: [DefectPhotos!]
+    deliveryDays: String!
+    diesel: Int!
+    doorCount: Int!
+    driveType: String!
+    drivetrainWarrantyExpirationDate: String!
+    drivetrainWarrantyMiles: Int!
+    drivetrainWarrantyRemainingMiles: Int!
+    engine: String!
+    extColor: String!
+    frontTrackWidth: Float!
+    fuelType: String!
+    geoLocation: String!
+    groundClearance: Float!
+    hasStockPhotos: Boolean!
+    height: Float!
+    highwayMpg: Int!
+    hiresPhotos: [String!]
+    intColor: String!
+    interiorPhotoUrlHiRes: String!
+    inventoryId: Int!
+    isAvailableToSell: Boolean!
+    isTitleQAPass: Boolean!
+    leadFlagPhotoUrl: String!
+    leadPhotoUrl: String!
+    length: Float!
+    listingPrice: Int!
+    location: String!
+    make: String!
+    makeSlug: String!
+    miles: Int!
+    model: String!
+    modelSlug: String!
+    optionalFeatures: String!
+    ownerCount: Int!
+    partnerId: String!
+    rearTrackWidth: Float!
+    shippingDistance: Float!
+    shippingFee: Float!
+    shippingFeeOnCatalog: String!
+    soldStatus: Int!
+    spincarSpinUrl: String
+    stockLeadFlagPhotoUrl: String!
+    style: String!
+    subjectLine: String!
+    transmission: String!
+    trim: String!
+    vehicleType: String!
+    vin: String!
+    vroomOwned: Boolean!
+    warranty: Int!
+    warrantyRemaining: String!
+    wheelBase: Float!
+    width: Float!
+    year: Int!
+    zone: String!
+    zoneID: Int!
+}
+
+type Inventory {
+    basicWarrantyExpirationDate: String
+    basicWarrantyMiles: Int
+    basicWarrantyMonths: Int
+    drivetrainWarrantyExpirationDate: String
+    drivetrainWarrantyMiles: Int
+    drivetrainWarrantyMonths: Int
+    id: String!
+    imageURLs: [ImageURL!]
+    inServiceDate: String
+    leadPhotoURL: String
+    miles: Int
+    ownerCount: Int
+    pricing: Pricing
+    status: KeyDisplayPair
+    vehicle: VehicleInventory
+}
+
+type IterableMessageType {
+    channelID: String!
+    subscribed: Boolean!
+    typeID: String!
+    typeName: String!
+}
+
+type IterableSourceData {
+    types: [IterableMessageType!]!
+}
+
+type IterableSubscription {
+    id: String!
+    sourceData: IterableSourceData!
+    unsubscribe: Boolean!
+}
+
+type KeyDisplayPair {
+    Display: String!
+    key: String!
+}
+
+type LPToVIN {
+    vehicles: [Vehicles]
+}
+
+type LeadResponseData {
+    correlationId: String!
+}
+
+type Lender {
+    lenderId: String!
+    lenderName: String!
+}
+
+type LenderEnvelope {
+    lenders: [Lender!]
+}
+
+type LoanDecision {
+    isAccepted: Boolean!
+    middleman: String!
+    middlemanReferenceID: String!
+    name: String!
+    pricing: loanPricing!
+    state: String!
+}
+
+type LoanPricingStack {
+    amountFinanced: Float!
+    annualMileage: Int!
+    apr: Float!
+    buyRate: Float!
+    downPayment: Int!
+    financeCharge: Float!
+    lenderName: String!
+    monthlyPayment: Float!
+    offerAvailable: Boolean!
+    taxItems: [TaxItem!]
+    termMonths: Int!
+    totalRebates: Int!
+    totalTaxes: Float!
+}
+
+type LocationInfo {
+    address: PortalAddress!
+    name: String!
+}
+
+type Metadata {
+    code: String
+    description: String
+    id: Int!
+}
+
+type MetadataArray {
+    item: [Metadata!]!
+}
+
+type Mutation {
+    acceptRejectOffer(accepted: Boolean!, detail: String, externalUserId: String, offerId: String!, reason: String, reasonOther: String, success: Boolean): [AppraisalOffer!]
+    addGroupToUser(group: String!, username: String!): StringArrayResult!
+    confirmPassword(email: String!, newPassword: String!, verificationCode: String!): SignedInUser!
+    confirmPasswordWithExtId(externalUserId: String!, newPassword: String!, verificationCode: String!): SignedInUser!
+    createPayment(input: CreatePayment!): CreatePaymentResponse!
+    createUserPaymentAccount(input: CreateUserPaymentAccountInput): Void
+    createUserPaymentAccountWithReturn(input: CreateUserPaymentAccountInput): CreateUserPaymentAccountResponse
+    createVerificationSession(request: CreateVerificationSessionRequest!): VerificationSession!
+    creditSubmitPrequalApplication(request: PrequalApplication!): PrequalResponses!
+    dealAcceptUACCOffer(amountFinanced: Float!, dealID: Int!, downPayment: Float!, lenderName: String!, monthlyPayment: Float!, netCheck: Int!, rate: Float!, reasonDeclined: String, referenceID: String!, source: String!, status: String!, term: Int!): DealResult!
+    dealAddAddress(addressType: AddressType!, city: String!, country: String, county: String!, dealID: Int!, firstName: String!, lastName: String!, postCode: String!, source: String!, state: String!, streetLine1: String!, streetLine2: String!, type: String!): DealResult!
+    dealAddDeal(attribution: AttributionDTO!, calculateEstimatedDeliveryDuration: Boolean, firstName: String!, isDeliveryDetailsTest: Boolean, lastName: String!, middleName: String!, phone: String!, shippingFeeEstimate: Float, source: String!, state: String, userName: String!, vin: String!): DealResult!
+    dealAddDeliveryDetails(AdditionalDetails: String, availableForDelivery: Boolean!, blackoutDates: [Time!], dealID: Int!, has18WheelerLimit: Boolean!, otherContactFirstName: String, otherContactLastName: String, otherContactPhoneNumber: String, source: String!): DealResult!
+    dealAddDeposit(depositRequest: DepositRequest!): DepositResult!
+    dealAddDocument(dealId: Int!, docId: String!, docType: String!, name: String, source: String!): DealResult!
+    dealAddPaymentType(dealID: Int!, paymentType: String!, source: String!): DealResult!
+    dealDeleteDeal(dealID: Int!, source: String!): DealDeleteResult!
+    dealDeleteDocument(dealId: Int!, docId: String!, source: String!): DealResult!
+    dealMakePayment(DealPaymentID: String!, UserPaymentAccountID: String!, dealID: Int!, source: String!): Boolean!
+    dealPostCreditApplication(creditRequest: CreditRequest!): CreditResponse!
+    dealPostProgressiveConsent(dealId: Int!, hasConsent: Boolean!, source: String!): DealResult!
+    dealPutTradeIn(appraisalID: String!, carModel: String!, dealID: Int!, email: String!, expirationDate: Time, loanPayoff: Float, make: String!, makingLoanPayoff: Boolean, offerID: Int!, offerPrice: Float!, offerStatus: String!, source: String!, vin: String!, year: Int!): DealResult!
+    dealToggleAdditionalProducts(dealID: Int!, productIDS: [String!]!, source: String!): DealResult!
+    dealV3AcceptUACCOffer(amountFinanced: Float!, downPayment: Float!, externalDealID: String!, lenderName: String!, monthlyPayment: Float!, netCheck: Int!, rate: Float!, reasonDeclined: String, referenceID: String!, source: String!, status: String!, term: Int!): DealV3Result!
+    dealV3AddAddress(addressType: AddressType!, city: String!, country: String, county: String!, externalDealID: String!, firstName: String!, lastName: String!, postCode: String!, source: String!, state: String!, streetLine1: String!, streetLine2: String!, type: String!): DealV3Result!
+    dealV3AddDeal(attribution: AttributionDTO!, calculateEstimatedDeliveryDuration: Boolean, firstName: String!, isDeliveryDetailsTest: Boolean, lastName: String!, middleName: String!, phone: String!, shippingFeeEstimate: Float, source: String!, state: String, userName: String!, vin: String!): DealV3Result!
+    dealV3AddDeliveryDetails(AdditionalDetails: String, availableForDelivery: Boolean!, blackoutDates: [Time!], externalDealID: String!, has18WheelerLimit: Boolean!, otherContactFirstName: String, otherContactLastName: String, otherContactPhoneNumber: String, source: String!): DealV3Result!
+    dealV3AddDeposit(depositRequest: DepositRequest!): DepositResult!
+    dealV3AddDocument(docId: String!, docType: String!, externalDealID: String!, name: String, source: String!): DealV3Result!
+    dealV3AddPaymentType(externalDealID: String!, paymentType: String!, source: String!): DealV3Result!
+    dealV3DeleteDeal(externalDealID: String!, source: String!): DealDeleteResult!
+    dealV3DeleteDocument(docId: String!, externalDealID: String!, source: String!): DealV3Result!
+    dealV3MakePayment(DealPaymentID: String!, UserPaymentAccountID: String!, externalDealID: String!, source: String!): Boolean!
+    dealV3PostCreditApplication(creditRequest: CreditRequestV3!): CreditResponse!
+    dealV3PostProgressiveConsent(externalDealID: String!, hasConsent: Boolean!, source: String!): DealV3Result!
+    dealV3PutTradeIn(appraisalID: String!, carModel: String!, email: String!, expirationDate: Time, externalDealID: String!, loanPayoff: Float, make: String!, makingLoanPayoff: Boolean, offerID: Int!, offerPrice: Float!, offerStatus: String!, source: String!, vin: String!, year: Int!): DealV3Result!
+    dealV3ToggleAdditionalProducts(externalDealID: String!, productIDS: [String!]!, source: String!): DealV3Result!
+    dealV3UpdateDeal(updateRequest: UpdateDealRequest!): DealV3Result!
+    dealValidateAddress(LongForm: Boolean, addressLine1: String!, addressLine2: String, city: String!, fullAddress: String, source: String!, state: String!, zipCode: String!): ValidateAddressResponse!
+    forgotPassword(email: String!): Boolean!
+    grade(make: String!, miles: Int!, model: String!, trim: String!, vin: String!): Boolean!
+    hornCreateDevice(applicationName: String!, id: String!, segmentId: String, type: DeviceType!): CreateDeviceResult!
+    hornCreateSubscription(filters: String!, subject: String!): CreateSubscriptionResult!
+    hornDeleteSubscription(id: String!): Boolean!
+    leadsCreateAttribution(input: Lead!): LeadApiResponse
+    portalUserCreate(firstName: String!, lastName: String!, username: String!): UserCreateResult!
+    portalUserCreateAccountEmail(emailAddress: String!, signupUrl: String!): APIError
+    portalUserUpdate(carrierCode: String, status: String, userId: Int!): UserUpdateResult!
+    preSignup(emailMarketingConsent: Boolean!, firstName: String!, lastName: String!, middleName: String, phone: String!, sendWelcomeEmail: Boolean, source: String!, username: String!): PreSignupResponseResult
+    refreshToken(refreshToken: String!): String!
+    removeGroupFromUser(group: String!, username: String!): StringArrayResult!
+    shipmentStopUpdate(arrival: Time, departure: Time, driverOnTheWay: Time, estimatedArrival: Time, estimatedDeparture: Time, idType: String!, latitude: Float, longitude: Float, milesTraveled: Int, reestimatedReason: String, shipmentId: Int!, shipmentStopId: Int!, stopSequence: Int): APIError
+    shipmentUpdate(bookedDate: Time, cancelReasonCode: String, cancelledDate: Time, carrierAccepted: Time, carrierCode: String, carrierPickedUp: Time, cost: Float, deliveryNotes: String, driverContact: String, driverName: String, id: Int!, idType: String!, postingDate: Time, status: String!): APIError
+    signOut(accountLoginUUIDs: [String!]!): APIError
+    """
+
+    The signin mutation is used to sign in a vroom user, don't forget that the source is required!
+    please put the client name and version in the source, for example, "andorid-v2.34.23"
+    """
+    signin(
+        password: String!,
+        source: String!,
+        "user name is also the email address always"
+        username: String!
+    ): SignedInUser!
+    signinWeb(password: String!, source: String!, username: String!): SignedInUserWeb!
+    signup(emailMarketingConsent: Boolean!, eventOrigin: String, firstName: String!, lastName: String!, middleName: String, password: String!, phone: String!, sendWelcomeEmail: Boolean, smsMarketingConsent: Boolean!, source: String!, username: String!): SignedInUser!
+    signupWeb(emailMarketingConsent: Boolean!, eventOrigin: String, firstName: String!, lastName: String!, middleName: String, password: String!, phone: String!, sendWelcomeEmail: Boolean, smsMarketingConsent: Boolean!, source: String!, username: String!): SignedInUserWeb!
+    signupWebWithExtID(emailMarketingConsent: Boolean!, eventOrigin: String, externalUserId: String!, password: String!, sendWelcomeEmail: Boolean, smsMarketingConsent: Boolean!, source: String!): SignedInUserWeb!
+    submitCaseForm(attachments: [String], description: String!, origin: String!, questionId: String!, source: String!, topicId: String!, xrefId: String!): CaseResponse!
+    updateDealStip(source: String!, updateRequest: DealStipUpdateRequest!): DealStipUpdateResponse!
+    updateDealV3Stip(source: String!, updateRequest: DealV3StipUpdateRequest!): DealStipUpdateResponse!
+    updateSubscription(email: String!, source: String!, subscriptions: [SubscriptionUpdate!]!): SubscriptionUpdateResult!
+    userAddFavoriteVehicles(source: String!, vin: String!): User!
+    userChangePassword(newPassword: String!, oldPassword: String!): Boolean!
+    userFileUploadURL(additionalReferences: [FileReference], fileExtension: String!, fileType: String!, originalFileName: String!, source: String!): FileUploadURL!
+    userRemoveFavoriteVehicles(source: String!, vin: String!): User!
+    userUpdateProfile(emailMarketingConsent: Boolean, firstName: String!, lastName: String!, phoneNumber: String!, smsMarketingConsent: Boolean): Boolean!
+    version: Int!
+}
+
+type OrderTracking {
+    actual_delivery_date: String
+    blackout_dates: [String]
+    deal_summary: OrderTrackingDealSummary!
+    estimated_delivery_date: String
+    is_last_mile: Boolean
+    last_mile_hub_email: String
+    last_mile_hub_phone_number: String
+    order_finalized_date: String
+    shipment_order: [Int]
+    shipments: [OrderTrackingShipment]
+    stage: String!
+}
+
+type OrderTrackingDealSummary {
+    deal_id: Int!
+    external_deal_id: String!
+    lead_photo_url: String!
+    list_price: Float!
+    make: String!
+    miles: Int!
+    model: String!
+    trim: String!
+    vin: String!
+    year: Int!
+}
+
+type OrderTrackingShipment {
+    active: Boolean!
+    carrier: Carrier
+    deliver_to: LocationInfo
+    pickup_from: LocationInfo
+    shipment_id: Int!
+    status: String!
+    type: String!
+}
+
+type Paging {
+    limit: Int!
+    next: String
+    offset: Int!
+    previous: String
+}
+
+type Payment {
+    amount: Int!
+    createdAt: Time!
+    deal_id: Int!
+    deal_payments_id: String!
+    is_paid: Boolean!
+    note: String!
+    payment_id: String!
+    payment_status: String!
+    updatedAt: Time!
+}
+
+type PaymentDS {
+    is_paid: Boolean!
+    status: String!
+}
+
+type PaymentStatusSummary {
+    totalDownPayment: Float!
+    totalDue: Float!
+}
+
+type PaymentV3 {
+    amount: Int!
+    createdAt: Time!
+    deal_payments_id: String!
+    external_deal_id: String!
+    is_paid: Boolean!
+    note: String!
+    payment_id: String!
+    payment_status: String!
+    updatedAt: Time!
+}
+
+type PersonResponse {
+    name_first: String!
+    name_last: String!
+    name_middle: String!
+    person_id: Int!
+}
+
+type Phone {
+    number: String!
+    type: String!
+}
+
+type PlaidAccountBalance {
+    AvailableBalance: Float!
+    CurrentBalance: Float!
+    PlaidAccountID: String!
+}
+
+type PlaidLinkTokenResponse {
+    Expiration: Time!
+    LinkToken: String!
+    RequestId: String!
+}
+
+type PointOfContact {
+    first: String!
+    last: String!
+    phone: String!
+}
+
+type PortalAddress {
+    city: String!
+    state: String!
+    stop_id: Int!
+    street_line_1: String!
+    street_line_2: String
+    to_string: String!
+    zip_code: String!
+}
+
+type PortalRole {
+    name: String!
+    portal_role_id: Int!
+}
+
+type PortalShipment {
+    actual_pickup: Time
+    blackout_dates: [String]
+    booked_date: Time
+    cancel_reason: String
+    customer: Customer
+    date_cancelled: Time
+    date_delivered: Time
+    date_posted: Time
+    destination_address: PortalAddress!
+    estimated_delivery: Time
+    estimated_pickup: Time
+    make: String
+    model: String
+    notes: String
+    origin: String
+    origin_address: PortalAddress!
+    shipment_id: Int!
+    shipment_name: String
+    status: String!
+    vin: String
+    year: Int
+}
+
+type PortalShipmentCount {
+    count: Int!
+    status: String!
+}
+
+type PortalShipmentsArray {
+    counts: [PortalShipmentCount!]!
+    shipments: [PortalShipment!]!
+}
+
+type PortalUser {
+    carrier: Carrier
+    created_on: Time!
+    first_name: String!
+    last_name: String!
+    middle_name: String
+    phone: String
+    portal_roles: [PortalRole]
+    portal_user_id: Int!
+    status: String!
+    updated_on: Time
+    username: String!
+}
+
+type PortalUsersArray {
+    users: [PortalUser!]!
+}
+
+type PreSignupResponse {
+    accountID: Int!
+    externalUserID: String!
+}
+
+type PrequalResponse {
+    category: String
+    maxLoanAmount: Float!
+    maxMonthlyPayment: Float!
+}
+
+type Pricing {
+    blueBookValue: Int!
+    listPrice: Int!
+    msrp: Int!
+}
+
+type Query {
+    activeLogins: ActiveLoginsResponseResult
+    carrierTrackerByDealId(dealId: Int!): CarrierTracker!
+    carrierTrackerByExternalDealId(externalDealId: String!): CarrierTracker!
+    carriers(filter: String!, portalVisible: Boolean): CarriersResult!
+    dealById(dealId: Int!): Deal
+    dealDeleteTradeIn(dealId: Int!, source: String!, vin: String!): DealResult!
+    dealHoldAmount(depositPlaced: Boolean!, depositPlacedDate: Time, vin: String!): CentralizedHoldResponse!
+    dealStateByExternalUserId(externalId: String!, isLatest: Boolean!, status: String, statusType: String!): [DealState!]
+    dealStateById(dealId: Int!, isLatest: Boolean!, status: String, statusType: String!): [DealState!]
+    dealStatusByExternalUserId(externalId: String!): DealStatusSummary
+    dealTrackingSummary(dealId: Int, externalId: String, source: String!): TrackingSummary
+    dealV3DeleteTradeIn(externalDealID: String!, source: String!, vin: String!): DealV3Result!
+    dealV3GetDeal(externalDealID: String!): DealV3
+    dealV3StateById(externalDealId: String!, isLatest: Boolean!, status: String, statusType: String!): [DealState!]
+    dealV3TrackingSummary(externalDealId: String, externalId: String, source: String!): TrackingSummary
+    dealV4TrackingSummary(externalDealId: String, source: String!): TrackingSummary
+    dealValidAcquisitions(source: String): [ValidAcquisition!]
+    decodeVIN(colors: Boolean!, options: Boolean, source: String, vin: String!): VinData!
+    getAccountBalance(plaidAccountID: String!): PlaidAccountBalance!
+    getByVin(vin: String!): InvSearchVehicleData
+    getCaseTopics(source: String!, topicType: String!): [CaseTopic!]
+    getContractJob(referenceId: String!): GetContractJobResponse
+    getDealsContract(envelopeId: String!, referenceId: String!, returnUrl: String!): ContractInfo
+    getDocuSignContract(email: String, referenceId: String!, returnUrl: String!): GetDocuSignUrlResponse
+    getLinkToken(source: String, userId: String!): PlaidLinkTokenResponse!
+    getLocalDocuSignContract(referenceId: String!): GetLocalDocuSignContractResponse
+    getReviewSummaryBySource(options: SummaryOptions): ReviewSummaryBySourceResponse
+    getSubscription(email: String!, source: String!): SubscriptionResponse!
+    getSuggestedDownPayment(request: SuggestedDownPaymentRequest!): SuggestedDownPaymentResponse!
+    getTokens(authCode: String!, redirectURI: String!): GetTokensResponseResult
+    getTrackingByExternalDealIdXref(adventId: String, email: String, externalDealId: String, inventoryId: String, offerId: String, opportunityId: String, vin: String): [Transaction]
+    getTrackingByXref(adventId: String, dealId: Int, email: String, inventoryId: String, offerId: String, opportunityId: String, vin: String): [Transaction]
+    getVerificationSession(externalDealID: String!): VerificationSession
+    getVroomReviews(options: ReviewOptions): ReviewsResponse
+    hornCheckSubscriptionExists(filters: String!, subject: String!): CheckSubscriptionResult!
+    hornListSubscriptions: SubscriptionPage
+    invSearch(bodyType: [String!], carStatus: Int, color: [String!], combinedMPG_max: Int, combinedMPG_min: Int, cylinders: [Int!], deliveryDays: Int, dmaCode: String, driveType: [String!], fuelType: [String!], geo: Geo, hasTitleAvailableSoon: Boolean, limit: Int, make: [String!], makeSlug: [String!], miles_max: Int, miles_min: Int, model: [String!], modelSlug: [String!], notCylinders: [Int!], offset: Int, optionalFeatures: [String!], price_max: Int, price_min: Int, regionCode: String, searchAll: String, soldStatus: String, sortBy: String, sortDirection: String, sorts: [SortField!], source: String!, stateCode: String, testDriveOnly: Boolean, transmissionID: String, trim: [String!], vin: [String!], year_max: Int, year_min: Int, zipCode: String): InvSearchResult
+    lendersByName(name: String!): LenderEnvelope!
+    licensePlateToVin(lp: String!, source: String!, state: String!): LPToVIN!
+    metadata(entity: String!): MetadataResult!
+    offerByEmail(email: String!): [AppraisalOffer!]
+    orderTracking: OrderTrackingResult!
+    paymentStatusByExternalUserId(externalId: String!): PaymentStatusSummary
+    portalShipments(limit: Int, name: String, offset: Int, status: String, user: String!, vin: String): PortalShipmentsResult!
+    portalUserStatus: PortalUserStatusResult!
+    portalUsers(carrier: String!, limit: Int, offset: Int, status: String!): PortalUsersResult!
+    requestedDocuments(input: GetRequestedDocumentsQueryInput!): [RequestedDocument!]!
+    shipping(carrierID: String, carrierName: String, password: String!, status: String, username: String!): ShippingResult!
+    taxiGetShippingFee: ShippingFee!
+    taxiGetShippingFeeBrackets: ShippingBrackets!
+    taxiGetZipCoordLookup(zipcode: String!): CoordinatePair
+    user: User
+    userSession: UserSessionResponseResult
+    usersInGroup(group: String!): StringArrayResult!
+    vehicles(criteria: VehicleSearchCriteria): [VehicleSearchResult]!
+    verificationFormByOfferId(offerId: String!): VerificationForm!
+    version: Int!
+    wait(seconds: Int!): Int!
+}
+
+type RateInformation {
+    choiceRateDownPayment: Float
+    choiceRateMonthly: Float
+    choiceRatePif: Float
+    choiceRateSavedAmount: Float
+    choiceRateTotalPayment: Float
+    hasConsent: Boolean!
+    msgStatusCd: String
+    quoteURL: String
+}
+
+type RequestedDocument {
+    active: Boolean!
+    created: String!
+    createdBy: String!
+    description: String!
+    documentDefinitionID: Int!
+    documentOwnerType: String!
+    externalUUID: String!
+    fileID: String!
+    isOriginalNeeded: Boolean!
+    name: String!
+    prevDocRejectionReasons: String
+    relatedVehicle: String
+    requestedDocumentID: Int!
+    source: String!
+    status: String!
+    updated: String!
+    version: String!
+}
+
+type Response {
+    comment: String
+    name: String
+    responseDate: String!
+}
+
+type Review {
+    canRespond: Boolean!
+    comment: String
+    commentTitle: String
+    date: String!
+    hasResponses: Boolean!
+    id: String!
+    locationID: String
+    locationName: String
+    rating: Float
+    responses: [Response]!
+    reviewer: Reviewer!
+    sentiment: String!
+    sourceID: String!
+}
+
+type ReviewSummaryBySourceResponse {
+    summary: SummarySources!
+}
+
+type Reviewer {
+    name: String
+}
+
+type ReviewsResponse {
+    paging: Paging!
+    reviews: [Review]!
+}
+
+type ServiceSalesTax {
+    amount: String!
+    code: String!
+    description: String!
+    feeType: String!
+}
+
+type Shipping {
+    actualDeliveryDate: Time
+    actualPickupDate: Time
+    adventPurchasedFrom: String!
+    billingAddress: ShippingAddress!
+    billingCompanyName: String!
+    bookedDate: Time!
+    carrier: String!
+    carrierCode: String!
+    carrierID: Int!
+    cost: String!
+    currentEstDeliveryDate: Time
+    currentEstPickupDate: Time
+    deliveryAddress: ShippingAddress!
+    deliveryNotes: String!
+    deliveryaccountfacilitycode: String!
+    deliveryaccountname: String!
+    destinationContactEmail: String!
+    destinationContactFirstName: String!
+    destinationContactLastName: String!
+    destinationContactPhone: String!
+    destinationEmailAddress: String!
+    destinationNotes: String!
+    destinationPhoneNumber: String!
+    enclosed: String!
+    inventoryID: Int!
+    lastMileMove: Int!
+    make: String!
+    model: String!
+    originalEstDeliveryDate: Time
+    originalEstPickupDate: Time
+    pickupAddress: ShippingAddress!
+    pickupAt: Time
+    pickupContactEmail: String!
+    pickupContactName: String!
+    pickupContactPhone: String!
+    postingDate: Time
+    rush: Int!
+    shipmentName: String!
+    shipmentStatus: String!
+    shipmentStatusID: Int!
+    transitType: String!
+    transitTypeID: Int!
+    vin: String!
+    year: Int!
+}
+
+type ShippingAddress {
+    city: String!
+    state: String!
+    street1: String!
+    street2: String!
+    zipcode: String!
+}
+
+type ShippingArray {
+    shippings: [Shipping!]!
+}
+
+type ShippingBrackets {
+    brackets: [Bracket]!
+    fallbackFee: Float!
+}
+
+type ShippingFee {
+    fee: Float!
+}
+
+type SignedInUser {
+    accessToken: String!
+    accountId: Int!
+    externalUserID: String!
+    idToken: String!
+    refreshToken: String!
+}
+
+type SignedInUserWeb {
+    accountId: Int!
+    externalUserID: String!
+    idToken: String!
+}
+
+type SourceReviewSummary {
+    count: Int!
+    id: String!
+    name: String!
+    rating: Float!
+    responseCount: Int!
+    score: Int!
+}
+
+type StageSummary {
+    isContractAvailable: Boolean!
+    isContractSigned: Boolean!
+    isContractingStep: Boolean!
+    isSoldSNDStep: Boolean!
+    isTitlesRegistrationStep: Boolean!
+}
+
+type StringArray {
+    values: [String!]!
+}
+
+type Subject {
+    name: String
+    path: String!
+}
+
+type SubjectSubscription {
+    filters: String!
+    id: String!
+    subject: Subject!
+}
+
+type SubscriptionPage {
+    nextPage: Int
+    subscriptions: [SubjectSubscription!]
+}
+
+type SuggestedDownPaymentResponse {
+    lowerBoundDownPayment: Float!
+    upperBoundDownPayment: Float!
+}
+
+type SummarySources {
+    sources: [SourceReviewSummary]!
+}
+
+type TaxItem {
+    name: String!
+    price: Float!
+    totalTax: Float!
+}
+
+type TaxesAndFees {
+    dmvFees: [Fee!]
+    dmvTotal: String!
+    saleTax: [ServiceSalesTax!]
+    status: String!
+}
+
+type TrackingStatus {
+    status: String
+    statusDate: Time
+    statusDetails: String
+}
+
+type TrackingSummary {
+    contractSummary: ContractSummary
+    dealStatus: String!
+    stageSummary: StageSummary!
+    statusType: String!
+    trackerStep: String
+    trackerSubStep: [String]
+    vehicle: VehicleDS
+}
+
+type TradeIn {
+    appraisalID: String!
+    email: String!
+    expirationDate: Time
+    loanPayoff: Float
+    make: String!
+    makingLoanPayoff: Boolean
+    model: String!
+    offerID: Int!
+    offerPrice: Float!
+    offerStatus: String!
+    vin: String!
+    year: Int!
+}
+
+type Transaction {
+    carrier: String
+    eta: Time
+    labelUrl: String
+    nameOnLabel: String
+    originalEta: Time
+    trackingNumber: String
+    trackingStatus: TrackingStatus
+    trackingUrlProvider: String
+    transaction: String
+}
+
+type TrimData {
+    database: String
+    source: String!
+    trims: [Trims]
+}
+
+type Trims {
+    Uid: Int
+    description: String!
+    doors: Int!
+    long_description: String!
+    options: [String]
+    source: String!
+}
+
+type User {
+    addresses: [Address!]
+    appraisals: [Appraisal]
+    consents: Consents!
+    deals(dealID: Int, dealStatus: [String!], noFilter: Boolean): [Deal!]
+    dealsV3(dealStatus: [String!], externalDealID: String, noFilter: Boolean): [DealV3!]
+    emails: [Email!]
+    externalUserID: String!
+    favoriteVehicles: [FavoriteVehicles!]
+    files: [File!]
+    firstName: String!
+    lastName: String
+    middleName: String
+    phones: [Phone!]
+    username: String!
+}
+
+type UserSessionResponse {
+    account: AccountResponse
+    account_id: Int!
+    account_login_id: String!
+    active: Boolean!
+    client_ip: String!
+    created: Time!
+    fpid: String!
+    fsid: String!
+    geoip_city: String!
+    geoip_country: String!
+    geoip_dma: String!
+    geoip_lat: String!
+    geoip_lon: String!
+    geoip_postal_code: String!
+    geoip_province: String!
+    identity_provider: String!
+    segment_anonymous_id: String!
+    user_agent: String!
+}
+
+type ValidAcquisition {
+    appraisalID: String!
+    email: String!
+    expirationDate: Time
+    offerID: Int!
+    offerPrice: Float!
+    offerStatus: String!
+    vehicle: ValidAcquisitonVehicle!
+}
+
+type ValidAcquisitonVehicle {
+    make: String!
+    mileage: Int!
+    model: String!
+    vin: String!
+    year: Int!
+}
+
+type ValidateAddressResponse {
+    addressesMatched: [AddressItem]
+}
+
+type ValidationError {
+    details: [ErrorDetail!]
+    title: String!
+    type: String!
+}
+
+type Vehicle {
+    make: String!
+    miles: Int!
+    model: String!
+    trim: String
+    vin: String!
+    year: Int!
+}
+
+type VehicleDS {
+    leadPhotoUrl: String
+    make: String!
+    miles: Int
+    model: String!
+    trim: String
+    year: Int!
+}
+
+type VehicleInventory {
+    cylinders: Int!
+    engineBore: Float!
+    fuelType: KeyDisplayPair
+    grossWeight: Int!
+    isElectric: Boolean!
+    make: String!
+    model: String!
+    seatingCapacity: Int!
+    trim: String!
+    vin: String!
+    year: Int!
+}
+
+type VehicleSearchResult {
+    bodyStyle: String
+    deliveryDays: String
+    imageURL: String
+    inventoryID: Int
+    make: String
+    mileage: Int
+    model: String
+    price: Float
+    reconLocation: String
+    shippingFee: Float
+    soldStatus: String
+    trim: String
+    vin: String
+    year: Int
+}
+
+type Vehicles {
+    inputLicensePlate: String!
+    make: String!
+    modelYear: String!
+    plateType: String!
+    processingType: String!
+    restrictedStateIndicator: String!
+    stateOfRegistration: String!
+    vin: String!
+    vinPattern: String!
+}
+
+type VerificationAddress {
+    Address1: String!
+    Address2: String
+    City: String!
+    State: String!
+    Zipcode: String!
+}
+
+type VerificationForm {
+    AcknowledgementOfTerms: Boolean
+    AppraisalVehicleId: Int!
+    BackOfDriverLicenseFileId: String
+    BackOfTitleLienFileId: String
+    Created: Time!
+    CurrentPayments: Boolean
+    CurrentRegistrationFileID: String
+    Email: String!
+    ExactMileage: Int!
+    FinalPayment: Float
+    FinalPayoff: Float
+    FinancialInstitutionPhone: String
+    FormState: Int!
+    FrontOfDriverLicenseFileId: String
+    FrontOfTitleLienFileId: String
+    Id: Int!
+    IsOwner: Boolean
+    LastFourSSN: String
+    LienAccountNumber: String
+    LienFinancialInstitutionName: String
+    LienReleaseLetterFileId: String
+    MileageFileId: String
+    OfferId: String!
+    OfferPrice: Float!
+    OwnerEmailAddress: String!
+    OwnerFirstName: String!
+    OwnerLastName: String!
+    OwnerMailingAddress: VerificationAddress!
+    OwnersOnTitle: Int!
+    PickupAddress: VerificationAddress!
+    PickupContactEmail: String
+    PickupContactFirstName: String
+    PickupContactLastName: String
+    PickupContactPhoneNumber: String
+    SameContactAsOwner: Boolean
+    SameMailingAddress: Boolean
+    SecondOwnerBackOfDriverLicenseFileId: String
+    SecondOwnerEmailAddress: String
+    SecondOwnerFirstName: String
+    SecondOwnerFrontOfDriverLicenseFileId: String
+    SecondOwnerLastName: String
+    SecondOwnerMailingAddress: VerificationAddress
+    SecondOwnerPhoneNumber: String
+    UserId: Int!
+    VIN: String!
+    XKEOfferId: Int!
+}
+
+type VerificationSession {
+    clientSecret: String
+    status: String!
+}
+
+type VinData {
+    basicData: BasicData
+    colorData: ColorData
+    options: [String]
+    trimData: TrimData
+}
+
+type loanPricing {
+    amountFinanced: Float!
+    apr: Float!
+    buyRate: Float!
+    downPayment: Float!
+    monthlyPayment: Float!
+    termMonths: Int!
+}
+
+type registrationDmv {
+    address: String!
+    name: String!
+    walkInDate: Time
+}
+
+enum AddressType {
+    BILLING
+    DELIVERY
+    REGISTRATION
+}
+
+enum DeviceType {
+    APNS
+    EMAIL
+    FCM
+}
+
+enum DocumentMetadataStatus {
+    Approved
+    Cancelled
+    "Envelope Received"
+    EnvelopeReceived
+    Rejected @deprecated(reason: "Not a real document status, but previously expected by client applications")
+    Requested
+    Required
+    Uploaded
+}
+
+enum ErrorType {
+    BadRequest
+    DealOutOfSync
+    ServerFailure
+}
+
+enum Role {
+    VROOM_USER
+    VROOM_USER_LOGISTICSPORTAL
+    VROOM_USER_LOGISTICSPORTALADMIN
+}
+
+scalar Map
+
+scalar Time
+
+scalar Void
+
+input Amount {
+    amount: Float!
+    denomination: String!
+}
+
+input AttributionDTO {
+    UTMBrand: String
+    UTMCampaign: String
+    UTMContent: String
+    UTMKeyword: String
+    UTMMedium: String
+    UTMRegistrationCorrelationID: String
+    UTMSegmentUserID: String
+    UTMSite: String
+    UTMSource: String
+    UTMSubsource: String
+    UTMTerm: String
+    UTMType: String
+}
+
+input Card {
+    address_city: String
+    address_country: String
+    address_line1: String
+    address_line1_check: String
+    address_line2: String
+    address_state: String
+    address_zip: String
+    address_zip_check: String
+    brand: String
+    country: String
+    cvc_check: String
+    dynamic_last4: String
+    exp_month: Int
+    exp_year: Int
+    funding: String
+    id: String!
+    last4: String!
+    name: String!
+    object: String
+    tokenization_method: String
+    wallet: Map
+}
+
+input CreatePayment {
+    AccountNumber: String
+    OfferId: String!
+    PaymentAddress: PaymentAddress
+    PaymentMethod: String!
+    RoutingNumber: String
+}
+
+input CreateUserPaymentAccountInput {
+    Account: PlaidAccount!
+    Email: String!
+    Institution: PlaidInstitution!
+    PublicToken: String!
+    ReferenceId: String!
+    Source: String!
+}
+
+input CreateVerificationSessionRequest {
+    externalDealID: String!
+    selfieCheck: Boolean
+    username: String!
+    vin: String!
+}
+
+input CreditAddress {
+    address: String!
+    address2: String
+    city: String!
+    monthsResidence: Int!
+    paymentAmount: Int
+    postalCode: String!
+    residencyType: String!
+    state: String!
+}
+
+input CreditApplicant {
+    creditScore: Int
+    currentAddress: CreditAddress!
+    currentEmployer: CreditCurrentEmployer!
+    dob: String!
+    email: String!
+    firstName: String!
+    lastName: String!
+    otherIncome: OtherIncome
+    phone: String!
+    previousAddress: CreditAddress
+    previousEmployer: CreditPreviousEmployer
+    ssn: String!
+}
+
+input CreditCurrentEmployer {
+    income: Int!
+    monthsEmployed: Int!
+    name: String!
+    phone: String!
+    status: String!
+    title: String!
+}
+
+input CreditDecision {
+    decision: String!
+    delay: Int!
+    lender: String!
+    middleMan: String!
+}
+
+input CreditFinance {
+    cashDownPayment: Int
+    term: Int
+}
+
+input CreditPreviousEmployer {
+    monthsEmployed: Int!
+    name: String!
+    phone: String!
+    status: String!
+    title: String!
+}
+
+input CreditRequest {
+    applicant: CreditApplicant!
+    coApplicant: CreditApplicant
+    coApplicantIndicator: Boolean!
+    dealID: Int!
+    finance: CreditFinance!
+    queryParams: String
+    simulate: CreditSimulate
+    simulateFlag: String
+    source: String!
+    vehicle: PostCreditVehicle!
+}
+
+input CreditRequestV3 {
+    applicant: CreditApplicant!
+    coApplicant: CreditApplicant
+    coApplicantIndicator: Boolean!
+    externalDealID: String!
+    finance: CreditFinance!
+    queryParams: String
+    simulate: CreditSimulate
+    simulateFlag: String
+    source: String!
+    vehicle: PostCreditVehicle!
+}
+
+input CreditSimulate {
+    decisions: [CreditDecision]!
+}
+
+input DealStipUpdateRequest {
+    approved: Time
+    approvedBy: String
+    dealId: Int!
+    fileId: String
+    isWet: Boolean
+    lastRejected: Time
+    rejectedReason: String
+    status: DocumentMetadataStatus
+    stipsCode: String!
+    trackingNumber: String
+    wetSignatureLink: String
+}
+
+input DealV3StipUpdateRequest {
+    approved: Time
+    approvedBy: String
+    externalDealId: String!
+    fileId: String
+    isWet: Boolean
+    lastRejected: Time
+    rejectedReason: String
+    status: DocumentMetadataStatus
+    stipsCode: String!
+    trackingNumber: String
+    wetSignatureLink: String
+}
+
+input DepositRequest {
+    deal_id: String!
+    stripe_token: StripeToken!
+}
+
+input FicoRange {
+    max: Int!
+    min: Int!
+}
+
+input FileReference {
+    referenceId: String!
+    referenceSource: String!
+}
+
+input Geo {
+    latitude: Float!
+    longitude: Float!
+}
+
+input GeoData {
+    city: String!
+    ip: String!
+    latitude: String!
+    longitude: String!
+    metroCode: String!
+    postalCode: String!
+    region: String!
+}
+
+input GetRequestedDocumentsQueryInput {
+    VIN: String
+    docDefID: String
+    documentOwnerType: String
+    isOriginalNeeded: Boolean
+    relatedVehicle: String
+    userID: String
+}
+
+input Lead {
+    account_xke_id: Int
+    affiliate: Boolean
+    ajs_anonymous_id: String
+    correlationId: String!
+    inventory: LeadInventory
+    message: Message!
+    payment: [LeadPayment]
+    person: Person!
+    sourcedetail: String
+    sourceemail: String
+    tradein: Boolean!
+    type: String!
+    weblead: Weblead!
+}
+
+input LeadAddress {
+    address1: String!
+    address2: String!
+    apartment: String!
+    city: String!
+    country: String!
+    state: String!
+    type: String!
+    zip: String!
+}
+
+input LeadConsent {
+    description: String
+    granted: Boolean
+    type: String
+}
+
+input LeadEmail {
+    address: String!
+    type: String!
+}
+
+input LeadInventory {
+    amount: Amount
+    status: String!
+    stocknumber: Int!
+    type: String!
+    vehicle: LeadVehicle
+}
+
+input LeadPayment {
+    amount: Amount!
+    method: String!
+}
+
+input LeadPhone {
+    number: String!
+    type: String!
+}
+
+input LeadVehicle {
+    color: String!
+    doors: Int!
+    make: String!
+    miles: Int!
+    model: String!
+    price: Float!
+    trim: String!
+    vin: String!
+    year: Int!
+}
+
+input Message {
+    brand: String!
+    comment: String!
+    content: String!
+    form: String!
+    from: String!
+    sent: String!
+    site: String!
+    source: String!
+    sub_source: String!
+    subject: String!
+    subsite: String!
+    utm_campaign: String!
+    utm_content: String!
+    utm_keyword: String!
+    utm_medium: String!
+    utm_source: String!
+    utm_subsource: String!
+    utm_term: String!
+}
+
+input OtherIncome {
+    amount: Int!
+    source: String!
+}
+
+input PaymentAddress {
+    Address1: String!
+    Address2: String!
+    City: String!
+    State: String!
+    Zipcode: String!
+}
+
+input Person {
+    address: [LeadAddress!]
+    city: String!
+    consent: [LeadConsent!]
+    email: [LeadEmail!]
+    ficoRange: FicoRange
+    firstname: String!
+    lastname: String!
+    maxLoanAmount: Float
+    middlename: String
+    phone: [LeadPhone!]
+    state: String!
+    zip_code: String!
+}
+
+input PlaidAccount {
+    Id: String!
+    Mask: String!
+    Name: String!
+    Subtype: String!
+    Type: String!
+}
+
+input PlaidInstitution {
+    Id: String!
+    Name: String
+}
+
+input PostCreditVehicle {
+    vin: String!
+}
+
+input PrequalApplicant {
+    address: PrequalApplicantAddress!
+    email: String!
+    employmentIncome: Float!
+    name: PrequalApplicantName!
+    phone: String!
+    segmentId: String
+}
+
+input PrequalApplicantAddress {
+    city: String!
+    state: String!
+    street: String!
+    street2: String!
+    zip: String!
+}
+
+input PrequalApplicantName {
+    first: String!
+    last: String!
+    middle: String!
+}
+
+input PrequalApplication {
+    applicant: PrequalApplicant!
+    bodyStyle: String
+    monthlyPaymentBudget: Float
+    vin: String
+}
+
+input ReviewOptions {
+    limit: Int
+    locationID: [String!]
+    minRating: Int
+    offset: Int
+    range: String
+    sourceID: [String!]
+}
+
+input SortField {
+    direction: String
+    field: String!
+}
+
+input StripeToken {
+    card: Card!
+    client_ip: String
+    created: Int
+    id: String!
+    livemode: Boolean
+    object: String
+    type: String
+    used: Boolean
+}
+
+input SubscriptionUpdate {
+    id: String!
+    subscribed: Boolean!
+}
+
+input SuggestedDownPaymentRequest {
+    registrationState: String!
+    shippingFee: Float!
+    totalTaxesAndFees: Float!
+    vin: String!
+    zip: String!
+}
+
+input SummaryOptions {
+    locationID: [String!]
+    range: String
+    sourceID: [String!]
+}
+
+input UpdateDealRequest {
+    backendProductsStepDone: Boolean
+    businessName: String
+    contractingStepDone: Boolean
+    dealReviewStepDone: Boolean
+    dealType: String
+    docUploadStepDone: Boolean
+    externalDealID: String!
+    installFrontPlate: Boolean
+    interestedInTrade: Boolean
+    militaryServiceMember: Boolean
+    plateWillBeTransferred: Boolean
+    source: String!
+    tradeInStepDone: Boolean
+}
+
+input VehicleSearchCriteria {
+    bodyStyle: [String!]
+    deliveryDays: String
+    geofence: Boolean
+    location: String
+    make: [String!]
+    model: [String!]
+    range: Int
+    soldStatus: [String!]
+    vin: [String!]
+}
+
+input Weblead {
+    compaign: String!
+    dealership: String!
+    device: String!
+    gclid: String!
+    geoData: GeoData
+    howdidyouhear: String!
+    sessionid: String!
+    userid: String!
+    webpage: String!
+}
