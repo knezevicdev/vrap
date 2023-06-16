@@ -1,12 +1,12 @@
 import { GQLTypes, isErrorResponse, Response } from '@vroom-web/networking';
 import {
   ApiError,
-  MutationDealV3AddStatusArgs,
+  MutationDealV3UpdateDealArgs,
 } from '@vroom-web/networking/dist/generated/graphql-types';
 import { get as _get } from 'lodash';
 
 import DEAL_ADD_TRADE_INS from '../../graphql/mutations/dealAddTradeIns.graphql';
-import UPDATE_DEAL_STATUS from '../../graphql/mutations/updateDealStatus.graphql';
+import UPDATE_DEAL from '../../graphql/mutations/updateDeal.graphql';
 import GET_USER_DEAL from '../../graphql/queries/getUserDeal.graphql';
 import client from '../client';
 
@@ -151,15 +151,18 @@ export const declineDeal = async (
 ): Promise<UpdateDeal> => {
   const res = await client.gqlRequest<
     Record<string, GQLTypes.DealV3>,
-    MutationDealV3AddStatusArgs
+    MutationDealV3UpdateDealArgs
   >({
-    document: UPDATE_DEAL_STATUS,
+    document: UPDATE_DEAL,
     variables: {
-      externalDealID: deal.externalDealID,
-      source: 'web',
-      tradeInStepDone: true,
+      updateRequest: {
+        externalDealID: deal.externalDealID,
+        source: 'web',
+        tradeInStepDone: true,
+        interestedInTrade: true,
+      },
     },
   });
 
-  return handleUpdateDealResponse(res, 'dealV3AddStatus');
+  return handleUpdateDealResponse(res, 'dealV3UpdateDeal');
 };

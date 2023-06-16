@@ -1,0 +1,22 @@
+#import "src/graphql/fragments/errorFragment.graphql"
+
+mutation UPDATE_DEAL($updateRequest: UpdateDealRequest!) {
+  dealV3UpdateDeal(updateRequest: $updateRequest) {
+    __typename
+    ... on DealV3 {
+      dealSummary {
+        dealStatus {
+          step
+        }
+        inventory {
+            vehicle {
+                vin
+            }
+        }
+      }
+    }
+    ... on APIError {
+      ...ErrorDetails
+    }
+  }
+}
