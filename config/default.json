@@ -21,7 +21,7 @@
   },
   "GOOGLE_MAPS_API_KEY": "AIzaSyA7DF8tw_hIePYUdOHBSYqnJwtwRAfrQws",
   "GQL_PROXY_TARGET": "/gql",
-  "INTERCHANGE_PROXY_TARGET": "https://dev.vroom.com",
+  "INTERCHANGE_PROXY_TARGET": "https://qa.vroom.com",
   "INTERCHANGE_URL": "",
   "ITERABLE_UNSUBSCRIBE_KEY": "CTVKm6IJxPwqShPsER9HfgApMU1OeJiBcYbYpxDM0S0=",
   "RECAPTCHA_SITE_KEY": "6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI",
@@ -29,7 +29,7 @@
   "SEGMENT_WRITE_KEY": "N0pxERRIw4iYCoxZREMZj1yWBIoARIz4",
   "VAST_IMAGE_PROXY_URL": "https://img.vast.com/carstory-appraisal/beta",
   "VIS_URL": "https://vis-int.dev.vroom.cloud/",
-  "VROOM_URL": "https://dev.vroom.com",
+  "VROOM_URL": "https://qa.vroom.com",
   "WEB_LEADS_PROXY_TARGET": "/api/weblead/attribution",
   "WEB_LEADS_URL": "/api/weblead/attribution"
 }

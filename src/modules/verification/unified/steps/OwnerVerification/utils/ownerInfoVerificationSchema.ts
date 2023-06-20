@@ -4,6 +4,7 @@ import { getZipCodeValidation } from 'src/networking/request';
 
 const ownerInfoVerificationSchema = yup.object().shape({
   firstName: yup.string().required('First name is required'),
+  middleName: yup.string().optional(),
   lastName: yup.string().required('Last name is required'),
   address: yup.string().required('Address is required'),
   state: yup.string().required('State is required'),

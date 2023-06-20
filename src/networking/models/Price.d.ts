@@ -43,6 +43,7 @@ export interface Verification {
   appraisal_vehicle_id: number;
   is_owner: boolean;
   owner_first_name: string;
+  owner_middle_name: string | null;
   owner_last_name: string;
   owner_mailing_address: Partial<{
     address_1: string;
@@ -55,6 +56,7 @@ export interface Verification {
   owner_email_address: string;
   owners_on_title: number;
   second_owner_first_name: string | null;
+  second_owner_middle_name: string | null;
   second_owner_last_name: string | null;
   second_owner_mailing_address: Partial<{
     address_1: string;

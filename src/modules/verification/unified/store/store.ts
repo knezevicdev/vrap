@@ -161,6 +161,7 @@ const useVerificationStore = create<VerificationState>()((...a) => ({
         firstOwnerAddress:
           verificationDetails.owner_mailing_address.address_1 || '',
         firstOwnerFirstName: verificationDetails.owner_first_name,
+        firstOwnerMiddleName: verificationDetails.owner_middle_name || '',
         firstOwnerLastName: verificationDetails.owner_last_name,
         firstOwnerPhoneNumber: verificationDetails.owner_phone_number,
         firstOwnerEmail: verificationDetails.owner_email_address,
@@ -179,6 +180,8 @@ const useVerificationStore = create<VerificationState>()((...a) => ({
         secondOwnerAddress:
           verificationDetails.second_owner_mailing_address.address_1 || '',
         secondOwnerFirstName: verificationDetails.second_owner_first_name || '',
+        secondOwnerMiddleName:
+          verificationDetails.second_owner_middle_name || '',
         secondOwnerLastName: verificationDetails.second_owner_last_name || '',
         secondOwnerPhoneNumber:
           verificationDetails.second_owner_phone_number || '',

@@ -46,6 +46,7 @@ const useSecondOwnerInfoForm = () => {
 
   const {
     firstName,
+    middleName,
     lastName,
     address,
     state,
@@ -59,6 +60,7 @@ const useSecondOwnerInfoForm = () => {
   } = useVerificationStore(
     (state) => ({
       firstName: state.secondOwnerFirstName,
+      middleName: state.secondOwnerMiddleName,
       lastName: state.secondOwnerLastName,
       address: state.secondOwnerAddress,
       state: state.secondOwnerState,
@@ -76,6 +78,7 @@ const useSecondOwnerInfoForm = () => {
   const form = useForm({
     defaultValues: {
       firstName,
+      middleName,
       lastName,
       address,
       state,
