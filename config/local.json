@@ -1,8 +1,8 @@
 {
   "ABSMARTLY_URL": "/interchange/absmartly/v1",
-  "CAT_DATA_PROXY_TARGET": "https://dev.vroom.com/cat-data",
+  "CAT_DATA_PROXY_TARGET": "https://qa.vroom.com/cat-data",
   "CAT_SERVICE_URL": "/appraisal/api",
-  "GQL_PROXY_TARGET": "https://dev.vroom.com/gql",
+  "GQL_PROXY_TARGET": "https://qa.vroom.com/gql",
   "INTERCHANGE_URL": "/appraisal/api/interchange",
-  "WEB_LEADS_PROXY_TARGET": "https://dev.vroom.com/api/weblead/attribution"
+  "WEB_LEADS_PROXY_TARGET": "https://qa.vroom.com/api/weblead/attribution"
 }

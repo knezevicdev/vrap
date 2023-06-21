@@ -9,6 +9,7 @@ import { VerificationState } from './store';
 export interface OwnerVerificationState {
   firstOwnerConfirmation: string;
   firstOwnerFirstName: string;
+  firstOwnerMiddleName: string;
   firstOwnerLastName: string;
   firstOwnerAddress: string;
   firstOwnerState: string;
@@ -19,6 +20,7 @@ export interface OwnerVerificationState {
   firstOwnerPhoneNumber: string;
   secondOwnerConfirmation: string;
   secondOwnerFirstName: string;
+  secondOwnerMiddleName: string;
   secondOwnerLastName: string;
   secondOwnerAddress: string;
   secondOwnerState: string;
@@ -47,6 +49,7 @@ const createOwnerVerificationSlice: StateCreator<
 > = (set) => ({
   firstOwnerConfirmation: '',
   firstOwnerFirstName: '',
+  firstOwnerMiddleName: '',
   firstOwnerLastName: '',
   firstOwnerAddress: '',
   firstOwnerState: '',
@@ -57,6 +60,7 @@ const createOwnerVerificationSlice: StateCreator<
   firstOwnerPhoneNumber: '',
   secondOwnerConfirmation: '',
   secondOwnerFirstName: '',
+  secondOwnerMiddleName: '',
   secondOwnerLastName: '',
   secondOwnerAddress: '',
   secondOwnerState: '',
@@ -89,6 +93,7 @@ const createOwnerVerificationSlice: StateCreator<
         firstOwnerConfirmationValues.firstOwnerConfirmation,
       firstOwnerFirstName: firstOwnerInfoValues.firstName,
       firstOwnerLastName: firstOwnerInfoValues.lastName,
+      firstOwnerMiddleName: firstOwnerInfoValues.middleName || '',
       firstOwnerAddress: firstOwnerInfoValues.address,
       firstOwnerState: firstOwnerInfoValues.state,
       firstOwnerZip: firstOwnerInfoValues.zip,
@@ -99,6 +104,7 @@ const createOwnerVerificationSlice: StateCreator<
       secondOwnerConfirmation:
         secondOwnerConfirmationValues.secondOwnerConfirmation,
       secondOwnerFirstName: secondOwnerInfoValue('firstName'),
+      secondOwnerMiddleName: secondOwnerInfoValue('middleName'),
       secondOwnerLastName: secondOwnerInfoValue('lastName'),
       secondOwnerAddress: secondOwnerInfoValue('address'),
       secondOwnerState: secondOwnerInfoValue('state'),

@@ -11,6 +11,7 @@ const FirstOwnerInfo = ({
   form,
 }: WizardStepProps<{
   firstName: string;
+  middleName: string;
   lastName: string;
   address: string;
   state: string;
@@ -24,7 +25,12 @@ const FirstOwnerInfo = ({
     <>
       <Typography.Title.Three>Owner contact information</Typography.Title.Three>
       <Row wrap="wrap" gap="20px">
-        <Col size={1 / 2}>
+        <Col
+          size={{
+            default: 1 / 3,
+            mobile: 1,
+          }}
+        >
           <Input
             id="firstOwnerFirstName"
             name="firstName"
@@ -33,7 +39,27 @@ const FirstOwnerInfo = ({
             label="First name"
           />
         </Col>
-        <Col size={1 / 2}>
+        <Col
+          size={{
+            default: 1 / 3,
+            mobile: 1,
+          }}
+        >
+          <Input
+            id="firstOwnerMiddleName"
+            name="middleName"
+            control={form.control}
+            placeholder="Middle name"
+            label="Middle name"
+            tooltip="If you have your vehicle’s title, please enter your name exactly as it appears there."
+          />
+        </Col>
+        <Col
+          size={{
+            default: 1 / 3,
+            mobile: 1,
+          }}
+        >
           <Input
             id="firstOwnerLastName"
             name="lastName"

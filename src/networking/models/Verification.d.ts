@@ -85,12 +85,14 @@ export interface PatchReview {
   offer_id: string | undefined;
   is_owner: boolean | undefined;
   owner_first_name: string | undefined;
+  owner_middle_name: string | undefined;
   owner_last_name: string | undefined;
   owner_mailing_address: Partial<MailingAddress> | undefined;
   owner_phone_number: string | undefined;
   owner_email_address: string | undefined;
   owners_on_title: number | undefined;
   second_owner_first_name: string | undefined;
+  second_owner_middle_name: string | undefined;
   second_owner_last_name: string | undefined;
   second_owner_mailing_address: Partial<MailingAddress> | undefined;
   second_owner_phone_number: string | undefined;
@@ -109,6 +111,7 @@ export interface PatchReview {
   acknowledgement_of_terms: boolean | undefined;
   exact_mileage: number | undefined;
   last_four_ssn: string | null | undefined;
+  loan_state: string | null | undefined;
   mileage_file_id: string | null | undefined;
   front_of_title_lien_file_id: string | null | undefined;
   back_of_title_lien_file_id: string | null | undefined;
