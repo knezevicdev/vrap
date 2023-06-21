@@ -1,11 +1,11 @@
 import { SkipNavigationLink } from '@vroom-web/ui-lib';
+import { IncomingMessage } from 'http';
 import { observer } from 'mobx-react';
 import { GetServerSideProps, GetServerSidePropsContext, NextPage } from 'next';
 import React from 'react';
 import styled from 'styled-components';
 
-import { parseCookies } from '../../modules/verification/shared/Wrapper';
-import UnifiedVerification from '../../modules/verification/unified';
+import UnifiedVerification from '../../modules/verification';
 
 import Header from 'src/components/Header';
 import Footer from 'src/core/Footer';
@@ -47,6 +47,19 @@ const PageContent = styled.div`
   align-items: flex-start;
   font-family: ${(props: any): string => props.theme.typography.family.body};
 `;
+
+interface Cookie {
+  ajs_user_id: string;
+}
+const parseCookies = (req?: IncomingMessage): Cookie => {
+  if (req && req.headers && req.headers.cookie) {
+    return Object.fromEntries(
+      req.headers.cookie.split('; ').map((v) => v.split(/=(.+)/))
+    );
+  } else {
+    return { ajs_user_id: '' };
+  }
+};
 
 export const getServerSideProps: GetServerSideProps = async (
   ctx: GetServerSidePropsContext

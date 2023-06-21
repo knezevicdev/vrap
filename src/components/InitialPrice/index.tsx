@@ -3,8 +3,8 @@ import { observer } from 'mobx-react';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 
 import { Icons } from '../../core/Icon';
-import TaxSavingsDialog from '../../modules/verification/unified/components/TaxSavingsDialog';
-import useTaxSavings from '../../modules/verification/unified/utils/useTaxSavings';
+import TaxSavingsDialog from '../../modules/verification/components/TaxSavingsDialog';
+import useTaxSavings from '../../modules/verification/utils/useTaxSavings';
 import { displayCurrency } from '../../utils';
 import AuthModal from '../AuthModal/AuthModal';
 import Spinner from '../Spinner';
