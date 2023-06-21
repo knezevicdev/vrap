@@ -84,6 +84,7 @@ export interface Verification {
   lien_financial_institution_name: string;
   lender_id: string;
   lender_name: string;
+  loan_state: string | null;
   financial_institution_phone: string;
   lien_account_number: string;
   acknowledgement_of_terms: boolean;

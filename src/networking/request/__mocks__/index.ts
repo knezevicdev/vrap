@@ -55,11 +55,13 @@ export const createVerificationData = {
   last_four_ssn: '',
   lien_account_number: '',
   lien_financial_institution_name: '',
+  loan_state: null,
   lien_release_letter_file_id: 'ca322735-9cde-473e-b80b-7529fcac39e4',
   mileage_file_id: 'd6fccae0-3ec5-40db-b42f-5a92967567ed',
   offer_id: 'cb5b06d43cb95286ceeb50efc7a82e08',
   owner_email_address: 'doyouliketesting@testvroom.com',
   owner_first_name: 'fname',
+  owner_middle_name: '',
   owner_last_name: 'lname',
   owner_mailing_address: {
     address_1: '123 Melrose Street',
@@ -86,6 +88,7 @@ export const createVerificationData = {
   second_owner_back_of_driver_license_file_id: null,
   second_owner_email_address: '',
   second_owner_first_name: '',
+  second_owner_middle_name: '',
   second_owner_front_of_driver_license_file_id: null,
   second_owner_last_name: '',
   second_owner_mailing_address: {
@@ -116,6 +119,7 @@ export const verificationResp: VerificationRespData = {
     id: 4611,
     is_owner: true,
     last_four_ssn: null,
+    loan_state: null,
     lien_account_number: '',
     lien_financial_institution_name: '',
     lien_release_letter_file_id: 'ca322735-9cde-473e-b80b-7529fcac39e4',
@@ -124,6 +128,7 @@ export const verificationResp: VerificationRespData = {
     offer_price: 0,
     owner_email_address: 'doyouliketesting@testvroom.com',
     owner_first_name: 'fname',
+    owner_middle_name: null,
     owner_last_name: 'lname',
     owner_mailing_address: {
       address_1: '123 Melrose Street',
@@ -155,6 +160,7 @@ export const verificationResp: VerificationRespData = {
     second_owner_back_of_driver_license_file_id: null,
     second_owner_email_address: '',
     second_owner_first_name: '',
+    second_owner_middle_name: null,
     second_owner_front_of_driver_license_file_id: null,
     second_owner_last_name: '',
     second_owner_mailing_address: {

@@ -211,7 +211,7 @@ const useVerificationStore = create<VerificationState>()((...a) => ({
         loanLastFourDigits: verificationDetails.last_four_ssn || '',
         loanInstitutionId: verificationDetails.lender_id || '',
         loanName: verificationDetails.lender_name || '',
-        loanState,
+        loanState: verificationDetails.loan_state || loanState,
         loanAcknowledgement: verificationDetails.acknowledgement_of_terms,
         documentDriverLicenseFront:
           verificationDetails.front_of_driver_license_file_id || '',

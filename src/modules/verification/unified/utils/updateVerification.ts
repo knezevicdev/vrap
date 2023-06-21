@@ -22,6 +22,7 @@ const updateVerification = async (formState: number) => {
     offer_id: verificationState.priceId,
     is_owner: yesNoOrUndefined(verificationState.firstOwnerConfirmation),
     owner_first_name: verificationState.firstOwnerFirstName,
+    owner_middle_name: verificationState.firstOwnerMiddleName,
     owner_last_name: verificationState.firstOwnerLastName,
     owner_mailing_address: {
       address_1: verificationState.firstOwnerAddress,
@@ -34,6 +35,7 @@ const updateVerification = async (formState: number) => {
     owner_email_address: verificationState.firstOwnerEmail,
     owners_on_title: ownersOnTitle,
     second_owner_first_name: verificationState.secondOwnerFirstName,
+    second_owner_middle_name: verificationState.secondOwnerMiddleName,
     second_owner_last_name: verificationState.secondOwnerLastName,
     second_owner_mailing_address: {
       address_1: verificationState.secondOwnerAddress,
@@ -67,6 +69,7 @@ const updateVerification = async (formState: number) => {
     lien_account_number: verificationState.loanAccountNumber,
     last_four_ssn: verificationState.loanLastFourDigits,
     acknowledgement_of_terms: verificationState.loanAcknowledgement,
+    loan_state: verificationState.loanState,
     exact_mileage: Number(
       String(verificationState.documentMileageValue).replace(/\D/g, '')
     ),

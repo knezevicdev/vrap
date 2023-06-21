@@ -49,6 +49,7 @@ export default class VerificationReviewSectionViewModel {
       offer_id: verificationDetail?.offer_id,
       is_owner: verificationDetail?.is_owner,
       owner_first_name: verificationDetail?.owner_first_name,
+      owner_middle_name: verificationDetail?.owner_middle_name || '',
       owner_last_name: verificationDetail?.owner_last_name,
       owner_mailing_address: verificationDetail?.owner_mailing_address,
       owner_phone_number: verificationDetail?.owner_phone_number,
@@ -56,6 +57,8 @@ export default class VerificationReviewSectionViewModel {
       owners_on_title: verificationDetail?.owners_on_title,
       second_owner_first_name:
         verificationDetail?.second_owner_first_name || '',
+      second_owner_middle_name:
+        verificationDetail?.second_owner_middle_name || '',
       second_owner_last_name: verificationDetail?.second_owner_last_name || '',
       second_owner_mailing_address:
         verificationDetail?.second_owner_mailing_address,
@@ -78,6 +81,7 @@ export default class VerificationReviewSectionViewModel {
         verificationDetail?.financial_institution_phone,
       lien_account_number: verificationDetail?.lien_account_number,
       last_four_ssn: verificationDetail?.last_four_ssn,
+      loan_state: verificationDetail?.loan_state,
       acknowledgement_of_terms: verificationDetail?.acknowledgement_of_terms,
       exact_mileage: verificationDetail?.exact_mileage,
       mileage_file_id: verificationDetail?.mileage_file_id,
