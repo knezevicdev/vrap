@@ -1,16 +1,20 @@
 import { Checkbox } from '@vroom-web/ui-lib';
 import React, { useEffect, useRef } from 'react';
+import { UseFormReturn } from 'react-hook-form';
 
-import { displayPhoneNumber } from '../../../../../../utils';
-import { lettersNumbersHyphensOnly } from '../../../../../appraisalform/components/formatting';
-import { STATES } from '../../../../../appraisalform/constants/misc';
-import Input from '../../../../components/Input';
-import Select from '../../../../components/Select';
-import { WizardStepProps } from '../../../../components/WizardForm';
+import { displayPhoneNumber } from '../../../../../../../utils';
+import { lettersNumbersHyphensOnly } from '../../../../../../appraisalform/components/formatting';
+import { STATES } from '../../../../../../appraisalform/constants/misc';
+import Input from '../../../../../components/Input';
+import { EditStep } from '../../../../../components/MultiStepForm/Style.css';
+import Select from '../../../../../components/Select';
+import PrevNextButtons from '../../../../../components/WizardForm/PrevNextButtons';
+import { SectionTitle } from '../../../../../Styled.css';
 import LxBank from './LxBank';
 import {
   Label,
   LabelContainer,
+  PreviewLine,
   SecurityLogo,
   SecurityMessage,
 } from './Style.css';
@@ -20,9 +24,8 @@ import useCaf from './useCaf';
 import { Icons } from 'src/core/Icon';
 import { Col, Row } from 'src/styled/grid';
 
-const LoanInformation = ({
-  form,
-}: WizardStepProps<{
+export interface LoanInformationForm {
+  loanStepCompleted: boolean;
   bankName: string;
   manualBankName: string;
   phoneNumber: string;
@@ -32,7 +35,17 @@ const LoanInformation = ({
   acknowledgment: boolean;
   lienId: string;
   accFields: boolean;
-}>) => {
+}
+
+interface Props {
+  form: UseFormReturn<LoanInformationForm>;
+  onPrev: () => void;
+  onNext: () => void;
+  onEdit: () => void;
+  preview?: boolean;
+}
+
+const LoanInformation = ({ form, onPrev, onNext, onEdit, preview }: Props) => {
   const lastAcknowledged = useRef(false);
   const caf = useCaf();
   const availableFields = useAvailableFields(caf, form);
@@ -51,8 +64,20 @@ const LoanInformation = ({
     }
   }, [form, isAcknowledged]);
 
+  if (preview) {
+    return (
+      <PreviewLine>
+        <SectionTitle>Payments on Vehicle</SectionTitle>
+        <EditStep role="button" tabIndex={0} onClick={onEdit}>
+          Edit
+        </EditStep>
+      </PreviewLine>
+    );
+  }
+
   return (
     <Row wrap="wrap" gap="20px">
+      <SectionTitle>Payments on Vehicle</SectionTitle>
       <Col size={1}>
         <LabelContainer>
           <Label>
@@ -178,6 +203,13 @@ const LoanInformation = ({
           label="I authorize Vroom to inquire and request any necessary information from my lienholder"
           id="lien-agreement"
           dataQa="lien-agreement"
+        />
+      </Col>
+      <Col size={1}>
+        <PrevNextButtons
+          disableNext={!form.formState.isValid}
+          onPrev={onPrev}
+          onNext={onNext}
         />
       </Col>
     </Row>

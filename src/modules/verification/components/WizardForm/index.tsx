@@ -2,9 +2,8 @@ import React, { MutableRefObject, useEffect, useRef } from 'react';
 import { FieldValues, UseFormReturn } from 'react-hook-form';
 import { StepWizardChildProps, StepWizardProps } from 'react-step-wizard';
 
-import { ButtonsWrapper, NextButton, PrevButton, Wizard } from './Styled.css';
-
-import { Col, Row } from 'src/styled/grid';
+import PrevNextButtons from './PrevNextButtons';
+import { Wizard } from './Styled.css';
 
 export type WizardStepProps<T extends FieldValues> = {
   form: UseFormReturn<T>;
@@ -17,6 +16,7 @@ type StepWithFormType<T extends FieldValues> = {
   onNext?: () => number;
   onPrev?: () => number;
   onActive?: () => void;
+  disableStepButtons?: boolean;
 };
 
 export interface WizardFormInstance {
@@ -52,6 +52,7 @@ const WizardFormNav = <T extends FieldValues[]>({
   const isNextDisabled = !step.form.formState.isValid;
   const nextText = step.nextText || 'Next';
   const initialScrollSkip = useRef(false);
+  const disableStepButtons = step.disableStepButtons;
 
   useEffect(() => {
     setTimeout(() => {
@@ -73,47 +74,37 @@ const WizardFormNav = <T extends FieldValues[]>({
     }, 500);
   }, [currentStep, extraOffset, rootElementRef]);
 
+  if (disableStepButtons) return null;
+
   return (
-    <ButtonsWrapper>
-      <Row wrap="wrap" gap="20px">
-        <Col size={1 / 2} disableBottomGap>
-          <PrevButton
-            disabled={currentStep === 1}
-            onClick={() => {
-              if (step.onPrev) {
-                const stepToGo = step.onPrev();
-                if (stepToGo) goToStep?.(stepToGo);
-                return;
-              }
+    <PrevNextButtons
+      hidePrev={currentStep === 1}
+      disableNext={isNextDisabled}
+      prevText="Back"
+      nextText={nextText}
+      onPrev={() => {
+        if (step.onPrev) {
+          const stepToGo = step.onPrev();
+          if (stepToGo) goToStep?.(stepToGo);
+          return;
+        }
 
-              previousStep?.();
-            }}
-          >
-            Prev
-          </PrevButton>
-        </Col>
-        <Col size={1 / 2} disableBottomGap>
-          <NextButton
-            onClick={() => {
-              if (step.onNext) {
-                const stepToGo = step.onNext();
-                if (stepToGo) goToStep?.(stepToGo);
-                return;
-              }
+        previousStep?.();
+      }}
+      onNext={() => {
+        if (step.onNext) {
+          const stepToGo = step.onNext();
+          if (stepToGo) goToStep?.(stepToGo);
+          return;
+        }
 
-              if (currentStep === steps.length) {
-                onDone?.();
-              } else {
-                nextStep?.();
-              }
-            }}
-            disabled={isNextDisabled}
-          >
-            {nextText}
-          </NextButton>
-        </Col>
-      </Row>
-    </ButtonsWrapper>
+        if (currentStep === steps.length) {
+          onDone?.();
+        } else {
+          nextStep?.();
+        }
+      }}
+    />
   );
 };
 

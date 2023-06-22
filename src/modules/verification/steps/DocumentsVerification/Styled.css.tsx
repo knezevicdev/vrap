@@ -1,4 +1,4 @@
-import { Icon, Typography } from '@vroom-web/ui-lib';
+import { Button, Icon, Typography } from '@vroom-web/ui-lib';
 import styled from 'styled-components';
 
 import { Row as GridRow } from 'src/styled/grid';
@@ -80,4 +80,19 @@ export const IconWrapper = styled.div`
   height: 100%;
   justify-content: center;
   align-items: center;
+`;
+
+export const SubmitButton = styled(Button.Primary)`
+  margin-top: 32px;
+  :disabled {
+    color: #ffffff;
+  }
+  @media (max-width: 1020px) {
+    margin-top: 20px;
+    width: 100%;
+  }
+`;
+
+export const Bold = styled.span`
+  font-family: 'Calibre-SemiBold';
 `;

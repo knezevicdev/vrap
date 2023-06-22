@@ -4,9 +4,10 @@ import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import { shallow } from 'zustand/shallow';
 
-import useVerificationStore from '../../../../store/store';
+import useVerificationStore from '../../../../../store/store';
 
 const loanInformationSchema = yup.object().shape({
+  loanStepCompleted: yup.boolean().required(),
   bankName: yup.string().required('Address is required'),
   manualBankName: yup.string().when('bankName', {
     is: 'Other',
@@ -61,6 +62,7 @@ const useLoanInformationForm = () => {
 
   const form = useForm({
     defaultValues: {
+      loanStepCompleted: false,
       bankName,
       manualBankName,
       phoneNumber,

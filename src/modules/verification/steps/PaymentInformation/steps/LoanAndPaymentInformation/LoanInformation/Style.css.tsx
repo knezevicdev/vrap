@@ -31,3 +31,16 @@ export const SecurityMessage = styled.div`
   font-size: 16px;
   line-height: 1.5rem;
 `;
+
+export const PreviewLine = styled.div`
+  display: flex;
+`;
+
+export const EditStep = styled.div`
+  padding-left: 10px;
+  color: #e7131a;
+  cursor: pointer;
+  line-height: 26px;
+  font-family: Calibre-Regular, sans-serif;
+  font-size: 16px;
+`;

@@ -1,17 +1,19 @@
 import React from 'react';
 
-import { Col, Row } from '../../../../../../styled/grid';
+import Input from '../../../../components/Input';
 import SelectBoxes from '../../../../components/SelectBoxes';
 import { WizardStepProps } from '../../../../components/WizardForm';
 
+import { Col, Row } from 'src/styled/grid';
+
 const FirstOwnerConfirmation = ({
   form,
-  nextStep,
 }: WizardStepProps<{
   firstOwnerConfirmation: string;
+  documentMileageValue: number;
 }>) => {
   return (
-    <Row>
+    <Row wrap="wrap" gap="10px">
       <Col
         size={{
           default: 1 / 2,
@@ -23,8 +25,21 @@ const FirstOwnerConfirmation = ({
           options={['Yes', 'No']}
           control={form.control}
           id={'firstOwnerConfirmation'}
-          onChange={nextStep}
         />
+      </Col>
+
+      <Col size={1}>
+        <Row>
+          <Col size={{ default: 1 / 2, mobile: 1 }}>
+            <Input
+              id="documentMileageValue"
+              name="documentMileageValue"
+              control={form.control}
+              placeholder="Mileage"
+              label="Mileage shown on the odometer"
+            />
+          </Col>
+        </Row>
       </Col>
     </Row>
   );

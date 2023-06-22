@@ -73,12 +73,18 @@ export const FormSection = styled(({ ...restProps }) => <div {...restProps} />)`
         max-height: 4500px;
       }
     `}
+
+  ${(props) =>
+    props.isview === 'true' &&
+    `
+      padding-left: 28.445px;
+    `}
 `;
 
 export const SectionHeader = styled.div`
   display: flex;
   flex-wrap: wrap;
-  padding-bottom: 20px;
+  padding-bottom: 4px;
 `;
 
 export const StepNumber = styled.div`
@@ -104,13 +110,15 @@ export const StepTitle = styled(({ ...restProps }) => <div {...restProps} />)`
   `)}
 `;
 
-export const EditStep = styled.div`
-  padding-left: 10px;
+export const EditStep = styled.span`
+  padding-left: 16px;
   color: #e7131a;
   cursor: pointer;
   line-height: 26px;
   font-family: Calibre-Regular, sans-serif;
   font-size: 16px;
+  display: flex;
+  align-items: center;
 `;
 
 export const NextButton = styled(({ ...restProps }) => (

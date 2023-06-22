@@ -7,7 +7,6 @@ import WizardForm, {
   WizardFormInstance,
 } from '../../components/WizardForm';
 import useVerificationStore from '../../store/store';
-import calculateDocumentsValid from '../../utils/calculateDocumentsValid';
 import FirstOwnerConfirmation from './steps/FirstOwnerConfirmation/FirstOwnerConfirmation';
 import useFirstOwnerConfirmationForm from './steps/FirstOwnerConfirmation/useFirstOwnerConfirmationForm';
 import FirstOwnerInfo from './steps/FirstOwnerInfo/FirstOwnerInfo';
@@ -17,12 +16,7 @@ import useSecondOwnerConfirmationForm from './steps/SecondOwnerConfirmation/useS
 import SecondOwnerInfo from './steps/SecondOwnerInfo/SecondOwnerInfo';
 import useSecondOwnerInfoForm from './steps/SecondOwnerInfo/useSecondOwnerInfoForm';
 
-const OwnerVerificationStep = ({
-  nextStep,
-  goToStep,
-  editRef,
-  returnStep,
-}: FormStepProps) => {
+const OwnerVerificationStep = ({ nextStep, editRef }: FormStepProps) => {
   const wizardFormInstance = React.useRef<WizardFormInstance>();
 
   useEffect(() => {
@@ -57,11 +51,6 @@ const OwnerVerificationStep = ({
       secondOwnerConfirmationForm,
       secondOwnerInfoForm
     );
-
-    if (editRef && returnStep > 3 && !calculateDocumentsValid()) {
-      goToStep(3);
-      return;
-    }
 
     nextStep();
   };

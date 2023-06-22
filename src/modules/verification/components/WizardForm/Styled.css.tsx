@@ -6,7 +6,7 @@ export const NextButton = styled(Button.Primary)`
   width: 100%;
 `;
 
-export const PrevButton = styled(Button.Secondary)`
+export const PrevButton = styled(Button.Outline)`
   width: 100%;
 `;
 
