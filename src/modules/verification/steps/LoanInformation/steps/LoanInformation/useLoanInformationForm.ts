@@ -19,7 +19,11 @@ const loanInformationSchema = yup.object().shape({
     .required('You must agree to the terms')
     .oneOf([true], 'You must agree to the terms'),
   lienId: yup.string(),
-  lastFourDigits: yup.string().optional(),
+  lastFourDigits: yup
+    .string()
+    .matches(/^$|^\d{4}$/, 'Invalid value')
+    .nullable()
+    .optional(),
   accFields: yup.boolean(),
   phoneNumber: yup.string().when('accFields', {
     is: true,
