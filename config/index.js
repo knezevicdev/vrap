@@ -1,5 +1,5 @@
 const defaultConfig = require('./default.json');
-const localConfig = require('./dev.json');
+const localConfig = require('./local.json');
 const devConfig = require('./dev.json');
 const qaConfig = require('./qa.json');
 const uatConfig = require('./uat.json');

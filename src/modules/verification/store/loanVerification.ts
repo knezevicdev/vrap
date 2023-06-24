@@ -50,6 +50,7 @@ const createLoanVerificationSlice: StateCreator<
 
     const bankName =
       loanInstitution === 'Other' ? manualBankName : loanInstitution;
+    const loanInstitutionId = loanInstitution === 'Other' ? '' : lienId;
 
     localStorage.setItem('lastFour', lastFourDigits || '');
     localStorage.setItem('whereIsVehicleRegistered', loanState);
@@ -63,7 +64,7 @@ const createLoanVerificationSlice: StateCreator<
       loanLastFourDigits: lastFourDigits,
       loanState: loanState,
       loanName: bankName,
-      loanInstitutionId: lienId,
+      loanInstitutionId,
       loanAcknowledgement: acknowledgment,
     }));
   },

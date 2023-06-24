@@ -108,6 +108,8 @@ export interface PatchReview {
   lien_financial_institution_name: string | undefined;
   financial_institution_phone: string | undefined;
   lien_account_number: string | undefined;
+  lender_id: string;
+  lender_name: string;
   acknowledgement_of_terms: boolean | undefined;
   exact_mileage: number | undefined;
   last_four_ssn: string | null | undefined;
