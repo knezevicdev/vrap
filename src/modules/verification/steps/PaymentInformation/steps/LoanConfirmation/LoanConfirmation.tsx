@@ -6,7 +6,6 @@ import { WizardStepProps } from '../../../../components/WizardForm';
 
 const LoanConfirmation = ({
   form,
-  nextStep,
 }: WizardStepProps<{
   loanConfirmation: string;
 }>) => {
@@ -23,9 +22,6 @@ const LoanConfirmation = ({
           options={['Yes', 'No']}
           control={form.control}
           id={'loanConfirmation'}
-          onChange={(value) => {
-            if (value === 'Yes') nextStep?.();
-          }}
         />
       </Col>
     </Row>

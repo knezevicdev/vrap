@@ -19,14 +19,14 @@ import OfferExpiredDialog from './components/OfferExpiredDialog';
 import VerificationSidebar from './components/Sidebar';
 import VerificationStepper from './components/Stepper';
 import DocumentsVerificationStep from './steps/DocumentsVerification/DocumentsVerification';
-import DocumentsVerificationReview from './steps/DocumentsVerification/DocumentsVerificationReview';
-import LoanInformationStep from './steps/LoanInformation/LoanInformation';
-import LoanInformationReview from './steps/LoanInformation/LoanInformationReview';
 import OwnerVerificationStep from './steps/OwnerVerification/OwnerVerification';
 import OwnerVerificationReview from './steps/OwnerVerification/OwnerVerificationReview';
+import PaymentInformationStep from './steps/PaymentInformation/PaymentInformation';
+import PaymentInformationReview from './steps/PaymentInformation/PaymentInformationReview';
 import PickupInformationStep from './steps/PickupInformation/PickupInformation';
 import PickupInformationReview from './steps/PickupInformation/PickupInformationReview';
 import Review from './steps/Review/Review';
+import ReviewReview from './steps/Review/ReviewReview';
 import PhotosVerificationStep from './steps/VehiclePhotos/VehiclePhotos';
 import VehiclePhotosReview from './steps/VehiclePhotos/VehiclePhotosReview';
 import useVerificationStore from './store/store';
@@ -44,9 +44,7 @@ import {
   StepperWrapper,
 } from './Styled.css';
 import calculateInitialSection from './utils/calculateInitialSection';
-import handleVerificationCompleted from './utils/handleVerificationCompleted';
 import updateVerification from './utils/updateVerification';
-import useDocumentsValid from './utils/useDocumentsValid';
 import usePhotosValid from './utils/usePhotosValid';
 
 interface Props {
@@ -88,7 +86,6 @@ const UnifiedVerification = ({ ajsUserId }: Props) => {
   }, [isAbsmartlyLoading, isInPhotosUploadExperiment, state]);
   const [activeSection, setActiveSection] = useState(initialSection);
 
-  const documentsValid = useDocumentsValid();
   const photosValid = usePhotosValid();
 
   const priceId = router.query.priceId as string;
@@ -139,11 +136,7 @@ const UnifiedVerification = ({ ajsUserId }: Props) => {
         <ButtonWrapper>
           <Button.Primary
             onClick={() => {
-              handleVerificationCompleted(
-                completedInfo.finalPayment,
-                completedInfo.offerPrice,
-                priceId
-              );
+              window.location.href = `/myaccount/hub/documents/sb`;
             }}
           >
             Continue
@@ -156,7 +149,7 @@ const UnifiedVerification = ({ ajsUserId }: Props) => {
   const sections: FormSection[] = [
     {
       component: OwnerVerificationStep,
-      title: 'Owner Information',
+      title: 'Ownership Information',
       isValid: true,
       disableNext: true,
       completedAfterComponent: OwnerVerificationReview,
@@ -169,17 +162,11 @@ const UnifiedVerification = ({ ajsUserId }: Props) => {
       completedAfterComponent: PickupInformationReview,
     },
     {
-      component: LoanInformationStep,
-      title: 'Payment Details',
+      component: PaymentInformationStep,
+      title: 'Payment',
       isValid: true,
       disableNext: true,
-      completedAfterComponent: LoanInformationReview,
-    },
-    {
-      component: DocumentsVerificationStep,
-      title: 'Document Upload',
-      isValid: documentsValid,
-      completedAfterComponent: DocumentsVerificationReview,
+      completedAfterComponent: PaymentInformationReview,
     },
   ];
 
@@ -192,12 +179,21 @@ const UnifiedVerification = ({ ajsUserId }: Props) => {
     });
   }
 
-  sections.push({
-    component: Review,
-    title: 'Review',
-    isValid: true,
-    disableNext: true,
-  });
+  sections.push(
+    {
+      component: Review,
+      title: 'Review',
+      isValid: true,
+      disableNext: true,
+      completedAfterComponent: ReviewReview,
+    },
+    {
+      component: DocumentsVerificationStep,
+      title: 'Upload Documents',
+      isValid: true,
+      disableNext: true,
+    }
+  );
 
   return (
     <ModuleWrapper>
@@ -217,38 +213,22 @@ const UnifiedVerification = ({ ajsUserId }: Props) => {
             subtitle="We need a few details to make a quick and easy transaction"
             sections={sections}
             onDone={async () => {
-              const response = await updateVerification(5);
+              const response = await updateVerification(4);
               if (!response) return;
 
-              const {
-                owner_email_address,
-                owner_first_name,
-                offer_price,
-                poq,
-              } = response.data.data;
+              const { owner_email_address, owner_first_name } =
+                response.data.data;
 
               analyticsHandler.current.trackVerificationSubmitted(
                 owner_email_address,
                 owner_first_name
               );
 
-              handleVerificationCompleted(
-                poq?.final_payment || null,
-                offer_price,
-                priceId
-              );
+              window.location.href = `/myaccount/hub/documents/sb`;
             }}
             onNext={(currentSection, nextSection) => {
-              if (currentSection < 4) {
+              if (currentSection < 3) {
                 updateVerification(currentSection + 1);
-              }
-
-              if (
-                nextSection === 3 &&
-                !trackedEvents.current.includes('documentsViewed')
-              ) {
-                trackedEvents.current.push('documentsViewed');
-                analyticsHandler.current.trackVerificationDocumentsViewed();
               }
 
               if (

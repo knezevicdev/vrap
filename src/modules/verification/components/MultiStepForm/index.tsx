@@ -136,7 +136,7 @@ const MultiStepForm: React.FC<Props> = (props) => {
   };
 
   const handleEditKeyDown = (
-    event: React.KeyboardEvent<HTMLDivElement>,
+    event: React.KeyboardEvent<HTMLDivElement | HTMLSpanElement>,
     sectionToOpen: number,
     newReturnSection: number
   ) => {
@@ -180,7 +180,7 @@ const MultiStepForm: React.FC<Props> = (props) => {
             )}
           </SectionHeader>
           {showEditButton && AfterComponent && (
-            <FormSection isactive="true">
+            <FormSection isactive="true" isview="true">
               <AfterComponent />
             </FormSection>
           )}

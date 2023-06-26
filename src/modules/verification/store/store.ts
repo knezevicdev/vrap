@@ -4,6 +4,7 @@ import { create } from 'zustand';
 import { Verification } from '../../../networking/models/Price';
 import {
   getOfferDetails,
+  getPlaidToken,
   getVerificationDetails,
   postVerification,
 } from '../../../networking/request';
@@ -17,6 +18,7 @@ import createLoanVerificationSlice, {
 import createOwnerVerificationSlice, {
   OwnerVerificationState,
 } from './ownerVerification';
+import createPaymentSlice, { PaymentState } from './payment';
 import createPhotosVerificationSlice, {
   PhotosVerificationState,
 } from './photosVerification';
@@ -28,7 +30,8 @@ export type VerificationState = OwnerVerificationState &
   PickupVerificationState &
   LoanVerificationState &
   DocumentsVerificationState &
-  PhotosVerificationState & {
+  PhotosVerificationState &
+  PaymentState & {
     priceId: string;
     vin: string;
     offerFirstName: string;
@@ -41,6 +44,7 @@ export type VerificationState = OwnerVerificationState &
     completed: boolean;
     finalPayment: number | null;
     offerPrice: number;
+    verificationEmail: string;
     loadState: (priceId: string) => Promise<boolean>;
   };
 
@@ -55,6 +59,7 @@ const useVerificationStore = create<VerificationState>()((...a) => ({
   ...createLoanVerificationSlice(...a),
   ...createDocumentsVerificationSlice(...a),
   ...createPhotosVerificationSlice(...a),
+  ...createPaymentSlice(...a),
   priceId: '',
   vin: '',
   offerFirstName: '',
@@ -67,6 +72,7 @@ const useVerificationStore = create<VerificationState>()((...a) => ({
   completed: false,
   finalPayment: null,
   offerPrice: 0,
+  verificationEmail: '',
   loadState: async (priceId: string) => {
     const set = a[0];
 
@@ -129,7 +135,7 @@ const useVerificationStore = create<VerificationState>()((...a) => ({
 
     if (!verificationDetails) return true;
 
-    if (verificationDetails.form_state === 5) {
+    if (verificationDetails.form_state === 4) {
       set((state) => ({
         ...state,
         completed: true,
@@ -146,6 +152,27 @@ const useVerificationStore = create<VerificationState>()((...a) => ({
       secondOwnerConfirmation =
         verificationDetails.owners_on_title > 1 ? 'Yes' : 'No';
     }
+
+    let plaidToken = '';
+    let plaidTokenIsLocal = false;
+
+    const localToken = localStorage.getItem('linkToken');
+    const localPriceId = localStorage.getItem('priceId');
+    if (localToken && localPriceId === priceId) {
+      plaidToken = localToken;
+      plaidTokenIsLocal = true;
+    } else {
+      const tokenResponse = await getPlaidToken(priceId);
+      if (!isErrorResponse(tokenResponse)) {
+        plaidToken = tokenResponse.data.getLinkToken.LinkToken;
+      }
+    }
+
+    localStorage.setItem('linkToken', plaidToken);
+    localStorage.setItem('priceId', priceId);
+
+    const paymentSubmittedType =
+      localStorage.getItem('paymentSubmittedType') || '';
 
     set((state) => {
       if (!verificationDetails) return state;
@@ -231,6 +258,10 @@ const useVerificationStore = create<VerificationState>()((...a) => ({
           verificationDetails.lien_release_letter_file_id || '',
         documentOdometer: verificationDetails.mileage_file_id || '',
         documentMileageValue: verificationDetails.exact_mileage || 0,
+        verificationEmail: verificationDetails?.email || '',
+        plaidToken,
+        plaidTokenIsLocal,
+        paymentSubmittedType,
       };
     });
 

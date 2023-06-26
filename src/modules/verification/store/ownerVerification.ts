@@ -91,6 +91,7 @@ const createOwnerVerificationSlice: StateCreator<
       ...state,
       firstOwnerConfirmation:
         firstOwnerConfirmationValues.firstOwnerConfirmation,
+      documentMileageValue: firstOwnerConfirmationValues.documentMileageValue,
       firstOwnerFirstName: firstOwnerInfoValues.firstName,
       firstOwnerLastName: firstOwnerInfoValues.lastName,
       firstOwnerMiddleName: firstOwnerInfoValues.middleName || '',

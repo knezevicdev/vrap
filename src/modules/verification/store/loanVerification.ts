@@ -1,7 +1,7 @@
 import { StateCreator } from 'zustand';
 
-import useLoanConfirmationForm from '../steps/LoanInformation/steps/LoanConfirmation/useLoanConfirmationForm';
-import useLoanInformationForm from '../steps/LoanInformation/steps/LoanInformation/useLoanInformationForm';
+import useLoanInformationForm from '../steps/PaymentInformation/steps/LoanAndPaymentInformation/LoanInformation/useLoanInformationForm';
+import useLoanConfirmationForm from '../steps/PaymentInformation/steps/LoanConfirmation/useLoanConfirmationForm';
 import { VerificationState } from './store';
 
 export interface LoanVerificationState {
