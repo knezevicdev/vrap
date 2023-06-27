@@ -1,7 +1,6 @@
 import { isErrorResponse } from '@vroom-web/networking';
 import React, { useCallback, useState } from 'react';
 
-import { submitPaymentOption } from '../../../../../../options/store';
 import useVerificationStore from '../../../../../store/store';
 import { SectionTitle } from '../../../../../Styled.css';
 import DirectDeposit from './DirectDeposit/DirectDeposit';
@@ -13,8 +12,27 @@ import PlaidButton from './PlaidButton';
 import { Preview, PreviewSubtitle } from './Style.css';
 
 import AnalyticsHandler from 'src/integrations/AnalyticsHandler';
-import { PlaidData } from 'src/interfaces.d';
-import { postPlaidPayment } from 'src/networking/request';
+import {
+  MailingAddress,
+  PaymentOverviewFormValues,
+  PlaidData,
+} from 'src/interfaces.d';
+import {
+  postPlaidPayment,
+  submitPaymentOptionSelected,
+} from 'src/networking/request';
+
+export async function submitPaymentOption(
+  values: PaymentOverviewFormValues,
+  priceId: string,
+  address: MailingAddress
+): Promise<void> {
+  try {
+    await submitPaymentOptionSelected(values, priceId, address);
+  } catch (err) {
+    console.log(JSON.stringify(err));
+  }
+}
 
 interface Props {
   preview?: boolean;
