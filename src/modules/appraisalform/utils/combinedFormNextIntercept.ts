@@ -41,7 +41,9 @@ const combinedFormNextIntercept =
         'Yes' &&
         [3, 4, 5, '3', '4', '5'].includes(
           appraisalUseForm.extConditionForm.fields.panelsWithMajorDamage.value
-        ))
+        )) ||
+      appraisalUseForm.extConditionForm.fields.frameOrStructuralDamage.value ===
+        'Yes'
     ) {
       exteriorCondition = 'Below Average';
     }
