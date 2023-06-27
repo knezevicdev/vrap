@@ -10,6 +10,7 @@ export interface PaymentState {
   paymentSubmittedType: string;
   setPaymentSubmittedType(paymentSubmittedType: string): void;
   refetchPlaidToken(): Promise<void>;
+  getPlaidToken(): Promise<void>;
 }
 
 const createPaymentSlice: StateCreator<
@@ -41,6 +42,31 @@ const createPaymentSlice: StateCreator<
 
     localStorage.setItem('linkToken', plaidToken);
     localStorage.setItem('priceId', priceId);
+  },
+  getPlaidToken: async () => {
+    const priceId = get().priceId;
+    let plaidToken = '';
+    let plaidTokenIsLocal = false;
+
+    const localToken = localStorage.getItem('linkToken');
+    const localPriceId = localStorage.getItem('priceId');
+    if (localToken && localPriceId === priceId) {
+      plaidToken = localToken;
+      plaidTokenIsLocal = true;
+    } else {
+      const tokenResponse = await getPlaidToken(priceId);
+      if (!isErrorResponse(tokenResponse)) {
+        plaidToken = tokenResponse.data.getLinkToken.LinkToken;
+      }
+    }
+
+    localStorage.setItem('linkToken', plaidToken);
+    localStorage.setItem('priceId', priceId);
+
+    set({
+      plaidToken,
+      plaidTokenIsLocal,
+    });
   },
 });
 
