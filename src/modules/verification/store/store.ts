@@ -4,7 +4,6 @@ import { create } from 'zustand';
 import { Verification } from '../../../networking/models/Price';
 import {
   getOfferDetails,
-  getPlaidToken,
   getVerificationDetails,
   postVerification,
 } from '../../../networking/request';
@@ -46,6 +45,8 @@ export type VerificationState = OwnerVerificationState &
     offerPrice: number;
     verificationEmail: string;
     loadState: (priceId: string) => Promise<boolean>;
+    isLoading: boolean;
+    setLoading(loading: boolean): void;
   };
 
 const yesNoOrEmptyString = (value: null | boolean) => {
@@ -73,6 +74,11 @@ const useVerificationStore = create<VerificationState>()((...a) => ({
   finalPayment: null,
   offerPrice: 0,
   verificationEmail: '',
+  isLoading: false,
+  setLoading: (loading: boolean) => {
+    const set = a[0];
+    set({ isLoading: loading });
+  },
   loadState: async (priceId: string) => {
     const set = a[0];
 
@@ -153,23 +159,9 @@ const useVerificationStore = create<VerificationState>()((...a) => ({
         verificationDetails.owners_on_title > 1 ? 'Yes' : 'No';
     }
 
-    let plaidToken = '';
-    let plaidTokenIsLocal = false;
-
-    const localToken = localStorage.getItem('linkToken');
     const localPriceId = localStorage.getItem('priceId');
-    if (localToken && localPriceId === priceId) {
-      plaidToken = localToken;
-      plaidTokenIsLocal = true;
-    } else {
-      const tokenResponse = await getPlaidToken(priceId);
-      if (!isErrorResponse(tokenResponse)) {
-        plaidToken = tokenResponse.data.getLinkToken.LinkToken;
-      }
-    }
-
-    localStorage.setItem('linkToken', plaidToken);
-    localStorage.setItem('priceId', priceId);
+    if (localPriceId !== priceId)
+      localStorage.removeItem('paymentSubmittedType');
 
     const paymentSubmittedType =
       localStorage.getItem('paymentSubmittedType') || '';
@@ -259,8 +251,6 @@ const useVerificationStore = create<VerificationState>()((...a) => ({
         documentOdometer: verificationDetails.mileage_file_id || '',
         documentMileageValue: verificationDetails.exact_mileage || 0,
         verificationEmail: verificationDetails?.email || '',
-        plaidToken,
-        plaidTokenIsLocal,
         paymentSubmittedType,
       };
     });

@@ -72,6 +72,10 @@ const UnifiedVerification = ({ ajsUserId }: Props) => {
   );
   const [state, setState] = useState('loading');
   const sectionChanged = useRef(false);
+  const getPlaidToken = useVerificationStore((state) => state.getPlaidToken);
+  const isLoading = useVerificationStore((state) => state.isLoading);
+  const setLoading = useVerificationStore((state) => state.setLoading);
+  const fetchedInitialPaymentData = useRef(false);
 
   const {
     isLoading: isAbsmartlyLoading,
@@ -85,6 +89,17 @@ const UnifiedVerification = ({ ajsUserId }: Props) => {
     return calculateInitialSection(isInPhotosUploadExperiment);
   }, [isAbsmartlyLoading, isInPhotosUploadExperiment, state]);
   const [activeSection, setActiveSection] = useState(initialSection);
+
+  useEffect(() => {
+    if (fetchedInitialPaymentData.current) return;
+    if (state === 'success' && initialSection > -1)
+      fetchedInitialPaymentData.current = true;
+
+    if (initialSection === 2) {
+      setLoading(true);
+      getPlaidToken().finally(() => setLoading(false));
+    }
+  }, [getPlaidToken, initialSection, setLoading, state]);
 
   const photosValid = usePhotosValid();
 
@@ -196,88 +211,105 @@ const UnifiedVerification = ({ ajsUserId }: Props) => {
   );
 
   return (
-    <ModuleWrapper>
-      <MainContent>
-        <StepperWrapper>
-          <StepperContainer>
-            <VerificationStepper
-              activeStep={
-                sectionChanged.current ? activeSection : initialSection
-              }
+    <>
+      {isLoading && (
+        <LoadingOverlay>
+          <SpinnerContainer>
+            <VroomSpinner />
+          </SpinnerContainer>
+        </LoadingOverlay>
+      )}
+      <ModuleWrapper>
+        <MainContent>
+          <StepperWrapper>
+            <StepperContainer>
+              <VerificationStepper
+                activeStep={
+                  sectionChanged.current ? activeSection : initialSection
+                }
+              />
+            </StepperContainer>
+          </StepperWrapper>
+          <Container>
+            <MultiStepForm
+              title="Let's verify your information"
+              subtitle="We need a few details to make a quick and easy transaction"
+              sections={sections}
+              onDone={async () => {
+                const response = await updateVerification(4);
+                if (!response) return;
+
+                const { owner_email_address, owner_first_name } =
+                  response.data.data;
+
+                analyticsHandler.current.trackVerificationSubmitted(
+                  owner_email_address,
+                  owner_first_name
+                );
+
+                window.location.href = `/myaccount/hub/documents/sb`;
+              }}
+              onNext={(currentSection, nextSection) => {
+                if (currentSection < 3) {
+                  updateVerification(currentSection + 1);
+                }
+
+                if (
+                  nextSection === sections.length - 1 &&
+                  !trackedEvents.current.includes('reviewViewed')
+                ) {
+                  trackedEvents.current.push('reviewViewed');
+                  analyticsHandler.current.trackVerificationReviewViewed();
+                }
+
+                if (
+                  currentSection === 0 &&
+                  !trackedEvents.current.includes('contactCompleted')
+                ) {
+                  trackedEvents.current.push('contactCompleted');
+                  analyticsHandler.current.trackContactInfoComplete();
+                }
+
+                if (
+                  currentSection === 1 &&
+                  !trackedEvents.current.includes('pickupCompleted')
+                ) {
+                  trackedEvents.current.push('pickupCompleted');
+                  analyticsHandler.current.trackPickupInfoComplete();
+                }
+
+                if (
+                  currentSection === 1 &&
+                  !useVerificationStore.getState().plaidToken
+                ) {
+                  setLoading(true);
+                  getPlaidToken().finally(() => setLoading(false));
+                }
+
+                if (
+                  currentSection === 2 &&
+                  !trackedEvents.current.includes('payoffCompleted')
+                ) {
+                  trackedEvents.current.push('payoffCompleted');
+                  analyticsHandler.current.trackPayoffInfoComplete();
+                }
+              }}
+              active={initialSection}
+              onSectionChange={(section) => {
+                if (!sectionChanged.current) sectionChanged.current = true;
+                setActiveSection(section);
+              }}
+              nextText={'Save and Continue'}
+              submitText={'Save and Continue'}
+              extraOffset={88} // stepper height
             />
-          </StepperContainer>
-        </StepperWrapper>
-        <Container>
-          <MultiStepForm
-            title="Let's verify your information"
-            subtitle="We need a few details to make a quick and easy transaction"
-            sections={sections}
-            onDone={async () => {
-              const response = await updateVerification(4);
-              if (!response) return;
-
-              const { owner_email_address, owner_first_name } =
-                response.data.data;
-
-              analyticsHandler.current.trackVerificationSubmitted(
-                owner_email_address,
-                owner_first_name
-              );
-
-              window.location.href = `/myaccount/hub/documents/sb`;
-            }}
-            onNext={(currentSection, nextSection) => {
-              if (currentSection < 3) {
-                updateVerification(currentSection + 1);
-              }
-
-              if (
-                nextSection === sections.length - 1 &&
-                !trackedEvents.current.includes('reviewViewed')
-              ) {
-                trackedEvents.current.push('reviewViewed');
-                analyticsHandler.current.trackVerificationReviewViewed();
-              }
-
-              if (
-                currentSection === 0 &&
-                !trackedEvents.current.includes('contactCompleted')
-              ) {
-                trackedEvents.current.push('contactCompleted');
-                analyticsHandler.current.trackContactInfoComplete();
-              }
-
-              if (
-                currentSection === 1 &&
-                !trackedEvents.current.includes('pickupCompleted')
-              ) {
-                trackedEvents.current.push('pickupCompleted');
-                analyticsHandler.current.trackPickupInfoComplete();
-              }
-
-              if (
-                currentSection === 2 &&
-                !trackedEvents.current.includes('payoffCompleted')
-              ) {
-                trackedEvents.current.push('payoffCompleted');
-                analyticsHandler.current.trackPayoffInfoComplete();
-              }
-            }}
-            active={initialSection}
-            onSectionChange={(section) => {
-              if (!sectionChanged.current) sectionChanged.current = true;
-              setActiveSection(section);
-            }}
-            nextText={'Save and Continue'}
-            submitText={'Save and Continue'}
-            extraOffset={88} // stepper height
-          />
-        </Container>
-      </MainContent>
-      <SidebarWrapper>
-        <VerificationSidebar {...sidebarProps} />
-      </SidebarWrapper>
-    </ModuleWrapper>
+          </Container>
+        </MainContent>
+        <SidebarWrapper>
+          <VerificationSidebar {...sidebarProps} />
+        </SidebarWrapper>
+      </ModuleWrapper>
+    </>
   );
 };
 
