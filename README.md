@@ -46,20 +46,3 @@ printenv
 ### Git Commit Short SHA
 In a CI/CD context, Gitlab supplies an environment variable named CI_COMMIT_SHORT_SHA. We use this for several things, such as the application's build ID and for the version endpoint.
 This variable isn't defined on your local machine, so it gets injected by the npm run dev script.
-
-## Theming
-We are using MaterialUI component library. Mainly for its Grid Components and functionality. We may incorporate more as our projects grows. But for now, here is documentation around how we use the grid.
-
-## Code Style Guide
-
-* [React](https://github.com/airbnb/javascript/tree/master/react)
-* [Javascript](https://github.com/airbnb/javascript)
-* [CSS](https://github.com/airbnb/css)
-
-
-## Build With
-
-* [Typescript](https://www.typescriptlang.org/)
-* [Nextjs](https://nextjs.org/)
-* [MobX](https://www.mobxjs.com/README.html)
-* [MaterialUI](https://material-ui.com/)
