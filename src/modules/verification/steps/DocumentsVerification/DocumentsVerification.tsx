@@ -10,7 +10,7 @@ const DocumentsVerificationStep = ({ nextStep }: FormStepProps) => {
         <Bold>Last Step:</Bold> To complete this sale, go to “My Documents” to
         upload required documents as soon as possible.
       </p>
-      <SubmitButton onClick={nextStep}>UPLOAD DOCUMENTS</SubmitButton>
+      <SubmitButton onClick={nextStep}>PROVIDE DOCUMENTS</SubmitButton>
     </div>
   );
 };
