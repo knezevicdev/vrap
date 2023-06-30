@@ -13,6 +13,7 @@ import VehicleInformation from './components/VehicleInformation';
 import ExactMilageDialog from './Dialog/ExactMilage';
 import InvalidMakeDialog from './Dialog/InvalidMake';
 import InvalidStateDialog from './Dialog/InvalidState';
+import { StyledLink } from './Style.css';
 import anyFieldSelected from './utils/anyFieldSelected';
 import combinedFormNextIntercept from './utils/combinedFormNextIntercept';
 import combineForms from './utils/combineForms';
@@ -350,6 +351,16 @@ const AppraisalForm: React.FC<Props> = ({ viewModel }) => {
       component: PersonalInformation,
       form: appraisalUseForm.personalInfoForm,
       title: 'Your Information',
+      afterButton: () => (
+        <div>
+          <StyledLink
+            href="/legal/privacy-policy#california-residents"
+            target="_blank"
+          >
+            California Notice of Collection
+          </StyledLink>
+        </div>
+      ),
     },
   ];
 

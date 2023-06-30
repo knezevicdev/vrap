@@ -196,13 +196,20 @@ const Register = ({
             >
               Financial Privacy Policy
             </Link>
-            ;&nbsp;and&nbsp;
+            ,&nbsp;
             <Link
               href="/legal/privacy-policy"
               target="_blank"
               className="sc-fWCJzd dpogyX View__CustomLink-sc-1t039fp-3 jFLFmB"
             >
               Privacy Policy
+            </Link>
+            , and, if I am California resident, reviewed this&nbsp;
+            <Link
+              href="/legal/privacy-policy#california-residents"
+              target="_blank"
+            >
+              Notice of Collection
             </Link>
             .
           </LegalListItem>

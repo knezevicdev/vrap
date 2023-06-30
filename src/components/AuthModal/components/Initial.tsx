@@ -98,9 +98,16 @@ const Initial = ({ onEmailProcessed, redirectUrl, initialEmail }: Props) => {
             <Link href="/legal/financial-privacy-policy" target="_blank">
               Financial Privacy Policy
             </Link>
-            ;&nbsp;and&nbsp;
+            ,&nbsp;
             <Link href="/legal/privacy-policy" target="_blank">
               Privacy Policy
+            </Link>
+            , and, if I am California resident, reviewed this&nbsp;
+            <Link
+              href="/legal/privacy-policy#california-residents"
+              target="_blank"
+            >
+              Notice of Collection
             </Link>
             .
           </LegalListItem>

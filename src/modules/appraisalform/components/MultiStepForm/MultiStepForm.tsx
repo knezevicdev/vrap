@@ -278,6 +278,7 @@ const MultiStepForm: React.FC<Props> = (props) => {
       form: { fields },
       title,
       onNextIntercept,
+      afterButton,
     } = formComponent;
     const CurrentComponent = component;
     const isActive = idx === activeSection;
@@ -330,6 +331,7 @@ const MultiStepForm: React.FC<Props> = (props) => {
           />
           {!hideButton &&
             getNextButton(formComponent, formIsInvalid, onNextIntercept)}
+          {afterButton?.()}
         </FormSection>
       </FormStep>
     );
