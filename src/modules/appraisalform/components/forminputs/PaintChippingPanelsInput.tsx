@@ -21,7 +21,7 @@ const PaintChippingPanelsInput: React.FC<Props> = ({ field }) => {
       <SelectBoxes
         field={{
           ...field,
-          options: ['1', '2', '3', '4', '5'],
+          options: [1, 2, 3, 4, 5],
           label: 'How many panels have paint chipping?',
           onClick: handleOnChange,
           value,
