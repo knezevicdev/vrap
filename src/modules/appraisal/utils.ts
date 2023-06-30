@@ -60,6 +60,15 @@ function interiorConditionData(data: IntConditionForm) {
   };
 }
 
+function intValueOrZero(value: string | number | undefined | null) {
+  if (value) {
+    const parsed = parseInt(String(value), 10);
+    if (!isNaN(parsed)) return parsed;
+  }
+
+  return 0;
+}
+
 function exteriorConditionData(data: ExtConditionForm) {
   return {
     exteriorCondition: data.exteriorCondition,
@@ -69,17 +78,13 @@ function exteriorConditionData(data: ExtConditionForm) {
     otherAfterMarket: data.otherAfterMarket,
     rust: data.rust,
     dents: data.dents,
-    dentsPanels: data.dentsPanels && parseInt(String(data.dentsPanels), 10),
+    dentsPanels: intValueOrZero(data.dentsPanels),
     paintChipping: data.paintChipping,
-    paintChippingPanels:
-      data.paintChippingPanels &&
-      parseInt(String(data.paintChippingPanels), 10),
+    paintChippingPanels: intValueOrZero(data.paintChippingPanels),
     scratches: data.scratches,
-    scratchesPanels: data.scratchesPanels && parseInt(data.scratchesPanels, 10),
+    scratchesPanels: intValueOrZero(data.scratchesPanels),
     majorDamageExterior: data.majorDamageExterior,
-    panelsWithMajorDamage:
-      data.panelsWithMajorDamage &&
-      parseInt(String(data.panelsWithMajorDamage), 10),
+    panelsWithMajorDamage: intValueOrZero(data.panelsWithMajorDamage),
     frameOrStructuralDamage: data.frameOrStructuralDamage,
     passStateEmissionStandards: data.passStateEmissionStandards,
     wornTires: data.wornTires,
