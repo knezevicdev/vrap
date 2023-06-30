@@ -28,7 +28,7 @@ function vehicleInformationData(data: VehicleInfoForm) {
     csTrimId: data.csTrimId,
     mileage: data.vin === '1GYS4CKJ0FR202274' ? 900000 : data.mileage, // https://tdalabs.atlassian.net/browse/AC-2649
     exteriorColor: data.exteriorColor,
-    keysAmount: data.keysAmount,
+    keysAmount: '1',
     options: data.vehicleOptions,
     zipCode: data.zipCode,
     appraisalIntent: data.sellOrTradeIn.toLowerCase(),
