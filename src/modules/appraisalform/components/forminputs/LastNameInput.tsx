@@ -14,8 +14,8 @@ const LastNameInput: React.FC<Props> = ({ field, className }) => {
 
   const handleOnChange = (event: GenericObject) => {
     const value = event.target.value;
-    const error = !isValidName(value);
-    onChange({ ...field, value, error });
+    const validationError = !isValidName(value);
+    onChange({ ...field, value, validationError });
   };
 
   return (

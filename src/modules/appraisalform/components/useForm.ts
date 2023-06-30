@@ -102,6 +102,8 @@ const useForm = (props: any) => {
 
       let error = field.isRequired ? !field.value : false;
       if (errorChanged) error = field.error;
+      if ((field.isRequired || field.value) && field.validationError)
+        error = field.validationError;
 
       setFields({
         ...fields,

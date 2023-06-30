@@ -19,8 +19,8 @@ const EmailInput: React.FC<Props> = ({
 
   const handleOnChange = (event: GenericObject) => {
     const value = event.target.value;
-    const error = !isValidEmail(value);
-    onChange({ ...field, value, error });
+    const validationError = !isValidEmail(value);
+    onChange({ ...field, value, validationError });
   };
 
   return (

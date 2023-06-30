@@ -22,9 +22,9 @@ const LicenseInput: React.FC<Props> = ({
 
   const handleOnChange = (event: GenericObject) => {
     const value = formatLicensePlate(event.target.value);
-    const error = !isValidLicense(value);
+    const validationError = !isValidLicense(value);
     const errorMessage = getLicenseErrors(value);
-    onChange({ ...field, value, error, errorMessage });
+    onChange({ ...field, value, validationError, errorMessage });
   };
 
   const handleOnKeyPressEnter: KeyboardEventHandler<HTMLSpanElement> = (
