@@ -188,7 +188,7 @@ const VehicleInformation: React.FC<Props> = ({
       resetLocalState();
       vin.onChange({
         ...vin,
-        error: true,
+        validationError: true,
         errorMessage: 'we could not find that vin. please try again.',
       });
     } else {
@@ -273,7 +273,7 @@ const VehicleInformation: React.FC<Props> = ({
           vin.onChange({
             ...vin,
             value: vinToDecode.toUpperCase(),
-            error: isError,
+            validationError: isError,
             errorMessage,
           });
 
@@ -330,7 +330,7 @@ const VehicleInformation: React.FC<Props> = ({
       vin.onChange({
         ...vin,
         value: vinToDecode.toUpperCase(),
-        error: !validVin,
+        validationError: !validVin,
         errorMessage,
       });
       resetLocalState();

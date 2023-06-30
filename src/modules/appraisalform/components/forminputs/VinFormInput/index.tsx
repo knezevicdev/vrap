@@ -20,9 +20,10 @@ const VinFormInput: React.FC<any> = ({
 
   const handleOnChange = (event: any) => {
     const value = lettersAndNumbersOnly(event.target.value, 17);
-    const error = !value.includes(VROOM_VIN_SUBSTRING) && !isValidVin(value);
+    const validationError =
+      !value.includes(VROOM_VIN_SUBSTRING) && !isValidVin(value);
     const errorMessage = getVinErrors(value);
-    onChange({ ...field, value, error, errorMessage });
+    onChange({ ...field, value, validationError, errorMessage });
   };
 
   const handleShowVinDialog = () => {

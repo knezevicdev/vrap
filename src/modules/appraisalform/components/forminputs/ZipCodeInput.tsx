@@ -30,12 +30,12 @@ const ZipCodeInput: React.FC<Props> = ({ field, className }) => {
       try {
         setIsLoading(true);
         const { data } = await getZipCodeValidation(value);
-        onChange({ ...field, value, error: !data?.isZipValid });
+        onChange({ ...field, value, validationError: !data?.isZipValid });
       } finally {
         setIsLoading(false);
       }
     } else {
-      onChange({ ...field, value, error: true });
+      onChange({ ...field, value, validationError: true });
     }
   };
 
