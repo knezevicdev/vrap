@@ -1,13 +1,13 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { observer } from 'mobx-react';
+
 import { useRouter } from 'next/router';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 
-import { useAppStore } from '../../../../context';
 import { useRecaptcha } from '../../../../context/Recaptcha';
 import useIsTradeIn from '../../../../hooks/useIsTradeIn';
 import AnalyticsHandler from '../../../../integrations/AnalyticsHandler';
 import { useRestrictedAppraisal } from '../../../../integrations/RestrictedAppraisalContext';
+import useAppraisalStore from '../../../../store/appraisalStore';
 import { lettersAndNumbersOnly } from '../formatting';
 import AppraisalLicenseToVin from '../forminputs/AppraisalLicenseToVin';
 import SellOrTradeInInput from '../forminputs/SellOrTradeInInput';
@@ -63,10 +63,11 @@ const VehicleInformation: React.FC<Props> = ({
 
   const { loaded: isRestrictedAppraisalLoaded } = useRestrictedAppraisal();
   const router = useRouter();
-  const { store } = useAppStore();
-  const vehicleDecodeData = store.appraisal.vehicleDecodeData;
+  const vehicleDecodeData = useAppraisalStore(
+    (state) => state.vehicleDecodeData
+  );
 
-  const appraisalPath = store.appraisal.appraisalPath;
+  const appraisalPath = useAppraisalStore((state) => state.appraisalPath());
   const routerAsPath = router.asPath as string;
   const isEditMode = routerAsPath.includes('#');
 
@@ -75,7 +76,7 @@ const VehicleInformation: React.FC<Props> = ({
   const [showSubmitError, setShowSubmitError] = useState(false);
 
   const { localState, resetLocalState, updateLocalState } = useLocalState();
-  const getTrimFeatures = useGetTrimFeatures(store.appraisal);
+  const getTrimFeatures = useGetTrimFeatures();
   const { isLoading: trimsLoading, getTrims } = useGetTrims(
     recaptcha,
     fields,
@@ -236,7 +237,7 @@ const VehicleInformation: React.FC<Props> = ({
     }
   }, [localState.trims.length, fields.vin.value, localState.vinDecoded]);
 
-  const getVinDecode = useGetVinDecode(store.appraisal);
+  const getVinDecode = useGetVinDecode();
 
   const { decodeVin, isLoading: isVinLoading } = useDecodeVin(
     fields,
@@ -331,14 +332,16 @@ const VehicleInformation: React.FC<Props> = ({
     }
   };
 
-  const gradeCheck = useGradeCheck(store.appraisal);
+  const gradeCheck = useGradeCheck();
 
   const handleMileageBlur = useCallback(() => {
     const vin = fields.vin.value;
     const miles = fields.mileage.value;
     const trim = fields.trim.value;
     gradeCheck(localState.make || '', localState.model || '', trim, miles, vin);
-    analyticsHandler.trackMileageChange(store.appraisal.eventCategory);
+    analyticsHandler.trackMileageChange(
+      useAppraisalStore.getState().eventCategory()
+    );
   }, [
     analyticsHandler,
     fields.mileage.value,
@@ -347,7 +350,6 @@ const VehicleInformation: React.FC<Props> = ({
     gradeCheck,
     localState.make,
     localState.model,
-    store.appraisal.eventCategory,
   ]);
 
   const handleOnKeyPressEnter = async (e: any) => {
@@ -377,7 +379,10 @@ const VehicleInformation: React.FC<Props> = ({
 
   const handleVinKeyPressSubmit = () => {
     if (!isSubmitDisabled()) {
-      analyticsHandler.trackLicenseToVin('Vin', store.appraisal.eventCategory);
+      analyticsHandler.trackLicenseToVin(
+        'Vin',
+        useAppraisalStore.getState().eventCategory()
+      );
       handleVehicleSubmit(fields.vin.value);
     }
   };
@@ -386,7 +391,7 @@ const VehicleInformation: React.FC<Props> = ({
     if (!isSubmitDisabled()) {
       analyticsHandler.trackLicenseToVin(
         'License Plate',
-        store.appraisal.eventCategory
+        useAppraisalStore.getState().eventCategory()
       );
       handleVehicleSubmit(fields.vin.value);
     }
@@ -437,8 +442,6 @@ const VehicleInformation: React.FC<Props> = ({
       setShowSubmitError(true);
     }
   };
-
-  console.log(localState);
 
   return (
     <>
@@ -556,4 +559,4 @@ const VehicleInformation: React.FC<Props> = ({
   );
 };
 
-export default observer(VehicleInformation);
+export default VehicleInformation;

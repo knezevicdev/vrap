@@ -1,16 +1,17 @@
 import { SkipNavigationLink, VroomSpinner } from '@vroom-web/ui-lib';
-import { observer } from 'mobx-react';
 import { GetServerSideProps, GetServerSidePropsContext, NextPage } from 'next';
 import { useRouter } from 'next/router';
 import React, { useEffect, useMemo } from 'react';
 import styled from 'styled-components';
 
 import ErrorBanner from '../components/ErrorBanner';
+import useIsTradeIn from '../hooks/useIsTradeIn';
 import useHandleAppraisalRoutes from '../modules/appraisal/hooks/useHandleAppraisalRoutes';
+import useAppraisalStore from '../store/appraisalStore';
+import useDealStore from '../store/dealStore';
 import { returnBrandConfig } from '../utils/pageheaders';
 
 import Header from 'src/components/Header';
-import { useAppStore } from 'src/context';
 import Footer from 'src/core/Footer';
 import AppraisalForm from 'src/modules/appraisalform';
 import Page from 'src/Page';
@@ -18,22 +19,21 @@ import Page from 'src/Page';
 const AppraisalFormPage: NextPage = () => {
   const router = useRouter();
   const vehicle = router.query.vehicle as string;
-  const { store } = useAppStore();
-  const isLoading = store.deal.loading;
+  const isLoading = useDealStore((state) => state.loading);
+  const isTradeIn = useIsTradeIn();
 
   useHandleAppraisalRoutes();
 
   const title = useMemo(
-    () =>
-      store.appraisal.isTradeIn ? 'Checkout Appraisal Form' : 'Appraisal Form',
-    [store.appraisal.isTradeIn]
+    () => (isTradeIn ? 'Checkout Appraisal Form' : 'Appraisal Form'),
+    [isTradeIn]
   );
 
-  const { tradeInError } = store.deal;
+  const tradeInError = useDealStore((state) => state.tradeInError);
 
   useEffect(() => {
-    store.appraisal.setVehicleId(vehicle);
-  }, [store.appraisal, vehicle]);
+    useAppraisalStore.getState().setVehicleId(vehicle);
+  }, [vehicle]);
 
   return (
     <Page name={title}>
@@ -119,4 +119,4 @@ const SpinnerContainer = styled.div`
   transform: translate(-50%, -50%);
 `;
 
-export default observer(AppraisalFormPage);
+export default AppraisalFormPage;

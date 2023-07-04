@@ -1,25 +1,22 @@
-import { makeAutoObservable } from 'mobx';
+import { create } from 'zustand';
 
 import { OfferDetail } from 'src/networking/models/Offer';
 
-export class OfferStore {
+export type OfferState = {
   offerDetail?: OfferDetail;
-  showOfferDialog = false;
-  loading = true;
+  showOfferDialog: boolean;
+  loading: boolean;
+  getOfferDetail(offer: OfferDetail): void;
+  setLoading(value: boolean): void;
+  setShowOfferDialog(value: boolean): void;
+};
 
-  constructor() {
-    makeAutoObservable(this);
-  }
+const useOfferStore = create<OfferState>()((set) => ({
+  showOfferDialog: false,
+  loading: false,
+  getOfferDetail: (offer: OfferDetail) => set({ offerDetail: offer }),
+  setLoading: (value: boolean) => set({ loading: value }),
+  setShowOfferDialog: (value: boolean) => set({ showOfferDialog: value }),
+}));
 
-  getOfferDetail(offer: OfferDetail): void {
-    this.offerDetail = offer;
-  }
-
-  setLoading(value: boolean): void {
-    this.loading = value;
-  }
-
-  setShowOfferDialog(value: boolean): void {
-    this.showOfferDialog = value;
-  }
-}
+export default useOfferStore;

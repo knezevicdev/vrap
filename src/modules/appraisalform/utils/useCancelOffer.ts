@@ -1,14 +1,18 @@
 import { useCallback } from 'react';
 
 import { declineDeal, UpdateDeal } from '../../../networking/request';
-import Store from '../../../store';
+import useDealStore from '../../../store/dealStore';
 
-const useCancelOffer = (store: Store) => {
+const useCancelOffer = () => {
+  const setTradeInError = useDealStore((state) => state.setTradeInError);
+  const setDealLoading = useDealStore((state) => state.setLoading);
+  const deal = useDealStore((state) => state.deal);
+
   const tradeInErrored = useCallback(() => {
-    store.deal.setTradeInError(
+    setTradeInError(
       'Your changes were unable to be saved because your transaction has new updates. Please try submitting again.'
     );
-  }, [store.deal]);
+  }, [setTradeInError]);
 
   const handleUpdateDeal = useCallback(
     (response: UpdateDeal): void => {
@@ -23,18 +27,18 @@ const useCancelOffer = (store: Store) => {
   );
 
   return useCallback(async (): Promise<void> => {
-    store.deal.setTradeInError('');
-    store.deal.setLoading(true);
+    setTradeInError('');
+    setDealLoading(true);
 
-    if (store.deal.deal) {
-      const response = await declineDeal(store.deal.deal);
+    if (deal) {
+      const response = await declineDeal(deal);
       handleUpdateDeal(response);
     } else {
       tradeInErrored();
     }
 
-    store.deal.setLoading(false);
-  }, [handleUpdateDeal, store.deal, tradeInErrored]);
+    setDealLoading(false);
+  }, [deal, handleUpdateDeal, setDealLoading, setTradeInError, tradeInErrored]);
 };
 
 export default useCancelOffer;

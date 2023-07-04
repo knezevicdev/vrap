@@ -1,24 +1,23 @@
-import { observer } from 'mobx-react';
 import React from 'react';
 
 import { StoreStatus } from '../../interfaces.d';
+import usePriceStore from '../../modules/price/store';
 import InitialPrice from '../InitialPrice';
 import LoadingPrice from '../LoadingPrice';
 import PendingPrice from '../PendingPrice';
 
-import { PriceStore } from 'src/modules/price/store';
+const PriceDetail: React.FC = () => {
+  const storeStatus = usePriceStore((state) => state.storeStatus);
+  const automatedAppraisal = usePriceStore(
+    (state) => state.price.automatedAppraisal
+  );
 
-const PriceDetail: React.FC<{ store: PriceStore }> = ({ store }) => {
-  switch (store.storeStatus) {
+  switch (storeStatus) {
     case StoreStatus.Initial:
       return <LoadingPrice />;
 
     case StoreStatus.Success:
-      return store.price.automatedAppraisal ? (
-        <InitialPrice store={store} />
-      ) : (
-        <PendingPrice />
-      );
+      return automatedAppraisal ? <InitialPrice /> : <PendingPrice />;
 
     case StoreStatus.Error:
       return <PendingPrice />;
@@ -28,4 +27,4 @@ const PriceDetail: React.FC<{ store: PriceStore }> = ({ store }) => {
   }
 };
 
-export default observer(PriceDetail);
+export default PriceDetail;

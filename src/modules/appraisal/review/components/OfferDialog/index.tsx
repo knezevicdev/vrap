@@ -1,6 +1,6 @@
-import { observer } from 'mobx-react';
 import React, { useEffect, useMemo } from 'react';
 
+import useOfferStore from '../../../../../store/offerStore';
 import { displayCurrency } from '../../../../../utils';
 import { MONTHS, WEEKDAYS } from './data';
 import {
@@ -16,10 +16,8 @@ import {
 } from './Style.css';
 import useAcceptDeclinePrice from './useAcceptDeclinePrice';
 
-import { useAppStore } from 'src/context';
-
 const OfferDialog: React.FC = () => {
-  const { store } = useAppStore();
+  const offerDetail = useOfferStore((state) => state.offerDetail);
 
   useEffect(() => {
     document.body.style.overflow = 'hidden';
@@ -29,20 +27,20 @@ const OfferDialog: React.FC = () => {
   }, []);
 
   const hasValidPrice = useMemo(() => {
-    const expirationDate = store.offer.offerDetail?.offerExpiration;
+    const expirationDate = offerDetail?.offerExpiration;
     return !!expirationDate && new Date(expirationDate) > new Date();
-  }, [store.offer.offerDetail?.offerExpiration]);
+  }, [offerDetail?.offerExpiration]);
 
   const price = useMemo(() => {
-    const price = store.offer.offerDetail?.price;
+    const price = offerDetail?.price;
 
     if (price) return displayCurrency(price);
 
     return '';
-  }, [store.offer.offerDetail?.price]);
+  }, [offerDetail?.price]);
 
   const expirationDate = useMemo(() => {
-    const expirationDate = store.offer.offerDetail?.offerExpiration;
+    const expirationDate = offerDetail?.offerExpiration;
 
     if (expirationDate) {
       const isoDateTime = new Date(expirationDate);
@@ -53,12 +51,9 @@ const OfferDialog: React.FC = () => {
     }
 
     return '';
-  }, [store.offer.offerDetail?.offerExpiration]);
+  }, [offerDetail?.offerExpiration]);
 
-  const { acceptPrice, declinePrice } = useAcceptDeclinePrice(
-    hasValidPrice,
-    store
-  );
+  const { acceptPrice, declinePrice } = useAcceptDeclinePrice(hasValidPrice);
 
   return (
     <Overlay>
@@ -119,4 +114,4 @@ const OfferDialog: React.FC = () => {
   );
 };
 
-export default observer(OfferDialog);
+export default OfferDialog;

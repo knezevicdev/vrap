@@ -1,6 +1,5 @@
 import { SkipNavigationLink } from '@vroom-web/ui-lib';
 import jwt from 'jsonwebtoken';
-import { observer } from 'mobx-react';
 import { GetServerSideProps, GetServerSidePropsContext, NextPage } from 'next';
 import getConfig from 'next/config';
 import React from 'react';
@@ -8,10 +7,10 @@ import styled from 'styled-components';
 
 import ErrorBanner from '../../components/ErrorBanner';
 import useHandleAppraisalRoutes from '../../modules/appraisal/hooks/useHandleAppraisalRoutes';
+import useAppraisalStore from '../../store/appraisalStore';
 import { returnBrandConfig } from '../../utils/pageheaders';
 
 import Header from 'src/components/Header';
-import { useAppStore } from 'src/context';
 import Footer from 'src/core/Footer';
 import AppraisalReviewViewDetail from 'src/modules/appraisal/review';
 import Page from 'src/Page';
@@ -23,8 +22,7 @@ interface Prop {
 }
 
 const AppraisalReview: NextPage<Prop> = ({ token }) => {
-  const { store } = useAppStore();
-  const reviewError = store.appraisal.reviewError;
+  const reviewError = useAppraisalStore((state) => state.reviewError);
 
   useHandleAppraisalRoutes();
 
@@ -116,4 +114,4 @@ export const getServerSideProps: GetServerSideProps<Props> = async (
   };
 };
 
-export default observer(AppraisalReview);
+export default AppraisalReview;

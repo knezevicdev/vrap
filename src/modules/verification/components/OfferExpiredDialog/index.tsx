@@ -1,8 +1,7 @@
-import { observer } from 'mobx-react';
 import { useRouter } from 'next/router';
 import React from 'react';
 
-import { useAppStore } from '../../../../context';
+import useAppraisalStore from '../../../../store/appraisalStore';
 import {
   Container,
   GetUpdatedCTA,
@@ -19,12 +18,11 @@ interface Props {
 }
 const OfferExpiredDialog: React.FC<Props> = ({ vin }) => {
   const router = useRouter();
-  const { store } = useAppStore();
 
   const handleGetUpdatedCTA = () => {
     router
       .push({
-        pathname: store.appraisal.appraisalPath,
+        pathname: useAppraisalStore.getState().appraisalPath(),
         query: { vehicle: vin, ...router.query },
       })
       .catch((e) => {
@@ -54,4 +52,4 @@ const OfferExpiredDialog: React.FC<Props> = ({ vin }) => {
   );
 };
 
-export default observer(OfferExpiredDialog);
+export default OfferExpiredDialog;

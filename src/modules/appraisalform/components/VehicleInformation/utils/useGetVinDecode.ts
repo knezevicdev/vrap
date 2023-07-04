@@ -1,9 +1,9 @@
 import { isErrorResponse } from '@vroom-web/networking';
 
 import { getCarstoryVinDecode } from '../../../../../networking/request';
-import { AppraisalStore } from '../../../../../store/appraisalStore';
+import useAppraisalStore from '../../../../../store/appraisalStore';
 
-const useGetVinDecode = (appraisalStore: AppraisalStore) => {
+const useGetVinDecode = () => {
   return async (vehicleId: string, captchaToken: string): Promise<any> => {
     try {
       const response = await getCarstoryVinDecode(vehicleId, captchaToken);
@@ -26,7 +26,7 @@ const useGetVinDecode = (appraisalStore: AppraisalStore) => {
         id = dataProviderInfo.nada.id || null;
       }
 
-      appraisalStore.setVehicleData({
+      useAppraisalStore.getState().setVehicleData({
         ...response.data.vehicleInfo,
         alternatives,
         features,

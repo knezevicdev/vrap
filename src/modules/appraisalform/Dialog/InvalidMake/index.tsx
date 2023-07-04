@@ -1,4 +1,3 @@
-import { observer } from 'mobx-react';
 import { useRouter } from 'next/router';
 import React, { useEffect } from 'react';
 
@@ -56,4 +55,4 @@ const InvalidMakeDialog: React.FC<Props> = ({ make }) => {
   );
 };
 
-export default observer(InvalidMakeDialog);
+export default InvalidMakeDialog;

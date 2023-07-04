@@ -1,12 +1,11 @@
 import useIsTradeIn from '../../../hooks/useIsTradeIn';
-
-import { useAppStore } from 'src/context';
+import useAppraisalStore from '../../../store/appraisalStore';
 
 const useHandleAppraisalRoutes = (): void => {
   const isTradeIn = useIsTradeIn();
-  const { store } = useAppStore();
+  const setIsTradeIn = useAppraisalStore((state) => state.setIsTradeIn);
 
-  store.appraisal.setIsTradeIn(isTradeIn);
+  setIsTradeIn(isTradeIn);
 };
 
 export default useHandleAppraisalRoutes;

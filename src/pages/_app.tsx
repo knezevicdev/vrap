@@ -10,7 +10,6 @@ import { CatSDK } from '@vroom-web/cat-sdk';
 import { isErrorResponse } from '@vroom-web/networking';
 import { CommonHandler } from '@vroom-web/shared-components';
 import { getVroomTheme, GlobalStyle } from '@vroom-web/ui-lib';
-import { configure as configureMobx } from 'mobx';
 import App, { AppProps } from 'next/app';
 import getConfig from 'next/config';
 import packageInfo from 'package.json';
@@ -33,10 +32,6 @@ import { AnalyticsHandlerContext } from 'src/integrations/AnalyticHandlerContext
 import AnalyticsHandler from 'src/integrations/AnalyticsHandler';
 import { CatSDKContext } from 'src/integrations/CatSDKContext';
 import { saveUTMParams } from 'src/networking/utils';
-
-configureMobx({
-  enforceActions: 'observed', // don't allow state modifications outside actions
-});
 
 const { publicRuntimeConfig } = getConfig();
 

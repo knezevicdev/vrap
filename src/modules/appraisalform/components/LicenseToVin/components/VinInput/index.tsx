@@ -3,15 +3,13 @@ import { useRouter } from 'next/router';
 import React, { useCallback, useMemo } from 'react';
 import styled from 'styled-components';
 
-import { useAppStore } from '../../../../../../context';
 import AnalyticsHandler from '../../../../../../integrations/AnalyticsHandler';
+import useAppraisalStore from '../../../../../../store/appraisalStore';
 import VinFormInput from '../../../forminputs/VinFormInput';
 import useForm from '../../../useForm';
 
 const VinInput: React.FC = () => {
   const router = useRouter();
-  const { store } = useAppStore();
-  const appraisalPath = store.appraisal.appraisalPath;
   const form = useForm({
     defaultValues: {
       vin: '',
@@ -28,8 +26,11 @@ const VinInput: React.FC = () => {
 
   const trackVinClicked = useCallback(() => {
     const label = 'Vin';
-    analyticsHandler.trackLicenseToVin(label, store.appraisal.eventCategory);
-  }, [analyticsHandler, store.appraisal.eventCategory]);
+    analyticsHandler.trackLicenseToVin(
+      label,
+      useAppraisalStore.getState().eventCategory()
+    );
+  }, [analyticsHandler]);
 
   const handleOnKeyPressEnter = (e: any): void => {
     if (e.key === 'Enter' && isFormValid) {
@@ -43,7 +44,7 @@ const VinInput: React.FC = () => {
 
     router
       .push({
-        pathname: appraisalPath,
+        pathname: useAppraisalStore.getState().appraisalPath(),
         query: { vehicle: vinForPath, form: router.query.form },
       })
       .catch((e) => {

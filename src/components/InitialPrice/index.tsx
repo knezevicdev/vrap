@@ -1,8 +1,9 @@
 import { Typography } from '@vroom-web/ui-lib';
-import { observer } from 'mobx-react';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
+import { shallow } from 'zustand/shallow';
 
 import { Icons } from '../../core/Icon';
+import usePriceStore from '../../modules/price/store';
 import TaxSavingsDialog from '../../modules/verification/components/TaxSavingsDialog';
 import useTaxSavings from '../../modules/verification/utils/useTaxSavings';
 import { displayCurrency } from '../../utils';
@@ -30,9 +31,8 @@ import useStickyFooter from './utils/useStickyFooter';
 import useVerificationUrl from './utils/useVerificationUrl';
 
 import AnalyticsHandler from 'src/integrations/AnalyticsHandler';
-import { PriceStore } from 'src/modules/price/store';
 
-const InitialPrice: React.FC<{ store: PriceStore }> = ({ store }) => {
+const InitialPrice: React.FC = () => {
   useStickyFooter();
   const analyticsHandler = useRef(new AnalyticsHandler());
 
@@ -40,9 +40,9 @@ const InitialPrice: React.FC<{ store: PriceStore }> = ({ store }) => {
     analyticsHandler.current.trackPriceAutomated();
   }, []);
 
-  const verificationUrl = useVerificationUrl(store);
-  const priceData = usePriceData(store);
-  const initialRegistrationData = useInitialRegistrationData(store);
+  const verificationUrl = useVerificationUrl();
+  const priceData = usePriceData();
+  const initialRegistrationData = useInitialRegistrationData();
   const { isAcceptingPrice, onContinueClick } = useOnContinueClick(
     analyticsHandler.current,
     verificationUrl
@@ -54,10 +54,14 @@ const InitialPrice: React.FC<{ store: PriceStore }> = ({ store }) => {
   }, [verificationUrl]);
 
   const [showDialog, setShowDialog] = useState(false);
-  const { taxState, taxSavings } = useTaxSavings(
-    store.price.price,
-    store.price.zipcode
+  const { price, zipcode } = usePriceStore(
+    (state) => ({
+      price: state.price.price,
+      zipcode: state.price.zipcode,
+    }),
+    shallow
   );
+  const { taxState, taxSavings } = useTaxSavings(price, zipcode);
 
   return (
     <>
@@ -168,4 +172,4 @@ const InitialPrice: React.FC<{ store: PriceStore }> = ({ store }) => {
   );
 };
 
-export default observer(InitialPrice);
+export default InitialPrice;

@@ -1,4 +1,3 @@
-import { observer } from 'mobx-react';
 import React, { useEffect } from 'react';
 
 import NextSteps from '../../components/NextSteps';
@@ -11,9 +10,7 @@ import {
   PriceDetailContainer,
 } from './Style.css';
 
-import { PriceStore } from 'src/modules/price/store';
-
-const Price: React.FC<{ store: PriceStore }> = ({ store }) => {
+const Price: React.FC = () => {
   useEffect(() => {
     new AnalyticsHandler().trackPriceViewed();
   }, []);
@@ -22,7 +19,7 @@ const Price: React.FC<{ store: PriceStore }> = ({ store }) => {
     <HeroContainer>
       <PriceContainer>
         <PriceDetailContainer>
-          <PriceDetail store={store} />
+          <PriceDetail />
         </PriceDetailContainer>
         <NextStepsContainer>
           <NextSteps />
@@ -32,4 +29,4 @@ const Price: React.FC<{ store: PriceStore }> = ({ store }) => {
   );
 };
 
-export default observer(Price);
+export default Price;

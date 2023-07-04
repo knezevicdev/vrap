@@ -1,13 +1,14 @@
 import { VroomSpinner } from '@vroom-web/ui-lib';
-import { observer } from 'mobx-react';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 
-import { useAppStore } from '../../../context';
 import { useRecaptcha } from '../../../context/Recaptcha';
 import useIsTradeIn from '../../../hooks/useIsTradeIn';
 import AnalyticsHandler from '../../../integrations/AnalyticsHandler';
 import { AppraisalPayload } from '../../../interfaces.d';
+import useAppraisalStore from '../../../store/appraisalStore';
+import useDealStore from '../../../store/dealStore';
+import useOfferStore from '../../../store/offerStore';
 import useSubmitAppraisal from '../hooks/useSubmitAppraisal';
 import { makeRequestBody } from '../utils';
 import NewVehicleHistory from './components/NewVehicleHistory';
@@ -31,32 +32,25 @@ interface Props {
 
 const AppraisalReview: React.FC<Props> = ({ token }) => {
   const router = useRouter();
-  const { store } = useAppStore();
   const isTradeIn = useIsTradeIn();
   const recaptcha = useRecaptcha();
   const [isLoading, setIsLoading] = useState(false);
   const submitButtonClasses = ['btn', 'btn-primary', 'finish-section-btn'];
+  const showOfferDialog = useOfferStore((state) => state.showOfferDialog);
 
-  const appraisalStore = store.appraisal;
+  const setForm = useAppraisalStore((state) => state.setForm);
+  const isFormEmpty = useAppraisalStore((state) => state.isFormEmpty);
+  const eventCategory = useAppraisalStore((state) => state.eventCategory());
+  const setReviewError = useAppraisalStore((state) => state.setReviewError);
 
-  const submitAppraisal = useSubmitAppraisal(
-    store,
-    appraisalStore,
-    router,
-    token,
-    isTradeIn
-  );
-
-  const canSubmit = !(isLoading || appraisalStore ? true : false);
+  const submitAppraisal = useSubmitAppraisal(router, token, isTradeIn);
 
   useEffect(() => {
-    if (isTradeIn) {
-      appraisalStore.setForm('trade');
-    }
-  }, [appraisalStore, isTradeIn]);
+    setForm(isTradeIn ? 'trade' : 'sell');
+  }, [setForm, isTradeIn]);
 
   useEffect(() => {
-    if (appraisalStore.isFormEmpty()) {
+    if (isFormEmpty()) {
       if (isTradeIn) {
         router.push('/sell/tradeIn-selfService').catch((e) => {
           console.error(e);
@@ -74,8 +68,7 @@ const AppraisalReview: React.FC<Props> = ({ token }) => {
     } else {
       const analyticsHandler = new AnalyticsHandler();
 
-      const data = appraisalStore;
-      const requestPayload: AppraisalPayload = makeRequestBody(data);
+      const requestPayload: AppraisalPayload = makeRequestBody();
 
       const identifyData = {
         ...requestPayload,
@@ -83,16 +76,16 @@ const AppraisalReview: React.FC<Props> = ({ token }) => {
       };
 
       analyticsHandler.trackAppraisalIdentify(
-        data.user?.externalUserID,
+        useAppraisalStore.getState().user?.externalUserID,
         identifyData
       );
-      analyticsHandler.trackAppraisalReviewViewed(appraisalStore.eventCategory);
+      analyticsHandler.trackAppraisalReviewViewed(eventCategory);
     }
-  }, [appraisalStore, isTradeIn, router]);
+  }, [eventCategory, isFormEmpty, isTradeIn, router]);
 
   useEffect(() => {
     return () => {
-      appraisalStore.clearReviewError();
+      useAppraisalStore.getState().clearReviewError();
     };
   }, []);
 
@@ -108,11 +101,13 @@ const AppraisalReview: React.FC<Props> = ({ token }) => {
         setIsLoading(false);
       });
     } else {
-      appraisalStore.setReviewError();
+      setReviewError();
     }
   };
 
-  const isAnyLoading = isLoading || store.deal.loading;
+  const isDealLoading = useDealStore((state) => state.loading);
+
+  const isAnyLoading = isLoading || isDealLoading;
 
   return (
     <Container>
@@ -133,7 +128,7 @@ const AppraisalReview: React.FC<Props> = ({ token }) => {
       <SubmitContainer>
         <SubmitButton
           className={submitButtonClasses.join(' ')}
-          disabled={canSubmit}
+          disabled={isLoading}
           onClick={handleSubmit}
         >
           {isLoading ? 'Submitting' : 'Get My Price'}
@@ -162,9 +157,9 @@ const AppraisalReview: React.FC<Props> = ({ token }) => {
           </a>
         </TextContainer>
       </SubmitContainer>
-      {store.offer.showOfferDialog && <OfferDialog />}
+      {showOfferDialog && <OfferDialog />}
     </Container>
   );
 };
 
-export default observer(AppraisalReview);
+export default AppraisalReview;

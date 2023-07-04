@@ -1,5 +1,4 @@
 import { SkipNavigationLink, VroomSpinner } from '@vroom-web/ui-lib';
-import { observer } from 'mobx-react';
 import React from 'react';
 import styled from 'styled-components';
 
@@ -74,4 +73,4 @@ const LoggedOutDialog: React.FC<Props> = ({ isLoading, onSuccessfulLogin }) => {
   );
 };
 
-export default observer(LoggedOutDialog);
+export default LoggedOutDialog;

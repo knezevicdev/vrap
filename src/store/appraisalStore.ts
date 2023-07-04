@@ -1,4 +1,4 @@
-import { makeAutoObservable, runInAction } from 'mobx';
+import { create } from 'zustand';
 
 import {
   ExtConditionForm,
@@ -9,11 +9,50 @@ import {
   VehicleInfoForm,
 } from 'src/modules/appraisal/review/store';
 
-export class AppraisalStore {
-  vehicleId = '';
+export type AppraisalState = {
+  vehicleId: string;
   vehicleDecodeData: any;
   gradeCheck: any;
-  vehicleInfoForm: VehicleInfoForm = {
+  vehicleInfoForm: VehicleInfoForm;
+  vehicleHistoryForm: VehicleHistoryForm;
+  personalInfoForm: PersonalInfoForm;
+  mechConditionForm: MechConditionForm;
+  intConditionForm: IntConditionForm;
+  extConditionForm: ExtConditionForm;
+  brand: string;
+  dealership: string;
+  type: string;
+  form: string;
+  isEmpty: boolean;
+  vehicle: any;
+  reviewError: string | undefined;
+  isUserLoggedIn: boolean;
+  user: any;
+  isTradeIn: boolean;
+  appraisalPath(): string;
+  reviewPath(): string;
+  eventCategory(): string;
+  isFormEmpty(): boolean;
+  setForm(value: string): void;
+  setVehicleId(vehicleId: string): void;
+  setReviewError(message?: string): void;
+  clearReviewError(): void;
+  setVehicleData(data: any): void;
+  setVehicleFeatureData(data: any): void;
+  setGradeCheck(data: any): void;
+  updateAppraisal(formInfo: any): void;
+  clearAppraisal(): void;
+  updateGeneralFields(fields: any): void;
+  setIsLoggedIn(status: boolean): void;
+  setUser(user: any): void;
+  setIsTradeIn(value: boolean): void;
+};
+
+const useAppraisalStore = create<AppraisalState>((set, get) => ({
+  vehicleId: '',
+  vehicleDecodeData: {},
+  gradeCheck: {},
+  vehicleInfoForm: {
     vin: '',
     exteriorColor: '',
     keysAmount: '1',
@@ -25,22 +64,22 @@ export class AppraisalStore {
     vehicleOptions: [],
     year: null,
     sellOrTradeIn: '',
-  };
-  vehicleHistoryForm: VehicleHistoryForm = {
+  },
+  vehicleHistoryForm: {
     hasAccident: '',
     repairedAfterAccident: '',
     titleStatus: '',
     lienType: '',
     bankName: '',
     state: '',
-  };
-  personalInfoForm: PersonalInfoForm = {
+  },
+  personalInfoForm: {
     email: '',
     firstName: '',
     lastName: '',
     phoneNumber: '',
-  };
-  mechConditionForm: MechConditionForm = {
+  },
+  mechConditionForm: {
     additionalDetails: '',
     floodFireDamage: '',
     mechanicalCondition: '',
@@ -51,8 +90,8 @@ export class AppraisalStore {
     transmissionIssue: '',
     engineIssue: '',
     noMechanicalIssues: '',
-  };
-  intConditionForm: IntConditionForm = {
+  },
+  intConditionForm: {
     interiorCondition: '',
     seats: '',
     smokedIn: '',
@@ -61,8 +100,8 @@ export class AppraisalStore {
     damagedDashboardOrPanels: '',
     noInteriorDamage: '',
     majorDamageInterior: '',
-  };
-  extConditionForm: ExtConditionForm = {
+  },
+  extConditionForm: {
     afterMarket: [],
     dents: '',
     exteriorCondition: '',
@@ -84,239 +123,193 @@ export class AppraisalStore {
     frameOrStructuralDamage: '',
     passStateEmissionStandards: '',
     windshieldCrackedChipped: '',
-  };
-  brand = 'Vroom';
-  dealership = 'Vroom';
-  type = 'Website';
-  form = 'sell';
-  isEmpty = true;
-  showExactMileageDialog = true;
-  carfaxOdoLast: any = null;
-
-  showSpinner = true;
-  vehicles: any = [];
-  vehicle: any = {};
-  vehicleError?: any;
-  checkoutTrade: any = {
-    vehicles: [],
-    vehicle: {},
-    error: null,
-  };
-  showLicenseError = false;
-  reviewError: string | undefined = undefined;
-  isUserLoggedIn = false;
-  user: any = {};
-  isTradeIn = false;
-
-  get appraisalPath() {
-    return this.isTradeIn
+  },
+  brand: 'Vroom',
+  dealership: 'Vroom',
+  type: 'Website',
+  form: 'sell',
+  isEmpty: true,
+  vehicle: {},
+  reviewError: undefined,
+  isUserLoggedIn: false,
+  user: {},
+  isTradeIn: false,
+  appraisalPath(): string {
+    return get().isTradeIn
       ? '/sell/tradeIn-selfService'
       : '/sell/vehicleInformation';
-  }
-
-  get reviewPath() {
-    return this.isTradeIn ? '/sell/tradeIn-selfService-Review' : '/sell/review';
-  }
-
-  get eventCategory() {
-    return this.isTradeIn ? 'Trade' : 'Sell';
-  }
-
-  constructor() {
-    makeAutoObservable(this);
-  }
-
+  },
+  reviewPath(): string {
+    return get().isTradeIn
+      ? '/sell/tradeIn-selfService-Review'
+      : '/sell/review';
+  },
+  eventCategory(): string {
+    return get().isTradeIn ? 'Trade' : 'Sell';
+  },
   isFormEmpty(): boolean {
-    return this.isEmpty;
-  }
-
+    return get().isEmpty;
+  },
   setForm(value: string): void {
-    this.form = value;
-  }
-
-  setShowSpinner(value: boolean): void {
-    this.showSpinner = value;
-  }
-
-  setVehicles(value: any): void {
-    this.vehicles = value;
-  }
-
-  setVehicle(value: any): void {
-    this.vehicle = value;
-  }
-
+    set({ form: value });
+  },
   setVehicleId(vehicleId: string): void {
-    this.vehicleId = vehicleId;
-  }
-
+    set({ vehicleId });
+  },
   setReviewError(
     message = 'Oops! Something went wrong. Please try to submit again.'
   ): void {
-    this.reviewError = message;
-  }
-
+    set({ reviewError: message });
+  },
   clearReviewError(): void {
-    this.reviewError = undefined;
-  }
-
-  setVehicleError(value: any): void {
-    this.vehicleError = value;
-  }
-
-  setCheckoutTrade(key: string, value: any): void {
-    this.checkoutTrade = {
-      ...this.checkoutTrade,
-      [key]: value,
-    };
-  }
-
-  setLicenseError(value: boolean): void {
-    this.showLicenseError = value;
-  }
-
+    set({ reviewError: undefined });
+  },
   setVehicleData(data: any): void {
-    this.vehicleDecodeData = {
-      ...this.vehicleDecodeData,
+    const vehicleDecodeData = {
+      ...get().vehicleDecodeData,
       ...data,
     };
-
-    this.vehicleInfoForm = {
-      ...this.vehicleInfoForm,
+    const vehicleInfoForm = {
+      ...get().vehicleInfoForm,
       year: data.year,
       model: data.model,
       make: data.make,
       zipCode: data.zipCode,
     };
-  }
-
+    set({ vehicleDecodeData, vehicleInfoForm });
+  },
   setVehicleFeatureData(data: any): void {
-    this.vehicleDecodeData = {
-      ...this.vehicleDecodeData,
-      ...data,
-    };
-  }
-
-  setGradeCheck(data: any): void {
-    this.gradeCheck = { ...data };
-  }
-
-  dismissExactMileageDialog(): void {
-    this.showExactMileageDialog = false;
-  }
-
-  updateAppraisal(formInfo: any): void {
-    this.vehicleInfoForm = {
-      ...this.vehicleInfoForm,
-      ...formInfo.vehicleInfoForm,
-    };
-    this.vehicleHistoryForm = { ...formInfo.vehicleHistoryForm };
-    this.intConditionForm = { ...formInfo.intConditionForm };
-    this.extConditionForm = { ...formInfo.extConditionForm };
-    this.mechConditionForm = { ...formInfo.mechConditionForm };
-    this.personalInfoForm = { ...formInfo.personalInfoForm };
-    this.isEmpty = false;
-  }
-
-  clearAppraisal(): void {
-    this.vehicleInfoForm = {
-      vin: '',
-      exteriorColor: '',
-      keysAmount: '1',
-      make: '',
-      mileage: null,
-      model: '',
-      trim: '',
-      vehicleOptions: [],
-      year: null,
-      zipCode: '',
-      sellOrTradeIn: '',
-    };
-    this.vehicleHistoryForm = {
-      hasAccident: '',
-      repairedAfterAccident: '',
-      titleStatus: '',
-      lienType: '',
-      bankName: '',
-      state: '',
-    };
-    this.personalInfoForm = {
-      email: '',
-      firstName: '',
-      lastName: '',
-      phoneNumber: '',
-    };
-    this.mechConditionForm = {
-      additionalDetails: '',
-      floodFireDamage: '',
-      mechanicalCondition: '',
-      otherWarning: '',
-      runnable: '',
-      warningLights: '',
-      warningLightsValues: [],
-      transmissionIssue: '',
-      engineIssue: '',
-      noMechanicalIssues: '',
-    };
-    this.intConditionForm = {
-      interiorCondition: '',
-      seats: '',
-      smokedIn: '',
-      ripsOrTearsInSeats: '',
-      damagedElectronic: '',
-      damagedDashboardOrPanels: '',
-      noInteriorDamage: '',
-      majorDamageInterior: '',
-    };
-    this.extConditionForm = {
-      afterMarket: [],
-      dents: '',
-      majorDamageExterior: '',
-      panelsWithMajorDamage: 0,
-      exteriorCondition: '',
-      hailDamage: '',
-      otherAfterMarket: '',
-      paintChipping: '',
-      rust: '',
-      scratches: '',
-      scratchesPanels: null,
-      dentsPanels: 0,
-      paintChippingPanels: 0,
-      tiresAndWheels: 'Under 5K',
-      floodDamage: '',
-      fireDamage: '',
-      wornTires: '',
-      noExteriorDamage: '',
-      frameOrStructuralDamage: '',
-      passStateEmissionStandards: '',
-      windshieldCrackedChipped: '',
-    };
-    this.isEmpty = true;
-  }
-
-  updateGeneralFields(fields: any): void {
-    this.brand = fields.brand.length ? fields.brand : this.brand;
-    this.dealership = fields.dealership.length
-      ? fields.dealership
-      : this.dealership;
-    this.type = fields.type.length ? fields.type : this.type;
-  }
-
-  setCarfaxOdoLast(mileage: any): void {
-    this.carfaxOdoLast = mileage;
-  }
-
-  setIsLoggedIn(status: boolean): void {
-    this.isUserLoggedIn = status;
-  }
-
-  setUser(user: any): void {
-    this.user = user;
-  }
-
-  setIsTradeIn(value: boolean): void {
-    runInAction(() => {
-      this.isTradeIn = value;
+    set({
+      vehicleDecodeData: {
+        ...get().vehicleDecodeData,
+        ...data,
+      },
     });
-  }
-}
+  },
+  setGradeCheck(data: any): void {
+    set({ gradeCheck: { ...data } });
+  },
+  updateAppraisal(formInfo: any) {
+    set({
+      vehicleInfoForm: {
+        ...get().vehicleInfoForm,
+        ...formInfo.vehicleInfoForm,
+      },
+      vehicleHistoryForm: {
+        ...formInfo.vehicleHistoryForm,
+      },
+      personalInfoForm: {
+        ...formInfo.personalInfoForm,
+      },
+      mechConditionForm: {
+        ...formInfo.mechConditionForm,
+      },
+      intConditionForm: {
+        ...formInfo.intConditionForm,
+      },
+      extConditionForm: {
+        ...formInfo.extConditionForm,
+      },
+      isEmpty: false,
+    });
+  },
+  clearAppraisal() {
+    set({
+      vehicleInfoForm: {
+        vin: '',
+        exteriorColor: '',
+        keysAmount: '1',
+        make: '',
+        mileage: null,
+        model: '',
+        trim: '',
+        vehicleOptions: [],
+        year: null,
+        zipCode: '',
+        sellOrTradeIn: '',
+      },
+      vehicleHistoryForm: {
+        hasAccident: '',
+        repairedAfterAccident: '',
+        titleStatus: '',
+        lienType: '',
+        bankName: '',
+        state: '',
+      },
+      personalInfoForm: {
+        email: '',
+        firstName: '',
+        lastName: '',
+        phoneNumber: '',
+      },
+      mechConditionForm: {
+        additionalDetails: '',
+        floodFireDamage: '',
+        mechanicalCondition: '',
+        otherWarning: '',
+        runnable: '',
+        warningLights: '',
+        warningLightsValues: [],
+        transmissionIssue: '',
+        engineIssue: '',
+        noMechanicalIssues: '',
+      },
+      intConditionForm: {
+        interiorCondition: '',
+        seats: '',
+        smokedIn: '',
+        ripsOrTearsInSeats: '',
+        damagedElectronic: '',
+        damagedDashboardOrPanels: '',
+        noInteriorDamage: '',
+        majorDamageInterior: '',
+      },
+      extConditionForm: {
+        afterMarket: [],
+        dents: '',
+        majorDamageExterior: '',
+        panelsWithMajorDamage: 0,
+        exteriorCondition: '',
+        hailDamage: '',
+        otherAfterMarket: '',
+        paintChipping: '',
+        rust: '',
+        scratches: '',
+        scratchesPanels: null,
+        dentsPanels: 0,
+        paintChippingPanels: 0,
+        tiresAndWheels: 'Under 5K',
+        floodDamage: '',
+        fireDamage: '',
+        wornTires: '',
+        noExteriorDamage: '',
+        frameOrStructuralDamage: '',
+        passStateEmissionStandards: '',
+        windshieldCrackedChipped: '',
+      },
+      isEmpty: true,
+    });
+  },
+  updateGeneralFields(fields: any) {
+    const state = get();
+
+    set({
+      brand: fields.brand.length ? fields.brand : state.brand,
+      dealership: fields.dealership.length
+        ? fields.dealership
+        : state.dealership,
+      type: fields.type.length ? fields.type : state.type,
+    });
+  },
+  setIsLoggedIn(status: boolean) {
+    set({ isUserLoggedIn: status });
+  },
+  setUser(user: any) {
+    set({ user });
+  },
+  setIsTradeIn(value: boolean) {
+    set({ isTradeIn: value });
+  },
+}));
+
+export default useAppraisalStore;

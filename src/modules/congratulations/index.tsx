@@ -1,5 +1,4 @@
 import { ProgressiveAd } from '@vroom-web/shared-components';
-import { observer } from 'mobx-react';
 import React, { useEffect } from 'react';
 
 import AnalyticsHandler from '../../integrations/AnalyticsHandler';
@@ -44,4 +43,4 @@ const Congratulations = (): JSX.Element => {
   );
 };
 
-export default observer(Congratulations);
+export default Congratulations;

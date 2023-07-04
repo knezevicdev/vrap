@@ -8,23 +8,23 @@ import {
   postAppraisalReview,
   submitWeblead,
 } from '../../../networking/request';
-import Store from '../../../store';
-import { AppraisalStore } from '../../../store/appraisalStore';
+import useAppraisalStore from '../../../store/appraisalStore';
+import useOfferStore from '../../../store/offerStore';
 import { makeRequestBody } from '../utils';
 
 const useSubmitAppraisal = (
-  store: Store,
-  appraisalStore: AppraisalStore,
   router: NextRouter,
   signatureToken: string,
   isTradeIn: boolean
 ) => {
+  const getOfferDetail = useOfferStore((state) => state.getOfferDetail);
+  const setShowOfferDialog = useOfferStore((state) => state.setShowOfferDialog);
+
   return async (token: string) => {
     try {
-      appraisalStore.clearReviewError();
+      useAppraisalStore.getState().clearReviewError();
 
-      const data = appraisalStore;
-      const requestPayload: AppraisalPayload = makeRequestBody(data);
+      const requestPayload: AppraisalPayload = makeRequestBody();
 
       // temporary solution for adding flag for active test
       if (requestPayload.additionalDetails.length)
@@ -78,10 +78,10 @@ const useSubmitAppraisal = (
           email: returnData.data.user_email,
           offerZip: returnData.data.zipcode,
         };
-        store.offer.getOfferDetail(offerDetailData);
-        store.offer.setShowOfferDialog(true);
+        getOfferDetail(offerDetailData);
+        setShowOfferDialog(true);
       } else {
-        appraisalStore.clearAppraisal();
+        useAppraisalStore.getState().clearAppraisal();
         router
           .push({
             pathname: `/appraisal/price`,
@@ -92,7 +92,7 @@ const useSubmitAppraisal = (
           });
       }
     } catch (err) {
-      appraisalStore.setReviewError();
+      useAppraisalStore.getState().setReviewError();
       console.log(JSON.stringify(err));
     }
   };

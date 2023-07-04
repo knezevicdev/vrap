@@ -1,11 +1,13 @@
 import { getInProgressDeal } from '../../../networking/request';
-import Store from '../../../store';
+import useDealStore from '../../../store/dealStore';
 
-const useInitialize = (store: Store) => {
+const useInitialize = () => {
+  const setDeal = useDealStore((state) => state.setDeal);
+
   return async () => {
     try {
       const deal = await getInProgressDeal();
-      store.deal.setDeal(deal);
+      setDeal(deal);
     } catch (e) {
       console.log('Error while fetching deal');
     }

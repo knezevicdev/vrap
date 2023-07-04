@@ -1,8 +1,7 @@
-import { observer } from 'mobx-react';
 import { useRouter } from 'next/router';
 import React, { KeyboardEventHandler, useCallback } from 'react';
 
-import { useAppStore } from '../../../../../context';
+import useAppraisalStore from '../../../../../store/appraisalStore';
 import {
   Container,
   Edit,
@@ -16,15 +15,13 @@ import {
 
 const PersonalInformation: React.FC = () => {
   const router = useRouter();
-  const { store } = useAppStore();
-  const appraisalDetail = store.appraisal;
 
   const handleEditClick = useCallback(() => {
     router
       .push({
-        pathname: store.appraisal.appraisalPath,
+        pathname: useAppraisalStore.getState().appraisalPath(),
         query: {
-          vehicle: `${store.appraisal?.vehicleInfoForm?.vin}`,
+          vehicle: `${useAppraisalStore.getState().vehicleInfoForm?.vin}`,
           ...router.query,
         },
         hash: `#personalinformation`,
@@ -32,17 +29,15 @@ const PersonalInformation: React.FC = () => {
       .catch((e) => {
         console.error(e);
       });
-  }, [
-    router,
-    store.appraisal.appraisalPath,
-    store.appraisal?.vehicleInfoForm?.vin,
-  ]);
+  }, [router]);
 
   const onKeyDown: KeyboardEventHandler<HTMLSpanElement> = (event) => {
     if (event.key === 'Enter') {
       handleEditClick();
     }
   };
+
+  const personalInfoForm = useAppraisalStore((state) => state.personalInfoForm);
 
   return (
     <Container>
@@ -60,21 +55,19 @@ const PersonalInformation: React.FC = () => {
       <Row>
         <Info>
           <Label>Name</Label>
-          <Field>{`${appraisalDetail?.personalInfoForm?.firstName} ${appraisalDetail?.personalInfoForm?.lastName}`}</Field>
+          <Field>{`${personalInfoForm?.firstName} ${personalInfoForm?.lastName}`}</Field>
         </Info>
         <Info>
           <Label>Email Address</Label>
-          <Field>{appraisalDetail?.personalInfoForm?.email}</Field>
+          <Field>{personalInfoForm?.email}</Field>
         </Info>
         <Info>
           <Label>Phone Number</Label>
-          <Field>
-            {appraisalDetail?.personalInfoForm?.phoneNumber || 'N\\A'}
-          </Field>
+          <Field>{personalInfoForm?.phoneNumber || 'N\\A'}</Field>
         </Info>
       </Row>
     </Container>
   );
 };
 
-export default observer(PersonalInformation);
+export default PersonalInformation;

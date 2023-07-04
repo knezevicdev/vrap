@@ -1,14 +1,15 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Body } from '@vroom-web/ui-lib';
-import { observer } from 'mobx-react';
 import { useRouter } from 'next/router';
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import styled from 'styled-components';
+import { shallow } from 'zustand/shallow';
 
 import useIsTradeIn from '../../hooks/useIsTradeIn';
 import AnalyticsHandler from '../../integrations/AnalyticsHandler';
 import { useRestrictedAppraisal } from '../../integrations/RestrictedAppraisalContext';
 import { getUser, isUserSignedIn } from '../../networking/request';
+import useAppraisalStore from '../../store/appraisalStore';
 import CombinedVehicleInfoForms from './components/CombinedVehicleInfoForm';
 import MultiStepForm from './components/MultiStepForm';
 import PersonalInformation from './components/personalinformation';
@@ -24,8 +25,6 @@ import combineForms from './utils/combineForms';
 import useCancelOffer from './utils/useCancelOffer';
 import useInitialize from './utils/useInitialize';
 
-import { useAppStore } from 'src/context';
-
 interface BuildForm {
   extConditionForm?: any;
   intConditionForm?: any;
@@ -38,7 +37,6 @@ interface BuildForm {
 const AppraisalForm: React.FC = () => {
   const { value: restrictedAppraisal } = useRestrictedAppraisal();
   const router = useRouter();
-  const { store } = useAppStore();
   const vinForPath = router.query.vehicle as string;
   const routerAsPath = router.asPath as string;
   const isEditMode = routerAsPath.includes('#');
@@ -48,12 +46,24 @@ const AppraisalForm: React.FC = () => {
 
   const analyticsHandler = useMemo(() => new AnalyticsHandler(), []);
 
-  const vehicleInfo = store.appraisal.vehicleInfoForm;
-  const yourInformation = store.appraisal.personalInfoForm;
-  const vehicleHistory = store.appraisal.vehicleHistoryForm;
-  const intCondition = store.appraisal.intConditionForm;
-  const extCondition = store.appraisal.extConditionForm;
-  const mechCondition = store.appraisal.mechConditionForm;
+  const {
+    vehicleInfo,
+    yourInformation,
+    vehicleHistory,
+    intCondition,
+    extCondition,
+    mechCondition,
+  } = useAppraisalStore(
+    (state) => ({
+      vehicleInfo: state.vehicleInfoForm,
+      yourInformation: state.personalInfoForm,
+      vehicleHistory: state.vehicleInfoForm,
+      intCondition: state.intConditionForm,
+      extCondition: state.extConditionForm,
+      mechCondition: state.mechConditionForm,
+    }),
+    shallow
+  );
   const [showInvalidStateDialog, setShowInvalidStateDialog] = useState(false);
   const [invalidMakeDialogMake, setInvalidMakeDialogMake] = useState<
     false | string
@@ -114,7 +124,7 @@ const AppraisalForm: React.FC = () => {
       setInvalidMakeDialogMake(vehicleInfo.make);
       analyticsHandler.trackInvalidMakeShown(
         vin,
-        store.appraisal.eventCategory
+        useAppraisalStore.getState().eventCategory()
       );
       return;
     }
@@ -123,7 +133,7 @@ const AppraisalForm: React.FC = () => {
       setInvalidMakeDialogMake(`${vehicleInfo.make} ${vehicleInfo.model}`);
       analyticsHandler.trackInvalidMakeShown(
         vin,
-        store.appraisal.eventCategory
+        useAppraisalStore.getState().eventCategory()
       );
       return;
     }
@@ -132,7 +142,7 @@ const AppraisalForm: React.FC = () => {
       setShowInvalidStateDialog(true);
       analyticsHandler.trackInvalidStateShown(
         vin,
-        store.appraisal.eventCategory
+        useAppraisalStore.getState().eventCategory()
       );
       return;
     }
@@ -144,7 +154,7 @@ const AppraisalForm: React.FC = () => {
     if (!isTradeIn) {
       analyticsHandler.trackSellOrTradeIn(
         vin,
-        store.appraisal.eventCategory,
+        useAppraisalStore.getState().eventCategory(),
         appraisalUseForm.vehicleInfoForm.fields.sellOrTradeIn.value
       );
     }
@@ -327,7 +337,9 @@ const AppraisalForm: React.FC = () => {
   useEffect(() => {
     const query = router.query;
 
-    analyticsHandler.trackProcessStart(store.appraisal.eventCategory);
+    analyticsHandler.trackProcessStart(
+      useAppraisalStore.getState().eventCategory()
+    );
 
     if (query.brand || query.dealership || query.type) {
       const fieldVals = {
@@ -336,7 +348,7 @@ const AppraisalForm: React.FC = () => {
         type: query.type || '',
       };
 
-      store.appraisal.updateGeneralFields(fieldVals);
+      useAppraisalStore.getState().updateGeneralFields(fieldVals);
     }
   }, []);
 
@@ -366,25 +378,27 @@ const AppraisalForm: React.FC = () => {
 
     (async (): Promise<void> => {
       const isLoggedIn = await isUserSignedIn();
-      store.appraisal.setIsLoggedIn(isLoggedIn);
+      useAppraisalStore.getState().setIsLoggedIn(isLoggedIn);
     })();
-  }, [store.appraisal]);
+  }, []);
 
+  const isUserLoggedIn = useAppraisalStore((state) => state.isUserLoggedIn);
   const userFetched = useRef(false);
   useEffect(() => {
-    if (store.appraisal.isUserLoggedIn) {
+    if (isUserLoggedIn) {
       if (userFetched.current) return;
       userFetched.current = true;
       (async (): Promise<void> => {
         const user = await getUser();
-        store.appraisal.setUser(user);
+        useAppraisalStore.getState().setUser(user);
       })();
     }
-  }, [store.appraisal.isUserLoggedIn]);
+  }, [isUserLoggedIn]);
 
+  const user = useAppraisalStore((state) => state.user);
   useEffect(() => {
-    changePersonalInfo({ ...store.appraisal.user });
-  }, [store.appraisal.user]);
+    changePersonalInfo({ ...user });
+  }, [user]);
 
   const buildFormSectionValues = (form: any, targetObj: any) => {
     for (const [key, value] of Object.entries(form) as any) {
@@ -429,13 +443,13 @@ const AppraisalForm: React.FC = () => {
   const onSubmit = async () => {
     const formInfo = buildFormForStore();
 
-    store.appraisal.updateAppraisal(formInfo);
+    useAppraisalStore.getState().updateAppraisal(formInfo);
     router
       .push({
-        pathname: store.appraisal.reviewPath,
+        pathname: useAppraisalStore.getState().reviewPath(),
         query: {
           ...(router.query.form && { form: router.query.form }),
-          vin: store.appraisal.vehicleInfoForm.vin,
+          vin: useAppraisalStore.getState().vehicleInfoForm.vin,
         },
       })
       .catch((e) => console.error(e));
@@ -451,7 +465,7 @@ const AppraisalForm: React.FC = () => {
     analyticsHandler.trackStepComplete(
       activeSection,
       formInfo,
-      store.appraisal.eventCategory
+      useAppraisalStore.getState().eventCategory()
     );
 
     if (activeSection < sections.length - 1) {
@@ -459,24 +473,24 @@ const AppraisalForm: React.FC = () => {
     }
 
     if (clearForm) {
-      await store.appraisal.clearAppraisal();
+      useAppraisalStore.getState().clearAppraisal();
       router
         .push({
-          pathname: store.appraisal.appraisalPath,
+          pathname: useAppraisalStore.getState().appraisalPath(),
           query: { ...router.query },
         })
         .catch((e) => {
           console.error(e);
         });
     } else {
-      store.appraisal.updateAppraisal(formInfo);
+      useAppraisalStore.getState().updateAppraisal(formInfo);
 
       if (location.hash.length) {
         router
           .push({
-            pathname: store.appraisal.reviewPath,
+            pathname: useAppraisalStore.getState().reviewPath(),
             query: {
-              vin: store.appraisal.vehicleInfoForm.vin,
+              vin: useAppraisalStore.getState().vehicleInfoForm.vin,
             },
           })
           .catch((e) => {
@@ -487,14 +501,14 @@ const AppraisalForm: React.FC = () => {
   };
 
   const isInitialized = useRef(false);
-  const initialize = useInitialize(store);
+  const initialize = useInitialize();
   useEffect(() => {
     if (isInitialized.current) return;
     isInitialized.current = true;
     initialize();
   }, [initialize]);
 
-  const cancelOffer = useCancelOffer(store);
+  const cancelOffer = useCancelOffer();
 
   return (
     <AppraisalFormContainer data-qa="AppraisalFormPage">
@@ -547,4 +561,4 @@ const AppraisalFormContainer = styled.div`
   }
 `;
 
-export default observer(AppraisalForm);
+export default AppraisalForm;

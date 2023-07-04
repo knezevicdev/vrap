@@ -6,8 +6,8 @@ import {
 import React, { useState } from 'react';
 import styled from 'styled-components';
 
-import { useAppStore } from '../../../context';
 import { GenericObject } from '../../../interfaces.d';
+import useAppraisalStore from '../../../store/appraisalStore';
 import Dialog from '../Dialog/Panels';
 
 import Icon, { Icons } from 'src/core/Icon';
@@ -32,13 +32,12 @@ const SelectBoxes: React.FC<Props> = ({
   className,
 }) => {
   const analyticsHandler: AnalyticsHandler = new AnalyticsHandler();
-  const { store } = useAppStore();
   const [showPanelsDialog, setShowPanelsDialog] = useState(false);
 
   const handleShowPanelsDialog = () => {
     analyticsHandler.trackPanelsTooltip(
       panelsTooltip,
-      store.appraisal.eventCategory
+      useAppraisalStore.getState().eventCategory()
     );
     setShowPanelsDialog(true);
   };

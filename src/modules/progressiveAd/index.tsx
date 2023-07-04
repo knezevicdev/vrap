@@ -1,22 +1,24 @@
 import { ProgressiveAd } from '@vroom-web/shared-components';
 import { addStyleForMobile } from '@vroom-web/ui-lib';
-import { observer } from 'mobx-react-lite';
 import React, { useMemo } from 'react';
 import styled from 'styled-components';
+import { shallow } from 'zustand/shallow';
 
 import { StoreStatus } from '../../interfaces.d';
-import { PriceStore } from '../price/store';
+import usePriceStore from '../price/store';
 
-const ProgressiveAdC: React.FC<{ store: PriceStore }> = ({ store }) => {
+const ProgressiveAdC: React.FC = () => {
+  const { automatedAppraisal, storeStatus } = usePriceStore(
+    (state) => ({
+      automatedAppraisal: state.price.automatedAppraisal,
+      storeStatus: state.storeStatus,
+    }),
+    shallow
+  );
+
   const isManualPricing = useMemo(() => {
-    const {
-      storeStatus,
-      /* eslint-disable-next-line */
-      price: { automatedAppraisal },
-    } = store;
-
     return storeStatus !== StoreStatus.Initial && !automatedAppraisal;
-  }, [store]);
+  }, []);
 
   if (isManualPricing) {
     return (
@@ -47,4 +49,4 @@ const ProgressiveWrapper = styled.div`
   `)}
 `;
 
-export default observer(ProgressiveAdC);
+export default ProgressiveAdC;

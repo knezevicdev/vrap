@@ -1,9 +1,9 @@
 import { isErrorResponse } from '@vroom-web/networking';
 
 import { getCarstoryTrimFeatures } from '../../../../../networking/request';
-import { AppraisalStore } from '../../../../../store/appraisalStore';
+import useAppraisalStore from '../../../../../store/appraisalStore';
 
-const useGetTrimFeatures = (appraisalStore: AppraisalStore) => {
+const useGetTrimFeatures = () => {
   return async (trimId: number, captchaToken: string | null): Promise<any> => {
     try {
       const response = await getCarstoryTrimFeatures(trimId, captchaToken);
@@ -14,7 +14,7 @@ const useGetTrimFeatures = (appraisalStore: AppraisalStore) => {
         ? dataProviderInfo.carstory.features
         : [];
 
-      appraisalStore.setVehicleFeatureData({
+      useAppraisalStore.getState().setVehicleFeatureData({
         features,
       });
 

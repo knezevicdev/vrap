@@ -1,8 +1,7 @@
-import { observer } from 'mobx-react';
 import { useRouter } from 'next/router';
 import React, { KeyboardEventHandler, useCallback } from 'react';
 
-import { useAppStore } from '../../../../../context';
+import useAppraisalStore from '../../../../../store/appraisalStore';
 import {
   Container,
   Edit,
@@ -16,18 +15,15 @@ import {
 
 const VehicleInformation: React.FC = () => {
   const router = useRouter();
-  const { store } = useAppStore();
-
-  const appraisalStore = store.appraisal;
+  const vehicleInfoForm = useAppraisalStore((state) => state.vehicleInfoForm);
+  const appraisalPath = useAppraisalStore((state) => state.appraisalPath());
 
   const OptionsList = () => {
     return (
       <>
-        {appraisalStore.vehicleInfoForm.vehicleOptions.map(
-          (element: any, index: any) => {
-            return <Field key={index}>{element}</Field>;
-          }
-        )}
+        {vehicleInfoForm.vehicleOptions.map((element: any, index: any) => {
+          return <Field key={index}>{element}</Field>;
+        })}
       </>
     );
   };
@@ -35,9 +31,9 @@ const VehicleInformation: React.FC = () => {
   const handleEditClick = useCallback(() => {
     router
       .push({
-        pathname: appraisalStore.appraisalPath,
+        pathname: appraisalPath,
         query: {
-          vehicle: `${appraisalStore?.vehicleInfoForm?.vin}`,
+          vehicle: `${vehicleInfoForm?.vin}`,
           ...router.query,
         },
         hash: `#top`,
@@ -45,11 +41,7 @@ const VehicleInformation: React.FC = () => {
       .catch((e) => {
         console.error(e);
       });
-  }, [
-    appraisalStore.appraisalPath,
-    appraisalStore?.vehicleInfoForm?.vin,
-    router,
-  ]);
+  }, [appraisalPath, vehicleInfoForm?.vin, router]);
 
   const onKeyDown: KeyboardEventHandler<HTMLSpanElement> = (event) => {
     if (event.key === 'Enter') {
@@ -87,43 +79,41 @@ const VehicleInformation: React.FC = () => {
       <Row>
         <Info>
           <Label>VIN</Label>
-          <Field>{appraisalStore.vehicleInfoForm.vin}</Field>
+          <Field>{vehicleInfoForm.vin}</Field>
         </Info>
-        {appraisalStore.vehicleInfoForm.trim && (
+        {vehicleInfoForm.trim && (
           <Info>
             <Label>Trim</Label>
-            <Field title={appraisalStore.vehicleInfoForm.trim}>
-              {addElipsesIfLong(appraisalStore.vehicleInfoForm.trim)}
+            <Field title={vehicleInfoForm.trim}>
+              {addElipsesIfLong(vehicleInfoForm.trim)}
             </Field>
           </Info>
         )}
         <Info>
           <Label>Mileage</Label>
-          <Field>
-            {numberWithCommas(appraisalStore.vehicleInfoForm.mileage)}
-          </Field>
+          <Field>{numberWithCommas(vehicleInfoForm.mileage)}</Field>
         </Info>
       </Row>
       <Row>
         <Info fullWidth={true}>
-          <Field>{`(${appraisalStore.vehicleInfoForm.year} ${appraisalStore.vehicleInfoForm.make} ${appraisalStore.vehicleInfoForm.model})`}</Field>
+          <Field>{`(${vehicleInfoForm.year} ${vehicleInfoForm.make} ${vehicleInfoForm.model})`}</Field>
         </Info>
       </Row>
       <Row>
         <Info>
           <Label>Zip Code</Label>
-          <Field>{appraisalStore.vehicleInfoForm.zipCode}</Field>
+          <Field>{vehicleInfoForm.zipCode}</Field>
         </Info>
       </Row>
       <Row>
         <Info>
           <Label>Exterior Color</Label>
-          <Field>{appraisalStore.vehicleInfoForm.exteriorColor}</Field>
+          <Field>{vehicleInfoForm.exteriorColor}</Field>
         </Info>
 
         <Info>
           <Label>Options</Label>
-          {appraisalStore.vehicleInfoForm.vehicleOptions.length !== 0 ? (
+          {vehicleInfoForm.vehicleOptions.length !== 0 ? (
             <OptionsList />
           ) : (
             <Field>N\A</Field>
@@ -134,4 +124,4 @@ const VehicleInformation: React.FC = () => {
   );
 };
 
-export default observer(VehicleInformation);
+export default VehicleInformation;

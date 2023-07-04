@@ -5,9 +5,14 @@ import {
   declineDeal,
   UpdateDeal,
 } from '../../../../../networking/request';
-import Store from '../../../../../store';
+import useAppraisalStore from '../../../../../store/appraisalStore';
+import useDealStore from '../../../../../store/dealStore';
+import useOfferStore from '../../../../../store/offerStore';
 
-const useAcceptDeclinePrice = (hasValidPrice: boolean, store: Store) => {
+const useAcceptDeclinePrice = (hasValidPrice: boolean) => {
+  const setShowOfferDialog = useOfferStore((state) => state.setShowOfferDialog);
+  const offerDetail = useOfferStore((state) => state.offerDetail);
+
   const handleUpdateDeal = useCallback(
     (response: UpdateDeal) => {
       if (!response.isError) {
@@ -15,31 +20,36 @@ const useAcceptDeclinePrice = (hasValidPrice: boolean, store: Store) => {
         return;
       }
 
-      store.appraisal.setReviewError(response.error);
-      store.offer.setShowOfferDialog(false);
+      useAppraisalStore.getState().setReviewError(response.error);
+      setShowOfferDialog(false);
     },
-    [store.appraisal, store.offer]
+    [setShowOfferDialog]
   );
 
   const showDealError = useCallback((): void => {
-    store.offer.setShowOfferDialog(false);
-    store.appraisal.setReviewError(
-      'Oops! Something went wrong. Please try again or give us a call at (855) 524-1300 to reserve this vehicle.'
-    );
-  }, [store.appraisal, store.offer]);
+    setShowOfferDialog(false);
+    useAppraisalStore
+      .getState()
+      .setReviewError(
+        'Oops! Something went wrong. Please try again or give us a call at (855) 524-1300 to reserve this vehicle.'
+      );
+  }, [setShowOfferDialog]);
+
+  const deal = useDealStore((state) => state.deal);
+  const setDealLoading = useDealStore((state) => state.setLoading);
 
   const declinePrice = useCallback(async (): Promise<void> => {
-    if (!store.deal.deal) {
+    if (!deal) {
       showDealError();
       return;
     }
 
-    store.deal.setLoading(true);
-    const response = await declineDeal(store.deal.deal);
-    store.deal.setLoading(false);
+    setDealLoading(true);
+    const response = await declineDeal(deal);
+    setDealLoading(false);
 
     handleUpdateDeal(response);
-  }, [handleUpdateDeal, showDealError, store.deal]);
+  }, [deal, setDealLoading, handleUpdateDeal, showDealError]);
 
   const acceptPrice = useCallback(async (): Promise<void> => {
     if (!hasValidPrice) {
@@ -47,16 +57,16 @@ const useAcceptDeclinePrice = (hasValidPrice: boolean, store: Store) => {
       return;
     }
 
-    const offer = store.offer.offerDetail;
-    if (!store.deal.deal || !offer) {
+    const offer = offerDetail;
+    if (!deal || !offer) {
       showDealError();
       return;
     }
 
-    store.deal.setLoading(true);
+    setDealLoading(true);
 
     const response = await acceptDeal({
-      externalDealID: store.deal.deal.externalDealID,
+      externalDealID: deal.externalDealID,
       appraisalID: offer.id,
       offerID: offer.offerId,
       offerPrice: offer.price,
@@ -69,16 +79,17 @@ const useAcceptDeclinePrice = (hasValidPrice: boolean, store: Store) => {
       expirationDate: offer.offerExpiration,
       source: 'web',
     });
-    store.deal.setLoading(false);
+    setDealLoading(false);
 
     handleUpdateDeal(response);
   }, [
+    deal,
     declinePrice,
     handleUpdateDeal,
     hasValidPrice,
+    setDealLoading,
     showDealError,
-    store.deal,
-    store.offer.offerDetail,
+    offerDetail,
   ]);
 
   return { acceptPrice, declinePrice };

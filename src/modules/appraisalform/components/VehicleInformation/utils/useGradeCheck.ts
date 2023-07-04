@@ -1,9 +1,9 @@
 import { isErrorResponse } from '@vroom-web/networking';
 
 import { getGradeCheck } from '../../../../../networking/request';
-import { AppraisalStore } from '../../../../../store/appraisalStore';
+import useAppraisalStore from '../../../../../store/appraisalStore';
 
-const useGradeCheck = (appraisalStore: AppraisalStore) => {
+const useGradeCheck = () => {
   return async (
     make: string,
     model: string,
@@ -15,7 +15,7 @@ const useGradeCheck = (appraisalStore: AppraisalStore) => {
       const response = await getGradeCheck(make, model, trim, miles, vin);
       if (isErrorResponse(response)) throw response;
 
-      appraisalStore.setGradeCheck(response.data);
+      useAppraisalStore.getState().setGradeCheck(response.data);
 
       return response.data;
     } catch (error) {
