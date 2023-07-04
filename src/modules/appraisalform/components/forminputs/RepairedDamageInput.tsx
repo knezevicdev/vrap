@@ -21,7 +21,7 @@ const RepairedDamageInput: React.FC<Props> = ({ field }) => {
         field={{
           ...field,
           options: ['Yes', 'No'],
-          label: 'Has the vehicle has been repaired?',
+          label: 'Has the vehicle been repaired?',
           onClick: handleOnChange,
           value,
         }}
