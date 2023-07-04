@@ -10,20 +10,33 @@ const yesNoOrUndefined = (value: string) => {
   return value === 'Yes';
 };
 
+const optionalFieldValue =
+  (
+    verificationState: ReturnType<typeof useVerificationStore.getState>,
+    validator: boolean
+  ) =>
+  <T extends keyof ReturnType<typeof useVerificationStore.getState>, K>(
+    key: T,
+    fallback: K = '' as K
+  ): ReturnType<typeof useVerificationStore.getState>[T] | K => {
+    if (!validator) return fallback;
+    return verificationState[key];
+  };
+
 const updateVerification = async (formState: number) => {
   const verificationState = useVerificationStore.getState();
 
   const hasSecondOwner = verificationState.secondOwnerConfirmation === 'Yes';
   const ownersOnTitle = hasSecondOwner ? 2 : 1;
 
-  const secondOwnerFieldValue = <
-    T extends keyof ReturnType<typeof useVerificationStore.getState>
-  >(
-    key: T
-  ): ReturnType<typeof useVerificationStore.getState>[T] | '' => {
-    if (!hasSecondOwner) return '';
-    return verificationState[key];
-  };
+  const secondOwnerFieldValue = optionalFieldValue(
+    verificationState,
+    hasSecondOwner
+  );
+  const loanFieldValue = optionalFieldValue(
+    verificationState,
+    verificationState.loanConfirmation === 'Yes'
+  );
 
   if (verificationState.loanLastFourDigits) {
     localStorage.setItem('lastFourSSN', verificationState.loanLastFourDigits);
@@ -78,14 +91,17 @@ const updateVerification = async (formState: number) => {
     pickup_contact_phone_number: verificationState.pickupContactPhoneNumber,
     pickup_contact_email: verificationState.pickupContactEmail,
     current_payments: yesNoOrUndefined(verificationState.loanConfirmation),
-    lien_financial_institution_name: verificationState.loanInstitution,
-    financial_institution_phone: verificationState.loanPhoneNumber,
-    lien_account_number: verificationState.loanAccountNumber,
-    last_four_ssn: verificationState.loanLastFourDigits,
-    lender_id: verificationState.loanInstitutionId,
-    lender_name: verificationState.loanName,
-    acknowledgement_of_terms: verificationState.loanAcknowledgement,
-    loan_state: verificationState.loanState,
+    lien_financial_institution_name: loanFieldValue(
+      'loanInstitution',
+      undefined
+    ),
+    financial_institution_phone: loanFieldValue('loanPhoneNumber', undefined),
+    lien_account_number: loanFieldValue('loanAccountNumber', undefined),
+    last_four_ssn: loanFieldValue('loanLastFourDigits', null),
+    lender_id: loanFieldValue('loanInstitutionId'),
+    lender_name: loanFieldValue('loanName'),
+    acknowledgement_of_terms: loanFieldValue('loanAcknowledgement', undefined),
+    loan_state: loanFieldValue('loanState'),
     exact_mileage: Number(
       String(verificationState.documentMileageValue).replace(/\D/g, '')
     ),
