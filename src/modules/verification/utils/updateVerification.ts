@@ -87,6 +87,7 @@ const updateVerification = async (formState: number) => {
     back_of_driver_license_file_id: verificationState.documentDriverLicenseBack,
     second_owner_back_of_driver_license_file_id:
       verificationState.documentSecondDriverLicenseBack,
+    paymentSubmitted: Boolean(verificationState.paymentSubmittedType),
   };
 
   const response = await patchVerification({

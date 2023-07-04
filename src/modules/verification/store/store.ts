@@ -160,8 +160,16 @@ const useVerificationStore = create<VerificationState>()((...a) => ({
     }
 
     const localPriceId = localStorage.getItem('priceId');
-    if (localPriceId !== priceId)
-      localStorage.removeItem('paymentSubmittedType');
+    if (localPriceId !== priceId || !verificationDetails.paymentSubmitted) {
+      if (verificationDetails.paymentSubmitted) {
+        localStorage.setItem(
+          'paymentSubmittedType',
+          'Payment method submitted'
+        );
+      } else {
+        localStorage.removeItem('paymentSubmittedType');
+      }
+    }
 
     const paymentSubmittedType =
       localStorage.getItem('paymentSubmittedType') || '';
