@@ -13,9 +13,21 @@ const yesNoOrUndefined = (value: string) => {
 const updateVerification = async (formState: number) => {
   const verificationState = useVerificationStore.getState();
 
-  let ownersOnTitle = undefined;
-  if (verificationState.secondOwnerConfirmation)
-    ownersOnTitle = verificationState.secondOwnerConfirmation === 'Yes' ? 2 : 1;
+  const hasSecondOwner = verificationState.secondOwnerConfirmation === 'Yes';
+  const ownersOnTitle = hasSecondOwner ? 2 : 1;
+
+  const secondOwnerFieldValue = <
+    T extends keyof ReturnType<typeof useVerificationStore.getState>
+  >(
+    key: T
+  ): ReturnType<typeof useVerificationStore.getState>[T] | '' => {
+    if (!hasSecondOwner) return '';
+    return verificationState[key];
+  };
+
+  if (verificationState.loanLastFourDigits) {
+    localStorage.setItem('lastFourSSN', verificationState.loanLastFourDigits);
+  }
 
   const payload: PatchReview = {
     form_state: Math.max(formState, verificationState.formState),
@@ -34,18 +46,20 @@ const updateVerification = async (formState: number) => {
     owner_phone_number: verificationState.firstOwnerPhoneNumber,
     owner_email_address: verificationState.firstOwnerEmail,
     owners_on_title: ownersOnTitle,
-    second_owner_first_name: verificationState.secondOwnerFirstName,
-    second_owner_middle_name: verificationState.secondOwnerMiddleName,
-    second_owner_last_name: verificationState.secondOwnerLastName,
-    second_owner_mailing_address: {
-      address_1: verificationState.secondOwnerAddress,
-      address_2: verificationState.secondOwnerApt,
-      city: verificationState.secondOwnerCity,
-      state: verificationState.secondOwnerState,
-      zipcode: verificationState.secondOwnerZip,
-    },
-    second_owner_phone_number: verificationState.secondOwnerPhoneNumber,
-    second_owner_email_address: verificationState.secondOwnerEmail,
+    second_owner_first_name: secondOwnerFieldValue('secondOwnerFirstName'),
+    second_owner_middle_name: secondOwnerFieldValue('secondOwnerMiddleName'),
+    second_owner_last_name: secondOwnerFieldValue('secondOwnerLastName'),
+    second_owner_mailing_address: hasSecondOwner
+      ? {
+          address_1: verificationState.secondOwnerAddress,
+          address_2: verificationState.secondOwnerApt,
+          city: verificationState.secondOwnerCity,
+          state: verificationState.secondOwnerState,
+          zipcode: verificationState.secondOwnerZip,
+        }
+      : {},
+    second_owner_phone_number: secondOwnerFieldValue('secondOwnerPhoneNumber'),
+    second_owner_email_address: secondOwnerFieldValue('secondOwnerEmail'),
     same_mailing_address: yesNoOrUndefined(
       verificationState.pickupAddressConfirmation
     ),
@@ -87,6 +101,7 @@ const updateVerification = async (formState: number) => {
     back_of_driver_license_file_id: verificationState.documentDriverLicenseBack,
     second_owner_back_of_driver_license_file_id:
       verificationState.documentSecondDriverLicenseBack,
+    paymentSubmitted: Boolean(verificationState.paymentSubmittedType),
   };
 
   const response = await patchVerification({

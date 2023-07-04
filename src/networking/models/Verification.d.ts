@@ -123,6 +123,7 @@ export interface PatchReview {
   second_owner_back_of_driver_license_file_id: string | null | undefined;
   current_registration_file_id: string | null | undefined;
   lien_release_letter_file_id: string | null | undefined;
+  paymentSubmitted: boolean | null | undefined;
 }
 
 export interface PatchReviewData {
