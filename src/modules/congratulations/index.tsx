@@ -1,18 +1,47 @@
+import { ProgressiveAd } from '@vroom-web/shared-components';
 import { observer } from 'mobx-react';
-import React, { useMemo } from 'react';
+import React, { useEffect } from 'react';
 
-import CongratulationsView from './View';
-import ViewModel from './ViewModel';
+import AnalyticsHandler from '../../integrations/AnalyticsHandler';
+import {
+  CongratsContainer,
+  CongratsDetailContainer,
+  Container,
+  HeroContainer,
+  ProgressiveWrapper,
+} from './Style.css';
 
-import AnalyticsHandler from 'src/integrations/AnalyticsHandler';
+import CongratsCard from 'src/components/CongratsCard';
+import CongratsNextSteps from 'src/components/CongratsNextSteps';
 
 const Congratulations = (): JSX.Element => {
-  const analyticsHandler = useMemo(() => new AnalyticsHandler(), []);
-  const viewModel = useMemo(
-    () => new ViewModel(analyticsHandler),
-    [analyticsHandler]
+  useEffect(() => {
+    new AnalyticsHandler().trackCongratsViewed();
+  }, []);
+
+  return (
+    <Container>
+      <HeroContainer>
+        <CongratsContainer>
+          <CongratsDetailContainer>
+            <CongratsCard />
+          </CongratsDetailContainer>
+        </CongratsContainer>
+        <CongratsNextSteps />
+      </HeroContainer>
+      <CongratsContainer>
+        <ProgressiveWrapper>
+          <ProgressiveAd
+            placementName="SUYC Congrats"
+            placementCode={2871300002}
+            category="sell"
+            headline="Switch Today and Save!"
+            version={2}
+          />
+        </ProgressiveWrapper>
+      </CongratsContainer>
+    </Container>
   );
-  return <CongratulationsView viewModel={viewModel} />;
 };
 
 export default observer(Congratulations);
