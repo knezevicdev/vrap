@@ -199,7 +199,9 @@ const LoanInformation = ({ form, onPrev, onNext, onEdit, preview }: Props) => {
       <Col>
         <Checkbox
           checked={isAcknowledged}
-          onChange={() => form.setValue('acknowledgment', !isAcknowledged)}
+          onChange={(event) =>
+            form.setValue('acknowledgment', event.target.checked)
+          }
           label="I authorize Vroom to inquire and request any necessary information from my lienholder"
           id="lien-agreement"
           dataQa="lien-agreement"
@@ -207,7 +209,7 @@ const LoanInformation = ({ form, onPrev, onNext, onEdit, preview }: Props) => {
       </Col>
       <Col size={1}>
         <PrevNextButtons
-          disableNext={!form.formState.isValid}
+          disableNext={!form.formState.isValid || !isAcknowledged}
           onPrev={onPrev}
           onNext={onNext}
         />
