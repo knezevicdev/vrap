@@ -161,18 +161,19 @@ const useVerificationStore = create<VerificationState>()((...a) => ({
 
     const localPriceId = localStorage.getItem('priceId');
     if (localPriceId !== priceId || !verificationDetails.paymentSubmitted) {
-      if (verificationDetails.paymentSubmitted) {
-        localStorage.setItem(
-          'paymentSubmittedType',
-          'Payment method submitted'
-        );
-      } else {
-        localStorage.removeItem('paymentSubmittedType');
-      }
+      localStorage.removeItem('paymentSubmittedType');
+    }
+    if (localPriceId !== priceId) {
+      localStorage.removeItem('lastFourSSN');
     }
 
-    const paymentSubmittedType =
+    let paymentSubmittedType =
       localStorage.getItem('paymentSubmittedType') || '';
+    const lastFourSSN = localStorage.getItem('lastFourSSN') || '';
+
+    if (!paymentSubmittedType && verificationDetails.paymentSubmitted) {
+      paymentSubmittedType = 'Payment method submitted';
+    }
 
     set((state) => {
       if (!verificationDetails) return state;
@@ -235,7 +236,7 @@ const useVerificationStore = create<VerificationState>()((...a) => ({
         loanInstitution: verificationDetails.lien_financial_institution_name,
         loanPhoneNumber: verificationDetails.financial_institution_phone,
         loanAccountNumber: verificationDetails.lien_account_number || '',
-        loanLastFourDigits: verificationDetails.last_four_ssn || '',
+        loanLastFourDigits: lastFourSSN,
         loanInstitutionId: verificationDetails.lender_id || '',
         loanName: verificationDetails.lender_name || '',
         loanState: verificationDetails.loan_state || loanState,

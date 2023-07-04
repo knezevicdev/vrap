@@ -25,6 +25,10 @@ const updateVerification = async (formState: number) => {
     return verificationState[key];
   };
 
+  if (verificationState.loanLastFourDigits) {
+    localStorage.setItem('lastFourSSN', verificationState.loanLastFourDigits);
+  }
+
   const payload: PatchReview = {
     form_state: Math.max(formState, verificationState.formState),
     offer_id: verificationState.priceId,

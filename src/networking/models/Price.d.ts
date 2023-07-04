@@ -104,6 +104,7 @@ export interface Verification {
   last_four_ssn: string | null;
   offer_price: number;
   poq: Poq;
+  paymentSubmitted: boolean | null;
 }
 
 export interface VerificationRespData {
