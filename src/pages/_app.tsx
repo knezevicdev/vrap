@@ -162,6 +162,10 @@ class AppraisalApp extends App<
   render(): JSX.Element {
     const { Component, pageProps } = this.props;
     const { isSignedIn, isSignedInLoaded } = this.state;
+    const forcedEmail =
+      typeof pageProps.initialEmail === 'string'
+        ? pageProps.initialEmail
+        : undefined;
 
     const component =
       pageProps.allowUnauthenticated || isSignedIn ? (
@@ -170,6 +174,7 @@ class AppraisalApp extends App<
         <LoggedOutDialog
           isLoading={!isSignedInLoaded}
           onSuccessfulLogin={this.checkSignInStatus}
+          forcedEmail={forcedEmail}
         />
       );
 

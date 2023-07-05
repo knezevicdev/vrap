@@ -4,9 +4,9 @@ import React, { useEffect } from 'react';
 import styled from 'styled-components';
 
 import Header from 'src/components/Header';
+import Questions from 'src/components/Questions';
 import Footer from 'src/core/Footer';
 import Congratulations from 'src/modules/congratulations';
-import Questions from 'src/modules/questions';
 import Page from 'src/Page';
 
 const CongratulationPage: NextPage = () => {

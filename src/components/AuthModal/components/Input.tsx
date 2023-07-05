@@ -10,6 +10,7 @@ interface Props<T extends FieldValues> {
   control: Control<T>;
   type?: string;
   valueFormatter?: (value: string) => string;
+  disabled?: boolean;
 }
 
 const Input = <T extends FieldValues>({
@@ -19,6 +20,7 @@ const Input = <T extends FieldValues>({
   control,
   type = 'text',
   valueFormatter,
+  disabled,
 }: Props<T>) => {
   const {
     field: { onChange, onBlur, value },
@@ -44,7 +46,7 @@ const Input = <T extends FieldValues>({
       }}
       onBlur={onBlur}
       value={value}
-      disabled={isSubmitting}
+      disabled={isSubmitting || disabled}
     />
   );
 };

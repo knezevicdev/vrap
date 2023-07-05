@@ -9,10 +9,10 @@ import usePriceStore from '../../modules/price/store';
 
 import AsyncIndicator from 'src/components/AsyncIndicator';
 import Header from 'src/components/Header';
+import ProgressiveAd from 'src/components/ProgressiveAd';
+import Questions from 'src/components/Questions';
 import Footer from 'src/core/Footer';
 import PriceInfo from 'src/modules/price';
-import ProgressiveAd from 'src/modules/progressiveAd';
-import Questions from 'src/modules/questions';
 import Page from 'src/Page';
 
 const Price: NextPage = () => {

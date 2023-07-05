@@ -49,9 +49,14 @@ const SpinnerContainer = styled.div`
 interface Props {
   isLoading: boolean;
   onSuccessfulLogin: () => void;
+  forcedEmail?: string;
 }
 
-const LoggedOutDialog: React.FC<Props> = ({ isLoading, onSuccessfulLogin }) => {
+const LoggedOutDialog: React.FC<Props> = ({
+  isLoading,
+  onSuccessfulLogin,
+  forcedEmail,
+}) => {
   return (
     <Page name="Sell Us Your Car | Vroom">
       {isLoading && (
@@ -66,7 +71,12 @@ const LoggedOutDialog: React.FC<Props> = ({ isLoading, onSuccessfulLogin }) => {
         <Header />
       </HeaderContainer>
       <PageContent id="main-content">
-        {!isLoading && <AuthModal onSuccessfulLogin={onSuccessfulLogin} />}
+        {!isLoading && (
+          <AuthModal
+            onSuccessfulLogin={onSuccessfulLogin}
+            email={forcedEmail}
+          />
+        )}
       </PageContent>
       <Footer />
     </Page>

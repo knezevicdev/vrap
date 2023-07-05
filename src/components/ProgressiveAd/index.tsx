@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import { shallow } from 'zustand/shallow';
 
 import { StoreStatus } from '../../interfaces.d';
-import usePriceStore from '../price/store';
+import usePriceStore from '../../modules/price/store';
 
 const ProgressiveAdC: React.FC = () => {
   const { automatedAppraisal, storeStatus } = usePriceStore(
