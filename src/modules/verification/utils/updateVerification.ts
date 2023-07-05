@@ -17,7 +17,7 @@ const optionalFieldValue =
   ) =>
   <T extends keyof ReturnType<typeof useVerificationStore.getState>, K>(
     key: T,
-    fallback: K = '' as K
+    fallback: K
   ): ReturnType<typeof useVerificationStore.getState>[T] | K => {
     if (!validator) return fallback;
     return verificationState[key];
@@ -59,9 +59,12 @@ const updateVerification = async (formState: number) => {
     owner_phone_number: verificationState.firstOwnerPhoneNumber,
     owner_email_address: verificationState.firstOwnerEmail,
     owners_on_title: ownersOnTitle,
-    second_owner_first_name: secondOwnerFieldValue('secondOwnerFirstName'),
-    second_owner_middle_name: secondOwnerFieldValue('secondOwnerMiddleName'),
-    second_owner_last_name: secondOwnerFieldValue('secondOwnerLastName'),
+    second_owner_first_name: secondOwnerFieldValue('secondOwnerFirstName', ''),
+    second_owner_middle_name: secondOwnerFieldValue(
+      'secondOwnerMiddleName',
+      ''
+    ),
+    second_owner_last_name: secondOwnerFieldValue('secondOwnerLastName', ''),
     second_owner_mailing_address: hasSecondOwner
       ? {
           address_1: verificationState.secondOwnerAddress,
@@ -71,8 +74,11 @@ const updateVerification = async (formState: number) => {
           zipcode: verificationState.secondOwnerZip,
         }
       : {},
-    second_owner_phone_number: secondOwnerFieldValue('secondOwnerPhoneNumber'),
-    second_owner_email_address: secondOwnerFieldValue('secondOwnerEmail'),
+    second_owner_phone_number: secondOwnerFieldValue(
+      'secondOwnerPhoneNumber',
+      ''
+    ),
+    second_owner_email_address: secondOwnerFieldValue('secondOwnerEmail', ''),
     same_mailing_address: yesNoOrUndefined(
       verificationState.pickupAddressConfirmation
     ),
@@ -98,10 +104,10 @@ const updateVerification = async (formState: number) => {
     financial_institution_phone: loanFieldValue('loanPhoneNumber', undefined),
     lien_account_number: loanFieldValue('loanAccountNumber', undefined),
     last_four_ssn: loanFieldValue('loanLastFourDigits', null),
-    lender_id: loanFieldValue('loanInstitutionId'),
-    lender_name: loanFieldValue('loanName'),
+    lender_id: loanFieldValue('loanInstitutionId', ''),
+    lender_name: loanFieldValue('loanName', ''),
     acknowledgement_of_terms: loanFieldValue('loanAcknowledgement', undefined),
-    loan_state: loanFieldValue('loanState'),
+    loan_state: loanFieldValue('loanState', ''),
     exact_mileage: Number(
       String(verificationState.documentMileageValue).replace(/\D/g, '')
     ),

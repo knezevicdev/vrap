@@ -51,7 +51,10 @@ const FirstOwnerInfo = ({
             control={form.control}
             placeholder="Middle name"
             label="Middle name"
-            tooltip="If you have your vehicle’s title, please enter your name exactly as it appears there."
+            tooltip={{
+              content:
+                'If you have your vehicle’s title, please enter your name exactly as it appears there.',
+            }}
           />
         </Col>
         <Col
