@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useRef } from 'react';
 import styled from 'styled-components';
 
-import useIsTradeIn from '../../../hooks/useIsTradeIn';
 import { FormField } from '../../../interfaces.d';
 import useAppraisalStore from '../../../store/appraisalStore';
 import { UseForm } from './componentInterfaces.d';
@@ -16,11 +15,10 @@ export interface Props {
 }
 
 const PersonalInformation: React.FC<Props> = ({ fields, form }) => {
-  const [isEmailDisabled, setIsEmailDisabled] = useState(false);
   const user = useAppraisalStore((state) => state.user);
-  const isTradeIn = useIsTradeIn();
+  const lastUserEmail = useRef<string>();
 
-  const prepopulateUserData = () => {
+  const prepopulateUserData = useCallback(() => {
     form.updateMultipleFields({
       firstName: {
         ...fields.firstName,
@@ -42,19 +40,24 @@ const PersonalInformation: React.FC<Props> = ({ fields, form }) => {
           '',
       },
     });
-  };
+  }, [
+    fields.email,
+    fields.firstName,
+    fields.lastName,
+    fields.phoneNumber,
+    form,
+    user?.firstName,
+    user?.lastName,
+    user.phones,
+    user?.username,
+  ]);
 
   useEffect(() => {
-    if (isTradeIn && user?.username) {
-      setIsEmailDisabled(true);
-    }
-  }, [isTradeIn, user?.username]);
-
-  useEffect(() => {
-    if (Object.keys(user).length) {
+    if (Object.keys(user).length && lastUserEmail.current !== user.username) {
+      lastUserEmail.current = user.username;
       prepopulateUserData();
     }
-  }, [user]);
+  }, [prepopulateUserData, user]);
 
   return (
     <>
@@ -63,7 +66,7 @@ const PersonalInformation: React.FC<Props> = ({ fields, form }) => {
         <Last field={fields.lastName} />
       </InputContainer>
       <InputContainer>
-        <Email disabled={isEmailDisabled} field={fields.email} />
+        <Email disabled={!!user?.username} field={fields.email} />
         <Phone field={fields.phoneNumber} optional={true} />
       </InputContainer>
     </>
