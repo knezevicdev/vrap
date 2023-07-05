@@ -1,6 +1,5 @@
 import { SkipNavigationLink } from '@vroom-web/ui-lib';
 import { IncomingMessage } from 'http';
-import { observer } from 'mobx-react';
 import { GetServerSideProps, GetServerSidePropsContext, NextPage } from 'next';
 import React from 'react';
 import styled from 'styled-components';
@@ -76,4 +75,4 @@ export const getServerSideProps: GetServerSideProps = async (
   };
 };
 
-export default observer(VerificationPage);
+export default VerificationPage;

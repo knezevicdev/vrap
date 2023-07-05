@@ -1,7 +1,7 @@
 import crypto from 'crypto';
 
 export const uuidCookieName = 'uuid';
-import { AppraisalStore } from '../../store/appraisalStore';
+import useAppraisalStore, { AppraisalState } from '../../store/appraisalStore';
 
 import { AppraisalPayload } from 'src/interfaces.d';
 import {
@@ -119,7 +119,7 @@ function personalInformationData(data: PersonalInfoForm) {
   };
 }
 
-function attributionData(data: AppraisalStore) {
+function attributionData(data: AppraisalState) {
   const dealership = (data.dealership || '').toLowerCase();
   const brand = (data.brand || '').toLowerCase();
   const type = (data.type || '').toLowerCase();
@@ -138,9 +138,9 @@ function getLienType(lienType: string) {
   return lienType && lienType.toLowerCase();
 }
 
-export function makeRequestBody(
-  appraisalData: AppraisalStore
-): AppraisalPayload {
+export function makeRequestBody(): AppraisalPayload {
+  const appraisalData = useAppraisalStore.getState();
+
   const now = new Date().toISOString();
   // eslint-disable-next-line @typescript-eslint/naming-convention
   const lead_id = generateUUID4();

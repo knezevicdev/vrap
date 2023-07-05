@@ -1,24 +1,21 @@
 import { GQLTypes } from '@vroom-web/networking';
-import { makeAutoObservable } from 'mobx';
+import { create } from 'zustand';
 
-export class DealStore {
+export type DealState = {
   deal?: GQLTypes.DealV3;
-  loading = false;
-  tradeInError = '';
+  loading: boolean;
+  tradeInError: string;
+  setDeal(deal: GQLTypes.DealV3): void;
+  setTradeInError(value: string): void;
+  setLoading(value: boolean): void;
+};
 
-  constructor() {
-    makeAutoObservable(this);
-  }
+const useDealStore = create<DealState>()((set) => ({
+  loading: false,
+  tradeInError: '',
+  setDeal: (deal: GQLTypes.DealV3) => set({ deal }),
+  setTradeInError: (value: string) => set({ tradeInError: value }),
+  setLoading: (value: boolean) => set({ loading: value }),
+}));
 
-  setDeal(deal: GQLTypes.DealV3): void {
-    this.deal = deal;
-  }
-
-  setTradeInError(value: string): void {
-    this.tradeInError = value;
-  }
-
-  setLoading(value: boolean): void {
-    this.loading = value;
-  }
-}
+export default useDealStore;

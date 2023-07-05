@@ -1,10 +1,12 @@
-import { PriceStore } from '../../../modules/price/store';
+import usePriceStore from '../../../modules/price/store';
 
-const useInitialRegistrationData = (store: PriceStore) => {
+const useInitialRegistrationData = () => {
+  const price = usePriceStore((state) => state.price);
+
   return {
-    firstName: store.price.userFirstName,
-    lastName: store.price.userLastName,
-    phoneNumber: store.price.userPhone,
+    firstName: price.userFirstName,
+    lastName: price.userLastName,
+    phoneNumber: price.userPhone,
   };
 };
 

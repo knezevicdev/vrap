@@ -1,5 +1,4 @@
 import { Icon } from '@vroom-web/ui-lib';
-import { observer } from 'mobx-react';
 import React from 'react';
 
 import {
@@ -43,4 +42,4 @@ const Questions = () => {
   );
 };
 
-export default observer(Questions);
+export default Questions;

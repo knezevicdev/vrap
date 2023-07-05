@@ -1,5 +1,4 @@
 import { Button, VroomSpinner } from '@vroom-web/ui-lib';
-import { observer } from 'mobx-react';
 import { useRouter } from 'next/router';
 import React, {
   useCallback,
@@ -313,4 +312,4 @@ const UnifiedVerification = ({ ajsUserId }: Props) => {
   );
 };
 
-export default observer(UnifiedVerification);
+export default UnifiedVerification;

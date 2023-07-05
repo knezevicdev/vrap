@@ -1,17 +1,19 @@
 import { useMemo } from 'react';
 
-import { PriceStore } from '../../../modules/price/store';
+import usePriceStore from '../../../modules/price/store';
 import { displayCurrency, parseDate, parsedDateTime } from '../Utils';
 
-const usePriceData = (store: PriceStore) => {
+const usePriceData = () => {
+  const price = usePriceStore((state) => state.price);
+
   return useMemo(
     () => ({
-      price: displayCurrency(store.price.price),
-      userEmail: store.price.userEmail,
-      goodUntil: parsedDateTime(store.price.goodUntil),
-      goodUntilMonthDay: parseDate(store.price.goodUntil),
+      price: displayCurrency(price.price),
+      userEmail: price.userEmail,
+      goodUntil: parsedDateTime(price.goodUntil),
+      goodUntilMonthDay: parseDate(price.goodUntil),
     }),
-    [store.price.goodUntil, store.price.price, store.price.userEmail]
+    [price.goodUntil, price.price, price.userEmail]
   );
 };
 

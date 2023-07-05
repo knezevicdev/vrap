@@ -1,15 +1,32 @@
-import { observer } from 'mobx-react';
-import React from 'react';
+import React, { useEffect } from 'react';
 
-import PriceView from './View';
-import ViewModel from './ViewModel';
+import NextSteps from '../../components/NextSteps';
+import PriceDetail from '../../components/PriceDetail';
+import AnalyticsHandler from '../../integrations/AnalyticsHandler';
+import {
+  HeroContainer,
+  NextStepsContainer,
+  PriceContainer,
+  PriceDetailContainer,
+} from './Style.css';
 
-import { PriceStore } from 'src/modules/price/store';
+const Price: React.FC = () => {
+  useEffect(() => {
+    new AnalyticsHandler().trackPriceViewed();
+  }, []);
 
-const Price: React.FC<{ store: PriceStore }> = ({ store }) => {
-  const viewModel = new ViewModel(store);
-
-  return <PriceView viewModel={viewModel} />;
+  return (
+    <HeroContainer>
+      <PriceContainer>
+        <PriceDetailContainer>
+          <PriceDetail />
+        </PriceDetailContainer>
+        <NextStepsContainer>
+          <NextSteps />
+        </NextStepsContainer>
+      </PriceContainer>
+    </HeroContainer>
+  );
 };
 
-export default observer(Price);
+export default Price;

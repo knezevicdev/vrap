@@ -1,8 +1,8 @@
 import { SelectChanges, SelectItem } from '@vroom-web/ui-lib';
 import React from 'react';
 
-import { useAppStore } from '../../../../context';
 import { FormField } from '../../../../interfaces.d';
+import useAppraisalStore from '../../../../store/appraisalStore';
 import Select from '../Select';
 
 import AnalyticsHandler from 'src/integrations/AnalyticsHandler';
@@ -18,12 +18,13 @@ const ExtColorInput: React.FC<Props> = ({
   className,
   customOptions,
 }) => {
-  const { store } = useAppStore();
   const { onChange } = field;
   const analyticsHandler = new AnalyticsHandler();
 
   const handleOnChange = (changes: SelectChanges<SelectItem>) => {
-    analyticsHandler.trackColorChange(store.appraisal.eventCategory);
+    analyticsHandler.trackColorChange(
+      useAppraisalStore.getState().eventCategory()
+    );
     const value = changes.selectedItem?.value;
     onChange({ ...field, value });
   };

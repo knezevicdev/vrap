@@ -1,4 +1,3 @@
-import { observer } from 'mobx-react';
 import { useRouter } from 'next/router';
 import React, { useEffect } from 'react';
 
@@ -53,4 +52,4 @@ const InvalidStateDialog: React.FC = () => {
   );
 };
 
-export default observer(InvalidStateDialog);
+export default InvalidStateDialog;

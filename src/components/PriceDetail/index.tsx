@@ -1,13 +1,30 @@
 import React from 'react';
 
-import View from './View';
-import PriceDetailViewModel from './ViewModel';
+import { StoreStatus } from '../../interfaces.d';
+import usePriceStore from '../../modules/price/store';
+import InitialPrice from '../InitialPrice';
+import LoadingPrice from '../LoadingPrice';
+import PendingPrice from '../PendingPrice';
 
-import { PriceStore } from 'src/modules/price/store';
+const PriceDetail: React.FC = () => {
+  const storeStatus = usePriceStore((state) => state.storeStatus);
+  const automatedAppraisal = usePriceStore(
+    (state) => state.price.automatedAppraisal
+  );
 
-const PriceDetail: React.FC<{ store: PriceStore }> = ({ store }) => {
-  const viewModel = new PriceDetailViewModel(store);
-  return <View viewModel={viewModel} />;
+  switch (storeStatus) {
+    case StoreStatus.Initial:
+      return <LoadingPrice />;
+
+    case StoreStatus.Success:
+      return automatedAppraisal ? <InitialPrice /> : <PendingPrice />;
+
+    case StoreStatus.Error:
+      return <PendingPrice />;
+
+    default:
+      return null;
+  }
 };
 
 export default PriceDetail;

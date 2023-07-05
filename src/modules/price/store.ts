@@ -1,7 +1,7 @@
 import { isErrorResponse } from '@vroom-web/networking';
-import { action, makeObservable, observable } from 'mobx';
+import { create } from 'zustand';
 
-import { AsyncStatus, Store, StoreStatus } from 'src/interfaces.d';
+import { AsyncStatus, StoreStatus } from 'src/interfaces.d';
 import { Price } from 'src/networking/models/Price';
 import { getOfferDetails } from 'src/networking/request';
 
@@ -57,27 +57,25 @@ export const defaultPriceState: PriceStoreState = {
   zipcode: '',
 };
 
-export class PriceStore implements Store {
-  price = defaultPriceState;
-  storeStatus = StoreStatus.Initial;
-  asyncStatus = AsyncStatus.Idle;
+export type PriceState = {
+  price: PriceStoreState;
+  storeStatus: StoreStatus;
+  asyncStatus: AsyncStatus;
+  getOfferDetails(priceId: string): Promise<void>;
+};
 
-  constructor(priceId: string) {
-    makeObservable(this, {
-      price: observable,
-      storeStatus: observable,
-      asyncStatus: observable,
-      getOfferDetails: action,
-    });
-    this.getOfferDetails(priceId);
-  }
-
-  getOfferDetails = async (priceId: string): Promise<void> => {
+const usePriceStore = create<PriceState>()((set) => ({
+  price: defaultPriceState,
+  storeStatus: StoreStatus.Initial,
+  asyncStatus: AsyncStatus.Idle,
+  getOfferDetails: async (priceId: string): Promise<void> => {
     const response = await getOfferDetails(priceId);
 
     if (isErrorResponse(response)) {
-      this.storeStatus = StoreStatus.Error;
-      this.asyncStatus = AsyncStatus.Idle;
+      set({
+        storeStatus: StoreStatus.Error,
+        asyncStatus: AsyncStatus.Idle,
+      });
       console.log(JSON.stringify(Error));
     } else {
       const prices: Price[] = response.data.data;
@@ -111,15 +109,21 @@ export class PriceStore implements Store {
         // - Price updates and refreshes views
         // - Status updates and refreshes views
         // Just a heads up this can cause race conditions
-        this.price = priceMapFromResponse;
-        this.storeStatus = StoreStatus.Success;
+        set({
+          price: priceMapFromResponse,
+          storeStatus: StoreStatus.Success,
+        });
       } else {
         const priceMapFromResponse = {} as PriceStoreState;
         priceMapFromResponse.automatedAppraisal = false;
 
-        this.price = priceMapFromResponse;
-        this.storeStatus = StoreStatus.Success;
+        set({
+          price: priceMapFromResponse,
+          storeStatus: StoreStatus.Success,
+        });
       }
     }
-  };
-}
+  },
+}));
+
+export default usePriceStore;

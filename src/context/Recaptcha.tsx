@@ -33,7 +33,7 @@ export const RecaptchaProvider = ({
   );
 };
 
-interface UseRecaptcha {
+export interface UseRecaptcha {
   getToken: () => Promise<string | null>;
 }
 

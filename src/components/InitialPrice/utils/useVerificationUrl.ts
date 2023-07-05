@@ -1,7 +1,9 @@
-import { PriceStore } from '../../../modules/price/store';
+import usePriceStore from '../../../modules/price/store';
 
-const useVerificationUrl = (store: PriceStore) => {
-  return `/sell/verification?priceId=${store.price.priceId}`;
+const useVerificationUrl = () => {
+  const priceId = usePriceStore((state) => state.price.priceId);
+
+  return `/sell/verification?priceId=${priceId}`;
 };
 
 export default useVerificationUrl;

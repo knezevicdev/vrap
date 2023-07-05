@@ -1,10 +1,9 @@
 import { addStyleForMobile } from '@vroom-web/ui-lib';
 import { noop } from 'lodash';
-import { observer } from 'mobx-react';
 import React, { useEffect, useRef } from 'react';
 import styled from 'styled-components';
 
-import { useAppStore } from '../../../../context';
+import useIsTradeIn from '../../../../hooks/useIsTradeIn';
 import { FormField } from '../../../../interfaces.d';
 import { UseForm } from '../componentInterfaces.d';
 import BankNameInput from '../forminputs/BankNameInput';
@@ -22,8 +21,7 @@ interface Props {
 const VehicleHistory: React.FC<Props> = ({ fields }) => {
   const lienholderRef = useRef<string>();
   const hasAccidentRef = useRef<string>();
-  const { store } = useAppStore();
-  const { isTradeIn } = store.appraisal;
+  const isTradeIn = useIsTradeIn();
 
   useEffect(() => {
     if (lienholderRef.current !== fields.lienType.value) {
@@ -85,4 +83,4 @@ const LxInputContainer = styled.div`
   `)}
 `;
 
-export default observer(VehicleHistory);
+export default VehicleHistory;
