@@ -1,4 +1,4 @@
-import { Input as UIInput, InputProps } from '@vroom-web/ui-lib';
+import { Input as UIInput, InputProps, TooltipConfig } from '@vroom-web/ui-lib';
 import React from 'react';
 import { FieldValues, Path, useController } from 'react-hook-form';
 import { Control } from 'react-hook-form/dist/types';
@@ -11,7 +11,7 @@ interface Props<T extends FieldValues> extends InputProps {
   control: Control<T>;
   type?: string;
   valueFormatter?: (value: string) => string;
-  tooltip?: React.ReactNode;
+  tooltip?: TooltipConfig;
 }
 
 const Input = <T extends FieldValues>({

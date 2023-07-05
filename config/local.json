@@ -1,5 +1,5 @@
 {
-  "ABSMARTLY_URL": "/interchange/absmartly/v1",
+  "ABSMARTLY_URL": "/absmartly/v1",
   "CAT_DATA_PROXY_TARGET": "https://qa.vroom.com/cat-data",
   "CAT_SERVICE_URL": "/appraisal/api",
   "GQL_PROXY_TARGET": "https://qa.vroom.com/gql",
