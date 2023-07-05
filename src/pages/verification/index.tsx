@@ -1,3 +1,4 @@
+import { isErrorResponse } from '@vroom-web/networking';
 import { SkipNavigationLink } from '@vroom-web/ui-lib';
 import { IncomingMessage } from 'http';
 import { GetServerSideProps, GetServerSidePropsContext, NextPage } from 'next';
@@ -5,6 +6,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 import UnifiedVerification from '../../modules/verification';
+import { getOfferDetails } from '../../networking/request';
 
 import Header from 'src/components/Header';
 import Footer from 'src/core/Footer';
@@ -60,17 +62,34 @@ const parseCookies = (req?: IncomingMessage): Cookie => {
   }
 };
 
+const getInitialEmail = async (priceId: string | string[] | undefined) => {
+  if (!priceId || Array.isArray(priceId)) return '';
+
+  const offerDetailsResponse = await getOfferDetails(priceId);
+  if (isErrorResponse(offerDetailsResponse)) return '';
+  const offerDetails = offerDetailsResponse.data.data?.[0];
+  if (!offerDetails) return '';
+
+  const offerExpirationTime = new Date(offerDetails.Good_Until__c).getTime();
+  if (offerExpirationTime < new Date().getTime()) return '';
+
+  return offerDetails.user_email || '';
+};
+
 export const getServerSideProps: GetServerSideProps = async (
   ctx: GetServerSidePropsContext
 ) => {
   const { req } = ctx;
   const cookies = parseCookies(req);
 
+  const initialEmail = await getInitialEmail(ctx.query.priceId);
+
   ctx.res.setHeader('Cache-Control', '');
   return {
     props: {
       title: 'Verification | Vroom',
       ajsUserId: cookies.ajs_user_id || '',
+      initialEmail,
     },
   };
 };

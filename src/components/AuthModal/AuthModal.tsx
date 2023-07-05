@@ -13,6 +13,7 @@ interface Props {
   redirectUrl?: string;
   email?: string;
   initialRegistrationData?: Partial<RegistrationData>;
+  enable3rdPartyLogin?: boolean;
 }
 
 const AuthModal = ({
@@ -20,6 +21,7 @@ const AuthModal = ({
   redirectUrl,
   email,
   initialRegistrationData,
+  enable3rdPartyLogin = false,
 }: Props) => {
   useScrollLock();
 
@@ -36,6 +38,8 @@ const AuthModal = ({
     setMode(hasAccount ? 'login' : 'register');
   }, []);
 
+  const lockEmail = !!email;
+
   const authModalRoot =
     typeof document !== 'undefined'
       ? document.getElementById('modals-root')
@@ -49,6 +53,8 @@ const AuthModal = ({
               onEmailProcessed={onEmailProcessed}
               redirectUrl={redirectUrl}
               initialEmail={initialEmail}
+              enable3rdPartyLogin={enable3rdPartyLogin}
+              lockEmail={lockEmail}
             />
           )}
           {mode === 'login' && (
@@ -57,6 +63,8 @@ const AuthModal = ({
               onSuccess={onSuccess}
               initialEmail={initialEmail}
               redirectUrl={redirectUrl}
+              enable3rdPartyLogin={enable3rdPartyLogin}
+              lockEmail={lockEmail}
             />
           )}
           {mode === 'register' && (
@@ -66,6 +74,8 @@ const AuthModal = ({
               initialEmail={initialEmail}
               redirectUrl={redirectUrl}
               initialRegistrationData={initialRegistrationData}
+              enable3rdPartyLogin={enable3rdPartyLogin}
+              lockEmail={lockEmail}
             />
           )}
         </Modal>

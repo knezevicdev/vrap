@@ -39,6 +39,8 @@ interface Props {
   initialEmail: string;
   redirectUrl?: string;
   initialRegistrationData?: Partial<RegistrationData>;
+  enable3rdPartyLogin: boolean;
+  lockEmail: boolean;
 }
 
 const Register = ({
@@ -47,6 +49,8 @@ const Register = ({
   initialEmail,
   redirectUrl,
   initialRegistrationData,
+  enable3rdPartyLogin,
+  lockEmail,
 }: Props) => {
   const [errorMessage, setErrorMessage] = useState('');
 
@@ -134,6 +138,7 @@ const Register = ({
           type="email"
           id="email"
           control={control}
+          disabled={lockEmail}
         />
         <Input
           placeholder="(  ) ___-____"
@@ -160,84 +165,88 @@ const Register = ({
           {isSubmitting ? <Spinner /> : 'Create account'}
         </PrimaryButton>
       </Form>
-      <Divider />
-      <SecondaryButton
-        disabled={isSubmitting}
-        onClick={() => redirectToThirdParty(redirectUrl)}
-      >
-        Continue with
-        <SocialIcon
-          src="https://www.vroom.com/static-assets/icons/myaccount/apple.svg"
-          alt="Apple"
-        />
-        or
-        <SocialIcon
-          src="https://www.vroom.com/static-assets/icons/myaccount/google.svg"
-          alt="Google"
-        />
-      </SecondaryButton>
-      <LegalContent>
-        By clicking &quot;Continue with Apple or Google&quot; button, I:
-        <LegalList>
-          <LegalListItem>
-            Certify that I have read and agreed to Vroom&apos;s&nbsp;
-            <Link
-              href="/legal/terms-of-use"
-              target="_blank"
-              className="sc-fWCJzd dpogyX View__CustomLink-sc-1t039fp-3 jFLFmB"
-            >
-              Terms of Use
-            </Link>
-            ,&nbsp;
-            <Link
-              href="/legal/financial-privacy-policy"
-              target="_blank"
-              className="sc-fWCJzd dpogyX View__CustomLink-sc-1t039fp-3 jFLFmB"
-            >
-              Financial Privacy Policy
-            </Link>
-            ,&nbsp;
-            <Link
-              href="/legal/privacy-policy"
-              target="_blank"
-              className="sc-fWCJzd dpogyX View__CustomLink-sc-1t039fp-3 jFLFmB"
-            >
-              Privacy Policy
-            </Link>
-            , and, if I am California resident, reviewed this&nbsp;
-            <Link
-              href="/legal/privacy-policy#california-residents"
-              target="_blank"
-            >
-              Notice of Collection
-            </Link>
-            .
-          </LegalListItem>
-          <LegalListItem>
-            Certify that I have read and agreed to our&nbsp;
-            <Link
-              href="/legal/e-sign"
-              target="_blank"
-              className="sc-fWCJzd dpogyX View__CustomLink-sc-1t039fp-3 jFLFmB"
-            >
-              E-SIGN Consent
-            </Link>
-            , which enables all transactions and disclosure delivery to occur
-            electronically
-          </LegalListItem>
-          <LegalListItem>
-            Agree to receive texts or calls from Vroom and its third-party
-            customer support team regarding my interest in buying or selling a
-            vehicle and for marketing/sales, informational or servicing
-            purposes. You may opt out by responding “STOP” to any text message
-            or by updating the information in my account. Message and data rates
-            may apply
-          </LegalListItem>
-          <LegalListItem>
-            Want to receive communications about Vroom news and offers
-          </LegalListItem>
-        </LegalList>
-      </LegalContent>
+      {enable3rdPartyLogin && (
+        <>
+          <Divider />
+          <SecondaryButton
+            disabled={isSubmitting}
+            onClick={() => redirectToThirdParty(redirectUrl)}
+          >
+            Continue with
+            <SocialIcon
+              src="https://www.vroom.com/static-assets/icons/myaccount/apple.svg"
+              alt="Apple"
+            />
+            or
+            <SocialIcon
+              src="https://www.vroom.com/static-assets/icons/myaccount/google.svg"
+              alt="Google"
+            />
+          </SecondaryButton>
+          <LegalContent>
+            By clicking &quot;Continue with Apple or Google&quot; button, I:
+            <LegalList>
+              <LegalListItem>
+                Certify that I have read and agreed to Vroom&apos;s&nbsp;
+                <Link
+                  href="/legal/terms-of-use"
+                  target="_blank"
+                  className="sc-fWCJzd dpogyX View__CustomLink-sc-1t039fp-3 jFLFmB"
+                >
+                  Terms of Use
+                </Link>
+                ,&nbsp;
+                <Link
+                  href="/legal/financial-privacy-policy"
+                  target="_blank"
+                  className="sc-fWCJzd dpogyX View__CustomLink-sc-1t039fp-3 jFLFmB"
+                >
+                  Financial Privacy Policy
+                </Link>
+                ,&nbsp;
+                <Link
+                  href="/legal/privacy-policy"
+                  target="_blank"
+                  className="sc-fWCJzd dpogyX View__CustomLink-sc-1t039fp-3 jFLFmB"
+                >
+                  Privacy Policy
+                </Link>
+                , and, if I am California resident, reviewed this&nbsp;
+                <Link
+                  href="/legal/privacy-policy#california-residents"
+                  target="_blank"
+                >
+                  Notice of Collection
+                </Link>
+                .
+              </LegalListItem>
+              <LegalListItem>
+                Certify that I have read and agreed to our&nbsp;
+                <Link
+                  href="/legal/e-sign"
+                  target="_blank"
+                  className="sc-fWCJzd dpogyX View__CustomLink-sc-1t039fp-3 jFLFmB"
+                >
+                  E-SIGN Consent
+                </Link>
+                , which enables all transactions and disclosure delivery to
+                occur electronically
+              </LegalListItem>
+              <LegalListItem>
+                Agree to receive texts or calls from Vroom and its third-party
+                customer support team regarding my interest in buying or selling
+                a vehicle and for marketing/sales, informational or servicing
+                purposes. You may opt out by responding “STOP” to any text
+                message or by updating the information in my account. Message
+                and data rates may apply
+              </LegalListItem>
+              <LegalListItem>
+                Want to receive communications about Vroom news and offers
+              </LegalListItem>
+            </LegalList>
+          </LegalContent>
+        </>
+      )}
       <FooterContent>
         Already have a Vroom account?{' '}
         <ButtonLink onClick={onLogin} disabled={isSubmitting}>

@@ -26,9 +26,17 @@ interface Props {
   onEmailProcessed: (email: string, hasAccount: boolean) => void;
   redirectUrl?: string;
   initialEmail?: string;
+  enable3rdPartyLogin: boolean;
+  lockEmail: boolean;
 }
 
-const Initial = ({ onEmailProcessed, redirectUrl, initialEmail }: Props) => {
+const Initial = ({
+  onEmailProcessed,
+  redirectUrl,
+  initialEmail,
+  enable3rdPartyLogin,
+  lockEmail,
+}: Props) => {
   const recaptcha = useRecaptcha();
   const {
     handleSubmit,
@@ -65,57 +73,62 @@ const Initial = ({ onEmailProcessed, redirectUrl, initialEmail }: Props) => {
           type="email"
           id="email"
           control={control}
+          disabled={lockEmail}
         />
         <PrimaryButton disabled={isSubmitting}>
           {isSubmitting ? <Spinner /> : 'Continue'}
         </PrimaryButton>
       </Form>
-      <Divider />
-      <SecondaryButton
-        disabled={isSubmitting}
-        onClick={() => redirectToThirdParty(redirectUrl)}
-      >
-        Continue with
-        <SocialIcon
-          src="https://www.vroom.com/static-assets/icons/myaccount/apple.svg"
-          alt="Apple"
-        />
-        or
-        <SocialIcon
-          src="https://www.vroom.com/static-assets/icons/myaccount/google.svg"
-          alt="Google"
-        />
-      </SecondaryButton>
-      <LegalContent>
-        By clicking &quot;Continue with Apple or Google&quot; button, I:
-        <LegalList>
-          <LegalListItem className="View__LegalContentListItem-sc-1mn8xok-11 DrBQv">
-            Certify that I have read and agreed to Vroom&apos;s&nbsp;
-            <Link href="/legal/terms-of-use" target="_blank">
-              Terms of Use
-            </Link>
-            ,&nbsp;
-            <Link href="/legal/financial-privacy-policy" target="_blank">
-              Financial Privacy Policy
-            </Link>
-            ,&nbsp;
-            <Link href="/legal/privacy-policy" target="_blank">
-              Privacy Policy
-            </Link>
-            , and, if I am California resident, reviewed this&nbsp;
-            <Link
-              href="/legal/privacy-policy#california-residents"
-              target="_blank"
-            >
-              Notice of Collection
-            </Link>
-            .
-          </LegalListItem>
-          <LegalListItem className="View__LegalContentListItem-sc-1mn8xok-11 DrBQv">
-            Want to receive communications about Vroom news and offers
-          </LegalListItem>
-        </LegalList>
-      </LegalContent>
+      {enable3rdPartyLogin && (
+        <>
+          <Divider />
+          <SecondaryButton
+            disabled={isSubmitting}
+            onClick={() => redirectToThirdParty(redirectUrl)}
+          >
+            Continue with
+            <SocialIcon
+              src="https://www.vroom.com/static-assets/icons/myaccount/apple.svg"
+              alt="Apple"
+            />
+            or
+            <SocialIcon
+              src="https://www.vroom.com/static-assets/icons/myaccount/google.svg"
+              alt="Google"
+            />
+          </SecondaryButton>
+          <LegalContent>
+            By clicking &quot;Continue with Apple or Google&quot; button, I:
+            <LegalList>
+              <LegalListItem className="View__LegalContentListItem-sc-1mn8xok-11 DrBQv">
+                Certify that I have read and agreed to Vroom&apos;s&nbsp;
+                <Link href="/legal/terms-of-use" target="_blank">
+                  Terms of Use
+                </Link>
+                ,&nbsp;
+                <Link href="/legal/financial-privacy-policy" target="_blank">
+                  Financial Privacy Policy
+                </Link>
+                ,&nbsp;
+                <Link href="/legal/privacy-policy" target="_blank">
+                  Privacy Policy
+                </Link>
+                , and, if I am California resident, reviewed this&nbsp;
+                <Link
+                  href="/legal/privacy-policy#california-residents"
+                  target="_blank"
+                >
+                  Notice of Collection
+                </Link>
+                .
+              </LegalListItem>
+              <LegalListItem className="View__LegalContentListItem-sc-1mn8xok-11 DrBQv">
+                Want to receive communications about Vroom news and offers
+              </LegalListItem>
+            </LegalList>
+          </LegalContent>
+        </>
+      )}
     </>
   );
 };
