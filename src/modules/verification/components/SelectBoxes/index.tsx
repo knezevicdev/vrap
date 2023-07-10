@@ -32,7 +32,7 @@ const SelectBoxes = <T extends FieldValues>({
       id={id}
       options={mapOptions(options)}
       label={label}
-      tooltip={{ content: tooltip }}
+      tooltip={tooltip ? { content: tooltip } : undefined}
       onChange={(value) => {
         fieldOnChange(value);
         onChange && onChange(value);
