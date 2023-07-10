@@ -180,7 +180,7 @@ class AppraisalApp extends App<
 
     return (
       <>
-        <GlobalStyle baseUrl={publicRuntimeConfig.BASE_PATH} />
+        <GlobalStyle />
         <ABSmartlyProvider
           apiKey={ABSMARTLY_API_KEY}
           application={ABSMARTLY_APP}
