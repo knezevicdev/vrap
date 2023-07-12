@@ -158,7 +158,7 @@ const MultiStepForm: React.FC<Props> = (props) => {
 
       return (
         <FormStep key={idx} id={String(idx)}>
-          <SectionHeader>
+          <SectionHeader suppressBottomPadding={!isActive && !showEditButton}>
             <StepNumber>
               {showGreenCheck && (
                 <img alt="" src={greenCheckPath} className={'title-icon'} />

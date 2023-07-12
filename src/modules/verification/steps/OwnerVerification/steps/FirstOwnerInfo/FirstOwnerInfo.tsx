@@ -82,7 +82,7 @@ const FirstOwnerInfo = ({
             apt: 'apt',
           }}
         />
-        <Col size={1 / 2}>
+        <Col size={1 / 2} disableBottomGap>
           <Input
             placeholder="Email"
             label="Email address"
@@ -92,7 +92,7 @@ const FirstOwnerInfo = ({
             control={form.control}
           />
         </Col>
-        <Col size={1 / 2}>
+        <Col size={1 / 2} disableBottomGap>
           <Input
             placeholder="(  ) ___-____"
             label="Phone number"

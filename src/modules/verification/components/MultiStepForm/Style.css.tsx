@@ -81,10 +81,11 @@ export const FormSection = styled(({ ...restProps }) => <div {...restProps} />)`
     `}
 `;
 
-export const SectionHeader = styled.div`
+export const SectionHeader = styled.div<{ suppressBottomPadding?: boolean }>`
   display: flex;
   flex-wrap: wrap;
-  padding-bottom: 4px;
+  padding-bottom: ${({ suppressBottomPadding }) =>
+    suppressBottomPadding ? '0' : '16px'};
 `;
 
 export const StepNumber = styled.div`
