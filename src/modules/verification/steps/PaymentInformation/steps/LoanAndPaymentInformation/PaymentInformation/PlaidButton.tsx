@@ -23,10 +23,10 @@ const PlaidButton = ({
   plaidSubmitting,
   setPlaidSubmitting,
 }: Props) => {
-  const { verificationEmail, priceId, plaidToken, plaidTokenIsLocal } =
+  const { offerEmail, priceId, plaidToken, plaidTokenIsLocal } =
     useVerificationStore(
-      ({ verificationEmail, priceId, plaidToken, plaidTokenIsLocal }) => ({
-        verificationEmail,
+      ({ offerEmail, priceId, plaidToken, plaidTokenIsLocal }) => ({
+        offerEmail,
         priceId,
         plaidToken,
         plaidTokenIsLocal,
@@ -53,11 +53,11 @@ const PlaidButton = ({
         PublicToken: metaData.public_token,
         Source: 'acquisitions',
         ReferenceId: priceId,
-        Email: verificationEmail,
+        Email: offerEmail,
       };
       plaidSuccess(mutationInput);
     },
-    [setPlaidSubmitting, priceId, verificationEmail, plaidSuccess]
+    [setPlaidSubmitting, priceId, offerEmail, plaidSuccess]
   );
 
   const onExit = useCallback(
