@@ -7,8 +7,9 @@ import styled from 'styled-components';
 
 export const SectionTitle = styled(Typography.Title.Three)`
   text-align: left;
-  margin: 20px 0;
+  margin: 0 0 4px;
   font-size: 16px;
+  display: block;
 `;
 
 export const Row = styled.div`

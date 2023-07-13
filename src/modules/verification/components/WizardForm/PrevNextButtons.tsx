@@ -23,7 +23,7 @@ const PrevNextButtons = ({
 }: Props) => {
   return (
     <ButtonsWrapper>
-      <Row wrap="wrap" gap="20px">
+      <Row wrap="wrap" gap={hidePrev ? '10px' : '20px'}>
         <Col size={1 / 2} disableBottomGap>
           {!hidePrev && (
             <PrevButton appearance="secondary" onClick={onPrev}>

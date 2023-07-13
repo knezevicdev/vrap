@@ -28,7 +28,7 @@ const FirstOwnerConfirmation = ({
         />
       </Col>
 
-      <Col size={1}>
+      <Col size={1} disableBottomGap>
         <Row>
           <Col size={{ default: 1 / 2, mobile: 1 }}>
             <Input
