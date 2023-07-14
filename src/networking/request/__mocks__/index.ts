@@ -176,7 +176,7 @@ export const verificationResp: VerificationRespData = {
     xke_offer_id: 26300,
     lender_id: '1',
     lender_name: 'Vroom',
-    paymentSubmitted: false,
+    payment_submitted: false,
   },
 };
 

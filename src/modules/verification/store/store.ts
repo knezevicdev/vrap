@@ -160,7 +160,7 @@ const useVerificationStore = create<VerificationState>()((...a) => ({
     }
 
     const localPriceId = localStorage.getItem('priceId');
-    if (localPriceId !== priceId || !verificationDetails.paymentSubmitted) {
+    if (localPriceId !== priceId || !verificationDetails.payment_submitted) {
       localStorage.removeItem('paymentSubmittedType');
     }
     if (localPriceId !== priceId) {
@@ -171,7 +171,7 @@ const useVerificationStore = create<VerificationState>()((...a) => ({
       localStorage.getItem('paymentSubmittedType') || '';
     const lastFourSSN = localStorage.getItem('lastFourSSN') || '';
 
-    if (!paymentSubmittedType && verificationDetails.paymentSubmitted) {
+    if (!paymentSubmittedType && verificationDetails.payment_submitted) {
       paymentSubmittedType = 'Payment method submitted';
     }
 
