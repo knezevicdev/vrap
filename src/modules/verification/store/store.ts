@@ -141,7 +141,7 @@ const useVerificationStore = create<VerificationState>()((...a) => ({
 
     if (!verificationDetails) return true;
 
-    if (verificationDetails.form_state === 4) {
+    if (verificationDetails.form_state >= 4) {
       set((state) => ({
         ...state,
         completed: true,
