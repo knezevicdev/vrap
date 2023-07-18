@@ -129,7 +129,7 @@ const ExteriorConditions: React.FC<Props> = ({ fields, form }) => {
       )}
       <StyledCheckbox
         label="Minor Dents or Dings"
-        description="Larger than ½″ in size"
+        description="Smaller than 2″ in size"
         onChange={handleCheckChange(
           fields,
           'dents',
