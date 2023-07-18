@@ -84,7 +84,10 @@ export const getServerSideProps: GetServerSideProps<Props> = async (
 ) => {
   ctx.res.setHeader('Cache-Control', '');
   const brandConfig = returnBrandConfig();
-  const requireAuth = ctx.req.url?.includes('/tradeIn-selfService');
+
+  const hasUserSignedInBefore = !!ctx.req.cookies['ajs_user_id'];
+  const isTradeIn = ctx.req.url?.includes('/tradeIn-selfService');
+  const requireAuth = isTradeIn || hasUserSignedInBefore;
 
   return {
     props: {

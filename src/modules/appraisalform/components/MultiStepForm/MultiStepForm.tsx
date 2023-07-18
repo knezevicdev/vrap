@@ -3,6 +3,7 @@ import { Button } from '@vroom-web/ui-lib';
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
+import AuthModal from '../../../../components/AuthModal/AuthModal';
 import { GenericObject } from '../../../../interfaces.d';
 import { UseForm } from '../componentInterfaces.d';
 import { blueIcons, grayIcons, greenCheckPath } from './utils';
@@ -67,6 +68,7 @@ const MultiStepForm: React.FC<Props> = (props) => {
   const [activeSection, setActiveSection] = useState(active);
   const [returnSection, setReturnSection] = useState(null);
   const [hideButton, setHideButton] = useState<boolean>(false);
+  const [showAuthModal, setShowAuthModal] = useState(false);
 
   // using a static string here to swap values but this can easily be passed in props
   // this can also be handled by parent component if we don't like this
@@ -357,6 +359,16 @@ const MultiStepForm: React.FC<Props> = (props) => {
         )}
       </FormHeader>
       {appraisalTitle && <FormWarning>{appraisalTitle}</FormWarning>}
+      <FormWarning>
+        Already have a Vroom.com account?{' '}
+        <ButtonLink onClick={() => setShowAuthModal(true)}>
+          Sign in now
+        </ButtonLink>{' '}
+        to continue.
+      </FormWarning>
+      {showAuthModal && (
+        <AuthModal onSuccessfulLogin={() => window.location.reload()} />
+      )}
       {formComponents}
     </div>
   );
@@ -513,6 +525,15 @@ const FormWarning = styled.div`
   @media (max-width: 420px) {
     text-align: center;
   }
+`;
+
+const ButtonLink = styled.button`
+  font-size: inherit;
+  color: rgb(231, 19, 26);
+  text-decoration: none;
+  border: none;
+  background: transparent;
+  cursor: pointer;
 `;
 
 export default MultiStepForm;

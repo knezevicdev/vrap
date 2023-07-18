@@ -33,6 +33,8 @@ const EmailInput: React.FC<Props> = ({
         disabled: disabled,
         onChange: handleOnChange,
         maxlength: '100',
+        toolTipText:
+          'Valid email required. If you decide to accept your Vroom offer, you will have to create an account (or login) using this email address.',
       }}
     />
   );
