@@ -1,6 +1,6 @@
 import { VroomSpinner } from '@vroom-web/ui-lib';
 import { useRouter } from 'next/router';
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 
 import { useRecaptcha } from '../../../context/Recaptcha';
 import useIsTradeIn from '../../../hooks/useIsTradeIn';
@@ -93,7 +93,7 @@ const AppraisalReview: React.FC<Props> = ({ token }) => {
     submitButtonClasses.push('submitting');
   }
 
-  const handleSubmit = async (): Promise<void> => {
+  const handleSubmit = useCallback(async (): Promise<void> => {
     const token = await recaptcha.getToken();
     if (token) {
       setIsLoading(true);
@@ -103,7 +103,7 @@ const AppraisalReview: React.FC<Props> = ({ token }) => {
     } else {
       setReviewError();
     }
-  };
+  }, [recaptcha, setReviewError, submitAppraisal]);
 
   const isDealLoading = useDealStore((state) => state.loading);
 

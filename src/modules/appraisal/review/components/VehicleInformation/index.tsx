@@ -34,7 +34,6 @@ const VehicleInformation: React.FC = () => {
         pathname: appraisalPath,
         query: {
           vehicle: `${vehicleInfoForm?.vin}`,
-          ...router.query,
         },
         hash: `#top`,
       })

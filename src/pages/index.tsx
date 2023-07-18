@@ -4,9 +4,9 @@ import { useRouter } from 'next/router';
 import React, { useEffect, useMemo } from 'react';
 import styled from 'styled-components';
 
-import ErrorBanner from '../components/ErrorBanner';
 import useIsTradeIn from '../hooks/useIsTradeIn';
 import useHandleAppraisalRoutes from '../modules/appraisal/hooks/useHandleAppraisalRoutes';
+import TradeInError from '../modules/appraisalform/components/TradeInError';
 import useAppraisalStore from '../store/appraisalStore';
 import useDealStore from '../store/dealStore';
 import { returnBrandConfig } from '../utils/pageheaders';
@@ -29,8 +29,6 @@ const AppraisalFormPage: NextPage = () => {
     [isTradeIn]
   );
 
-  const tradeInError = useDealStore((state) => state.tradeInError);
-
   useEffect(() => {
     useAppraisalStore.getState().setVehicleId(vehicle);
   }, [vehicle]);
@@ -47,7 +45,7 @@ const AppraisalFormPage: NextPage = () => {
       <SkipNavigationLink mainContentId={'main-content'} />
       <HeaderContainer>
         <Header />
-        {tradeInError && <ErrorBanner errorMessage={tradeInError} />}
+        <TradeInError />
       </HeaderContainer>
       <PageContent id="main-content">
         <AppraisalForm />

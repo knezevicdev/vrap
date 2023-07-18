@@ -57,7 +57,7 @@ const AppraisalForm: React.FC = () => {
     (state) => ({
       vehicleInfo: state.vehicleInfoForm,
       yourInformation: state.personalInfoForm,
-      vehicleHistory: state.vehicleInfoForm,
+      vehicleHistory: state.vehicleHistoryForm,
       intCondition: state.intConditionForm,
       extCondition: state.extConditionForm,
       mechCondition: state.mechConditionForm,
@@ -350,7 +350,7 @@ const AppraisalForm: React.FC = () => {
 
       useAppraisalStore.getState().updateGeneralFields(fieldVals);
     }
-  }, []);
+  }, [analyticsHandler, router.query]);
 
   useEffect(() => {
     const warningLights =
@@ -450,6 +450,7 @@ const AppraisalForm: React.FC = () => {
         query: {
           ...(router.query.form && { form: router.query.form }),
           vin: useAppraisalStore.getState().vehicleInfoForm.vin,
+          ts: Date.now(),
         },
       })
       .catch((e) => console.error(e));
@@ -491,6 +492,7 @@ const AppraisalForm: React.FC = () => {
             pathname: useAppraisalStore.getState().reviewPath(),
             query: {
               vin: useAppraisalStore.getState().vehicleInfoForm.vin,
+              ts: Date.now(),
             },
           })
           .catch((e) => {
