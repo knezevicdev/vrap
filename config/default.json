@@ -4,7 +4,7 @@
   "ABSMARTLY_ENV": "dev",
   "ABSMARTLY_URL": "/absmartly/v1",
   "ACCOUNT_MANAGEMENT_URL": "https://accountmanagement-int.dev.vroom.cloud",
-  "ACQUISITIONS_URL": "https://acquisition-int.dev.vroom.cloud/v1",
+  "ACQUISITIONS_URL": "https://acquisition-int.qa.vroom.cloud/v1",
   "APPRAISAL_API_URL": "https://carstory-appraisal-beta.api.vast.com",
   "BRANCH_IO_KEY": "key_live_kcLYw3YkcZ81GfwRZ84cBcgmusnd6ysn",
   "CAT_DATA_PROXY_TARGET": "/cat-data",
@@ -28,7 +28,7 @@
   "RECAPTCHA_VERIFICATION_URL": "https://www.google.com/recaptcha/api/siteverify",
   "SEGMENT_WRITE_KEY": "N0pxERRIw4iYCoxZREMZj1yWBIoARIz4",
   "VAST_IMAGE_PROXY_URL": "https://img.vast.com/carstory-appraisal/beta",
-  "VIS_URL": "https://vis-int.dev.vroom.cloud/",
+  "VIS_URL": "https://vis-int.qa.vroom.cloud/",
   "VROOM_URL": "https://qa.vroom.com",
   "WEB_LEADS_PROXY_TARGET": "/api/weblead/attribution",
   "WEB_LEADS_URL": "/api/weblead/attribution"

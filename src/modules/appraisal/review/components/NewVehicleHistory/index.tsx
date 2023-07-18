@@ -1,5 +1,6 @@
 import { useRouter } from 'next/router';
 import React, { KeyboardEventHandler, useCallback, useMemo } from 'react';
+import { shallow } from 'zustand/shallow';
 
 import useAppraisalStore from '../../../../../store/appraisalStore';
 import {
@@ -17,30 +18,50 @@ import {
 const NewVehicleHistory: React.FC = () => {
   const router = useRouter();
 
-  const store = useAppraisalStore();
+  const {
+    mechConditionForm,
+    extConditionForm,
+    vehicleHistoryForm,
+    intConditionForm,
+  } = useAppraisalStore(
+    ({
+      mechConditionForm,
+      extConditionForm,
+      vehicleHistoryForm,
+      intConditionForm,
+    }) => ({
+      mechConditionForm,
+      extConditionForm,
+      vehicleHistoryForm,
+      intConditionForm,
+    }),
+    shallow
+  );
+
+  const appraisalPath = useAppraisalStore((state) => state.appraisalPath());
+  const vin = useAppraisalStore((state) => state.vehicleInfoForm?.vin);
 
   const warningLightsValues = useMemo(() => {
-    return store.mechConditionForm.warningLightsValues;
-  }, [store.mechConditionForm.warningLightsValues]);
+    return mechConditionForm.warningLightsValues;
+  }, [mechConditionForm.warningLightsValues]);
 
   const afterMarketOptions = useMemo(() => {
-    return store.extConditionForm.afterMarket;
-  }, [store.extConditionForm.afterMarket]);
+    return extConditionForm.afterMarket;
+  }, [extConditionForm.afterMarket]);
 
   const handleEditClick = useCallback(() => {
     router
       .push({
-        pathname: store.appraisalPath(),
+        pathname: appraisalPath,
         query: {
-          vehicle: `${store?.vehicleInfoForm?.vin}`,
-          ...router.query,
+          vehicle: vin,
         },
         hash: `#vehiclehistory`,
       })
       .catch((e) => {
         console.error(e);
       });
-  }, [router, store.appraisalPath, store?.vehicleInfoForm?.vin]);
+  }, [appraisalPath, router, vin]);
 
   const onKeyDown: KeyboardEventHandler<HTMLSpanElement> = (event) => {
     if (event.key === 'Enter') {
@@ -64,37 +85,37 @@ const NewVehicleHistory: React.FC = () => {
       <Row>
         <Info>
           <Label>Accident</Label>
-          <Field>{store.vehicleHistoryForm?.hasAccident}</Field>
+          <Field>{vehicleHistoryForm?.hasAccident}</Field>
         </Info>
-        {store.vehicleHistoryForm?.state && (
+        {vehicleHistoryForm?.state && (
           <Info>
             <Label>State of Purchase</Label>
-            <Field>{store.vehicleHistoryForm.state}</Field>
+            <Field>{vehicleHistoryForm.state}</Field>
           </Info>
         )}
         <Info>
           <Label>Title</Label>
-          <Field>{store.vehicleHistoryForm?.titleStatus}</Field>
+          <Field>{vehicleHistoryForm?.titleStatus}</Field>
         </Info>
       </Row>
-      {store.vehicleHistoryForm?.hasAccident === 'Yes' && (
+      {vehicleHistoryForm?.hasAccident === 'Yes' && (
         <Row>
           <Info>
             <Label>Repaired damage</Label>
-            <Field>{store.vehicleHistoryForm?.repairedAfterAccident}</Field>
+            <Field>{vehicleHistoryForm?.repairedAfterAccident}</Field>
           </Info>
         </Row>
       )}
-      {store.vehicleHistoryForm?.lienType && (
+      {vehicleHistoryForm?.lienType && (
         <Row>
           <Info>
             <Label>Loan or lease on your vehicle?</Label>
-            <Field>{store.vehicleHistoryForm?.lienType}</Field>
+            <Field>{vehicleHistoryForm?.lienType}</Field>
           </Info>
-          {store.vehicleHistoryForm?.bankName && (
+          {vehicleHistoryForm?.bankName && (
             <Info>
               <Label>Bank Name</Label>
-              <Field>{store.vehicleHistoryForm?.bankName}</Field>
+              <Field>{vehicleHistoryForm?.bankName}</Field>
             </Info>
           )}
         </Row>
@@ -104,36 +125,34 @@ const NewVehicleHistory: React.FC = () => {
         {warningLightsValues && (
           <Info>
             <Label>Warning Lights</Label>
-            {store.mechConditionForm?.warningLights === 'No' && (
-              <Field>{store.mechConditionForm?.warningLights}</Field>
+            {mechConditionForm?.warningLights === 'No' && (
+              <Field>{mechConditionForm?.warningLights}</Field>
             )}
             {warningLightsValues.map((element: string, index: number) => {
               return <Field key={index}>{element}</Field>;
             })}
-            {store.mechConditionForm?.otherWarning && (
-              <Field>{store.mechConditionForm?.otherWarning}</Field>
+            {mechConditionForm?.otherWarning && (
+              <Field>{mechConditionForm?.otherWarning}</Field>
             )}
           </Info>
         )}
         <Info>
           <Label>Transmission</Label>
-          <Field>{store.mechConditionForm.transmissionIssue}</Field>
+          <Field>{mechConditionForm.transmissionIssue}</Field>
         </Info>
         <Info>
           <Label>Engine</Label>
-          <Field>{store.mechConditionForm.engineIssue}</Field>
+          <Field>{mechConditionForm.engineIssue}</Field>
         </Info>
       </Row>
       <Row>
         <Info>
           <Label>Does Not Run/Not Drivable</Label>
-          <Field>
-            {store.mechConditionForm.runnable === 'Yes' ? 'No' : 'Yes'}
-          </Field>
+          <Field>{mechConditionForm.runnable === 'Yes' ? 'No' : 'Yes'}</Field>
         </Info>
         <Info>
           <Label>No Mechanical or Electrical Issues</Label>
-          <Field>{store.mechConditionForm.noMechanicalIssues}</Field>
+          <Field>{mechConditionForm.noMechanicalIssues}</Field>
         </Info>
       </Row>
       <SmallSubtitle>Exterior Damage</SmallSubtitle>
@@ -141,107 +160,107 @@ const NewVehicleHistory: React.FC = () => {
         <Info>
           <Label>Paint Damage/Imperfections</Label>
           <Field>
-            {store.extConditionForm?.paintChippingPanels
-              ? `${store.extConditionForm?.paintChippingPanels} Panel(s)`
-              : store.extConditionForm?.paintChipping}
+            {extConditionForm?.paintChippingPanels
+              ? `${extConditionForm?.paintChippingPanels} Panel(s)`
+              : extConditionForm?.paintChipping}
           </Field>
         </Info>
         <Info>
           <Label>Dents</Label>
           <Field>
-            {store.extConditionForm?.dentsPanels
-              ? `${store.extConditionForm?.dentsPanels} Panel(s)`
-              : store.extConditionForm?.dents}
+            {extConditionForm?.dentsPanels
+              ? `${extConditionForm?.dentsPanels} Panel(s)`
+              : extConditionForm?.dents}
           </Field>
         </Info>
         <Info>
           <Label>Scratches</Label>
           <Field>
-            {store.extConditionForm?.scratchesPanels
-              ? `${store.extConditionForm?.scratchesPanels} Panel(s)`
-              : store.extConditionForm?.scratches}
+            {extConditionForm?.scratchesPanels
+              ? `${extConditionForm?.scratchesPanels} Panel(s)`
+              : extConditionForm?.scratches}
           </Field>
         </Info>
       </Row>
       <Row>
         <Info>
           <Label>Rust</Label>
-          <Field>{store.extConditionForm?.rust}</Field>
+          <Field>{extConditionForm?.rust}</Field>
         </Info>
         <Info>
           <Label>Hail Damage</Label>
-          <Field>{store.extConditionForm?.hailDamage}</Field>
+          <Field>{extConditionForm?.hailDamage}</Field>
         </Info>
         <Info>
           <Label>Water Damage</Label>
-          <Field>{store.extConditionForm?.floodDamage}</Field>
+          <Field>{extConditionForm?.floodDamage}</Field>
         </Info>
       </Row>
       <Row>
         <Info>
           <Label>Frame or structural damage</Label>
-          <Field>{store.extConditionForm?.frameOrStructuralDamage}</Field>
+          <Field>{extConditionForm?.frameOrStructuralDamage}</Field>
         </Info>
         <Info>
           <Label>Windshield cracked</Label>
-          <Field>{store.extConditionForm?.windshieldCrackedChipped}</Field>
+          <Field>{extConditionForm?.windshieldCrackedChipped}</Field>
         </Info>
         <Info>
           <Label>Major damage</Label>
-          <Field>{store.extConditionForm?.majorDamageExterior}</Field>
+          <Field>{extConditionForm?.majorDamageExterior}</Field>
         </Info>
       </Row>
       <Row>
         <Info>
           <Label>Fire Damage</Label>
-          <Field>{store.extConditionForm?.fireDamage}</Field>
+          <Field>{extConditionForm?.fireDamage}</Field>
         </Info>
         <Info>
           <Label>Worn Tires</Label>
-          <Field>{store.extConditionForm?.wornTires}</Field>
+          <Field>{extConditionForm?.wornTires}</Field>
         </Info>
         <Info>
           <Label>No Exterior Damage</Label>
-          <Field>{store.extConditionForm?.noExteriorDamage}</Field>
+          <Field>{extConditionForm?.noExteriorDamage}</Field>
         </Info>
       </Row>
       <SmallSubtitle>Interior Damage</SmallSubtitle>
       <Row>
         <Info>
           <Label>Rips or Tears in Seats</Label>
-          <Field>{store.intConditionForm?.ripsOrTearsInSeats}</Field>
+          <Field>{intConditionForm?.ripsOrTearsInSeats}</Field>
         </Info>
         <Info>
           <Label>Persistent Odors</Label>
-          <Field>{store.intConditionForm?.smokedIn}</Field>
+          <Field>{intConditionForm?.smokedIn}</Field>
         </Info>
         <Info>
           <Label>Damaged Electronic Equipment</Label>
-          <Field>{store.intConditionForm?.damagedElectronic}</Field>
+          <Field>{intConditionForm?.damagedElectronic}</Field>
         </Info>
       </Row>
       <Row>
         <Info>
           <Label>Damaged Dashboard or Interior Panels</Label>
-          <Field>{store.intConditionForm?.damagedDashboardOrPanels}</Field>
+          <Field>{intConditionForm?.damagedDashboardOrPanels}</Field>
         </Info>
         <Info>
           <Label>Major damage</Label>
-          <Field>{store.intConditionForm?.majorDamageInterior}</Field>
+          <Field>{intConditionForm?.majorDamageInterior}</Field>
         </Info>
         <Info>
           <Label>No Interior Damage</Label>
-          <Field>{store.intConditionForm?.noInteriorDamage}</Field>
+          <Field>{intConditionForm?.noInteriorDamage}</Field>
         </Info>
       </Row>
       <SmallSubtitle>Aftermarket Modification</SmallSubtitle>
       <Row>
         <Info>
-          {store.extConditionForm?.afterMarket.length > 0 ? (
+          {extConditionForm?.afterMarket.length > 0 ? (
             afterMarketOptions.map((element: any, index: any) => {
               let value = element;
               if (element === 'Other') {
-                value = `Other (${store.extConditionForm?.otherAfterMarket})`;
+                value = `Other (${extConditionForm?.otherAfterMarket})`;
               }
               return <Field key={index}>{value}</Field>;
             })
@@ -253,20 +272,20 @@ const NewVehicleHistory: React.FC = () => {
       <Row>
         <Info>
           <Label>Additional Information</Label>
-          {store.mechConditionForm?.additionalDetails ? (
-            <Field>{store.mechConditionForm?.additionalDetails}</Field>
+          {mechConditionForm?.additionalDetails ? (
+            <Field>{mechConditionForm?.additionalDetails}</Field>
           ) : (
             <Field>N\A</Field>
           )}
         </Info>
       </Row>
-      {(store.extConditionForm?.afterMarket.includes('Exhaust') ||
-        store.extConditionForm?.afterMarket.includes('Performance') ||
-        store.extConditionForm?.afterMarket.includes('Other')) && (
+      {(extConditionForm?.afterMarket.includes('Exhaust') ||
+        extConditionForm?.afterMarket.includes('Performance') ||
+        extConditionForm?.afterMarket.includes('Other')) && (
         <Row>
           <Info>
             <Label>Pass emission standards</Label>
-            <Field>{store.extConditionForm?.passStateEmissionStandards}</Field>
+            <Field>{extConditionForm?.passStateEmissionStandards}</Field>
           </Info>
         </Row>
       )}

@@ -22,7 +22,6 @@ const PersonalInformation: React.FC = () => {
         pathname: useAppraisalStore.getState().appraisalPath(),
         query: {
           vehicle: `${useAppraisalStore.getState().vehicleInfoForm?.vin}`,
-          ...router.query,
         },
         hash: `#personalinformation`,
       })

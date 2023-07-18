@@ -155,7 +155,7 @@ const MultiStepForm: React.FC<Props> = (props) => {
 
       invalidField.onChange({
         ...invalidField,
-        validationError: true,
+        error: true,
         setForceValidate: true,
       });
 

@@ -5,9 +5,8 @@ import getConfig from 'next/config';
 import React from 'react';
 import styled from 'styled-components';
 
-import ErrorBanner from '../../components/ErrorBanner';
 import useHandleAppraisalRoutes from '../../modules/appraisal/hooks/useHandleAppraisalRoutes';
-import useAppraisalStore from '../../store/appraisalStore';
+import ReviewError from '../../modules/appraisal/review/components/ReviewError';
 import { returnBrandConfig } from '../../utils/pageheaders';
 
 import Header from 'src/components/Header';
@@ -22,8 +21,6 @@ interface Prop {
 }
 
 const AppraisalReview: NextPage<Prop> = ({ token }) => {
-  const reviewError = useAppraisalStore((state) => state.reviewError);
-
   useHandleAppraisalRoutes();
 
   return (
@@ -31,7 +28,7 @@ const AppraisalReview: NextPage<Prop> = ({ token }) => {
       <SkipNavigationLink mainContentId={'main-content'} />
       <HeaderContainer>
         <Header />
-        {reviewError && <ErrorBanner errorMessage={reviewError} />}
+        <ReviewError />
       </HeaderContainer>
       <Contents id="main-content">
         <AppraisalContainer>
