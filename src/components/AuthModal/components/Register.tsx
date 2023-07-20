@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 
 import { displayPhoneNumber } from '../../../utils';
+import AuthManager from '../../../utils/AuthManager';
 import Spinner from '../../Spinner';
 import {
   ButtonLink,
@@ -22,7 +23,6 @@ import {
   TwoColumnLayout,
 } from '../Style.css';
 import redirectToThirdParty from '../utils/redirectToThirdParty';
-import registerUser from '../utils/registerUser';
 import registrationResolver from '../utils/registrationResolver';
 import trackRegistrationAndSubmitWebLead from '../utils/trackRegistrationAndSubmitWebLead';
 import Input from './Input';
@@ -82,7 +82,7 @@ const Register = ({
 
   const onSubmit = handleSubmit(async (data) => {
     setErrorMessage('');
-    const response = await registerUser(
+    const response = await AuthManager.registerUser(
       data.email,
       data.password,
       data.firstName,

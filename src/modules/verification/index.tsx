@@ -46,11 +46,7 @@ import calculateInitialSection from './utils/calculateInitialSection';
 import updateVerification from './utils/updateVerification';
 import usePhotosValid from './utils/usePhotosValid';
 
-interface Props {
-  ajsUserId: string;
-}
-
-const UnifiedVerification = ({ ajsUserId }: Props) => {
+const UnifiedVerification = () => {
   const analyticsHandler = useRef(new AnalyticsHandler());
   const trackedEvents = useRef<string[]>([]);
   const priceAccepted = useRef(false);
@@ -119,8 +115,8 @@ const UnifiedVerification = ({ ajsUserId }: Props) => {
 
   const acceptPrice = useCallback(async () => {
     priceAccepted.current = true;
-    await acceptPriceOffer(priceId, ajsUserId);
-  }, [priceId, ajsUserId]);
+    await acceptPriceOffer(priceId);
+  }, [priceId]);
 
   useEffect(() => {
     if (!priceAccepted.current) acceptPrice();

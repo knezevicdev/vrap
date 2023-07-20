@@ -5,6 +5,7 @@ import styled from 'styled-components';
 
 import AuthModal from '../../../../components/AuthModal/AuthModal';
 import { GenericObject } from '../../../../interfaces.d';
+import useAppraisalStore from '../../../../store/appraisalStore';
 import { UseForm } from '../componentInterfaces.d';
 import { blueIcons, grayIcons, greenCheckPath } from './utils';
 
@@ -62,6 +63,8 @@ const MultiStepForm: React.FC<Props> = (props) => {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
+
+  const isUserLoggedIn = useAppraisalStore((state) => state.isUserLoggedIn);
 
   const maxSteps = sections.length - 1;
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -359,15 +362,22 @@ const MultiStepForm: React.FC<Props> = (props) => {
         )}
       </FormHeader>
       {appraisalTitle && <FormWarning>{appraisalTitle}</FormWarning>}
-      <FormWarning>
-        Already have a Vroom.com account?{' '}
-        <ButtonLink onClick={() => setShowAuthModal(true)}>
-          Sign in now
-        </ButtonLink>{' '}
-        to continue.
-      </FormWarning>
+      {!isUserLoggedIn && (
+        <FormWarning>
+          Already have a Vroom.com account?{' '}
+          <ButtonLink onClick={() => setShowAuthModal(true)}>
+            Sign in now
+          </ButtonLink>{' '}
+          to continue.
+        </FormWarning>
+      )}
       {showAuthModal && (
-        <AuthModal onSuccessfulLogin={() => window.location.reload()} />
+        <AuthModal
+          onSuccessfulLogin={() => {
+            useAppraisalStore.getState().setIsLoggedIn(true);
+            setShowAuthModal(false);
+          }}
+        />
       )}
       {formComponents}
     </div>

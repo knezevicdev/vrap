@@ -9,7 +9,7 @@ import { Modal, Overlay, OverlayInner } from './Style.css';
 import { useScrollLock } from './utils/useScrollLock';
 
 interface Props {
-  onSuccessfulLogin: () => void;
+  onSuccessfulLogin?: () => void;
   redirectUrl?: string;
   email?: string;
   initialRegistrationData?: Partial<RegistrationData>;
@@ -30,7 +30,7 @@ const AuthModal = ({
 
   const onSuccess = useCallback(() => {
     Cookies.set('mrt', Date.now().toString());
-    onSuccessfulLogin();
+    onSuccessfulLogin?.();
   }, [onSuccessfulLogin]);
 
   const onEmailProcessed = useCallback((email: string, hasAccount: boolean) => {
