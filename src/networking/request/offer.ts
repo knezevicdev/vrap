@@ -1,5 +1,6 @@
 import { Response } from '@vroom-web/networking';
 import { enc, HmacSHA256 } from 'crypto-js';
+import Cookies from 'js-cookie';
 import getConfig from 'next/config';
 
 import ACCEPT_REJECT_OFFER from '../../graphql/mutations/acceptRejectOffer.graphql';
@@ -34,14 +35,13 @@ export const getOfferDetails = async (
   return res;
 };
 
-export const acceptPriceOffer = async (
-  offerId: string,
-  externalUserId: string
-): Promise<void> => {
+export const acceptPriceOffer = async (offerId: string): Promise<void> => {
   const key = 'APPRAISAL_ACCEPTED_OFFER';
 
   const acceptedOfferId = localStorage.getItem(key);
   if (acceptedOfferId === offerId) return;
+
+  const externalUserId = Cookies.get('ajs_user_id') || '';
 
   try {
     await client.gqlRequest<unknown, MutationAcceptRejectOfferArgs>({

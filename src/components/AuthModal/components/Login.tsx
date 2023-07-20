@@ -2,6 +2,7 @@ import { isErrorResponse } from '@vroom-web/networking';
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 
+import AuthManager from '../../../utils/AuthManager';
 import Spinner from '../../Spinner';
 import {
   ButtonLink,
@@ -21,7 +22,6 @@ import {
   SocialIcon,
 } from '../Style.css';
 import loginResolver from '../utils/loginResolver';
-import loginUser from '../utils/loginUser';
 import redirectToThirdParty from '../utils/redirectToThirdParty';
 import trackLogin from '../utils/trackLogin';
 import Input from './Input';
@@ -59,7 +59,7 @@ const Login = ({
 
   const onSubmit = handleSubmit(async (data) => {
     setErrorMessage('');
-    const response = await loginUser(data.email, data.password);
+    const response = await AuthManager.loginUser(data.email, data.password);
     if (isErrorResponse(response)) {
       setErrorMessage(
         'The email address or password is invalid. Please try a different email address or password.'
