@@ -28,12 +28,17 @@ export interface FormStepProps {
   returnStep: number;
 }
 
+export interface AfterComponentProps {
+  onEdit?: () => void;
+}
+
 export interface FormSection {
   component: React.ComponentType<FormStepProps>;
   isValid: boolean;
   title: string;
   disableNext?: boolean;
-  completedAfterComponent?: React.ComponentType;
+  disableEditButton?: boolean;
+  completedAfterComponent?: React.ComponentType<AfterComponentProps>;
 }
 
 interface Props {
@@ -147,8 +152,13 @@ const MultiStepForm: React.FC<Props> = (props) => {
 
   const formComponents = sections.map(
     (formComponent: FormSection, idx: number) => {
-      const { component, title, disableNext, completedAfterComponent } =
-        formComponent;
+      const {
+        component,
+        title,
+        disableNext,
+        disableEditButton,
+        completedAfterComponent,
+      } = formComponent;
       const CurrentComponent = component;
       const AfterComponent = completedAfterComponent;
       const isActive = idx === activeSection;
@@ -166,7 +176,7 @@ const MultiStepForm: React.FC<Props> = (props) => {
               {!showGreenCheck && numberIcon(idx, activeSection, 'title-icon')}
             </StepNumber>
             <StepTitle isactive={isActive.toString()}>{title}</StepTitle>
-            {showEditButton && (
+            {!disableEditButton && showEditButton && (
               <EditStep
                 role="button"
                 tabIndex={0}
@@ -181,7 +191,9 @@ const MultiStepForm: React.FC<Props> = (props) => {
           </SectionHeader>
           {showEditButton && AfterComponent && (
             <FormSection isactive="true" isview="true">
-              <AfterComponent />
+              <AfterComponent
+                onEdit={() => handleEditSection(idx, activeSection)}
+              />
             </FormSection>
           )}
           <FormSection isactive={isActive.toString()}>

@@ -36,7 +36,7 @@ const FirstOwnerConfirmation = ({
               name="documentMileageValue"
               control={form.control}
               placeholder="Mileage"
-              label="Mileage shown on the odometer"
+              label="Mileage shown on the odometer."
             />
           </Col>
         </Row>

@@ -97,7 +97,6 @@ const PickupVerificationStep = ({ nextStep, editRef }: FormStepProps) => {
     {
       component: ContactInfoConfirmation,
       form: contactInfoConfirmationForm,
-      nextText: isContactInfoConfirmed ? 'Continue' : 'Next',
       onNext: () => {
         if (isContactInfoConfirmed) {
           onDone();

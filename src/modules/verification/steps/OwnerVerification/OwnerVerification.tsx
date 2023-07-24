@@ -115,12 +115,10 @@ const OwnerVerificationStep = ({ nextStep, editRef }: FormStepProps) => {
 
         return 4;
       },
-      nextText: isSecondOwnerConfirmed ? 'Next' : 'Continue',
     },
     {
       component: SecondOwnerInfo,
       form: secondOwnerInfoForm,
-      nextText: 'Continue',
     }
   );
 

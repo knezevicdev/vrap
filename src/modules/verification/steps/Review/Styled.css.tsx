@@ -8,3 +8,7 @@ export const CheckboxContainer = styled.div`
     margin-top: 5px;
   }
 `;
+
+export const Paragraph = styled.p`
+  margin: 0;
+`;

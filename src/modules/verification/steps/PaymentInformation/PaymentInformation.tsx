@@ -58,7 +58,6 @@ const LoanInformationStep = ({ nextStep, editRef }: FormStepProps) => {
     {
       component: LoanAndPaymentInformation,
       form: loanInformationForm,
-      nextText: 'Next',
       disableStepButtons: true,
     }
   );

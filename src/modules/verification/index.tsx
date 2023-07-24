@@ -176,6 +176,7 @@ const UnifiedVerification = () => {
       title: 'Payment',
       isValid: true,
       disableNext: true,
+      disableEditButton: true,
       completedAfterComponent: PaymentInformationReview,
     },
   ];
