@@ -96,3 +96,7 @@ export const SubmitButton = styled(Button.Primary)`
 export const Bold = styled.span`
   font-family: 'Calibre-SemiBold';
 `;
+
+export const Paragraph = styled.p`
+  margin: 0;
+`;

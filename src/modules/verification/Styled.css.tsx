@@ -5,11 +5,19 @@ import {
 } from '@vroom-web/ui-lib';
 import styled from 'styled-components';
 
-export const SectionTitle = styled(Typography.Title.Three)`
+export const SectionTitle = styled(Typography.Title.Three)<{
+  topSpacing?: boolean;
+}>`
   text-align: left;
   margin: 0 0 4px;
-  font-size: 16px;
+  font-size: 18px;
   display: block;
+
+  ${({ topSpacing }) =>
+    topSpacing &&
+    `
+    margin-top: 16px;
+  `}
 `;
 
 export const Row = styled.div`
@@ -38,7 +46,7 @@ export const FullInfo = styled.div`
 `;
 
 export const Label = styled(Typography.Fine)`
-  font-size: 13px;
+  font-size: 14px;
   letter-spacing: 0.35px;
 `;
 

@@ -1,15 +1,15 @@
 import React from 'react';
 
 import { FormStepProps } from '../../components/MultiStepForm';
-import { Bold, SubmitButton } from './Styled.css';
+import { Bold, Paragraph, SubmitButton } from './Styled.css';
 
 const DocumentsVerificationStep = ({ nextStep }: FormStepProps) => {
   return (
     <div>
-      <p>
+      <Paragraph>
         <Bold>Last Step:</Bold> To complete this sale, go to “My Documents” to
         upload required documents as soon as possible.
-      </p>
+      </Paragraph>
       <SubmitButton onClick={nextStep}>PROVIDE DOCUMENTS</SubmitButton>
     </div>
   );

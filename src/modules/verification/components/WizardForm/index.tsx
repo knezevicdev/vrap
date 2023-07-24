@@ -12,7 +12,6 @@ export type WizardStepProps<T extends FieldValues> = {
 type StepWithFormType<T extends FieldValues> = {
   component: React.ComponentType<WizardStepProps<T>>;
   form: UseFormReturn<T>;
-  nextText?: string;
   onNext?: () => number;
   onPrev?: () => number;
   onActive?: () => void;
@@ -50,7 +49,6 @@ const WizardFormNav = <T extends FieldValues[]>({
 }: WizardFormNavProps<T>) => {
   const step = steps[(currentStep || 1) - 1];
   const isNextDisabled = !step.form.formState.isValid;
-  const nextText = step.nextText || 'Next';
   const initialScrollSkip = useRef(false);
   const disableStepButtons = step.disableStepButtons;
 
@@ -81,7 +79,7 @@ const WizardFormNav = <T extends FieldValues[]>({
       hidePrev={currentStep === 1}
       disableNext={isNextDisabled}
       prevText="Back"
-      nextText={nextText}
+      nextText="Next"
       onPrev={() => {
         if (step.onPrev) {
           const stepToGo = step.onPrev();
