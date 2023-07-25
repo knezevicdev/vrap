@@ -1,5 +1,6 @@
 import crypto from 'crypto';
 import jwt from 'jsonwebtoken';
+import { get as _get } from 'lodash';
 import { NextApiRequest } from 'next';
 import getConfig from 'next/config';
 import useragent from 'useragent';
@@ -67,7 +68,7 @@ function checkUserAgent(req: NextApiRequest) {
   return true;
 }
 
-function checkSignature(req: NextApiRequest) {
+export function checkSignature(req: NextApiRequest, vinKey = 'payload.vin') {
   const signature = req.headers['x-signature'];
   const signatureSecret = req.headers['x-token'];
 
@@ -86,7 +87,7 @@ function checkSignature(req: NextApiRequest) {
       serverRuntimeConfig.JWT_SECRET_KEY
     );
     if (typeof decoded === 'string') return false;
-    if (decoded.vin !== req.body.payload.vin) return false;
+    if (decoded.vin !== _get(req.body, vinKey)) return false;
   } catch (err) {
     return false;
   }
