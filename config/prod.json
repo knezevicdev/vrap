@@ -15,5 +15,7 @@
   "VAST_IMAGE_PROXY_URL": "https://img.vast.com/caABSMARTLY_URLrstory-appraisal/beta",
   "VIS_URL": "https://vis-int.prod.vroom.cloud/",
   "VROOM_URL": "https://www.vroom.com",
-  "RECAPTCHA_SITE_KEY": "6Le6wLMgAAAAALm7gYrofvWVwOPFm2YVO0gTSsdQ"
+  "RECAPTCHA_SITE_KEY": "6Le6wLMgAAAAALm7gYrofvWVwOPFm2YVO0gTSsdQ",
+  "ICO_DASH_URL": "https://icodashboard.feautoprod.vast.com",
+  "ICO_DASH_AUTH": ""
 }
