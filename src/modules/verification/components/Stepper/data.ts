@@ -6,9 +6,10 @@ export const defaultSteps = [
   'Upload Documents',
 ];
 export const photosExpSteps = [
-  'Ownership Information',
-  'Pick Up Address',
-  'Payment Details',
-  'Documents',
+  'Ownership Info',
+  'Pick Up Info',
+  'Payment',
   'Photos',
+  'Review',
+  'Documents',
 ];

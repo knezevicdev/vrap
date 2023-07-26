@@ -137,6 +137,8 @@ const config = {
     VAST_IMAGE_PROXY_URL: currentConfig.VAST_IMAGE_PROXY_URL,
     VROOM_URL: currentConfig.VROOM_URL,
     WEB_LEADS_URL: currentConfig.WEB_LEADS_URL,
+    ICO_DASH_URL: currentConfig.ICO_DASH_URL,
+    ICO_DASH_AUTH: currentConfig.ICO_DASH_AUTH,
   },
   serverRuntimeConfig: {
     // Will only be available on the server side
