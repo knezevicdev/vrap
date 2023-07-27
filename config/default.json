@@ -32,6 +32,6 @@
   "VROOM_URL": "https://qa.vroom.com",
   "WEB_LEADS_PROXY_TARGET": "/api/weblead/attribution",
   "WEB_LEADS_URL": "/api/weblead/attribution",
-  "ICO_DASH_URL": "https://icodashboard.feautosandbox3.vast.com",
+  "ICO_DASH_URL": "https://icodashboard.feautobeta.vast.com",
   "ICO_DASH_AUTH": "Basic ZnJvbnRlbmQ6dGVzdHRlc3Q="
 }
