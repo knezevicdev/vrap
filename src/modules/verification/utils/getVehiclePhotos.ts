@@ -1,6 +1,7 @@
-import axios from 'axios';
+import { isErrorResponse } from '@vroom-web/networking';
 import getConfig from 'next/config';
 
+import client from '../../../networking/client';
 import { DocumentFileType } from '../steps/VehiclePhotos/utils/uploadVehiclePhoto';
 
 const { publicRuntimeConfig } = getConfig();
@@ -20,9 +21,13 @@ const getVehiclePhotos = async (
   if (publicRuntimeConfig.ICO_DASH_AUTH) {
     headers.Authorization = publicRuntimeConfig.ICO_DASH_AUTH;
   }
-  const response = await axios.post<ImagesResponse>(url, undefined, {
+
+  const response = await client.httpRequest<ImagesResponse>({
+    url,
+    method: 'POST',
     headers,
   });
+  if (isErrorResponse(response)) return {};
 
   return response.data
     .filter((image) => image.name.startsWith(priceId))
