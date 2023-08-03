@@ -1,7 +1,5 @@
-import { isErrorResponse } from '@vroom-web/networking';
 import getConfig from 'next/config';
 
-import client from '../../../networking/client';
 import { DocumentFileType } from '../steps/VehiclePhotos/utils/uploadVehiclePhoto';
 
 const { publicRuntimeConfig } = getConfig();
@@ -17,19 +15,35 @@ const getVehiclePhotos = async (
   priceId: string
 ): Promise<Partial<Record<DocumentFileType, string>>> => {
   const url = `${publicRuntimeConfig.ICO_DASH_URL}/api/appraisal-photos?vin=${vin}`;
-  const headers: Record<string, string> = {};
-  if (publicRuntimeConfig.ICO_DASH_AUTH) {
+  const headers: Record<string, string> = {
+    accept: 'application/json, text/plain, */*',
+  };
+  const hasAuth = publicRuntimeConfig.ICO_DASH_AUTH;
+  if (hasAuth) {
     headers.Authorization = publicRuntimeConfig.ICO_DASH_AUTH;
   }
 
-  const response = await client.httpRequest<ImagesResponse>({
-    url,
-    method: 'POST',
-    headers,
-  });
-  if (isErrorResponse(response)) return {};
+  let data: ImagesResponse;
 
-  return response.data
+  try {
+    const response = await fetch(url, {
+      headers,
+      body: null,
+      method: 'POST',
+      ...(hasAuth
+        ? {
+            mode: 'cors',
+          }
+        : {
+            mode: 'no-cors',
+          }),
+    });
+    data = await response.json();
+  } catch (e) {
+    return {};
+  }
+
+  return data
     .filter((image) => image.name.startsWith(priceId))
     .reduce((res, image) => {
       const type = image.name.replace(/\.[^/.]+$/, '').split('-')[1];

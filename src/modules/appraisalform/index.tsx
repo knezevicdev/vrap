@@ -491,6 +491,7 @@ const AppraisalForm: React.FC = () => {
           .push({
             pathname: useAppraisalStore.getState().reviewPath(),
             query: {
+              ...(router.query.form && { form: router.query.form }),
               vin: useAppraisalStore.getState().vehicleInfoForm.vin,
               ts: Date.now(),
             },

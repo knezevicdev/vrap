@@ -46,8 +46,8 @@ const AppraisalReview: React.FC<Props> = ({ token }) => {
   const submitAppraisal = useSubmitAppraisal(router, token, isTradeIn);
 
   useEffect(() => {
-    setForm(isTradeIn ? 'trade' : 'sell');
-  }, [setForm, isTradeIn]);
+    setForm(router.query.form === 'trade' ? 'trade' : 'sell');
+  }, [router.query.form, setForm]);
 
   useEffect(() => {
     if (isFormEmpty()) {
