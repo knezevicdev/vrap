@@ -45,7 +45,10 @@ const VinInput: React.FC = () => {
     router
       .push({
         pathname: useAppraisalStore.getState().appraisalPath(),
-        query: { vehicle: vinForPath, form: router.query.form },
+        query: {
+          vehicle: vinForPath,
+          ...(router.query.form && { form: router.query.form }),
+        },
       })
       .catch((e) => {
         console.error(e);
