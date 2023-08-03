@@ -87,7 +87,9 @@ export const getServerSideProps: GetServerSideProps<Props> = async (
 
   const hasUserSignedInBefore = !!ctx.req.cookies['ajs_user_id'];
   const isTradeIn = ctx.req.url?.includes('/tradeIn-selfService');
-  const requireAuth = isTradeIn || hasUserSignedInBefore;
+  const isInStore = Object.keys(ctx.query).includes('in-store');
+
+  const requireAuth = isTradeIn || (hasUserSignedInBefore && !isInStore);
 
   return {
     props: {
