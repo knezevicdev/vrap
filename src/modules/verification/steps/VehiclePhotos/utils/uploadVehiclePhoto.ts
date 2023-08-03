@@ -1,4 +1,3 @@
-import axios from 'axios';
 import { ActualFileObject } from 'filepond';
 import getConfig from 'next/config';
 
@@ -28,17 +27,38 @@ export const uploadVehiclePhoto = async (
     'Content-Type': 'application/octet-stream',
   };
 
+  const hasAuth = publicRuntimeConfig.ICO_DASH_AUTH;
   if (publicRuntimeConfig.ICO_DASH_AUTH) {
     headers.Authorization = publicRuntimeConfig.ICO_DASH_AUTH;
   }
 
-  await axios.post(
-    `${publicRuntimeConfig.ICO_DASH_URL}/api/appraisal-photos/upload?priceId=${priceId}&fileType=${fileType}&vin=${vin}`,
-    fileBuffer,
-    {
-      headers,
-    }
-  );
+  try {
+    const response = await fetch(
+      `${publicRuntimeConfig.ICO_DASH_URL}/api/appraisal-photos/upload?priceId=${priceId}&fileType=${fileType}&vin=${vin}`,
+      {
+        method: 'POST',
+        headers,
+        body: fileBuffer,
+        ...(hasAuth
+          ? {
+              mode: 'cors',
+            }
+          : {
+              mode: 'no-cors',
+            }),
+      }
+    );
 
-  return true;
+    if (response.ok) {
+      return true;
+    } else {
+      console.error(
+        `Error uploading vehicle photo. Status: ${response.status}`
+      );
+      return false;
+    }
+  } catch (error) {
+    console.error('Error uploading vehicle photo:', error);
+    return false;
+  }
 };
