@@ -154,9 +154,12 @@ export function makeRequestBody(): AppraisalPayload {
   const data = {
     // eslint-disable-next-line @typescript-eslint/naming-convention
     DateSubmitted: now,
-    form: appraisalData.isTradeIn
-      ? 'trade'
-      : appraisalData.vehicleInfoForm.sellOrTradeIn,
+    form:
+      appraisalData.isTradeIn ||
+      appraisalData.vehicleInfoForm.sellOrTradeIn.toLowerCase() === 'trade' ||
+      appraisalData.form === 'trade'
+        ? 'trade'
+        : 'sell',
     lead_id,
     anonymous_id,
     ...vehicleInformationData(appraisalData.vehicleInfoForm),
