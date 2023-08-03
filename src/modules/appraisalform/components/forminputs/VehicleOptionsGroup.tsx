@@ -16,9 +16,14 @@ const VehicleOptionsGroup: React.FC<Props> = ({
   options,
   className,
 }) => {
-  const [checkedValuesForParent, setCheckedValuesForParent] = useState(
-    [] as string[]
-  );
+  const [checkedValuesForParent, setCheckedValuesForParent] = useState(() => {
+    return options.reduce((result, opt) => {
+      const optChecked = field.value.includes(opt.name) || opt.selected;
+      if (!optChecked) return result;
+
+      return [...result, opt.name];
+    }, []);
+  });
   const { onChange } = field;
   const optionsDefaultVals = options.reduce((result, opt) => {
     const optChecked = field.value.includes(opt.name) || opt.selected;
