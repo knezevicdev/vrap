@@ -26,11 +26,6 @@ const useSubmitAppraisal = (
 
       const requestPayload: AppraisalPayload = makeRequestBody();
 
-      // temporary solution for adding flag for active test
-      if (requestPayload.additionalDetails.length)
-        requestPayload.additionalDetails += ' ';
-      requestPayload.additionalDetails += `suyc-condition-category-questions: true`;
-
       const leadTrackingData = {
         email: requestPayload.email,
         phone: requestPayload.phoneNumber,
