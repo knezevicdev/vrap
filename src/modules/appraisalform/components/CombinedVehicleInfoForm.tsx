@@ -1,6 +1,7 @@
 import React, { ReactNode } from 'react';
 import styled from 'styled-components';
 
+import useIsInExperiment from '../../../hooks/useIsInExperiment';
 import { FormField } from '../../../interfaces.d';
 import { UseForm } from './componentInterfaces.d';
 import ExteriorCondition from './ExteriorConditions';
@@ -19,6 +20,9 @@ interface Props {
 const CombinedVehicleInfoForms = (props: Props): ReactNode => {
   const { isMechanicalSelected, isExteriorSelected, isInteriorSelected } =
     props.combinedFormInvalidSections;
+
+  const { isInExperiment: isInAdditionalCommentsExperiment, isLoading } =
+    useIsInExperiment('appraisal-form-additional-comments-field');
 
   return (
     <div>
@@ -48,7 +52,9 @@ const CombinedVehicleInfoForms = (props: Props): ReactNode => {
         emissionField={props.fields.passStateEmissionStandards}
       />
       <br />
-      <AdditionalDetailsInput field={props.fields.additionalDetails} />
+      {!isLoading && !isInAdditionalCommentsExperiment && (
+        <AdditionalDetailsInput field={props.fields.additionalDetails} />
+      )}
     </div>
   );
 };
