@@ -100,9 +100,9 @@ const Register = ({
     }
 
     trackRegistrationAndSubmitWebLead(
-      data.email,
       data.firstName,
       data.lastName,
+      data.email,
       data.phoneNumber,
       response.data.externalUserID
     );
