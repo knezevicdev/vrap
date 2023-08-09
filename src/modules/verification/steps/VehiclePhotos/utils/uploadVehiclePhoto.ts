@@ -40,7 +40,7 @@ export const uploadVehiclePhoto = async (
   };
 
   const hasAuth = publicRuntimeConfig.ICO_DASH_AUTH;
-  if (publicRuntimeConfig.ICO_DASH_AUTH) {
+  if (hasAuth) {
     headers.Authorization = publicRuntimeConfig.ICO_DASH_AUTH;
   }
 
@@ -67,7 +67,7 @@ export const uploadVehiclePhoto = async (
                 mode: 'cors',
               }
             : {
-                mode: 'cors',
+                mode: 'no-cors',
               }),
         }
       );
