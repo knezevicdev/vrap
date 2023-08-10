@@ -139,6 +139,10 @@ const config = {
     WEB_LEADS_URL: currentConfig.WEB_LEADS_URL,
     ICO_DASH_URL: currentConfig.ICO_DASH_URL,
     ICO_DASH_AUTH: currentConfig.ICO_DASH_AUTH,
+    ICO_DASH_OVERRIDE: currentConfig.ICO_DASH_OVERRIDE,
+    ICO_DASH_UPLOAD_URL: currentConfig.ICO_DASH_UPLOAD_URL,
+    ICO_DASH_UPLOAD_AUTH: currentConfig.ICO_DASH_UPLOAD_AUTH,
+    ICO_DASH_UPLOAD_OVERRIDE: currentConfig.ICO_DASH_UPLOAD_OVERRIDE,
   },
   serverRuntimeConfig: {
     // Will only be available on the server side

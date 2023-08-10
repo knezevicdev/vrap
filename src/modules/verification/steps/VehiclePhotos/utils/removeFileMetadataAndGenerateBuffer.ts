@@ -1,8 +1,8 @@
 import { ActualFileObject } from 'filepond';
 
-const removeFileMetadataAndGenerateBase64 = async (
+const removeFileMetadataAndGenerateBuffer = async (
   file: ActualFileObject
-): Promise<string> => {
+): Promise<ArrayBuffer> => {
   let canvas: HTMLCanvasElement | undefined = undefined;
   let cleanObjectUrl: () => void = () => {
     // nothing
@@ -23,7 +23,16 @@ const removeFileMetadataAndGenerateBase64 = async (
     if (!ctx) throw new Error('Could not get canvas context');
     ctx.drawImage(img, 0, 0);
 
-    return canvas.toDataURL('image/jpeg', 1);
+    const newBlob = (await new Promise((resolve) => {
+      if (!canvas) {
+        resolve(null);
+        return;
+      }
+      canvas.toBlob(resolve, 'image/jpeg', 1);
+    })) as Blob | null;
+    if (!newBlob) throw new Error('Could not generate new blob');
+
+    return newBlob.arrayBuffer();
   } catch (error) {
     console.error(error);
     throw error;
@@ -33,4 +42,4 @@ const removeFileMetadataAndGenerateBase64 = async (
   }
 };
 
-export default removeFileMetadataAndGenerateBase64;
+export default removeFileMetadataAndGenerateBuffer;

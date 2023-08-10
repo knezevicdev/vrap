@@ -1,8 +1,7 @@
-import crypto from 'crypto';
 import { ActualFileObject } from 'filepond';
 import getConfig from 'next/config';
 
-import removeFileMetadataAndGenerateBase64 from './removeFileMetadataAndGenerateBase64';
+import removeFileMetadataAndGenerateBuffer from './removeFileMetadataAndGenerateBuffer';
 
 const { publicRuntimeConfig } = getConfig();
 
@@ -21,68 +20,57 @@ export const uploadVehiclePhoto = async (
   vin: string,
   priceId: string
 ): Promise<boolean> => {
-  const base64Uri = (await removeFileMetadataAndGenerateBase64(file))
-    .split(';base64,')
-    .pop();
-  if (!base64Uri) return false;
-
-  const chunks = [];
-
-  let index = 0;
-  while (index < base64Uri.length) {
-    chunks.push(base64Uri.slice(index, index + 100_000)); // make chunks of 400kB each
-    index += 100_000;
-  }
+  const fileBuffer = await removeFileMetadataAndGenerateBuffer(file);
 
   const headers: Record<string, string> = {
     // eslint-disable-next-line @typescript-eslint/naming-convention
-    'Content-Type': 'application/json',
+    'Content-Type': 'application/octet-stream',
   };
 
-  const hasAuth = publicRuntimeConfig.ICO_DASH_AUTH;
+  const url = publicRuntimeConfig.ICO_DASH_UPLOAD_URL
+    ? publicRuntimeConfig.ICO_DASH_UPLOAD_URL
+    : publicRuntimeConfig.ICO_DASH_URL;
+  const auth = publicRuntimeConfig.ICO_DASH_UPLOAD_AUTH
+    ? publicRuntimeConfig.ICO_DASH_UPLOAD_AUTH
+    : publicRuntimeConfig.ICO_DASH_AUTH;
+  const apiOverride = publicRuntimeConfig.ICO_DASH_UPLOAD_OVERRIDE
+    ? publicRuntimeConfig.ICO_DASH_UPLOAD_OVERRIDE
+    : publicRuntimeConfig.ICO_DASH_OVERRIDE;
+
+  const hasAuth = !!auth;
   if (hasAuth) {
-    headers.Authorization = publicRuntimeConfig.ICO_DASH_AUTH;
+    headers.Authorization = auth;
   }
 
-  const identifier = crypto.randomBytes(16).toString('hex');
-
-  for (let chunkIndex = 0; chunkIndex < chunks.length; chunkIndex++) {
-    try {
-      const response = await fetch(
-        `${publicRuntimeConfig.ICO_DASH_URL}/api/appraisal-photos/chunked`,
-        {
-          method: 'POST',
-          headers,
-          body: JSON.stringify({
-            fileType,
-            priceId,
-            identifier,
-            totalChunks: chunks.length,
-            chunkIndex,
-            payload: chunks[chunkIndex],
-            vin,
-          }),
-          ...(hasAuth
-            ? {
-                mode: 'cors',
-              }
-            : {
-                mode: 'no-cors',
-              }),
-        }
-      );
-
-      if (!response.ok) {
-        console.error(
-          `Error uploading vehicle photo. Status: ${response.status}`
-        );
-        return false;
+  try {
+    const response = await fetch(
+      `${url}/api/appraisal-photos/upload?priceId=${priceId}&fileType=${fileType}&vin=${vin}${
+        apiOverride ? `&apiOverride=${apiOverride}` : ''
+      }}`,
+      {
+        method: 'POST',
+        headers,
+        body: fileBuffer,
+        ...(hasAuth
+          ? {
+              mode: 'cors',
+            }
+          : {
+              mode: 'no-cors',
+            }),
       }
-    } catch (error) {
-      console.error('Error uploading vehicle photo:', error);
+    );
+
+    if (response.ok) {
+      return true;
+    } else {
+      console.error(
+        `Error uploading vehicle photo. Status: ${response.status}`
+      );
       return false;
     }
+  } catch (error) {
+    console.error('Error uploading vehicle photo:', error);
+    return false;
   }
-
-  return true;
 };
