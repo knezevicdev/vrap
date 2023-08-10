@@ -46,7 +46,7 @@ export const uploadVehiclePhoto = async (
     const response = await fetch(
       `${url}/api/appraisal-photos/upload?priceId=${priceId}&fileType=${fileType}&vin=${vin}${
         apiOverride ? `&apiOverride=${apiOverride}` : ''
-      }}`,
+      }`,
       {
         method: 'POST',
         headers,
