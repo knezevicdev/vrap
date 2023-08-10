@@ -16,9 +16,5 @@
   "VIS_URL": "https://vis-int.prod.vroom.cloud/",
   "VROOM_URL": "https://www.vroom.com",
   "RECAPTCHA_SITE_KEY": "6Le6wLMgAAAAALm7gYrofvWVwOPFm2YVO0gTSsdQ",
-  "ICO_DASH_URL": "https://icodashboard.feautoprod.vast.com",
-  "ICO_DASH_AUTH": "",
-  "ICO_DASH_UPLOAD_URL": "https://icodashboard.feautobeta.vast.com",
-  "ICO_DASH_UPLOAD_AUTH": "Basic ZnJvbnRlbmQ6dGVzdHRlc3Q=",
-  "ICO_DASH_UPLOAD_OVERRIDE": "prod"
+  "ICO_DASH_OVERRIDE": "prod"
 }

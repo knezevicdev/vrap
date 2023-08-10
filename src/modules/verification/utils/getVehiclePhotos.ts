@@ -14,14 +14,16 @@ const getVehiclePhotos = async (
   vin: string,
   priceId: string
 ): Promise<Partial<Record<DocumentFileType, string>>> => {
-  const url = `${publicRuntimeConfig.ICO_DASH_URL}/api/appraisal-photos?vin=${vin}`;
+  const apiOverride = publicRuntimeConfig.ICO_DASH_OVERRIDE;
+  const url = `${
+    publicRuntimeConfig.ICO_DASH_URL
+  }/api/appraisal-photos?vin=${vin}${
+    apiOverride ? `&apiOverride=${apiOverride}` : ''
+  }`;
   const headers: Record<string, string> = {
     accept: 'application/json, text/plain, */*',
+    Authorization: publicRuntimeConfig.ICO_DASH_AUTH,
   };
-  const hasAuth = publicRuntimeConfig.ICO_DASH_AUTH;
-  if (hasAuth) {
-    headers.Authorization = publicRuntimeConfig.ICO_DASH_AUTH;
-  }
 
   let data: ImagesResponse;
 
@@ -30,13 +32,7 @@ const getVehiclePhotos = async (
       headers,
       body: null,
       method: 'POST',
-      ...(hasAuth
-        ? {
-            mode: 'cors',
-          }
-        : {
-            mode: 'no-cors',
-          }),
+      mode: 'cors',
     });
     data = await response.json();
   } catch (e) {

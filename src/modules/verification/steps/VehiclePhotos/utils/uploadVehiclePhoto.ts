@@ -25,39 +25,23 @@ export const uploadVehiclePhoto = async (
   const headers: Record<string, string> = {
     // eslint-disable-next-line @typescript-eslint/naming-convention
     'Content-Type': 'application/octet-stream',
+    Authorization: publicRuntimeConfig.ICO_DASH_AUTH,
   };
 
-  const url = publicRuntimeConfig.ICO_DASH_UPLOAD_URL
-    ? publicRuntimeConfig.ICO_DASH_UPLOAD_URL
-    : publicRuntimeConfig.ICO_DASH_URL;
-  const auth = publicRuntimeConfig.ICO_DASH_UPLOAD_AUTH
-    ? publicRuntimeConfig.ICO_DASH_UPLOAD_AUTH
-    : publicRuntimeConfig.ICO_DASH_AUTH;
-  const apiOverride = publicRuntimeConfig.ICO_DASH_UPLOAD_OVERRIDE
-    ? publicRuntimeConfig.ICO_DASH_UPLOAD_OVERRIDE
-    : publicRuntimeConfig.ICO_DASH_OVERRIDE;
-
-  const hasAuth = !!auth;
-  if (hasAuth) {
-    headers.Authorization = auth;
-  }
+  const apiOverride = publicRuntimeConfig.ICO_DASH_OVERRIDE;
 
   try {
     const response = await fetch(
-      `${url}/api/appraisal-photos/upload?priceId=${priceId}&fileType=${fileType}&vin=${vin}${
+      `${
+        publicRuntimeConfig.ICO_DASH_URL
+      }/api/appraisal-photos/upload?priceId=${priceId}&fileType=${fileType}&vin=${vin}${
         apiOverride ? `&apiOverride=${apiOverride}` : ''
       }`,
       {
         method: 'POST',
         headers,
         body: fileBuffer,
-        ...(hasAuth
-          ? {
-              mode: 'cors',
-            }
-          : {
-              mode: 'no-cors',
-            }),
+        mode: 'cors',
       }
     );
 
