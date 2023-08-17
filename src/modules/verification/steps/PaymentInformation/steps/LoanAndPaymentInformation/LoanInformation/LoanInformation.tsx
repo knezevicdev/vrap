@@ -93,6 +93,9 @@ const LoanInformation = ({ form, onPrev, onNext, onEdit, preview }: Props) => {
           onChange={(bankName: string, lenderId: string) => {
             form.setValue('bankName', bankName);
             form.setValue('lienId', lenderId);
+            if (form.getValues().bankName !== '') {
+              form.trigger();
+            }
           }}
           defaultValue={form.getValues().bankName}
         />

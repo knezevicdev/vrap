@@ -34,8 +34,22 @@ const useAvailableFields = (
         LoanField.SSN_LAST_DIGITS
       );
     }
-    if (bankName === 'Other') localAvailableFields.push(LoanField.LIEN_NAME);
+
+    const formValues = form.getValues();
+
+    if (bankName === 'Other') {
+      localAvailableFields.push(LoanField.LIEN_NAME);
+    } else if (formValues.manualBankName !== '') {
+      form.setValue('manualBankName', '');
+    }
     form.setValue('accFields', includePhoneAndSsn);
+    if (
+      !includePhoneAndSsn &&
+      (formValues.phoneNumber !== '' || formValues.lastFourDigits !== '')
+    ) {
+      form.setValue('phoneNumber', '');
+      form.setValue('lastFourDigits', '');
+    }
 
     if (
       JSON.stringify(localAvailableFields) !== JSON.stringify(availableFields)
