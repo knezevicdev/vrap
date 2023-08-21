@@ -18,7 +18,7 @@ function generateUUID4() {
   return crypto.randomBytes(16).toString('hex');
 }
 
-function vehicleInformationData(data: VehicleInfoForm) {
+function vehicleInformationData(data: VehicleInfoForm, isTradeIntent: boolean) {
   return {
     vin: data.vin,
     year: data.year,
@@ -31,7 +31,7 @@ function vehicleInformationData(data: VehicleInfoForm) {
     keysAmount: '1',
     options: data.vehicleOptions,
     zipCode: data.zipCode,
-    appraisalIntent: data.sellOrTradeIn.toLowerCase(),
+    appraisalIntent: isTradeIntent ? 'trade' : data.sellOrTradeIn.toLowerCase(),
   };
 }
 
@@ -151,18 +151,17 @@ export function makeRequestBody(): AppraisalPayload {
     window.analytics.user().anonymousId
       ? window.analytics.user().anonymousId()
       : null;
+
+  const isTradeIntent =
+    appraisalData.isTradeIn || appraisalData.form === 'trade';
+
   const data = {
     // eslint-disable-next-line @typescript-eslint/naming-convention
     DateSubmitted: now,
-    form:
-      appraisalData.isTradeIn ||
-      appraisalData.vehicleInfoForm.sellOrTradeIn.toLowerCase() === 'trade' ||
-      appraisalData.form === 'trade'
-        ? 'trade'
-        : 'sell',
+    form: isTradeIntent ? 'trade' : 'sell',
     lead_id,
     anonymous_id,
-    ...vehicleInformationData(appraisalData.vehicleInfoForm),
+    ...vehicleInformationData(appraisalData.vehicleInfoForm, isTradeIntent),
     ...vehicleHistoryData(
       appraisalData.vehicleHistoryForm,
       appraisalData.isTradeIn
