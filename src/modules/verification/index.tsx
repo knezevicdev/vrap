@@ -238,7 +238,7 @@ const UnifiedVerification = () => {
                 const { owner_email_address, owner_first_name } =
                   response.data.data;
 
-                analyticsHandler.current.trackVerificationSubmitted(
+                analyticsHandler.current.trackProvideDocumentsClicked(
                   owner_email_address,
                   owner_first_name
                 );

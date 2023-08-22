@@ -125,13 +125,16 @@ describe('test AnalyticsHandler ', () => {
     expect(pageSpy).toHaveBeenCalledWith('Verification Review', 'verification');
   });
 
-  it('test trackVerificationSubmitted ', () => {
+  it('test trackProvideDocumentsClicked ', () => {
     const email = 'test@test.com';
     const firstName = 'fname';
     const category = 'verification';
-    analytics.trackVerificationSubmitted(email, firstName);
+    analytics.trackProvideDocumentsClicked(email, firstName);
     const properties = { email, 'Account.FirstName': firstName, category };
-    expect(trackSpy).toHaveBeenCalledWith('Verification Submitted', properties);
+    expect(trackSpy).toHaveBeenCalledWith(
+      'Provide Documents Clicked',
+      properties
+    );
   });
 
   it('test trackLicenseToVin ', () => {
