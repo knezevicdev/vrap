@@ -3,7 +3,7 @@ import {
   Link as UILink,
   Typography,
 } from '@vroom-web/ui-lib';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 export const DialogOverlay = styled.div`
   position: fixed;
@@ -64,14 +64,39 @@ export const Link = styled(UILink.Text)`
   }
 `;
 
-export const Button = styled(UIButton.Outline)`
-  width: 50%;
+export const ButtonsWrapper = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 1.5rem;
+  justify-content: space-between;
+  margin: 0 1.5rem;
+
+  @media (max-width: 600px) {
+    grid-template-columns: 1fr;
+  }
+`;
+
+const buttonStyle = css`
+  width: 100%;
   font-size: 16px;
   font-family: Calibre, Arial, sans-serif;
   font-weight: 600;
   letter-spacing: 1.75px;
   text-transform: uppercase;
   margin: 0 auto 1rem;
+`;
+
+export const ButtonSecondary = styled(UIButton.Secondary)`
+  ${buttonStyle}
+`;
+
+export const ButtonPrimary = styled(UIButton.Primary)`
+  ${buttonStyle}
+`;
+
+export const ButtonOutline = styled(UIButton.Outline)`
+  ${buttonStyle}
+  width: 50%;
 
   @media (max-width: 600px) {
     width: 80%;

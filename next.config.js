@@ -140,6 +140,7 @@ const config = {
     ICO_DASH_URL: currentConfig.ICO_DASH_URL,
     ICO_DASH_AUTH: currentConfig.ICO_DASH_AUTH,
     ICO_DASH_OVERRIDE: currentConfig.ICO_DASH_OVERRIDE,
+    SHOULD_CALL_ZAPIER: currentConfig.SHOULD_CALL_ZAPIER,
   },
   serverRuntimeConfig: {
     // Will only be available on the server side
@@ -157,6 +158,7 @@ const config = {
     SEGMENT_WRITE_KEY: currentConfig.SEGMENT_WRITE_KEY,
     VIS_URL: currentConfig.VIS_URL,
     WEB_LEADS_PROXY_TARGET: currentConfig.WEB_LEADS_PROXY_TARGET,
+    ZAPIER_WEBHOOK: currentConfig.ZAPIER_WEBHOOK,
   },
   /* Custom webpack configuration. */
   webpack: (config) => {

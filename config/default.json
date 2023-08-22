@@ -33,5 +33,7 @@
   "WEB_LEADS_PROXY_TARGET": "/api/weblead/attribution",
   "WEB_LEADS_URL": "/api/weblead/attribution",
   "ICO_DASH_URL": "https://icodashboard.feautobeta.vast.com",
-  "ICO_DASH_AUTH": "Basic ZnJvbnRlbmQ6dGVzdHRlc3Q="
+  "ICO_DASH_AUTH": "Basic ZnJvbnRlbmQ6dGVzdHRlc3Q=",
+  "SHOULD_CALL_ZAPIER": false,
+  "ZAPIER_WEBHOOK": "https://hooks.zapier.com/hooks/catch/1232083/3tij769/"
 }
