@@ -17,5 +17,5 @@
   "VROOM_URL": "https://www.vroom.com",
   "RECAPTCHA_SITE_KEY": "6Le6wLMgAAAAALm7gYrofvWVwOPFm2YVO0gTSsdQ",
   "ICO_DASH_OVERRIDE": "prod",
-  "SHOULD_CALL_ZAPIER": false
+  "SHOULD_CALL_ZAPIER": true
 }
