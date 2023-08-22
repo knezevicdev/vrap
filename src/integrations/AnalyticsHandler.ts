@@ -445,6 +445,30 @@ class AnalyticsHandler extends BaseAnalyticsHandler {
     const properties = { category };
     this.track(event, properties);
   }
+
+  trackNearSUYCLocationModalShown(vin: string, userEmail: string): void {
+    const event = 'Near SUYC Location Modal Shown';
+    const category = 'verification';
+    const properties = { category, vin, userEmail };
+    this.track(event, properties);
+  }
+
+  trackNearSUYCLocationModalYesCTAClicked(
+    vin: string,
+    userEmail: string
+  ): void {
+    const event = 'Near SUYC Location Modal Yes CTA Clicked';
+    const category = 'verification';
+    const properties = { category, vin, userEmail };
+    this.track(event, properties);
+  }
+
+  trackNearSUYCLocationModalNoCTAClicked(vin: string, userEmail: string): void {
+    const event = 'Near SUYC Location Modal No CTA Clicked';
+    const category = 'verification';
+    const properties = { category, vin, userEmail };
+    this.track(event, properties);
+  }
 }
 
 export default AnalyticsHandler;
