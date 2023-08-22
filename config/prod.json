@@ -16,5 +16,6 @@
   "VIS_URL": "https://vis-int.prod.vroom.cloud/",
   "VROOM_URL": "https://www.vroom.com",
   "RECAPTCHA_SITE_KEY": "6Le6wLMgAAAAALm7gYrofvWVwOPFm2YVO0gTSsdQ",
-  "ICO_DASH_OVERRIDE": "prod"
+  "ICO_DASH_OVERRIDE": "prod",
+  "SHOULD_CALL_ZAPIER": false
 }
