@@ -85,8 +85,8 @@ class AnalyticsHandler extends BaseAnalyticsHandler {
     this.page(name, category);
   }
 
-  trackVerificationSubmitted(email: string, firstName: string): void {
-    const event = 'Verification Submitted';
+  trackProvideDocumentsClicked(email: string, firstName: string): void {
+    const event = 'Provide Documents Clicked';
     const category = 'verification';
     const properties = { email, 'Account.FirstName': firstName, category };
     this.track(event, properties);
