@@ -65,7 +65,7 @@ const calculateDistanceInMiles = (
   const R = 3958.8; // Earth's radius in miles
 
   const dLat = toRadians(location2.lat - location1.lat);
-  const dLon = toRadians(location2.lng - location2.lng);
+  const dLon = toRadians(location2.lng - location1.lng);
 
   const a =
     Math.sin(dLat / 2) ** 2 +
