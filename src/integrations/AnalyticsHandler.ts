@@ -85,11 +85,15 @@ class AnalyticsHandler extends BaseAnalyticsHandler {
     this.page(name, category);
   }
 
-  trackProvideDocumentsClicked(email: string, firstName: string): void {
+  trackProvideDocumentsClicked(
+    email: string,
+    firstName: string,
+    callback: () => void
+  ): void {
     const event = 'Provide Documents Clicked';
     const category = 'verification';
     const properties = { email, 'Account.FirstName': firstName, category };
-    this.track(event, properties);
+    this.track(event, properties, undefined, callback, 1500);
   }
 
   trackLicenseToVin(label: string, category: string): void {

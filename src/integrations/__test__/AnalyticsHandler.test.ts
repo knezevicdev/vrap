@@ -129,11 +129,15 @@ describe('test AnalyticsHandler ', () => {
     const email = 'test@test.com';
     const firstName = 'fname';
     const category = 'verification';
-    analytics.trackProvideDocumentsClicked(email, firstName);
+    const callback = jest.fn();
+    analytics.trackProvideDocumentsClicked(email, firstName, callback);
     const properties = { email, 'Account.FirstName': firstName, category };
     expect(trackSpy).toHaveBeenCalledWith(
       'Provide Documents Clicked',
-      properties
+      properties,
+      undefined,
+      callback,
+      1500
     );
   });
 
