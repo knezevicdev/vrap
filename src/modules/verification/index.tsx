@@ -240,10 +240,11 @@ const UnifiedVerification = () => {
 
                 analyticsHandler.current.trackProvideDocumentsClicked(
                   owner_email_address,
-                  owner_first_name
+                  owner_first_name,
+                  () => {
+                    window.location.href = `/myaccount/hub/documents/sb`;
+                  }
                 );
-
-                window.location.href = `/myaccount/hub/documents/sb`;
               }}
               onNext={(currentSection, nextSection) => {
                 if (currentSection < 3) {
