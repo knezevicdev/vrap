@@ -3,6 +3,8 @@ import getConfig from 'next/config';
 
 import removeFileMetadataAndGenerateBuffer from './removeFileMetadataAndGenerateBuffer';
 
+import client from 'src/networking/client';
+
 const { publicRuntimeConfig } = getConfig();
 
 export enum DocumentFileType {
@@ -13,6 +15,14 @@ export enum DocumentFileType {
   DASH_INSTRUMENT_CLUSTER = 'dashCluster',
   DRIVER_SIDE_FRONT_SEAT = 'driverSideFrontSeat',
 }
+
+const noticePhotoUploaded = async (vin: string): Promise<void> => {
+  await client.httpRequest({
+    method: 'POST',
+    url: '/appraisal/api/notice-photo-uploaded',
+    data: { vin },
+  });
+};
 
 export const uploadVehiclePhoto = async (
   file: ActualFileObject,
@@ -46,6 +56,9 @@ export const uploadVehiclePhoto = async (
     );
 
     if (response.ok) {
+      noticePhotoUploaded(vin).catch((error) => {
+        console.warn('Error calling noticePhotoUploaded:', error);
+      });
       return true;
     } else {
       console.error(

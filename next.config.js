@@ -159,6 +159,9 @@ const config = {
     VIS_URL: currentConfig.VIS_URL,
     WEB_LEADS_PROXY_TARGET: currentConfig.WEB_LEADS_PROXY_TARGET,
     ZAPIER_WEBHOOK: currentConfig.ZAPIER_WEBHOOK,
+    GOOGLE_SERVICE_ACCOUNT: process.env.GOOGLE_SERVICE_ACCOUNT,
+    APPRAISAL_PHOTOS_SPREADSHEET_ID:
+      process.env.APPRAISAL_PHOTOS_SPREADSHEET_ID,
   },
   /* Custom webpack configuration. */
   webpack: (config) => {
