@@ -1,5 +1,9 @@
 import { Button, Icon, Link, Typography } from '@vroom-web/ui-lib';
+import getConfig from 'next/config';
 import styled from 'styled-components';
+
+const { publicRuntimeConfig } = getConfig();
+const BASE_PATH = publicRuntimeConfig.BASE_PATH;
 
 export const StyledContainer = styled.div`
   height: 100%;
@@ -40,7 +44,7 @@ export const StickyContent = styled.div`
 
 export const StyledLegal = styled.div`
   max-width: 500px;
-  text-align: left;
+  text-align: center;
   margin: auto;
   > span {
     line-height: 12px;
@@ -92,4 +96,30 @@ export const TaxLink = styled(Link.Text)`
   cursor: pointer;
   color: rgb(48, 132, 6);
   font-family: Calibre-Semibold, sans-serif;
+`;
+
+export const PriceSubtitle = styled(Typography.Heading.Four)`
+  font-size: 16px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  line-height: 1.2;
+  margin-top: 5px;
+`;
+
+export const locationIcon = `${BASE_PATH}/icons/car.svg`;
+
+export const CarImage = styled.div`
+  background: url(${locationIcon}) center no-repeat;
+  width: 25px;
+  height: 20px;
+  margin-right: 5px;
+`;
+
+export const PriceExplanationContainer = styled.div`
+  margin-bottom: 12px;
+`;
+
+export const PriceExplanation = styled(Typography.Body.Small)`
+  text-align: center;
 `;

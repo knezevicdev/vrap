@@ -1,7 +1,7 @@
 {
   "ABSMARTLY_API_KEY": "GGn4f29B6Fo1Oeh2CLrJV/CJPAIXm3p5541qRLCqXfyw7eEMJacDMXxVEqK3DvXc",
   "ABSMARTLY_APP": "web",
-  "ABSMARTLY_ENV": "dev",
+  "ABSMARTLY_ENV": "qa",
   "ABSMARTLY_URL": "/absmartly/v1",
   "ACCOUNT_MANAGEMENT_URL": "https://accountmanagement-int.dev.vroom.cloud",
   "ACQUISITIONS_URL": "https://acquisition-int.qa.vroom.cloud/v1",
