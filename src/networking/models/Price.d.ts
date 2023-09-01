@@ -22,6 +22,7 @@ export interface Price {
   payment_method: string | null;
   phone: string;
   zipcode: string;
+  grade: string;
 }
 
 export interface Prices {

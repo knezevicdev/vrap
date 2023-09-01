@@ -473,6 +473,20 @@ class AnalyticsHandler extends BaseAnalyticsHandler {
     const properties = { category, vin, userEmail };
     this.track(event, properties);
   }
+
+  trackRetailAppraisalOffer(vin: string, userEmail: string): void {
+    const event = 'Retail Appraisal Offer';
+    const category = 'price';
+    const properties = { category, vin, userEmail };
+    this.track(event, properties);
+  }
+
+  trackWholesaleAppraisalOffer(vin: string, userEmail: string): void {
+    const event = 'Wholesale Appraisal Offer';
+    const category = 'price';
+    const properties = { category, vin, userEmail };
+    this.track(event, properties);
+  }
 }
 
 export default AnalyticsHandler;
