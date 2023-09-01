@@ -10,9 +10,13 @@ import { displayCurrency } from '../../utils';
 import AuthModal from '../AuthModal/AuthModal';
 import Spinner from '../Spinner';
 import {
+  CarImage,
   Content,
   ContentText,
   FullButton,
+  PriceExplanation,
+  PriceExplanationContainer,
+  PriceSubtitle,
   StickyContent,
   StickyDetails,
   StickyFooter,
@@ -63,10 +67,17 @@ const InitialPrice: React.FC = () => {
   );
   const { taxState, taxSavings } = useTaxSavings(price, zipcode);
 
+  const showLowPriceNotice = price < 1000;
+
   return (
     <>
       <StyledContainer>
-        <Typography.Heading.Four>your price</Typography.Heading.Four>
+        <Typography.Heading.Three>your price</Typography.Heading.Three>
+        {showLowPriceNotice && (
+          <PriceSubtitle>
+            Your ride’s a little outside our specialty
+          </PriceSubtitle>
+        )}
         <Typography.Heading.One>{priceData.price}</Typography.Heading.One>
         <StyledIcon
           title="Car"
@@ -119,6 +130,21 @@ const InitialPrice: React.FC = () => {
           {isAcceptingPrice ? <Spinner /> : 'save and continue'}
         </StyledButton>
 
+        {showLowPriceNotice && (
+          <StyledLegal>
+            <PriceSubtitle>
+              <CarImage /> Details about our offer
+            </PriceSubtitle>
+            <PriceExplanationContainer>
+              <PriceExplanation>
+                Our offer price might not meet your expectations, but it is
+                based on thousands of similar market transactions. Some rides
+                with title issues, distinct histories, higher mileage or older
+                model years typically aren’t the best fit for us.
+              </PriceExplanation>
+            </PriceExplanationContainer>
+          </StyledLegal>
+        )}
         <StyledLegal>
           <Typography.Body.Small>
             This price is based on data from thousands of similar market
