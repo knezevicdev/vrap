@@ -1,10 +1,12 @@
 import { SkipNavigationLink } from '@vroom-web/ui-lib';
 import { GetServerSideProps, GetServerSidePropsContext, NextPage } from 'next';
 import { useRouter } from 'next/router';
-import React, { useEffect } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import styled from 'styled-components';
+import { shallow } from 'zustand/shallow';
 
 import useIsAbSmartlyLoading from '../../hooks/useIsAbSmartlyLoading';
+import AnalyticsHandler from '../../integrations/AnalyticsHandler';
 import usePriceStore from '../../modules/price/store';
 
 import AsyncIndicator from 'src/components/AsyncIndicator';
@@ -16,9 +18,19 @@ import PriceInfo from 'src/modules/price';
 import Page from 'src/Page';
 
 const Price: NextPage = () => {
+  const analyticsHandler = useMemo(() => new AnalyticsHandler(), []);
   const router = useRouter();
   const priceId = router.query.priceId as string;
   const isAbSmartlyLoading = useIsAbSmartlyLoading();
+
+  const { grade, vin, userEmail } = usePriceStore(
+    (state) => ({
+      grade: state.price.grade,
+      vin: state.price.vin,
+      userEmail: state.price.userEmail,
+    }),
+    shallow
+  );
 
   useEffect(() => {
     const storedId = localStorage.getItem('priceId');
@@ -29,6 +41,16 @@ const Price: NextPage = () => {
   }, [priceId]);
 
   const asyncStatus = usePriceStore((state) => state.asyncStatus);
+
+  useEffect(() => {
+    if (grade.toLowerCase() === 'retail') {
+      analyticsHandler.trackRetailAppraisalOffer(vin, userEmail);
+    }
+
+    if (grade.toLowerCase() === 'wholesale') {
+      analyticsHandler.trackWholesaleAppraisalOffer(vin, userEmail);
+    }
+  }, [grade, vin, userEmail, analyticsHandler]);
 
   return (
     <Page name="Price">

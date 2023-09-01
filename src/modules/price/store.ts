@@ -30,6 +30,7 @@ export interface PriceStoreState {
   xkeId: number;
   year: number;
   zipcode: string;
+  grade: string;
 }
 
 export const defaultPriceState: PriceStoreState = {
@@ -55,6 +56,7 @@ export const defaultPriceState: PriceStoreState = {
   xkeId: 0,
   year: 0,
   zipcode: '',
+  grade: '',
 };
 
 export type PriceState = {
@@ -104,6 +106,7 @@ const usePriceStore = create<PriceState>()((set) => ({
         priceMapFromResponse.xkeId = price.offer_id;
         priceMapFromResponse.year = price.Year__c;
         priceMapFromResponse.zipcode = price.zipcode;
+        priceMapFromResponse.grade = price.grade;
 
         // This actually creates "separate" updates
         // - Price updates and refreshes views
