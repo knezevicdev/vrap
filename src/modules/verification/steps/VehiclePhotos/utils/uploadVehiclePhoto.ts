@@ -1,7 +1,10 @@
 import { ActualFileObject } from 'filepond';
 import getConfig from 'next/config';
 
+import { VehiclePhotosKey } from '../../../store/photosVerification';
+import useVerificationStore from '../../../store/store';
 import removeFileMetadataAndGenerateBuffer from './removeFileMetadataAndGenerateBuffer';
+import { photosKeyToDocumentFileType } from './useGetPhotosUploadProps';
 
 import client from 'src/networking/client';
 
@@ -22,6 +25,28 @@ const noticePhotoUploaded = async (vin: string): Promise<void> => {
     url: '/appraisal/api/notice-photo-uploaded',
     data: { vin },
   });
+};
+
+const shouldNoticePhotoUploaded = (fileType: DocumentFileType) => {
+  const state = useVerificationStore.getState();
+
+  const photos = {
+    photosDriverSide: state.photosDriverSide,
+    photosPassengerSide: state.photosPassengerSide,
+    photosFront: state.photosFront,
+    photosBack: state.photosBack,
+    photosDash: state.photosDash,
+    photosFrontSeat: state.photosFrontSeat,
+  };
+
+  const photosLeftToUpload = Object.entries(photos)
+    .filter(([, photoUrl]) => !photoUrl)
+    .map(([key]) => photosKeyToDocumentFileType[key as VehiclePhotosKey]);
+
+  return (
+    photosLeftToUpload.length === 0 ||
+    (photosLeftToUpload.length === 1 && photosLeftToUpload[0] === fileType)
+  );
 };
 
 export const uploadVehiclePhoto = async (
@@ -55,7 +80,7 @@ export const uploadVehiclePhoto = async (
       }
     );
 
-    if (response.ok) {
+    if (response.ok && shouldNoticePhotoUploaded(fileType)) {
       noticePhotoUploaded(vin).catch((error) => {
         console.warn('Error calling noticePhotoUploaded:', error);
       });

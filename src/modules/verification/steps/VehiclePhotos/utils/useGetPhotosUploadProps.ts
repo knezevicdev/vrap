@@ -41,15 +41,17 @@ export const photosUploadProps: Record<
   },
 };
 
-const photosKeyToDocumentFileType: Record<VehiclePhotosKey, DocumentFileType> =
-  {
-    photosDriverSide: DocumentFileType.DRIVER_SIDE_EXTERIOR,
-    photosPassengerSide: DocumentFileType.PASSENGER_SIDE_EXTERIOR,
-    photosFront: DocumentFileType.FRONT,
-    photosBack: DocumentFileType.BACK,
-    photosDash: DocumentFileType.DASH_INSTRUMENT_CLUSTER,
-    photosFrontSeat: DocumentFileType.DRIVER_SIDE_FRONT_SEAT,
-  };
+export const photosKeyToDocumentFileType: Record<
+  VehiclePhotosKey,
+  DocumentFileType
+> = {
+  photosDriverSide: DocumentFileType.DRIVER_SIDE_EXTERIOR,
+  photosPassengerSide: DocumentFileType.PASSENGER_SIDE_EXTERIOR,
+  photosFront: DocumentFileType.FRONT,
+  photosBack: DocumentFileType.BACK,
+  photosDash: DocumentFileType.DASH_INSTRUMENT_CLUSTER,
+  photosFrontSeat: DocumentFileType.DRIVER_SIDE_FRONT_SEAT,
+};
 
 const useGetPhotosUploadProps = () => {
   const priceId = useVerificationStore((state) => state.priceId);
