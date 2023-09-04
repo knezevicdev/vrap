@@ -1,4 +1,4 @@
-import { Response } from '@vroom-web/networking';
+import { isErrorResponse, Response } from '@vroom-web/networking';
 import { enc, HmacSHA256 } from 'crypto-js';
 import Cookies from 'js-cookie';
 import getConfig from 'next/config';
@@ -22,6 +22,22 @@ type MutationAcceptRejectOfferArgs = {
   externalUserId: string;
 };
 
+function subtractOneDayFromOffer<T extends { Good_Until__c: string }>(
+  offer: T
+) {
+  if (!offer || !offer.Good_Until__c) return offer;
+
+  const goodUntil = new Date(offer.Good_Until__c);
+
+  const oneDayInMilliseconds = 24 * 60 * 60 * 1000;
+  const newGoodUntil = new Date(goodUntil.getTime() - oneDayInMilliseconds);
+
+  return {
+    ...offer,
+    Good_Until__c: newGoodUntil.toISOString().slice(0, 19) + 'Z',
+  };
+}
+
 export const getOfferDetails = async (
   priceId: string
 ): Promise<Response<Prices>> => {
@@ -31,6 +47,10 @@ export const getOfferDetails = async (
     method: 'get',
     url,
   });
+
+  if (isErrorResponse(res)) return res;
+
+  res.data.data = res.data.data.map(subtractOneDayFromOffer);
 
   return res;
 };
@@ -83,7 +103,7 @@ export const postAppraisalReview = async (
     const hmac = HmacSHA256(JSON.stringify(payload), signatureSecret);
     const signature = hmac.toString(enc.Hex);
 
-    return await client.httpRequest({
+    const response = await client.httpRequest<AppraisalResp>({
       method: 'post',
       url,
       timeout: 30000,
@@ -93,5 +113,11 @@ export const postAppraisalReview = async (
         'X-Token': signatureSecret,
       },
     });
+
+    if (isErrorResponse(response)) return response;
+
+    response.data.data = subtractOneDayFromOffer(response.data.data);
+
+    return response;
   }
 };
