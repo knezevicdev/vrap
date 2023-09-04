@@ -36,6 +36,7 @@ const offerbyIdResp: Prices = {
       user_email: 'doyouliketesting@testvroom.com',
       verification_url: null,
       zipcode: '12345',
+      grade: 'retail',
     },
   ],
 };
