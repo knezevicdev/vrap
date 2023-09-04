@@ -43,6 +43,8 @@ const Price: NextPage = () => {
   const asyncStatus = usePriceStore((state) => state.asyncStatus);
 
   useEffect(() => {
+    if (!grade) return;
+
     if (grade.toLowerCase() === 'retail') {
       analyticsHandler.trackRetailAppraisalOffer(vin, userEmail);
     }
