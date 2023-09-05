@@ -21,9 +21,9 @@ const MONTHS = [
 export const parsedDateTime = (dateTime: string): string => {
   const parsedDate = new Date(dateTime);
 
-  const year = parsedDate.getUTCFullYear();
-  const month = MONTHS[parsedDate.getUTCMonth()].label;
-  const day = parsedDate.getUTCDate();
+  const year = parsedDate.getFullYear();
+  const month = MONTHS[parsedDate.getMonth()].label;
+  const day = parsedDate.getDate();
 
   return `${month} ${day}, ${year}`;
 };
@@ -44,8 +44,8 @@ const setDay = (day: number): string => {
 export const parseDate = (datetime: string): string => {
   const parsedDate = new Date(datetime);
 
-  const month = MONTHS[parsedDate.getUTCMonth()].label;
-  const day = parsedDate.getUTCDate();
+  const month = MONTHS[parsedDate.getMonth()].label;
+  const day = parsedDate.getDate();
 
   return `${month} ${setDay(day)}`;
 };
