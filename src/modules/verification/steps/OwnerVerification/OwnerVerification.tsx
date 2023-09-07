@@ -95,6 +95,26 @@ const OwnerVerificationStep = ({ nextStep, editRef }: FormStepProps) => {
           'firstOwnerPhoneNumber',
           firstOwnerInfoFormValues.phoneNumber
         );
+        secondOwnerInfoForm.setValue(
+          'firstOwnerAddress',
+          firstOwnerInfoFormValues.address
+        );
+        secondOwnerInfoForm.setValue(
+          'firstOwnerCity',
+          firstOwnerInfoFormValues.city
+        );
+        secondOwnerInfoForm.setValue(
+          'firstOwnerApt',
+          firstOwnerInfoFormValues.apt
+        );
+        secondOwnerInfoForm.setValue(
+          'firstOwnerState',
+          firstOwnerInfoFormValues.state
+        );
+        secondOwnerInfoForm.setValue(
+          'firstOwnerZip',
+          firstOwnerInfoFormValues.zip
+        );
 
         if (secondOwnerInfoFormValues.email)
           secondOwnerInfoForm.trigger('email');

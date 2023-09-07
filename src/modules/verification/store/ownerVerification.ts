@@ -29,6 +29,7 @@ export interface OwnerVerificationState {
   secondOwnerApt: string;
   secondOwnerEmail: string;
   secondOwnerPhoneNumber: string;
+  secondOwnerAddressSameAsFirstOwner: boolean;
   loadOwnerStateFromForms: (
     firstOwnerConfirmationForm: ReturnType<
       typeof useFirstOwnerConfirmationForm
@@ -69,6 +70,7 @@ const createOwnerVerificationSlice: StateCreator<
   secondOwnerApt: '',
   secondOwnerEmail: '',
   secondOwnerPhoneNumber: '',
+  secondOwnerAddressSameAsFirstOwner: false,
   loadOwnerStateFromForms: (
     firstOwnerConfirmationForm,
     firstOwnerInfoForm,
@@ -81,7 +83,9 @@ const createOwnerVerificationSlice: StateCreator<
       secondOwnerConfirmationForm.getValues();
     const secondOwnerInfoValues = secondOwnerInfoForm.getValues();
 
-    const secondOwnerInfoValue = (key: keyof typeof secondOwnerInfoValues) => {
+    const secondOwnerInfoValue = (
+      key: keyof Omit<typeof secondOwnerInfoValues, 'sameAddressAsFirstOwner'>
+    ) => {
       if (secondOwnerConfirmationValues.secondOwnerConfirmation === 'no')
         return '';
       return secondOwnerInfoValues[key];
@@ -114,6 +118,8 @@ const createOwnerVerificationSlice: StateCreator<
       secondOwnerApt: secondOwnerInfoValue('apt') || '',
       secondOwnerEmail: secondOwnerInfoValue('email'),
       secondOwnerPhoneNumber: secondOwnerInfoValue('phoneNumber'),
+      secondOwnerAddressSameAsFirstOwner:
+        secondOwnerInfoValues.sameAddressAsFirstOwner,
     }));
   },
 });

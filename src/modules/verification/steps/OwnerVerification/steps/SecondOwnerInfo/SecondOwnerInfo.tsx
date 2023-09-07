@@ -1,9 +1,10 @@
 import { Typography } from '@vroom-web/ui-lib';
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 
 import { Col, Row } from '../../../../../../styled/grid';
 import { displayPhoneNumber } from '../../../../../../utils';
 import AddressSelector from '../../../../components/AddressSelector';
+import Checkbox from '../../../../components/Checkbox';
 import Input from '../../../../components/Input';
 import { WizardStepProps } from '../../../../components/WizardForm';
 
@@ -22,7 +23,35 @@ const SecondOwnerInfo = ({
   phoneNumber: string;
   firstOwnerEmail: string;
   firstOwnerPhoneNumber: string;
+  firstOwnerAddress: string;
+  firstOwnerState: string;
+  firstOwnerZip: string;
+  firstOwnerCity: string;
+  firstOwnerApt: string;
+  sameAddressAsFirstOwner: boolean;
 }>) => {
+  const sameAddressAsFirstOwner = form.watch('sameAddressAsFirstOwner');
+  const lastSameAddressAsFirstOwner = useRef(sameAddressAsFirstOwner);
+
+  useEffect(() => {
+    if (lastSameAddressAsFirstOwner.current !== sameAddressAsFirstOwner) {
+      lastSameAddressAsFirstOwner.current = sameAddressAsFirstOwner;
+      const formValues = form.getValues();
+
+      form.setValue('address', formValues.firstOwnerAddress);
+      form.setValue('city', formValues.firstOwnerCity);
+      form.setValue('apt', formValues.firstOwnerApt);
+      form.setValue('state', formValues.firstOwnerState);
+      form.setValue('zip', formValues.firstOwnerZip);
+
+      form.trigger('address');
+      form.trigger('city');
+      form.trigger('apt');
+      form.trigger('state');
+      form.trigger('zip');
+    }
+  }, [form, sameAddressAsFirstOwner]);
+
   return (
     <>
       <Typography.Title.Three>
@@ -75,18 +104,7 @@ const SecondOwnerInfo = ({
             label="Last name"
           />
         </Col>
-        <AddressSelector
-          idPrefix="secondOwner"
-          form={form}
-          fieldMap={{
-            addressLine: 'address',
-            state: 'state',
-            zip: 'zip',
-            city: 'city',
-            apt: 'apt',
-          }}
-        />
-        <Col size={1 / 2} disableBottomGap>
+        <Col size={1 / 2}>
           <Input
             placeholder="Email"
             label="Email address"
@@ -96,7 +114,7 @@ const SecondOwnerInfo = ({
             control={form.control}
           />
         </Col>
-        <Col size={1 / 2} disableBottomGap>
+        <Col size={1 / 2}>
           <Input
             placeholder="(  ) ___-____"
             label="Phone number"
@@ -106,6 +124,27 @@ const SecondOwnerInfo = ({
             valueFormatter={displayPhoneNumber}
           />
         </Col>
+        <Col size={1 / 2}>
+          <Checkbox
+            label="Same address as primary owner"
+            id="secondOwnerAddressSameAsFirstOwner"
+            name="sameAddressAsFirstOwner"
+            control={form.control}
+          />
+        </Col>
+        {!sameAddressAsFirstOwner && (
+          <AddressSelector
+            idPrefix="secondOwner"
+            form={form}
+            fieldMap={{
+              addressLine: 'address',
+              state: 'state',
+              zip: 'zip',
+              city: 'city',
+              apt: 'apt',
+            }}
+          />
+        )}
       </Row>
     </>
   );

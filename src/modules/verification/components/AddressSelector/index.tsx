@@ -109,7 +109,7 @@ const AddressSelector = <T extends FieldValues>({
           name={fieldMap.city}
         />
       </Col>
-      <Col size={1 / 2}>
+      <Col size={1 / 2} disableBottomGap>
         <Select
           label="State"
           placeholder="State"
@@ -119,7 +119,7 @@ const AddressSelector = <T extends FieldValues>({
           options={STATES}
         />
       </Col>
-      <Col size={1 / 2}>
+      <Col size={1 / 2} disableBottomGap>
         <Input
           label="Zip Code"
           placeholder="Zip Code"

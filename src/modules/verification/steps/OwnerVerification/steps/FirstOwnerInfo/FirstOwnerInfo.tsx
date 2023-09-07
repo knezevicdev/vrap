@@ -71,6 +71,26 @@ const FirstOwnerInfo = ({
             label="Last name"
           />
         </Col>
+        <Col size={1 / 2}>
+          <Input
+            placeholder="Email"
+            label="Email address"
+            type="email"
+            id="firstOwnerEmail"
+            name="email"
+            control={form.control}
+          />
+        </Col>
+        <Col size={1 / 2}>
+          <Input
+            placeholder="(  ) ___-____"
+            label="Phone number"
+            id="firstOwnerPhoneNumber"
+            name="phoneNumber"
+            control={form.control}
+            valueFormatter={displayPhoneNumber}
+          />
+        </Col>
         <AddressSelector
           idPrefix="firstOwner"
           form={form}
@@ -82,26 +102,6 @@ const FirstOwnerInfo = ({
             apt: 'apt',
           }}
         />
-        <Col size={1 / 2} disableBottomGap>
-          <Input
-            placeholder="Email"
-            label="Email address"
-            type="email"
-            id="firstOwnerEmail"
-            name="email"
-            control={form.control}
-          />
-        </Col>
-        <Col size={1 / 2} disableBottomGap>
-          <Input
-            placeholder="(  ) ___-____"
-            label="Phone number"
-            id="firstOwnerPhoneNumber"
-            name="phoneNumber"
-            control={form.control}
-            valueFormatter={displayPhoneNumber}
-          />
-        </Col>
       </Row>
     </>
   );
