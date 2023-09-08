@@ -39,6 +39,7 @@ const secondOwnerInfoVerificationSchema = ownerInfoVerificationSchema.shape({
         return value !== firstOwnerPhoneNumber;
       }
     ),
+  sameAddressAsFirstOwner: yup.boolean(),
 });
 
 const useSecondOwnerInfoForm = () => {
@@ -57,6 +58,12 @@ const useSecondOwnerInfoForm = () => {
     phoneNumber,
     firstOwnerEmail,
     firstOwnerPhoneNumber,
+    firstOwnerAddress,
+    firstOwnerState,
+    firstOwnerZip,
+    firstOwnerCity,
+    firstOwnerApt,
+    sameAddressAsFirstOwner,
   } = useVerificationStore(
     (state) => ({
       firstName: state.secondOwnerFirstName,
@@ -71,6 +78,12 @@ const useSecondOwnerInfoForm = () => {
       phoneNumber: state.secondOwnerPhoneNumber,
       firstOwnerEmail: state.firstOwnerEmail,
       firstOwnerPhoneNumber: state.firstOwnerPhoneNumber,
+      firstOwnerAddress: state.firstOwnerAddress,
+      firstOwnerState: state.firstOwnerState,
+      firstOwnerZip: state.firstOwnerZip,
+      firstOwnerCity: state.firstOwnerCity,
+      firstOwnerApt: state.firstOwnerApt,
+      sameAddressAsFirstOwner: state.secondOwnerAddressSameAsFirstOwner,
     }),
     shallow
   );
@@ -89,6 +102,12 @@ const useSecondOwnerInfoForm = () => {
       phoneNumber,
       firstOwnerEmail,
       firstOwnerPhoneNumber,
+      firstOwnerAddress,
+      firstOwnerState,
+      firstOwnerZip,
+      firstOwnerCity,
+      firstOwnerApt,
+      sameAddressAsFirstOwner,
     },
     resolver: yupResolver(secondOwnerInfoVerificationSchema),
     mode: 'onChange',
