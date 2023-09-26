@@ -262,6 +262,17 @@ describe('test AnalyticsHandler ', () => {
     expect(pageSpy).toHaveBeenCalledWith(pageName, category);
   });
 
+  it('calls trackConditionalSignIn', () => {
+    const event = 'Display login modal appraisal';
+    const vin = 'ZN661YUS3LX349214';
+    const properties = {
+      vin,
+    };
+    analytics.trackConditionalSignIn(vin);
+
+    expect(trackSpy).toHaveBeenCalledWith(event, properties);
+  });
+
   it('calls trackInvalidStateShown', () => {
     const category = 'Sell';
     const event = 'Show State Prohibited Modal';
