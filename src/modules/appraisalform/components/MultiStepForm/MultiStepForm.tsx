@@ -1,13 +1,18 @@
 import { addStyleForMobile, Tooltip } from '@vroom-web/ui-lib';
 import { Button } from '@vroom-web/ui-lib';
-import React, { useEffect, useState } from 'react';
+import { useRouter } from 'next/router';
+import React, { useEffect, useMemo, useState } from 'react';
 import styled from 'styled-components';
 
 import AuthModal from '../../../../components/AuthModal/AuthModal';
+import AnalyticsHandler from '../../../../integrations/AnalyticsHandler';
 import { GenericObject } from '../../../../interfaces.d';
 import useAppraisalStore from '../../../../store/appraisalStore';
 import { UseForm } from '../componentInterfaces.d';
 import { blueIcons, grayIcons, greenCheckPath } from './utils';
+
+// import { useRouter } from 'next/router';
+// import AnalyticsHandler from '../../../../integrations/AnalyticsHandler';
 
 function numberIcon(index: number, activeSection: number, className: string) {
   const isActive = activeSection === index;
@@ -65,13 +70,23 @@ const MultiStepForm: React.FC<Props> = (props) => {
   }, []);
 
   const isUserLoggedIn = useAppraisalStore((state) => state.isUserLoggedIn);
-
+  const analyticsHandler = useMemo(() => new AnalyticsHandler(), []);
+  const router = useRouter();
   const maxSteps = sections.length - 1;
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [activeSection, setActiveSection] = useState(active);
   const [returnSection, setReturnSection] = useState(null);
   const [hideButton, setHideButton] = useState<boolean>(false);
   const [showAuthModal, setShowAuthModal] = useState(false);
+
+  let vehicleId = router.query?.vehicle ? router.query?.vehicle : '';
+  if (Array.isArray(vehicleId)) {
+    vehicleId = vehicleId[0];
+  }
+
+  if (showAuthModal) {
+    analyticsHandler.trackConditionalSignIn(vehicleId);
+  }
 
   // using a static string here to swap values but this can easily be passed in props
   // this can also be handled by parent component if we don't like this
