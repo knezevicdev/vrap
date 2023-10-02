@@ -202,6 +202,14 @@ class AnalyticsHandler extends BaseAnalyticsHandler {
     this.page(pageName, category);
   }
 
+  trackConditionalSignIn(vin: string): void {
+    const event = 'Display login modal appraisal';
+    const properties = {
+      vin,
+    };
+    this.track(event, properties);
+  }
+
   trackInvalidStateShown(vin: string, category: string): void {
     const event = 'Show State Prohibited Modal';
     const properties = {
