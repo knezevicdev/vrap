@@ -86,17 +86,19 @@ export const getServerSideProps: GetServerSideProps<Props> = async (
   const brandConfig = returnBrandConfig();
 
   const hasUserSignedInBefore = !!ctx.req.cookies['ajs_user_id'];
+
   const isTradeIn = ctx.req.url?.includes('/tradeIn-selfService');
   const isInStore = Object.keys(ctx.query).includes('in-store');
 
-  const requireAuth = isTradeIn || (hasUserSignedInBefore && !isInStore);
+  const isAuthRequired = isTradeIn || (hasUserSignedInBefore && !isInStore);
 
   return {
     props: {
       description: brandConfig.description,
       title: brandConfig.title,
       canonical: brandConfig.canonical,
-      allowUnauthenticated: !requireAuth,
+      allowUnauthenticated: !isAuthRequired,
+      forcedSignInDueToPreviousAuth: isAuthRequired && hasUserSignedInBefore,
     },
   };
 };

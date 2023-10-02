@@ -152,6 +152,12 @@ class AppraisalApp extends App<
       console.error('Failed to fetch appraisal context', e);
     });
 
+    const vehicleVIN = this.props.router.query?.vehicle as string;
+
+    if (vehicleVIN && this.props.pageProps.forcedSignInDueToPreviousAuth) {
+      this.analyticsHandler.trackConditionalSignIn(vehicleVIN);
+    }
+
     if (!this.props.pageProps.allowUnauthenticated) {
       this.checkSignInStatus().catch((e) => {
         console.error('Failed to check sign-in status', e);
