@@ -4,14 +4,16 @@ import { GetServerSideProps, GetServerSidePropsContext, NextPage } from 'next';
 import React from 'react';
 import styled from 'styled-components';
 
-import UnifiedVerification from '../../modules/verification';
-import { getOfferDetails } from '../../networking/request';
-
 import Header from 'src/components/Header';
 import Footer from 'src/core/Footer';
+import photoUploadZipCodes from 'src/data/photoUploadZipCodes.json';
+import UnifiedVerification from 'src/modules/verification';
+import { getOfferDetails } from 'src/networking/request';
 import Page from 'src/Page';
 
-const VerificationPage: NextPage = () => {
+const VerificationPage: NextPage<{ forcePhotoUpload: boolean }> = ({
+  forcePhotoUpload,
+}) => {
   return (
     <Page name="Verification">
       <SkipNavigationLink mainContentId={'main-content'} />
@@ -19,7 +21,7 @@ const VerificationPage: NextPage = () => {
         <Header />
       </HeaderContainer>
       <PageContent id="main-content">
-        <UnifiedVerification />
+        <UnifiedVerification forcePhotoUpload={forcePhotoUpload} />
       </PageContent>
       <Footer />
     </Page>
@@ -44,30 +46,41 @@ const PageContent = styled.div`
   font-family: ${(props: any): string => props.theme.typography.family.body};
 `;
 
-const getInitialEmail = async (priceId: string | string[] | undefined) => {
-  if (!priceId || Array.isArray(priceId)) return '';
+const invalidResponse = {
+  initialEmail: '',
+  zip: '',
+};
+
+const getInitialEmailAndZip = async (
+  priceId: string | string[] | undefined
+) => {
+  if (!priceId || Array.isArray(priceId)) return invalidResponse;
 
   const offerDetailsResponse = await getOfferDetails(priceId);
-  if (isErrorResponse(offerDetailsResponse)) return '';
+  if (isErrorResponse(offerDetailsResponse)) return invalidResponse;
   const offerDetails = offerDetailsResponse.data.data?.[0];
-  if (!offerDetails) return '';
+  if (!offerDetails) return invalidResponse;
 
   const offerExpirationTime = new Date(offerDetails.Good_Until__c).getTime();
-  if (offerExpirationTime < new Date().getTime()) return '';
+  if (offerExpirationTime < new Date().getTime()) return invalidResponse;
 
-  return offerDetails.user_email || '';
+  return {
+    initialEmail: offerDetails.user_email,
+    zip: offerDetails.zipcode,
+  };
 };
 
 export const getServerSideProps: GetServerSideProps = async (
   ctx: GetServerSidePropsContext
 ) => {
-  const initialEmail = await getInitialEmail(ctx.query.priceId);
+  const { initialEmail, zip } = await getInitialEmailAndZip(ctx.query.priceId);
 
   ctx.res.setHeader('Cache-Control', '');
   return {
     props: {
       title: 'Verification | Vroom',
       initialEmail,
+      forcePhotoUpload: photoUploadZipCodes.includes(zip),
     },
   };
 };
