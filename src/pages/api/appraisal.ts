@@ -3,6 +3,8 @@ import { NextApiRequest, NextApiResponse } from 'next';
 import getConfig from 'next/config';
 
 import { AppraisalPayload } from '../../interfaces.d';
+import fakeOffer from '../../modules/api/fakeOffer';
+import { getIsEmailBanned } from '../../modules/api/getIsEmailBanned';
 import checkBotActivity from '../../utils/checkBotActivity';
 import logger from '../../utils/logger';
 import requestHandler from '../../utils/requestHandler';
@@ -53,6 +55,17 @@ export default requestHandler(
         token: req.headers['x-token'],
       });
       res.status(400).end();
+      return;
+    }
+
+    if (await getIsEmailBanned(payload.email)) {
+      logger.warn(`Email ${payload.email} is banned.`, {
+        appraisalApiRoute,
+        request_payload: req.body,
+        fpid,
+        ajs_anonymous_id,
+      });
+      res.status(200).json({ data: fakeOffer });
       return;
     }
 

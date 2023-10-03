@@ -19,6 +19,7 @@
     "projectId": "vroom-acquisitions-v2",
     "storageBucket": "vroom-acquisitions-v2.appspot.com"
   },
+  "FIREBASE_ENV": "DEVQA",
   "GOOGLE_MAPS_API_KEY": "AIzaSyA7DF8tw_hIePYUdOHBSYqnJwtwRAfrQws",
   "GQL_PROXY_TARGET": "/gql",
   "INTERCHANGE_PROXY_TARGET": "https://qa.vroom.com",

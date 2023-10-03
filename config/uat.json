@@ -10,6 +10,7 @@
     "projectId": "vroom-acquisitions-v2",
     "storageBucket": "vroom-acquisitions-v2.appspot.com"
   },
+  "FIREBASE_ENV": "UAT",
   "INTERCHANGE_PROXY_TARGET": "https://uat.vroom.com",
   "SEGMENT_WRITE_KEY": "HoOMdOEbnzWKYfDahFunvFtz6FuxRXlT",
   "VIS_URL": "https://vis-int.uat.vroom.cloud/",
