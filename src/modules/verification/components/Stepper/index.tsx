@@ -12,21 +12,19 @@ import {
   TextContainer,
 } from './Styled.css';
 
-import useIsInExperiment from 'src/hooks/useIsInExperiment';
-
 export interface Props {
   activeStep: number;
+  shouldShowPhotosUpload: boolean;
 }
 
-const VerificationStepper: React.FC<Props> = ({ activeStep }) => {
-  const { isInExperiment: isInPhotosUploadExperiment } = useIsInExperiment(
-    'verification-form-vehicle-photo-upload'
-  );
-
+const VerificationStepper: React.FC<Props> = ({
+  activeStep,
+  shouldShowPhotosUpload,
+}) => {
   const steps = useMemo(() => {
-    if (isInPhotosUploadExperiment) return photosExpSteps;
+    if (shouldShowPhotosUpload) return photosExpSteps;
     return defaultSteps;
-  }, [isInPhotosUploadExperiment]);
+  }, [shouldShowPhotosUpload]);
 
   return (
     <Container>
