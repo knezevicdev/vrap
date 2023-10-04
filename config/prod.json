@@ -10,6 +10,7 @@
     "projectId": "vroom-acquisitions-v2",
     "storageBucket": "vroom-acquisitions-v2.appspot.com"
   },
+  "FIREBASE_ENV": "PROD",
   "INTERCHANGE_PROXY_TARGET": "https://www.vroom.com",
   "SEGMENT_WRITE_KEY": "7HuADUm47c18c2eCfItrske3d6wshZ2g",
   "VAST_IMAGE_PROXY_URL": "https://img.vast.com/caABSMARTLY_URLrstory-appraisal/beta",

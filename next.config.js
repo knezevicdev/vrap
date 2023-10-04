@@ -141,6 +141,7 @@ const config = {
     ICO_DASH_AUTH: currentConfig.ICO_DASH_AUTH,
     ICO_DASH_OVERRIDE: currentConfig.ICO_DASH_OVERRIDE,
     SHOULD_CALL_ZAPIER: currentConfig.SHOULD_CALL_ZAPIER,
+    FIREBASE_ENV: currentConfig.FIREBASE_ENV,
   },
   serverRuntimeConfig: {
     // Will only be available on the server side
@@ -162,6 +163,8 @@ const config = {
     GOOGLE_SERVICE_ACCOUNT: process.env.GOOGLE_SERVICE_ACCOUNT,
     APPRAISAL_PHOTOS_SPREADSHEET_ID:
       process.env.APPRAISAL_PHOTOS_SPREADSHEET_ID,
+    FIREBASE_SERVICE_ACCOUNT: process.env.FIREBASE_SERVICE_ACCOUNT,
+    FIREBASE_ENV: currentConfig.FIREBASE_ENV,
   },
   /* Custom webpack configuration. */
   webpack: (config) => {
