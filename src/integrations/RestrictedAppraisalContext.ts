@@ -10,6 +10,12 @@ export type RestrictedAppraisalContextType = {
     make: string;
     model: string;
   }[];
+  restrictedYears: {
+    make: string;
+    model: string;
+    yearMin: number;
+    yearMax: number;
+  }[];
   restrictedStates: {
     state: string;
     zipCodeMin: number;
@@ -28,6 +34,18 @@ const RestrictedAppraisalContextSchema = Yup.object().shape({
         .shape({
           make: Yup.string().required(),
           model: Yup.string().required(),
+        })
+        .required()
+    )
+    .required(),
+  restrictedYears: Yup.array()
+    .of(
+      Yup.object()
+        .shape({
+          make: Yup.string().required(),
+          model: Yup.string().required(),
+          yearMin: Yup.number().required(),
+          yearMax: Yup.number().required(),
         })
         .required()
     )
@@ -57,6 +75,7 @@ const RestrictedAppraisalContextSchema = Yup.object().shape({
 export const defaultRestrictedContextValue = {
   restrictedMakes: [],
   restrictedModels: [],
+  restrictedYears: [],
   restrictedStates: [],
   restrictedZipCodes: [],
 };
@@ -87,6 +106,9 @@ export const getRestrictedAppraisalContext = async (
     const restrictedModels = JSON.parse(
       remoteConfig.getValue('appraisal_restricted_models').asString()
     );
+    const restrictedYears = JSON.parse(
+      remoteConfig.getValue('appraisal_restricted_years').asString()
+    );
     const restrictedStates = JSON.parse(
       remoteConfig.getValue('appraisal_restricted_states').asString()
     );
@@ -97,6 +119,7 @@ export const getRestrictedAppraisalContext = async (
     const restrictedAppraisalContextValue = {
       restrictedMakes,
       restrictedModels,
+      restrictedYears,
       restrictedStates,
       restrictedZipCodes,
     };
