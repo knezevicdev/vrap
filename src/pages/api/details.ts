@@ -74,6 +74,8 @@ function mapDetailsToResponse(details: NewVinDecodeResp): DetailsResponse {
       trim: vehicleInfo?.trim,
       vin: vehicleInfo?.vin,
       year: vehicleInfo?.year,
+      fuel: vehicleInfo?.fuel,
+      bodyStyle: vehicleInfo?.bodyStyle,
     },
     dataProviderInfo: {},
   };

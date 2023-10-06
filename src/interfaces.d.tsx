@@ -327,6 +327,8 @@ export interface DetailsResponse {
     trim: string;
     vin: string;
     year: number;
+    fuel: string;
+    bodyStyle: string;
   };
   dataProviderInfo: {
     carstory?: Pick<Carstory, 'alternatives' | 'features' | 'id' | 'style'>;

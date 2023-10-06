@@ -15,6 +15,7 @@ export type RestrictedAppraisalContextType = {
     model: string;
     yearMin: number;
     yearMax: number;
+    extraProps?: Record<string, string>;
   }[];
   restrictedStates: {
     state: string;
@@ -46,6 +47,7 @@ const RestrictedAppraisalContextSchema = Yup.object().shape({
           model: Yup.string().required(),
           yearMin: Yup.number().required(),
           yearMax: Yup.number().required(),
+          extraProps: Yup.object(),
         })
         .required()
     )

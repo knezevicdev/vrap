@@ -106,11 +106,11 @@ const AppraisalForm: React.FC = () => {
       restrictedAppraisal.restrictedStates
     );
     const vin = appraisalUseForm.vehicleInfoForm.fields.vin.value;
-    const isMakeValid = !restrictedAppraisal.restrictedMakes
+    const isMakeInvalid = restrictedAppraisal.restrictedMakes
       .map((restrictedMake) => restrictedMake.toLowerCase())
       .includes(vehicleInfo.make.toLowerCase());
 
-    const isModelInvalid = !restrictedAppraisal.restrictedModels.find(
+    const isModelInvalid = restrictedAppraisal.restrictedModels.some(
       (restrictedModel) =>
         Boolean(
           vehicleInfo.make.toLowerCase() ===
@@ -120,7 +120,7 @@ const AppraisalForm: React.FC = () => {
         )
     );
 
-    const isYearInvalid = !restrictedAppraisal.restrictedYears.find(
+    const matchedInvalidMMY = restrictedAppraisal.restrictedYears.find(
       (restrictedYear) =>
         Boolean(
           vehicleInfo.make.toLowerCase() ===
@@ -129,11 +129,16 @@ const AppraisalForm: React.FC = () => {
               restrictedYear.model.toLowerCase() &&
             vehicleInfo.year &&
             vehicleInfo.year >= restrictedYear.yearMin &&
-            vehicleInfo.year <= restrictedYear.yearMax
+            vehicleInfo.year <= restrictedYear.yearMax &&
+            (!restrictedYear.extraProps ||
+              Object.entries(restrictedYear.extraProps).every(
+                ([key, value]) =>
+                  useAppraisalStore.getState().vehicleDecodeData[key] === value
+              ))
         )
     );
 
-    if (!isMakeValid) {
+    if (isMakeInvalid) {
       setInvalidMakeDialogMake(vehicleInfo.make);
       analyticsHandler.trackInvalidMakeShown(
         vin,
@@ -142,7 +147,7 @@ const AppraisalForm: React.FC = () => {
       return;
     }
 
-    if (!isModelInvalid) {
+    if (isModelInvalid) {
       setInvalidMakeDialogMake(`${vehicleInfo.make} ${vehicleInfo.model}`);
       analyticsHandler.trackInvalidMakeShown(
         vin,
@@ -151,9 +156,13 @@ const AppraisalForm: React.FC = () => {
       return;
     }
 
-    if (!isYearInvalid) {
+    if (matchedInvalidMMY) {
       setInvalidMakeDialogMake(
-        `${vehicleInfo.make} ${vehicleInfo.model} ${vehicleInfo.year}`
+        `${vehicleInfo.make} ${vehicleInfo.model}${
+          matchedInvalidMMY.extraProps
+            ? ' ' + Object.values(matchedInvalidMMY.extraProps).join(' ')
+            : ''
+        } ${vehicleInfo.year}`
       );
       analyticsHandler.trackInvalidMakeShown(
         vin,
@@ -171,9 +180,7 @@ const AppraisalForm: React.FC = () => {
       return;
     }
 
-    if (isStateValid && isMakeValid) {
-      proceedNext();
-    }
+    proceedNext();
 
     if (!isTradeIn) {
       analyticsHandler.trackSellOrTradeIn(
