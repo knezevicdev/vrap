@@ -3,6 +3,8 @@ import React, { useEffect } from 'react';
 import NextSteps from '../../components/NextSteps';
 import PriceDetail from '../../components/PriceDetail';
 import AnalyticsHandler from '../../integrations/AnalyticsHandler';
+import { StoreStatus } from '../../interfaces.d';
+import usePriceStore from './store';
 import {
   HeroContainer,
   NextStepsContainer,
@@ -15,15 +17,22 @@ const Price: React.FC = () => {
     new AnalyticsHandler().trackPriceViewed();
   }, []);
 
+  const storeStatus = usePriceStore((state) => state.storeStatus);
+  const automatedAppraisal = usePriceStore(
+    (state) => state.price.automatedAppraisal
+  );
+
   return (
     <HeroContainer>
       <PriceContainer>
         <PriceDetailContainer>
           <PriceDetail />
         </PriceDetailContainer>
-        <NextStepsContainer>
-          <NextSteps />
-        </NextStepsContainer>
+        {storeStatus === StoreStatus.Success && automatedAppraisal && (
+          <NextStepsContainer>
+            <NextSteps />
+          </NextStepsContainer>
+        )}
       </PriceContainer>
     </HeroContainer>
   );

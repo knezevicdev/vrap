@@ -64,7 +64,8 @@ const InitialPrice: React.FC = () => {
   );
   const { taxState, taxSavings } = useTaxSavings(price, zipcode);
 
-  const showLowPriceNotice = priceReductionReasons?.out_of_speciality;
+  const showLowPriceNotice =
+    price < 1000 || priceReductionReasons?.out_of_speciality;
 
   return (
     <>
