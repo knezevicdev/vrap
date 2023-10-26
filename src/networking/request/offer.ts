@@ -1,4 +1,4 @@
-import { Response } from '@vroom-web/networking';
+import { isErrorResponse, Response } from '@vroom-web/networking';
 import { enc, HmacSHA256 } from 'crypto-js';
 import Cookies from 'js-cookie';
 import getConfig from 'next/config';
@@ -22,13 +22,35 @@ type MutationAcceptRejectOfferArgs = {
   externalUserId: string;
 };
 
-export const getOfferDetails = (priceId: string): Promise<Response<Prices>> => {
+export const getOfferDetails = async (
+  priceId: string
+): Promise<Response<Prices>> => {
   const encodedPriceID = encodeURIComponent(priceId);
   const url = `${VROOM_URL}/suyc-api/v1/acquisition/offer?offerID=${encodedPriceID}`;
-  return client.httpRequest<Prices>({
+  const response = await client.httpRequest<Prices>({
     method: 'get',
     url,
   });
+
+  if (isErrorResponse(response)) return response;
+
+  if (response.data.data.length === 0) {
+    localStorage.removeItem(`appraisal-reject-reasons-${priceId}`);
+  } else {
+    const rejectReasons = localStorage.getItem(
+      `appraisal-reject-reasons-${priceId}`
+    );
+
+    if (rejectReasons)
+      try {
+        response.data.data[0].price_reduction_reasons =
+          JSON.parse(rejectReasons);
+      } catch {
+        console.warn('Error while parsing reject reasons');
+      }
+  }
+
+  return response;
 };
 
 export const acceptPriceOffer = async (offerId: string): Promise<void> => {
@@ -58,7 +80,7 @@ export const acceptPriceOffer = async (offerId: string): Promise<void> => {
   }
 };
 
-export const postAppraisalReview = (
+export const postAppraisalReview = async (
   data: any,
   captchaToken: string,
   signatureSecret: string
@@ -79,7 +101,7 @@ export const postAppraisalReview = (
     const hmac = HmacSHA256(JSON.stringify(payload), signatureSecret);
     const signature = hmac.toString(enc.Hex);
 
-    return client.httpRequest<AppraisalResp>({
+    const response = await client.httpRequest<AppraisalResp>({
       method: 'post',
       url,
       timeout: 30000,
@@ -89,5 +111,16 @@ export const postAppraisalReview = (
         'X-Token': signatureSecret,
       },
     });
+
+    if (isErrorResponse(response)) return response;
+
+    if (response.data.data.price_reduction_reasons) {
+      localStorage.setItem(
+        `appraisal-reject-reasons-${response.data.data.ID}`,
+        JSON.stringify(response.data.data.price_reduction_reasons)
+      );
+    }
+
+    return response;
   }
 };

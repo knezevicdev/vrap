@@ -161,6 +161,12 @@ export interface AppraisalResp {
     offer_status: string;
     user_email: string;
     zipcode: string;
+    price_reduction_reasons: {
+      branded_title_history: boolean;
+      clean_vehicle_history: boolean;
+      damage_history_found: boolean;
+      out_of_speciality: boolean;
+    } | null;
   };
 }
 
