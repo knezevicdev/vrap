@@ -46,11 +46,7 @@ import calculateInitialSection from './utils/calculateInitialSection';
 import updateVerification from './utils/updateVerification';
 import usePhotosValid from './utils/usePhotosValid';
 
-interface Props {
-  forcePhotoUpload: boolean;
-}
-
-const UnifiedVerification = ({ forcePhotoUpload }: Props) => {
+const UnifiedVerification = () => {
   const analyticsHandler = useRef(new AnalyticsHandler());
   const trackedEvents = useRef<string[]>([]);
   const priceAccepted = useRef(false);
@@ -81,17 +77,12 @@ const UnifiedVerification = ({ forcePhotoUpload }: Props) => {
     isInExperiment: isInPhotosUploadExperiment,
   } = useIsInExperiment('verification-form-vehicle-photo-upload');
 
-  const shouldUploadPhotos = useMemo(
-    () => forcePhotoUpload || isInPhotosUploadExperiment,
-    [forcePhotoUpload, isInPhotosUploadExperiment]
-  );
-
   const initialSection = useMemo(() => {
     if (state === 'loading' || isAbsmartlyLoading) return -1;
     if (state === 'error') return 0;
 
-    return calculateInitialSection(shouldUploadPhotos);
-  }, [isAbsmartlyLoading, shouldUploadPhotos, state]);
+    return calculateInitialSection(isInPhotosUploadExperiment);
+  }, [isAbsmartlyLoading, isInPhotosUploadExperiment, state]);
   const [activeSection, setActiveSection] = useState(initialSection);
 
   useEffect(() => {
@@ -190,7 +181,7 @@ const UnifiedVerification = ({ forcePhotoUpload }: Props) => {
     },
   ];
 
-  if (shouldUploadPhotos) {
+  if (isInPhotosUploadExperiment) {
     sections.push({
       component: PhotosVerificationStep,
       title: 'Vehicle Photos',
@@ -232,7 +223,7 @@ const UnifiedVerification = ({ forcePhotoUpload }: Props) => {
                 activeStep={
                   sectionChanged.current ? activeSection : initialSection
                 }
-                shouldShowPhotosUpload={shouldUploadPhotos}
+                shouldShowPhotosUpload={isInPhotosUploadExperiment}
               />
             </StepperContainer>
           </StepperWrapper>

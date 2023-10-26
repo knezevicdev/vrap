@@ -1,54 +1,60 @@
-import { Typography } from '@vroom-web/ui-lib';
 import React from 'react';
 
+import usePriceStore from '../../modules/price/store';
 import {
-  ColoredBullet,
-  StyledContainer,
-  StyledDiv,
-  StyledHero,
-  StyledTitle,
-} from './Style.css';
+  CarImage,
+  PriceExplanation,
+  PriceExplanationContainer,
+  PriceSubtitle,
+  StyledLegal,
+} from '../InitialPrice/Style.css';
+import { Checkmark, Cross, ReducedPriceReason } from './Style.css';
 
 const NextSteps = () => {
+  const priceReductionReasons = usePriceStore(
+    (state) => state.price.priceReductionReasons
+  );
+
   return (
-    <StyledContainer>
-      <StyledHero>next steps</StyledHero>
-      <ColoredBullet>
-        <StyledTitle>
-          <Typography.Title.Three>Verify Ownership</Typography.Title.Three>
-        </StyledTitle>
-        <StyledDiv>
-          <Typography.Body.Regular>
-            We&apos;ll request relevant documents and additional information to
-            verify vehicle ownership before the price expires.
-          </Typography.Body.Regular>
-        </StyledDiv>
-      </ColoredBullet>
-      <ColoredBullet>
-        <StyledTitle>
-          <Typography.Title.Three>Sign Contracts</Typography.Title.Three>
-        </StyledTitle>
-        <StyledDiv>
-          <Typography.Body.Regular>
-            We&apos;ll send an email with a contract to e-Sign, and may require
-            some additional paperwork by mail in order to finalize the deal.
-          </Typography.Body.Regular>
-        </StyledDiv>
-      </ColoredBullet>
-      <ColoredBullet>
-        <StyledTitle>
-          <Typography.Title.Three>
-            We Pick Up, You Get Paid
-          </Typography.Title.Three>
-        </StyledTitle>
-        <StyledDiv>
-          <Typography.Body.Regular>
-            We&apos;ll schedule a time to pick up your vehicle. Once we have
-            your car, we&apos;ll send your payment within 2-3 business days.
-          </Typography.Body.Regular>
-        </StyledDiv>
-      </ColoredBullet>
-    </StyledContainer>
+    <StyledLegal>
+      <PriceSubtitle style={{ marginBottom: '16px', fontSize: '22px' }}>
+        <CarImage /> Details about our offer
+      </PriceSubtitle>
+      {priceReductionReasons?.clean_vehicle_history && (
+        <ReducedPriceReason>
+          <Checkmark />
+          <div>Clean Vehicle History</div>
+        </ReducedPriceReason>
+      )}
+      {priceReductionReasons?.damage_history_found && (
+        <ReducedPriceReason>
+          <Cross />
+          <div>Accident or Damage History Found</div>
+        </ReducedPriceReason>
+      )}
+      {priceReductionReasons?.branded_title_history === false && (
+        <ReducedPriceReason>
+          <Checkmark />
+          <div>Clean Title History</div>
+        </ReducedPriceReason>
+      )}
+      {priceReductionReasons?.branded_title_history === true && (
+        <ReducedPriceReason>
+          <Cross />
+          <div>Branded Title History Found</div>
+        </ReducedPriceReason>
+      )}
+      <PriceExplanationContainer>
+        <PriceExplanation>
+          This price is based on data from thousands of similar market
+          transactions, as well as the information you provided. Vroom may
+          modify or revoke this price if the information you provided is
+          inaccurate or if there is a significant present or prospective change
+          in the used vehicle market beyond Vroom&apos;s control. Other terms
+          and restrictions apply.
+        </PriceExplanation>
+      </PriceExplanationContainer>
+    </StyledLegal>
   );
 };
 

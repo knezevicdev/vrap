@@ -31,6 +31,12 @@ export interface PriceStoreState {
   year: number;
   zipcode: string;
   grade: string;
+  priceReductionReasons: {
+    branded_title_history: boolean;
+    clean_vehicle_history: boolean;
+    damage_history_found: boolean;
+    out_of_speciality: boolean;
+  } | null;
 }
 
 export const defaultPriceState: PriceStoreState = {
@@ -57,6 +63,7 @@ export const defaultPriceState: PriceStoreState = {
   year: 0,
   zipcode: '',
   grade: '',
+  priceReductionReasons: null,
 };
 
 export type PriceState = {
@@ -107,6 +114,8 @@ const usePriceStore = create<PriceState>()((set) => ({
         priceMapFromResponse.year = price.Year__c;
         priceMapFromResponse.zipcode = price.zipcode;
         priceMapFromResponse.grade = price.grade;
+        priceMapFromResponse.priceReductionReasons =
+          price.price_reduction_reasons;
 
         // This actually creates "separate" updates
         // - Price updates and refreshes views

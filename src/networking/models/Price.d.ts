@@ -23,6 +23,12 @@ export interface Price {
   phone: string;
   zipcode: string;
   grade: string;
+  price_reduction_reasons: {
+    branded_title_history: boolean;
+    clean_vehicle_history: boolean;
+    damage_history_found: boolean;
+    out_of_speciality: boolean;
+  } | null;
 }
 
 export interface Prices {

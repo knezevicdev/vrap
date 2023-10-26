@@ -10,12 +10,9 @@ import { displayCurrency } from '../../utils';
 import AuthModal from '../AuthModal/AuthModal';
 import Spinner from '../Spinner';
 import {
-  CarImage,
   Content,
   ContentText,
   FullButton,
-  PriceExplanation,
-  PriceExplanationContainer,
   PriceSubtitle,
   StickyContent,
   StickyDetails,
@@ -23,7 +20,6 @@ import {
   StyledButton,
   StyledContainer,
   StyledIcon,
-  StyledLegal,
   TaxImportant,
   TaxLink,
   TaxSavings,
@@ -58,16 +54,17 @@ const InitialPrice: React.FC = () => {
   }, [verificationUrl]);
 
   const [showDialog, setShowDialog] = useState(false);
-  const { price, zipcode } = usePriceStore(
+  const { price, zipcode, priceReductionReasons } = usePriceStore(
     (state) => ({
       price: state.price.price,
       zipcode: state.price.zipcode,
+      priceReductionReasons: state.price.priceReductionReasons,
     }),
     shallow
   );
   const { taxState, taxSavings } = useTaxSavings(price, zipcode);
 
-  const showLowPriceNotice = price < 1000;
+  const showLowPriceNotice = priceReductionReasons?.out_of_speciality;
 
   return (
     <>
@@ -129,32 +126,6 @@ const InitialPrice: React.FC = () => {
         >
           {isAcceptingPrice ? <Spinner /> : 'save and continue'}
         </StyledButton>
-
-        {showLowPriceNotice && (
-          <StyledLegal>
-            <PriceSubtitle>
-              <CarImage /> Details about our offer
-            </PriceSubtitle>
-            <PriceExplanationContainer>
-              <PriceExplanation>
-                Our offer price might not meet your expectations, but it is
-                based on thousands of similar market transactions. Some rides
-                with title issues, distinct histories, higher mileage or older
-                model years typically aren’t the best fit for us.
-              </PriceExplanation>
-            </PriceExplanationContainer>
-          </StyledLegal>
-        )}
-        <StyledLegal>
-          <Typography.Body.Small>
-            This price is based on data from thousands of similar market
-            transactions, as well as the information you provided. Vroom may
-            modify or revoke this price if the information you provided is
-            inaccurate or if there is a significant present or prospective
-            change in the used vehicle market beyond Vroom&apos;s control. Other
-            terms and restrictions apply.
-          </Typography.Body.Small>
-        </StyledLegal>
 
         <StickyFooter id="stickyFooter">
           <StickyContent>
