@@ -6,14 +6,11 @@ import styled from 'styled-components';
 
 import Header from 'src/components/Header';
 import Footer from 'src/core/Footer';
-import photoUploadZipCodes from 'src/data/photoUploadZipCodes.json';
 import UnifiedVerification from 'src/modules/verification';
 import { getOfferDetails } from 'src/networking/request';
 import Page from 'src/Page';
 
-const VerificationPage: NextPage<{ forcePhotoUpload: boolean }> = ({
-  forcePhotoUpload,
-}) => {
+const VerificationPage: NextPage = () => {
   return (
     <Page name="Verification">
       <SkipNavigationLink mainContentId={'main-content'} />
@@ -21,7 +18,7 @@ const VerificationPage: NextPage<{ forcePhotoUpload: boolean }> = ({
         <Header />
       </HeaderContainer>
       <PageContent id="main-content">
-        <UnifiedVerification forcePhotoUpload={forcePhotoUpload} />
+        <UnifiedVerification />
       </PageContent>
       <Footer />
     </Page>
@@ -46,41 +43,32 @@ const PageContent = styled.div`
   font-family: ${(props: any): string => props.theme.typography.family.body};
 `;
 
-const invalidResponse = {
-  initialEmail: '',
-  zip: '',
-};
-
 const getInitialEmailAndZip = async (
   priceId: string | string[] | undefined
 ) => {
-  if (!priceId || Array.isArray(priceId)) return invalidResponse;
+  if (!priceId || Array.isArray(priceId)) return '';
 
   const offerDetailsResponse = await getOfferDetails(priceId);
-  if (isErrorResponse(offerDetailsResponse)) return invalidResponse;
+  if (isErrorResponse(offerDetailsResponse)) return '';
   const offerDetails = offerDetailsResponse.data.data?.[0];
-  if (!offerDetails) return invalidResponse;
+  if (!offerDetails) return '';
 
   const offerExpirationTime = new Date(offerDetails.Good_Until__c).getTime();
-  if (offerExpirationTime < new Date().getTime()) return invalidResponse;
+  if (offerExpirationTime < new Date().getTime()) return '';
 
-  return {
-    initialEmail: offerDetails.user_email,
-    zip: offerDetails.zipcode,
-  };
+  return offerDetails.user_email || '';
 };
 
 export const getServerSideProps: GetServerSideProps = async (
   ctx: GetServerSidePropsContext
 ) => {
-  const { initialEmail, zip } = await getInitialEmailAndZip(ctx.query.priceId);
+  const initialEmail = await getInitialEmailAndZip(ctx.query.priceId);
 
   ctx.res.setHeader('Cache-Control', '');
   return {
     props: {
       title: 'Verification | Vroom',
       initialEmail,
-      forcePhotoUpload: photoUploadZipCodes.includes(zip),
     },
   };
 };
