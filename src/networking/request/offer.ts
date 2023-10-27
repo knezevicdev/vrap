@@ -32,7 +32,8 @@ export const getOfferDetails = async (
     url,
   });
 
-  if (isErrorResponse(response)) return response;
+  if (isErrorResponse(response) || typeof localStorage === 'undefined')
+    return response;
 
   if (response.data.data.length === 0) {
     localStorage.removeItem(`appraisal-reject-reasons-${priceId}`);
