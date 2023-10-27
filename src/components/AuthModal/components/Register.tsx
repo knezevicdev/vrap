@@ -104,7 +104,7 @@ const Register = ({
       data.lastName,
       data.email,
       data.phoneNumber,
-      response.data.externalUserID
+      response.data.data.externalUserID
     );
     onSuccess();
   });
