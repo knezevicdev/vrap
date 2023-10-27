@@ -26,7 +26,7 @@ class AuthManager {
   }
 
   static async loginUser(username: string, password: string) {
-    const response = await client.httpRequest<SignedInUser>({
+    const response = await client.httpRequest<{ data: SignedInUser }>({
       method: 'POST',
       url: `${client.httpEndpoints.interchangeUrl}/myaccount/signin-web`,
       data: {
@@ -54,7 +54,7 @@ class AuthManager {
     lastName: string,
     phone: string
   ) {
-    const response = await client.httpRequest<SignedInUser>({
+    const response = await client.httpRequest<{ data: SignedInUser }>({
       method: 'POST',
       url: `${client.httpEndpoints.interchangeUrl}/myaccount/signup-web`,
       data: {

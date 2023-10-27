@@ -67,7 +67,7 @@ const Login = ({
       return;
     }
 
-    trackLogin(data.email, response.data.externalUserID);
+    trackLogin(data.email, response.data.data.externalUserID);
     onSuccess();
   });
 
