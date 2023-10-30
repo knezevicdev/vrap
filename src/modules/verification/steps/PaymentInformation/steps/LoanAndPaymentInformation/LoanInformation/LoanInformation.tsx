@@ -81,9 +81,9 @@ const LoanInformation = ({ form, onPrev, onNext, onEdit, preview }: Props) => {
       <Col size={1}>
         <LabelContainer>
           <Label>
-            Don&apos;t worry, we&apos;ll pay off the remaining balance. Please
-            call the bank where you make your car payments and authorize Vroom
-            to ask about a payoff quote.
+            Don&apos;t worry, we&apos;ll send the agreed payment directly to
+            your lender. We&apos;ll contact you if your lender requires
+            additional authorization to obtain a payoff quote.
           </Label>
         </LabelContainer>
       </Col>
