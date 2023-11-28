@@ -3,6 +3,7 @@ import { omit } from 'lodash';
 import React, { useEffect, useRef } from 'react';
 import styled from 'styled-components';
 
+import useIsInExperiment from '../../../../hooks/useIsInExperiment';
 import { FormField, GenericObject } from '../../../../interfaces.d';
 import useForm from '../useForm';
 import EmissionStandardInput from './EmissionStandardInput';
@@ -21,15 +22,28 @@ const AlternateAfterMarketModsOptionsGroup: React.FC<Props> = ({
   otherAfterMarketField,
   emissionField,
 }) => {
+  const { isInExperiment: isInShowWrappedCheckmarkExperiment } =
+    useIsInExperiment('show-wrapped-checkmark');
+
   const lastEnabledEmissionRef = useRef<boolean>();
-  const options = [
-    'Stereo System',
-    'Wheels and tires',
-    'Exhaust',
-    'Suspension',
-    'Performance',
-    'Other',
-  ];
+  const options = isInShowWrappedCheckmarkExperiment
+    ? [
+        'Stereo System',
+        'Wheels and tires',
+        'Exhaust',
+        'Other',
+        'Suspension',
+        'Performance',
+        'Wrapped',
+      ]
+    : [
+        'Stereo System',
+        'Wheels and tires',
+        'Exhaust',
+        'Suspension',
+        'Performance',
+        'Other',
+      ];
 
   const showEmissionField =
     field.value.includes('Exhaust') ||
