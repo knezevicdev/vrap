@@ -32,10 +32,8 @@ const VinInput: React.FC = () => {
     );
   }, [analyticsHandler]);
 
-  const handleOnKeyPressEnter = (e: any): void => {
-    if (e.key === 'Enter' && isFormValid) {
-      trackVinClicked();
-    }
+  const handleOnKeyPressEnter = (): void => {
+    trackVinClicked();
   };
 
   const vinSubmit = (): void => {
