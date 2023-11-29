@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/naming-convention */
 import getConfig from 'next/config';
 import React from 'react';
 

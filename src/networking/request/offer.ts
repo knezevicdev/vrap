@@ -1,6 +1,5 @@
 import { isErrorResponse, Response } from '@vroom-web/networking';
 import { enc, HmacSHA256 } from 'crypto-js';
-import Cookies from 'js-cookie';
 import getConfig from 'next/config';
 
 import ACCEPT_REJECT_OFFER from '../../graphql/mutations/acceptRejectOffer.graphql';
@@ -8,6 +7,7 @@ import { AppraisalResp } from '../../interfaces.d';
 import client from '../client';
 import { Prices } from '../models/Price';
 import { checkAppraisalPayload, getDummyOfferResp } from '../utils';
+import { getUser } from './user';
 
 const { publicRuntimeConfig } = getConfig();
 const VROOM_URL = publicRuntimeConfig.VROOM_URL;
@@ -60,14 +60,14 @@ export const acceptPriceOffer = async (offerId: string): Promise<void> => {
   const acceptedOfferId = localStorage.getItem(key);
   if (acceptedOfferId === offerId) return;
 
-  const externalUserId = Cookies.get('ajs_user_id') || '';
-
   try {
-    await client.gqlRequest<unknown, MutationAcceptRejectOfferArgs>({
+    const user = await getUser();
+
+    await client.gearboxRequest<unknown, MutationAcceptRejectOfferArgs>({
       document: ACCEPT_REJECT_OFFER,
       variables: {
         offerId,
-        externalUserId,
+        externalUserId: user.externalUserID,
         accepted: true,
         reason: '',
         reasonOther: '',
@@ -108,7 +108,9 @@ export const postAppraisalReview = async (
       timeout: 30000,
       data: payload,
       headers: {
+        // eslint-disable-next-line @typescript-eslint/naming-convention
         'X-Signature': signature,
+        // eslint-disable-next-line @typescript-eslint/naming-convention
         'X-Token': signatureSecret,
       },
     });

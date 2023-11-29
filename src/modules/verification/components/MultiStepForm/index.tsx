@@ -155,8 +155,8 @@ const MultiStepForm: React.FC<Props> = (props) => {
       const {
         component,
         title,
-        disableNext,
-        disableEditButton,
+        disableNext: isNextDisabled,
+        disableEditButton: isEditButtonDisabled,
         completedAfterComponent,
       } = formComponent;
       const CurrentComponent = component;
@@ -176,7 +176,7 @@ const MultiStepForm: React.FC<Props> = (props) => {
               {!showGreenCheck && numberIcon(idx, activeSection, 'title-icon')}
             </StepNumber>
             <StepTitle isactive={isActive.toString()}>{title}</StepTitle>
-            {!disableEditButton && showEditButton && (
+            {!isEditButtonDisabled && showEditButton && (
               <EditStep
                 role="button"
                 tabIndex={0}
@@ -203,7 +203,7 @@ const MultiStepForm: React.FC<Props> = (props) => {
               editRef={editRefs.current[idx]}
               returnStep={returnSection}
             />
-            {!disableNext && (
+            {!isNextDisabled && (
               <NextButton
                 onClick={handleOnNext}
                 disabled={isFormInvalid}

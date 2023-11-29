@@ -42,9 +42,9 @@ const useLoanInformationForm = () => {
     accountNumber,
     lastFourDigits,
     state,
-    acknowledgment,
+    isAcknowledged,
     lienId,
-    accFields,
+    hasCccFields,
   } = useVerificationStore(
     (state) => ({
       bankName: state.loanInstitution,
@@ -53,9 +53,9 @@ const useLoanInformationForm = () => {
       accountNumber: state.loanAccountNumber,
       lastFourDigits: state.loanLastFourDigits,
       state: state.loanState,
-      acknowledgment: state.loanAcknowledgement,
+      isAcknowledged: state.loanAcknowledgement,
       lienId: state.loanInstitutionId,
-      accFields: !!state.loanPhoneNumber,
+      hasCccFields: !!state.loanPhoneNumber,
     }),
     shallow
   );
@@ -69,15 +69,15 @@ const useLoanInformationForm = () => {
       accountNumber,
       lastFourDigits,
       state,
-      acknowledgment,
+      acknowledgment: isAcknowledged,
       lienId,
-      accFields,
+      accFields: hasCccFields,
     },
     resolver: yupResolver(loanInformationSchema),
     mode: 'onChange',
   });
 
-  if (acknowledgment && !initialized.current) {
+  if (isAcknowledged && !initialized.current) {
     initialized.current = true;
     if (!form.formState.isValid) form.trigger();
   }

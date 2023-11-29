@@ -36,7 +36,7 @@ const proxy = async (
     validateStatus: (status: number) => status >= 200 && status < 500,
     httpsAgent,
     headers: {
-      Cookie: req.headers.cookie,
+      cookie: req.headers.cookie,
     },
   });
   res.status(status);

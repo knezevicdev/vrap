@@ -8,7 +8,7 @@ import PendingPrice from '../PendingPrice';
 
 const PriceDetail: React.FC = () => {
   const storeStatus = usePriceStore((state) => state.storeStatus);
-  const automatedAppraisal = usePriceStore(
+  const isAutomatedAppraisal = usePriceStore(
     (state) => state.price.automatedAppraisal
   );
 
@@ -17,7 +17,7 @@ const PriceDetail: React.FC = () => {
       return <LoadingPrice />;
 
     case StoreStatus.Success:
-      return automatedAppraisal ? <InitialPrice /> : <PendingPrice />;
+      return isAutomatedAppraisal ? <InitialPrice /> : <PendingPrice />;
 
     case StoreStatus.Error:
       return <PendingPrice />;

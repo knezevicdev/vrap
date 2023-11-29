@@ -60,7 +60,7 @@ const VehicleInformation: React.FC = () => {
   }
   function addElipsesIfLong(str: string) {
     if (str) {
-      return str.length > 23 ? str.substr(0, 20) + '...' : str;
+      return str.length > 23 ? str.substring(0, 20) + '...' : str;
     }
   }
   return (

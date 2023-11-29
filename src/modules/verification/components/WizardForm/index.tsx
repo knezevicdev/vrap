@@ -50,7 +50,7 @@ const WizardFormNav = <T extends FieldValues[]>({
   const step = steps[(currentStep || 1) - 1];
   const isNextDisabled = !step.form.formState.isValid;
   const initialScrollSkip = useRef(false);
-  const disableStepButtons = step.disableStepButtons;
+  const shouldDisableStepButtons = step.disableStepButtons;
 
   useEffect(() => {
     setTimeout(() => {
@@ -72,7 +72,7 @@ const WizardFormNav = <T extends FieldValues[]>({
     }, 500);
   }, [currentStep, extraOffset, rootElementRef]);
 
-  if (disableStepButtons) return null;
+  if (shouldDisableStepButtons) return null;
 
   return (
     <PrevNextButtons

@@ -9,18 +9,18 @@ interface SignedInUser {
 
 class AuthManager {
   private static _instance: AuthManager;
-  private listeners: SignInCallback[] = [];
+  private _listeners: SignInCallback[] = [];
 
   private triggerSignInStatusChange() {
-    this.listeners.forEach((callback) => callback());
+    this._listeners.forEach((callback) => callback());
   }
 
   static addSignInListener(callback: SignInCallback) {
-    this.instance.listeners.push(callback);
+    this.instance._listeners.push(callback);
   }
 
   static removeSignInListener(callback: SignInCallback) {
-    this.instance.listeners = this.instance.listeners.filter(
+    this.instance._listeners = this.instance._listeners.filter(
       (listener) => listener !== callback
     );
   }

@@ -77,7 +77,7 @@ const VehicleInformation: React.FC<Props> = ({
 
   const { localState, resetLocalState, updateLocalState } = useLocalState();
   const getTrimFeatures = useGetTrimFeatures();
-  const { isLoading: trimsLoading, getTrims } = useGetTrims(
+  const { isLoading: isTrimsLoading, getTrims } = useGetTrims(
     recaptcha,
     fields,
     isEditMode,
@@ -111,10 +111,10 @@ const VehicleInformation: React.FC<Props> = ({
     const vehicleId = router.query.vehicle || fields.vin.value;
     const validVin =
       vehicleId.includes(VROOM_VIN_SUBSTRING) || isValidVin(vehicleId);
-    const validLicense = isValidCSLicense(vehicleId);
+    const isValidLicense = isValidCSLicense(vehicleId);
     if (validVin) {
       setViewMode('vin');
-    } else if (validLicense) {
+    } else if (isValidLicense) {
       setViewMode('license');
     }
 
@@ -155,7 +155,7 @@ const VehicleInformation: React.FC<Props> = ({
         ...vin,
         value: vehicleId.toUpperCase(),
       });
-    } else if (validLicense) {
+    } else if (isValidLicense) {
       const [state, ...rest] = vehicleId.split('-');
       const license = rest.join('-');
       const errorMessage = 'Please enter a valid license plate number';
@@ -412,16 +412,6 @@ const VehicleInformation: React.FC<Props> = ({
     }
   };
 
-  const handleVinChange = async (vin: string) => {
-    fields.vin.onChange({
-      ...fields.vin,
-      value: vin,
-    });
-    updateLocalState({
-      vinDecoded: false,
-    });
-  };
-
   const handleVinSubmit = async (vin = '') => {
     const token = await recaptcha.getToken();
     if (token) {
@@ -452,7 +442,6 @@ const VehicleInformation: React.FC<Props> = ({
             <VinField>
               <VinFormInput
                 field={fields.vin}
-                handleUpdate={handleVinChange}
                 disabled={isEditMode}
                 onKeyPressEnter={handleVinKeyPressSubmit}
               />
@@ -525,7 +514,7 @@ const VehicleInformation: React.FC<Props> = ({
                 field={fields.trim}
                 onChange={handleTrimChange}
                 customOptions={localState.trims}
-                trimLoader={trimsLoading}
+                trimLoader={isTrimsLoading}
               />
             </InputContainer>
           )}

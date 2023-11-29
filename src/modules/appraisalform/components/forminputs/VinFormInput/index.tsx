@@ -1,29 +1,35 @@
-import React, { KeyboardEventHandler, useState } from 'react';
+import React, { ChangeEvent, KeyboardEventHandler, useState } from 'react';
 import styled from 'styled-components';
 
 import { VROOM_VIN_SUBSTRING } from '../../../constants/misc';
 import Dialog from '../../../Dialog/VinInformation';
+import { FormField } from '../../componentInterfaces.d';
 import { lettersAndNumbersOnly } from '../../formatting';
 import Input from '../../Input';
 import { getVinErrors, isValidVin } from '../../validation';
 
 import Icon, { Icons } from 'src/core/Icon';
 
-const VinFormInput: React.FC<any> = ({
-  field,
-  className,
-  onKeyPressEnter,
-  disabled = false,
-}) => {
+const VinFormInput: React.FC<{
+  field: FormField;
+  className?: string;
+  onKeyPressEnter: () => void;
+  disabled?: boolean;
+}> = ({ field, className, onKeyPressEnter, disabled = false }) => {
   const { onChange } = field;
   const [showVinDialog, setShowVinDialog] = useState(false);
 
-  const handleOnChange = (event: any) => {
+  const handleOnChange = (event: ChangeEvent<HTMLInputElement>) => {
     const value = lettersAndNumbersOnly(event.target.value, 17);
-    const validationError =
+    const hasValidationError =
       !value.includes(VROOM_VIN_SUBSTRING) && !isValidVin(value);
     const errorMessage = getVinErrors(value);
-    onChange({ ...field, value, validationError, errorMessage });
+    onChange({
+      ...field,
+      value,
+      validationError: hasValidationError,
+      errorMessage,
+    });
   };
 
   const handleShowVinDialog = () => {

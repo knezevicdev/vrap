@@ -46,13 +46,13 @@ const createPaymentSlice: StateCreator<
   getPlaidToken: async () => {
     const priceId = get().priceId;
     let plaidToken = '';
-    let plaidTokenIsLocal = false;
+    let isPlaidTokenLocal = false;
 
     const localToken = localStorage.getItem('linkToken');
     const localPriceId = localStorage.getItem('priceId');
     if (localToken && localPriceId === priceId) {
       plaidToken = localToken;
-      plaidTokenIsLocal = true;
+      isPlaidTokenLocal = true;
     } else {
       const tokenResponse = await getPlaidToken(priceId);
       if (!isErrorResponse(tokenResponse)) {
@@ -65,7 +65,7 @@ const createPaymentSlice: StateCreator<
 
     set({
       plaidToken,
-      plaidTokenIsLocal,
+      plaidTokenIsLocal: isPlaidTokenLocal,
     });
   },
 });

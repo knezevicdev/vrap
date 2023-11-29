@@ -77,11 +77,17 @@ export default requestHandler(
         response: data,
       });
       res.status(200).json(data);
-    } catch (err: any) {
+    } catch (err: unknown) {
       const message = `Request to /v1/acquisition/appraisal failed.`;
 
       logger.error(message, { appraisalApiRoute, error: err });
-      res.status(500).json({ status: 'error', message: err?.message });
+      res.status(500).json({
+        status: 'error',
+        message:
+          typeof err === 'object' && err !== null && 'message' in err
+            ? err?.message
+            : '',
+      });
     }
   },
   {
@@ -89,8 +95,8 @@ export default requestHandler(
   }
 );
 
-async function postAppraisal(payload: AppraisalPayload) {
-  return await axios.post(
+function postAppraisal(payload: AppraisalPayload) {
+  return axios.post(
     `${serverRuntimeConfig.ACQUISITIONS_URL}/acquisition/appraisal`,
     { payload }
   );

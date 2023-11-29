@@ -58,6 +58,7 @@ const Label = styled.label`
   margin-bottom: 10px;
 `;
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const InputContainer = styled(({ height, ...restProps }) => (
   <textarea {...restProps} />
 ))`
@@ -72,7 +73,7 @@ const InputContainer = styled(({ height, ...restProps }) => (
   border-radius: 0;
   box-shadow: none;
   line-height: 24px;
-  font-family: Calibre-Regular;
+  font-family: Calibre-Regular, sans-serif;
 
   &::placeholder {
     color: ${grayTwo};

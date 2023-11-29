@@ -1,4 +1,9 @@
-import { SkipNavigationLink, VroomSpinner } from '@vroom-web/ui-lib';
+import {
+  SkipNavigationLink,
+  SpinnerColor,
+  SpinnerSize,
+  VroomSpinner,
+} from '@vroom-web/ui-lib';
 import React from 'react';
 import styled from 'styled-components';
 
@@ -62,7 +67,13 @@ const LoggedOutDialog: React.FC<Props> = ({
       {isLoading && (
         <WhiteBox>
           <SpinnerContainer>
-            <VroomSpinner />
+            <VroomSpinner
+              size={SpinnerSize.MD}
+              color={SpinnerColor.PRIMARY_BRAND}
+              showBrand={true}
+              showLoadingText={false}
+              loadingText="loading..."
+            />
           </SpinnerContainer>
         </WhiteBox>
       )}

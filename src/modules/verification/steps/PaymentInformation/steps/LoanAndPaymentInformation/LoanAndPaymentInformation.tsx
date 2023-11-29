@@ -12,7 +12,7 @@ const LoanAndPaymentInformation = ({
   form,
   previousStep,
 }: WizardStepProps<LoanInformationForm>) => {
-  const completedLoanInfo = form.watch('loanStepCompleted');
+  const hasCompletedLoanInfo = form.watch('loanStepCompleted');
   const paymentSubmittedType = useVerificationStore(
     (state) => state.paymentSubmittedType
   );
@@ -29,10 +29,10 @@ const LoanAndPaymentInformation = ({
             : form.setValue('loanStepCompleted', true)
         }
         onEdit={() => previousStep?.()}
-        preview={completedLoanInfo}
+        preview={hasCompletedLoanInfo}
       />
       <PaymentInformation
-        preview={!completedLoanInfo}
+        preview={!hasCompletedLoanInfo}
         onComplete={() => onDone()}
       />
     </div>

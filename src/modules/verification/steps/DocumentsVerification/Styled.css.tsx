@@ -1,11 +1,5 @@
-import { Button, Icon, Typography } from '@vroom-web/ui-lib';
+import { Button, Typography } from '@vroom-web/ui-lib';
 import styled from 'styled-components';
-
-import { Row as GridRow } from 'src/styled/grid';
-
-export const Wrapper = styled(GridRow)`
-  margin-top: 30px;
-`;
 
 export const DocUploadDesc = styled.p`
   font-size: 18px;
@@ -25,18 +19,6 @@ export const FilesInfoTitle = styled(FilesInfo)`
   margin-bottom: 5px;
 `;
 
-export const SecurityLogo = styled(Icon)`
-  margin-right: 7px;
-`;
-
-export const SecureInfo = styled.p`
-  font-size: 16px;
-  letter-spacing: 0.43px;
-  line-height: 20px;
-  color: #308406;
-  margin: 10px 0 0;
-`;
-
 export const Container = styled.div``;
 
 export const Row = styled.div`
@@ -47,10 +29,6 @@ export const Row = styled.div`
     flex-direction: column;
     margin-top: 0;
   }
-`;
-
-export const MileContainer = styled(Row)`
-  flex-direction: column;
 `;
 
 export const Label = styled(Typography.Fine)`

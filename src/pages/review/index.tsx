@@ -98,14 +98,16 @@ export const getServerSideProps: GetServerSideProps<Props> = async (
   const token = jwt.sign({ vin }, serverRuntimeConfig.JWT_SECRET_KEY, {
     expiresIn: '10m',
   });
-  const requireAuth = ctx.req.url?.includes('/sell/tradeIn-selfService-Review');
+  const isAuthRequired = ctx.req.url?.includes(
+    '/sell/tradeIn-selfService-Review'
+  );
 
   return {
     props: {
       description: brandConfig.description,
       title: brandConfig.title,
       canonical: brandConfig.canonical,
-      allowUnauthenticated: !requireAuth,
+      allowUnauthenticated: !isAuthRequired,
       token,
     },
   };

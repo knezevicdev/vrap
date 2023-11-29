@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/naming-convention */
 import { CatData } from '@vroom-web/cat-sdk';
 import crypto from 'crypto';
 import Cookies from 'js-cookie';
@@ -10,7 +10,17 @@ import {
   WebLeadUserData,
 } from 'src/interfaces.d';
 
-export const checkAppraisalPayload = (req: any): number => {
+export const checkAppraisalPayload = (req: {
+  firstName: string;
+  lastName: string;
+  phoneNumber: string;
+  zipCode: string;
+  email: string;
+  expectedOffer: number;
+  lead_id: string;
+  vin: string;
+  options: string[];
+}): number => {
   const {
     firstName,
     lastName,

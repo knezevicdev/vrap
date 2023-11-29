@@ -10,7 +10,7 @@ interface Props {
 }
 
 const LoanAccountNumberInput: React.FC<Props> = ({ field, className }) => {
-  const { value, error, onChange } = field;
+  const { value, error: hasError, onChange } = field;
 
   const handleOnChange = (event: ChangeEvent<HTMLInputElement>) => {
     const value = lettersNumbersHyphensOnly(event.target.value, 25);
@@ -26,7 +26,7 @@ const LoanAccountNumberInput: React.FC<Props> = ({ field, className }) => {
         ...field,
         placeholder: 'xxxxxxxxxxxx',
         label: label,
-        error: error,
+        error: hasError,
         value,
         onChange: handleOnChange,
         dataQa: 'Lien Account Number',

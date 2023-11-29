@@ -9,27 +9,27 @@ const mediaSizes = {
 type MediaSize = keyof typeof mediaSizes;
 
 function useMediaQuery(size: MediaSize): boolean {
-  const [matches, setMatches] = useState(false);
+  const [isMatching, setIsMatching] = useState(false);
 
   useEffect(() => {
     const mediaQuery = mediaSizes[size];
 
     // If window is not defined (i.e. on the server), always set matches to false
     if (typeof window === 'undefined') {
-      setMatches(false);
+      setIsMatching(false);
       return;
     }
 
     const media = window.matchMedia(mediaQuery);
-    setMatches(media.matches);
+    setIsMatching(media.matches);
 
-    const handleChange = (e: MediaQueryListEvent) => setMatches(e.matches);
+    const handleChange = (e: MediaQueryListEvent) => setIsMatching(e.matches);
     media.addEventListener('change', handleChange);
 
     return () => media.removeEventListener('change', handleChange);
   }, [size]);
 
-  return matches;
+  return isMatching;
 }
 
 export default useMediaQuery;

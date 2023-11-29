@@ -28,6 +28,7 @@ export default class AppraisalDocument extends Document {
     try {
       ctx.renderPage = () =>
         originalRenderPage({
+          // eslint-disable-next-line @typescript-eslint/naming-convention
           enhanceApp: (App) => (props) =>
             styledComponentsSheet.collectStyles(<App {...props} />),
         });

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/naming-convention */
 export const greenCheckPath =
   'https://assets.vroomcdn.com/static-rebrand/icons/svg/400-gt/check-mark-green.svg';
 const one_icon = `https://assets.vroomcdn.com/static-rebrand/icons/svg/400-gt/1-active.svg`;

@@ -176,7 +176,7 @@ const useVerificationStore = create<VerificationState>()((...a) => ({
       paymentSubmittedType = 'Payment method submitted';
     }
 
-    const secondOwnerAddressSameAsFirstOwner =
+    const isSecondOwnerAddressSameAsFirstOwner =
       Object.values(verificationDetails.owner_mailing_address).filter((v) => v)
         .length >= 4 &&
       isEqual(
@@ -223,7 +223,7 @@ const useVerificationStore = create<VerificationState>()((...a) => ({
         secondOwnerPhoneNumber:
           verificationDetails.second_owner_phone_number || '',
         secondOwnerEmail: verificationDetails.second_owner_email_address || '',
-        secondOwnerAddressSameAsFirstOwner,
+        isSecondOwnerAddressSameAsFirstOwner,
         pickupAddressConfirmation: yesNoOrEmptyString(
           verificationDetails.same_mailing_address
         ),

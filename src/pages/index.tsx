@@ -1,4 +1,10 @@
-import { SkipNavigationLink, VroomSpinner } from '@vroom-web/ui-lib';
+import {
+  SkipNavigationLink,
+  SpinnerColor,
+  SpinnerSize,
+  ThemeProps,
+  VroomSpinner,
+} from '@vroom-web/ui-lib';
 import { GetServerSideProps, GetServerSidePropsContext, NextPage } from 'next';
 import { useRouter } from 'next/router';
 import React, { useEffect, useMemo } from 'react';
@@ -38,7 +44,13 @@ const AppraisalFormPage: NextPage = () => {
       {isLoading && (
         <WhiteBox>
           <SpinnerContainer>
-            <VroomSpinner />
+            <VroomSpinner
+              size={SpinnerSize.MD}
+              color={SpinnerColor.PRIMARY_BRAND}
+              showBrand={true}
+              showLoadingText={false}
+              loadingText="loading..."
+            />
           </SpinnerContainer>
         </WhiteBox>
       )}
@@ -70,7 +82,8 @@ const PageContent = styled.div`
   display: flex;
   justify-content: center;
   align-items: flex-start;
-  font-family: ${(props: any): string => props.theme.typography.family.body};
+  font-family: ${(props: { theme: ThemeProps }): string =>
+    props.theme.typography.family.body};
 `;
 
 interface Props {

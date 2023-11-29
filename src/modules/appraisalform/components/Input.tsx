@@ -37,10 +37,10 @@ const Input: React.FC<Props> = (props) => {
     className,
   } = props;
 
-  const [validate, setValidate] = useState(false);
+  const [shouldValidate, setValidate] = useState(false);
 
   const handleValidation = (action: any) => (event: any) => {
-    if (!validate) {
+    if (!shouldValidate) {
       setValidate(true);
     }
     if (action) {
@@ -48,7 +48,7 @@ const Input: React.FC<Props> = (props) => {
     }
   };
 
-  const showError = (validate || forceValidate) && error;
+  const showError = (shouldValidate || forceValidate) && error;
 
   return (
     <Container className={className}>
@@ -96,7 +96,7 @@ const Container = styled.div`
 `;
 
 const Label = styled.label`
-  font-family: Calibre-Regular;
+  font-family: Calibre-Regular, sans-serif;
   font-size: 13px;
   line-height: 13px;
   margin-bottom: 4px;

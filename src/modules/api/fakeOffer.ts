@@ -1,3 +1,4 @@
+/* eslint-disable */
 export default {
   automated_appraisal: false,
   ID: 'dGhpc2lzZmFrZW5vcHJpY2VvZmZlcg',

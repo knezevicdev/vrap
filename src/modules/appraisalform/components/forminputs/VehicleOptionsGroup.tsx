@@ -8,7 +8,7 @@ import useForm from '../useForm';
 interface Props {
   field: FormField;
   className?: string;
-  options: any[];
+  options: { name: string; selected: boolean }[];
 }
 
 const VehicleOptionsGroup: React.FC<Props> = ({
@@ -17,7 +17,7 @@ const VehicleOptionsGroup: React.FC<Props> = ({
   className,
 }) => {
   const [checkedValuesForParent, setCheckedValuesForParent] = useState(() => {
-    return options.reduce((result, opt) => {
+    return options.reduce((result: string[], opt) => {
       const optChecked = field.value.includes(opt.name) || opt.selected;
       if (!optChecked) return result;
 

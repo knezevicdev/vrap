@@ -14,7 +14,7 @@ export const isUserSignedIn = async (): Promise<boolean> => {
 };
 
 export const getUser = async (): Promise<GQLTypes.User> => {
-  const userResp = await client.gqlRequest<{ user: GQLTypes.User }>({
+  const userResp = await client.gearboxRequest<{ user: GQLTypes.User }>({
     document: GET_USER,
   });
   if (isErrorResponse(userResp)) throw userResp;

@@ -15,7 +15,7 @@ const useDecodeVin = (
 
   const decodeVin = useCallback(
     (vinToDecode: string, captchaToken: string) => {
-      const validVin =
+      const isVinValid =
         vinToDecode.includes(VROOM_VIN_SUBSTRING) || isValidVin(vinToDecode);
       const errorMessage = 'Please enter a valid vin';
       const { vin } = fields;
@@ -24,7 +24,7 @@ const useDecodeVin = (
       setIsLoading(true);
       setViewMode('vin');
 
-      if (validVin) {
+      if (isVinValid) {
         getVinDecode(vinToDecode, captchaToken)
           .then((response) => {
             const {
@@ -105,7 +105,7 @@ const useDecodeVin = (
         vin.onChange({
           ...vin,
           value: vinToDecode.toUpperCase(),
-          validationError: !validVin,
+          validationError: !isVinValid,
           errorMessage,
         });
         resetLocalState();

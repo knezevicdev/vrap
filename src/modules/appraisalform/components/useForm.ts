@@ -61,7 +61,7 @@ const initResetForm = (fields: any) => {
 };
 
 const calcIsFormValid = (fields: any) => {
-  const fieldsHaveAnEmptyValue = Object.keys(fields).some((key) => {
+  const hasFieldsAnEmptyValue = Object.keys(fields).some((key) => {
     // check if check boxes are false and required
     // check if string is empty and required
     // check if is array and is empty and required
@@ -76,15 +76,15 @@ const calcIsFormValid = (fields: any) => {
     );
   });
 
-  const fieldsHaveErrors = Object.keys(fields)
+  const hasFieldsErrors = Object.keys(fields)
     .map((key) => {
       return fields[key].error;
     })
     .some((error) => error === true);
 
-  if (fieldsHaveAnEmptyValue) return false;
+  if (hasFieldsAnEmptyValue) return false;
 
-  return !fieldsHaveErrors;
+  return !hasFieldsErrors;
 };
 
 const useForm = (props: any) => {
@@ -96,12 +96,13 @@ const useForm = (props: any) => {
 
   const onChange = useCallback(
     (key: any) => (field: Record<string, any>) => {
-      const errorChanged = fields[key] && fields[key].error !== field.error;
+      const isErrorChanged = fields[key] && fields[key].error !== field.error;
       const setForceValidate = field.setForceValidate;
       delete field.setForceValidate;
 
+      // eslint-disable-next-line @typescript-eslint/naming-convention
       let error = field.isRequired ? !field.value : false;
-      if (errorChanged) error = field.error;
+      if (isErrorChanged) error = field.error;
       if ((field.isRequired || field.value) && field.validationError)
         error = field.validationError;
 

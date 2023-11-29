@@ -12,7 +12,7 @@ const HeaderView: React.FC = () => {
   const catSDK = useContext(CatSDKContext);
   const analyticsHandler = useContext(AnalyticsHandlerContext);
   const absmartly = useABSmartly();
-  const [loggedIn, setLoggedIn] = useState(false);
+  const [isLoggedIn, setLoggedIn] = useState(false);
 
   useEffect(() => {
     const loggedInListener = () => {
@@ -33,7 +33,7 @@ const HeaderView: React.FC = () => {
         analyticsHandler={analyticsHandler}
         absmartly={absmartly}
         catSDK={catSDK}
-        key={loggedIn ? 'loggedIn' : 'loggedOut'}
+        key={isLoggedIn ? 'loggedIn' : 'loggedOut'}
       />
     </div>
   );

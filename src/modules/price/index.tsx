@@ -18,7 +18,7 @@ const Price: React.FC = () => {
   }, []);
 
   const storeStatus = usePriceStore((state) => state.storeStatus);
-  const automatedAppraisal = usePriceStore(
+  const isAutomatedAppraisal = usePriceStore(
     (state) => state.price.automatedAppraisal
   );
 
@@ -28,7 +28,7 @@ const Price: React.FC = () => {
         <PriceDetailContainer>
           <PriceDetail />
         </PriceDetailContainer>
-        {storeStatus === StoreStatus.Success && automatedAppraisal && (
+        {storeStatus === StoreStatus.Success && isAutomatedAppraisal && (
           <NextStepsContainer>
             <NextSteps />
           </NextStepsContainer>
