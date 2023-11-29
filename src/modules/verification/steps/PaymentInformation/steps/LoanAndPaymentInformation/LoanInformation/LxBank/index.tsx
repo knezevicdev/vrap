@@ -39,6 +39,7 @@ const LxBank = ({ label, onChange, defaultValue }: Props): ReactElement => {
             value,
             __isNew__: isNew,
           } = option as Option & {
+            // eslint-disable-next-line @typescript-eslint/naming-convention
             __isNew__?: boolean;
           };
 

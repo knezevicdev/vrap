@@ -22,7 +22,7 @@ const getVehiclePhotos = async (
   }`;
   const headers: Record<string, string> = {
     accept: 'application/json, text/plain, */*',
-    Authorization: publicRuntimeConfig.ICO_DASH_AUTH,
+    authorization: publicRuntimeConfig.ICO_DASH_AUTH,
   };
 
   let data: ImagesResponse;

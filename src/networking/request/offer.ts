@@ -63,7 +63,7 @@ export const acceptPriceOffer = async (offerId: string): Promise<void> => {
   const externalUserId = Cookies.get('ajs_user_id') || '';
 
   try {
-    await client.gqlRequest<unknown, MutationAcceptRejectOfferArgs>({
+    await client.gearboxRequest<unknown, MutationAcceptRejectOfferArgs>({
       document: ACCEPT_REJECT_OFFER,
       variables: {
         offerId,
@@ -108,7 +108,9 @@ export const postAppraisalReview = async (
       timeout: 30000,
       data: payload,
       headers: {
+        // eslint-disable-next-line @typescript-eslint/naming-convention
         'X-Signature': signature,
+        // eslint-disable-next-line @typescript-eslint/naming-convention
         'X-Token': signatureSecret,
       },
     });

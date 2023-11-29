@@ -61,87 +61,6 @@ export interface Store {
   storeStatus: StoreStatus;
 }
 
-export interface Stepper {
-  step: string;
-  progress: string;
-  next: string;
-  title: string;
-}
-
-interface MutationInputAccount {
-  Id: string;
-  Name: string;
-  Type: string;
-  Subtype: string;
-  Mask: string;
-}
-
-interface MutationInputInstitution {
-  Id: string;
-  Name: string;
-}
-
-export interface MutationInput {
-  Account: MutationInputAccount;
-  Institution: MutationInputInstitution;
-  PublicToken: string;
-  Source: string;
-  ReferenceId: string;
-  Email: string;
-}
-
-export interface VehicleArr {
-  inputLicensePlate: string;
-  make: string;
-  modelYear: string;
-  plateType: string;
-  processingType: string;
-  restrictedStateIndicator: string;
-  stateOfRegistration: string;
-  vin: string;
-  vinPattern: string;
-}
-
-export interface LtoVResp {
-  data: {
-    vehicles: VehicleArr[];
-  };
-}
-
-export interface LtoVPayload {
-  licensePlate: string;
-  state: string;
-}
-
-export interface VinDecodeResp {
-  decodeVIN: {
-    basicData: {
-      database: string;
-      make: string;
-      model: string;
-      source: string;
-      year: number;
-    };
-    colorData: {
-      colors: string[];
-      source: string;
-    };
-    options: [];
-    trimData: {
-      database: string;
-      source: string;
-      trims: {
-        Uid: number;
-        description: string;
-        doors: number;
-        long_description: string;
-        options: [];
-        source: string;
-      };
-    };
-  };
-}
-
 export interface GradeCheckResp {
   grade: boolean;
 }
@@ -339,11 +258,6 @@ export interface DetailsResponse {
   dataProviderInfo: {
     carstory?: Pick<Carstory, 'alternatives' | 'features' | 'id' | 'style'>;
   } | null;
-}
-
-export interface MileageCheckResp {
-  mileage: number;
-  errorMessage: string | null;
 }
 
 export interface WebLeadsPayload {

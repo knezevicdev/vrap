@@ -1,5 +1,6 @@
 import { isErrorResponse } from '@vroom-web/networking';
 import { SkipNavigationLink } from '@vroom-web/ui-lib';
+import { ThemeProps } from '@vroom-web/ui-lib/dist/foundation/themes/types';
 import { GetServerSideProps, GetServerSidePropsContext, NextPage } from 'next';
 import React from 'react';
 import styled from 'styled-components';
@@ -40,7 +41,8 @@ const PageContent = styled.div`
   display: flex;
   justify-content: center;
   align-items: flex-start;
-  font-family: ${(props: any): string => props.theme.typography.family.body};
+  font-family: ${(props: { theme: ThemeProps }): string =>
+    props.theme.typography.family.body};
 `;
 
 const getInitialEmailAndZip = async (

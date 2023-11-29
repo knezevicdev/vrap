@@ -23,7 +23,7 @@ export interface PaymentData {
   payment_address?: MailingAddress;
 }
 
-export const submitPaymentOptionSelected = async (
+export const submitPaymentOptionSelected = (
   paymentData: PaymentOverviewFormValues,
   priceId: string,
   address: MailingAddress
@@ -40,41 +40,30 @@ export const submitPaymentOptionSelected = async (
     data['payment_address'] = address;
   }
 
-  return await client.httpRequest<PaymentOptionsRespData>({
+  return client.httpRequest<PaymentOptionsRespData>({
     method: 'post',
     url,
     data: { payload: data },
   });
 };
 
-export const getPlaidToken = async (
+export const getPlaidToken = (
   userId: string
 ): Promise<Response<PlaidTokenResp>> => {
-  return await client.gqlRequest<
-    PlaidTokenResp,
-    GQLTypes.QueryGetLinkTokenArgs
-  >({
+  return client.gearboxRequest<PlaidTokenResp, GQLTypes.QueryGetLinkTokenArgs>({
     document: GET_PLAID_TOKEN,
     variables: { userId, source: 'appraisal' },
   });
 };
 
-export const postPlaidPayment = async (
+export const postPlaidPayment = (
   input: PlaidData
 ): Promise<Response<PlaidTokenResp>> => {
-  return await client.gqlRequest<
+  return client.gearboxRequest<
     PlaidTokenResp,
     GQLTypes.MutationCreateUserPaymentAccountArgs
   >({
     document: CREATE_USER_PAYMENT_ACCOUNT,
     variables: { input },
-  });
-};
-
-export const getInstitutionLogo = async (id: string): Promise<any> => {
-  const url = `${VROOM_URL}/mypayments/logo/${id}`;
-  return await client.httpRequest({
-    method: 'get',
-    url,
   });
 };

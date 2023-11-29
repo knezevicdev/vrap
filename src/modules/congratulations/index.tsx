@@ -36,6 +36,8 @@ const Congratulations = (): JSX.Element => {
             category="sell"
             headline="Switch Today and Save!"
             version={2}
+            description="Compare auto insurance rates side by side on the site ranked #1 for ease of use."
+            specialText="Featured Offer"
           />
         </ProgressiveWrapper>
       </CongratsContainer>

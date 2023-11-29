@@ -2,6 +2,7 @@ import { returnBrandConfig } from '../pageheaders';
 
 jest.mock('next/config', () => (): unknown => ({
   serverRuntimeConfig: {
+    // eslint-disable-next-line @typescript-eslint/naming-convention
     SEGMENT_WRITE_KEY: '12345',
   },
 }));

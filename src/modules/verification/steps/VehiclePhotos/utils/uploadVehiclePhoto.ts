@@ -60,7 +60,7 @@ export const uploadVehiclePhoto = async (
   const headers: Record<string, string> = {
     // eslint-disable-next-line @typescript-eslint/naming-convention
     'Content-Type': 'application/octet-stream',
-    Authorization: publicRuntimeConfig.ICO_DASH_AUTH,
+    authorization: publicRuntimeConfig.ICO_DASH_AUTH,
   };
 
   const apiOverride = publicRuntimeConfig.ICO_DASH_OVERRIDE;

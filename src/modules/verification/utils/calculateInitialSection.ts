@@ -3,9 +3,9 @@ import calculatePhotosValid from './calculatePhotosValid';
 
 const calculateInitialSection = (isInPhotosExperiment: boolean) => {
   const verificationState = useVerificationStore.getState();
-  const photosValid = isInPhotosExperiment ? calculatePhotosValid() : false;
+  const isPhotosValid = isInPhotosExperiment ? calculatePhotosValid() : false;
 
-  if (photosValid) return 4;
+  if (isPhotosValid) return 4;
   if (
     verificationState.loanConfirmation &&
     verificationState.paymentSubmittedType

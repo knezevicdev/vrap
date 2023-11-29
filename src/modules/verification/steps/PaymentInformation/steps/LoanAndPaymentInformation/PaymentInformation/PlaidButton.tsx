@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/naming-convention */
 import React, { useCallback, useMemo, useRef } from 'react';
 import { usePlaidLink } from 'react-plaid-link';
 import { shallow } from 'zustand/shallow';

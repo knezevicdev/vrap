@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/naming-convention */
 import { AnalyticsHandler as BaseAnalyticsHandler } from '@vroom-web/analytics-integration';
 import CryptoJS from 'crypto-js';
 import AES from 'crypto-js/aes';
@@ -151,8 +152,8 @@ class AnalyticsHandler extends BaseAnalyticsHandler {
     this.track(event, properties);
   }
 
-  trackStepComplete(step: any, formData: any, category: string): void {
-    const sections: any = {
+  trackStepComplete(step: number, formData: any, category: string): void {
+    const sections: Record<number, string> = {
       0: 'Vehicle Information',
       1: 'Vehicle History',
       2: 'Interior Conditions',
@@ -186,8 +187,8 @@ class AnalyticsHandler extends BaseAnalyticsHandler {
     this.track(event, properties);
   }
 
-  trackNextStepViewed(step: any): void {
-    const sections: any = {
+  trackNextStepViewed(step: number): void {
+    const sections: Record<number, string> = {
       0: 'Vehicle Information',
       1: 'Vehicle History',
       2: 'Interior Conditions',
@@ -281,20 +282,23 @@ class AnalyticsHandler extends BaseAnalyticsHandler {
     this.track(eventName, trackObj);
   };
 
-  trackLeadSubmitted = (label: string, leadData: any): void => {
-    const { email, phoneNumber, lead_id } = leadData;
+  trackLeadSubmitted = (
+    label: string,
+    leadData: { email: string; phone: string; lead_id: string }
+  ): void => {
+    const { email, phone, lead_id } = leadData;
 
     const trackLeadObj = {
       label,
       email,
-      phone: phoneNumber,
+      phone,
       lead_id,
     };
 
     this.track('Lead Submitted', trackLeadObj);
 
     const trackingData = {
-      phone: phoneNumber,
+      phone,
       emailEncrypted: '',
     };
 
@@ -314,7 +318,10 @@ class AnalyticsHandler extends BaseAnalyticsHandler {
     this.track(`Appraisal Submitted`, trackingData);
   };
 
-  trackAppraisalIdentify = (userId: any, appraisalData: any): void => {
+  trackAppraisalIdentify = (
+    userId: string | null,
+    appraisalData: any
+  ): void => {
     const {
       firstName,
       lastName,
@@ -382,37 +389,6 @@ class AnalyticsHandler extends BaseAnalyticsHandler {
     const event = 'Payoff Information completed';
     const category = 'verification';
     const properties = { category };
-    this.track(event, properties);
-  }
-
-  trackVerificationDocumentsViewed(): void {
-    const name = 'Doc Upload';
-    const category = 'verification';
-    this.page(name, category);
-  }
-
-  trackDocTypeUploaded(docType: string, priceId: string, fileId: string): void {
-    const event = `${docType} uploaded`;
-    const category = 'verification';
-    const properties = { category, priceId, fileId, docType };
-    this.track(event, properties);
-  }
-
-  trackDocTypeUploadError(
-    docType: string,
-    priceId: string,
-    errorMessage: string,
-    errorObject: Record<string, unknown> = {}
-  ): void {
-    const event = `${docType} Doc Upload Failed`;
-    const category = 'verification';
-    const properties = {
-      category,
-      priceId,
-      errorMessage,
-      docType,
-      ...errorObject,
-    };
     this.track(event, properties);
   }
 

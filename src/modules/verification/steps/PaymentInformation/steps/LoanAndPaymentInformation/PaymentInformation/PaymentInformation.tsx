@@ -41,8 +41,8 @@ interface Props {
 
 const PaymentInformation = ({ preview, onComplete }: Props) => {
   const [selectedPayment, setSelectedPayment] = useState('DirectDeposit');
-  const [institutionFound, setInstitutionFound] = useState(true);
-  const [plaidSubmitting, setPlaidSubmitting] = useState(false);
+  const [isInstitutionFound, setInstitutionFound] = useState(true);
+  const [isPlaidSubmitting, setPlaidSubmitting] = useState(false);
   const refetchPlaidToken = useVerificationStore(
     (store) => store.refetchPlaidToken
   );
@@ -180,13 +180,13 @@ const PaymentInformation = ({ preview, onComplete }: Props) => {
       {selectedPayment === 'DirectDeposit' && (
         <PlaidButton
           plaidExit={plaidExit}
-          plaidSubmitting={plaidSubmitting}
+          plaidSubmitting={isPlaidSubmitting}
           setPlaidSubmitting={setPlaidSubmitting}
           plaidSuccess={plaidSuccess}
           setInstitutionFound={setInstitutionFound}
         />
       )}
-      {!institutionFound && selectedPayment === 'DirectDeposit' && (
+      {!isInstitutionFound && selectedPayment === 'DirectDeposit' && (
         <DirectDeposit form={directDepositForm} onSubmit={onPaymentSubmit} />
       )}
     </div>

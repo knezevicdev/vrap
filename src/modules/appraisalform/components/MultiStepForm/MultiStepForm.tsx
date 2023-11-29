@@ -16,7 +16,7 @@ import { blueIcons, grayIcons, greenCheckPath } from './utils';
 
 function numberIcon(index: number, activeSection: number, className: string) {
   const isActive = activeSection === index;
-  let src = '';
+  let src: string;
   if (isActive) {
     src = blueIcons[index];
   } else {
@@ -58,7 +58,7 @@ const MultiStepForm: React.FC<Props> = (props) => {
     onNext,
     active = 0,
     customAnalyticsFunc,
-    refreshButton = false,
+    refreshButton: showRefreshButton = false,
     nextText = 'Next',
     submitText = 'Review',
     appraisalTitle,
@@ -76,7 +76,7 @@ const MultiStepForm: React.FC<Props> = (props) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [activeSection, setActiveSection] = useState(active);
   const [returnSection, setReturnSection] = useState(null);
-  const [hideButton, setHideButton] = useState<boolean>(false);
+  const [isNextHidden, setHideButton] = useState<boolean>(false);
   const [showAuthModal, setShowAuthModal] = useState(false);
 
   let vehicleId = router.query?.vehicle ? router.query?.vehicle : '';
@@ -302,10 +302,10 @@ const MultiStepForm: React.FC<Props> = (props) => {
     } = formComponent;
     const CurrentComponent = component;
     const isActive = idx === activeSection;
-    let formIsInvalid =
+    let isFormInvalid =
       !sections[activeSection].form.isFormValid || isSubmitting;
     if (sections[activeSection].addressForm) {
-      formIsInvalid =
+      isFormInvalid =
         !sections[activeSection].form.isFormValid ||
         isSubmitting ||
         !sections[activeSection].addressForm.isFormValid;
@@ -349,8 +349,8 @@ const MultiStepForm: React.FC<Props> = (props) => {
             {...formComponent}
             hideButtonCallback={hideButtonCallback}
           />
-          {!hideButton &&
-            getNextButton(formComponent, formIsInvalid, onNextIntercept)}
+          {!isNextHidden &&
+            getNextButton(formComponent, isFormInvalid, onNextIntercept)}
           {afterButton?.()}
         </FormSection>
       </FormStep>
@@ -365,7 +365,7 @@ const MultiStepForm: React.FC<Props> = (props) => {
           <span>{formTitle}</span>
           {formSubtittleSection && formSubtittleSection()}
         </FormTitle>
-        {refreshButton && (
+        {showRefreshButton && (
           <FormRefresh
             role="button"
             tabIndex={0}

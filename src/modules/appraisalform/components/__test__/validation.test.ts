@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/naming-convention */
 import * as Validation from '../validation';
 
 describe('testing validation ', () => {

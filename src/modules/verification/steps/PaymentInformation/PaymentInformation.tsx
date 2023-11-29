@@ -42,12 +42,12 @@ const LoanInformationStep = ({ nextStep, editRef }: FormStepProps) => {
       component: LoanConfirmation,
       form: loanConfirmationForm,
       onNext: () => {
-        const loanNotConfirmed =
+        const isLoanNotConfirmed =
           loanConfirmationForm.getValues('loanConfirmation') === 'No';
 
-        loanInformationForm.setValue('loanStepCompleted', loanNotConfirmed);
+        loanInformationForm.setValue('loanStepCompleted', isLoanNotConfirmed);
 
-        if (loanNotConfirmed && paymentSubmittedType) {
+        if (isLoanNotConfirmed && paymentSubmittedType) {
           onDone();
           return 0;
         }

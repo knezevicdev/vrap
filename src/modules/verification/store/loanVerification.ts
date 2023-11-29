@@ -44,7 +44,7 @@ const createLoanVerificationSlice: StateCreator<
       accountNumber,
       lastFourDigits,
       state: loanState,
-      acknowledgment,
+      acknowledgment: hasAcknowledgment,
       lienId,
     } = loanInfoForm.getValues();
 
@@ -65,7 +65,7 @@ const createLoanVerificationSlice: StateCreator<
       loanState: loanState,
       loanName: bankName,
       loanInstitutionId,
-      loanAcknowledgement: acknowledgment,
+      loanAcknowledgement: hasAcknowledgment,
     }));
   },
 });

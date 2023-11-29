@@ -6,15 +6,15 @@ import PrevNextButtons from '../../components/WizardForm/PrevNextButtons';
 import { CheckboxContainer } from './Styled.css';
 
 const Review = ({ nextStep, goToStep }: FormStepProps) => {
-  const [checked, setChecked] = React.useState(false);
+  const [isChecked, setChecked] = React.useState(false);
 
   return (
     <div>
       <CheckboxContainer>
         <Checkbox
-          checked={checked}
+          checked={isChecked}
           id={'verification-agreement-checkbox'}
-          onChange={(): void => setChecked(!checked)}
+          onChange={(): void => setChecked(!isChecked)}
           dataQa={'verification-agreement-checkbox'}
           label="I acknowledge that all information provided is accurate. Vroom reserves the right to modify or revoke your price if any information provided is inaccurate."
         />
@@ -22,7 +22,7 @@ const Review = ({ nextStep, goToStep }: FormStepProps) => {
       <PrevNextButtons
         onPrev={() => goToStep(2)}
         onNext={nextStep}
-        disableNext={!checked}
+        disableNext={!isChecked}
       />
     </div>
   );

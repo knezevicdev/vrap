@@ -24,11 +24,11 @@ const PhoneInput: React.FC<Props> = ({
   const handleOnChange = (event: any) => {
     const value = event.target.value;
     // If the field is optional and empty, it's still considered valid
-    const validationError =
+    const hasValidationError =
       isEmpty(value) && optional ? false : !isValidPhoneNumber(value);
     const maxPhoneLength = 15;
     if (value.length < maxPhoneLength) {
-      onChange({ ...field, value, validationError });
+      onChange({ ...field, value, validationError: hasValidationError });
     }
   };
 

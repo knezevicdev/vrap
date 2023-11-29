@@ -8,17 +8,17 @@ import { StoreStatus } from '../../interfaces.d';
 import usePriceStore from '../../modules/price/store';
 
 const ProgressiveAdC: React.FC = () => {
-  const { automatedAppraisal, storeStatus } = usePriceStore(
+  const { isAutomatedAppraisal, storeStatus } = usePriceStore(
     (state) => ({
-      automatedAppraisal: state.price.automatedAppraisal,
+      isAutomatedAppraisal: state.price.automatedAppraisal,
       storeStatus: state.storeStatus,
     }),
     shallow
   );
 
   const isManualPricing = useMemo(() => {
-    return storeStatus !== StoreStatus.Initial && !automatedAppraisal;
-  }, []);
+    return storeStatus !== StoreStatus.Initial && !isAutomatedAppraisal;
+  }, [isAutomatedAppraisal, storeStatus]);
 
   if (isManualPricing) {
     return (
@@ -29,6 +29,8 @@ const ProgressiveAdC: React.FC = () => {
           category="sell"
           headline="Switch Today and Save!"
           version={2}
+          description="Compare auto insurance rates side by side on the site ranked #1 for ease of use."
+          specialText="Featured Offer"
         />
       </ProgressiveWrapper>
     );
@@ -40,7 +42,7 @@ const ProgressiveWrapper = styled.div`
   justify-content: center;
   max-width: 1360px;
   width: 100%;
-  padding: 0px 40px;
+  padding: 0 40px;
   margin: 0 auto 50px;
 
   ${addStyleForMobile(`

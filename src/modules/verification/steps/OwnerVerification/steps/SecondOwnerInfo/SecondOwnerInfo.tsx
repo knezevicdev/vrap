@@ -30,12 +30,12 @@ const SecondOwnerInfo = ({
   firstOwnerApt: string;
   sameAddressAsFirstOwner: boolean;
 }>) => {
-  const sameAddressAsFirstOwner = form.watch('sameAddressAsFirstOwner');
-  const lastSameAddressAsFirstOwner = useRef(sameAddressAsFirstOwner);
+  const hasSameAddressAsFirstOwner = form.watch('sameAddressAsFirstOwner');
+  const lastSameAddressAsFirstOwner = useRef(hasSameAddressAsFirstOwner);
 
   useEffect(() => {
-    if (lastSameAddressAsFirstOwner.current !== sameAddressAsFirstOwner) {
-      lastSameAddressAsFirstOwner.current = sameAddressAsFirstOwner;
+    if (lastSameAddressAsFirstOwner.current !== hasSameAddressAsFirstOwner) {
+      lastSameAddressAsFirstOwner.current = hasSameAddressAsFirstOwner;
       const formValues = form.getValues();
 
       form.setValue('address', formValues.firstOwnerAddress);
@@ -50,7 +50,7 @@ const SecondOwnerInfo = ({
       form.trigger('state');
       form.trigger('zip');
     }
-  }, [form, sameAddressAsFirstOwner]);
+  }, [form, hasSameAddressAsFirstOwner]);
 
   return (
     <>
@@ -132,7 +132,7 @@ const SecondOwnerInfo = ({
             control={form.control}
           />
         </Col>
-        {!sameAddressAsFirstOwner && (
+        {!hasSameAddressAsFirstOwner && (
           <AddressSelector
             idPrefix="secondOwner"
             form={form}

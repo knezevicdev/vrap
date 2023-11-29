@@ -1,4 +1,9 @@
-import { Button, VroomSpinner } from '@vroom-web/ui-lib';
+import {
+  Button,
+  SpinnerColor,
+  SpinnerSize,
+  VroomSpinner,
+} from '@vroom-web/ui-lib';
 import { useRouter } from 'next/router';
 import React, {
   useCallback,
@@ -96,7 +101,7 @@ const UnifiedVerification = () => {
     }
   }, [getPlaidToken, initialSection, setLoading, state]);
 
-  const photosValid = usePhotosValid();
+  const isPhotosValid = usePhotosValid();
 
   const priceId = router.query.priceId as string;
 
@@ -126,7 +131,13 @@ const UnifiedVerification = () => {
     return (
       <LoadingOverlay>
         <SpinnerContainer>
-          <VroomSpinner />
+          <VroomSpinner
+            size={SpinnerSize.MD}
+            color={SpinnerColor.PRIMARY_BRAND}
+            showBrand={true}
+            showLoadingText={false}
+            loadingText="loading..."
+          />
         </SpinnerContainer>
       </LoadingOverlay>
     );
@@ -185,7 +196,7 @@ const UnifiedVerification = () => {
     sections.push({
       component: PhotosVerificationStep,
       title: 'Vehicle Photos',
-      isValid: photosValid,
+      isValid: isPhotosValid,
       completedAfterComponent: VehiclePhotosReview,
     });
   }
@@ -211,7 +222,13 @@ const UnifiedVerification = () => {
       {isLoading && (
         <LoadingOverlay>
           <SpinnerContainer>
-            <VroomSpinner />
+            <VroomSpinner
+              size={SpinnerSize.MD}
+              color={SpinnerColor.PRIMARY_BRAND}
+              showBrand={true}
+              showLoadingText={false}
+              loadingText="loading..."
+            />
           </SpinnerContainer>
         </LoadingOverlay>
       )}
@@ -236,6 +253,7 @@ const UnifiedVerification = () => {
                 const response = await updateVerification(4);
                 if (!response) return;
 
+                // eslint-disable-next-line @typescript-eslint/naming-convention
                 const { owner_email_address, owner_first_name } =
                   response.data.data;
 

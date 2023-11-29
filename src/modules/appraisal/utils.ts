@@ -1,6 +1,5 @@
 import crypto from 'crypto';
 
-export const uuidCookieName = 'uuid';
 import useAppraisalStore, { AppraisalState } from '../../store/appraisalStore';
 
 import { AppraisalPayload } from 'src/interfaces.d';

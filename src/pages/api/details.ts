@@ -45,7 +45,7 @@ export default requestHandler(
       const response = mapDetailsToResponse(details);
 
       res.status(200).json(response);
-    } catch (err: any) {
+    } catch (err: unknown) {
       const message = `Request to /v1/details/${vehicleId} failed.`;
 
       logger.error(message, { appraisalApiRoute, error: err });
@@ -57,8 +57,8 @@ export default requestHandler(
   }
 );
 
-async function getDetails(vehicleId: string) {
-  return await axios.get(
+function getDetails(vehicleId: string) {
+  return axios.get(
     `${serverRuntimeConfig.VIS_URL}v1/carstory/details/${vehicleId}?cacheCarfax=true&cacheAutocheck=true`
   );
 }

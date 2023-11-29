@@ -14,8 +14,8 @@ const FirstNameInput: React.FC<Props> = ({ field, className }) => {
 
   const handleOnChange = (event: GenericObject) => {
     const value = event.target.value;
-    const validationError = !isValidName(value);
-    onChange({ ...field, value, validationError });
+    const hasValidationError = !isValidName(value);
+    onChange({ ...field, value, validationError: hasValidationError });
   };
 
   return (

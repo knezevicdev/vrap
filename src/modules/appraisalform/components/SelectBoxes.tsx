@@ -84,6 +84,7 @@ const mapOptions = (options: []): HorizontalRadioOption[] => {
   return options.map((option) => ({
     label: option,
     value: option,
+    // eslint-disable-next-line @typescript-eslint/naming-convention
     'data-qa': option,
   }));
 };

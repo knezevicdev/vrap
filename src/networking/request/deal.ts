@@ -48,7 +48,7 @@ const getResumeStep = (nextStep: string, vin: string): string | undefined => {
 };
 
 export const getInProgressDeal = async (): Promise<GQLTypes.DealV3> => {
-  const res = await client.gqlRequest<
+  const res = await client.gearboxRequest<
     { user: GQLTypes.User },
     GQLTypes.UserDealsV3Args
   >({
@@ -122,7 +122,7 @@ export const acceptDeal = async (
     expirationDate,
     source,
   } = payload;
-  const res = await client.gqlRequest<
+  const res = await client.gearboxRequest<
     Record<string, GQLTypes.DealV3>,
     GQLTypes.MutationDealV3PutTradeInArgs
   >({
@@ -149,7 +149,7 @@ export const acceptDeal = async (
 export const declineDeal = async (
   deal: GQLTypes.DealV3
 ): Promise<UpdateDeal> => {
-  const res = await client.gqlRequest<
+  const res = await client.gearboxRequest<
     Record<string, GQLTypes.DealV3>,
     MutationDealV3UpdateDealArgs
   >({

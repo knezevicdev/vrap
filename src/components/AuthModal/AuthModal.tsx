@@ -38,7 +38,7 @@ const AuthModal = ({
     setMode(hasAccount ? 'login' : 'register');
   }, []);
 
-  const lockEmail = !!email;
+  const shouldLockEmail = !!email;
 
   const authModalRoot =
     typeof document !== 'undefined'
@@ -54,7 +54,7 @@ const AuthModal = ({
               redirectUrl={redirectUrl}
               initialEmail={initialEmail}
               enable3rdPartyLogin={enable3rdPartyLogin}
-              lockEmail={lockEmail}
+              lockEmail={shouldLockEmail}
             />
           )}
           {mode === 'login' && (
@@ -64,7 +64,7 @@ const AuthModal = ({
               initialEmail={initialEmail}
               redirectUrl={redirectUrl}
               enable3rdPartyLogin={enable3rdPartyLogin}
-              lockEmail={lockEmail}
+              lockEmail={shouldLockEmail}
             />
           )}
           {mode === 'register' && (
@@ -75,7 +75,7 @@ const AuthModal = ({
               redirectUrl={redirectUrl}
               initialRegistrationData={initialRegistrationData}
               enable3rdPartyLogin={enable3rdPartyLogin}
-              lockEmail={lockEmail}
+              lockEmail={shouldLockEmail}
             />
           )}
         </Modal>

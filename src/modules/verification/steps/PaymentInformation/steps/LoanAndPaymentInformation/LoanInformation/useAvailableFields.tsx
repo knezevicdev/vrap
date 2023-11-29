@@ -27,8 +27,8 @@ const useAvailableFields = (
 
     const localAvailableFields = [];
 
-    const includePhoneAndSsn = !apiFields.includes('ACC');
-    if (includePhoneAndSsn) {
+    const shouldIncludePhoneAndSsn = !apiFields.includes('ACC');
+    if (shouldIncludePhoneAndSsn) {
       localAvailableFields.push(
         LoanField.PHONE_NUMBER,
         LoanField.SSN_LAST_DIGITS
@@ -42,9 +42,9 @@ const useAvailableFields = (
     } else if (formValues.manualBankName !== '') {
       form.setValue('manualBankName', '');
     }
-    form.setValue('accFields', includePhoneAndSsn);
+    form.setValue('accFields', shouldIncludePhoneAndSsn);
     if (
-      !includePhoneAndSsn &&
+      !shouldIncludePhoneAndSsn &&
       (formValues.phoneNumber !== '' || formValues.lastFourDigits !== '')
     ) {
       form.setValue('phoneNumber', '');

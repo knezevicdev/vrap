@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 
 export const useScrollLock = () => {
+  // eslint-disable-next-line @typescript-eslint/naming-convention
   const [isiOS, setIsiOS] = useState(false);
   const scrollOffset = React.useRef(0);
 
@@ -10,7 +11,7 @@ export const useScrollLock = () => {
     document.body.style.paddingRight = 'var(--scrollbar-compensation)';
 
     if (isiOS) {
-      scrollOffset.current = window.pageYOffset;
+      scrollOffset.current = window.scrollY;
       document.body.style.position = 'fixed';
       document.body.style.top = `-${scrollOffset.current}px`;
       document.body.style.width = '100%';

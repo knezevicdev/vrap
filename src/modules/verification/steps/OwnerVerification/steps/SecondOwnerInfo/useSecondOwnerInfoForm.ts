@@ -63,7 +63,7 @@ const useSecondOwnerInfoForm = () => {
     firstOwnerZip,
     firstOwnerCity,
     firstOwnerApt,
-    sameAddressAsFirstOwner,
+    hasSameAddressAsFirstOwner,
   } = useVerificationStore(
     (state) => ({
       firstName: state.secondOwnerFirstName,
@@ -83,7 +83,7 @@ const useSecondOwnerInfoForm = () => {
       firstOwnerZip: state.firstOwnerZip,
       firstOwnerCity: state.firstOwnerCity,
       firstOwnerApt: state.firstOwnerApt,
-      sameAddressAsFirstOwner: state.secondOwnerAddressSameAsFirstOwner,
+      hasSameAddressAsFirstOwner: state.secondOwnerAddressSameAsFirstOwner,
     }),
     shallow
   );
@@ -107,7 +107,7 @@ const useSecondOwnerInfoForm = () => {
       firstOwnerZip,
       firstOwnerCity,
       firstOwnerApt,
-      sameAddressAsFirstOwner,
+      sameAddressAsFirstOwner: hasSameAddressAsFirstOwner,
     },
     resolver: yupResolver(secondOwnerInfoVerificationSchema),
     mode: 'onChange',

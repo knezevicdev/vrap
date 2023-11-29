@@ -1,4 +1,4 @@
-import { VroomSpinner } from '@vroom-web/ui-lib';
+import { SpinnerColor, SpinnerSize, VroomSpinner } from '@vroom-web/ui-lib';
 import { useRouter } from 'next/router';
 import React, { useCallback, useEffect, useState } from 'react';
 
@@ -114,7 +114,13 @@ const AppraisalReview: React.FC<Props> = ({ token }) => {
       {isAnyLoading && (
         <WhiteBox>
           <SpinnerContainer>
-            <VroomSpinner />
+            <VroomSpinner
+              size={SpinnerSize.MD}
+              color={SpinnerColor.PRIMARY_BRAND}
+              showBrand={true}
+              showLoadingText={false}
+              loadingText="loading..."
+            />
           </SpinnerContainer>
         </WhiteBox>
       )}
