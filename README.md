@@ -15,7 +15,10 @@ git clone https://gitlab.vroom.com/vroom-web/apps/appraisal.git
 npm install 
 ```
 
-**add .env file**
+**download .env file**
+```
+npm run env
+```
 
 
 **running projecct**

@@ -18,7 +18,8 @@
     "release:minor": "npm version minor",
     "release:premajor": "npm version premajor",
     "release:major": "npm version major",
-    "postversion": "git push --follow-tags"
+    "postversion": "git push --follow-tags",
+    "env": "node ./tools/dowloadEnv.js"
   },
   "overrides": {
     "@vroom-web/shared-components": {
