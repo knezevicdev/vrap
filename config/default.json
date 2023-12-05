@@ -36,5 +36,10 @@
   "ICO_DASH_URL": "https://icodashboard.feautobeta.vast.com",
   "ICO_DASH_AUTH": "Basic ZnJvbnRlbmQ6dGVzdHRlc3Q=",
   "SHOULD_CALL_ZAPIER": false,
-  "ZAPIER_WEBHOOK": "https://hooks.zapier.com/hooks/catch/1232083/3tij769/"
+  "ZAPIER_WEBHOOK": "https://hooks.zapier.com/hooks/catch/1232083/3tij769/",
+  "ACCT_MGMT_SERVICE_PRE_SIGNUP_ENDPOINT": "https://accountmanagement-int.qa.vroom.cloud/v2/my-account/pre-signup",
+  "ACCT_MGMT_SERVICE_FETCH_TOKEN_ENDPOINT": "https://accountmanagement-int.qa.vroom.cloud/v2/token",
+  "ENABLE_3PA_LOGIN": false,
+  "GOOGLE_3PA_CLIENT_ID": "896223242054-5gh2hun3seb386kg5lu1ke6l8uko8bg9.apps.googleusercontent.com",
+  "GOOGLE_3PA_LOGIN_REDIRECT_URI": "https://qa.vroom.com/myaccount/3rd-party-login"
 }

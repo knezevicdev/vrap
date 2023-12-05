@@ -4,5 +4,6 @@
   "CAT_SERVICE_URL": "/appraisal/api",
   "GQL_PROXY_TARGET": "https://qa.vroom.com/gql",
   "INTERCHANGE_URL": "/appraisal/api/interchange",
-  "WEB_LEADS_PROXY_TARGET": "https://qa.vroom.com/api/weblead/attribution"
+  "WEB_LEADS_PROXY_TARGET": "https://qa.vroom.com/api/weblead/attribution",
+  "ENABLE_3PA_LOGIN": true
 }

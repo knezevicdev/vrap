@@ -142,6 +142,8 @@ const config = {
     ICO_DASH_OVERRIDE: currentConfig.ICO_DASH_OVERRIDE,
     SHOULD_CALL_ZAPIER: currentConfig.SHOULD_CALL_ZAPIER,
     FIREBASE_ENV: currentConfig.FIREBASE_ENV,
+    ENABLE_3PA_LOGIN: currentConfig.ENABLE_3PA_LOGIN,
+    GOOGLE_3PA_CLIENT_ID: currentConfig.GOOGLE_3PA_CLIENT_ID,
   },
   serverRuntimeConfig: {
     // Will only be available on the server side
@@ -165,6 +167,12 @@ const config = {
       process.env.APPRAISAL_PHOTOS_SPREADSHEET_ID,
     FIREBASE_SERVICE_ACCOUNT: process.env.FIREBASE_SERVICE_ACCOUNT,
     FIREBASE_ENV: currentConfig.FIREBASE_ENV,
+    ACCT_MGMT_SERVICE_PRE_SIGNUP_ENDPOINT:
+      currentConfig.ACCT_MGMT_SERVICE_PRE_SIGNUP_ENDPOINT,
+    ACCT_MGMT_SERVICE_FETCH_TOKEN_ENDPOINT:
+      currentConfig.ACCT_MGMT_SERVICE_FETCH_TOKEN_ENDPOINT,
+    GOOGLE_3PA_CLIENT_ID: currentConfig.GOOGLE_3PA_CLIENT_ID,
+    GOOGLE_3PA_LOGIN_REDIRECT_URI: currentConfig.GOOGLE_3PA_LOGIN_REDIRECT_URI,
   },
   /* Custom webpack configuration. */
   webpack: (config) => {

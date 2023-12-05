@@ -14,5 +14,6 @@
   "INTERCHANGE_PROXY_TARGET": "https://uat.vroom.com",
   "SEGMENT_WRITE_KEY": "HoOMdOEbnzWKYfDahFunvFtz6FuxRXlT",
   "VIS_URL": "https://vis-int.uat.vroom.cloud/",
-  "VROOM_URL": "https://uat.vroom.com"
+  "VROOM_URL": "https://uat.vroom.com",
+  "ACCT_MGMT_SERVICE_PRE_SIGNUP_ENDPOINT": "https://accountmanagement-int.uat.vroom.cloud/v2/my-account/pre-signup"
 }

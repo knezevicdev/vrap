@@ -5,5 +5,6 @@
   "INTERCHANGE_PROXY_TARGET": "https://qa.vroom.com",
   "SEGMENT_WRITE_KEY": "8c18UJXtpiLVCERFxnmoRysnnu08NOMH",
   "VIS_URL": "https://vis-int.qa.vroom.cloud/",
-  "VROOM_URL": "https://qa.vroom.com"
+  "VROOM_URL": "https://qa.vroom.com",
+  "ENABLE_3PA_LOGIN": true
 }

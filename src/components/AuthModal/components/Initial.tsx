@@ -1,5 +1,7 @@
 import { isErrorResponse } from '@vroom-web/networking';
-import React from 'react';
+import axios from 'axios';
+import getConfig from 'next/config';
+import React, { useEffect, useRef } from 'react';
 import { useForm } from 'react-hook-form';
 
 import { useRecaptcha } from '../../../context/Recaptcha';
@@ -21,6 +23,8 @@ import checkAccount from '../utils/checkAccount';
 import checkAccountResolver from '../utils/checkAccountResolver';
 import redirectToThirdParty from '../utils/redirectToThirdParty';
 import Input from './Input';
+
+const { publicRuntimeConfig } = getConfig();
 
 interface Props {
   onEmailProcessed: (email: string, hasAccount: boolean) => void;
@@ -60,6 +64,37 @@ const Initial = ({
     onEmailProcessed(data.email, response.data.exists);
   });
 
+  const loginWithGoogleButton = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    if (!publicRuntimeConfig.ENABLE_3PA_LOGIN) return;
+
+    function handleCredentialResponse(response: {
+      clientId: string;
+      client_id: string;
+      credential: string;
+      select_by: string;
+    }) {
+      axios
+        .post('/appraisal/api/3pa-login', {
+          token: response.credential,
+        })
+        .then((response) => {
+          console.log(response.data);
+        });
+    }
+
+    google.accounts.id.initialize({
+      client_id: publicRuntimeConfig.GOOGLE_3PA_CLIENT_ID,
+      callback: handleCredentialResponse,
+    });
+    google.accounts.id.renderButton(loginWithGoogleButton.current, {
+      theme: 'outline',
+      size: 'large',
+    });
+    google.accounts.id.prompt();
+  });
+
   return (
     <>
       <Form onSubmit={onSubmit}>
@@ -79,6 +114,11 @@ const Initial = ({
           {isSubmitting ? <Spinner /> : 'Continue'}
         </PrimaryButton>
       </Form>
+      {publicRuntimeConfig.ENABLE_3PA_LOGIN && (
+        <div ref={loginWithGoogleButton} style={{ marginTop: '16px' }}>
+          continue with google
+        </div>
+      )}
       {enable3rdPartyLogin && (
         <>
           <Divider />
