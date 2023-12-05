@@ -18,5 +18,6 @@
   "VROOM_URL": "https://www.vroom.com",
   "RECAPTCHA_SITE_KEY": "6Le6wLMgAAAAALm7gYrofvWVwOPFm2YVO0gTSsdQ",
   "ICO_DASH_OVERRIDE": "prod",
-  "SHOULD_CALL_ZAPIER": true
+  "SHOULD_CALL_ZAPIER": true,
+  "ACCT_MGMT_SERVICE_PRE_SIGNUP_ENDPOINT": "https://accountmanagement-int.prod.vroom.cloud/v2/my-account/pre-signup"
 }

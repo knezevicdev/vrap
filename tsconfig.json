@@ -32,6 +32,7 @@
   ],
   "include": [
     "./next-env.d.ts",
+    "./google.d.ts",
     "./types/**/*.ts",
     "./src/**/*.ts",
     "./src/**/*.tsx",

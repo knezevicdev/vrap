@@ -66,6 +66,7 @@ export default class AppraisalDocument extends Document {
           <script
             src={`https://maps.googleapis.com/maps/api/js?key=${GOOGLE_MAPS_API_KEY}&v=quarterly&libraries=places`}
           />
+          <script src="https://accounts.google.com/gsi/client" async></script>
           <link
             rel="stylesheet"
             href={`${publicRuntimeConfig.BASE_PATH}/api/style.css`}
