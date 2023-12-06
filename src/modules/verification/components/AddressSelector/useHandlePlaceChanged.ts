@@ -42,7 +42,7 @@ const useHandlePlaceChanged = (
         }
       }
     );
-    address.addressLine = `${address.streetNumber} ${address.street}`;
+    address.addressLine = `${address.streetNumber} ${address.street}`.trim();
 
     if (
       address.addressLine.includes('undefined') ||
