@@ -151,10 +151,12 @@ const VehicleInformation: React.FC<Props> = ({
         });
       }
       const { vin } = fields;
-      vin.onChange({
-        ...vin,
-        value: vehicleId.toUpperCase(),
-      });
+      setTimeout(() => {
+        vin.onChange({
+          ...vin,
+          value: vehicleId.toUpperCase(),
+        });
+      }, 0);
     } else if (isValidLicense) {
       const [state, ...rest] = vehicleId.split('-');
       const license = rest.join('-');

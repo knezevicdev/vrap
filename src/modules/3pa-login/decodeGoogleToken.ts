@@ -1,12 +1,14 @@
 import { OAuth2Client } from 'google-auth-library';
+import getConfig from 'next/config';
+
+const { serverRuntimeConfig } = getConfig();
 
 const decodeGoogleToken = async (token: string) => {
   const client = new OAuth2Client();
   async function verify() {
     const ticket = await client.verifyIdToken({
       idToken: token,
-      audience:
-        '896223242054-5gh2hun3seb386kg5lu1ke6l8uko8bg9.apps.googleusercontent.com',
+      audience: serverRuntimeConfig.GOOGLE_3PA_CLIENT_ID,
     });
     return ticket.getPayload();
   }
