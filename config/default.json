@@ -40,6 +40,6 @@
   "ACCT_MGMT_SERVICE_PRE_SIGNUP_ENDPOINT": "https://accountmanagement-int.qa.vroom.cloud/v2/my-account/pre-signup",
   "ACCT_MGMT_SERVICE_FETCH_TOKEN_ENDPOINT": "https://accountmanagement-int.qa.vroom.cloud/v2/token",
   "ENABLE_3PA_LOGIN": false,
-  "GOOGLE_3PA_CLIENT_ID": "896223242054-5gh2hun3seb386kg5lu1ke6l8uko8bg9.apps.googleusercontent.com",
+  "GOOGLE_3PA_CLIENT_ID": "538646723917-i75gut4dga577mvv0kj4ufrgiq49sj1m.apps.googleusercontent.com",
   "GOOGLE_3PA_LOGIN_REDIRECT_URI": "https://qa.vroom.com/myaccount/3rd-party-login"
 }

@@ -19,12 +19,7 @@ import { ThemeProvider as StyledComponentsThemeProvider } from 'styled-component
 
 import LoggedOutDialog from '../components/LoggedOutDialog';
 import { RecaptchaProvider } from '../context/Recaptcha';
-import {
-  defaultRestrictedContextValue,
-  getRestrictedAppraisalContext,
-  RestrictedAppraisalContext,
-  RestrictedAppraisalContextType,
-} from '../integrations/RestrictedAppraisalContext';
+import RestrictedContext from '../context/RestrictedContext';
 import client from '../networking/client';
 
 import AppProvider from 'src/context/AppContext';
@@ -55,8 +50,6 @@ class AppraisalApp extends App<
   {
     isSignedIn: boolean;
     isSignedInLoaded: boolean;
-    restrictedContextValue: RestrictedAppraisalContextType;
-    restrictedContextValueLoaded: boolean;
   }
 > {
   private readonly catSDK: CatSDK;
@@ -88,8 +81,6 @@ class AppraisalApp extends App<
     this.state = {
       isSignedIn: false,
       isSignedInLoaded: false,
-      restrictedContextValue: defaultRestrictedContextValue,
-      restrictedContextValueLoaded: false,
     };
   }
 
@@ -115,18 +106,6 @@ class AppraisalApp extends App<
     }));
   };
 
-  fetchRestrictedAppraisalContext = async () => {
-    const restrictedContextValue = await getRestrictedAppraisalContext(
-      publicRuntimeConfig.FIREBASE_CONFIG
-    );
-
-    this.setState((currentState) => ({
-      ...currentState,
-      restrictedContextValue,
-      restrictedContextValueLoaded: true,
-    }));
-  };
-
   componentDidMount(): void {
     smoothscroll.polyfill(); // needs access to the window
     if (DATA_DOG_RUM_APPLICATION) {
@@ -148,9 +127,6 @@ class AppraisalApp extends App<
     });
     this.commonHandler.check3rdPartyAuth();
     saveUTMParams();
-    this.fetchRestrictedAppraisalContext().catch((e) => {
-      console.error('Failed to fetch appraisal context', e);
-    });
 
     const vehicleVIN = this.props.router.query?.vehicle as string;
 
@@ -195,12 +171,7 @@ class AppraisalApp extends App<
         >
           <AnalyticsHandlerContext.Provider value={this.analyticsHandler}>
             <CatSDKContext.Provider value={this.catSDK}>
-              <RestrictedAppraisalContext.Provider
-                value={{
-                  value: this.state.restrictedContextValue,
-                  loaded: this.state.restrictedContextValueLoaded,
-                }}
-              >
+              <RestrictedContext>
                 <StyledComponentsThemeProvider theme={getVroomTheme()}>
                   <RecaptchaProvider>
                     <AppProvider>
@@ -209,7 +180,7 @@ class AppraisalApp extends App<
                     </AppProvider>
                   </RecaptchaProvider>
                 </StyledComponentsThemeProvider>
-              </RestrictedAppraisalContext.Provider>
+              </RestrictedContext>
             </CatSDKContext.Provider>
           </AnalyticsHandlerContext.Provider>
         </ABSmartlyProvider>

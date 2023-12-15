@@ -1,7 +1,7 @@
 # syntax = docker/dockerfile:experimental
 # This enabled the feature to load the secrets in the RUN step
 
-FROM node:18-alpine
+FROM node:18-alpine3.18
 # Using local images to build from removes the dependency on docker hub - but the images recent releases by the same name
 
 RUN apk update && apk --no-cache add git
