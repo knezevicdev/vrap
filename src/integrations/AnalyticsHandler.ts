@@ -471,6 +471,20 @@ class AnalyticsHandler extends BaseAnalyticsHandler {
     const properties = { category, vin, userEmail };
     this.track(event, properties);
   }
+
+  trackRetailVerification(vin: string, userEmail: string): void {
+    const event = 'Start Verification Retail Offer';
+    const category = 'verification';
+    const properties = { category, vin, userEmail };
+    this.track(event, properties);
+  }
+
+  trackWholesaleVerification(vin: string, userEmail: string): void {
+    const event = 'Start Verification Wholesale Offer';
+    const category = 'verification';
+    const properties = { category, vin, userEmail };
+    this.track(event, properties);
+  }
 }
 
 export default AnalyticsHandler;

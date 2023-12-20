@@ -49,6 +49,7 @@ import {
 } from './Styled.css';
 import calculateInitialSection from './utils/calculateInitialSection';
 import updateVerification from './utils/updateVerification';
+import useGradeTracking from './utils/useGradeTracking';
 import usePhotosValid from './utils/usePhotosValid';
 
 const UnifiedVerification = () => {
@@ -56,10 +57,6 @@ const UnifiedVerification = () => {
   const trackedEvents = useRef<string[]>([]);
   const priceAccepted = useRef(false);
   const router = useRouter();
-  const sidebarProps = useVerificationStore((state) => ({
-    offer: state.offer,
-    offerZip: state.offerZip,
-  }));
   const loadState = useVerificationStore((state) => state.loadState);
   const vin = useVerificationStore((state) => state.vin);
   const completedInfo = useVerificationStore(
@@ -89,6 +86,8 @@ const UnifiedVerification = () => {
     return calculateInitialSection(isInPhotosUploadExperiment);
   }, [isAbsmartlyLoading, isInPhotosUploadExperiment, state]);
   const [activeSection, setActiveSection] = useState(initialSection);
+
+  useGradeTracking(analyticsHandler.current);
 
   useEffect(() => {
     if (fetchedInitialPaymentData.current) return;
@@ -322,7 +321,7 @@ const UnifiedVerification = () => {
           </Container>
         </MainContent>
         <SidebarWrapper>
-          <VerificationSidebar {...sidebarProps} />
+          <VerificationSidebar />
         </SidebarWrapper>
       </ModuleWrapper>
     </>
