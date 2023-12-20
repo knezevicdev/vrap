@@ -1,5 +1,6 @@
 import React, { useRef, useState } from 'react';
 
+import useVerificationStore from '../../store/store';
 import useTaxSavings from '../../utils/useTaxSavings';
 import TaxSavingsDialog from '../TaxSavingsDialog';
 import {
@@ -15,12 +16,11 @@ import {
 import AnalyticsHandler from 'src/integrations/AnalyticsHandler';
 import { displayCurrency } from 'src/utils';
 
-interface Props {
-  offer: number;
-  offerZip: string;
-}
-
-const VerificationSidebar = ({ offer, offerZip }: Props) => {
+const VerificationSidebar = () => {
+  const { offer, offerZip } = useVerificationStore((state) => ({
+    offer: state.offer,
+    offerZip: state.offerZip,
+  }));
   const analyticsHandler = useRef(new AnalyticsHandler());
   const [showDialog, setShowDialog] = useState(false);
   const { taxState, taxSavings } = useTaxSavings(offer, offerZip);

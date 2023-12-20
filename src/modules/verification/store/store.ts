@@ -40,6 +40,7 @@ export type VerificationState = OwnerVerificationState &
     offerEmail: string;
     offer: number;
     offerZip: string;
+    offerGrade: string;
     formState: number;
     completed: boolean;
     finalPayment: number | null;
@@ -70,6 +71,7 @@ const useVerificationStore = create<VerificationState>()((...a) => ({
   offerEmail: '',
   offer: 0,
   offerZip: '',
+  offerGrade: '',
   formState: 0,
   completed: false,
   finalPayment: null,
@@ -104,6 +106,7 @@ const useVerificationStore = create<VerificationState>()((...a) => ({
       offerEmail: offerDetails.user_email,
       offer: offerDetails.Price__c,
       offerZip: offerDetails.zipcode,
+      offerGrade: offerDetails.grade,
     }));
 
     try {
