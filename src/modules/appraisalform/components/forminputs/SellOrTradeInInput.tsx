@@ -21,7 +21,7 @@ const SellOrTradeInInput: React.FC<Props> = ({ field, className }) => {
       className={className}
       field={{
         ...field,
-        options: ['Sell', 'Trade', 'Not Sure'],
+        options: ['Sell', 'Trade'],
         label: 'Sell or Trade-in?',
         onClick: handleOnChange,
         value,
