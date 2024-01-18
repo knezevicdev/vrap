@@ -13,7 +13,7 @@ interface Props {
   otherWarningField: FormField;
 }
 
-const STATIC_URL = 'https://assets.vroomcdn.com/static-rebrand';
+const STATIC_URL = 'https://www.vroom.com/static-assets/classic';
 
 const WarningLightsOptionsGroup: React.FC<Props> = ({
   field,
