@@ -33,6 +33,7 @@
   "dependencies": {
     "@absmartly/javascript-sdk": "^1.11.4",
     "@datadog/browser-rum": "^4.35.0",
+    "@google-cloud/storage": "^7.7.0",
     "@hookform/resolvers": "^3.0.0",
     "@react-google-maps/api": "^2.18.1",
     "@vroom-web/analytics-integration": "^3.12.1",
